@@ -7,9 +7,10 @@ name = "trading-os"
 version = "0.0.1"
 description = "Personal Trading OS: data, research, backtest, execution, risk, journaling."
 readme = "README.md"
-requires-python = ">=3.10"
 license = { text = "Proprietary" }
 authors = [{ name = "zcs" }]
+
+requires-python = ">=3.10,<3.13"
 
 dependencies = []
 
@@ -17,6 +18,16 @@ dependencies = []
 dev = [
   "pytest>=8",
   "ruff>=0.4",
+]
+
+data_lake = [
+  "duckdb>=1.0",
+  "pandas>=2.0",
+  "pyarrow>=14.0",
+]
+
+data_yahoo = [
+  "yfinance>=0.2",
 ]
 
 [tool.setuptools]

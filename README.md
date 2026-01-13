@@ -20,7 +20,7 @@ cd /Users/zcs/code2/trading-os
 python -m venv .venv
 source .venv/bin/activate
 pip install -U pip
-pip install -e .
+pip install -e ".[data_lake]"
 ```
 
 运行 CLI（目前是占位，用来验证工程结构）：
@@ -35,6 +35,10 @@ python -m trading_os paths
 ```bash
 PYTHONPATH=src python -m trading_os --help
 ```
+
+## Python 版本说明
+- 本项目的“数据湖（DuckDB/Parquet）”依赖目前通常需要 **Python 3.10–3.12**。
+- 如果你当前是 Python 3.13，建议用 `conda`/`pyenv` 创建 3.12 环境再安装依赖。
 
 ## 目录结构
 - `src/trading_os/`: 核心代码
