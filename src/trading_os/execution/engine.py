@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import uuid
 from dataclasses import dataclass
-from datetime import datetime
 from typing import TYPE_CHECKING, Callable
 
 try:
@@ -16,9 +15,8 @@ if TYPE_CHECKING:  # pragma: no cover
 from ..data.schema import BarColumns
 from ..journal.event_log import EventLog
 from ..risk.manager import RiskManager
-from .models import Fill, Order, OrderSide, OrderStatus
+from .models import Fill, Order, OrderSide
 from .portfolio import Portfolio
-
 
 SignalsFn = Callable[["pd_types.DataFrame"], "pd_types.Series"]
 
@@ -138,7 +136,7 @@ class PaperTradingEngine:
                     )
                     portfolio.apply_fill(fill)
                     self.risk.notify_trade(symbol, bar_index=i)
-                    self.log.write_obj("order_filled", {"order": order.__dict__, "fill": fill.__dict__}, ts=ts)
+                    self.log.write_obj("order_filled", {"order": order, "fill": fill}, ts=ts)
                     last_target = tgt
 
             snap = portfolio.snapshot(ts=ts, prices={symbol: px_close})

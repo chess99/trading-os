@@ -1,24 +1,9 @@
 from __future__ import annotations
 
+import importlib
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
-
-from typing import TYPE_CHECKING
-
-try:
-    import duckdb  # type: ignore
-except ImportError:  # pragma: no cover
-    duckdb = None  # type: ignore
-
-try:
-    import pandas as pd  # type: ignore
-except ImportError:  # pragma: no cover
-    pd = None  # type: ignore
-
-if TYPE_CHECKING:  # pragma: no cover
-    import duckdb as duckdb_types
-    import pandas as pd_types
+from typing import Any, Iterable
 
 from .schema import Adjustment, BarColumns, Exchange, Timeframe
 
@@ -49,24 +34,26 @@ class LocalDataLake:
     """
 
     def __init__(self, root: Path):
-        if duckdb is None or pd is None:  # pragma: no cover
+        try:  # pragma: no cover
+            self._duckdb = importlib.import_module("duckdb")
+            self._pd = importlib.import_module("pandas")
+        except ModuleNotFoundError as e:  # pragma: no cover
             raise RuntimeError(
                 "LocalDataLake requires optional dependencies. "
                 "Create a Python 3.10–3.12 environment and install: "
                 "`pip install -e .[data_lake]`"
-            )
+            ) from e
         self.paths = DataLakePaths(root=root)
         self.paths.root.mkdir(parents=True, exist_ok=True)
         self.paths.bars_dir.mkdir(parents=True, exist_ok=True)
 
-    def connect(self) -> "duckdb_types.DuckDBPyConnection":
-        # duckdb is guaranteed by __init__
-        con = duckdb.connect(str(self.paths.duckdb_path))  # type: ignore[union-attr]
+    def connect(self) -> Any:
+        con = self._duckdb.connect(str(self.paths.duckdb_path))
         # pragmatic defaults
         con.execute("SET TimeZone='UTC'")
         return con
 
-    def _create_empty_bars_view(self, con: "duckdb_types.DuckDBPyConnection") -> None:
+    def _create_empty_bars_view(self, con: Any) -> None:
         # DuckDB can't create a parquet view if the glob matches nothing.
         con.execute(
             f"""
@@ -107,7 +94,7 @@ class LocalDataLake:
 
     def write_bars_parquet(
         self,
-        df: "pd_types.DataFrame",
+        df: Any,
         *,
         exchange: Exchange,
         timeframe: Timeframe,
@@ -136,7 +123,7 @@ class LocalDataLake:
         out = df.copy()
         # Normalize ts to tz-aware UTC
         if BarColumns.ts in out.columns:
-            out[BarColumns.ts] = pd.to_datetime(out[BarColumns.ts], utc=True)  # type: ignore[union-attr]
+            out[BarColumns.ts] = self._pd.to_datetime(out[BarColumns.ts], utc=True)
         out[BarColumns.exchange] = exchange.value
         out[BarColumns.timeframe] = timeframe.value
         out[BarColumns.adjustment] = adjustment.value
@@ -161,7 +148,8 @@ class LocalDataLake:
         out = out[[c for c in cols if c in out.columns]]
 
         suffix = partition_hint or "append"
-        path = self.paths.bars_dir / f"bars_{exchange.value}_{timeframe.value}_{adjustment.value}_{suffix}.parquet"
+        filename = f"bars_{exchange.value}_{timeframe.value}_{adjustment.value}_{suffix}.parquet"
+        path = self.paths.bars_dir / filename
         out.to_parquet(path, index=False)
         return path
 
@@ -175,7 +163,7 @@ class LocalDataLake:
         start: str | None = None,  # ISO date or timestamp
         end: str | None = None,
         limit: int | None = None,
-    ) -> "pd_types.DataFrame":
+    ) -> Any:
         """Query bars from DuckDB view.
 
         `start`/`end` are interpreted by DuckDB (ISO strings recommended).
@@ -202,7 +190,27 @@ class LocalDataLake:
             where.append(f"{BarColumns.ts} <= ?")
             params.append(end)
 
-        sql = f"SELECT * FROM bars WHERE {' AND '.join(where)} ORDER BY {BarColumns.ts}"
+        # Deduplicate by logical primary key to avoid accidental duplicates
+        # when multiple parquet files contain overlapping ranges.
+        sql = f"""
+        SELECT * EXCLUDE (rn)
+        FROM (
+          SELECT
+            *,
+            row_number() OVER (
+              PARTITION BY
+                {BarColumns.symbol},
+                {BarColumns.timeframe},
+                {BarColumns.adjustment},
+                {BarColumns.ts}
+              ORDER BY {BarColumns.source} DESC
+            ) AS rn
+          FROM bars
+          WHERE {' AND '.join(where)}
+        )
+        WHERE rn = 1
+        ORDER BY {BarColumns.ts}
+        """
         if limit is not None:
             sql += " LIMIT ?"
             params.append(int(limit))

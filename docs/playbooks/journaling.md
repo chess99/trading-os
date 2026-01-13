@@ -38,3 +38,8 @@ python -m trading_os paper-run-sma --symbol NASDAQ:TEST --fast 5 --slow 20 --sto
 - 引用：决策记录 + 事件日志 + 回测证据
 - 结论必须落为 **可执行改进动作**（代码/参数/流程）
 
+也可以先自动生成一份草稿（再手工补充主观部分）：
+
+```bash
+python -m trading_os draft-review --events artifacts/paper/events_NASDAQ_TEST.jsonl
+```

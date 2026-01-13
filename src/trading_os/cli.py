@@ -133,6 +133,19 @@ def main(argv: list[str] | None = None) -> int:
     p_paper.add_argument("--circuit-breaker", type=float, default=None, help="Peak-to-valley drawdown halt pct (e.g. 0.1)")
     p_paper.set_defaults(func=_cmd_paper_run_sma)
 
+    p_dr = sub.add_parser(
+        "draft-review", help="Generate a review draft from a paper-trading JSONL event log"
+    )
+    p_dr.add_argument("--events", required=True, help="Path to events_*.jsonl (absolute or repo-relative)")
+    p_dr.add_argument("--decision", default=None, help="Decision markdown path to include (optional)")
+    p_dr.add_argument(
+        "--out",
+        default=None,
+        help="Output markdown path (default: journal/reviews/<date>_<symbol>_auto.md)",
+    )
+    p_dr.add_argument("--overwrite", action="store_true", help="Overwrite output file if exists")
+    p_dr.set_defaults(func=_cmd_draft_review)
+
     ns = parser.parse_args(argv)
     func = getattr(ns, "func", None)
     if not callable(func):
@@ -360,5 +373,36 @@ def _cmd_paper_run_sma(ns: argparse.Namespace) -> int:
     )
     print(f"wrote_events: {log_path}")
     print(curve.tail(5))
+    return 0
+
+
+def _cmd_draft_review(ns: argparse.Namespace) -> int:
+    from pathlib import Path
+
+    from .journal.review_draft import write_review_draft
+
+    root = repo_root()
+    events_path = Path(ns.events).expanduser()
+    if not events_path.is_absolute():
+        events_path = root / events_path
+
+    if ns.out:
+        out_path = Path(ns.out).expanduser()
+        if not out_path.is_absolute():
+            out_path = root / out_path
+    else:
+        today = datetime.now(timezone.utc).date().isoformat()
+        # derive symbol from filename when possible, e.g. events_NASDAQ_TEST.jsonl
+        stem = events_path.stem
+        safe_symbol = stem.removeprefix("events_") if stem.startswith("events_") else stem
+        out_path = root / "journal" / "reviews" / f"{today}_{safe_symbol}_auto.md"
+
+    out = write_review_draft(
+        events_path=events_path,
+        out_path=out_path,
+        decision_path=ns.decision,
+        overwrite=bool(ns.overwrite),
+    )
+    print(f"wrote_review: {out}")
     return 0
 

@@ -4,12 +4,14 @@ from pathlib import Path
 
 
 def repo_root() -> Path:
-    """Resolve repository root by walking up from this file.
+    """Resolve repository root by searching for `pyproject.toml` upward.
 
-    Assumption: this file lives under `src/trading_os/`.
+    This works both when running from source and when installed in editable mode.
     """
-
     here = Path(__file__).resolve()
-    # trading-os/src/trading_os/paths.py -> trading-os
-    return here.parents[3]
+    for p in [here, *here.parents]:
+        if (p / "pyproject.toml").exists():
+            return p
+    # Fallback: assume src layout: repo/src/trading_os/paths.py
+    return here.parents[2]
 
