@@ -7,10 +7,12 @@ Agent系统CLI集成
 from datetime import datetime
 from typing import Dict, Any
 from pathlib import Path
+import numpy as np
 
 from .core.agent_interface import AgentContext
 from .core.message_types import PortfolioSnapshot
 from .roles.fund_manager import FundManager
+from .data_validation import ensure_data_quality, DataIntegrityChecker
 
 
 class AgentSystemCLI:
@@ -87,45 +89,122 @@ class AgentSystemCLI:
 
     def _build_analysis_context(self) -> AgentContext:
         """构建分析上下文"""
-        # 模拟市场数据 - 实际应该从数据湖获取
-        mock_market_data = {
-            "prices": {
-                "AAPL": {"current_price": 150.0, "change_pct": 0.02},
-                "MSFT": {"current_price": 300.0, "change_pct": 0.015},
-                "JPM": {"current_price": 140.0, "change_pct": -0.005}
-            },
-            "market_volatility": 0.18,
-            "market_liquidity_score": 0.75,
-            "average_correlation": 0.6
-        }
+        try:
+            # 从数据湖获取真实市场数据
+            from ..data.lake import LocalDataLake
+            lake = LocalDataLake(self.repo_root / "data")
 
-        # 模拟投资组合状态
+            # 获取主要股票的最新价格
+            symbols = ["NASDAQ:AAPL", "NASDAQ:MSFT", "NASDAQ:GOOGL"]
+            market_data = {"prices": {}}
+
+            for symbol in symbols:
+                try:
+                    bars = lake.query_bars(symbols=[symbol])
+                    if not bars.empty:
+                        latest = bars.iloc[-1]
+                        prev_close = bars.iloc[-2]['close'] if len(bars) > 1 else latest['close']
+                        change_pct = (latest['close'] - prev_close) / prev_close
+
+                        ticker = symbol.split(':')[1]
+                        market_data["prices"][ticker] = {
+                            "current_price": float(latest['close']),
+                            "change_pct": float(change_pct),
+                            "volume": float(latest['volume']),
+                            "timestamp": str(latest['ts'])
+                        }
+                except Exception as e:
+                    print(f"警告: 无法获取 {symbol} 数据: {e}")
+
+            # 计算市场指标
+            if market_data["prices"]:
+                prices = [data["current_price"] for data in market_data["prices"].values()]
+                changes = [data["change_pct"] for data in market_data["prices"].values()]
+
+                market_data.update({
+                    "market_volatility": float(np.std(changes)) if len(changes) > 1 else 0.02,
+                    "market_liquidity_score": 0.8,  # 可以基于成交量计算
+                    "average_correlation": 0.6,  # 可以基于历史数据计算
+                    "market_trend": "bullish" if np.mean(changes) > 0 else "bearish",
+                    "data_source": "real_data_lake"
+                })
+            else:
+                # 如果没有数据，明确失败
+                print("❌ 错误: 数据湖中没有找到任何市场数据")
+                print("请先添加数据：")
+                print("  python -m trading_os seed --exchange NASDAQ --ticker AAPL")
+                print("  python -m trading_os seed --exchange NASDAQ --ticker MSFT")
+                print("  python -m trading_os seed --exchange NASDAQ --ticker GOOGL")
+                raise RuntimeError("数据湖为空，无法进行市场分析")
+
+        except Exception as e:
+            print(f"❌ 错误: 无法从数据湖获取市场数据")
+            print(f"详细错误: {e}")
+            print("请检查：")
+            print("1. 数据湖是否已初始化：python -m trading_os lake-init")
+            print("2. 是否有数据：python -m trading_os query-bars --symbols NASDAQ:AAPL")
+            print("3. 如需添加数据：python -m trading_os seed --exchange NASDAQ --ticker AAPL")
+            raise RuntimeError(f"市场数据获取失败，无法进行分析: {e}") from e
+
+        # 模拟投资组合状态（实际应该从投资组合管理系统获取）
         mock_portfolio = {
             "positions": {
                 "AAPL": 0.25,
                 "MSFT": 0.20,
-                "JPM": 0.15
+                "GOOGL": 0.15
             },
             "cash_position": 0.40,
             "total_value": 1000000
         }
 
-        # 模拟风险指标
-        mock_risk_metrics = {
-            "individual_volatilities": {
-                "AAPL": 0.25,
-                "MSFT": 0.22,
-                "JPM": 0.20
-            }
-        }
+        # 计算真实的风险指标
+        try:
+            # 基于真实数据计算波动率
+            risk_metrics = {"individual_volatilities": {}}
 
-        return AgentContext(
+            for symbol in ["NASDAQ:AAPL", "NASDAQ:MSFT", "NASDAQ:GOOGL"]:
+                try:
+                    bars = lake.query_bars(symbols=[symbol])
+                    if len(bars) > 10:  # 需要足够的数据点
+                        returns = bars['close'].pct_change().dropna()
+                        volatility = float(returns.std() * np.sqrt(252))  # 年化波动率
+                        ticker = symbol.split(':')[1]
+                        risk_metrics["individual_volatilities"][ticker] = volatility
+                except:
+                    pass
+
+            # 如果没有计算出波动率，明确失败
+            if not risk_metrics["individual_volatilities"]:
+                print("❌ 错误: 无法计算任何股票的波动率")
+                print("请确保数据湖中有足够的历史数据（至少10个交易日）")
+                raise RuntimeError("风险指标计算失败：数据不足")
+
+            risk_metrics["data_source"] = "calculated_from_real_data"
+
+        except Exception as e:
+            print(f"❌ 错误: 无法计算风险指标: {e}")
+            print("风险计算需要足够的历史数据")
+            raise RuntimeError(f"风险指标计算失败: {e}") from e
+
+        context = AgentContext(
             timestamp=datetime.now(),
-            market_data=mock_market_data,
+            market_data=market_data,
             portfolio_state=mock_portfolio,
-            risk_metrics=mock_risk_metrics,
-            metadata={}
+            risk_metrics=risk_metrics,
+            metadata={"data_integration_status": "enhanced_with_real_data"}
         )
+
+        # 验证数据质量
+        try:
+            ensure_data_quality(context)
+        except Exception as e:
+            # 提供详细的诊断信息
+            checker = DataIntegrityChecker(self.repo_root)
+            report = checker.generate_data_status_report()
+            print(report)
+            raise RuntimeError(f"数据质量验证失败: {e}") from e
+
+        return context
 
     def _format_analysis_results(self, outputs: list) -> Dict[str, Any]:
         """格式化分析结果"""
@@ -211,6 +290,9 @@ def add_agent_commands(cli_parser):
     # 风险评估命令
     risk_parser = agent_subparsers.add_parser('risk', help='评估投资组合风险')
 
+    # 数据状态检查命令
+    status_parser = agent_subparsers.add_parser('status', help='检查数据湖状态')
+
     return agent_parser
 
 
@@ -252,5 +334,10 @@ def handle_agent_command(args, repo_root: Path):
                 for alert in alerts:
                     print(f"  - {alert.description} (严重性: {alert.severity})")
 
+    elif args.agent_action == 'status':
+        checker = DataIntegrityChecker(repo_root)
+        report = checker.generate_data_status_report()
+        print(report)
+
     else:
-        print("请指定有效的agent操作: daily, board-report, recommend, risk")
+        print("请指定有效的agent操作: daily, board-report, recommend, risk, status")

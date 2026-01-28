@@ -162,6 +162,9 @@ def main(argv: list[str] | None = None) -> int:
     p_risk = agent_sub.add_parser("risk", help="评估投资组合风险")
     p_risk.set_defaults(func=_cmd_agent)
 
+    p_status = agent_sub.add_parser("status", help="检查数据湖状态")
+    p_status.set_defaults(func=_cmd_agent)
+
     ns = parser.parse_args(argv)
     func = getattr(ns, "func", None)
     if not callable(func):
@@ -460,8 +463,13 @@ def _cmd_agent(ns: argparse.Namespace) -> int:
                 print(f"风险警报 ({len(alerts)} 个):")
                 for alert in alerts:
                     print(f"  - {alert.description} (严重性: {alert.severity})")
+    elif ns.agent_action == 'status':
+        from .agents.data_validation import DataIntegrityChecker
+        checker = DataIntegrityChecker(root)
+        report = checker.generate_data_status_report()
+        print(report)
     else:
-        print("请指定有效的agent操作: daily, board-report, recommend, risk")
+        print("请指定有效的agent操作: daily, board-report, recommend, risk, status")
 
     return 0
 
