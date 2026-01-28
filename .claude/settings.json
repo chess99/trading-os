@@ -1,0 +1,93 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m trading_os:*)",
+      "Bash(python scripts/*)",
+      "Bash(git:*)",
+      "Read(src/**)",
+      "Read(docs/**)",
+      "Read(artifacts/**)",
+      "Read(data/**)",
+      "Edit(src/**)",
+      "Write(artifacts/**)",
+      "Write(docs/**)",
+      "Skill(fund-management)",
+      "Skill(market-analysis)"
+    ],
+    "ask": [
+      "Bash(pip:*)",
+      "Bash(npm:*)",
+      "Edit(pyproject.toml)",
+      "Edit(.claude/**)"
+    ],
+    "deny": [
+      "Read(.env*)",
+      "Read(secrets/**)",
+      "Edit(.env*)",
+      "Bash(rm -rf:*)",
+      "Bash(curl:*)"
+    ]
+  },
+  "env": {
+    "CLAUDE_CODE_ENABLE_TELEMETRY": "0",
+    "TRADING_OS_MODE": "fund_management"
+  },
+  "attribution": {
+    "commit": "🤖 基金管理AI决策\n\nCo-Authored-By: Claude Fund Manager <fund-manager@trading-os.ai>",
+    "pr": "🤖 由基金管理AI系统生成"
+  },
+  "companyAnnouncements": [
+    "欢迎使用基金管理AI系统！您的AI基金经理已准备就绪。",
+    "提醒：重大投资决策请与董事长确认",
+    "系统已集成市场分析、风险管理和投资决策功能"
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '🏦 基金管理AI系统启动完成'"
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "matcher": "fund-manager",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '💼 基金经理AI开始工作...'"
+          }
+        ]
+      },
+      {
+        "matcher": "research-analyst",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '📊 研究分析师开始深度分析...'"
+          }
+        ]
+      },
+      {
+        "matcher": "risk-manager",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '⚠️ 风控专员开始风险评估...'"
+          }
+        ]
+      }
+    ]
+  },
+  "model": "sonnet",
+  "outputStyle": "Professional",
+  "language": "chinese",
+  "statusLine": {
+    "type": "command",
+    "command": "echo '🏦 基金管理AI | 市场: 开盘 | 风险: 可控 | 现金: 25%'"
+  }
+}
