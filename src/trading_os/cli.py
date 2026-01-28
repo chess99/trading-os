@@ -146,6 +146,22 @@ def main(argv: list[str] | None = None) -> int:
     p_dr.add_argument("--overwrite", action="store_true", help="Overwrite output file if exists")
     p_dr.set_defaults(func=_cmd_draft_review)
 
+    # Agent system commands
+    p_agent = sub.add_parser("agent", help="基金经理AI系统")
+    agent_sub = p_agent.add_subparsers(dest="agent_action", required=True)
+
+    p_daily = agent_sub.add_parser("daily", help="运行日常分析")
+    p_daily.set_defaults(func=_cmd_agent)
+
+    p_board = agent_sub.add_parser("board-report", help="生成董事会报告")
+    p_board.set_defaults(func=_cmd_agent)
+
+    p_recommend = agent_sub.add_parser("recommend", help="获取投资建议")
+    p_recommend.set_defaults(func=_cmd_agent)
+
+    p_risk = agent_sub.add_parser("risk", help="评估投资组合风险")
+    p_risk.set_defaults(func=_cmd_agent)
+
     ns = parser.parse_args(argv)
     func = getattr(ns, "func", None)
     if not callable(func):
@@ -404,5 +420,48 @@ def _cmd_draft_review(ns: argparse.Namespace) -> int:
         overwrite=bool(ns.overwrite),
     )
     print(f"wrote_review: {out}")
+    return 0
+
+
+def _cmd_agent(ns: argparse.Namespace) -> int:
+    """Agent系统命令处理"""
+    from .agents.cli_integration import AgentSystemCLI
+
+    root = repo_root()
+    agent_cli = AgentSystemCLI(root)
+
+    if ns.agent_action == 'daily':
+        result = agent_cli.run_daily_analysis()
+        agent_cli.print_analysis_summary(result)
+    elif ns.agent_action == 'board-report':
+        report = agent_cli.generate_board_report()
+        print("\n📊 董事会报告:")
+        print(f"报告日期: {report['report_date']}")
+        print(f"投资组合: {report['portfolio_summary']}")
+        print(f"市场观点: {report['market_assessment']}")
+        print(f"风险状况: {report['risk_analysis']}")
+        print(f"展望: {report['outlook']}")
+    elif ns.agent_action == 'recommend':
+        recommendations = agent_cli.get_investment_recommendations()
+        print(f"\n💡 投资建议 ({len(recommendations['recommendations'])} 条):")
+        for i, rec in enumerate(recommendations['recommendations'], 1):
+            print(f"{i}. {rec.symbol}: {rec.action} (目标: {rec.target_allocation:.1%})")
+            print(f"   推理: {rec.reasoning}")
+            print(f"   信心: {rec.confidence:.1%}, 风险: {rec.risk_level}")
+    elif ns.agent_action == 'risk':
+        risk_result = agent_cli.assess_portfolio_risk()
+        if risk_result['risk_assessment']:
+            risk = risk_result['risk_assessment']
+            print(f"\n⚠️  风险评估结果:")
+            print(f"整体风险: {risk.get('overall_risk_level', '未知')}")
+            print(f"风险指标: {risk.get('risk_metrics', {})}")
+            alerts = risk.get('risk_alerts', [])
+            if alerts:
+                print(f"风险警报 ({len(alerts)} 个):")
+                for alert in alerts:
+                    print(f"  - {alert.description} (严重性: {alert.severity})")
+    else:
+        print("请指定有效的agent操作: daily, board-report, recommend, risk")
+
     return 0
 
