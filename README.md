@@ -136,6 +136,12 @@ Claude会根据您的需求自动选择合适的专业角色：
 
 ### 核心命令
 ```bash
+# 数据可靠性检查 (开发前必须运行)
+python scripts/data_reliability_check.py
+
+# 数据状态检查
+python -m trading_os agent status
+
 # 市场分析
 python .claude/skills/market-analysis/scripts/market_analysis.py
 
@@ -199,6 +205,7 @@ python -m trading_os draft-review --events artifacts/paper/events_NASDAQ_AAPL.js
 - **不构成投资建议**: 本系统仅用于研究与工程实践
 - **风险自担**: 实盘前必须在纸交易中验证稳定性
 - **严格风控**: 设置适当的风险限制和止损机制
+- **数据可靠性**: 系统严格禁止使用模拟数据进行投资分析，详见 [数据可靠性标准](docs/DATA_RELIABILITY_STANDARDS.md)
 
 ## 📚 文档结构
 
