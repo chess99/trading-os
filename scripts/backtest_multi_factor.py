@@ -24,6 +24,7 @@ from trading_os.backtest.multi_factor_strategy import (
     MultiFactorBacktest,
 )
 from trading_os.paths import repo_root
+from trading_os.visualization.charts import create_backtest_report
 
 
 def load_historical_data(
@@ -250,6 +251,18 @@ def main():
             trades_file = output_dir / f"{timestamp}_trades.csv"
             results['trades'].to_csv(trades_file, index=False)
             print(f"💾 交易记录已保存: {trades_file}")
+
+        # 生成可视化报告
+        print(f"\n📊 生成可视化报告...")
+        try:
+            create_backtest_report(
+                results,
+                output_dir,
+                report_name=timestamp
+            )
+        except Exception as e:
+            print(f"⚠️  生成可视化报告失败: {e}")
+            print("提示: 需要安装matplotlib: pip install matplotlib")
 
         print("\n✅ 回测完成!")
 
