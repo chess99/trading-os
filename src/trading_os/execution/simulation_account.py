@@ -212,9 +212,11 @@ class SimulationAccount:
         if quantity % 100 != 0:
             logger.warning(f"买入数量必须是100的整数倍: {quantity}")
             quantity = int(quantity / 100) * 100
-            if quantity == 0:
-                logger.error("买入数量不足100股")
-                return None
+
+        # 数量为0时直接返回
+        if quantity == 0:
+            logger.error("买入数量不足100股")
+            return None
 
         # 计算交易金额和手续费
         amount = quantity * price
