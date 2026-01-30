@@ -17,6 +17,7 @@ import numpy as np
 
 from ..data.lake import LocalDataLake
 from ..data.schema import parse_symbol
+from ..data.sources.realtime_price import get_realtime_price
 
 logger = logging.getLogger(__name__)
 
@@ -74,11 +75,18 @@ class MarketAnalyzer:
     4. 风险因素识别
     """
 
-    def __init__(self, data_dir: Path):
-        """初始化市场分析器"""
+    def __init__(self, data_dir: Path, use_realtime: bool = True):
+        """
+        初始化市场分析器
+
+        Args:
+            data_dir: 数据目录
+            use_realtime: 是否使用实时价格(默认True)
+        """
         self.data_dir = data_dir
         self.lake = LocalDataLake(data_dir)
-        logger.info("市场分析器初始化完成")
+        self.use_realtime = use_realtime
+        logger.info(f"市场分析器初始化完成 (实时价格: {use_realtime})")
 
     def analyze_market(self, days: int = 60) -> MarketAnalysisReport:
         """
@@ -160,7 +168,21 @@ class MarketAnalyzer:
             close_prices = bars['close'].values
             volumes = bars['volume'].values
 
-            current_price = float(close_prices[-1])
+            # 获取当前价格
+            if self.use_realtime:
+                try:
+                    realtime_price = get_realtime_price(symbol)
+                    if realtime_price is not None:
+                        current_price = float(realtime_price)
+                        logger.info(f"{symbol} 使用实时价格: {current_price:.2f}")
+                    else:
+                        current_price = float(close_prices[-1])
+                        logger.warning(f"{symbol} 实时价格获取失败,使用历史价格: {current_price:.2f}")
+                except Exception as e:
+                    logger.warning(f"{symbol} 实时价格获取异常: {e},使用历史价格")
+                    current_price = float(close_prices[-1])
+            else:
+                current_price = float(close_prices[-1])
 
             # 计算涨跌幅
             change_1d = (close_prices[-1] / close_prices[-2] - 1) if len(close_prices) > 1 else 0

@@ -13,25 +13,24 @@ repo_root = Path(__file__).parent.parent
 sys.path.insert(0, str(repo_root / "src"))
 
 from trading_os.execution.account_manager import get_default_simulation_account
-from trading_os.data.lake import LocalDataLake
-from trading_os.data.schema import parse_symbol
+from trading_os.data.sources.realtime_price import get_realtime_prices
 
 
-def get_latest_prices(lake: LocalDataLake, symbols: list) -> dict:
-    """获取最新价格"""
-    prices = {}
+def get_latest_prices(symbols: list) -> dict:
+    """
+    获取最新价格
 
-    for symbol_str in symbols:
-        try:
-            symbol = parse_symbol(symbol_str)
-            bars = lake.query_bars(symbols=[symbol_str], limit=1)
-            if not bars.empty:
-                prices[symbol_str] = float(bars.iloc[-1]['close'])
-        except Exception as e:
-            print(f"警告: 无法获取 {symbol_str} 的价格: {e}")
-            prices[symbol_str] = 0.0
+    优先使用实时价格,确保显示的盈亏准确
+    """
+    try:
+        prices = get_realtime_prices(symbols)
+        if prices:
+            return prices
+    except Exception as e:
+        print(f"警告: 获取实时价格失败: {e}")
 
-    return prices
+    # 降级方案: 返回空字典
+    return {symbol: 0.0 for symbol in symbols}
 
 
 def main():
@@ -52,9 +51,8 @@ def main():
 
     # 获取最新价格
     if positions:
-        lake = LocalDataLake(Path("data"))
         symbols = list(positions.keys())
-        prices = get_latest_prices(lake, symbols)
+        prices = get_latest_prices(symbols)
     else:
         prices = {}
 

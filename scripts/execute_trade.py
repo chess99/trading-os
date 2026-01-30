@@ -14,16 +14,19 @@ sys.path.insert(0, str(repo_root / "src"))
 
 from trading_os.execution.account_manager import get_default_simulation_account
 from trading_os.decision import get_default_decision_logger, DecisionType, DecisionStatus
-from trading_os.data.lake import LocalDataLake
+from trading_os.data.sources.realtime_price import get_realtime_price
 
 
 def get_latest_price(symbol: str) -> float:
-    """获取最新价格"""
-    lake = LocalDataLake(Path("data"))
-    bars = lake.query_bars(symbols=[symbol], limit=1)
-    if bars.empty:
-        raise ValueError(f"无法获取 {symbol} 的价格")
-    return float(bars.iloc[-1]['close'])
+    """
+    获取最新价格
+
+    使用实时行情接口获取最新价格,确保交易价格准确
+    """
+    price = get_realtime_price(symbol)
+    if price is None:
+        raise ValueError(f"无法获取 {symbol} 的实时价格")
+    return price
 
 
 def execute_buy_decision(
