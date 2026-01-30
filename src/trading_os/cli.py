@@ -57,6 +57,61 @@ def _cmd_fetch_yf(ns: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_fetch_ak(ns: argparse.Namespace) -> int:
+    """从akshare获取A股数据"""
+    from .data.lake import LocalDataLake
+    from .data.schema import Adjustment, Exchange, Timeframe
+    from .data.sources.akshare_source import fetch_daily_bars
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+
+    exch = Exchange(ns.exchange)
+    tf = Timeframe.D1
+
+    # 处理复权类型
+    if ns.adjustment == "qfq":
+        adj = Adjustment.QFQ
+    elif ns.adjustment == "hfq":
+        adj = Adjustment.HFQ
+    else:
+        adj = Adjustment.NONE
+
+    try:
+        print(f"📊 获取A股数据: {exch.value}:{ns.ticker} (复权: {adj.value})")
+
+        df = fetch_daily_bars(
+            ns.ticker,
+            exchange=exch,
+            start=ns.start,
+            end=ns.end,
+            adjustment=adj
+        )
+
+        if df.empty:
+            print("❌ 未获取到数据")
+            return 1
+
+        lake.write_bars_parquet(
+            df,
+            exchange=exch,
+            timeframe=tf,
+            adjustment=adj,
+            source="akshare",
+            partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+        )
+        lake.init()
+
+        print(f"✅ 成功写入 {len(df)} 条记录: {exch.value}:{ns.ticker}")
+        print(f"📈 数据范围: {df['ts'].min().date()} 至 {df['ts'].max().date()}")
+
+        return 0
+
+    except Exception as e:
+        print(f"❌ 获取A股数据失败: {e}")
+        return 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="trading_os", description="Trading OS CLI")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -73,6 +128,14 @@ def main(argv: list[str] | None = None) -> int:
     p_yf.add_argument("--start", default=None, help="Start date (YYYY-MM-DD)")
     p_yf.add_argument("--end", default=None, help="End date (YYYY-MM-DD)")
     p_yf.set_defaults(func=_cmd_fetch_yf)
+
+    p_ak = sub.add_parser("fetch-ak", help="从akshare获取A股数据")
+    p_ak.add_argument("--exchange", required=True, choices=["SSE", "SZSE"], help="交易所 (SSE/SZSE)")
+    p_ak.add_argument("--ticker", required=True, help="股票代码 (6位数字)")
+    p_ak.add_argument("--start", default=None, help="开始日期 YYYY-MM-DD")
+    p_ak.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD")
+    p_ak.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="none", help="复权类型")
+    p_ak.set_defaults(func=_cmd_fetch_ak)
 
     p_seed = sub.add_parser("seed", help="Seed synthetic daily bars into the lake (offline)")
     p_seed.add_argument("--exchange", required=True, help="Exchange code, e.g. NASDAQ")

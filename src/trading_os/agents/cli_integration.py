@@ -94,8 +94,8 @@ class AgentSystemCLI:
             from ..data.lake import LocalDataLake
             lake = LocalDataLake(self.repo_root / "data")
 
-            # 获取主要股票的最新价格
-            symbols = ["NASDAQ:AAPL", "NASDAQ:MSFT", "NASDAQ:GOOGL"]
+            # 获取主要股票的最新价格 - 切换到A股
+            symbols = ["SSE:600000", "SZSE:000001", "SSE:600036"]  # 浦发银行、平安银行、招商银行
             market_data = {"prices": {}}
 
             for symbol in symbols:
@@ -149,9 +149,9 @@ class AgentSystemCLI:
         # 模拟投资组合状态（实际应该从投资组合管理系统获取）
         mock_portfolio = {
             "positions": {
-                "AAPL": 0.25,
-                "MSFT": 0.20,
-                "GOOGL": 0.15
+                "600000": 0.25,  # 浦发银行
+                "000001": 0.20,  # 平安银行
+                "600036": 0.15   # 招商银行
             },
             "cash_position": 0.40,
             "total_value": 1000000
@@ -162,7 +162,7 @@ class AgentSystemCLI:
             # 基于真实数据计算波动率
             risk_metrics = {"individual_volatilities": {}}
 
-            for symbol in ["NASDAQ:AAPL", "NASDAQ:MSFT", "NASDAQ:GOOGL"]:
+            for symbol in ["SSE:600000", "SZSE:000001", "SSE:600036"]:
                 try:
                     bars = lake.query_bars(symbols=[symbol])
                     if len(bars) > 10:  # 需要足够的数据点

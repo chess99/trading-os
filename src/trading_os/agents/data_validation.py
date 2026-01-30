@@ -104,8 +104,8 @@ class DataIntegrityChecker:
             from ..data.lake import LocalDataLake
             lake = LocalDataLake(self.repo_root / "data")
 
-            # 检查主要股票数据
-            required_symbols = ["NASDAQ:AAPL", "NASDAQ:MSFT", "NASDAQ:GOOGL"]
+            # 检查主要股票数据 - A股
+            required_symbols = ["SSE:600000", "SZSE:000001", "SSE:600036"]
             status = {
                 "data_lake_available": True,
                 "symbols_status": {},
