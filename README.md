@@ -2,6 +2,8 @@
 
 这是一套基于**Claude Code**构建的专业基金管理AI系统，将trading-os转变为一个完整的基金公司，其中Claude扮演专业基金经理角色，具备自主分析、决策和执行能力。
 
+> 📋 **重要**: 请先阅读 [TRADING_OS_CHARTER.md](./TRADING_OS_CHARTER.md) 了解系统核心理念和工作方式
+
 ## 🎯 系统概述
 
 ### 核心特性
