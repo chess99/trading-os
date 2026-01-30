@@ -228,6 +228,11 @@ def main(argv: list[str] | None = None) -> int:
     p_status = agent_sub.add_parser("status", help="检查数据湖状态")
     p_status.set_defaults(func=_cmd_agent)
 
+    p_screen = agent_sub.add_parser("screen", help="股票筛选和投资组合分析")
+    p_screen.add_argument("--style", choices=["value", "growth", "garp"], default="garp", help="投资风格")
+    p_screen.add_argument("--risk", choices=["conservative", "moderate", "aggressive"], default="moderate", help="风险等级")
+    p_screen.set_defaults(func=_cmd_agent)
+
     ns = parser.parse_args(argv)
     func = getattr(ns, "func", None)
     if not callable(func):
@@ -531,8 +536,58 @@ def _cmd_agent(ns: argparse.Namespace) -> int:
         checker = DataIntegrityChecker(root)
         report = checker.generate_data_status_report()
         print(report)
+    elif ns.agent_action == 'screen':
+        from .research.stock_screener import StockScreener, ScreeningCriteria, InvestmentStyle
+        from .research.portfolio_manager import PortfolioManager, RiskLevel
+
+        # 解析参数
+        style_map = {
+            "value": InvestmentStyle.VALUE,
+            "growth": InvestmentStyle.GROWTH,
+            "garp": InvestmentStyle.GARP
+        }
+        risk_map = {
+            "conservative": RiskLevel.CONSERVATIVE,
+            "moderate": RiskLevel.MODERATE,
+            "aggressive": RiskLevel.AGGRESSIVE
+        }
+
+        investment_style = style_map.get(ns.style, InvestmentStyle.GARP)
+        risk_level = risk_map.get(ns.risk, RiskLevel.MODERATE)
+
+        print(f"🔍 股票筛选分析")
+        print(f"投资风格: {investment_style.value}")
+        print(f"风险等级: {risk_level.value}")
+        print("-" * 50)
+
+        # 初始化筛选器
+        screener = StockScreener()
+        screener.load_stock_universe()
+
+        # 根据风险等级创建筛选条件
+        portfolio_manager = PortfolioManager()
+        criteria = portfolio_manager._get_screening_criteria_by_risk(risk_level)
+        criteria.investment_style = investment_style
+
+        # 执行筛选
+        selected_stocks = screener.screen_stocks(criteria)
+
+        # 显示结果
+        print(f"\n📊 筛选结果: {len(selected_stocks)} 只股票")
+        print("\n前10只推荐股票:")
+        for i, stock in enumerate(selected_stocks[:10], 1):
+            print(f"{i:2d}. {stock.symbol} {stock.name}")
+            print(f"     行业: {stock.industry.value}, PE: {stock.pe_ratio:.1f}, ROE: {stock.roe:.1%}")
+
+        # 显示行业分布
+        report = screener.get_screening_report()
+        if report.get("industry_distribution"):
+            print(f"\n🏭 行业分布:")
+            for industry, count in report["industry_distribution"].items():
+                print(f"  {industry}: {count} 只")
+
     else:
-        print("请指定有效的agent操作: daily, board-report, recommend, risk, status")
+        print("请指定有效的agent操作: daily, board-report, recommend, risk, status, screen")
 
     return 0
 

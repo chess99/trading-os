@@ -90,31 +90,65 @@ class AgentSystemCLI:
     def _build_analysis_context(self) -> AgentContext:
         """构建分析上下文"""
         try:
-            # 从数据湖获取真实市场数据
+            # 使用动态股票筛选替代硬编码股票
+            from ..research.portfolio_manager import PortfolioManager, RiskLevel
+            from ..research.stock_screener import InvestmentStyle
             from ..data.lake import LocalDataLake
-            lake = LocalDataLake(self.repo_root / "data")
 
-            # 获取主要股票的最新价格 - 切换到A股
-            symbols = ["SSE:600000", "SZSE:000001", "SSE:600036"]  # 浦发银行、平安银行、招商银行
+            # 初始化投资组合管理器
+            portfolio_manager = PortfolioManager()
+            portfolio_manager.initialize_portfolio(RiskLevel.MODERATE)
+
+            # 获取当前投资组合摘要
+            portfolio_summary = portfolio_manager.get_portfolio_summary()
+
+            # 从投资组合中获取市场数据
+            lake = LocalDataLake(self.repo_root / "data")
             market_data = {"prices": {}}
 
-            for symbol in symbols:
-                try:
-                    bars = lake.query_bars(symbols=[symbol])
-                    if not bars.empty:
-                        latest = bars.iloc[-1]
-                        prev_close = bars.iloc[-2]['close'] if len(bars) > 1 else latest['close']
-                        change_pct = (latest['close'] - prev_close) / prev_close
+            # 获取投资组合中股票的价格数据
+            if portfolio_summary.get("top_positions"):
+                for position in portfolio_summary["top_positions"]:
+                    symbol = position["symbol"]
+                    try:
+                        bars = lake.query_bars(symbols=[symbol])
+                        if not bars.empty:
+                            latest = bars.iloc[-1]
+                            prev_close = bars.iloc[-2]['close'] if len(bars) > 1 else latest['close']
+                            change_pct = (latest['close'] - prev_close) / prev_close
 
-                        ticker = symbol.split(':')[1]
-                        market_data["prices"][ticker] = {
-                            "current_price": float(latest['close']),
-                            "change_pct": float(change_pct),
-                            "volume": float(latest['volume']),
-                            "timestamp": str(latest['ts'])
-                        }
-                except Exception as e:
-                    print(f"警告: 无法获取 {symbol} 数据: {e}")
+                            ticker = symbol.split(':')[1]
+                            market_data["prices"][ticker] = {
+                                "current_price": float(latest['close']),
+                                "change_pct": float(change_pct),
+                                "volume": float(latest['volume']),
+                                "timestamp": str(latest['ts']),
+                                "weight": position["weight"],
+                                "pnl_ratio": position["pnl_ratio"]
+                            }
+                    except Exception as e:
+                        print(f"警告: 无法获取 {symbol} 数据: {e}")
+
+            # 如果投资组合为空，回退到默认股票
+            if not market_data["prices"]:
+                default_symbols = ["SSE:600000", "SZSE:000001", "SSE:600036"]
+                for symbol in default_symbols:
+                    try:
+                        bars = lake.query_bars(symbols=[symbol])
+                        if not bars.empty:
+                            latest = bars.iloc[-1]
+                            prev_close = bars.iloc[-2]['close'] if len(bars) > 1 else latest['close']
+                            change_pct = (latest['close'] - prev_close) / prev_close
+
+                            ticker = symbol.split(':')[1]
+                            market_data["prices"][ticker] = {
+                                "current_price": float(latest['close']),
+                                "change_pct": float(change_pct),
+                                "volume": float(latest['volume']),
+                                "timestamp": str(latest['ts'])
+                            }
+                    except Exception as e:
+                        print(f"警告: 无法获取 {symbol} 数据: {e}")
 
             # 计算市场指标
             if market_data["prices"]:
@@ -146,16 +180,30 @@ class AgentSystemCLI:
             print("3. 如需添加数据：python -m trading_os seed --exchange NASDAQ --ticker AAPL")
             raise RuntimeError(f"市场数据获取失败，无法进行分析: {e}") from e
 
-        # 模拟投资组合状态（实际应该从投资组合管理系统获取）
-        mock_portfolio = {
-            "positions": {
-                "600000": 0.25,  # 浦发银行
-                "000001": 0.20,  # 平安银行
-                "600036": 0.15   # 招商银行
-            },
+        # 使用真实投资组合状态
+        portfolio_state = {
+            "positions": {},
             "cash_position": 0.40,
             "total_value": 1000000
         }
+
+        # 从投资组合摘要中提取持仓信息
+        if portfolio_summary.get("top_positions"):
+            for position in portfolio_summary["top_positions"]:
+                ticker = position["symbol"].split(':')[1]
+                portfolio_state["positions"][ticker] = position["weight"]
+
+            # 更新组合总价值和现金比例
+            if portfolio_summary.get("overview"):
+                portfolio_state["total_value"] = portfolio_summary["overview"]["total_value"]
+                portfolio_state["cash_position"] = portfolio_summary["overview"]["cash_ratio"]
+        else:
+            # 如果没有投资组合，使用默认配置
+            portfolio_state["positions"] = {
+                "600000": 0.25,  # 浦发银行
+                "000001": 0.20,  # 平安银行
+                "600036": 0.15   # 招商银行
+            }
 
         # 计算真实的风险指标
         try:
@@ -189,9 +237,14 @@ class AgentSystemCLI:
         context = AgentContext(
             timestamp=datetime.now(),
             market_data=market_data,
-            portfolio_state=mock_portfolio,
+            portfolio_state=portfolio_state,
             risk_metrics=risk_metrics,
-            metadata={"data_integration_status": "enhanced_with_real_data"}
+            metadata={
+                "data_integration_status": "enhanced_with_dynamic_portfolio",
+                "portfolio_summary": portfolio_summary,
+                "investment_style": "GARP",  # Growth at Reasonable Price
+                "screening_enabled": True
+            }
         )
 
         # 验证数据质量
