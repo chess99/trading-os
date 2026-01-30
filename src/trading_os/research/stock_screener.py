@@ -1,7 +1,8 @@
 """
 股票筛选器 - 基于真实基金公司运作方式
 
-实现多因子股票筛选，替代硬编码股票列表
+实现多因子股票筛选，使用真实数据源
+严格禁止使用模拟数据和硬编码!
 """
 
 from typing import Dict, List, Any, Optional
@@ -11,6 +12,9 @@ import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
 import logging
+from pathlib import Path
+
+from ..data.sources.akshare_factors import AkshareFactorSource
 
 logger = logging.getLogger(__name__)
 
@@ -122,12 +126,28 @@ class ScreeningCriteria:
 
 
 class StockScreener:
-    """股票筛选器"""
+    """
+    股票筛选器
 
-    def __init__(self, data_source=None):
+    使用真实数据源进行多因子筛选
+    """
+
+    def __init__(self, data_source: Optional[AkshareFactorSource] = None):
+        """
+        初始化筛选器
+
+        Args:
+            data_source: 数据源,如果为None则创建默认数据源
+        """
+        if data_source is None:
+            from ..data.sources.akshare_factors import get_default_factor_source
+            data_source = get_default_factor_source()
+
         self.data_source = data_source
         self.stock_universe: List[StockFactor] = []
         self.screening_results: Dict[str, Any] = {}
+
+        logger.info("股票筛选器初始化完成 (使用真实数据源)")
 
     def load_stock_universe(self, symbols: List[str] = None) -> None:
         """加载股票池"""
@@ -170,116 +190,171 @@ class StockScreener:
         return final_stocks
 
     def _get_default_stock_universe(self) -> List[str]:
-        """获取默认股票池"""
-        # 模拟A股主要股票池（实际应该从数据源获取）
-        default_universe = [
-            # 银行
-            "SSE:600000", "SSE:600036", "SSE:601398", "SSE:601939", "SSE:601288",
-            "SZSE:000001", "SZSE:000002", "SZSE:002142",
+        """
+        获取默认股票池
 
-            # 保险
-            "SSE:601318", "SSE:601601", "SSE:601628",
+        从数据源获取A股全市场股票,进行初步筛选
 
-            # 证券
-            "SSE:600030", "SSE:600837", "SZSE:000166",
+        Returns:
+            符合条件的股票代码列表(格式: 交易所:代码,如SSE:600000)
+        """
+        try:
+            logger.info("从数据源获取A股股票池...")
 
-            # 白酒
-            "SSE:600519", "SZSE:000858", "SSE:600809",
+            # 获取A股列表
+            df = self.data_source.get_a_stock_list()
 
-            # 科技
-            "SZSE:000063", "SZSE:002415", "SZSE:300059",
+            # 基础筛选
+            # 1. 排除ST、*ST股票
+            df = df[~df['name'].str.contains('ST', na=False)]
 
-            # 医药
-            "SZSE:000661", "SSE:600276", "SZSE:300015",
+            # 2. 排除退市股票
+            df = df[~df['name'].str.contains('退', na=False)]
 
-            # 新能源
-            "SZSE:300750", "SSE:600885", "SZSE:002594",
+            # 3. 只保留主板、创业板、科创板
+            df = df[df['market'].isin(['沪市主板', '深市主板', '创业板', '科创板'])]
 
-            # 消费
-            "SZSE:000895", "SSE:600887", "SZSE:002304"
-        ]
+            # 格式化为标准格式
+            symbols = [
+                f"{row['exchange']}:{row['symbol']}"
+                for _, row in df.iterrows()
+            ]
 
-        return default_universe
+            logger.info(f"获取到 {len(symbols)} 只符合条件的A股股票")
+            return symbols
+
+        except Exception as e:
+            logger.error(f"获取股票池失败: {e}")
+            # 如果获取失败,抛出异常而不是返回硬编码列表
+            raise RuntimeError(f"无法获取股票池: {e}") from e
 
     def _calculate_stock_factors(self, symbol: str) -> Optional[StockFactor]:
-        """计算单只股票的因子数据"""
-        try:
-            # 这里应该从数据源获取真实数据
-            # 目前返回模拟数据用于演示
+        """
+        计算单只股票的因子数据
 
+        从真实数据源获取所有因子数据
+
+        Args:
+            symbol: 股票代码,格式如SSE:600000
+
+        Returns:
+            StockFactor对象,如果获取失败返回None
+        """
+        try:
             # 解析symbol
             exchange, ticker = symbol.split(':')
 
-            # 模拟因子数据
+            logger.debug(f"获取 {symbol} 的因子数据...")
+
+            # 从数据源获取完整因子数据
+            factors_data = self.data_source.get_complete_stock_factors(ticker)
+
+            # 转换行业分类
+            industry = self._map_industry(factors_data.get('industry', '未知'))
+
+            # 创建StockFactor对象
             factor = StockFactor(
                 symbol=symbol,
-                name=self._get_stock_name(ticker),
-                industry=self._get_industry(ticker),
+                name=factors_data['name'],
+                industry=industry,
 
-                # 模拟估值因子
-                pe_ratio=np.random.uniform(5, 50),
-                pb_ratio=np.random.uniform(0.5, 5),
-                ps_ratio=np.random.uniform(0.5, 10),
-                ev_ebitda=np.random.uniform(3, 30),
+                # 估值因子
+                pe_ratio=factors_data.get('pe_ratio', 0),
+                pb_ratio=factors_data.get('pb_ratio', 0),
+                ps_ratio=factors_data.get('ps_ratio', 0),
+                ev_ebitda=0,  # 需要单独计算
 
-                # 模拟成长因子
-                revenue_growth=np.random.uniform(-0.2, 0.5),
-                profit_growth=np.random.uniform(-0.3, 0.8),
-                roe_growth=np.random.uniform(-0.5, 1.0),
+                # 成长因子
+                revenue_growth=factors_data.get('revenue_growth', 0),
+                profit_growth=factors_data.get('profit_growth', 0),
+                roe_growth=0,  # 需要对比历史数据
 
-                # 模拟质量因子
-                roe=np.random.uniform(0.02, 0.25),
-                roa=np.random.uniform(0.01, 0.15),
-                gross_margin=np.random.uniform(0.1, 0.6),
-                debt_ratio=np.random.uniform(0.2, 0.8),
+                # 质量因子
+                roe=factors_data.get('roe', 0),
+                roa=factors_data.get('roa', 0),
+                gross_margin=factors_data.get('gross_margin', 0),
+                debt_ratio=factors_data.get('debt_ratio', 0),
 
-                # 模拟技术因子
-                momentum_1m=np.random.uniform(-0.2, 0.2),
-                momentum_3m=np.random.uniform(-0.4, 0.4),
-                momentum_6m=np.random.uniform(-0.6, 0.6),
-                volatility=np.random.uniform(0.15, 0.45),
-                turnover_rate=np.random.uniform(0.5, 5.0),
+                # 技术因子
+                momentum_1m=factors_data.get('momentum_1m', 0),
+                momentum_3m=factors_data.get('momentum_3m', 0),
+                momentum_6m=factors_data.get('momentum_6m', 0),
+                volatility=factors_data.get('volatility', 0),
+                turnover_rate=factors_data.get('turnover_rate', 0),
 
-                # 模拟市值因子
-                market_cap=np.random.uniform(50e8, 2000e8),
-                float_market_cap=np.random.uniform(30e8, 1500e8),
+                # 市值因子
+                market_cap=factors_data.get('market_cap', 0),
+                float_market_cap=factors_data.get('float_market_cap', 0),
 
-                # 模拟流动性因子
-                avg_volume=np.random.uniform(1e6, 1e8),
-                avg_amount=np.random.uniform(1e7, 1e9),
+                # 流动性因子
+                avg_volume=factors_data.get('avg_volume', 0),
+                avg_amount=factors_data.get('avg_amount', 0),
 
                 last_update=datetime.now()
             )
 
+            logger.debug(f"成功获取 {symbol} 因子数据")
             return factor
 
         except Exception as e:
-            logger.error(f"计算 {symbol} 因子失败: {e}")
+            logger.warning(f"获取 {symbol} 因子数据失败: {e}")
             return None
 
-    def _get_stock_name(self, ticker: str) -> str:
-        """获取股票名称"""
-        name_map = {
-            "600000": "浦发银行",
-            "600036": "招商银行",
-            "601398": "工商银行",
-            "000001": "平安银行",
-            "600519": "贵州茅台",
-            "000858": "五粮液"
-        }
-        return name_map.get(ticker, f"股票{ticker}")
+    def _map_industry(self, industry_name: str) -> Industry:
+        """
+        映射行业分类
 
-    def _get_industry(self, ticker: str) -> Industry:
-        """获取股票行业"""
-        industry_map = {
-            "600000": Industry.BANKING,
-            "600036": Industry.BANKING,
-            "601398": Industry.BANKING,
-            "000001": Industry.BANKING,
-            "600519": Industry.FOOD_BEVERAGE,
-            "000858": Industry.FOOD_BEVERAGE
+        将akshare的行业分类映射到系统的Industry枚举
+
+        Args:
+            industry_name: akshare返回的行业名称
+
+        Returns:
+            Industry枚举值
+        """
+        # 行业映射表
+        industry_mapping = {
+            '银行': Industry.BANKING,
+            '保险': Industry.INSURANCE,
+            '证券': Industry.SECURITIES,
+            '房地产': Industry.REAL_ESTATE,
+            '建筑': Industry.CONSTRUCTION,
+            '钢铁': Industry.STEEL,
+            '煤炭': Industry.COAL,
+            '石油': Industry.PETROCHEMICAL,
+            '化工': Industry.PETROCHEMICAL,
+            '电力': Industry.POWER,
+            '交通': Industry.TRANSPORTATION,
+            '运输': Industry.TRANSPORTATION,
+            '零售': Industry.RETAIL,
+            '商业': Industry.RETAIL,
+            '食品': Industry.FOOD_BEVERAGE,
+            '饮料': Industry.FOOD_BEVERAGE,
+            '白酒': Industry.FOOD_BEVERAGE,
+            '纺织': Industry.TEXTILE,
+            '医药': Industry.MEDICINE,
+            '生物': Industry.MEDICINE,
+            '电子': Industry.ELECTRONICS,
+            '计算机': Industry.COMPUTER,
+            '软件': Industry.COMPUTER,
+            '通信': Industry.COMMUNICATIONS,
+            '汽车': Industry.AUTO,
+            '机械': Industry.MACHINERY,
+            '航空': Industry.AEROSPACE,
+            '新能源': Industry.NEW_ENERGY,
+            '光伏': Industry.NEW_ENERGY,
+            '锂电': Industry.NEW_ENERGY,
+            '环保': Industry.ENVIRONMENTAL,
         }
-        return industry_map.get(ticker, Industry.BANKING)
+
+        # 查找匹配的行业
+        for key, value in industry_mapping.items():
+            if key in industry_name:
+                return value
+
+        # 默认返回银行(最保守的分类)
+        logger.debug(f"未知行业分类: {industry_name}, 使用默认值")
+        return Industry.BANKING
 
     def _apply_basic_filters(self, criteria: ScreeningCriteria) -> List[StockFactor]:
         """应用基础筛选条件"""
