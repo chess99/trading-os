@@ -272,9 +272,35 @@ class PortfolioManager:
             logger.error(f"买入 {symbol} 失败: {e}")
 
     def _get_current_price(self, symbol: str) -> float:
-        """获取当前价格（模拟）"""
-        # 实际应该从数据源获取
-        return np.random.uniform(8, 50)
+        """
+        获取当前价格（从数据湖）
+
+        ⚠️ 严格禁止使用模拟数据！
+        """
+        from ..data.lake import LocalDataLake
+        from pathlib import Path
+
+        try:
+            lake = LocalDataLake(Path("data"))
+            bars = lake.query_bars(symbols=[symbol], limit=1)
+
+            if bars.empty:
+                raise ValueError(f"数据湖中没有 {symbol} 的数据")
+
+            price = float(bars.iloc[-1]['close'])
+
+            if price <= 0:
+                raise ValueError(f"{symbol} 价格无效: {price}")
+
+            logger.debug(f"获取 {symbol} 价格: {price:.2f}")
+            return price
+
+        except Exception as e:
+            # 数据获取失败时必须抛出异常，绝不降级到模拟数据
+            raise RuntimeError(
+                f"无法获取 {symbol} 的真实价格: {e}。"
+                f"系统不允许使用模拟数据进行投资分析。"
+            ) from e
 
     def _get_stock_factor(self, symbol: str) -> Optional[StockFactor]:
         """获取股票因子"""
