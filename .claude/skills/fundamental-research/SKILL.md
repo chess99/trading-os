@@ -866,16 +866,36 @@ print(cashflow[['报告期','经营活动现金流量净额','资本支出']].he
 
 ## Trading OS 集成
 
-```bash
-# 获取历史行情（配合估值分析）
-python -m trading_os query-bars --symbols SSE:600000 --adjustment qfq --limit 252
+**财务数据（BaoStock，免费，国内直连）**：
 
-# 研究完成后，如果决定建仓，运行技术面确认
-# 说："用三重滤网分析 600000 的入场时机"
+```python
+from trading_os.data.sources.fundamental_source import get_financial_summary
 
-# 建仓后，用 position-monitor 追踪逻辑止损条件
-# 在持仓备注中记录"逻辑止损条件"，而不是价格止损线
+# 获取财务摘要（自动格式化，可直接插入分析）
+data = get_financial_summary("SSE:600519", years=5)
+print(data["summary_text"])  # 盈利能力、成长能力、偿债能力历史表格
+
+# 也可以访问原始数据
+for q in data["profitability"][:4]:  # 最近4个季度
+    print(q["period"], q["roe"], q["net_margin"])
 ```
+
+覆盖指标：
+- 盈利能力：ROE、净利率、毛利率、净利润、EPS(TTM)
+- 成长能力：净利润同比增速、EPS增速、净资产增速
+- 偿债能力：资产负债率、流动比率、权益乘数
+
+**行情数据（配合估值分析）**：
+
+```bash
+python -m trading_os query-bars --symbols SSE:600000 --adjustment qfq --limit 252
+```
+
+**完整研究流程**：
+1. `get_financial_summary("SSE:600519")` — 获取财务数据
+2. `query-bars` — 获取行情数据（计算历史 PE/PB）
+3. 运行 fundamental-research 分析（LLM 结合两类数据）
+4. 研究完成后，说"用三重滤网分析入场时机" → 触发 elder-screen
 
 研究报告建议保存到 `artifacts/research/{股票代码}_{日期}.md`，
 供后续定期复查（建议每季度更新一次，检查逻辑止损条件是否触发）。

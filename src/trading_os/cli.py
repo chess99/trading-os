@@ -164,6 +164,23 @@ def _cmd_query_bars(ns: argparse.Namespace) -> int:
 # Strategy builder (shared)
 # ---------------------------------------------------------------------------
 
+def _cmd_fundamental(ns: argparse.Namespace) -> int:
+    """获取股票财务摘要（BaoStock，免费，无需代理）。"""
+    from .data.sources.fundamental_source import get_financial_summary
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    years = int(ns.years)
+
+    for sym in symbols:
+        data = get_financial_summary(sym, years=years)
+        if data.get("error") and not data.get("profitability"):
+            print(f"获取失败 {sym}: {data['error']}", file=sys.stderr)
+            continue
+        print(data["summary_text"])
+        print()
+    return 0
+
+
 def _build_strategy(ns: argparse.Namespace):
     name = ns.strategy.lower()
     if name in ("ma", "macross"):
@@ -356,6 +373,11 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("lake-init", help="Initialize DuckDB/Parquet data lake")
     p.set_defaults(func=_cmd_lake_init)
+
+    p = sub.add_parser("fundamental", help="获取股票财务摘要（BaoStock，无需代理）")
+    p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:600519,SSE:600000")
+    p.add_argument("--years", type=int, default=5, help="获取最近几年数据（默认5年）")
+    p.set_defaults(func=_cmd_fundamental)
 
     p = sub.add_parser("fetch-bs", help="从BaoStock获取A股日线数据（国内直连，无需代理）")
     p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])
