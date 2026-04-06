@@ -122,7 +122,8 @@ def _build_market_context(
 
         lines.append(f"[{sym}]")
         lines.append(f"  Last Close:  {last_close:.2f}  ({pct_change:+.2f}%)")
-        lines.append(f"  MA5:         {ma5:.2f}  MA20: {ma20:.2f if ma20 == ma20 else 'N/A'}")
+        ma20_str = f"{ma20:.2f}" if ma20 == ma20 else "N/A"
+        lines.append(f"  MA5:         {ma5:.2f}  MA20: {ma20_str}")
         lines.append(f"  RSI(14):     {rsi_val:.1f}" if rsi_val == rsi_val else "  RSI(14):     N/A")
         lines.append(f"  Volume Ratio (vs 5d avg): {vol_ratio:.2f}x")
 
@@ -175,25 +176,68 @@ Output schema (JSON):
 
 @dataclass
 class AgentConfig:
+    """LLM 配置。
+
+    支持两种模式：
+    1. Anthropic 原生（默认）：设置 ANTHROPIC_API_KEY 环境变量
+    2. OpenAI 兼容接口（MiniMax/通义千问等）：设置 api_base_url + api_key
+
+    示例 — MiniMax M2.7：
+        AgentConfig(
+            model="MiniMax-M2.7",
+            api_base_url="https://api.minimaxi.com/v1",
+            api_key="sk-cp-...",
+        )
+    示例 — 通义千问：
+        AgentConfig(
+            model="qwen3-max-2026-01-23",
+            api_base_url="https://coding.dashscope.aliyuncs.com/v1",
+            api_key="sk-sp-...",
+        )
+    示例 — 从环境变量读取：
+        AgentConfig(
+            model="MiniMax-M2.7",
+            api_base_url_env="MINIMAX_BASE_URL",
+            api_key_env="MINIMAX_API_KEY",
+        )
+    """
     model: str = "claude-opus-4-6"
     max_tokens: int = 2048
     confirm_mode: Literal["confirm", "auto"] = "confirm"
-    lookback_display: int = 20   # bars to show in context
+    lookback_display: int = 20
     max_consecutive_failures: int = 3
-    cache_dir: str | None = None  # cache API responses to disk (by date)
+    cache_dir: str | None = None
+
+    # OpenAI 兼容接口配置（直接指定）
+    api_base_url: str | None = None   # 如 "https://api.minimaxi.com/v1"
+    api_key: str | None = None         # 直接传入 key（优先于环境变量）
+
+    # OpenAI 兼容接口配置（从环境变量读取）
+    api_base_url_env: str | None = None  # 环境变量名，如 "MINIMAX_BASE_URL"
+    api_key_env: str | None = None       # 环境变量名，如 "MINIMAX_API_KEY"
+
+    def is_openai_compat(self) -> bool:
+        """是否使用 OpenAI 兼容接口（而非 Anthropic 原生）。"""
+        return bool(
+            self.api_base_url
+            or self.api_base_url_env
+            or self.api_key_env
+        )
 
 
 class AgentStrategy(Strategy):
-    """Strategy driven by Claude API analysis.
+    """Strategy driven by LLM analysis. Supports Claude and any OpenAI-compatible API.
 
-    Usage::
-
+    Usage — Claude (default)::
         strategy = AgentStrategy(AgentConfig(confirm_mode="auto"))
-        runner = BacktestRunner(strategy=strategy, pipeline=pipeline)
-        result = runner.run(symbols=["SSE:600000"], start=..., end=...)
 
-    For backtest over long periods, responses are cached by (symbols, date)
-    to avoid redundant API calls.
+    Usage — MiniMax M2.7::
+        strategy = AgentStrategy(AgentConfig(
+            model="MiniMax-M2.7",
+            api_base_url="https://api.minimaxi.com/v1",
+            api_key="sk-cp-...",
+            confirm_mode="auto",
+        ))
     """
 
     def __init__(self, config: AgentConfig | None = None) -> None:
@@ -204,16 +248,57 @@ class AgentStrategy(Strategy):
     def _get_client(self) -> Any:
         if self._client is not None:
             return self._client
-        try:
-            import anthropic
-        except ImportError as e:
-            raise RuntimeError(
-                "AgentStrategy requires anthropic SDK: pip install anthropic"
-            ) from e
-        api_key = os.environ.get("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise RuntimeError("ANTHROPIC_API_KEY environment variable not set")
-        self._client = anthropic.Anthropic(api_key=api_key)
+
+        cfg = self.config
+
+        if cfg.is_openai_compat():
+            # OpenAI 兼容接口（MiniMax、通义千问等）
+            try:
+                from openai import OpenAI
+            except ImportError as e:
+                raise RuntimeError(
+                    "OpenAI-compatible API requires openai SDK: pip install openai"
+                ) from e
+
+            # 解析 api_key
+            api_key = cfg.api_key
+            if not api_key and cfg.api_key_env:
+                api_key = os.environ.get(cfg.api_key_env)
+            if not api_key:
+                # 尝试通用环境变量
+                api_key = os.environ.get("LLM_API_KEY")
+            if not api_key:
+                raise RuntimeError(
+                    f"API key not found. Set api_key in AgentConfig, "
+                    f"or set environment variable {cfg.api_key_env or 'LLM_API_KEY'}"
+                )
+
+            # 解析 base_url
+            base_url = cfg.api_base_url
+            if not base_url and cfg.api_base_url_env:
+                base_url = os.environ.get(cfg.api_base_url_env)
+            if not base_url:
+                raise RuntimeError(
+                    f"API base URL not found. Set api_base_url in AgentConfig, "
+                    f"or set environment variable {cfg.api_base_url_env or 'LLM_BASE_URL'}"
+                )
+
+            self._client = OpenAI(api_key=api_key, base_url=base_url)
+            log.info("Using OpenAI-compatible API: %s / %s", base_url, cfg.model)
+        else:
+            # Anthropic 原生
+            try:
+                import anthropic
+            except ImportError as e:
+                raise RuntimeError(
+                    "AgentStrategy requires anthropic SDK: pip install anthropic"
+                ) from e
+            api_key = os.environ.get("ANTHROPIC_API_KEY")
+            if not api_key:
+                raise RuntimeError("ANTHROPIC_API_KEY environment variable not set")
+            self._client = anthropic.Anthropic(api_key=api_key)
+            log.info("Using Anthropic API: %s", cfg.model)
+
         return self._client
 
     def generate_signals(
@@ -241,18 +326,31 @@ class AgentStrategy(Strategy):
             f"Generate signals for all {len(symbols)} symbols."
         )
 
-        # Call Claude API
+        # Call LLM API
         try:
             client = self._get_client()
-            response = client.messages.create(
-                model=self.config.model,
-                max_tokens=self.config.max_tokens,
-                system=_SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": user_prompt}],
-            )
-            raw_text = response.content[0].text
+            if self.config.is_openai_compat():
+                # OpenAI 兼容接口（MiniMax、通义千问等）
+                response = client.chat.completions.create(
+                    model=self.config.model,
+                    max_tokens=self.config.max_tokens,
+                    messages=[
+                        {"role": "system", "content": _SYSTEM_PROMPT},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                )
+                raw_text = response.choices[0].message.content or ""
+            else:
+                # Anthropic 原生
+                response = client.messages.create(
+                    model=self.config.model,
+                    max_tokens=self.config.max_tokens,
+                    system=_SYSTEM_PROMPT,
+                    messages=[{"role": "user", "content": user_prompt}],
+                )
+                raw_text = response.content[0].text
         except Exception as e:
-            log.error("Claude API call failed on %s: %s", trading_date, e)
+            log.error("LLM API call failed on %s: %s", trading_date, e)
             self._consecutive_failures += 1
             if self._consecutive_failures >= self.config.max_consecutive_failures:
                 raise RuntimeError(

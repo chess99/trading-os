@@ -14,6 +14,7 @@ Commands:
 from __future__ import annotations
 
 import argparse
+import os
 from datetime import date as date_type
 from datetime import datetime, timezone
 import sys
@@ -177,7 +178,15 @@ def _build_strategy(ns: argparse.Namespace):
     elif name == "agent":
         from .strategy.agent import AgentConfig, AgentStrategy
         confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
+        # 从环境变量读取 LLM 配置（支持 MiniMax/通义千问等 OpenAI 兼容接口）
+        # LLM_MODEL=MiniMax-M2.7 LLM_BASE_URL=https://api.minimaxi.com/v1 LLM_API_KEY=sk-...
+        model = os.environ.get("LLM_MODEL", "claude-opus-4-6")
+        base_url = os.environ.get("LLM_BASE_URL") or None
+        api_key = os.environ.get("LLM_API_KEY") or None
         return AgentStrategy(AgentConfig(
+            model=model,
+            api_base_url=base_url,
+            api_key=api_key,
             confirm_mode=confirm,
             cache_dir=str(repo_root() / "artifacts" / "agent_cache"),
         ))
@@ -302,7 +311,13 @@ def _cmd_agent(ns: argparse.Namespace) -> int:
     trading_date = _parse_date(ns.date) or date_type.today()
     confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
 
+    model = os.environ.get("LLM_MODEL", "claude-opus-4-6")
+    base_url = os.environ.get("LLM_BASE_URL") or None
+    api_key = os.environ.get("LLM_API_KEY") or None
     strategy = AgentStrategy(AgentConfig(
+        model=model,
+        api_base_url=base_url,
+        api_key=api_key,
         confirm_mode=confirm,
         cache_dir=str(root / "artifacts" / "agent_cache"),
     ))
