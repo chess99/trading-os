@@ -268,7 +268,6 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
           "error": str | None,
         }
     """
-    from pathlib import Path
     result: dict[str, Any] = {
         "high_52w": None, "low_52w": None, "current": None,
         "pct_from_high": None, "pct_from_low": None,
@@ -278,14 +277,12 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
         import pandas as pd
         from ..lake import LocalDataLake
         from ..schema import Adjustment, Exchange, Timeframe
+        from ...paths import repo_root
 
         parts = symbol_id.split(":")
         exch = Exchange(parts[0])
 
-        # 自动找项目根目录
-        here = Path(__file__).resolve()
-        root = here.parents[4]  # src/trading_os/data/sources → project root
-        lake = LocalDataLake(root / "data")
+        lake = LocalDataLake(repo_root() / "data")
 
         df = lake.query_bars(
             symbols=[symbol_id],
@@ -353,7 +350,6 @@ def get_market_breadth(index_symbol: str = "SSE:000001", lookback_days: int = 30
           "error": str | None,
         }
     """
-    from pathlib import Path
     result: dict[str, Any] = {
         "distribution_days": 0, "lookback_days": lookback_days,
         "market_status": "未知", "recent_dates": [],
@@ -363,13 +359,12 @@ def get_market_breadth(index_symbol: str = "SSE:000001", lookback_days: int = 30
         import pandas as pd
         from ..lake import LocalDataLake
         from ..schema import Adjustment, Exchange, Timeframe
+        from ...paths import repo_root
 
         parts = index_symbol.split(":")
         exch = Exchange(parts[0])
 
-        here = Path(__file__).resolve()
-        root = here.parents[4]
-        lake = LocalDataLake(root / "data")
+        lake = LocalDataLake(repo_root() / "data")
 
         # 指数数据通常以 QFQ 存储（fetch-bs 默认前复权）
         df = lake.query_bars(

@@ -80,7 +80,7 @@ def fetch_daily_bars(
         adjust_map = {Adjustment.QFQ: "qfq", Adjustment.HFQ: "hfq", Adjustment.NONE: ""}
         adjust_str = adjust_map.get(adjustment, "")
 
-        df = _fetch_with_fallback(ak, symbol_str, start, end, adjust_str)
+        df = _fetch_with_fallback(ak, symbol_str, exchange, start, end, adjust_str)
 
         if df is None or df.empty:
             logger.warning(f"未获取到数据: {symbol_str}")
@@ -97,7 +97,7 @@ def fetch_daily_bars(
         raise RuntimeError(f"akshare数据获取失败: {e}") from e
 
 
-def _fetch_with_fallback(ak, symbol_str: str, start: str, end: str, adjust: str) -> "pd.DataFrame":
+def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, end: str, adjust: str) -> "pd.DataFrame":
     """先用东财接口，失败自动 fallback 到新浪接口。
 
     东财（push2his.eastmoney.com）：境外 IP 不可达。
@@ -120,14 +120,17 @@ def _fetch_with_fallback(ak, symbol_str: str, start: str, end: str, adjust: str)
     except Exception as e:
         logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
 
-    # Fallback：新浪
+    # Fallback：新浪（stock_zh_a_daily 需要 "sh600000" / "sz000001" 格式）
     try:
+        prefix = "sh" if exchange.value == "SSE" else "sz"
+        sina_symbol = f"{prefix}{symbol_str}"
         adjust_sina = {"qfq": "qfq", "hfq": "hfq", "": None}.get(adjust, None)
-        df = ak.stock_zh_a_daily(symbol=symbol_str, adjust=adjust_sina)
+        df = ak.stock_zh_a_daily(symbol=sina_symbol, adjust=adjust_sina)
         if df is None or df.empty:
             return pd.DataFrame()
 
-        # 新浪接口列名不同，统一映射
+        # 新浪接口列名不同，统一映射到东财列名
+        # 注意：新浪已有 amount 列（成交额），直接映射，不补占位列
         df = df.rename(columns={
             "date": "日期",
             "open": "开盘",
@@ -135,15 +138,13 @@ def _fetch_with_fallback(ak, symbol_str: str, start: str, end: str, adjust: str)
             "low": "最低",
             "close": "收盘",
             "volume": "成交量",
+            "amount": "成交额",
         })
-        # 新浪无成交额，补充占位列
-        if "成交额" not in df.columns:
-            df["成交额"] = None
 
-        logger.info(f"新浪接口成功: {symbol_str}，共{len(df)}条")
+        logger.info(f"新浪接口成功: {sina_symbol}，共{len(df)}条")
         return df
     except Exception as e2:
-        logger.error(f"新浪接口也失败({symbol_str}): {e2}")
+        logger.error(f"新浪接口也失败({sina_symbol}): {e2}")
         return pd.DataFrame()
 
 
