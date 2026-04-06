@@ -1,6 +1,9 @@
 {
   "permissions": {
     "allow": [
+      "Read(.env.example)",
+      "Edit(.env.example)",
+      "Write(.env.example)",
       "Bash(python -m trading_os:*)",
       "Bash(python -m pytest:*)",
       "Bash(python scripts/*)",
@@ -31,9 +34,9 @@
       "Edit(.claude/**)"
     ],
     "deny": [
-      "Read(.env*)",
+      "Read(.env)",
       "Read(secrets/**)",
-      "Edit(.env*)",
+      "Edit(.env)",
       "Bash(rm -rf:*)",
       "Bash(git push --force:*)"
     ]
