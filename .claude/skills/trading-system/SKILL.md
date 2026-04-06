@@ -22,11 +22,12 @@ description: |
 trading-system（本 skill，编排层）
 │
 ├── 【选股层】— 什么值得关注
-│   ├── canslim-screen    基本面选股（欧奈尔 CANSLIM 七维度）
-│   └── signal-scanner    技术面批量扫描（三重滤网第一滤网）
+│   ├── fundamental-research  深度基本面研究，估算内在价值（巴菲特/格雷厄姆框架）
+│   ├── canslim-screen        快速基本面筛选，CANSLIM 七维度（欧奈尔框架）
+│   └── signal-scanner        技术面批量扫描（三重滤网第一滤网）
 │
 ├── 【分析层】— 深度分析单标的
-│   └── elder-screen      三重滤网技术分析（埃尔德）
+│   └── elder-screen          三重滤网技术分析（埃尔德）
 │
 ├── 【执行层】— 怎么买卖
 │   ├── position-sizer    仓位计算（2%/6%原则）
@@ -46,22 +47,36 @@ trading-system（本 skill，编排层）
 
 ---
 
-### 流程 A：基本面优先（长线选股）
+### 流程 A：基本面优先（中长线选股）
 
-**触发词**："这只股票值得长期持有吗"、"帮我筛选成长股"、"基本面怎么样"、
-"有没有真实业绩支撑"、"这是在炒梦还是真的有基本面"
+**触发词**："这只股票值得长期持有吗"、"帮我研究这家公司"、"这公司值多少钱"、
+"深度分析"、"护城河是什么"、"估值合理吗"
 
+**快速版**（用户只想初步筛选）：
 ```
-1. [canslim-screen]   基本面评分（C/A/N/S/L/I/M 七维度）
-2. [elder-screen]     技术面确认（现在是好的入场时机吗）
-3. [position-sizer]   仓位计算（两个维度都通过才计算）
-4. [trade-executor]   生成指令
+1. [canslim-screen]          快速基本面评分（10 分钟）
+2. [elder-screen]            技术面确认入场时机
+3. [position-sizer]          仓位计算
+4. [trade-executor]          生成指令
+```
+
+**深度版**（用户想认真研究一家公司）：
+```
+1. [canslim-screen]          快速初筛，是否值得深入（通过才继续）
+2. [fundamental-research]    深度研究：护城河/财务/估值/逻辑止损条件（1 小时）
+3. [elder-screen]            技术面确认入场时机
+4. [position-sizer]          仓位计算
+5. [trade-executor]          生成指令
 ```
 
 **仓位规则**：
-- CANSLIM ≥6/7 + 技术面买入 → 正常仓位（2% 原则）
-- CANSLIM 4-5/7 + 技术面买入 → 减半仓位（1% 原则）
+- fundamental-research 强烈关注 + 技术面买入 → 正常仓位（2% 原则）
+- canslim ≥6/7 + 技术面买入（未做深度研究）→ 减半仓位（1% 原则）
+- canslim 4-5/7 + 技术面买入 → 1/4 仓位，持续观察
 - 两者冲突 → 不入场，明确告知冲突点
+
+**止损模式**：基本面持仓用逻辑止损，不用价格止损。
+持仓备注中记录 fundamental-research 输出的"逻辑止损条件"。
 
 ---
 
@@ -88,10 +103,15 @@ trading-system（本 skill，编排层）
 **触发词**："分析一下 600000"、"这只股票能买吗"、"帮我看看这个标的"
 
 ```
-1. [canslim-screen]   基本面评分（快速版，重点看 C/A/M）
+1. [canslim-screen]   基本面快速评分（重点看 C/A/M）
 2. [elder-screen]     技术面分析（三重滤网）
 3. [position-sizer]   仓位计算（如果两个维度都通过）
 ```
+
+如果 canslim 评分 ≥ 5/7，询问用户是否需要深度研究：
+"基本面初筛通过，要做深度研究（估值 + 护城河 + 逻辑止损条件）吗？约需 1 小时。"
+- 是 → 插入 [fundamental-research]，完成后再做技术面
+- 否 → 继续技术面分析，按减半仓位处理
 
 ---
 

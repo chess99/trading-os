@@ -56,22 +56,61 @@ python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
 3. BaoStock (free, historical)
 4. Local cache (DuckDB, offline)
 
+## Investment Strategy
+
+**定位：量化因子选股 + AI 增强研究 + 技术面择时**
+
+不做纯量化（alpha 衰减快，同质化严重），不做纯主观（缺乏行业深度积累）。
+比较优势在于：用 LLM 大规模处理非结构化信息（研报、财报、电话会议），
+结合技术面择时，形成差异化的分析链。
+
+**分析链（三层）：**
+```
+1. 研究层：fundamental-research（内在价值估算，AI 研究员模式）
+           canslim-screen（快速基本面筛选，成长特征）
+2. 择时层：elder-screen（三重滤网，确认买卖点）
+3. 执行层：position-sizer + trade-executor（仓位 + 指令）
+```
+
+**止损逻辑的两种模式：**
+- 技术面持仓（短中线）：价格止损，Elder 的 2%/6% 原则
+- 基本面持仓（中长线）：逻辑止损，买入理由不再成立时卖出，与价格无关
+
 ## Skills (`.claude/skills/`)
 
-基于《以交易为生》（Alexander Elder）提炼的交易决策 skills，与代码执行层互补：
+交易决策 skills，与代码执行层互补。按用途分层：
 
-| Skill | 职责 | 与代码的连接 |
-|-------|------|-------------|
-| `trading-system` | 编排入口，调度整个交易流程 | 调用所有子 skill |
-| `elder-screen` | 三重滤网技术分析（周线+日线） | 从 `query-bars` 获取数据 |
-| `signal-scanner` | 批量扫描候选标的池 | 输出供 `backtest` 验证 |
-| `position-sizer` | 2%/6% 原则计算仓位 | 输出 `Signal.size` 值 |
-| `trade-executor` | 生成具体交易指令 | 驱动 `paper` 命令执行 |
-| `position-monitor` | 持仓监控，追踪止损 | 读取 EventLog 持仓状态 |
-| `trading-journal` | 交易记录与绩效统计 | EventLog + BacktestResult |
-| `backtest-review` | 系统回测健康评估 | 直接调用 `backtest` 命令 |
+**编排层**
+| Skill | 职责 |
+|-------|------|
+| `trading-system` | 入口，识别意图，调度三条分析流程（基本面优先/技术面优先/综合） |
 
-**使用方式**：直接说"帮我分析 600000"、"扫描今天的机会"、"算一下仓位"等，对应 skill 自动触发。
+**选股层**（什么值得关注）
+| Skill | 职责 | 来源 |
+|-------|------|------|
+| `fundamental-research` | 深度基本面研究，估算内在价值，逻辑止损框架 | 巴菲特/芒格/格雷厄姆 |
+| `canslim-screen` | CANSLIM 七维度快速基本面评分 | 欧奈尔《笑傲股市》 |
+| `signal-scanner` | 技术面批量扫描 | Elder《以交易为生》 |
+
+**分析层**（深度分析单标的）
+| Skill | 职责 | 来源 |
+|-------|------|------|
+| `elder-screen` | 三重滤网技术分析（周线+日线） | Elder《以交易为生》 |
+
+**执行层**（怎么买卖）
+| Skill | 职责 |
+|-------|------|
+| `position-sizer` | 2%/6% 原则计算仓位，输出 `Signal.size` |
+| `trade-executor` | 生成具体交易指令，驱动 `paper` 命令 |
+| `position-monitor` | 持仓监控，追踪止损（价格止损/逻辑止损两种模式） |
+
+**复盘层**（回顾改进）
+| Skill | 职责 |
+|-------|------|
+| `trading-journal` | 交易记录与绩效统计 |
+| `backtest-review` | 系统回测健康评估，调用 `backtest` 命令 |
+
+**使用方式**：直接说"帮我分析 600000"、"这家公司值多少钱"、"扫描今天的机会"等，对应 skill 自动触发。
 
 ## Vendor Research
 
