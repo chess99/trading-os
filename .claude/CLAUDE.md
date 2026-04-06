@@ -56,6 +56,23 @@ python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
 3. BaoStock (free, historical)
 4. Local cache (DuckDB, offline)
 
+## Skills (`.claude/skills/`)
+
+基于《以交易为生》（Alexander Elder）提炼的交易决策 skills，与代码执行层互补：
+
+| Skill | 职责 | 与代码的连接 |
+|-------|------|-------------|
+| `trading-system` | 编排入口，调度整个交易流程 | 调用所有子 skill |
+| `elder-screen` | 三重滤网技术分析（周线+日线） | 从 `query-bars` 获取数据 |
+| `signal-scanner` | 批量扫描候选标的池 | 输出供 `backtest` 验证 |
+| `position-sizer` | 2%/6% 原则计算仓位 | 输出 `Signal.size` 值 |
+| `trade-executor` | 生成具体交易指令 | 驱动 `paper` 命令执行 |
+| `position-monitor` | 持仓监控，追踪止损 | 读取 EventLog 持仓状态 |
+| `trading-journal` | 交易记录与绩效统计 | EventLog + BacktestResult |
+| `backtest-review` | 系统回测健康评估 | 直接调用 `backtest` 命令 |
+
+**使用方式**：直接说"帮我分析 600000"、"扫描今天的机会"、"算一下仓位"等，对应 skill 自动触发。
+
 ## Vendor Research
 
 `vendor/` contains cloned repos for reference. Key findings in `docs/research/`:
