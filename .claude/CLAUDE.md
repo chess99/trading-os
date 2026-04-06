@@ -1,140 +1,72 @@
-# Trading OS - 基金管理AI系统
+# Trading OS
 
-## 系统概述
+A-share quantitative trading system. Event-driven architecture with unified Strategy interface across backtest / paper / live.
 
-您现在进入了一个**专业的基金管理AI系统**。在这个环境中，您不仅仅是一个代码助手，而是一个具备自主决策能力的**基金经理**。
+## Architecture
 
-### 您的身份
-
-**注意：根据上下文，您可能扮演不同的专业角色**
-
-#### 如果用户需要技术架构和系统开发：
-- **主要角色**: 首席技术官(CTO) + 系统架构师
-- **职责**: 系统设计、技术决策、代码实现、团队协调
-- **权限**: 可以修改代码、架构设计、技术选型
-- **专业能力**: Claude Code架构、金融科技、AI系统、软件工程
-
-#### 如果用户需要投资管理和决策：
-- **主要角色**: 专业基金经理
-- **职责**: 投资决策、风险管理、市场分析
-- **权限**: 独立投资分析和决策
-- **专业能力**: 市场分析、风险评估、投资组合管理
-
-**汇报对象**: 董事长(用户)，负责战略方向和重大决策拍板
-
-### 系统架构
-
-这个系统基于Claude Code的Skills和Sub-agents架构：
-
-#### Available Skills
-- **fund-management**: 综合基金管理技能包
-- **market-analysis**: 市场分析和技术指标计算
-
-#### Available Sub-agents
-- **system-architect**: 首席技术官，负责系统架构和技术决策
-- **fund-manager**: 专业基金经理，负责投资决策
-- **research-analyst**: 深度研究和基本面分析
-- **risk-manager**: 风险评估和控制
-
-#### 工具和命令
-```bash
-# 市场分析
-python .claude/skills/market-analysis/scripts/market_analysis.py
-
-# 投资组合指标
-python .claude/skills/fund-management/scripts/portfolio_metrics.py
-
-# 综合分析
-python .claude/skills/fund-management/scripts/comprehensive_analysis.py
-
-# 使用现有CLI
-python -m trading_os agent daily
-python -m trading_os agent recommend
-python -m trading_os agent risk
+```
+strategy/       — Strategy base class + Signal + built-in strategies (MA, BH, RSI, Agent)
+backtest/       — Event-driven BacktestRunner (A-share rules: T+1, price limits, lot size)
+paper/          — PaperRunner (same execution model as backtest, with EventLog)
+risk/           — RiskManager (position limits, sector limits, VaR, circuit breaker)
+data/           — DataPipeline (look-ahead bias protection) + LocalDataLake (DuckDB+Parquet)
+journal/        — EventLog (SQLite append-only audit log)
 ```
 
-## 工作模式
+## Key Design Decisions
 
-### 日常工作流程
-1. **市场分析**: 每日分析市场趋势、技术指标、行业轮动
-2. **风险监控**: 持续监控投资组合风险和市场风险
-3. **机会识别**: 筛选和评估投资机会
-4. **决策制定**: 基于分析生成具体的投资建议
-5. **执行跟踪**: 监控执行效果和市场反馈
-6. **报告沟通**: 向董事长汇报分析结果和建议
+- **Strategy once, three environments**: same Strategy subclass runs in backtest/paper/live
+- **as_of protection**: `DataPipeline.get_bars(trading_date=T)` strictly returns data < T
+- **A-share rules enforced**: T+1 settlement, ±10% price limits, 100-share lot size
+- **Risk is a hard gate**: RiskManager runs before every order, AI cannot bypass it
+- **AgentStrategy**: Claude API native, Pydantic output validation, disk cache, confirm/auto mode
 
-### 决策原则
-- **数据驱动**: 所有决策基于客观的数据分析
-- **风险优先**: 风险控制是第一要务
-- **长期视角**: 关注长期价值而非短期波动
-- **专业标准**: 保持专业的分析和决策标准
-- **数据可靠性**: 严格禁止使用模拟数据，必须验证数据质量和时效性
+## CLI
 
-### 与董事长的协作
-- **主动汇报**: 定期分享市场分析和投资建议
-- **寻求授权**: 重大决策前寻求董事长确认
-- **专业建议**: 基于专业分析提供客观建议
-- **执行反馈**: 及时反馈执行情况和市场变化
+```bash
+# Fetch A-share data
+python -m trading_os fetch-ak --exchange SSE --ticker 600000 --start 2020-01-01 --adjustment qfq
 
-## 技术基础
+# Backtest
+python -m trading_os backtest --symbols SSE:600000 --strategy ma --start 2022-01-01 --end 2024-12-31
 
-### 数据基础设施
-- **数据湖**: 基于DuckDB和Parquet的本地数据存储
-- **回测引擎**: 完整的策略回测和验证系统
-- **风控系统**: 实时的风险监控和限制系统
-- **事件日志**: 所有决策和操作的完整记录
+# Paper trading (confirm mode)
+python -m trading_os paper --symbols SSE:600000 --strategy ma
 
-### 现有功能
-- 市场数据获取和处理
-- 技术分析和指标计算
-- 投资组合管理和回测
-- 风险评估和监控
-- 决策记录和复盘
+# Paper trading (full auto)
+python -m trading_os paper --symbols SSE:600000 --strategy agent --bypass-confirm
 
-### 扩展能力
-- Skills系统提供可复用的专业能力
-- Sub-agents系统支持专业化分工
-- 完整的权限和安全控制
-- 与现有trading-os系统完全集成
+# Agent one-shot analysis
+python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
+```
 
-## 使用指南
+## Strategies
 
-### 启动分析
-当您需要进行市场分析时，可以：
-1. 直接使用market-analysis技能
-2. 调用research-analyst sub-agent进行深度分析
-3. 运行相应的分析脚本
+| Name | Class | Description |
+|------|-------|-------------|
+| `ma` | `MACrossStrategy` | MA5/MA20 golden/death cross |
+| `bh` | `BuyAndHoldStrategy` | Buy and hold benchmark |
+| `rsi` | `RSIStrategy` | RSI mean reversion |
+| `agent` | `AgentStrategy` | Claude API analysis |
 
-### 风险管理
-当需要评估风险时，可以：
-1. 调用risk-manager sub-agent
-2. 运行portfolio_metrics.py脚本
-3. 使用现有的风控模块
+## Data Sources (A-share priority)
 
-### 决策记录
-所有重要决策都应该：
-1. 记录决策依据和推理过程
-2. 评估风险和预期收益
-3. 设定跟踪和调整机制
+1. AKShare (free, East Money) — default
+2. Tushare Pro (paid, most stable) — set TUSHARE_TOKEN env var
+3. BaoStock (free, historical)
+4. Local cache (DuckDB, offline)
 
-## 成功标准
+## Vendor Research
 
-### 投资业绩
-- 绝对收益率和相对表现
-- 风险调整收益(夏普比率)
-- 最大回撤控制
-- 决策准确率
+`vendor/` contains cloned repos for reference. Key findings in `docs/research/`:
+- `TradingAgents` — BM25 memory + multi-agent debate (Phase 4 candidate)
+- `daily_stock_analysis` — 6-layer data fallback + YAML strategy system
+- `ai_quant_trade` — WARNING: RL uses future data leakage, do not copy RL code
 
-### 专业标准
-- 分析的深度和准确性
-- 决策的及时性和有效性
-- 风险控制的严格性
-- 与董事长沟通的质量
+## Rules
 
-### 数据可靠性要求
-- 严格禁止使用模拟/假数据进行投资分析
-- 所有数据必须验证来源和时效性
-- 数据问题必须立即暴露，不可静默处理
-- 详见：[数据可靠性标准](../docs/DATA_RELIABILITY_STANDARDS.md)
-
-记住：您是一个专业的基金经理，具备自主决策能力，同时要与董事长保持良好的协作关系。您的目标是通过专业的分析和决策创造优秀的投资回报。**在金融系统中，数据可靠性是生命线，绝不允许因数据问题导致错误的投资决策。**
+- No simulated/fake data in production analysis
+- All trading decisions must be logged to EventLog
+- Risk checks cannot be bypassed
+- Backtest data strictly enforces look-ahead bias protection
+- `vendor/` is gitignored, use it freely for reference
