@@ -73,6 +73,36 @@ def _cmd_fetch_ak(ns: argparse.Namespace) -> int:
         return 1
 
 
+def _cmd_fetch_bs(ns: argparse.Namespace) -> int:
+    """从 BaoStock 获取 A 股数据（国内直连，无需代理）。"""
+    from .data.lake import LocalDataLake
+    from .data.schema import Adjustment, Exchange, Timeframe
+    from .data.sources.baostock_source import fetch_daily_bars
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+    exch = Exchange(ns.exchange)
+    adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
+
+    try:
+        print(f"获取A股数据(BaoStock): {exch.value}:{ns.ticker} (复权: {adj.value})")
+        df = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
+        if df.empty:
+            print("未获取到数据")
+            return 1
+        lake.write_bars_parquet(
+            df, exchange=exch, timeframe=Timeframe.D1, adjustment=adj,
+            source="baostock", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+        )
+        lake.init()
+        print(f"写入 {len(df)} 条: {exch.value}:{ns.ticker}")
+        print(f"数据范围: {df['ts'].min().date()} 至 {df['ts'].max().date()}")
+        return 0
+    except Exception as e:
+        print(f"获取数据失败: {e}", file=sys.stderr)
+        return 1
+
+
 def _cmd_fetch_yf(ns: argparse.Namespace) -> int:
     from .data.lake import LocalDataLake
     from .data.schema import Adjustment, Exchange, Timeframe
@@ -311,6 +341,14 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("lake-init", help="Initialize DuckDB/Parquet data lake")
     p.set_defaults(func=_cmd_lake_init)
+
+    p = sub.add_parser("fetch-bs", help="从BaoStock获取A股日线数据（国内直连，无需代理）")
+    p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])
+    p.add_argument("--ticker", required=True, help="股票代码，如 600000")
+    p.add_argument("--start", default=None, help="开始日期 YYYY-MM-DD")
+    p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD")
+    p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq")
+    p.set_defaults(func=_cmd_fetch_bs)
 
     p = sub.add_parser("fetch-ak", help="从AKShare获取A股日线数据")
     p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])
