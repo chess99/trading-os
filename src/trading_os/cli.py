@@ -318,6 +318,71 @@ def _cmd_paper_run_sma(ns: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_backtest(ns: argparse.Namespace) -> int:
+    """New event-driven backtest using unified Strategy interface."""
+    from datetime import date as date_type
+
+    from .backtest.runner import BacktestConfig, BacktestRunner
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+    pipeline = DataPipeline(lake)
+
+    # Parse strategy
+    strategy_name = ns.strategy.lower()
+    if strategy_name == "ma" or strategy_name == "macross":
+        from .strategy.builtin import MACrossStrategy
+        strategy = MACrossStrategy(fast=int(ns.fast), slow=int(ns.slow))
+    elif strategy_name == "bh" or strategy_name == "buyandhold":
+        from .strategy.builtin import BuyAndHoldStrategy
+        strategy = BuyAndHoldStrategy()
+    elif strategy_name == "rsi":
+        from .strategy.builtin import RSIStrategy
+        strategy = RSIStrategy()
+    else:
+        print(f"Unknown strategy: {ns.strategy}. Use: ma, bh, rsi", file=sys.stderr)
+        return 1
+
+    # Parse symbols
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+
+    # Parse dates
+    def _parse_date(s: str | None) -> date_type | None:
+        if s is None:
+            return None
+        return date_type.fromisoformat(s)
+
+    start = _parse_date(ns.start) or date_type(2022, 1, 1)
+    end = _parse_date(ns.end) or date_type.today()
+
+    config = BacktestConfig(
+        initial_cash=float(ns.initial_cash),
+    )
+
+    runner = BacktestRunner(strategy=strategy, pipeline=pipeline, config=config)
+
+    print(f"Running backtest: {strategy_name} | {symbols} | {start} → {end}")
+    result = runner.run(symbols=symbols, start=start, end=end)
+    summary = result.summary()
+
+    print(f"\n{'='*50}")
+    print(f"  Total Return:      {summary.get('total_return', 0):.2f}%")
+    print(f"  Annualized Return: {summary.get('annualized_return', 0):.2f}%")
+    print(f"  Sharpe Ratio:      {summary.get('sharpe_ratio', 0):.3f}")
+    print(f"  Max Drawdown:      {summary.get('max_drawdown', 0):.2f}%")
+    print(f"  Final NAV:         {summary.get('final_nav', 0):,.2f} CNY")
+    print(f"  Trades:            {summary.get('trades', 0)}")
+    print(f"{'='*50}")
+
+    if not result.equity_curve.empty:
+        print("\nEquity curve (last 5 rows):")
+        print(result.equity_curve.tail(5).to_string(index=False))
+
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="trading_os", description="Trading OS CLI")
     sub = parser.add_subparsers(dest="cmd", required=True)
@@ -382,6 +447,17 @@ def main(argv: list[str] | None = None) -> int:
     p_bh.add_argument("--fee-bps", type=float, default=1.0)
     p_bh.add_argument("--slippage-bps", type=float, default=2.0)
     p_bh.set_defaults(func=_cmd_backtest_bh)
+
+    # New unified backtest command
+    p_bt2 = sub.add_parser("backtest", help="Run backtest with unified Strategy interface (A-share rules)")
+    p_bt2.add_argument("--symbols", required=True, help="Comma-separated symbol ids, e.g. SSE:600000,SZSE:000001")
+    p_bt2.add_argument("--strategy", default="ma", help="Strategy: ma, bh, rsi (default: ma)")
+    p_bt2.add_argument("--fast", type=int, default=5, help="Fast MA period (for ma strategy)")
+    p_bt2.add_argument("--slow", type=int, default=20, help="Slow MA period (for ma strategy)")
+    p_bt2.add_argument("--start", default=None, help="Start date YYYY-MM-DD")
+    p_bt2.add_argument("--end", default=None, help="End date YYYY-MM-DD")
+    p_bt2.add_argument("--initial-cash", type=float, default=1_000_000.0)
+    p_bt2.set_defaults(func=_cmd_backtest)
 
     p_paper = sub.add_parser("paper-run-sma", help="Paper trade SMA crossover")
     p_paper.add_argument("--symbol", required=True)

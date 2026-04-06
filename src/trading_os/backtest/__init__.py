@@ -1,16 +1,19 @@
-"""Backtesting engine and sample strategies."""
+"""Backtesting engine."""
 
-from .engine import BacktestConfig, BacktestResult, run_backtest
-from .metrics import PerformanceMetrics, compute_performance_metrics
-from .strategies import buy_and_hold_signals, sma_crossover_signals
+from .runner import (
+    BacktestConfig,
+    BacktestResult,
+    BacktestRunner,
+    FillEvent,
+    OrderEvent,
+    RiskRejectEvent,
+)
 
 __all__ = [
     "BacktestConfig",
     "BacktestResult",
-    "PerformanceMetrics",
-    "buy_and_hold_signals",
-    "compute_performance_metrics",
-    "run_backtest",
-    "sma_crossover_signals",
+    "BacktestRunner",
+    "FillEvent",
+    "OrderEvent",
+    "RiskRejectEvent",
 ]
-
