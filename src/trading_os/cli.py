@@ -330,19 +330,10 @@ def _cmd_backtest(ns: argparse.Namespace) -> int:
     lake = LocalDataLake(root / "data")
     pipeline = DataPipeline(lake)
 
-    # Parse strategy
-    strategy_name = ns.strategy.lower()
-    if strategy_name == "ma" or strategy_name == "macross":
-        from .strategy.builtin import MACrossStrategy
-        strategy = MACrossStrategy(fast=int(ns.fast), slow=int(ns.slow))
-    elif strategy_name == "bh" or strategy_name == "buyandhold":
-        from .strategy.builtin import BuyAndHoldStrategy
-        strategy = BuyAndHoldStrategy()
-    elif strategy_name == "rsi":
-        from .strategy.builtin import RSIStrategy
-        strategy = RSIStrategy()
-    else:
-        print(f"Unknown strategy: {ns.strategy}. Use: ma, bh, rsi", file=sys.stderr)
+    try:
+        strategy = _build_strategy(ns)
+    except ValueError as e:
+        print(str(e), file=sys.stderr)
         return 1
 
     # Parse symbols
@@ -380,6 +371,132 @@ def _cmd_backtest(ns: argparse.Namespace) -> int:
         print("\nEquity curve (last 5 rows):")
         print(result.equity_curve.tail(5).to_string(index=False))
 
+    return 0
+
+
+def _build_strategy(ns: argparse.Namespace):
+    """Shared helper: build a Strategy from CLI args."""
+    strategy_name = ns.strategy.lower()
+    if strategy_name in ("ma", "macross"):
+        from .strategy.builtin import MACrossStrategy
+        return MACrossStrategy(fast=int(getattr(ns, "fast", 5)), slow=int(getattr(ns, "slow", 20)))
+    elif strategy_name in ("bh", "buyandhold"):
+        from .strategy.builtin import BuyAndHoldStrategy
+        return BuyAndHoldStrategy()
+    elif strategy_name == "rsi":
+        from .strategy.builtin import RSIStrategy
+        return RSIStrategy()
+    elif strategy_name == "agent":
+        from .strategy.agent import AgentConfig, AgentStrategy
+        confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
+        cache_dir = str(repo_root() / "artifacts" / "agent_cache")
+        return AgentStrategy(AgentConfig(confirm_mode=confirm, cache_dir=cache_dir))
+    else:
+        raise ValueError(f"Unknown strategy: {strategy_name!r}. Use: ma, bh, rsi, agent")
+
+
+def _cmd_paper(ns: argparse.Namespace) -> int:
+    """Paper trading with unified Strategy interface."""
+    from datetime import date as date_type
+
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+    from .journal.event_log import EventLog
+    from .paper.runner import PaperConfig, PaperRunner
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+    pipeline = DataPipeline(lake)
+
+    try:
+        strategy = _build_strategy(ns)
+    except ValueError as e:
+        print(str(e), file=sys.stderr)
+        return 1
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+
+    def _parse_date(s: str | None) -> date_type | None:
+        if s is None:
+            return None
+        return date_type.fromisoformat(s)
+
+    start = _parse_date(ns.start) or date_type(2024, 1, 1)
+    end = _parse_date(ns.end) or date_type.today()
+    confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
+
+    from .backtest.runner import BacktestConfig
+    from .risk.manager import RiskConfig
+
+    config = PaperConfig(
+        initial_cash=float(ns.initial_cash),
+        confirm_mode=confirm,
+        broker=BacktestConfig(),
+        risk=RiskConfig(),
+    )
+    event_log = EventLog.from_repo_root(root, name=f"paper_{start}_{end}")
+
+    runner = PaperRunner(
+        strategy=strategy,
+        pipeline=pipeline,
+        config=config,
+        event_log=event_log,
+    )
+
+    print(f"Paper trading: {ns.strategy} | {symbols} | {start} → {end} | mode={confirm}")
+    session = runner.run(symbols=symbols, start=start, end=end)
+    summary = session.summary()
+
+    print(f"\n{'='*50}")
+    print(f"  Total Return:  {summary['total_return']}")
+    print(f"  Final NAV:     {summary['final_nav']:,.2f} CNY")
+    print(f"  Fills:         {summary['fills']}")
+    print(f"  Rejects:       {summary['rejects']}")
+    print(f"  Log:           {summary['log']}")
+    print(f"{'='*50}")
+    return 0
+
+
+def _cmd_agent_analyze(ns: argparse.Namespace) -> int:
+    """One-shot agent analysis for today (or a given date)."""
+    from datetime import date as date_type
+
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+    from .strategy.agent import AgentConfig, AgentStrategy
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+    pipeline = DataPipeline(lake)
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    trading_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today()
+    confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
+
+    strategy = AgentStrategy(
+        AgentConfig(
+            confirm_mode=confirm,
+            cache_dir=str(root / "artifacts" / "agent_cache"),
+        )
+    )
+
+    bars = pipeline.get_bars(symbols=symbols, trading_date=trading_date)
+    if bars is None or bars.empty:
+        print("No bars found. Fetch data first with: trading-os fetch-ak", file=sys.stderr)
+        return 1
+
+    print(f"Analyzing {symbols} for {trading_date}...")
+    signals = strategy.generate_signals(bars, trading_date)
+
+    print(f"\n{'='*60}")
+    print(f"  Agent Signals — {trading_date}")
+    print(f"{'='*60}")
+    for sym, sig in sorted(signals.items()):
+        marker = "→" if sig.action != "HOLD" else " "
+        print(f"  {marker} {sig.action:4s}  {sym:20s}  size={sig.size:.1%}  conf={sig.confidence:.0%}")
+        if sig.reason:
+            print(f"       {sig.reason}")
+    print(f"{'='*60}")
     return 0
 
 
@@ -459,7 +576,26 @@ def main(argv: list[str] | None = None) -> int:
     p_bt2.add_argument("--initial-cash", type=float, default=1_000_000.0)
     p_bt2.set_defaults(func=_cmd_backtest)
 
-    p_paper = sub.add_parser("paper-run-sma", help="Paper trade SMA crossover")
+    # New unified paper trading command
+    p_paper2 = sub.add_parser("paper", help="Paper trade with unified Strategy interface")
+    p_paper2.add_argument("--symbols", required=True, help="Comma-separated symbol ids")
+    p_paper2.add_argument("--strategy", default="ma", help="Strategy: ma, bh, rsi, agent")
+    p_paper2.add_argument("--fast", type=int, default=5)
+    p_paper2.add_argument("--slow", type=int, default=20)
+    p_paper2.add_argument("--start", default=None)
+    p_paper2.add_argument("--end", default=None)
+    p_paper2.add_argument("--initial-cash", type=float, default=1_000_000.0)
+    p_paper2.add_argument("--bypass-confirm", action="store_true", help="Auto-execute without confirmation")
+    p_paper2.set_defaults(func=_cmd_paper)
+
+    # Agent one-shot analysis
+    p_agent = sub.add_parser("agent", help="Run Claude agent analysis for a given date")
+    p_agent.add_argument("--symbols", required=True, help="Comma-separated symbol ids")
+    p_agent.add_argument("--date", default=None, help="Analysis date YYYY-MM-DD (default: today)")
+    p_agent.add_argument("--bypass-confirm", action="store_true", help="Skip confirmation prompt")
+    p_agent.set_defaults(func=_cmd_agent_analyze)
+
+    p_paper = sub.add_parser("paper-run-sma", help="Paper trade SMA crossover (legacy)")
     p_paper.add_argument("--symbol", required=True)
     p_paper.add_argument("--fast", type=int, default=10)
     p_paper.add_argument("--slow", type=int, default=30)
