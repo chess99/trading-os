@@ -181,6 +181,27 @@ def _cmd_fundamental(ns: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_52week(ns: argparse.Namespace) -> int:
+    """计算股票52周高低点统计（从本地K线，无需网络）。"""
+    from .data.sources.fundamental_source import get_52week_stats
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    for sym in symbols:
+        result = get_52week_stats(sym)
+        print(result["summary_text"])
+        print()
+    return 0
+
+
+def _cmd_market_breadth(ns: argparse.Namespace) -> int:
+    """计算大盘换筹日数量，判断市场状态（从本地K线，无需网络）。"""
+    from .data.sources.fundamental_source import get_market_breadth
+
+    result = get_market_breadth(ns.index, lookback_days=int(ns.days))
+    print(result["summary_text"])
+    return 0
+
+
 def _build_strategy(ns: argparse.Namespace):
     name = ns.strategy.lower()
     if name in ("ma", "macross"):
@@ -378,6 +399,15 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:600519,SSE:600000")
     p.add_argument("--years", type=int, default=5, help="获取最近几年数据（默认5年）")
     p.set_defaults(func=_cmd_fundamental)
+
+    p = sub.add_parser("52week", help="计算股票52周高低点统计（从本地K线）")
+    p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:601138")
+    p.set_defaults(func=_cmd_52week)
+
+    p = sub.add_parser("market-breadth", help="计算大盘换筹日数量，判断市场状态（从本地K线）")
+    p.add_argument("--index", default="SSE:000001", help="指数代码（默认上证综指）")
+    p.add_argument("--days", type=int, default=30, help="统计窗口（默认30个交易日）")
+    p.set_defaults(func=_cmd_market_breadth)
 
     p = sub.add_parser("fetch-bs", help="从BaoStock获取A股日线数据（国内直连，无需代理）")
     p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])

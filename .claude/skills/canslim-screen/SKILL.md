@@ -251,25 +251,34 @@ RS 线趋势（卖出预警）：
 
 ## 分析流程
 
-### 第一步：获取数据
+**目标：3 分钟内完成初筛，给出 ✓/⚠/✗，不追求数据精确到小数点。**
+
+### 第一步：本地数据获取（优先，无需网络）
 
 ```bash
-# 获取 A 股基本面数据（需要 AKShare）
-python -c "
-import akshare as ak
-# 财务报表
-df = ak.stock_financial_report_sina(stock='sh600000', symbol='资产负债表')
-print(df.head())
-"
+# 1. 财务数据（C/A 维度）— BaoStock，1秒内出结果
+python -m trading_os fundamental --symbols SSE:601138 --years 3
 
-# 或通过 trading-os 的数据湖查询已有数据
-python -m trading_os query-bars --symbols SSE:600000 --limit 10
+# 2. K线数据（如果本地没有，先获取）— BaoStock，无需代理
+python -m trading_os fetch-bs --exchange SSE --ticker 601138 --start 2023-01-01
+
+# 同时获取上证指数（M 维度需要）
+python -m trading_os fetch-bs --exchange SSE --ticker 000001 --start 2025-01-01
+
+# 3. 52周统计（N/L 维度）— 从本地K线计算，无需网络
+python -m trading_os 52week --symbols SSE:601138
+
+# 4. 大盘换筹日（M 维度）— 从本地指数K线计算，无需网络
+python -m trading_os market-breadth --index SSE:000001
 ```
 
-如果本地没有基本面数据，使用 web_search 搜索：
-- `{股票代码} 季报 EPS 增长`
-- `{股票代码} 机构持仓 最新`
-- `{股票代码} 近期新高`
+### 第二步：补充联网数据（仅当本地数据不足时）
+
+**用 WebSearch，不用 CDP 浏览器**（速度差 10 倍）：
+- C/A 维度补充：`WebSearch "{股票名称} 2025年报 净利润增速"`
+- N 维度（催化剂）：`WebSearch "{股票名称} 最新研报 新业务"`
+- I 维度（机构持仓）：`WebSearch "{股票代码} 机构持仓 基金重仓"`
+- M 维度（大盘状态）：直接根据已知宏观事件判断（如关税冲击、政策转向）
 
 ### 第二步：逐维度评分
 
@@ -326,28 +335,24 @@ M — 大盘方向：{跟进日/换筹日状态}  {评分}
 
 ## Trading OS 集成
 
-基本面数据获取：
+### 标准数据获取流程（按优先级）
 
-```bash
-# AKShare 获取 A 股财务数据
-python -c "
-import akshare as ak
-# ROE 数据
-roe_df = ak.stock_roe_em(symbol='600000')
-print(roe_df.tail(8))
+| 维度 | 数据来源 | 命令 | 网络需求 |
+|------|---------|------|---------|
+| C/A（EPS/ROE）| BaoStock | `fundamental --symbols` | 无需代理 |
+| N/L（52周高低）| 本地K线 | `52week --symbols` | 无需网络 |
+| M（大盘换筹日）| 本地指数K线 | `market-breadth` | 无需网络 |
+| S（成交量）| 本地K线 | `query-bars` 查看 | 无需网络 |
+| I（机构持仓）| WebSearch | 搜索关键词 | 需要网络 |
+| N（催化剂）| WebSearch | 搜索关键词 | 需要网络 |
 
-# 机构持仓
-inst_df = ak.stock_institute_hold(symbol='600000', quarter='20241')
-print(inst_df.head())
-"
+### 数据源说明
 
-# 北向资金持仓（外资）
-python -c "
-import akshare as ak
-north_df = ak.stock_hsgt_individual_em(symbol='sh600000')
-print(north_df.head())
-"
-```
+- **BaoStock**：国内直连，无需代理，覆盖 C/A/S 维度所需财务和K线数据
+- **AKShare**：境外 IP 的 `stock_zh_a_hist` 接口不可达（push2his.eastmoney.com 限制大陆IP），已自动 fallback 到新浪接口；`fundamental` 命令使用 BaoStock 不受影响
+- **WebSearch**：用于 I（机构持仓）和 N（催化剂）维度，直接搜索关键词，**不要用 CDP 浏览器**
+
+### 下一步衔接
 
 CANSLIM 评分结果如果通过（≥5/7），直接调用 `elder-screen` 做技术面确认：
 - 说"继续用三重滤网分析这只股票"

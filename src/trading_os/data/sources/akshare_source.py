@@ -76,34 +76,11 @@ def fetch_daily_bars(
         else:
             start = start.replace("-", "")
 
-        # 根据复权类型获取数据
-        if adjustment == Adjustment.QFQ:
-            # 前复权
-            df = ak.stock_zh_a_hist(
-                symbol=symbol_str,
-                period="daily",
-                start_date=start,
-                end_date=end,
-                adjust="qfq"
-            )
-        elif adjustment == Adjustment.HFQ:
-            # 后复权
-            df = ak.stock_zh_a_hist(
-                symbol=symbol_str,
-                period="daily",
-                start_date=start,
-                end_date=end,
-                adjust="hfq"
-            )
-        else:
-            # 不复权
-            df = ak.stock_zh_a_hist(
-                symbol=symbol_str,
-                period="daily",
-                start_date=start,
-                end_date=end,
-                adjust=""
-            )
+        # 根据复权类型获取数据（优先东财接口，失败自动 fallback 新浪）
+        adjust_map = {Adjustment.QFQ: "qfq", Adjustment.HFQ: "hfq", Adjustment.NONE: ""}
+        adjust_str = adjust_map.get(adjustment, "")
+
+        df = _fetch_with_fallback(ak, symbol_str, start, end, adjust_str)
 
         if df is None or df.empty:
             logger.warning(f"未获取到数据: {symbol_str}")
@@ -118,6 +95,56 @@ def fetch_daily_bars(
     except Exception as e:
         logger.error(f"获取A股数据失败 {symbol_str}: {e}")
         raise RuntimeError(f"akshare数据获取失败: {e}") from e
+
+
+def _fetch_with_fallback(ak, symbol_str: str, start: str, end: str, adjust: str) -> "pd.DataFrame":
+    """先用东财接口，失败自动 fallback 到新浪接口。
+
+    东财（push2his.eastmoney.com）：境外 IP 不可达。
+    新浪（finance.sina.com.cn）：无地区限制，本机可用。
+    """
+    import pandas as pd
+
+    # 主路：东财
+    try:
+        df = ak.stock_zh_a_hist(
+            symbol=symbol_str,
+            period="daily",
+            start_date=start,
+            end_date=end,
+            adjust=adjust,
+        )
+        if df is not None and not df.empty:
+            logger.debug(f"东财接口成功: {symbol_str}")
+            return df
+    except Exception as e:
+        logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
+
+    # Fallback：新浪
+    try:
+        adjust_sina = {"qfq": "qfq", "hfq": "hfq", "": None}.get(adjust, None)
+        df = ak.stock_zh_a_daily(symbol=symbol_str, adjust=adjust_sina)
+        if df is None or df.empty:
+            return pd.DataFrame()
+
+        # 新浪接口列名不同，统一映射
+        df = df.rename(columns={
+            "date": "日期",
+            "open": "开盘",
+            "high": "最高",
+            "low": "最低",
+            "close": "收盘",
+            "volume": "成交量",
+        })
+        # 新浪无成交额，补充占位列
+        if "成交额" not in df.columns:
+            df["成交额"] = None
+
+        logger.info(f"新浪接口成功: {symbol_str}，共{len(df)}条")
+        return df
+    except Exception as e2:
+        logger.error(f"新浪接口也失败({symbol_str}): {e2}")
+        return pd.DataFrame()
 
 
 def _build_akshare_symbol(ticker: str, exchange: Exchange) -> str:
