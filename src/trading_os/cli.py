@@ -181,6 +181,32 @@ def _cmd_fundamental(ns: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_valuation(ns: argparse.Namespace) -> int:
+    """计算股票内在价值（EPV / DCF / PEG），参数由调用方显式传入。"""
+    from .data.sources.valuation_source import calculate_valuation
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    for sym in symbols:
+        result = calculate_valuation(
+            sym,
+            cost_of_capital=float(ns.cost_of_capital),
+            moat=ns.moat,
+            sustainable_profit_years=int(ns.epv_years),
+            growth_rate=float(ns.growth_rate) if ns.growth_rate else None,
+            growth_years=int(ns.growth_years),
+            terminal_pe=float(ns.terminal_pe),
+            discount_rate=float(ns.discount_rate) if ns.discount_rate else None,
+            peg_target=float(ns.peg_target),
+            growth_cagr=float(ns.growth_cagr) if ns.growth_cagr else None,
+        )
+        if result.get("error"):
+            print(f"估值失败 {sym}: {result['error']}", file=__import__("sys").stderr)
+            continue
+        print(result["summary_text"])
+        print()
+    return 0
+
+
 def _cmd_52week(ns: argparse.Namespace) -> int:
     """计算股票52周高低点统计（从本地K线，无需网络）。"""
     from .data.sources.fundamental_source import get_52week_stats
@@ -399,6 +425,28 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:600519,SSE:600000")
     p.add_argument("--years", type=int, default=5, help="获取最近几年数据（默认5年）")
     p.set_defaults(func=_cmd_fundamental)
+
+    p = sub.add_parser("valuation", help="计算股票内在价值（EPV/DCF/PEG），参数由AI根据分析结果传入")
+    p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:601138")
+    p.add_argument("--cost-of-capital", default="0.09",
+                   help="资本成本：宽护城河取0.07，窄护城河取0.09，无护城河取0.12")
+    p.add_argument("--moat", choices=["wide", "narrow", "none"], default="narrow",
+                   help="护城河宽度，影响安全边际要求")
+    p.add_argument("--epv-years", type=int, default=3,
+                   help="EPV 使用最近几年均值利润（默认3年）")
+    p.add_argument("--growth-rate", default=None,
+                   help="DCF 增速假设，如0.30（不传则跳过DCF）")
+    p.add_argument("--growth-years", type=int, default=5,
+                   help="高增速持续年数（默认5年）")
+    p.add_argument("--terminal-pe", type=float, default=15.0,
+                   help="终止PE，成熟代工企业约12-15x，消费品约18-20x")
+    p.add_argument("--discount-rate", default=None,
+                   help="DCF折现率（不传则用资本成本+3%）")
+    p.add_argument("--peg-target", type=float, default=1.0,
+                   help="目标PEG（默认1.0）")
+    p.add_argument("--growth-cagr", default=None,
+                   help="PEG使用的增速CAGR（不传则从财务数据自动推算）")
+    p.set_defaults(func=_cmd_valuation)
 
     p = sub.add_parser("52week", help="计算股票52周高低点统计（从本地K线）")
     p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:601138")

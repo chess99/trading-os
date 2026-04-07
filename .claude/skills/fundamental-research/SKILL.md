@@ -866,36 +866,71 @@ print(cashflow[['报告期','经营活动现金流量净额','资本支出']].he
 
 ## Trading OS 集成
 
-**财务数据（BaoStock，免费，国内直连）**：
+**⚠️ 重要原则：估值必须调用程序计算，禁止 LLM 口算**
 
-```python
-from trading_os.data.sources.fundamental_source import get_financial_summary
+所有估值数字必须来自 `valuation` 命令的输出，不允许在分析文字中直接给出估值数字而不展示计算过程。
 
-# 获取财务摘要（自动格式化，可直接插入分析）
-data = get_financial_summary("SSE:600519", years=5)
-print(data["summary_text"])  # 盈利能力、成长能力、偿债能力历史表格
+---
 
-# 也可以访问原始数据
-for q in data["profitability"][:4]:  # 最近4个季度
-    print(q["period"], q["roe"], q["net_margin"])
-```
-
-覆盖指标：
-- 盈利能力：ROE、净利率、毛利率、净利润、EPS(TTM)
-- 成长能力：净利润同比增速、EPS增速、净资产增速
-- 偿债能力：资产负债率、流动比率、权益乘数
-
-**行情数据（配合估值分析）**：
+### 标准研究流程（按顺序执行）
 
 ```bash
-python -m trading_os query-bars --symbols SSE:600000 --adjustment qfq --limit 252
+# 步骤 1：获取财务数据（BaoStock，无需代理）
+python -m trading_os fundamental --symbols SSE:601138 --years 5
+
+# 步骤 2：获取52周行情统计
+python -m trading_os 52week --symbols SSE:601138
+
+# 步骤 3：大盘状态（M 维度）
+python -m trading_os market-breadth
 ```
 
-**完整研究流程**：
-1. `get_financial_summary("SSE:600519")` — 获取财务数据
-2. `query-bars` — 获取行情数据（计算历史 PE/PB）
-3. 运行 fundamental-research 分析（LLM 结合两类数据）
-4. 研究完成后，说"用三重滤网分析入场时机" → 触发 elder-screen
+步骤 1-3 完成后，AI 根据财务数据和护城河分析，**决定参数**，然后执行步骤 4：
 
-研究报告建议保存到 `artifacts/research/{股票代码}_{日期}.md`，
-供后续定期复查（建议每季度更新一次，检查逻辑止损条件是否触发）。
+```bash
+# 步骤 4：估值计算（参数由 AI 根据分析结果决定后传入）
+python -m trading_os valuation \
+  --symbols SSE:601138 \
+  --cost-of-capital 0.09 \   # AI 决定：宽护城河0.07，窄0.09，无0.12
+  --moat narrow \             # AI 决定：wide / narrow / none
+  --epv-years 3 \             # 通常取3，周期性行业取5
+  --growth-rate 0.25 \        # AI 决定：基于成长性分析，无成长预期则不传
+  --growth-years 5 \          # AI 决定：高增速可持续几年
+  --terminal-pe 15 \          # AI 决定：代工12-15x，消费品18-20x，科技15-20x
+  --peg-target 1.0            # 通常1.0，高确定性成长股可用1.2
+```
+
+### 参数决策指引
+
+| 参数 | 决策依据 | 典型值 |
+|------|---------|--------|
+| `--cost-of-capital` | 护城河宽度 + 行业风险 | 宽护城河→0.07，窄→0.09，无→0.12 |
+| `--moat` | Fisher 15要点 + 格林沃尔德分析 | wide/narrow/none |
+| `--growth-rate` | 近3年CAGR + 行业趋势判断 | 保守取历史CAGR×0.7 |
+| `--terminal-pe` | 行业成熟期合理估值 | 代工12-15x，消费品18-20x |
+| `--epv-years` | 利润稳定性 | 稳定取3，周期性取5 |
+
+**参数必须在分析报告中明确说明选择理由**，例如：
+> "工业富联为代工制造，无定价权，判断为无护城河（none），资本成本取12%；
+> AI服务器需求具有周期性，保守取30%增速（低于历史52%），持续5年；
+> 终止PE取15x（代工企业成熟期合理水平）。"
+
+### 覆盖指标
+
+财务数据（`fundamental` 命令）：
+- 盈利能力：ROE、净利率、毛利率、净利润、EPS(TTM)
+- 成长能力：净利润同比增速、EPS增速、净资产增速
+- 偿债能力：资产负债率、流动比率
+
+估值输出（`valuation` 命令）：
+- EPV：无成长假设的永续折现价值
+- DCF：5年成长期折现价值（需传入增速假设）
+- PEG：林奇PEG法合理价格
+- 安全边际：各方法对应买入线
+- 市场隐含假设反推：当前股价隐含的稳态利润预期
+
+### 后续衔接
+
+研究完成后：
+- 说"用三重滤网分析入场时机" → 触发 `elder-screen`
+- 研究报告建议保存到 `artifacts/research/{股票代码}_{日期}.md`，每季度复查逻辑止损条件
