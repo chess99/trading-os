@@ -1,17 +1,35 @@
+"""Trading OS CLI.
+
+Commands:
+    lake-init      Initialize DuckDB/Parquet data lake
+    fetch-ak       Fetch A-share daily bars from AKShare
+    fetch-yf       Fetch bars from yfinance (US/HK stocks)
+    seed           Seed synthetic bars (offline testing)
+    query-bars     Query bars from the local lake
+    backtest       Run backtest with A-share rules (ma/bh/rsi/agent)
+    paper          Paper trading (ma/bh/rsi/agent)
+    agent          One-shot Claude agent analysis
+    paths          Print key repo paths
+"""
 from __future__ import annotations
 
 import argparse
+import os
+from datetime import date as date_type
 from datetime import datetime, timezone
 import sys
 
 from .paths import repo_root
 
 
+# ---------------------------------------------------------------------------
+# Data commands
+# ---------------------------------------------------------------------------
+
 def _cmd_paths(_: argparse.Namespace) -> int:
     root = repo_root()
     print(f"repo_root: {root}")
     print(f"docs:      {root / 'docs'}")
-    print(f"journal:   {root / 'journal'}")
     print(f"data:      {root / 'data'}")
     print(f"artifacts: {root / 'artifacts'}")
     return 0
@@ -27,6 +45,65 @@ def _cmd_lake_init(_: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_fetch_ak(ns: argparse.Namespace) -> int:
+    from .data.lake import LocalDataLake
+    from .data.schema import Adjustment, Exchange, Timeframe
+    from .data.sources.akshare_source import fetch_daily_bars
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+    exch = Exchange(ns.exchange)
+    adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
+
+    try:
+        print(f"获取A股数据: {exch.value}:{ns.ticker} (复权: {adj.value})")
+        df = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
+        if df.empty:
+            print("未获取到数据")
+            return 1
+        lake.write_bars_parquet(
+            df, exchange=exch, timeframe=Timeframe.D1, adjustment=adj,
+            source="akshare", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+        )
+        lake.init()
+        print(f"写入 {len(df)} 条: {exch.value}:{ns.ticker}")
+        print(f"数据范围: {df['ts'].min().date()} 至 {df['ts'].max().date()}")
+        return 0
+    except Exception as e:
+        print(f"获取A股数据失败: {e}", file=sys.stderr)
+        return 1
+
+
+def _cmd_fetch_bs(ns: argparse.Namespace) -> int:
+    """从 BaoStock 获取 A 股数据（国内直连，无需代理）。"""
+    from .data.lake import LocalDataLake
+    from .data.schema import Adjustment, Exchange, Timeframe
+    from .data.sources.baostock_source import fetch_daily_bars
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+    exch = Exchange(ns.exchange)
+    adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
+
+    try:
+        print(f"获取A股数据(BaoStock): {exch.value}:{ns.ticker} (复权: {adj.value})")
+        df = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
+        if df.empty:
+            print("未获取到数据")
+            return 1
+        lake.write_bars_parquet(
+            df, exchange=exch, timeframe=Timeframe.D1, adjustment=adj,
+            source="baostock", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+        )
+        lake.init()
+        print(f"写入 {len(df)} 条: {exch.value}:{ns.ticker}")
+        print(f"数据范围: {df['ts'].min().date()} 至 {df['ts'].max().date()}")
+        return 0
+    except Exception as e:
+        print(f"获取数据失败: {e}", file=sys.stderr)
+        return 1
+
+
 def _cmd_fetch_yf(ns: argparse.Namespace) -> int:
     from .data.lake import LocalDataLake
     from .data.schema import Adjustment, Exchange, Timeframe
@@ -34,127 +111,18 @@ def _cmd_fetch_yf(ns: argparse.Namespace) -> int:
 
     root = repo_root()
     lake = LocalDataLake(root / "data")
-
     exch = Exchange(ns.exchange)
-    tf = Timeframe.D1
-    adj = Adjustment.NONE
-
     df = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end)
     if df.empty:
         print("No data fetched.")
         return 1
-
     lake.write_bars_parquet(
-        df,
-        exchange=exch,
-        timeframe=tf,
-        adjustment=adj,
-        source="yfinance",
-        partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+        df, exchange=exch, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
+        source="yfinance", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
     )
     lake.init()
     print(f"Wrote {len(df)} rows for {exch.value}:{ns.ticker}")
     return 0
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="trading_os", description="Trading OS CLI")
-    sub = parser.add_subparsers(dest="cmd", required=True)
-
-    p_paths = sub.add_parser("paths", help="Print key repo paths")
-    p_paths.set_defaults(func=_cmd_paths)
-
-    p_lake = sub.add_parser("lake-init", help="Initialize local DuckDB/Parquet data lake")
-    p_lake.set_defaults(func=_cmd_lake_init)
-
-    p_yf = sub.add_parser("fetch-yf", help="Fetch daily bars from yfinance into the lake")
-    p_yf.add_argument("--exchange", required=True, help="Exchange code, e.g. NASDAQ/NYSE")
-    p_yf.add_argument("--ticker", required=True, help="Yahoo ticker, e.g. AAPL")
-    p_yf.add_argument("--start", default=None, help="Start date (YYYY-MM-DD)")
-    p_yf.add_argument("--end", default=None, help="End date (YYYY-MM-DD)")
-    p_yf.set_defaults(func=_cmd_fetch_yf)
-
-    p_seed = sub.add_parser("seed", help="Seed synthetic daily bars into the lake (offline)")
-    p_seed.add_argument("--exchange", required=True, help="Exchange code, e.g. NASDAQ")
-    p_seed.add_argument("--ticker", required=True, help="Ticker, e.g. TEST")
-    p_seed.add_argument("--days", type=int, default=60, help="Number of days to generate")
-    p_seed.set_defaults(func=_cmd_seed)
-
-    p_q = sub.add_parser("query-bars", help="Query bars from the local lake")
-    p_q.add_argument("--exchange", default=None, help="Exchange code filter (optional)")
-    p_q.add_argument("--symbols", default=None, help="Comma-separated symbol ids (EXCHANGE:TICKER)")
-    p_q.add_argument("--timeframe", default="1d", help="Timeframe (default: 1d)")
-    p_q.add_argument("--adjustment", default="none", help="Adjustment (default: none)")
-    p_q.add_argument("--start", default=None, help="Start (ISO date/timestamp)")
-    p_q.add_argument("--end", default=None, help="End (ISO date/timestamp)")
-    p_q.add_argument("--limit", type=int, default=20, help="Max rows to print")
-    p_q.set_defaults(func=_cmd_query_bars)
-
-    p_bt = sub.add_parser("backtest-sma", help="Run SMA crossover backtest for a symbol")
-    p_bt.add_argument("--symbol", required=True, help="Symbol id (EXCHANGE:TICKER)")
-    p_bt.add_argument("--fast", type=int, default=10, help="Fast SMA window")
-    p_bt.add_argument("--slow", type=int, default=30, help="Slow SMA window")
-    p_bt.add_argument("--timeframe", default="1d", help="Timeframe (default: 1d)")
-    p_bt.add_argument("--adjustment", default="none", help="Adjustment (default: none)")
-    p_bt.add_argument("--start", default=None, help="Start (ISO date/timestamp)")
-    p_bt.add_argument("--end", default=None, help="End (ISO date/timestamp)")
-    p_bt.add_argument("--initial-cash", type=float, default=100_000.0)
-    p_bt.add_argument("--fee-bps", type=float, default=1.0)
-    p_bt.add_argument("--slippage-bps", type=float, default=2.0)
-    p_bt.set_defaults(func=_cmd_backtest_sma)
-
-    p_bh = sub.add_parser("backtest-bh", help="Run buy & hold backtest for a symbol")
-    p_bh.add_argument("--symbol", required=True, help="Symbol id (EXCHANGE:TICKER)")
-    p_bh.add_argument("--timeframe", default="1d", help="Timeframe (default: 1d)")
-    p_bh.add_argument("--adjustment", default="none", help="Adjustment (default: none)")
-    p_bh.add_argument("--start", default=None, help="Start (ISO date/timestamp)")
-    p_bh.add_argument("--end", default=None, help="End (ISO date/timestamp)")
-    p_bh.add_argument("--initial-cash", type=float, default=100_000.0)
-    p_bh.add_argument("--fee-bps", type=float, default=1.0)
-    p_bh.add_argument("--slippage-bps", type=float, default=2.0)
-    p_bh.set_defaults(func=_cmd_backtest_bh)
-
-    p_paper = sub.add_parser("paper-run-sma", help="Paper trade SMA crossover and write event log")
-    p_paper.add_argument("--symbol", required=True, help="Symbol id (EXCHANGE:TICKER)")
-    p_paper.add_argument("--fast", type=int, default=10, help="Fast SMA window")
-    p_paper.add_argument("--slow", type=int, default=30, help="Slow SMA window")
-    p_paper.add_argument("--timeframe", default="1d", help="Timeframe (default: 1d)")
-    p_paper.add_argument("--adjustment", default="none", help="Adjustment (default: none)")
-    p_paper.add_argument("--start", default=None, help="Start (ISO date/timestamp)")
-    p_paper.add_argument("--end", default=None, help="End (ISO date/timestamp)")
-    p_paper.add_argument("--initial-cash", type=float, default=100_000.0)
-    p_paper.add_argument("--fee-bps", type=float, default=1.0)
-    p_paper.add_argument("--slippage-bps", type=float, default=2.0)
-    p_paper.add_argument("--max-gross", type=float, default=1.0, help="Max gross exposure pct")
-    p_paper.add_argument("--max-pos", type=float, default=1.0, help="Max single position pct")
-    p_paper.add_argument("--cooldown", type=int, default=0, help="Cooldown bars after a trade")
-    p_paper.add_argument("--stop-loss", type=float, default=None, help="Stop loss pct (e.g. 0.1)")
-    p_paper.add_argument("--max-daily-loss", type=float, default=None, help="Max daily loss pct (e.g. 0.03)")
-    p_paper.add_argument("--circuit-breaker", type=float, default=None, help="Peak-to-valley drawdown halt pct (e.g. 0.1)")
-    p_paper.set_defaults(func=_cmd_paper_run_sma)
-
-    p_dr = sub.add_parser(
-        "draft-review", help="Generate a review draft from a paper-trading JSONL event log"
-    )
-    p_dr.add_argument("--events", required=True, help="Path to events_*.jsonl (absolute or repo-relative)")
-    p_dr.add_argument("--decision", default=None, help="Decision markdown path to include (optional)")
-    p_dr.add_argument(
-        "--out",
-        default=None,
-        help="Output markdown path (default: journal/reviews/<date>_<symbol>_auto.md)",
-    )
-    p_dr.add_argument("--overwrite", action="store_true", help="Overwrite output file if exists")
-    p_dr.set_defaults(func=_cmd_draft_review)
-
-    ns = parser.parse_args(argv)
-    func = getattr(ns, "func", None)
-    if not callable(func):
-        return 2
-    try:
-        return int(func(ns))
-    except RuntimeError as e:
-        print(str(e), file=sys.stderr)
-        return 1
 
 
 def _cmd_seed(ns: argparse.Namespace) -> int:
@@ -164,20 +132,11 @@ def _cmd_seed(ns: argparse.Namespace) -> int:
 
     root = repo_root()
     lake = LocalDataLake(root / "data")
-
     exch = Exchange(ns.exchange)
-    tf = Timeframe.D1
-    adj = Adjustment.NONE
-
-    df = make_daily_bars(ns.ticker, exchange=exch)
-    df = df.head(int(ns.days))
+    df = make_daily_bars(ns.ticker, exchange=exch).head(int(ns.days))
     lake.write_bars_parquet(
-        df,
-        exchange=exch,
-        timeframe=tf,
-        adjustment=adj,
-        source="synthetic",
-        partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+        df, exchange=exch, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
+        source="synthetic", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
     )
     lake.init()
     print(f"Seeded {len(df)} rows for {exch.value}:{ns.ticker}")
@@ -190,219 +149,448 @@ def _cmd_query_bars(ns: argparse.Namespace) -> int:
 
     root = repo_root()
     lake = LocalDataLake(root / "data")
-
     exch = Exchange(ns.exchange) if ns.exchange else None
-    tf = Timeframe(ns.timeframe)
-    adj = Adjustment(ns.adjustment)
-
-    symbols = None
-    if ns.symbols:
-        symbols = [s.strip() for s in ns.symbols.split(",") if s.strip()]
-
+    symbols = [s.strip() for s in ns.symbols.split(",")] if ns.symbols else None
     df = lake.query_bars(
-        symbols=symbols,
-        exchange=exch,
-        timeframe=tf,
-        adjustment=adj,
-        start=ns.start,
-        end=ns.end,
-        limit=ns.limit,
+        symbols=symbols, exchange=exch,
+        timeframe=Timeframe(ns.timeframe), adjustment=Adjustment(ns.adjustment),
+        start=ns.start, end=ns.end, limit=ns.limit,
     )
     print(df)
     return 0
 
 
-def _cmd_backtest_sma(ns: argparse.Namespace) -> int:
-    from .backtest.engine import BacktestConfig, run_backtest
-    from .backtest.metrics import compute_performance_metrics
-    from .backtest.strategies import sma_crossover_signals
-    from .data.lake import LocalDataLake
-    from .data.schema import Adjustment, Timeframe
+# ---------------------------------------------------------------------------
+# Strategy builder (shared)
+# ---------------------------------------------------------------------------
 
-    root = repo_root()
-    lake = LocalDataLake(root / "data")
+def _cmd_fundamental(ns: argparse.Namespace) -> int:
+    """获取股票财务摘要（BaoStock，免费，无需代理）。"""
+    from .data.sources.fundamental_source import get_financial_summary
 
-    bars = lake.query_bars(
-        symbols=[ns.symbol],
-        timeframe=Timeframe(ns.timeframe),
-        adjustment=Adjustment(ns.adjustment),
-        start=ns.start,
-        end=ns.end,
-        limit=None,
-    )
-    if bars.empty:
-        raise RuntimeError("No bars found for requested query.")
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    years = int(ns.years)
 
-    cfg = BacktestConfig(
-        initial_cash=float(ns.initial_cash),
-        fee_bps=float(ns.fee_bps),
-        slippage_bps=float(ns.slippage_bps),
-    )
-    res = run_backtest(
-        bars,
-        signals_fn=lambda b: sma_crossover_signals(b, fast=int(ns.fast), slow=int(ns.slow)),
-        config=cfg,
-    )
-    m = compute_performance_metrics(res.equity_curve)
-
-    print(f"symbol: {res.symbol}")
-    print(f"total_return: {m.total_return:.4f}")
-    print(f"max_drawdown: {m.max_drawdown:.4f}")
-    if m.sharpe is not None:
-        print(f"sharpe: {m.sharpe:.3f}")
-    if m.cagr is not None:
-        print(f"cagr: {m.cagr:.4f}")
-    print(f"trades: {len(res.trades)}")
-    print(res.equity_curve.tail(5))
+    for sym in symbols:
+        data = get_financial_summary(sym, years=years)
+        if data.get("error") and not data.get("profitability"):
+            print(f"获取失败 {sym}: {data['error']}", file=sys.stderr)
+            continue
+        print(data["summary_text"])
+        print()
     return 0
 
 
-def _cmd_backtest_bh(ns: argparse.Namespace) -> int:
-    from .backtest.engine import BacktestConfig, run_backtest
-    from .backtest.metrics import compute_performance_metrics
-    from .backtest.strategies import buy_and_hold_signals
-    from .data.lake import LocalDataLake
-    from .data.schema import Adjustment, Timeframe
+def _cmd_valuation(ns: argparse.Namespace) -> int:
+    """计算股票内在价值（EPV / DCF / PEG），参数由调用方显式传入。"""
+    from .data.sources.valuation_source import calculate_valuation
 
-    root = repo_root()
-    lake = LocalDataLake(root / "data")
-
-    bars = lake.query_bars(
-        symbols=[ns.symbol],
-        timeframe=Timeframe(ns.timeframe),
-        adjustment=Adjustment(ns.adjustment),
-        start=ns.start,
-        end=ns.end,
-        limit=None,
-    )
-    if bars.empty:
-        raise RuntimeError("No bars found for requested query.")
-
-    cfg = BacktestConfig(
-        initial_cash=float(ns.initial_cash),
-        fee_bps=float(ns.fee_bps),
-        slippage_bps=float(ns.slippage_bps),
-    )
-    res = run_backtest(bars, signals_fn=buy_and_hold_signals, config=cfg)
-    m = compute_performance_metrics(res.equity_curve)
-    print(f"symbol: {res.symbol}")
-    print(f"total_return: {m.total_return:.4f}")
-    print(f"max_drawdown: {m.max_drawdown:.4f}")
-    if m.sharpe is not None:
-        print(f"sharpe: {m.sharpe:.3f}")
-    if m.cagr is not None:
-        print(f"cagr: {m.cagr:.4f}")
-    print(f"trades: {len(res.trades)}")
-    print(res.equity_curve.tail(5))
-    return 0
-
-
-def _cmd_paper_run_sma(ns: argparse.Namespace) -> int:
-    from pathlib import Path
-
-    from .backtest.strategies import sma_crossover_signals
-    from .data.lake import LocalDataLake
-    from .data.schema import Adjustment, Timeframe
-    from .execution.engine import PaperEngineConfig, PaperTradingEngine
-    from .journal.event_log import EventLog
-    from .risk.manager import RiskConfig, RiskManager
-
-    root = repo_root()
-    lake = LocalDataLake(root / "data")
-    bars = lake.query_bars(
-        symbols=[ns.symbol],
-        timeframe=Timeframe(ns.timeframe),
-        adjustment=Adjustment(ns.adjustment),
-        start=ns.start,
-        end=ns.end,
-        limit=None,
-    )
-    if bars.empty:
-        raise RuntimeError("No bars found for requested query.")
-
-    log_path = Path(root / "artifacts" / "paper" / f"events_{ns.symbol.replace(':', '_')}.jsonl")
-    elog = EventLog(log_path)
-
-    # record the "decision" (strategy run configuration) up-front for traceability
-    elog.write(
-        {
-            "ts": datetime.now(timezone.utc).isoformat(),
-            "kind": "decision",
-            "payload": {
-                "engine": "paper-run-sma",
-                "symbol": ns.symbol,
-                "strategy": {"name": "sma_crossover", "fast": int(ns.fast), "slow": int(ns.slow)},
-                "bars": {"timeframe": ns.timeframe, "adjustment": ns.adjustment},
-                "costs": {"fee_bps": float(ns.fee_bps), "slippage_bps": float(ns.slippage_bps)},
-                "risk": {
-                    "max_gross": float(ns.max_gross),
-                    "max_pos": float(ns.max_pos),
-                    "cooldown": int(ns.cooldown),
-                    "stop_loss": float(ns.stop_loss) if ns.stop_loss is not None else None,
-                    "max_daily_loss": float(ns.max_daily_loss) if ns.max_daily_loss is not None else None,
-                    "circuit_breaker": float(ns.circuit_breaker) if ns.circuit_breaker is not None else None,
-                },
-            },
-        }
-    )
-
-    risk = RiskManager(
-        RiskConfig(
-            max_gross_exposure_pct=float(ns.max_gross),
-            max_position_pct=float(ns.max_pos),
-            cooldown_bars=int(ns.cooldown),
-            stop_loss_pct=float(ns.stop_loss) if ns.stop_loss is not None else None,
-            max_daily_loss_pct=float(ns.max_daily_loss) if ns.max_daily_loss is not None else None,
-            circuit_breaker_drawdown_pct=float(ns.circuit_breaker)
-            if ns.circuit_breaker is not None
-            else None,
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    for sym in symbols:
+        result = calculate_valuation(
+            sym,
+            cost_of_capital=float(ns.cost_of_capital),
+            moat=ns.moat,
+            sustainable_profit_years=int(ns.epv_years),
+            growth_rate=float(ns.growth_rate) if ns.growth_rate else None,
+            growth_years=int(ns.growth_years),
+            terminal_pe=float(ns.terminal_pe),
+            discount_rate=float(ns.discount_rate) if ns.discount_rate else None,
+            peg_target=float(ns.peg_target),
+            growth_cagr=float(ns.growth_cagr) if ns.growth_cagr else None,
         )
-    )
-    engine = PaperTradingEngine(
-        config=PaperEngineConfig(
-            initial_cash=float(ns.initial_cash),
-            fee_bps=float(ns.fee_bps),
-            slippage_bps=float(ns.slippage_bps),
-        ),
-        risk=risk,
-        event_log=elog,
-    )
-    curve = engine.run_single_symbol(
-        bars,
-        signals_fn=lambda b: sma_crossover_signals(b, fast=int(ns.fast), slow=int(ns.slow)),
-    )
-    print(f"wrote_events: {log_path}")
-    print(curve.tail(5))
+        if result.get("error"):
+            print(f"估值失败 {sym}: {result['error']}", file=__import__("sys").stderr)
+            continue
+        print(result["summary_text"])
+        print()
     return 0
 
 
-def _cmd_draft_review(ns: argparse.Namespace) -> int:
-    from pathlib import Path
+def _cmd_valuation_sensitivity(ns: argparse.Namespace) -> int:
+    """计算估值敏感性矩阵，展示关键参数变化对估值的影响范围。"""
+    from .data.sources.valuation_source import calculate_sensitivity
 
-    from .journal.review_draft import write_review_draft
+    growth_rates = [float(x) for x in ns.growth_rates.split(",")] if ns.growth_rates else None
+    terminal_pes = [float(x) for x in ns.terminal_pes.split(",")] if ns.terminal_pes else None
+    costs = [float(x) for x in ns.costs_of_capital.split(",")] if ns.costs_of_capital else None
+    profits = [float(x) for x in ns.sustainable_profits.split(",")] if ns.sustainable_profits else None
+
+    result = calculate_sensitivity(
+        ns.symbol,
+        method=ns.method,
+        base_profit_bn=float(ns.base_profit),
+        growth_rates=growth_rates,
+        terminal_pes=terminal_pes,
+        growth_years=int(ns.growth_years),
+        discount_rate=float(ns.discount_rate),
+        sustainable_profits_bn=profits,
+        costs_of_capital=costs,
+    )
+    print(result["summary_text"])
+    return 0
+
+
+def _cmd_valuation_sotp(ns: argparse.Namespace) -> int:
+    """分部估值（Sum-of-the-Parts）。各板块参数通过 JSON 文件传入。"""
+    import json, sys
+    from .data.sources.valuation_source import calculate_sotp
+
+    try:
+        with open(ns.segments_file) as f:
+            segments = json.load(f)
+    except Exception as e:
+        print(f"读取分部参数失败: {e}", file=sys.stderr)
+        print("segments_file 应为 JSON 数组，每项包含 name/profit_bn/method/multiple/note 等字段", file=sys.stderr)
+        return 1
+
+    result = calculate_sotp(ns.symbol, segments)
+    print(result["summary_text"])
+    return 0
+
+
+def _cmd_52week(ns: argparse.Namespace) -> int:
+    """计算股票52周高低点统计（从本地K线，无需网络）。"""
+    from .data.sources.fundamental_source import get_52week_stats
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    for sym in symbols:
+        result = get_52week_stats(sym)
+        print(result["summary_text"])
+        print()
+    return 0
+
+
+def _cmd_market_breadth(ns: argparse.Namespace) -> int:
+    """计算大盘换筹日数量，判断市场状态（从本地K线，无需网络）。"""
+    from .data.sources.fundamental_source import get_market_breadth
+
+    result = get_market_breadth(ns.index, lookback_days=int(ns.days))
+    print(result["summary_text"])
+    return 0
+
+
+def _build_strategy(ns: argparse.Namespace):
+    name = ns.strategy.lower()
+    if name in ("ma", "macross"):
+        from .strategy.builtin import MACrossStrategy
+        return MACrossStrategy(fast=int(getattr(ns, "fast", 5)), slow=int(getattr(ns, "slow", 20)))
+    elif name in ("bh", "buyandhold"):
+        from .strategy.builtin import BuyAndHoldStrategy
+        return BuyAndHoldStrategy()
+    elif name == "rsi":
+        from .strategy.builtin import RSIStrategy
+        return RSIStrategy()
+    elif name == "agent":
+        from .strategy.agent import AgentConfig, AgentStrategy
+        confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
+        # 从环境变量读取 LLM 配置（支持 MiniMax/通义千问等 OpenAI 兼容接口）
+        # LLM_MODEL=MiniMax-M2.7 LLM_BASE_URL=https://api.minimaxi.com/v1 LLM_API_KEY=sk-...
+        model = os.environ.get("LLM_MODEL", "claude-opus-4-6")
+        base_url = os.environ.get("LLM_BASE_URL") or None
+        api_key = os.environ.get("LLM_API_KEY") or None
+        return AgentStrategy(AgentConfig(
+            model=model,
+            api_base_url=base_url,
+            api_key=api_key,
+            confirm_mode=confirm,
+            cache_dir=str(repo_root() / "artifacts" / "agent_cache"),
+        ))
+    else:
+        raise ValueError(f"Unknown strategy: {name!r}. Available: ma, bh, rsi, agent")
+
+
+def _parse_date(s: str | None) -> date_type | None:
+    return date_type.fromisoformat(s) if s else None
+
+
+# ---------------------------------------------------------------------------
+# Backtest
+# ---------------------------------------------------------------------------
+
+def _cmd_backtest(ns: argparse.Namespace) -> int:
+    from .backtest.runner import BacktestConfig, BacktestRunner
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
 
     root = repo_root()
-    events_path = Path(ns.events).expanduser()
-    if not events_path.is_absolute():
-        events_path = root / events_path
+    pipeline = DataPipeline(LocalDataLake(root / "data"))
 
-    if ns.out:
-        out_path = Path(ns.out).expanduser()
-        if not out_path.is_absolute():
-            out_path = root / out_path
-    else:
-        today = datetime.now(timezone.utc).date().isoformat()
-        # derive symbol from filename when possible, e.g. events_NASDAQ_TEST.jsonl
-        stem = events_path.stem
-        safe_symbol = stem.removeprefix("events_") if stem.startswith("events_") else stem
-        out_path = root / "journal" / "reviews" / f"{today}_{safe_symbol}_auto.md"
+    try:
+        strategy = _build_strategy(ns)
+    except ValueError as e:
+        print(str(e), file=sys.stderr)
+        return 1
 
-    out = write_review_draft(
-        events_path=events_path,
-        out_path=out_path,
-        decision_path=ns.decision,
-        overwrite=bool(ns.overwrite),
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    start = _parse_date(ns.start) or date_type(2022, 1, 1)
+    end = _parse_date(ns.end) or date_type.today()
+
+    runner = BacktestRunner(
+        strategy=strategy,
+        pipeline=pipeline,
+        config=BacktestConfig(initial_cash=float(ns.initial_cash)),
     )
-    print(f"wrote_review: {out}")
+
+    print(f"Backtest: {ns.strategy} | {symbols} | {start} → {end}")
+    result = runner.run(symbols=symbols, start=start, end=end)
+    s = result.summary()
+
+    print(f"\n{'='*52}")
+    print(f"  Total Return:      {s.get('total_return', 0):>8.2f}%")
+    print(f"  Annualized Return: {s.get('annualized_return', 0):>8.2f}%")
+    print(f"  Sharpe Ratio:      {s.get('sharpe_ratio', 0):>8.3f}")
+    print(f"  Max Drawdown:      {s.get('max_drawdown', 0):>8.2f}%")
+    print(f"  Final NAV:         {s.get('final_nav', 0):>14,.2f} CNY")
+    print(f"  Trades:            {s.get('trades', 0):>8}")
+    print(f"{'='*52}")
+
+    if not result.equity_curve.empty:
+        print("\nEquity curve (last 5 rows):")
+        print(result.equity_curve.tail(5).to_string(index=False))
     return 0
 
+
+# ---------------------------------------------------------------------------
+# Paper trading
+# ---------------------------------------------------------------------------
+
+def _cmd_paper(ns: argparse.Namespace) -> int:
+    from .backtest.runner import BacktestConfig
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+    from .journal.event_log import EventLog
+    from .paper.runner import PaperConfig, PaperRunner
+    from .risk.manager import RiskConfig
+
+    root = repo_root()
+    pipeline = DataPipeline(LocalDataLake(root / "data"))
+
+    try:
+        strategy = _build_strategy(ns)
+    except ValueError as e:
+        print(str(e), file=sys.stderr)
+        return 1
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    start = _parse_date(ns.start) or date_type(2024, 1, 1)
+    end = _parse_date(ns.end) or date_type.today()
+    confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
+
+    config = PaperConfig(
+        initial_cash=float(ns.initial_cash),
+        confirm_mode=confirm,
+        broker=BacktestConfig(),
+        risk=RiskConfig(),
+    )
+    event_log = EventLog.from_repo_root(root, name=f"paper_{start}_{end}")
+
+    runner = PaperRunner(strategy=strategy, pipeline=pipeline, config=config, event_log=event_log)
+
+    print(f"Paper: {ns.strategy} | {symbols} | {start} → {end} | mode={confirm}")
+    session = runner.run(symbols=symbols, start=start, end=end)
+    s = session.summary()
+
+    print(f"\n{'='*52}")
+    print(f"  Total Return:  {s['total_return']:>10}")
+    print(f"  Final NAV:     {s['final_nav']:>14,.2f} CNY")
+    print(f"  Fills:         {s['fills']:>8}")
+    print(f"  Rejects:       {s['rejects']:>8}")
+    print(f"  Log:           {s['log']}")
+    print(f"{'='*52}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Agent one-shot
+# ---------------------------------------------------------------------------
+
+def _cmd_agent(ns: argparse.Namespace) -> int:
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+    from .strategy.agent import AgentConfig, AgentStrategy
+
+    root = repo_root()
+    pipeline = DataPipeline(LocalDataLake(root / "data"))
+
+    symbols = [s.strip() for s in ns.symbols.split(",")]
+    trading_date = _parse_date(ns.date) or date_type.today()
+    confirm = "auto" if getattr(ns, "bypass_confirm", False) else "confirm"
+
+    model = os.environ.get("LLM_MODEL", "claude-opus-4-6")
+    base_url = os.environ.get("LLM_BASE_URL") or None
+    api_key = os.environ.get("LLM_API_KEY") or None
+    strategy = AgentStrategy(AgentConfig(
+        model=model,
+        api_base_url=base_url,
+        api_key=api_key,
+        confirm_mode=confirm,
+        cache_dir=str(root / "artifacts" / "agent_cache"),
+    ))
+
+    bars = pipeline.get_bars(symbols=symbols, trading_date=trading_date)
+    if bars is None or bars.empty:
+        print("No bars found. Fetch data first: trading-os fetch-ak ...", file=sys.stderr)
+        return 1
+
+    print(f"Analyzing {symbols} for {trading_date}...")
+    signals = strategy.generate_signals(bars, trading_date)
+
+    print(f"\n{'='*60}")
+    print(f"  Agent Signals — {trading_date}")
+    print(f"{'='*60}")
+    for sym, sig in sorted(signals.items()):
+        marker = "→" if sig.action != "HOLD" else " "
+        print(f"  {marker} {sig.action:4s}  {sym:20s}  size={sig.size:.1%}  conf={sig.confidence:.0%}")
+        if sig.reason:
+            print(f"       {sig.reason}")
+    print(f"{'='*60}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(prog="trading_os", description="Trading OS — A-share quantitative trading")
+    sub = parser.add_subparsers(dest="cmd", required=True)
+
+    # --- Data ---
+    p = sub.add_parser("paths", help="Print key repo paths")
+    p.set_defaults(func=_cmd_paths)
+
+    p = sub.add_parser("lake-init", help="Initialize DuckDB/Parquet data lake")
+    p.set_defaults(func=_cmd_lake_init)
+
+    p = sub.add_parser("fundamental", help="获取股票财务摘要（BaoStock，无需代理）")
+    p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:600519,SSE:600000")
+    p.add_argument("--years", type=int, default=5, help="获取最近几年数据（默认5年）")
+    p.set_defaults(func=_cmd_fundamental)
+
+    p = sub.add_parser("valuation", help="计算股票内在价值（EPV/DCF/PEG），参数由AI根据分析结果传入")
+    p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:601138")
+    p.add_argument("--cost-of-capital", default="0.09",
+                   help="资本成本：宽护城河取0.07，窄护城河取0.09，无护城河取0.12")
+    p.add_argument("--moat", choices=["wide", "narrow", "none"], default="narrow",
+                   help="护城河宽度，影响安全边际要求")
+    p.add_argument("--epv-years", type=int, default=3,
+                   help="EPV 使用最近几年均值利润（默认3年）")
+    p.add_argument("--growth-rate", default=None,
+                   help="DCF 增速假设，如0.30（不传则跳过DCF）")
+    p.add_argument("--growth-years", type=int, default=5,
+                   help="高增速持续年数（默认5年）")
+    p.add_argument("--terminal-pe", type=float, default=15.0,
+                   help="终止PE，成熟代工企业约12-15x，消费品约18-20x")
+    p.add_argument("--discount-rate", default=None,
+                   help="DCF折现率（不传则用资本成本+3%）")
+    p.add_argument("--peg-target", type=float, default=1.0,
+                   help="目标PEG（默认1.0）")
+    p.add_argument("--growth-cagr", default=None,
+                   help="PEG使用的增速CAGR（不传则从财务数据自动推算）")
+    p.set_defaults(func=_cmd_valuation)
+
+    p = sub.add_parser("valuation-sensitivity", help="估值敏感性矩阵：展示关键参数变化对估值的影响")
+    p.add_argument("--symbol", required=True, help="股票代码，如 SSE:601138")
+    p.add_argument("--method", choices=["dcf", "epv"], default="dcf")
+    p.add_argument("--base-profit", required=True, help="基准利润（亿元），如 353")
+    p.add_argument("--growth-rates", default=None, help="DCF增速列表，逗号分隔，如 0.15,0.20,0.25,0.30,0.35")
+    p.add_argument("--terminal-pes", default=None, help="DCF终止PE列表，如 10,12,15,18,20")
+    p.add_argument("--growth-years", type=int, default=5)
+    p.add_argument("--discount-rate", type=float, default=0.12)
+    p.add_argument("--sustainable-profits", default=None, help="EPV可持续利润列表（亿），如 250,300,350,400")
+    p.add_argument("--costs-of-capital", default=None, help="EPV资本成本列表，如 0.08,0.09,0.10,0.11,0.12")
+    p.set_defaults(func=_cmd_valuation_sensitivity)
+
+    p = sub.add_parser("valuation-sotp", help="分部估值（Sum-of-the-Parts），各板块参数通过 JSON 文件传入")
+    p.add_argument("--symbol", required=True, help="股票代码，如 SSE:601138")
+    p.add_argument("--segments-file", required=True, help="分部参数 JSON 文件路径")
+    p.set_defaults(func=_cmd_valuation_sotp)
+
+    p = sub.add_parser("52week", help="计算股票52周高低点统计（从本地K线）")
+    p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:601138")
+    p.set_defaults(func=_cmd_52week)
+
+    p = sub.add_parser("market-breadth", help="计算大盘换筹日数量，判断市场状态（从本地K线）")
+    p.add_argument("--index", default="SSE:000001", help="指数代码（默认上证综指）")
+    p.add_argument("--days", type=int, default=30, help="统计窗口（默认30个交易日）")
+    p.set_defaults(func=_cmd_market_breadth)
+
+    p = sub.add_parser("fetch-bs", help="从BaoStock获取A股日线数据（国内直连，无需代理）")
+    p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])
+    p.add_argument("--ticker", required=True, help="股票代码，如 600000")
+    p.add_argument("--start", default=None, help="开始日期 YYYY-MM-DD")
+    p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD")
+    p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq")
+    p.set_defaults(func=_cmd_fetch_bs)
+
+    p = sub.add_parser("fetch-ak", help="从AKShare获取A股日线数据")
+    p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])
+    p.add_argument("--ticker", required=True, help="股票代码，如 600000")
+    p.add_argument("--start", default=None, help="开始日期 YYYY-MM-DD")
+    p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD")
+    p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq", help="复权方式")
+    p.set_defaults(func=_cmd_fetch_ak)
+
+    p = sub.add_parser("fetch-yf", help="Fetch bars from yfinance (US/HK stocks)")
+    p.add_argument("--exchange", required=True)
+    p.add_argument("--ticker", required=True)
+    p.add_argument("--start", default=None)
+    p.add_argument("--end", default=None)
+    p.set_defaults(func=_cmd_fetch_yf)
+
+    p = sub.add_parser("seed", help="Seed synthetic daily bars (offline testing)")
+    p.add_argument("--exchange", required=True)
+    p.add_argument("--ticker", required=True)
+    p.add_argument("--days", type=int, default=252)
+    p.set_defaults(func=_cmd_seed)
+
+    p = sub.add_parser("query-bars", help="Query bars from the local lake")
+    p.add_argument("--exchange", default=None)
+    p.add_argument("--symbols", default=None, help="Comma-separated symbol ids")
+    p.add_argument("--timeframe", default="1d")
+    p.add_argument("--adjustment", default="qfq")
+    p.add_argument("--start", default=None)
+    p.add_argument("--end", default=None)
+    p.add_argument("--limit", type=int, default=20)
+    p.set_defaults(func=_cmd_query_bars)
+
+    # --- Strategy ---
+    _STRATEGY_HELP = "Strategy: ma (MA crossover), bh (buy-and-hold), rsi (RSI), agent (Claude AI)"
+
+    p = sub.add_parser("backtest", help="Run backtest with A-share rules")
+    p.add_argument("--symbols", required=True, help="Comma-separated symbol ids, e.g. SSE:600000")
+    p.add_argument("--strategy", default="ma", help=_STRATEGY_HELP)
+    p.add_argument("--fast", type=int, default=5, help="Fast MA period")
+    p.add_argument("--slow", type=int, default=20, help="Slow MA period")
+    p.add_argument("--start", default=None, help="Start date YYYY-MM-DD")
+    p.add_argument("--end", default=None, help="End date YYYY-MM-DD")
+    p.add_argument("--initial-cash", type=float, default=1_000_000.0)
+    p.set_defaults(func=_cmd_backtest)
+
+    p = sub.add_parser("paper", help="Paper trading with A-share rules")
+    p.add_argument("--symbols", required=True, help="Comma-separated symbol ids")
+    p.add_argument("--strategy", default="ma", help=_STRATEGY_HELP)
+    p.add_argument("--fast", type=int, default=5)
+    p.add_argument("--slow", type=int, default=20)
+    p.add_argument("--start", default=None)
+    p.add_argument("--end", default=None)
+    p.add_argument("--initial-cash", type=float, default=1_000_000.0)
+    p.add_argument("--bypass-confirm", action="store_true", help="Auto-execute without confirmation")
+    p.set_defaults(func=_cmd_paper)
+
+    p = sub.add_parser("agent", help="One-shot Claude agent analysis")
+    p.add_argument("--symbols", required=True, help="Comma-separated symbol ids")
+    p.add_argument("--date", default=None, help="Analysis date YYYY-MM-DD (default: today)")
+    p.add_argument("--bypass-confirm", action="store_true")
+    p.set_defaults(func=_cmd_agent)
+
+    ns = parser.parse_args(argv)
+    func = getattr(ns, "func", None)
+    if not callable(func):
+        return 2
+    try:
+        return int(func(ns))
+    except RuntimeError as e:
+        print(str(e), file=sys.stderr)
+        return 1

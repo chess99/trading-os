@@ -1,6 +1,5 @@
-"""Risk management (pre-trade and intra-trade)."""
+"""Risk management — hard quantitative limits on all trading signals."""
 
-from .manager import RiskConfig, RiskManager, RiskVerdict
+from .manager import RiskConfig, RiskDecision, RiskManager
 
-__all__ = ["RiskConfig", "RiskManager", "RiskVerdict"]
-
+__all__ = ["RiskConfig", "RiskDecision", "RiskManager"]
