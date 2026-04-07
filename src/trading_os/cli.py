@@ -207,6 +207,48 @@ def _cmd_valuation(ns: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_valuation_sensitivity(ns: argparse.Namespace) -> int:
+    """计算估值敏感性矩阵，展示关键参数变化对估值的影响范围。"""
+    from .data.sources.valuation_source import calculate_sensitivity
+
+    growth_rates = [float(x) for x in ns.growth_rates.split(",")] if ns.growth_rates else None
+    terminal_pes = [float(x) for x in ns.terminal_pes.split(",")] if ns.terminal_pes else None
+    costs = [float(x) for x in ns.costs_of_capital.split(",")] if ns.costs_of_capital else None
+    profits = [float(x) for x in ns.sustainable_profits.split(",")] if ns.sustainable_profits else None
+
+    result = calculate_sensitivity(
+        ns.symbol,
+        method=ns.method,
+        base_profit_bn=float(ns.base_profit),
+        growth_rates=growth_rates,
+        terminal_pes=terminal_pes,
+        growth_years=int(ns.growth_years),
+        discount_rate=float(ns.discount_rate),
+        sustainable_profits_bn=profits,
+        costs_of_capital=costs,
+    )
+    print(result["summary_text"])
+    return 0
+
+
+def _cmd_valuation_sotp(ns: argparse.Namespace) -> int:
+    """分部估值（Sum-of-the-Parts）。各板块参数通过 JSON 文件传入。"""
+    import json, sys
+    from .data.sources.valuation_source import calculate_sotp
+
+    try:
+        with open(ns.segments_file) as f:
+            segments = json.load(f)
+    except Exception as e:
+        print(f"读取分部参数失败: {e}", file=sys.stderr)
+        print("segments_file 应为 JSON 数组，每项包含 name/profit_bn/method/multiple/note 等字段", file=sys.stderr)
+        return 1
+
+    result = calculate_sotp(ns.symbol, segments)
+    print(result["summary_text"])
+    return 0
+
+
 def _cmd_52week(ns: argparse.Namespace) -> int:
     """计算股票52周高低点统计（从本地K线，无需网络）。"""
     from .data.sources.fundamental_source import get_52week_stats
@@ -447,6 +489,23 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--growth-cagr", default=None,
                    help="PEG使用的增速CAGR（不传则从财务数据自动推算）")
     p.set_defaults(func=_cmd_valuation)
+
+    p = sub.add_parser("valuation-sensitivity", help="估值敏感性矩阵：展示关键参数变化对估值的影响")
+    p.add_argument("--symbol", required=True, help="股票代码，如 SSE:601138")
+    p.add_argument("--method", choices=["dcf", "epv"], default="dcf")
+    p.add_argument("--base-profit", required=True, help="基准利润（亿元），如 353")
+    p.add_argument("--growth-rates", default=None, help="DCF增速列表，逗号分隔，如 0.15,0.20,0.25,0.30,0.35")
+    p.add_argument("--terminal-pes", default=None, help="DCF终止PE列表，如 10,12,15,18,20")
+    p.add_argument("--growth-years", type=int, default=5)
+    p.add_argument("--discount-rate", type=float, default=0.12)
+    p.add_argument("--sustainable-profits", default=None, help="EPV可持续利润列表（亿），如 250,300,350,400")
+    p.add_argument("--costs-of-capital", default=None, help="EPV资本成本列表，如 0.08,0.09,0.10,0.11,0.12")
+    p.set_defaults(func=_cmd_valuation_sensitivity)
+
+    p = sub.add_parser("valuation-sotp", help="分部估值（Sum-of-the-Parts），各板块参数通过 JSON 文件传入")
+    p.add_argument("--symbol", required=True, help="股票代码，如 SSE:601138")
+    p.add_argument("--segments-file", required=True, help="分部参数 JSON 文件路径")
+    p.set_defaults(func=_cmd_valuation_sotp)
 
     p = sub.add_parser("52week", help="计算股票52周高低点统计（从本地K线）")
     p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:601138")

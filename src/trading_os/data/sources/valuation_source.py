@@ -285,3 +285,284 @@ def _format_summary(result: dict, current_price: float | None, margin_required: 
 
 def _moat_label(moat: str) -> str:
     return {"wide": "低风险，宽护城河", "narrow": "中风险，窄护城河", "none": "高风险，无护城河"}.get(moat, moat)
+
+
+# ─────────────────────────────────────────────────────────────
+# 分部估值（Sum-of-the-Parts）
+# ─────────────────────────────────────────────────────────────
+
+def calculate_sotp(
+    symbol_id: str,
+    segments: list[dict],
+) -> dict[str, Any]:
+    """分部估值（Sum-of-the-Parts）。
+
+    当公司有多个业务板块，且各板块的成长性、利润率、护城河差异显著时使用。
+    每个板块独立估值后加总，比整体估值更准确。
+
+    Args:
+        symbol_id: 规范化股票代码，如 "SSE:601138"
+        segments: 各业务板块列表，每项为：
+            {
+              "name": str,              # 板块名称，如 "AI服务器代工"
+              "profit_bn": float,       # 板块年利润（亿元），由 AI 根据分部数据估算
+              "method": str,            # 估值方法："pe" / "dcf" / "epv"
+              "multiple": float,        # PE 倍数 或 1/资本成本（EPV）
+              "growth_rate": float,     # DCF 增速（method="dcf" 时必填）
+              "growth_years": int,      # DCF 增速持续年数（默认5）
+              "terminal_pe": float,     # DCF 终止PE（默认15）
+              "discount_rate": float,   # DCF 折现率（默认0.12）
+              "note": str,              # 估值逻辑说明（必填，解释为何选此倍数）
+            }
+
+    Returns:
+        {
+          "segments": list,       # 各板块估值结果
+          "total_value_bn": float,# 合计价值（亿元）
+          "shares_bn": float,     # 总股本（亿股）
+          "value_per_share": float,
+          "current_price": float,
+          "premium_discount": float,  # 相对当前价格的溢价/折价
+          "summary_text": str,
+        }
+    """
+    current_price = _get_current_price(symbol_id)
+    shares = _get_shares(symbol_id)
+
+    results = []
+    total_value = 0.0
+
+    for seg in segments:
+        profit = seg["profit_bn"] * 1e8  # 转为元
+        method = seg.get("method", "pe")
+        value = 0.0
+        formula = ""
+
+        if method == "pe":
+            multiple = seg["multiple"]
+            value = profit * multiple
+            formula = f"{seg['profit_bn']:.1f}亿 × {multiple}x PE = {value/1e8:.0f}亿"
+
+        elif method == "epv":
+            r = seg["multiple"]  # multiple 此时表示资本成本
+            value = profit / r
+            formula = f"{seg['profit_bn']:.1f}亿 / {r:.0%} = {value/1e8:.0f}亿"
+
+        elif method == "dcf":
+            gr = seg.get("growth_rate", 0.20)
+            gy = seg.get("growth_years", 5)
+            tpe = seg.get("terminal_pe", 15.0)
+            dr = seg.get("discount_rate", 0.12)
+            profit_terminal = profit * (1 + gr) ** gy
+            # 终止价值用 terminal_pe × 终止利润，再折现
+            terminal_value = profit_terminal * tpe
+            value = terminal_value / (1 + dr) ** gy
+            formula = (
+                f"{seg['profit_bn']:.1f}亿×(1+{gr:.0%})^{gy}={profit_terminal/1e8:.0f}亿"
+                f"→×{tpe}xPE={terminal_value/1e8:.0f}亿→折现@{dr:.0%}={value/1e8:.0f}亿"
+            )
+
+        total_value += value
+        results.append({
+            "name": seg["name"],
+            "profit_bn": seg["profit_bn"],
+            "method": method,
+            "value_bn": value / 1e8,
+            "formula": formula,
+            "note": seg.get("note", ""),
+            "pct_of_total": 0.0,  # 填充后计算
+        })
+
+    # 计算各板块占比
+    for r in results:
+        r["pct_of_total"] = r["value_bn"] / (total_value / 1e8) if total_value else 0
+
+    total_bn = total_value / 1e8
+    shares_bn = shares / 1e8 if shares else None   # 亿股，用于显示
+    vps = (total_bn / shares_bn) if shares_bn else None  # 亿元 / 亿股 = 元/股
+    prem = (current_price / vps - 1) if (vps and current_price) else None
+
+    summary = _format_sotp(symbol_id, results, total_bn, shares_bn, vps, current_price, prem)
+
+    return {
+        "segments": results,
+        "total_value_bn": total_bn,
+        "shares_bn": shares_bn,
+        "value_per_share": vps,
+        "current_price": current_price,
+        "premium_discount": prem,
+        "summary_text": summary,
+    }
+
+
+def _get_shares(symbol_id: str) -> float | None:
+    """从财务数据推算总股本（股）。"""
+    try:
+        from .fundamental_source import get_financial_summary
+        fin = get_financial_summary(symbol_id, years=2)
+        profits = [r["net_profit"] for r in fin.get("profitability", [])
+                   if r.get("net_profit") and r["period"].endswith("12-31")]
+        eps = fin["profitability"][0].get("eps_ttm") if fin.get("profitability") else None
+        if eps and profits:
+            return profits[0] / eps
+    except Exception as e:
+        log.warning("推算股本失败: %s", e)
+    return None
+
+
+def _format_sotp(symbol_id, segments, total_bn, shares, vps, current_price, prem) -> str:
+    lines = [
+        f"【分部估值 SOTP】{symbol_id}",
+        f"",
+        f"{'板块':<18} {'利润(亿)':>8} {'方法':>6} {'估值(亿)':>10} {'占比':>6}  估值逻辑",
+        f"{'─'*75}",
+    ]
+    for s in segments:
+        lines.append(
+            f"{s['name']:<18} {s['profit_bn']:>8.1f} {s['method']:>6} "
+            f"{s['value_bn']:>10.0f} {s['pct_of_total']:>6.1%}  {s['note']}"
+        )
+    lines += [
+        f"{'─'*75}",
+        f"{'合计':<18} {'':>8} {'':>6} {total_bn:>10.0f}",
+        f"",
+    ]
+    if vps:
+        lines.append(f"每股内在价值: {vps:.1f}元")
+    if current_price:
+        lines.append(f"当前股价:     {current_price:.2f}元")
+    if prem is not None:
+        sign = "溢价" if prem > 0 else "折价"
+        lines.append(f"当前股价相对SOTP价值: {sign} {abs(prem):.1%}")
+    lines += ["", "▌ 各板块估值公式"]
+    for s in segments:
+        lines.append(f"  {s['name']}: {s['formula']}")
+    return "\n".join(lines)
+
+
+# ─────────────────────────────────────────────────────────────
+# 敏感性矩阵
+# ─────────────────────────────────────────────────────────────
+
+def calculate_sensitivity(
+    symbol_id: str,
+    *,
+    method: str = "dcf",
+    base_profit_bn: float,
+    # DCF 敏感性：行=增速，列=终止PE（或折现率）
+    growth_rates: list[float] | None = None,     # 如 [0.15, 0.20, 0.25, 0.30, 0.35]
+    terminal_pes: list[float] | None = None,     # 如 [12, 15, 18, 20, 25]
+    growth_years: int = 5,
+    discount_rate: float = 0.12,
+    # EPV 敏感性：行=可持续利润，列=资本成本
+    sustainable_profits_bn: list[float] | None = None,  # 如 [250, 300, 350, 400]
+    costs_of_capital: list[float] | None = None,        # 如 [0.08, 0.09, 0.10, 0.11, 0.12]
+) -> dict[str, Any]:
+    """计算估值敏感性矩阵，展示关键参数变化对估值的影响。
+
+    DCF 矩阵：行=增速假设，列=终止PE
+    EPV 矩阵：行=可持续利润，列=资本成本
+
+    Args:
+        symbol_id:              股票代码
+        method:                 "dcf" 或 "epv"
+        base_profit_bn:         基准利润（亿元），由 AI 传入
+        growth_rates:           DCF 增速列表（行维度）
+        terminal_pes:           DCF 终止PE列表（列维度）
+        growth_years:           增速持续年数
+        discount_rate:          DCF 折现率
+        sustainable_profits_bn: EPV 可持续利润列表（行维度）
+        costs_of_capital:       EPV 资本成本列表（列维度）
+
+    Returns:
+        {"matrix": list[list], "row_labels": list, "col_labels": list,
+         "current_price": float, "summary_text": str}
+    """
+    current_price = _get_current_price(symbol_id)
+    shares = _get_shares(symbol_id)
+
+    if method == "dcf":
+        rows = growth_rates or [0.15, 0.20, 0.25, 0.30, 0.35]
+        cols = terminal_pes or [10, 12, 15, 18, 20]
+        base_profit = base_profit_bn * 1e8
+
+        matrix = []
+        for gr in rows:
+            row = []
+            for tpe in cols:
+                profit_t = base_profit * (1 + gr) ** growth_years
+                price = (profit_t * tpe / (1 + discount_rate) ** growth_years)
+                per_share = price / shares if shares else None
+                row.append(per_share)
+            matrix.append(row)
+
+        row_labels = [f"增速{r:.0%}" for r in rows]
+        col_labels = [f"终止{c}xPE" for c in cols]
+        title = f"DCF 敏感性矩阵（基准利润{base_profit_bn:.0f}亿，折现率{discount_rate:.0%}，{growth_years}年）"
+
+    else:  # epv
+        rows = sustainable_profits_bn or [
+            base_profit_bn * 0.7, base_profit_bn * 0.85,
+            base_profit_bn, base_profit_bn * 1.15, base_profit_bn * 1.3
+        ]
+        cols = costs_of_capital or [0.07, 0.08, 0.09, 0.10, 0.11, 0.12]
+
+        matrix = []
+        for p_bn in rows:
+            row = []
+            for r in cols:
+                value = (p_bn * 1e8) / r
+                per_share = value / shares if shares else None
+                row.append(per_share)
+            matrix.append(row)
+
+        row_labels = [f"利润{p:.0f}亿" for p in rows]
+        col_labels = [f"资本成本{r:.0%}" for r in cols]
+        title = f"EPV 敏感性矩阵（可持续利润 vs 资本成本）"
+
+    summary = _format_sensitivity(title, matrix, row_labels, col_labels, current_price)
+
+    return {
+        "method": method,
+        "matrix": matrix,
+        "row_labels": row_labels,
+        "col_labels": col_labels,
+        "current_price": current_price,
+        "summary_text": summary,
+    }
+
+
+def _format_sensitivity(title, matrix, row_labels, col_labels, current_price) -> str:
+    """格式化敏感性矩阵，当前股价对应的区间高亮显示。"""
+    col_w = 10
+    lines = [title, ""]
+
+    # 表头
+    header = f"{'':>12}" + "".join(f"{c:>{col_w}}" for c in col_labels)
+    lines.append(header)
+    lines.append("─" * len(header))
+
+    for i, (row_label, row) in enumerate(zip(row_labels, matrix)):
+        cells = []
+        for val in row:
+            if val is None:
+                cells.append(f"{'N/A':>{col_w}}")
+            else:
+                cell = f"{val:.1f}"
+                # 标记：当前价格附近的区间（±5%）
+                if current_price and abs(val - current_price) / current_price <= 0.05:
+                    cell = f"[{cell}]"  # 方括号标记"当前价格附近"
+                elif current_price and val < current_price:
+                    cell = f"↓{cell}"  # 低于当前价（低估）
+                else:
+                    cell = f" {cell}"
+                cells.append(f"{cell:>{col_w}}")
+        lines.append(f"{row_label:>12}" + "".join(cells))
+
+    lines += [
+        "",
+        f"当前股价: {current_price:.2f}元" if current_price else "",
+        "说明: [xx.x] = 当前价格附近(±5%)  ↓xx.x = 低于当前价（此参数下低估）",
+        "      空白/↑ = 高于当前价（此参数下高估）",
+    ]
+    return "\n".join(l for l in lines if l is not None)
