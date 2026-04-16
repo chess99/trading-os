@@ -62,24 +62,34 @@ python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
 **Elder 技术交易体系**（`.claude/skills/elder/`）
 | Skill | 职责 |
 |-------|------|
+| `elder/elder-system` | 体系入口，三套流程（单标的/批量扫描/持仓管理） |
 | `elder/elder-screen` | 三重滤网技术分析 |
 | `elder/signal-scanner` | 技术面批量扫描 |
 | `elder/position-sizer` | 2%/6% 原则仓位计算 |
 | `elder/trade-executor` | 技术交易指令生成 |
-| `elder/position-monitor` | 价格止损持仓监控 |
+| `elder/position-monitor` | 价格止损持仓监控（不处理逻辑止损） |
 | `elder/trading-journal` | 技术交易记录 |
 | `elder/backtest-review` | Elder 系统回测评估 |
 
 **CANSLIM 成长股体系**（`.claude/skills/canslim/`）
 | Skill | 职责 |
 |-------|------|
+| `canslim/canslim-system` | 体系入口，两套流程（单标的分析/持仓管理） |
 | `canslim/canslim-screen` | CANSLIM 七维度基本面评分 |
 | `canslim/fundamental-research` | 深度基本面研究（CANSLIM 视角） |
+| `canslim/elder-confirm` | 技术面确认（elder-screen 裁剪版，只用第二三滤网） |
+| `canslim/position-sizer` | 欧奈尔 7-8% 止损规则仓位计算 |
+| `canslim/position-monitor` | 双模式止损（初期价格止损，盈利后逻辑止损） |
+| `canslim/trade-executor` | 枢纽点买入指令生成 |
+| `canslim/trading-journal` | 成长股交易记录（含 CANSLIM 评分准确性追踪） |
 
 **Value Investing 体系**（`.claude/skills/value-investing/`）
 | Skill | 职责 |
 |-------|------|
+| `value-investing/value-system` | 体系入口，两套流程（新标的研究/持仓监控） |
 | `value-investing/fundamental-research` | 深度基本面研究（价值投资视角） |
+| `value-investing/valuation` | 程序化估值（封装 `trading_os valuation` CLI） |
+| `value-investing/position-monitor` | 纯逻辑止损（不检查价格，卖出唯一理由是逻辑失效） |
 
 说"用 Elder 分析 600000"触发 Elder 体系，"CANSLIM 分析"触发 CANSLIM 体系，"估值分析"触发 Value Investing 体系。
 
