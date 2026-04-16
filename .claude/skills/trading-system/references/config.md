@@ -1,106 +1,131 @@
 # 系统配置参考
 
-## 账户配置
+三套体系各自独立配置。选择使用哪套体系时，对应的配置节生效。
+
+---
+
+## Elder 技术交易体系配置
 
 ```yaml
-account:
-  total_capital: 500000        # 账户总资金（元/美元）
-  monthly_loss_limit: 0.06     # 月度最大亏损比例（6%原则）
-  per_trade_risk: 0.02         # 单笔最大风险比例（2%原则）
-  currency: CNY                # 货币单位
+elder:
+  account:
+    total_capital: 500000        # 技术交易账户资金（元）
+    monthly_loss_limit: 0.06     # 月度最大亏损比例（6% 原则）
+    per_trade_risk: 0.02         # 单笔最大风险比例（2% 原则）
+    currency: CNY
+
+  watchlist:
+    A股:
+      - 600519  # 贵州茅台
+      - 000858  # 五粮液
+      - 300750  # 宁德时代
+      - 601318  # 中国平安
+      # 建议挑选流动性好、趋势明显的龙头股
+
+    美股:
+      - AAPL
+      - NVDA
+      - TSLA
+      - SPY   # 标普500 ETF
+
+    期货:
+      - GC    # 黄金
+      - CL    # 原油
+      - ES    # 标普500期货
+
+  indicators:
+    ema:
+      slow: 26
+      fast: 13
+    macd:
+      fast_period: 12
+      slow_period: 26
+      signal_period: 9
+    stochastic:
+      period: 5
+      smooth: 3
+    atr:
+      period: 13
+    force_index:
+      short_ema: 2
+      long_ema: 13
+
+  signal_filter:
+    min_risk_reward: 2.0
+    min_signal_strength: 中
+    require_divergence: false
+    max_signals_per_day: 5
 ```
 
-## 候选标的池
+---
 
-建议按市场分组管理，初始建议不超过20-30个标的：
+## CANSLIM 成长股体系配置
 
 ```yaml
-watchlist:
-  A股:
-    - 600519  # 贵州茅台
-    - 000858  # 五粮液
-    - 300750  # 宁德时代
-    - 601318  # 中国平安
-    # ... 建议挑选流动性好、趋势明显的龙头股
+canslim:
+  account:
+    total_capital: 500000        # 成长股账户资金（元）
+    initial_stop_loss: 0.08      # 欧奈尔规则：初始止损 7-8%
+    currency: CNY
 
-  美股:
-    - AAPL
-    - NVDA
-    - TSLA
-    - SPY   # 标普500 ETF
+  watchlist:
+    A股成长股候选:
+      - 300750  # 宁德时代
+      - 688981  # 中芯国际
+      # 建议选择 EPS 高增长、行业龙头、近期创新高的标的
 
-  期货:
-    - GC    # 黄金
-    - CL    # 原油
-    - ES    # 标普500期货
-
-  外汇:
-    - EURUSD
-    - USDJPY
+  screening_thresholds:
+    eps_growth_quarterly: 0.25   # 当季 EPS 增长 > 25%（C 维度）
+    eps_growth_annual_years: 3   # 年度 EPS 连续增长年数（A 维度）
+    roe_min: 0.17                # ROE > 17%
+    relative_strength_rank: 90  # 相对强度排名前 10%（L 维度）
 ```
 
-## 技术指标参数
+---
+
+## Value Investing 价值投资体系配置
 
 ```yaml
-indicators:
-  ema:
-    slow: 26    # 慢线（周线图用26周，日线图用26日）
-    fast: 13    # 快线（约为慢线的一半）
+value_investing:
+  account:
+    total_capital: 500000        # 价值投资账户资金（元）
+    stop_loss_type: logic        # 纯逻辑止损，无价格止损
+    currency: CNY
 
-  macd:
-    fast_period: 12
-    slow_period: 26
-    signal_period: 9
+  watchlist:
+    A股价值候选:
+      - 600519  # 贵州茅台
+      - 601318  # 中国平安
+      # 建议选择护城河清晰、ROE 稳定、管理层优秀的公司
 
-  stochastic:
-    period: 5
-    smooth: 3
-
-  atr:
-    period: 13
-
-  force_index:
-    short_ema: 2
-    long_ema: 13
+  valuation_methods:
+    - DCF          # 现金流折现
+    - PE_relative  # 相对市盈率
+    - SOTP         # 分部估值（适合多业务公司）
 ```
 
-## 信号过滤阈值
+---
 
-```yaml
-signal_filter:
-  min_risk_reward: 2.0      # 最低风险收益比
-  min_signal_strength: 中    # 最低信号强度（弱/中/强）
-  require_divergence: false  # 是否只选有背离的信号
-  max_signals_per_day: 5    # 每日最多深度分析的标的数
-```
-
-## 数据源配置
+## 数据源配置（三套体系共用）
 
 ```yaml
 data_sources:
-  # 实时行情（需要配置）
   realtime:
-    provider: ""    # 如：tushare、akshare、yfinance、alpha_vantage
+    provider: ""    # tushare、akshare、yfinance、alpha_vantage
     api_key: ""
 
-  # 历史数据
   historical:
-    provider: ""
-    lookback_weeks: 52    # 周线回看52周（1年）
-    lookback_days: 120    # 日线回看120天
+    provider: akshare
+    lookback_weeks: 52
+    lookback_days: 120
 
-  # 暂不可用时的替代方案
   fallback: "手动输入价格数据，或使用 web_search 获取最新行情"
-```
 
-## 交易接口配置（壳子，待接入）
-
-```yaml
 broker:
-  name: ""          # 如：Interactive Brokers、富途、老虎证券
+  name: ""
   api_endpoint: ""
   api_key: ""
   account_id: ""
-  mode: paper       # paper（模拟）或 live（实盘）
-  auto_execute: false   # 是否自动执行，默认关闭，需要人工确认
+  mode: paper
+  auto_execute: false
 ```
