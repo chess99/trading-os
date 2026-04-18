@@ -70,6 +70,11 @@ def get_scan_symbols(
             f"AKShare 不可用，请检查网络连接。错误：{exc}"
         ) from exc
 
+    if akshare_df is None or akshare_df.empty:
+        raise RuntimeError(
+            "AKShare 返回空股票列表，请检查网络连接后重试。"
+        )
+
     # 过滤 ST / 退市：名称包含 ST、*ST、退 等
     mask = ~akshare_df["name"].str.contains(r"ST|退市", na=False)
     akshare_df = akshare_df[mask]
@@ -166,8 +171,29 @@ def load_bars_batch(
         return pd.DataFrame()
 
 
+class _NumpyEncoder(json.JSONEncoder):
+    """处理 numpy 类型的 JSON 序列化。"""
+    def default(self, obj: Any) -> Any:
+        try:
+            import numpy as np
+            if isinstance(obj, (np.integer,)):
+                return int(obj)
+            if isinstance(obj, (np.floating,)):
+                return float(obj)
+            if isinstance(obj, (np.bool_,)):
+                return bool(obj)
+            if isinstance(obj, np.ndarray):
+                return obj.tolist()
+        except ImportError:
+            pass
+        return super().default(obj)
+
+
 def write_scan_output(results: dict[str, Any], path: Path) -> None:
     """写入扫描结果 JSON 文件。"""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
+    path.write_text(
+        json.dumps(results, ensure_ascii=False, indent=2, cls=_NumpyEncoder),
+        encoding="utf-8",
+    )
     log.info("Scan output written to %s", path)

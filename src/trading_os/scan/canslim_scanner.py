@@ -109,40 +109,38 @@ def scan_canslim(
             insufficient_data += 1
             continue
 
-        # ── C 维度：当季 EPS 同比增速 ≥ 18% ──
-        per_share = fund.get("per_share", {})
-        quarterly_eps = per_share.get("quarterly_eps", [])
-        if len(quarterly_eps) < 5:  # 需要至少 5 个季度（当季 + 去年同期）
+        # fundamental_source 返回的实际格式：
+        # profitability: list of {period, roe, eps_ttm, ...}（按时间降序）
+        # growth: list of {period, yoy_eps, ...}（按时间降序）
+        profitability_list = fund.get("profitability", [])
+        growth_list = fund.get("growth", [])
+
+        if not profitability_list or not growth_list:
             insufficient_data += 1
             continue
 
-        # quarterly_eps 按时间升序，最后一个是最新季度
-        current_eps = quarterly_eps[-1].get("eps", 0)
-        prior_year_eps = quarterly_eps[-5].get("eps", 0)  # 去年同期（4个季度前）
-
-        growth = _eps_yoy_growth(current_eps, prior_year_eps)
-        if growth is None:
-            # 去年同期 EPS ≤ 0，无法计算
+        # ── C 维度：最新季度 EPS 同比增速 ≥ 18% ──
+        # growth[0] 是最新季度，yoy_eps 已经是同比增速（小数）
+        latest_growth = growth_list[0]
+        yoy_eps = latest_growth.get("yoy_eps")
+        if yoy_eps is None:
             insufficient_data += 1
             continue
 
-        if growth < _MIN_EPS_GROWTH:
+        if yoy_eps < _MIN_EPS_GROWTH:
             no_signal += 1
             continue
 
-        # ── A 维度：年度 EPS 连续增长 ──
-        annual_eps_list = [
-            item.get("eps", 0)
-            for item in per_share.get("annual_eps", [])
-        ]
-        if not _annual_eps_continuous_growth(annual_eps_list, years=3):
+        # ── A 维度：年度 EPS 连续增长（用 yoy_eps > 0 的季度比例代理）──
+        # 取最近 12 个季度（约 3 年），要求多数季度 yoy_eps > 0
+        recent_growth = growth_list[:12]
+        positive_quarters = sum(1 for g in recent_growth if g.get("yoy_eps", 0) > 0)
+        if len(recent_growth) < 4 or positive_quarters < len(recent_growth) * 0.75:
             no_signal += 1
             continue
 
         # ── ROE ≥ 17% ──
-        profitability = fund.get("profitability", {})
-        roe_history = profitability.get("roe", [])
-        latest_roe = roe_history[-1].get("value", 0) if roe_history else 0
+        latest_roe = profitability_list[0].get("roe", 0) if profitability_list else 0
         if latest_roe < _MIN_ROE:
             no_signal += 1
             continue
@@ -159,7 +157,7 @@ def scan_canslim(
         if rs_ok:
             score += 2  # L 维度
         # EPS 增速越高加分
-        if growth >= 0.40:
+        if yoy_eps >= 0.40:
             score += 1
 
         candidates.append({
@@ -167,8 +165,8 @@ def scan_canslim(
             "rank": 0,
             "score": round(score, 1),
             "signals": {
-                "eps_growth_yoy": round(growth, 3),
-                "annual_eps_continuous": True,
+                "eps_growth_yoy": round(yoy_eps, 3),
+                "recent_quarters_positive": positive_quarters,
                 "roe": round(latest_roe, 3),
                 "relative_strength_top20pct": rs_ok,
             },

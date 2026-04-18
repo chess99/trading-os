@@ -70,28 +70,28 @@ def scan_value(
     import pandas as pd
     from .common import load_fundamental
 
-    # 获取全市场实时 PE/PB/市值快照
+    # 获取全市场实时 PE/PB/市值快照（一次调用，不逐只查询）
     try:
-        from trading_os.data.sources.akshare_factors import AkshareFactorSource
-        akshare = AkshareFactorSource()
-        snapshot_df = akshare.get_stock_basic_info()
+        import akshare as ak
+        snapshot_df = ak.stock_zh_a_spot_em()
     except Exception as exc:
         raise RuntimeError(
             f"AKShare 不可用，无法获取 PE/PB 数据，请检查网络连接。错误：{exc}"
         ) from exc
 
+    if snapshot_df is None or snapshot_df.empty:
+        raise RuntimeError("AKShare 返回空快照，请检查网络连接后重试。")
+
     # 建立 symbol → snapshot 行的映射
-    # snapshot_df 的 symbol 列格式为 6 位代码，需要匹配规范格式
+    # stock_zh_a_spot_em 的 "代码" 列为 6 位代码
     snapshot_map: dict[str, Any] = {}
-    if snapshot_df is not None and not snapshot_df.empty:
-        for _, row in snapshot_df.iterrows():
-            # 尝试从 symbol 列推断规范格式
-            raw_sym = str(row.get("symbol", ""))
-            if raw_sym.startswith("6"):
-                canonical = f"SSE:{raw_sym}"
-            else:
-                canonical = f"SZSE:{raw_sym}"
-            snapshot_map[canonical] = row
+    for _, row in snapshot_df.iterrows():
+        raw_sym = str(row.get("代码", ""))
+        if raw_sym.startswith("6") or raw_sym.startswith("5"):
+            canonical = f"SSE:{raw_sym}"
+        else:
+            canonical = f"SZSE:{raw_sym}"
+        snapshot_map[canonical] = row
 
     candidates = []
     insufficient_data = 0
@@ -103,20 +103,21 @@ def scan_value(
             insufficient_data += 1
             continue
 
-        # ── 市值过滤 ──
-        market_cap = snap.get("total_mv", 0)
+        # ── 市值过滤（stock_zh_a_spot_em 列名：总市值，单位元）──
+        import math
+        market_cap_raw = snap.get("总市值", 0)
         try:
-            market_cap = float(market_cap) * 1e4  # AKShare 单位为万元
+            market_cap = float(market_cap_raw) if market_cap_raw and str(market_cap_raw) != '-' else 0
         except (TypeError, ValueError):
             market_cap = 0
         if market_cap < _MIN_MARKET_CAP:
             no_signal += 1
             continue
 
-        # ── PB 过滤 ──
-        pb = snap.get("pb", None)
+        # ── PB 过滤（列名：市净率）──
+        pb_raw = snap.get("市净率", None)
         try:
-            pb = float(pb) if pb is not None else None
+            pb = float(pb_raw) if pb_raw is not None and str(pb_raw) != '-' else None
         except (TypeError, ValueError):
             pb = None
         if pb is None or pb >= _MAX_PB or pb <= 0:
@@ -146,10 +147,10 @@ def scan_value(
         roe_ok = False
         latest_roe = None
         if fund is not None:
-            profitability = fund.get("profitability", {})
-            roe_history = profitability.get("roe", [])
-            if roe_history:
-                latest_roe = roe_history[-1].get("value", 0)
+            profitability_list = fund.get("profitability", [])
+            if profitability_list:
+                # profitability 是 list，按时间降序，[0] 是最新
+                latest_roe = profitability_list[0].get("roe", 0)
                 roe_ok = latest_roe >= _MIN_ROE
         # 无 fundamental 数据时跳过 ROE 过滤（不崩溃）
 
@@ -177,9 +178,9 @@ def scan_value(
             "signals": {
                 "price_percentile_3yr": round(percentile, 3),
                 "price_percentile_method": "price_proxy",
-                "data_limited": is_limited_data,
+                "data_limited": bool(is_limited_data),
                 "pb": round(pb, 2),
-                "roe": round(latest_roe, 3) if latest_roe is not None else None,
+                "roe": round(float(latest_roe), 3) if latest_roe is not None else None,
                 "market_cap_billion": round(market_cap / 1e8, 1),
             },
             "pe_pb_source": "realtime_snapshot",
