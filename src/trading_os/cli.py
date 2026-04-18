@@ -1,15 +1,17 @@
 """Trading OS CLI.
 
 Commands:
-    lake-init      Initialize DuckDB/Parquet data lake
-    fetch-ak       Fetch A-share daily bars from AKShare
-    fetch-yf       Fetch bars from yfinance (US/HK stocks)
-    seed           Seed synthetic bars (offline testing)
-    query-bars     Query bars from the local lake
-    backtest       Run backtest with A-share rules (ma/bh/rsi/agent)
-    paper          Paper trading (ma/bh/rsi/agent)
-    agent          One-shot Claude agent analysis
-    paths          Print key repo paths
+    lake-init           Initialize DuckDB/Parquet data lake
+    fetch-ak            Fetch A-share daily bars from AKShare
+    fetch-yf            Fetch bars from yfinance (US/HK stocks)
+    seed                Seed synthetic bars (offline testing)
+    query-bars          Query bars from the local lake
+    backtest            Run backtest with A-share rules (ma/bh/rsi/agent)
+    paper               Paper trading (ma/bh/rsi/agent)
+    agent               One-shot Claude agent analysis
+    paths               Print key repo paths
+    scan-elder          批量扫描全 A 股技术信号（Elder 体系）
+    fundamental-store   持久化 BaoStock 基本面数据到本地
 """
 from __future__ import annotations
 
@@ -449,6 +451,276 @@ def _cmd_agent(ns: argparse.Namespace) -> int:
 
 
 # ---------------------------------------------------------------------------
+# Scan commands
+# ---------------------------------------------------------------------------
+
+def _cmd_scan_elder(ns: argparse.Namespace) -> int:
+    from datetime import timedelta
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+    from .data.sources.akshare_factors import AkshareFactorSource
+    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output
+    from .scan.elder_scanner import scan_elder
+
+    root = repo_root()
+    scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
+    output_path = (
+        root / ns.output if ns.output
+        else root / "artifacts" / "scan" / f"elder-{scan_date.isoformat().replace('-', '')}.json"
+    )
+
+    lake = LocalDataLake(root / "data")
+    lake.init()
+    pipeline = DataPipeline(lake)
+    akshare = AkshareFactorSource()
+
+    print(f"Scanning Elder signals for {scan_date}...")
+
+    try:
+        symbols, no_data = get_scan_symbols(pipeline, akshare, exchange=ns.exchange)
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+
+    print(f"  Local symbols: {len(symbols)} ({no_data} without local data)")
+
+    # 批量加载数据（每批 500 只）
+    batch_size = 500
+    all_bars_parts = []
+    for i in range(0, len(symbols), batch_size):
+        batch = symbols[i:i + batch_size]
+        bars = load_bars_batch(pipeline, batch, scan_date=scan_date, lookback_days=504)
+        if not bars.empty:
+            all_bars_parts.append(bars)
+
+    import pandas as pd
+    all_bars = pd.concat(all_bars_parts) if all_bars_parts else pd.DataFrame()
+
+    # 成交额过滤
+    if not all_bars.empty:
+        symbols, low_turnover = filter_by_turnover(
+            symbols, all_bars, min_amount=ns.min_turnover
+        )
+    else:
+        low_turnover = len(symbols)
+        symbols = []
+
+    print(f"  After turnover filter: {len(symbols)} ({low_turnover} filtered)")
+
+    # 技术指标筛选
+    result = scan_elder(symbols, all_bars, scan_date=scan_date, top_n=ns.top)
+
+    output = {
+        "scan_date": scan_date.isoformat(),
+        "system": "elder",
+        "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],
+        "candidates": result["candidates"],
+        "filtered_out": {
+            "no_data": no_data,
+            "low_turnover": low_turnover,
+            "insufficient_data": result["_stats"]["insufficient_data"],
+            "no_signal": result["_stats"]["no_signal"],
+        },
+    }
+
+    write_scan_output(output, output_path)
+    print(f"  Found {len(result['candidates'])} candidates → {output_path}")
+    return 0
+
+
+def _cmd_fundamental_store(ns: argparse.Namespace) -> int:
+    import json
+    from .data.sources.fundamental_source import get_financial_summary
+    from .scan.common import fundamental_path
+
+    root = repo_root()
+    (root / "data" / "fundamental").mkdir(parents=True, exist_ok=True)
+
+    if ns.symbols:
+        symbols = [s.strip() for s in ns.symbols.split(",")]
+    else:
+        # 全 A 股：从 AKShare 获取列表
+        try:
+            from .data.sources.akshare_factors import AkshareFactorSource
+            from .scan.common import to_canonical
+            akshare = AkshareFactorSource()
+            df = akshare.get_a_stock_list()
+            symbols = [
+                to_canonical(row["exchange"], row["symbol"])
+                for _, row in df.iterrows()
+            ]
+        except Exception as exc:
+            print(f"AKShare 不可用，请检查网络连接。错误：{exc}", file=sys.stderr)
+            return 1
+
+    success = 0
+    failed = 0
+    skipped = 0
+
+    print(f"fundamental-store: processing {len(symbols)} symbols...")
+
+    for i, sym in enumerate(symbols, 1):
+        path = fundamental_path(root / "data", sym)
+
+        if ns.skip_existing and path.exists():
+            skipped += 1
+            continue
+
+        try:
+            data = get_financial_summary(sym, years=ns.years)
+            path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+            success += 1
+        except Exception as exc:
+            import logging
+            logging.getLogger(__name__).warning("Failed %s: %s", sym, exc)
+            failed += 1
+
+        if i % 100 == 0:
+            print(f"  Progress: {i}/{len(symbols)} (success={success}, failed={failed}, skipped={skipped})")
+
+    print(f"\nDone: success={success}, failed={failed}, skipped={skipped}")
+    return 0
+
+
+def _cmd_scan_canslim(ns: argparse.Namespace) -> int:
+    from datetime import timedelta
+    import pandas as pd
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+    from .data.sources.akshare_factors import AkshareFactorSource
+    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output
+    from .scan.canslim_scanner import scan_canslim
+
+    root = repo_root()
+    scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
+    output_path = (
+        root / ns.output if ns.output
+        else root / "artifacts" / "scan" / f"canslim-{scan_date.isoformat().replace('-', '')}.json"
+    )
+
+    lake = LocalDataLake(root / "data")
+    lake.init()
+    pipeline = DataPipeline(lake)
+    akshare = AkshareFactorSource()
+
+    print(f"Scanning CANSLIM signals for {scan_date}...")
+
+    try:
+        symbols, no_data = get_scan_symbols(pipeline, akshare, exchange=ns.exchange)
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+
+    print(f"  Local symbols: {len(symbols)} ({no_data} without local data)")
+
+    batch_size = 500
+    all_bars_parts = []
+    for i in range(0, len(symbols), batch_size):
+        batch = symbols[i:i + batch_size]
+        bars = load_bars_batch(pipeline, batch, scan_date=scan_date, lookback_days=504)
+        if not bars.empty:
+            all_bars_parts.append(bars)
+
+    all_bars = pd.concat(all_bars_parts) if all_bars_parts else pd.DataFrame()
+
+    if not all_bars.empty:
+        symbols, low_turnover = filter_by_turnover(symbols, all_bars, min_amount=ns.min_turnover)
+    else:
+        low_turnover = len(symbols)
+        symbols = []
+
+    result = scan_canslim(symbols, all_bars, scan_date=scan_date, data_root=root / "data", top_n=ns.top)
+
+    output = {
+        "scan_date": scan_date.isoformat(),
+        "system": "canslim",
+        "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],
+        "candidates": result["candidates"],
+        "filtered_out": {
+            "no_data": no_data,
+            "low_turnover": low_turnover,
+            "insufficient_data": result["_stats"]["insufficient_data"],
+            "no_signal": result["_stats"]["no_signal"],
+        },
+    }
+
+    write_scan_output(output, output_path)
+    print(f"  Found {len(result['candidates'])} candidates → {output_path}")
+    return 0
+
+
+def _cmd_scan_value(ns: argparse.Namespace) -> int:
+    from datetime import timedelta
+    import pandas as pd
+    from .data.lake import LocalDataLake
+    from .data.pipeline import DataPipeline
+    from .data.sources.akshare_factors import AkshareFactorSource
+    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output
+    from .scan.value_scanner import scan_value
+
+    root = repo_root()
+    scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
+    output_path = (
+        root / ns.output if ns.output
+        else root / "artifacts" / "scan" / f"value-{scan_date.isoformat().replace('-', '')}.json"
+    )
+
+    lake = LocalDataLake(root / "data")
+    lake.init()
+    pipeline = DataPipeline(lake)
+    akshare = AkshareFactorSource()
+
+    print(f"Scanning Value Investing signals for {scan_date}...")
+
+    try:
+        symbols, no_data = get_scan_symbols(pipeline, akshare, exchange=ns.exchange)
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+
+    print(f"  Local symbols: {len(symbols)} ({no_data} without local data)")
+
+    batch_size = 500
+    all_bars_parts = []
+    for i in range(0, len(symbols), batch_size):
+        batch = symbols[i:i + batch_size]
+        bars = load_bars_batch(pipeline, batch, scan_date=scan_date, lookback_days=756)  # 3年
+        if not bars.empty:
+            all_bars_parts.append(bars)
+
+    all_bars = pd.concat(all_bars_parts) if all_bars_parts else pd.DataFrame()
+
+    if not all_bars.empty:
+        symbols, low_turnover = filter_by_turnover(symbols, all_bars, min_amount=ns.min_turnover)
+    else:
+        low_turnover = len(symbols)
+        symbols = []
+
+    try:
+        result = scan_value(symbols, all_bars, scan_date=scan_date, data_root=root / "data", top_n=ns.top)
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+
+    output = {
+        "scan_date": scan_date.isoformat(),
+        "system": "value",
+        "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],
+        "candidates": result["candidates"],
+        "filtered_out": {
+            "no_data": no_data,
+            "low_turnover": low_turnover,
+            "insufficient_data": result["_stats"]["insufficient_data"],
+            "no_signal": result["_stats"]["no_signal"],
+        },
+    }
+
+    write_scan_output(output, output_path)
+    print(f"  Found {len(result['candidates'])} candidates → {output_path}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -584,6 +856,37 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--date", default=None, help="Analysis date YYYY-MM-DD (default: today)")
     p.add_argument("--bypass-confirm", action="store_true")
     p.set_defaults(func=_cmd_agent)
+
+    # --- Scan ---
+    p = sub.add_parser("scan-elder", help="批量扫描全 A 股技术信号（Elder 三重滤网体系）")
+    p.add_argument("--date", default=None, help="扫描日期 YYYY-MM-DD（默认昨日）")
+    p.add_argument("--top", type=int, default=30, help="输出前 N 只（默认30）")
+    p.add_argument("--min-turnover", type=float, default=1e7, help="最低日均成交额 CNY（默认1000万）")
+    p.add_argument("--exchange", default=None, choices=["SSE", "SZSE"], help="只扫描指定交易所")
+    p.add_argument("--output", default=None, help="输出 JSON 路径（默认 artifacts/scan/elder-YYYYMMDD.json）")
+    p.set_defaults(func=_cmd_scan_elder)
+
+    p = sub.add_parser("fundamental-store", help="持久化 BaoStock 基本面数据到 data/fundamental/")
+    p.add_argument("--symbols", default=None, help="逗号分隔的股票代码（不传则处理全 A 股）")
+    p.add_argument("--years", type=int, default=5, help="获取最近几年数据（默认5年）")
+    p.add_argument("--skip-existing", action="store_true", help="跳过已有数据的股票（增量更新）")
+    p.set_defaults(func=_cmd_fundamental_store)
+
+    p = sub.add_parser("scan-canslim", help="批量扫描全 A 股基本面信号（CANSLIM 成长股体系）")
+    p.add_argument("--date", default=None, help="扫描日期 YYYY-MM-DD（默认昨日）")
+    p.add_argument("--top", type=int, default=30, help="输出前 N 只（默认30）")
+    p.add_argument("--min-turnover", type=float, default=1e7, help="最低日均成交额 CNY（默认1000万）")
+    p.add_argument("--exchange", default=None, choices=["SSE", "SZSE"], help="只扫描指定交易所")
+    p.add_argument("--output", default=None, help="输出 JSON 路径")
+    p.set_defaults(func=_cmd_scan_canslim)
+
+    p = sub.add_parser("scan-value", help="批量扫描全 A 股估值信号（Value Investing 体系）")
+    p.add_argument("--date", default=None, help="扫描日期 YYYY-MM-DD（默认昨日）")
+    p.add_argument("--top", type=int, default=30, help="输出前 N 只（默认30）")
+    p.add_argument("--min-turnover", type=float, default=1e7, help="最低日均成交额 CNY（默认1000万）")
+    p.add_argument("--exchange", default=None, choices=["SSE", "SZSE"], help="只扫描指定交易所")
+    p.add_argument("--output", default=None, help="输出 JSON 路径")
+    p.set_defaults(func=_cmd_scan_value)
 
     ns = parser.parse_args(argv)
     func = getattr(ns, "func", None)

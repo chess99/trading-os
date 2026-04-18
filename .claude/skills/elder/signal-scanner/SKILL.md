@@ -3,8 +3,10 @@ name: signal-scanner
 description: |
   批量扫描候选标的池，用三重滤网第一滤网快速筛选，输出有交易信号的标的清单。
   当用户说"扫描市场"、"看看今天有什么机会"、"帮我筛选标的"、"有哪些股票值得看"、
-  "跑一下信号扫描"、"今天哪些标的有信号"时触发。
-  通常由 trading-system 编排调用，也可以单独使用。
+  "跑一下信号扫描"、"今天哪些标的有信号"时触发（模式 A：用户提供候选池）。
+  当用户说"读取 Elder 扫描结果"、"分析昨天的 Elder 扫描"、"分析 scan-elder 的输出"时触发
+  （模式 B：读取 artifacts/scan/elder-YYYYMMDD.json）。
+  通常由 elder-system 调用，也可以单独使用。
   输出按信号强度排序的候选清单，供 elder-screen 做进一步深度分析。
 ---
 
@@ -133,7 +135,7 @@ description: |
 - 扫描是快速判断，不是精确分析。强信号标的仍需通过 elder-screen 深度验证
 - 每天最多推荐5个标的进入深度分析，避免分析瘫痪
 - 如果数据获取不完整，在报告中明确标注，不要基于不完整数据给出错误信号
-- 扫描结果传递给 trading-system，由编排层决定下一步
+- 扫描结果传递给 elder-system，由编排层决定下一步
 
 ---
 
@@ -145,3 +147,26 @@ description: |
 3. 用户填入后继续扫描
 
 不要因为数据缺失而跳过标的，要明确告知用户哪些标的因数据缺失未被扫描。
+
+
+---
+
+## 模式 B：读取 scan-elder 扫描结果
+
+当用户说"读取 Elder 扫描结果"、"分析昨天的 Elder 扫描"时，从本地 JSON 文件读取候选清单：
+
+```bash
+# 查看最新扫描结果
+ls artifacts/scan/elder-*.json | tail -1
+
+# 读取内容
+cat artifacts/scan/elder-YYYYMMDD.json
+```
+
+读取 JSON 后，对 `candidates` 列表中的每只股票：
+1. 提取 `signals` 字段（weekly_ema_direction, macd_season, daily_stoch, force_index_2d）
+2. 按 score 降序排列，优先分析高分标的
+3. 输出与模式 A 相同格式的 Markdown 分析报告
+4. 建议对 TOP 3-5 只标的进一步运行 `elder-screen` 做完整三重滤网分析
+
+**注意**：JSON 是输入协议，最终输出给用户的是 Markdown 分析报告，不是原始 JSON。
