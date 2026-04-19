@@ -77,17 +77,9 @@ def _cmd_fetch_ak(ns: argparse.Namespace) -> int:
         return 1
 
 
-def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
-    """批量拉取全 A 股（或指定列表）历史数据，并发执行。"""
-    import concurrent.futures
-    from .data.lake import LocalDataLake
-    from .data.schema import Adjustment, Exchange, Timeframe
-    from .data.sources.akshare_source import fetch_daily_bars
-
-    root = repo_root()
-    adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
-
-    # 确定要拉取的 (exchange, ticker) 列表
+def _resolve_bulk_pairs(ns) -> list | None:
+    """解析 --tickers 参数或从 BaoStock 获取全 A 股列表。返回 (Exchange, ticker) 列表，失败返回 None。"""
+    from .data.schema import Exchange
     if ns.tickers:
         pairs = []
         for sym in ns.tickers.split(","):
@@ -97,21 +89,60 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 pairs.append((Exchange(exch_str.upper()), ticker))
             else:
                 print(f"跳过格式不正确的代码: {sym}（需要 SSE:600000 格式）", file=sys.stderr)
+        return pairs
     else:
-        # 从 AKShare 获取全 A 股列表
         try:
-            from .data.sources.akshare_factors import AkshareFactorSource
-            akshare = AkshareFactorSource()
-            stock_df = akshare.get_a_stock_list()
-            if stock_df is None or stock_df.empty:
-                print("AKShare 返回空列表，请检查网络连接", file=sys.stderr)
-                return 1
-            pairs = [(Exchange(row["exchange"]), row["symbol"]) for _, row in stock_df.iterrows()]
+            import baostock as bs
+            lg = bs.login()
+            if lg.error_code != "0":
+                print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+                return None
+            rs = bs.query_stock_basic(code="", code_name="", fields="code,code_name,type,status")
+            pairs = []
+            while rs.next():
+                row = rs.get_row_data()
+                code, _, stock_type, status = row[0], row[1], row[2], row[3]
+                if stock_type != "1" or status != "1":  # 只要 A 股且上市
+                    continue
+                prefix, ticker = code.split(".")
+                exch = Exchange.SSE if prefix == "sh" else Exchange.SZSE
+                pairs.append((exch, ticker))
+            bs.logout()
+            return pairs
         except Exception as exc:
             print(f"获取股票列表失败: {exc}", file=sys.stderr)
-            return 1
+            return None
 
-    # 跳过已有数据的（--skip-existing）
+
+def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
+    """批量拉取全 A 股历史数据。
+
+    使用 BaoStock 作为数据源（全球可达，无需代理），串行处理。
+    每 BATCH_SIZE 只写入一个 Parquet 文件，最后统一刷新 DuckDB view。
+
+    设计原则：
+    - BaoStock 天然串行（login/logout per session），并发无收益
+    - 批量写入避免 Parquet 文件碎片化（5000 个小文件 vs 25 个批次文件）
+    - lake.init() 只在最后调用一次，不在循环内调用
+    - 预计耗时：~33 分钟（2.5 req/s × 5000 只）
+    """
+    import pandas as pd
+    from .data.lake import LocalDataLake
+    from .data.schema import Adjustment, Exchange, Timeframe
+    from .data.sources.baostock_source import query_bars_with_session
+
+    root = repo_root()
+    adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
+    BATCH_SIZE = 200  # 每批写入一个 Parquet 文件
+
+    pairs = _resolve_bulk_pairs(ns)
+    if pairs is None:
+        return 1
+    if not pairs:
+        print("没有需要拉取的股票")
+        return 0
+
+    # --skip-existing：跳过本地已有数据的股票
     if ns.skip_existing:
         lake_check = LocalDataLake(root / "data")
         lake_check.init()
@@ -125,52 +156,78 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         print("没有需要拉取的股票")
         return 0
 
-    print(f"开始批量拉取 {len(pairs)} 只，并发数 {ns.workers}，起始日期 {ns.start or '默认'}")
+    start = ns.start or "2022-01-01"
+    end = ns.end or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    print(f"开始批量拉取 {len(pairs)} 只（BaoStock，串行）")
+    print(f"  日期范围: {start} ~ {end}，预计耗时 ~{len(pairs) // 150 + 1} 分钟")
 
+    try:
+        import baostock as bs
+    except ImportError:
+        print("baostock 未安装，请运行: pip install baostock", file=sys.stderr)
+        return 1
+
+    lg = bs.login()
+    if lg.error_code != "0":
+        print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+        return 1
+
+    lake = LocalDataLake(root / "data")
     success = 0
-    failed = 0
     failed_list: list[str] = []
+    batch: list[pd.DataFrame] = []
+    batch_num = 0
 
-    def _fetch_one(args: tuple) -> tuple[str, bool, str]:
-        exch, ticker = args
-        sym_id = f"{exch.value}:{ticker}"
-        try:
-            df = fetch_daily_bars(ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
-            if df.empty:
-                return sym_id, False, "空数据"
-            lake = LocalDataLake(root / "data")
-            lake.write_bars_parquet(
-                df, exchange=exch, timeframe=Timeframe.D1, adjustment=adj,
-                source="akshare",
-                partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
-            )
-            lake.init()
-            return sym_id, True, f"{len(df)} 条"
-        except Exception as exc:
-            return sym_id, False, str(exc)[:80]
+    def _flush_batch() -> None:
+        nonlocal batch, batch_num
+        if not batch:
+            return
+        combined = pd.concat(batch, ignore_index=True)
+        batch_num += 1
+        lake.write_bars_parquet(
+            combined,
+            exchange=Exchange.SSE,          # exchange 字段只用于目录分类，数据里已有 symbol 列
+            timeframe=Timeframe.D1,
+            adjustment=adj,
+            source="baostock",
+            partition_hint=f"bulk_{batch_num:05d}",  # 单调递增，无碰撞
+        )
+        batch = []
 
-    with concurrent.futures.ThreadPoolExecutor(max_workers=ns.workers) as executor:
-        futures = {executor.submit(_fetch_one, p): p for p in pairs}
-        done_count = 0
-        for future in concurrent.futures.as_completed(futures):
-            done_count += 1
-            sym_id, ok, msg = future.result()
-            if ok:
-                success += 1
-            else:
-                failed += 1
-                failed_list.append(f"{sym_id}: {msg}")
-            if done_count % 50 == 0 or done_count == len(pairs):
-                print(f"  进度: {done_count}/{len(pairs)} (成功={success}, 失败={failed})")
+    try:
+        for i, (exch, ticker) in enumerate(pairs, 1):
+            sym_id = f"{exch.value}:{ticker}"
+            try:
+                df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
+                if df.empty:
+                    failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
+                else:
+                    batch.append(df)
+                    success += 1
+            except Exception as exc:
+                failed_list.append(f"{sym_id}: {str(exc)[:80]}")
 
-    print(f"\n完成: 成功={success}, 失败={failed}")
+            if len(batch) >= BATCH_SIZE:
+                _flush_batch()
+
+            if i % 100 == 0 or i == len(pairs):
+                print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
+
+        _flush_batch()  # 写入最后不足一批的数据
+
+    finally:
+        bs.logout()
+
+    lake.init()  # 一次性刷新 DuckDB view
+
+    print(f"\n完成: 成功={success}, 失败={len(failed_list)}")
     if failed_list and ns.verbose:
-        print("失败列表:")
+        print("失败列表（前 20 条）:")
         for item in failed_list[:20]:
             print(f"  {item}")
         if len(failed_list) > 20:
-            print(f"  ... 还有 {len(failed_list) - 20} 个")
-    return 0 if failed == 0 else 1
+            print(f"  ... 还有 {len(failed_list) - 20} 条")
+    return 0 if not failed_list else 1
 
 
 def _cmd_fetch_bs(ns: argparse.Namespace) -> int:
@@ -901,12 +958,11 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq", help="复权方式")
     p.set_defaults(func=_cmd_fetch_ak)
 
-    p = sub.add_parser("fetch-ak-bulk", help="批量拉取全A股历史数据（并发）")
+    p = sub.add_parser("fetch-ak-bulk", help="批量拉取全A股历史数据（BaoStock，串行，全球可达）")
     p.add_argument("--tickers", default=None, help="逗号分隔的代码，如 SSE:600000,SZSE:000001（不传则全A股）")
     p.add_argument("--start", default="2022-01-01", help="开始日期 YYYY-MM-DD（默认2022-01-01）")
     p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD（默认今日）")
     p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq", help="复权方式")
-    p.add_argument("--workers", type=int, default=8, help="并发线程数（默认8）")
     p.add_argument("--skip-existing", action="store_true", help="跳过本地已有数据的股票")
     p.add_argument("--verbose", action="store_true", help="显示失败列表详情")
     p.set_defaults(func=_cmd_fetch_ak_bulk)
