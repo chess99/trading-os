@@ -97,12 +97,15 @@ def _resolve_bulk_pairs(ns) -> list | None:
             if lg.error_code != "0":
                 print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
                 return None
-            rs = bs.query_stock_basic(code="", code_name="", fields="code,code_name,type,status")
+            # fields: code, code_name, ipoDate, outDate, type, status
+            rs = bs.query_stock_basic(code="", code_name="")
             pairs = []
             while rs.next():
                 row = rs.get_row_data()
-                code, _, stock_type, status = row[0], row[1], row[2], row[3]
-                if stock_type != "1" or status != "1":  # 只要 A 股且上市
+                code = row[0]          # sh.600000 / sz.000001
+                stock_type = row[4]    # 1=股票, 2=指数, 3=其他
+                status = row[5]        # 1=上市, 0=退市
+                if stock_type != "1" or status != "1":
                     continue
                 prefix, ticker = code.split(".")
                 exch = Exchange.SSE if prefix == "sh" else Exchange.SZSE
