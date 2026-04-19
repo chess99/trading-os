@@ -7,12 +7,17 @@ A股数据源 - 基于akshare
 from typing import Any
 import pandas as pd
 import logging
+import threading
 from datetime import datetime, timedelta
 
 from ..schema import Exchange, Symbol, Timeframe, Adjustment
 
 
 logger = logging.getLogger(__name__)
+
+# 新浪接口使用 mini_racer（JS 引擎），不是线程安全的。
+# 并发调用时必须串行化新浪 fallback，否则 mini_racer 会崩溃。
+_SINA_LOCK = threading.Lock()
 
 
 class AkshareConfig:
@@ -121,11 +126,13 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
         logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
 
     # Fallback：新浪（stock_zh_a_daily 需要 "sh600000" / "sz000001" 格式）
+    # mini_racer 不是线程安全的，必须加锁串行化
     try:
         prefix = "sh" if exchange.value == "SSE" else "sz"
         sina_symbol = f"{prefix}{symbol_str}"
         adjust_sina = {"qfq": "qfq", "hfq": "hfq", "": None}.get(adjust, None)
-        df = ak.stock_zh_a_daily(symbol=sina_symbol, adjust=adjust_sina)
+        with _SINA_LOCK:
+            df = ak.stock_zh_a_daily(symbol=sina_symbol, adjust=adjust_sina)
         if df is None or df.empty:
             return pd.DataFrame()
 
