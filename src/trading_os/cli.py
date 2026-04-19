@@ -170,9 +170,14 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         print("baostock 未安装，请运行: pip install baostock", file=sys.stderr)
         return 1
 
-    lg = bs.login()
-    if lg.error_code != "0":
-        print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+    def _bs_login() -> bool:
+        lg = bs.login()
+        if lg.error_code != "0":
+            print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+            return False
+        return True
+
+    if not _bs_login():
         return 1
 
     lake = LocalDataLake(root / "data")
@@ -180,6 +185,8 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     failed_list: list[str] = []
     batch: list[pd.DataFrame] = []
     batch_num = 0
+    # 每 N 只重连一次，避免长连接断线
+    RECONNECT_INTERVAL = 500
 
     def _flush_batch() -> None:
         nonlocal batch, batch_num
@@ -189,16 +196,23 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         batch_num += 1
         lake.write_bars_parquet(
             combined,
-            exchange=Exchange.SSE,          # exchange 字段只用于目录分类，数据里已有 symbol 列
+            exchange=Exchange.SSE,
             timeframe=Timeframe.D1,
             adjustment=adj,
             source="baostock",
-            partition_hint=f"bulk_{batch_num:05d}",  # 单调递增，无碰撞
+            partition_hint=f"bulk_{batch_num:05d}",
         )
         batch = []
 
     try:
         for i, (exch, ticker) in enumerate(pairs, 1):
+            # 定期重连，防止长连接超时断开
+            if i > 1 and (i - 1) % RECONNECT_INTERVAL == 0:
+                bs.logout()
+                if not _bs_login():
+                    print(f"重连失败，已处理 {i-1} 只，中止", file=sys.stderr)
+                    break
+
             sym_id = f"{exch.value}:{ticker}"
             try:
                 df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
@@ -208,7 +222,12 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                     batch.append(df)
                     success += 1
             except Exception as exc:
-                failed_list.append(f"{sym_id}: {str(exc)[:80]}")
+                err = str(exc)[:80]
+                failed_list.append(f"{sym_id}: {err}")
+                # 如果是连接错误，立即重连
+                if "connection" in err.lower() or "login" in err.lower() or "socket" in err.lower():
+                    bs.logout()
+                    _bs_login()
 
             if len(batch) >= BATCH_SIZE:
                 _flush_batch()
@@ -216,7 +235,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             if i % 100 == 0 or i == len(pairs):
                 print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
 
-        _flush_batch()  # 写入最后不足一批的数据
+        _flush_batch()
 
     finally:
         bs.logout()
