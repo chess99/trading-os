@@ -123,9 +123,16 @@ def filter_by_turnover(
     if bars_df.empty:
         return [], len(symbols)
 
-    # 计算成交额 = 成交量 * 收盘价（近似）
+    # 计算成交额（CNY）
+    # BaoStock 的 volume 单位是手（1手=100股），需要乘以 100
+    # AKShare 的 volume 单位是股，不需要乘以 100
+    # 两种数据源都用 volume * close 近似，但 BaoStock 需要再乘 100
+    # 判断方法：BaoStock 数据的 source 列为 "baostock"
     bars_df = bars_df.copy()
-    bars_df["turnover"] = bars_df["volume"] * bars_df["close"]
+    if "source" in bars_df.columns and (bars_df["source"] == "baostock").any():
+        bars_df["turnover"] = bars_df["volume"] * bars_df["close"] * 100
+    else:
+        bars_df["turnover"] = bars_df["volume"] * bars_df["close"]
 
     passed = []
     filtered = 0
