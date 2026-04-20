@@ -234,8 +234,10 @@ class ElderStrategy(Strategy):
             extra["current_month"] = month_key
             extra["monthly_loss"] = 0.0
 
+        # ── Use current NAV for position sizing (updated by BacktestRunner before each call) ──
+        portfolio_value = extra.get('current_nav', self._ctx.initial_cash)
+
         # ── Monthly fuse: stop new entries if realized loss ≥ 6% ──
-        portfolio_value = self._ctx.initial_cash  # approximation; actual NAV not accessible
         fuse_triggered = extra["monthly_loss"] >= portfolio_value * MONTHLY_FUSE
 
         symbols = bars[BarColumns.symbol].unique().tolist()
