@@ -659,7 +659,7 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
     from .data.lake import LocalDataLake
     from .data.pipeline import DataPipeline
     from .data.sources.akshare_factors import AkshareFactorSource
-    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output
+    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output, get_stock_names
     from .scan.elder_scanner import scan_elder
 
     root = repo_root()
@@ -709,6 +709,12 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
 
     # 技术指标筛选
     result = scan_elder(symbols, all_bars, scan_date=scan_date, top_n=ns.top)
+
+    # 注入股票名称
+    print("  获取股票名称...")
+    name_map = get_stock_names(cache_path=root / "data" / "stock_names.json")
+    for c in result["candidates"]:
+        c["name"] = name_map.get(c["symbol"], "")
 
     output = {
         "scan_date": scan_date.isoformat(),
@@ -788,7 +794,7 @@ def _cmd_scan_canslim(ns: argparse.Namespace) -> int:
     from .data.lake import LocalDataLake
     from .data.pipeline import DataPipeline
     from .data.sources.akshare_factors import AkshareFactorSource
-    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output
+    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output, get_stock_names
     from .scan.canslim_scanner import scan_canslim
 
     root = repo_root()
@@ -830,6 +836,11 @@ def _cmd_scan_canslim(ns: argparse.Namespace) -> int:
         symbols = []
 
     result = scan_canslim(symbols, all_bars, scan_date=scan_date, data_root=root / "data", top_n=ns.top)
+
+    print("  获取股票名称...")
+    name_map = get_stock_names(cache_path=root / "data" / "stock_names.json")
+    for c in result["candidates"]:
+        c["name"] = name_map.get(c["symbol"], "")
 
     output = {
         "scan_date": scan_date.isoformat(),
@@ -901,6 +912,11 @@ def _cmd_scan_value(ns: argparse.Namespace) -> int:
     except RuntimeError as exc:
         print(str(exc), file=sys.stderr)
         return 1
+
+    print("  获取股票名称...")
+    name_map = get_stock_names(cache_path=root / "data" / "stock_names.json")
+    for c in result["candidates"]:
+        c["name"] = name_map.get(c["symbol"], "")
 
     output = {
         "scan_date": scan_date.isoformat(),

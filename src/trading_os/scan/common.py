@@ -16,6 +16,58 @@ if TYPE_CHECKING:
 log = logging.getLogger(__name__)
 
 
+def get_stock_names(cache_path: Path | None = None, max_age_days: int = 30) -> dict[str, str]:
+    """获取全 A 股中文名称映射，返回 {symbol: name}。
+
+    结果缓存到 data/stock_names.json，30 天内直接读缓存，不重复调接口。
+    失败时返回空 dict（不影响主流程）。
+    """
+    import time
+
+    if cache_path is None:
+        # 默认缓存路径：相对于调用方的 data/ 目录，由 cli 传入
+        # 这里用 None 表示"不缓存"，cli 传入具体路径
+        pass
+
+    # 读缓存
+    if cache_path is not None and cache_path.exists():
+        age_days = (time.time() - cache_path.stat().st_mtime) / 86400
+        if age_days < max_age_days:
+            try:
+                return json.loads(cache_path.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+
+    # 从 BaoStock 拉取
+    try:
+        import baostock as bs
+        lg = bs.login()
+        if lg.error_code != "0":
+            return {}
+        rs = bs.query_stock_basic(code="", code_name="")
+        name_map: dict[str, str] = {}
+        while rs.next():
+            row = rs.get_row_data()
+            code = row[0]      # sh.600000
+            name = row[1]      # 浦发银行
+            stock_type = row[4]
+            if stock_type != "1":
+                continue
+            prefix, ticker = code.split(".")
+            exch = "SSE" if prefix == "sh" else "SZSE"
+            name_map[f"{exch}:{ticker}"] = name
+        bs.logout()
+
+        # 写缓存
+        if cache_path is not None and name_map:
+            cache_path.parent.mkdir(parents=True, exist_ok=True)
+            cache_path.write_text(json.dumps(name_map, ensure_ascii=False), encoding="utf-8")
+
+        return name_map
+    except Exception:
+        return {}
+
+
 def to_canonical(exchange: str, ticker: str) -> str:
     """将交易所+代码转换为规范格式。
 
