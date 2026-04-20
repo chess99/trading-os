@@ -34,6 +34,7 @@ def query_bars_with_session(
     start: str,
     end: str,
     adjustment: Adjustment = Adjustment.QFQ,
+    timeout: int = 30,
 ) -> "pd.DataFrame":
     """使用已登录的 BaoStock session 查询历史数据。
 
@@ -41,6 +42,7 @@ def query_bars_with_session(
 
     Args:
         bs:         已 import 的 baostock 模块（已调用 bs.login()）
+        timeout:    单次查询超时秒数（默认 30 秒），超时抛 TimeoutError
         ticker:     股票代码（如 "600000"）
         exchange:   交易所（SSE / SZSE）
         start:      开始日期 "YYYY-MM-DD"
@@ -63,6 +65,15 @@ def query_bars_with_session(
     end = end[:10]
 
     log.debug("BaoStock 查询: %s [%s ~ %s]", bs_symbol, start, end)
+
+    # 给底层 socket 设置超时，防止断网后无限阻塞
+    import baostock.common.context as _bs_ctx
+    _sock = getattr(_bs_ctx, "default_socket", None)
+    if _sock is not None:
+        try:
+            _sock.settimeout(timeout)
+        except Exception:
+            pass
 
     rs = bs.query_history_k_data_plus(
         bs_symbol,

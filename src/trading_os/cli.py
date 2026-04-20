@@ -224,9 +224,13 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             except Exception as exc:
                 err = str(exc)[:80]
                 failed_list.append(f"{sym_id}: {err}")
-                # 如果是连接错误，立即重连
-                if "connection" in err.lower() or "login" in err.lower() or "socket" in err.lower():
-                    bs.logout()
+                # 连接/超时错误立即重连
+                if any(k in err.lower() for k in ("connection", "login", "socket", "timeout", "timed out", "reset")):
+                    print(f"  连接异常，重连 BaoStock ({sym_id}): {err}")
+                    try:
+                        bs.logout()
+                    except Exception:
+                        pass
                     _bs_login()
 
             if len(batch) >= BATCH_SIZE:
