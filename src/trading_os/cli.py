@@ -710,9 +710,14 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
     # 技术指标筛选
     result = scan_elder(symbols, all_bars, scan_date=scan_date, top_n=ns.top)
 
-    # 注入股票名称
+    # 注入股票名称（有 miss 时强制刷新缓存，可能是新股上市）
     print("  获取股票名称...")
-    name_map = get_stock_names(cache_path=root / "data" / "stock_names.json")
+    name_cache = root / "data" / "stock_names.json"
+    name_map = get_stock_names(cache_path=name_cache)
+    missing = [c["symbol"] for c in result["candidates"] if c["symbol"] not in name_map]
+    if missing:
+        print(f"  发现 {len(missing)} 只未知股票，刷新名称缓存...")
+        name_map = get_stock_names(cache_path=name_cache, max_age_days=0)
     for c in result["candidates"]:
         c["name"] = name_map.get(c["symbol"], "")
 
@@ -838,7 +843,12 @@ def _cmd_scan_canslim(ns: argparse.Namespace) -> int:
     result = scan_canslim(symbols, all_bars, scan_date=scan_date, data_root=root / "data", top_n=ns.top)
 
     print("  获取股票名称...")
-    name_map = get_stock_names(cache_path=root / "data" / "stock_names.json")
+    name_cache = root / "data" / "stock_names.json"
+    name_map = get_stock_names(cache_path=name_cache)
+    missing = [c["symbol"] for c in result["candidates"] if c["symbol"] not in name_map]
+    if missing:
+        print(f"  发现 {len(missing)} 只未知股票，刷新名称缓存...")
+        name_map = get_stock_names(cache_path=name_cache, max_age_days=0)
     for c in result["candidates"]:
         c["name"] = name_map.get(c["symbol"], "")
 
@@ -914,7 +924,12 @@ def _cmd_scan_value(ns: argparse.Namespace) -> int:
         return 1
 
     print("  获取股票名称...")
-    name_map = get_stock_names(cache_path=root / "data" / "stock_names.json")
+    name_cache = root / "data" / "stock_names.json"
+    name_map = get_stock_names(cache_path=name_cache)
+    missing = [c["symbol"] for c in result["candidates"] if c["symbol"] not in name_map]
+    if missing:
+        print(f"  发现 {len(missing)} 只未知股票，刷新名称缓存...")
+        name_map = get_stock_names(cache_path=name_cache, max_age_days=0)
     for c in result["candidates"]:
         c["name"] = name_map.get(c["symbol"], "")
 
