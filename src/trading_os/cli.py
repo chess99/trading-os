@@ -2,7 +2,8 @@
 
 Commands:
     lake-init           Initialize DuckDB/Parquet data lake
-    fetch-ak            Fetch A-share daily bars from AKShare
+    lake-compact        合并去重 Parquet 文件（自动在文件数>20时触发，也可手动执行）
+    fetch-bars          获取A股日线数据（自动选择最佳数据源）
     fetch-yf            Fetch bars from yfinance (US/HK stocks)
     seed                Seed synthetic bars (offline testing)
     query-bars          Query bars from the local lake
@@ -48,7 +49,20 @@ def _cmd_lake_init(_: argparse.Namespace) -> int:
     return 0
 
 
-def _cmd_fetch_ak(ns: argparse.Namespace) -> int:
+def _cmd_lake_compact(_: argparse.Namespace) -> int:
+    """手动触发 Parquet compact（强制，不检查 threshold）。"""
+    from .data.lake import LocalDataLake
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+    n = lake.compact(threshold=0)  # threshold=0 强制触发
+    if n == 0:
+        print("没有数据需要 compact")
+    else:
+        print(f"Compact 完成，当前 {n} 个 Parquet 文件")
+    return 0
+
+
+def _cmd_fetch_bars(ns: argparse.Namespace) -> int:
     from .data.lake import LocalDataLake
     from .data.schema import Adjustment, Exchange, Timeframe
     from .data.sources.akshare_source import fetch_daily_bars
@@ -60,16 +74,17 @@ def _cmd_fetch_ak(ns: argparse.Namespace) -> int:
 
     try:
         print(f"获取A股数据: {exch.value}:{ns.ticker} (复权: {adj.value})")
-        df = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
+        df, actual_source = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
         if df.empty:
             print("未获取到数据")
             return 1
         lake.write_bars_parquet(
             df, exchange=exch, timeframe=Timeframe.D1, adjustment=adj,
-            source="akshare", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+            source=actual_source, partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
         )
         lake.init()
-        print(f"写入 {len(df)} 条: {exch.value}:{ns.ticker}")
+        source_note = f" (via {actual_source})" if actual_source != "akshare" else ""
+        print(f"写入 {len(df)} 条: {exch.value}:{ns.ticker}{source_note}")
         print(f"数据范围: {df['ts'].min().date()} 至 {df['ts'].max().date()}")
         return 0
     except Exception as e:
@@ -275,35 +290,6 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             print(f"  ... 还有 {len(failed_list) - 20} 条")
     return 0 if not failed_list else 1
 
-
-def _cmd_fetch_bs(ns: argparse.Namespace) -> int:
-    """从 BaoStock 获取 A 股数据（国内直连，无需代理）。"""
-    from .data.lake import LocalDataLake
-    from .data.schema import Adjustment, Exchange, Timeframe
-    from .data.sources.baostock_source import fetch_daily_bars
-
-    root = repo_root()
-    lake = LocalDataLake(root / "data")
-    exch = Exchange(ns.exchange)
-    adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
-
-    try:
-        print(f"获取A股数据(BaoStock): {exch.value}:{ns.ticker} (复权: {adj.value})")
-        df = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
-        if df.empty:
-            print("未获取到数据")
-            return 1
-        lake.write_bars_parquet(
-            df, exchange=exch, timeframe=Timeframe.D1, adjustment=adj,
-            source="baostock", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
-        )
-        lake.init()
-        print(f"写入 {len(df)} 条: {exch.value}:{ns.ticker}")
-        print(f"数据范围: {df['ts'].min().date()} 至 {df['ts'].max().date()}")
-        return 0
-    except Exception as e:
-        print(f"获取数据失败: {e}", file=sys.stderr)
-        return 1
 
 
 def _cmd_fetch_yf(ns: argparse.Namespace) -> int:
@@ -632,7 +618,7 @@ def _cmd_agent(ns: argparse.Namespace) -> int:
 
     bars = pipeline.get_bars(symbols=symbols, trading_date=trading_date)
     if bars is None or bars.empty:
-        print("No bars found. Fetch data first: trading-os fetch-ak ...", file=sys.stderr)
+        print("No bars found. Fetch data first: trading-os fetch-bars ...", file=sys.stderr)
         return 1
 
     print(f"Analyzing {symbols} for {trading_date}...")
@@ -654,19 +640,27 @@ def _cmd_agent(ns: argparse.Namespace) -> int:
 # Scan commands
 # ---------------------------------------------------------------------------
 
-def _cmd_scan_elder(ns: argparse.Namespace) -> int:
+def _run_scan(
+    ns: argparse.Namespace,
+    *,
+    scanner_fn,
+    system_name: str,
+    lookback_days: int = 504,
+    scanner_kwargs: dict | None = None,
+) -> int:
+    """三个 scan 命令的公共实现。"""
     from datetime import timedelta
+    import pandas as pd
     from .data.lake import LocalDataLake
     from .data.pipeline import DataPipeline
     from .data.sources.akshare_factors import AkshareFactorSource
     from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output, get_stock_names
-    from .scan.elder_scanner import scan_elder
 
     root = repo_root()
     scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
     output_path = (
         root / ns.output if ns.output
-        else root / "artifacts" / "scan" / f"elder-{scan_date.isoformat().replace('-', '')}.json"
+        else root / "artifacts" / "scan" / f"{system_name}-{scan_date.isoformat().replace('-', '')}.json"
     )
 
     lake = LocalDataLake(root / "data")
@@ -674,7 +668,7 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
     pipeline = DataPipeline(lake)
     akshare = AkshareFactorSource()
 
-    print(f"Scanning Elder signals for {scan_date}...")
+    print(f"Scanning {system_name} signals for {scan_date}...")
 
     try:
         symbols, no_data = get_scan_symbols(pipeline, akshare, exchange=ns.exchange)
@@ -689,11 +683,10 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
     all_bars_parts = []
     for i in range(0, len(symbols), batch_size):
         batch = symbols[i:i + batch_size]
-        bars = load_bars_batch(pipeline, batch, scan_date=scan_date, lookback_days=504)
+        bars = load_bars_batch(pipeline, batch, scan_date=scan_date, lookback_days=lookback_days)
         if not bars.empty:
             all_bars_parts.append(bars)
 
-    import pandas as pd
     all_bars = pd.concat(all_bars_parts) if all_bars_parts else pd.DataFrame()
 
     # 成交额过滤
@@ -705,10 +698,15 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
         low_turnover = len(symbols)
         symbols = []
 
-    print(f"  After turnover filter: {len(symbols)} ({low_turnover} filtered)")
+    kwargs: dict = {"scan_date": scan_date, "top_n": ns.top}
+    if scanner_kwargs:
+        kwargs.update(scanner_kwargs)
 
-    # 技术指标筛选
-    result = scan_elder(symbols, all_bars, scan_date=scan_date, top_n=ns.top)
+    try:
+        result = scanner_fn(symbols, all_bars, **kwargs)
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
 
     # 注入股票名称（有 miss 时强制刷新缓存，可能是新股上市）
     print("  获取股票名称...")
@@ -723,7 +721,7 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
 
     output = {
         "scan_date": scan_date.isoformat(),
-        "system": "elder",
+        "system": system_name,
         "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],
         "candidates": result["candidates"],
         "filtered_out": {
@@ -737,6 +735,11 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
     write_scan_output(output, output_path)
     print(f"  Found {len(result['candidates'])} candidates → {output_path}")
     return 0
+
+
+def _cmd_scan_elder(ns: argparse.Namespace) -> int:
+    from .scan.elder_scanner import scan_elder
+    return _run_scan(ns, scanner_fn=scan_elder, system_name="elder", lookback_days=504)
 
 
 def _cmd_fundamental_store(ns: argparse.Namespace) -> int:
@@ -794,161 +797,28 @@ def _cmd_fundamental_store(ns: argparse.Namespace) -> int:
 
 
 def _cmd_scan_canslim(ns: argparse.Namespace) -> int:
-    from datetime import timedelta
-    import pandas as pd
-    from .data.lake import LocalDataLake
-    from .data.pipeline import DataPipeline
-    from .data.sources.akshare_factors import AkshareFactorSource
-    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output, get_stock_names
     from .scan.canslim_scanner import scan_canslim
-
+    from pathlib import Path
     root = repo_root()
-    scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
-    output_path = (
-        root / ns.output if ns.output
-        else root / "artifacts" / "scan" / f"canslim-{scan_date.isoformat().replace('-', '')}.json"
+    return _run_scan(
+        ns,
+        scanner_fn=scan_canslim,
+        system_name="canslim",
+        lookback_days=504,
+        scanner_kwargs={"data_root": root / "data"},
     )
-
-    lake = LocalDataLake(root / "data")
-    lake.init()
-    pipeline = DataPipeline(lake)
-    akshare = AkshareFactorSource()
-
-    print(f"Scanning CANSLIM signals for {scan_date}...")
-
-    try:
-        symbols, no_data = get_scan_symbols(pipeline, akshare, exchange=ns.exchange)
-    except RuntimeError as exc:
-        print(str(exc), file=sys.stderr)
-        return 1
-
-    print(f"  Local symbols: {len(symbols)} ({no_data} without local data)")
-
-    batch_size = 500
-    all_bars_parts = []
-    for i in range(0, len(symbols), batch_size):
-        batch = symbols[i:i + batch_size]
-        bars = load_bars_batch(pipeline, batch, scan_date=scan_date, lookback_days=504)
-        if not bars.empty:
-            all_bars_parts.append(bars)
-
-    all_bars = pd.concat(all_bars_parts) if all_bars_parts else pd.DataFrame()
-
-    if not all_bars.empty:
-        symbols, low_turnover = filter_by_turnover(symbols, all_bars, min_amount=ns.min_turnover)
-    else:
-        low_turnover = len(symbols)
-        symbols = []
-
-    result = scan_canslim(symbols, all_bars, scan_date=scan_date, data_root=root / "data", top_n=ns.top)
-
-    print("  获取股票名称...")
-    name_cache = root / "data" / "stock_names.json"
-    name_map = get_stock_names(cache_path=name_cache)
-    missing = [c["symbol"] for c in result["candidates"] if c["symbol"] not in name_map]
-    if missing:
-        print(f"  发现 {len(missing)} 只未知股票，刷新名称缓存...")
-        name_map = get_stock_names(cache_path=name_cache, max_age_days=0)
-    for c in result["candidates"]:
-        c["name"] = name_map.get(c["symbol"], "")
-
-    output = {
-        "scan_date": scan_date.isoformat(),
-        "system": "canslim",
-        "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],
-        "candidates": result["candidates"],
-        "filtered_out": {
-            "no_data": no_data,
-            "low_turnover": low_turnover,
-            "insufficient_data": result["_stats"]["insufficient_data"],
-            "no_signal": result["_stats"]["no_signal"],
-        },
-    }
-
-    write_scan_output(output, output_path)
-    print(f"  Found {len(result['candidates'])} candidates → {output_path}")
-    return 0
 
 
 def _cmd_scan_value(ns: argparse.Namespace) -> int:
-    from datetime import timedelta
-    import pandas as pd
-    from .data.lake import LocalDataLake
-    from .data.pipeline import DataPipeline
-    from .data.sources.akshare_factors import AkshareFactorSource
-    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output
     from .scan.value_scanner import scan_value
-
     root = repo_root()
-    scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
-    output_path = (
-        root / ns.output if ns.output
-        else root / "artifacts" / "scan" / f"value-{scan_date.isoformat().replace('-', '')}.json"
+    return _run_scan(
+        ns,
+        scanner_fn=scan_value,
+        system_name="value",
+        lookback_days=756,
+        scanner_kwargs={"data_root": root / "data"},
     )
-
-    lake = LocalDataLake(root / "data")
-    lake.init()
-    pipeline = DataPipeline(lake)
-    akshare = AkshareFactorSource()
-
-    print(f"Scanning Value Investing signals for {scan_date}...")
-
-    try:
-        symbols, no_data = get_scan_symbols(pipeline, akshare, exchange=ns.exchange)
-    except RuntimeError as exc:
-        print(str(exc), file=sys.stderr)
-        return 1
-
-    print(f"  Local symbols: {len(symbols)} ({no_data} without local data)")
-
-    batch_size = 500
-    all_bars_parts = []
-    for i in range(0, len(symbols), batch_size):
-        batch = symbols[i:i + batch_size]
-        bars = load_bars_batch(pipeline, batch, scan_date=scan_date, lookback_days=756)  # 3年
-        if not bars.empty:
-            all_bars_parts.append(bars)
-
-    all_bars = pd.concat(all_bars_parts) if all_bars_parts else pd.DataFrame()
-
-    if not all_bars.empty:
-        symbols, low_turnover = filter_by_turnover(symbols, all_bars, min_amount=ns.min_turnover)
-    else:
-        low_turnover = len(symbols)
-        symbols = []
-
-    try:
-        result = scan_value(symbols, all_bars, scan_date=scan_date, data_root=root / "data", top_n=ns.top)
-    except RuntimeError as exc:
-        print(str(exc), file=sys.stderr)
-        return 1
-
-    print("  获取股票名称...")
-    name_cache = root / "data" / "stock_names.json"
-    name_map = get_stock_names(cache_path=name_cache)
-    missing = [c["symbol"] for c in result["candidates"] if c["symbol"] not in name_map]
-    if missing:
-        print(f"  发现 {len(missing)} 只未知股票，刷新名称缓存...")
-        name_map = get_stock_names(cache_path=name_cache, max_age_days=0)
-    for c in result["candidates"]:
-        c["name"] = name_map.get(c["symbol"], "")
-
-    output = {
-        "scan_date": scan_date.isoformat(),
-        "system": "value",
-        "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],
-        "candidates": result["candidates"],
-        "filtered_out": {
-            "no_data": no_data,
-            "low_turnover": low_turnover,
-            "insufficient_data": result["_stats"]["insufficient_data"],
-            "no_signal": result["_stats"]["no_signal"],
-        },
-    }
-
-    write_scan_output(output, output_path)
-    print(f"  Found {len(result['candidates'])} candidates → {output_path}")
-    return 0
 
 
 # ---------------------------------------------------------------------------
@@ -965,6 +835,9 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("lake-init", help="Initialize DuckDB/Parquet data lake")
     p.set_defaults(func=_cmd_lake_init)
+
+    p = sub.add_parser("lake-compact", help="合并去重 Parquet 文件（自动在文件数>20时触发，也可手动执行）")
+    p.set_defaults(func=_cmd_lake_compact)
 
     p = sub.add_parser("fundamental", help="获取股票财务摘要（BaoStock，无需代理）")
     p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:600519,SSE:600000")
@@ -1019,21 +892,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--days", type=int, default=30, help="统计窗口（默认30个交易日）")
     p.set_defaults(func=_cmd_market_breadth)
 
-    p = sub.add_parser("fetch-bs", help="从BaoStock获取A股日线数据（国内直连，无需代理）")
-    p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])
-    p.add_argument("--ticker", required=True, help="股票代码，如 600000")
-    p.add_argument("--start", default=None, help="开始日期 YYYY-MM-DD")
-    p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD")
-    p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq")
-    p.set_defaults(func=_cmd_fetch_bs)
-
-    p = sub.add_parser("fetch-ak", help="从AKShare获取A股日线数据")
+    p = sub.add_parser("fetch-bars", help="获取A股日线数据（自动选择最佳数据源）")
     p.add_argument("--exchange", required=True, choices=["SSE", "SZSE"])
     p.add_argument("--ticker", required=True, help="股票代码，如 600000")
     p.add_argument("--start", default=None, help="开始日期 YYYY-MM-DD")
     p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD")
     p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq", help="复权方式")
-    p.set_defaults(func=_cmd_fetch_ak)
+    p.set_defaults(func=_cmd_fetch_bars)
 
     p = sub.add_parser("fetch-ak-bulk", help="批量拉取全A股历史数据（BaoStock，串行，全球可达）")
     p.add_argument("--tickers", default=None, help="逗号分隔的代码，如 SSE:600000,SZSE:000001（不传则全A股）")

@@ -58,38 +58,27 @@ def test_annual_eps_continuous_insufficient_data():
 # ── scan_canslim integration ──────────────────────────────────────────────
 
 def _make_fundamental(symbol: str, eps_growth: float = 0.30, roe: float = 0.20) -> dict:
-    """Build a minimal fundamental JSON dict.
+    """Build a minimal fundamental JSON dict matching fundamental_source output format.
 
-    quarterly_eps has 5 entries: indices [-5].eps = prior_year, [-1].eps = current.
-    eps_growth = (current - prior) / prior
+    profitability: list of {period, roe, eps_ttm, ...} (descending by time)
+    growth: list of {period, yoy_eps, ...} (descending by time)
     """
-    prior_eps = 1.0
-    current_eps = prior_eps * (1 + eps_growth)
+    # Build 12 quarters of growth data, all positive yoy_eps so A-dimension passes
+    growth = []
+    for i in range(12):
+        period = f"2024Q{4 - i % 4}" if i < 4 else f"202{3 - i // 4}Q{4 - i % 4}"
+        # Most recent quarter has the target eps_growth, rest are positive
+        yoy = eps_growth if i == 0 else 0.25
+        growth.append({"period": period, "yoy_eps": yoy, "yoy_profit": yoy})
+
+    profitability = [
+        {"period": "2024Q4", "roe": roe, "eps_ttm": 1.5, "net_margin": 0.15},
+    ]
+
     return {
         "symbol": symbol,
-        "per_share": {
-            "quarterly_eps": [
-                # 4 filler quarters before the "prior year same quarter"
-                {"quarter": "2021Q1", "eps": 0.8},
-                {"quarter": "2021Q2", "eps": 0.85},
-                {"quarter": "2021Q3", "eps": 0.9},
-                {"quarter": "2021Q4", "eps": 0.95},
-                {"quarter": "2022Q1", "eps": prior_eps},   # index [-5]: prior year
-                {"quarter": "2022Q2", "eps": 1.05},
-                {"quarter": "2022Q3", "eps": 1.10},
-                {"quarter": "2022Q4", "eps": 1.15},
-                {"quarter": "2023Q1", "eps": current_eps}, # index [-1]: current
-            ],
-            "annual_eps": [
-                {"year": "2020", "eps": 0.8},
-                {"year": "2021", "eps": 1.0},
-                {"year": "2022", "eps": 1.3},
-                {"year": "2023", "eps": 1.7},
-            ],
-        },
-        "profitability": {
-            "roe": [{"year": "2023", "value": roe}],
-        },
+        "profitability": profitability,
+        "growth": growth,
     }
 
 

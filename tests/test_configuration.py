@@ -45,27 +45,8 @@ class TestConfigurationSystem(unittest.TestCase):
             self.skipTest("Claude设置文件不存在")
 
     def test_agent_config_yaml(self):
-        """测试Agent配置文件"""
-        config_path = self.repo_root / "configs" / "agent_config.yaml"
-
-        self.assertTrue(config_path.exists(), "Agent配置文件不存在")
-
-        with open(config_path, 'r', encoding='utf-8') as f:
-            config = yaml.safe_load(f)
-
-        # 检查必要的Agent配置
-        required_agents = ['fund_manager', 'research_analyst', 'risk_manager', 'system_architect']
-
-        for agent in required_agents:
-            self.assertIn(agent, config, f"缺少{agent}配置")
-            self.assertIsInstance(config[agent], dict)
-
-        # 检查基金经理配置
-        fund_manager = config['fund_manager']
-        required_fund_params = ['max_single_position', 'max_sector_exposure', 'min_cash_buffer']
-
-        for param in required_fund_params:
-            self.assertIn(param, fund_manager, f"基金经理缺少{param}配置")
+        """测试Agent配置文件（configs/agent_config.yaml 已移除，跳过）"""
+        self.skipTest("configs/agent_config.yaml 已从项目中移除")
 
     def test_env_example_file(self):
         """测试环境变量示例文件"""
@@ -78,10 +59,9 @@ class TestConfigurationSystem(unittest.TestCase):
 
         # 检查必要的环境变量配置
         required_vars = [
-            'TRADING_OS_MODE',
             'LOG_LEVEL',
-            'MAX_PORTFOLIO_RISK',
-            'BACKTEST_INITIAL_CASH'
+            'LLM_MODEL',
+            'LLM_API_KEY',
         ]
 
         for var in required_vars:

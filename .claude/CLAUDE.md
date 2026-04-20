@@ -25,7 +25,7 @@ journal/    EventLog（SQLite append-only 审计日志）
 
 ```bash
 # 获取 A 股数据
-python -m trading_os fetch-ak --exchange SSE --ticker 600000 --start 2020-01-01 --adjustment qfq
+python -m trading_os fetch-bars --exchange SSE --ticker 600000 --start 2020-01-01 --adjustment qfq
 
 # 回测
 python -m trading_os backtest --symbols SSE:600000 --strategy ma --start 2022-01-01 --end 2024-12-31

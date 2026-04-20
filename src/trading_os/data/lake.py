@@ -76,8 +76,90 @@ class LocalDataLake:
             """
         )
 
-    def init(self) -> None:
-        """Create or refresh views/tables pointing to Parquet datasets."""
+    def compact(self, threshold: int = 20) -> int:
+        """当 Parquet 文件数超过 threshold 时，合并去重写成一个文件。
+
+        原子性：先写新文件，验证成功后再删旧文件。
+
+        Returns:
+            compact 后的文件数（0 表示未触发 compact）
+        """
+        files = sorted(self.paths.bars_dir.glob("*.parquet"))
+        if len(files) <= threshold:
+            return 0
+
+        bars_glob = self.paths.bars_dir.as_posix() + "/*.parquet"
+
+        # 用 DuckDB 直接读所有 parquet，按 (exchange, timeframe, adjustment) 分组去重
+        with self.connect() as con:
+            groups_df = con.execute(
+                f"""
+                SELECT DISTINCT exchange, timeframe, adjustment
+                FROM read_parquet('{bars_glob}', union_by_name=true)
+                """
+            ).df()
+
+        new_files: list = []
+        try:
+            for _, row in groups_df.iterrows():
+                exchange_val = row["exchange"]
+                timeframe_val = row["timeframe"]
+                adjustment_val = row["adjustment"]
+
+                out_name = f"bars_{exchange_val}_{timeframe_val}_{adjustment_val}_compacted.parquet"
+                out_path = self.paths.bars_dir / out_name
+
+                with self.connect() as con:
+                    deduped = con.execute(
+                        f"""
+                        SELECT * EXCLUDE (rn)
+                        FROM (
+                          SELECT
+                            *,
+                            row_number() OVER (
+                              PARTITION BY symbol, timeframe, adjustment, ts
+                              ORDER BY source DESC
+                            ) AS rn
+                          FROM read_parquet('{bars_glob}', union_by_name=true)
+                          WHERE exchange = ?
+                            AND timeframe = ?
+                            AND adjustment = ?
+                        )
+                        WHERE rn = 1
+                        ORDER BY symbol, ts
+                        """,
+                        [exchange_val, timeframe_val, adjustment_val],
+                    ).df()
+
+                deduped.to_parquet(out_path, index=False)
+
+                # Verify the new file is readable
+                with self.connect() as con:
+                    con.execute(
+                        f"SELECT 1 FROM read_parquet('{out_path.as_posix()}') LIMIT 1"
+                    )
+
+                new_files.append(out_path)
+
+        except Exception:
+            # Clean up any partially written compacted files before re-raising
+            for f in new_files:
+                try:
+                    f.unlink(missing_ok=True)
+                except OSError:
+                    pass
+            raise
+
+        # All new files written and verified — now delete the old files
+        new_names = {f.name for f in new_files}
+        for old_file in files:
+            if old_file.name not in new_names:
+                old_file.unlink(missing_ok=True)
+
+        return len(new_files)
+
+    def _refresh_view(self) -> None:
+        """Rebuild the DuckDB `bars` view from current Parquet files on disk."""
         with self.connect() as con:
             files = sorted(self.paths.bars_dir.glob("*.parquet"))
             if not files:
@@ -91,6 +173,11 @@ class LocalDataLake:
                 FROM read_parquet('{self.paths.bars_dir.as_posix()}/*.parquet', union_by_name=true)
                 """
             )
+
+    def init(self) -> None:
+        """Create or refresh views/tables pointing to Parquet datasets."""
+        self.compact()
+        self._refresh_view()
 
     def write_bars_parquet(
         self,

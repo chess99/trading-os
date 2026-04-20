@@ -38,9 +38,9 @@ def fetch_daily_bars(
     end: str | None = None,
     adjustment: Adjustment = Adjustment.NONE,
     config: AkshareConfig | None = None,
-) -> pd.DataFrame:
+) -> tuple[pd.DataFrame, str]:
     """
-    从akshare获取A股日线数据
+    从akshare获取A股日线数据（自动选择最佳数据源）
 
     Args:
         ticker: 股票代码 (如 "600000", "000001")
@@ -51,7 +51,7 @@ def fetch_daily_bars(
         config: 配置参数
 
     Returns:
-        标准化的DataFrame，包含OHLCV数据
+        (标准化的DataFrame，实际使用的数据源名称)
     """
     try:
         import akshare as ak
@@ -84,33 +84,36 @@ def fetch_daily_bars(
         else:
             start = start.replace("-", "")
 
-        # 根据复权类型获取数据（优先东财接口，失败自动 fallback 新浪）
+        # 根据复权类型获取数据（优先东财接口，失败自动 fallback 新浪/BaoStock）
         adjust_map = {Adjustment.QFQ: "qfq", Adjustment.HFQ: "hfq", Adjustment.NONE: ""}
         adjust_str = adjust_map.get(adjustment, "")
 
-        df = _fetch_with_fallback(ak, symbol_str, exchange, start, end, adjust_str)
+        df, actual_source = _fetch_with_fallback(ak, symbol_str, exchange, start, end, adjust_str)
 
         if df is None or df.empty:
             logger.warning(f"未获取到数据: {symbol_str}")
-            return pd.DataFrame()
+            return pd.DataFrame(), "none"
 
         # 标准化列名和数据格式
         df = _normalize_akshare_data(df, ticker, exchange, adjustment)
 
-        logger.info(f"成功获取 {len(df)} 条记录: {symbol_str}")
-        return df
+        logger.info(f"成功获取 {len(df)} 条记录: {symbol_str} (via {actual_source})")
+        return df, actual_source
 
     except Exception as e:
         logger.error(f"获取A股数据失败 {symbol_str}: {e}")
         raise RuntimeError(f"akshare数据获取失败: {e}") from e
 
 
-def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, end: str, adjust: str) -> "pd.DataFrame":
+def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, end: str, adjust: str) -> "tuple[pd.DataFrame, str]":
     """先用东财接口，失败自动 fallback 到新浪接口，再失败 fallback 到 BaoStock。
 
     东财（push2his.eastmoney.com）：境外 IP 不可达，ETF 可能失败。
     新浪（finance.sina.com.cn）：ETF 代码解析失败。
     BaoStock：国内直连，支持 A 股及 ETF，无需代理。
+
+    Returns:
+        (DataFrame, source_name)，source_name 为 "akshare" / "baostock" / "none"
     """
     import pandas as pd
 
@@ -125,7 +128,7 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
         )
         if df is not None and not df.empty:
             logger.debug(f"东财接口成功: {symbol_str}")
-            return df
+            return df, "akshare"
     except Exception as e:
         logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
 
@@ -150,7 +153,7 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
                 "amount": "成交额",
             })
             logger.info(f"新浪接口成功: {sina_symbol}，共{len(df)}条")
-            return df
+            return df, "akshare"
         logger.warning(f"新浪接口也失败({sina_symbol}): No value to decode，切换 BaoStock 接口")
     except Exception as e2:
         logger.warning(f"新浪接口也失败({sina_symbol}): {e2}，切换 BaoStock 接口")
@@ -179,11 +182,11 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
             })
             bs_df["成交额"] = 0  # BaoStock 标准输出不含 amount，补占位列
             logger.info(f"BaoStock 接口成功: {symbol_str}，共{len(bs_df)}条")
-            return bs_df
+            return bs_df, "baostock"
     except Exception as e3:
         logger.error(f"BaoStock 接口也失败({symbol_str}): {e3}")
 
-    return pd.DataFrame()
+    return pd.DataFrame(), "none"
 
 
 def _build_akshare_symbol(ticker: str, exchange: Exchange) -> str:
