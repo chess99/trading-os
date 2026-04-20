@@ -484,8 +484,11 @@ def _build_strategy(ns: argparse.Namespace):
             confirm_mode=confirm,
             cache_dir=str(repo_root() / "artifacts" / "agent_cache"),
         ))
+    elif name in ("elder", "elder_triple_screen"):
+        from .strategy.elder import ElderStrategy
+        return ElderStrategy()
     else:
-        raise ValueError(f"Unknown strategy: {name!r}. Available: ma, bh, rsi, agent")
+        raise ValueError(f"Unknown strategy: {name!r}. Available: ma, bh, rsi, agent, elder")
 
 
 def _parse_date(s: str | None) -> date_type | None:
@@ -510,7 +513,15 @@ def _cmd_backtest(ns: argparse.Namespace) -> int:
         print(str(e), file=sys.stderr)
         return 1
 
-    symbols = [s.strip() for s in ns.symbols.split(",")]
+    if ns.symbols.strip().lower() == "all":
+        pipeline.lake.init()
+        symbols = pipeline.available_symbols()
+        if not symbols:
+            print("本地没有任何股票数据，请先运行 fetch-ak-bulk", file=sys.stderr)
+            return 1
+        print(f"--symbols all: 使用本地全部 {len(symbols)} 只股票")
+    else:
+        symbols = [s.strip() for s in ns.symbols.split(",")]
     start = _parse_date(ns.start) or date_type(2022, 1, 1)
     end = _parse_date(ns.end) or date_type.today()
 
@@ -933,7 +944,7 @@ def main(argv: list[str] | None = None) -> int:
     p.set_defaults(func=_cmd_query_bars)
 
     # --- Strategy ---
-    _STRATEGY_HELP = "Strategy: ma (MA crossover), bh (buy-and-hold), rsi (RSI), agent (Claude AI)"
+    _STRATEGY_HELP = "Strategy: ma (MA crossover), bh (buy-and-hold), rsi (RSI), agent (Claude AI), elder (Elder Triple Screen)"
 
     p = sub.add_parser("backtest", help="Run backtest with A-share rules")
     p.add_argument("--symbols", required=True, help="Comma-separated symbol ids, e.g. SSE:600000")

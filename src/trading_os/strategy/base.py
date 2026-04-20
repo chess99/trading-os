@@ -43,6 +43,9 @@ class Signal:
     reason: str = ""
     confidence: float = 1.0
     valid_until: date | None = None
+    metadata: dict = field(default_factory=dict)
+    # metadata 用于策略内部传递额外信息，BacktestRunner 不读取此字段。
+    # 示例（Elder 策略）：{"stop_price": 5.70, "atr": 0.33}
 
     def __post_init__(self) -> None:
         if not 0.0 <= self.size <= 1.0:
