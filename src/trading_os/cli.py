@@ -204,11 +204,15 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         )
         batch = []
 
+    import time
+    QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发 BaoStock 限速
+
     try:
         for i, (exch, ticker) in enumerate(pairs, 1):
             # 定期重连，防止长连接超时断开
             if i > 1 and (i - 1) % RECONNECT_INTERVAL == 0:
                 bs.logout()
+                time.sleep(2)
                 if not _bs_login():
                     print(f"重连失败，已处理 {i-1} 只，中止", file=sys.stderr)
                     break
@@ -221,6 +225,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 else:
                     batch.append(df)
                     success += 1
+                time.sleep(QUERY_INTERVAL)  # 限速：2.5 req/s
             except Exception as exc:
                 err = str(exc)[:80]
                 failed_list.append(f"{sym_id}: {err}")
@@ -231,6 +236,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                         bs.logout()
                     except Exception:
                         pass
+                    time.sleep(3)
                     _bs_login()
 
             if len(batch) >= BATCH_SIZE:
