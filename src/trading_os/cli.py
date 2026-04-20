@@ -514,7 +514,6 @@ def _cmd_backtest(ns: argparse.Namespace) -> int:
         return 1
 
     if ns.symbols.strip().lower() == "all":
-        pipeline.lake.init()
         symbols = pipeline.available_symbols()
         if not symbols:
             print("本地没有任何股票数据，请先运行 fetch-ak-bulk", file=sys.stderr)
