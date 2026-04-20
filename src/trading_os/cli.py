@@ -206,6 +206,8 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
     import time
     QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发 BaoStock 限速
+    consecutive_failures = 0
+    MAX_CONSECUTIVE_FAILURES = 5  # 连续失败超过 5 次强制重连
 
     try:
         for i, (exch, ticker) in enumerate(pairs, 1):
@@ -222,15 +224,26 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
                 if df.empty:
                     failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
+                    consecutive_failures += 1
                 else:
                     batch.append(df)
                     success += 1
+                    consecutive_failures = 0
                 time.sleep(QUERY_INTERVAL)  # 限速：2.5 req/s
             except Exception as exc:
                 err = str(exc)[:80]
                 failed_list.append(f"{sym_id}: {err}")
-                # 连接/超时错误立即重连
-                if any(k in err.lower() for k in ("connection", "login", "socket", "timeout", "timed out", "reset")):
+                consecutive_failures += 1
+                # 连接/超时错误立即重连（含 BaoStock 中文错误信息）
+                reconnect_keywords = (
+                    "connection", "login", "socket", "timeout", "timed out", "reset",
+                    "broken pipe", "网络", "接收错误", "连接失败", "10002",
+                )
+                need_reconnect = any(k in err.lower() for k in reconnect_keywords)
+                if not need_reconnect and consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
+                    need_reconnect = True
+                    print(f"  连续失败 {consecutive_failures} 次，强制重连")
+                if need_reconnect:
                     print(f"  连接异常，重连 BaoStock ({sym_id}): {err}")
                     try:
                         bs.logout()
@@ -238,6 +251,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                         pass
                     time.sleep(3)
                     _bs_login()
+                    consecutive_failures = 0
 
             if len(batch) >= BATCH_SIZE:
                 _flush_batch()
