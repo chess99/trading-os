@@ -19,6 +19,9 @@ logger = logging.getLogger(__name__)
 # 并发调用时必须串行化新浪 fallback，否则 mini_racer 会崩溃。
 _SINA_LOCK = threading.Lock()
 
+# BaoStock login/logout 是全局状态，并发调用会互相干扰。
+_BAOSTOCK_LOCK = threading.Lock()
+
 
 class AkshareConfig:
     """Akshare数据源配置"""
@@ -103,10 +106,11 @@ def fetch_daily_bars(
 
 
 def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, end: str, adjust: str) -> "pd.DataFrame":
-    """先用东财接口，失败自动 fallback 到新浪接口。
+    """先用东财接口，失败自动 fallback 到新浪接口，再失败 fallback 到 BaoStock。
 
-    东财（push2his.eastmoney.com）：境外 IP 不可达。
-    新浪（finance.sina.com.cn）：无地区限制，本机可用。
+    东财（push2his.eastmoney.com）：境外 IP 不可达，ETF 可能失败。
+    新浪（finance.sina.com.cn）：ETF 代码解析失败。
+    BaoStock：国内直连，支持 A 股及 ETF，无需代理。
     """
     import pandas as pd
 
@@ -125,34 +129,61 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
     except Exception as e:
         logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
 
-    # Fallback：新浪（stock_zh_a_daily 需要 "sh600000" / "sz000001" 格式）
+    # Fallback 1：新浪（stock_zh_a_daily 需要 "sh600000" / "sz000001" 格式）
     # mini_racer 不是线程安全的，必须加锁串行化
+    sina_symbol = ""
     try:
         prefix = "sh" if exchange.value == "SSE" else "sz"
         sina_symbol = f"{prefix}{symbol_str}"
         adjust_sina = {"qfq": "qfq", "hfq": "hfq", "": None}.get(adjust, None)
         with _SINA_LOCK:
             df = ak.stock_zh_a_daily(symbol=sina_symbol, adjust=adjust_sina)
-        if df is None or df.empty:
-            return pd.DataFrame()
-
-        # 新浪接口列名不同，统一映射到东财列名
-        # 注意：新浪已有 amount 列（成交额），直接映射，不补占位列
-        df = df.rename(columns={
-            "date": "日期",
-            "open": "开盘",
-            "high": "最高",
-            "low": "最低",
-            "close": "收盘",
-            "volume": "成交量",
-            "amount": "成交额",
-        })
-
-        logger.info(f"新浪接口成功: {sina_symbol}，共{len(df)}条")
-        return df
+        if df is not None and not df.empty:
+            # 新浪接口列名不同，统一映射到东财列名
+            df = df.rename(columns={
+                "date": "日期",
+                "open": "开盘",
+                "high": "最高",
+                "low": "最低",
+                "close": "收盘",
+                "volume": "成交量",
+                "amount": "成交额",
+            })
+            logger.info(f"新浪接口成功: {sina_symbol}，共{len(df)}条")
+            return df
+        logger.warning(f"新浪接口也失败({sina_symbol}): No value to decode，切换 BaoStock 接口")
     except Exception as e2:
-        logger.error(f"新浪接口也失败({sina_symbol}): {e2}")
-        return pd.DataFrame()
+        logger.warning(f"新浪接口也失败({sina_symbol}): {e2}，切换 BaoStock 接口")
+
+    # Fallback 2：BaoStock（国内直连，支持 ETF）
+    # BaoStock login/logout 是全局状态，并发时必须串行化
+    try:
+        from .baostock_source import fetch_daily_bars as bs_fetch
+        from ..schema import Adjustment as Adj
+        adjust_map = {"qfq": Adj.QFQ, "hfq": Adj.HFQ, "": Adj.NONE}
+        adj = adjust_map.get(adjust, Adj.NONE)
+        # BaoStock 日期格式 YYYY-MM-DD，而 start/end 此时是 YYYYMMDD
+        start_fmt = f"{start[:4]}-{start[4:6]}-{start[6:8]}"
+        end_fmt = f"{end[:4]}-{end[4:6]}-{end[6:8]}"
+        with _BAOSTOCK_LOCK:
+            bs_df = bs_fetch(symbol_str, exchange=exchange, start=start_fmt, end=end_fmt, adjustment=adj)
+        if bs_df is not None and not bs_df.empty:
+            # BaoStock 返回的是标准化列名（BarColumns），需映射回东财格式供后续 _normalize_akshare_data 处理
+            bs_df = bs_df.rename(columns={
+                "ts": "日期",
+                "open": "开盘",
+                "high": "最高",
+                "low": "最低",
+                "close": "收盘",
+                "volume": "成交量",
+            })
+            bs_df["成交额"] = 0  # BaoStock 标准输出不含 amount，补占位列
+            logger.info(f"BaoStock 接口成功: {symbol_str}，共{len(bs_df)}条")
+            return bs_df
+    except Exception as e3:
+        logger.error(f"BaoStock 接口也失败({symbol_str}): {e3}")
+
+    return pd.DataFrame()
 
 
 def _build_akshare_symbol(ticker: str, exchange: Exchange) -> str:
