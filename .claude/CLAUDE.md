@@ -25,7 +25,7 @@ journal/    EventLog（SQLite append-only 审计日志）
 
 ```bash
 # 获取 A 股数据
-python -m trading_os fetch-ak --exchange SSE --ticker 600000 --start 2020-01-01 --adjustment qfq
+python -m trading_os fetch-bars --exchange SSE --ticker 600000 --start 2020-01-01 --adjustment qfq
 
 # 回测
 python -m trading_os backtest --symbols SSE:600000 --strategy ma --start 2022-01-01 --end 2024-12-31
@@ -42,57 +42,56 @@ python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
 
 ## 投资策略定位
 
-**量化因子选股 + AI 增强研究 + 技术面择时**
+**三套独立体系，账户层面隔离，各自独立迭代。**
 
-不做纯量化（alpha 衰减快，同质化严重），不做纯主观（缺乏行业深度积累）。
-比较优势在于用 LLM 大规模处理非结构化信息（研报、财报、电话会议纪要），结合技术面择时，形成差异化的分析链。
-
-三层分析链：
-```
-研究层  fundamental-research（内在价值估算）+ canslim-screen（成长特征快速筛选）
-择时层  elder-screen（三重滤网，确认买卖点）
-执行层  position-sizer（仓位）+ trade-executor（指令）
-```
-
-止损的两种模式：
-- 技术面持仓（短中线）：价格止损，Elder 2%/6% 原则
-- 基本面持仓（中长线）：逻辑止损，买入理由不再成立时卖出，与价格无关
+| 体系 | 方法 | 持仓周期 | 止损方式 |
+|------|------|---------|---------|
+| Elder 技术交易 | 三重滤网（Elder） | 天到周 | 价格止损（2%/6%） |
+| CANSLIM 成长股 | 基本面七维度（欧奈尔）+ 技术面确认 | 周到月 | 初期价格止损，盈利后逻辑止损 |
+| Value Investing | 护城河 + DCF/SOTP 估值（巴菲特/格雷厄姆） | 月到年 | 纯逻辑止损 |
 
 ## Skills（`.claude/skills/`）
 
-交易决策 skills，与代码执行层互补，按用途分四层：
+三套体系完全独立，扁平目录结构，用前缀区分体系。意图不明确时先用 `trading-system` 导航。
 
-**编排层**
+**导航层**
+| Skill | 触发词 |
+|-------|-------|
+| `trading-system` | "分析一下这只股票"、"帮我看看600000"、意图不明确时 |
+
+**Elder 技术交易体系**
 | Skill | 职责 |
 |-------|------|
-| `trading-system` | 入口，识别意图，调度基本面/技术面/综合三条流程 |
+| `elder-system` | 体系入口，三套流程（单标的/批量扫描/持仓管理） |
+| `elder-screen` | 三重滤网技术分析 |
+| `elder-signal-scanner` | 技术面批量扫描 |
+| `elder-position-sizer` | 2%/6% 原则仓位计算 |
+| `elder-trade-executor` | 技术交易指令生成 |
+| `elder-position-monitor` | 价格止损持仓监控（不处理逻辑止损） |
+| `elder-trading-journal` | 技术交易记录 |
+| `elder-backtest-review` | Elder 系统回测评估 |
 
-**选股层**（什么值得关注）
-| Skill | 职责 | 知识来源 |
-|-------|------|---------|
-| `fundamental-research` | 深度基本面研究，估算内在价值，建立逻辑止损条件 | 巴菲特/芒格/格雷厄姆 |
-| `canslim-screen` | CANSLIM 七维度快速基本面评分（10 分钟） | 欧奈尔《笑傲股市》 |
-| `signal-scanner` | 技术面批量扫描候选标的池 | Elder《以交易为生》 |
-
-**分析层**（深度分析单标的）
-| Skill | 职责 | 知识来源 |
-|-------|------|---------|
-| `elder-screen` | 三重滤网技术分析（周线趋势 + 日线时机） | Elder《以交易为生》 |
-
-**执行层**（怎么买卖）
+**CANSLIM 成长股体系**
 | Skill | 职责 |
 |-------|------|
-| `position-sizer` | 2%/6% 原则计算仓位，输出 `Signal.size` |
-| `trade-executor` | 生成具体交易指令，驱动 `paper` 命令执行 |
-| `position-monitor` | 持仓监控，支持价格止损和逻辑止损两种模式 |
+| `canslim-system` | 体系入口，两套流程（单标的分析/持仓管理） |
+| `canslim-screen` | CANSLIM 七维度基本面评分 |
+| `canslim-fundamental-research` | 深度基本面研究（CANSLIM 视角） |
+| `canslim-elder-confirm` | 技术面确认（elder-screen 裁剪版，只用第二三滤网） |
+| `canslim-position-sizer` | 欧奈尔 7-8% 止损规则仓位计算 |
+| `canslim-position-monitor` | 双模式止损（初期价格止损，盈利后逻辑止损） |
+| `canslim-trade-executor` | 枢纽点买入指令生成 |
+| `canslim-trading-journal` | 成长股交易记录（含 CANSLIM 评分准确性追踪） |
 
-**复盘层**（回顾改进）
+**Value Investing 体系**
 | Skill | 职责 |
 |-------|------|
-| `trading-journal` | 交易记录与绩效统计 |
-| `backtest-review` | 系统回测健康评估，直接调用 `backtest` 命令 |
+| `value-system` | 体系入口，两套流程（新标的研究/持仓监控） |
+| `value-fundamental-research` | 深度基本面研究（价值投资视角） |
+| `value-valuation` | 程序化估值（封装 `trading_os valuation` CLI） |
+| `value-position-monitor` | 纯逻辑止损（不检查价格，卖出唯一理由是逻辑失效） |
 
-说"帮我分析 600000"、"这家公司值多少钱"、"扫描今天的机会"等，对应 skill 自动触发。
+说"用 Elder 分析 600000"触发 Elder 体系，"CANSLIM 分析"触发 CANSLIM 体系，"估值分析"触发 Value Investing 体系。
 
 ## 参考资料
 

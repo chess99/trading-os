@@ -383,6 +383,9 @@ class BacktestRunner:
                 final_nav=self.config.initial_cash,
             )
 
+        # Allow strategy to precompute indicators once across all data
+        self.strategy.on_data(all_bars)
+
         # Get unique trading dates in [start, end]
         all_bars[BarColumns.ts] = pd.to_datetime(all_bars[BarColumns.ts], utc=True)
         start_ts = pd.Timestamp(start, tz="UTC")
@@ -409,6 +412,16 @@ class BacktestRunner:
 
             if hist_bars is None or hist_bars.empty:
                 continue
+
+            # Update strategy context with current portfolio NAV (using prev close prices)
+            # This lets strategies use real-time NAV for position sizing instead of initial cash
+            if hasattr(self.strategy, '_ctx') and hasattr(self.strategy._ctx, 'extra'):
+                prev_close_prices = {}
+                if not hist_bars.empty:
+                    latest = hist_bars.groupby(BarColumns.symbol)[BarColumns.close].last()
+                    prev_close_prices = latest.to_dict()
+                current_nav = portfolio.mark_to_market(prev_close_prices)
+                self.strategy._ctx.extra['current_nav'] = current_nav
 
             # Generate signals
             try:

@@ -43,6 +43,9 @@ class Signal:
     reason: str = ""
     confidence: float = 1.0
     valid_until: date | None = None
+    metadata: dict = field(default_factory=dict)
+    # metadata 用于策略内部传递额外信息，BacktestRunner 不读取此字段。
+    # 示例（Elder 策略）：{"stop_price": 5.70, "atr": 0.33}
 
     def __post_init__(self) -> None:
         if not 0.0 <= self.size <= 1.0:
@@ -92,6 +95,13 @@ class Strategy(ABC):
 
     def on_start(self, context: StrategyContext) -> None:
         """Called once before the first bar. Override to initialize state."""
+
+    def on_data(self, all_bars: "pd.DataFrame") -> None:
+        """Called once after on_start with the full bar dataset for the backtest period.
+
+        Override to precompute indicators across all symbols and dates.
+        This avoids recomputing indicators on every generate_signals call.
+        """
 
     def on_fill(self, fill: object) -> None:
         """Called after each order fill. Override to track position state."""

@@ -20,7 +20,7 @@ description: |
 **与其他 skill 的分工：**
 - `canslim-screen`：快速筛选，有没有成长特征，10 分钟
 - `fundamental-research`：深度研究，这家公司值多少钱，1 小时
-- `elder-screen`：技术面确认，现在能不能进场
+- `value-investing/valuation`：估值分析，当前价格是否有安全边际
 
 ---
 
@@ -829,7 +829,7 @@ EPV vs 资产再生产成本：{情形 A/B/C，附数据}
 【综合评级】
 研究结论：强烈关注 / 值得关注 / 观察 / 回避
 建议下一步：
-→ {如果值得关注：运行 elder-screen 确认技术面入场时机}
+→ {如果值得关注：运行 valuation 计算内在价值和安全边际}
 → {如果高估：加入观察名单，设定目标价格提醒}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -1022,5 +1022,5 @@ python -m trading_os valuation-sensitivity \
 ### 后续衔接
 
 研究完成后：
-- 说"用三重滤网分析入场时机" → 触发 `elder-screen`
+- 说"估值分析" → 触发 `value-investing/valuation`（价值投资不依赖技术面时机）
 - 研究报告建议保存到 `artifacts/research/{股票代码}_{日期}.md`，每季度复查逻辑止损条件
