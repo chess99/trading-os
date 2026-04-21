@@ -383,6 +383,9 @@ class BacktestRunner:
                 final_nav=self.config.initial_cash,
             )
 
+        # Allow strategy to precompute indicators once across all data
+        self.strategy.on_data(all_bars)
+
         # Get unique trading dates in [start, end]
         all_bars[BarColumns.ts] = pd.to_datetime(all_bars[BarColumns.ts], utc=True)
         start_ts = pd.Timestamp(start, tz="UTC")

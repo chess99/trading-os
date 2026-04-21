@@ -96,6 +96,13 @@ class Strategy(ABC):
     def on_start(self, context: StrategyContext) -> None:
         """Called once before the first bar. Override to initialize state."""
 
+    def on_data(self, all_bars: "pd.DataFrame") -> None:
+        """Called once after on_start with the full bar dataset for the backtest period.
+
+        Override to precompute indicators across all symbols and dates.
+        This avoids recomputing indicators on every generate_signals call.
+        """
+
     def on_fill(self, fill: object) -> None:
         """Called after each order fill. Override to track position state."""
 
