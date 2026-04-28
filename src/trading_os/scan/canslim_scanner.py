@@ -134,7 +134,7 @@ def scan_canslim(
         # ── A 维度：年度 EPS 连续增长（用 yoy_eps > 0 的季度比例代理）──
         # 取最近 12 个季度（约 3 年），要求多数季度 yoy_eps > 0
         recent_growth = growth_list[:12]
-        positive_quarters = sum(1 for g in recent_growth if g.get("yoy_eps", 0) > 0)
+        positive_quarters = sum(1 for g in recent_growth if (g.get("yoy_eps") or 0) > 0)
         if len(recent_growth) < 4 or positive_quarters < len(recent_growth) * 0.75:
             no_signal += 1
             continue
