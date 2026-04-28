@@ -13,6 +13,7 @@ Commands:
     paths               Print key repo paths
     fetch-ak-bulk       批量并发拉取全 A 股历史数据
     scan-elder          批量扫描全 A 股技术信号（Elder 体系）
+    scan-canslim        批量扫描全 A 股基本面信号（CANSLIM 体系，--live 模式无需预缓存）
     fundamental-store   持久化 BaoStock 基本面数据到本地
 """
 from __future__ import annotations
@@ -110,8 +111,7 @@ def _resolve_bulk_pairs(ns) -> list | None:
             import baostock as bs
             lg = bs.login()
             if lg.error_code != "0":
-                print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
-                return None
+                raise RuntimeError(f"BaoStock 登录失败: {lg.error_msg}")
             # fields: code, code_name, ipoDate, outDate, type, status
             rs = bs.query_stock_basic(code="", code_name="")
             pairs = []
@@ -128,8 +128,30 @@ def _resolve_bulk_pairs(ns) -> list | None:
             bs.logout()
             return pairs
         except Exception as exc:
-            print(f"获取股票列表失败: {exc}", file=sys.stderr)
-            return None
+            print(f"BaoStock 获取股票列表失败: {exc}", file=sys.stderr)
+            print("Fallback：使用本地已有股票列表...", file=sys.stderr)
+            try:
+                import duckdb
+                root = repo_root()
+                db_path = root / "data" / "lake.duckdb"
+                con = duckdb.connect(str(db_path), read_only=True)
+                rows = con.execute(
+                    "SELECT DISTINCT symbol FROM bars ORDER BY symbol"
+                ).fetchall()
+                con.close()
+                pairs = []
+                for (sym,) in rows:
+                    if ":" in sym:
+                        exch_str, ticker = sym.split(":", 1)
+                        try:
+                            pairs.append((Exchange(exch_str.upper()), ticker))
+                        except ValueError:
+                            pass
+                print(f"Fallback 成功：从本地获取到 {len(pairs)} 只股票", file=sys.stderr)
+                return pairs if pairs else None
+            except Exception as fallback_exc:
+                print(f"Fallback 也失败: {fallback_exc}", file=sys.stderr)
+                return None
 
 
 def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
@@ -176,24 +198,36 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
     start = ns.start or "2022-01-01"
     end = ns.end or datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    print(f"开始批量拉取 {len(pairs)} 只（BaoStock，串行）")
-    print(f"  日期范围: {start} ~ {end}，预计耗时 ~{len(pairs) // 150 + 1} 分钟")
 
+    # 检测 BaoStock 是否可用
+    _use_baostock = False
     try:
         import baostock as bs
-    except ImportError:
-        print("baostock 未安装，请运行: pip install baostock", file=sys.stderr)
-        return 1
-
-    def _bs_login() -> bool:
         lg = bs.login()
-        if lg.error_code != "0":
-            print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
-            return False
-        return True
+        if lg.error_code == "0":
+            _use_baostock = True
+            bs.logout()
+        else:
+            print(f"BaoStock 不可用: {lg.error_msg}，切换到 akshare", file=sys.stderr)
+    except Exception as exc:
+        print(f"BaoStock 不可用: {exc}，切换到 akshare", file=sys.stderr)
 
-    if not _bs_login():
-        return 1
+    if _use_baostock:
+        print(f"开始批量拉取 {len(pairs)} 只（BaoStock，串行）")
+    else:
+        print(f"开始批量拉取 {len(pairs)} 只（akshare，串行）")
+    print(f"  日期范围: {start} ~ {end}，预计耗时 ~{len(pairs) // 150 + 1} 分钟")
+
+    if _use_baostock:
+        def _bs_login() -> bool:
+            lg = bs.login()
+            if lg.error_code != "0":
+                print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+                return False
+            return True
+
+        if not _bs_login():
+            return 1
 
     lake = LocalDataLake(root / "data")
     success = 0
@@ -202,6 +236,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     batch_num = 0
     # 每 N 只重连一次，避免长连接断线
     RECONNECT_INTERVAL = 500
+    _source_name = "baostock" if _use_baostock else "akshare"
 
     def _flush_batch() -> None:
         nonlocal batch, batch_num
@@ -214,59 +249,90 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             exchange=Exchange.SSE,
             timeframe=Timeframe.D1,
             adjustment=adj,
-            source="baostock",
+            source=_source_name,
             partition_hint=f"bulk_{batch_num:05d}",
         )
         batch = []
 
     import time
-    QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发 BaoStock 限速
+    QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发限速
     consecutive_failures = 0
     MAX_CONSECUTIVE_FAILURES = 5  # 连续失败超过 5 次强制重连
 
-    try:
-        for i, (exch, ticker) in enumerate(pairs, 1):
-            # 定期重连，防止长连接超时断开
-            if i > 1 and (i - 1) % RECONNECT_INTERVAL == 0:
-                bs.logout()
-                time.sleep(2)
-                if not _bs_login():
-                    print(f"重连失败，已处理 {i-1} 只，中止", file=sys.stderr)
-                    break
+    if _use_baostock:
+        try:
+            for i, (exch, ticker) in enumerate(pairs, 1):
+                # 定期重连，防止长连接超时断开
+                if i > 1 and (i - 1) % RECONNECT_INTERVAL == 0:
+                    bs.logout()
+                    time.sleep(2)
+                    if not _bs_login():
+                        print(f"重连失败，已处理 {i-1} 只，中止", file=sys.stderr)
+                        break
 
+                sym_id = f"{exch.value}:{ticker}"
+                try:
+                    df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
+                    if df.empty:
+                        failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
+                        consecutive_failures += 1
+                    else:
+                        batch.append(df)
+                        success += 1
+                        consecutive_failures = 0
+                    time.sleep(QUERY_INTERVAL)
+                except Exception as exc:
+                    err = str(exc)[:80]
+                    failed_list.append(f"{sym_id}: {err}")
+                    consecutive_failures += 1
+                    reconnect_keywords = (
+                        "connection", "login", "socket", "timeout", "timed out", "reset",
+                        "broken pipe", "网络", "接收错误", "连接失败", "10002",
+                    )
+                    need_reconnect = any(k in err.lower() for k in reconnect_keywords)
+                    if not need_reconnect and consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
+                        need_reconnect = True
+                        print(f"  连续失败 {consecutive_failures} 次，强制重连")
+                    if need_reconnect:
+                        print(f"  连接异常，重连 BaoStock ({sym_id}): {err}")
+                        try:
+                            bs.logout()
+                        except Exception:
+                            pass
+                        time.sleep(3)
+                        _bs_login()
+                        consecutive_failures = 0
+
+                if len(batch) >= BATCH_SIZE:
+                    _flush_batch()
+
+                if i % 100 == 0 or i == len(pairs):
+                    print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
+
+            _flush_batch()
+
+        finally:
+            bs.logout()
+    else:
+        # akshare fallback
+        from .data.sources.akshare_source import fetch_daily_bars as ak_fetch
+
+        for i, (exch, ticker) in enumerate(pairs, 1):
             sym_id = f"{exch.value}:{ticker}"
             try:
-                df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
+                df, actual_source = ak_fetch(ticker, exchange=exch, start=start, end=end, adjustment=adj)
                 if df.empty:
-                    failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
+                    failed_list.append(f"{sym_id}: 空数据")
                     consecutive_failures += 1
                 else:
                     batch.append(df)
                     success += 1
                     consecutive_failures = 0
-                time.sleep(QUERY_INTERVAL)  # 限速：2.5 req/s
+                time.sleep(QUERY_INTERVAL)
             except Exception as exc:
                 err = str(exc)[:80]
                 failed_list.append(f"{sym_id}: {err}")
                 consecutive_failures += 1
-                # 连接/超时错误立即重连（含 BaoStock 中文错误信息）
-                reconnect_keywords = (
-                    "connection", "login", "socket", "timeout", "timed out", "reset",
-                    "broken pipe", "网络", "接收错误", "连接失败", "10002",
-                )
-                need_reconnect = any(k in err.lower() for k in reconnect_keywords)
-                if not need_reconnect and consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
-                    need_reconnect = True
-                    print(f"  连续失败 {consecutive_failures} 次，强制重连")
-                if need_reconnect:
-                    print(f"  连接异常，重连 BaoStock ({sym_id}): {err}")
-                    try:
-                        bs.logout()
-                    except Exception:
-                        pass
-                    time.sleep(3)
-                    _bs_login()
-                    consecutive_failures = 0
 
             if len(batch) >= BATCH_SIZE:
                 _flush_batch()
@@ -275,9 +341,6 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
 
         _flush_batch()
-
-    finally:
-        bs.logout()
 
     lake.init()  # 一次性刷新 DuckDB view
 
@@ -807,9 +870,18 @@ def _cmd_fundamental_store(ns: argparse.Namespace) -> int:
 
 
 def _cmd_scan_canslim(ns: argparse.Namespace) -> int:
-    from .scan.canslim_scanner import scan_canslim
     from pathlib import Path
     root = repo_root()
+    if getattr(ns, "live", False):
+        from .scan.canslim_scanner import scan_canslim_live
+        return _run_scan(
+            ns,
+            scanner_fn=scan_canslim_live,
+            system_name="canslim",
+            lookback_days=504,
+            scanner_kwargs={"max_workers": getattr(ns, "workers", 3)},
+        )
+    from .scan.canslim_scanner import scan_canslim
     return _run_scan(
         ns,
         scanner_fn=scan_canslim,
@@ -993,6 +1065,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--min-turnover", type=float, default=1e7, help="最低日均成交额 CNY（默认1000万）")
     p.add_argument("--exchange", default=None, choices=["SSE", "SZSE"], help="只扫描指定交易所")
     p.add_argument("--output", default=None, help="输出 JSON 路径")
+    p.add_argument("--live", action="store_true",
+                   help="实时模式：直接调用 EastMoney F10 API，无需 fundamental-store 预缓存")
+    p.add_argument("--workers", type=int, default=3,
+                   help="--live 模式并发线程数（默认3，避免触发限速）")
     p.set_defaults(func=_cmd_scan_canslim)
 
     p = sub.add_parser("scan-value", help="批量扫描全 A 股估值信号（Value Investing 体系）")

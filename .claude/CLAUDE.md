@@ -38,6 +38,17 @@ python -m trading_os paper --symbols SSE:600000 --strategy agent --bypass-confir
 
 # Agent 单次分析
 python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
+
+# CANSLIM 批量扫描（需要先运行 fundamental-store 预缓存基本面数据）
+python -m trading_os scan-canslim --date 2024-03-15
+
+# CANSLIM 实时扫描（直接调用 EastMoney F10，无需预缓存，适合首次扫描）
+python -m trading_os scan-canslim --live --date 2024-03-15
+# --live 模式说明：
+#   - 数据源：EastMoney F10 API（实时，比 BaoStock 更新更快）
+#   - 无需运行 fundamental-store，适合本地没有缓存时使用
+#   - 速度受网络限速，默认 3 线程（--workers 可调）
+#   - 实现：data/sources/eastmoney_source.py + scan/canslim_scanner.scan_canslim_live()
 ```
 
 ## 投资策略定位

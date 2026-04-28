@@ -186,3 +186,129 @@ def scan_canslim(
             "no_signal": no_signal,
         },
     }
+
+
+def scan_canslim_live(
+    symbols: list[str],
+    bars_df: "pd.DataFrame",
+    *,
+    scan_date: date,
+    top_n: int = 30,
+    max_workers: int = 3,
+) -> dict[str, Any]:
+    """CANSLIM 实时扫描模式：直接调用 EastMoney F10，无需 fundamental-store 预缓存。
+
+    适用场景：
+    - 本地没有 fundamental/ 缓存数据
+    - 需要最新财务数据（F10 比 BaoStock 更新更快）
+
+    与 scan_canslim 的区别：
+    - 数据源：EastMoney F10 API（实时）vs BaoStock fundamental JSON（预缓存）
+    - 速度：受网络限速，建议 max_workers=3
+    - 依赖：需要网络访问东方财富，无需 fundamental-store
+
+    Args:
+        symbols: 已经过成交额过滤的候选符号
+        bars_df: 所有符号的日线数据 DataFrame
+        scan_date: 扫描日期
+        top_n: 输出前 N 只
+        max_workers: 并发线程数（建议 3，避免触发限速）
+    """
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
+    from ..data.sources.eastmoney_source import get_financial_data
+
+    candidates = []
+    insufficient_data = 0
+    no_signal = 0
+
+    # 计算全市场相对强度
+    rs_map = _compute_relative_strength(symbols, bars_df)
+    if rs_map:
+        all_returns = sorted(rs_map.values(), reverse=True)
+        rs_threshold_idx = int(len(all_returns) * _RS_RANK_THRESHOLD)
+        rs_threshold = all_returns[rs_threshold_idx] if rs_threshold_idx < len(all_returns) else 0.0
+    else:
+        rs_threshold = 0.0
+
+    def _process(sym: str) -> dict[str, Any]:
+        fund = get_financial_data(sym)
+        if not fund:
+            return {"_type": "nodata", "symbol": sym}
+
+        yoy_eps_list = fund.get("yoy_eps_list", [])
+        roe_list = fund.get("roe_list", [])
+
+        if not yoy_eps_list or not roe_list:
+            return {"_type": "nodata", "symbol": sym}
+
+        # C 维度：最新季度 EPS 同比增速 ≥ 18%
+        latest_yoy = yoy_eps_list[0].get("yoy_eps")
+        if latest_yoy is None or latest_yoy < _MIN_EPS_GROWTH:
+            return {"_type": "nosignal", "symbol": sym, "reason": "eps_growth"}
+
+        # A 维度：近 12 季度 75% 以上 yoy_eps > 0
+        recent_12 = yoy_eps_list[:12]
+        positive_quarters = sum(1 for g in recent_12 if (g.get("yoy_eps") or 0) > 0)
+        if len(recent_12) < 4 or positive_quarters < len(recent_12) * 0.75:
+            return {"_type": "nosignal", "symbol": sym, "reason": "positive_quarters"}
+
+        # ROE ≥ 17%（F10 返回百分数格式，如 17.54）
+        latest_roe_pct = roe_list[0].get("roe", 0)
+        latest_roe = latest_roe_pct / 100  # 转为小数
+        if latest_roe < _MIN_ROE:
+            return {"_type": "nosignal", "symbol": sym, "reason": "roe"}
+
+        sym_return = rs_map.get(sym)
+        rs_ok = sym_return is not None and sym_return >= rs_threshold
+
+        score = 7.0  # C(3) + A(2) + ROE(2)
+        if rs_ok:
+            score += 2
+        if latest_yoy >= 0.40:
+            score += 1
+
+        return {
+            "_type": "candidate",
+            "symbol": sym,
+            "score": round(score, 1),
+            "signals": {
+                "eps_growth_yoy": round(latest_yoy, 3),
+                "recent_quarters_positive": positive_quarters,
+                "roe": round(latest_roe, 3),
+                "relative_strength_top20pct": rs_ok,
+            },
+            "next_step": "运行 canslim-system 做完整 CANSLIM 七维度分析",
+        }
+
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(_process, sym): sym for sym in symbols}
+        done = 0
+        for future in as_completed(futures):
+            result = future.result()
+            done += 1
+            t = result["_type"]
+            if t == "candidate":
+                candidates.append(result)
+            elif t == "nodata":
+                insufficient_data += 1
+            elif t == "nosignal":
+                no_signal += 1
+
+            if done % 100 == 0:
+                log.info("进度: %d/%d candidates=%d", done, len(symbols), len(candidates))
+
+    # 排序 + 截取 top_n
+    candidates.sort(key=lambda x: x["score"], reverse=True)
+    candidates = candidates[:top_n]
+    for i, c in enumerate(candidates, 1):
+        c["rank"] = i
+        c.pop("_type", None)
+
+    return {
+        "candidates": candidates,
+        "_stats": {
+            "insufficient_data": insufficient_data,
+            "no_signal": no_signal,
+        },
+    }
