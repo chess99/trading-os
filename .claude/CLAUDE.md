@@ -112,6 +112,24 @@ python -m trading_os scan-canslim --live --date 2024-03-15
 - `daily_stock_analysis`：6 层 Fallback 数据架构 + YAML 策略系统，值得借鉴
 - `ai_quant_trade`：**警告**——RL 策略存在未来数据泄露，不可复制
 
+## artifacts 目录规范
+
+```
+artifacts/
+  research/   ← 入库（git 追踪）。分析报告、研究存档，不是交易记录
+  scan/       ← gitignored。批量扫描输出（elder/canslim/value JSON）
+  journal/    ← gitignored。EventLog 审计日志（SQLite）
+  agent_cache/← gitignored。AgentStrategy 推理缓存
+```
+
+**research/ 命名规范**：
+- 批量扫描分析：`CANSLIM-scan-YYYYMMDD.md`、`Elder-scan-YYYYMMDD.md`
+- 单股研究：`{EXCHANGE}{TICKER}-YYYYMMDD.md`，如 `SZSE000858-20260430.md`
+- 专题研究：`topic-YYYYMMDD.md`
+
+**何时存 research/**：完成一次完整分析（含结论和行动计划）后存档，供未来复盘追责。
+**不存什么**：进行中的临时笔记、纯数据输出（扫描 JSON 放 scan/）。
+
 ## 规则
 
 - 严禁使用模拟/假数据进行投资分析
