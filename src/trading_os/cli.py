@@ -314,8 +314,14 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         finally:
             bs.logout()
     else:
-        # akshare fallback
-        from .data.sources.akshare_source import fetch_daily_bars as ak_fetch
+        # akshare fallback — 先探测最佳源，整批复用
+        from .data.sources.akshare_source import fetch_daily_bars as ak_fetch, probe_and_get_preferred_source
+        from .data.schema import Exchange as _Exch
+        preferred = probe_and_get_preferred_source(_Exch.SSE)
+        print(f"  源探测完成：首选 {preferred}，后续跳过不可用源", file=sys.stderr)
+        if preferred == "none":
+            print("所有数据源均不可用，无法拉取数据", file=sys.stderr)
+            return 1
 
         for i, (exch, ticker) in enumerate(pairs, 1):
             sym_id = f"{exch.value}:{ticker}"

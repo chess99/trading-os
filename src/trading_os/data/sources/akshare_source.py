@@ -22,6 +22,82 @@ _SINA_LOCK = threading.Lock()
 # BaoStock login/logout 是全局状态，并发调用会互相干扰。
 _BAOSTOCK_LOCK = threading.Lock()
 
+# 会话级别数据源可用性缓存：None=未探测, True=可用, False=不可用
+# 探测一次后整个进程内复用，避免每只股票都等超时。
+_SOURCE_AVAILABILITY: dict[str, bool | None] = {
+    "eastmoney": None,
+    "sina": None,
+    "baostock": None,
+}
+_SOURCE_PROBE_LOCK = threading.Lock()
+
+
+def probe_and_get_preferred_source(exchange: "Exchange", timeout: int = 10) -> str:
+    """探测各数据源可用性，返回首选源名称（'eastmoney'/'sina'/'baostock'/'none'）。
+
+    使用 600000（浦发银行）作为探针股票，结果在进程内缓存。
+    每个源最多等 timeout 秒，避免卡在超时上。
+    仅在首次调用时实际发起网络请求，后续直接返回缓存结果。
+    """
+    import akshare as ak
+    from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeout
+
+    with _SOURCE_PROBE_LOCK:
+        # 已探测过，直接返回
+        if _SOURCE_AVAILABILITY["eastmoney"] is not None:
+            if _SOURCE_AVAILABILITY["eastmoney"]:
+                return "eastmoney"
+            if _SOURCE_AVAILABILITY["sina"]:
+                return "sina"
+            if _SOURCE_AVAILABILITY["baostock"]:
+                return "baostock"
+            return "none"
+
+        probe_ticker = "600000"
+        probe_start = "20260101"
+        probe_end = "20260401"
+
+        def _try_eastmoney():
+            return ak.stock_zh_a_hist(
+                symbol=probe_ticker, period="daily",
+                start_date=probe_start, end_date=probe_end, adjust="qfq",
+            )
+
+        def _try_sina():
+            with _SINA_LOCK:
+                return ak.stock_zh_a_daily(symbol=f"sh{probe_ticker}", adjust="qfq")
+
+        def _try_baostock():
+            from .baostock_source import fetch_daily_bars as bs_fetch
+            from ..schema import Adjustment as Adj
+            with _BAOSTOCK_LOCK:
+                return bs_fetch(probe_ticker, exchange=exchange, start="2026-01-01", end="2026-04-01", adjustment=Adj.QFQ)
+
+        for source_name, probe_fn in [
+            ("eastmoney", _try_eastmoney),
+            ("sina", _try_sina),
+            ("baostock", _try_baostock),
+        ]:
+            try:
+                with ThreadPoolExecutor(max_workers=1) as executor:
+                    future = executor.submit(probe_fn)
+                    df = future.result(timeout=timeout)
+                if df is not None and not df.empty:
+                    _SOURCE_AVAILABILITY[source_name] = True
+                    logger.info(f"源探测：{source_name} 可用")
+                    return source_name
+                else:
+                    _SOURCE_AVAILABILITY[source_name] = False
+                    logger.warning(f"源探测：{source_name} 返回空数据")
+            except FuturesTimeout:
+                _SOURCE_AVAILABILITY[source_name] = False
+                logger.warning(f"源探测：{source_name} 超时（>{timeout}s）")
+            except Exception as e:
+                _SOURCE_AVAILABILITY[source_name] = False
+                logger.warning(f"源探测：{source_name} 不可用 ({e})")
+
+        return "none"
+
 
 class AkshareConfig:
     """Akshare数据源配置"""
@@ -112,54 +188,61 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
     新浪（finance.sina.com.cn）：ETF 代码解析失败。
     BaoStock：国内直连，支持 A 股及 ETF，无需代理。
 
+    会话级别源可用性缓存：如果探测已确认某源不可用，直接跳过，不等超时。
+
     Returns:
         (DataFrame, source_name)，source_name 为 "akshare" / "baostock" / "none"
     """
     import pandas as pd
 
-    # 主路：东财
-    try:
-        df = ak.stock_zh_a_hist(
-            symbol=symbol_str,
-            period="daily",
-            start_date=start,
-            end_date=end,
-            adjust=adjust,
-        )
-        if df is not None and not df.empty:
-            logger.debug(f"东财接口成功: {symbol_str}")
-            return df, "akshare"
-    except Exception as e:
-        logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
+    # 主路：东财（若会话级探测已确认不可用则跳过）
+    if _SOURCE_AVAILABILITY["eastmoney"] is not False:
+        try:
+            df = ak.stock_zh_a_hist(
+                symbol=symbol_str,
+                period="daily",
+                start_date=start,
+                end_date=end,
+                adjust=adjust,
+            )
+            if df is not None and not df.empty:
+                logger.debug(f"东财接口成功: {symbol_str}")
+                return df, "akshare"
+        except Exception as e:
+            logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
+            # 单只失败不更新全局状态（可能是该股特有问题）
 
-    # Fallback 1：新浪（stock_zh_a_daily 需要 "sh600000" / "sz000001" 格式）
+    # Fallback 1：新浪（若会话级探测已确认不可用则跳过）
     # mini_racer 不是线程安全的，必须加锁串行化
     sina_symbol = ""
-    try:
-        prefix = "sh" if exchange.value == "SSE" else "sz"
-        sina_symbol = f"{prefix}{symbol_str}"
-        adjust_sina = {"qfq": "qfq", "hfq": "hfq", "": None}.get(adjust, None)
-        with _SINA_LOCK:
-            df = ak.stock_zh_a_daily(symbol=sina_symbol, adjust=adjust_sina)
-        if df is not None and not df.empty:
-            # 新浪接口列名不同，统一映射到东财列名
-            df = df.rename(columns={
-                "date": "日期",
-                "open": "开盘",
-                "high": "最高",
-                "low": "最低",
-                "close": "收盘",
-                "volume": "成交量",
-                "amount": "成交额",
-            })
-            logger.info(f"新浪接口成功: {sina_symbol}，共{len(df)}条")
-            return df, "akshare"
-        logger.warning(f"新浪接口也失败({sina_symbol}): No value to decode，切换 BaoStock 接口")
-    except Exception as e2:
-        logger.warning(f"新浪接口也失败({sina_symbol}): {e2}，切换 BaoStock 接口")
+    if _SOURCE_AVAILABILITY["sina"] is not False:
+        try:
+            prefix = "sh" if exchange.value == "SSE" else "sz"
+            sina_symbol = f"{prefix}{symbol_str}"
+            adjust_sina = {"qfq": "qfq", "hfq": "hfq", "": None}.get(adjust, None)
+            with _SINA_LOCK:
+                df = ak.stock_zh_a_daily(symbol=sina_symbol, adjust=adjust_sina)
+            if df is not None and not df.empty:
+                # 新浪接口列名不同，统一映射到东财列名
+                df = df.rename(columns={
+                    "date": "日期",
+                    "open": "开盘",
+                    "high": "最高",
+                    "low": "最低",
+                    "close": "收盘",
+                    "volume": "成交量",
+                    "amount": "成交额",
+                })
+                logger.info(f"新浪接口成功: {sina_symbol}，共{len(df)}条")
+                return df, "akshare"
+            logger.warning(f"新浪接口也失败({sina_symbol}): No value to decode，切换 BaoStock 接口")
+        except Exception as e2:
+            logger.warning(f"新浪接口也失败({sina_symbol}): {e2}，切换 BaoStock 接口")
 
-    # Fallback 2：BaoStock（国内直连，支持 ETF）
+    # Fallback 2：BaoStock（若会话级探测已确认不可用则跳过）
     # BaoStock login/logout 是全局状态，并发时必须串行化
+    if _SOURCE_AVAILABILITY["baostock"] is False:
+        return pd.DataFrame(), "none"
     try:
         from .baostock_source import fetch_daily_bars as bs_fetch
         from ..schema import Adjustment as Adj
