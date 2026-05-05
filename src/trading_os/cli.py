@@ -910,6 +910,333 @@ def _cmd_scan_value(ns: argparse.Namespace) -> int:
 
 
 # ---------------------------------------------------------------------------
+# Pool — watchlist management
+# ---------------------------------------------------------------------------
+
+def _pool_path() -> "Path":
+    from pathlib import Path
+    return repo_root() / "artifacts" / "watchlist" / "pool.json"
+
+
+def _load_pool() -> dict:
+    import json
+    p = _pool_path()
+    if not p.exists():
+        return {"last_updated": "", "pools": {"canslim": {"candidates": [], "watchlist": [], "ready": []}, "elder": {"candidates": [], "watchlist": [], "ready": []}, "value": {"candidates": [], "watchlist": [], "ready": []}}, "exited": []}
+    return json.loads(p.read_text(encoding="utf-8"))
+
+
+def _save_pool(data: dict) -> None:
+    import json
+    p = _pool_path()
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+def _append_tracking(symbol: str, note: str) -> None:
+    """Append a timestamped note to the symbol's tracking file."""
+    from pathlib import Path
+    tracking_dir = repo_root() / "artifacts" / "watchlist" / "tracking"
+    tracking_dir.mkdir(parents=True, exist_ok=True)
+    fname = symbol.replace(":", "_") + ".md"
+    fpath = tracking_dir / fname
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    entry = f"\n### {today}\n{note}\n"
+    with open(fpath, "a", encoding="utf-8") as f:
+        f.write(entry)
+
+
+def _cmd_pool(ns: argparse.Namespace) -> int:
+    sub = ns.pool_cmd
+    if sub == "list":
+        return _pool_list(ns)
+    elif sub == "status":
+        return _pool_status(ns)
+    elif sub == "add":
+        return _pool_add(ns)
+    elif sub == "remove":
+        return _pool_remove(ns)
+    elif sub == "promote":
+        return _pool_promote(ns)
+    elif sub == "update":
+        return _pool_update(ns)
+    else:
+        print(f"未知 pool 子命令: {sub}", file=sys.stderr)
+        return 1
+
+
+def _pool_list(ns: argparse.Namespace) -> int:
+    data = _load_pool()
+    systems = [ns.system] if getattr(ns, "system", None) else ["canslim", "elder", "value"]
+    tiers = [ns.tier] if getattr(ns, "tier", None) else ["candidates", "watchlist", "ready"]
+
+    total = 0
+    for sys_name in systems:
+        pool = data["pools"].get(sys_name, {})
+        for tier in tiers:
+            items = pool.get(tier, [])
+            if not items:
+                continue
+            print(f"\n【{sys_name.upper()} / {tier}】({len(items)} 只)")
+            for item in items:
+                status = item.get("status", "—")
+                trigger = item.get("trigger_price")
+                trigger_str = f"  触发价:{trigger}" if trigger else ""
+                print(f"  {item['symbol']:<18} {item['name']:<10} [{status}]{trigger_str}")
+                if getattr(ns, "verbose", False) and item.get("notes"):
+                    print(f"    └ {item['notes']}")
+            total += len(items)
+
+    print(f"\n合计: {total} 只在池")
+    return 0
+
+
+def _pool_status(ns: argparse.Namespace) -> int:
+    """生成池状态摘要报告。"""
+    import io
+    buf = io.StringIO()
+
+    data = _load_pool()
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    def w(line: str = "") -> None:
+        buf.write(line + "\n")
+
+    w(f"# 自选池状态报告 — {today}")
+    w()
+
+    # 汇总
+    total_watching = 0
+    for sys_name in ["canslim", "elder", "value"]:
+        pool = data["pools"].get(sys_name, {})
+        n = sum(len(pool.get(t, [])) for t in ["candidates", "watchlist", "ready"])
+        total_watching += n
+
+    w(f"**在池标的：{total_watching} 只 | 已移出：{len(data.get('exited', []))} 只**")
+    w()
+
+    # 需要立即处理（ready 层）
+    ready_items = []
+    for sys_name in ["canslim", "elder", "value"]:
+        for item in data["pools"].get(sys_name, {}).get("ready", []):
+            ready_items.append((sys_name, item))
+    if ready_items:
+        w("## ⚡ 需要立即处理（已进入 ready 层）")
+        for sys_name, item in ready_items:
+            w(f"- **{item['symbol']} {item['name']}** [{sys_name.upper()}]")
+            w(f"  触发价:{item.get('trigger_price')}  止损:{item.get('stop_loss')}  目标仓位:{item.get('target_position_pct')}%")
+        w()
+
+    # 各体系观察池
+    for sys_name in ["canslim", "elder", "value"]:
+        pool = data["pools"].get(sys_name, {})
+        items_wl = pool.get("watchlist", [])
+        items_cd = pool.get("candidates", [])
+        if not items_wl and not items_cd:
+            continue
+        w(f"## {sys_name.upper()} 体系")
+        if items_wl:
+            w(f"### 观察池（{len(items_wl)} 只）")
+            for item in items_wl:
+                w(f"- **{item['symbol']} {item['name']}** [{item.get('status', '—')}]")
+                w(f"  触发价:{item.get('trigger_price')}  目标仓位:{item.get('target_position_pct')}%")
+                if item.get("notes"):
+                    w(f"  _{item['notes']}_")
+        if items_cd:
+            w(f"### 候选池（{len(items_cd)} 只，待深度研究）")
+            for item in items_cd:
+                w(f"- {item['symbol']} {item['name']}  触发价:{item.get('trigger_price')}")
+        w()
+
+    # 已移出
+    exited = data.get("exited", [])
+    if exited:
+        w(f"## 已移出（{len(exited)} 只）")
+        for item in exited[-5:]:  # 只显示最近5只
+            w(f"- {item['symbol']} {item['name']} — {item.get('exit_reason', '')[:60]}")
+        w()
+
+    report = buf.getvalue()
+    output_path = getattr(ns, "output", None)
+    if output_path:
+        from pathlib import Path
+        Path(output_path).parent.mkdir(parents=True, exist_ok=True)
+        Path(output_path).write_text(report, encoding="utf-8")
+        print(f"报告已写入: {output_path}")
+    else:
+        print(report)
+    return 0
+
+
+def _pool_add(ns: argparse.Namespace) -> int:
+    data = _load_pool()
+    system = ns.system
+    tier = getattr(ns, "tier", "candidates")
+    symbol = ns.symbol
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    pool = data["pools"].setdefault(system, {"candidates": [], "watchlist": [], "ready": []})
+    # 检查是否已存在
+    for t in ["candidates", "watchlist", "ready"]:
+        for item in pool.get(t, []):
+            if item["symbol"] == symbol:
+                print(f"{symbol} 已在 {system}/{t} 中", file=sys.stderr)
+                return 1
+
+    entry: dict = {
+        "symbol": symbol,
+        "name": getattr(ns, "name", symbol),
+        "entered_at": today,
+        "entry_reason": getattr(ns, "reason", ""),
+        "trigger_price": getattr(ns, "trigger", None),
+        "notes": getattr(ns, "notes", ""),
+    }
+    if tier in ("watchlist", "ready"):
+        entry.update({
+            "research_file": getattr(ns, "research", None),
+            "stop_loss": getattr(ns, "stop_loss", None),
+            "target_position_pct": getattr(ns, "position_pct", None),
+            "status": "waiting_market",
+            "last_checked": today,
+        })
+    else:
+        entry["score"] = getattr(ns, "score", None)
+
+    pool.setdefault(tier, []).append(entry)
+    data["last_updated"] = today
+    _save_pool(data)
+    _append_tracking(symbol, f"入池：{system}/{tier}\n- 原因：{entry['entry_reason']}\n- 触发价：{entry['trigger_price']}")
+    print(f"已添加 {symbol} → {system}/{tier}")
+    return 0
+
+
+def _pool_remove(ns: argparse.Namespace) -> int:
+    data = _load_pool()
+    symbol = ns.symbol
+    system = getattr(ns, "system", None)
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    reason = getattr(ns, "reason", "")
+
+    removed = []
+    systems_to_check = [system] if system else list(data["pools"].keys())
+    for sys_name in systems_to_check:
+        pool = data["pools"].get(sys_name, {})
+        for tier in ["candidates", "watchlist", "ready"]:
+            before = pool.get(tier, [])
+            after = [x for x in before if x["symbol"] != symbol]
+            if len(after) < len(before):
+                removed_item = next(x for x in before if x["symbol"] == symbol)
+                pool[tier] = after
+                data["exited"].append({
+                    "symbol": symbol,
+                    "name": removed_item.get("name", symbol),
+                    "system": sys_name,
+                    "exited_at": today,
+                    "exit_reason": reason,
+                    "duration_days": (
+                        (datetime.now(timezone.utc).date() -
+                         datetime.fromisoformat(removed_item.get("entered_at", today)).date()).days
+                    ),
+                })
+                removed.append(f"{sys_name}/{tier}")
+
+    if not removed:
+        print(f"{symbol} 不在池中", file=sys.stderr)
+        return 1
+
+    data["last_updated"] = today
+    _save_pool(data)
+    _append_tracking(symbol, f"移出池：{', '.join(removed)}\n- 原因：{reason}")
+    print(f"已移出 {symbol}（来自 {', '.join(removed)}）")
+    return 0
+
+
+def _pool_promote(ns: argparse.Namespace) -> int:
+    data = _load_pool()
+    symbol = ns.symbol
+    system = ns.system
+    to_tier = ns.to
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    tier_order = ["candidates", "watchlist", "ready"]
+    if to_tier not in tier_order:
+        print(f"无效 tier: {to_tier}", file=sys.stderr)
+        return 1
+
+    pool = data["pools"].get(system, {})
+    from_tier = None
+    item = None
+    for t in tier_order:
+        for x in pool.get(t, []):
+            if x["symbol"] == symbol:
+                from_tier = t
+                item = x
+                break
+        if item:
+            break
+
+    if not item:
+        print(f"{symbol} 不在 {system} 池中", file=sys.stderr)
+        return 1
+
+    # 移出原层
+    pool[from_tier] = [x for x in pool[from_tier] if x["symbol"] != symbol]
+
+    # 升层，补充字段
+    item["last_checked"] = today
+    if to_tier in ("watchlist", "ready") and "status" not in item:
+        item["status"] = "waiting_market"
+    if to_tier == "ready":
+        item["confirmed_at"] = today
+        if getattr(ns, "research", None):
+            item["research_file"] = ns.research
+
+    pool.setdefault(to_tier, []).append(item)
+    data["last_updated"] = today
+    _save_pool(data)
+    _append_tracking(symbol, f"层级提升：{system}/{from_tier} → {system}/{to_tier}")
+    print(f"已提升 {symbol}：{system}/{from_tier} → {system}/{to_tier}")
+    return 0
+
+
+def _pool_update(ns: argparse.Namespace) -> int:
+    data = _load_pool()
+    symbol = ns.symbol
+    system = getattr(ns, "system", None)
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    updated = False
+    systems_to_check = [system] if system else list(data["pools"].keys())
+    for sys_name in systems_to_check:
+        pool = data["pools"].get(sys_name, {})
+        for tier in ["candidates", "watchlist", "ready"]:
+            for item in pool.get(tier, []):
+                if item["symbol"] == symbol:
+                    if getattr(ns, "status", None):
+                        item["status"] = ns.status
+                    if getattr(ns, "trigger", None) is not None:
+                        item["trigger_price"] = ns.trigger
+                    if getattr(ns, "stop_loss", None) is not None:
+                        item["stop_loss"] = ns.stop_loss
+                    if getattr(ns, "notes", None):
+                        item["notes"] = ns.notes
+                    item["last_checked"] = today
+                    updated = True
+
+    if not updated:
+        print(f"{symbol} 不在池中", file=sys.stderr)
+        return 1
+
+    data["last_updated"] = today
+    _save_pool(data)
+    notes = getattr(ns, "notes", "")
+    status = getattr(ns, "status", "")
+    _append_tracking(symbol, f"更新：status={status}\n{notes}")
+    print(f"已更新 {symbol}")
+    return 0
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -1084,6 +1411,51 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--exchange", default=None, choices=["SSE", "SZSE"], help="只扫描指定交易所")
     p.add_argument("--output", default=None, help="输出 JSON 路径")
     p.set_defaults(func=_cmd_scan_value)
+
+    # --- Pool ---
+    pool_p = sub.add_parser("pool", help="自选池管理（查看/添加/移出/升层/更新）")
+    pool_sub = pool_p.add_subparsers(dest="pool_cmd", required=True)
+    pool_p.set_defaults(func=_cmd_pool)
+
+    p = pool_sub.add_parser("list", help="列出池中标的")
+    p.add_argument("--system", choices=["canslim", "elder", "value"], default=None)
+    p.add_argument("--tier", choices=["candidates", "watchlist", "ready"], default=None)
+    p.add_argument("-v", "--verbose", action="store_true", help="显示备注")
+
+    p = pool_sub.add_parser("status", help="生成池状态摘要报告")
+    p.add_argument("--output", default=None, help="输出 Markdown 路径（默认 stdout）")
+
+    p = pool_sub.add_parser("add", help="添加标的到池")
+    p.add_argument("--symbol", required=True, help="如 SZSE:300750")
+    p.add_argument("--system", required=True, choices=["canslim", "elder", "value"])
+    p.add_argument("--tier", choices=["candidates", "watchlist", "ready"], default="candidates")
+    p.add_argument("--name", default=None)
+    p.add_argument("--reason", default="")
+    p.add_argument("--trigger", type=float, default=None, help="触发入场价")
+    p.add_argument("--stop-loss", type=float, default=None, dest="stop_loss")
+    p.add_argument("--position-pct", type=float, default=None, dest="position_pct")
+    p.add_argument("--research", default=None, help="研究报告路径")
+    p.add_argument("--score", type=float, default=None)
+    p.add_argument("--notes", default="")
+
+    p = pool_sub.add_parser("remove", help="移出标的（记录原因）")
+    p.add_argument("--symbol", required=True)
+    p.add_argument("--system", choices=["canslim", "elder", "value"], default=None)
+    p.add_argument("--reason", default="")
+
+    p = pool_sub.add_parser("promote", help="升层（candidates→watchlist→ready）")
+    p.add_argument("--symbol", required=True)
+    p.add_argument("--system", required=True, choices=["canslim", "elder", "value"])
+    p.add_argument("--to", required=True, choices=["watchlist", "ready"], dest="to")
+    p.add_argument("--research", default=None)
+
+    p = pool_sub.add_parser("update", help="更新标的状态/触发价/备注")
+    p.add_argument("--symbol", required=True)
+    p.add_argument("--system", choices=["canslim", "elder", "value"], default=None)
+    p.add_argument("--status", default=None, choices=["waiting_market", "waiting_catalyst", "ready", "entered"])
+    p.add_argument("--trigger", type=float, default=None)
+    p.add_argument("--stop-loss", type=float, default=None, dest="stop_loss")
+    p.add_argument("--notes", default=None)
 
     ns = parser.parse_args(argv)
     func = getattr(ns, "func", None)
