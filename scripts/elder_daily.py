@@ -52,6 +52,7 @@ def elder_single(df, name, ticker):
 
     ema13 = calc_ema(pd.Series(close), 13).values
     ema26 = calc_ema(pd.Series(close), 26).values
+    ema50 = calc_ema(pd.Series(close), 50).values
 
     bull_power = high - ema13
     bear_power = low - ema13
@@ -63,57 +64,44 @@ def elder_single(df, name, ticker):
     vol_ratio = (pd.Series(volume) / vol_ma20).values
 
     last_close = close[-1]
-    trend_up = ema13[-1] > ema26[-1]
+    last_date = df['date'].iloc[-1].date()
+    trend = "↑ 上升" if ema13[-1] > ema26[-1] else "↓ 下降"
+    fi_state = "🟢" if fi13[-1] > 0 else "🔴"
+    bp_state = "✅" if bull_power[-1] > 0 else "⚠️"
+    vol_state = "放量" if vol_ratio[-1] > 1.2 else "缩量" if vol_ratio[-1] < 0.8 else "正常"
+
     ret20 = (last_close / close[-21] - 1) * 100 if len(close) > 21 else 0
     ret60 = (last_close / close[-61] - 1) * 100 if len(close) > 61 else 0
 
     # 评分
     score = 0
-    if trend_up: score += 2
+    if ema13[-1] > ema26[-1]: score += 2
     if bull_power[-1] > 0: score += 1
     if fi13[-1] > 0: score += 1
     if vol_ratio[-1] > 1.2: score += 1
     if ret20 > 0: score += 1
 
     verdict = "强势" if score >= 5 else "中性" if score >= 3 else "弱势"
-    trend_str = "上升" if trend_up else "下降"
 
-    vol_tag = ""
-    if vol_ratio[-1] > 1.2:
-        vol_tag = " · 放量"
-    elif vol_ratio[-1] < 0.8:
-        vol_tag = " · 缩量"
-
-    if score >= 5:
-        action = "✅ 强势，持有/可加仓"
-    elif score == 4:
-        action = "✅ 偏强，可持有"
-    elif score == 3:
-        action = "➡️  中性，观望为主"
-    elif score == 2:
-        action = "⚠️  偏弱，轻仓或观望"
-    else:
-        action = "🔴 弱势，空仓不参与"
-
-    ret20_str = f"+{ret20:.1f}%" if ret20 >= 0 else f"{ret20:.1f}%"
-    ret60_str = f"+{ret60:.1f}%" if ret60 >= 0 else f"{ret60:.1f}%"
-
-    return "\n".join([
-        f"━━━ {name} · {ticker} ━━━",
-        f"收盘 {last_close:.3f}   20日 {ret20_str}   60日 {ret60_str}",
-        f"趋势{trend_str} · 信号{verdict} {score}/6{vol_tag}",
-        action,
-    ])
+    lines = [
+        f"📊 {name}({ticker})  {last_date}  收盘 {last_close:.3f}",
+        f"   EMA13={ema13[-1]:.3f} EMA26={ema26[-1]:.3f} EMA50={ema50[-1]:.3f}  [{trend}]",
+        f"   多头力量={bull_power[-1]:+.4f} {bp_state}  空头力量={bear_power[-1]:+.4f}",
+        f"   Force Index(13)={fi13[-1]:+.0f} {fi_state}  成交量/MA20={vol_ratio[-1]:.1f}×({vol_state})",
+        f"   20日收益={ret20:+.1f}%  60日收益={ret60:+.1f}%",
+        f"   🎯 Elder信号: {score}/6 [{verdict}]",
+    ]
+    return "\n".join(lines)
 
 def main():
     symbols = [
+        ("sh510300", "沪深300ETF"),
         ("sh159740", "恒生科技ETF"),
         ("sh588000", "科创50ETF"),
         ("sh601138", "工业富联"),
         ("sh600519", "贵州茅台"),
     ]
 
-    now_cst = datetime.now(CST)
     results = []
     for ticker, name in symbols:
         log.info(f"分析 {name}({ticker})...")
@@ -131,9 +119,9 @@ def main():
     if not results:
         print("❌ 所有标的分析均失败")
     else:
-        print(f"📈 Elder 日报 · {now_cst.strftime('%Y-%m-%d')}\n")
-        print("\n\n".join(results))
-        print(f"\n发送时间: {now_cst.strftime('%H:%M')} CST")
+        msg = f"📈 Elder 每日收盘分析\n{'='*50}\n\n" + "\n\n".join(results)
+        msg += f"\n\n{'='*50}\n分析时间: {datetime.now(CST).strftime('%Y-%m-%d %H:%M')} (CST)"
+        print(msg)
 
 if __name__ == "__main__":
     main()
