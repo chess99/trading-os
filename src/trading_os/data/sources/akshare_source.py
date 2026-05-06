@@ -240,10 +240,13 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
             logger.warning(f"新浪接口也失败({sina_symbol}): {e2}，切换 BaoStock 接口")
 
     # Fallback 2：BaoStock（若会话级探测已确认不可用则跳过）
-    # ETF/LOF 代码（51xxxx/56xxxx for SSE, 15xxxx/16xxxx for SZSE）新浪失败是预期行为，
-    # 不走 BaoStock fallback——BaoStock 不通时会超时卡死全量更新进程。
+    # ETF/LOF 代码新浪失败是预期行为，不走 BaoStock fallback——BaoStock 不通时会超时卡死全量更新进程。
+    # SSE ETF 前缀：51xxxx（普通ETF）、56xxxx（LOF）、58xxxx（科创板ETF，如588000科创50ETF）
+    # SZSE ETF 前缀：15xxxx、16xxxx
     _is_etf = (
-        (exchange.value == "SSE" and (symbol_str.startswith("51") or symbol_str.startswith("56")))
+        (exchange.value == "SSE" and (
+            symbol_str.startswith("51") or symbol_str.startswith("56") or symbol_str.startswith("58")
+        ))
         or (exchange.value == "SZSE" and (symbol_str.startswith("15") or symbol_str.startswith("16")))
     )
     if _is_etf:

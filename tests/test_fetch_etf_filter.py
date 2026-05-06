@@ -63,3 +63,27 @@ def test_normal_stock_still_uses_baostock_fallback():
             )
 
     assert baostock_called, "普通股票应尝试 BaoStock fallback"
+
+
+def test_kechuang_etf_skips_baostock():
+    """科创板 ETF（58xxxx，如588000科创50ETF）也应跳过 BaoStock fallback。"""
+    import trading_os.data.sources.akshare_source as mod
+    mod._SOURCE_AVAILABILITY.update({"eastmoney": False, "sina": False, "baostock": None})
+
+    mock_ak = MagicMock()
+    mock_ak.stock_zh_a_hist.side_effect = Exception("eastmoney fail")
+    mock_ak.stock_zh_a_daily.side_effect = Exception("sina fail: No value to decode")
+
+    baostock_called = []
+    def fake_bs_fetch(*args, **kwargs):
+        baostock_called.append(True)
+        return _make_valid_df()
+
+    with patch("trading_os.data.sources.akshare_source._BAOSTOCK_LOCK"):
+        with patch("trading_os.data.sources.baostock_source.fetch_daily_bars", fake_bs_fetch):
+            df, src = _fetch_with_fallback(
+                mock_ak, "588000", Exchange.SSE, "20260101", "20260401", "qfq"
+            )
+
+    assert not baostock_called, "科创板ETF（588000）不应触发 BaoStock fallback"
+    assert df.empty

@@ -15,6 +15,7 @@ Commands:
     scan-elder          批量扫描全 A 股技术信号（Elder 体系）
     scan-canslim        批量扫描全 A 股基本面信号（CANSLIM 体系，--live 模式无需预缓存）
     fundamental-store   持久化 BaoStock 基本面数据到本地
+    pool                自选池管理（list/status/add/remove/promote/update/sync-from-scan）
 """
 from __future__ import annotations
 
@@ -145,13 +146,15 @@ def _resolve_bulk_pairs(ns) -> list | None:
                         exch_str, ticker = sym.split(":", 1)
                         try:
                             # 过滤非普通A股：
-                            # - ETF/LOF: 51xxxx / 56xxxx (SSE), 15xxxx / 16xxxx (SZSE)
+                            # - ETF/LOF: 51xxxx / 56xxxx / 58xxxx (SSE), 15xxxx / 16xxxx (SZSE)
+                            #   58xxxx = 科创板ETF（如588000科创50ETF）
                             # - 指数: 000001 等（6位但非股票）
                             # - 可转债: 11xxxx / 12xxxx
                             # BaoStock 正常路径通过 stock_type=1 过滤，Fallback 需手动过滤
                             exch_upper = exch_str.upper()
                             if exch_upper == "SSE" and (
                                 ticker.startswith("51") or ticker.startswith("56")
+                                or ticker.startswith("58")
                                 or ticker.startswith("11") or ticker.startswith("13")
                             ):
                                 continue
@@ -934,12 +937,29 @@ def _pool_path() -> "Path":
     return repo_root() / "artifacts" / "watchlist" / "pool.json"
 
 
+def _empty_pool() -> dict:
+    return {
+        "last_updated": "",
+        "pools": {
+            "canslim": {"candidates": [], "watchlist": [], "ready": []},
+            "elder":   {"candidates": [], "watchlist": [], "ready": []},
+            "value":   {"candidates": [], "watchlist": [], "ready": []},
+        },
+        "exited": [],
+    }
+
+
 def _load_pool() -> dict:
     import json
     p = _pool_path()
     if not p.exists():
-        return {"last_updated": "", "pools": {"canslim": {"candidates": [], "watchlist": [], "ready": []}, "elder": {"candidates": [], "watchlist": [], "ready": []}, "value": {"candidates": [], "watchlist": [], "ready": []}}, "exited": []}
-    return json.loads(p.read_text(encoding="utf-8"))
+        return _empty_pool()
+    try:
+        return json.loads(p.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as e:
+        print(f"pool.json 解析失败: {e}", file=sys.stderr)
+        print(f"请检查文件: {p}", file=sys.stderr)
+        raise SystemExit(1)
 
 
 def _save_pool(data: dict) -> None:
@@ -1237,7 +1257,9 @@ def _pool_update(ns: argparse.Namespace) -> int:
                     if getattr(ns, "stop_loss", None) is not None:
                         item["stop_loss"] = ns.stop_loss
                     if getattr(ns, "notes", None):
-                        item["notes"] = ns.notes
+                        # 追加而非覆盖，保留历史批注
+                        prior = item.get("notes", "")
+                        item["notes"] = f"{prior}；{ns.notes}" if prior else ns.notes
                     item["last_checked"] = today
                     updated = True
 
