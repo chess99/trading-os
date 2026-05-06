@@ -134,7 +134,7 @@ def elder_single(df, name, ticker):
 def main():
     symbols = [
         ("sh510300", "沪深300ETF"),
-        ("sh159740", "恒生科技ETF"),
+        ("sz159740", "恒生科技ETF"),
         ("sh588000", "科创50ETF"),
         ("sh601138", "工业富联"),
         ("sh600519", "贵州茅台"),
