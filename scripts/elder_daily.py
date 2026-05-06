@@ -20,10 +20,35 @@ CST = timezone(timedelta(hours=8))
 def calc_ema(series, n):
     return series.ewm(span=n, adjust=False).mean()
 
+def fetch_realtime_bar(ticker):
+    """用腾讯实时行情 API 获取今日 bar（收盘后可用），返回单行 dict 或 None"""
+    import requests
+    r = requests.get(f"https://qt.gtimg.cn/q={ticker}", timeout=10,
+                     headers={"User-Agent": "Mozilla/5.0"})
+    fields = r.text.split("~")
+    if len(fields) < 37:
+        return None
+    dt_str = fields[30]  # 例如 "20260506161450"
+    if len(dt_str) < 8:
+        return None
+    date_str = f"{dt_str[:4]}-{dt_str[4:6]}-{dt_str[6:8]}"
+    try:
+        return {
+            "date": date_str,
+            "open": float(fields[5]),
+            "close": float(fields[3]),
+            "high": float(fields[33]),
+            "low": float(fields[34]),
+            "volume": float(fields[36]) * 100,  # 手 → 股
+        }
+    except (ValueError, IndexError):
+        return None
+
 def fetch_tencent_bars(ticker, start="2020-01-01", end=None):
     import requests
+    today = datetime.now(CST).strftime('%Y-%m-%d')
     if end is None:
-        end = datetime.now(CST).strftime('%Y-%m-%d')
+        end = today
     url = "https://web.ifzq.gtimg.cn/appstock/app/fqkline/get"
     params = {"param": f"{ticker},day,{start},{end},2000,qfq"}
     r = requests.get(url, params=params, timeout=15,
@@ -42,7 +67,18 @@ def fetch_tencent_bars(ticker, start="2020-01-01", end=None):
                      "high": float(item[3]), "low": float(item[4]), "volume": float(item[5])})
     df = pd.DataFrame(rows)
     df['date'] = pd.to_datetime(df['date'])
-    return df.sort_values('date').reset_index(drop=True)
+    df = df.sort_values('date').reset_index(drop=True)
+
+    # 历史K线 API 有延迟，若最新一条不是今天，用实时行情补齐
+    last_date = df['date'].iloc[-1].strftime('%Y-%m-%d')
+    if last_date < today:
+        rt = fetch_realtime_bar(ticker)
+        if rt and rt["date"] == today:
+            new_row = pd.DataFrame([{**rt, "date": pd.Timestamp(rt["date"])}])
+            df = pd.concat([df, new_row], ignore_index=True)
+            log.info(f"{ticker} 实时行情补齐今日数据 ({today})")
+
+    return df
 
 def elder_single(df, name, ticker):
     close = df['close'].values
@@ -83,13 +119,15 @@ def elder_single(df, name, ticker):
 
     verdict = "强势" if score >= 5 else "中性" if score >= 3 else "弱势"
 
+    verdict_icon = "🔥" if score >= 5 else "⚡" if score >= 3 else "❄️"
     lines = [
-        f"📊 {name}({ticker})  {last_date}  收盘 {last_close:.3f}",
-        f"   EMA13={ema13[-1]:.3f} EMA26={ema26[-1]:.3f} EMA50={ema50[-1]:.3f}  [{trend}]",
-        f"   多头力量={bull_power[-1]:+.4f} {bp_state}  空头力量={bear_power[-1]:+.4f}",
-        f"   Force Index(13)={fi13[-1]:+.0f} {fi_state}  成交量/MA20={vol_ratio[-1]:.1f}×({vol_state})",
-        f"   20日收益={ret20:+.1f}%  60日收益={ret60:+.1f}%",
-        f"   🎯 Elder信号: {score}/6 [{verdict}]",
+        f"┌─ 📊 {name}({ticker}) ─── {last_date} ───────────────",
+        f"│  收盘 {last_close:.3f}  {trend}",
+        f"│  EMA13={ema13[-1]:.3f}  EMA26={ema26[-1]:.3f}  EMA50={ema50[-1]:.3f}",
+        f"│  多头力量 {bull_power[-1]:+.4f} {bp_state}   空头力量 {bear_power[-1]:+.4f}",
+        f"│  Force Index(13)={fi13[-1]:+.0f} {fi_state}   成交量/MA20={vol_ratio[-1]:.1f}×({vol_state})",
+        f"│  20日收益={ret20:+.1f}%   60日收益={ret60:+.1f}%",
+        f"└─ {verdict_icon} Elder信号: {score}/6 [{verdict}]",
     ]
     return "\n".join(lines)
 
@@ -119,8 +157,8 @@ def main():
     if not results:
         print("❌ 所有标的分析均失败")
     else:
-        msg = f"📈 Elder 每日收盘分析\n{'='*50}\n\n" + "\n\n".join(results)
-        msg += f"\n\n{'='*50}\n分析时间: {datetime.now(CST).strftime('%Y-%m-%d %H:%M')} (CST)"
+        msg = "📈 Elder 每日收盘分析\n" + "\n".join(results)
+        msg += f"\n🕐 {datetime.now(CST).strftime('%Y-%m-%d %H:%M')} (CST)"
         print(msg)
 
 if __name__ == "__main__":
