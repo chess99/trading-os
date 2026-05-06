@@ -144,10 +144,26 @@ def _resolve_bulk_pairs(ns) -> list | None:
                     if ":" in sym:
                         exch_str, ticker = sym.split(":", 1)
                         try:
-                            pairs.append((Exchange(exch_str.upper()), ticker))
+                            # 过滤非普通A股：
+                            # - ETF/LOF: 51xxxx / 56xxxx (SSE), 15xxxx / 16xxxx (SZSE)
+                            # - 指数: 000001 等（6位但非股票）
+                            # - 可转债: 11xxxx / 12xxxx
+                            # BaoStock 正常路径通过 stock_type=1 过滤，Fallback 需手动过滤
+                            exch_upper = exch_str.upper()
+                            if exch_upper == "SSE" and (
+                                ticker.startswith("51") or ticker.startswith("56")
+                                or ticker.startswith("11") or ticker.startswith("13")
+                            ):
+                                continue
+                            if exch_upper == "SZSE" and (
+                                ticker.startswith("15") or ticker.startswith("16")
+                                or ticker.startswith("12")
+                            ):
+                                continue
+                            pairs.append((Exchange(exch_upper), ticker))
                         except ValueError:
                             pass
-                print(f"Fallback 成功：从本地获取到 {len(pairs)} 只股票", file=sys.stderr)
+                print(f"Fallback 成功：从本地获取到 {len(pairs)} 只股票（已过滤ETF/指数）", file=sys.stderr)
                 return pairs if pairs else None
             except Exception as fallback_exc:
                 print(f"Fallback 也失败: {fallback_exc}", file=sys.stderr)
@@ -960,6 +976,8 @@ def _cmd_pool(ns: argparse.Namespace) -> int:
         return _pool_promote(ns)
     elif sub == "update":
         return _pool_update(ns)
+    elif sub == "sync-from-scan":
+        return _pool_sync_from_scan(ns)
     else:
         print(f"未知 pool 子命令: {sub}", file=sys.stderr)
         return 1
@@ -1236,6 +1254,64 @@ def _pool_update(ns: argparse.Namespace) -> int:
     return 0
 
 
+def _pool_sync_from_scan(ns: argparse.Namespace) -> int:
+    """比对扫描结果与现有池，输出进出池建议（不自动修改池）。"""
+    import json
+    from pathlib import Path
+
+    scan_path = ns.scan
+    system = ns.system
+
+    if not Path(scan_path).exists():
+        print(f"扫描文件不存在: {scan_path}", file=sys.stderr)
+        return 1
+
+    scan_data = json.loads(Path(scan_path).read_text(encoding="utf-8"))
+    pool_data = _load_pool()
+
+    scan_symbols = {item["symbol"]: item for item in scan_data.get("candidates", [])}
+    pool_system = pool_data["pools"].get(system, {})
+    pool_in_symbols: dict[str, str] = {}  # symbol -> tier
+    for tier in ["candidates", "watchlist", "ready"]:
+        for item in pool_system.get(tier, []):
+            pool_in_symbols[item["symbol"]] = tier
+
+    print(f"\n【pool sync-from-scan】{system.upper()} | 扫描日期: {scan_data.get('scan_date', '?')}")
+    print(f"扫描候选: {len(scan_symbols)} 只 | 当前池: {len(pool_in_symbols)} 只\n")
+
+    # 新出现：在扫描中，不在池中
+    new_entries = {s: v for s, v in scan_symbols.items() if s not in pool_in_symbols}
+    if new_entries:
+        print("✅ 建议入候选池（新出现，未在池中）:")
+        for sym, item in sorted(new_entries.items(), key=lambda x: -x[1].get("score", 0)):
+            print(f"  {sym:<20} {item.get('name',''):<10} 得分:{item.get('score','?')}")
+            print(f"    → pool add --symbol {sym} --system {system} --tier candidates "
+                  f"--reason \"scan得分{item.get('score','?')}\" "
+                  f"--score {item.get('score','?')}")
+    else:
+        print("✅ 无新候选需要入池")
+
+    # 已在池
+    already = {s: v for s, v in scan_symbols.items() if s in pool_in_symbols}
+    if already:
+        print(f"\n📋 已在池中（{len(already)} 只）:")
+        for sym, item in already.items():
+            tier = pool_in_symbols[sym]
+            print(f"  {sym:<20} {item.get('name',''):<10} [{tier}] 得分:{item.get('score','?')}")
+
+    # 池中但本次扫描未出现
+    dropped = {s: t for s, t in pool_in_symbols.items() if s not in scan_symbols}
+    if dropped:
+        print(f"\n⚠️  池中标的未出现在本次扫描（需关注是否移出）:")
+        for sym, tier in dropped.items():
+            print(f"  {sym:<20} [{tier}] — 本次扫描得分不足，请确认是否移出")
+    else:
+        print("\n✅ 所有池中标的均在本次扫描中出现")
+
+    print(f"\n（此命令只输出建议，不修改 pool.json。如需操作请手动执行上方命令）")
+    return 0
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -1456,6 +1532,10 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--trigger", type=float, default=None)
     p.add_argument("--stop-loss", type=float, default=None, dest="stop_loss")
     p.add_argument("--notes", default=None)
+
+    p = pool_sub.add_parser("sync-from-scan", help="比对扫描结果与现有池，输出进出池建议（不修改池）")
+    p.add_argument("--scan", required=True, help="扫描 JSON 路径，如 artifacts/scan/canslim-20260506.json")
+    p.add_argument("--system", required=True, choices=["canslim", "elder", "value"])
 
     ns = parser.parse_args(argv)
     func = getattr(ns, "func", None)
