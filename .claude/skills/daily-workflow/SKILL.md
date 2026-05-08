@@ -23,8 +23,8 @@ description: |
 ```bash
 # 全量更新（等完成后再继续）
 python -m trading_os fetch-ak-bulk --start {LAST_TRADING_DAY} --end {TODAY} --adjustment qfq
-# 同时更新上证指数（market-breadth 需要）
-python -m trading_os fetch-bars --exchange SSE --ticker 000001 --start {LAST_TRADING_DAY}
+# 同时更新上证指数（market-breadth 需要；必须加 --asset-type index 才能拉到真实点位）
+python -m trading_os fetch-bars --exchange SSE --ticker 000001 --asset-type index --start {LAST_TRADING_DAY}
 ```
 
 - `LAST_TRADING_DAY`：上次运行日期（或昨日）
