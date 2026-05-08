@@ -182,12 +182,89 @@ def test_equity_handler_validate_rejects_absurd_price():
         handler.validate(df, "600000", Exchange.SSE)
 
 
-# ── EtfHandler stub ───────────────────────────────────────────────────────────
+# ── EtfHandler ────────────────────────────────────────────────────────────────
 
-def test_etf_handler_raises_not_implemented():
+def _make_etf_df():
+    """Minimal DataFrame in fund_etf_hist_em format (same Chinese columns as equity)."""
+    return pd.DataFrame({
+        "日期": pd.date_range("2026-04-08", periods=5, freq="B"),
+        "开盘": [1.000, 1.005, 1.010, 1.008, 1.012],
+        "最高": [1.010, 1.015, 1.020, 1.018, 1.022],
+        "最低": [0.995, 1.000, 1.005, 1.003, 1.007],
+        "收盘": [1.005, 1.010, 1.015, 1.013, 1.017],
+        "成交量": [5_000_000] * 5,
+        "成交额": [5_050_000.0] * 5,
+    })
+
+
+def test_etf_handler_fetch_calls_fund_etf_hist_em():
+    """EtfHandler.fetch() must call ak.fund_etf_hist_em, not the equity interface."""
     from trading_os.data.schema import Exchange, Adjustment
     from trading_os.data.sources.asset_type_handler import EtfHandler
 
+    mock_ak = MagicMock()
+    mock_ak.fund_etf_hist_em.return_value = _make_etf_df()
+
     handler = EtfHandler()
-    with pytest.raises(NotImplementedError):
-        handler.fetch("510300", Exchange.SSE, start=None, end=None, adjustment=Adjustment.QFQ)
+    with patch("trading_os.data.sources.asset_type_handler.ak", mock_ak):
+        df, source = handler.fetch(
+            "588000", Exchange.SSE,
+            start="2026-04-08", end="2026-04-12",
+            adjustment=Adjustment.QFQ,
+        )
+
+    mock_ak.fund_etf_hist_em.assert_called_once()
+    call_kwargs = mock_ak.fund_etf_hist_em.call_args
+    assert call_kwargs.kwargs.get("symbol") == "588000" or call_kwargs.args[0] == "588000"
+    assert source == "akshare_etf"
+    assert not df.empty
+
+
+def test_etf_handler_normalized_df_has_standard_columns():
+    from trading_os.data.schema import Exchange, Adjustment
+    from trading_os.data.sources.asset_type_handler import EtfHandler
+
+    mock_ak = MagicMock()
+    mock_ak.fund_etf_hist_em.return_value = _make_etf_df()
+
+    handler = EtfHandler()
+    with patch("trading_os.data.sources.asset_type_handler.ak", mock_ak):
+        df, _ = handler.fetch(
+            "588000", Exchange.SSE,
+            start=None, end=None,
+            adjustment=Adjustment.QFQ,
+        )
+
+    for col in ["symbol", "ts", "open", "high", "low", "close", "volume", "source"]:
+        assert col in df.columns, f"Missing column: {col}"
+    assert df["source"].iloc[0] == "akshare_etf"
+    assert df["symbol"].iloc[0] == "SSE:588000"
+    # adjustment is set by write_bars_parquet at lake write time, not by the handler
+
+
+def test_etf_handler_validate_passes_for_normal_etf():
+    """Normal ETF price (0.1-200) must pass validation."""
+    from trading_os.data.schema import Exchange
+    from trading_os.data.sources.asset_type_handler import EtfHandler
+
+    handler = EtfHandler()
+    df = pd.DataFrame({
+        "close": [1.005, 1.010, 1.015],
+        "volume": [5_000_000.0] * 3,
+    })
+    handler.validate(df, "588000", Exchange.SSE)  # should not raise
+
+
+def test_etf_handler_validate_rejects_absurd_price():
+    """Price > 500 must fail ETF validation."""
+    from trading_os.data.schema import Exchange
+    from trading_os.data.sources.asset_type_handler import EtfHandler
+    from trading_os.data.exceptions import DataIntegrityError
+
+    handler = EtfHandler()
+    df = pd.DataFrame({
+        "close": [999.0],
+        "volume": [5_000_000.0],
+    })
+    with pytest.raises(DataIntegrityError):
+        handler.validate(df, "588000", Exchange.SSE)

@@ -197,10 +197,17 @@ class IndexHandler(AssetTypeHandler):
         # a second layer of defence at write time.
 
 
-# ── ETF (stub) ────────────────────────────────────────────────────────────────
+# ── ETF ───────────────────────────────────────────────────────────────────────
 
 class EtfHandler(AssetTypeHandler):
-    """ETF handler — not yet implemented."""
+    """A-share ETF handler. Uses ak.fund_etf_hist_em — the dedicated ETF endpoint.
+
+    fund_etf_hist_em auto-detects SSE vs SZSE from the ticker via get_market_id(),
+    so no exchange-prefix logic is needed here.
+
+    Column format is identical to stock_zh_a_hist (Chinese column names), so we
+    reuse _normalize_akshare_data with source overridden to 'akshare_etf'.
+    """
 
     def fetch(
         self,
@@ -211,13 +218,46 @@ class EtfHandler(AssetTypeHandler):
         end: str | None,
         adjustment: Adjustment,
     ) -> tuple[pd.DataFrame, str]:
-        raise NotImplementedError(
-            "EtfHandler is not yet implemented. "
-            "Use --asset-type equity for now and handle ETF codes manually."
+        if ak is None:
+            raise RuntimeError("akshare is required. Install with: pip install akshare")
+
+        from datetime import timedelta
+
+        adjust_map = {Adjustment.QFQ: "qfq", Adjustment.HFQ: "hfq", Adjustment.NONE: ""}
+        adjust_str = adjust_map.get(adjustment, "qfq")
+
+        start_date = (start or (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")).replace("-", "")
+        end_date = (end or datetime.now().strftime("%Y-%m-%d")).replace("-", "")
+
+        raw = ak.fund_etf_hist_em(
+            symbol=ticker,
+            period="daily",
+            start_date=start_date,
+            end_date=end_date,
+            adjust=adjust_str,
         )
+        if raw is None or raw.empty:
+            return pd.DataFrame(), "none"
+
+        # Reuse equity normalizer — same Chinese column format
+        from .akshare_source import _normalize_akshare_data
+        df = _normalize_akshare_data(raw, ticker, exchange, adjustment)
+        # Override source to distinguish ETF from equity
+        df["source"] = "akshare_etf"
+        return df, "akshare_etf"
 
     def validate(self, df: pd.DataFrame, ticker: str, exchange: Exchange) -> None:
-        raise NotImplementedError("EtfHandler is not yet implemented.")
+        if df.empty:
+            return
+        # ETF prices in China are typically 0.1-500 CNY.
+        # Wide upper bound (500) accommodates leveraged/gold ETFs.
+        bad = df[(df["close"] <= 0) | (df["close"] > 500)]
+        if not bad.empty:
+            raise DataIntegrityError(
+                symbol=f"{exchange.value}:{ticker}",
+                expected_range=(0.0, 500.0),
+                actual_value=float(bad["close"].iloc[0]),
+            )
 
 
 # ── Dispatcher ────────────────────────────────────────────────────────────────
