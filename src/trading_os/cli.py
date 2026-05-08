@@ -298,7 +298,8 @@ def _resolve_bulk_pairs(ns) -> list | None:
                             # BaoStock 正常路径通过 stock_type=1 过滤，Fallback 需手动过滤
                             exch_upper = exch_str.upper()
                             if exch_upper == "SSE" and (
-                                ticker.startswith("51") or ticker.startswith("56")
+                                ticker.startswith("000")  # SSE composite/sector indices (上证指数等)
+                                or ticker.startswith("51") or ticker.startswith("56")
                                 or ticker.startswith("58")
                                 or ticker.startswith("11") or ticker.startswith("13")
                             ):

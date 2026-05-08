@@ -369,6 +369,11 @@ def get_market_index(index_code: str = "000001") -> pd.DataFrame:
     """
     获取市场指数数据
 
+    .. deprecated::
+        使用 IndexHandler.fetch() 替代（通过 fetch_daily_bars(..., asset_type=AssetType.INDEX)）。
+        此函数写入 source='akshare'（非 'akshare_index'），会被
+        _check_price_continuity 拦截，且不走 AssetType 校验。
+
     Args:
         index_code: 指数代码，默认"000001"(上证指数)
 

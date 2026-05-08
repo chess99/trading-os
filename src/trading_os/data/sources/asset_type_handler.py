@@ -12,7 +12,7 @@ based on the caller-supplied asset_type argument.
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from datetime import datetime, timezone
+from datetime import datetime
 
 import pandas as pd
 
@@ -185,14 +185,16 @@ class IndexHandler(AssetTypeHandler):
                 expected_range=(100.0, 20_000.0),
                 actual_value=float(bad_price["close"].iloc[0]),
             )
-        # Volume: index volume is in 手 (lots); normal trading day > 1M lots
-        bad_vol = df[df["volume"] < 1_000_000]
-        if not bad_vol.empty:
-            raise DataIntegrityError(
-                symbol=symbol_id,
-                expected_range=(1_000_000.0, float("inf")),
-                actual_value=float(bad_vol["volume"].iloc[0]),
-            )
+        # Volume: index volume is in 手 (lots); normal trading day > 1M lots.
+        # Guard against APIs that omit the volume column entirely.
+        if "volume" in df.columns:
+            bad_vol = df[df["volume"] < 1_000_000]
+            if not bad_vol.empty:
+                raise DataIntegrityError(
+                    symbol=symbol_id,
+                    expected_range=(1_000_000.0, float("inf")),
+                    actual_value=float(bad_vol["volume"].iloc[0]),
+                )
 
 
 # ── ETF (stub) ────────────────────────────────────────────────────────────────
