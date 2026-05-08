@@ -66,17 +66,35 @@ def _cmd_lake_compact(_: argparse.Namespace) -> int:
 
 def _cmd_fetch_bars(ns: argparse.Namespace) -> int:
     from .data.lake import LocalDataLake
-    from .data.schema import Adjustment, Exchange, Timeframe
+    from .data.schema import Adjustment, AssetType, Exchange, Timeframe
     from .data.sources.akshare_source import fetch_daily_bars
 
     root = repo_root()
     lake = LocalDataLake(root / "data")
     exch = Exchange(ns.exchange)
     adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
+    asset_type_map = {
+        "equity": AssetType.EQUITY,
+        "index": AssetType.INDEX,
+        "etf": AssetType.ETF,
+    }
+    asset_type = asset_type_map.get(getattr(ns, "asset_type", "equity"), AssetType.EQUITY)
+
+    # For index, adjustment is always NONE (IndexHandler enforces this internally,
+    # but we also set it here so the write_bars_parquet call uses the right value)
+    if asset_type == AssetType.INDEX:
+        adj = Adjustment.NONE
 
     try:
-        print(f"获取A股数据: {exch.value}:{ns.ticker} (复权: {adj.value})")
-        df, actual_source = fetch_daily_bars(ns.ticker, exchange=exch, start=ns.start, end=ns.end, adjustment=adj)
+        print(f"获取A股数据: {exch.value}:{ns.ticker} (复权: {adj.value}, 类型: {asset_type.value})")
+        df, actual_source = fetch_daily_bars(
+            ns.ticker,
+            exchange=exch,
+            start=ns.start,
+            end=ns.end,
+            adjustment=adj,
+            asset_type=asset_type,
+        )
         if df.empty:
             print("未获取到数据")
             return 1
@@ -91,6 +109,133 @@ def _cmd_fetch_bars(ns: argparse.Namespace) -> int:
         return 0
     except Exception as e:
         print(f"获取A股数据失败: {e}", file=sys.stderr)
+        return 1
+
+
+def _cmd_lake_fix_index(ns: argparse.Namespace) -> int:
+    """Clean up index data polluted by equity API calls, then re-fetch correct data.
+
+    Idempotent: if correct akshare_index data already exists for the target period,
+    skips the re-fetch.
+    """
+    from .data.lake import LocalDataLake
+    from .data.schema import Adjustment, AssetType, Exchange, Timeframe
+    from .data.sources.akshare_source import fetch_daily_bars
+
+    root = repo_root()
+    lake = LocalDataLake(root / "data")
+
+    symbol = ns.symbol  # e.g. "SSE:000001"
+    exch_str, ticker = symbol.split(":", 1)
+    exch = Exchange(exch_str)
+
+    bars_glob = lake.paths.bars_dir.as_posix() + "/*.parquet"
+    files = list(lake.paths.bars_dir.glob("*.parquet"))
+
+    if not files:
+        print(f"No parquet files found in {lake.paths.bars_dir}. Nothing to fix.")
+        return 0
+
+    # Step 1: Count dirty records
+    with lake.connect() as con:
+        try:
+            dirty = con.execute(
+                f"""
+                SELECT COUNT(*) AS n FROM read_parquet('{bars_glob}', union_by_name=true)
+                WHERE symbol = ? AND source = 'akshare'
+                """,
+                [symbol],
+            ).fetchone()[0]
+        except Exception:
+            dirty = 0
+
+    print(f"[lake-fix-index] {symbol}: found {dirty} dirty records (source=akshare)")
+
+    # Step 2: Determine earliest dirty date for re-fetch range
+    if dirty > 0:
+        with lake.connect() as con:
+            try:
+                first_dirty = con.execute(
+                    f"""
+                    SELECT MIN(ts)::DATE AS d FROM read_parquet('{bars_glob}', union_by_name=true)
+                    WHERE symbol = ? AND source = 'akshare'
+                    """,
+                    [symbol],
+                ).fetchone()[0]
+            except Exception:
+                first_dirty = None
+        refetch_start = str(first_dirty) if first_dirty else "2026-04-08"
+    else:
+        refetch_start = "2026-04-08"
+
+    # Step 3: Check if already have akshare_index data for the target range
+    with lake.connect() as con:
+        try:
+            existing_clean = con.execute(
+                f"""
+                SELECT COUNT(*) AS n FROM read_parquet('{bars_glob}', union_by_name=true)
+                WHERE symbol = ? AND source = 'akshare_index'
+                  AND ts::DATE >= ?
+                """,
+                [symbol, refetch_start],
+            ).fetchone()[0]
+        except Exception:
+            existing_clean = 0
+
+    if existing_clean > 0 and dirty == 0:
+        print(f"[lake-fix-index] Already clean: {existing_clean} akshare_index records, 0 dirty. Nothing to do.")
+        return 0
+
+    # Step 4: Remove dirty records by rewriting all parquet files without them
+    print(f"[lake-fix-index] Removing dirty records for {symbol} (source=akshare)...")
+    try:
+        with lake.connect() as con:
+            clean_df = con.execute(
+                f"""
+                SELECT * FROM read_parquet('{bars_glob}', union_by_name=true)
+                WHERE NOT (symbol = ? AND source = 'akshare')
+                ORDER BY symbol, ts
+                """,
+                [symbol],
+            ).df()
+        clean_path = lake.paths.bars_dir / "bars_cleaned_after_fix_index.parquet"
+        clean_df.to_parquet(clean_path, index=False)
+        for f in lake.paths.bars_dir.glob("*.parquet"):
+            if f != clean_path:
+                f.unlink()
+        print(f"[lake-fix-index] Dirty records removed. {len(clean_df)} rows retained.")
+    except Exception as e:
+        print(f"[lake-fix-index] ERROR during cleanup: {e}", file=sys.stderr)
+        return 1
+
+    # Step 5: Re-fetch correct index data
+    print(f"[lake-fix-index] Re-fetching {symbol} as INDEX from {refetch_start} to today...")
+    try:
+        df, source = fetch_daily_bars(
+            ticker,
+            exchange=exch,
+            start=refetch_start,
+            end=None,
+            adjustment=Adjustment.NONE,
+            asset_type=AssetType.INDEX,
+        )
+        if df.empty:
+            print(f"[lake-fix-index] WARNING: no data returned for {symbol} from {refetch_start}. "
+                  "Check network connectivity.")
+            return 1
+
+        lake.write_bars_parquet(
+            df, exchange=exch, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
+            source=source,
+            partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
+        )
+        lake.init()
+        print(f"[lake-fix-index] Written {len(df)} clean records for {symbol} (source={source})")
+        print(f"[lake-fix-index] Data range: {df['ts'].min().date()} to {df['ts'].max().date()}")
+        print(f"[lake-fix-index] DONE. {symbol} is now clean.")
+        return 0
+    except Exception as e:
+        print(f"[lake-fix-index] ERROR during re-fetch: {e}", file=sys.stderr)
         return 1
 
 
@@ -1352,6 +1497,17 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("lake-compact", help="合并去重 Parquet 文件（自动在文件数>20时触发，也可手动执行）")
     p.set_defaults(func=_cmd_lake_compact)
 
+    p = sub.add_parser(
+        "lake-fix-index",
+        help="清洗被股票 API 污染的指数数据并重新拉取正确数据（幂等）",
+    )
+    p.add_argument(
+        "--symbol",
+        required=True,
+        help="要修复的指数 symbol，如 SSE:000001",
+    )
+    p.set_defaults(func=_cmd_lake_fix_index)
+
     p = sub.add_parser("fundamental", help="获取股票财务摘要（BaoStock，无需代理）")
     p.add_argument("--symbols", required=True, help="逗号分隔的股票代码，如 SSE:600519,SSE:600000")
     p.add_argument("--years", type=int, default=5, help="获取最近几年数据（默认5年）")
@@ -1411,6 +1567,13 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--start", default=None, help="开始日期 YYYY-MM-DD")
     p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD")
     p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq", help="复权方式")
+    p.add_argument(
+        "--asset-type",
+        choices=["equity", "index", "etf"],
+        default="equity",
+        dest="asset_type",
+        help="资产类型 (默认: equity)。指数请用 index，如: --asset-type index",
+    )
     p.set_defaults(func=_cmd_fetch_bars)
 
     p = sub.add_parser("fetch-ak-bulk", help="批量拉取全A股历史数据（BaoStock，串行，全球可达）")
