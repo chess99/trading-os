@@ -114,6 +114,7 @@ def fetch_daily_bars(
     end: str | None = None,
     adjustment: Adjustment = Adjustment.NONE,
     config: AkshareConfig | None = None,
+    asset_type: "Any | None" = None,
 ) -> tuple[pd.DataFrame, str]:
     """
     从akshare获取A股日线数据（自动选择最佳数据源）
@@ -123,62 +124,35 @@ def fetch_daily_bars(
         exchange: 交易所 (SSE/SZSE)
         start: 开始日期 "YYYY-MM-DD"
         end: 结束日期 "YYYY-MM-DD"
-        adjustment: 复权类型
-        config: 配置参数
+        adjustment: 复权类型（对指数无效，会被强制覆盖为 NONE）
+        config: 配置参数（仅 EquityHandler 使用）
+        asset_type: 资产类型。None 或不传时默认 AssetType.EQUITY（向后兼容）。
+                    指数请显式传 AssetType.INDEX。
 
     Returns:
         (标准化的DataFrame，实际使用的数据源名称)
     """
+    from ..schema import AssetType as AT
+    from .asset_type_handler import get_handler
+
+    if asset_type is None:
+        asset_type = AT.EQUITY
+
     try:
-        import akshare as ak
+        import akshare  # noqa: F401 — ensure akshare is installed
     except ImportError as e:
         raise RuntimeError(
             "akshare is required for A-share data. Install with: pip install akshare"
         ) from e
 
-    if config is None:
-        config = AkshareConfig()
-
-    # 验证交易所
     if exchange not in [Exchange.SSE, Exchange.SZSE]:
         raise ValueError(f"akshare仅支持SSE和SZSE交易所，得到: {exchange}")
 
-    # 构造akshare股票代码
-    symbol_str = _build_akshare_symbol(ticker, exchange)
-
-    try:
-        logger.info(f"获取A股数据: {symbol_str}, 复权类型: {adjustment}")
-
-        # 设置默认日期范围
-        if end is None:
-            end = datetime.now().strftime("%Y%m%d")
-        else:
-            end = end.replace("-", "")
-
-        if start is None:
-            start = (datetime.now() - timedelta(days=365)).strftime("%Y%m%d")
-        else:
-            start = start.replace("-", "")
-
-        # 根据复权类型获取数据（优先东财接口，失败自动 fallback 新浪/BaoStock）
-        adjust_map = {Adjustment.QFQ: "qfq", Adjustment.HFQ: "hfq", Adjustment.NONE: ""}
-        adjust_str = adjust_map.get(adjustment, "")
-
-        df, actual_source = _fetch_with_fallback(ak, symbol_str, exchange, start, end, adjust_str)
-
-        if df is None or df.empty:
-            logger.warning(f"未获取到数据: {symbol_str}")
-            return pd.DataFrame(), "none"
-
-        # 标准化列名和数据格式
-        df = _normalize_akshare_data(df, ticker, exchange, adjustment)
-
-        logger.info(f"成功获取 {len(df)} 条记录: {symbol_str} (via {actual_source})")
-        return df, actual_source
-
-    except Exception as e:
-        logger.error(f"获取A股数据失败 {symbol_str}: {e}")
-        raise RuntimeError(f"akshare数据获取失败: {e}") from e
+    handler = get_handler(asset_type)
+    df, source = handler.fetch(ticker, exchange, start=start, end=end, adjustment=adjustment)
+    if df is not None and not df.empty:
+        handler.validate(df, ticker, exchange)
+    return df if df is not None else pd.DataFrame(), source
 
 
 def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, end: str, adjust: str) -> "tuple[pd.DataFrame, str]":
@@ -429,3 +403,15 @@ def get_market_index(index_code: str = "000001") -> pd.DataFrame:
     except Exception as e:
         logger.error(f"获取指数数据失败: {e}")
         return pd.DataFrame()
+
+def _make_akshare_df_for_test() -> pd.DataFrame:
+    """Test helper: minimal DataFrame in akshare (eastmoney) column format."""
+    return pd.DataFrame({
+        "日期": pd.date_range("2024-01-01", periods=5, freq="B"),
+        "开盘": [10.0, 10.1, 10.2, 10.3, 10.4],
+        "最高": [10.5, 10.6, 10.7, 10.8, 10.9],
+        "最低": [9.5, 9.6, 9.7, 9.8, 9.9],
+        "收盘": [10.2, 10.3, 10.4, 10.5, 10.6],
+        "成交量": [1_000_000] * 5,
+        "成交额": [10_000_000.0] * 5,
+    })

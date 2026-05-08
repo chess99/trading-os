@@ -93,3 +93,48 @@ def test_fetch_returns_none_source_when_all_fail():
 
     assert source == "none"
     assert df.empty
+
+
+def test_fetch_daily_bars_accepts_asset_type_index():
+    """fetch_daily_bars with asset_type=AssetType.INDEX dispatches to IndexHandler."""
+    from unittest.mock import patch
+    import pandas as pd
+    from trading_os.data.schema import Exchange, Adjustment, AssetType
+    from trading_os.data.sources.akshare_source import fetch_daily_bars
+
+    mock_df = pd.DataFrame({
+        "date": pd.date_range("2026-04-08", periods=3, freq="B"),
+        "open": [3200.0, 3210.0, 3220.0],
+        "high": [3250.0, 3260.0, 3270.0],
+        "low":  [3180.0, 3190.0, 3200.0],
+        "close": [3220.0, 3230.0, 3240.0],
+        "volume": [30_000_000.0] * 3,
+        "amount": [3.5e11] * 3,
+    })
+
+    with patch("trading_os.data.sources.asset_type_handler.ak") as mock_ak:
+        mock_ak.stock_zh_index_daily.return_value = mock_df
+        df, source = fetch_daily_bars(
+            "000001",
+            exchange=Exchange.SSE,
+            adjustment=Adjustment.QFQ,
+            asset_type=AssetType.INDEX,
+        )
+
+    assert source == "akshare_index"
+    assert not df.empty
+    assert df["source"].iloc[0] == "akshare_index"
+    assert df["adjustment"].iloc[0] == "none"  # forced to NONE for indices
+
+
+def test_fetch_daily_bars_default_asset_type_is_equity():
+    """Calling without asset_type defaults to equity (backward compatible)."""
+    from unittest.mock import MagicMock, patch
+    from trading_os.data.schema import Exchange, Adjustment
+    from trading_os.data.sources.akshare_source import fetch_daily_bars, _make_akshare_df_for_test
+
+    with patch("trading_os.data.sources.akshare_source._fetch_with_fallback") as mock_fb:
+        mock_fb.return_value = (_make_akshare_df_for_test(), "akshare")
+        df, source = fetch_daily_bars("600000", exchange=Exchange.SSE, adjustment=Adjustment.QFQ)
+
+    assert source == "akshare"
