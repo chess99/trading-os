@@ -179,6 +179,61 @@ class LocalDataLake:
         self.compact()
         self._refresh_view()
 
+    def _check_price_continuity(self, df: Any, symbol: str) -> None:
+        """Reject writes that would create a magnitude discontinuity in close prices.
+
+        Compares the median of the 5 most-recent existing close values for *symbol*
+        against every close in the incoming *df*.  If any new close is more than 50x
+        or less than 1/50th of that median, raises DataIntegrityError.
+
+        Empty lake (no existing history for symbol): passes silently — first write is
+        always allowed.
+        """
+        from .exceptions import DataIntegrityError
+
+        bars_glob = self.paths.bars_dir.as_posix() + "/*.parquet"
+        files = list(self.paths.bars_dir.glob("*.parquet"))
+        if not files:
+            return  # empty lake — first write
+
+        try:
+            with self.connect() as con:
+                result = con.execute(
+                    f"""
+                    SELECT close FROM read_parquet('{bars_glob}', union_by_name=true)
+                    WHERE symbol = ?
+                    ORDER BY ts DESC
+                    LIMIT 5
+                    """,
+                    [symbol],
+                ).df()
+        except Exception:
+            return  # if query fails, don't block the write
+
+        if result.empty:
+            return  # no existing data for this symbol — first write
+
+        median_close = float(result["close"].median())
+        if median_close <= 0:
+            return  # guard against bad existing data
+
+        lo = median_close / 50.0
+        hi = median_close * 50.0
+
+        try:
+            import pandas as _pd
+            new_closes = _pd.to_numeric(df["close"], errors="coerce").dropna()
+        except (KeyError, TypeError):
+            return
+
+        bad = new_closes[(new_closes < lo) | (new_closes > hi)]
+        if not bad.empty:
+            raise DataIntegrityError(
+                symbol=symbol,
+                expected_range=(lo, hi),
+                actual_value=float(bad.iloc[0]),
+            )
+
     def write_bars_parquet(
         self,
         df: Any,
@@ -206,6 +261,14 @@ class LocalDataLake:
         missing = [c for c in required if c not in df.columns]
         if missing:
             raise ValueError(f"bars df missing columns: {missing}")
+
+        # ── price continuity guard ──────────────────────────────────────────
+        # Reject writes that would create a magnitude discontinuity.
+        # Only checks symbols present in df; skips silently if lake is empty.
+        if BarColumns.symbol in df.columns:
+            for sym in df[BarColumns.symbol].unique():
+                self._check_price_continuity(df[df[BarColumns.symbol] == sym], sym)
+        # ───────────────────────────────────────────────────────────────────
 
         out = df.copy()
         # Normalize ts to tz-aware UTC
