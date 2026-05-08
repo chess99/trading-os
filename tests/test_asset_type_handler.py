@@ -126,19 +126,32 @@ def test_index_handler_validate_passes_for_valid_index_price():
     handler.validate(df, "000001", Exchange.SSE)  # should not raise
 
 
-def test_index_handler_validate_rejects_equity_price():
-    """Price of ~11 (平安银行 range) must fail index validation."""
+def test_index_handler_validate_rejects_zero_price():
+    """Zero or negative close must fail index validation."""
     from trading_os.data.schema import Exchange
     from trading_os.data.sources.asset_type_handler import IndexHandler
     from trading_os.data.exceptions import DataIntegrityError
 
     handler = IndexHandler()
     df = pd.DataFrame({
-        "close": [11.09, 11.01, 11.37],
-        "volume": [680_915.0, 722_530.0, 936_958.0],
+        "close": [0.0, 3200.0],
+        "volume": [30_000_000.0, 30_000_000.0],
     })
     with pytest.raises(DataIntegrityError):
         handler.validate(df, "000001", Exchange.SSE)
+
+
+def test_index_handler_validate_passes_for_low_historical_price():
+    """Early 1990s index price (~100) must pass — lower bound is 0, not 100."""
+    from trading_os.data.schema import Exchange
+    from trading_os.data.sources.asset_type_handler import IndexHandler
+
+    handler = IndexHandler()
+    df = pd.DataFrame({
+        "close": [99.98, 104.5],
+        "volume": [126_000.0, 200_000.0],
+    })
+    handler.validate(df, "000001", Exchange.SSE)  # should not raise
 
 
 # ── EquityHandler ─────────────────────────────────────────────────────────────

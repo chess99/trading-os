@@ -366,19 +366,20 @@ def get_market_breadth(index_symbol: str = "SSE:000001", lookback_days: int = 30
 
         lake = LocalDataLake(repo_root() / "data")
 
-        # 指数数据通常以 QFQ 存储（fetch-bs 默认前复权）
+        # 指数数据优先读 adjustment=none（IndexHandler 写入的正确格式）
+        # fallback 到 qfq（兼容旧 BaoStock 历史数据，migration 前过渡用）
         df = lake.query_bars(
             symbols=[index_symbol],
             exchange=exch,
             timeframe=Timeframe.D1,
-            adjustment=Adjustment.QFQ,
+            adjustment=Adjustment.NONE,
         )
         if df.empty:
             df = lake.query_bars(
                 symbols=[index_symbol],
                 exchange=exch,
                 timeframe=Timeframe.D1,
-                adjustment=Adjustment.NONE,
+                adjustment=Adjustment.QFQ,
             )
         if df.empty:
             result["error"] = f"本地无指数数据，请先运行: python -m trading_os fetch-bs --exchange {parts[0]} --ticker {parts[1]}"

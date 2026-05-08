@@ -113,10 +113,19 @@ def _cmd_fetch_bars(ns: argparse.Namespace) -> int:
 
 
 def _cmd_lake_fix_index(ns: argparse.Namespace) -> int:
-    """Clean up index data polluted by equity API calls, then re-fetch correct data.
+    """Rebuild index symbol data: remove ALL existing rows (any source/adjustment),
+    then re-fetch full history via IndexHandler (adjustment=none, source=akshare_index).
 
-    Idempotent: if correct akshare_index data already exists for the target period,
-    skips the re-fetch.
+    This fixes two problems:
+    1. Rows written by equity API (source=akshare, ~11 CNY price for 平安银行)
+    2. Rows with incorrect adjustment=qfq tag (BaoStock history — adjustment is
+       meaningless for indices, which have no dividends/splits)
+
+    After this command, the symbol has a single clean series:
+      adjustment=none, source=akshare_index, from ~1990 to today.
+
+    Idempotent: if the symbol already has ONLY akshare_index data and no other
+    sources, the command skips the re-fetch.
     """
     from .data.lake import LocalDataLake
     from .data.schema import Adjustment, AssetType, Exchange, Timeframe
@@ -136,91 +145,73 @@ def _cmd_lake_fix_index(ns: argparse.Namespace) -> int:
         print(f"No parquet files found in {lake.paths.bars_dir}. Nothing to fix.")
         return 0
 
-    # Step 1: Count dirty records
+    # Step 1: Audit current state
     with lake.connect() as con:
         try:
-            dirty = con.execute(
+            audit = con.execute(
                 f"""
-                SELECT COUNT(*) AS n FROM read_parquet('{bars_glob}', union_by_name=true)
-                WHERE symbol = ? AND source = 'akshare'
+                SELECT source, adjustment, COUNT(*) AS n,
+                       MIN(ts::DATE) AS first, MAX(ts::DATE) AS last
+                FROM read_parquet('{bars_glob}', union_by_name=true)
+                WHERE symbol = ?
+                GROUP BY source, adjustment
+                ORDER BY source
                 """,
                 [symbol],
-            ).fetchone()[0]
+            ).df()
         except Exception:
-            dirty = 0
+            audit = None
 
-    print(f"[lake-fix-index] {symbol}: found {dirty} dirty records (source=akshare)")
-
-    # Step 2: Determine earliest dirty date for re-fetch range
-    if dirty > 0:
-        with lake.connect() as con:
-            try:
-                first_dirty = con.execute(
-                    f"""
-                    SELECT MIN(ts)::DATE AS d FROM read_parquet('{bars_glob}', union_by_name=true)
-                    WHERE symbol = ? AND source = 'akshare'
-                    """,
-                    [symbol],
-                ).fetchone()[0]
-            except Exception:
-                first_dirty = None
-        refetch_start = str(first_dirty) if first_dirty else "2026-04-08"
+    if audit is not None and not audit.empty:
+        print(f"[lake-fix-index] Current state of {symbol}:")
+        for _, row in audit.iterrows():
+            print(f"  source={row['source']} adjustment={row['adjustment']} "
+                  f"n={row['n']} {row['first']}~{row['last']}")
     else:
-        refetch_start = "2026-04-08"
+        print(f"[lake-fix-index] {symbol}: no existing data found.")
 
-    # Step 3: Check if already have akshare_index data for the target range
-    with lake.connect() as con:
-        try:
-            existing_clean = con.execute(
-                f"""
-                SELECT COUNT(*) AS n FROM read_parquet('{bars_glob}', union_by_name=true)
-                WHERE symbol = ? AND source = 'akshare_index'
-                  AND ts::DATE >= ?
-                """,
-                [symbol, refetch_start],
-            ).fetchone()[0]
-        except Exception:
-            existing_clean = 0
+    # Idempotency check: already fully clean (only akshare_index, adjustment=none)
+    if audit is not None and not audit.empty:
+        non_clean = audit[~((audit["source"] == "akshare_index") & (audit["adjustment"] == "none"))]
+        if non_clean.empty:
+            print(f"[lake-fix-index] Already fully clean (only akshare_index/none). Nothing to do.")
+            return 0
 
-    if existing_clean > 0 and dirty == 0:
-        print(f"[lake-fix-index] Already clean: {existing_clean} akshare_index records, 0 dirty. Nothing to do.")
-        return 0
-
-    # Step 4: Remove dirty records by rewriting all parquet files without them
-    print(f"[lake-fix-index] Removing dirty records for {symbol} (source=akshare)...")
+    # Step 2: Remove ALL rows for this symbol (any source, any adjustment)
+    print(f"[lake-fix-index] Removing ALL existing rows for {symbol}...")
     try:
         with lake.connect() as con:
-            clean_df = con.execute(
+            remaining_df = con.execute(
                 f"""
                 SELECT * FROM read_parquet('{bars_glob}', union_by_name=true)
-                WHERE NOT (symbol = ? AND source = 'akshare')
+                WHERE symbol != ?
                 ORDER BY symbol, ts
                 """,
                 [symbol],
             ).df()
-        clean_path = lake.paths.bars_dir / "bars_cleaned_after_fix_index.parquet"
-        clean_df.to_parquet(clean_path, index=False)
+        clean_path = lake.paths.bars_dir / "bars_all_except_fixed_index.parquet"
+        remaining_df.to_parquet(clean_path, index=False)
         for f in lake.paths.bars_dir.glob("*.parquet"):
             if f != clean_path:
                 f.unlink()
-        print(f"[lake-fix-index] Dirty records removed. {len(clean_df)} rows retained.")
+        print(f"[lake-fix-index] Done. {len(remaining_df)} rows from other symbols retained.")
     except Exception as e:
         print(f"[lake-fix-index] ERROR during cleanup: {e}", file=sys.stderr)
         return 1
 
-    # Step 5: Re-fetch correct index data
-    print(f"[lake-fix-index] Re-fetching {symbol} as INDEX from {refetch_start} to today...")
+    # Step 3: Re-fetch full history via IndexHandler (adjustment=none, source=akshare_index)
+    print(f"[lake-fix-index] Re-fetching {symbol} full history via IndexHandler...")
     try:
         df, source = fetch_daily_bars(
             ticker,
             exchange=exch,
-            start=refetch_start,
+            start=None,   # full history from ~1990
             end=None,
             adjustment=Adjustment.NONE,
             asset_type=AssetType.INDEX,
         )
         if df.empty:
-            print(f"[lake-fix-index] WARNING: no data returned for {symbol} from {refetch_start}. "
+            print(f"[lake-fix-index] WARNING: no data returned for {symbol}. "
                   "Check network connectivity.")
             return 1
 
@@ -230,9 +221,10 @@ def _cmd_lake_fix_index(ns: argparse.Namespace) -> int:
             partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
         )
         lake.init()
-        print(f"[lake-fix-index] Written {len(df)} clean records for {symbol} (source={source})")
+        print(f"[lake-fix-index] Written {len(df)} records for {symbol} "
+              f"(source={source}, adjustment=none)")
         print(f"[lake-fix-index] Data range: {df['ts'].min().date()} to {df['ts'].max().date()}")
-        print(f"[lake-fix-index] DONE. {symbol} is now clean.")
+        print(f"[lake-fix-index] DONE. {symbol} now has a single clean series.")
         return 0
     except Exception as e:
         print(f"[lake-fix-index] ERROR during re-fetch: {e}", file=sys.stderr)
