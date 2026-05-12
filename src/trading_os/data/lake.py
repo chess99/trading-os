@@ -255,6 +255,63 @@ class LocalDataLake:
                 actual_value=float(bad.iloc[0]),
             )
 
+    def _check_volume_unit(self, df: Any, symbol: str) -> None:
+        """Reject writes where volume appears to be in lots (手) rather than shares (股).
+
+        Compares the median of the 10 most-recent existing volume values for *symbol*
+        against the median of the incoming *df*.  If the new median is less than 1/50th
+        of the existing median, the data is likely in lots rather than shares (100x error).
+
+        Empty lake or no existing history for symbol: passes silently — first write is
+        always allowed.
+        """
+        from .exceptions import DataIntegrityError
+
+        bars_glob = self.paths.bars_dir.as_posix() + "/*.parquet"
+        files = list(self.paths.bars_dir.glob("*.parquet"))
+        if not files:
+            return
+
+        try:
+            with self.connect() as con:
+                result = con.execute(
+                    f"""
+                    SELECT volume FROM read_parquet('{bars_glob}', union_by_name=true)
+                    WHERE symbol = ? AND volume > 0
+                    ORDER BY ts DESC
+                    LIMIT 10
+                    """,
+                    [symbol],
+                ).df()
+        except Exception:
+            return
+
+        if result.empty:
+            return  # no existing data — first write always allowed
+
+        existing_median = float(result["volume"].median())
+        if existing_median <= 0:
+            return
+
+        try:
+            import pandas as _pd
+            new_volumes = _pd.to_numeric(df["volume"], errors="coerce").dropna()
+            new_volumes = new_volumes[new_volumes > 0]
+        except (KeyError, TypeError):
+            return
+
+        if new_volumes.empty:
+            return
+
+        new_median = float(new_volumes.median())
+        # If new volume is < 1/50 of existing, very likely unit mismatch (手 vs 股)
+        if new_median < existing_median / 50.0:
+            raise DataIntegrityError(
+                symbol=symbol,
+                expected_range=(existing_median / 50.0, existing_median * 50.0),
+                actual_value=new_median,
+            )
+
     def write_bars_parquet(
         self,
         df: Any,
@@ -289,6 +346,13 @@ class LocalDataLake:
         if BarColumns.symbol in df.columns:
             for sym in df[BarColumns.symbol].unique():
                 self._check_price_continuity(df[df[BarColumns.symbol] == sym], sym)
+        # ───────────────────────────────────────────────────────────────────
+
+        # ── volume unit guard ───────────────────────────────────────────────
+        # Reject writes where volume looks like lots (手) rather than shares (股).
+        if BarColumns.symbol in df.columns:
+            for sym in df[BarColumns.symbol].unique():
+                self._check_volume_unit(df[df[BarColumns.symbol] == sym], sym)
         # ───────────────────────────────────────────────────────────────────
 
         out = df.copy()
