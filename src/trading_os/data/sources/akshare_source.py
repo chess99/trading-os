@@ -183,8 +183,14 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
                 logger.debug(f"东财接口成功: {symbol_str}")
                 return df, "akshare"
         except Exception as e:
-            logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
-            # 单只失败不更新全局状态（可能是该股特有问题）
+            err_str = str(e).lower()
+            _PROXY_KEYWORDS = ("proxy", "proxyerror", "max retries", "remotedisconnected", "443")
+            if any(kw in err_str for kw in _PROXY_KEYWORDS):
+                # 代理/网络全局性故障：标记整个会话内跳过东财，避免每只股票都等超时
+                _SOURCE_AVAILABILITY["eastmoney"] = False
+                logger.warning(f"东财接口代理错误，本会话内禁用东财接口: {e}")
+            else:
+                logger.warning(f"东财接口失败({symbol_str}): {e}，切换新浪接口")
 
     # Fallback 1：新浪（若会话级探测已确认不可用则跳过）
     # mini_racer 不是线程安全的，必须加锁串行化
