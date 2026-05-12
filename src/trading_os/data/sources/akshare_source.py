@@ -31,6 +31,10 @@ _SOURCE_AVAILABILITY: dict[str, bool | None] = {
 }
 _SOURCE_PROBE_LOCK = threading.Lock()
 
+# 代理/全局网络故障特征词：匹配后立即将 eastmoney 标记为会话级不可用。
+# "443" 太宽泛（可能出现在价格或错误码中），依赖其他关键词已足够覆盖 ProxyError/TLS 场景。
+_PROXY_KEYWORDS: tuple[str, ...] = ("proxy", "proxyerror", "max retries", "remotedisconnected")
+
 
 def probe_and_get_preferred_source(exchange: "Exchange", timeout: int = 10) -> str:
     """探测各数据源可用性，返回首选源名称（'eastmoney'/'sina'/'baostock'/'none'）。
@@ -184,7 +188,6 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
                 return df, "akshare"
         except Exception as e:
             err_str = str(e).lower()
-            _PROXY_KEYWORDS = ("proxy", "proxyerror", "max retries", "remotedisconnected", "443")
             if any(kw in err_str for kw in _PROXY_KEYWORDS):
                 # 代理/网络全局性故障：标记整个会话内跳过东财，避免每只股票都等超时
                 _SOURCE_AVAILABILITY["eastmoney"] = False

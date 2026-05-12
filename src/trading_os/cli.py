@@ -396,7 +396,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     _source_name = "baostock" if _use_baostock else "akshare"
 
     def _flush_batch() -> None:
-        nonlocal batch, batch_num
+        nonlocal batch, batch_num, success
         if not batch:
             return
         from .data.exceptions import DataIntegrityError
@@ -415,6 +415,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 )
             except DataIntegrityError as e:
                 failed_list.append(f"{sym}: DataIntegrityError - {e}")
+                success -= 1  # 写入失败，撤销 fetch 阶段的 success 计数
         batch = []
 
     import time

@@ -84,8 +84,8 @@ def test_mixed_history_does_not_false_positive():
     lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
     # 新数据0.40 — 与历史最低0.41接近，应通过（不被误拦）
-    # 用新逻辑（min/max边界）：min=0.41, lo=0.41/10=0.041, hi=25*10=250
-    # 0.40 > 0.041，通过
+    # 当前 median 逻辑：median([25, 22, 15, 5, 0.41]) = 15, lo=15/50=0.30, hi=750
+    # 0.40 > 0.30，通过
     df2 = _bar_df("SSE:600031", ["2026-01-02"], [0.40])
     lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
