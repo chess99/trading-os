@@ -118,3 +118,85 @@ def test_recent_modern_history_does_not_block_qfq_low():
     with pytest.raises(DataIntegrityError):
         lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
                                  adjustment=Adjustment.QFQ, source="akshare")
+
+
+# ── _check_volume_unit tests ─────────────────────────────────────────────────
+
+
+def _bar_df_with_vol(symbol, dates, closes, volumes, exchange="SSE"):
+    return pd.DataFrame({
+        "symbol": symbol,
+        "ts": pd.to_datetime(dates),
+        "open": closes,
+        "high": [c * 1.02 for c in closes],
+        "low": [c * 0.98 for c in closes],
+        "close": closes,
+        "volume": [float(v) for v in volumes],
+        "vwap": closes,
+        "trades": [100] * len(closes),
+        "source": "akshare",
+    })
+
+
+def test_volume_unit_first_write_passes():
+    """空 lake，任何 volume 应通过（无参考数据）"""
+    lake, _ = _make_lake()
+    df = _bar_df_with_vol("SSE:601138", ["2026-01-01"], [65.0], [200_000])
+    lake.write_bars_parquet(df, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+                             adjustment=Adjustment.QFQ, source="sina")
+
+
+def test_volume_unit_lot_data_blocked():
+    """已有股数数据时，写入手数数据（差 100 倍）应被拦截。
+
+    模拟场景：东财接口返回 volume=手，未经 *100 换算直接写入。
+    现有数据 median ≈ 2亿股，新数据 median ≈ 200万（手），比值 = 100，触发拦截。
+    """
+    lake, _ = _make_lake()
+    # 写入正确的股数数据（10 条，确保 median 稳定）
+    share_vol = 200_000_000  # 2亿股，典型大盘股
+    dates_existing = [f"2026-01-{d:02d}" for d in range(2, 12)]
+    df1 = _bar_df_with_vol("SSE:601138", dates_existing, [65.0] * 10,
+                           [share_vol] * 10)
+    lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+                             adjustment=Adjustment.QFQ, source="baostock")
+
+    # 尝试写入手数数据（volume = share_vol / 100）
+    lot_vol = share_vol // 100  # 200万手，是股数的 1/100
+    df2 = _bar_df_with_vol("SSE:601138", ["2026-01-13"], [65.5], [lot_vol])
+    with pytest.raises(DataIntegrityError):
+        lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+                                 adjustment=Adjustment.QFQ, source="eastmoney")
+
+
+def test_volume_unit_normal_variation_passes():
+    """正常的成交量波动（±50%）不应触发拦截"""
+    lake, _ = _make_lake()
+    base_vol = 10_000_000  # 1千万股
+    dates = [f"2026-01-{d:02d}" for d in range(2, 12)]
+    df1 = _bar_df_with_vol("SZSE:300857", dates, [280.0] * 10, [base_vol] * 10)
+    lake.write_bars_parquet(df1, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+                             adjustment=Adjustment.QFQ, source="baostock")
+
+    # 成交量减少到基准的 5%（仍在 1/50 阈值以上）
+    df2 = _bar_df_with_vol("SZSE:300857", ["2026-01-13"], [281.0],
+                           [int(base_vol * 0.06)])
+    lake.write_bars_parquet(df2, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+                             adjustment=Adjustment.QFQ, source="sina")
+
+
+def test_volume_unit_small_cap_low_volume_passes():
+    """小盘股低成交量（301061 赛伍技术，日均 ~180万股）不应被误拦截"""
+    lake, _ = _make_lake()
+    # 小盘股真实 volume 范围：120万~240万股
+    vols = [1_267_755, 1_770_628, 1_798_385, 2_394_242, 2_133_466,
+            1_500_000, 1_800_000, 2_000_000, 1_600_000, 1_700_000]
+    dates = [f"2026-01-{d:02d}" for d in range(2, 12)]
+    df1 = _bar_df_with_vol("SZSE:301061", dates, [65.0] * 10, vols)
+    lake.write_bars_parquet(df1, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+                             adjustment=Adjustment.QFQ, source="baostock")
+
+    # 新数据仍在同量级范围内（~130万）
+    df2 = _bar_df_with_vol("SZSE:301061", ["2026-01-13"], [65.6], [1_300_000])
+    lake.write_bars_parquet(df2, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+                             adjustment=Adjustment.QFQ, source="sina")

@@ -103,7 +103,7 @@ def _cmd_fetch_bars(ns: argparse.Namespace) -> int:
             source=actual_source, partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
         )
         lake.init()
-        source_note = f" (via {actual_source})" if actual_source != "akshare" else ""
+        source_note = f" (via {actual_source})" if actual_source not in ("none",) else ""
         print(f"写入 {len(df)} 条: {exch.value}:{ns.ticker}{source_note}")
         print(f"数据范围: {df['ts'].min().date()} 至 {df['ts'].max().date()}")
         return 0
@@ -393,7 +393,10 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     batch_num = 0
     # 每 N 只重连一次，避免长连接断线
     RECONNECT_INTERVAL = 500
-    _source_name = "baostock" if _use_baostock else "akshare"
+    # baostock 路径：source 由 query_bars_with_session 写入 df["source"]="baostock"。
+    # akshare 路径：source 由 _normalize_akshare_data(source_name=) 写入，为 "eastmoney" 或 "sina"。
+    # _flush_batch 从 df["source"].iloc[0] 读取实际来源；此处的 _source_name 仅作最终回退。
+    _source_name = "baostock" if _use_baostock else "unknown"
     source_counter: dict[str, int] = {}
 
     def _flush_batch() -> None:

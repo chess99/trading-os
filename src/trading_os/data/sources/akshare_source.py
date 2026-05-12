@@ -5,6 +5,7 @@ A股数据源 - 基于akshare
 """
 
 from typing import Any
+import numpy as np
 import pandas as pd
 import logging
 import threading
@@ -335,7 +336,6 @@ def _normalize_akshare_data(
     # 计算VWAP (成交量加权平均价)
     # 东财/新浪/BaoStock fallback 的成交额单位均为元，成交量单位均为股。
     # 使用逐行判断：单日停牌（amount=0）时降级为均价，不影响其他有效交易日。
-    import numpy as np
     if "amount" in df.columns:
         df["vwap"] = np.where(
             df["amount"] > 0,
