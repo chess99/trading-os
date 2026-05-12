@@ -68,14 +68,15 @@ def probe_and_get_preferred_source(exchange: "Exchange", timeout: int = 10) -> s
             )
 
         def _try_sina():
-            with _SINA_LOCK:
-                return ak.stock_zh_a_daily(symbol=f"sh{probe_ticker}", adjust="qfq")
+            # 探测时不持有 _SINA_LOCK：同 baostock，避免超时后遗弃线程占锁。
+            return ak.stock_zh_a_daily(symbol=f"sh{probe_ticker}", adjust="qfq")
 
         def _try_baostock():
             from .baostock_source import fetch_daily_bars as bs_fetch
             from ..schema import Adjustment as Adj
-            with _BAOSTOCK_LOCK:
-                return bs_fetch(probe_ticker, exchange=exchange, start="2026-01-01", end="2026-04-01", adjustment=Adj.QFQ)
+            # 探测时不持有 _BAOSTOCK_LOCK：若探测线程因 timeout 被遗弃，
+            # 不会导致主循环的 baostock 调用永久阻塞。
+            return bs_fetch(probe_ticker, exchange=exchange, start="2026-01-01", end="2026-04-01", adjustment=Adj.QFQ)
 
         for source_name, probe_fn in [
             ("eastmoney", _try_eastmoney),
