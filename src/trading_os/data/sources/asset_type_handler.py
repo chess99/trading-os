@@ -92,7 +92,7 @@ class EquityHandler(AssetTypeHandler):
         if df is None or df.empty:
             return pd.DataFrame(), "none"
 
-        df = _normalize_akshare_data(df, ticker, exchange, adjustment)
+        df = _normalize_akshare_data(df, ticker, exchange, adjustment, source_name=source)
         return df, source
 
     def validate(self, df: pd.DataFrame, ticker: str, exchange: Exchange) -> None:
@@ -241,9 +241,7 @@ class EtfHandler(AssetTypeHandler):
 
         # Reuse equity normalizer — same Chinese column format
         from .akshare_source import _normalize_akshare_data
-        df = _normalize_akshare_data(raw, ticker, exchange, adjustment)
-        # Override source to distinguish ETF from equity
-        df["source"] = "akshare_etf"
+        df = _normalize_akshare_data(raw, ticker, exchange, adjustment, source_name="akshare_etf")
         return df, "akshare_etf"
 
     def validate(self, df: pd.DataFrame, ticker: str, exchange: Exchange) -> None:

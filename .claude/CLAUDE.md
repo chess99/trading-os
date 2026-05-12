@@ -136,3 +136,12 @@ artifacts/
 - 所有交易决策必须写入 EventLog
 - 风控检查不可绕过
 - 回测数据层严格执行前瞻偏差防护
+
+## 数据查询规则
+
+**严禁直接读取 parquet 文件**（`read_parquet`、`pd.read_parquet`、`duckdb.read_parquet` 等）。必须通过：
+- `lake.query_bars()` API
+- `python -m trading_os` CLI 命令
+
+原因：直接读 parquet 会绕过 compact dedup 层，读到重复行和脏数据，导致错误的数量级判断。
+已发生事故：直接读 parquet 误判 volume 单位，险些将正确数据修改为错误值（SZSE compacted parquet 曾被错误改写，靠备份恢复）。每个结论必须有至少两个独立数据源（新浪、BaoStock 各一）交叉验证后，才可执行数据修改操作。

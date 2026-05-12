@@ -394,6 +394,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     # 每 N 只重连一次，避免长连接断线
     RECONNECT_INTERVAL = 500
     _source_name = "baostock" if _use_baostock else "akshare"
+    source_counter: dict[str, int] = {}
 
     def _flush_batch() -> None:
         nonlocal batch, batch_num, success
@@ -404,13 +405,15 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         batch_num += 1
         # 分 symbol 写入：某只股票数据完整性失败不影响其他股票
         for sym, sym_df in combined.groupby("symbol"):
+            # 从 df["source"] 列读取实际来源（_normalize_akshare_data 已写入正确值）
+            actual_src = sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
             try:
                 lake.write_bars_parquet(
                     sym_df,
                     exchange=Exchange.SSE,
                     timeframe=Timeframe.D1,
                     adjustment=adj,
-                    source=_source_name,
+                    source=actual_src,
                     partition_hint=f"bulk_{batch_num:05d}",
                 )
             except DataIntegrityError as e:
@@ -497,6 +500,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 else:
                     batch.append(df)
                     success += 1
+                    source_counter[actual_source] = source_counter.get(actual_source, 0) + 1
                     consecutive_failures = 0
                 time.sleep(QUERY_INTERVAL)
             except Exception as exc:
@@ -508,7 +512,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 _flush_batch()
 
             if i % 100 == 0 or i == len(pairs):
-                print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
+                src_summary = ", ".join(f"{k}={v}" for k, v in source_counter.items())
+                src_info = f"  [{src_summary}]" if src_summary else ""
+                print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}{src_info}")
 
         _flush_batch()
 

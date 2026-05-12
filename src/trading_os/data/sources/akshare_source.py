@@ -177,7 +177,7 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
     会话级别源可用性缓存：如果探测已确认某源不可用，直接跳过，不等超时。
 
     Returns:
-        (DataFrame, source_name)，source_name 为 "akshare" / "baostock" / "none"
+        (DataFrame, source_name)，source_name 为 "eastmoney" / "sina" / "baostock" / "none"
     """
     import pandas as pd
 
@@ -193,7 +193,12 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
             )
             if df is not None and not df.empty:
                 logger.debug(f"东财接口成功: {symbol_str}")
-                return df, "akshare"
+                # 东财 stock_zh_a_hist 成交量单位是手（lot），需换算为股（*100）。
+                # 新浪 stock_zh_a_daily 和 BaoStock 均已是股，不需要换算。
+                df = df.copy()
+                if "成交量" in df.columns:
+                    df["成交量"] = df["成交量"] * 100
+                return df, "eastmoney"
         except Exception as e:
             err_str = str(e).lower()
             if any(kw in err_str for kw in _PROXY_KEYWORDS):
@@ -225,7 +230,7 @@ def _fetch_with_fallback(ak, symbol_str: str, exchange: "Exchange", start: str, 
                     "amount": "成交额",
                 })
                 logger.info(f"新浪接口成功: {sina_symbol}，共{len(df)}条")
-                return df, "akshare"
+                return df, "sina"
             logger.warning(f"新浪接口也失败({sina_symbol}): No value to decode，切换 BaoStock 接口")
         except Exception as e2:
             logger.warning(f"新浪接口也失败({sina_symbol}): {e2}，切换 BaoStock 接口")
@@ -287,7 +292,8 @@ def _normalize_akshare_data(
     df: pd.DataFrame,
     ticker: str,
     exchange: Exchange,
-    adjustment: Adjustment
+    adjustment: Adjustment,
+    source_name: str = "akshare",
 ) -> pd.DataFrame:
     """标准化akshare数据格式"""
 
@@ -324,12 +330,18 @@ def _normalize_akshare_data(
     df["exchange"] = exchange.value
     df["timeframe"] = Timeframe.D1.value
     df["adjustment"] = adjustment.value
-    df["source"] = "akshare"
+    df["source"] = source_name
 
     # 计算VWAP (成交量加权平均价)
-    if "amount" in df.columns and df["amount"].notna().all():
-        # 成交额 / 成交量 = VWAP (注意akshare成交额单位)
-        df["vwap"] = df["amount"] * 10000 / df["volume"]  # 成交额通常以万元为单位
+    # 东财/新浪/BaoStock fallback 的成交额单位均为元，成交量单位均为股。
+    # 使用逐行判断：单日停牌（amount=0）时降级为均价，不影响其他有效交易日。
+    import numpy as np
+    if "amount" in df.columns:
+        df["vwap"] = np.where(
+            df["amount"] > 0,
+            df["amount"] / df["volume"],
+            (df["high"] + df["low"] + df["close"]) / 3,
+        )
     else:
         # 如果没有成交额，使用简单平均价
         df["vwap"] = (df["high"] + df["low"] + df["close"]) / 3

@@ -32,8 +32,8 @@ def _make_baostock_df():
     })
 
 
-def test_fetch_returns_akshare_source_when_eastmoney_succeeds():
-    """When eastmoney succeeds, source should be 'akshare'."""
+def test_fetch_returns_eastmoney_source_when_eastmoney_succeeds():
+    """When eastmoney succeeds, source should be 'eastmoney' and volume multiplied by 100."""
     from trading_os.data.schema import Exchange
     from trading_os.data.sources.akshare_source import _fetch_with_fallback
 
@@ -44,9 +44,11 @@ def test_fetch_returns_akshare_source_when_eastmoney_succeeds():
         mock_ak, "600000", Exchange.SSE, "20240101", "20240110", "qfq"
     )
 
-    assert source == "akshare"
+    assert source == "eastmoney"
     assert not df.empty
     assert "收盘" in df.columns
+    # volume should be multiplied by 100 (手 → 股)
+    assert (df["成交量"] == 100_000_000).all()
 
 
 def test_fetch_falls_back_to_baostock_when_akshare_fails():
@@ -134,7 +136,7 @@ def test_fetch_daily_bars_default_asset_type_is_equity():
     from trading_os.data.sources.akshare_source import fetch_daily_bars, _make_akshare_df_for_test
 
     with patch("trading_os.data.sources.akshare_source._fetch_with_fallback") as mock_fb:
-        mock_fb.return_value = (_make_akshare_df_for_test(), "akshare")
+        mock_fb.return_value = (_make_akshare_df_for_test(), "eastmoney")
         df, source = fetch_daily_bars("600000", exchange=Exchange.SSE, adjustment=Adjustment.QFQ)
 
-    assert source == "akshare"
+    assert source == "eastmoney"
