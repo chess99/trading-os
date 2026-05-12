@@ -83,9 +83,19 @@ def probe_and_get_preferred_source(exchange: "Exchange", timeout: int = 10) -> s
             ("baostock", _try_baostock),
         ]:
             try:
-                with ThreadPoolExecutor(max_workers=1) as executor:
-                    future = executor.submit(probe_fn)
+                # cancel_futures=True：超时后不等阻塞线程（避免 executor.__exit__ 挂死）
+                executor = ThreadPoolExecutor(max_workers=1)
+                future = executor.submit(probe_fn)
+                try:
                     df = future.result(timeout=timeout)
+                except FuturesTimeout:
+                    future.cancel()
+                    executor.shutdown(wait=False)
+                    _SOURCE_AVAILABILITY[source_name] = False
+                    logger.warning(f"源探测：{source_name} 超时（>{timeout}s）")
+                    continue
+                finally:
+                    executor.shutdown(wait=False)
                 if df is not None and not df.empty:
                     _SOURCE_AVAILABILITY[source_name] = True
                     logger.info(f"源探测：{source_name} 可用")
@@ -93,9 +103,6 @@ def probe_and_get_preferred_source(exchange: "Exchange", timeout: int = 10) -> s
                 else:
                     _SOURCE_AVAILABILITY[source_name] = False
                     logger.warning(f"源探测：{source_name} 返回空数据")
-            except FuturesTimeout:
-                _SOURCE_AVAILABILITY[source_name] = False
-                logger.warning(f"源探测：{source_name} 超时（>{timeout}s）")
             except Exception as e:
                 _SOURCE_AVAILABILITY[source_name] = False
                 logger.warning(f"源探测：{source_name} 不可用 ({e})")
