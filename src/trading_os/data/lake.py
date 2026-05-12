@@ -226,6 +226,27 @@ class LocalDataLake:
         except (KeyError, TypeError):
             return
 
+        # If new data contains records older than existing history, it's a historical
+        # backfill (e.g. sina returns full history). Only check rows that overlap with
+        # the known recent window — qfq prices from decades ago can be far below current.
+        try:
+            if "ts" in df.columns:
+                import pandas as _pd2
+                # existing_min_ts: earliest ts already in the lake for this symbol
+                try:
+                    with self.connect() as con2:
+                        existing_min = con2.execute(
+                            f"SELECT MIN(ts) FROM read_parquet('{bars_glob}', union_by_name=true) WHERE symbol = ?",
+                            [symbol],
+                        ).fetchone()[0]
+                except Exception:
+                    existing_min = None
+                if existing_min is not None:
+                    mask = _pd2.to_datetime(df["ts"]) >= _pd2.to_datetime(existing_min)
+                    new_closes = _pd.to_numeric(df.loc[mask, "close"], errors="coerce").dropna()
+        except Exception:
+            pass  # fallback: check all rows with original lo/hi
+
         bad = new_closes[(new_closes < lo) | (new_closes > hi)]
         if not bad.empty:
             raise DataIntegrityError(
