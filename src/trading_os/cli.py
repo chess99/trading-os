@@ -399,16 +399,22 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         nonlocal batch, batch_num
         if not batch:
             return
+        from .data.exceptions import DataIntegrityError
         combined = pd.concat(batch, ignore_index=True)
         batch_num += 1
-        lake.write_bars_parquet(
-            combined,
-            exchange=Exchange.SSE,
-            timeframe=Timeframe.D1,
-            adjustment=adj,
-            source=_source_name,
-            partition_hint=f"bulk_{batch_num:05d}",
-        )
+        # 分 symbol 写入：某只股票数据完整性失败不影响其他股票
+        for sym, sym_df in combined.groupby("symbol"):
+            try:
+                lake.write_bars_parquet(
+                    sym_df,
+                    exchange=Exchange.SSE,
+                    timeframe=Timeframe.D1,
+                    adjustment=adj,
+                    source=_source_name,
+                    partition_hint=f"bulk_{batch_num:05d}",
+                )
+            except DataIntegrityError as e:
+                failed_list.append(f"{sym}: DataIntegrityError - {e}")
         batch = []
 
     import time
