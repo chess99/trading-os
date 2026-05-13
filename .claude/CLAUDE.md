@@ -123,8 +123,9 @@ artifacts/
 ```
 
 **research/ 命名规范**：
+- 完整投研报告（含估值结论、买卖建议）：`report-{EXCHANGE}{TICKER}-YYYYMMDD.md`，如 `report-SSE601138-20260513.md`
 - 批量扫描分析：`CANSLIM-scan-YYYYMMDD.md`、`Elder-scan-YYYYMMDD.md`
-- 单股研究：`{EXCHANGE}{TICKER}-YYYYMMDD.md`，如 `SZSE000858-20260430.md`
+- 单股研究笔记（轻量，无完整估值）：`{EXCHANGE}{TICKER}-YYYYMMDD.md`，如 `SZSE000858-20260430.md`
 - 专题研究：`topic-YYYYMMDD.md`
 
 **何时存 research/**：完成一次完整分析（含结论和行动计划）后存档，供未来复盘追责。

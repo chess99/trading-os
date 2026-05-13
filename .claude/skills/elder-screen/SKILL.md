@@ -91,6 +91,22 @@ description: |
 - 价格在价值区间上方 = 偏贵，不追高
 - 价格在价值区间下方 = 超卖，等待反弹确认
 
+### 📰 新闻背景（量价异动辅助判断）
+
+如发现异常量价信号，调用以下代码获取近期新闻作为背景参考：
+
+```python
+from trading_os.news import get_stock_news, format_news_for_prompt
+items = get_stock_news("{symbol}")  # 替换为实际标的，如 "SSE:600000"
+news_section = format_news_for_prompt(items)
+```
+
+如果 `news_section` 非空，在分析报告的量价分析结论后追加：
+
+> **近期新闻**：{news_section}
+
+新闻是背景参考，不改变技术信号判断。若技术面已给出明确信号（如 MACD 背离确认），新闻只用于解释"为什么"，不用于推翻信号。
+
 ---
 
 ## 第三滤网：精确入场
