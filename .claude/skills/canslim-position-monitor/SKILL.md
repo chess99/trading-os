@@ -62,6 +62,21 @@ CANSLIM 体系的持仓有两个阶段，止损逻辑不同：
 - [ ] 出现"高位放量滞涨"：成交量放大但股价不涨，机构在出货
 - [ ] 股价跌破 10 周均线且成交量放大
 
+#### 📰 新闻核查（核心假设是否被新公告否定）
+
+```python
+from trading_os.news import get_stock_news, format_news_for_prompt
+items = get_stock_news("{symbol}")  # 替换为实际标的
+news_section = format_news_for_prompt(items)
+```
+
+将 `news_section` 注入到假设验证分析中。重点关注：
+- 是否有业绩预警、盈利下修公告
+- 是否有监管/政策负面消息
+- 是否有管理层变动、大股东减持公告
+
+如无重要新闻，填写"无重要近期新闻"并继续持有判断。
+
 ---
 
 ## 输出格式
