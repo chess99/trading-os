@@ -216,3 +216,51 @@ def test_fetch_cls_parses_items():
     assert result[0].importance == "high"   # level A
     assert result[1].importance == "low"    # level C
     assert result[0].source == "cls_telegraph"
+
+
+def test_get_stock_news_uses_cache_on_second_call(tmp_path):
+    """Second call within 24h must return cached data without calling fetcher."""
+    from trading_os.news.service import NewsService
+    svc = NewsService(cache_path=tmp_path / "news.db")
+
+    fake_items = [_make_item("SSE:600000", "缓存新闻")]
+    with patch("trading_os.news.service.fetch_stock_news", return_value=fake_items) as mock_fetch:
+        svc.get_stock_news("SSE:600000")
+        svc.get_stock_news("SSE:600000")
+        assert mock_fetch.call_count == 1  # fetcher called only once
+
+
+def test_get_stock_news_refetches_when_stale(tmp_path):
+    """After cache expires, fetcher must be called again."""
+    from trading_os.news.service import NewsService
+    svc = NewsService(cache_path=tmp_path / "news.db")
+
+    # Pre-populate with stale item
+    stale_time = datetime.now(timezone.utc) - timedelta(hours=25)
+    stale = _make_item("SSE:600000", "旧新闻", fetched_at=stale_time)
+    svc._cache.save([stale])
+
+    fresh_items = [_make_item("SSE:600000", "新新闻")]
+    with patch("trading_os.news.service.fetch_stock_news", return_value=fresh_items) as mock_fetch:
+        result = svc.get_stock_news("SSE:600000")
+        assert mock_fetch.call_count == 1
+    assert result[0].title == "新新闻"
+
+
+def test_format_news_for_prompt_empty():
+    """format_news_for_prompt([]) must return '' without raising."""
+    from trading_os.news.service import NewsService
+    svc = NewsService()
+    result = svc.format_news_for_prompt([])
+    assert result == ""
+
+
+def test_format_news_for_prompt_truncation():
+    """10 items with long content must produce output under 4000 chars."""
+    from trading_os.news.service import NewsService
+    svc = NewsService()
+    items = [_make_item("SSE:600000", f"标题{i}") for i in range(10)]
+    for item in items:
+        item.content = "内容" * 200
+    result = svc.format_news_for_prompt(items)
+    assert len(result) < 4000
