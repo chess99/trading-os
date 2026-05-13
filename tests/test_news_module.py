@@ -122,3 +122,97 @@ def test_fetched_at_utc_format(tmp_path):
     con.close()
     pattern = r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?\+00:00"
     assert re.match(pattern, fetched_at), f"Bad format: {fetched_at}"
+
+
+from unittest.mock import patch, MagicMock
+import pandas as pd
+
+
+def _make_em_df():
+    """Minimal DataFrame matching ak.stock_news_em output columns."""
+    return pd.DataFrame({
+        "新闻标题": ["标题A", "标题B"],
+        "新闻内容": ["内容A", "内容B"],
+        "新闻摘要": ["摘要A", "摘要B"],
+        "新闻链接": ["http://a.com", "http://b.com"],
+        "发布时间": ["2026-05-13 09:00:00", "2026-05-13 10:00:00"],
+    })
+
+
+def test_symbol_strip_sse():
+    """fetch_stock_news('SSE:600000') must call ak.stock_news_em with '600000'."""
+    from trading_os.news.fetcher import fetch_stock_news
+    with patch("trading_os.news.fetcher.ak") as mock_ak:
+        mock_ak.stock_news_em.return_value = _make_em_df()
+        result = fetch_stock_news("SSE:600000")
+        mock_ak.stock_news_em.assert_called_once_with(symbol="600000")
+    assert len(result) == 2
+    assert result[0].source == "eastmoney"
+    assert result[0].symbol == "SSE:600000"
+
+
+def test_symbol_strip_szse():
+    """fetch_stock_news('SZSE:000001') must call ak.stock_news_em with '000001'."""
+    from trading_os.news.fetcher import fetch_stock_news
+    with patch("trading_os.news.fetcher.ak") as mock_ak:
+        mock_ak.stock_news_em.return_value = _make_em_df()
+        fetch_stock_news("SZSE:000001")
+        mock_ak.stock_news_em.assert_called_once_with(symbol="000001")
+
+
+def test_fetch_stock_news_returns_empty_on_exception():
+    """fetch_stock_news must return [] silently on any exception."""
+    from trading_os.news.fetcher import fetch_stock_news
+    with patch("trading_os.news.fetcher.ak") as mock_ak:
+        mock_ak.stock_news_em.side_effect = Exception("rate limited")
+        result = fetch_stock_news("SSE:600000")
+    assert result == []
+
+
+def test_fetch_cls_returns_empty_on_exception():
+    """fetch_cls_telegraph must return [] silently on network failure."""
+    from trading_os.news.fetcher import fetch_cls_telegraph
+    with patch("trading_os.news.fetcher.requests") as mock_req:
+        mock_req.get.side_effect = Exception("connection refused")
+        result = fetch_cls_telegraph()
+    assert result == []
+
+
+def test_fetch_cls_parses_items():
+    """fetch_cls_telegraph must parse CLS JSON response into NewsItems."""
+    from trading_os.news.fetcher import fetch_cls_telegraph
+    from trading_os.news.models import MARKET_SYMBOL
+    fake_response = MagicMock()
+    fake_response.ok = True
+    fake_response.json.return_value = {
+        "error": 0,
+        "data": {
+            "roll_data": [
+                {
+                    "title": "央行降息",
+                    "content": "央行宣布降息25bp",
+                    "shareurl": "http://cls.cn/1",
+                    "ctime": 1715574000,
+                    "level": "A",
+                    "subjects": [],
+                },
+                {
+                    "title": "",
+                    "content": "无标题电报内容",
+                    "shareurl": "http://cls.cn/2",
+                    "ctime": 1715574060,
+                    "level": "C",
+                    "subjects": [],
+                },
+            ]
+        },
+    }
+    with patch("trading_os.news.fetcher.requests") as mock_req:
+        mock_req.get.return_value = fake_response
+        result = fetch_cls_telegraph()
+    assert len(result) == 2
+    assert result[0].symbol == MARKET_SYMBOL
+    assert result[0].title == "央行降息"
+    assert result[0].importance == "high"   # level A
+    assert result[1].importance == "low"    # level C
+    assert result[0].source == "cls_telegraph"
