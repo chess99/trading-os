@@ -10,6 +10,7 @@ Key constraints:
 from __future__ import annotations
 
 import logging
+import math
 from datetime import datetime, timezone
 
 import requests
@@ -61,6 +62,15 @@ def _score_importance(text: str) -> str:
     return "low"
 
 
+def _get_str(row: object, *keys: str) -> str:
+    """Extract first non-empty, non-NaN string value from a pandas row."""
+    for k in keys:
+        v = row.get(k, "")  # type: ignore[union-attr]
+        if v and not (isinstance(v, float) and math.isnan(v)):
+            return str(v)
+    return ""
+
+
 def _cls_level_to_importance(level: str) -> str:
     """CLS level 'A'/'B' = high/medium, 'C' = low."""
     return {"A": "high", "B": "medium"}.get(level, "low")
@@ -88,10 +98,10 @@ def fetch_stock_news(symbol: str, limit: int = 10) -> list[NewsItem]:
 
     items: list[NewsItem] = []
     for _, row in df.head(limit).iterrows():
-        title = str(row.get("新闻标题", "") or "")
-        content = str(row.get("新闻内容", "") or row.get("新闻摘要", "") or "")
+        title = _get_str(row, "新闻标题")
+        content = _get_str(row, "新闻内容", "新闻摘要")
         text = title + content
-        pub_str = str(row.get("发布时间", "") or "")
+        pub_str = _get_str(row, "发布时间")
         try:
             pub_time = datetime.fromisoformat(pub_str).astimezone(timezone.utc)
         except (ValueError, TypeError):
@@ -105,7 +115,7 @@ def fetch_stock_news(symbol: str, limit: int = 10) -> list[NewsItem]:
             pub_time=pub_time,
             sentiment=_score_sentiment(text),
             importance=_score_importance(text),
-            url=str(row.get("新闻链接", "") or ""),
+            url=_get_str(row, "新闻链接"),
         ))
     return items
 
