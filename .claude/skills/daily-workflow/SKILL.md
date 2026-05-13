@@ -191,6 +191,22 @@ python -m trading_os pool status --output artifacts/daily/{TODAY}.md
 |------|------|--------|---------|------|
 | {SYMBOL} | {PRICE} | {PCT}% | {简述} | 维持/预警/移出 |
 
+## 近期市场动态
+
+```python
+from trading_os.news import get_market_news, format_news_for_prompt
+items = get_market_news(limit=15)
+news_section = format_news_for_prompt(items)
+```
+
+在日报末尾追加此栏（如 `news_section` 非空）：
+
+---
+{news_section}
+---
+
+此栏为背景参考，不影响个股分析结论。
+
 ## 建议下一步行动（优先级排序）
 1. {最紧急的行动}
 2. ...
