@@ -39,6 +39,22 @@ description: |
 - [ ] 买入时预期的催化剂是否已经发生或已经失效
 - [ ] 行业格局是否发生根本性变化
 
+#### 📰 新闻扫描（护城河是否受损）
+
+```python
+from trading_os.news import get_stock_news, format_news_for_prompt
+items = get_stock_news("{symbol}")  # 替换为实际标的
+news_section = format_news_for_prompt(items)
+```
+
+将 `news_section` 注入逻辑止损判断。护城河相关的危险信号包括：
+- 核心业务被监管限制或打压
+- 主要客户流失或合同终止公告
+- 管理层重大变动（创始人离职/被查）
+- 竞争对手获得颠覆性优势的公告
+
+新闻是"早期预警"，出现上述信号时标记为"需要深度复查"，不自动触发卖出。
+
 ---
 
 ## 卖出触发条件
