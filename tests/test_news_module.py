@@ -16,6 +16,7 @@ def test_newsitem_defaults():
     assert item.url == ""
     assert item.symbol == "SSE:600000"
     assert item.sentiment == "positive"
+    assert item.fetched_at.tzinfo is not None  # auto-populated, timezone-aware
 
 
 def test_newsitem_market_sentinel():
@@ -30,4 +31,4 @@ def test_newsitem_market_sentinel():
         sentiment="neutral",
         importance="medium",
     )
-    assert item.symbol == "__MARKET__"
+    assert item.symbol == MARKET_SYMBOL

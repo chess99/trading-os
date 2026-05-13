@@ -15,6 +15,11 @@ which breaks INSERT OR REPLACE deduplication.
 
 @dataclass
 class NewsItem:
+    """A single news item fetched from EastMoney or CLS telegraph.
+
+    Use MARKET_SYMBOL as `symbol` for market-wide news (e.g. CLS telegraph items).
+    """
+
     symbol: str
     """Stock symbol (e.g. 'SSE:600000') or MARKET_SYMBOL for market-wide news."""
     title: str
