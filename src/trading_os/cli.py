@@ -1174,7 +1174,8 @@ def _pool_list(ns: argparse.Namespace) -> int:
                 status = item.get("status", "—")
                 trigger = item.get("trigger_price")
                 trigger_str = f"  触发价:{trigger}" if trigger else ""
-                print(f"  {item['symbol']:<18} {item['name']:<10} [{status}]{trigger_str}")
+                name = item.get("name") or ""
+                print(f"  {item['symbol']:<18} {name:<10} [{status}]{trigger_str}")
                 if getattr(ns, "verbose", False) and item.get("notes"):
                     print(f"    └ {item['notes']}")
             total += len(items)
