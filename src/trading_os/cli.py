@@ -1123,13 +1123,37 @@ def _save_pool(data: dict) -> None:
     p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
+def _tracking_path(symbol: str, tracking_dir) -> "Path":
+    """Return the tracking file path for a symbol, matching existing files by prefix."""
+    from pathlib import Path
+    prefix = symbol.replace(":", "_")
+    # Match existing file: SSE_601138_工业富联.md or SSE_601138.md
+    for p in tracking_dir.glob(f"{prefix}*.md"):
+        return p
+    # No existing file — try to get name from pool.json
+    data = _load_pool()
+    name = ""
+    for sys_pools in data.get("pools", {}).values():
+        for tier_items in sys_pools.values():
+            for item in tier_items:
+                if item.get("symbol") == symbol:
+                    name = item.get("name") or ""
+                    break
+    if not name:
+        for item in data.get("exited", []):
+            if item.get("symbol") == symbol:
+                name = item.get("name") or ""
+                break
+    fname = f"{prefix}_{name}.md" if name else f"{prefix}.md"
+    return tracking_dir / fname
+
+
 def _append_tracking(symbol: str, note: str) -> None:
     """Append a timestamped note to the symbol's tracking file."""
     from pathlib import Path
     tracking_dir = repo_root() / "artifacts" / "watchlist" / "tracking"
     tracking_dir.mkdir(parents=True, exist_ok=True)
-    fname = symbol.replace(":", "_") + ".md"
-    fpath = tracking_dir / fname
+    fpath = _tracking_path(symbol, tracking_dir)
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     entry = f"\n### {today}\n{note}\n"
     with open(fpath, "a", encoding="utf-8") as f:
