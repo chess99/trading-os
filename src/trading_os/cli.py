@@ -525,9 +525,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
     # 数据新鲜度报告：让调用方（含 AI）能直接判断数据是否为今日
     try:
-        import duckdb as _duckdb
-        from datetime import date as _date
-        _con = _duckdb.connect(str(lake.paths.duckdb_path), read_only=True)
+        from datetime import date as _date, timedelta as _timedelta
+        from .data.calendar import WeekdayCalendar as _Cal
+        _con = lake.connect()  # 使用 lake 的连接（已设 SET TimeZone='UTC'）
         _row = _con.execute(
             "SELECT MAX(ts)::DATE as latest FROM bars WHERE timeframe='1d' AND adjustment=?",
             [adj.value],
@@ -536,8 +536,16 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         if _row and _row[0]:
             _latest = _row[0]
             _today = _date.today()
-            _lag = (_today - _latest).days
-            _status = "✓ 今日数据已就绪" if _lag == 0 else f"⚠️  落后 {_lag} 天（今日 {_today}）"
+            _cal = _Cal()
+            # 计算交易日落后天数（排除周末/假日，避免周一误报）
+            _trading_lag = sum(
+                1 for _i in range(1, (_today - _latest).days + 1)
+                if _cal.is_trading_day(_latest + _timedelta(days=_i))
+            )
+            if _trading_lag == 0:
+                _status = "✓ 今日数据已就绪"
+            else:
+                _status = f"⚠️  落后 {_trading_lag} 个交易日（最新 {_latest}，今日 {_today}）"
             print(f"数据截止: {_latest}  [{_status}]")
     except Exception:
         pass  # 查询失败不中断主流程

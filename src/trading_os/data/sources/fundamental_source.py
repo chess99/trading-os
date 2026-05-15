@@ -271,7 +271,7 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
     result: dict[str, Any] = {
         "high_52w": None, "low_52w": None, "current": None,
         "pct_from_high": None, "pct_from_low": None,
-        "bars_count": 0, "summary_text": "", "error": None,
+        "bars_count": 0, "latest_date": None, "summary_text": "", "error": None,
     }
     try:
         import pandas as pd
@@ -301,7 +301,7 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
         low_52w = float(df["close"].min())
         current = float(df["close"].iloc[-1])
         latest_ts = df["ts"].iloc[-1]
-        latest_date = pd.Timestamp(latest_ts).date() if not isinstance(latest_ts, type(None)) else None
+        latest_date = pd.Timestamp(latest_ts).date() if pd.notna(latest_ts) else None
 
         pct_from_high = (current - high_52w) / high_52w
         pct_from_low = (current - low_52w) / low_52w
