@@ -300,6 +300,8 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
         high_52w = float(df["close"].max())
         low_52w = float(df["close"].min())
         current = float(df["close"].iloc[-1])
+        latest_ts = df["ts"].iloc[-1]
+        latest_date = pd.Timestamp(latest_ts).date() if not isinstance(latest_ts, type(None)) else None
 
         pct_from_high = (current - high_52w) / high_52w
         pct_from_low = (current - low_52w) / low_52w
@@ -311,11 +313,14 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
             "pct_from_high": pct_from_high,
             "pct_from_low": pct_from_low,
             "bars_count": len(df),
+            "latest_date": str(latest_date) if latest_date else None,
         })
 
         # 格式化摘要
+        date_str = str(latest_date) if latest_date else "未知"
         lines = [
             f"【52周统计】{symbol_id}",
+            f"  数据截止: {date_str}",
             f"  当前价:   {current:.2f}",
             f"  52周高:   {high_52w:.2f}  (距高点 {pct_from_high:+.1%})",
             f"  52周低:   {low_52w:.2f}  (距低点 {pct_from_low:+.1%})",

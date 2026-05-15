@@ -523,6 +523,25 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
     lake.init()  # 一次性刷新 DuckDB view
 
+    # 数据新鲜度报告：让调用方（含 AI）能直接判断数据是否为今日
+    try:
+        import duckdb as _duckdb
+        from datetime import date as _date
+        _con = _duckdb.connect(str(lake.paths.duckdb_path), read_only=True)
+        _row = _con.execute(
+            "SELECT MAX(ts)::DATE as latest FROM bars WHERE timeframe='1d' AND adjustment=?",
+            [adj.value],
+        ).fetchone()
+        _con.close()
+        if _row and _row[0]:
+            _latest = _row[0]
+            _today = _date.today()
+            _lag = (_today - _latest).days
+            _status = "✓ 今日数据已就绪" if _lag == 0 else f"⚠️  落后 {_lag} 天（今日 {_today}）"
+            print(f"数据截止: {_latest}  [{_status}]")
+    except Exception:
+        pass  # 查询失败不中断主流程
+
     print(f"\n完成: 成功={success}, 失败={len(failed_list)}")
     if failed_list and ns.verbose:
         print("失败列表（前 20 条）:")
