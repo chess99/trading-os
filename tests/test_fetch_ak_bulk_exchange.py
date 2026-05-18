@@ -1,9 +1,7 @@
 # tests/test_fetch_ak_bulk_exchange.py
 """测试 _flush_batch 写入时 exchange 列按 symbol 正确推断，不硬编码 SSE。"""
 import pandas as pd
-import pytest
-from pathlib import Path
-from trading_os.data.schema import Exchange, Timeframe, Adjustment
+from trading_os.data.schema import Exchange, Timeframe
 
 
 def _make_bar_df(symbol: str) -> pd.DataFrame:
