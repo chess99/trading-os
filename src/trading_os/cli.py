@@ -410,10 +410,18 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         for sym, sym_df in combined.groupby("symbol"):
             # 从 df["source"] 列读取实际来源（_normalize_akshare_data 已写入正确值）
             actual_src = sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
+            # 从 symbol 推断 exchange（格式 "SSE:600000" 或 "SZSE:300750"）
+            sym_str = str(sym)
+            if sym_str.startswith("SZSE:"):
+                actual_exchange = Exchange.SZSE
+            elif sym_str.startswith("SSE:"):
+                actual_exchange = Exchange.SSE
+            else:
+                actual_exchange = Exchange.SSE  # 兜底
             try:
                 lake.write_bars_parquet(
                     sym_df,
-                    exchange=Exchange.SSE,
+                    exchange=actual_exchange,
                     timeframe=Timeframe.D1,
                     adjustment=adj,
                     source=actual_src,
