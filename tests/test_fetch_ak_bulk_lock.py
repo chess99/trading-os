@@ -2,6 +2,7 @@
 """测试 fetch-ak-bulk 的 PID lock 和进度日志行为。"""
 import os
 from pathlib import Path
+
 import pytest
 
 

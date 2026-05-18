@@ -21,12 +21,12 @@ from __future__ import annotations
 
 import argparse
 import os
+import sys
 from datetime import date as date_type
 from datetime import datetime, timezone
-import sys
+from pathlib import Path
 
 from .paths import repo_root
-
 
 # ---------------------------------------------------------------------------
 # Data commands
@@ -174,7 +174,7 @@ def _cmd_lake_fix_index(ns: argparse.Namespace) -> int:
     if audit is not None and not audit.empty:
         non_clean = audit[~((audit["source"] == "akshare_index") & (audit["adjustment"] == "none"))]
         if non_clean.empty:
-            print(f"[lake-fix-index] Already fully clean (only akshare_index/none). Nothing to do.")
+            print("[lake-fix-index] Already fully clean (only akshare_index/none). Nothing to do.")
             return 0
 
     # Step 2: Remove ALL rows for this symbol (any source, any adjustment)
@@ -311,19 +311,16 @@ def _resolve_bulk_pairs(ns) -> list | None:
                 return None
 
 
-def _bulk_lock_path() -> "Path":
-    from pathlib import Path
+def _bulk_lock_path() -> Path:
     return repo_root() / "artifacts" / "fetch_bulk.pid"
 
 
-def _bulk_progress_log_path() -> "Path":
-    from pathlib import Path
+def _bulk_progress_log_path() -> Path:
     return repo_root() / "artifacts" / "fetch_bulk_progress.log"
 
 
-def _acquire_bulk_lock(lock_path: "Path") -> None:
+def _acquire_bulk_lock(lock_path: Path) -> None:
     """写 PID lock。若已有活跃进程则打印提示并 sys.exit(1)。"""
-    import os, sys
     if lock_path.exists():
         try:
             pid = int(lock_path.read_text().strip())
@@ -341,15 +338,14 @@ def _acquire_bulk_lock(lock_path: "Path") -> None:
     lock_path.write_text(str(os.getpid()))
 
 
-def _release_bulk_lock(lock_path: "Path") -> None:
+def _release_bulk_lock(lock_path: Path) -> None:
     lock_path.unlink(missing_ok=True)
 
 
 def _write_bulk_progress(
-    log_path: "Path", *, done: int, total: int, success: int, failed: int, elapsed: float
+    log_path: Path, *, done: int, total: int, success: int, failed: int, elapsed: float
 ) -> None:
     """追加一行进度到日志文件。"""
-    from datetime import datetime
     remaining = int((elapsed / done) * (total - done)) if done > 0 else 0
     line = (
         f"[{datetime.now().strftime('%H:%M:%S')}] "
@@ -374,7 +370,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     - 预计耗时：~33 分钟（2.5 req/s × 5000 只）
     """
     import time
+
     import pandas as pd
+
     from .data.lake import LocalDataLake
     from .data.schema import Adjustment, Exchange, Timeframe
     from .data.sources.baostock_source import query_bars_with_session
@@ -554,8 +552,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 bs.logout()
         else:
             # akshare fallback — 先探测最佳源，整批复用
-            from .data.sources.akshare_source import fetch_daily_bars as ak_fetch, probe_and_get_preferred_source
             from .data.schema import Exchange as _Exch
+            from .data.sources.akshare_source import fetch_daily_bars as ak_fetch
+            from .data.sources.akshare_source import probe_and_get_preferred_source
             preferred = probe_and_get_preferred_source(_Exch.SSE)
             print(f"  源探测完成：首选 {preferred}，后续跳过不可用源", file=sys.stderr)
             if preferred == "none":
@@ -601,7 +600,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
     # 数据新鲜度报告：让调用方（含 AI）能直接判断数据是否为今日
     try:
-        from datetime import date as _date, timedelta as _timedelta
+        from datetime import date as _date
+        from datetime import timedelta as _timedelta
+
         from .data.calendar import WeekdayCalendar as _Cal
         _con = lake.connect()  # 使用 lake 的连接（已设 SET TimeZone='UTC'）
         _row = _con.execute(
@@ -766,7 +767,9 @@ def _cmd_valuation_sensitivity(ns: argparse.Namespace) -> int:
 
 def _cmd_valuation_sotp(ns: argparse.Namespace) -> int:
     """分部估值（Sum-of-the-Parts）。各板块参数通过 JSON 文件传入。"""
-    import json, sys
+    import json
+    import sys
+
     from .data.sources.valuation_source import calculate_sotp
 
     try:
@@ -1005,11 +1008,19 @@ def _run_scan(
 ) -> int:
     """三个 scan 命令的公共实现。"""
     from datetime import timedelta
+
     import pandas as pd
+
     from .data.lake import LocalDataLake
     from .data.pipeline import DataPipeline
     from .data.sources.akshare_factors import AkshareFactorSource
-    from .scan.common import get_scan_symbols, filter_by_turnover, load_bars_batch, write_scan_output, get_stock_names
+    from .scan.common import (
+        filter_by_turnover,
+        get_scan_symbols,
+        get_stock_names,
+        load_bars_batch,
+        write_scan_output,
+    )
 
     root = repo_root()
     scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
@@ -1099,6 +1110,7 @@ def _cmd_scan_elder(ns: argparse.Namespace) -> int:
 
 def _cmd_fundamental_store(ns: argparse.Namespace) -> int:
     import json
+
     from .data.sources.fundamental_source import get_financial_summary
     from .scan.common import fundamental_path
 
@@ -1152,7 +1164,6 @@ def _cmd_fundamental_store(ns: argparse.Namespace) -> int:
 
 
 def _cmd_scan_canslim(ns: argparse.Namespace) -> int:
-    from pathlib import Path
     root = repo_root()
     if getattr(ns, "live", False):
         from .scan.canslim_scanner import scan_canslim_live
@@ -1190,7 +1201,6 @@ def _cmd_scan_value(ns: argparse.Namespace) -> int:
 # ---------------------------------------------------------------------------
 
 def _pool_path() -> "Path":
-    from pathlib import Path
     return repo_root() / "artifacts" / "watchlist" / "pool.json"
 
 
@@ -1228,7 +1238,6 @@ def _save_pool(data: dict) -> None:
 
 def _tracking_path(symbol: str, tracking_dir) -> "Path":
     """Return the tracking file path for a symbol, matching existing files by prefix."""
-    from pathlib import Path
     prefix = symbol.replace(":", "_")
     # Match existing file: SSE_601138_工业富联.md or SSE_601138.md
     for p in tracking_dir.glob(f"{prefix}*.md"):
@@ -1253,7 +1262,6 @@ def _tracking_path(symbol: str, tracking_dir) -> "Path":
 
 def _append_tracking(symbol: str, note: str) -> None:
     """Append a timestamped note to the symbol's tracking file."""
-    from pathlib import Path
     tracking_dir = repo_root() / "artifacts" / "watchlist" / "tracking"
     tracking_dir.mkdir(parents=True, exist_ok=True)
     fpath = _tracking_path(symbol, tracking_dir)
@@ -1606,13 +1614,13 @@ def _pool_sync_from_scan(ns: argparse.Namespace) -> int:
     # 池中但本次扫描未出现
     dropped = {s: t for s, t in pool_in_symbols.items() if s not in scan_symbols}
     if dropped:
-        print(f"\n⚠️  池中标的未出现在本次扫描（需关注是否移出）:")
+        print("\n⚠️  池中标的未出现在本次扫描（需关注是否移出）:")
         for sym, tier in dropped.items():
             print(f"  {sym:<20} [{tier}] — 本次扫描得分不足，请确认是否移出")
     else:
         print("\n✅ 所有池中标的均在本次扫描中出现")
 
-    print(f"\n（此命令只输出建议，不修改 pool.json。如需操作请手动执行上方命令）")
+    print("\n（此命令只输出建议，不修改 pool.json。如需操作请手动执行上方命令）")
     return 0
 
 
