@@ -1204,6 +1204,10 @@ def _pool_path() -> "Path":
     return repo_root() / "artifacts" / "watchlist" / "pool.json"
 
 
+def _stock_names_path() -> "Path":
+    return repo_root() / "data" / "stock_names.json"
+
+
 def _empty_pool() -> dict:
     return {
         "last_updated": "",
@@ -1411,9 +1415,22 @@ def _pool_add(ns: argparse.Namespace) -> int:
                 print(f"{symbol} 已在 {system}/{t} 中", file=sys.stderr)
                 return 1
 
+    # 优先用 --name 参数，否则从 stock_names.json 查
+    explicit_name = getattr(ns, "name", None)
+    if explicit_name is not None:
+        name = explicit_name
+    else:
+        import json as _json
+        names_path = _stock_names_path()
+        if names_path.exists():
+            name_map = _json.loads(names_path.read_text(encoding="utf-8"))
+            name = name_map.get(symbol, "")
+        else:
+            name = ""
+
     entry: dict = {
         "symbol": symbol,
-        "name": getattr(ns, "name", symbol),
+        "name": name,
         "entered_at": today,
         "entry_reason": getattr(ns, "reason", ""),
         "trigger_price": getattr(ns, "trigger", None),
