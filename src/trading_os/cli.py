@@ -325,6 +325,7 @@ def _acquire_bulk_lock(lock_path: Path) -> None:
         try:
             pid = int(lock_path.read_text().strip())
             os.kill(pid, 0)  # 0 = 只检查进程是否存活，不发信号
+            # 进程存活，拒绝启动
             print(
                 f"[fetch-ak-bulk] 已有实例在运行（PID {pid}），拒绝启动。\n"
                 f"  进度日志：{lock_path.parent / 'fetch_bulk_progress.log'}\n"
@@ -332,7 +333,20 @@ def _acquire_bulk_lock(lock_path: Path) -> None:
                 file=sys.stderr,
             )
             sys.exit(1)
-        except (ProcessLookupError, PermissionError):
+        except ProcessLookupError:
+            # ESRCH: 进程不存在，stale lock，安全清除
+            lock_path.unlink(missing_ok=True)
+        except PermissionError:
+            # EPERM: 进程存在但属于其他用户，无法判断是否活跃，拒绝启动
+            pid_text = lock_path.read_text().strip()
+            print(
+                f"[fetch-ak-bulk] lock 文件存在（PID {pid_text}），进程属于其他用户，无法判断是否活跃。\n"
+                f"  若确认可以继续，手动删除 {lock_path} 后重试。",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        except ValueError:
+            # lock 文件内容损坏（非整数），安全清除
             lock_path.unlink(missing_ok=True)
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     lock_path.write_text(str(os.getpid()))
@@ -383,114 +397,114 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     _acquire_bulk_lock(lock_path)
     progress_log.unlink(missing_ok=True)  # 清空上次的进度日志
     _start_time = time.time()
-    adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
-    BATCH_SIZE = 200  # 每批写入一个 Parquet 文件
-
-    pairs = _resolve_bulk_pairs(ns)
-    if pairs is None:
-        return 1
-    if not pairs:
-        print("没有需要拉取的股票")
-        return 0
-
-    # --skip-existing：跳过本地已有数据的股票
-    if ns.skip_existing:
-        lake_check = LocalDataLake(root / "data")
-        lake_check.init()
-        from .data.pipeline import DataPipeline
-        existing = set(DataPipeline(lake_check).available_symbols())
-        before = len(pairs)
-        pairs = [(e, t) for e, t in pairs if f"{e.value}:{t}" not in existing]
-        print(f"--skip-existing: 跳过 {before - len(pairs)} 只已有数据，剩余 {len(pairs)} 只")
-
-    if not pairs:
-        print("没有需要拉取的股票")
-        return 0
-
-    start = ns.start or "2022-01-01"
-    end = ns.end or datetime.now(timezone.utc).strftime("%Y-%m-%d")
-
-    # 检测 BaoStock 是否可用
-    _use_baostock = False
     try:
-        import baostock as bs
-        lg = bs.login()
-        if lg.error_code == "0":
-            _use_baostock = True
-            bs.logout()
-        else:
-            print(f"BaoStock 不可用: {lg.error_msg}，切换到 akshare", file=sys.stderr)
-    except Exception as exc:
-        print(f"BaoStock 不可用: {exc}，切换到 akshare", file=sys.stderr)
+        adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
+        BATCH_SIZE = 200  # 每批写入一个 Parquet 文件
 
-    if _use_baostock:
-        print(f"开始批量拉取 {len(pairs)} 只（BaoStock，串行）")
-    else:
-        print(f"开始批量拉取 {len(pairs)} 只（akshare，串行）")
-    print(f"  日期范围: {start} ~ {end}，预计耗时 ~{len(pairs) // 150 + 1} 分钟")
-
-    if _use_baostock:
-        def _bs_login() -> bool:
-            lg = bs.login()
-            if lg.error_code != "0":
-                print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
-                return False
-            return True
-
-        if not _bs_login():
+        pairs = _resolve_bulk_pairs(ns)
+        if pairs is None:
             return 1
+        if not pairs:
+            print("没有需要拉取的股票")
+            return 0
 
-    lake = LocalDataLake(root / "data")
-    success = 0
-    failed_list: list[str] = []
-    batch: list[pd.DataFrame] = []
-    batch_num = 0
-    # 每 N 只重连一次，避免长连接断线
-    RECONNECT_INTERVAL = 500
-    # baostock 路径：source 由 query_bars_with_session 写入 df["source"]="baostock"。
-    # akshare 路径：source 由 _normalize_akshare_data(source_name=) 写入，为 "eastmoney" 或 "sina"。
-    # _flush_batch 从 df["source"].iloc[0] 读取实际来源；此处的 _source_name 仅作最终回退。
-    _source_name = "baostock" if _use_baostock else "unknown"
-    source_counter: dict[str, int] = {}
+        # --skip-existing：跳过本地已有数据的股票
+        if ns.skip_existing:
+            lake_check = LocalDataLake(root / "data")
+            lake_check.init()
+            from .data.pipeline import DataPipeline
+            existing = set(DataPipeline(lake_check).available_symbols())
+            before = len(pairs)
+            pairs = [(e, t) for e, t in pairs if f"{e.value}:{t}" not in existing]
+            print(f"--skip-existing: 跳过 {before - len(pairs)} 只已有数据，剩余 {len(pairs)} 只")
 
-    def _flush_batch() -> None:
-        nonlocal batch, batch_num, success
-        if not batch:
-            return
-        from .data.exceptions import DataIntegrityError
-        combined = pd.concat(batch, ignore_index=True)
-        batch_num += 1
-        # 分 symbol 写入：某只股票数据完整性失败不影响其他股票
-        for sym, sym_df in combined.groupby("symbol"):
-            # 从 df["source"] 列读取实际来源（_normalize_akshare_data 已写入正确值）
-            actual_src = sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
-            # 从 symbol 推断 exchange（格式 "SSE:600000" 或 "SZSE:300750"）
-            sym_str = str(sym)
-            if sym_str.startswith("SZSE:"):
-                actual_exchange = Exchange.SZSE
-            elif sym_str.startswith("SSE:"):
-                actual_exchange = Exchange.SSE
+        if not pairs:
+            print("没有需要拉取的股票")
+            return 0
+
+        start = ns.start or "2022-01-01"
+        end = ns.end or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+        # 检测 BaoStock 是否可用
+        _use_baostock = False
+        try:
+            import baostock as bs
+            lg = bs.login()
+            if lg.error_code == "0":
+                _use_baostock = True
+                bs.logout()
             else:
-                actual_exchange = Exchange.SSE  # 兜底
-            try:
-                lake.write_bars_parquet(
-                    sym_df,
-                    exchange=actual_exchange,
-                    timeframe=Timeframe.D1,
-                    adjustment=adj,
-                    source=actual_src,
-                    partition_hint=f"bulk_{batch_num:05d}",
-                )
-            except DataIntegrityError as e:
-                failed_list.append(f"{sym}: DataIntegrityError - {e}")
-                success -= 1  # 写入失败，撤销 fetch 阶段的 success 计数
-        batch = []
+                print(f"BaoStock 不可用: {lg.error_msg}，切换到 akshare", file=sys.stderr)
+        except Exception as exc:
+            print(f"BaoStock 不可用: {exc}，切换到 akshare", file=sys.stderr)
 
-    QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发限速
-    consecutive_failures = 0
-    MAX_CONSECUTIVE_FAILURES = 5  # 连续失败超过 5 次强制重连
+        if _use_baostock:
+            print(f"开始批量拉取 {len(pairs)} 只（BaoStock，串行）")
+        else:
+            print(f"开始批量拉取 {len(pairs)} 只（akshare，串行）")
+        print(f"  日期范围: {start} ~ {end}，预计耗时 ~{len(pairs) // 150 + 1} 分钟")
 
-    try:
+        if _use_baostock:
+            def _bs_login() -> bool:
+                lg = bs.login()
+                if lg.error_code != "0":
+                    print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+                    return False
+                return True
+
+            if not _bs_login():
+                return 1
+
+        lake = LocalDataLake(root / "data")
+        success = 0
+        failed_list: list[str] = []
+        batch: list[pd.DataFrame] = []
+        batch_num = 0
+        # 每 N 只重连一次，避免长连接断线
+        RECONNECT_INTERVAL = 500
+        # baostock 路径：source 由 query_bars_with_session 写入 df["source"]="baostock"。
+        # akshare 路径：source 由 _normalize_akshare_data(source_name=) 写入，为 "eastmoney" 或 "sina"。
+        # _flush_batch 从 df["source"].iloc[0] 读取实际来源；此处的 _source_name 仅作最终回退。
+        _source_name = "baostock" if _use_baostock else "unknown"
+        source_counter: dict[str, int] = {}
+
+        def _flush_batch() -> None:
+            nonlocal batch, batch_num, success
+            if not batch:
+                return
+            from .data.exceptions import DataIntegrityError
+            combined = pd.concat(batch, ignore_index=True)
+            batch_num += 1
+            # 分 symbol 写入：某只股票数据完整性失败不影响其他股票
+            for sym, sym_df in combined.groupby("symbol"):
+                # 从 df["source"] 列读取实际来源（_normalize_akshare_data 已写入正确值）
+                actual_src = sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
+                # 从 symbol 推断 exchange（格式 "SSE:600000" 或 "SZSE:300750"）
+                sym_str = str(sym)
+                if sym_str.startswith("SZSE:"):
+                    actual_exchange = Exchange.SZSE
+                elif sym_str.startswith("SSE:"):
+                    actual_exchange = Exchange.SSE
+                else:
+                    actual_exchange = Exchange.SSE  # 兜底
+                try:
+                    lake.write_bars_parquet(
+                        sym_df,
+                        exchange=actual_exchange,
+                        timeframe=Timeframe.D1,
+                        adjustment=adj,
+                        source=actual_src,
+                        partition_hint=f"bulk_{batch_num:05d}",
+                    )
+                except DataIntegrityError as e:
+                    failed_list.append(f"{sym}: DataIntegrityError - {e}")
+                    success -= 1  # 写入失败，撤销 fetch 阶段的 success 计数
+            batch = []
+
+        QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发限速
+        consecutive_failures = 0
+        MAX_CONSECUTIVE_FAILURES = 5  # 连续失败超过 5 次强制重连
+
         if _use_baostock:
             try:
                 for i, (exch, ticker) in enumerate(pairs, 1):
