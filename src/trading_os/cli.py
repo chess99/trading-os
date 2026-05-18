@@ -311,6 +311,56 @@ def _resolve_bulk_pairs(ns) -> list | None:
                 return None
 
 
+def _bulk_lock_path() -> "Path":
+    from pathlib import Path
+    return repo_root() / "artifacts" / "fetch_bulk.pid"
+
+
+def _bulk_progress_log_path() -> "Path":
+    from pathlib import Path
+    return repo_root() / "artifacts" / "fetch_bulk_progress.log"
+
+
+def _acquire_bulk_lock(lock_path: "Path") -> None:
+    """写 PID lock。若已有活跃进程则打印提示并 sys.exit(1)。"""
+    import os, sys
+    if lock_path.exists():
+        try:
+            pid = int(lock_path.read_text().strip())
+            os.kill(pid, 0)  # 0 = 只检查进程是否存活，不发信号
+            print(
+                f"[fetch-ak-bulk] 已有实例在运行（PID {pid}），拒绝启动。\n"
+                f"  进度日志：{lock_path.parent / 'fetch_bulk_progress.log'}\n"
+                f"  若确认进程已死，手动删除 {lock_path} 后重试。",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+        except (ProcessLookupError, PermissionError):
+            lock_path.unlink(missing_ok=True)
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    lock_path.write_text(str(os.getpid()))
+
+
+def _release_bulk_lock(lock_path: "Path") -> None:
+    lock_path.unlink(missing_ok=True)
+
+
+def _write_bulk_progress(
+    log_path: "Path", *, done: int, total: int, success: int, failed: int, elapsed: float
+) -> None:
+    """追加一行进度到日志文件。"""
+    from datetime import datetime
+    remaining = int((elapsed / done) * (total - done)) if done > 0 else 0
+    line = (
+        f"[{datetime.now().strftime('%H:%M:%S')}] "
+        f"{done}/{total}  success={success}  failed={failed}  "
+        f"elapsed={int(elapsed)}s  eta={remaining}s\n"
+    )
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    with log_path.open("a") as f:
+        f.write(line)
+
+
 def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     """批量拉取全 A 股历史数据。
 
@@ -323,12 +373,18 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     - lake.init() 只在最后调用一次，不在循环内调用
     - 预计耗时：~33 分钟（2.5 req/s × 5000 只）
     """
+    import time
     import pandas as pd
     from .data.lake import LocalDataLake
     from .data.schema import Adjustment, Exchange, Timeframe
     from .data.sources.baostock_source import query_bars_with_session
 
     root = repo_root()
+    lock_path = _bulk_lock_path()
+    progress_log = _bulk_progress_log_path()
+    _acquire_bulk_lock(lock_path)
+    progress_log.unlink(missing_ok=True)  # 清空上次的进度日志
+    _start_time = time.time()
     adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
     BATCH_SIZE = 200  # 每批写入一个 Parquet 文件
 
@@ -432,102 +488,114 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 success -= 1  # 写入失败，撤销 fetch 阶段的 success 计数
         batch = []
 
-    import time
     QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发限速
     consecutive_failures = 0
     MAX_CONSECUTIVE_FAILURES = 5  # 连续失败超过 5 次强制重连
 
-    if _use_baostock:
-        try:
-            for i, (exch, ticker) in enumerate(pairs, 1):
-                # 定期重连，防止长连接超时断开
-                if i > 1 and (i - 1) % RECONNECT_INTERVAL == 0:
-                    bs.logout()
-                    time.sleep(2)
-                    if not _bs_login():
-                        print(f"重连失败，已处理 {i-1} 只，中止", file=sys.stderr)
-                        break
+    try:
+        if _use_baostock:
+            try:
+                for i, (exch, ticker) in enumerate(pairs, 1):
+                    # 定期重连，防止长连接超时断开
+                    if i > 1 and (i - 1) % RECONNECT_INTERVAL == 0:
+                        bs.logout()
+                        time.sleep(2)
+                        if not _bs_login():
+                            print(f"重连失败，已处理 {i-1} 只，中止", file=sys.stderr)
+                            break
 
+                    sym_id = f"{exch.value}:{ticker}"
+                    try:
+                        df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
+                        if df.empty:
+                            failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
+                            consecutive_failures += 1
+                        else:
+                            batch.append(df)
+                            success += 1
+                            consecutive_failures = 0
+                        time.sleep(QUERY_INTERVAL)
+                    except Exception as exc:
+                        err = str(exc)[:80]
+                        failed_list.append(f"{sym_id}: {err}")
+                        consecutive_failures += 1
+                        reconnect_keywords = (
+                            "connection", "login", "socket", "timeout", "timed out", "reset",
+                            "broken pipe", "网络", "接收错误", "连接失败", "10002",
+                        )
+                        need_reconnect = any(k in err.lower() for k in reconnect_keywords)
+                        if not need_reconnect and consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
+                            need_reconnect = True
+                            print(f"  连续失败 {consecutive_failures} 次，强制重连")
+                        if need_reconnect:
+                            print(f"  连接异常，重连 BaoStock ({sym_id}): {err}")
+                            try:
+                                bs.logout()
+                            except Exception:
+                                pass
+                            time.sleep(3)
+                            _bs_login()
+                            consecutive_failures = 0
+
+                    if len(batch) >= BATCH_SIZE:
+                        _flush_batch()
+
+                    if i % 100 == 0 or i == len(pairs):
+                        print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
+                        _write_bulk_progress(
+                            progress_log, done=i, total=len(pairs),
+                            success=success, failed=len(failed_list),
+                            elapsed=time.time() - _start_time,
+                        )
+
+                _flush_batch()
+
+            finally:
+                bs.logout()
+        else:
+            # akshare fallback — 先探测最佳源，整批复用
+            from .data.sources.akshare_source import fetch_daily_bars as ak_fetch, probe_and_get_preferred_source
+            from .data.schema import Exchange as _Exch
+            preferred = probe_and_get_preferred_source(_Exch.SSE)
+            print(f"  源探测完成：首选 {preferred}，后续跳过不可用源", file=sys.stderr)
+            if preferred == "none":
+                print("所有数据源均不可用，无法拉取数据", file=sys.stderr)
+                return 1
+
+            for i, (exch, ticker) in enumerate(pairs, 1):
                 sym_id = f"{exch.value}:{ticker}"
                 try:
-                    df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
+                    df, actual_source = ak_fetch(ticker, exchange=exch, start=start, end=end, adjustment=adj)
                     if df.empty:
-                        failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
+                        failed_list.append(f"{sym_id}: 空数据")
                         consecutive_failures += 1
                     else:
                         batch.append(df)
                         success += 1
+                        source_counter[actual_source] = source_counter.get(actual_source, 0) + 1
                         consecutive_failures = 0
                     time.sleep(QUERY_INTERVAL)
                 except Exception as exc:
                     err = str(exc)[:80]
                     failed_list.append(f"{sym_id}: {err}")
                     consecutive_failures += 1
-                    reconnect_keywords = (
-                        "connection", "login", "socket", "timeout", "timed out", "reset",
-                        "broken pipe", "网络", "接收错误", "连接失败", "10002",
-                    )
-                    need_reconnect = any(k in err.lower() for k in reconnect_keywords)
-                    if not need_reconnect and consecutive_failures >= MAX_CONSECUTIVE_FAILURES:
-                        need_reconnect = True
-                        print(f"  连续失败 {consecutive_failures} 次，强制重连")
-                    if need_reconnect:
-                        print(f"  连接异常，重连 BaoStock ({sym_id}): {err}")
-                        try:
-                            bs.logout()
-                        except Exception:
-                            pass
-                        time.sleep(3)
-                        _bs_login()
-                        consecutive_failures = 0
 
                 if len(batch) >= BATCH_SIZE:
                     _flush_batch()
 
                 if i % 100 == 0 or i == len(pairs):
-                    print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
+                    src_summary = ", ".join(f"{k}={v}" for k, v in source_counter.items())
+                    src_info = f"  [{src_summary}]" if src_summary else ""
+                    print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}{src_info}")
+                    _write_bulk_progress(
+                        progress_log, done=i, total=len(pairs),
+                        success=success, failed=len(failed_list),
+                        elapsed=time.time() - _start_time,
+                    )
 
             _flush_batch()
-
-        finally:
-            bs.logout()
-    else:
-        # akshare fallback — 先探测最佳源，整批复用
-        from .data.sources.akshare_source import fetch_daily_bars as ak_fetch, probe_and_get_preferred_source
-        from .data.schema import Exchange as _Exch
-        preferred = probe_and_get_preferred_source(_Exch.SSE)
-        print(f"  源探测完成：首选 {preferred}，后续跳过不可用源", file=sys.stderr)
-        if preferred == "none":
-            print("所有数据源均不可用，无法拉取数据", file=sys.stderr)
-            return 1
-
-        for i, (exch, ticker) in enumerate(pairs, 1):
-            sym_id = f"{exch.value}:{ticker}"
-            try:
-                df, actual_source = ak_fetch(ticker, exchange=exch, start=start, end=end, adjustment=adj)
-                if df.empty:
-                    failed_list.append(f"{sym_id}: 空数据")
-                    consecutive_failures += 1
-                else:
-                    batch.append(df)
-                    success += 1
-                    source_counter[actual_source] = source_counter.get(actual_source, 0) + 1
-                    consecutive_failures = 0
-                time.sleep(QUERY_INTERVAL)
-            except Exception as exc:
-                err = str(exc)[:80]
-                failed_list.append(f"{sym_id}: {err}")
-                consecutive_failures += 1
-
-            if len(batch) >= BATCH_SIZE:
-                _flush_batch()
-
-            if i % 100 == 0 or i == len(pairs):
-                src_summary = ", ".join(f"{k}={v}" for k, v in source_counter.items())
-                src_info = f"  [{src_summary}]" if src_summary else ""
-                print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}{src_info}")
-
-        _flush_batch()
+    finally:
+        _release_bulk_lock(lock_path)
 
     lake.init()  # 一次性刷新 DuckDB view
 
