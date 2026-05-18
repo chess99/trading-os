@@ -475,21 +475,23 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             from .data.exceptions import DataIntegrityError
             combined = pd.concat(batch, ignore_index=True)
             batch_num += 1
-            # 分 symbol 写入：某只股票数据完整性失败不影响其他股票
-            for sym, sym_df in combined.groupby("symbol"):
-                # 从 df["source"] 列读取实际来源（_normalize_akshare_data 已写入正确值）
-                actual_src = sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
-                # 从 symbol 推断 exchange（格式 "SSE:600000" 或 "SZSE:300750"）
-                sym_str = str(sym)
-                if sym_str.startswith("SZSE:"):
-                    actual_exchange = Exchange.SZSE
-                elif sym_str.startswith("SSE:"):
-                    actual_exchange = Exchange.SSE
-                else:
-                    actual_exchange = Exchange.SSE  # 兜底
+
+            # 为每个 symbol 推断 exchange 列（覆盖 write_bars_parquet 的 exchange 参数前置处理）
+            def _infer_exchange(sym: str) -> str:
+                if sym.startswith("SZSE:"):
+                    return Exchange.SZSE.value
+                if sym.startswith("SSE:"):
+                    return Exchange.SSE.value
+                return Exchange.SSE.value
+            combined["exchange"] = combined["symbol"].map(_infer_exchange)
+
+            # 按 exchange 分组写入：同一 exchange 一次写一个文件，避免覆盖
+            for exch_val, exch_df in combined.groupby("exchange"):
+                actual_exchange = Exchange(exch_val)
+                actual_src = exch_df["source"].iloc[0] if "source" in exch_df.columns else _source_name
                 try:
                     lake.write_bars_parquet(
-                        sym_df,
+                        exch_df,
                         exchange=actual_exchange,
                         timeframe=Timeframe.D1,
                         adjustment=adj,
@@ -497,8 +499,11 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                         partition_hint=f"bulk_{batch_num:05d}",
                     )
                 except DataIntegrityError as e:
-                    failed_list.append(f"{sym}: DataIntegrityError - {e}")
-                    success -= 1  # 写入失败，撤销 fetch 阶段的 success 计数
+                    # 整组失败：计算失败 symbol 数并回滚 success 计数
+                    failed_syms = exch_df["symbol"].unique()
+                    for sym in failed_syms:
+                        failed_list.append(f"{sym}: DataIntegrityError - {e}")
+                    success -= len(failed_syms)
             batch = []
 
         QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发限速
