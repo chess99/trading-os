@@ -56,13 +56,21 @@ python -m trading_os market-breadth --index SSE:000001
 
 ### 周一（完整扫描）
 
-```bash
-python -m trading_os scan-canslim --date {TODAY} --top 50 \
-  --output artifacts/scan/canslim-{TODAY}.json
+**重要：默认模式只扫本地有基本面缓存的股票（通常 300-500 只），不是全 A 股。**
+周一必须用 `--live` 模式扫全 A 股（约 45-60 分钟，可后台运行）：
 
+```bash
+# --live 模式：直接调 EastMoney F10 API，扫全 A 股（2800+ 只）
+# 后台运行，约 45-60 分钟
+python -m trading_os scan-canslim --date {TODAY} --top 50 --live \
+  --output artifacts/scan/canslim-{TODAY}.json &
+
+# Elder 扫描用本地 K 线数据，不需要 --live（K 线已全量更新）
 python -m trading_os scan-elder --date {TODAY} \
   --output artifacts/scan/elder-{TODAY}.json
 ```
+
+`--live` 模式说明：直接调用 EastMoney F10，无需 `fundamental-store` 预缓存，默认 3 线程（`--workers` 可调）。
 
 ### 每日（比对现有池与最新扫描）
 
