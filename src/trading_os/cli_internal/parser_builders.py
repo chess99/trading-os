@@ -261,3 +261,39 @@ def register_pool_commands(sub: argparse._SubParsersAction) -> None:
     p = pool_sub.add_parser("sync-from-scan", help="比对扫描结果与现有池，输出进出池建议（不修改池）")
     p.add_argument("--scan", required=True, help="扫描 JSON 路径，如 artifacts/scan/canslim-20260506.json")
     p.add_argument("--system", required=True, choices=POOL_SYSTEM_CHOICES)
+
+
+def register_scheduler_commands(sub: argparse._SubParsersAction) -> None:
+    from trading_os.scheduler import cmd_scheduler
+
+    p = sub.add_parser("scheduler", help="后台任务编排服务控制面")
+    scheduler_sub = p.add_subparsers(dest="scheduler_cmd", required=True)
+    p.set_defaults(func=cmd_scheduler)
+
+    p_run = scheduler_sub.add_parser("run", help="启动后台调度服务")
+    p_run.set_defaults(func=cmd_scheduler)
+
+    p_status = scheduler_sub.add_parser("status", help="显示当前任务状态")
+    p_status.set_defaults(func=cmd_scheduler)
+
+    p_jobs = scheduler_sub.add_parser("jobs", help="列出最近任务")
+    p_jobs.add_argument("--limit", type=int, default=50)
+    p_jobs.set_defaults(func=cmd_scheduler)
+
+    p_trigger = scheduler_sub.add_parser("trigger", help="手动触发任务")
+    p_trigger.add_argument(
+        "job_name",
+        choices=["market_data_probe", "market_data_bulk_refresh", "full_scan_and_daily"],
+    )
+    p_trigger.add_argument("--effective-date", default=None, help="YYYY-MM-DD")
+    p_trigger.add_argument("--force", action="store_true", help="对扫描任务允许重复运行")
+    p_trigger.set_defaults(func=cmd_scheduler)
+
+
+def register_daily_commands(sub: argparse._SubParsersAction) -> None:
+    from trading_os.scheduler import cmd_daily
+
+    p = sub.add_parser("daily", help="读取 scheduler 状态生成日报或阻塞报告")
+    p.add_argument("--effective-date", default=None, help="YYYY-MM-DD；默认今日")
+    p.add_argument("--allow-historical", action="store_true", help="允许生成历史复盘报告")
+    p.set_defaults(func=cmd_daily)

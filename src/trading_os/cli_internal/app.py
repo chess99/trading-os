@@ -4,9 +4,11 @@ import argparse
 import sys
 
 from .parser_builders import (
+    register_daily_commands,
     register_data_commands,
     register_pool_commands,
     register_scan_commands,
+    register_scheduler_commands,
     register_strategy_commands,
 )
 
@@ -21,6 +23,8 @@ def build_parser() -> argparse.ArgumentParser:
     register_strategy_commands(sub)
     register_scan_commands(sub)
     register_pool_commands(sub)
+    register_scheduler_commands(sub)
+    register_daily_commands(sub)
     return parser
 
 

@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from uuid import uuid4
 
 from ...paths import repo_root
 
@@ -263,14 +265,34 @@ def _bulk_progress_log_path() -> Path:
     return repo_root() / "artifacts" / "fetch_bulk_progress.log"
 
 
-def _acquire_bulk_lock(lock_path: Path) -> None:
+def _parse_bulk_lock(raw: str) -> dict:
+    raw = raw.strip()
+    if not raw:
+        raise ValueError("empty lock")
+    if raw.startswith("{"):
+        data = json.loads(raw)
+        data["pid"] = int(data["pid"])
+        return data
+    return {"pid": int(raw)}
+
+
+def _acquire_bulk_lock(
+    lock_path: Path,
+    *,
+    job_id: str | None = None,
+    command: str | None = None,
+    effective_date: str | None = None,
+) -> None:
     if lock_path.exists():
         try:
-            pid = int(lock_path.read_text().strip())
+            lock_data = _parse_bulk_lock(lock_path.read_text(encoding="utf-8"))
+            pid = int(lock_data["pid"])
             os.kill(pid, 0)
+            running_job = lock_data.get("job_id", "unknown")
             print(
-                f"[fetch-ak-bulk] 已有实例在运行（PID {pid}），拒绝启动。\n"
+                f"[fetch-ak-bulk] 已有实例在运行（job {running_job}, PID {pid}），拒绝启动。\n"
                 f"  进度日志：{lock_path.parent / 'fetch_bulk_progress.log'}\n"
+                f"  进度快照：{lock_path.parent / 'jobs' / 'current_fetch_bulk.json'}\n"
                 f"  若确认进程已死，手动删除 {lock_path} 后重试。",
                 file=sys.stderr,
             )
@@ -288,23 +310,71 @@ def _acquire_bulk_lock(lock_path: Path) -> None:
         except ValueError:
             lock_path.unlink(missing_ok=True)
     lock_path.parent.mkdir(parents=True, exist_ok=True)
-    lock_path.write_text(str(os.getpid()))
+    lock_data = {
+        "job_id": job_id or f"fetch-ak-bulk-{uuid4().hex[:12]}",
+        "pid": os.getpid(),
+        "command": command or "fetch-ak-bulk",
+        "effective_date": effective_date,
+        "started_at": datetime.now(timezone.utc).isoformat(),
+    }
+    lock_path.write_text(json.dumps(lock_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _release_bulk_lock(lock_path: Path) -> None:
     lock_path.unlink(missing_ok=True)
 
 
-def _write_bulk_progress(log_path: Path, *, done: int, total: int, success: int, failed: int, elapsed: float) -> None:
-    remaining = int((elapsed / done) * (total - done)) if done > 0 else 0
+def _current_fetch_bulk_json_path(log_path: Path) -> Path:
+    return log_path.parent / "jobs" / "current_fetch_bulk.json"
+
+
+def _write_bulk_progress(
+    log_path: Path,
+    *,
+    done: int,
+    total: int,
+    success: int,
+    failed: int,
+    elapsed: float,
+    job_id: str | None = None,
+    effective_date: str | None = None,
+    source: str | None = None,
+    status: str = "running",
+    started_at: str | None = None,
+) -> None:
+    remaining = int((elapsed / done) * (total - done)) if done > 0 else None
     line = (
         f"[{datetime.now().strftime('%H:%M:%S')}] "
         f"{done}/{total}  success={success}  failed={failed}  "
-        f"elapsed={int(elapsed)}s  eta={remaining}s\n"
+        f"elapsed={int(elapsed)}s  eta={remaining if remaining is not None else 'unknown'}s\n"
     )
     log_path.parent.mkdir(parents=True, exist_ok=True)
     with log_path.open("a") as f:
         f.write(line)
+    progress_path = _current_fetch_bulk_json_path(log_path)
+    progress_path.parent.mkdir(parents=True, exist_ok=True)
+    now = datetime.now(timezone.utc).isoformat()
+    previous = {}
+    if progress_path.exists():
+        try:
+            previous = json.loads(progress_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            previous = {}
+    progress = {
+        "job_id": job_id or previous.get("job_id"),
+        "effective_date": effective_date or previous.get("effective_date"),
+        "total": total,
+        "done": done,
+        "success": success,
+        "failed": failed,
+        "started_at": started_at or previous.get("started_at"),
+        "updated_at": now,
+        "elapsed_sec": int(elapsed),
+        "eta_sec": remaining,
+        "source": source or previous.get("source"),
+        "status": status,
+    }
+    progress_path.write_text(json.dumps(progress, ensure_ascii=False, indent=2), encoding="utf-8")
 
 
 def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
@@ -318,7 +388,11 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     root = repo_root()
     lock_path = _bulk_lock_path()
     progress_log = _bulk_progress_log_path()
-    _acquire_bulk_lock(lock_path)
+    job_id = f"fetch-ak-bulk-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-{uuid4().hex[:8]}"
+    effective_date = ns.end or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    started_at = datetime.now(timezone.utc).isoformat()
+    command = " ".join(["fetch-ak-bulk", "--start", str(ns.start), "--end", str(ns.end), "--adjustment", str(ns.adjustment)])
+    _acquire_bulk_lock(lock_path, job_id=job_id, command=command, effective_date=effective_date)
     progress_log.unlink(missing_ok=True)
     _start_time = time.time()
     try:
@@ -347,6 +421,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
         start = ns.start or "2022-01-01"
         end = ns.end or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        effective_date = end
         _use_baostock = False
         try:
             import baostock as bs
@@ -361,7 +436,20 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             print(f"BaoStock 不可用: {exc}，切换到 akshare", file=sys.stderr)
 
         print(f"开始批量拉取 {len(pairs)} 只（{'BaoStock' if _use_baostock else 'akshare'}，串行）")
-        print(f"  日期范围: {start} ~ {end}，预计耗时 ~{len(pairs) // 150 + 1} 分钟")
+        print(f"  日期范围: {start} ~ {end}，ETA 将按实际进度滚动计算")
+        _write_bulk_progress(
+            progress_log,
+            done=0,
+            total=len(pairs),
+            success=0,
+            failed=0,
+            elapsed=0,
+            job_id=job_id,
+            effective_date=effective_date,
+            source="baostock" if _use_baostock else "akshare",
+            status="running",
+            started_at=started_at,
+        )
 
         if _use_baostock:
             def _bs_login() -> bool:
@@ -464,7 +552,19 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                         _flush_batch()
                     if i % 100 == 0 or i == len(pairs):
                         print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}")
-                        _write_bulk_progress(progress_log, done=i, total=len(pairs), success=success, failed=len(failed_list), elapsed=time.time() - _start_time)
+                        _write_bulk_progress(
+                            progress_log,
+                            done=i,
+                            total=len(pairs),
+                            success=success,
+                            failed=len(failed_list),
+                            elapsed=time.time() - _start_time,
+                            job_id=job_id,
+                            effective_date=effective_date,
+                            source="baostock",
+                            status="running",
+                            started_at=started_at,
+                        )
                 _flush_batch()
             finally:
                 bs.logout()
@@ -502,7 +602,19 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                     src_summary = ", ".join(f"{k}={v}" for k, v in source_counter.items())
                     src_info = f"  [{src_summary}]" if src_summary else ""
                     print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}{src_info}")
-                    _write_bulk_progress(progress_log, done=i, total=len(pairs), success=success, failed=len(failed_list), elapsed=time.time() - _start_time)
+                    _write_bulk_progress(
+                        progress_log,
+                        done=i,
+                        total=len(pairs),
+                        success=success,
+                        failed=len(failed_list),
+                        elapsed=time.time() - _start_time,
+                        job_id=job_id,
+                        effective_date=effective_date,
+                        source="akshare",
+                        status="running",
+                        started_at=started_at,
+                    )
             _flush_batch()
     finally:
         _release_bulk_lock(lock_path)
@@ -527,6 +639,19 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         pass
 
     print(f"\n完成: 成功={success}, 失败={len(failed_list)}")
+    _write_bulk_progress(
+        progress_log,
+        done=len(pairs),
+        total=len(pairs),
+        success=success,
+        failed=len(failed_list),
+        elapsed=time.time() - _start_time,
+        job_id=job_id,
+        effective_date=effective_date,
+        source=_source_name,
+        status="success" if not failed_list else "failed",
+        started_at=started_at,
+    )
     if failed_list and ns.verbose:
         print("失败列表（前 20 条）:")
         for item in failed_list[:20]:

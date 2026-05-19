@@ -1,5 +1,6 @@
 # tests/test_fetch_ak_bulk_lock.py
 """测试 fetch-ak-bulk 的 PID lock 和进度日志行为。"""
+import json
 import os
 from pathlib import Path
 
@@ -19,7 +20,7 @@ def test_lock_file_created_on_start(tmp_path):
 
     _acquire_bulk_lock(lock_path)
     assert lock_path.exists()
-    assert int(lock_path.read_text().strip()) == os.getpid()
+    assert json.loads(lock_path.read_text())["pid"] == os.getpid()
     _release_bulk_lock(lock_path)
     assert not lock_path.exists()
 
@@ -42,7 +43,7 @@ def test_stale_lock_cleared(tmp_path):
     lock_path.write_text("99999999")
 
     _acquire_bulk_lock(lock_path)
-    assert int(lock_path.read_text().strip()) == os.getpid()
+    assert json.loads(lock_path.read_text())["pid"] == os.getpid()
     _release_bulk_lock(lock_path)
 
 
@@ -57,3 +58,27 @@ def test_progress_log_written(tmp_path):
     assert "100/2880" in content
     assert "success=98" in content
     assert "failed=2" in content
+    progress = json.loads((log_path.parent / "jobs" / "current_fetch_bulk.json").read_text())
+    assert progress["done"] == 100
+    assert progress["total"] == 2880
+    assert progress["eta_sec"] == 1112
+
+
+def test_lock_file_records_job_metadata(tmp_path):
+    """job-aware lock 应记录 job_id、命令和 effective_date。"""
+    from trading_os.cli_internal.commands.data import _acquire_bulk_lock, _release_bulk_lock
+    lock_path = _artifacts_dir(tmp_path) / "fetch_bulk.pid"
+
+    _acquire_bulk_lock(
+        lock_path,
+        job_id="bulk-1",
+        command="python -m trading_os fetch-ak-bulk",
+        effective_date="2026-05-19",
+    )
+
+    data = json.loads(lock_path.read_text())
+    assert data["job_id"] == "bulk-1"
+    assert data["pid"] == os.getpid()
+    assert data["command"] == "python -m trading_os fetch-ak-bulk"
+    assert data["effective_date"] == "2026-05-19"
+    _release_bulk_lock(lock_path)
