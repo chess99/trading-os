@@ -157,8 +157,14 @@ class IndexHandler(AssetTypeHandler):
         df["source"] = "akshare_index"
 
         # vwap: amount (元) / volume (手*100股) ≈ average price per share
-        if "amount" in df.columns and df["amount"].notna().all() and (df["volume"] > 0).all():
-            df["vwap"] = df["amount"] / (df["volume"] * 100)
+        # Row-wise: days with amount=0/NaN fall back to (H+L+C)/3 without affecting others.
+        import numpy as np
+        if "amount" in df.columns:
+            df["vwap"] = np.where(
+                (df["amount"].notna()) & (df["amount"] > 0) & (df["volume"] > 0),
+                df["amount"] / (df["volume"] * 100),
+                (df["high"] + df["low"] + df["close"]) / 3,
+            )
         else:
             df["vwap"] = (df["high"] + df["low"] + df["close"]) / 3
 

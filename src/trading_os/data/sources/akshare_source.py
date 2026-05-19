@@ -59,8 +59,9 @@ def probe_and_get_preferred_source(exchange: "Exchange", timeout: int = 10) -> s
             return "none"
 
         probe_ticker = "600000"
-        probe_start = "20260101"
-        probe_end = "20260401"
+        _today = datetime.now()
+        probe_start = (_today - timedelta(days=90)).strftime("%Y%m%d")
+        probe_end = (_today - timedelta(days=1)).strftime("%Y%m%d")
 
         def _try_eastmoney():
             return ak.stock_zh_a_hist(
@@ -393,50 +394,6 @@ def get_stock_info(ticker: str, exchange: Exchange) -> dict:
         logger.warning(f"获取股票信息失败 {ticker}: {e}")
         return {}
 
-
-def get_market_index(index_code: str = "000001") -> pd.DataFrame:
-    """
-    获取市场指数数据
-
-    .. deprecated::
-        使用 IndexHandler.fetch() 替代（通过 fetch_daily_bars(..., asset_type=AssetType.INDEX)）。
-        此函数写入 source='akshare'（非 'akshare_index'），会被
-        _check_price_continuity 拦截，且不走 AssetType 校验。
-
-    Args:
-        index_code: 指数代码，默认"000001"(上证指数)
-
-    Returns:
-        指数历史数据
-    """
-    try:
-        import akshare as ak
-
-        # 获取指数数据
-        df = ak.stock_zh_index_daily(symbol=f"sh{index_code}")
-
-        if df is None or df.empty:
-            return pd.DataFrame()
-
-        # 标准化格式
-        df = df.rename(columns={
-            "date": "ts",
-            "open": "open",
-            "high": "high",
-            "low": "low",
-            "close": "close",
-            "volume": "volume"
-        })
-
-        df["ts"] = pd.to_datetime(df["ts"])
-        df["symbol"] = f"INDEX:{index_code}"
-        df["source"] = "akshare"
-
-        return df.sort_values("ts").reset_index(drop=True)
-
-    except Exception as e:
-        logger.error(f"获取指数数据失败: {e}")
-        return pd.DataFrame()
 
 def _make_akshare_df_for_test() -> pd.DataFrame:
     """Test helper: minimal DataFrame in akshare (eastmoney) column format."""

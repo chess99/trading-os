@@ -8,7 +8,11 @@ import pytest
 def _run_pool(args, pool_path):
     """辅助：以 pool_path 为池文件运行 pool 子命令。"""
     from trading_os.cli import main
-    with patch("trading_os.cli._pool_path", return_value=Path(pool_path)):
+    with (
+        patch("trading_os.cli._pool_path", return_value=Path(pool_path)),
+        # Prevent writing to real artifacts/watchlist/tracking/
+        patch("trading_os.cli._append_tracking"),
+    ):
         return main(["pool"] + args)
 
 

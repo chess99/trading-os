@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib
+from contextlib import contextmanager
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
@@ -46,6 +47,7 @@ class LocalDataLake:
         self.paths = DataLakePaths(root=root)
         self.paths.root.mkdir(parents=True, exist_ok=True)
         self.paths.bars_dir.mkdir(parents=True, exist_ok=True)
+        self._view_dirty: bool = True  # True = view needs refresh before next query
 
     def connect(self) -> Any:
         con = self._duckdb.connect(str(self.paths.duckdb_path))
@@ -178,6 +180,37 @@ class LocalDataLake:
         """Create or refresh views/tables pointing to Parquet datasets."""
         self.compact()
         self._refresh_view()
+        self._view_dirty = False
+
+    def _query_recent_values(self, symbol: str, column: str, limit: int) -> Any:
+        """Return a Series of the most-recent `limit` values of `column` for `symbol`.
+
+        Returns None when the lake is empty or the query fails (caller should treat
+        as "no history" and skip the check).
+        """
+        bars_glob = self.paths.bars_dir.as_posix() + "/*.parquet"
+        files = list(self.paths.bars_dir.glob("*.parquet"))
+        if not files:
+            return None  # empty lake
+
+        try:
+            with self.connect() as con:
+                result = con.execute(
+                    f"""
+                    SELECT {column} FROM read_parquet('{bars_glob}', union_by_name=true)
+                    WHERE symbol = ? AND {column} IS NOT NULL
+                    ORDER BY ts DESC
+                    LIMIT {int(limit)}
+                    """,
+                    [symbol],
+                ).df()
+        except Exception:
+            return None  # query failed — don't block the write
+
+        if result.empty:
+            return None  # no existing data for this symbol
+
+        return result[column]
 
     def _check_price_continuity(self, df: Any, symbol: str) -> None:
         """Reject writes that would create a magnitude discontinuity in close prices.
@@ -191,29 +224,11 @@ class LocalDataLake:
         """
         from .exceptions import DataIntegrityError
 
-        bars_glob = self.paths.bars_dir.as_posix() + "/*.parquet"
-        files = list(self.paths.bars_dir.glob("*.parquet"))
-        if not files:
-            return  # empty lake — first write
+        existing = self._query_recent_values(symbol, "close", limit=5)
+        if existing is None:
+            return  # empty lake or no history — first write always allowed
 
-        try:
-            with self.connect() as con:
-                result = con.execute(
-                    f"""
-                    SELECT close FROM read_parquet('{bars_glob}', union_by_name=true)
-                    WHERE symbol = ?
-                    ORDER BY ts DESC
-                    LIMIT 5
-                    """,
-                    [symbol],
-                ).df()
-        except Exception:
-            return  # if query fails, don't block the write
-
-        if result.empty:
-            return  # no existing data for this symbol — first write
-
-        median_close = float(result["close"].median())
+        median_close = float(existing.median())
         if median_close <= 0:
             return  # guard against bad existing data
 
@@ -232,11 +247,12 @@ class LocalDataLake:
         try:
             if "ts" in df.columns:
                 import pandas as _pd2
-                # existing_min_ts: earliest ts already in the lake for this symbol
+                bars_glob = self.paths.bars_dir.as_posix() + "/*.parquet"
                 try:
                     with self.connect() as con2:
                         existing_min = con2.execute(
-                            f"SELECT MIN(ts) FROM read_parquet('{bars_glob}', union_by_name=true) WHERE symbol = ?",
+                            "SELECT MIN(ts) FROM read_parquet("
+                            f"'{bars_glob}', union_by_name=true) WHERE symbol = ?",
                             [symbol],
                         ).fetchone()[0]
                 except Exception:
@@ -255,43 +271,22 @@ class LocalDataLake:
                 actual_value=float(bad.iloc[0]),
             )
 
+    # Minimum plausible daily volume for any A-share equity (shares, not lots).
+    # A-share price limits mean a liquid stock trades at least a few thousand shares/day.
+    # 10,000 shares = 100 lots: anything below this is almost certainly lot-unit data.
+    # ETFs and indices are excluded from this check (they may have different thresholds).
+    _MIN_EQUITY_VOLUME: int = 10_000
+
     def _check_volume_unit(self, df: Any, symbol: str) -> None:
         """Reject writes where volume appears to be in lots (手) rather than shares (股).
 
-        Compares the median of the 10 most-recent existing volume values for *symbol*
-        against the median of the incoming *df*.  If the new median is less than 1/50th
-        of the existing median, the data is likely in lots rather than shares (100x error).
-
-        Empty lake or no existing history for symbol: passes silently — first write is
-        always allowed.
+        Two independent checks:
+        1. Absolute threshold: for A-share equities, volume < 10,000 strongly suggests
+           lot-unit data (100x too small). Applies even on the first write of a new symbol.
+        2. Relative check: if existing history is present, reject if new median is < 1/50
+           of the existing median.
         """
         from .exceptions import DataIntegrityError
-
-        bars_glob = self.paths.bars_dir.as_posix() + "/*.parquet"
-        files = list(self.paths.bars_dir.glob("*.parquet"))
-        if not files:
-            return
-
-        try:
-            with self.connect() as con:
-                result = con.execute(
-                    f"""
-                    SELECT volume FROM read_parquet('{bars_glob}', union_by_name=true)
-                    WHERE symbol = ? AND volume > 0
-                    ORDER BY ts DESC
-                    LIMIT 10
-                    """,
-                    [symbol],
-                ).df()
-        except Exception:
-            return
-
-        if result.empty:
-            return  # no existing data — first write always allowed
-
-        existing_median = float(result["volume"].median())
-        if existing_median <= 0:
-            return
 
         try:
             import pandas as _pd
@@ -303,6 +298,30 @@ class LocalDataLake:
         if new_volumes.empty:
             return
 
+        # 1. Absolute threshold (applies on first write too).
+        # Only for A-share equities — indices and ETFs may legitimately have lower volume.
+        _is_ashare_equity = (
+            symbol.startswith("SSE:6") or symbol.startswith("SSE:0")
+            or symbol.startswith("SZSE:0") or symbol.startswith("SZSE:3")
+        )
+        if _is_ashare_equity:
+            new_median = float(new_volumes.median())
+            if new_median < self._MIN_EQUITY_VOLUME:
+                raise DataIntegrityError(
+                    symbol=symbol,
+                    expected_range=(float(self._MIN_EQUITY_VOLUME), float("inf")),
+                    actual_value=new_median,
+                )
+
+        # 2. Relative check against existing history (skipped if no history yet).
+        existing = self._query_recent_values(symbol, "volume", limit=10)
+        if existing is None:
+            return  # empty lake or no history for this symbol
+
+        existing_median = float(existing.median())
+        if existing_median <= 0:
+            return
+
         new_median = float(new_volumes.median())
         # If new volume is < 1/50 of existing, very likely unit mismatch (手 vs 股)
         if new_median < existing_median / 50.0:
@@ -311,6 +330,25 @@ class LocalDataLake:
                 expected_range=(existing_median / 50.0, existing_median * 50.0),
                 actual_value=new_median,
             )
+
+    @contextmanager
+    def _bars_write_lock(self):
+        """Advisory file lock on the bars directory to prevent concurrent writes.
+
+        Uses fcntl on POSIX (macOS/Linux). Falls back to a no-op on other platforms
+        (Windows) — this is a personal single-machine tool, so POSIX is expected.
+        """
+        lock_path = self.paths.bars_dir / ".write.lock"
+        try:
+            import fcntl
+            with open(lock_path, "w") as lf:
+                fcntl.flock(lf, fcntl.LOCK_EX)
+                try:
+                    yield
+                finally:
+                    fcntl.flock(lf, fcntl.LOCK_UN)
+        except ImportError:
+            yield  # non-POSIX: no-op
 
     @staticmethod
     def _exchange_from_symbol(symbol: str) -> "Exchange":
@@ -391,12 +429,14 @@ class LocalDataLake:
 
         suffix = partition_hint or "append"
         paths: list[Path] = []
-        # Group by exchange so each exchange gets its own file (no overwrites).
-        for exch_val, group in out.groupby(BarColumns.exchange):
-            filename = f"bars_{exch_val}_{timeframe.value}_{adjustment.value}_{suffix}.parquet"
-            path = self.paths.bars_dir / filename
-            group.to_parquet(path, index=False)
-            paths.append(path)
+        with self._bars_write_lock():
+            # Group by exchange so each exchange gets its own file (no overwrites).
+            for exch_val, group in out.groupby(BarColumns.exchange):
+                filename = f"bars_{exch_val}_{timeframe.value}_{adjustment.value}_{suffix}.parquet"
+                path = self.paths.bars_dir / filename
+                group.to_parquet(path, index=False)
+                paths.append(path)
+        self._view_dirty = True  # new parquet written — next query_bars will refresh view
         return paths
 
     def query_bars(
@@ -414,7 +454,8 @@ class LocalDataLake:
 
         `start`/`end` are interpreted by DuckDB (ISO strings recommended).
         """
-        self.init()
+        if self._view_dirty:
+            self.init()
         where: list[str] = [
             f"{BarColumns.timeframe} = ?",
             f"{BarColumns.adjustment} = ?",

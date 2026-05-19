@@ -9,6 +9,8 @@ def _run_pool_add(args, pool_path, names_path):
     with (
         patch("trading_os.cli._pool_path", return_value=Path(pool_path)),
         patch("trading_os.cli._stock_names_path", return_value=Path(names_path)),
+        # Prevent writing to real artifacts/watchlist/tracking/
+        patch("trading_os.cli._append_tracking"),
     ):
         return main(["pool", "add"] + args)
 

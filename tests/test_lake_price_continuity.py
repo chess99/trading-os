@@ -139,11 +139,21 @@ def _bar_df_with_vol(symbol, dates, closes, volumes, exchange="SSE"):
 
 
 def test_volume_unit_first_write_passes():
-    """空 lake，任何 volume 应通过（无参考数据）"""
+    """空 lake，合理 volume 应通过（无参考数据）"""
     lake, _ = _make_lake()
     df = _bar_df_with_vol("SSE:601138", ["2026-01-01"], [65.0], [200_000])
     lake.write_bars_parquet(df, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="sina")
+
+
+def test_volume_unit_first_write_lot_sized_blocked():
+    """新 symbol 首次写入，volume < 10000（手数级别）应被绝对阈值拦截。"""
+    lake, _ = _make_lake()
+    # 3000 是典型的手数数据（30万股换算成手 = 3000手），不是股数
+    df = _bar_df_with_vol("SSE:601138", ["2026-01-01"], [65.0], [3000])
+    with pytest.raises(DataIntegrityError):
+        lake.write_bars_parquet(df, timeframe=Timeframe.D1,
+                                 adjustment=Adjustment.QFQ, source="eastmoney")
 
 
 def test_volume_unit_lot_data_blocked():
