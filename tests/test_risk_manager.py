@@ -1,5 +1,4 @@
 """Tests for RiskManager sub-checks: sector limit, circuit breaker, VaR."""
-import pytest
 from unittest.mock import MagicMock
 
 
@@ -106,7 +105,8 @@ def test_circuit_breaker_rejects_after_daily_loss_limit():
     sig = _make_signal("SSE:600000", "BUY", size=0.05)
     decision = risk.check_signal(sig, portfolio, {"SSE:600000": 10.0})
     assert not decision.approved
-    assert "熔断" in decision.reason or "circuit" in decision.reason.lower() or "日亏损" in decision.reason
+    reason = decision.reason
+    assert "熔断" in reason or "circuit" in reason.lower() or "日亏损" in reason
 
 
 def test_circuit_breaker_approves_when_loss_within_limit():

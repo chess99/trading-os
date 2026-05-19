@@ -14,6 +14,7 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+import numpy as np
 import pandas as pd
 
 try:
@@ -21,8 +22,8 @@ try:
 except ImportError:
     ak = None  # type: ignore[assignment]
 
-from ..schema import Adjustment, Exchange, Symbol, Timeframe
 from ..exceptions import DataIntegrityError
+from ..schema import Adjustment, Exchange, Symbol, Timeframe
 
 
 class AssetTypeHandler(ABC):
@@ -70,12 +71,13 @@ class EquityHandler(AssetTypeHandler):
         adjustment: Adjustment,
     ) -> tuple[pd.DataFrame, str]:
         # Delegate to the existing equity logic in akshare_source
+        from datetime import timedelta
+
         from .akshare_source import (
+            _build_akshare_symbol,
             _fetch_with_fallback,
             _normalize_akshare_data,
-            _build_akshare_symbol,
         )
-        from datetime import timedelta
 
         symbol_str = _build_akshare_symbol(ticker, exchange)
 
@@ -158,7 +160,6 @@ class IndexHandler(AssetTypeHandler):
 
         # vwap: amount (元) / volume (手*100股) ≈ average price per share
         # Row-wise: days with amount=0/NaN fall back to (H+L+C)/3 without affecting others.
-        import numpy as np
         if "amount" in df.columns:
             df["vwap"] = np.where(
                 (df["amount"].notna()) & (df["amount"] > 0) & (df["volume"] > 0),
@@ -232,7 +233,8 @@ class EtfHandler(AssetTypeHandler):
         adjust_map = {Adjustment.QFQ: "qfq", Adjustment.HFQ: "hfq", Adjustment.NONE: ""}
         adjust_str = adjust_map.get(adjustment, "qfq")
 
-        start_date = (start or (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")).replace("-", "")
+        default_start = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
+        start_date = (start or default_start).replace("-", "")
         end_date = (end or datetime.now().strftime("%Y-%m-%d")).replace("-", "")
 
         raw = ak.fund_etf_hist_em(

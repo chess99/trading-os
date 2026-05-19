@@ -78,7 +78,13 @@ def probe_and_get_preferred_source(exchange: "Exchange", timeout: int = 10) -> s
             from ..schema import Adjustment as Adj
             # 探测时不持有 _BAOSTOCK_LOCK：若探测线程因 timeout 被遗弃，
             # 不会导致主循环的 baostock 调用永久阻塞。
-            return bs_fetch(probe_ticker, exchange=exchange, start="2026-01-01", end="2026-04-01", adjustment=Adj.QFQ)
+            # probe_start/probe_end are YYYYMMDD; baostock expects YYYY-MM-DD
+            bs_start = f"{probe_start[:4]}-{probe_start[4:6]}-{probe_start[6:8]}"
+            bs_end = f"{probe_end[:4]}-{probe_end[4:6]}-{probe_end[6:8]}"
+            return bs_fetch(
+                probe_ticker, exchange=exchange,
+                start=bs_start, end=bs_end, adjustment=Adj.QFQ,
+            )
 
         for source_name, probe_fn in [
             ("eastmoney", _try_eastmoney),

@@ -299,7 +299,10 @@ class LocalDataLake:
             return
 
         # 1. Absolute threshold (applies on first write too).
-        # Only for A-share equities — indices and ETFs may legitimately have lower volume.
+        # Prefix match covers A-share equities and major indices (SSE:000xxx, SZSE:399xxx).
+        # Indices are intentionally included: their volume (hundreds of millions of shares)
+        # is far above the 10,000 threshold, so the check is harmless for them.
+        # ETFs (SSE:51xxxx, SZSE:15xxxx) are not matched and skip this check.
         _is_ashare_equity = (
             symbol.startswith("SSE:6") or symbol.startswith("SSE:0")
             or symbol.startswith("SZSE:0") or symbol.startswith("SZSE:3")
