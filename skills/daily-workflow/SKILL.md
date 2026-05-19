@@ -31,17 +31,19 @@ python -m trading_os scheduler jobs --limit 20
 python -m trading_os daily
 ```
 
-`daily` 会根据最新完整数据集选择 effective date，而不是直接使用墙上日期。若依赖未完成，它会生成 `artifacts/daily/YYYYMMDD-blocked.md`。
+`daily` 会锚定当前应交付的 effective date，而不是回退到更早的完成态日报。若依赖未完成，它会生成 `artifacts/daily/YYYYMMDD-blocked.md`。
 
 看到 blocked 日报时：
 
 - 不做大盘判断、个股买卖建议、扫描进出池结论。
+- 不更新 pool，不把旧完成态当作今天的结果复用。
 - 报告缺失的 job、effective date、当前进度文件和下一步可执行的 scheduler trigger。
 - 如用户只要求日报，停在 blocked 状态即可。
 
 看到完成态日报时：
 
 - 使用日报中的 effective date 和 job id。
+- CANSLIM `candidates` 由 scheduler 基于同日扫描结果重建；`watchlist/ready` 仍由人工研究维护。
 - 如需进一步解释，读取 `artifacts/watchlist/`、`artifacts/scan/`、`artifacts/research/` 中对应日期文件。
 - 结论必须明确基于该 effective date，不要把自然日“今天”等同于行情数据日期。
 
@@ -56,7 +58,7 @@ python -m trading_os daily
 
 `market_data_probe` 用于判断 A 股目标交易日是否已有可用数据。`market_data_bulk_refresh` 负责全量 K 线刷新，并会写入结构化进度。
 
-扫描日期有前瞻偏差语义：行情数据 effective date 是最新已收盘数据日；扫描内部使用下一个交易日作为 signal date，因为 `DataPipeline` 在 signal date 只返回之前的数据。不要手工把 effective date 直接传给 scan 命令来替代 scheduler 的转换。
+扫描日期有前瞻偏差语义：行情数据 effective date 是最新已收盘数据日；扫描内部使用下一个交易日作为 signal date，因为 `DataPipeline` 在 signal date 只返回之前的数据。scan 产物文件名按 effective date 归档，JSON 内同时记录 effective date 和 signal date。不要手工把 effective date 直接传给 scan 命令来替代 scheduler 的转换。
 
 ## 手工触发
 
@@ -97,4 +99,4 @@ python -m trading_os pool list -v
 - Elder：三重滤网、入场信号、价格止损。
 - Value：护城河、估值、安全边际、逻辑止损。
 
-任何进出池、升层、移出操作都应基于完成态日报或用户明确指定的扫描文件，不要基于 blocked 日报做交易动作。
+任何进出池、升层、移出操作都应基于完成态日报或用户明确指定的扫描文件，不要基于 blocked 日报做交易动作。`pool sync-from-scan --apply` 只允许重建 `candidates`，不自动改 `watchlist/ready`。

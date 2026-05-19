@@ -59,7 +59,7 @@ python -m trading_os scheduler trigger full_scan_and_daily --effective-date YYYY
 
 ## 日期语义
 
-`daily` 默认使用最新完整行情数据日作为 effective date，不等同于自然日今天。
+`daily` 默认使用当前应交付的 effective date：收盘前是上一交易日，收盘后是当日。如果该日依赖未完成，必须输出 blocked，而不是回退到更早的完成态日报。
 
 扫描命令的 `--date` 是 signal date。`DataPipeline` 会排除同日 K 线以防前瞻偏差，所以 scheduler 会负责把 effective date 转成正确的 signal date。跑 daily 时不要绕过这个转换。
 
@@ -82,7 +82,7 @@ python -m trading_os paper --symbols SSE:600000 --strategy ma
 # Agent 单次分析
 python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
 
-# CANSLIM 扫描
+# CANSLIM 扫描（诊断/专项分析用，不是标准 daily 入口）
 python -m trading_os scan-canslim --date 2024-03-15
 python -m trading_os scan-canslim --live --date 2024-03-15
 ```

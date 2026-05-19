@@ -73,6 +73,8 @@ def _run_scan(
         c["name"] = name_map.get(c["symbol"], "")
 
     output = {
+        "effective_date": getattr(ns, "effective_date", None),
+        "signal_date": scan_date.isoformat(),
         "scan_date": scan_date.isoformat(),
         "system": system_name,
         "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],

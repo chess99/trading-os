@@ -191,6 +191,36 @@ class LocalDataLake:
         self._refresh_view()
         self._view_dirty = False
 
+    def _bars_glob_sql(self) -> str:
+        return f"read_parquet('{self.paths.bars_dir.as_posix()}/*.parquet', union_by_name=true)"
+
+    def has_bar_files(self) -> bool:
+        return any(self.paths.bars_dir.glob("*.parquet"))
+
+    def list_symbols(
+        self,
+        *,
+        exchange: Exchange | None = None,
+        as_of: str | None = None,
+    ) -> list[str]:
+        if not self.has_bar_files():
+            return []
+        where = []
+        params: list[object] = []
+        if exchange is not None:
+            where.append(f"{BarColumns.exchange} = ?")
+            params.append(exchange.value)
+        if as_of is not None:
+            where.append(f"{BarColumns.ts} < ?")
+            params.append(as_of)
+        sql = f"SELECT DISTINCT {BarColumns.symbol} FROM {self._bars_glob_sql()}"
+        if where:
+            sql += " WHERE " + " AND ".join(where)
+        sql += f" ORDER BY {BarColumns.symbol}"
+        with self.connect() as con:
+            result = con.execute(sql, params).fetchall()
+        return [row[0] for row in result]
+
     def _query_recent_values(self, symbol: str, column: str, limit: int) -> Any:
         """Return a Series of the most-recent `limit` values of `column` for `symbol`.
 
@@ -477,8 +507,8 @@ class LocalDataLake:
 
         `start`/`end` are interpreted by DuckDB (ISO strings recommended).
         """
-        if self._view_dirty:
-            self.init()
+        if not self.has_bar_files():
+            return self._pd.DataFrame()
         where: list[str] = [
             f"{BarColumns.timeframe} = ?",
             f"{BarColumns.adjustment} = ?",
@@ -515,7 +545,7 @@ class LocalDataLake:
                 {BarColumns.ts}
               ORDER BY {self._source_priority_sql(BarColumns.source)} DESC, {BarColumns.source} DESC
             ) AS rn
-          FROM bars
+          FROM {self._bars_glob_sql()}
           WHERE {' AND '.join(where)}
         )
         WHERE rn = 1

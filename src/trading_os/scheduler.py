@@ -454,6 +454,23 @@ def trigger_full_scan_and_daily(
     if not effective_date:
         job = store.create_job("full_scan_and_daily", status=JOB_STATUS_NOT_READY)
         return [store.update_job(job.id, error="no successful bulk refresh", ended=True)]
+    existing_orchestrator = store.latest_job(
+        "full_scan_and_daily",
+        effective_date=effective_date,
+        statuses={JOB_STATUS_RUNNING},
+    )
+    if existing_orchestrator:
+        return [
+            store.create_job(
+                "full_scan_and_daily",
+                effective_date=effective_date,
+                status=JOB_STATUS_SKIPPED,
+                metadata={
+                    "reason": "full_scan_and_daily already running",
+                    "existing_job_id": existing_orchestrator.id,
+                },
+            )
+        ]
     bulk = store.latest_job(
         "market_data_bulk_refresh",
         effective_date=effective_date,
@@ -484,7 +501,9 @@ def trigger_full_scan_and_daily(
             )
         ]
 
-    results: list[JobRecord] = []
+    orchestrator = store.create_job("full_scan_and_daily", effective_date=effective_date)
+    orchestrator = store.update_job(orchestrator.id, status=JOB_STATUS_RUNNING, started=True)
+    results: list[JobRecord] = [orchestrator]
     signal_date = signal_date_for_effective_date(effective_date)
     effective_compact = effective_date.replace("-", "")
     elder = _ensure_scan_job(
@@ -498,6 +517,8 @@ def trigger_full_scan_and_daily(
             "scan-elder",
             "--date",
             signal_date,
+            "--effective-date",
+            effective_date,
             "--output",
             f"artifacts/scan/elder-{effective_compact}.json",
         ],
@@ -517,6 +538,8 @@ def trigger_full_scan_and_daily(
             "--date",
             signal_date,
             "--live",
+            "--effective-date",
+            effective_date,
             "--output",
             f"artifacts/scan/canslim-{effective_compact}.json",
         ],
@@ -532,6 +555,7 @@ def trigger_full_scan_and_daily(
         )
         results.append(store.update_job(daily.id, error="scan incomplete", ended=True))
         write_blocked_daily(store, effective_date, "scan incomplete")
+        store.update_job(orchestrator.id, status=JOB_STATUS_FAILED, error="scan incomplete", ended=True)
         return results
 
     daily = store.create_job(
@@ -545,8 +569,26 @@ def trigger_full_scan_and_daily(
         },
     )
     store.update_job(daily.id, status=JOB_STATUS_RUNNING, started=True)
-    write_complete_daily(store, effective_date, bulk, elder, canslim)
+    try:
+        write_complete_daily(store, effective_date, bulk, elder, canslim)
+    except Exception as exc:
+        results.append(
+            store.update_job(
+                daily.id,
+                status=JOB_STATUS_FAILED,
+                error=str(exc)[:300],
+                ended=True,
+            )
+        )
+        store.update_job(
+            orchestrator.id,
+            status=JOB_STATUS_FAILED,
+            error=f"daily report failed: {str(exc)[:260]}",
+            ended=True,
+        )
+        raise
     results.append(store.update_job(daily.id, status=JOB_STATUS_SUCCESS, ended=True))
+    store.update_job(orchestrator.id, status=JOB_STATUS_SUCCESS, ended=True)
     return results
 
 
@@ -608,6 +650,13 @@ def compute_daily_blocker(
     )
     if not canslim:
         return "CANSLIM scan is incomplete"
+    daily = store.latest_job(
+        "daily_report",
+        effective_date=effective_date,
+        statuses={JOB_STATUS_SUCCESS},
+    )
+    if not daily:
+        return "daily report is incomplete"
     return None
 
 
@@ -619,6 +668,7 @@ def write_blocked_daily(store: SchedulerStore, effective_date: str, reason: str)
     lines = [
         f"# Daily blocked - {effective_date}",
         "",
+        f"- intended_effective_date: `{default_daily_effective_date(store)}`",
         f"- effective_date: `{effective_date}`",
         f"- reason: {reason}",
         f"- updated_at: `{snapshot['updated_at']}`",
@@ -638,6 +688,7 @@ def write_blocked_daily(store: SchedulerStore, effective_date: str, reason: str)
         "",
         "No market view, scan changes, symbol conclusion, or trading action is emitted "
         "while upstream jobs are incomplete.",
+        "Pool state is not updated in blocked mode.",
     ]
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return out
@@ -652,21 +703,79 @@ def write_complete_daily(
     *,
     historical: bool = False,
 ) -> Path:
+    import json
+    from .cli_internal.commands.pool import _load_pool, sync_candidates_from_scan
+
     suffix = "-historical" if historical else ""
     out = store.root / "artifacts" / "daily" / f"{effective_date.replace('-', '')}{suffix}.md"
     out.parent.mkdir(parents=True, exist_ok=True)
+    pool_path = store.root / "artifacts" / "watchlist" / "pool.json"
     title = "Historical Daily Review" if historical else "Daily Workflow"
+    effective_compact = effective_date.replace("-", "")
+    elder_scan_path = store.root / "artifacts" / "scan" / f"elder-{effective_compact}.json"
+    canslim_scan_path = store.root / "artifacts" / "scan" / f"canslim-{effective_compact}.json"
+    elder_scan = json.loads(elder_scan_path.read_text(encoding="utf-8")) if elder_scan_path.exists() else {}
+    canslim_scan = json.loads(canslim_scan_path.read_text(encoding="utf-8")) if canslim_scan_path.exists() else {}
+    signal_date = (
+        canslim_scan.get("signal_date")
+        or elder_scan.get("signal_date")
+        or signal_date_for_effective_date(effective_date)
+    )
+    canslim_sync = sync_candidates_from_scan(
+        system="canslim",
+        scan_data=canslim_scan or {"candidates": []},
+        apply=not historical and canslim_scan_path.exists(),
+        scan_file=str(canslim_scan_path),
+        scan_job_id=canslim.id,
+        pool_path=pool_path,
+    )
+    pool_data = _load_pool(pool_path)
+    ready_items = []
+    for sys_name in ["canslim", "elder", "value"]:
+        ready_items.extend(
+            [(sys_name, item) for item in pool_data["pools"].get(sys_name, {}).get("ready", [])]
+        )
+    canslim_pool = pool_data["pools"].get("canslim", {})
     lines = [
         f"# {title} - {effective_date}",
         "",
         f"- effective_date: `{effective_date}`",
+        f"- signal_date: `{signal_date}`",
         f"- market_data_bulk_refresh: `{bulk.id}` ({bulk.status})",
         f"- elder_scan: `{elder.id}` ({elder.status})",
         f"- canslim_scan: `{canslim.id}` ({canslim.status})",
         "",
-        "This report is generated only after all upstream jobs for the same "
-        "effective_date completed.",
+        "## Scan Summary",
+        "",
+        f"- Elder: scanned `{elder_scan.get('total_scanned', 0)}` / candidates `{len(elder_scan.get('candidates', []))}`",
+        f"- CANSLIM: scanned `{canslim_scan.get('total_scanned', 0)}` / candidates `{len(canslim_scan.get('candidates', []))}`",
+        "",
+        "## Pool Update",
+        "",
+        f"- CANSLIM candidates rebuilt: `{canslim_sync['previous_candidates']}` -> `{canslim_sync['next_candidates']}`",
+        f"- Added: `{', '.join(canslim_sync['added']) if canslim_sync['added'] else 'none'}`",
+        f"- Dropped: `{', '.join(canslim_sync['dropped']) if canslim_sync['dropped'] else 'none'}`",
+        f"- Blocked re-entry: `{', '.join(canslim_sync['blocked_reentry']) if canslim_sync['blocked_reentry'] else 'none'}`",
+        f"- Current CANSLIM watchlist/ready: watchlist `{len(canslim_pool.get('watchlist', []))}` / ready `{len(canslim_pool.get('ready', []))}`",
+        "",
+        "## Immediate Actions",
+        "",
     ]
+    if ready_items:
+        for sys_name, item in ready_items:
+            lines.append(
+                f"- [{sys_name.upper()}] `{item['symbol']}` {item.get('name', '')} "
+                f"trigger={item.get('trigger_price')} stop={item.get('stop_loss')}"
+            )
+    else:
+        lines.append("- none")
+    lines.extend([
+        "",
+        "## Notes",
+        "",
+        "- Value pool is carried forward from existing manual tracking; it is not rebuilt by scheduler daily.",
+        "- This report is generated only after all upstream jobs for the same effective_date completed.",
+    ])
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return out
 
@@ -703,7 +812,12 @@ def generate_daily(
         effective_date=effective_date,
         statuses={JOB_STATUS_SUCCESS},
     )
-    if bulk is None or elder is None or canslim is None:
+    daily = store.latest_job(
+        "daily_report",
+        effective_date=effective_date,
+        statuses={JOB_STATUS_SUCCESS},
+    )
+    if bulk is None or elder is None or canslim is None or daily is None:
         return write_blocked_daily(
             store,
             effective_date,
@@ -741,10 +855,14 @@ def lake_has_effective_date(
         from .data.lake import LocalDataLake
 
         lake = LocalDataLake(root / "data")
-        lake.init()
         con = lake.connect()
+        if not lake.has_bar_files():
+            con.close()
+            return False, None
         row = con.execute(
-            "SELECT MAX(ts)::DATE AS latest FROM bars WHERE timeframe='1d' AND adjustment='qfq'"
+            "SELECT MAX(ts)::DATE AS latest "
+            f"FROM {lake._bars_glob_sql()} "
+            "WHERE timeframe='1d' AND adjustment='qfq'"
         ).fetchone()
         con.close()
     except Exception:
@@ -802,24 +920,25 @@ def latest_complete_daily_effective_date(store: SchedulerStore) -> str | None:
               AND c.status=?
               AND c.effective_date=b.effective_date
           )
+          AND EXISTS (
+            SELECT 1 FROM jobs d
+            WHERE d.name='daily_report'
+              AND d.status=?
+              AND d.effective_date=b.effective_date
+          )
         ORDER BY b.effective_date DESC, b.updated_at DESC
         LIMIT 1
     """
     with store._connect() as con:
         row = con.execute(
             query,
-            [JOB_STATUS_SUCCESS, JOB_STATUS_SUCCESS, JOB_STATUS_SUCCESS],
+            [JOB_STATUS_SUCCESS, JOB_STATUS_SUCCESS, JOB_STATUS_SUCCESS, JOB_STATUS_SUCCESS],
         ).fetchone()
     return row[0] if row else None
 
 
 def default_daily_effective_date(store: SchedulerStore) -> str:
-    return (
-        latest_complete_daily_effective_date(store)
-        or _latest_success_date(store, "market_data_bulk_refresh")
-        or _latest_ready_probe_date(store)
-        or intended_market_effective_date().isoformat()
-    )
+    return intended_market_effective_date().isoformat()
 
 
 def scheduled_market_data_probe(root: str | None = None) -> None:

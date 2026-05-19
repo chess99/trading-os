@@ -28,10 +28,10 @@ def _empty_pool() -> dict:
     }
 
 
-def _load_pool() -> dict:
+def _load_pool(path: Path | None = None) -> dict:
     import json
 
-    p = _pool_path()
+    p = path or _pool_path()
     if not p.exists():
         return _empty_pool()
     try:
@@ -42,10 +42,10 @@ def _load_pool() -> dict:
         raise SystemExit(1)
 
 
-def _save_pool(data: dict) -> None:
+def _save_pool(data: dict, path: Path | None = None) -> None:
     import json
 
-    p = _pool_path()
+    p = path or _pool_path()
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -79,6 +79,110 @@ def _append_tracking(symbol: str, note: str) -> None:
     entry = f"\n### {today}\n{note}\n"
     with open(fpath, "a", encoding="utf-8") as f:
         f.write(entry)
+
+
+def _today_utc() -> str:
+    return datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+
+def _scan_candidate_to_pool_entry(
+    item: dict,
+    *,
+    effective_date: str | None,
+    signal_date: str | None,
+    scan_job_id: str | None,
+    scan_file: str | None,
+) -> dict:
+    score = item.get("score")
+    rank = item.get("rank")
+    reason_bits = ["scan candidate"]
+    if score is not None:
+        reason_bits.append(f"score={score}")
+    if rank is not None:
+        reason_bits.append(f"rank={rank}")
+    return {
+        "symbol": item["symbol"],
+        "name": item.get("name", ""),
+        "entered_at": _today_utc(),
+        "entry_reason": " | ".join(reason_bits),
+        "trigger_price": item.get("trigger_price"),
+        "notes": "",
+        "score": score,
+        "scan_effective_date": effective_date,
+        "scan_signal_date": signal_date,
+        "scan_job_id": scan_job_id,
+        "scan_file": scan_file,
+    }
+
+
+def sync_candidates_from_scan(
+    *,
+    system: str,
+    scan_data: dict,
+    apply: bool = False,
+    scan_file: str | None = None,
+    scan_job_id: str | None = None,
+    pool_path: Path | None = None,
+) -> dict:
+    data = _load_pool(pool_path)
+    effective_date = scan_data.get("effective_date")
+    signal_date = scan_data.get("signal_date") or scan_data.get("scan_date")
+    pool_system = data["pools"].setdefault(system, {"candidates": [], "watchlist": [], "ready": []})
+    active_non_candidates = {
+        item["symbol"]
+        for tier in ("watchlist", "ready")
+        for item in pool_system.get(tier, [])
+    }
+    exited_symbols = {
+        item["symbol"]
+        for item in data.get("exited", [])
+        if item.get("system") == system
+    }
+    old_candidates = {item["symbol"]: item for item in pool_system.get("candidates", [])}
+    scan_candidates = {item["symbol"]: item for item in scan_data.get("candidates", [])}
+
+    retained_symbols = []
+    blocked_reentry = []
+    for symbol in scan_candidates:
+        if symbol in active_non_candidates:
+            retained_symbols.append(symbol)
+        elif symbol in exited_symbols:
+            blocked_reentry.append(symbol)
+
+    next_candidates = []
+    for symbol, item in scan_candidates.items():
+        if symbol in active_non_candidates or symbol in exited_symbols:
+            continue
+        next_candidates.append(
+            _scan_candidate_to_pool_entry(
+                item,
+                effective_date=effective_date,
+                signal_date=signal_date,
+                scan_job_id=scan_job_id,
+                scan_file=scan_file,
+            )
+        )
+    next_candidates.sort(key=lambda x: (-float(x.get("score") or 0), x["symbol"]))
+
+    summary = {
+        "effective_date": effective_date,
+        "signal_date": signal_date,
+        "scan_candidates": len(scan_candidates),
+        "previous_candidates": len(old_candidates),
+        "next_candidates": len(next_candidates),
+        "added": sorted([sym for sym in scan_candidates if sym not in old_candidates and sym not in active_non_candidates and sym not in exited_symbols]),
+        "dropped": sorted([sym for sym in old_candidates if sym not in scan_candidates]),
+        "retained": sorted([sym for sym in scan_candidates if sym in old_candidates]),
+        "already_active": sorted(retained_symbols),
+        "blocked_reentry": sorted(blocked_reentry),
+        "updated": False,
+    }
+    if apply:
+        pool_system["candidates"] = next_candidates
+        data["last_updated"] = _today_utc()
+        _save_pool(data, pool_path)
+        summary["updated"] = True
+    return summary
 
 
 def _cmd_pool(ns: argparse.Namespace) -> int:
@@ -203,7 +307,7 @@ def _pool_add(ns: argparse.Namespace) -> int:
     system = ns.system
     tier = getattr(ns, "tier", "candidates")
     symbol = ns.symbol
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today = _today_utc()
     pool = data["pools"].setdefault(system, {"candidates": [], "watchlist": [], "ready": []})
     for t in ["candidates", "watchlist", "ready"]:
         for item in pool.get(t, []):
@@ -244,7 +348,8 @@ def _pool_add(ns: argparse.Namespace) -> int:
     pool.setdefault(tier, []).append(entry)
     data["last_updated"] = today
     _save_pool(data)
-    _append_tracking(symbol, f"入池：{system}/{tier}\n- 原因：{entry['entry_reason']}\n- 触发价：{entry['trigger_price']}")
+    if tier in ("watchlist", "ready"):
+        _append_tracking(symbol, f"入池：{system}/{tier}\n- 原因：{entry['entry_reason']}\n- 触发价：{entry['trigger_price']}")
     print(f"已添加 {symbol} → {system}/{tier}")
     return 0
 
@@ -253,9 +358,10 @@ def _pool_remove(ns: argparse.Namespace) -> int:
     data = _load_pool()
     symbol = ns.symbol
     system = getattr(ns, "system", None)
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today = _today_utc()
     reason = getattr(ns, "reason", "")
     removed = []
+    removed_tiers: list[str] = []
     systems_to_check = [system] if system else list(data["pools"].keys())
     for sys_name in systems_to_check:
         pool = data["pools"].get(sys_name, {})
@@ -277,12 +383,14 @@ def _pool_remove(ns: argparse.Namespace) -> int:
                     ).days,
                 })
                 removed.append(f"{sys_name}/{tier}")
+                removed_tiers.append(tier)
     if not removed:
         print(f"{symbol} 不在池中", file=sys.stderr)
         return 1
     data["last_updated"] = today
     _save_pool(data)
-    _append_tracking(symbol, f"移出池：{', '.join(removed)}\n- 原因：{reason}")
+    if any(tier in ("watchlist", "ready") for tier in removed_tiers):
+        _append_tracking(symbol, f"移出池：{', '.join(removed)}\n- 原因：{reason}")
     print(f"已移出 {symbol}（来自 {', '.join(removed)}）")
     return 0
 
@@ -292,7 +400,7 @@ def _pool_promote(ns: argparse.Namespace) -> int:
     symbol = ns.symbol
     system = ns.system
     to_tier = ns.to
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today = _today_utc()
     tier_order = ["candidates", "watchlist", "ready"]
     if to_tier not in tier_order:
         print(f"无效 tier: {to_tier}", file=sys.stderr)
@@ -334,8 +442,9 @@ def _pool_update(ns: argparse.Namespace) -> int:
     data = _load_pool()
     symbol = ns.symbol
     system = getattr(ns, "system", None)
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    today = _today_utc()
     updated = False
+    touched_tracking_tier = False
     systems_to_check = [system] if system else list(data["pools"].keys())
     for sys_name in systems_to_check:
         pool = data["pools"].get(sys_name, {})
@@ -353,6 +462,7 @@ def _pool_update(ns: argparse.Namespace) -> int:
                         item["notes"] = f"{prior}；{ns.notes}" if prior else ns.notes
                     item["last_checked"] = today
                     updated = True
+                    touched_tracking_tier = touched_tracking_tier or tier in ("watchlist", "ready")
     if not updated:
         print(f"{symbol} 不在池中", file=sys.stderr)
         return 1
@@ -360,7 +470,8 @@ def _pool_update(ns: argparse.Namespace) -> int:
     _save_pool(data)
     notes = getattr(ns, "notes", "")
     status = getattr(ns, "status", "")
-    _append_tracking(symbol, f"更新：status={status}\n{notes}")
+    if touched_tracking_tier:
+        _append_tracking(symbol, f"更新：status={status}\n{notes}")
     print(f"已更新 {symbol}")
     return 0
 
@@ -376,39 +487,61 @@ def _pool_sync_from_scan(ns: argparse.Namespace) -> int:
 
     scan_data = json.loads(Path(scan_path).read_text(encoding="utf-8"))
     pool_data = _load_pool()
-    scan_symbols = {item["symbol"]: item for item in scan_data.get("candidates", [])}
     pool_system = pool_data["pools"].get(system, {})
-    pool_in_symbols: dict[str, str] = {}
+    active_tiers: dict[str, str] = {}
     for tier in ["candidates", "watchlist", "ready"]:
         for item in pool_system.get(tier, []):
-            pool_in_symbols[item["symbol"]] = tier
+            active_tiers[item["symbol"]] = tier
+    summary = sync_candidates_from_scan(
+        system=system,
+        scan_data=scan_data,
+        apply=getattr(ns, "apply", False),
+        scan_file=str(Path(scan_path)),
+    )
 
-    print(f"\n【pool sync-from-scan】{system.upper()} | 扫描日期: {scan_data.get('scan_date', '?')}")
-    print(f"扫描候选: {len(scan_symbols)} 只 | 当前池: {len(pool_in_symbols)} 只\n")
+    print(
+        f"\n【pool sync-from-scan】{system.upper()} | "
+        f"effective_date: {summary.get('effective_date') or '?'} | "
+        f"signal_date: {summary.get('signal_date') or '?'}"
+    )
+    print(
+        f"扫描候选: {summary['scan_candidates']} 只 | "
+        f"旧 candidates: {summary['previous_candidates']} 只 | "
+        f"新 candidates: {summary['next_candidates']} 只\n"
+    )
 
-    new_entries = {s: v for s, v in scan_symbols.items() if s not in pool_in_symbols}
-    if new_entries:
+    scan_symbols = {item["symbol"]: item for item in scan_data.get("candidates", [])}
+    if summary["added"]:
         print("✅ 建议入候选池（新出现，未在池中）:")
-        for sym, item in sorted(new_entries.items(), key=lambda x: -x[1].get("score", 0)):
-            print(f"  {sym:<20} {item.get('name',''):<10} 得分:{item.get('score','?')}")
-            print(f"    → pool add --symbol {sym} --system {system} --tier candidates --reason \"scan得分{item.get('score','?')}\" --score {item.get('score','?')}")
+        for sym in summary["added"]:
+            item = scan_symbols[sym]
+            print(f"  {sym:<20} {item.get('name', ''):<10} 得分:{item.get('score', '?')}")
     else:
         print("✅ 无新候选需要入池")
 
-    already = {s: v for s, v in scan_symbols.items() if s in pool_in_symbols}
-    if already:
-        print(f"\n📋 已在池中（{len(already)} 只）:")
-        for sym, item in already.items():
-            tier = pool_in_symbols[sym]
-            print(f"  {sym:<20} {item.get('name',''):<10} [{tier}] 得分:{item.get('score','?')}")
+    active_symbols = sorted(set(summary["retained"]) | set(summary["already_active"]))
+    if active_symbols:
+        print(f"\n📋 已在池中或已高层跟踪（{len(active_symbols)} 只）:")
+        for sym in active_symbols:
+            item = scan_symbols[sym]
+            tier = active_tiers.get(sym, "active")
+            print(f"  {sym:<20} {item.get('name', ''):<10} [{tier}] 得分:{item.get('score', '?')}")
 
-    dropped = {s: t for s, t in pool_in_symbols.items() if s not in scan_symbols}
-    if dropped:
-        print("\n⚠️  池中标的未出现在本次扫描（需关注是否移出）:")
-        for sym, tier in dropped.items():
-            print(f"  {sym:<20} [{tier}] — 本次扫描得分不足，请确认是否移出")
+    if summary["blocked_reentry"]:
+        print(f"\n⛔ 已移出标的不自动回池（{len(summary['blocked_reentry'])} 只）:")
+        for sym in summary["blocked_reentry"]:
+            item = scan_symbols[sym]
+            print(f"  {sym:<20} {item.get('name', ''):<10}")
+
+    if summary["dropped"]:
+        print("\n⚠️  旧 candidates 未出现在本次扫描中:")
+        for sym in summary["dropped"]:
+            print(f"  {sym:<20} [candidates] — 本次扫描未命中")
     else:
-        print("\n✅ 所有池中标的均在本次扫描中出现")
+        print("\n✅ 旧 candidates 全部仍在本次扫描结果中")
 
-    print("\n（此命令只输出建议，不修改 pool.json。如需操作请手动执行上方命令）")
+    if summary["updated"]:
+        print("\n已应用：仅重建 candidates，watchlist/ready 未自动改动。")
+    else:
+        print("\n（默认 dry-run；如需重建 candidates，请加 --apply）")
     return 0

@@ -39,6 +39,8 @@ def _make_pool(tmp_path):
 
 def _make_scan(tmp_path, candidates):
     scan = {
+        "effective_date": "2026-05-05",
+        "signal_date": "2026-05-06",
         "scan_date": "2026-05-06",
         "system": "canslim",
         "total_scanned": 5517,
@@ -86,3 +88,24 @@ def test_sync_shows_dropped_from_scan(tmp_path, capsys):
     out = capsys.readouterr().out
     assert "SSE:601138" in out
     assert "未出现" in out or "dropped" in out.lower() or "不在" in out
+
+
+def test_sync_apply_rebuilds_candidates_only(tmp_path):
+    pool_path = _make_pool(tmp_path)
+    pool = json.loads(Path(pool_path).read_text())
+    pool["pools"]["canslim"]["watchlist"].append(
+        {"symbol": "SZSE:300750", "name": "宁德时代", "entered_at": "2026-05-01"}
+    )
+    Path(pool_path).write_text(json.dumps(pool), encoding="utf-8")
+    scan_path = _make_scan(tmp_path, [
+        {"symbol": "SZSE:300308", "name": "中际旭创", "rank": 1, "score": 10.0, "signals": {}, "next_step": ""},
+        {"symbol": "SZSE:300750", "name": "宁德时代", "rank": 2, "score": 9.0, "signals": {}, "next_step": ""},
+    ])
+
+    _run_pool(["sync-from-scan", "--scan", scan_path, "--system", "canslim", "--apply"], pool_path)
+
+    updated = json.loads(Path(pool_path).read_text(encoding="utf-8"))
+    candidates = updated["pools"]["canslim"]["candidates"]
+    watchlist = updated["pools"]["canslim"]["watchlist"]
+    assert [item["symbol"] for item in candidates] == ["SZSE:300308"]
+    assert watchlist[0]["symbol"] == "SZSE:300750"

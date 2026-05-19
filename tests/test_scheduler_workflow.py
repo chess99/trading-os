@@ -77,12 +77,19 @@ def test_probe_uses_market_effective_date_not_wall_clock_today():
     assert intended_market_effective_date(monday_morning).isoformat() == "2026-05-15"
 
 
-def test_daily_blocked_when_bulk_missing(tmp_path):
+def test_daily_blocked_when_bulk_missing(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
     from trading_os.scheduler import SchedulerStore, generate_daily
 
     store = SchedulerStore(tmp_path)
+    today = date.today().isoformat()
+    monkeypatch.setattr(
+        scheduler,
+        "intended_market_effective_date",
+        lambda now=None: date.fromisoformat(today),
+    )
 
-    path = generate_daily(store, effective_date=date.today().isoformat())
+    path = generate_daily(store, effective_date=today)
 
     assert path.name.endswith("-blocked.md")
     text = path.read_text(encoding="utf-8")
@@ -90,12 +97,18 @@ def test_daily_blocked_when_bulk_missing(tmp_path):
     assert "No market view" in text
 
 
-def test_daily_blocked_when_scans_missing(tmp_path):
+def test_daily_blocked_when_scans_missing(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
     from trading_os.scheduler import JOB_STATUS_SUCCESS, SchedulerStore, generate_daily
 
     today = date.today().isoformat()
     store = SchedulerStore(tmp_path)
     store.create_job("market_data_bulk_refresh", effective_date=today, status=JOB_STATUS_SUCCESS)
+    monkeypatch.setattr(
+        scheduler,
+        "intended_market_effective_date",
+        lambda now=None: date.fromisoformat(today),
+    )
 
     path = generate_daily(store, effective_date=today)
 
@@ -103,7 +116,8 @@ def test_daily_blocked_when_scans_missing(tmp_path):
     assert "Elder scan is incomplete" in path.read_text(encoding="utf-8")
 
 
-def test_daily_complete_only_after_bulk_and_both_scans(tmp_path):
+def test_daily_complete_only_after_bulk_and_both_scans(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
     from trading_os.scheduler import JOB_STATUS_SUCCESS, SchedulerStore, generate_daily
 
     today = date.today().isoformat()
@@ -115,6 +129,12 @@ def test_daily_complete_only_after_bulk_and_both_scans(tmp_path):
     )
     elder = store.create_job("elder_scan", effective_date=today, status=JOB_STATUS_SUCCESS)
     canslim = store.create_job("canslim_scan", effective_date=today, status=JOB_STATUS_SUCCESS)
+    store.create_job("daily_report", effective_date=today, status=JOB_STATUS_SUCCESS)
+    monkeypatch.setattr(
+        scheduler,
+        "intended_market_effective_date",
+        lambda now=None: date.fromisoformat(today),
+    )
 
     path = generate_daily(store, effective_date=today)
 
@@ -123,24 +143,34 @@ def test_daily_complete_only_after_bulk_and_both_scans(tmp_path):
     assert bulk.id in text
     assert elder.id in text
     assert canslim.id in text
+    assert "## Scan Summary" in text
 
 
-def test_daily_defaults_to_latest_complete_effective_date(tmp_path):
+def test_daily_defaults_to_intended_effective_date_and_does_not_fallback(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
     from trading_os.scheduler import JOB_STATUS_SUCCESS, SchedulerStore, generate_daily
 
-    effective = "2026-05-18"
+    intended = "2026-05-19"
+    completed = "2026-05-18"
     store = SchedulerStore(tmp_path)
     store.create_job(
         "market_data_bulk_refresh",
-        effective_date=effective,
+        effective_date=completed,
         status=JOB_STATUS_SUCCESS,
     )
-    store.create_job("elder_scan", effective_date=effective, status=JOB_STATUS_SUCCESS)
-    store.create_job("canslim_scan", effective_date=effective, status=JOB_STATUS_SUCCESS)
+    store.create_job("elder_scan", effective_date=completed, status=JOB_STATUS_SUCCESS)
+    store.create_job("canslim_scan", effective_date=completed, status=JOB_STATUS_SUCCESS)
+    store.create_job("daily_report", effective_date=completed, status=JOB_STATUS_SUCCESS)
+    monkeypatch.setattr(
+        scheduler,
+        "intended_market_effective_date",
+        lambda now=None: date.fromisoformat(intended),
+    )
 
     path = generate_daily(store)
 
-    assert path.name == "20260518.md"
+    assert path.name == "20260519-blocked.md"
+    assert "market data bulk refresh is incomplete" in path.read_text(encoding="utf-8")
 
 
 def test_full_scan_same_effective_date_not_repeated(tmp_path):
@@ -155,6 +185,7 @@ def test_full_scan_same_effective_date_not_repeated(tmp_path):
     store.create_job("market_data_bulk_refresh", effective_date=today, status=JOB_STATUS_SUCCESS)
     store.create_job("elder_scan", effective_date=today, status=JOB_STATUS_SUCCESS)
     store.create_job("canslim_scan", effective_date=today, status=JOB_STATUS_SUCCESS)
+    store.create_job("daily_report", effective_date=today, status=JOB_STATUS_SUCCESS)
 
     calls = []
 
@@ -164,11 +195,7 @@ def test_full_scan_same_effective_date_not_repeated(tmp_path):
 
     jobs = trigger_full_scan_and_daily(store, effective_date=today, runner=fake_runner)
 
-    assert [job.status for job in jobs] == [
-        JOB_STATUS_SUCCESS,
-        JOB_STATUS_SUCCESS,
-        JOB_STATUS_SUCCESS,
-    ]
+    assert [job.status for job in jobs] == ["skipped"]
     assert calls == []
 
 
@@ -184,14 +211,11 @@ def test_existing_successful_scan_jobs_are_reported_not_skipped_jobs(tmp_path):
     )
     elder = store.create_job("elder_scan", effective_date=effective, status=JOB_STATUS_SUCCESS)
     canslim = store.create_job("canslim_scan", effective_date=effective, status=JOB_STATUS_SUCCESS)
+    store.create_job("daily_report", effective_date=effective, status=JOB_STATUS_SUCCESS)
 
     jobs = trigger_full_scan_and_daily(store, effective_date=effective, runner=lambda args, log: 0)
-    text = (tmp_path / "artifacts" / "daily" / "20260518.md").read_text(encoding="utf-8")
-
-    assert jobs[-1].status == JOB_STATUS_SUCCESS
-    assert bulk.id in text
-    assert elder.id in text
-    assert canslim.id in text
+    assert jobs[0].status == "skipped"
+    assert jobs[0].metadata["existing_job_id"]
 
 
 def test_scan_commands_use_next_trading_day_but_effective_date_output_name(tmp_path):
@@ -212,13 +236,38 @@ def test_scan_commands_use_next_trading_day_but_effective_date_output_name(tmp_p
 
     trigger_full_scan_and_daily(store, effective_date=effective, runner=fake_runner)
 
-    elder_date_arg = calls[0][calls[0].index("--date"):calls[0].index("--date") + 2]
-    canslim_date_arg = calls[1][calls[1].index("--date"):calls[1].index("--date") + 2]
+    elder_call = next(call for call in calls if "scan-elder" in call)
+    canslim_call = next(call for call in calls if "scan-canslim" in call)
+    elder_date_arg = elder_call[elder_call.index("--date"):elder_call.index("--date") + 2]
+    canslim_date_arg = canslim_call[canslim_call.index("--date"):canslim_call.index("--date") + 2]
 
     assert ["--date", "2026-05-18"] == elder_date_arg
-    assert "artifacts/scan/elder-20260515.json" in calls[0]
+    assert ["--effective-date", "2026-05-15"] == elder_call[elder_call.index("--effective-date"):elder_call.index("--effective-date") + 2]
+    assert "artifacts/scan/elder-20260515.json" in elder_call
     assert ["--date", "2026-05-18"] == canslim_date_arg
-    assert "artifacts/scan/canslim-20260515.json" in calls[1]
+    assert ["--effective-date", "2026-05-15"] == canslim_call[canslim_call.index("--effective-date"):canslim_call.index("--effective-date") + 2]
+    assert "artifacts/scan/canslim-20260515.json" in canslim_call
+
+
+def test_daily_blocked_when_daily_report_missing(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
+    from trading_os.scheduler import JOB_STATUS_SUCCESS, SchedulerStore, generate_daily
+
+    effective = "2026-05-18"
+    store = SchedulerStore(tmp_path)
+    store.create_job("market_data_bulk_refresh", effective_date=effective, status=JOB_STATUS_SUCCESS)
+    store.create_job("elder_scan", effective_date=effective, status=JOB_STATUS_SUCCESS)
+    store.create_job("canslim_scan", effective_date=effective, status=JOB_STATUS_SUCCESS)
+    monkeypatch.setattr(
+        scheduler,
+        "intended_market_effective_date",
+        lambda now=None: date.fromisoformat(effective),
+    )
+
+    path = generate_daily(store, effective_date=effective)
+
+    assert path.name == "20260518-blocked.md"
+    assert "daily report is incomplete" in path.read_text(encoding="utf-8")
 
 
 def test_classify_bulk_lock_running_and_stale(tmp_path):

@@ -92,7 +92,7 @@ python -m trading_os scheduler trigger market_data_bulk_refresh --effective-date
 python -m trading_os scheduler trigger full_scan_and_daily --effective-date YYYY-MM-DD
 ```
 
-`daily` 使用最新完整行情数据日作为 effective date，不假设自然日今天的数据已经就绪。全量扫描由 scheduler 处理日期转换，避免绕过 `DataPipeline` 的前瞻偏差防护。
+`daily` 使用当前应交付的 effective date：收盘前是上一交易日，收盘后是当日。如果该日期上游依赖未完成，它会输出 blocked 报告，而不是回退到更早的完成态日报。全量扫描由 scheduler 处理日期转换，避免绕过 `DataPipeline` 的前瞻偏差防护。
 
 ---
 
@@ -112,7 +112,7 @@ python -m trading_os daily
 # 回测 Elder 策略
 python -m trading_os backtest --symbols SSE:600000 --strategy elder --start 2022-01-01
 
-# CANSLIM 全 A 股扫描
+# CANSLIM 全 A 股扫描（诊断/专项分析用，不是标准 daily 入口）
 python -m trading_os scan-canslim --date 2024-03-15
 
 # Value 扫描：默认实时估值快照（不可严格回放）

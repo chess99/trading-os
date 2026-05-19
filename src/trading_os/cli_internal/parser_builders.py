@@ -41,6 +41,7 @@ POOL_TIER_CHOICES = ["candidates", "watchlist", "ready"]
 
 def _add_scan_common_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--date", default=None, help="扫描日期 YYYY-MM-DD（默认昨日）")
+    parser.add_argument("--effective-date", default=None, help="归档用 effective date YYYY-MM-DD（可选）")
     parser.add_argument("--top", type=int, default=30, help="输出前 N 只（默认30）")
     parser.add_argument("--min-turnover", type=float, default=1e7, help="最低日均成交额 CNY（默认1000万）")
     parser.add_argument("--exchange", default=None, choices=EXCHANGE_CHOICES, help="只扫描指定交易所")
@@ -258,9 +259,10 @@ def register_pool_commands(sub: argparse._SubParsersAction) -> None:
     p.add_argument("--stop-loss", type=float, default=None, dest="stop_loss")
     p.add_argument("--notes", default=None)
 
-    p = pool_sub.add_parser("sync-from-scan", help="比对扫描结果与现有池，输出进出池建议（不修改池）")
+    p = pool_sub.add_parser("sync-from-scan", help="比对扫描结果与现有池；可显式重建 candidates")
     p.add_argument("--scan", required=True, help="扫描 JSON 路径，如 artifacts/scan/canslim-20260506.json")
     p.add_argument("--system", required=True, choices=POOL_SYSTEM_CHOICES)
+    p.add_argument("--apply", action="store_true", help="应用扫描结果，仅重建 candidates")
 
 
 def register_scheduler_commands(sub: argparse._SubParsersAction) -> None:
@@ -294,6 +296,6 @@ def register_daily_commands(sub: argparse._SubParsersAction) -> None:
     from trading_os.scheduler import cmd_daily
 
     p = sub.add_parser("daily", help="读取 scheduler 状态生成日报或阻塞报告")
-    p.add_argument("--effective-date", default=None, help="YYYY-MM-DD；默认最新完整数据日")
+    p.add_argument("--effective-date", default=None, help="YYYY-MM-DD；默认当前应交付的 effective date")
     p.add_argument("--allow-historical", action="store_true", help="允许生成历史复盘报告")
     p.set_defaults(func=cmd_daily)

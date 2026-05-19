@@ -6,13 +6,10 @@ from unittest.mock import patch
 
 def _run_pool_add(args, pool_path, names_path):
     from trading_os.cli import main
-    with (
-        patch("trading_os.cli_internal.commands.pool._pool_path", return_value=Path(pool_path)),
-        patch("trading_os.cli_internal.commands.pool._stock_names_path", return_value=Path(names_path)),
-        # Prevent writing to real artifacts/watchlist/tracking/
-        patch("trading_os.cli_internal.commands.pool._append_tracking"),
-    ):
-        return main(["pool", "add"] + args)
+    with patch("trading_os.cli_internal.commands.pool._pool_path", return_value=Path(pool_path)):
+        with patch("trading_os.cli_internal.commands.pool._stock_names_path", return_value=Path(names_path)):
+            with patch("trading_os.cli_internal.commands.pool._append_tracking") as append_tracking:
+                return main(["pool", "add"] + args), append_tracking
 
 
 def _empty_pool(tmp_path) -> str:
@@ -83,3 +80,16 @@ def test_pool_add_unknown_symbol_name_empty(tmp_path):
     pool = json.loads(Path(pool_path).read_text())
     entry = pool["pools"]["canslim"]["candidates"][0]
     assert entry["name"] == ""
+
+
+def test_pool_add_candidates_do_not_create_tracking(tmp_path):
+    pool_path = _empty_pool(tmp_path)
+    names_path = _names_file(tmp_path)
+
+    _, append_tracking = _run_pool_add(
+        ["--symbol", "SZSE:300866", "--system", "canslim", "--tier", "candidates",
+         "--reason", "test"],
+        pool_path, names_path,
+    )
+
+    append_tracking.assert_not_called()
