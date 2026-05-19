@@ -14,7 +14,7 @@ def _artifacts_dir(tmp_path) -> Path:
 
 def test_lock_file_created_on_start(tmp_path):
     """启动时应创建 PID lock 文件，内容为当前进程 PID。"""
-    from trading_os.cli import _acquire_bulk_lock, _release_bulk_lock
+    from trading_os.cli_internal.commands.data import _acquire_bulk_lock, _release_bulk_lock
     lock_path = _artifacts_dir(tmp_path) / "fetch_bulk.pid"
 
     _acquire_bulk_lock(lock_path)
@@ -26,7 +26,7 @@ def test_lock_file_created_on_start(tmp_path):
 
 def test_lock_blocks_second_instance(tmp_path):
     """lock 文件存在且进程活跃时，应拒绝启动并返回非零退出码。"""
-    from trading_os.cli import _acquire_bulk_lock
+    from trading_os.cli_internal.commands.data import _acquire_bulk_lock
     lock_path = _artifacts_dir(tmp_path) / "fetch_bulk.pid"
     lock_path.write_text(str(os.getpid()))
 
@@ -37,7 +37,7 @@ def test_lock_blocks_second_instance(tmp_path):
 
 def test_stale_lock_cleared(tmp_path):
     """lock 文件中的 PID 不存在（进程已死）时，应清除 stale lock 并继续。"""
-    from trading_os.cli import _acquire_bulk_lock, _release_bulk_lock
+    from trading_os.cli_internal.commands.data import _acquire_bulk_lock, _release_bulk_lock
     lock_path = _artifacts_dir(tmp_path) / "fetch_bulk.pid"
     lock_path.write_text("99999999")
 
@@ -48,7 +48,7 @@ def test_stale_lock_cleared(tmp_path):
 
 def test_progress_log_written(tmp_path):
     """_write_bulk_progress 应向日志追加一行，包含进度信息。"""
-    from trading_os.cli import _write_bulk_progress
+    from trading_os.cli_internal.commands.data import _write_bulk_progress
     log_path = _artifacts_dir(tmp_path) / "fetch_bulk_progress.log"
 
     _write_bulk_progress(log_path, done=100, total=2880, success=98, failed=2, elapsed=40.0)
