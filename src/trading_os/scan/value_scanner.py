@@ -8,15 +8,19 @@
 3. ROE ≥ 15%（排除低质量低估值陷阱）
 4. 市值 > 50 亿（排除微盘股）
 
-注意：PE/PB 数据来自 AKShare 实时快照（stock_zh_a_spot_em），
-      不是 scan_date 的历史数据。在输出中标注 pe_pb_source: realtime_snapshot。
+注意：
+  - live 模式：PE/PB 数据来自 AKShare 实时快照（stock_zh_a_spot_em），不可严格回放
+  - historical 模式：只读取 data/valuation_snapshots/YYYY-MM-DD.json，对缺失快照不回退实时数据
 """
 from __future__ import annotations
 
 import logging
+import json
 from datetime import date
 from pathlib import Path
 from typing import Any
+
+from .common import load_fundamental
 
 log = logging.getLogger(__name__)
 
@@ -26,6 +30,53 @@ _MIN_MARKET_CAP = 50e8   # 50 亿
 _PE_PERCENTILE_THRESHOLD = 0.30  # 当前 PE 低于历史 70% 的时间
 _MIN_YEARS_FOR_PERCENTILE = 1.0   # 至少 1 年数据才计算分位
 _FULL_YEARS_FOR_PERCENTILE = 3.0  # 3 年以上为"完整数据"
+
+
+def _snapshot_path(data_root: Path, scan_date: date) -> Path:
+    return data_root / "valuation_snapshots" / f"{scan_date.isoformat()}.json"
+
+
+def _load_snapshot_map(
+    *,
+    mode: str,
+    scan_date: date,
+    data_root: Path,
+) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    import pandas as pd
+
+    metadata = {
+        "mode": mode,
+        "replayable": mode == "historical",
+        "valuation_data_as_of": scan_date.isoformat() if mode == "historical" else None,
+    }
+
+    if mode == "historical":
+        path = _snapshot_path(data_root, scan_date)
+        if not path.exists():
+            return None, metadata
+        snapshot_rows = json.loads(path.read_text(encoding="utf-8"))
+        snapshot_df = pd.DataFrame(snapshot_rows)
+    else:
+        try:
+            import akshare as ak
+            snapshot_df = ak.stock_zh_a_spot_em()
+        except Exception as exc:
+            raise RuntimeError(
+                f"AKShare 不可用，无法获取 PE/PB 数据，请检查网络连接。错误：{exc}"
+            ) from exc
+
+        if snapshot_df is None or snapshot_df.empty:
+            raise RuntimeError("AKShare 返回空快照，请检查网络连接后重试。")
+
+    snapshot_map: dict[str, Any] = {}
+    for _, row in snapshot_df.iterrows():
+        raw_sym = str(row.get("代码", ""))
+        if raw_sym.startswith("6") or raw_sym.startswith("5"):
+            canonical = f"SSE:{raw_sym}"
+        else:
+            canonical = f"SZSE:{raw_sym}"
+        snapshot_map[canonical] = row
+    return snapshot_map, metadata
 
 
 def _price_percentile(
@@ -54,6 +105,7 @@ def scan_value(
     scan_date: date,
     data_root: Path,
     top_n: int = 30,
+    mode: str = "live",
 ) -> dict[str, Any]:
     """对给定符号列表运行 Value Investing 估值筛选。
 
@@ -68,36 +120,21 @@ def scan_value(
         符合 scan output 格式的 dict（不含 filtered_out，由调用方合并）
     """
     import pandas as pd
-    from .common import load_fundamental
 
-    # 获取全市场实时 PE/PB/市值快照（一次调用，不逐只查询）
-    try:
-        import akshare as ak
-        snapshot_df = ak.stock_zh_a_spot_em()
-    except Exception as exc:
-        raise RuntimeError(
-            f"AKShare 不可用，无法获取 PE/PB 数据，请检查网络连接。错误：{exc}"
-        ) from exc
+    if mode not in {"live", "historical"}:
+        raise ValueError(f"Unsupported mode: {mode!r}")
 
-    if snapshot_df is None or snapshot_df.empty:
-        raise RuntimeError("AKShare 返回空快照，请检查网络连接后重试。")
-
-    # 建立 symbol → snapshot 行的映射
-    # stock_zh_a_spot_em 的 "代码" 列为 6 位代码
-    snapshot_map: dict[str, Any] = {}
-    for _, row in snapshot_df.iterrows():
-        raw_sym = str(row.get("代码", ""))
-        if raw_sym.startswith("6") or raw_sym.startswith("5"):
-            canonical = f"SSE:{raw_sym}"
-        else:
-            canonical = f"SZSE:{raw_sym}"
-        snapshot_map[canonical] = row
+    snapshot_map, metadata = _load_snapshot_map(mode=mode, scan_date=scan_date, data_root=data_root)
 
     candidates = []
     insufficient_data = 0
     no_signal = 0
 
     for sym in symbols:
+        if snapshot_map is None:
+            insufficient_data += 1
+            continue
+
         snap = snapshot_map.get(sym)
         if snap is None:
             insufficient_data += 1
@@ -183,7 +220,7 @@ def scan_value(
                 "roe": round(float(latest_roe), 3) if latest_roe is not None else None,
                 "market_cap_billion": round(market_cap / 1e8, 1),
             },
-            "pe_pb_source": "realtime_snapshot",
+            "pe_pb_source": "historical_snapshot" if mode == "historical" else "realtime_snapshot",
             "next_step": "运行 value-system 做深度基本面研究和估值分析",
         })
 
@@ -199,4 +236,5 @@ def scan_value(
             "insufficient_data": insufficient_data,
             "no_signal": no_signal,
         },
+        "metadata": metadata,
     }

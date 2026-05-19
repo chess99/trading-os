@@ -8,6 +8,15 @@ from typing import Any, Iterable
 
 from .schema import Adjustment, BarColumns, Exchange, Timeframe
 
+_SOURCE_PRIORITY: dict[str, int] = {
+    "akshare_index": 60,
+    "akshare_etf": 50,
+    "sina": 40,
+    "eastmoney": 30,
+    "baostock": 20,
+    "synthetic": 10,
+}
+
 
 @dataclass(frozen=True, slots=True)
 class DataLakePaths:
@@ -120,7 +129,7 @@ class LocalDataLake:
                             *,
                             row_number() OVER (
                               PARTITION BY symbol, timeframe, adjustment, ts
-                              ORDER BY source DESC
+                              ORDER BY {self._source_priority_sql("source")} DESC, source DESC
                             ) AS rn
                           FROM read_parquet('{bars_glob}', union_by_name=true)
                           WHERE exchange = ?
@@ -354,6 +363,14 @@ class LocalDataLake:
             yield  # non-POSIX: no-op
 
     @staticmethod
+    def _source_priority_sql(column: str) -> str:
+        clauses = " ".join(
+            f"WHEN '{source}' THEN {priority}"
+            for source, priority in _SOURCE_PRIORITY.items()
+        )
+        return f"CASE {column} {clauses} ELSE 0 END"
+
+    @staticmethod
     def _exchange_from_symbol(symbol: str) -> "Exchange":
         """Infer Exchange from symbol string (e.g. 'SSE:600000' → Exchange.SSE)."""
         if symbol.startswith("SZSE:"):
@@ -411,7 +428,10 @@ class LocalDataLake:
         )
         out[BarColumns.timeframe] = timeframe.value
         out[BarColumns.adjustment] = adjustment.value
-        out[BarColumns.source] = source
+        if BarColumns.source in out.columns:
+            out[BarColumns.source] = out[BarColumns.source].fillna(source)
+        else:
+            out[BarColumns.source] = source
 
         cols = [
             BarColumns.symbol,
@@ -493,7 +513,7 @@ class LocalDataLake:
                 {BarColumns.timeframe},
                 {BarColumns.adjustment},
                 {BarColumns.ts}
-              ORDER BY {BarColumns.source} DESC
+              ORDER BY {self._source_priority_sql(BarColumns.source)} DESC, {BarColumns.source} DESC
             ) AS rn
           FROM bars
           WHERE {' AND '.join(where)}
@@ -507,4 +527,3 @@ class LocalDataLake:
 
         with self.connect() as con:
             return con.execute(sql, params).df()
-

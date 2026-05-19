@@ -18,7 +18,7 @@ Trading OS 是一个以 **AI Agent 为主要操作界面** 的 A 股研究工具
 
 **前瞻偏差防护是内置的，无法绕过。** `DataPipeline.get_bars(as_of=T)` 在接口层面强制只返回 T 之前的数据，策略代码无需自己做日期过滤，也无法意外引入未来数据。
 
-**风控是硬性门控，AI 无法绕过。** 每笔信号都必须通过 `RiskManager`（单股上限、板块集中度、VaR、日亏损熔断）。AI 说"买"，但 VaR 超限，就不买。
+**风控是硬性门控，AI 无法绕过。** 回测与模拟交易都会在下单前通过 `RiskManager`（单股上限、板块集中度、VaR、日亏损熔断）。AI 说"买"，但 VaR 超限，就不买。
 
 **三套投资体系账户层面完全隔离。** Elder 技术交易、CANSLIM 成长股、价值投资三套体系使用互相矛盾的心理模型和止损逻辑，混用会互相干扰。每套体系有自己完整的 Skill 链，不共享止损决策。
 
@@ -86,6 +86,12 @@ python -m trading_os backtest --symbols SSE:600000 --strategy elder --start 2022
 
 # CANSLIM 全 A 股扫描
 python -m trading_os scan-canslim --date 2024-03-15
+
+# Value 扫描：默认实时估值快照（不可严格回放）
+python -m trading_os scan-value --date 2024-03-15 --mode live
+
+# Value 扫描：历史快照模式（需提前准备 data/valuation_snapshots/YYYY-MM-DD.json）
+python -m trading_os scan-value --date 2024-03-15 --mode historical
 
 # 在 Claude Code 中触发日常工作流
 # 说："跑日常工作流"

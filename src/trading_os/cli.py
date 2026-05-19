@@ -1113,6 +1113,8 @@ def _run_scan(
             "no_signal": result["_stats"]["no_signal"],
         },
     }
+    if "metadata" in result:
+        output["metadata"] = result["metadata"]
 
     write_scan_output(output, output_path)
     print(f"  Found {len(result['candidates'])} candidates → {output_path}")
@@ -1208,7 +1210,7 @@ def _cmd_scan_value(ns: argparse.Namespace) -> int:
         scanner_fn=scan_value,
         system_name="value",
         lookback_days=756,
-        scanner_kwargs={"data_root": root / "data"},
+        scanner_kwargs={"data_root": root / "data", "mode": ns.mode},
     )
 
 
@@ -1849,6 +1851,8 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--min-turnover", type=float, default=1e7, help="最低日均成交额 CNY（默认1000万）")
     p.add_argument("--exchange", default=None, choices=["SSE", "SZSE"], help="只扫描指定交易所")
     p.add_argument("--output", default=None, help="输出 JSON 路径")
+    p.add_argument("--mode", default="live", choices=["live", "historical"],
+                   help="live=实时估值快照；historical=读取 data/valuation_snapshots/YYYY-MM-DD.json")
     p.set_defaults(func=_cmd_scan_value)
 
     # --- Pool ---

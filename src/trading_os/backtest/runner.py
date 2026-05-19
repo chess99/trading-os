@@ -1,8 +1,8 @@
 """Event-driven backtest runner for A-share markets.
 
 Execution model (prevents look-ahead bias):
-    Day T close  → Strategy.generate_signals(bars_up_to_T-1, trading_date=T)
-    Day T+1 open → Orders execute at T+1 open price
+    Day T-1 close → Strategy.generate_signals(bars_up_to_T-1, trading_date=T)
+    Day T open    → Orders execute at T open price
 
 A-share market rules enforced:
     - T+1 settlement: shares bought on T cannot be sold until T+1
@@ -19,10 +19,11 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, timedelta
 from typing import TYPE_CHECKING, Literal
 
 from ..data.schema import BarColumns
+from ..risk.manager import RiskConfig, RiskManager
 from ..strategy.base import Signal, Strategy, StrategyContext
 
 if TYPE_CHECKING:
@@ -45,6 +46,7 @@ class BacktestConfig:
     price_limit_normal: float = 0.10     # ±10% daily limit for normal stocks
     price_limit_st: float = 0.05         # ±5% daily limit for ST stocks
     lot_size: int = 100                  # minimum lot size (shares)
+    risk: RiskConfig = field(default_factory=RiskConfig)
 
 
 # ---------------------------------------------------------------------------
@@ -257,6 +259,7 @@ class BacktestResult:
     trades: "pd.DataFrame"         # columns: date, symbol, side, shares, price, ...
     events: list                   # all events (for audit)
     final_nav: float = 0.0
+    risk_rejects: int = 0
 
     @property
     def total_return(self) -> float:
@@ -291,7 +294,66 @@ class BacktestResult:
             "max_drawdown": round(max_drawdown * 100, 2),
             "final_nav": round(self.final_nav, 2),
             "trades": len(self.trades),
+            "risk_rejects": self.risk_rejects,
         }
+
+
+def _load_period_bars(
+    pipeline: object,
+    symbols: list[str],
+    start: date,
+    end: date,
+    lookback_days: int,
+):
+    return pipeline.get_bars(
+        symbols=symbols,
+        trading_date=end + timedelta(days=1),
+        lookback_days=(end - start).days + lookback_days + 31,
+    )
+
+
+def _trading_dates_in_range(all_bars: "pd.DataFrame", start: date, end: date) -> list:
+    import pandas as pd
+
+    all_bars[BarColumns.ts] = pd.to_datetime(all_bars[BarColumns.ts], utc=True)
+    start_ts = pd.Timestamp(start, tz="UTC")
+    end_ts = pd.Timestamp(end, tz="UTC")
+    return sorted(
+        all_bars[
+            (all_bars[BarColumns.ts] >= start_ts) &
+            (all_bars[BarColumns.ts] <= end_ts)
+        ][BarColumns.ts]
+        .dt.normalize()
+        .unique()
+    )
+
+
+def _update_strategy_runtime(strategy: Strategy, hist_bars: "pd.DataFrame", portfolio: Portfolio) -> float:
+    prev_close_prices = {}
+    if not hist_bars.empty:
+        latest = hist_bars.groupby(BarColumns.symbol)[BarColumns.close].last()
+        prev_close_prices = latest.to_dict()
+    current_nav = portfolio.mark_to_market(prev_close_prices)
+    ctx = getattr(strategy, "_ctx", None)
+    if ctx is not None and hasattr(ctx, "extra"):
+        ctx.extra["current_nav"] = current_nav
+    return current_nav
+
+
+def _price_maps_for_day(today_bars: "pd.DataFrame", hist_bars: "pd.DataFrame") -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
+    open_prices = {
+        row[BarColumns.symbol]: float(row[BarColumns.open])
+        for _, row in today_bars.iterrows()
+    }
+    close_prices = {
+        row[BarColumns.symbol]: float(row[BarColumns.close])
+        for _, row in today_bars.iterrows()
+    }
+    prev_close_prices: dict[str, float] = {}
+    prev_date_bars = hist_bars.groupby(BarColumns.symbol).last()
+    for sym, row in prev_date_bars.iterrows():
+        prev_close_prices[sym] = float(row[BarColumns.close])
+    return open_prices, close_prices, prev_close_prices
 
 
 # ---------------------------------------------------------------------------
@@ -326,6 +388,7 @@ class BacktestRunner:
         self.pipeline = pipeline
         self.config = config or BacktestConfig()
         self._broker = BacktestBroker(self.config)
+        self._risk = RiskManager(self.config.risk)
 
     def run(
         self,
@@ -364,11 +427,7 @@ class BacktestRunner:
         trade_rows: list[dict] = []
 
         # Get all trading dates in range
-        all_bars = self.pipeline.get_bars(
-            symbols=symbols,
-            trading_date=end,
-            lookback_days=(end - start).days + lookback_days + 30,
-        )
+        all_bars = _load_period_bars(self.pipeline, symbols, start, end, lookback_days)
 
         if all_bars is None or all_bars.empty:
             log.warning("No bars found for backtest period %s–%s", start, end)
@@ -381,24 +440,15 @@ class BacktestRunner:
                 trades=pd.DataFrame(),
                 events=[],
                 final_nav=self.config.initial_cash,
+                risk_rejects=0,
             )
 
         # Allow strategy to precompute indicators once across all data
         self.strategy.on_data(all_bars)
 
-        # Get unique trading dates in [start, end]
-        all_bars[BarColumns.ts] = pd.to_datetime(all_bars[BarColumns.ts], utc=True)
-        start_ts = pd.Timestamp(start, tz="UTC")
-        end_ts = pd.Timestamp(end, tz="UTC")
-
-        trading_dates = sorted(
-            all_bars[
-                (all_bars[BarColumns.ts] >= start_ts) &
-                (all_bars[BarColumns.ts] <= end_ts)
-            ][BarColumns.ts]
-            .dt.normalize()
-            .unique()
-        )
+        trading_dates = _trading_dates_in_range(all_bars, start, end)
+        risk_rejects = 0
+        equity_history: list[float] = []
 
         for ts in trading_dates:
             trading_date = ts.date()
@@ -413,15 +463,7 @@ class BacktestRunner:
             if hist_bars is None or hist_bars.empty:
                 continue
 
-            # Update strategy context with current portfolio NAV (using prev close prices)
-            # This lets strategies use real-time NAV for position sizing instead of initial cash
-            if hasattr(self.strategy, '_ctx') and hasattr(self.strategy._ctx, 'extra'):
-                prev_close_prices = {}
-                if not hist_bars.empty:
-                    latest = hist_bars.groupby(BarColumns.symbol)[BarColumns.close].last()
-                    prev_close_prices = latest.to_dict()
-                current_nav = portfolio.mark_to_market(prev_close_prices)
-                self.strategy._ctx.extra['current_nav'] = current_nav
+            current_nav = _update_strategy_runtime(self.strategy, hist_bars, portfolio)
 
             # Generate signals
             try:
@@ -433,18 +475,8 @@ class BacktestRunner:
             # Today's bars (for execution prices and prev_close)
             today_bars = all_bars[all_bars[BarColumns.ts].dt.normalize() == ts]
 
-            # Build price lookup for today
-            open_prices: dict[str, float] = {}
-            prev_close_prices: dict[str, float] = {}
-
-            for _, row in today_bars.iterrows():
-                sym = row[BarColumns.symbol]
-                open_prices[sym] = float(row[BarColumns.open])
-
-            # Get previous close for price limit calculation
-            prev_date_bars = hist_bars.groupby(BarColumns.symbol).last()
-            for sym, row in prev_date_bars.iterrows():
-                prev_close_prices[sym] = float(row[BarColumns.close])
+            open_prices, close_prices, prev_close_prices = _price_maps_for_day(today_bars, hist_bars)
+            self._risk.start_of_day(trading_date, current_nav)
 
             # Process signals → orders → fills
             for sym in sorted(signals.keys()):  # deterministic order
@@ -465,8 +497,14 @@ class BacktestRunner:
                     log.debug("No price data for %s on %s, skipping", sym, trading_date)
                     continue
 
-                # Compute target shares from signal.size
-                current_nav = portfolio.mark_to_market(open_prices)
+                risk_decision = self._risk.check_signal(
+                    signal, portfolio, open_prices, equity_history
+                )
+                if not risk_decision.approved:
+                    risk_rejects += 1
+                    all_events.append(RiskRejectEvent(trading_date, sym, risk_decision.reason))
+                    continue
+
                 target_value = signal.size * current_nav
                 current_pos = portfolio.positions.get(sym)
                 current_shares = current_pos.shares if current_pos else 0.0
@@ -518,12 +556,9 @@ class BacktestRunner:
                     log.debug("Rejected %s on %s: %s", sym, trading_date, result.reason)
 
             # Record equity at end of day (mark-to-market using today's close)
-            close_prices = {
-                row[BarColumns.symbol]: float(row[BarColumns.close])
-                for _, row in today_bars.iterrows()
-            }
             nav = portfolio.mark_to_market(close_prices)
             equity = nav - portfolio.cash
+            equity_history.append(nav)
             equity_rows.append({
                 "date": trading_date,
                 "nav": nav,
@@ -544,4 +579,5 @@ class BacktestRunner:
             trades=trades_df,
             events=all_events,
             final_nav=final_nav,
+            risk_rejects=risk_rejects,
         )

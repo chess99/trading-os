@@ -66,10 +66,10 @@ def test_compact_on_empty_lake_returns_zero(tmp_path):
     assert result == 0
 
 
-# ── Dedup: source priority (ORDER BY source DESC) ─────────────────────────────
+# ── Dedup: explicit source priority ───────────────────────────────────────────
 
 def test_compact_dedup_sina_beats_eastmoney(tmp_path):
-    """'sina' > 'eastmoney' alphabetically — sina row survives dedup."""
+    """Explicit source priority should still keep sina above eastmoney."""
     lake = _make_lake(tmp_path)
     _write_bars(lake, "SSE:600000", [10.0], "eastmoney")
     _write_bars(lake, "SSE:600000", [20.0], "sina")
@@ -82,12 +82,11 @@ def test_compact_dedup_sina_beats_eastmoney(tmp_path):
         timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
     )
     assert not df.empty
-    # After dedup, only one row per ts; sina's close (20.0) should win
     assert (df["close"] == 20.0).all(), f"Expected sina close=20.0, got: {df['close'].tolist()}"
 
 
 def test_compact_dedup_baostock_beats_akshare_index(tmp_path):
-    """'baostock' > 'akshare_index' alphabetically — baostock row survives dedup."""
+    """Index-specific source should outrank generic baostock rows."""
     lake = _make_lake(tmp_path)
     _write_bars(lake, "SSE:000001", [3800.0], "akshare_index")
     _write_bars(lake, "SSE:000001", [3900.0], "baostock")
@@ -100,10 +99,40 @@ def test_compact_dedup_baostock_beats_akshare_index(tmp_path):
         timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
     )
     assert not df.empty
-    assert (df["close"] == 3900.0).all(), (
-        "baostock should beat akshare_index in current alphabetical dedup. "
-        "If this fails after adding explicit priority column, update expected value."
+    assert (df["close"] == 3800.0).all()
+
+
+def test_write_bars_preserves_row_level_source(tmp_path):
+    """Batch writes with mixed sources should keep each row's original source."""
+    from trading_os.data.schema import Adjustment, Timeframe
+
+    lake = _make_lake(tmp_path)
+    df = pd.DataFrame(
+        {
+            "symbol": ["SSE:600000", "SSE:600036"],
+            "ts": pd.date_range("2024-01-02", periods=2, freq="B", tz="UTC"),
+            "open": [10.0, 11.0],
+            "high": [10.1, 11.1],
+            "low": [9.9, 10.9],
+            "close": [10.0, 11.0],
+            "volume": [1_000_000.0, 1_100_000.0],
+            "source": ["eastmoney", "sina"],
+        }
     )
+
+    lake.write_bars_parquet(
+        df,
+        timeframe=Timeframe.D1,
+        adjustment=Adjustment.NONE,
+        source="baostock",
+        partition_hint="mixed_source",
+    )
+    lake.init()
+
+    out = lake.query_bars(timeframe=Timeframe.D1, adjustment=Adjustment.NONE)
+    sources = dict(zip(out["symbol"], out["source"]))
+    assert sources["SSE:600000"] == "eastmoney"
+    assert sources["SSE:600036"] == "sina"
 
 
 def test_compact_dedup_keeps_only_one_row_per_ts(tmp_path):

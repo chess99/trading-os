@@ -181,8 +181,9 @@ def filter_by_turnover(
     # 两种数据源都用 volume * close 近似，但 BaoStock 需要再乘 100
     # 判断方法：BaoStock 数据的 source 列为 "baostock"
     bars_df = bars_df.copy()
-    if "source" in bars_df.columns and (bars_df["source"] == "baostock").any():
-        bars_df["turnover"] = bars_df["volume"] * bars_df["close"] * 100
+    if "source" in bars_df.columns:
+        multiplier = bars_df["source"].eq("baostock").map({True: 100.0, False: 1.0})
+        bars_df["turnover"] = bars_df["volume"] * bars_df["close"] * multiplier
     else:
         bars_df["turnover"] = bars_df["volume"] * bars_df["close"]
 
