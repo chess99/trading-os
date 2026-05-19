@@ -1,12 +1,43 @@
-# Trading OS Agent Guide
+# Trading OS Agent 指南
 
-This repository is operated primarily by Claude Code / Codex agents. Read this file before running workflows or changing behavior.
+这个仓库主要由 Claude Code / Codex 这类 agent 操作。`AGENTS.md` 是仓库级 agent 行为的唯一事实源。
 
-## Daily Workflow
+根目录 `CLAUDE.md` 应该是指向 `AGENTS.md` 的软链，方便 Claude Code 读取同一份内容。不要再维护 `.claude/CLAUDE.md` 或 `.agents/agents.md`。
 
-Daily research is scheduler-driven. Do not manually stitch together `fetch-ak-bulk`, `scan-elder`, `scan-canslim`, and `pool status` to produce a daily report.
+Skill 的真实目录是根目录 `skills/`。兼容路径 `.claude/skills` 和 `.agents/skills` 只保留指向根目录 `skills/` 的软链；不要在多个目录维护重复 skill。
 
-Default commands:
+## 代码架构
+
+```
+src/trading_os/
+  strategy/      策略基类 + Signal + 内置策略
+  backtest/      事件驱动回测引擎，包含 A 股规则
+  paper/         模拟交易引擎，带 EventLog 审计
+  risk/          硬性风控门控
+  data/          DataPipeline 前瞻偏差防护 + LocalDataLake
+  scan/          Elder / CANSLIM / Value 扫描器
+  scheduler.py   日常数据更新、扫描、日报门控
+  journal/       SQLite append-only 事件日志
+
+skills/          Agent 工作流说明
+artifacts/
+  research/      入库研究报告
+  scan/          扫描 JSON 输出，gitignored
+  watchlist/     自选池状态和逐标的追踪
+```
+
+关键设计约束：
+
+- 策略代码要能在回测、模拟、未来实盘中复用。
+- `DataPipeline` 负责前瞻偏差防护，不要绕过。
+- 风控是硬门控，AI 建议不能绕过 `RiskManager`。
+- Elder、CANSLIM、Value Investing 是三套独立体系，心理模型、入场逻辑、止损逻辑不要混用。
+
+## Daily 工作流
+
+Daily 由 scheduler 驱动，不是 agent 手工串联脚本。不要为了生成日报直接拼接 `fetch-ak-bulk`、`scan-elder`、`scan-canslim`、`pool status`。
+
+默认路径：
 
 ```bash
 python -m trading_os scheduler status
@@ -14,9 +45,9 @@ python -m trading_os scheduler jobs --limit 20
 python -m trading_os daily
 ```
 
-If `daily` produces `artifacts/daily/YYYYMMDD-blocked.md`, stop there. Report the blocker and do not make market, stock, entry, exit, or watchlist conclusions from incomplete data.
+如果 `daily` 生成 `artifacts/daily/YYYYMMDD-blocked.md`，停在这里。只报告阻塞原因、缺失 job、effective date、相关进度文件，不要从不完整数据推导大盘、个股、入场、退出、自选池进出结论。
 
-Manual scheduler triggers are for diagnosis or repair only:
+手工触发只用于诊断或修复：
 
 ```bash
 python -m trading_os scheduler trigger market_data_probe
@@ -24,22 +55,88 @@ python -m trading_os scheduler trigger market_data_bulk_refresh --effective-date
 python -m trading_os scheduler trigger full_scan_and_daily --effective-date YYYY-MM-DD
 ```
 
-`python -m trading_os scheduler run` is a long-running service entrypoint. Check scheduler status before starting it.
+`python -m trading_os scheduler run` 是长驻服务入口。启动前先看 `scheduler status`，避免重复启动 scheduler。
 
-## Date Semantics
+## 日期语义
 
-`daily` uses the latest complete market data date as the effective date; it is not necessarily the wall-clock date.
+`daily` 默认使用最新完整行情数据日作为 effective date，不等同于自然日今天。
 
-Scanner `--date` means signal date. `DataPipeline` excludes same-day bars for lookahead protection, so scheduler handles the effective-date to signal-date conversion. Do not bypass that conversion when running the daily workflow.
+扫描命令的 `--date` 是 signal date。`DataPipeline` 会排除同日 K 线以防前瞻偏差，所以 scheduler 会负责把 effective date 转成正确的 signal date。跑 daily 时不要绕过这个转换。
 
-## Data Access
+## 常用命令
 
-Do not read parquet files directly for analysis or data correction. Use `LocalDataLake` APIs or `python -m trading_os` commands so compact/dedup layers and lookahead protections remain active.
+```bash
+# 单标的 A 股数据
+python -m trading_os fetch-bars --exchange SSE --ticker 600000 --start 2020-01-01 --adjustment qfq
 
-## Claude Skills
+# Scheduler 状态和日报
+python -m trading_os scheduler status
+python -m trading_os daily
 
-Claude Code workflow instructions live under `.claude/skills/`. For daily work, the source of truth is:
+# 回测
+python -m trading_os backtest --symbols SSE:600000 --strategy elder --start 2022-01-01
 
-- `.claude/skills/daily-workflow/SKILL.md`
+# 模拟交易
+python -m trading_os paper --symbols SSE:600000 --strategy ma
 
-Keep `AGENTS.md`, `.claude/CLAUDE.md`, `README.md`, and relevant skill files aligned when workflow semantics change.
+# Agent 单次分析
+python -m trading_os agent --symbols SSE:600000 --date 2024-03-15
+
+# CANSLIM 扫描
+python -m trading_os scan-canslim --date 2024-03-15
+python -m trading_os scan-canslim --live --date 2024-03-15
+```
+
+## Skills
+
+Agent 工作流说明放在根目录 `skills/`。Daily 的事实源是：
+
+- `skills/daily-workflow/SKILL.md`
+
+体系入口：
+
+- `trading-system`：意图不明确时导航。
+- `elder-system`：Elder 技术交易体系入口。
+- `canslim-system`：CANSLIM 成长股体系入口。
+- `value-system`：价值投资体系入口。
+
+支撑 skill 仍然按体系隔离。不要把 Elder 的价格止损、CANSLIM 的双模式止损、Value 的逻辑止损混在一起。
+
+## 数据访问
+
+严禁在 agent 工作流中直接读取 parquet 文件，包括 `read_parquet`、`pd.read_parquet`、`duckdb.read_parquet`。
+
+必须通过：
+
+- `LocalDataLake` API，例如 `lake.query_bars()`
+- `python -m trading_os` CLI
+
+原因：直接读 parquet 会绕过 compact/dedup 层，可能读到重复行或脏数据，也可能绕过前瞻偏差防护。
+
+如果要修改或修复数据，至少用两个独立来源交叉验证。历史上出现过直接读 parquet 误判 volume 单位、险些错误改写 SZSE compacted parquet 的事故。
+
+## Artifacts
+
+```
+artifacts/
+  research/      入库分析报告和研究存档，git 追踪
+  scan/          扫描 JSON 输出，gitignored
+  journal/       EventLog SQLite 数据，gitignored
+  agent_cache/   AgentStrategy 推理缓存，gitignored
+```
+
+研究报告命名：
+
+- 完整报告：`report-{EXCHANGE}{TICKER}-YYYYMMDD.md`
+- 批量扫描分析：`CANSLIM-scan-YYYYMMDD.md`、`Elder-scan-YYYYMMDD.md`
+- 单股轻量笔记：`{EXCHANGE}{TICKER}-YYYYMMDD.md`
+- 专题研究：`topic-YYYYMMDD.md`
+
+完成一次包含结论和行动计划的分析后，存到 `artifacts/research/`。临时笔记和原始扫描 JSON 不放这里。
+
+## 基本规则
+
+- 投资分析严禁使用模拟数据或假数据。
+- 所有交易决策必须能通过 EventLog 追责。
+- 不要绕过风控检查。
+- 工作流语义变更时，只维护根目录 `AGENTS.md` 和相关根目录 `skills/` 文件。

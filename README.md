@@ -49,7 +49,7 @@ src/trading_os/
   scheduler.py  日常数据更新、扫描和日报门控
   journal/    EventLog（SQLite append-only 审计日志）
 
-.claude/skills/   AI Agent 决策层，三套体系完全独立
+skills/          AI Agent 决策层，三套体系完全独立
 artifacts/
   research/   分析报告存档（git 追踪）
   scan/       批量扫描输出 JSON（gitignored）
@@ -68,7 +68,7 @@ artifacts/
 - **确认模式（默认）**：显示 AI 分析结果，等待人工确认后执行
 - **全自动模式**（`--bypass-confirm`）：无人值守运行，类似 Claude Code 的 bypassPermissions
 
-日常研究工作流不通过 `AgentStrategy` 运行，而是通过 scheduler + `.claude/skills/` 协作完成。scheduler 负责长耗时数据更新、全量扫描、依赖门控和 blocked 报告；Claude Code/Codex 负责读取完成态日报并做解释。两者有明确的分工边界：确定性计算和流程状态归 Python，模糊判断归 AI。
+日常研究工作流不通过 `AgentStrategy` 运行，而是通过 scheduler + `skills/` 协作完成。scheduler 负责长耗时数据更新、全量扫描、依赖门控和 blocked 报告；Claude Code/Codex 负责读取完成态日报并做解释。两者有明确的分工边界：确定性计算和流程状态归 Python，模糊判断归 AI。
 
 ## 日常工作流
 
