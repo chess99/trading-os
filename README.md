@@ -46,6 +46,7 @@ src/trading_os/
   risk/       量化风控守门人（单股上限、板块集中度、VaR、日亏损熔断）
   data/       DataPipeline（前瞻偏差防护）+ LocalDataLake（DuckDB + Parquet）
   scan/       三套体系的全 A 股批量筛选（Elder/CANSLIM/Value）
+  scheduler.py  日常数据更新、扫描和日报门控
   journal/    EventLog（SQLite append-only 审计日志）
 
 .claude/skills/   AI Agent 决策层，三套体系完全独立
@@ -67,7 +68,31 @@ artifacts/
 - **确认模式（默认）**：显示 AI 分析结果，等待人工确认后执行
 - **全自动模式**（`--bypass-confirm`）：无人值守运行，类似 Claude Code 的 bypassPermissions
 
-日常研究工作流不通过 `AgentStrategy` 运行，而是通过 `.claude/skills/` 里的 Skill——由 Claude Code 调用 `python -m trading_os` 子命令获取数据，AI 在此基础上做判断。两者有明确的分工边界：确定性计算归 Python，模糊判断归 AI。
+日常研究工作流不通过 `AgentStrategy` 运行，而是通过 scheduler + `.claude/skills/` 协作完成。scheduler 负责长耗时数据更新、全量扫描、依赖门控和 blocked 报告；Claude Code/Codex 负责读取完成态日报并做解释。两者有明确的分工边界：确定性计算和流程状态归 Python，模糊判断归 AI。
+
+## 日常工作流
+
+```bash
+# 查看 scheduler 状态和最近任务
+python -m trading_os scheduler status
+python -m trading_os scheduler jobs --limit 20
+
+# 生成日报。依赖未完成时会生成 blocked 报告，而不是半成品结论。
+python -m trading_os daily
+
+# 长驻 scheduler 服务入口。通常由常驻环境启动，交互式 agent 不应重复启动。
+python -m trading_os scheduler run
+```
+
+手工补跑仅用于诊断或修复：
+
+```bash
+python -m trading_os scheduler trigger market_data_probe
+python -m trading_os scheduler trigger market_data_bulk_refresh --effective-date YYYY-MM-DD
+python -m trading_os scheduler trigger full_scan_and_daily --effective-date YYYY-MM-DD
+```
+
+`daily` 使用最新完整行情数据日作为 effective date，不假设自然日今天的数据已经就绪。全量扫描由 scheduler 处理日期转换，避免绕过 `DataPipeline` 的前瞻偏差防护。
 
 ---
 
@@ -78,8 +103,11 @@ git clone https://github.com/chess99/trading-os
 cd trading-os
 pip install -e ".[data_ashare,agent]"
 
-# 拉取 A 股历史数据
-python -m trading_os fetch-ak-bulk --start 2022-01-01
+# 查看日常数据/扫描状态
+python -m trading_os scheduler status
+
+# 生成日报
+python -m trading_os daily
 
 # 回测 Elder 策略
 python -m trading_os backtest --symbols SSE:600000 --strategy elder --start 2022-01-01
@@ -93,7 +121,7 @@ python -m trading_os scan-value --date 2024-03-15 --mode live
 # Value 扫描：历史快照模式（需提前准备 data/valuation_snapshots/YYYY-MM-DD.json）
 python -m trading_os scan-value --date 2024-03-15 --mode historical
 
-# 在 Claude Code 中触发日常工作流
+# 在 Claude Code / Codex 中触发日常工作流
 # 说："跑日常工作流"
 ```
 

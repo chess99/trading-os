@@ -294,6 +294,6 @@ def register_daily_commands(sub: argparse._SubParsersAction) -> None:
     from trading_os.scheduler import cmd_daily
 
     p = sub.add_parser("daily", help="读取 scheduler 状态生成日报或阻塞报告")
-    p.add_argument("--effective-date", default=None, help="YYYY-MM-DD；默认今日")
+    p.add_argument("--effective-date", default=None, help="YYYY-MM-DD；默认最新完整数据日")
     p.add_argument("--allow-historical", action="store_true", help="允许生成历史复盘报告")
     p.set_defaults(func=cmd_daily)

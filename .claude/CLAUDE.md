@@ -51,6 +51,24 @@ python -m trading_os scan-canslim --live --date 2024-03-15
 #   - 实现：data/sources/eastmoney_source.py + scan/canslim_scanner.scan_canslim_live()
 ```
 
+## Daily / Scheduler 工作流
+
+日常研究工作流由 scheduler 管理，不再由 agent 手工串联 `fetch-ak-bulk`、`scan-*`、`pool status`。当用户说“跑日常工作流”“日报”“今天市场怎样”时，优先使用 `.claude/skills/daily-workflow/SKILL.md`，默认路径是：
+
+```bash
+python -m trading_os scheduler status
+python -m trading_os scheduler jobs --limit 20
+python -m trading_os daily
+```
+
+关键约束：
+
+- `python -m trading_os daily` 是日报入口。它只读取 scheduler 完成态；依赖缺失时生成 `artifacts/daily/YYYYMMDD-blocked.md`。
+- blocked 日报不是分析结果。看到 blocked 时停止市场/个股判断，只报告缺失 job、effective date、进度文件和可选补跑命令。
+- 不要为完成日报绕过 scheduler 直接跑 `fetch-ak-bulk`、`scan-elder`、`scan-canslim` 或 `pool status`，除非用户明确要求诊断或补跑。
+- effective date 是最新完整行情数据日，不一定等于自然日今天。scan 命令的 `--date` 是 signal date，`DataPipeline` 会排除同日 K 线；scheduler 会处理 effective date 到 signal date 的转换。
+- `python -m trading_os scheduler run` 是长驻服务入口。交互式 agent 启动前必须先看 `scheduler status`，避免重复 scheduler。
+
 ## 投资策略定位
 
 **三套独立体系，账户层面隔离，各自独立迭代。**
