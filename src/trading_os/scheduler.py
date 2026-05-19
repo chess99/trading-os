@@ -10,6 +10,7 @@ from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Callable, Sequence
+from zoneinfo import ZoneInfo
 
 from .paths import repo_root
 
@@ -27,6 +28,8 @@ PROBE_SENTINELS = (
     ("SZSE", "000001", "equity"),
     ("SSE", "000001", "index"),
 )
+MARKET_TZ = ZoneInfo("Asia/Shanghai")
+PROBE_WINDOW_TEXT = "18:30-22:30 every 30 minutes"
 
 
 def utc_now() -> str:
@@ -230,14 +233,16 @@ class SchedulerStore:
         for job in jobs:
             latest_by_name.setdefault(job.name, _job_to_dict(job))
         fetch_progress = load_json(current_fetch_bulk_path(self.root))
-        blocked_reason = compute_daily_blocker(self, date.today().isoformat())
+        effective_date = default_daily_effective_date(self)
+        blocked_reason = compute_daily_blocker(self, effective_date)
         return {
             "updated_at": utc_now(),
             "scheduler_db": str(self.db_path),
             "latest_jobs": latest_by_name,
             "fetch_bulk": fetch_progress,
+            "daily_effective_date": effective_date,
             "daily_blocked_reason": blocked_reason,
-            "next_probe_window": "18:30-22:30 every 30 minutes",
+            "next_probe_window": PROBE_WINDOW_TEXT,
         }
 
     def write_status(self) -> None:
@@ -288,11 +293,32 @@ def default_runner(args: Sequence[str], log_path: Path) -> int:
         return int(proc.returncode)
 
 
+def intended_market_effective_date(now: datetime | None = None) -> date:
+    from .data.calendar import WeekdayCalendar
+
+    local_now = (now or datetime.now(MARKET_TZ)).astimezone(MARKET_TZ)
+    cal = WeekdayCalendar()
+    today = local_now.date()
+    if not cal.is_trading_day(today):
+        return cal.prev_trading_day(today)
+    market_close_buffer = local_now.replace(hour=15, minute=30, second=0, microsecond=0)
+    if local_now >= market_close_buffer:
+        return today
+    return cal.prev_trading_day(today)
+
+
+def signal_date_for_effective_date(effective_date: str) -> str:
+    from .data.calendar import WeekdayCalendar
+
+    return WeekdayCalendar().next_trading_day(date.fromisoformat(effective_date)).isoformat()
+
+
 def probe_market_data(today: date | None = None) -> dict:
     from .data.schema import Adjustment, AssetType, Exchange
     from .data.sources.akshare_source import fetch_daily_bars
 
-    today = today or date.today()
+    target_date = today or intended_market_effective_date()
+    wall_clock_date = datetime.now(MARKET_TZ).date()
     sentinels: dict[str, str | None] = {}
     errors: dict[str, str] = {}
     latest_dates: list[date] = []
@@ -304,8 +330,8 @@ def probe_market_data(today: date | None = None) -> dict:
             df, source = fetch_daily_bars(
                 ticker,
                 exchange=Exchange(exchange),
-                start=(today - timedelta(days=10)).isoformat(),
-                end=today.isoformat(),
+                start=(target_date - timedelta(days=10)).isoformat(),
+                end=target_date.isoformat(),
                 adjustment=adjustment,
                 asset_type=asset_type,
             )
@@ -321,13 +347,14 @@ def probe_market_data(today: date | None = None) -> dict:
             errors[symbol] = str(exc)[:200]
 
     effective = min(latest_dates).isoformat() if len(latest_dates) == len(PROBE_SENTINELS) else None
-    ready = effective == today.isoformat()
+    ready = effective is not None and effective >= target_date.isoformat()
     return {
         "effective_date": effective,
+        "target_effective_date": target_date.isoformat(),
         "ready": ready,
         "sentinels": sentinels,
         "errors": errors,
-        "wall_clock_date": today.isoformat(),
+        "wall_clock_date": wall_clock_date.isoformat(),
     }
 
 
@@ -399,12 +426,13 @@ def trigger_market_data_bulk_refresh(
             error=f"exit code {code}",
             ended=True,
         )
-    ok, latest = lake_has_effective_date(store.root, effective_date)
+    progress = load_json(current_fetch_bulk_path(store.root))
+    ok, latest = lake_has_effective_date(store.root, effective_date, progress=progress)
     if not ok:
         return store.update_job(
             job.id,
             status=JOB_STATUS_FAILED,
-            error=f"lake qfq latest {latest or 'unknown'} < {effective_date}",
+            error=f"bulk coverage incomplete; lake qfq latest {latest or 'unknown'}",
             ended=True,
         )
     return store.update_job(
@@ -438,13 +466,41 @@ def trigger_full_scan_and_daily(
             status=JOB_STATUS_NOT_READY,
         )
         return [store.update_job(job.id, error="bulk refresh incomplete", ended=True)]
+    existing_daily = store.latest_job(
+        "daily_report",
+        effective_date=effective_date,
+        statuses={JOB_STATUS_SUCCESS},
+    )
+    if existing_daily and not force:
+        return [
+            store.create_job(
+                "full_scan_and_daily",
+                effective_date=effective_date,
+                status=JOB_STATUS_SKIPPED,
+                metadata={
+                    "reason": "daily already completed",
+                    "existing_job_id": existing_daily.id,
+                },
+            )
+        ]
 
     results: list[JobRecord] = []
+    signal_date = signal_date_for_effective_date(effective_date)
+    effective_compact = effective_date.replace("-", "")
     elder = _ensure_scan_job(
         store,
         name="elder_scan",
         effective_date=effective_date,
-        command=[sys.executable, "-m", "trading_os", "scan-elder", "--date", effective_date],
+        command=[
+            sys.executable,
+            "-m",
+            "trading_os",
+            "scan-elder",
+            "--date",
+            signal_date,
+            "--output",
+            f"artifacts/scan/elder-{effective_compact}.json",
+        ],
         runner=runner,
         force=force,
     )
@@ -459,15 +515,16 @@ def trigger_full_scan_and_daily(
             "trading_os",
             "scan-canslim",
             "--date",
-            effective_date,
+            signal_date,
             "--live",
+            "--output",
+            f"artifacts/scan/canslim-{effective_compact}.json",
         ],
         runner=runner,
         force=force,
     )
     results.append(canslim)
-    scan_complete_statuses = {JOB_STATUS_SUCCESS, JOB_STATUS_SKIPPED}
-    if elder.status not in scan_complete_statuses or canslim.status not in scan_complete_statuses:
+    if elder.status != JOB_STATUS_SUCCESS or canslim.status != JOB_STATUS_SUCCESS:
         daily = store.create_job(
             "daily_report",
             effective_date=effective_date,
@@ -484,6 +541,7 @@ def trigger_full_scan_and_daily(
             "bulk_job_id": bulk.id,
             "elder_scan_job_id": elder.id,
             "canslim_scan_job_id": canslim.id,
+            "scan_signal_date": signal_date,
         },
     )
     store.update_job(daily.id, status=JOB_STATUS_RUNNING, started=True)
@@ -503,12 +561,7 @@ def _ensure_scan_job(
 ) -> JobRecord:
     existing = store.latest_job(name, effective_date=effective_date, statuses={JOB_STATUS_SUCCESS})
     if existing and not force:
-        return store.create_job(
-            name,
-            effective_date=effective_date,
-            status=JOB_STATUS_SKIPPED,
-            metadata={"reason": "already completed", "existing_job_id": existing.id},
-        )
+        return existing
     log_path = jobs_dir(store.root) / f"{name}-{effective_date}.log"
     job = store.create_job(name, effective_date=effective_date, log_path=log_path)
     store.update_job(job.id, status=JOB_STATUS_RUNNING, started=True)
@@ -529,8 +582,8 @@ def compute_daily_blocker(
     *,
     allow_historical: bool = False,
 ) -> str | None:
-    if effective_date != date.today().isoformat() and not allow_historical:
-        return "historical effective_date requires --allow-historical"
+    if allow_historical:
+        pass
     bulk = store.latest_job(
         "market_data_bulk_refresh",
         effective_date=effective_date,
@@ -541,18 +594,17 @@ def compute_daily_blocker(
         if progress and progress.get("status") == JOB_STATUS_RUNNING:
             return "market data bulk refresh is running"
         return "market data bulk refresh is incomplete"
-    scan_done = {JOB_STATUS_SUCCESS, JOB_STATUS_SKIPPED}
     elder = store.latest_job(
         "elder_scan",
         effective_date=effective_date,
-        statuses=scan_done,
+        statuses={JOB_STATUS_SUCCESS},
     )
     if not elder:
         return "Elder scan is incomplete"
     canslim = store.latest_job(
         "canslim_scan",
         effective_date=effective_date,
-        statuses=scan_done,
+        statuses={JOB_STATUS_SUCCESS},
     )
     if not canslim:
         return "CANSLIM scan is incomplete"
@@ -625,11 +677,17 @@ def generate_daily(
     effective_date: str | None = None,
     allow_historical: bool = False,
 ) -> Path:
-    effective_date = effective_date or date.today().isoformat()
+    default_effective = default_daily_effective_date(store)
+    if effective_date is not None and not allow_historical and effective_date != default_effective:
+        return write_blocked_daily(
+            store,
+            effective_date,
+            f"historical effective_date requires --allow-historical; latest is {default_effective}",
+        )
+    effective_date = effective_date or default_effective
     reason = compute_daily_blocker(store, effective_date, allow_historical=allow_historical)
     if reason:
         return write_blocked_daily(store, effective_date, reason)
-    scan_done = {JOB_STATUS_SUCCESS, JOB_STATUS_SKIPPED}
     bulk = store.latest_job(
         "market_data_bulk_refresh",
         effective_date=effective_date,
@@ -638,12 +696,12 @@ def generate_daily(
     elder = store.latest_job(
         "elder_scan",
         effective_date=effective_date,
-        statuses=scan_done,
+        statuses={JOB_STATUS_SUCCESS},
     )
     canslim = store.latest_job(
         "canslim_scan",
         effective_date=effective_date,
-        statuses=scan_done,
+        statuses={JOB_STATUS_SUCCESS},
     )
     if bulk is None or elder is None or canslim is None:
         return write_blocked_daily(
@@ -661,7 +719,24 @@ def generate_daily(
     )
 
 
-def lake_has_effective_date(root: Path, effective_date: str) -> tuple[bool, str | None]:
+def lake_has_effective_date(
+    root: Path,
+    effective_date: str,
+    *,
+    progress: dict | None = None,
+) -> tuple[bool, str | None]:
+    if progress is not None:
+        if (
+            progress.get("effective_date") != effective_date
+            or progress.get("status") != JOB_STATUS_SUCCESS
+        ):
+            return False, None
+        done = int(progress.get("done") or 0)
+        total = int(progress.get("total") or 0)
+        success = int(progress.get("success") or 0)
+        failed = int(progress.get("failed") or 0)
+        if total <= 0 or done < total or success + failed < total or failed > 0:
+            return False, None
     try:
         from .data.lake import LocalDataLake
 
@@ -707,6 +782,56 @@ def _latest_ready_probe_date(store: SchedulerStore) -> str | None:
 def _latest_success_date(store: SchedulerStore, name: str) -> str | None:
     job = store.latest_job(name, statuses={JOB_STATUS_SUCCESS})
     return job.effective_date if job else None
+
+
+def latest_complete_daily_effective_date(store: SchedulerStore) -> str | None:
+    query = """
+        SELECT b.effective_date
+        FROM jobs b
+        WHERE b.name='market_data_bulk_refresh'
+          AND b.status=?
+          AND EXISTS (
+            SELECT 1 FROM jobs e
+            WHERE e.name='elder_scan'
+              AND e.status=?
+              AND e.effective_date=b.effective_date
+          )
+          AND EXISTS (
+            SELECT 1 FROM jobs c
+            WHERE c.name='canslim_scan'
+              AND c.status=?
+              AND c.effective_date=b.effective_date
+          )
+        ORDER BY b.effective_date DESC, b.updated_at DESC
+        LIMIT 1
+    """
+    with store._connect() as con:
+        row = con.execute(
+            query,
+            [JOB_STATUS_SUCCESS, JOB_STATUS_SUCCESS, JOB_STATUS_SUCCESS],
+        ).fetchone()
+    return row[0] if row else None
+
+
+def default_daily_effective_date(store: SchedulerStore) -> str:
+    return (
+        latest_complete_daily_effective_date(store)
+        or _latest_success_date(store, "market_data_bulk_refresh")
+        or _latest_ready_probe_date(store)
+        or intended_market_effective_date().isoformat()
+    )
+
+
+def scheduled_market_data_probe(root: str | None = None) -> None:
+    trigger_market_data_probe(SchedulerStore(Path(root) if root else None))
+
+
+def scheduled_market_data_bulk_refresh(root: str | None = None) -> None:
+    trigger_market_data_bulk_refresh(SchedulerStore(Path(root) if root else None))
+
+
+def scheduled_full_scan_and_daily(root: str | None = None) -> None:
+    trigger_full_scan_and_daily(SchedulerStore(Path(root) if root else None))
 
 
 def cmd_scheduler(ns: argparse.Namespace) -> int:
@@ -777,23 +902,32 @@ def run_scheduler_service(store: SchedulerStore) -> int:
         jobstores={"default": SQLAlchemyJobStore(url=f"sqlite:///{store.db_path}")},
     )
 
-    def probe_and_continue() -> None:
-        probe = trigger_market_data_probe(store)
-        if probe.status == JOB_STATUS_SUCCESS:
-            effective_date = probe.metadata.get("effective_date")
-            bulk = trigger_market_data_bulk_refresh(
-                store,
-                effective_date=effective_date,
-            )
-            if bulk.status in {JOB_STATUS_SUCCESS, JOB_STATUS_SKIPPED}:
-                trigger_full_scan_and_daily(store, effective_date=effective_date)
-
     scheduler.add_job(
-        probe_and_continue,
+        scheduled_market_data_probe,
         "cron",
         hour="18-22",
         minute="0,30",
         id="market_data_probe",
+        args=[str(store.root)],
+        replace_existing=True,
+    )
+    scheduler.add_job(
+        scheduled_market_data_bulk_refresh,
+        "cron",
+        hour="18-22",
+        minute="10,40",
+        id="market_data_bulk_refresh",
+        args=[str(store.root)],
+        replace_existing=True,
+    )
+    scheduler.add_job(
+        scheduled_full_scan_and_daily,
+        "cron",
+        hour="18-23",
+        minute="20,50",
+        id="full_scan_and_daily",
+        args=[str(store.root)],
+        replace_existing=True,
     )
     print(f"scheduler running; db={store.db_path}")
     scheduler.start()

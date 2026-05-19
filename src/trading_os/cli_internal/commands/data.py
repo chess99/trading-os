@@ -388,21 +388,63 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
     root = repo_root()
     lock_path = _bulk_lock_path()
     progress_log = _bulk_progress_log_path()
-    job_id = f"fetch-ak-bulk-{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}-{uuid4().hex[:8]}"
+    job_stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    job_id = f"fetch-ak-bulk-{job_stamp}-{uuid4().hex[:8]}"
     effective_date = ns.end or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     started_at = datetime.now(timezone.utc).isoformat()
-    command = " ".join(["fetch-ak-bulk", "--start", str(ns.start), "--end", str(ns.end), "--adjustment", str(ns.adjustment)])
+    command = " ".join(
+        [
+            "fetch-ak-bulk",
+            "--start",
+            str(ns.start),
+            "--end",
+            str(ns.end),
+            "--adjustment",
+            str(ns.adjustment),
+        ]
+    )
     _acquire_bulk_lock(lock_path, job_id=job_id, command=command, effective_date=effective_date)
     progress_log.unlink(missing_ok=True)
+    _current_fetch_bulk_json_path(progress_log).unlink(missing_ok=True)
     _start_time = time.time()
+    progress_started = False
+    terminal_status: str | None = None
+    terminal_written = False
+    pairs: list = []
+    success = 0
+    failed_list: list[str] = []
+    _source_name = "unknown"
+
+    def _write_terminal_progress(status: str) -> None:
+        nonlocal terminal_written
+        if terminal_written:
+            return
+        pair_count = len(pairs) if pairs is not None else 0
+        _write_bulk_progress(
+            progress_log,
+            done=pair_count,
+            total=pair_count,
+            success=success,
+            failed=len(failed_list),
+            elapsed=time.time() - _start_time,
+            job_id=job_id,
+            effective_date=effective_date,
+            source=_source_name,
+            status=status,
+            started_at=started_at,
+        )
+        terminal_written = True
+
     try:
         adj = {"qfq": Adjustment.QFQ, "hfq": Adjustment.HFQ}.get(ns.adjustment, Adjustment.NONE)
         batch_size = 200
         pairs = _resolve_bulk_pairs(ns)
         if pairs is None:
+            terminal_status = "failed"
             return 1
         if not pairs:
             print("没有需要拉取的股票")
+            terminal_status = "skipped"
             return 0
 
         if ns.skip_existing:
@@ -417,6 +459,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
         if not pairs:
             print("没有需要拉取的股票")
+            terminal_status = "skipped"
             return 0
 
         start = ns.start or "2022-01-01"
@@ -437,6 +480,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
         print(f"开始批量拉取 {len(pairs)} 只（{'BaoStock' if _use_baostock else 'akshare'}，串行）")
         print(f"  日期范围: {start} ~ {end}，ETA 将按实际进度滚动计算")
+        _source_name = "baostock" if _use_baostock else "akshare"
         _write_bulk_progress(
             progress_log,
             done=0,
@@ -450,6 +494,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             status="running",
             started_at=started_at,
         )
+        progress_started = True
 
         if _use_baostock:
             def _bs_login() -> bool:
@@ -460,15 +505,13 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 return True
 
             if not _bs_login():
+                terminal_status = "failed"
                 return 1
 
         lake = LocalDataLake(root / "data")
-        success = 0
-        failed_list: list[str] = []
         batch: list[pd.DataFrame] = []
         batch_num = 0
         reconnect_interval = 500
-        _source_name = "baostock" if _use_baostock else "unknown"
         source_counter: dict[str, int] = {}
 
         def _flush_batch() -> None:
@@ -479,7 +522,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
             combined = pd.concat(batch, ignore_index=True)
             batch_num += 1
-            actual_src = combined["source"].iloc[0] if "source" in combined.columns else _source_name
+            actual_src = (
+                combined["source"].iloc[0] if "source" in combined.columns else _source_name
+            )
             try:
                 lake.write_bars_parquet(
                     combined,
@@ -490,7 +535,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 )
             except DataIntegrityError:
                 for sym, sym_df in combined.groupby("symbol"):
-                    sym_src = sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
+                    sym_src = (
+                        sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
+                    )
                     try:
                         lake.write_bars_parquet(
                             sym_df,
@@ -520,7 +567,14 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
                     sym_id = f"{exch.value}:{ticker}"
                     try:
-                        df = query_bars_with_session(bs, ticker, exchange=exch, start=start, end=end, adjustment=adj)
+                        df = query_bars_with_session(
+                            bs,
+                            ticker,
+                            exchange=exch,
+                            start=start,
+                            end=end,
+                            adjustment=adj,
+                        )
                         if df.empty:
                             failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
                             consecutive_failures += 1
@@ -533,7 +587,19 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                         err = str(exc)[:80]
                         failed_list.append(f"{sym_id}: {err}")
                         consecutive_failures += 1
-                        reconnect_keywords = ("connection", "login", "socket", "timeout", "timed out", "reset", "broken pipe", "网络", "接收错误", "连接失败", "10002")
+                        reconnect_keywords = (
+                            "connection",
+                            "login",
+                            "socket",
+                            "timeout",
+                            "timed out",
+                            "reset",
+                            "broken pipe",
+                            "网络",
+                            "接收错误",
+                            "连接失败",
+                            "10002",
+                        )
                         need_reconnect = any(k in err.lower() for k in reconnect_keywords)
                         if not need_reconnect and consecutive_failures >= max_consecutive_failures:
                             need_reconnect = True
@@ -577,11 +643,18 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             print(f"  源探测完成：首选 {preferred}，后续跳过不可用源", file=sys.stderr)
             if preferred == "none":
                 print("所有数据源均不可用，无法拉取数据", file=sys.stderr)
+                terminal_status = "failed"
                 return 1
             for i, (exch, ticker) in enumerate(pairs, 1):
                 sym_id = f"{exch.value}:{ticker}"
                 try:
-                    df, actual_source = ak_fetch(ticker, exchange=exch, start=start, end=end, adjustment=adj)
+                    df, actual_source = ak_fetch(
+                        ticker,
+                        exchange=exch,
+                        start=start,
+                        end=end,
+                        adjustment=adj,
+                    )
                     if df.empty:
                         failed_list.append(f"{sym_id}: 空数据")
                         consecutive_failures += 1
@@ -617,6 +690,10 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                     )
             _flush_batch()
     finally:
+        if terminal_status is not None:
+            _write_terminal_progress(terminal_status)
+        elif progress_started and sys.exc_info()[0] is not None:
+            _write_terminal_progress("failed")
         _release_bulk_lock(lock_path)
 
     lake.init()
@@ -639,19 +716,7 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         pass
 
     print(f"\n完成: 成功={success}, 失败={len(failed_list)}")
-    _write_bulk_progress(
-        progress_log,
-        done=len(pairs),
-        total=len(pairs),
-        success=success,
-        failed=len(failed_list),
-        elapsed=time.time() - _start_time,
-        job_id=job_id,
-        effective_date=effective_date,
-        source=_source_name,
-        status="success" if not failed_list else "failed",
-        started_at=started_at,
-    )
+    _write_terminal_progress("success" if not failed_list else "failed")
     if failed_list and ns.verbose:
         print("失败列表（前 20 条）:")
         for item in failed_list[:20]:

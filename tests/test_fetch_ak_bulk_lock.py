@@ -3,6 +3,7 @@
 import json
 import os
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -82,3 +83,51 @@ def test_lock_file_records_job_metadata(tmp_path):
     assert data["command"] == "python -m trading_os fetch-ak-bulk"
     assert data["effective_date"] == "2026-05-19"
     _release_bulk_lock(lock_path)
+
+
+def test_fetch_ak_bulk_failed_resolution_writes_terminal_progress(tmp_path, monkeypatch):
+    """股票列表解析失败早退时，结构化进度不能停留在 running。"""
+    import trading_os.cli_internal.commands.data as data_cmd
+
+    monkeypatch.setattr(data_cmd, "repo_root", lambda: tmp_path)
+    monkeypatch.setattr(data_cmd, "_resolve_bulk_pairs", lambda ns: None)
+    ns = SimpleNamespace(
+        adjustment="qfq",
+        start="2026-05-18",
+        end="2026-05-18",
+        skip_existing=False,
+        verbose=False,
+        tickers=None,
+    )
+
+    assert data_cmd._cmd_fetch_ak_bulk(ns) == 1
+
+    progress_path = tmp_path / "artifacts" / "jobs" / "current_fetch_bulk.json"
+    progress = json.loads(progress_path.read_text(encoding="utf-8"))
+    assert progress["status"] == "failed"
+    assert progress["done"] == 0
+    assert progress["total"] == 0
+    assert not (tmp_path / "artifacts" / "fetch_bulk.pid").exists()
+
+
+def test_fetch_ak_bulk_no_pairs_writes_skipped_progress(tmp_path, monkeypatch):
+    """没有可拉取股票时也要写终态，避免 stale running 误导 daily。"""
+    import trading_os.cli_internal.commands.data as data_cmd
+
+    monkeypatch.setattr(data_cmd, "repo_root", lambda: tmp_path)
+    monkeypatch.setattr(data_cmd, "_resolve_bulk_pairs", lambda ns: [])
+    ns = SimpleNamespace(
+        adjustment="qfq",
+        start="2026-05-18",
+        end="2026-05-18",
+        skip_existing=False,
+        verbose=False,
+        tickers=None,
+    )
+
+    assert data_cmd._cmd_fetch_ak_bulk(ns) == 0
+
+    progress = json.loads(
+        (tmp_path / "artifacts" / "jobs" / "current_fetch_bulk.json").read_text(encoding="utf-8")
+    )
+    assert progress["status"] == "skipped"
