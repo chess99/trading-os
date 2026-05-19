@@ -20,7 +20,7 @@ def test_backtest_ma_smoke():
         lake = LocalDataLake(pathlib.Path(tmp))
         bars = make_daily_bars("600000", exchange=Exchange.SSE)
         lake.write_bars_parquet(
-            bars, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+            bars, timeframe=Timeframe.D1,
             adjustment=Adjustment.QFQ, source="synthetic",
         )
         lake.init()
@@ -61,7 +61,7 @@ def test_backtest_bh_smoke():
         lake = LocalDataLake(pathlib.Path(tmp))
         bars = make_daily_bars("000001", exchange=Exchange.SZSE)
         lake.write_bars_parquet(
-            bars, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+            bars, timeframe=Timeframe.D1,
             adjustment=Adjustment.QFQ, source="synthetic",
         )
         lake.init()

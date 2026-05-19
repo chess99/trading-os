@@ -57,7 +57,7 @@ def _make_bar_df(symbol: str, closes: list, source: str = "akshare"):
 
 def test_price_continuity_passes_on_empty_lake(tmp_path):
     """First write to a new symbol must not raise (empty lake = no history)."""
-    from trading_os.data.schema import Exchange, Timeframe, Adjustment
+    from trading_os.data.schema import Timeframe, Adjustment
 
     lake = _make_lake(tmp_path)
     df = _make_bar_df("SSE:000001", [3200.0, 3210.0], source="akshare_index")
@@ -65,7 +65,6 @@ def test_price_continuity_passes_on_empty_lake(tmp_path):
     # Should not raise
     lake.write_bars_parquet(
         df,
-        exchange=Exchange.SSE,
         timeframe=Timeframe.D1,
         adjustment=Adjustment.NONE,
         source="akshare_index",
@@ -74,13 +73,12 @@ def test_price_continuity_passes_on_empty_lake(tmp_path):
 
 def test_price_continuity_passes_for_normal_equity_update(tmp_path):
     """Writing stock prices consistent with existing history must not raise."""
-    from trading_os.data.schema import Exchange, Timeframe, Adjustment
+    from trading_os.data.schema import Timeframe, Adjustment
 
     lake = _make_lake(tmp_path)
     existing = _make_bar_df("SSE:600000", [10.0, 10.1, 10.2, 10.3, 10.4])
     lake.write_bars_parquet(
         existing,
-        exchange=Exchange.SSE,
         timeframe=Timeframe.D1,
         adjustment=Adjustment.NONE,
         source="akshare",
@@ -91,7 +89,6 @@ def test_price_continuity_passes_for_normal_equity_update(tmp_path):
     # Should not raise
     lake.write_bars_parquet(
         new_data,
-        exchange=Exchange.SSE,
         timeframe=Timeframe.D1,
         adjustment=Adjustment.NONE,
         source="akshare",
@@ -100,7 +97,7 @@ def test_price_continuity_passes_for_normal_equity_update(tmp_path):
 
 def test_price_continuity_rejects_magnitude_jump(tmp_path):
     """Writing 平安银行 prices (~11) after 上证指数 history (~3800) must raise."""
-    from trading_os.data.schema import Exchange, Timeframe, Adjustment
+    from trading_os.data.schema import Timeframe, Adjustment
     from trading_os.data.exceptions import DataIntegrityError
 
     lake = _make_lake(tmp_path)
@@ -109,7 +106,6 @@ def test_price_continuity_rejects_magnitude_jump(tmp_path):
                              source="baostock")
     lake.write_bars_parquet(
         good_data,
-        exchange=Exchange.SSE,
         timeframe=Timeframe.D1,
         adjustment=Adjustment.NONE,
         source="baostock",
@@ -121,7 +117,6 @@ def test_price_continuity_rejects_magnitude_jump(tmp_path):
     with pytest.raises(DataIntegrityError):
         lake.write_bars_parquet(
             bad_data,
-            exchange=Exchange.SSE,
             timeframe=Timeframe.D1,
             adjustment=Adjustment.NONE,
             source="akshare",

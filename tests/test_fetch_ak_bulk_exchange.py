@@ -2,7 +2,7 @@
 """测试 _flush_batch 写入时 exchange 列按 symbol 正确推断，不硬编码 SSE。"""
 import pandas as pd
 
-from trading_os.data.schema import Exchange, Timeframe
+from trading_os.data.schema import Timeframe
 
 
 def _make_bar_df(symbol: str) -> pd.DataFrame:
@@ -28,16 +28,8 @@ def _run_flush_batch(tmp_path, symbols: list[str]) -> pd.DataFrame:
     adj = Adj.QFQ
 
     for sym, sym_df in combined.groupby("symbol"):
-        sym_str = str(sym)
-        if sym_str.startswith("SZSE:"):
-            actual_exchange = Exchange.SZSE
-        elif sym_str.startswith("SSE:"):
-            actual_exchange = Exchange.SSE
-        else:
-            actual_exchange = Exchange.SSE
         lake.write_bars_parquet(
             sym_df,
-            exchange=actual_exchange,
             timeframe=Timeframe.D1,
             adjustment=adj,
             source="baostock",

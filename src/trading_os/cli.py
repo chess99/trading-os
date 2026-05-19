@@ -99,7 +99,7 @@ def _cmd_fetch_bars(ns: argparse.Namespace) -> int:
             print("未获取到数据")
             return 1
         lake.write_bars_parquet(
-            df, exchange=exch, timeframe=Timeframe.D1, adjustment=adj,
+            df, timeframe=Timeframe.D1, adjustment=adj,
             source=actual_source, partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
         )
         lake.init()
@@ -216,7 +216,7 @@ def _cmd_lake_fix_index(ns: argparse.Namespace) -> int:
             return 1
 
         lake.write_bars_parquet(
-            df, exchange=exch, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
+            df, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
             source=source,
             partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
         )
@@ -475,35 +475,32 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             from .data.exceptions import DataIntegrityError
             combined = pd.concat(batch, ignore_index=True)
             batch_num += 1
-
-            # 为每个 symbol 推断 exchange 列（覆盖 write_bars_parquet 的 exchange 参数前置处理）
-            def _infer_exchange(sym: str) -> str:
-                if sym.startswith("SZSE:"):
-                    return Exchange.SZSE.value
-                if sym.startswith("SSE:"):
-                    return Exchange.SSE.value
-                return Exchange.SSE.value
-            combined["exchange"] = combined["symbol"].map(_infer_exchange)
-
-            # 按 exchange 分组写入：同一 exchange 一次写一个文件，避免覆盖
-            for exch_val, exch_df in combined.groupby("exchange"):
-                actual_exchange = Exchange(exch_val)
-                actual_src = exch_df["source"].iloc[0] if "source" in exch_df.columns else _source_name
-                try:
-                    lake.write_bars_parquet(
-                        exch_df,
-                        exchange=actual_exchange,
-                        timeframe=Timeframe.D1,
-                        adjustment=adj,
-                        source=actual_src,
-                        partition_hint=f"bulk_{batch_num:05d}",
-                    )
-                except DataIntegrityError as e:
-                    # 整组失败：计算失败 symbol 数并回滚 success 计数
-                    failed_syms = exch_df["symbol"].unique()
-                    for sym in failed_syms:
-                        failed_list.append(f"{sym}: DataIntegrityError - {e}")
-                    success -= len(failed_syms)
+            # 整批一次写入：write_bars_parquet 内部按 exchange 分组，各 exchange 写独立文件。
+            # DataIntegrityError 时逐 symbol 重试，把失败的单独记录。
+            actual_src = combined["source"].iloc[0] if "source" in combined.columns else _source_name
+            try:
+                lake.write_bars_parquet(
+                    combined,
+                    timeframe=Timeframe.D1,
+                    adjustment=adj,
+                    source=actual_src,
+                    partition_hint=f"bulk_{batch_num:05d}",
+                )
+            except DataIntegrityError:
+                # 整批失败时逐 symbol 重试，隔离单只股票的完整性错误
+                for sym, sym_df in combined.groupby("symbol"):
+                    sym_src = sym_df["source"].iloc[0] if "source" in sym_df.columns else _source_name
+                    try:
+                        lake.write_bars_parquet(
+                            sym_df,
+                            timeframe=Timeframe.D1,
+                            adjustment=adj,
+                            source=sym_src,
+                            partition_hint=f"bulk_{batch_num:05d}_{sym.replace(':', '_')}",
+                        )
+                    except DataIntegrityError as e2:
+                        failed_list.append(f"{sym}: DataIntegrityError - {e2}")
+                        success -= 1
             batch = []
 
         QUERY_INTERVAL = 0.4  # 每次查询间隔 0.4 秒，避免触发限速
@@ -670,7 +667,7 @@ def _cmd_fetch_yf(ns: argparse.Namespace) -> int:
         print("No data fetched.")
         return 1
     lake.write_bars_parquet(
-        df, exchange=exch, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
+        df, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
         source="yfinance", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
     )
     lake.init()
@@ -688,7 +685,7 @@ def _cmd_seed(ns: argparse.Namespace) -> int:
     exch = Exchange(ns.exchange)
     df = make_daily_bars(ns.ticker, exchange=exch).head(int(ns.days))
     lake.write_bars_parquet(
-        df, exchange=exch, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
+        df, timeframe=Timeframe.D1, adjustment=Adjustment.NONE,
         source="synthetic", partition_hint=datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S"),
     )
     lake.init()

@@ -3,7 +3,7 @@ import pytest
 import tempfile
 from pathlib import Path
 from trading_os.data.lake import LocalDataLake
-from trading_os.data.schema import Exchange, Timeframe, Adjustment
+from trading_os.data.schema import Timeframe, Adjustment
 from trading_os.data.exceptions import DataIntegrityError
 
 
@@ -31,7 +31,7 @@ def test_first_write_always_passes():
     """空 lake，任何数据都应通过"""
     lake, _ = _make_lake()
     df = _bar_df("SSE:600000", ["2026-01-01"], [10.0])
-    lake.write_bars_parquet(df, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
 
 
@@ -41,10 +41,10 @@ def test_normal_price_movement_passes():
     df1 = _bar_df("SSE:600000", ["2026-01-01", "2026-01-02", "2026-01-03",
                                   "2026-01-06", "2026-01-07"],
                   [10.0, 10.5, 9.8, 10.2, 10.3])
-    lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
     df2 = _bar_df("SSE:600000", ["2026-01-08"], [10.8])
-    lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
 
 
@@ -54,10 +54,10 @@ def test_qfq_historical_low_passes():
     df1 = _bar_df("SSE:600031", ["2005-01-01", "2005-01-02", "2005-01-03",
                                   "2005-01-04", "2005-01-05"],
                   [0.41, 0.42, 0.40, 0.39, 0.43])
-    lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
     df2 = _bar_df("SSE:600031", ["2005-01-06"], [0.40])
-    lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
 
 
@@ -67,11 +67,11 @@ def test_magnitude_error_blocked():
     df1 = _bar_df("SSE:600031", ["2026-01-01", "2026-01-02", "2026-01-03",
                                   "2026-01-06", "2026-01-07"],
                   [24.5, 25.0, 25.2, 24.8, 25.1])
-    lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
     df2 = _bar_df("SSE:600031", ["2026-01-08"], [0.025])
     with pytest.raises(DataIntegrityError):
-        lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+        lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                                  adjustment=Adjustment.QFQ, source="akshare")
 
 
@@ -81,13 +81,13 @@ def test_mixed_history_does_not_false_positive():
     mixed_dates = ["2005-01-01", "2020-01-01", "2023-01-01", "2025-01-01", "2026-01-01"]
     mixed_closes = [0.41, 5.0, 15.0, 22.0, 25.0]  # 跨越 60x
     df1 = _bar_df("SSE:600031", mixed_dates, mixed_closes)
-    lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
     # 新数据0.40 — 与历史最低0.41接近，应通过（不被误拦）
     # 当前 median 逻辑：median([25, 22, 15, 5, 0.41]) = 15, lo=15/50=0.30, hi=750
     # 0.40 > 0.30，通过
     df2 = _bar_df("SSE:600031", ["2026-01-02"], [0.40])
-    lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
 
 
@@ -110,13 +110,13 @@ def test_recent_modern_history_does_not_block_qfq_low():
     df1 = _bar_df("SSE:600031", ["2026-01-01", "2026-01-02", "2026-01-03",
                                   "2026-01-06", "2026-01-07"],
                   [24.5, 25.0, 25.2, 24.8, 25.1])
-    lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="akshare")
     # 新数据0.40：这确实是数量级异常（25元 → 0.40，差60倍），应该被拦截
     # 修复的重点是 _flush_batch 不 crash，而是记录为 failed 继续
     df2 = _bar_df("SSE:600031", ["2026-01-08"], [0.40])
     with pytest.raises(DataIntegrityError):
-        lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+        lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                                  adjustment=Adjustment.QFQ, source="akshare")
 
 
@@ -142,7 +142,7 @@ def test_volume_unit_first_write_passes():
     """空 lake，任何 volume 应通过（无参考数据）"""
     lake, _ = _make_lake()
     df = _bar_df_with_vol("SSE:601138", ["2026-01-01"], [65.0], [200_000])
-    lake.write_bars_parquet(df, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="sina")
 
 
@@ -158,14 +158,14 @@ def test_volume_unit_lot_data_blocked():
     dates_existing = [f"2026-01-{d:02d}" for d in range(2, 12)]
     df1 = _bar_df_with_vol("SSE:601138", dates_existing, [65.0] * 10,
                            [share_vol] * 10)
-    lake.write_bars_parquet(df1, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="baostock")
 
     # 尝试写入手数数据（volume = share_vol / 100）
     lot_vol = share_vol // 100  # 200万手，是股数的 1/100
     df2 = _bar_df_with_vol("SSE:601138", ["2026-01-13"], [65.5], [lot_vol])
     with pytest.raises(DataIntegrityError):
-        lake.write_bars_parquet(df2, exchange=Exchange.SSE, timeframe=Timeframe.D1,
+        lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                                  adjustment=Adjustment.QFQ, source="eastmoney")
 
 
@@ -175,13 +175,13 @@ def test_volume_unit_normal_variation_passes():
     base_vol = 10_000_000  # 1千万股
     dates = [f"2026-01-{d:02d}" for d in range(2, 12)]
     df1 = _bar_df_with_vol("SZSE:300857", dates, [280.0] * 10, [base_vol] * 10)
-    lake.write_bars_parquet(df1, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="baostock")
 
     # 成交量减少到基准的 5%（仍在 1/50 阈值以上）
     df2 = _bar_df_with_vol("SZSE:300857", ["2026-01-13"], [281.0],
                            [int(base_vol * 0.06)])
-    lake.write_bars_parquet(df2, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="sina")
 
 
@@ -193,10 +193,10 @@ def test_volume_unit_small_cap_low_volume_passes():
             1_500_000, 1_800_000, 2_000_000, 1_600_000, 1_700_000]
     dates = [f"2026-01-{d:02d}" for d in range(2, 12)]
     df1 = _bar_df_with_vol("SZSE:301061", dates, [65.0] * 10, vols)
-    lake.write_bars_parquet(df1, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df1, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="baostock")
 
     # 新数据仍在同量级范围内（~130万）
     df2 = _bar_df_with_vol("SZSE:301061", ["2026-01-13"], [65.6], [1_300_000])
-    lake.write_bars_parquet(df2, exchange=Exchange.SZSE, timeframe=Timeframe.D1,
+    lake.write_bars_parquet(df2, timeframe=Timeframe.D1,
                              adjustment=Adjustment.QFQ, source="sina")

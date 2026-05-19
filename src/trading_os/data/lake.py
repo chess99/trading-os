@@ -312,18 +312,27 @@ class LocalDataLake:
                 actual_value=new_median,
             )
 
+    @staticmethod
+    def _exchange_from_symbol(symbol: str) -> "Exchange":
+        """Infer Exchange from symbol string (e.g. 'SSE:600000' → Exchange.SSE)."""
+        if symbol.startswith("SZSE:"):
+            return Exchange.SZSE
+        if symbol.startswith("SSE:"):
+            return Exchange.SSE
+        raise ValueError(f"Cannot infer exchange from symbol: {symbol!r}")
+
     def write_bars_parquet(
         self,
         df: Any,
         *,
-        exchange: Exchange,
         timeframe: Timeframe,
         adjustment: Adjustment = Adjustment.NONE,
         source: str,
         partition_hint: str | None = None,
-    ) -> Path:
-        """Append bars to parquet.
+    ) -> list["Path"]:
+        """Append bars to parquet. Exchange is inferred from the symbol column.
 
+        Returns a list of paths written (one per exchange present in df).
         We store as multiple Parquet files (append-only). Downstream queries use DuckDB view `bars`.
         """
 
@@ -341,30 +350,28 @@ class LocalDataLake:
             raise ValueError(f"bars df missing columns: {missing}")
 
         # ── price continuity guard ──────────────────────────────────────────
-        # Reject writes that would create a magnitude discontinuity.
-        # Only checks symbols present in df; skips silently if lake is empty.
         if BarColumns.symbol in df.columns:
             for sym in df[BarColumns.symbol].unique():
                 self._check_price_continuity(df[df[BarColumns.symbol] == sym], sym)
         # ───────────────────────────────────────────────────────────────────
 
         # ── volume unit guard ───────────────────────────────────────────────
-        # Reject writes where volume looks like lots (手) rather than shares (股).
         if BarColumns.symbol in df.columns:
             for sym in df[BarColumns.symbol].unique():
                 self._check_volume_unit(df[df[BarColumns.symbol] == sym], sym)
         # ───────────────────────────────────────────────────────────────────
 
         out = df.copy()
-        # Normalize ts to tz-aware UTC
         if BarColumns.ts in out.columns:
             out[BarColumns.ts] = self._pd.to_datetime(out[BarColumns.ts], utc=True)
-        out[BarColumns.exchange] = exchange.value
+        # Infer exchange from symbol — single source of truth, no caller override.
+        out[BarColumns.exchange] = out[BarColumns.symbol].map(
+            lambda s: self._exchange_from_symbol(s).value
+        )
         out[BarColumns.timeframe] = timeframe.value
         out[BarColumns.adjustment] = adjustment.value
         out[BarColumns.source] = source
 
-        # ensure ordering
         cols = [
             BarColumns.symbol,
             BarColumns.exchange,
@@ -383,10 +390,14 @@ class LocalDataLake:
         out = out[[c for c in cols if c in out.columns]]
 
         suffix = partition_hint or "append"
-        filename = f"bars_{exchange.value}_{timeframe.value}_{adjustment.value}_{suffix}.parquet"
-        path = self.paths.bars_dir / filename
-        out.to_parquet(path, index=False)
-        return path
+        paths: list[Path] = []
+        # Group by exchange so each exchange gets its own file (no overwrites).
+        for exch_val, group in out.groupby(BarColumns.exchange):
+            filename = f"bars_{exch_val}_{timeframe.value}_{adjustment.value}_{suffix}.parquet"
+            path = self.paths.bars_dir / filename
+            group.to_parquet(path, index=False)
+            paths.append(path)
+        return paths
 
     def query_bars(
         self,

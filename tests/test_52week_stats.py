@@ -7,7 +7,7 @@ pd = pytest.importorskip("pandas")
 
 def _make_lake_with_bars(data_path: pathlib.Path, symbol: str, closes: list, adj: str = "qfq"):
     from trading_os.data.lake import LocalDataLake
-    from trading_os.data.schema import Adjustment, Exchange, Timeframe
+    from trading_os.data.schema import Adjustment, Timeframe
 
     lake = LocalDataLake(data_path)
     n = len(closes)
@@ -24,7 +24,6 @@ def _make_lake_with_bars(data_path: pathlib.Path, symbol: str, closes: list, adj
     })
     lake.write_bars_parquet(
         df,
-        exchange=Exchange(symbol.split(":")[0]),
         timeframe=Timeframe.D1,
         adjustment=Adjustment(adj),
         source="synthetic",
