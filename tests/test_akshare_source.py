@@ -140,3 +140,30 @@ def test_fetch_daily_bars_default_asset_type_is_equity():
         df, source = fetch_daily_bars("600000", exchange=Exchange.SSE, adjustment=Adjustment.QFQ)
 
     assert source == "eastmoney"
+
+
+def test_normalize_akshare_data_tolerates_nan_volume():
+    from trading_os.data.schema import Adjustment, Exchange
+    from trading_os.data.sources.akshare_source import _normalize_akshare_data
+
+    raw = pd.DataFrame({
+        "日期": pd.date_range("2026-05-01", periods=2, freq="B"),
+        "开盘": [10.0, 10.1],
+        "最高": [10.2, 10.3],
+        "最低": [9.8, 9.9],
+        "收盘": [10.1, 10.2],
+        "成交量": [1000000, None],
+        "成交额": [10000000.0, 0.0],
+    })
+
+    df = _normalize_akshare_data(
+        raw,
+        ticker="600355",
+        exchange=Exchange.SSE,
+        adjustment=Adjustment.QFQ,
+        source_name="baostock",
+    )
+
+    assert len(df) == 2
+    assert df["trades"].iloc[0] == 10000
+    assert df["trades"].iloc[1] == 0

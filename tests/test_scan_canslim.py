@@ -136,6 +136,8 @@ def test_scan_canslim_passing_stock():
         # Should produce 1 candidate (all conditions pass)
         assert len(result["candidates"]) == 1
         assert result["candidates"][0]["signals"]["eps_growth_yoy"] > 0
+        assert result["_stats"]["matched_total"] == 1
+        assert result["_stats"]["output_count"] == 1
 
 
 def test_scan_canslim_low_eps_growth_filtered():
@@ -155,3 +157,23 @@ def test_scan_canslim_low_eps_growth_filtered():
         )
         assert result["candidates"] == []
         assert result["_stats"]["no_signal"] == 1
+        assert result["_stats"]["matched_total"] == 0
+
+
+def test_scan_canslim_tracks_matched_total_before_top_n():
+    import pandas as pd
+    with tempfile.TemporaryDirectory() as tmp:
+        data_root = Path(tmp)
+        symbols = [f"SSE:{600000 + i}" for i in range(4)]
+        bars = pd.concat([_make_bars(sym, days=300) for sym in symbols], ignore_index=True)
+        for sym in symbols:
+            _write_fundamental(data_root, sym, _make_fundamental(sym, eps_growth=0.35, roe=0.25))
+        result = scan_canslim(
+            symbols, bars,
+            scan_date=date(2024, 3, 15),
+            data_root=data_root,
+            top_n=2,
+        )
+        assert result["_stats"]["matched_total"] == 4
+        assert result["_stats"]["output_count"] == 2
+        assert len(result["candidates"]) == 2

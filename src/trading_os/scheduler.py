@@ -53,6 +53,24 @@ def current_fetch_bulk_path(root: Path | None = None) -> Path:
     return (root or repo_root()) / "artifacts" / "jobs" / "current_fetch_bulk.json"
 
 
+def daily_summary_path(
+    effective_date: str,
+    *,
+    root: Path | None = None,
+    historical: bool = False,
+) -> Path:
+    suffix = "-historical-summary" if historical else "-summary"
+    return (root or repo_root()) / "artifacts" / "daily" / f"{effective_date.replace('-', '')}{suffix}.md"
+
+
+def research_daily_path(
+    effective_date: str,
+    *,
+    root: Path | None = None,
+) -> Path:
+    return (root or repo_root()) / "artifacts" / "daily" / f"{effective_date.replace('-', '')}.md"
+
+
 @dataclass(slots=True)
 class JobRecord:
     id: str
@@ -235,6 +253,7 @@ class SchedulerStore:
         fetch_progress = load_json(current_fetch_bulk_path(self.root))
         effective_date = default_daily_effective_date(self)
         blocked_reason = compute_daily_blocker(self, effective_date)
+        latest_completed_daily = latest_complete_daily_effective_date(self)
         return {
             "updated_at": utc_now(),
             "scheduler_db": str(self.db_path),
@@ -242,6 +261,12 @@ class SchedulerStore:
             "fetch_bulk": fetch_progress,
             "daily_effective_date": effective_date,
             "daily_blocked_reason": blocked_reason,
+            "latest_completed_daily_effective_date": latest_completed_daily,
+            "latest_completed_daily_report": (
+                str(daily_summary_path(latest_completed_daily, root=self.root))
+                if latest_completed_daily
+                else None
+            ),
             "next_probe_window": PROBE_WINDOW_TEXT,
         }
 
@@ -419,15 +444,27 @@ def trigger_market_data_bulk_refresh(
         "qfq",
     ]
     code = runner(cmd, log_path)
+    progress = load_json(current_fetch_bulk_path(store.root))
+    ok, latest = lake_has_effective_date(store.root, effective_date, progress=progress)
     if code != 0:
+        exception_ok, inactive = bulk_coverage_exception(store.root, effective_date)
+        if ok and exception_ok:
+            return store.update_job(
+                job.id,
+                status=JOB_STATUS_SUCCESS,
+                metadata={
+                    "lake_latest_qfq": latest,
+                    "coverage_exception": inactive,
+                    "warning": "inactive laggards excluded from blocking bulk success",
+                },
+                ended=True,
+            )
         return store.update_job(
             job.id,
             status=JOB_STATUS_FAILED,
             error=f"exit code {code}",
             ended=True,
         )
-    progress = load_json(current_fetch_bulk_path(store.root))
-    ok, latest = lake_has_effective_date(store.root, effective_date, progress=progress)
     if not ok:
         return store.update_job(
             job.id,
@@ -706,11 +743,10 @@ def write_complete_daily(
     import json
     from .cli_internal.commands.pool import _load_pool, sync_candidates_from_scan
 
-    suffix = "-historical" if historical else ""
-    out = store.root / "artifacts" / "daily" / f"{effective_date.replace('-', '')}{suffix}.md"
+    out = daily_summary_path(effective_date, root=store.root, historical=historical)
     out.parent.mkdir(parents=True, exist_ok=True)
     pool_path = store.root / "artifacts" / "watchlist" / "pool.json"
-    title = "Historical Daily Review" if historical else "Daily Workflow"
+    title = "Historical Daily Summary" if historical else "Daily Workflow Summary"
     effective_compact = effective_date.replace("-", "")
     elder_scan_path = store.root / "artifacts" / "scan" / f"elder-{effective_compact}.json"
     canslim_scan_path = store.root / "artifacts" / "scan" / f"canslim-{effective_compact}.json"
@@ -730,6 +766,7 @@ def write_complete_daily(
         pool_path=pool_path,
     )
     pool_data = _load_pool(pool_path)
+    research_path = research_daily_path(effective_date, root=store.root)
     ready_items = []
     for sys_name in ["canslim", "elder", "value"]:
         ready_items.extend(
@@ -744,17 +781,35 @@ def write_complete_daily(
         f"- market_data_bulk_refresh: `{bulk.id}` ({bulk.status})",
         f"- elder_scan: `{elder.id}` ({elder.status})",
         f"- canslim_scan: `{canslim.id}` ({canslim.status})",
+        (
+            f"- research_report: `{research_path}`"
+            if research_path.exists()
+            else "- research_report: `not generated`"
+        ),
         "",
         "## Scan Summary",
         "",
-        f"- Elder: scanned `{elder_scan.get('total_scanned', 0)}` / candidates `{len(elder_scan.get('candidates', []))}`",
-        f"- CANSLIM: scanned `{canslim_scan.get('total_scanned', 0)}` / candidates `{len(canslim_scan.get('candidates', []))}`",
+        (
+            f"- Elder: scanned `{elder_scan.get('total_scanned', 0)}` / "
+            f"matched `{elder_scan.get('candidates_total', len(elder_scan.get('candidates', [])))}` / "
+            f"output `{elder_scan.get('candidates_output_count', len(elder_scan.get('candidates', [])))}`"
+        ),
+        (
+            f"- CANSLIM: scanned `{canslim_scan.get('total_scanned', 0)}` / "
+            f"matched `{canslim_scan.get('candidates_total', len(canslim_scan.get('candidates', [])))}` / "
+            f"output `{canslim_scan.get('candidates_output_count', len(canslim_scan.get('candidates', [])))}`"
+        ),
         "",
         "## Pool Update",
         "",
+        f"- CANSLIM scan matched total: `{canslim_sync['scan_candidates_total']}`",
+        f"- CANSLIM scan output considered: `{canslim_sync['scan_candidates']}`",
+        f"- Eligible after policy filter: `{canslim_sync['eligible_after_policy_filter']}`",
+        f"- Actually written to candidates: `{canslim_sync['actually_written']}`",
         f"- CANSLIM candidates rebuilt: `{canslim_sync['previous_candidates']}` -> `{canslim_sync['next_candidates']}`",
         f"- Added: `{', '.join(canslim_sync['added']) if canslim_sync['added'] else 'none'}`",
         f"- Dropped: `{', '.join(canslim_sync['dropped']) if canslim_sync['dropped'] else 'none'}`",
+        f"- Already active in watchlist/ready: `{', '.join(canslim_sync['already_active']) if canslim_sync['already_active'] else 'none'}`",
         f"- Blocked re-entry: `{', '.join(canslim_sync['blocked_reentry']) if canslim_sync['blocked_reentry'] else 'none'}`",
         f"- Current CANSLIM watchlist/ready: watchlist `{len(canslim_pool.get('watchlist', []))}` / ready `{len(canslim_pool.get('ready', []))}`",
         "",
@@ -773,6 +828,7 @@ def write_complete_daily(
         "",
         "## Notes",
         "",
+        "- This file is a scheduler-generated workflow summary, not the research daily.",
         "- Value pool is carried forward from existing manual tracking; it is not rebuilt by scheduler daily.",
         "- This report is generated only after all upstream jobs for the same effective_date completed.",
     ])
@@ -871,6 +927,76 @@ def lake_has_effective_date(
         return False, None
     latest = row[0].isoformat() if hasattr(row[0], "isoformat") else str(row[0])
     return latest >= effective_date, latest
+
+
+def lagging_qfq_symbols(root: Path, effective_date: str) -> list[tuple[str, str]]:
+    try:
+        import duckdb
+
+        con = duckdb.connect(str(root / "data" / "lake.duckdb"), read_only=False)
+        rows = con.execute(
+            """
+            SELECT symbol, CAST(MAX(ts) AS DATE)::VARCHAR AS latest
+            FROM read_parquet(?, union_by_name=true)
+            WHERE timeframe='1d' AND adjustment='qfq'
+            GROUP BY symbol
+            HAVING CAST(MAX(ts) AS DATE) < CAST(? AS DATE)
+            ORDER BY latest DESC, symbol
+            """,
+            [str(root / "data" / "parquet" / "bars" / "*.parquet"), effective_date],
+        ).fetchall()
+        con.close()
+        return [(str(symbol), str(latest)) for symbol, latest in rows]
+    except Exception:
+        return []
+
+
+def inactive_laggards_as_of(effective_date: str, laggards: list[tuple[str, str]]) -> list[dict]:
+    if not laggards:
+        return []
+    try:
+        import baostock as bs
+
+        lg = bs.login()
+        if lg.error_code != "0":
+            return []
+        inactive = []
+        for symbol, latest in laggards:
+            exch, ticker = symbol.split(":", 1)
+            code = f"{'sh' if exch == 'SSE' else 'sz'}.{ticker}"
+            rs = bs.query_stock_basic(code=code)
+            rows = []
+            while rs.error_code == "0" and rs.next():
+                rows.append(rs.get_row_data())
+            if not rows:
+                continue
+            row = rows[0]
+            out_date = row[3]
+            status = row[5]
+            if status != "1" and out_date and out_date <= effective_date:
+                inactive.append(
+                    {
+                        "symbol": symbol,
+                        "latest": latest,
+                        "name": row[1],
+                        "out_date": out_date,
+                        "status": status,
+                    }
+                )
+        bs.logout()
+        return inactive
+    except Exception:
+        return []
+
+
+def bulk_coverage_exception(root: Path, effective_date: str) -> tuple[bool, list[dict]]:
+    laggards = lagging_qfq_symbols(root, effective_date)
+    if not laggards:
+        return False, []
+    inactive = inactive_laggards_as_of(effective_date, laggards)
+    if inactive and len(inactive) == len(laggards):
+        return True, inactive
+    return False, inactive
 
 
 def classify_bulk_lock(lock_path: Path) -> dict:

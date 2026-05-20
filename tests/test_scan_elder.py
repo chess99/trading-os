@@ -147,3 +147,5 @@ def test_scan_elder_top_n_respected():
     all_bars = pd.concat(bars_list)
     result = scan_elder(symbols, all_bars, scan_date=date(2024, 3, 15), top_n=3)
     assert len(result["candidates"]) <= 3
+    assert result["_stats"]["output_count"] == len(result["candidates"])
+    assert result["_stats"]["matched_total"] >= len(result["candidates"])

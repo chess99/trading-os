@@ -28,7 +28,6 @@ def _run_scan(
     output_path = root / ns.output if ns.output else root / "artifacts" / "scan" / f"{system_name}-{scan_date.isoformat().replace('-', '')}.json"
 
     lake = LocalDataLake(root / "data")
-    lake.init()
     pipeline = DataPipeline(lake)
     akshare = AkshareFactorSource()
     print(f"Scanning {system_name} signals for {scan_date}...")
@@ -37,6 +36,7 @@ def _run_scan(
     except RuntimeError as exc:
         print(str(exc), file=sys.stderr)
         return 1
+    universe_total = len(symbols) + no_data
     print(f"  Local symbols: {len(symbols)} ({no_data} without local data)")
 
     batch_size = 500
@@ -52,6 +52,7 @@ def _run_scan(
     else:
         low_turnover = len(symbols)
         symbols = []
+    scanner_input_total = len(symbols)
 
     kwargs: dict = {"scan_date": scan_date, "top_n": ns.top}
     if scanner_kwargs:
@@ -77,7 +78,11 @@ def _run_scan(
         "signal_date": scan_date.isoformat(),
         "scan_date": scan_date.isoformat(),
         "system": system_name,
-        "total_scanned": len(symbols) + result["_stats"]["insufficient_data"] + result["_stats"]["no_signal"],
+        "universe_total": universe_total,
+        "after_turnover_filter": scanner_input_total,
+        "total_scanned": scanner_input_total,
+        "candidates_total": result["_stats"].get("matched_total", len(result["candidates"])),
+        "candidates_output_count": result["_stats"].get("output_count", len(result["candidates"])),
         "candidates": result["candidates"],
         "filtered_out": {
             "no_data": no_data,

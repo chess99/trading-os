@@ -353,13 +353,14 @@ def _normalize_akshare_data(
         # 如果没有成交额，使用简单平均价
         df["vwap"] = (df["high"] + df["low"] + df["close"]) / 3
 
-    # 交易笔数 (akshare通常不提供，使用估算)
-    df["trades"] = (df["volume"] / 100).astype(int)  # 估算：平均每手100股
-
     # 确保数值类型
-    numeric_columns = ["open", "high", "low", "close", "volume", "vwap", "trades"]
+    numeric_columns = ["open", "high", "low", "close", "volume", "vwap"]
     for col in numeric_columns:
         df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    # 交易笔数 (akshare通常不提供，使用估算)
+    # 先统一 volume 为数值，再对缺失值安全降级为 0，避免个别异常行导致整只股票失败。
+    df["trades"] = np.floor(df["volume"].fillna(0) / 100).astype(int)
 
     # 按时间排序
     df = df.sort_values("ts").reset_index(drop=True)

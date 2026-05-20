@@ -175,6 +175,7 @@ def scan_canslim(
 
     # 排序 + 截取 top_n
     candidates.sort(key=lambda x: x["score"], reverse=True)
+    matched_total = len(candidates)
     candidates = candidates[:top_n]
     for i, c in enumerate(candidates, 1):
         c["rank"] = i
@@ -184,6 +185,8 @@ def scan_canslim(
         "_stats": {
             "insufficient_data": insufficient_data,
             "no_signal": no_signal,
+            "matched_total": matched_total,
+            "output_count": len(candidates),
         },
     }
 
@@ -300,6 +303,7 @@ def scan_canslim_live(
 
     # 排序 + 截取 top_n
     candidates.sort(key=lambda x: x["score"], reverse=True)
+    matched_total = len(candidates)
     candidates = candidates[:top_n]
     for i, c in enumerate(candidates, 1):
         c["rank"] = i
@@ -310,5 +314,7 @@ def scan_canslim_live(
         "_stats": {
             "insufficient_data": insufficient_data,
             "no_signal": no_signal,
+            "matched_total": matched_total,
+            "output_count": len(candidates),
         },
     }

@@ -70,6 +70,42 @@ def test_probe_ready_then_bulk_job_created(tmp_path, monkeypatch):
     assert "fetch-ak-bulk" in calls[0][0]
 
 
+def test_bulk_nonzero_can_still_succeed_when_only_inactive_laggards_remain(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
+    from trading_os.scheduler import JOB_STATUS_SUCCESS, SchedulerStore
+
+    store = SchedulerStore(tmp_path)
+    effective = "2026-05-19"
+    scheduler.trigger_market_data_probe(
+        store,
+        probe_fn=lambda: {
+            "effective_date": effective,
+            "ready": True,
+            "sentinels": {},
+            "errors": {},
+            "wall_clock_date": "2026-05-20",
+        },
+    )
+    monkeypatch.setattr(
+        scheduler,
+        "lake_has_effective_date",
+        lambda root, effective_date, progress=None: (True, effective_date),
+    )
+    monkeypatch.setattr(
+        scheduler,
+        "bulk_coverage_exception",
+        lambda root, effective_date: (
+            True,
+            [{"symbol": "SSE:600355", "out_date": "2026-04-27", "status": "0"}],
+        ),
+    )
+
+    job = scheduler.trigger_market_data_bulk_refresh(store, runner=lambda args, log_path: 1)
+
+    assert job.status == JOB_STATUS_SUCCESS
+    assert job.metadata["coverage_exception"][0]["symbol"] == "SSE:600355"
+
+
 def test_probe_uses_market_effective_date_not_wall_clock_today():
     from trading_os.scheduler import intended_market_effective_date
 
@@ -136,14 +172,90 @@ def test_daily_complete_only_after_bulk_and_both_scans(tmp_path, monkeypatch):
         lambda now=None: date.fromisoformat(today),
     )
 
+    daily_dir = tmp_path / "artifacts" / "daily"
+    daily_dir.mkdir(parents=True, exist_ok=True)
+    (tmp_path / "artifacts" / "scan").mkdir(parents=True, exist_ok=True)
+    (tmp_path / "artifacts" / "watchlist").mkdir(parents=True, exist_ok=True)
+    (tmp_path / "artifacts" / "watchlist" / "pool.json").write_text(
+        json.dumps(
+            {
+                "last_updated": "",
+                "pools": {
+                    "canslim": {"candidates": [], "watchlist": [], "ready": []},
+                    "elder": {"candidates": [], "watchlist": [], "ready": []},
+                    "value": {"candidates": [], "watchlist": [], "ready": []},
+                },
+                "exited": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "artifacts" / "scan" / f"elder-{today.replace('-', '')}.json").write_text(
+        json.dumps(
+            {
+                "effective_date": today,
+                "signal_date": today,
+                "scan_date": today,
+                "system": "elder",
+                "total_scanned": 5,
+                "candidates_total": 2,
+                "candidates_output_count": 2,
+                "candidates": [{"symbol": "SSE:600000"}],
+                "filtered_out": {"no_data": 0, "low_turnover": 0, "insufficient_data": 1, "no_signal": 2},
+            }
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "artifacts" / "scan" / f"canslim-{today.replace('-', '')}.json").write_text(
+        json.dumps(
+            {
+                "effective_date": today,
+                "signal_date": today,
+                "scan_date": today,
+                "system": "canslim",
+                "total_scanned": 7,
+                "candidates_total": 4,
+                "candidates_output_count": 3,
+                "candidates": [{"symbol": "SSE:600001", "rank": 1, "score": 9.0, "name": "A"}],
+                "filtered_out": {"no_data": 0, "low_turnover": 0, "insufficient_data": 1, "no_signal": 3},
+            }
+        ),
+        encoding="utf-8",
+    )
+
     path = generate_daily(store, effective_date=today)
 
     text = path.read_text(encoding="utf-8")
-    assert path.name == f"{today.replace('-', '')}.md"
+    assert path.name == f"{today.replace('-', '')}-summary.md"
     assert bulk.id in text
     assert elder.id in text
     assert canslim.id in text
     assert "## Scan Summary" in text
+    assert "matched `4` / output `3`" in text
+
+
+def test_status_snapshot_reports_latest_completed_daily(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
+    from trading_os.scheduler import JOB_STATUS_SUCCESS, SchedulerStore
+
+    completed = "2026-05-19"
+    intended = "2026-05-20"
+    store = SchedulerStore(tmp_path)
+    store.create_job("market_data_bulk_refresh", effective_date=completed, status=JOB_STATUS_SUCCESS)
+    store.create_job("elder_scan", effective_date=completed, status=JOB_STATUS_SUCCESS)
+    store.create_job("canslim_scan", effective_date=completed, status=JOB_STATUS_SUCCESS)
+    store.create_job("daily_report", effective_date=completed, status=JOB_STATUS_SUCCESS)
+    monkeypatch.setattr(
+        scheduler,
+        "intended_market_effective_date",
+        lambda now=None: date.fromisoformat(intended),
+    )
+
+    snapshot = store.status_snapshot()
+
+    assert snapshot["daily_effective_date"] == intended
+    assert snapshot["latest_completed_daily_effective_date"] == completed
+    assert snapshot["latest_completed_daily_report"].endswith("20260519-summary.md")
 
 
 def test_daily_defaults_to_intended_effective_date_and_does_not_fallback(tmp_path, monkeypatch):

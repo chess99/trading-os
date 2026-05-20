@@ -168,8 +168,11 @@ def sync_candidates_from_scan(
         "effective_date": effective_date,
         "signal_date": signal_date,
         "scan_candidates": len(scan_candidates),
+        "scan_candidates_total": int(scan_data.get("candidates_total") or len(scan_candidates)),
         "previous_candidates": len(old_candidates),
         "next_candidates": len(next_candidates),
+        "eligible_after_policy_filter": len(next_candidates) + len(retained_symbols),
+        "actually_written": len(next_candidates),
         "added": sorted([sym for sym in scan_candidates if sym not in old_candidates and sym not in active_non_candidates and sym not in exited_symbols]),
         "dropped": sorted([sym for sym in old_candidates if sym not in scan_candidates]),
         "retained": sorted([sym for sym in scan_candidates if sym in old_candidates]),
@@ -505,7 +508,9 @@ def _pool_sync_from_scan(ns: argparse.Namespace) -> int:
         f"signal_date: {summary.get('signal_date') or '?'}"
     )
     print(
-        f"扫描候选: {summary['scan_candidates']} 只 | "
+        f"扫描命中总数: {summary['scan_candidates_total']} 只 | "
+        f"输出候选: {summary['scan_candidates']} 只 | "
+        f"策略可入池: {summary['eligible_after_policy_filter']} 只 | "
         f"旧 candidates: {summary['previous_candidates']} 只 | "
         f"新 candidates: {summary['next_candidates']} 只\n"
     )
