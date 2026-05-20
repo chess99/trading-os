@@ -21,8 +21,8 @@ src/trading_os/
 
 skills/          Agent 工作流说明
 artifacts/
-  research/      入库研究报告
-  scan/          扫描 JSON 输出，gitignored
+  research/      单标的最终深度研究报告，git 追踪
+  scan/          扫描 JSON 快照 + 同名人工解读 Markdown，git 追踪正式快照
   watchlist/     自选池状态和逐标的追踪
 ```
 
@@ -119,20 +119,25 @@ Agent 工作流说明放在根目录 `skills/`。Daily 的事实源是：
 
 ```
 artifacts/
-  research/      入库分析报告和研究存档，git 追踪
-  scan/          扫描 JSON 输出，gitignored
+  research/      单标的最终深度研究报告，git 追踪
+  scan/          扫描 JSON 快照 + 同名人工解读 Markdown，git 追踪正式快照
   journal/       EventLog SQLite 数据，gitignored
   agent_cache/   AgentStrategy 推理缓存，gitignored
 ```
 
-研究报告命名：
+产物边界：
 
-- 完整报告：`report-{EXCHANGE}{TICKER}-YYYYMMDD.md`
-- 批量扫描分析：`CANSLIM-scan-YYYYMMDD.md`、`Elder-scan-YYYYMMDD.md`
-- 单股轻量笔记：`{EXCHANGE}{TICKER}-YYYYMMDD.md`
-- 专题研究：`topic-YYYYMMDD.md`
+- `artifacts/daily/`：每日状态、当日 TODO、后续处理闭环和最终研究报告链接。不要额外创建 daily follow-up 中间文件。
+- `artifacts/scan/`：正式扫描快照，包含 `{system}-YYYYMMDD.json` 和可选同名 `{system}-YYYYMMDD.md` 人工解读。临时诊断扫描放 `artifacts/scan/tmp/`，不入库。
+- `artifacts/research/`：只放单个标的的最终深度研究报告，不放日报拆解、扫描解读、临时笔记、批量候选清单。
 
-完成一次包含结论和行动计划的分析后，存到 `artifacts/research/`。临时笔记和原始扫描 JSON 不放这里。
+单标的深度研究报告命名：
+
+- Value：`value-{EXCHANGE}{TICKER}-YYYYMMDD.md`
+- CANSLIM：`canslim-{EXCHANGE}{TICKER}-YYYYMMDD.md`
+- Elder：`elder-{EXCHANGE}{TICKER}-YYYYMMDD.md`
+
+完成一次包含结论和行动计划的单标的深度研究后，存到 `artifacts/research/`。如果研究来自 daily TODO，应在对应 `artifacts/daily/YYYYMMDD.md` 记录完成状态并链接最终研究报告。
 
 ## 基本规则
 

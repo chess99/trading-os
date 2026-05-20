@@ -51,8 +51,8 @@ src/trading_os/
 
 skills/          AI Agent 决策层，三套体系完全独立
 artifacts/
-  research/   分析报告存档（git 追踪）
-  scan/       批量扫描输出 JSON（gitignored）
+  research/   单标的最终深度研究报告（git 追踪）
+  scan/       扫描 JSON 快照 + 同名人工解读 Markdown（正式快照 git 追踪）
   watchlist/  自选池状态（pool.json + 逐标的追踪日志）
 ```
 
