@@ -103,6 +103,7 @@ class SchedulerStore:
 
     def _init_db(self) -> None:
         with self._connect() as con:
+            con.execute("PRAGMA journal_mode=WAL")
             con.execute(
                 """
                 CREATE TABLE IF NOT EXISTS jobs (
