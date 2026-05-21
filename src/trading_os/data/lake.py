@@ -43,7 +43,7 @@ class LocalDataLake:
     - data/parquet/bars/*.parquet
     """
 
-    def __init__(self, root: Path):
+    def __init__(self, root: Path, *, read_only: bool = False):
         try:  # pragma: no cover
             self._duckdb = importlib.import_module("duckdb")
             self._pd = importlib.import_module("pandas")
@@ -56,11 +56,11 @@ class LocalDataLake:
         self.paths = DataLakePaths(root=root)
         self.paths.root.mkdir(parents=True, exist_ok=True)
         self.paths.bars_dir.mkdir(parents=True, exist_ok=True)
+        self._read_only = read_only
         self._view_dirty: bool = True  # True = view needs refresh before next query
 
     def connect(self) -> Any:
-        con = self._duckdb.connect(str(self.paths.duckdb_path))
-        # pragmatic defaults
+        con = self._duckdb.connect(str(self.paths.duckdb_path), read_only=self._read_only)
         con.execute("SET TimeZone='UTC'")
         return con
 
