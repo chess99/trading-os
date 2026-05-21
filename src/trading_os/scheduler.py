@@ -6,6 +6,7 @@ import os
 import sqlite3
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -543,46 +544,51 @@ def trigger_full_scan_and_daily(
     results: list[JobRecord] = [orchestrator]
     signal_date = signal_date_for_effective_date(effective_date)
     effective_compact = effective_date.replace("-", "")
-    elder = _ensure_scan_job(
-        store,
-        name="elder_scan",
-        effective_date=effective_date,
-        command=[
-            sys.executable,
-            "-m",
-            "trading_os",
-            "scan-elder",
-            "--date",
-            signal_date,
-            "--effective-date",
-            effective_date,
-            "--output",
-            f"artifacts/scan/elder-{effective_compact}.json",
-        ],
-        runner=runner,
-        force=force,
-    )
+    with ThreadPoolExecutor(max_workers=2) as _scan_pool:
+        elder_future = _scan_pool.submit(
+            _ensure_scan_job,
+            store,
+            name="elder_scan",
+            effective_date=effective_date,
+            command=[
+                sys.executable,
+                "-m",
+                "trading_os",
+                "scan-elder",
+                "--date",
+                signal_date,
+                "--effective-date",
+                effective_date,
+                "--output",
+                f"artifacts/scan/elder-{effective_compact}.json",
+            ],
+            runner=runner,
+            force=force,
+        )
+        canslim_future = _scan_pool.submit(
+            _ensure_scan_job,
+            store,
+            name="canslim_scan",
+            effective_date=effective_date,
+            command=[
+                sys.executable,
+                "-m",
+                "trading_os",
+                "scan-canslim",
+                "--date",
+                signal_date,
+                "--live",
+                "--effective-date",
+                effective_date,
+                "--output",
+                f"artifacts/scan/canslim-{effective_compact}.json",
+            ],
+            runner=runner,
+            force=force,
+        )
+    elder = elder_future.result()
+    canslim = canslim_future.result()
     results.append(elder)
-    canslim = _ensure_scan_job(
-        store,
-        name="canslim_scan",
-        effective_date=effective_date,
-        command=[
-            sys.executable,
-            "-m",
-            "trading_os",
-            "scan-canslim",
-            "--date",
-            signal_date,
-            "--live",
-            "--effective-date",
-            effective_date,
-            "--output",
-            f"artifacts/scan/canslim-{effective_compact}.json",
-        ],
-        runner=runner,
-        force=force,
-    )
     results.append(canslim)
     if elder.status != JOB_STATUS_SUCCESS or canslim.status != JOB_STATUS_SUCCESS:
         daily = store.create_job(

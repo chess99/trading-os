@@ -428,6 +428,43 @@ def test_scheduler_jobs_are_importable_for_sqlite_jobstore(tmp_path):
         scheduler.shutdown()
 
 
+import time as _time
+
+
+def test_trigger_full_scan_and_daily_runs_scans_in_parallel(tmp_path: Path) -> None:
+    """elder_scan 和 canslim_scan 应该并发启动，而不是串行等待。"""
+    import threading
+    from trading_os.scheduler import SchedulerStore, trigger_full_scan_and_daily
+    from trading_os.scheduler import JOB_STATUS_SUCCESS
+
+    store = SchedulerStore(tmp_path)
+
+    bulk = store.create_job("market_data_bulk_refresh", effective_date="2026-05-19")
+    store.update_job(bulk.id, status=JOB_STATUS_SUCCESS, ended=True)
+
+    start_times: dict[str, float] = {}
+    lock_obj = threading.Lock()
+
+    def slow_runner(args: list, log_path) -> int:
+        cmd = " ".join(args)
+        name = "elder" if "scan-elder" in cmd else "canslim"
+        with lock_obj:
+            start_times[name] = _time.monotonic()
+        _time.sleep(0.3)
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        log_path.write_text("ok")
+        return 0
+
+    t0 = _time.monotonic()
+    trigger_full_scan_and_daily(store, effective_date="2026-05-19", runner=slow_runner)
+    total = _time.monotonic() - t0
+
+    assert "elder" in start_times and "canslim" in start_times
+    gap = abs(start_times["elder"] - start_times["canslim"])
+    assert gap < 0.1, f"扫描未并发启动，启动时差 {gap:.2f}s"
+    assert total < 0.8, f"总耗时 {total:.2f}s，串行预期 >= 0.6s"
+
+
 def test_two_scan_processes_can_open_lake_simultaneously(tmp_path: Path) -> None:
     """两个 DataPipeline（read_only=True）可同时存在，不会互相阻塞。"""
     from concurrent.futures import ThreadPoolExecutor
