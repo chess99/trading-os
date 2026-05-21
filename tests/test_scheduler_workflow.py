@@ -4,6 +4,7 @@ import json
 import os
 from datetime import date, datetime, timedelta
 from importlib import import_module
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
@@ -425,3 +426,24 @@ def test_scheduler_jobs_are_importable_for_sqlite_jobstore(tmp_path):
         assert scheduler.get_job("market_data_probe") is not None
     finally:
         scheduler.shutdown()
+
+
+def test_two_scan_processes_can_open_lake_simultaneously(tmp_path: Path) -> None:
+    """两个 DataPipeline（read_only=True）可同时存在，不会互相阻塞。"""
+    from concurrent.futures import ThreadPoolExecutor
+    from trading_os.data.lake import LocalDataLake
+    from trading_os.data.pipeline import DataPipeline
+
+    lake_path = tmp_path / "data"
+    lake_path.mkdir()
+    (lake_path / "parquet" / "bars").mkdir(parents=True)
+
+    def make_pipeline_and_list(i: int) -> list:
+        lake = LocalDataLake(lake_path, read_only=True)
+        pipe = DataPipeline(lake)
+        return pipe.available_symbols()
+
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(pool.map(make_pipeline_and_list, range(2)))
+
+    assert results[0] == results[1]

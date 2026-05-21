@@ -27,7 +27,7 @@ def _run_scan(
     scan_date = date_type.fromisoformat(ns.date) if ns.date else date_type.today() - timedelta(days=1)
     output_path = root / ns.output if ns.output else root / "artifacts" / "scan" / f"{system_name}-{scan_date.isoformat().replace('-', '')}.json"
 
-    lake = LocalDataLake(root / "data")
+    lake = LocalDataLake(root / "data", read_only=True)
     pipeline = DataPipeline(lake)
     akshare = AkshareFactorSource()
     print(f"Scanning {system_name} signals for {scan_date}...")
