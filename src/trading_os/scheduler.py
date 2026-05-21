@@ -6,6 +6,7 @@ import os
 import sqlite3
 import subprocess
 import sys
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 from datetime import date, datetime, timedelta, timezone
@@ -92,6 +93,7 @@ class SchedulerStore:
         self.root = root or repo_root()
         self.db_path = scheduler_db_path(self.root)
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
+        self._status_lock = threading.Lock()
         self._init_db()
 
     def _connect(self) -> sqlite3.Connection:
@@ -274,8 +276,9 @@ class SchedulerStore:
     def write_status(self) -> None:
         path = status_path(self.root)
         path.parent.mkdir(parents=True, exist_ok=True)
-        payload = json.dumps(self.status_snapshot(), ensure_ascii=False, indent=2)
-        path.write_text(payload, encoding="utf-8")
+        with self._status_lock:
+            payload = json.dumps(self.status_snapshot(), ensure_ascii=False, indent=2)
+            path.write_text(payload, encoding="utf-8")
 
 
 def _row_to_job(row: sqlite3.Row) -> JobRecord:

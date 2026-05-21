@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import time as _time
 from datetime import date, datetime, timedelta
 from importlib import import_module
 from pathlib import Path
@@ -426,9 +427,6 @@ def test_scheduler_jobs_are_importable_for_sqlite_jobstore(tmp_path):
         assert scheduler.get_job("market_data_probe") is not None
     finally:
         scheduler.shutdown()
-
-
-import time as _time
 
 
 def test_trigger_full_scan_and_daily_runs_scans_in_parallel(tmp_path: Path) -> None:

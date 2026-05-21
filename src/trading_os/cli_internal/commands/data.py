@@ -665,6 +665,10 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                     return sym_id, df, actual_source, None
                 except Exception as exc:
                     return sym_id, None, None, str(exc)[:80]
+                finally:
+                    # Per-worker throttle: 5 workers × 0.4s ≈ 12.5 req/s total,
+                    # staying well below eastmoney/sina rate limits.
+                    time.sleep(query_interval)
 
             completed = 0
             with ThreadPoolExecutor(max_workers=_max_workers) as pool:
