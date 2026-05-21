@@ -167,3 +167,62 @@ def test_normalize_akshare_data_tolerates_nan_volume():
     assert len(df) == 2
     assert df["trades"].iloc[0] == 10000
     assert df["trades"].iloc[1] == 0
+
+
+def test_concurrent_fetch_same_result_as_serial() -> None:
+    """并发抓取的结果集应与串行抓取相同（不丢数据，不重复）。"""
+    from datetime import datetime, timezone
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
+    from trading_os.data.schema import Exchange as _Exch, Adjustment
+
+    def mock_fetch(ticker, *, exchange, start, end, adjustment):
+        df = pd.DataFrame({
+            "symbol": [f"{exchange.value}:{ticker}"] * 2,
+            "exchange": [exchange.value] * 2,
+            "timeframe": ["1d"] * 2,
+            "adjustment": ["qfq"] * 2,
+            "ts": [datetime(2024, 1, 2, tzinfo=timezone.utc),
+                   datetime(2024, 1, 3, tzinfo=timezone.utc)],
+            "open": [10.0, 10.1],
+            "high": [10.5, 10.6],
+            "low": [9.9, 10.0],
+            "close": [10.2, 10.3],
+            "volume": [500_000.0, 600_000.0],
+            "vwap": [10.1, 10.2],
+            "trades": [None, None],
+            "source": ["eastmoney"] * 2,
+        })
+        return df, "eastmoney"
+
+    pairs = [(_Exch.SSE, f"60000{i}") for i in range(10)]
+
+    # 串行
+    serial_frames = []
+    for exch, ticker in pairs:
+        df, _ = mock_fetch(ticker, exchange=exch, start="2024-01-01", end="2024-01-31",
+                           adjustment=Adjustment.QFQ)
+        serial_frames.append(df)
+    serial_symbols = set(
+        pd.concat(serial_frames)["symbol"].unique()
+    )
+
+    # 并发
+    concurrent_frames = []
+
+    def fetch_one(exch_ticker):
+        exch, ticker = exch_ticker
+        df, src = mock_fetch(ticker, exchange=exch, start="2024-01-01", end="2024-01-31",
+                             adjustment=Adjustment.QFQ)
+        return df
+
+    with ThreadPoolExecutor(max_workers=5) as pool:
+        futures = [pool.submit(fetch_one, pair) for pair in pairs]
+        for f in as_completed(futures):
+            concurrent_frames.append(f.result())
+
+    concurrent_result = pd.concat(concurrent_frames)
+    concurrent_symbols = set(concurrent_result["symbol"].unique())
+
+    assert serial_symbols == concurrent_symbols
+    assert len(concurrent_result) == len(pd.concat(serial_frames))

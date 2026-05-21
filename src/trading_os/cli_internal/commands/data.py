@@ -4,6 +4,8 @@ import argparse
 import json
 import os
 import sys
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from uuid import uuid4
@@ -645,7 +647,12 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                 print("所有数据源均不可用，无法拉取数据", file=sys.stderr)
                 terminal_status = "failed"
                 return 1
-            for i, (exch, ticker) in enumerate(pairs, 1):
+
+            _fetch_lock = threading.Lock()
+            _max_workers = 5
+
+            def _fetch_one(exch_ticker):
+                exch, ticker = exch_ticker
                 sym_id = f"{exch.value}:{ticker}"
                 try:
                     df, actual_source = ak_fetch(
@@ -655,39 +662,52 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                         end=end,
                         adjustment=adj,
                     )
-                    if df.empty:
-                        failed_list.append(f"{sym_id}: 空数据")
-                        consecutive_failures += 1
-                    else:
-                        batch.append(df)
-                        success += 1
-                        source_counter[actual_source] = source_counter.get(actual_source, 0) + 1
-                        consecutive_failures = 0
-                    time.sleep(query_interval)
+                    return sym_id, df, actual_source, None
                 except Exception as exc:
-                    err = str(exc)[:80]
-                    failed_list.append(f"{sym_id}: {err}")
-                    consecutive_failures += 1
+                    return sym_id, None, None, str(exc)[:80]
 
-                if len(batch) >= batch_size:
-                    _flush_batch()
-                if i % 100 == 0 or i == len(pairs):
-                    src_summary = ", ".join(f"{k}={v}" for k, v in source_counter.items())
-                    src_info = f"  [{src_summary}]" if src_summary else ""
-                    print(f"  {i}/{len(pairs)}  成功={success}  失败={len(failed_list)}{src_info}")
-                    _write_bulk_progress(
-                        progress_log,
-                        done=i,
-                        total=len(pairs),
-                        success=success,
-                        failed=len(failed_list),
-                        elapsed=time.time() - _start_time,
-                        job_id=job_id,
-                        effective_date=effective_date,
-                        source="akshare",
-                        status="running",
-                        started_at=started_at,
-                    )
+            completed = 0
+            with ThreadPoolExecutor(max_workers=_max_workers) as pool:
+                futures = {pool.submit(_fetch_one, pair): pair for pair in pairs}
+                for future in as_completed(futures):
+                    sym_id, df, actual_source, err = future.result()
+                    completed += 1
+                    with _fetch_lock:
+                        if err is not None:
+                            failed_list.append(f"{sym_id}: {err}")
+                            consecutive_failures += 1
+                        elif df is None or df.empty:
+                            failed_list.append(f"{sym_id}: 空数据")
+                            consecutive_failures += 1
+                        else:
+                            batch.append(df)
+                            success += 1
+                            source_counter[actual_source] = source_counter.get(actual_source, 0) + 1
+                            consecutive_failures = 0
+
+                        if len(batch) >= batch_size:
+                            _flush_batch()
+
+                        if completed % 100 == 0 or completed == len(pairs):
+                            src_summary = ", ".join(f"{k}={v}" for k, v in source_counter.items())
+                            src_info = f"  [{src_summary}]" if src_summary else ""
+                            print(
+                                f"  {completed}/{len(pairs)}  成功={success}  "
+                                f"失败={len(failed_list)}{src_info}"
+                            )
+                            _write_bulk_progress(
+                                progress_log,
+                                done=completed,
+                                total=len(pairs),
+                                success=success,
+                                failed=len(failed_list),
+                                elapsed=time.time() - _start_time,
+                                job_id=job_id,
+                                effective_date=effective_date,
+                                source="akshare",
+                                status="running",
+                                started_at=started_at,
+                            )
             _flush_batch()
     finally:
         if terminal_status is not None:
