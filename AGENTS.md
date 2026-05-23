@@ -49,7 +49,7 @@ python -m trading_os daily
 
 完成态有两个 daily 产物：
 
-- `artifacts/daily/YYYYMMDD-summary.md`：scheduler 机器回执，只证明同日数据刷新、扫描和 pool 同步完成。
+- `artifacts/daily/YYYYMMDD-summary.md`：scheduler 本地机器回执，只证明同日数据刷新、扫描和 pool 同步完成；gitignored，不作为正式日报快照入库。
 - `artifacts/daily/YYYYMMDD.md`：agent 基于完成态 summary、同日 scan、watchlist/pool 和 tracking 文件生成的人读深度日报。
 
 如果用户要“日报”“深度日报”“今天市场怎样”，不能只交付 `*-summary.md`；在 scheduler 完成态后必须补写或更新 `YYYYMMDD.md`。
@@ -134,7 +134,7 @@ artifacts/
 
 产物边界：
 
-- `artifacts/daily/`：每日状态、当日 TODO、后续处理闭环和最终研究报告链接。`YYYYMMDD-summary.md` 是机器回执，`YYYYMMDD.md` 是人读深度日报；不要额外创建 daily follow-up 中间文件。
+- `artifacts/daily/`：每日状态、当日 TODO、后续处理闭环和最终研究报告链接。`YYYYMMDD-summary.md` 是 gitignored 的本地机器回执，`YYYYMMDD.md` 是入库的人读深度日报；不要额外创建 daily follow-up 中间文件。
 - `artifacts/daily/tmp/`：blocked 日报等临时诊断产物，gitignored，不作为正式日报快照入库。
 - `artifacts/scan/`：正式扫描快照，包含 `{system}-YYYYMMDD.json` 和可选同名 `{system}-YYYYMMDD.md` 人工解读。临时诊断扫描放 `artifacts/scan/tmp/`，不入库。
 - `artifacts/research/`：只放单个标的的最终深度研究报告，不放日报拆解、扫描解读、临时笔记、批量候选清单。

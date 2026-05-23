@@ -43,8 +43,9 @@ python -m trading_os daily
 看到完成态日报时：
 
 - 使用日报中的 effective date 和 job id。
-- `artifacts/daily/YYYYMMDD-summary.md` 是 scheduler 生成的机器回执，只证明数据、扫描和 pool 同步已经完成；它不是人读深度 daily。
+- `artifacts/daily/YYYYMMDD-summary.md` 是 scheduler 生成的本地机器回执，只证明数据、扫描和 pool 同步已经完成；它不是人读深度 daily，且不入库。
 - 如果用户要“日报”“深度日报”“今天市场怎样”，且只有 `YYYYMMDD-summary.md`、没有 `YYYYMMDD.md`，agent 必须基于完成态 summary、同日 scan、watchlist/pool 和 tracking 文件补写 `artifacts/daily/YYYYMMDD.md`。
+- 深度 daily 必须包含单标的深度研究队列：说明哪些扫描命中标的需要进入 `artifacts/research/{system}-{EXCHANGE}{TICKER}-YYYYMMDD.md`，为什么需要研究，优先级是什么。Daily 不是只汇总全盘扫描。
 - CANSLIM `candidates` 由 scheduler 基于同日扫描结果重建；`watchlist/ready` 仍由人工研究维护。
 - 如需进一步解释，读取 `artifacts/watchlist/`、`artifacts/scan/`、`artifacts/research/` 中对应日期文件。
 - daily 的 TODO 和后续处理闭环写回对应的 `artifacts/daily/YYYYMMDD.md`。不要创建 `daily-followup`、`value-daily` 这类中间研究文件。
@@ -84,7 +85,7 @@ python -m trading_os scheduler trigger full_scan_and_daily --effective-date YYYY
 - `artifacts/jobs/status.json`：当前 scheduler 摘要。
 - `artifacts/jobs/YYYYMMDD/*.log`：单 job 日志。
 - `artifacts/jobs/current_fetch_bulk.json`：`fetch-ak-bulk` 当前进度或终态。
-- `artifacts/daily/YYYYMMDD-summary.md`：scheduler 完成态机器回执，git 追踪。
+- `artifacts/daily/YYYYMMDD-summary.md`：scheduler 完成态本地机器回执，gitignored。
 - `artifacts/daily/YYYYMMDD.md`：agent 生成的人读深度日报，git 追踪。
 - `artifacts/daily/tmp/YYYYMMDD-blocked.md`：阻塞态临时诊断报告，gitignored，不作为正式日报快照入库。
 - `artifacts/scan/{system}-YYYYMMDD.json`：正式扫描快照。
