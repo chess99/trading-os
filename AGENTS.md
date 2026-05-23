@@ -35,7 +35,9 @@ artifacts/
 
 ## Daily 工作流
 
-Daily 由 scheduler 驱动，不是 agent 手工串联脚本。不要为了生成日报直接拼接 `fetch-ak-bulk`、`scan-elder`、`scan-canslim`、`pool status`。
+Daily 由 scheduler 驱动，不是 agent 手工串联脚本。默认 daily 是 CANSLIM 日常流程：数据刷新、CANSLIM 全量扫描、深研队列和自选池闭环。不要为了生成日报直接拼接 `fetch-ak-bulk`、`scan-canslim`、`pool status`。
+
+Elder 不作为 daily 默认扫描任务。Elder 扫描是宽口径技术信号，只有在明确要做技术交易机会筛选时才专项运行；不要把未深研、未入池的 Elder 扫描结果塞进 daily。
 
 默认路径：
 

@@ -92,6 +92,7 @@ def _scan_candidate_to_pool_entry(
     signal_date: str | None,
     scan_job_id: str | None,
     scan_file: str | None,
+    existing: dict | None = None,
 ) -> dict:
     score = item.get("score")
     rank = item.get("rank")
@@ -100,19 +101,24 @@ def _scan_candidate_to_pool_entry(
         reason_bits.append(f"score={score}")
     if rank is not None:
         reason_bits.append(f"rank={rank}")
-    return {
+    entry = {
         "symbol": item["symbol"],
         "name": item.get("name", ""),
-        "entered_at": _today_utc(),
+        "entered_at": (existing or {}).get("entered_at", _today_utc()),
         "entry_reason": " | ".join(reason_bits),
-        "trigger_price": item.get("trigger_price"),
-        "notes": "",
+        "trigger_price": (existing or {}).get("trigger_price", item.get("trigger_price")),
+        "notes": (existing or {}).get("notes", ""),
         "score": score,
         "scan_effective_date": effective_date,
         "scan_signal_date": signal_date,
         "scan_job_id": scan_job_id,
         "scan_file": scan_file,
     }
+    if existing:
+        for key in ("research_file",):
+            if key in existing:
+                entry[key] = existing[key]
+    return entry
 
 
 def sync_candidates_from_scan(
@@ -160,6 +166,7 @@ def sync_candidates_from_scan(
                 signal_date=signal_date,
                 scan_job_id=scan_job_id,
                 scan_file=scan_file,
+                existing=old_candidates.get(symbol),
             )
         )
     next_candidates.sort(key=lambda x: (-float(x.get("score") or 0), x["symbol"]))

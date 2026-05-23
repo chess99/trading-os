@@ -13,7 +13,7 @@ description: |
 
 ## 核心原则
 
-Daily 是 scheduler 驱动的流程，不是 agent 手工五步脚本。
+Daily 是 scheduler 驱动的 CANSLIM 日常流程，不是 agent 手工五步脚本。
 
 默认只做三件事：
 
@@ -21,7 +21,9 @@ Daily 是 scheduler 驱动的流程，不是 agent 手工五步脚本。
 2. 运行 `python -m trading_os daily` 生成完成态或 blocked 态日报。
 3. 如果 blocked，停止分析并报告阻塞原因；如果完成，再基于日报和追踪文件做解释。
 
-不要为了“完成 daily”直接运行 `fetch-ak-bulk`、`scan-elder`、`scan-canslim`、`pool status` 手工拼接结果，除非用户明确要求排查或修复 scheduler。
+不要为了“完成 daily”直接运行 `fetch-ak-bulk`、`scan-canslim`、`pool status` 手工拼接结果，除非用户明确要求排查或修复 scheduler。
+
+Elder 不作为 daily 默认扫描任务。原因是 Elder 扫描输出是宽口径技术候选，通常数量很大；如果 daily 不逐只做 Elder 深研、入池和风控闭环，默认扫描只会制造噪音。需要技术交易机会时，用户明确要求后再专项运行 Elder 工作流。
 
 ## 标准执行路径
 
@@ -57,7 +59,6 @@ python -m trading_os daily
 完整 daily 依赖同一 effective date 下这些成功 job：
 
 - `market_data_bulk_refresh`
-- `elder_scan`
 - `canslim_scan`
 - `daily_report`
 
@@ -105,7 +106,7 @@ python -m trading_os pool list -v
 池中标的解释仍按体系分离：
 
 - CANSLIM：基本面假设、EPS/销售增长、相对强度、技术确认。
-- Elder：三重滤网、入场信号、价格止损。
+- Elder：不进入默认 daily；专项触发时才使用三重滤网、入场信号、价格止损。
 - Value：护城河、估值、安全边际、逻辑止损。
 
 任何进出池、升层、移出操作都应基于完成态日报或用户明确指定的扫描文件，不要基于 blocked 日报做交易动作。`pool sync-from-scan --apply` 只允许重建 `candidates`，不自动改 `watchlist/ready`。
