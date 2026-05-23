@@ -516,7 +516,8 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         except Exception as exc:
             print(f"BaoStock 不可用: {exc}，切换到 akshare", file=sys.stderr)
 
-        print(f"开始批量拉取 {len(pairs)} 只（{'BaoStock' if _use_baostock else 'akshare'}，串行）")
+        mode_label = "BaoStock，串行" if _use_baostock else "akshare，并发"
+        print(f"开始批量拉取 {len(pairs)} 只（{mode_label}）")
         print(f"  日期范围: {start} ~ {end}，ETA 将按实际进度滚动计算")
         _source_name = "baostock" if _use_baostock else "akshare"
         _write_bulk_progress(
@@ -596,10 +597,9 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
             batch = []
 
         query_interval = 0.4
-        consecutive_failures = 0
-        max_consecutive_failures = 5
-
         if _use_baostock:
+            consecutive_failures = 0
+            max_consecutive_failures = 5
             try:
                 for i, (exch, ticker) in enumerate(pairs, 1):
                     if i > 1 and (i - 1) % reconnect_interval == 0:
@@ -722,15 +722,12 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
                     with _fetch_lock:
                         if err is not None:
                             failed_list.append(f"{sym_id}: {err}")
-                            consecutive_failures += 1
                         elif df is None or df.empty:
                             failed_list.append(f"{sym_id}: 空数据")
-                            consecutive_failures += 1
                         else:
                             batch.append(df)
                             success += 1
                             source_counter[actual_source] = source_counter.get(actual_source, 0) + 1
-                            consecutive_failures = 0
 
                         if len(batch) >= batch_size:
                             _flush_batch()

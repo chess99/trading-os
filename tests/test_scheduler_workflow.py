@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import os
-import time as _time
 from datetime import date, datetime, timedelta
 from importlib import import_module
 from pathlib import Path
@@ -151,10 +150,10 @@ def test_daily_blocked_when_scans_missing(tmp_path, monkeypatch):
     path = generate_daily(store, effective_date=today)
 
     assert path.name.endswith("-blocked.md")
-    assert "Elder scan is incomplete" in path.read_text(encoding="utf-8")
+    assert "CANSLIM scan is incomplete" in path.read_text(encoding="utf-8")
 
 
-def test_daily_complete_only_after_bulk_and_both_scans(tmp_path, monkeypatch):
+def test_daily_complete_only_after_bulk_and_canslim_scan(tmp_path, monkeypatch):
     import trading_os.scheduler as scheduler
     from trading_os.scheduler import JOB_STATUS_SUCCESS, SchedulerStore, generate_daily
 
@@ -165,7 +164,6 @@ def test_daily_complete_only_after_bulk_and_both_scans(tmp_path, monkeypatch):
         effective_date=today,
         status=JOB_STATUS_SUCCESS,
     )
-    elder = store.create_job("elder_scan", effective_date=today, status=JOB_STATUS_SUCCESS)
     canslim = store.create_job("canslim_scan", effective_date=today, status=JOB_STATUS_SUCCESS)
     store.create_job("daily_report", effective_date=today, status=JOB_STATUS_SUCCESS)
     monkeypatch.setattr(
@@ -192,22 +190,6 @@ def test_daily_complete_only_after_bulk_and_both_scans(tmp_path, monkeypatch):
         ),
         encoding="utf-8",
     )
-    (tmp_path / "artifacts" / "scan" / f"elder-{today.replace('-', '')}.json").write_text(
-        json.dumps(
-            {
-                "effective_date": today,
-                "signal_date": today,
-                "scan_date": today,
-                "system": "elder",
-                "total_scanned": 5,
-                "candidates_total": 2,
-                "candidates_output_count": 2,
-                "candidates": [{"symbol": "SSE:600000"}],
-                "filtered_out": {"no_data": 0, "low_turnover": 0, "insufficient_data": 1, "no_signal": 2},
-            }
-        ),
-        encoding="utf-8",
-    )
     (tmp_path / "artifacts" / "scan" / f"canslim-{today.replace('-', '')}.json").write_text(
         json.dumps(
             {
@@ -230,8 +212,8 @@ def test_daily_complete_only_after_bulk_and_both_scans(tmp_path, monkeypatch):
     text = path.read_text(encoding="utf-8")
     assert path.name == f"{today.replace('-', '')}-summary.md"
     assert bulk.id in text
-    assert elder.id in text
     assert canslim.id in text
+    assert "elder_scan" not in text
     assert "## Scan Summary" in text
     assert "matched `4` / output `3`" in text
 
@@ -350,14 +332,10 @@ def test_scan_commands_use_next_trading_day_but_effective_date_output_name(tmp_p
 
     trigger_full_scan_and_daily(store, effective_date=effective, runner=fake_runner)
 
-    elder_call = next(call for call in calls if "scan-elder" in call)
     canslim_call = next(call for call in calls if "scan-canslim" in call)
-    elder_date_arg = elder_call[elder_call.index("--date"):elder_call.index("--date") + 2]
     canslim_date_arg = canslim_call[canslim_call.index("--date"):canslim_call.index("--date") + 2]
 
-    assert ["--date", "2026-05-18"] == elder_date_arg
-    assert ["--effective-date", "2026-05-15"] == elder_call[elder_call.index("--effective-date"):elder_call.index("--effective-date") + 2]
-    assert "artifacts/scan/elder-20260515.json" in elder_call
+    assert not any("scan-elder" in call for call in calls)
     assert ["--date", "2026-05-18"] == canslim_date_arg
     assert ["--effective-date", "2026-05-15"] == canslim_call[canslim_call.index("--effective-date"):canslim_call.index("--effective-date") + 2]
     assert "artifacts/scan/canslim-20260515.json" in canslim_call
@@ -429,9 +407,8 @@ def test_scheduler_jobs_are_importable_for_sqlite_jobstore(tmp_path):
         scheduler.shutdown()
 
 
-def test_trigger_full_scan_and_daily_runs_scans_in_parallel(tmp_path: Path) -> None:
-    """elder_scan 和 canslim_scan 应该并发启动，而不是串行等待。"""
-    import threading
+def test_trigger_full_scan_and_daily_runs_canslim_only(tmp_path: Path) -> None:
+    """Daily 默认只跑 CANSLIM，不再跑宽口径 Elder 扫描。"""
     from trading_os.scheduler import SchedulerStore, trigger_full_scan_and_daily
     from trading_os.scheduler import JOB_STATUS_SUCCESS
 
@@ -440,27 +417,20 @@ def test_trigger_full_scan_and_daily_runs_scans_in_parallel(tmp_path: Path) -> N
     bulk = store.create_job("market_data_bulk_refresh", effective_date="2026-05-19")
     store.update_job(bulk.id, status=JOB_STATUS_SUCCESS, ended=True)
 
-    start_times: dict[str, float] = {}
-    lock_obj = threading.Lock()
+    commands: list[str] = []
 
     def slow_runner(args: list, log_path) -> int:
         cmd = " ".join(args)
-        name = "elder" if "scan-elder" in cmd else "canslim"
-        with lock_obj:
-            start_times[name] = _time.monotonic()
-        _time.sleep(0.3)
+        commands.append(cmd)
         log_path.parent.mkdir(parents=True, exist_ok=True)
         log_path.write_text("ok")
         return 0
 
-    t0 = _time.monotonic()
     trigger_full_scan_and_daily(store, effective_date="2026-05-19", runner=slow_runner)
-    total = _time.monotonic() - t0
 
-    assert "elder" in start_times and "canslim" in start_times
-    gap = abs(start_times["elder"] - start_times["canslim"])
-    assert gap < 0.1, f"扫描未并发启动，启动时差 {gap:.2f}s"
-    assert total < 0.8, f"总耗时 {total:.2f}s，串行预期 >= 0.6s"
+    assert len(commands) == 1
+    assert "scan-canslim" in commands[0]
+    assert "scan-elder" not in commands[0]
 
 
 def test_two_scan_processes_can_open_lake_simultaneously(tmp_path: Path) -> None:

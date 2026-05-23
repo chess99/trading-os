@@ -41,6 +41,18 @@ def test_read_only_lake_can_list_symbols(tmp_path: Path) -> None:
     assert "SSE:600000" in symbols
 
 
+def test_read_only_lake_init_is_noop_for_catalog_writes(tmp_path: Path) -> None:
+    """read_only=True 的 init() 不应尝试 CREATE VIEW 或 compact 写入。"""
+    rw_lake = LocalDataLake(tmp_path)
+    _write_test_bars(rw_lake)
+
+    ro_lake = LocalDataLake(tmp_path, read_only=True)
+    ro_lake.init()
+
+    symbols = ro_lake.list_symbols()
+    assert "SSE:600000" in symbols
+
+
 def test_two_read_only_lakes_concurrent(tmp_path: Path) -> None:
     """两个 read_only lake 可以同时持有连接并查询，不互相阻塞。"""
     from concurrent.futures import ThreadPoolExecutor

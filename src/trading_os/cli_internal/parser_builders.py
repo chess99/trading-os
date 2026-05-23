@@ -133,7 +133,7 @@ def register_data_commands(sub: argparse._SubParsersAction) -> None:
     p.add_argument("--asset-type", choices=["equity", "index", "etf"], default="equity", dest="asset_type", help="资产类型 (默认: equity)。指数请用 index，如: --asset-type index")
     p.set_defaults(func=_cmd_fetch_bars)
 
-    p = sub.add_parser("fetch-ak-bulk", help="批量拉取全A股历史数据（BaoStock，串行，全球可达）")
+    p = sub.add_parser("fetch-ak-bulk", help="批量拉取全A股历史数据（BaoStock串行；AKShare并发）")
     p.add_argument("--tickers", default=None, help="逗号分隔的代码，如 SSE:600000,SZSE:000001（不传则全A股）")
     p.add_argument("--start", default="2022-01-01", help="开始日期 YYYY-MM-DD（默认2022-01-01）")
     p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD（默认今日）")

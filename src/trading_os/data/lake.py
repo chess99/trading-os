@@ -95,6 +95,9 @@ class LocalDataLake:
         Returns:
             compact 后的文件数（0 表示未触发 compact）
         """
+        if self._read_only:
+            return 0
+
         files = sorted(self.paths.bars_dir.glob("*.parquet"))
         if len(files) <= threshold:
             return 0
@@ -171,6 +174,9 @@ class LocalDataLake:
 
     def _refresh_view(self) -> None:
         """Rebuild the DuckDB `bars` view from current Parquet files on disk."""
+        if self._read_only:
+            return
+
         with self.connect() as con:
             files = sorted(self.paths.bars_dir.glob("*.parquet"))
             if not files:
