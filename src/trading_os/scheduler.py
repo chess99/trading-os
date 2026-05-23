@@ -581,7 +581,6 @@ def trigger_full_scan_and_daily(
                 "scan-canslim",
                 "--date",
                 signal_date,
-                "--live",
                 "--effective-date",
                 effective_date,
                 "--output",
@@ -708,7 +707,13 @@ def compute_daily_blocker(
 
 
 def write_blocked_daily(store: SchedulerStore, effective_date: str, reason: str) -> Path:
-    out = store.root / "artifacts" / "daily" / f"{effective_date.replace('-', '')}-blocked.md"
+    out = (
+        store.root
+        / "artifacts"
+        / "daily"
+        / "tmp"
+        / f"{effective_date.replace('-', '')}-blocked.md"
+    )
     out.parent.mkdir(parents=True, exist_ok=True)
     snapshot = store.status_snapshot()
     progress = snapshot.get("fetch_bulk") or {}
@@ -970,6 +975,14 @@ def inactive_laggards_as_of(effective_date: str, laggards: list[tuple[str, str]]
         lg = bs.login()
         if lg.error_code != "0":
             return []
+        try:
+            import baostock.common.context as _bs_ctx
+
+            sock = getattr(_bs_ctx, "default_socket", None)
+            if sock is not None:
+                sock.settimeout(30)
+        except Exception:
+            pass
         inactive = []
         for symbol, latest in laggards:
             exch, ticker = symbol.split(":", 1)

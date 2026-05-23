@@ -29,43 +29,20 @@ def get_stock_names(cache_path: Path | None = None, max_age_days: int = 30) -> d
         # 这里用 None 表示"不缓存"，cli 传入具体路径
         pass
 
-    # 读缓存
+    # 读缓存。名称不是交易决策门控数据；网络不可用时允许使用过期缓存。
+    stale_cache: dict[str, str] = {}
     if cache_path is not None and cache_path.exists():
-        age_days = (time.time() - cache_path.stat().st_mtime) / 86400
-        if age_days < max_age_days:
-            try:
-                return json.loads(cache_path.read_text(encoding="utf-8"))
-            except Exception:
-                pass
+        try:
+            stale_cache = json.loads(cache_path.read_text(encoding="utf-8"))
+            age_days = (time.time() - cache_path.stat().st_mtime) / 86400
+            if age_days < max_age_days:
+                return stale_cache
+        except Exception:
+            stale_cache = {}
 
-    # 从 BaoStock 拉取
-    try:
-        import baostock as bs
-        lg = bs.login()
-        if lg.error_code != "0":
-            return {}
-        rs = bs.query_stock_basic(code="", code_name="")
-        name_map: dict[str, str] = {}
-        while rs.next():
-            row = rs.get_row_data()
-            code = row[0]      # sh.600000
-            name = row[1]      # 浦发银行
-            stock_type = row[4]
-            if stock_type != "1":
-                continue
-            prefix, ticker = code.split(".")
-            exch = "SSE" if prefix == "sh" else "SZSE"
-            name_map[f"{exch}:{ticker}"] = name
-        bs.logout()
-
-        # 写缓存
-        if cache_path is not None and name_map:
-            cache_path.parent.mkdir(parents=True, exist_ok=True)
-            cache_path.write_text(json.dumps(name_map, ensure_ascii=False), encoding="utf-8")
-
-        return name_map
-    except Exception:
-        return {}
+    # 名称不是交易决策门控数据。Daily/scan 不为名称刷新阻塞外部网络；
+    # 需要更新名称缓存时应单独跑维护命令。
+    return stale_cache
 
 
 def to_canonical(exchange: str, ticker: str) -> str:
@@ -115,17 +92,26 @@ def get_scan_symbols(
     Returns:
         (symbols, no_data_count) — 可扫描的规范化符号列表，以及无本地数据的数量
     """
+    from trading_os.data.schema import Exchange
+    exch_enum = Exchange(exchange) if exchange else None
+    local_symbols = set(pipeline.available_symbols(exchange=exch_enum))
+
     try:
         akshare_df = data_sources.get_a_stock_list()
     except Exception as exc:
-        raise RuntimeError(
-            f"AKShare 不可用，请检查网络连接。错误：{exc}"
-        ) from exc
+        log.warning(
+            "AKShare stock list unavailable; falling back to %d local symbols: %s",
+            len(local_symbols),
+            exc,
+        )
+        return sorted(local_symbols), 0
 
     if akshare_df is None or akshare_df.empty:
-        raise RuntimeError(
-            "AKShare 返回空股票列表，请检查网络连接后重试。"
+        log.warning(
+            "AKShare returned an empty stock list; falling back to %d local symbols",
+            len(local_symbols),
         )
+        return sorted(local_symbols), 0
 
     # 过滤 ST / 退市：名称包含 ST、*ST、退 等
     mask = ~akshare_df["name"].str.contains(r"ST|退市", na=False)
@@ -138,10 +124,6 @@ def get_scan_symbols(
     )
 
     # 与本地数据取交集
-    from trading_os.data.schema import Exchange
-    exch_enum = Exchange(exchange) if exchange else None
-    local_symbols = set(pipeline.available_symbols(exchange=exch_enum))
-
     scan_symbols = sorted(akshare_symbols & local_symbols)
     no_data_count = len(akshare_symbols - local_symbols)
 

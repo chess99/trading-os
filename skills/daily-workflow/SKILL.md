@@ -31,7 +31,7 @@ python -m trading_os scheduler jobs --limit 20
 python -m trading_os daily
 ```
 
-`daily` 会锚定当前应交付的 effective date，而不是回退到更早的完成态日报。若依赖未完成，它会生成 `artifacts/daily/YYYYMMDD-blocked.md`。
+`daily` 会锚定当前应交付的 effective date，而不是回退到更早的完成态日报。若依赖未完成，它会生成临时 blocked 报告：`artifacts/daily/tmp/YYYYMMDD-blocked.md`。
 
 看到 blocked 日报时：
 
@@ -83,7 +83,7 @@ python -m trading_os scheduler trigger full_scan_and_daily --effective-date YYYY
 - `artifacts/jobs/YYYYMMDD/*.log`：单 job 日志。
 - `artifacts/jobs/current_fetch_bulk.json`：`fetch-ak-bulk` 当前进度或终态。
 - `artifacts/daily/YYYYMMDD.md`：完成态日报。
-- `artifacts/daily/YYYYMMDD-blocked.md`：阻塞态日报。
+- `artifacts/daily/tmp/YYYYMMDD-blocked.md`：阻塞态临时诊断报告，gitignored，不作为正式日报快照入库。
 - `artifacts/scan/{system}-YYYYMMDD.json`：正式扫描快照。
 - `artifacts/scan/{system}-YYYYMMDD.md`：同一扫描快照的人工解读；文件名必须与 JSON 同名。
 - `artifacts/research/{system}-{EXCHANGE}{TICKER}-YYYYMMDD.md`：单标的最终深度研究报告。

@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import json
 import os
+import signal
 import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -11,6 +13,24 @@ from pathlib import Path
 from uuid import uuid4
 
 from ...paths import repo_root
+
+
+@contextlib.contextmanager
+def _operation_timeout(seconds: int, message: str):
+    def _handle_timeout(signum, frame):  # noqa: ARG001
+        raise TimeoutError(message)
+
+    if threading.current_thread() is not threading.main_thread():
+        yield
+        return
+    previous_handler = signal.getsignal(signal.SIGALRM)
+    signal.signal(signal.SIGALRM, _handle_timeout)
+    signal.alarm(seconds)
+    try:
+        yield
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, previous_handler)
 
 
 def _cmd_paths(_: argparse.Namespace) -> int:
@@ -204,10 +224,12 @@ def _resolve_bulk_pairs(ns) -> list | None:
     try:
         import baostock as bs
 
-        lg = bs.login()
-        if lg.error_code != "0":
-            raise RuntimeError(f"BaoStock 登录失败: {lg.error_msg}")
-        rs = bs.query_stock_basic(code="", code_name="")
+        with _operation_timeout(30, "BaoStock 获取股票列表超时"):
+            lg = bs.login()
+            if lg.error_code != "0":
+                raise RuntimeError(f"BaoStock 登录失败: {lg.error_msg}")
+            _set_baostock_socket_timeout(30)
+            rs = bs.query_stock_basic(code="", code_name="")
         pairs = []
         while rs.next():
             row = rs.get_row_data()
@@ -257,6 +279,18 @@ def _resolve_bulk_pairs(ns) -> list | None:
         except Exception as fallback_exc:
             print(f"Fallback 也失败: {fallback_exc}", file=sys.stderr)
             return None
+
+
+def _set_baostock_socket_timeout(timeout: int) -> None:
+    """Set BaoStock's module-level socket timeout when the session exists."""
+    try:
+        import baostock.common.context as _bs_ctx
+
+        sock = getattr(_bs_ctx, "default_socket", None)
+        if sock is not None:
+            sock.settimeout(timeout)
+    except Exception:
+        pass
 
 
 def _bulk_lock_path() -> Path:
@@ -471,12 +505,14 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
         try:
             import baostock as bs
 
-            lg = bs.login()
-            if lg.error_code == "0":
-                _use_baostock = True
-                bs.logout()
-            else:
-                print(f"BaoStock 不可用: {lg.error_msg}，切换到 akshare", file=sys.stderr)
+            with _operation_timeout(30, "BaoStock 登录超时"):
+                lg = bs.login()
+                if lg.error_code == "0":
+                    _set_baostock_socket_timeout(30)
+                    _use_baostock = True
+                    bs.logout()
+                else:
+                    print(f"BaoStock 不可用: {lg.error_msg}，切换到 akshare", file=sys.stderr)
         except Exception as exc:
             print(f"BaoStock 不可用: {exc}，切换到 akshare", file=sys.stderr)
 
@@ -500,11 +536,17 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
         if _use_baostock:
             def _bs_login() -> bool:
-                lg = bs.login()
-                if lg.error_code != "0":
-                    print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+                try:
+                    with _operation_timeout(30, "BaoStock 登录超时"):
+                        lg = bs.login()
+                        if lg.error_code != "0":
+                            print(f"BaoStock 登录失败: {lg.error_msg}", file=sys.stderr)
+                            return False
+                        _set_baostock_socket_timeout(30)
+                        return True
+                except TimeoutError as exc:
+                    print(str(exc), file=sys.stderr)
                     return False
-                return True
 
             if not _bs_login():
                 terminal_status = "failed"
@@ -569,14 +611,15 @@ def _cmd_fetch_ak_bulk(ns: argparse.Namespace) -> int:
 
                     sym_id = f"{exch.value}:{ticker}"
                     try:
-                        df = query_bars_with_session(
-                            bs,
-                            ticker,
-                            exchange=exch,
-                            start=start,
-                            end=end,
-                            adjustment=adj,
-                        )
+                        with _operation_timeout(30, f"BaoStock 查询超时 {sym_id}"):
+                            df = query_bars_with_session(
+                                bs,
+                                ticker,
+                                exchange=exch,
+                                start=start,
+                                end=end,
+                                adjustment=adj,
+                            )
                         if df.empty:
                             failed_list.append(f"{sym_id}: 空数据（停牌或未上市）")
                             consecutive_failures += 1
