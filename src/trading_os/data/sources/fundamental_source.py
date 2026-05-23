@@ -271,7 +271,7 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
     result: dict[str, Any] = {
         "high_52w": None, "low_52w": None, "current": None,
         "pct_from_high": None, "pct_from_low": None,
-        "bars_count": 0, "summary_text": "", "error": None,
+        "bars_count": 0, "latest_date": None, "summary_text": "", "error": None,
     }
     try:
         import pandas as pd
@@ -300,6 +300,8 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
         high_52w = float(df["close"].max())
         low_52w = float(df["close"].min())
         current = float(df["close"].iloc[-1])
+        latest_ts = df["ts"].iloc[-1]
+        latest_date = pd.Timestamp(latest_ts).date() if pd.notna(latest_ts) else None
 
         pct_from_high = (current - high_52w) / high_52w
         pct_from_low = (current - low_52w) / low_52w
@@ -311,11 +313,14 @@ def get_52week_stats(symbol_id: str) -> dict[str, Any]:
             "pct_from_high": pct_from_high,
             "pct_from_low": pct_from_low,
             "bars_count": len(df),
+            "latest_date": str(latest_date) if latest_date else None,
         })
 
         # 格式化摘要
+        date_str = str(latest_date) if latest_date else "未知"
         lines = [
             f"【52周统计】{symbol_id}",
+            f"  数据截止: {date_str}",
             f"  当前价:   {current:.2f}",
             f"  52周高:   {high_52w:.2f}  (距高点 {pct_from_high:+.1%})",
             f"  52周低:   {low_52w:.2f}  (距低点 {pct_from_low:+.1%})",
@@ -366,19 +371,20 @@ def get_market_breadth(index_symbol: str = "SSE:000001", lookback_days: int = 30
 
         lake = LocalDataLake(repo_root() / "data")
 
-        # 指数数据通常以 QFQ 存储（fetch-bs 默认前复权）
+        # 指数数据优先读 adjustment=none（IndexHandler 写入的正确格式）
+        # fallback 到 qfq（兼容旧 BaoStock 历史数据，migration 前过渡用）
         df = lake.query_bars(
             symbols=[index_symbol],
             exchange=exch,
             timeframe=Timeframe.D1,
-            adjustment=Adjustment.QFQ,
+            adjustment=Adjustment.NONE,
         )
         if df.empty:
             df = lake.query_bars(
                 symbols=[index_symbol],
                 exchange=exch,
                 timeframe=Timeframe.D1,
-                adjustment=Adjustment.NONE,
+                adjustment=Adjustment.QFQ,
             )
         if df.empty:
             result["error"] = f"本地无指数数据，请先运行: python -m trading_os fetch-bs --exchange {parts[0]} --ticker {parts[1]}"

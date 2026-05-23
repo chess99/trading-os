@@ -24,7 +24,17 @@ from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-from ..backtest.runner import BacktestBroker, BacktestConfig, FillEvent, Portfolio, RiskRejectEvent
+from ..backtest.runner import (
+    BacktestBroker,
+    BacktestConfig,
+    FillEvent,
+    Portfolio,
+    RiskRejectEvent,
+    _load_period_bars,
+    _price_maps_for_day,
+    _trading_dates_in_range,
+    _update_strategy_runtime,
+)
 from ..journal.event_log import EventLog
 from ..risk.manager import RiskConfig, RiskManager
 
@@ -157,11 +167,7 @@ class PaperRunner:
         equity_history: list[float] = []
 
         # Get all bars for the full period (for trading date enumeration)
-        all_bars = self.pipeline.get_bars(
-            symbols=symbols,
-            trading_date=end,
-            lookback_days=(end - start).days + lookback_days + 30,
-        )
+        all_bars = _load_period_bars(self.pipeline, symbols, start, end, lookback_days)
 
         if all_bars is None or all_bars.empty:
             log.warning("No bars found for paper trading period %s–%s", start, end)
@@ -176,16 +182,7 @@ class PaperRunner:
                 log_path=self._log.path,
             )
 
-        all_bars[BarColumns.ts] = pd.to_datetime(all_bars[BarColumns.ts], utc=True)
-        start_ts = pd.Timestamp(start, tz="UTC")
-        end_ts = pd.Timestamp(end, tz="UTC")
-
-        trading_dates = sorted(
-            all_bars[
-                (all_bars[BarColumns.ts] >= start_ts) &
-                (all_bars[BarColumns.ts] <= end_ts)
-            ][BarColumns.ts].dt.normalize().unique()
-        )
+        trading_dates = _trading_dates_in_range(all_bars, start, end)
 
         final_nav = self.config.initial_cash
 
@@ -204,20 +201,8 @@ class PaperRunner:
             # Today's bars for execution prices
             today_bars = all_bars[all_bars[BarColumns.ts].dt.normalize() == ts]
 
-            open_prices: dict[str, float] = {
-                row[BarColumns.symbol]: float(row[BarColumns.open])
-                for _, row in today_bars.iterrows()
-            }
-            close_prices: dict[str, float] = {
-                row[BarColumns.symbol]: float(row[BarColumns.close])
-                for _, row in today_bars.iterrows()
-            }
-            prev_close_prices: dict[str, float] = {
-                sym: float(grp[BarColumns.close].iloc[-1])
-                for sym, grp in hist_bars.groupby(BarColumns.symbol)
-            }
-
-            current_nav = portfolio.mark_to_market(open_prices)
+            current_nav = _update_strategy_runtime(self.strategy, hist_bars, portfolio)
+            open_prices, close_prices, prev_close_prices = _price_maps_for_day(today_bars, hist_bars)
             self._risk.start_of_day(trading_date, current_nav)
 
             # Generate signals

@@ -120,23 +120,10 @@ class DataPipeline:
         as_of: date | None = None,
     ) -> list[str]:
         """Return symbols available in the local data lake."""
-        self._lake.init()
-        with self._lake.connect() as con:
-            where = []
-            params = []
-            if exchange is not None:
-                where.append(f"{BarColumns.exchange} = ?")
-                params.append(exchange.value)
-            if as_of is not None:
-                cutoff = datetime(as_of.year, as_of.month, as_of.day, tzinfo=timezone.utc)
-                where.append(f"{BarColumns.ts} < ?")
-                params.append(cutoff.isoformat())
-            sql = f"SELECT DISTINCT {BarColumns.symbol} FROM bars"
-            if where:
-                sql += " WHERE " + " AND ".join(where)
-            sql += f" ORDER BY {BarColumns.symbol}"
-            result = con.execute(sql, params).fetchall()
-            return [row[0] for row in result]
+        cutoff = None
+        if as_of is not None:
+            cutoff = datetime(as_of.year, as_of.month, as_of.day, tzinfo=timezone.utc).isoformat()
+        return self._lake.list_symbols(exchange=exchange, as_of=cutoff)
 
     @classmethod
     def from_repo_root(cls, repo_root: Path) -> "DataPipeline":

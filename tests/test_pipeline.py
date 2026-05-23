@@ -15,7 +15,7 @@ pd = pytest.importorskip("pandas")
 def _make_lake_with_bars(tmp_path: pathlib.Path):
     """Create a LocalDataLake with synthetic bars spanning 2024-01-01 to 2024-06-30."""
     from trading_os.data.lake import LocalDataLake
-    from trading_os.data.schema import Adjustment, Exchange, Timeframe
+    from trading_os.data.schema import Adjustment, Timeframe
 
     lake = LocalDataLake(tmp_path)
 
@@ -33,7 +33,6 @@ def _make_lake_with_bars(tmp_path: pathlib.Path):
     })
     lake.write_bars_parquet(
         bars,
-        exchange=Exchange.SSE,
         timeframe=Timeframe.D1,
         adjustment=Adjustment.QFQ,
         source="synthetic",

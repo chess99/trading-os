@@ -99,6 +99,17 @@ def test_filter_by_turnover_empty_bars():
     assert filtered == 1
 
 
+def test_filter_by_turnover_mixed_sources_uses_row_level_volume_units():
+    bars = _make_bars([("SSE:A", 10.0, 20_000), ("SSE:B", 10.0, 2_000_000)])
+    bars.loc[bars["symbol"] == "SSE:A", "source"] = "baostock"
+    bars.loc[bars["symbol"] == "SSE:B", "source"] = "eastmoney"
+
+    passed, filtered = filter_by_turnover(["SSE:A", "SSE:B"], bars, min_amount=1e7)
+
+    assert passed == ["SSE:A", "SSE:B"]
+    assert filtered == 0
+
+
 # ── write_scan_output ─────────────────────────────────────────────────────
 
 def test_write_scan_output_empty_candidates():
