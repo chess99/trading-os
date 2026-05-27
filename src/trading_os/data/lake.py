@@ -227,6 +227,37 @@ class LocalDataLake:
             result = con.execute(sql, params).fetchall()
         return [row[0] for row in result]
 
+    def latest_bar_dates(
+        self,
+        *,
+        symbols: Iterable[str] | None = None,
+        timeframe: Timeframe = Timeframe.D1,
+        adjustment: Adjustment = Adjustment.QFQ,
+    ) -> dict[str, str]:
+        """Return each symbol's latest available bar date from the deduplicated lake view."""
+        if not self.has_bar_files():
+            return {}
+        where = [
+            f"{BarColumns.timeframe} = ?",
+            f"{BarColumns.adjustment} = ?",
+        ]
+        params: list[object] = [timeframe.value, adjustment.value]
+        if symbols is not None:
+            syms = list(symbols)
+            if not syms:
+                return {}
+            where.append(f"{BarColumns.symbol} IN ({','.join(['?'] * len(syms))})")
+            params.extend(syms)
+        sql = f"""
+        SELECT {BarColumns.symbol}, CAST(MAX({BarColumns.ts}) AS DATE)::VARCHAR AS latest
+        FROM {self._bars_glob_sql()}
+        WHERE {' AND '.join(where)}
+        GROUP BY {BarColumns.symbol}
+        """
+        with self.connect() as con:
+            rows = con.execute(sql, params).fetchall()
+        return {str(symbol): str(latest) for symbol, latest in rows if latest is not None}
+
     def _query_recent_values(self, symbol: str, column: str, limit: int) -> Any:
         """Return a Series of the most-recent `limit` values of `column` for `symbol`.
 

@@ -107,6 +107,118 @@ def test_bulk_nonzero_can_still_succeed_when_only_inactive_laggards_remain(tmp_p
     assert job.metadata["coverage_exception"][0]["symbol"] == "SSE:600355"
 
 
+def test_evaluate_bulk_coverage_manifest_requires_no_failed_symbols(tmp_path):
+    import trading_os.scheduler as scheduler
+
+    effective = "2026-05-26"
+    path = tmp_path / "artifacts" / "jobs" / "bulk_coverage_20260526.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps(
+            {
+                "effective_date": effective,
+                "total": 4,
+                "status_counts": {
+                    "covered": 1,
+                    "inactive": 1,
+                    "suspended": 1,
+                    "failed": 1,
+                },
+                "source_counts": {"eastmoney": 1},
+                "symbols": [
+                    {"symbol": "SSE:600000", "status": "covered", "latest": effective},
+                    {"symbol": "SSE:600355", "status": "inactive", "latest": "2026-04-27"},
+                    {"symbol": "SZSE:000001", "status": "suspended", "latest": "2026-05-25"},
+                    {"symbol": "SZSE:000002", "status": "failed", "reason": "network timeout"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    ok, metadata = scheduler.evaluate_bulk_coverage_manifest(tmp_path, effective)
+
+    assert ok is False
+    assert metadata["failed_count"] == 1
+    assert metadata["failed_symbols"][0]["symbol"] == "SZSE:000002"
+
+
+def test_evaluate_bulk_coverage_manifest_accepts_covered_and_structured_exceptions(tmp_path):
+    import trading_os.scheduler as scheduler
+
+    effective = "2026-05-26"
+    path = tmp_path / "artifacts" / "jobs" / "bulk_coverage_20260526.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(
+        json.dumps(
+            {
+                "effective_date": effective,
+                "total": 3,
+                "status_counts": {"covered": 1, "inactive": 1, "suspended": 1, "failed": 0},
+                "source_counts": {"eastmoney": 1},
+                "symbols": [
+                    {"symbol": "SSE:600000", "status": "covered", "latest": effective},
+                    {"symbol": "SSE:600355", "status": "inactive", "latest": "2026-04-27"},
+                    {"symbol": "SZSE:000001", "status": "suspended", "latest": "2026-05-25"},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    ok, metadata = scheduler.evaluate_bulk_coverage_manifest(tmp_path, effective)
+
+    assert ok is True
+    assert metadata["coverage_path"].endswith("bulk_coverage_20260526.json")
+    assert metadata["exception_counts"] == {"inactive": 1, "suspended": 1}
+
+
+def test_daily_blocked_report_includes_coverage_diagnostics(tmp_path, monkeypatch):
+    import trading_os.scheduler as scheduler
+    from trading_os.scheduler import SchedulerStore, generate_daily
+
+    effective = "2026-05-26"
+    store = SchedulerStore(tmp_path)
+    monkeypatch.setattr(
+        scheduler,
+        "intended_market_effective_date",
+        lambda now=None: date.fromisoformat(effective),
+    )
+    progress_path = tmp_path / "artifacts" / "jobs" / "current_fetch_bulk.json"
+    progress_path.parent.mkdir(parents=True)
+    progress_path.write_text(
+        json.dumps(
+            {
+                "effective_date": effective,
+                "status": "failed",
+                "done": 4,
+                "total": 5,
+                "source_counts": {"eastmoney": 3, "baostock": 1},
+                "coverage_path": str(tmp_path / "artifacts" / "jobs" / "bulk_coverage_20260526.json"),
+            }
+        ),
+        encoding="utf-8",
+    )
+    (tmp_path / "artifacts" / "jobs" / "bulk_coverage_20260526.json").write_text(
+        json.dumps(
+            {
+                "effective_date": effective,
+                "status_counts": {"covered": 4, "failed": 1},
+                "symbols": [{"symbol": "SZSE:000002", "status": "failed", "reason": "network timeout"}],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    path = generate_daily(store, effective_date=effective)
+
+    text = path.read_text(encoding="utf-8")
+    assert "coverage_manifest" in text
+    assert "failed_symbols_count: `1`" in text
+    assert "SZSE:000002" in text
+    assert "source_counts: `eastmoney=3, baostock=1`" in text
+
+
 def test_probe_uses_market_effective_date_not_wall_clock_today():
     from trading_os.scheduler import intended_market_effective_date
 

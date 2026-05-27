@@ -139,6 +139,10 @@ def register_data_commands(sub: argparse._SubParsersAction) -> None:
     p.add_argument("--end", default=None, help="结束日期 YYYY-MM-DD（默认今日）")
     p.add_argument("--adjustment", choices=["none", "qfq", "hfq"], default="qfq", help="复权方式")
     p.add_argument("--skip-existing", action="store_true", help="跳过本地已有数据的股票")
+    p.add_argument("--source", choices=["auto", "baostock", "akshare"], default="auto", help="数据源策略（默认 auto）")
+    p.add_argument("--max-retries", type=int, default=3, help="股票列表/单标的网络错误最大重试次数")
+    p.add_argument("--retry-failed-rounds", type=int, default=2, help="首轮后仅补拉失败标的的轮数")
+    p.add_argument("--workers", type=int, default=5, help="akshare 并发 worker 数")
     p.add_argument("--verbose", action="store_true", help="显示失败列表详情")
     p.set_defaults(func=_cmd_fetch_ak_bulk)
 

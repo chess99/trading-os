@@ -446,9 +446,29 @@ def trigger_market_data_bulk_refresh(
         effective_date,
         "--adjustment",
         "qfq",
+        "--source",
+        "auto",
     ]
     code = runner(cmd, log_path)
     progress = load_json(current_fetch_bulk_path(store.root))
+    coverage_ok, coverage_metadata = evaluate_bulk_coverage_manifest(store.root, effective_date)
+    if coverage_metadata.get("exists"):
+        if coverage_ok:
+            return store.update_job(
+                job.id,
+                status=JOB_STATUS_SUCCESS,
+                metadata=coverage_metadata,
+                ended=True,
+            )
+        failed_count = coverage_metadata.get("failed_count", "unknown")
+        top_reason = coverage_metadata.get("top_failure_reason") or "coverage incomplete"
+        return store.update_job(
+            job.id,
+            status=JOB_STATUS_FAILED,
+            metadata=coverage_metadata,
+            error=f"bulk coverage failed; failed={failed_count}; top_reason={top_reason}",
+            ended=True,
+        )
     ok, latest = lake_has_effective_date(store.root, effective_date, progress=progress)
     if code != 0:
         exception_ok, inactive = bulk_coverage_exception(store.root, effective_date)
@@ -683,6 +703,19 @@ def write_blocked_daily(store: SchedulerStore, effective_date: str, reason: str)
     out.parent.mkdir(parents=True, exist_ok=True)
     snapshot = store.status_snapshot()
     progress = snapshot.get("fetch_bulk") or {}
+    coverage_path = progress.get("coverage_path") or str(bulk_coverage_manifest_path(store.root, effective_date))
+    coverage = load_json(Path(coverage_path)) if coverage_path else None
+    status_counts = (coverage or {}).get("status_counts") or {}
+    failed_symbols = [
+        row for row in (coverage or {}).get("symbols", [])
+        if row.get("status") == "failed"
+    ][:20]
+    source_counts = progress.get("source_counts") or (coverage or {}).get("source_counts") or {}
+    source_counts_text = (
+        ", ".join(f"{key}={value}" for key, value in source_counts.items())
+        if source_counts
+        else "none"
+    )
     lines = [
         f"# Daily blocked - {effective_date}",
         "",
@@ -697,17 +730,30 @@ def write_blocked_daily(store: SchedulerStore, effective_date: str, reason: str)
         f"- fetch_bulk: `{progress.get('done', 0)}/{progress.get('total', 0)}`",
         f"- eta_sec: `{progress.get('eta_sec')}`",
         f"- running_job_id: `{progress.get('job_id')}`",
+        f"- coverage_manifest: `{coverage_path}`",
+        f"- source_counts: `{source_counts_text}`",
+        f"- failed_symbols_count: `{status_counts.get('failed', len(failed_symbols))}`",
         "",
         "## Diagnostics",
         "",
         "- `python -m trading_os scheduler status`",
         "- `python -m trading_os scheduler jobs`",
         "- `tail -f artifacts/fetch_bulk_progress.log`",
+        f"- `python -m trading_os scheduler trigger market_data_bulk_refresh --effective-date {effective_date}`",
         "",
+    ]
+    if failed_symbols:
+        lines.extend(["## Failed Symbols", ""])
+        for row in failed_symbols:
+            reason_text = row.get("reason") or "unknown"
+            latest = row.get("latest") or "none"
+            lines.append(f"- `{row.get('symbol')}` latest=`{latest}` reason={reason_text}")
+        lines.append("")
+    lines.extend([
         "No market view, scan changes, symbol conclusion, or trading action is emitted "
         "while upstream jobs are incomplete.",
         "Pool state is not updated in blocked mode.",
-    ]
+    ])
     out.write_text("\n".join(lines) + "\n", encoding="utf-8")
     return out
 
@@ -894,24 +940,69 @@ def lake_has_effective_date(
     return latest >= effective_date, latest
 
 
+def bulk_coverage_manifest_path(root: Path, effective_date: str) -> Path:
+    return root / "artifacts" / "jobs" / f"bulk_coverage_{effective_date.replace('-', '')}.json"
+
+
+def evaluate_bulk_coverage_manifest(root: Path, effective_date: str) -> tuple[bool, dict]:
+    path = bulk_coverage_manifest_path(root, effective_date)
+    if not path.exists():
+        return False, {"exists": False, "coverage_path": str(path)}
+    try:
+        manifest = json.loads(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        return False, {"exists": True, "coverage_path": str(path), "error": str(exc)}
+    if manifest.get("effective_date") != effective_date:
+        return False, {
+            "exists": True,
+            "coverage_path": str(path),
+            "error": f"manifest effective_date mismatch: {manifest.get('effective_date')}",
+        }
+    symbols = manifest.get("symbols") or []
+    failed_symbols = [row for row in symbols if row.get("status") == "failed"]
+    status_counts = manifest.get("status_counts") or {}
+    failed_count = max(
+        len(failed_symbols),
+        int(status_counts.get("failed", 0) or 0),
+    )
+    source_counts = manifest.get("source_counts") or {}
+    exception_counts = {
+        status: int(status_counts.get(status, 0) or 0)
+        for status in ("inactive", "suspended")
+        if int(status_counts.get(status, 0) or 0) > 0
+    }
+    reason_counts: dict[str, int] = {}
+    for row in failed_symbols:
+        reason = str(row.get("reason") or "unknown")
+        reason_counts[reason] = reason_counts.get(reason, 0) + 1
+    top_reason = None
+    if reason_counts:
+        top_reason = sorted(reason_counts.items(), key=lambda item: item[1], reverse=True)[0][0]
+    metadata = {
+        "exists": True,
+        "coverage_path": str(path),
+        "total": int(manifest.get("total") or len(symbols)),
+        "status_counts": status_counts,
+        "source_counts": source_counts,
+        "exception_counts": exception_counts,
+        "failed_count": failed_count,
+        "failed_symbols": failed_symbols[:20],
+        "top_failure_reason": top_reason,
+    }
+    return failed_count == 0 and bool(symbols), metadata
+
+
 def lagging_qfq_symbols(root: Path, effective_date: str) -> list[tuple[str, str]]:
     try:
-        import duckdb
+        from .data.lake import LocalDataLake
 
-        con = duckdb.connect(str(root / "data" / "lake.duckdb"), read_only=False)
-        rows = con.execute(
-            """
-            SELECT symbol, CAST(MAX(ts) AS DATE)::VARCHAR AS latest
-            FROM read_parquet(?, union_by_name=true)
-            WHERE timeframe='1d' AND adjustment='qfq'
-            GROUP BY symbol
-            HAVING CAST(MAX(ts) AS DATE) < CAST(? AS DATE)
-            ORDER BY latest DESC, symbol
-            """,
-            [str(root / "data" / "parquet" / "bars" / "*.parquet"), effective_date],
-        ).fetchall()
-        con.close()
-        return [(str(symbol), str(latest)) for symbol, latest in rows]
+        lake = LocalDataLake(root / "data")
+        latest_by_symbol = lake.latest_bar_dates()
+        return [
+            (symbol, latest)
+            for symbol, latest in sorted(latest_by_symbol.items(), key=lambda item: (item[1], item[0]))
+            if latest < effective_date
+        ]
     except Exception:
         return []
 
