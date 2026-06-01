@@ -44,7 +44,6 @@ skills/          Agent 工作流说明
 artifacts/
   runs/          每次 recipe 运行的 manifest、trace、tables、charts、report
   research/      单标的最终深度研究报告，git 追踪
-  scan/          兼容旧扫描快照；新筛选优先写 artifacts/runs
   watchlist/     自选池状态和逐标的追踪
 ```
 
@@ -162,9 +161,10 @@ python -m trading_os backtest run strategy_name --start YYYY-MM-DD --end YYYY-MM
 
 - `artifacts/runs/`：recipe 的完整运行证据链，是默认产物目录。
 - `artifacts/research/`：只放单个标的的最终深度研究报告。
-- `artifacts/scan/`：保留旧扫描快照兼容用途，新筛选默认不写这里。
 - `artifacts/watchlist/`：自选池状态和逐标的追踪。
 - `artifacts/journal/`：事件日志和交易审计数据，通常不入库。
+
+旧日常产物和旧批量扫描产物已经退出当前事实源；需要查看历史时使用 git history，不要把旧文件当作新的研究输入。
 
 单标的深度研究报告命名：
 

@@ -1024,4 +1024,4 @@ python -m trading_os valuation-sensitivity \
 研究完成后：
 - 说"CANSLIM 技术面确认" → 触发 `elder-confirm`（CANSLIM 体系内的技术确认步骤）
 - 最终单标的深度研究报告保存到 `artifacts/research/canslim-{EXCHANGE}{TICKER}-YYYYMMDD.md`，每季度复查逻辑止损条件
-- 日报拆解、扫描解读、临时笔记不放入 `artifacts/research/`；daily 后续处理写回对应日报，扫描解读写到 `artifacts/scan/{system}-YYYYMMDD.md`
+- 研究过程、候选解释、临时表格不放入 `artifacts/research/`；统一写入 `artifacts/runs/{run_id}/`，最终报告必须链接对应 manifest

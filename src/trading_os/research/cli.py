@@ -6,6 +6,7 @@ from datetime import date
 
 from ..paths import repo_root
 from .datahub import DataHub
+from .migration import migrate_legacy_fundamentals
 from .recipes import (
     run_backtest_recipe,
     run_canslim_screen,
@@ -51,6 +52,22 @@ def cmd_data(ns: argparse.Namespace) -> int:
         else:  # pragma: no cover
             raise RuntimeError(f"unknown dataset: {ns.dataset}")
         print(f"refreshed {ns.dataset}: {len(df)} rows")
+        return 0
+    if ns.data_cmd == "migrate":
+        as_of = date.fromisoformat(ns.as_of)
+        if ns.migration != "legacy-fundamentals":
+            raise RuntimeError(f"unknown migration: {ns.migration}")
+        stats = migrate_legacy_fundamentals(
+            repo_root() / ns.source_dir,
+            hub.store,
+            as_of=as_of,
+        )
+        print(
+            "migrated legacy fundamentals: "
+            f"success={stats.success} failed={stats.failed} skipped={stats.skipped}"
+        )
+        if stats.errors:
+            print(json.dumps({"errors": stats.errors}, ensure_ascii=False, indent=2))
         return 0
     raise RuntimeError(f"unknown data command: {ns.data_cmd}")
 
@@ -117,6 +134,11 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     refresh.add_argument("--end", required=True)
     refresh.add_argument("--adjustment", default="qfq")
     refresh.set_defaults(func=cmd_data)
+    migrate = data_sub.add_parser("migrate", help="Migrate legacy local data into ResearchStore")
+    migrate.add_argument("migration", choices=["legacy-fundamentals"])
+    migrate.add_argument("--as-of", required=True, dest="as_of")
+    migrate.add_argument("--source-dir", default="data/fundamental")
+    migrate.set_defaults(func=cmd_data)
 
     research = sub.add_parser("research", help="Run deterministic research recipes")
     research_sub = research.add_subparsers(dest="research_cmd", required=True)

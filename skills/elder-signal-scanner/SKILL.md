@@ -4,8 +4,8 @@ description: |
   批量扫描候选标的池，用三重滤网第一滤网快速筛选，输出有交易信号的标的清单。
   当用户说"扫描市场"、"看看今天有什么机会"、"帮我筛选标的"、"有哪些股票值得看"、
   "跑一下信号扫描"、"今天哪些标的有信号"时触发（模式 A：用户提供候选池）。
-  当用户说"读取 Elder 扫描结果"、"分析昨天的 Elder 扫描"、"分析 scan-elder 的输出"时触发
-  （模式 B：读取 artifacts/scan/elder-YYYYMMDD.json）。
+  当用户说"读取 Elder 研究运行结果"、"分析昨天的 Elder 候选"时触发
+  （模式 B：读取 artifacts/runs/{run_id}/manifest.json 和 report.md）。
   通常由 elder-system 调用，也可以单独使用。
   输出按信号强度排序的候选清单，供 elder-screen 做进一步深度分析。
 ---
@@ -151,22 +151,23 @@ description: |
 
 ---
 
-## 模式 B：读取 scan-elder 扫描结果
+## 模式 B：读取 recipe 运行结果
 
-当用户说"读取 Elder 扫描结果"、"分析昨天的 Elder 扫描"时，从本地 JSON 文件读取候选清单：
+当用户说"读取 Elder 研究运行结果"、"分析昨天的 Elder 候选"时，从 `artifacts/runs/{run_id}/` 读取证据链：
 
 ```bash
-# 查看最新扫描结果
-ls artifacts/scan/elder-*.json | tail -1
+# 查看运行证据链
+python -m trading_os data status
 
-# 读取内容
-cat artifacts/scan/elder-YYYYMMDD.json
+# 读取指定 run
+cat artifacts/runs/{run_id}/manifest.json
+cat artifacts/runs/{run_id}/report.md
 ```
 
-读取 JSON 后，对 `candidates` 列表中的每只股票：
-1. 提取 `signals` 字段（weekly_ema_direction, macd_season, daily_stoch, force_index_2d）
+读取 manifest/report 后，对候选列表中的每只股票：
+1. 提取 recipe 已记录的信号、数据版本、过滤原因和限制说明
 2. 按 score 降序排列，优先分析高分标的
 3. 输出与模式 A 相同格式的 Markdown 分析报告
 4. 建议对 TOP 3-5 只标的进一步运行 `elder-screen` 做完整三重滤网分析
 
-**注意**：JSON 是输入协议，最终输出给用户的是 Markdown 分析报告，不是原始 JSON。
+**注意**：`manifest.json` 是证据链协议，最终输出给用户的是 Markdown 分析报告，不是原始 JSON。
