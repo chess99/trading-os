@@ -5,6 +5,15 @@ RETIRED_WORKFLOW_TERMS = [
     "python -m trading_os daily",
     "scan-canslim",
     "fetch-ak-bulk",
+    "sync-from-scan",
+    "query-bars",
+    "market-breadth",
+    "python -m trading_os valuation",
+    "python -m trading_os fundamental",
+    "python -m trading_os 52week",
+    "python -m trading_os backtest --",
+    "valuation-sotp",
+    "valuation-sensitivity",
 ]
 
 

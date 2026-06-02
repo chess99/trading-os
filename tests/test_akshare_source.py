@@ -1,228 +1,88 @@
-"""Tests for akshare_source.py — specifically the BaoStock fallback path."""
-import pytest
+from __future__ import annotations
+
 from unittest.mock import MagicMock, patch
+
+import pytest
 
 pd = pytest.importorskip("pandas")
 
 
 def _make_akshare_df():
-    """Minimal DataFrame in akshare (eastmoney) column format."""
-    return pd.DataFrame({
-        "日期": pd.date_range("2024-01-01", periods=5, freq="B"),
-        "开盘": [10.0, 10.1, 10.2, 10.3, 10.4],
-        "最高": [10.5, 10.6, 10.7, 10.8, 10.9],
-        "最低": [9.5, 9.6, 9.7, 9.8, 9.9],
-        "收盘": [10.2, 10.3, 10.4, 10.5, 10.6],
-        "成交量": [1_000_000] * 5,
-        "成交额": [10_000_000.0] * 5,
-    })
+    return pd.DataFrame(
+        {
+            "日期": pd.date_range("2024-01-01", periods=5, freq="B"),
+            "开盘": [10.0, 10.1, 10.2, 10.3, 10.4],
+            "最高": [10.5, 10.6, 10.7, 10.8, 10.9],
+            "最低": [9.5, 9.6, 9.7, 9.8, 9.9],
+            "收盘": [10.2, 10.3, 10.4, 10.5, 10.6],
+            "成交量": [1_000_000] * 5,
+            "成交额": [10_000_000.0] * 5,
+        }
+    )
 
 
-def _make_baostock_df():
-    """Minimal DataFrame in baostock_source standard output format."""
-    return pd.DataFrame({
-        "symbol": ["SSE:600000"] * 5,
-        "ts": pd.date_range("2024-01-01", periods=5, freq="B", tz="UTC"),
-        "open": [10.0, 10.1, 10.2, 10.3, 10.4],
-        "high": [10.5, 10.6, 10.7, 10.8, 10.9],
-        "low": [9.5, 9.6, 9.7, 9.8, 9.9],
-        "close": [10.2, 10.3, 10.4, 10.5, 10.6],
-        "volume": [1_000_000.0] * 5,
-        "source": ["baostock"] * 5,
-    })
-
-
-def test_fetch_returns_eastmoney_source_when_eastmoney_succeeds():
-    """When eastmoney succeeds, source should be 'eastmoney' and volume multiplied by 100."""
-    from trading_os.data.schema import Exchange
-    from trading_os.data.sources.akshare_source import _fetch_with_fallback
+def test_fetch_daily_bars_uses_eastmoney_and_normalizes_volume():
+    from trading_os.data.schema import Adjustment, Exchange
+    from trading_os.data.sources.akshare_source import fetch_daily_bars
 
     mock_ak = MagicMock()
     mock_ak.stock_zh_a_hist.return_value = _make_akshare_df()
 
-    df, source = _fetch_with_fallback(
-        mock_ak, "600000", Exchange.SSE, "20240101", "20240110", "qfq"
-    )
-
-    assert source == "eastmoney"
-    assert not df.empty
-    assert "收盘" in df.columns
-    # volume should be multiplied by 100 (手 → 股)
-    assert (df["成交量"] == 100_000_000).all()
-
-
-def test_fetch_falls_back_to_baostock_when_akshare_fails():
-    """When both eastmoney and sina fail, source should be 'baostock'."""
-    from trading_os.data.schema import Exchange
-    from trading_os.data.sources.akshare_source import _fetch_with_fallback
-
-    mock_ak = MagicMock()
-    mock_ak.stock_zh_a_hist.side_effect = ConnectionError("proxy error")
-    mock_ak.stock_zh_a_daily.side_effect = ValueError("No value to decode")
-
-    bs_df = _make_baostock_df()
-    with patch(
-        "trading_os.data.sources.akshare_source._BAOSTOCK_LOCK"
-    ):
-        with patch(
-            "trading_os.data.sources.baostock_source.fetch_daily_bars",
-            return_value=bs_df,
-        ):
-            df, source = _fetch_with_fallback(
-                mock_ak, "600000", Exchange.SSE, "20240101", "20240110", "qfq"
-            )
-
-    assert source == "baostock"
-    assert not df.empty
-
-
-def test_fetch_returns_none_source_when_all_fail():
-    """When all three sources fail, returns (empty DataFrame, 'none')."""
-    from trading_os.data.schema import Exchange
-    from trading_os.data.sources.akshare_source import _fetch_with_fallback
-
-    mock_ak = MagicMock()
-    mock_ak.stock_zh_a_hist.side_effect = ConnectionError("proxy error")
-    mock_ak.stock_zh_a_daily.side_effect = ValueError("No value to decode")
-
-    with patch(
-        "trading_os.data.sources.baostock_source.fetch_daily_bars",
-        side_effect=RuntimeError("BaoStock failed"),
-    ):
-        df, source = _fetch_with_fallback(
-            mock_ak, "600000", Exchange.SSE, "20240101", "20240110", "qfq"
+    with patch.dict("sys.modules", {"akshare": mock_ak}):
+        df, source = fetch_daily_bars(
+            "600000",
+            exchange=Exchange.SSE,
+            start="2024-01-01",
+            end="2024-01-10",
+            adjustment=Adjustment.QFQ,
         )
 
-    assert source == "none"
-    assert df.empty
+    assert source == "eastmoney"
+    assert mock_ak.stock_zh_a_hist.call_args.kwargs["start_date"] == "20240101"
+    assert mock_ak.stock_zh_a_hist.call_args.kwargs["end_date"] == "20240110"
+    assert mock_ak.stock_zh_a_hist.call_args.kwargs["adjust"] == "qfq"
+    assert df["symbol"].unique().tolist() == ["SSE:600000"]
+    assert (df["volume"] == 100_000_000).all()
+    assert df["source"].unique().tolist() == ["eastmoney"]
 
 
-def test_fetch_daily_bars_accepts_asset_type_index():
-    """fetch_daily_bars with asset_type=AssetType.INDEX dispatches to IndexHandler."""
-    from unittest.mock import patch
-    import pandas as pd
-    from trading_os.data.schema import Exchange, Adjustment, AssetType
+def test_fetch_daily_bars_rejects_non_equity_asset_type():
+    from trading_os.data.schema import Adjustment, AssetType, Exchange
     from trading_os.data.sources.akshare_source import fetch_daily_bars
 
-    mock_df = pd.DataFrame({
-        "date": pd.date_range("2026-04-08", periods=3, freq="B"),
-        "open": [3200.0, 3210.0, 3220.0],
-        "high": [3250.0, 3260.0, 3270.0],
-        "low":  [3180.0, 3190.0, 3200.0],
-        "close": [3220.0, 3230.0, 3240.0],
-        "volume": [30_000_000.0] * 3,
-        "amount": [3.5e11] * 3,
-    })
-
-    with patch("trading_os.data.sources.asset_type_handler.ak") as mock_ak:
-        mock_ak.stock_zh_index_daily.return_value = mock_df
-        df, source = fetch_daily_bars(
+    with pytest.raises(ValueError, match="only supports A-share equities"):
+        fetch_daily_bars(
             "000001",
             exchange=Exchange.SSE,
             adjustment=Adjustment.QFQ,
             asset_type=AssetType.INDEX,
         )
 
-    assert source == "akshare_index"
-    assert not df.empty
-    assert df["source"].iloc[0] == "akshare_index"
-    assert df["adjustment"].iloc[0] == "none"  # forced to NONE for indices
-
-
-def test_fetch_daily_bars_default_asset_type_is_equity():
-    """Calling without asset_type defaults to equity (backward compatible)."""
-    from unittest.mock import MagicMock, patch
-    from trading_os.data.schema import Exchange, Adjustment
-    from trading_os.data.sources.akshare_source import fetch_daily_bars, _make_akshare_df_for_test
-
-    with patch("trading_os.data.sources.akshare_source._fetch_with_fallback") as mock_fb:
-        mock_fb.return_value = (_make_akshare_df_for_test(), "eastmoney")
-        df, source = fetch_daily_bars("600000", exchange=Exchange.SSE, adjustment=Adjustment.QFQ)
-
-    assert source == "eastmoney"
-
 
 def test_normalize_akshare_data_tolerates_nan_volume():
     from trading_os.data.schema import Adjustment, Exchange
     from trading_os.data.sources.akshare_source import _normalize_akshare_data
 
-    raw = pd.DataFrame({
-        "日期": pd.date_range("2026-05-01", periods=2, freq="B"),
-        "开盘": [10.0, 10.1],
-        "最高": [10.2, 10.3],
-        "最低": [9.8, 9.9],
-        "收盘": [10.1, 10.2],
-        "成交量": [1000000, None],
-        "成交额": [10000000.0, 0.0],
-    })
+    raw = pd.DataFrame(
+        {
+            "日期": pd.date_range("2026-05-01", periods=2, freq="B"),
+            "开盘": [10.0, 10.1],
+            "最高": [10.2, 10.3],
+            "最低": [9.8, 9.9],
+            "收盘": [10.1, 10.2],
+            "成交量": [1_000_000, None],
+            "成交额": [10_000_000.0, 0.0],
+        }
+    )
 
     df = _normalize_akshare_data(
         raw,
         ticker="600355",
         exchange=Exchange.SSE,
         adjustment=Adjustment.QFQ,
-        source_name="baostock",
     )
 
     assert len(df) == 2
     assert df["trades"].iloc[0] == 10000
     assert df["trades"].iloc[1] == 0
-
-
-def test_concurrent_fetch_same_result_as_serial() -> None:
-    """并发抓取的结果集应与串行抓取相同（不丢数据，不重复）。"""
-    from datetime import datetime, timezone
-    from concurrent.futures import ThreadPoolExecutor, as_completed
-    import threading
-    from trading_os.data.schema import Exchange as _Exch, Adjustment
-
-    def mock_fetch(ticker, *, exchange, start, end, adjustment):
-        df = pd.DataFrame({
-            "symbol": [f"{exchange.value}:{ticker}"] * 2,
-            "exchange": [exchange.value] * 2,
-            "timeframe": ["1d"] * 2,
-            "adjustment": ["qfq"] * 2,
-            "ts": [datetime(2024, 1, 2, tzinfo=timezone.utc),
-                   datetime(2024, 1, 3, tzinfo=timezone.utc)],
-            "open": [10.0, 10.1],
-            "high": [10.5, 10.6],
-            "low": [9.9, 10.0],
-            "close": [10.2, 10.3],
-            "volume": [500_000.0, 600_000.0],
-            "vwap": [10.1, 10.2],
-            "trades": [None, None],
-            "source": ["eastmoney"] * 2,
-        })
-        return df, "eastmoney"
-
-    pairs = [(_Exch.SSE, f"60000{i}") for i in range(10)]
-
-    # 串行
-    serial_frames = []
-    for exch, ticker in pairs:
-        df, _ = mock_fetch(ticker, exchange=exch, start="2024-01-01", end="2024-01-31",
-                           adjustment=Adjustment.QFQ)
-        serial_frames.append(df)
-    serial_symbols = set(
-        pd.concat(serial_frames)["symbol"].unique()
-    )
-
-    # 并发
-    concurrent_frames = []
-
-    def fetch_one(exch_ticker):
-        exch, ticker = exch_ticker
-        df, src = mock_fetch(ticker, exchange=exch, start="2024-01-01", end="2024-01-31",
-                             adjustment=Adjustment.QFQ)
-        return df
-
-    with ThreadPoolExecutor(max_workers=5) as pool:
-        futures = [pool.submit(fetch_one, pair) for pair in pairs]
-        for f in as_completed(futures):
-            concurrent_frames.append(f.result())
-
-    concurrent_result = pd.concat(concurrent_frames)
-    concurrent_symbols = set(concurrent_result["symbol"].unique())
-
-    assert serial_symbols == concurrent_symbols
-    assert len(concurrent_result) == len(pd.concat(serial_frames))
+    assert df["adjustment"].iloc[0] == "qfq"

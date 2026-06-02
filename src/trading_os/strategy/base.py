@@ -3,7 +3,7 @@
 The three-environment contract:
   - Strategy.generate_signals() is called once per trading day.
   - The `bars` DataFrame passed in contains only data up to (but NOT including)
-    the trading_date. This is enforced by the DataPipeline, not the strategy.
+    the trading_date. This is enforced by the BarProvider, not the strategy.
   - The same Strategy subclass runs unchanged in backtest, paper, and live modes.
     Only the data source and broker differ.
 """
@@ -95,6 +95,7 @@ class Strategy(ABC):
 
     def on_start(self, context: StrategyContext) -> None:
         """Called once before the first bar. Override to initialize state."""
+        return None
 
     def on_data(self, all_bars: "pd.DataFrame") -> None:
         """Called once after on_start with the full bar dataset for the backtest period.
@@ -102,9 +103,11 @@ class Strategy(ABC):
         Override to precompute indicators across all symbols and dates.
         This avoids recomputing indicators on every generate_signals call.
         """
+        return None
 
     def on_fill(self, fill: object) -> None:
         """Called after each order fill. Override to track position state."""
+        return None
 
     @abstractmethod
     def generate_signals(

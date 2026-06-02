@@ -13,8 +13,8 @@ authors = [{ name = "zcs" }]
 requires-python = ">=3.10,<3.15"
 
 dependencies = [
-  "apscheduler>=3.10",
-  "sqlalchemy>=2.0",
+  "pandas>=2.0",
+  "pyarrow>=14.0",
 ]
 
 [project.optional-dependencies]
@@ -24,20 +24,8 @@ dev = [
   "pyyaml>=6",
 ]
 
-data_lake = [
-  "duckdb>=1.0",
-  "pandas>=2.0",
-  "pyarrow>=14.0",
-]
-
-data_yahoo = [
-  "yfinance>=0.2",
-]
-
 data_ashare = [
   "akshare>=1.10",
-  "baostock>=0.8",
-  "pandas-ta>=0.3",
 ]
 
 agent = [

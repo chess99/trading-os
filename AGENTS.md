@@ -36,8 +36,7 @@ src/trading_os/
   backtest/      事件驱动回测引擎，包含 A 股规则
   paper/         模拟交易引擎，带 EventLog 审计
   risk/          硬性风控门控
-  data/          历史数据 schema、兼容数据源 adapter、旧 lake 兼容层
-  scan/          旧扫描器兼容层；新工作流优先用 research recipes
+  data/          轻量 schema 和 ResearchStore 所需数据源 adapter
   journal/       SQLite append-only 事件日志
 
 skills/          Agent 工作流说明

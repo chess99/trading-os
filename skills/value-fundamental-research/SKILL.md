@@ -875,9 +875,7 @@ print(cashflow[['报告期','经营活动现金流量净额','资本支出']].he
 ### 第一步：获取数据
 
 ```bash
-python -m trading_os fundamental --symbols SSE:601138 --years 5
-python -m trading_os 52week --symbols SSE:601138
-python -m trading_os market-breadth
+python -m trading_os research company SSE:601138 --template value --as-of YYYY-MM-DD
 ```
 
 ---
@@ -904,91 +902,9 @@ python -m trading_os market-breadth
 
 ---
 
-### 第三步：运行估值命令
+### 第三步：读取 recipe 估值口径
 
-#### 方案 A：整体估值（单一业务或差异不大）
-
-```bash
-python -m trading_os valuation \
-  --symbols SSE:601138 \
-  --cost-of-capital 0.09 \  # AI决定：宽护城河0.07，窄0.09，无护城河0.12
-  --moat narrow \            # AI决定：wide / narrow / none
-  --epv-years 3 \            # 稳定业务取3，周期性取5
-  --growth-rate 0.25 \       # AI决定：保守取历史CAGR×0.7；无成长预期则不传
-  --growth-years 5 \         # AI决定：高增速可持续几年
-  --terminal-pe 15 \         # AI决定：代工12-15x，消费品18-20x，科技15-20x
-  --peg-target 1.0
-```
-
-#### 方案 B：分部估值（多业务板块，差异显著时优先使用）
-
-先将各板块利润和估值逻辑写入 JSON 文件，再运行：
-
-```bash
-# 创建分部参数文件（AI 根据业务分析填写）
-cat > /tmp/segments.json << 'EOF'
-[
-  {
-    "name": "AI服务器代工",
-    "profit_bn": 280,
-    "method": "dcf",
-    "multiple": 0.09,
-    "growth_rate": 0.25,
-    "growth_years": 5,
-    "terminal_pe": 12,
-    "discount_rate": 0.12,
-    "note": "高增长但无定价权，终止PE保守取12x"
-  },
-  {
-    "name": "传统通信代工",
-    "profit_bn": 55,
-    "method": "pe",
-    "multiple": 12,
-    "note": "成熟业务，给12xPE"
-  },
-  {
-    "name": "工业互联网SaaS",
-    "profit_bn": 18,
-    "method": "pe",
-    "multiple": 25,
-    "note": "软件高利润率，给25xPE"
-  }
-]
-EOF
-
-python -m trading_os valuation-sotp \
-  --symbol SSE:601138 \
-  --segments-file /tmp/segments.json
-```
-
-#### 方案 C：敏感性矩阵（必须运行，不可省略）
-
-无论用哪种方法，**都必须运行敏感性矩阵**，让读者看到结论对假设的敏感程度：
-
-```bash
-# DCF 敏感性：行=增速，列=终止PE
-python -m trading_os valuation-sensitivity \
-  --symbol SSE:601138 \
-  --method dcf \
-  --base-profit 353 \
-  --growth-rates "0.15,0.20,0.25,0.30,0.35" \
-  --terminal-pes "10,12,15,18,20" \
-  --discount-rate 0.12
-
-# EPV 敏感性：行=可持续利润，列=资本成本
-python -m trading_os valuation-sensitivity \
-  --symbol SSE:601138 \
-  --method epv \
-  --base-profit 353 \
-  --sustainable-profits "210,265,300,353,420" \
-  --costs-of-capital "0.08,0.09,0.10,0.11,0.12"
-```
-
-**敏感性矩阵的解读原则**：
-- `↓xx.x` = 该参数组合下估值低于当前股价（股票高估）
-- `[xx.x]` = 该参数组合下估值接近当前股价（±5%）
-- 空白/正常 = 估值高于当前股价（股票低估）
-- 若绝大多数格子都是 `↓`，说明当前股价需要非常乐观的假设才能支撑
+从 recipe 输出读取 `manifest.json`、`trace.md` 和 `report.md`。估值区间、分部假设、敏感性判断必须来自这些产物；如果 recipe 没有足够数据，应在报告中明确标注“估值待补充”或降低置信度。
 
 ---
 
@@ -1014,10 +930,7 @@ python -m trading_os valuation-sensitivity \
 
 | 命令 | 输出内容 |
 |------|---------|
-| `fundamental` | ROE/净利率/毛利率/净利润/EPS/增速/负债率 |
-| `valuation` | EPV / DCF / PEG / 安全边际 / 市场隐含假设反推 |
-| `valuation-sotp` | 各板块估值 / 合计每股价值 / 溢价折价 |
-| `valuation-sensitivity` | 参数敏感性矩阵，标注当前价格位置 |
+| `research company --template value` | 财务、估值口径、风险、限制、manifest |
 
 ### 后续衔接
 

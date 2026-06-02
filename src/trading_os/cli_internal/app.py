@@ -4,9 +4,7 @@ import argparse
 import sys
 
 from ..research.cli import register_research_kernel_commands
-from .parser_builders import (
-    register_pool_commands,
-)
+from .commands.pool import register_pool_commands
 
 
 def build_parser() -> argparse.ArgumentParser:
