@@ -9,7 +9,7 @@ Key design decisions:
 - confirm_mode='auto' executes without confirmation (--bypass-confirm).
 
 Execution model (same as BacktestRunner):
-    Day T-1 close → DataPipeline.get_bars(trading_date=T)
+    Day T-1 close → BarProvider.history_for_signal(trading_date=T)
     Strategy.generate_signals(bars, T)
     RiskManager.check_signal(signal, portfolio, prices)
     BacktestBroker.execute(order, portfolio, open_price=T_open, prev_close=T-1_close)
@@ -24,6 +24,7 @@ from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
+from ..backtest.data import BarProvider
 from ..backtest.runner import (
     BacktestBroker,
     BacktestConfig,
@@ -39,7 +40,6 @@ from ..journal.event_log import EventLog
 from ..risk.manager import RiskConfig, RiskManager
 
 if TYPE_CHECKING:
-    from ..data.pipeline import DataPipeline
     from ..strategy.base import Strategy
 
 log = logging.getLogger(__name__)
@@ -96,7 +96,7 @@ class PaperRunner:
 
         runner = PaperRunner(
             strategy=MACrossStrategy(),
-            pipeline=DataPipeline.from_repo_root(repo_root),
+            bar_provider=ResearchStoreBarProvider(store),
             config=PaperConfig(confirm_mode="auto"),
             event_log=EventLog.from_repo_root(repo_root),
         )
@@ -111,18 +111,20 @@ class PaperRunner:
     def __init__(
         self,
         strategy: "Strategy",
-        pipeline: "DataPipeline",
+        bar_provider: BarProvider,
         config: PaperConfig | None = None,
         event_log: EventLog | None = None,
         repo_root: Path | None = None,
     ) -> None:
         self.strategy = strategy
-        self.pipeline = pipeline
+        self.bar_provider = bar_provider
         self.config = config or PaperConfig()
         self._broker = BacktestBroker(self.config.broker)
         self._risk = RiskManager(self.config.risk)
         self._log = event_log or (
-            EventLog.from_repo_root(repo_root) if repo_root else EventLog(Path("artifacts/paper.db"))
+            EventLog.from_repo_root(repo_root)
+            if repo_root
+            else EventLog(Path("artifacts/paper.db"))
         )
 
     def run(
@@ -136,11 +138,6 @@ class PaperRunner:
 
         Same execution model as BacktestRunner.run().
         """
-        try:
-            import pandas as pd
-        except ImportError as e:
-            raise RuntimeError("PaperRunner requires pandas") from e
-
         from ..backtest.runner import OrderEvent
         from ..data.schema import BarColumns
         from ..strategy.base import StrategyContext
@@ -167,11 +164,14 @@ class PaperRunner:
         equity_history: list[float] = []
 
         # Get all bars for the full period (for trading date enumeration)
-        all_bars = _load_period_bars(self.pipeline, symbols, start, end, lookback_days)
+        all_bars = _load_period_bars(self.bar_provider, symbols, start, end, lookback_days)
 
         if all_bars is None or all_bars.empty:
             log.warning("No bars found for paper trading period %s–%s", start, end)
-            self._log.write("SESSION_END", {"reason": "no_data", "final_nav": self.config.initial_cash})
+            self._log.write(
+                "SESSION_END",
+                {"reason": "no_data", "final_nav": self.config.initial_cash},
+            )
             return PaperSession(
                 start_date=start,
                 end_date=end,
@@ -190,8 +190,8 @@ class PaperRunner:
             trading_date = ts.date()
 
             # Bars available for signal generation
-            hist_bars = self.pipeline.get_bars(
-                symbols=symbols,
+            hist_bars = self.bar_provider.history_for_signal(
+                symbols,
                 trading_date=trading_date,
                 lookback_days=lookback_days,
             )
@@ -202,7 +202,10 @@ class PaperRunner:
             today_bars = all_bars[all_bars[BarColumns.ts].dt.normalize() == ts]
 
             current_nav = _update_strategy_runtime(self.strategy, hist_bars, portfolio)
-            open_prices, close_prices, prev_close_prices = _price_maps_for_day(today_bars, hist_bars)
+            open_prices, close_prices, prev_close_prices = _price_maps_for_day(
+                today_bars,
+                hist_bars,
+            )
             self._risk.start_of_day(trading_date, current_nav)
 
             # Generate signals
@@ -210,7 +213,10 @@ class PaperRunner:
                 signals = self.strategy.generate_signals(hist_bars, trading_date)
             except Exception as e:
                 log.error("Strategy error on %s: %s", trading_date, e)
-                self._log.write("STRATEGY_ERROR", {"date": trading_date.isoformat(), "error": str(e)})
+                self._log.write(
+                    "STRATEGY_ERROR",
+                    {"date": trading_date.isoformat(), "error": str(e)},
+                )
                 signals = {}
 
             # Log signals

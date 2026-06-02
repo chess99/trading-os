@@ -19,12 +19,13 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date
 from typing import TYPE_CHECKING, Literal
 
 from ..data.schema import BarColumns
 from ..risk.manager import RiskConfig, RiskManager
 from ..strategy.base import Signal, Strategy, StrategyContext
+from .data import BarProvider
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -215,7 +216,11 @@ class BacktestBroker:
         # 5. Round to lot size (100 shares)
         shares = (order.shares // cfg.lot_size) * cfg.lot_size
         if shares < cfg.lot_size:
-            return RiskRejectEvent(order.trading_date, order.symbol, f"数量不足最小手数 {cfg.lot_size} 股")
+            return RiskRejectEvent(
+                order.trading_date,
+                order.symbol,
+                f"数量不足最小手数 {cfg.lot_size} 股",
+            )
 
         # 6. Commission
         gross = shares * exec_price
@@ -268,7 +273,6 @@ class BacktestResult:
         return (self.final_nav - self.initial_cash) / self.initial_cash
 
     def summary(self) -> dict:
-        import pandas as pd
 
         if self.equity_curve.empty:
             return {"total_return": 0.0, "trades": 0}
@@ -299,16 +303,17 @@ class BacktestResult:
 
 
 def _load_period_bars(
-    pipeline: object,
+    bar_provider: BarProvider,
     symbols: list[str],
     start: date,
     end: date,
     lookback_days: int,
 ):
-    return pipeline.get_bars(
-        symbols=symbols,
-        trading_date=end + timedelta(days=1),
-        lookback_days=(end - start).days + lookback_days + 31,
+    return bar_provider.period_bars(
+        symbols,
+        start=start,
+        end=end,
+        lookback_days=lookback_days,
     )
 
 
@@ -328,7 +333,11 @@ def _trading_dates_in_range(all_bars: "pd.DataFrame", start: date, end: date) ->
     )
 
 
-def _update_strategy_runtime(strategy: Strategy, hist_bars: "pd.DataFrame", portfolio: Portfolio) -> float:
+def _update_strategy_runtime(
+    strategy: Strategy,
+    hist_bars: "pd.DataFrame",
+    portfolio: Portfolio,
+) -> float:
     prev_close_prices = {}
     if not hist_bars.empty:
         latest = hist_bars.groupby(BarColumns.symbol)[BarColumns.close].last()
@@ -340,7 +349,10 @@ def _update_strategy_runtime(strategy: Strategy, hist_bars: "pd.DataFrame", port
     return current_nav
 
 
-def _price_maps_for_day(today_bars: "pd.DataFrame", hist_bars: "pd.DataFrame") -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
+def _price_maps_for_day(
+    today_bars: "pd.DataFrame",
+    hist_bars: "pd.DataFrame",
+) -> tuple[dict[str, float], dict[str, float], dict[str, float]]:
     open_prices = {
         row[BarColumns.symbol]: float(row[BarColumns.open])
         for _, row in today_bars.iterrows()
@@ -367,7 +379,7 @@ class BacktestRunner:
 
         runner = BacktestRunner(
             strategy=MACrossStrategy(),
-            pipeline=DataPipeline.from_repo_root(repo_root),
+            bar_provider=ResearchStoreBarProvider(store),
             config=BacktestConfig(),
         )
         result = runner.run(
@@ -381,11 +393,11 @@ class BacktestRunner:
     def __init__(
         self,
         strategy: Strategy,
-        pipeline: object,   # DataPipeline (avoid circular import)
+        bar_provider: BarProvider,
         config: BacktestConfig | None = None,
     ) -> None:
         self.strategy = strategy
-        self.pipeline = pipeline
+        self.bar_provider = bar_provider
         self.config = config or BacktestConfig()
         self._broker = BacktestBroker(self.config)
         self._risk = RiskManager(self.config.risk)
@@ -427,7 +439,7 @@ class BacktestRunner:
         trade_rows: list[dict] = []
 
         # Get all trading dates in range
-        all_bars = _load_period_bars(self.pipeline, symbols, start, end, lookback_days)
+        all_bars = _load_period_bars(self.bar_provider, symbols, start, end, lookback_days)
 
         if all_bars is None or all_bars.empty:
             log.warning("No bars found for backtest period %s–%s", start, end)
@@ -454,8 +466,8 @@ class BacktestRunner:
             trading_date = ts.date()
 
             # Bars available for signal generation: strictly < trading_date
-            hist_bars = self.pipeline.get_bars(
-                symbols=symbols,
+            hist_bars = self.bar_provider.history_for_signal(
+                symbols,
                 trading_date=trading_date,
                 lookback_days=lookback_days,
             )
@@ -475,7 +487,10 @@ class BacktestRunner:
             # Today's bars (for execution prices and prev_close)
             today_bars = all_bars[all_bars[BarColumns.ts].dt.normalize() == ts]
 
-            open_prices, close_prices, prev_close_prices = _price_maps_for_day(today_bars, hist_bars)
+            open_prices, close_prices, prev_close_prices = _price_maps_for_day(
+                today_bars,
+                hist_bars,
+            )
             self._risk.start_of_day(trading_date, current_nav)
 
             # Process signals → orders → fills

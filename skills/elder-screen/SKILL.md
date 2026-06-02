@@ -286,11 +286,8 @@ news_section = format_news_for_prompt(items)
 ## Trading OS 集成
 
 ```bash
-# 优先从本地数据湖获取数据
-python -m trading_os query-bars --symbols SSE:600000 --adjustment qfq --limit 260
-
-# 如果没有，先获取
-python -m trading_os fetch-ak --exchange SSE --ticker 600000 --start 2022-01-01 --adjustment qfq
+# 按需补齐 ResearchStore bars
+python -m trading_os data refresh bars --symbols SSE:600000 --start 2022-01-01 --end YYYY-MM-DD
 ```
 
 用本地数据计算 EMA(13)、EMA(26)、MACD(12-26-9)、强力指数(2日EMA)、ATR。

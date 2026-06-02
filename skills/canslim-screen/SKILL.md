@@ -253,23 +253,11 @@ RS 线趋势（卖出预警）：
 
 **目标：3 分钟内完成初筛，给出 ✓/⚠/✗，不追求数据精确到小数点。**
 
-### 第一步：本地数据获取（优先，无需网络）
+### 第一步：运行 Research Recipe
 
 ```bash
-# 1. 财务数据（C/A 维度）— BaoStock，1秒内出结果
-python -m trading_os fundamental --symbols SSE:601138 --years 3
-
-# 2. K线数据（如果本地没有，先获取）— BaoStock，无需代理
-python -m trading_os fetch-bs --exchange SSE --ticker 601138 --start 2023-01-01
-
-# 同时获取上证指数（M 维度需要）
-python -m trading_os fetch-bs --exchange SSE --ticker 000001 --start 2025-01-01
-
-# 3. 52周统计（N/L 维度）— 从本地K线计算，无需网络
-python -m trading_os 52week --symbols SSE:601138
-
-# 4. 大盘换筹日（M 维度）— 从本地指数K线计算，无需网络
-python -m trading_os market-breadth --index SSE:000001
+python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
+python -m trading_os research company SSE:601138 --template canslim --as-of YYYY-MM-DD
 ```
 
 ### 第二步：补充联网数据（仅当本地数据不足时）
@@ -339,17 +327,17 @@ M — 大盘方向：{跟进日/换筹日状态}  {评分}
 
 | 维度 | 数据来源 | 命令 | 网络需求 |
 |------|---------|------|---------|
-| C/A（EPS/ROE）| BaoStock | `fundamental --symbols` | 无需代理 |
-| N/L（52周高低）| 本地K线 | `52week --symbols` | 无需网络 |
-| M（大盘换筹日）| 本地指数K线 | `market-breadth` | 无需网络 |
-| S（成交量）| 本地K线 | `query-bars` 查看 | 无需网络 |
+| C/A（EPS/ROE）| ResearchStore fundamentals | `research run canslim_screen` | cache-first |
+| N/L（新高/相对强度）| ResearchStore bars/factors | `research run canslim_screen` | lazy-fill |
+| M（大盘状态）| ResearchStore quote/factors | `research daily` | cache-first |
+| S（成交量）| ResearchStore quote/bars | `research run canslim_screen` | cache-first/lazy-fill |
 | I（机构持仓）| WebSearch | 搜索关键词 | 需要网络 |
 | N（催化剂）| WebSearch | 搜索关键词 | 需要网络 |
 
 ### 数据源说明
 
-- **BaoStock**：国内直连，无需代理，覆盖 C/A/S 维度所需财务和K线数据
-- **AKShare**：境外 IP 的 `stock_zh_a_hist` 接口不可达（push2his.eastmoney.com 限制大陆IP），已自动 fallback 到新浪接口；`fundamental` 命令使用 BaoStock 不受影响
+- **ResearchStore/DataHub**：所有正式数据访问入口，支持 cache-first、refresh、offline、lazy-fill
+- **AKShare**：作为可替换 A 股行情 adapter，只通过 DataHub 使用
 - **WebSearch**：用于 I（机构持仓）和 N（催化剂）维度，直接搜索关键词，**不要用 CDP 浏览器**
 
 ### 下一步衔接

@@ -186,7 +186,7 @@ for f in fills[-10:]:
 
 绩效统计从 BacktestResult.summary() 获取：
 ```bash
-python -m trading_os backtest --symbols SSE:600000 --strategy ma --start 2024-01-01
+python -m trading_os backtest run elder_triple_screen --start 2024-01-01 --end YYYY-MM-DD
 ```
 
 手动交易记录（非系统执行的）仍然用本 skill 的格式手动记录到 `artifacts/manual_trades.md`。
