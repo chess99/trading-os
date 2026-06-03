@@ -180,8 +180,9 @@ def run_canslim_screen(
             }
         )
     candidates.sort(key=lambda x: x["score"], reverse=True)
-    for idx, candidate in enumerate(candidates[:top_n], 1):
+    for idx, candidate in enumerate(candidates, 1):
         candidate["rank"] = idx
+    displayed_candidates = candidates[:top_n]
     limitations = []
     limitations = [*rs_limitations]
     if any(candidate["missing_fields"] for candidate in candidates):
@@ -189,7 +190,14 @@ def run_canslim_screen(
             "Some candidates are provisional because quarterly continuity fields are missing."
         )
     return _finish_result(
-        hub, run, "canslim_screen", trace, candidates[:top_n], filtered, limitations=limitations
+        hub,
+        run,
+        "canslim_screen",
+        trace,
+        displayed_candidates,
+        filtered,
+        limitations=limitations,
+        all_candidates=candidates,
     )
 
 
@@ -337,12 +345,14 @@ def _finish_result(
     candidates: list[dict[str, Any]],
     filtered: dict[str, int],
     limitations: list[str] | None = None,
+    all_candidates: list[dict[str, Any]] | None = None,
 ) -> RecipeResult:
+    all_candidates = all_candidates if all_candidates is not None else candidates
     strict_total = sum(
-        1 for c in candidates if c.get("classification") == "strict_canslim_candidate"
+        1 for c in all_candidates if c.get("classification") == "strict_canslim_candidate"
     )
     provisional_total = sum(
-        1 for c in candidates if c.get("classification") == "provisional_research_queue"
+        1 for c in all_candidates if c.get("classification") == "provisional_research_queue"
     )
     manifest = {
         "steps": [
@@ -350,7 +360,8 @@ def _finish_result(
             {"name": "score_candidates"},
             {"name": "write_artifacts"},
         ],
-        "candidates_total": len(candidates),
+        "candidates_total": len(all_candidates),
+        "displayed_candidates_total": len(candidates),
         "strict_candidates_total": strict_total,
         "provisional_candidates_total": provisional_total,
         "filtered_out": filtered,
@@ -360,13 +371,21 @@ def _finish_result(
             "manifest": str(run.path / "manifest.json"),
         },
     }
-    report = _canslim_report(candidates, filtered, limitations or [])
+    report = _canslim_report(candidates, filtered, limitations or [], all_candidates)
     hub.store.write_run_artifacts(
         run,
         manifest=manifest,
-        trace_lines=trace + [f"- candidates: `{len(candidates)}`"],
+        trace_lines=trace
+        + [
+            f"- total candidates: `{len(all_candidates)}`",
+            f"- displayed candidates: `{len(candidates)}`",
+        ],
         report=report,
-        tables={"candidates": pd.DataFrame(candidates), "filtered_out": pd.DataFrame([filtered])},
+        tables={
+            "candidates": pd.DataFrame(candidates),
+            "all_candidates": pd.DataFrame(all_candidates),
+            "filtered_out": pd.DataFrame([filtered]),
+        },
     )
     return RecipeResult(recipe, run, manifest, report, candidates, filtered)
 
@@ -468,17 +487,22 @@ def _factor_table(quotes: pd.DataFrame, fundamentals: pd.DataFrame) -> pd.DataFr
 
 
 def _canslim_report(
-    candidates: list[dict[str, Any]], filtered: dict[str, int], limitations: list[str]
+    candidates: list[dict[str, Any]],
+    filtered: dict[str, int],
+    limitations: list[str],
+    all_candidates: list[dict[str, Any]] | None = None,
 ) -> str:
+    all_candidates = all_candidates if all_candidates is not None else candidates
     strict_total = sum(
-        1 for c in candidates if c.get("classification") == "strict_canslim_candidate"
+        1 for c in all_candidates if c.get("classification") == "strict_canslim_candidate"
     )
     provisional_total = sum(
-        1 for c in candidates if c.get("classification") == "provisional_research_queue"
+        1 for c in all_candidates if c.get("classification") == "provisional_research_queue"
     )
     lines = [
         "# CANSLIM Screen",
         "",
+        f"Total Qualified Candidates: {len(all_candidates)}",
         f"Strict CANSLIM Candidates: {strict_total}",
         f"Provisional Research Queue: {provisional_total}",
         f"Displayed Candidates: {len(candidates)}",

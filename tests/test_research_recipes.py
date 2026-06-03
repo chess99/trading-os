@@ -108,6 +108,54 @@ class EnrichingFundamentalsProvider(RecipeProvider):
         )
 
 
+class ManyCandidatesProvider(RecipeProvider):
+    def fetch_universe(self, as_of: date):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": f"SSE:60000{i}",
+                    "name": f"Candidate {i}",
+                    "exchange": "SSE",
+                    "is_st": False,
+                    "is_active": True,
+                }
+                for i in range(5)
+            ]
+        )
+
+    def fetch_quote_snapshot(self, as_of: date):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": f"SSE:60000{i}",
+                    "close": 10.0 + i,
+                    "volume": 2_000_000.0,
+                    "amount": 40_000_000.0,
+                }
+                for i in range(5)
+            ]
+        )
+
+    def fetch_bars(self, symbols, start, end, adjustment):
+        self.bars_calls.append(list(symbols))
+        rows = []
+        for idx, sym in enumerate(symbols):
+            for i, ts in enumerate(pd.date_range("2025-05-01", periods=260, freq="B")):
+                base = 10 + i * (0.01 + idx * 0.01)
+                rows.append(
+                    {
+                        "symbol": sym,
+                        "ts": ts,
+                        "open": base,
+                        "high": base,
+                        "low": base,
+                        "close": base,
+                        "volume": 1_000_000.0,
+                    }
+                )
+        return pd.DataFrame(rows)
+
+
 def _fundamentals():
     return pd.DataFrame(
         [
@@ -225,6 +273,45 @@ def test_canslim_screen_enriches_missing_quarter_history_when_provider_supports_
     assert result.candidates[0]["signals"]["positive_quarters"] == 8
     assert result.manifest["strict_candidates_total"] == 1
     assert result.manifest["provisional_candidates_total"] == 0
+
+
+def test_canslim_screen_top_n_only_limits_displayed_candidates(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": f"SSE:60000{i}",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35 + i * 0.01,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+                for i in range(5)
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    provider = ManyCandidatesProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=2, min_turnover=1)
+
+    assert len(result.candidates) == 2
+    assert result.manifest["candidates_total"] == 5
+    assert result.manifest["displayed_candidates_total"] == 2
+    all_candidates = pd.read_csv(result.run.path / "tables" / "all_candidates.csv")
+    displayed_candidates = pd.read_csv(result.run.path / "tables" / "candidates.csv")
+    assert len(all_candidates) == 5
+    assert len(displayed_candidates) == 2
+    report = (result.run.path / "report.md").read_text(encoding="utf-8")
+    assert "Total Qualified Candidates: 5" in report
+    assert "Displayed Candidates: 2" in report
 
 
 def test_canslim_screen_skips_bars_for_core_fundamental_failures(tmp_path):

@@ -31,6 +31,25 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 
 快筛不应触发全市场逐标的历史 K 线刷新。
 
+`--top` 只是展示上限：
+
+- `report.md` 和 `tables/candidates.csv` 只展示前 N 个候选。
+- 实际候选总数必须读 `manifest.json` 的 `candidates_total`。
+- 严格候选总数必须读 `strict_candidates_total`。
+- 全量候选明细必须读 `tables/all_candidates.csv`。
+
+不要把 `Displayed Candidates` 当作全量扫描结果。
+
+## 快筛后的默认动作
+
+扫描完成后，agent 应按以下顺序推进：
+
+1. 读取 manifest、report、`tables/all_candidates.csv`，解释全量候选数、展示数量、过滤统计和数据限制。
+2. 对全部 `strict_canslim_candidate` 建立深研队列；不要任意只取 top 3。
+3. 只在 strict 数量过多、用户要求压缩成本，或深研 recipe 明确受限时，才按分数/RS/流动性分批执行。
+4. `provisional_research_queue` 不是正式候选；先补缺失字段或说明限制，再决定是否深研。
+5. 深研通过后，再进入 CANSLIM 技术面确认、watchlist、回测和风控。
+
 ## 单标的深研入口
 
 对候选标的做完整研究：

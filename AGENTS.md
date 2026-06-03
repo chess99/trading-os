@@ -122,7 +122,17 @@ CANSLIM 快筛不应触发全市场逐标的历史 K 线刷新。需要历史价
 python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 ```
 
-输出候选列表、评分拆解、过滤统计、manifest、trace 和 report。筛选结果只是研究队列，不自动形成买入结论。
+输出候选列表、评分拆解、过滤统计、manifest、trace 和 report。`--top` 只是 report
+和 `tables/candidates.csv` 的展示上限；实际全量候选必须以 manifest 中的
+`candidates_total`、`strict_candidates_total`、`provisional_candidates_total` 和
+`tables/all_candidates.csv` 为准。
+
+扫描结果只是研究队列，不自动形成买入结论。扫描后的默认动作是：
+
+- 对全部 `strict_canslim_candidate` 生成 CANSLIM 深研队列，不要任意只取 top 3。
+- `provisional_research_queue` 只在缺失字段补齐、或用户明确要求扩大覆盖时继续深研。
+- 深研完成后再进入技术面确认、watchlist、回测或风控流程。
+- 最终回答必须说明“全量候选数”和“展示候选数”的区别。
 
 ### 单标的深研
 

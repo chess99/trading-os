@@ -28,6 +28,19 @@ def test_agents_guidance_points_to_research_recipes_not_scheduler_bulk():
     assert "scheduler trigger market_data_bulk_refresh" not in text
 
 
+def test_canslim_guidance_distinguishes_display_limit_from_full_results():
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+    skill = Path("skills/canslim-system/SKILL.md").read_text(encoding="utf-8")
+
+    for text in [agents, skill]:
+        assert "--top" in text
+        assert "展示上限" in text
+        assert "candidates_total" in text
+        assert "strict_candidates_total" in text
+        assert "tables/all_candidates.csv" in text
+        assert "不要任意只取 top 3" in text
+
+
 def test_daily_skill_no_longer_requires_scheduler_bulk_refresh():
     text = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
 
