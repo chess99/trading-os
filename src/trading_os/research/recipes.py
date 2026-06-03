@@ -63,21 +63,11 @@ def run_canslim_screen(
         filtered["insufficient_data"] = len(symbols)
         return _finish_result(hub, run, "canslim_screen", trace, [], filtered)
 
-    bars = hub.get_bars(
-        symbols,
-        start=as_of - timedelta(days=420),
-        end=as_of + timedelta(days=1),
-        adjustment="qfq",
-        policy="lazy_fill",
-    )
-    trace.append("- lazy-fill missing bars only for screened liquid symbols")
-    rs = _relative_strength(symbols, bars)
-    rs_threshold = _percentile_threshold(rs, pct=0.20)
-
-    candidates: list[dict[str, Any]] = []
     fund_by_symbol = (
         fundamentals.sort_values(["as_of", "fetched_at"]).groupby("symbol", as_index=False).tail(1)
     )
+    prelim_symbols: list[str] = []
+    prelim_rows: list[dict[str, Any]] = []
     for row in fund_by_symbol.to_dict("records"):
         symbol = str(row["symbol"])
         if symbol not in symbols:
@@ -91,6 +81,30 @@ def run_canslim_screen(
         if eps_growth < 0.18 or roe < 0.17 or positive_quarters < 4:
             filtered["no_signal"] += 1
             continue
+        prelim_symbols.append(symbol)
+        prelim_rows.append(row)
+
+    if not prelim_symbols:
+        trace.append("- skip RS bars: no symbols passed C/A fundamental hard filters")
+        return _finish_result(hub, run, "canslim_screen", trace, [], filtered)
+
+    bars = hub.get_bars(
+        prelim_symbols,
+        start=as_of - timedelta(days=420),
+        end=as_of + timedelta(days=1),
+        adjustment="qfq",
+        policy="lazy_fill",
+    )
+    trace.append("- lazy-fill missing bars only for fundamentally qualified symbols")
+    rs = _relative_strength(prelim_symbols, bars)
+    rs_threshold = _percentile_threshold(rs, pct=0.20)
+
+    candidates: list[dict[str, Any]] = []
+    for row in prelim_rows:
+        symbol = str(row["symbol"])
+        eps_growth = _float(row.get("eps_growth_yoy"))
+        roe = _float(row.get("roe"))
+        positive_quarters = int(row.get("positive_quarters") or 0)
         rs_value = rs.get(symbol)
         rs_ok = rs_value is not None and rs_value >= rs_threshold
         score = 7.0 + (2.0 if rs_ok else 0.0) + (1.0 if eps_growth >= 0.40 else 0.0)

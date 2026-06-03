@@ -123,9 +123,41 @@ def test_canslim_screen_uses_snapshots_and_lazy_bars_without_bulk_refresh(tmp_pa
     assert [c["symbol"] for c in result.candidates] == ["SSE:600000"]
     assert result.filtered_out["st_or_inactive"] == 1
     assert result.filtered_out["no_signal"] == 1
-    assert provider.bars_calls == [["SSE:600000", "SSE:600001"]]
+    assert provider.bars_calls == [["SSE:600000"]]
     assert (result.run.path / "manifest.json").exists()
     assert (result.run.path / "report.md").exists()
+
+
+def test_canslim_screen_skips_bars_when_fundamental_filters_fail(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                }
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+        provenance={"fixture": "fundamentals_missing_positive_quarters"},
+    )
+    provider = RecipeProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
+
+    assert result.candidates == []
+    assert result.filtered_out["no_signal"] == 1
+    assert provider.bars_calls == []
+    assert "skip RS bars" in (result.run.path / "trace.md").read_text(encoding="utf-8")
 
 
 def test_company_factor_backtest_and_daily_recipes_write_run_artifacts(tmp_path):
