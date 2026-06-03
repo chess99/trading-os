@@ -88,6 +88,8 @@ class DataHub:
         source = self._provider_name(provider)
         df = provider.fetch_fundamentals(symbols, as_of, periods)
         if df is not None and not df.empty:
+            if policy == "refresh" and not cached.empty:
+                df = _merge_fundamentals(cached, df)
             self.store.write_fundamentals(
                 df, as_of=as_of, source=source, provenance={"provider": source}
             )
@@ -181,8 +183,74 @@ class AkshareResearchProvider:
                 parts.append(df)
         return pd.concat(parts, ignore_index=True) if parts else pd.DataFrame()
 
+    def fetch_fundamentals(
+        self, symbols: list[str], as_of: date, periods: int | None = None
+    ) -> Any:
+        import akshare as ak
+        import pandas as pd
+
+        rows = []
+        for symbol in symbols:
+            _exchange, ticker = symbol.split(":", 1)
+            try:
+                raw = ak.stock_financial_abstract_new_ths(symbol=ticker)
+            except Exception:
+                continue
+            row = _quarter_history_from_ths(symbol, raw, as_of=as_of, periods=periods)
+            if row:
+                rows.append(row)
+        return pd.DataFrame(rows)
+
 
 def _canonical_from_code(code: str) -> str:
     code = str(code).zfill(6)
     exchange = "SSE" if code.startswith("6") else "SZSE"
     return f"{exchange}:{code}"
+
+
+def _merge_fundamentals(cached: Any, fetched: Any) -> Any:
+    import pandas as pd
+
+    if cached is None or cached.empty:
+        return fetched
+    if fetched is None or fetched.empty:
+        return cached
+    cached_idx = cached.copy().set_index("symbol", drop=False)
+    fetched_idx = fetched.copy().set_index("symbol", drop=False)
+    merged = fetched_idx.combine_first(cached_idx)
+    return pd.DataFrame(merged).reset_index(drop=True)
+
+
+def _quarter_history_from_ths(
+    symbol: str, raw: Any, *, as_of: date, periods: int | None = None
+) -> dict[str, Any] | None:
+    import pandas as pd
+
+    if raw is None or raw.empty:
+        return None
+    df = raw.copy()
+    if "report_date" not in df.columns or "metric_name" not in df.columns:
+        return None
+    df["report_date"] = pd.to_datetime(df["report_date"], errors="coerce")
+    df = df[df["report_date"].dt.date <= as_of]
+    profit = df[df["metric_name"] == "parent_holder_net_profit"].sort_values(
+        "report_date", ascending=False
+    )
+    if profit.empty:
+        return None
+    if periods is not None:
+        profit = profit.head(periods)
+
+    positive_quarters = 0
+    for value in pd.to_numeric(profit.get("single"), errors="coerce"):
+        if pd.isna(value) or float(value) <= 0:
+            break
+        positive_quarters += 1
+
+    latest = profit.iloc[0]
+    return {
+        "symbol": symbol,
+        "period": latest["report_date"].date().isoformat(),
+        "pub_date": latest["report_date"].date().isoformat(),
+        "positive_quarters": positive_quarters,
+    }

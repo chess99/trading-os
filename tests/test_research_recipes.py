@@ -82,6 +82,32 @@ class RecipeProvider:
         return pd.DataFrame(rows)
 
 
+class FailingBarsProvider(RecipeProvider):
+    def fetch_bars(self, symbols, start, end, adjustment):
+        self.bars_calls.append(list(symbols))
+        raise RuntimeError("bars source unavailable")
+
+
+class EnrichingFundamentalsProvider(RecipeProvider):
+    def __init__(self) -> None:
+        super().__init__()
+        self.fundamental_calls: list[list[str]] = []
+
+    def fetch_fundamentals(self, symbols, as_of, periods):
+        self.fundamental_calls.append(list(symbols))
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        )
+
+
 def _fundamentals():
     return pd.DataFrame(
         [
@@ -128,7 +154,7 @@ def test_canslim_screen_uses_snapshots_and_lazy_bars_without_bulk_refresh(tmp_pa
     assert (result.run.path / "report.md").exists()
 
 
-def test_canslim_screen_skips_bars_when_fundamental_filters_fail(tmp_path):
+def test_canslim_screen_marks_missing_quarter_history_as_provisional(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.recipes import run_canslim_screen
     from trading_os.research.store import ResearchStore
@@ -154,10 +180,117 @@ def test_canslim_screen_skips_bars_when_fundamental_filters_fail(tmp_path):
 
     result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
 
+    assert [candidate["symbol"] for candidate in result.candidates] == ["SSE:600000"]
+    assert result.candidates[0]["classification"] == "provisional_research_queue"
+    assert result.candidates[0]["signals"]["positive_quarters"] is None
+    assert "positive_quarters" in result.candidates[0]["missing_fields"]
+    assert result.filtered_out["insufficient_data"] == 2
+    assert result.filtered_out["no_signal"] == 0
+    assert provider.bars_calls == [["SSE:600000"]]
+    assert result.manifest["strict_candidates_total"] == 0
+    assert result.manifest["provisional_candidates_total"] == 1
+    report = (result.run.path / "report.md").read_text(encoding="utf-8")
+    assert "Strict CANSLIM Candidates: 0" in report
+    assert "Provisional Research Queue: 1" in report
+
+
+def test_canslim_screen_enriches_missing_quarter_history_when_provider_supports_it(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                }
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    provider = EnrichingFundamentalsProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
+
+    assert provider.fundamental_calls == [["SSE:600000"]]
+    assert [candidate["symbol"] for candidate in result.candidates] == ["SSE:600000"]
+    assert result.candidates[0]["classification"] == "strict_canslim_candidate"
+    assert result.candidates[0]["signals"]["positive_quarters"] == 8
+    assert result.manifest["strict_candidates_total"] == 1
+    assert result.manifest["provisional_candidates_total"] == 0
+
+
+def test_canslim_screen_skips_bars_for_core_fundamental_failures(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.10,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    provider = RecipeProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
+
     assert result.candidates == []
     assert result.filtered_out["no_signal"] == 1
+    assert result.filtered_out["insufficient_data"] == 1
     assert provider.bars_calls == []
-    assert "skip RS bars" in (result.run.path / "trace.md").read_text(encoding="utf-8")
+
+
+def test_canslim_screen_does_not_abort_when_rs_bars_are_unavailable(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    provider = FailingBarsProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
+
+    assert [candidate["symbol"] for candidate in result.candidates] == ["SSE:600000"]
+    assert result.candidates[0]["classification"] == "provisional_research_queue"
+    assert "relative_strength" in result.candidates[0]["missing_fields"]
+    assert result.manifest["strict_candidates_total"] == 0
+    assert result.manifest["provisional_candidates_total"] == 1
+    assert "RS bars unavailable" in result.manifest["limitations"][0]
 
 
 def test_company_factor_backtest_and_daily_recipes_write_run_artifacts(tmp_path):

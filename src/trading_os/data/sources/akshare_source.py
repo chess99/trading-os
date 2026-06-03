@@ -39,19 +39,36 @@ def fetch_daily_bars(
         raise RuntimeError("akshare is required for A-share data") from exc
 
     symbol_str = _build_akshare_symbol(ticker, exchange)
-    raw = ak.stock_zh_a_hist(
-        symbol=symbol_str,
-        period="daily",
+    try:
+        raw = ak.stock_zh_a_hist(
+            symbol=symbol_str,
+            period="daily",
+            start_date=_ak_date(start),
+            end_date=_ak_date(end),
+            adjust=_adjustment_value(adjustment),
+        )
+        if raw is not None and not raw.empty:
+            raw = raw.copy()
+            if "成交量" in raw.columns:
+                raw["成交量"] = raw["成交量"] * 100
+            return (
+                _normalize_akshare_data(raw, ticker, exchange, adjustment, "eastmoney"),
+                "eastmoney",
+            )
+    except Exception as exc:
+        logger.debug("eastmoney daily bars failed for %s:%s: %s", exchange.value, ticker, exc)
+
+    fallback = ak.stock_zh_a_daily(
+        symbol=_prefixed_symbol(ticker, exchange),
         start_date=_ak_date(start),
         end_date=_ak_date(end),
         adjust=_adjustment_value(adjustment),
     )
-    if raw is None or raw.empty:
-        return pd.DataFrame(), "eastmoney"
-    raw = raw.copy()
-    if "成交量" in raw.columns:
-        raw["成交量"] = raw["成交量"] * 100
-    return _normalize_akshare_data(raw, ticker, exchange, adjustment, "eastmoney"), "eastmoney"
+    if fallback is None or fallback.empty:
+        return pd.DataFrame(), "sina_daily"
+    return _normalize_akshare_data(
+        fallback, ticker, exchange, adjustment, "sina_daily"
+    ), "sina_daily"
 
 
 def _ak_date(value: str | date | None) -> str:
@@ -78,6 +95,11 @@ def _build_akshare_symbol(ticker: str, exchange: Exchange) -> str:
     return ticker
 
 
+def _prefixed_symbol(ticker: str, exchange: Exchange) -> str:
+    prefix = "sh" if exchange == Exchange.SSE else "sz"
+    return f"{prefix}{ticker}"
+
+
 def _normalize_akshare_data(
     df: pd.DataFrame,
     ticker: str,
@@ -87,6 +109,7 @@ def _normalize_akshare_data(
 ) -> pd.DataFrame:
     column_mapping = {
         "日期": "ts",
+        "date": "ts",
         "开盘": "open",
         "收盘": "close",
         "最高": "high",
