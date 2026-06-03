@@ -131,7 +131,10 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 
 - 对全部 `strict_canslim_candidate` 生成 CANSLIM 深研队列，不要任意只取 top 3。
 - `provisional_research_queue` 只在缺失字段补齐、或用户明确要求扩大覆盖时继续深研。
-- 深研完成后再进入技术面确认、watchlist、回测或风控流程。
+- 深研完成后必须在 `artifacts/research/` 生成一份人类可读的汇总报告，不能只把
+  `data/research/runs/...` 或 run manifest 路径甩给用户。
+- 汇总报告必须列出全量候选数、strict/provisional 数、全部 strict 标的、单标的报告路径、数据限制和下一步队列。
+- 之后再进入技术面确认、watchlist、回测或风控流程。
 - 最终回答必须说明“全量候选数”和“展示候选数”的区别。
 
 ### 单标的深研
@@ -169,7 +172,7 @@ python -m trading_os backtest run strategy_name --start YYYY-MM-DD --end YYYY-MM
 产物边界：
 
 - `artifacts/runs/`：recipe 的完整运行证据链，是默认产物目录。
-- `artifacts/research/`：只放单个标的的最终深度研究报告。
+- `artifacts/research/`：放人类可读的研究汇总、单标的最终深度研究报告。
 - `artifacts/watchlist/`：自选池状态和逐标的追踪。
 - `artifacts/journal/`：事件日志和交易审计数据，通常不入库。
 

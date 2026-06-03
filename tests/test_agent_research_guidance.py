@@ -41,6 +41,19 @@ def test_canslim_guidance_distinguishes_display_limit_from_full_results():
         assert "不要任意只取 top 3" in text
 
 
+def test_canslim_guidance_requires_human_readable_research_summary():
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+    skill = Path("skills/canslim-system/SKILL.md").read_text(encoding="utf-8")
+
+    for text in [agents, skill]:
+        assert "artifacts/research/" in text
+        assert "人类可读" in text
+        assert "不能只" in text
+        assert "data/research/runs" in text
+        assert "单标的报告路径" in text
+        assert "下一步" in text
+
+
 def test_daily_skill_no_longer_requires_scheduler_bulk_refresh():
     text = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
 
