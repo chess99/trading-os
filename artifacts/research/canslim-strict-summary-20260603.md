@@ -1,5 +1,8 @@
 # CANSLIM Strict Candidates Summary - 2026-06-03
 
+> Superseded: 完整复核报告已生成到 `artifacts/research/canslim-strict-complete-review-20260603.md`。
+> 该完整报告补充了近 12 个月公告/事件、管理层指引/订单/产能/产品线索、机构持仓、主营构成、同业拥挤度和 base/pivot/突破放量技术确认。
+
 ## 结论
 
 本轮全 A CANSLIM 快筛得到 63 个全量候选，其中 13 个为 `strict_canslim_candidate`，50 个为 `provisional_research_queue`。`--top 30` 只是展示上限，不代表全量候选数。
@@ -16,15 +19,7 @@
 
 本轮 strict 的本地筛选字段完整：行情快照、fundamentals、季度连续性、RS 历史价格均可用。
 
-仍未完成的深研维度：
-
-- 近 12 个月新闻和公告事件。
-- 管理层指引、订单、产能、产品周期等定性催化。
-- 机构持仓变化。
-- 同业比较和行业拥挤度。
-- 技术形态中的 base、pivot、突破放量确认。
-
-因此本文件用于组织后续研究和技术确认，不构成交易建议。
+完整复核维度已在 `artifacts/research/canslim-strict-complete-review-20260603.md` 补充。本文件保留为初始 deep-research 索引和单标的 run 路径索引，不构成交易建议。
 
 ## Strict 候选总览
 

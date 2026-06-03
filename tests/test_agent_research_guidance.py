@@ -54,6 +54,26 @@ def test_canslim_guidance_requires_human_readable_research_summary():
         assert "下一步" in text
 
 
+def test_canslim_guidance_requires_complete_post_screen_review():
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+    skill = Path("skills/canslim-system/SKILL.md").read_text(encoding="utf-8")
+
+    required_terms = [
+        "完整复核报告",
+        "后续再补",
+        "近 12 个月公告/事件",
+        "管理层指引/订单/产能/产品线索",
+        "机构持仓",
+        "同业拥挤度",
+        "base/pivot/突破放量技术确认",
+        "失败接口",
+        "替代口径",
+    ]
+    for text in [agents, skill]:
+        for term in required_terms:
+            assert term in text
+
+
 def test_daily_skill_no_longer_requires_scheduler_bulk_refresh():
     text = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
 

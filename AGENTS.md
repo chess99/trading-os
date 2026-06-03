@@ -131,10 +131,11 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 
 - 对全部 `strict_canslim_candidate` 生成 CANSLIM 深研队列，不要任意只取 top 3。
 - `provisional_research_queue` 只在缺失字段补齐、或用户明确要求扩大覆盖时继续深研。
-- 深研完成后必须在 `artifacts/research/` 生成一份人类可读的汇总报告，不能只把
-  `data/research/runs/...` 或 run manifest 路径甩给用户。
-- 汇总报告必须列出全量候选数、strict/provisional 数、全部 strict 标的、单标的报告路径、数据限制和下一步队列。
-- 之后再进入技术面确认、watchlist、回测或风控流程。
+- 深研完成后必须在 `artifacts/research/` 生成一份人类可读的完整复核报告，不能只把
+  `data/research/runs/...` 或 run manifest 路径甩给用户，也不能留下“后续再补”的维度后停止。
+- 完整复核报告必须列出全量候选数、strict/provisional 数、全部 strict 标的、单标的报告路径、近 12 个月公告/事件、管理层指引/订单/产能/产品线索、机构持仓、主营构成、同业拥挤度、base/pivot/突破放量技术确认、数据限制和下一步队列。
+- 如果某个外部数据源真实失败，报告必须列明失败接口、失败原因、已使用的替代口径和对结论置信度的影响；不得把缺口写成待办后直接结束。
+- 完整复核完成后再进入 watchlist、回测或风控流程。
 - 最终回答必须说明“全量候选数”和“展示候选数”的区别。
 
 ### 单标的深研
