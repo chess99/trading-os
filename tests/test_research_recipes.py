@@ -443,3 +443,60 @@ def test_company_factor_backtest_and_daily_recipes_write_run_artifacts(tmp_path)
         assert (result.run.path / "manifest.json").exists()
         assert (result.run.path / "trace.md").exists()
         assert (result.run.path / "report.md").exists()
+
+
+def test_company_research_canslim_report_contains_real_screening_sections(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_company_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_quote_snapshot(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "name": "A",
+                    "close": 20.0,
+                    "volume": 2_000_000.0,
+                    "amount": 40_000_000.0,
+                }
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                    "net_margin": 0.18,
+                    "gross_margin": 0.42,
+                }
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    bars = RecipeProvider().fetch_bars(["SSE:600000"], date(2025, 5, 1), date(2026, 5, 31), "qfq")
+    store.write_bars(bars, source="fixture")
+    hub = DataHub(store, provider=RecipeProvider())
+
+    result = run_company_research(
+        hub, "SSE:600000", as_of=date(2026, 5, 30), template="canslim"
+    )
+
+    report = result.report
+    assert "## CANSLIM Evidence" in report
+    assert "eps_growth_yoy" in report
+    assert "positive_quarters" in report
+    assert "relative_strength" in report
+    assert "## Data Limitations" in report
+    assert "## Next Actions" in report
+    assert result.manifest["template"] == "canslim"
+    assert "bars" in result.manifest["datasets"]

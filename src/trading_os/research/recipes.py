@@ -226,21 +226,37 @@ def run_company_research(
     news = hub.get_news(
         [symbol], as_of=as_of, lookback_months=lookback_months, policy="cache_first"
     )
+    bars = hub.get_bars(
+        [symbol],
+        start=as_of - timedelta(days=420),
+        end=as_of + timedelta(days=1),
+        adjustment="qfq",
+        policy="lazy_fill",
+    )
     trace = [
         "# company_research trace",
         f"- symbol: `{symbol}`",
-        "- load quote, fundamentals, estimates, and news through DataHub",
+        "- load quote, fundamentals, bars, estimates, and news through DataHub",
         "- write structured report with explicit data limitations",
     ]
     tables = {
         "quotes": quotes[quotes["symbol"] == symbol] if not quotes.empty else quotes,
         "fundamentals": fundamentals,
+        "bars": bars,
         "estimates": estimates,
         "news": news,
     }
     report = _company_report(symbol, as_of, template, valuation_mode, tables)
     manifest = {
         "steps": [{"name": "load_company_datasets"}, {"name": "write_report"}],
+        "template": template,
+        "datasets": {
+            "quotes": not tables["quotes"].empty,
+            "fundamentals": not fundamentals.empty,
+            "bars": not bars.empty,
+            "estimates": not estimates.empty,
+            "news": not news.empty,
+        },
         "outputs": {"report": str(run.path / "report.md")},
         "limitations": [
             "Missing datasets are reported as unavailable; no synthetic investment data is used."
@@ -457,10 +473,13 @@ def _company_report(
 ) -> str:
     quote = tables["quotes"]
     fundamentals = tables["fundamentals"]
+    bars = tables.get("bars", pd.DataFrame())
     latest_price = "N/A" if quote.empty or "close" not in quote else quote.iloc[0]["close"]
     latest_roe = (
         "N/A" if fundamentals.empty or "roe" not in fundamentals else fundamentals.iloc[0]["roe"]
     )
+    if template == "canslim":
+        return _canslim_company_report(symbol, as_of, valuation_mode, quote, fundamentals, bars)
     return (
         f"# Company Research: {symbol}\n\n"
         f"- as_of: `{as_of.isoformat()}`\n"
@@ -472,6 +491,107 @@ def _company_report(
         "Missing datasets are explicitly left blank; "
         "no synthetic investment data is used.\n"
     )
+
+
+def _canslim_company_report(
+    symbol: str,
+    as_of: date,
+    valuation_mode: str,
+    quote: pd.DataFrame,
+    fundamentals: pd.DataFrame,
+    bars: pd.DataFrame,
+) -> str:
+    latest_quote = quote.iloc[0].to_dict() if not quote.empty else {}
+    latest_fund = fundamentals.iloc[0].to_dict() if not fundamentals.empty else {}
+    rs_values = _relative_strength([symbol], bars)
+    rs_value = rs_values.get(symbol)
+    close = _float(latest_quote.get("close"))
+    amount = _float(latest_quote.get("amount"))
+    eps_growth = _float(latest_fund.get("eps_growth_yoy"))
+    roe = _float(latest_fund.get("roe"))
+    positive_quarters = _int_or_none(latest_fund.get("positive_quarters"))
+    gross_margin = _float(latest_fund.get("gross_margin"))
+    net_margin = _float(latest_fund.get("net_margin"))
+
+    missing = []
+    for name, value in [
+        ("quote.close", close),
+        ("quote.amount", amount),
+        ("fundamentals.eps_growth_yoy", eps_growth),
+        ("fundamentals.roe", roe),
+        ("fundamentals.positive_quarters", positive_quarters),
+        ("bars.relative_strength", rs_value),
+    ]:
+        if value is None:
+            missing.append(name)
+
+    c_ok = eps_growth is not None and eps_growth >= 0.18
+    a_ok = roe is not None and roe >= 0.17 and (
+        positive_quarters is not None and positive_quarters >= 4
+    )
+    l_ok = rs_value is not None and rs_value > 0
+
+    lines = [
+        f"# CANSLIM Company Research: {symbol}",
+        "",
+        f"- as_of: `{as_of.isoformat()}`",
+        f"- valuation_mode: `{valuation_mode}`",
+        f"- latest_price: `{_fmt(close)}`",
+        f"- latest_turnover_amount: `{_fmt(amount)}`",
+        "",
+        "## CANSLIM Evidence",
+        "",
+        f"- C current earnings: eps_growth_yoy=`{_fmt_pct(eps_growth)}` pass=`{c_ok}`",
+        (
+            "- A annual/quality proxy: "
+            f"roe=`{_fmt_pct(roe)}`, positive_quarters=`{_fmt(positive_quarters)}` "
+            f"pass=`{a_ok}`"
+        ),
+        f"- L leadership proxy: relative_strength=`{_fmt_pct(rs_value)}` pass=`{l_ok}`",
+        f"- S liquidity proxy: turnover_amount=`{_fmt(amount)}`",
+        f"- profitability context: gross_margin=`{_fmt_pct(gross_margin)}`, "
+        f"net_margin=`{_fmt_pct(net_margin)}`",
+        "",
+        "## Interpretation",
+        "",
+        "- This report verifies the deterministic CANSLIM screening evidence available locally.",
+        "- It is not a trade instruction; technical base/pivot confirmation is still required.",
+        "",
+        "## Data Limitations",
+        "",
+    ]
+    if missing:
+        for item in missing:
+            lines.append(f"- Missing `{item}`.")
+    else:
+        lines.append("- Required local CANSLIM screening fields are present.")
+    lines.extend(
+        [
+            "- News, management guidance, institutional sponsorship, and peer comparison are "
+            "not yet fully populated unless separate datasets exist.",
+            "",
+            "## Next Actions",
+            "",
+            "- Run CANSLIM technical confirmation before adding to watchlist.",
+            "- Investigate one-off profit, cyclicality, and industry crowding.",
+            "- Link any final conclusion back to this run manifest and technical confirmation.",
+        ]
+    )
+    return "\n".join(lines) + "\n"
+
+
+def _fmt(value: Any) -> str:
+    if value is None:
+        return "N/A"
+    if isinstance(value, float):
+        return f"{value:.4g}"
+    return str(value)
+
+
+def _fmt_pct(value: float | None) -> str:
+    if value is None:
+        return "N/A"
+    return f"{value:.2%}"
 
 
 def _factor_table(quotes: pd.DataFrame, fundamentals: pd.DataFrame) -> pd.DataFrame:
