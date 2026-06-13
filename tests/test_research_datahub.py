@@ -49,6 +49,24 @@ class FakeProvider:
         )
 
 
+class FundamentalsProvider:
+    def __init__(self) -> None:
+        self.calls: list[list[str]] = []
+
+    def fetch_fundamentals(self, symbols, as_of, periods):
+        self.calls.append(list(symbols))
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "roe": 0.20,
+                    "revenue_growth_yoy": 0.30,
+                }
+                for symbol in symbols
+            ]
+        )
+
+
 class EmptyRouterProvider:
     name = "empty"
     capabilities = {"universe", "bars_daily", "fundamentals"}
@@ -181,6 +199,40 @@ def test_datahub_lazy_fill_refetches_bars_when_date_coverage_is_stale(tmp_path):
     assert pd.to_datetime(bars["ts"], utc=True).max().date().isoformat() == "2026-05-30"
 
 
+def test_datahub_lazy_fill_refetches_bars_when_cache_does_not_cover_start(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_bars(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "ts": "2026-05-30",
+                    "open": 9.0,
+                    "high": 9.0,
+                    "low": 9.0,
+                    "close": 9.0,
+                    "volume": 1_000_000.0,
+                }
+            ]
+        ),
+        source="fixture",
+    )
+    provider = FakeProvider()
+    hub = DataHub(store, provider=provider)
+
+    hub.get_bars(
+        ["SSE:600000"],
+        start=date(2026, 5, 1),
+        end=date(2026, 5, 31),
+        policy="lazy_fill",
+    )
+
+    assert provider.calls == ["bars:SSE:600000:2026-05-01:2026-05-31"]
+
+
 def test_datahub_refresh_refetches_bars_when_date_coverage_is_complete(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore
@@ -213,7 +265,9 @@ def test_datahub_refresh_refetches_bars_when_date_coverage_is_complete(tmp_path)
     )
 
     assert provider.calls == ["bars:SSE:600000:2026-05-01:2026-05-31"]
-    assert set(bars["source"].tolist()) == {"fixture", "FakeProvider"}
+    assert bars[["symbol", "ts"]].duplicated().sum() == 0
+    assert bars["source"].tolist() == ["FakeProvider"]
+    assert bars["close"].tolist() == [10.0]
 
 
 def test_datahub_with_provider_router_fetches_universe_through_fallback(tmp_path):
@@ -276,6 +330,51 @@ def test_datahub_with_provider_router_refreshes_fundamentals_through_fallback(tm
     assert fundamentals["source"].unique().tolist() == ["working"]
     assert fundamentals.iloc[0]["roe"] == 0.18
     assert health["capability"].tolist() == ["fundamentals"]
+
+
+def test_datahub_cache_first_fetches_missing_fundamental_symbols_only(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame([{"symbol": "SSE:600000", "roe": 0.10}]),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    provider = FundamentalsProvider()
+    hub = DataHub(store, provider=provider)
+
+    fundamentals = hub.get_fundamentals(
+        ["SSE:600000", "SZSE:000001"],
+        as_of=date(2026, 5, 30),
+        policy="cache_first",
+    )
+
+    assert provider.calls == [["SZSE:000001"]]
+    assert sorted(fundamentals["symbol"].tolist()) == ["SSE:600000", "SZSE:000001"]
+    assert fundamentals[fundamentals["symbol"] == "SSE:600000"].iloc[0]["roe"] == 0.10
+    assert fundamentals[fundamentals["symbol"] == "SZSE:000001"].iloc[0]["roe"] == 0.20
+
+
+def test_datahub_offline_raises_when_fundamental_cache_is_partial(tmp_path):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame([{"symbol": "SSE:600000", "roe": 0.10}]),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    hub = DataHub(store, provider=FundamentalsProvider())
+
+    with pytest.raises(MissingDataError):
+        hub.get_fundamentals(
+            ["SSE:600000", "SZSE:000001"],
+            as_of=date(2026, 5, 30),
+            policy="offline",
+        )
 
 
 def test_datahub_persists_provider_health_when_all_router_quote_providers_fail(tmp_path):

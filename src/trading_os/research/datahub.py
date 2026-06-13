@@ -106,14 +106,23 @@ class DataHub:
         policy: str = "cache_first",
     ) -> Any:
         cached = self.store.get_fundamentals(symbols, as_of=as_of)
-        if policy in {"cache_first", "offline", "lazy_fill"} and not cached.empty:
+        cached_symbols = _cached_symbols(cached)
+        missing = [symbol for symbol in symbols if symbol not in cached_symbols]
+        if policy in {"cache_first", "lazy_fill"} and not missing:
             return cached
         if policy == "offline":
-            raise MissingDataError(f"fundamentals missing for as_of={as_of}")
+            if missing:
+                raise MissingDataError(
+                    f"fundamentals missing for {','.join(missing)} as_of={as_of}"
+                )
+            return cached
+        symbols_to_fetch = list(symbols) if policy == "refresh" else missing
+        if not symbols_to_fetch:
+            return cached
         provider = self._provider()
         if isinstance(provider, ProviderRouter):
             result = self._router_fetch(
-                provider, "fundamentals", "fetch_fundamentals", symbols, as_of, periods
+                provider, "fundamentals", "fetch_fundamentals", symbols_to_fetch, as_of, periods
             )
             source = result.provider_name
             df = result.data
@@ -121,9 +130,9 @@ class DataHub:
             if not hasattr(provider, "fetch_fundamentals"):
                 return cached
             source = self._provider_name(provider)
-            df = provider.fetch_fundamentals(symbols, as_of, periods)
+            df = provider.fetch_fundamentals(symbols_to_fetch, as_of, periods)
         if df is not None and not df.empty:
-            if policy == "refresh" and not cached.empty:
+            if not cached.empty:
                 df = _merge_fundamentals(cached, df)
             self.store.write_fundamentals(
                 df, as_of=as_of, source=source, provenance={"provider": source}
@@ -270,6 +279,7 @@ def _symbols_with_missing_bar_coverage(
 
     import pandas as pd
 
+    start_ts = pd.Timestamp(start, tz="UTC")
     end_ts = pd.Timestamp(end, tz="UTC")
     latest_required = end_ts - pd.Timedelta(days=1)
     result: list[str] = []
@@ -278,10 +288,17 @@ def _symbols_with_missing_bar_coverage(
         if rows.empty:
             result.append(symbol)
             continue
+        earliest = pd.to_datetime(rows["ts"], utc=True).min()
         latest = pd.to_datetime(rows["ts"], utc=True).max()
-        if latest < latest_required:
+        if earliest > start_ts or latest < latest_required:
             result.append(symbol)
     return result
+
+
+def _cached_symbols(cached: Any) -> set[str]:
+    if cached is None or cached.empty or "symbol" not in cached.columns:
+        return set()
+    return set(cached["symbol"].astype(str))
 
 
 def _merge_fundamentals(cached: Any, fetched: Any) -> Any:

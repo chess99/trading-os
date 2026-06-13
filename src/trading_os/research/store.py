@@ -175,6 +175,11 @@ class ResearchStore:
         end_ts = self._pd.Timestamp(end, tz="UTC")
         df = df[df["symbol"].isin(symbols)]
         df = df[(df["ts"] >= start_ts) & (df["ts"] < end_ts)]
+        sort_columns = ["symbol", "ts"]
+        if "fetched_at" in df.columns:
+            sort_columns.append("fetched_at")
+        df = df.sort_values(sort_columns)
+        df = df.drop_duplicates(["symbol", "ts"], keep="last")
         return df.sort_values(["symbol", "ts"]).reset_index(drop=True)
 
     def start_run(self, recipe: str, *, inputs: dict[str, Any]) -> ResearchRun:
