@@ -98,8 +98,11 @@ class ResearchStore:
         source: str,
         provenance: dict[str, Any] | None = None,
         freshness_policy: str = "quarterly",
+        append: bool = False,
     ) -> Path:
-        partition = as_of.isoformat() + "-" + uuid4().hex[:8]
+        partition = as_of.isoformat()
+        if append:
+            partition += "-" + uuid4().hex[:8]
         return self._write_snapshot_dataset(
             "fundamentals",
             df,

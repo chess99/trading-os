@@ -142,7 +142,7 @@ class DataHub:
                 self._ensure_non_empty(df, "fundamentals", source)
         if df is not None and not df.empty:
             self.store.write_fundamentals(
-                df, as_of=as_of, source=source, provenance={"provider": source}
+                df, as_of=as_of, source=source, provenance={"provider": source}, append=True
             )
         final = self.store.get_fundamentals(symbols, as_of=as_of)
         remaining = [symbol for symbol in symbols_to_fetch if symbol not in _cached_symbols(final)]
