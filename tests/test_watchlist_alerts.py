@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 
 def test_watchlist_state_created_from_wait_for_breakout_decision():
     from trading_os.research.watchlist import update_watchlist_from_decisions
@@ -29,7 +31,15 @@ def test_watchlist_state_created_from_wait_for_breakout_decision():
 def test_reject_decision_invalidates_existing_watchlist_entry():
     from trading_os.research.watchlist import update_watchlist_from_decisions
 
-    current = [{"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0}]
+    current = [
+        {
+            "symbol": "SSE:600000",
+            "status": "watching",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        }
+    ]
     decisions = [{"symbol": "SSE:600000", "decision": "reject", "source_run_id": "run-2"}]
 
     state = update_watchlist_from_decisions(current, decisions)
@@ -37,7 +47,9 @@ def test_reject_decision_invalidates_existing_watchlist_entry():
     assert state[0]["status"] == "invalidated"
     assert state[0]["source_run_id"] == "run-2"
     assert state[0]["last_decision"] == "reject"
-    assert state[0]["pivot_price"] == 12.0
+    assert "pivot_price" not in state[0]
+    assert "buy_zone_high" not in state[0]
+    assert "stop_loss" not in state[0]
 
 
 def test_actionable_watch_updates_existing_row_and_preserves_unwritten_fields():
@@ -104,6 +116,40 @@ def test_research_only_creates_candidate_without_technical_levels():
     ]
 
 
+def test_research_only_clears_stale_technical_levels():
+    from trading_os.research.watchlist import update_watchlist_from_decisions
+
+    current = [
+        {
+            "symbol": "SSE:600000",
+            "status": "actionable",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+            "notes": "preserve",
+        }
+    ]
+    decisions = [
+        {
+            "symbol": "SSE:600000",
+            "decision": "research_only",
+            "source_run_id": "run-5",
+        }
+    ]
+
+    state = update_watchlist_from_decisions(current, decisions)
+
+    assert state == [
+        {
+            "symbol": "SSE:600000",
+            "status": "candidate",
+            "notes": "preserve",
+            "source_run_id": "run-5",
+            "last_decision": "research_only",
+        }
+    ]
+
+
 def test_malformed_missing_or_blank_symbols_are_skipped():
     from trading_os.research.watchlist import update_watchlist_from_decisions
 
@@ -156,4 +202,80 @@ def test_duplicate_decisions_last_decision_wins_deterministically():
     assert state[1]["status"] == "invalidated"
     assert state[1]["source_run_id"] == "run-3"
     assert state[1]["last_decision"] == "reject"
-    assert state[1]["pivot_price"] == 10.0
+    assert "pivot_price" not in state[1]
+    assert "buy_zone_high" not in state[1]
+    assert "stop_loss" not in state[1]
+
+
+@pytest.mark.parametrize(
+    "decision",
+    [
+        {
+            "symbol": "SSE:600000",
+            "decision": "wait_for_breakout",
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        },
+        {
+            "symbol": "SSE:600000",
+            "decision": "actionable_watch",
+            "pivot_price": "bad",
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        },
+        {
+            "symbol": "SSE:600000",
+            "decision": "wait_for_breakout",
+            "pivot_price": float("nan"),
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        },
+        {
+            "symbol": "SSE:600000",
+            "decision": "actionable_watch",
+            "pivot_price": 0.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        },
+        {
+            "symbol": "SSE:600000",
+            "decision": "wait_for_breakout",
+            "pivot_price": 12.0,
+            "buy_zone_high": -12.6,
+            "stop_loss": 11.04,
+        },
+        {
+            "symbol": "SSE:600000",
+            "decision": "actionable_watch",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": None,
+        },
+    ],
+)
+def test_invalid_actionable_decisions_downgrade_and_clear_levels(decision):
+    from trading_os.research.watchlist import update_watchlist_from_decisions
+
+    current = [
+        {
+            "symbol": "SSE:600000",
+            "status": "watching",
+            "pivot_price": 11.5,
+            "buy_zone_high": 12.075,
+            "stop_loss": 10.58,
+            "notes": "keep",
+        }
+    ]
+    decision["source_run_id"] = "run-invalid"
+
+    state = update_watchlist_from_decisions(current, [decision])
+
+    assert state == [
+        {
+            "symbol": "SSE:600000",
+            "status": "candidate",
+            "notes": "keep",
+            "source_run_id": "run-invalid",
+            "last_decision": decision["decision"],
+        }
+    ]

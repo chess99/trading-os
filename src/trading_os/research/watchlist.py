@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from typing import Any
 
 _DECISION_STATUS = {
@@ -33,14 +34,21 @@ def update_watchlist_from_decisions(
             continue
 
         existing = dict(by_symbol.get(symbol, {"symbol": symbol}))
+        if decision_name in {"wait_for_breakout", "actionable_watch"} and not _has_valid_levels(
+            decision
+        ):
+            status = "candidate"
+
         existing["status"] = status
         existing["source_run_id"] = decision.get("source_run_id")
         existing["last_decision"] = decision_name
 
-        if decision_name in {"wait_for_breakout", "actionable_watch"}:
+        if status in {"watching", "actionable"}:
             existing["pivot_price"] = decision.get("pivot_price")
             existing["buy_zone_high"] = decision.get("buy_zone_high")
             existing["stop_loss"] = decision.get("stop_loss")
+        else:
+            _clear_actionable_levels(existing)
 
         by_symbol[symbol] = existing
 
@@ -54,3 +62,24 @@ def _clean_symbol(value: Any) -> str | None:
     if not symbol:
         return None
     return symbol
+
+
+def _has_valid_levels(decision: dict[str, Any]) -> bool:
+    return all(
+        _is_finite_positive_number(decision.get(field))
+        for field in ("pivot_price", "buy_zone_high", "stop_loss")
+    )
+
+
+def _is_finite_positive_number(value: Any) -> bool:
+    return (
+        not isinstance(value, bool)
+        and isinstance(value, int | float)
+        and math.isfinite(value)
+        and value > 0
+    )
+
+
+def _clear_actionable_levels(row: dict[str, Any]) -> None:
+    for field in ("pivot_price", "buy_zone_high", "stop_loss"):
+        row.pop(field, None)
