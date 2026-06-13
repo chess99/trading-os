@@ -31,6 +31,8 @@ class TradingCalendar:
         now_date: date | None = None,
         now_time: time | None = None,
     ) -> date:
+        if now_time is not None and now_date is None:
+            raise ValueError("now_date is required when now_time is provided")
         if not self.is_trading_day(requested):
             current = requested
             while not self.is_trading_day(current):

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import date, time
 
+import pytest
+
 
 def test_resolves_weekend_to_previous_trading_day():
     from trading_os.research.calendar import TradingCalendar
@@ -24,9 +26,9 @@ def test_trading_day_before_eod_cutoff_uses_previous_trading_day():
 
     cal = TradingCalendar(eod_ready_time=time(18, 0))
 
-    assert cal.resolve_effective_as_of(date(2026, 6, 12), now_time=time(15, 30)) == date(
-        2026, 6, 11
-    )
+    assert cal.resolve_effective_as_of(
+        date(2026, 6, 12), now_date=date(2026, 6, 12), now_time=time(15, 30)
+    ) == date(2026, 6, 11)
 
 
 def test_trading_day_after_eod_cutoff_uses_same_day():
@@ -34,9 +36,9 @@ def test_trading_day_after_eod_cutoff_uses_same_day():
 
     cal = TradingCalendar(eod_ready_time=time(18, 0))
 
-    assert cal.resolve_effective_as_of(date(2026, 6, 12), now_time=time(18, 30)) == date(
-        2026, 6, 12
-    )
+    assert cal.resolve_effective_as_of(
+        date(2026, 6, 12), now_date=date(2026, 6, 12), now_time=time(18, 30)
+    ) == date(2026, 6, 12)
 
 
 def test_historical_trading_day_ignores_current_day_eod_cutoff():
@@ -47,3 +49,11 @@ def test_historical_trading_day_ignores_current_day_eod_cutoff():
     assert cal.resolve_effective_as_of(
         date(2026, 6, 1), now_date=date(2026, 6, 12), now_time=time(15, 30)
     ) == date(2026, 6, 1)
+
+
+def test_now_time_requires_now_date():
+    from trading_os.research.calendar import TradingCalendar
+
+    cal = TradingCalendar()
+    with pytest.raises(ValueError, match="now_date is required"):
+        cal.resolve_effective_as_of(date(2026, 6, 1), now_time=time(15, 30))
