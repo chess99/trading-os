@@ -33,8 +33,14 @@ class DataHub:
         if policy == "offline":
             raise MissingDataError(f"universe_snapshot missing for as_of={as_of}")
         provider = self._provider()
-        source = self._provider_name(provider)
-        df = provider.fetch_universe(as_of)
+        if isinstance(provider, ProviderRouter):
+            result = provider.fetch("universe", "fetch_universe", as_of)
+            self.store.write_provider_health(result.failures)
+            source = result.provider_name
+            df = result.data
+        else:
+            source = self._provider_name(provider)
+            df = provider.fetch_universe(as_of)
         self.store.write_universe(df, as_of=as_of, source=source, provenance={"provider": source})
         return self.store.get_universe(as_of=as_of)
 
@@ -77,8 +83,14 @@ class DataHub:
             raise MissingDataError(f"bars missing for {','.join(missing)}")
         if missing and policy in {"lazy_fill", "refresh", "cache_first"}:
             provider = self._provider()
-            source = self._provider_name(provider)
-            df = provider.fetch_bars(missing, start, end, adjustment)
+            if isinstance(provider, ProviderRouter):
+                result = provider.fetch("bars_daily", "fetch_bars", missing, start, end, adjustment)
+                self.store.write_provider_health(result.failures)
+                source = result.provider_name
+                df = result.data
+            else:
+                source = self._provider_name(provider)
+                df = provider.fetch_bars(missing, start, end, adjustment)
             if df is not None and not df.empty:
                 self.store.write_bars(df, source=source, provenance={"provider": source})
         return self.store.get_bars(symbols, start=start, end=end)
@@ -97,10 +109,16 @@ class DataHub:
         if policy == "offline":
             raise MissingDataError(f"fundamentals missing for as_of={as_of}")
         provider = self._provider()
-        if not hasattr(provider, "fetch_fundamentals"):
-            return cached
-        source = self._provider_name(provider)
-        df = provider.fetch_fundamentals(symbols, as_of, periods)
+        if isinstance(provider, ProviderRouter):
+            result = provider.fetch("fundamentals", "fetch_fundamentals", symbols, as_of, periods)
+            self.store.write_provider_health(result.failures)
+            source = result.provider_name
+            df = result.data
+        else:
+            if not hasattr(provider, "fetch_fundamentals"):
+                return cached
+            source = self._provider_name(provider)
+            df = provider.fetch_fundamentals(symbols, as_of, periods)
         if df is not None and not df.empty:
             if policy == "refresh" and not cached.empty:
                 df = _merge_fundamentals(cached, df)

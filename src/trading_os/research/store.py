@@ -82,6 +82,8 @@ class ResearchStore:
         df = self._normalize_frame(records)
         if df.empty:
             return self._dataset_path("provider_health", "empty")
+        if "recorded_at" not in df.columns:
+            df["recorded_at"] = datetime.now(timezone.utc).isoformat()
         partition = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + uuid4().hex[:8]
         return self._write_dataset("provider_health", df, partition)
 

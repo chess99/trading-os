@@ -45,6 +45,17 @@ class ProviderRouter:
                     }
                 )
                 continue
+            if getattr(data, "empty", False) is True:
+                failures.append(
+                    {
+                        "provider": provider_name,
+                        "capability": capability,
+                        "method": method_name,
+                        "error_type": "EmptyDataError",
+                        "message": "provider returned empty data",
+                    }
+                )
+                continue
             return ProviderResult(provider_name=provider_name, data=data, failures=failures)
 
         raise RuntimeError(f"all providers failed for capability={capability}: {failures}")

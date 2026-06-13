@@ -49,6 +49,67 @@ class FakeProvider:
         )
 
 
+class EmptyRouterProvider:
+    name = "empty"
+    capabilities = {"universe", "bars_daily", "fundamentals"}
+
+    def fetch_universe(self, as_of: date):
+        return pd.DataFrame()
+
+    def fetch_bars(self, symbols, start, end, adjustment):
+        return pd.DataFrame()
+
+    def fetch_fundamentals(self, symbols, as_of, periods):
+        return pd.DataFrame()
+
+
+class WorkingRouterProvider:
+    name = "working"
+    capabilities = {"universe", "bars_daily", "fundamentals"}
+
+    def fetch_universe(self, as_of: date):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "name": "浦发银行",
+                    "exchange": "SSE",
+                    "is_st": False,
+                    "is_active": True,
+                }
+            ]
+        )
+
+    def fetch_bars(self, symbols, start, end, adjustment):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "ts": pd.Timestamp(end) - pd.Timedelta(days=1),
+                    "open": 10.0,
+                    "high": 10.0,
+                    "low": 10.0,
+                    "close": 10.0,
+                    "volume": 1_000_000.0,
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_fundamentals(self, symbols, as_of, periods):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "revenue_growth_yoy": 0.25,
+                    "net_profit_growth_yoy": 0.30,
+                    "roe": 0.18,
+                }
+                for symbol in symbols
+            ]
+        )
+
+
 def test_datahub_cache_first_does_not_refetch_fresh_universe(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore
@@ -110,6 +171,68 @@ def test_datahub_lazy_fill_refetches_bars_when_date_coverage_is_stale(tmp_path):
 
     assert provider.calls == ["bars:SSE:600000:2026-05-01:2026-05-31"]
     assert pd.to_datetime(bars["ts"], utc=True).max().date().isoformat() == "2026-05-30"
+
+
+def test_datahub_with_provider_router_fetches_universe_through_fallback(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.providers import ProviderRouter
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    hub = DataHub(store, provider=ProviderRouter([EmptyRouterProvider(), WorkingRouterProvider()]))
+
+    universe = hub.get_universe(date(2026, 5, 30), policy="refresh")
+    health = store.get_provider_health()
+
+    assert universe["symbol"].tolist() == ["SSE:600000"]
+    assert universe["source"].unique().tolist() == ["working"]
+    assert health["provider"].tolist() == ["empty"]
+
+
+def test_datahub_with_provider_router_lazy_fills_bars_through_fallback(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.providers import ProviderRouter
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    hub = DataHub(store, provider=ProviderRouter([EmptyRouterProvider(), WorkingRouterProvider()]))
+
+    bars = hub.get_bars(
+        ["SSE:600000"],
+        start=date(2026, 5, 1),
+        end=date(2026, 5, 31),
+        policy="lazy_fill",
+    )
+    health = store.get_provider_health()
+
+    assert bars["symbol"].tolist() == ["SSE:600000"]
+    assert bars["source"].unique().tolist() == ["working"]
+    assert health["capability"].tolist() == ["bars_daily"]
+
+
+def test_datahub_with_provider_router_refreshes_fundamentals_through_fallback(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.providers import ProviderRouter
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame([{"symbol": "SSE:600000", "roe": 0.10}]),
+        as_of=date(2026, 5, 29),
+        source="fixture",
+    )
+    hub = DataHub(store, provider=ProviderRouter([EmptyRouterProvider(), WorkingRouterProvider()]))
+
+    fundamentals = hub.get_fundamentals(
+        ["SSE:600000"],
+        as_of=date(2026, 5, 30),
+        policy="refresh",
+    )
+    health = store.get_provider_health()
+
+    assert fundamentals["source"].unique().tolist() == ["working"]
+    assert fundamentals.iloc[0]["roe"] == 0.18
+    assert health["capability"].tolist() == ["fundamentals"]
 
 
 def test_datahub_offline_raises_when_cache_missing(tmp_path):
