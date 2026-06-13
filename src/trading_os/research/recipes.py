@@ -851,13 +851,22 @@ def _canslim_company_report(
     if news.empty:
         lines.append("- No cached news or announcements are available for this symbol.")
     else:
-        for record in news.head(10).to_dict("records"):
-            published_at = _fmt(record.get("published_at"))
-            title = _fmt(record.get("title"))
-            source_url = _fmt(record.get("source_url"))
-            lines.append(
-                f"- published_at=`{published_at}` title=`{title}` source_url=`{source_url}`"
-            )
+        symbol_news = _filter_symbol_rows(news, symbol)
+        ordered_news = _sort_by_recency(
+            symbol_news,
+            recency_columns=["published_at"],
+            tie_columns=["title", "source_url"],
+        )
+        if ordered_news.empty:
+            lines.append("- No cached news or announcements are available for this symbol.")
+        else:
+            for record in ordered_news.head(10).to_dict("records"):
+                published_at = _fmt(record.get("published_at"))
+                title = _fmt(record.get("title"))
+                source_url = _fmt(record.get("source_url"))
+                lines.append(
+                    f"- published_at=`{published_at}` title=`{title}` source_url=`{source_url}`"
+                )
     lines.extend(
         [
             "",
@@ -868,11 +877,19 @@ def _canslim_company_report(
     if estimates.empty:
         lines.append("- No cached estimates are available for this symbol.")
     else:
-        latest_estimate = estimates.iloc[0].to_dict()
-        for key, value in latest_estimate.items():
-            if key == "symbol":
-                continue
-            lines.append(f"- {key}: `{_fmt(value)}`")
+        symbol_estimates = _filter_symbol_rows(estimates, symbol)
+        ordered_estimates = _sort_by_recency(
+            symbol_estimates,
+            recency_columns=["as_of", "fetched_at", "estimate_date", "report_date", "published_at"],
+        )
+        if ordered_estimates.empty:
+            lines.append("- No cached estimates are available for this symbol.")
+        else:
+            latest_estimate = ordered_estimates.iloc[0].to_dict()
+            for key, value in latest_estimate.items():
+                if key == "symbol":
+                    continue
+                lines.append(f"- {key}: `{_fmt(value)}`")
     lines.extend(
         [
             "",
@@ -909,6 +926,49 @@ def _canslim_company_report(
         ]
     )
     return "\n".join(lines) + "\n"
+
+
+def _filter_symbol_rows(df: pd.DataFrame, symbol: str) -> pd.DataFrame:
+    if df.empty or "symbol" not in df.columns:
+        return df
+    return df[df["symbol"].astype(str) == symbol].reset_index(drop=True)
+
+
+def _sort_by_recency(
+    df: pd.DataFrame, *, recency_columns: list[str], tie_columns: list[str] | None = None
+) -> pd.DataFrame:
+    if df.empty:
+        return df
+
+    out = df.copy()
+    sort_columns = []
+    ascending = []
+    for column in recency_columns:
+        if column not in out.columns:
+            continue
+        parsed_column = f"__parsed_{column}"
+        out[parsed_column] = pd.to_datetime(out[column], errors="coerce", utc=True)
+        sort_columns.append(parsed_column)
+        ascending.append(False)
+
+    for column in tie_columns or []:
+        if column in out.columns:
+            sort_columns.append(column)
+            ascending.append(True)
+
+    if not sort_columns:
+        return out
+
+    return (
+        out.sort_values(
+            sort_columns,
+            ascending=ascending,
+            na_position="last",
+            kind="mergesort",
+        )
+        .drop(columns=[column for column in sort_columns if column.startswith("__parsed_")])
+        .reset_index(drop=True)
+    )
 
 
 def _fmt(value: Any) -> str:

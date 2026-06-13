@@ -564,3 +564,107 @@ def test_company_research_canslim_report_includes_enrichment_sections(tmp_path):
     assert "## Estimates and Valuation Context" in result.report
     assert "target_price" in result.report
     assert "## Institutional Sponsorship and Peer Context" in result.report
+
+
+def test_company_research_canslim_report_sorts_news_latest_first_and_filters_symbol():
+    from trading_os.research.recipes import _company_report
+
+    report = _company_report(
+        "SSE:600000",
+        date(2026, 6, 12),
+        "canslim",
+        "pe_band",
+        {
+            "quotes": pd.DataFrame(
+                [{"symbol": "SSE:600000", "close": 20.0, "amount": 40_000_000.0}]
+            ),
+            "fundamentals": pd.DataFrame(
+                [
+                    {
+                        "symbol": "SSE:600000",
+                        "period": "2026Q1",
+                        "eps_growth_yoy": 0.35,
+                        "roe": 0.22,
+                        "positive_quarters": 8,
+                    }
+                ]
+            ),
+            "bars": pd.DataFrame(),
+            "estimates": pd.DataFrame(),
+            "news": pd.DataFrame(
+                [
+                    {
+                        "symbol": "SSE:600000",
+                        "title": "较早公告",
+                        "published_at": "2026-05-01T09:00:00+08:00",
+                        "source_url": "https://example.test/news/old",
+                    },
+                    {
+                        "symbol": "SZSE:000001",
+                        "title": "其他公司公告",
+                        "published_at": "2026-06-10T09:00:00+08:00",
+                        "source_url": "https://example.test/news/other",
+                    },
+                    {
+                        "symbol": "SSE:600000",
+                        "title": "最新公告",
+                        "published_at": "2026-06-01T09:00:00+08:00",
+                        "source_url": "https://example.test/news/new",
+                    },
+                ]
+            ),
+        },
+    )
+
+    assert report.index("最新公告") < report.index("较早公告")
+    assert "其他公司公告" not in report
+
+
+def test_company_research_canslim_report_selects_freshest_estimate():
+    from trading_os.research.recipes import _company_report
+
+    report = _company_report(
+        "SSE:600000",
+        date(2026, 6, 12),
+        "canslim",
+        "pe_band",
+        {
+            "quotes": pd.DataFrame(
+                [{"symbol": "SSE:600000", "close": 20.0, "amount": 40_000_000.0}]
+            ),
+            "fundamentals": pd.DataFrame(
+                [
+                    {
+                        "symbol": "SSE:600000",
+                        "period": "2026Q1",
+                        "eps_growth_yoy": 0.35,
+                        "roe": 0.22,
+                        "positive_quarters": 8,
+                    }
+                ]
+            ),
+            "bars": pd.DataFrame(),
+            "news": pd.DataFrame(),
+            "estimates": pd.DataFrame(
+                [
+                    {
+                        "symbol": "SSE:600000",
+                        "target_price": 10.0,
+                        "estimate_date": "2026-05-01",
+                        "analyst": "stale",
+                    },
+                    {
+                        "symbol": "SSE:600000",
+                        "target_price": 15.0,
+                        "estimate_date": "2026-06-01",
+                        "analyst": "fresh",
+                    },
+                ]
+            ),
+        },
+    )
+
+    assert "target_price: `15`" in report
+    assert "analyst: `fresh`" in report
+    assert "target_price: `10`" not in report
+    assert "analyst: `stale`" not in report
