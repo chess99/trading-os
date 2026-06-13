@@ -74,10 +74,27 @@ def test_canslim_guidance_requires_complete_post_screen_review():
             assert term in text
 
 
+def test_docs_reference_daily_canslim_closure():
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+    readme = Path("README.md").read_text(encoding="utf-8")
+
+    assert "daily-canslim" in agents
+    assert "daily-canslim" in readme
+    assert "观察池盘中提醒" in agents
+
+
+def test_daily_skill_requires_human_report_and_watchlist_state():
+    text = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
+
+    assert "artifacts/research/daily-canslim-YYYYMMDD.md" in text
+    assert "artifacts/watchlist/state.json" in text
+    assert "不能只输出 run manifest" in text
+
+
 def test_daily_skill_no_longer_requires_scheduler_bulk_refresh():
     text = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
 
-    assert "python -m trading_os research daily" in text
+    assert "python -m trading_os research daily-canslim" in text
     assert "bulk refresh" not in text.lower()
     assert "blocked" not in text.lower()
 

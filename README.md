@@ -61,8 +61,11 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 # 单标的深度研究
 python -m trading_os research company SSE:600660 --template quality_growth --as-of YYYY-MM-DD
 
-# 每日研究队列
-python -m trading_os research daily --as-of YYYY-MM-DD
+# Daily CANSLIM 收口
+python -m trading_os research daily-canslim --as-of YYYY-MM-DD
+
+# 观察池提醒监控
+python -m trading_os alert monitor --mode watchlist --once
 
 # 因子研究和回测
 python -m trading_os factor run momentum_roe --as-of YYYY-MM-DD
@@ -80,6 +83,31 @@ artifacts/runs/{run_id}/report.md
 ```
 
 ## 研究工作流
+
+### Daily CANSLIM Closure
+
+使用：
+
+```bash
+python -m trading_os research daily-canslim --as-of YYYY-MM-DD
+```
+
+该 workflow 会解析最近一个已完成交易日，运行全 A CANSLIM 快筛，研究每一个 strict
+candidate，写入决策，更新 `artifacts/watchlist/state.json`，并生成
+`artifacts/research/daily-canslim-YYYYMMDD.md`。
+
+`--top` 只限制展示结果，绝不能限制下游 strict 候选处理。workflow 不能在写完 run
+manifest 后停止，必须完成决策、观察池更新和人类可读日报。
+
+### Watchlist Alert Monitor
+
+使用：
+
+```bash
+python -m trading_os alert monitor --mode watchlist --once
+```
+
+提醒监控只评估机器可读的观察池条目，不做全市场盘中扫描。
 
 ### CANSLIM 快筛
 

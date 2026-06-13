@@ -15,6 +15,22 @@ Agent 不直接拼接底层数据脚本，不直接读 parquet，不把快筛结
 
 ## 快筛入口
 
+Daily CANSLIM closure command:
+
+```bash
+python -m trading_os research daily-canslim --as-of YYYY-MM-DD
+```
+
+Required final user-facing outputs:
+
+- `artifacts/research/daily-canslim-YYYYMMDD.md`
+- `artifacts/watchlist/state.json`
+- linked `data/research/runs/{run_id}/manifest.json`
+
+Daily CANSLIM closure 会解析最近一个已完成交易日，运行全 A CANSLIM 快筛，研究每一个
+strict 候选，写入决策并更新观察池。Agent 必须总结 decisions 和 watchlist changes；
+cannot only return run manifest paths。
+
 全 A 快筛使用：
 
 ```bash
@@ -37,6 +53,7 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 - 实际候选总数必须读 `manifest.json` 的 `candidates_total`。
 - 严格候选总数必须读 `strict_candidates_total`。
 - 全量候选明细必须读 `tables/all_candidates.csv`。
+- Daily CANSLIM closure 中的 `--top` display limits never limit downstream strict-candidate processing。
 
 不要把 `Displayed Candidates` 当作全量扫描结果。
 

@@ -1,29 +1,31 @@
 ---
 name: daily-workflow
 description: |
-  每日研究工作流。由 research recipe 生成当日研究队列、候选清单和证据链。
+  每日研究工作流。由 Daily CANSLIM closure 生成当日候选、深研、决策、观察池状态和证据链。
   触发词："跑日常工作流"、"更新自选池"、"日常分析"、"今天市场怎样"、"日报"。
-  输出：artifacts/runs/{run_id}/report.md、trace.md、manifest.json。
+  输出：artifacts/research/daily-canslim-YYYYMMDD.md、artifacts/watchlist/state.json、linked run manifest。
 ---
 
 # Daily Research Workflow
 
-Daily 是 ResearchStore + DataHub + research recipe 驱动的研究队列，不是 agent 手工拼接脚本。
+Daily 是 ResearchStore + DataHub + research recipe 驱动的 CANSLIM 收口流程，不是 agent 手工拼接脚本。
 
 标准入口：
 
 ```bash
-python -m trading_os research daily --as-of YYYY-MM-DD
+python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 ```
 
 ## Agent 职责
 
 1. 根据用户问题确定 `as_of`。
-2. 运行 daily research recipe。
+2. 运行 Daily CANSLIM closure recipe。
 3. 读取本次 run 的 `manifest.json`、`trace.md`、`report.md`。
-4. 向用户解释候选清单、后续深研队列、数据口径限制。
+4. 读取 `artifacts/research/daily-canslim-YYYYMMDD.md` 和 `artifacts/watchlist/state.json`。
+5. 向用户解释候选清单、每个 strict 候选的决策、观察池变化和数据口径限制。
 
 不要手工串联底层数据脚本。不要直接读取 parquet。不要在缺失数据时编造结论。
+不能只输出 run manifest 路径；必须总结决策和 watchlist changes。
 
 ## 数据语义
 
@@ -34,7 +36,19 @@ python -m trading_os research daily --as-of YYYY-MM-DD
 
 ## 产物
 
-每次运行生成：
+Daily CANSLIM closure command:
+
+```bash
+python -m trading_os research daily-canslim --as-of YYYY-MM-DD
+```
+
+Required final user-facing outputs:
+
+- `artifacts/research/daily-canslim-YYYYMMDD.md`
+- `artifacts/watchlist/state.json`
+- linked `data/research/runs/{run_id}/manifest.json`
+
+每次运行还会生成 recipe 证据链：
 
 ```
 artifacts/runs/{run_id}/manifest.json
@@ -49,7 +63,11 @@ artifacts/runs/{run_id}/report.md
 - 使用的 `as_of`
 - 执行了哪些 recipe
 - 关键候选或研究队列
+- 决策摘要和观察池变化
 - 数据缺口和口径限制
+
+`--top` 只限制展示结果，不能限制下游 strict-candidate processing。workflow 不能在
+写完 run manifests 后停止，必须完成日报、决策和观察池更新。
 
 ## 自选池解释规则
 
