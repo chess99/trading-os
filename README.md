@@ -7,7 +7,7 @@ Trading OS 是一个 agent-native 的 A 股投研与量化研究平台。它的�
 - Agent 负责理解用户意图、选择 recipe、解释结果和说明限制。
 - 底层系统负责确定性数据访问、缓存、计算、回测、风控和证据链。
 - 所有正式投资分析必须使用真实数据；缺数据时明确降级或失败，不使用模拟值补结论。
-- 所有报告都应链接 `artifacts/runs/{run_id}/manifest.json` 和 `report.md`，方便复核数据来源、计算步骤和口径限制。
+- 所有报告都应链接 `data/research/runs/{run_id}/manifest.json` 和 `report.md`，方便复核数据来源、计算步骤和口径限制。
 
 ## 架构
 
@@ -22,8 +22,9 @@ src/trading_os/
   journal/       SQLite append-only 事件日志
 
 skills/          Agent 工作流说明
-artifacts/
+data/research/
   runs/          recipe 运行证据链：manifest、trace、tables、charts、report
+artifacts/
   research/      单标的最终深度研究报告
   watchlist/     自选池状态和逐标的追踪
 ```
@@ -75,11 +76,11 @@ python -m trading_os backtest run canslim_breakout --start YYYY-MM-DD --end YYYY
 每次 recipe 运行都会生成：
 
 ```
-artifacts/runs/{run_id}/manifest.json
-artifacts/runs/{run_id}/trace.md
-artifacts/runs/{run_id}/tables/*.csv
-artifacts/runs/{run_id}/charts/*.png
-artifacts/runs/{run_id}/report.md
+data/research/runs/{run_id}/manifest.json
+data/research/runs/{run_id}/trace.md
+data/research/runs/{run_id}/tables/*.csv
+data/research/runs/{run_id}/charts/*.png
+data/research/runs/{run_id}/report.md
 ```
 
 ## 研究工作流
@@ -139,7 +140,7 @@ python -m trading_os alert monitor --mode watchlist --once
 
 ## Artifact 边界
 
-- `artifacts/runs/`：recipe 的完整运行证据链，是新的默认事实源。
+- `data/research/runs/`：recipe 的完整运行证据链，是新的默认事实源。
 - `artifacts/research/`：只放单个标的最终深度研究报告。
 - `artifacts/watchlist/`：自选池状态和逐标的追踪。
 - `artifacts/journal/`：事件日志和交易审计数据，通常不入库。

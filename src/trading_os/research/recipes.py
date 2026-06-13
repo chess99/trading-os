@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
+from pathlib import Path
 from typing import Any
 
 import pandas as pd
@@ -452,6 +454,12 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
     ]
     hub.store.write_watchlist_state(watchlist_state)
     trace.append(f"- watchlist rows written: `{len(watchlist_state)}`")
+    watchlist_state_path = _write_watchlist_state_json(
+        as_of=effective_as_of,
+        generated_from_run_id=run.run_id,
+        watchlist_state=watchlist_state,
+    )
+    trace.append(f"- watchlist state json: `{watchlist_state_path}`")
 
     deep_research_runs = []
     for symbol in strict_symbols:
@@ -514,9 +522,11 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
         "strict_candidates_processed": len(strict_candidates),
         "decisions_total": len(decisions),
         "human_report": str(human_report_path),
+        "watchlist_state_json": str(watchlist_state_path),
         "outputs": {
             "report": str(run.path / "report.md"),
             "manifest": str(run.path / "manifest.json"),
+            "watchlist_state_json": str(watchlist_state_path),
         },
     }
     hub.store.write_run_artifacts(
@@ -538,6 +548,23 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
         decisions,
         screen.filtered_out,
     )
+
+
+def _write_watchlist_state_json(
+    *,
+    as_of: date,
+    generated_from_run_id: str,
+    watchlist_state: list[dict[str, Any]],
+) -> Path:
+    path = repo_root() / "artifacts" / "watchlist" / "state.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "as_of": as_of.isoformat(),
+        "generated_from_run_id": generated_from_run_id,
+        "watchlist_state": watchlist_state,
+    }
+    path.write_text(json.dumps(_jsonable(payload), ensure_ascii=False, indent=2), encoding="utf-8")
+    return path
 
 
 def _finish_result(
@@ -727,6 +754,18 @@ def _int_or_none(value: Any) -> int | None:
         return int(value)
     except Exception:
         return None
+
+
+def _jsonable(value: Any) -> Any:
+    if isinstance(value, (date, datetime)):
+        return value.isoformat()
+    if isinstance(value, dict):
+        return {str(k): _jsonable(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_jsonable(v) for v in value]
+    if pd.isna(value):
+        return None
+    return value
 
 
 def _core_pass_symbols_missing_quarter_history(

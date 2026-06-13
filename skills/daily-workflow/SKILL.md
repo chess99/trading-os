@@ -51,11 +51,11 @@ Required final user-facing outputs:
 每次运行还会生成 recipe 证据链：
 
 ```
-artifacts/runs/{run_id}/manifest.json
-artifacts/runs/{run_id}/trace.md
-artifacts/runs/{run_id}/tables/*.csv
-artifacts/runs/{run_id}/charts/*.png
-artifacts/runs/{run_id}/report.md
+data/research/runs/{run_id}/manifest.json
+data/research/runs/{run_id}/trace.md
+data/research/runs/{run_id}/tables/*.csv
+data/research/runs/{run_id}/charts/*.png
+data/research/runs/{run_id}/report.md
 ```
 
 回答用户时必须引用本次 run 的 manifest/report 路径，并说明：

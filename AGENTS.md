@@ -40,8 +40,9 @@ src/trading_os/
   journal/       SQLite append-only 事件日志
 
 skills/          Agent 工作流说明
-artifacts/
+data/research/
   runs/          每次 recipe 运行的 manifest、trace、tables、charts、report
+artifacts/
   research/      单标的最终深度研究报告，git 追踪
   watchlist/     自选池状态和逐标的追踪
 ```
@@ -84,11 +85,11 @@ python -m trading_os backtest run canslim_breakout --start YYYY-MM-DD --end YYYY
 每次 recipe 运行都会生成：
 
 ```
-artifacts/runs/{run_id}/manifest.json
-artifacts/runs/{run_id}/trace.md
-artifacts/runs/{run_id}/tables/*.csv
-artifacts/runs/{run_id}/charts/*.png
-artifacts/runs/{run_id}/report.md
+data/research/runs/{run_id}/manifest.json
+data/research/runs/{run_id}/trace.md
+data/research/runs/{run_id}/tables/*.csv
+data/research/runs/{run_id}/charts/*.png
+data/research/runs/{run_id}/report.md
 ```
 
 最终回答用户时，优先引用 `manifest.json` 和 `report.md` 路径，并说明关键数据口径。
@@ -201,7 +202,7 @@ python -m trading_os backtest run strategy_name --start YYYY-MM-DD --end YYYY-MM
 
 产物边界：
 
-- `artifacts/runs/`：recipe 的完整运行证据链，是默认产物目录。
+- `data/research/runs/`：recipe 的完整运行证据链，是默认产物目录。
 - `artifacts/research/`：放人类可读的研究汇总、单标的最终深度研究报告。
 - `artifacts/watchlist/`：自选池状态和逐标的追踪。
 - `artifacts/journal/`：事件日志和交易审计数据，通常不入库。

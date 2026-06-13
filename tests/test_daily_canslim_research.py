@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 from datetime import date
 
 import pytest
@@ -527,6 +528,44 @@ def test_daily_canslim_research_writes_human_report(tmp_path, monkeypatch):
     report_path = tmp_path / "artifacts" / "research" / "daily-canslim-20260612.md"
     assert report_path.exists()
     assert str(report_path) == result.manifest["human_report"]
+
+
+def test_daily_canslim_research_exports_watchlist_state_json(tmp_path, monkeypatch):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    hub = DataHub(store, provider=DailyProvider())
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    state_path = tmp_path / "artifacts" / "watchlist" / "state.json"
+    assert state_path.exists()
+    payload = json.loads(state_path.read_text(encoding="utf-8"))
+
+    assert payload["as_of"] == "2026-06-12"
+    assert payload["generated_from_run_id"] == result.run.run_id
+    assert result.manifest["watchlist_state_json"] == str(state_path)
+    assert payload["watchlist_state"][0]["symbol"] == "SSE:600000"
+    assert payload["watchlist_state"][0]["status"] == "watching"
 
 
 def test_daily_canslim_research_runs_company_research_for_every_strict(

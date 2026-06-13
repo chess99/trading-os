@@ -80,6 +80,10 @@ def test_docs_reference_daily_canslim_closure():
 
     assert "daily-canslim" in agents
     assert "daily-canslim" in readme
+    assert "data/research/runs/{run_id}/manifest.json" in agents
+    assert "data/research/runs/{run_id}/manifest.json" in readme
+    assert "artifacts/runs/{run_id}" not in agents
+    assert "artifacts/runs/{run_id}" not in readme
     assert "观察池盘中提醒" in agents
 
 
@@ -88,7 +92,16 @@ def test_daily_skill_requires_human_report_and_watchlist_state():
 
     assert "artifacts/research/daily-canslim-YYYYMMDD.md" in text
     assert "artifacts/watchlist/state.json" in text
+    assert "data/research/runs/{run_id}/manifest.json" in text
+    assert "artifacts/runs/{run_id}" not in text
     assert "不能只输出 run manifest" in text
+
+
+def test_canslim_skill_uses_implemented_run_manifest_path():
+    text = Path("skills/canslim-system/SKILL.md").read_text(encoding="utf-8")
+
+    assert "data/research/runs/{run_id}/manifest.json" in text
+    assert "artifacts/runs/{run_id}" not in text
 
 
 def test_daily_skill_no_longer_requires_scheduler_bulk_refresh():
