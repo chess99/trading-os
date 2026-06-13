@@ -668,3 +668,64 @@ def test_company_research_canslim_report_selects_freshest_estimate():
     assert "analyst: `fresh`" in report
     assert "target_price: `10`" not in report
     assert "analyst: `stale`" not in report
+
+
+def test_company_research_canslim_report_uses_freshest_cached_estimate_real_path(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_company_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_quote_snapshot(
+        pd.DataFrame([{"symbol": "SSE:600000", "close": 20.0, "amount": 40_000_000.0}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_estimates(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "target_price": 15.0,
+                    "estimate_date": "2026-06-01",
+                    "analyst": "fresh",
+                },
+                {
+                    "symbol": "SSE:600000",
+                    "target_price": 10.0,
+                    "estimate_date": "2026-05-01",
+                    "analyst": "stale",
+                },
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    hub = DataHub(store, provider=RecipeProvider())
+
+    result = run_company_research(
+        hub,
+        "SSE:600000",
+        as_of=date(2026, 6, 12),
+        template="canslim",
+    )
+
+    assert "target_price: `15`" in result.report
+    assert "analyst: `fresh`" in result.report
+    assert "target_price: `10`" not in result.report
+    assert "analyst: `stale`" not in result.report

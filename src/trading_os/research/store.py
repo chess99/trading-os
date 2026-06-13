@@ -151,7 +151,7 @@ class ResearchStore:
         )
 
     def get_estimates(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
-        df = self._read_latest_snapshot("estimates", as_of=as_of, key="symbol")
+        df = self._read_latest_estimates(as_of=as_of)
         if symbols is not None and not df.empty:
             df = df[df["symbol"].isin(symbols)].reset_index(drop=True)
         return df
@@ -296,6 +296,47 @@ class ResearchStore:
             return df.reset_index(drop=True)
         df = df.sort_values(["as_of", "fetched_at"])
         return df.groupby(key, as_index=False).tail(1).sort_values(key).reset_index(drop=True)
+
+    def _read_latest_estimates(self, *, as_of: date) -> Any:
+        df = self._read_dataset("estimates")
+        if df.empty:
+            return df
+        df = df[df["as_of"] <= as_of.isoformat()]
+        if df.empty:
+            return df.reset_index(drop=True)
+
+        out = df.copy()
+        sort_columns = []
+        ascending = []
+        for column in ["estimate_date", "report_date", "published_at", "as_of", "fetched_at"]:
+            if column not in out.columns:
+                continue
+            parsed_column = f"__parsed_{column}"
+            out[parsed_column] = self._pd.to_datetime(out[column], errors="coerce", utc=True)
+            sort_columns.append(parsed_column)
+            ascending.append(False)
+
+        if not sort_columns:
+            return (
+                out.sort_values(["as_of", "fetched_at"])
+                .groupby("symbol", as_index=False)
+                .tail(1)
+                .sort_values("symbol")
+                .reset_index(drop=True)
+            )
+
+        return (
+            out.sort_values(
+                sort_columns,
+                ascending=ascending,
+                na_position="last",
+                kind="mergesort",
+            )
+            .drop_duplicates("symbol", keep="first")
+            .drop(columns=sort_columns)
+            .sort_values("symbol")
+            .reset_index(drop=True)
+        )
 
     def _dataset_path(self, dataset: str, partition: str) -> Path:
         return self.datasets / dataset / f"{partition}.parquet"
