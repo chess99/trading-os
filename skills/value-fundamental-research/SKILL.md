@@ -937,4 +937,4 @@ python -m trading_os research company SSE:601138 --template value --as-of YYYY-M
 研究完成后：
 - 说"估值分析" → 触发 `value-investing/valuation`（价值投资不依赖技术面时机）
 - 最终单标的深度研究报告保存到 `artifacts/research/value-{EXCHANGE}{TICKER}-YYYYMMDD.md`，每季度复查逻辑止损条件
-- 研究过程、候选解释、临时表格不放入 `artifacts/research/`；统一写入 `artifacts/runs/{run_id}/`，最终报告必须链接对应 manifest
+- 研究过程、候选解释、临时表格不放入 `artifacts/research/`；统一写入 `data/research/runs/{run_id}/`，最终报告必须链接对应 manifest

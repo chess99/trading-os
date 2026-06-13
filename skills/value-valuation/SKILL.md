@@ -19,7 +19,7 @@ python -m trading_os research company SSE:600519 --template value --as-of YYYY-M
 
 1. 确认标的代码为 `SSE:600519` / `SZSE:000858` 这类 canonical symbol。
 2. 运行 company research recipe。
-3. 读取 `artifacts/runs/{run_id}/manifest.json` 和 `report.md`。
+3. 读取 `data/research/runs/{run_id}/manifest.json` 和 `report.md`。
 4. 在回复中说明估值口径、关键假设、数据缺口和置信度。
 
 ## 规则

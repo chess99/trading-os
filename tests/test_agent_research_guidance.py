@@ -104,6 +104,21 @@ def test_canslim_skill_uses_implemented_run_manifest_path():
     assert "artifacts/runs/{run_id}" not in text
 
 
+def test_core_skills_use_implemented_run_artifact_path():
+    paths = [
+        Path("skills/daily-workflow/SKILL.md"),
+        Path("skills/canslim-system/SKILL.md"),
+        Path("skills/elder-signal-scanner/SKILL.md"),
+        Path("skills/value-valuation/SKILL.md"),
+        Path("skills/canslim-fundamental-research/SKILL.md"),
+        Path("skills/value-fundamental-research/SKILL.md"),
+    ]
+
+    for path in paths:
+        text = path.read_text(encoding="utf-8")
+        assert "artifacts/runs/{run_id}" not in text, f"{path} uses stale run path"
+
+
 def test_daily_skill_no_longer_requires_scheduler_bulk_refresh():
     text = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
 
