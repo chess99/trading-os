@@ -527,3 +527,58 @@ def test_daily_canslim_research_writes_human_report(tmp_path, monkeypatch):
     report_path = tmp_path / "artifacts" / "research" / "daily-canslim-20260612.md"
     assert report_path.exists()
     assert str(report_path) == result.manifest["human_report"]
+
+
+def test_daily_canslim_research_runs_company_research_for_every_strict(
+    tmp_path, monkeypatch
+):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600001",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.40,
+                    "roe": 0.24,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600002",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.05,
+                    "roe": 0.21,
+                    "positive_quarters": 8,
+                },
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    hub = DataHub(store, provider=DailyProvider())
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    deep_research_runs = result.manifest["deep_research_runs"]
+    assert len(deep_research_runs) == 2
+    assert all(item["template"] == "canslim" for item in deep_research_runs)
+    assert {item["symbol"] for item in deep_research_runs} == {
+        "SSE:600000",
+        "SSE:600001",
+    }
+    assert all((tmp_path / item["report"]).exists() for item in deep_research_runs)
+    assert "## Deep Research Runs" in result.report
+    assert all(item["report"] in result.report for item in deep_research_runs)

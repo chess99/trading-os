@@ -453,11 +453,31 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
     hub.store.write_watchlist_state(watchlist_state)
     trace.append(f"- watchlist rows written: `{len(watchlist_state)}`")
 
+    deep_research_runs = []
+    for symbol in strict_symbols:
+        company = run_company_research(
+            hub,
+            symbol,
+            as_of=effective_as_of,
+            template="canslim",
+        )
+        deep_research_runs.append(
+            {
+                "symbol": symbol,
+                "run_id": company.run.run_id,
+                "template": "canslim",
+                "report": str(company.run.path / "report.md"),
+                "manifest": str(company.run.path / "manifest.json"),
+            }
+        )
+    trace.append(f"- deep research runs written: `{len(deep_research_runs)}`")
+
     report = _daily_canslim_report(
         requested_as_of=requested_as_of,
         effective_as_of=effective_as_of,
         screen=screen,
         strict_candidates=strict_candidates,
+        deep_research_runs=deep_research_runs,
         decisions=decisions,
         watchlist_state=watchlist_state,
     )
@@ -473,7 +493,8 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
     manifest = {
         "requested_as_of": requested_as_of.isoformat(),
         "effective_as_of": effective_as_of.isoformat(),
-        "child_runs": [screen.run.run_id],
+        "child_runs": [screen.run.run_id, *[item["run_id"] for item in deep_research_runs]],
+        "deep_research_runs": deep_research_runs,
         "strict_candidates_processed": len(strict_candidates),
         "decisions_total": len(decisions),
         "human_report": str(human_report_path),
@@ -888,6 +909,7 @@ def _daily_canslim_report(
     effective_as_of: date,
     screen: RecipeResult,
     strict_candidates: list[dict[str, Any]],
+    deep_research_runs: list[dict[str, Any]],
     decisions: list[dict[str, Any]],
     watchlist_state: list[dict[str, Any]],
 ) -> str:
@@ -909,6 +931,13 @@ def _daily_canslim_report(
             lines.append(f"- {row.get('symbol')} score={row.get('score')}")
     else:
         lines.append("- No strict CANSLIM candidates.")
+
+    lines.extend(["", "## Deep Research Runs"])
+    if deep_research_runs:
+        for row in deep_research_runs:
+            lines.append(f"- {row['symbol']} report={row['report']}")
+    else:
+        lines.append("- No strict candidate deep research runs.")
 
     lines.extend(["", "## Decisions"])
     if decisions:
