@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import math
 from typing import Any
+
+import pandas as pd
 
 
 def detect_technical_setup(symbol: str, bars: Any) -> dict[str, Any]:
@@ -8,7 +11,7 @@ def detect_technical_setup(symbol: str, bars: Any) -> dict[str, Any]:
         return _insufficient_bars(symbol)
     if bars is None or getattr(bars, "empty", False):
         return _insufficient_bars(symbol)
-    if "symbol" not in bars.columns or "close" not in bars.columns:
+    if "symbol" not in bars.columns or "ts" not in bars.columns or "close" not in bars.columns:
         return _insufficient_bars(symbol)
 
     rows = bars[bars["symbol"].astype(str) == symbol].copy()
@@ -16,10 +19,20 @@ def detect_technical_setup(symbol: str, bars: Any) -> dict[str, Any]:
         return _insufficient_bars(symbol)
 
     rows = rows.sort_values("ts")
-    closes = rows["close"].astype(float)
+    rows["close"] = pd.to_numeric(rows["close"], errors="coerce")
+    rows = rows[rows["close"].map(math.isfinite)]
+    if rows.empty:
+        return _insufficient_bars(symbol)
+
+    closes = rows["close"]
     pivot = float(closes.tail(min(len(closes), 60)).max())
     if "volume" in rows.columns:
-        volume_baseline = float(rows["volume"].astype(float).tail(min(len(rows), 50)).mean())
+        volume_window = rows.tail(min(len(rows), 50))
+        volumes = pd.to_numeric(volume_window["volume"], errors="coerce").dropna()
+        volumes = volumes[volumes.map(math.isfinite)]
+        volume_baseline = (
+            float(volumes.tail(min(len(volumes), 50)).mean()) if not volumes.empty else 0.0
+        )
     else:
         volume_baseline = 0.0
 
