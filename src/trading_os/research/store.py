@@ -99,6 +99,7 @@ class ResearchStore:
         provenance: dict[str, Any] | None = None,
         freshness_policy: str = "quarterly",
     ) -> Path:
+        partition = as_of.isoformat() + "-" + uuid4().hex[:8]
         return self._write_snapshot_dataset(
             "fundamentals",
             df,
@@ -106,6 +107,7 @@ class ResearchStore:
             source=source,
             provenance=provenance,
             freshness_policy=freshness_policy,
+            partition=partition,
         )
 
     def get_fundamentals(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
@@ -228,6 +230,7 @@ class ResearchStore:
         source: str,
         provenance: dict[str, Any] | None,
         freshness_policy: str = "daily",
+        partition: str | None = None,
     ) -> Path:
         out = self._normalize_frame(df)
         out["as_of"] = as_of.isoformat()
@@ -235,7 +238,7 @@ class ResearchStore:
         out["fetched_at"] = datetime.now(timezone.utc).isoformat()
         out["provenance"] = json.dumps(provenance or {}, ensure_ascii=False)
         out["freshness_policy"] = freshness_policy
-        return self._write_dataset(dataset, out, as_of.isoformat())
+        return self._write_dataset(dataset, out, partition or as_of.isoformat())
 
     def _read_latest_snapshot(self, dataset: str, *, as_of: date, key: str) -> Any:
         df = self._read_dataset(dataset)

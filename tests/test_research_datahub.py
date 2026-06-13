@@ -529,6 +529,37 @@ def test_datahub_cache_first_fetches_missing_fundamental_symbols_only(tmp_path):
     assert fundamentals[fundamentals["symbol"] == "SZSE:000001"].iloc[0]["roe"] == 0.20
 
 
+def test_datahub_cache_first_fundamentals_does_not_promote_stale_cached_symbols(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame([{"symbol": "SSE:600000", "roe": 0.10}]),
+        as_of=date(2026, 5, 29),
+        source="fixture",
+    )
+    provider = FundamentalsProvider()
+    hub = DataHub(store, provider=provider)
+
+    fundamentals = hub.get_fundamentals(
+        ["SSE:600000", "SZSE:000001"],
+        as_of=date(2026, 5, 30),
+        policy="cache_first",
+    )
+
+    cached = fundamentals[fundamentals["symbol"] == "SSE:600000"].iloc[0]
+    fetched = fundamentals[fundamentals["symbol"] == "SZSE:000001"].iloc[0]
+
+    assert provider.calls == [["SZSE:000001"]]
+    assert cached["as_of"] == "2026-05-29"
+    assert cached["source"] == "fixture"
+    assert cached["roe"] == 0.10
+    assert fetched["as_of"] == "2026-05-30"
+    assert fetched["source"] == "FundamentalsProvider"
+    assert fetched["roe"] == 0.20
+
+
 def test_datahub_refresh_fundamentals_does_not_promote_stale_missing_symbols(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore

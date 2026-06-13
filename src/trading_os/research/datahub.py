@@ -141,8 +141,6 @@ class DataHub:
             if policy == "refresh":
                 self._ensure_non_empty(df, "fundamentals", source)
         if df is not None and not df.empty:
-            if policy != "refresh" and not cached.empty:
-                df = _merge_fundamentals(cached, df)
             self.store.write_fundamentals(
                 df, as_of=as_of, source=source, provenance={"provider": source}
             )
