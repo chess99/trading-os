@@ -279,3 +279,155 @@ def test_invalid_actionable_decisions_downgrade_and_clear_levels(decision):
             "last_decision": decision["decision"],
         }
     ]
+
+
+def test_alert_monitor_only_alerts_watchlist_breakouts():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [
+        {
+            "symbol": "SSE:600000",
+            "status": "watching",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        }
+    ]
+    quotes = [
+        {"symbol": "SSE:600000", "close": 12.2, "volume": 2_000_000.0},
+        {"symbol": "SSE:600001", "close": 30.0, "volume": 9_000_000.0},
+    ]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-12T10:30:00+08:00", existing_cooldowns=set()
+    )
+
+    assert len(alerts) == 1
+    alert = alerts[0]
+    assert set(alert) == {
+        "alert_id",
+        "symbol",
+        "as_of",
+        "trigger_type",
+        "trigger_value",
+        "pivot_price",
+        "status",
+        "cooldown_key",
+    }
+    assert alert["alert_id"].startswith("alert-")
+    assert alert["symbol"] == "SSE:600000"
+    assert alert["as_of"] == "2026-06-12T10:30:00+08:00"
+    assert alert["trigger_type"] == "breakout_confirmed"
+    assert alert["trigger_value"] == 12.2
+    assert alert["pivot_price"] == 12.0
+    assert alert["status"] == "pending"
+    assert alert["cooldown_key"] == "SSE:600000:breakout_confirmed:2026-06-12"
+
+
+def test_alert_monitor_alerts_actionable_status_at_pivot():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [{"symbol": "SSE:600000", "status": "actionable", "pivot_price": 12.0}]
+    quotes = [{"symbol": "SSE:600000", "close": 12.0}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-12T10:30:00+08:00", existing_cooldowns=set()
+    )
+
+    assert len(alerts) == 1
+    assert alerts[0]["trigger_value"] == 12.0
+
+
+def test_alert_monitor_deduplicates_by_cooldown_key():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [{"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0}]
+    quotes = [{"symbol": "SSE:600000", "close": 12.2}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist,
+        quotes,
+        as_of="2026-06-12T10:30:00+08:00",
+        existing_cooldowns={"SSE:600000:breakout_confirmed:2026-06-12"},
+    )
+
+    assert alerts == []
+
+
+def test_alert_monitor_ignores_non_watchlist_quotes():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist=[],
+        quotes=[{"symbol": "SSE:600000", "close": 12.2}],
+        as_of="2026-06-12T10:30:00+08:00",
+        existing_cooldowns=set(),
+    )
+
+    assert alerts == []
+
+
+@pytest.mark.parametrize("status", ["candidate", "invalidated", "rejected", None])
+def test_alert_monitor_ignores_non_watch_statuses(status):
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [{"symbol": "SSE:600000", "status": status, "pivot_price": 12.0}]
+    quotes = [{"symbol": "SSE:600000", "close": 12.2}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-12T10:30:00+08:00", existing_cooldowns=set()
+    )
+
+    assert alerts == []
+
+
+@pytest.mark.parametrize(
+    ("watchlist_row", "quote_row"),
+    [
+        ({"status": "watching", "pivot_price": 12.0}, {"symbol": "SSE:600000", "close": 12.2}),
+        ({"symbol": "", "status": "watching", "pivot_price": 12.0}, {"symbol": "", "close": 12.2}),
+        (
+            {"symbol": "SSE:600000", "status": "watching"},
+            {"symbol": "SSE:600000", "close": 12.2},
+        ),
+        (
+            {"symbol": "SSE:600000", "status": "watching", "pivot_price": "bad"},
+            {"symbol": "SSE:600000", "close": 12.2},
+        ),
+        (
+            {"symbol": "SSE:600000", "status": "watching", "pivot_price": float("nan")},
+            {"symbol": "SSE:600000", "close": 12.2},
+        ),
+        (
+            {"symbol": "SSE:600000", "status": "watching", "pivot_price": 0.0},
+            {"symbol": "SSE:600000", "close": 12.2},
+        ),
+        (
+            {"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0},
+            {"symbol": "SSE:600000"},
+        ),
+        (
+            {"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0},
+            {"symbol": "SSE:600000", "close": "bad"},
+        ),
+        (
+            {"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0},
+            {"symbol": "SSE:600000", "close": float("inf")},
+        ),
+        (
+            {"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0},
+            {"symbol": "SSE:600000", "close": 0.0},
+        ),
+    ],
+)
+def test_alert_monitor_ignores_missing_or_bad_values(watchlist_row, quote_row):
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    alerts = evaluate_watchlist_alerts(
+        [watchlist_row],
+        [quote_row],
+        as_of="2026-06-12T10:30:00+08:00",
+        existing_cooldowns=set(),
+    )
+
+    assert alerts == []
