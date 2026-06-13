@@ -145,3 +145,89 @@ def test_detects_setup_with_no_valid_volume_values_uses_zero_baseline():
     assert setup["status"] == "wait_for_breakout"
     assert setup["pivot_price"] == 12.0
     assert setup["volume_baseline"] == 0.0
+
+
+def test_decision_board_emits_one_decision_per_strict_candidate():
+    from trading_os.research.decisions import build_canslim_decisions
+
+    candidates = [
+        {
+            "symbol": "SSE:600000",
+            "classification": "strict_canslim_candidate",
+            "score": 9.0,
+            "signals": {"relative_strength_top20pct": True},
+        },
+        {
+            "symbol": "SSE:600001",
+            "classification": "provisional_research_queue",
+            "score": 8.0,
+            "signals": {},
+        },
+    ]
+    setups = {
+        "SSE:600000": {
+            "status": "wait_for_breakout",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        }
+    }
+
+    decisions = build_canslim_decisions(
+        candidates, setups, as_of="2026-06-12", source_run_id="screen-1"
+    )
+
+    assert [d["symbol"] for d in decisions] == ["SSE:600000"]
+    assert decisions[0]["decision"] == "wait_for_breakout"
+    assert decisions[0]["pivot_price"] == 12.0
+    assert decisions[0]["source_run_id"] == "screen-1"
+
+
+def test_decision_board_marks_incomplete_setup_research_only_and_ignores_non_strict():
+    from trading_os.research.decisions import build_canslim_decisions
+
+    candidates = [
+        {
+            "symbol": "SSE:600000",
+            "classification": "strict_canslim_candidate",
+            "score": 9.0,
+        },
+        {
+            "symbol": "SSE:600001",
+            "classification": "provisional_research_queue",
+            "score": 8.0,
+        },
+    ]
+    setups = {
+        "SSE:600000": {
+            "status": "wait_for_breakout",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": None,
+        },
+        "SSE:600001": {
+            "status": "wait_for_breakout",
+            "pivot_price": 20.0,
+            "buy_zone_high": 21.0,
+            "stop_loss": 18.4,
+        },
+    }
+
+    decisions = build_canslim_decisions(
+        candidates, setups, as_of="2026-06-12", source_run_id="screen-1"
+    )
+
+    assert decisions == [
+        {
+            "symbol": "SSE:600000",
+            "as_of": "2026-06-12",
+            "decision": "research_only",
+            "confidence": 0.45,
+            "reason": "strict CANSLIM evidence but technical setup is incomplete",
+            "score": 9.0,
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": None,
+            "source_run_id": "screen-1",
+        }
+    ]
