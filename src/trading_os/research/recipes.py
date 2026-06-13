@@ -411,7 +411,7 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
         for row in all_candidates
         if str(row.get("classification")) == "strict_canslim_candidate"
     ]
-    strict_symbols = [str(row["symbol"]) for row in strict_candidates if row.get("symbol")]
+    strict_symbols = _ordered_unique_candidate_symbols(strict_candidates)
     trace.append(f"- strict candidates loaded from all_candidates.csv: `{len(strict_candidates)}`")
 
     bars = _get_bars_with_partial_fallback(
@@ -455,17 +455,30 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
 
     deep_research_runs = []
     for symbol in strict_symbols:
-        company = run_company_research(
-            hub,
-            symbol,
-            as_of=effective_as_of,
-            template="canslim",
-        )
+        try:
+            company = run_company_research(
+                hub,
+                symbol,
+                as_of=effective_as_of,
+                template="canslim",
+            )
+        except Exception as exc:
+            deep_research_runs.append(
+                {
+                    "symbol": symbol,
+                    "template": "canslim",
+                    "status": "failed",
+                    "error_type": type(exc).__name__,
+                    "error": str(exc),
+                }
+            )
+            continue
         deep_research_runs.append(
             {
                 "symbol": symbol,
                 "run_id": company.run.run_id,
                 "template": "canslim",
+                "status": "ok",
                 "report": str(company.run.path / "report.md"),
                 "manifest": str(company.run.path / "manifest.json"),
             }
@@ -493,7 +506,10 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
     manifest = {
         "requested_as_of": requested_as_of.isoformat(),
         "effective_as_of": effective_as_of.isoformat(),
-        "child_runs": [screen.run.run_id, *[item["run_id"] for item in deep_research_runs]],
+        "child_runs": [
+            screen.run.run_id,
+            *[item["run_id"] for item in deep_research_runs if item["status"] == "ok"],
+        ],
         "deep_research_runs": deep_research_runs,
         "strict_candidates_processed": len(strict_candidates),
         "decisions_total": len(decisions),
@@ -590,6 +606,21 @@ def _read_screen_all_candidates(screen: RecipeResult) -> list[dict[str, Any]]:
     if df.empty:
         return []
     return df.to_dict("records")
+
+
+def _ordered_unique_candidate_symbols(candidates: list[dict[str, Any]]) -> list[str]:
+    seen = set()
+    symbols = []
+    for row in candidates:
+        raw = row.get("symbol")
+        if raw is None or pd.isna(raw):
+            continue
+        symbol = str(raw).strip()
+        if not symbol or symbol in seen:
+            continue
+        seen.add(symbol)
+        symbols.append(symbol)
+    return symbols
 
 
 def _current_watchlist_records(hub: DataHub, as_of: date) -> list[dict[str, Any]]:
@@ -935,7 +966,13 @@ def _daily_canslim_report(
     lines.extend(["", "## Deep Research Runs"])
     if deep_research_runs:
         for row in deep_research_runs:
-            lines.append(f"- {row['symbol']} report={row['report']}")
+            if row["status"] == "ok":
+                lines.append(f"- {row['symbol']} status=ok report={row['report']}")
+            else:
+                lines.append(
+                    f"- {row['symbol']} status=failed "
+                    f"error_type={row['error_type']} error={row['error']}"
+                )
     else:
         lines.append("- No strict candidate deep research runs.")
 

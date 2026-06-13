@@ -574,6 +574,7 @@ def test_daily_canslim_research_runs_company_research_for_every_strict(
 
     deep_research_runs = result.manifest["deep_research_runs"]
     assert len(deep_research_runs) == 2
+    assert all(item["status"] == "ok" for item in deep_research_runs)
     assert all(item["template"] == "canslim" for item in deep_research_runs)
     assert {item["symbol"] for item in deep_research_runs} == {
         "SSE:600000",
@@ -582,3 +583,136 @@ def test_daily_canslim_research_runs_company_research_for_every_strict(
     assert all((tmp_path / item["report"]).exists() for item in deep_research_runs)
     assert "## Deep Research Runs" in result.report
     assert all(item["report"] in result.report for item in deep_research_runs)
+
+
+def test_daily_canslim_research_records_failed_company_research_and_continues(
+    tmp_path, monkeypatch
+):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600001",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.40,
+                    "roe": 0.24,
+                    "positive_quarters": 8,
+                },
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    original_run_company_research = recipes.run_company_research
+
+    def flaky_run_company_research(hub, symbol, *, as_of, template):
+        if symbol == "SSE:600001":
+            raise RuntimeError("company research unavailable")
+        return original_run_company_research(
+            hub,
+            symbol,
+            as_of=as_of,
+            template=template,
+        )
+
+    monkeypatch.setattr(recipes, "run_company_research", flaky_run_company_research)
+    hub = DataHub(store, provider=DailyProvider())
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    assert (result.run.path / "manifest.json").exists()
+    assert (result.run.path / "report.md").exists()
+    deep_research_runs = result.manifest["deep_research_runs"]
+    assert {item["symbol"]: item["status"] for item in deep_research_runs} == {
+        "SSE:600000": "ok",
+        "SSE:600001": "failed",
+    }
+    failed = next(item for item in deep_research_runs if item["status"] == "failed")
+    assert failed == {
+        "symbol": "SSE:600001",
+        "template": "canslim",
+        "status": "failed",
+        "error_type": "RuntimeError",
+        "error": "company research unavailable",
+    }
+    assert "SSE:600001 status=failed error_type=RuntimeError" in result.report
+    assert result.manifest["strict_candidates_processed"] == 2
+    assert result.manifest["decisions_total"] == 2
+
+
+def test_daily_canslim_research_deduplicates_strict_symbols_for_deep_research(
+    tmp_path, monkeypatch
+):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600001",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.40,
+                    "roe": 0.24,
+                    "positive_quarters": 8,
+                },
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    monkeypatch.setattr(
+        recipes,
+        "_read_screen_all_candidates",
+        lambda screen: [
+            {
+                "symbol": "SSE:600000",
+                "classification": "strict_canslim_candidate",
+                "score": 9.0,
+            },
+            {
+                "symbol": "SSE:600000",
+                "classification": "strict_canslim_candidate",
+                "score": 8.5,
+            },
+            {
+                "symbol": "SSE:600001",
+                "classification": "strict_canslim_candidate",
+                "score": 8.0,
+            },
+        ],
+    )
+    provider = DailyProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    deep_research_runs = result.manifest["deep_research_runs"]
+    assert result.manifest["strict_candidates_processed"] == 3
+    assert [item["symbol"] for item in deep_research_runs] == ["SSE:600000", "SSE:600001"]
+    assert provider.bars_calls[-1] == ["SSE:600000", "SSE:600001"]
