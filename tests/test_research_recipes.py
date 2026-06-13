@@ -502,3 +502,65 @@ def test_company_research_canslim_report_contains_real_screening_sections(tmp_pa
     assert "## Next Actions" in report
     assert result.manifest["template"] == "canslim"
     assert "bars" in result.manifest["datasets"]
+
+
+def test_company_research_canslim_report_includes_enrichment_sections(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_company_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_quote_snapshot(
+        pd.DataFrame([{"symbol": "SSE:600000", "close": 20.0, "amount": 40_000_000.0}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_news(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "title": "公司公告订单增长",
+                    "published_at": "2026-06-01T09:00:00+08:00",
+                    "source_url": "https://example.test/news/1",
+                    "lookback_months": 12,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_estimates(
+        pd.DataFrame([{"symbol": "SSE:600000", "eps_estimate": 1.23, "target_price": 15.0}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    hub = DataHub(store, provider=RecipeProvider())
+
+    result = run_company_research(
+        hub,
+        "SSE:600000",
+        as_of=date(2026, 6, 12),
+        template="canslim",
+    )
+
+    assert "## News and Announcements" in result.report
+    assert "公司公告订单增长" in result.report
+    assert "## Estimates and Valuation Context" in result.report
+    assert "target_price" in result.report
+    assert "## Institutional Sponsorship and Peer Context" in result.report

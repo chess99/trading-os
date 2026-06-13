@@ -756,12 +756,16 @@ def _company_report(
     quote = tables["quotes"]
     fundamentals = tables["fundamentals"]
     bars = tables.get("bars", pd.DataFrame())
+    estimates = tables.get("estimates", pd.DataFrame())
+    news = tables.get("news", pd.DataFrame())
     latest_price = "N/A" if quote.empty or "close" not in quote else quote.iloc[0]["close"]
     latest_roe = (
         "N/A" if fundamentals.empty or "roe" not in fundamentals else fundamentals.iloc[0]["roe"]
     )
     if template == "canslim":
-        return _canslim_company_report(symbol, as_of, valuation_mode, quote, fundamentals, bars)
+        return _canslim_company_report(
+            symbol, as_of, valuation_mode, quote, fundamentals, bars, estimates, news
+        )
     return (
         f"# Company Research: {symbol}\n\n"
         f"- as_of: `{as_of.isoformat()}`\n"
@@ -782,6 +786,8 @@ def _canslim_company_report(
     quote: pd.DataFrame,
     fundamentals: pd.DataFrame,
     bars: pd.DataFrame,
+    estimates: pd.DataFrame,
+    news: pd.DataFrame,
 ) -> str:
     latest_quote = quote.iloc[0].to_dict() if not quote.empty else {}
     latest_fund = fundamentals.iloc[0].to_dict() if not fundamentals.empty else {}
@@ -839,9 +845,52 @@ def _canslim_company_report(
         "- This report verifies the deterministic CANSLIM screening evidence available locally.",
         "- It is not a trade instruction; technical base/pivot confirmation is still required.",
         "",
-        "## Data Limitations",
+        "## News and Announcements",
         "",
     ]
+    if news.empty:
+        lines.append("- No cached news or announcements are available for this symbol.")
+    else:
+        for record in news.head(10).to_dict("records"):
+            published_at = _fmt(record.get("published_at"))
+            title = _fmt(record.get("title"))
+            source_url = _fmt(record.get("source_url"))
+            lines.append(
+                f"- published_at=`{published_at}` title=`{title}` source_url=`{source_url}`"
+            )
+    lines.extend(
+        [
+            "",
+            "## Estimates and Valuation Context",
+            "",
+        ]
+    )
+    if estimates.empty:
+        lines.append("- No cached estimates are available for this symbol.")
+    else:
+        latest_estimate = estimates.iloc[0].to_dict()
+        for key, value in latest_estimate.items():
+            if key == "symbol":
+                continue
+            lines.append(f"- {key}: `{_fmt(value)}`")
+    lines.extend(
+        [
+            "",
+            "## Institutional Sponsorship and Peer Context",
+            "",
+            "- Institutional sponsorship, peer positioning, ownership trend, and industry "
+            "crowding require provider coverage that is not guaranteed in cached datasets.",
+            "- Missing sponsorship or peer fields reduce confidence and block automatic trade "
+            "status until provider-backed evidence is available.",
+            "",
+        ]
+    )
+    lines.extend(
+        [
+            "## Data Limitations",
+            "",
+        ]
+    )
     if missing:
         for item in missing:
             lines.append(f"- Missing `{item}`.")
