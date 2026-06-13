@@ -231,3 +231,110 @@ def test_decision_board_marks_incomplete_setup_research_only_and_ignores_non_str
             "source_run_id": "screen-1",
         }
     ]
+
+
+@pytest.mark.parametrize(
+    "pivot_price,stop_loss",
+    [
+        ("bad", 11.04),
+        (float("nan"), 11.04),
+        (12.0, "bad"),
+        (12.0, float("nan")),
+    ],
+)
+def test_decision_board_marks_nonnumeric_or_nan_setup_research_only(
+    pivot_price, stop_loss
+):
+    from trading_os.research.decisions import build_canslim_decisions
+
+    candidates = [
+        {
+            "symbol": "SSE:600000",
+            "classification": "strict_canslim_candidate",
+            "score": 9.0,
+        }
+    ]
+    setups = {
+        "SSE:600000": {
+            "status": "wait_for_breakout",
+            "pivot_price": pivot_price,
+            "buy_zone_high": 12.6,
+            "stop_loss": stop_loss,
+        }
+    }
+
+    decisions = build_canslim_decisions(
+        candidates, setups, as_of="2026-06-12", source_run_id="screen-1"
+    )
+
+    assert decisions[0]["decision"] == "research_only"
+    assert decisions[0]["confidence"] == 0.45
+    assert (
+        decisions[0]["reason"]
+        == "strict CANSLIM evidence but technical setup is incomplete"
+    )
+
+
+def test_decision_board_skips_missing_or_blank_symbol_without_exception():
+    from trading_os.research.decisions import build_canslim_decisions
+
+    candidates = [
+        {"classification": "strict_canslim_candidate", "score": 9.0},
+        {
+            "symbol": "   ",
+            "classification": "strict_canslim_candidate",
+            "score": 8.0,
+        },
+        {
+            "symbol": "SSE:600000",
+            "classification": "strict_canslim_candidate",
+            "score": 7.0,
+        },
+    ]
+    setups = {
+        "SSE:600000": {
+            "status": "wait_for_breakout",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        }
+    }
+
+    decisions = build_canslim_decisions(
+        candidates, setups, as_of="2026-06-12", source_run_id="screen-1"
+    )
+
+    assert [decision["symbol"] for decision in decisions] == ["SSE:600000"]
+
+
+def test_decision_board_duplicate_strict_candidates_emit_one_decision():
+    from trading_os.research.decisions import build_canslim_decisions
+
+    candidates = [
+        {
+            "symbol": "SSE:600000",
+            "classification": "strict_canslim_candidate",
+            "score": 9.0,
+        },
+        {
+            "symbol": "SSE:600000",
+            "classification": "strict_canslim_candidate",
+            "score": 7.5,
+        },
+    ]
+    setups = {
+        "SSE:600000": {
+            "status": "wait_for_breakout",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+            "stop_loss": 11.04,
+        }
+    }
+
+    decisions = build_canslim_decisions(
+        candidates, setups, as_of="2026-06-12", source_run_id="screen-1"
+    )
+
+    assert len(decisions) == 1
+    assert decisions[0]["symbol"] == "SSE:600000"
+    assert decisions[0]["score"] == 9.0

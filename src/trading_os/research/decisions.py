@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from typing import Any
 
 
@@ -11,16 +12,21 @@ def build_canslim_decisions(
     source_run_id: str,
 ) -> list[dict[str, Any]]:
     decisions: list[dict[str, Any]] = []
+    seen_symbols: set[str] = set()
     for candidate in candidates:
         if candidate.get("classification") != "strict_canslim_candidate":
             continue
 
-        symbol = str(candidate["symbol"])
+        symbol = str(candidate.get("symbol", "")).strip()
+        if not symbol or symbol in seen_symbols:
+            continue
+        seen_symbols.add(symbol)
+
         setup = setups.get(symbol, {})
         pivot = setup.get("pivot_price")
         stop_loss = setup.get("stop_loss")
 
-        if pivot and stop_loss:
+        if _is_finite_positive_number(pivot) and _is_finite_positive_number(stop_loss):
             decision = setup.get("status") or "wait_for_breakout"
             confidence = 0.75
             reason = "strict CANSLIM evidence with defined technical setup"
@@ -45,3 +51,12 @@ def build_canslim_decisions(
         )
 
     return decisions
+
+
+def _is_finite_positive_number(value: Any) -> bool:
+    return (
+        not isinstance(value, bool)
+        and isinstance(value, int | float)
+        and math.isfinite(value)
+        and value > 0
+    )
