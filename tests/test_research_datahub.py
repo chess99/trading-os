@@ -110,6 +110,14 @@ class WorkingRouterProvider:
         )
 
 
+class FailingQuoteRouterProvider:
+    name = "quote_failing"
+    capabilities = {"quote_snapshot_eod"}
+
+    def fetch_quote_snapshot(self, as_of: date):
+        raise RuntimeError("quote down")
+
+
 def test_datahub_cache_first_does_not_refetch_fresh_universe(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore
@@ -173,6 +181,41 @@ def test_datahub_lazy_fill_refetches_bars_when_date_coverage_is_stale(tmp_path):
     assert pd.to_datetime(bars["ts"], utc=True).max().date().isoformat() == "2026-05-30"
 
 
+def test_datahub_refresh_refetches_bars_when_date_coverage_is_complete(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_bars(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "ts": "2026-05-30",
+                    "open": 9.0,
+                    "high": 9.0,
+                    "low": 9.0,
+                    "close": 9.0,
+                    "volume": 1_000_000.0,
+                }
+            ]
+        ),
+        source="fixture",
+    )
+    provider = FakeProvider()
+    hub = DataHub(store, provider=provider)
+
+    bars = hub.get_bars(
+        ["SSE:600000"],
+        start=date(2026, 5, 1),
+        end=date(2026, 5, 31),
+        policy="refresh",
+    )
+
+    assert provider.calls == ["bars:SSE:600000:2026-05-01:2026-05-31"]
+    assert set(bars["source"].tolist()) == {"fixture", "FakeProvider"}
+
+
 def test_datahub_with_provider_router_fetches_universe_through_fallback(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.providers import ProviderRouter
@@ -233,6 +276,25 @@ def test_datahub_with_provider_router_refreshes_fundamentals_through_fallback(tm
     assert fundamentals["source"].unique().tolist() == ["working"]
     assert fundamentals.iloc[0]["roe"] == 0.18
     assert health["capability"].tolist() == ["fundamentals"]
+
+
+def test_datahub_persists_provider_health_when_all_router_quote_providers_fail(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.providers import ProviderFetchError, ProviderRouter
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    hub = DataHub(store, provider=ProviderRouter([FailingQuoteRouterProvider()]))
+
+    with pytest.raises(ProviderFetchError):
+        hub.get_quote_snapshot(date(2026, 5, 30), policy="refresh")
+
+    health = store.get_provider_health()
+
+    assert health["provider"].tolist() == ["quote_failing"]
+    assert health["capability"].tolist() == ["quote_snapshot_eod"]
+    assert health["error_type"].tolist() == ["RuntimeError"]
+    assert health["recorded_at"].notna().all()
 
 
 def test_datahub_offline_raises_when_cache_missing(tmp_path):

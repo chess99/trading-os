@@ -8,6 +8,13 @@ class MissingCapabilityError(RuntimeError):
     pass
 
 
+class ProviderFetchError(RuntimeError):
+    def __init__(self, capability: str, failures: list[dict[str, Any]]) -> None:
+        super().__init__(f"all providers failed for capability={capability}: {failures}")
+        self.capability = capability
+        self.failures = failures
+
+
 @dataclass(frozen=True, slots=True)
 class ProviderResult:
     provider_name: str
@@ -45,6 +52,17 @@ class ProviderRouter:
                     }
                 )
                 continue
+            if data is None:
+                failures.append(
+                    {
+                        "provider": provider_name,
+                        "capability": capability,
+                        "method": method_name,
+                        "error_type": "EmptyDataError",
+                        "message": "provider returned no data",
+                    }
+                )
+                continue
             if getattr(data, "empty", False) is True:
                 failures.append(
                     {
@@ -58,7 +76,7 @@ class ProviderRouter:
                 continue
             return ProviderResult(provider_name=provider_name, data=data, failures=failures)
 
-        raise RuntimeError(f"all providers failed for capability={capability}: {failures}")
+        raise ProviderFetchError(capability, failures)
 
 
 def _provider_name(provider: Any) -> str:

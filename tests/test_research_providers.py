@@ -31,6 +31,14 @@ class EmptyProvider:
         return pd.DataFrame()
 
 
+class NoneProvider:
+    name = "none"
+    capabilities = {"quote_snapshot_eod"}
+
+    def fetch_quote_snapshot(self, as_of: date):
+        return None
+
+
 def test_provider_router_falls_back_and_records_failure():
     from trading_os.research.providers import ProviderRouter
 
@@ -42,6 +50,21 @@ def test_provider_router_falls_back_and_records_failure():
     assert len(result.failures) == 1
     assert result.failures[0]["provider"] == "failing"
     assert result.failures[0]["error_type"] == "RuntimeError"
+    assert not result.data.empty
+
+
+def test_provider_router_falls_back_when_provider_returns_none():
+    from trading_os.research.providers import ProviderRouter
+
+    router = ProviderRouter([NoneProvider(), WorkingProvider()])
+
+    result = router.fetch("quote_snapshot_eod", "fetch_quote_snapshot", date(2026, 6, 12))
+
+    assert result.provider_name == "working"
+    assert len(result.failures) == 1
+    assert result.failures[0]["provider"] == "none"
+    assert result.failures[0]["error_type"] == "EmptyDataError"
+    assert result.failures[0]["message"] == "provider returned no data"
     assert not result.data.empty
 
 
@@ -58,6 +81,27 @@ def test_provider_router_falls_back_when_provider_returns_empty_frame():
     assert result.failures[0]["error_type"] == "EmptyDataError"
     assert result.failures[0]["message"] == "provider returned empty data"
     assert not result.data.empty
+
+
+def test_provider_router_raises_fetch_error_with_failures_when_all_providers_fail():
+    from trading_os.research.providers import ProviderFetchError, ProviderRouter
+
+    router = ProviderRouter([FailingProvider(), EmptyProvider(), NoneProvider()])
+
+    with pytest.raises(ProviderFetchError) as exc_info:
+        router.fetch("quote_snapshot_eod", "fetch_quote_snapshot", date(2026, 6, 12))
+
+    assert exc_info.value.capability == "quote_snapshot_eod"
+    assert [failure["provider"] for failure in exc_info.value.failures] == [
+        "failing",
+        "empty",
+        "none",
+    ]
+    assert [failure["error_type"] for failure in exc_info.value.failures] == [
+        "RuntimeError",
+        "EmptyDataError",
+        "EmptyDataError",
+    ]
 
 
 def test_provider_router_fails_when_no_provider_has_capability():

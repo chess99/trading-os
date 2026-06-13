@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Any, Protocol
 
-from .providers import ProviderRouter
+from .providers import ProviderFetchError, ProviderResult, ProviderRouter
 from .store import ResearchStore
 
 
@@ -34,8 +34,7 @@ class DataHub:
             raise MissingDataError(f"universe_snapshot missing for as_of={as_of}")
         provider = self._provider()
         if isinstance(provider, ProviderRouter):
-            result = provider.fetch("universe", "fetch_universe", as_of)
-            self.store.write_provider_health(result.failures)
+            result = self._router_fetch(provider, "universe", "fetch_universe", as_of)
             source = result.provider_name
             df = result.data
         else:
@@ -56,8 +55,9 @@ class DataHub:
             raise MissingDataError(f"quote_snapshot missing for as_of={as_of}")
         provider = self._provider()
         if isinstance(provider, ProviderRouter):
-            result = provider.fetch("quote_snapshot_eod", "fetch_quote_snapshot", as_of)
-            self.store.write_provider_health(result.failures)
+            result = self._router_fetch(
+                provider, "quote_snapshot_eod", "fetch_quote_snapshot", as_of
+            )
             source = result.provider_name
             df = result.data
         else:
@@ -81,16 +81,18 @@ class DataHub:
         missing = _symbols_with_missing_bar_coverage(cached, symbols, start=start, end=end)
         if missing and policy == "offline":
             raise MissingDataError(f"bars missing for {','.join(missing)}")
-        if missing and policy in {"lazy_fill", "refresh", "cache_first"}:
+        symbols_to_fetch = list(symbols) if policy == "refresh" else missing
+        if symbols_to_fetch and policy in {"lazy_fill", "refresh", "cache_first"}:
             provider = self._provider()
             if isinstance(provider, ProviderRouter):
-                result = provider.fetch("bars_daily", "fetch_bars", missing, start, end, adjustment)
-                self.store.write_provider_health(result.failures)
+                result = self._router_fetch(
+                    provider, "bars_daily", "fetch_bars", symbols_to_fetch, start, end, adjustment
+                )
                 source = result.provider_name
                 df = result.data
             else:
                 source = self._provider_name(provider)
-                df = provider.fetch_bars(missing, start, end, adjustment)
+                df = provider.fetch_bars(symbols_to_fetch, start, end, adjustment)
             if df is not None and not df.empty:
                 self.store.write_bars(df, source=source, provenance={"provider": source})
         return self.store.get_bars(symbols, start=start, end=end)
@@ -110,8 +112,9 @@ class DataHub:
             raise MissingDataError(f"fundamentals missing for as_of={as_of}")
         provider = self._provider()
         if isinstance(provider, ProviderRouter):
-            result = provider.fetch("fundamentals", "fetch_fundamentals", symbols, as_of, periods)
-            self.store.write_provider_health(result.failures)
+            result = self._router_fetch(
+                provider, "fundamentals", "fetch_fundamentals", symbols, as_of, periods
+            )
             source = result.provider_name
             df = result.data
         else:
@@ -154,6 +157,17 @@ class DataHub:
         if self.provider is None:
             self.provider = AkshareResearchProvider()
         return self.provider
+
+    def _router_fetch(
+        self, provider: ProviderRouter, capability: str, method_name: str, *args: Any
+    ) -> ProviderResult:
+        try:
+            result = provider.fetch(capability, method_name, *args)
+        except ProviderFetchError as exc:
+            self.store.write_provider_health(exc.failures)
+            raise
+        self.store.write_provider_health(result.failures)
+        return result
 
     @staticmethod
     def _provider_name(provider: Any) -> str:
