@@ -414,52 +414,33 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
         if str(row.get("classification")) == "strict_canslim_candidate"
     ]
     strict_symbols = _ordered_unique_candidate_symbols(strict_candidates)
+    current_watchlist = _current_watchlist_records(hub, effective_as_of)
+    watched_symbols = _watchlist_symbols_for_daily(current_watchlist)
+    evaluation_symbols = _ordered_unique_values([*strict_symbols, *watched_symbols])
     trace.append(f"- strict candidates loaded from all_candidates.csv: `{len(strict_candidates)}`")
+    trace.append(f"- active watchlist symbols loaded: `{len(watched_symbols)}`")
 
     bars = _get_bars_with_partial_fallback(
         hub,
-        strict_symbols,
+        evaluation_symbols,
         start=effective_as_of - timedelta(days=420),
         end=effective_as_of + timedelta(days=1),
         adjustment="qfq",
         policy="lazy_fill",
     )
-    trace.append("- lazy-fill bars only for strict CANSLIM symbols")
+    trace.append("- lazy-fill bars for strict CANSLIM symbols and active watchlist symbols")
 
     setups = {
         symbol: {
             **detect_technical_setup(symbol, bars),
             "as_of": effective_as_of.isoformat(),
-            "source_run_id": screen.run.run_id,
+            "source_run_id": run.run_id,
+            "screen_run_id": screen.run.run_id,
         }
-        for symbol in strict_symbols
+        for symbol in evaluation_symbols
     }
     technical_setups = list(setups.values())
     hub.store.write_technical_setups(technical_setups)
-
-    decisions = build_canslim_decisions(
-        strict_candidates,
-        setups,
-        as_of=effective_as_of.isoformat(),
-        source_run_id=screen.run.run_id,
-    )
-    hub.store.write_decisions(decisions)
-    trace.append(f"- decisions written: `{len(decisions)}`")
-
-    current_watchlist = _current_watchlist_records(hub, effective_as_of)
-    watchlist_state = update_watchlist_from_decisions(current_watchlist, decisions)
-    watchlist_state = [
-        {**row, "as_of": effective_as_of.isoformat(), "source_run_id": row.get("source_run_id")}
-        for row in watchlist_state
-    ]
-    hub.store.write_watchlist_state(watchlist_state)
-    trace.append(f"- watchlist rows written: `{len(watchlist_state)}`")
-    watchlist_state_path = _write_watchlist_state_json(
-        as_of=effective_as_of,
-        generated_from_run_id=run.run_id,
-        watchlist_state=watchlist_state,
-    )
-    trace.append(f"- watchlist state json: `{watchlist_state_path}`")
 
     deep_research_runs = []
     for symbol in strict_symbols:
@@ -486,12 +467,47 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
                 "symbol": symbol,
                 "run_id": company.run.run_id,
                 "template": "canslim",
-                "status": "ok",
+                **_deep_research_status(company),
                 "report": str(company.run.path / "report.md"),
                 "manifest": str(company.run.path / "manifest.json"),
             }
         )
     trace.append(f"- deep research runs written: `{len(deep_research_runs)}`")
+
+    strict_decisions = build_canslim_decisions(
+        strict_candidates,
+        setups,
+        as_of=effective_as_of.isoformat(),
+        source_run_id=screen.run.run_id,
+    )
+    strict_decisions = _downgrade_failed_deep_research_decisions(
+        strict_decisions,
+        deep_research_runs,
+    )
+    watchlist_refresh_decisions = _build_watchlist_refresh_decisions(
+        current_watchlist,
+        strict_symbols=set(strict_symbols),
+        setups=setups,
+        as_of=effective_as_of.isoformat(),
+        source_run_id=run.run_id,
+    )
+    decisions = [*strict_decisions, *watchlist_refresh_decisions]
+    hub.store.write_decisions(decisions)
+    trace.append(f"- decisions written: `{len(decisions)}`")
+
+    watchlist_state = update_watchlist_from_decisions(current_watchlist, decisions)
+    watchlist_state = [
+        {**row, "as_of": effective_as_of.isoformat(), "source_run_id": row.get("source_run_id")}
+        for row in watchlist_state
+    ]
+    hub.store.write_watchlist_state(watchlist_state)
+    trace.append(f"- watchlist rows written: `{len(watchlist_state)}`")
+    watchlist_state_path = _write_watchlist_state_json(
+        as_of=effective_as_of,
+        generated_from_run_id=run.run_id,
+        watchlist_state=watchlist_state,
+    )
+    trace.append(f"- watchlist state json: `{watchlist_state_path}`")
 
     report = _daily_canslim_report(
         requested_as_of=requested_as_of,
@@ -516,10 +532,11 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
         "effective_as_of": effective_as_of.isoformat(),
         "child_runs": [
             screen.run.run_id,
-            *[item["run_id"] for item in deep_research_runs if item["status"] == "ok"],
+            *[item["run_id"] for item in deep_research_runs if item.get("run_id")],
         ],
         "deep_research_runs": deep_research_runs,
         "strict_candidates_processed": len(strict_candidates),
+        "active_watchlist_symbols_processed": len(watched_symbols),
         "decisions_total": len(decisions),
         "human_report": str(human_report_path),
         "watchlist_state_json": str(watchlist_state_path),
@@ -636,14 +653,15 @@ def _read_screen_all_candidates(screen: RecipeResult) -> list[dict[str, Any]]:
 
 
 def _ordered_unique_candidate_symbols(candidates: list[dict[str, Any]]) -> list[str]:
+    return _ordered_unique_values(row.get("symbol") for row in candidates)
+
+
+def _ordered_unique_values(values: Any) -> list[str]:
     seen = set()
     symbols = []
-    for row in candidates:
-        raw = row.get("symbol")
-        if raw is None or pd.isna(raw):
-            continue
-        symbol = str(raw).strip()
-        if not symbol or symbol in seen:
+    for raw in values:
+        symbol = _clean_symbol(raw)
+        if symbol is None or symbol in seen:
             continue
         seen.add(symbol)
         symbols.append(symbol)
@@ -655,7 +673,175 @@ def _current_watchlist_records(hub: DataHub, as_of: date) -> list[dict[str, Any]
         current = hub.store.get_watchlist_state(as_of=as_of)
     except TypeError:
         current = hub.store.get_watchlist_state()
-    return current.to_dict("records") if current is not None and not current.empty else []
+    records = current.to_dict("records") if current is not None and not current.empty else []
+    return _latest_rows_by_symbol(records)
+
+
+def _latest_rows_by_symbol(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    by_symbol: dict[str, dict[str, Any]] = {}
+    for record in sorted(records, key=_event_record_sort_key):
+        symbol = _clean_symbol(record.get("symbol"))
+        if symbol is None:
+            continue
+        row = dict(record)
+        row["symbol"] = symbol
+        by_symbol[symbol] = row
+    return sorted(by_symbol.values(), key=lambda row: str(row["symbol"]))
+
+
+def _watchlist_symbols_for_daily(records: list[dict[str, Any]]) -> list[str]:
+    return _ordered_unique_values(
+        row.get("symbol")
+        for row in records
+        if row.get("status") in {"watching", "actionable"}
+    )
+
+
+def _build_watchlist_refresh_decisions(
+    watchlist: list[dict[str, Any]],
+    *,
+    strict_symbols: set[str],
+    setups: dict[str, dict[str, Any]],
+    as_of: str,
+    source_run_id: str,
+) -> list[dict[str, Any]]:
+    decisions = []
+    for item in watchlist:
+        symbol = _clean_symbol(item.get("symbol"))
+        if symbol is None or symbol in strict_symbols:
+            continue
+        status = item.get("status")
+        if status == "candidate":
+            reason = "existing candidate requires fresh strict screen and complete deep research"
+            decisions.append(
+                {
+                    "symbol": symbol,
+                    "as_of": as_of,
+                    "decision": "research_only",
+                    "confidence": 0.35,
+                    "reason": reason,
+                    "score": item.get("score"),
+                    "pivot_price": None,
+                    "buy_zone_high": None,
+                    "stop_loss": None,
+                    "source_run_id": source_run_id,
+                }
+            )
+            continue
+        if status not in {"watching", "actionable"}:
+            continue
+        setup = setups.get(symbol, {})
+        pivot = setup.get("pivot_price")
+        stop_loss = setup.get("stop_loss")
+        if _is_positive_number(pivot) and _is_positive_number(stop_loss):
+            decision = setup.get("status") or "wait_for_breakout"
+            confidence = 0.55
+            reason = "existing watchlist symbol refreshed with defined technical setup"
+        else:
+            decision = "research_only"
+            confidence = 0.35
+            reason = "existing watchlist symbol refreshed but technical setup is incomplete"
+        decisions.append(
+            {
+                "symbol": symbol,
+                "as_of": as_of,
+                "decision": decision,
+                "confidence": confidence,
+                "reason": reason,
+                "score": item.get("score"),
+                "pivot_price": pivot,
+                "buy_zone_high": setup.get("buy_zone_high"),
+                "stop_loss": stop_loss,
+                "source_run_id": source_run_id,
+            }
+        )
+    return decisions
+
+
+def _downgrade_failed_deep_research_decisions(
+    decisions: list[dict[str, Any]], deep_research_runs: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    unsafe = {
+        str(item.get("symbol")): str(item.get("status"))
+        for item in deep_research_runs
+        if item.get("status") != "ok" and item.get("symbol") is not None
+    }
+    if not unsafe:
+        return decisions
+    downgraded = []
+    for decision in decisions:
+        row = dict(decision)
+        symbol = str(row.get("symbol"))
+        if symbol in unsafe:
+            row["decision"] = "research_only"
+            row["confidence"] = min(float(row.get("confidence") or 0.0), 0.35)
+            row["reason"] = f"strict CANSLIM evidence but deep research {unsafe[symbol]}"
+        downgraded.append(row)
+    return downgraded
+
+
+def _deep_research_status(company: RecipeResult) -> dict[str, Any]:
+    manifest = company.manifest or {}
+    explicit_status = str(manifest.get("status") or "").strip().lower()
+    if explicit_status in {"failed", "incomplete"}:
+        return {"status": explicit_status}
+    if manifest.get("complete") is False or manifest.get("is_complete") is False:
+        return {"status": "incomplete", "reason": "company research marked incomplete"}
+
+    datasets = manifest.get("datasets")
+    if isinstance(datasets, dict):
+        missing_core = [
+            name
+            for name in ("quotes", "fundamentals", "bars")
+            if datasets.get(name) is not True
+        ]
+        if missing_core:
+            return {
+                "status": "incomplete",
+                "missing_core_datasets": missing_core,
+            }
+
+    report_path = company.run.path / "report.md"
+    manifest_path = company.run.path / "manifest.json"
+    if not report_path.exists() or not manifest_path.exists():
+        return {
+            "status": "incomplete",
+            "reason": "company research artifacts missing",
+        }
+    return {"status": "ok"}
+
+
+def _clean_symbol(value: Any) -> str | None:
+    if value is None:
+        return None
+    try:
+        if pd.isna(value):
+            return None
+    except (TypeError, ValueError):
+        return None
+    symbol = str(value).strip()
+    return symbol or None
+
+
+def _is_positive_number(value: Any) -> bool:
+    if isinstance(value, bool):
+        return False
+    try:
+        number = float(value)
+    except Exception:
+        return False
+    return not pd.isna(number) and number > 0
+
+
+def _event_record_sort_key(record: dict[str, Any]) -> tuple[str, str]:
+    return (_date_key(record.get("as_of")), str(record.get("fetched_at") or ""))
+
+
+def _date_key(value: Any) -> str:
+    try:
+        return date.fromisoformat(str(value)).isoformat()
+    except (TypeError, ValueError):
+        return ""
 
 
 def _get_bars_with_partial_fallback(
@@ -667,6 +853,8 @@ def _get_bars_with_partial_fallback(
     adjustment: str,
     policy: str,
 ) -> pd.DataFrame:
+    if not symbols:
+        return pd.DataFrame()
     try:
         return hub.get_bars(
             symbols,
@@ -1117,10 +1305,7 @@ def _daily_canslim_report(
             if row["status"] == "ok":
                 lines.append(f"- {row['symbol']} status=ok report={row['report']}")
             else:
-                lines.append(
-                    f"- {row['symbol']} status=failed "
-                    f"error_type={row['error_type']} error={row['error']}"
-                )
+                lines.append(_format_deep_research_issue(row))
     else:
         lines.append("- No strict candidate deep research runs.")
 
@@ -1154,3 +1339,16 @@ def _daily_canslim_report(
         ]
     )
     return "\n".join(lines) + "\n"
+
+
+def _format_deep_research_issue(row: dict[str, Any]) -> str:
+    parts = [f"- {row.get('symbol')} status={row.get('status')}"]
+    if row.get("error_type"):
+        parts.append(f"error_type={row['error_type']}")
+    if row.get("error"):
+        parts.append(f"error={row['error']}")
+    if row.get("reason"):
+        parts.append(f"reason={row['reason']}")
+    if row.get("missing_core_datasets"):
+        parts.append(f"missing_core_datasets={row['missing_core_datasets']}")
+    return " ".join(parts)

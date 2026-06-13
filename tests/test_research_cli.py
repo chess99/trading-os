@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import json
+
 import pytest
 
 
@@ -182,3 +184,117 @@ def test_alert_monitor_once_writes_alerts_and_event_log(tmp_path, monkeypatch, c
     events = EventLog(tmp_path / "artifacts" / "alerts.db").query(event_type="ALERT")
     assert len(events) == 1
     assert events[0]["payload"]["symbol"] == "SSE:600660"
+
+
+def test_alert_monitor_uses_latest_watchlist_status_when_json_is_absent(
+    tmp_path, monkeypatch, capsys
+):
+    from trading_os.cli_internal.app import build_parser
+    from trading_os.journal.event_log import EventLog
+    from trading_os.research import cli as research_cli
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_watchlist_state(
+        [
+            {
+                "symbol": "SSE:600660",
+                "as_of": "2026-06-12",
+                "status": "invalidated",
+            }
+        ]
+    )
+    store.write_watchlist_state(
+        [
+            {
+                "symbol": "SSE:600660",
+                "as_of": "2026-06-11",
+                "status": "watching",
+                "pivot_price": 100.0,
+                "buy_zone_high": 105.0,
+            }
+        ]
+    )
+    store.write_quote_snapshot(
+        [{"symbol": "SSE:600660", "close": 102.0}],
+        as_of=research_cli.date.fromisoformat("2026-06-12"),
+        source="fixture",
+    )
+    hub = DataHub(store)
+
+    monkeypatch.setattr(research_cli, "build_datahub", lambda: hub)
+    monkeypatch.setattr(research_cli, "repo_root", lambda: tmp_path)
+
+    parser = build_parser()
+    ns = parser.parse_args(
+        ["alert", "monitor", "--mode", "watchlist", "--once", "--as-of", "2026-06-12"]
+    )
+
+    assert ns.func(ns) == 0
+
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["alerts_count"] == 0
+    assert store.get_alerts(as_of=research_cli.date.fromisoformat("2026-06-12")).empty
+    assert EventLog(tmp_path / "artifacts" / "alerts.db").query(event_type="ALERT") == []
+
+
+def test_alert_monitor_ignores_stale_exported_watchlist_json(
+    tmp_path, monkeypatch, capsys
+):
+    from trading_os.cli_internal.app import build_parser
+    from trading_os.journal.event_log import EventLog
+    from trading_os.research import cli as research_cli
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    state_path = tmp_path / "artifacts" / "watchlist" / "state.json"
+    state_path.parent.mkdir(parents=True)
+    state_path.write_text(
+        json.dumps(
+            {
+                "as_of": "2026-06-13",
+                "watchlist_state": [
+                    {
+                        "symbol": "SSE:600660",
+                        "status": "watching",
+                        "pivot_price": 100.0,
+                        "buy_zone_high": 105.0,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_watchlist_state(
+        [
+            {
+                "symbol": "SSE:600660",
+                "as_of": "2026-06-13",
+                "status": "invalidated",
+            }
+        ]
+    )
+    store.write_quote_snapshot(
+        [{"symbol": "SSE:600660", "close": 102.0}],
+        as_of=research_cli.date.fromisoformat("2026-06-13"),
+        source="fixture",
+    )
+    hub = DataHub(store)
+
+    monkeypatch.setattr(research_cli, "build_datahub", lambda: hub)
+    monkeypatch.setattr(research_cli, "repo_root", lambda: tmp_path)
+
+    parser = build_parser()
+    ns = parser.parse_args(
+        ["alert", "monitor", "--mode", "watchlist", "--once", "--as-of", "2026-06-13"]
+    )
+
+    assert ns.func(ns) == 0
+
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["alerts_count"] == 0
+    assert store.get_alerts(as_of=research_cli.date.fromisoformat("2026-06-13")).empty
+    assert EventLog(tmp_path / "artifacts" / "alerts.db").query(event_type="ALERT") == []

@@ -449,6 +449,173 @@ def test_daily_canslim_research_processes_all_strict_candidates(tmp_path, monkey
     assert not store.get_technical_setups(as_of=date(2026, 6, 12)).empty
 
 
+def test_daily_canslim_research_refreshes_existing_watchlist_symbols(tmp_path, monkeypatch):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_watchlist_state(
+        [
+            {
+                "symbol": "SSE:600099",
+                "as_of": "2026-06-11",
+                "status": "watching",
+                "pivot_price": 9.0,
+                "buy_zone_high": 9.45,
+                "stop_loss": 8.28,
+            }
+        ]
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    provider = DailyProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    assert result.manifest["active_watchlist_symbols_processed"] == 1
+    assert "SSE:600099" in provider.bars_calls[-1]
+    assert {decision["symbol"] for decision in result.candidates} == {
+        "SSE:600000",
+        "SSE:600099",
+    }
+    watchlist_decision = next(
+        decision for decision in result.candidates if decision["symbol"] == "SSE:600099"
+    )
+    assert watchlist_decision["decision"] == "wait_for_breakout"
+    setups = store.get_technical_setups(as_of=date(2026, 6, 12))
+    assert "SSE:600099" in set(setups["symbol"])
+
+
+def test_daily_canslim_research_uses_latest_watchlist_status_by_as_of(
+    tmp_path, monkeypatch
+):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_watchlist_state(
+        [
+            {
+                "symbol": "SSE:600099",
+                "as_of": "2026-06-12",
+                "status": "invalidated",
+            }
+        ]
+    )
+    store.write_watchlist_state(
+        [
+            {
+                "symbol": "SSE:600099",
+                "as_of": "2026-06-11",
+                "status": "watching",
+                "pivot_price": 9.0,
+                "buy_zone_high": 9.45,
+                "stop_loss": 8.28,
+            }
+        ]
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    provider = DailyProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    assert result.manifest["active_watchlist_symbols_processed"] == 0
+    assert "SSE:600099" not in provider.bars_calls[-1]
+    assert "SSE:600099" not in {decision["symbol"] for decision in result.candidates}
+
+
+def test_daily_canslim_research_does_not_promote_existing_candidate_without_deep_research(
+    tmp_path, monkeypatch
+):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    store.write_watchlist_state(
+        [
+            {
+                "symbol": "SSE:600099",
+                "as_of": "2026-06-11",
+                "status": "candidate",
+                "last_decision": "research_only",
+            }
+        ]
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    provider = DailyProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    assert result.manifest["active_watchlist_symbols_processed"] == 0
+    assert "SSE:600099" not in provider.bars_calls[-1]
+    decision = next(row for row in result.candidates if row["symbol"] == "SSE:600099")
+    assert decision["decision"] == "research_only"
+    assert (
+        decision["reason"]
+        == "existing candidate requires fresh strict screen and complete deep research"
+    )
+    state = {
+        row["symbol"]: row
+        for row in store.get_watchlist_state(as_of=date(2026, 6, 12)).to_dict("records")
+    }
+    assert state["SSE:600099"]["status"] == "candidate"
+    assert state["SSE:600099"]["last_decision"] == "research_only"
+    assert pd.isna(state["SSE:600099"]["pivot_price"])
+
+
 def test_daily_canslim_research_continues_when_strict_bars_have_partial_gap(tmp_path, monkeypatch):
     import trading_os.research.recipes as recipes
     from trading_os.research.datahub import DataHub
@@ -691,6 +858,82 @@ def test_daily_canslim_research_records_failed_company_research_and_continues(
     assert "SSE:600001 status=failed error_type=RuntimeError" in result.report
     assert result.manifest["strict_candidates_processed"] == 2
     assert result.manifest["decisions_total"] == 2
+    decisions = {decision["symbol"]: decision for decision in result.candidates}
+    assert decisions["SSE:600001"]["decision"] == "research_only"
+    assert decisions["SSE:600001"]["confidence"] == 0.35
+    assert decisions["SSE:600001"]["reason"] == "strict CANSLIM evidence but deep research failed"
+    watchlist = store.get_watchlist_state(as_of=date(2026, 6, 12)).to_dict("records")
+    state = {row["symbol"]: row for row in watchlist}
+    assert state["SSE:600001"]["status"] == "candidate"
+    assert state["SSE:600001"]["last_decision"] == "research_only"
+    assert pd.isna(state["SSE:600001"]["pivot_price"])
+
+
+def test_daily_canslim_research_downgrades_incomplete_company_research(
+    tmp_path, monkeypatch
+):
+    import trading_os.research.recipes as recipes
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600001",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.40,
+                    "roe": 0.24,
+                    "positive_quarters": 8,
+                },
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    original_run_company_research = recipes.run_company_research
+
+    def incomplete_run_company_research(hub, symbol, *, as_of, template):
+        result = original_run_company_research(
+            hub,
+            symbol,
+            as_of=as_of,
+            template=template,
+        )
+        if symbol == "SSE:600001":
+            result.manifest["complete"] = False
+        return result
+
+    monkeypatch.setattr(recipes, "run_company_research", incomplete_run_company_research)
+    hub = DataHub(store, provider=DailyProvider())
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    runs = {item["symbol"]: item for item in result.manifest["deep_research_runs"]}
+    assert runs["SSE:600001"]["status"] == "incomplete"
+    assert runs["SSE:600001"]["reason"] == "company research marked incomplete"
+    assert runs["SSE:600001"]["run_id"] in result.manifest["child_runs"]
+    decisions = {decision["symbol"]: decision for decision in result.candidates}
+    assert decisions["SSE:600001"]["decision"] == "research_only"
+    assert (
+        decisions["SSE:600001"]["reason"]
+        == "strict CANSLIM evidence but deep research incomplete"
+    )
+    state = {
+        row["symbol"]: row
+        for row in store.get_watchlist_state(as_of=date(2026, 6, 12)).to_dict("records")
+    }
+    assert state["SSE:600001"]["status"] == "candidate"
 
 
 def test_daily_canslim_research_deduplicates_strict_symbols_for_deep_research(

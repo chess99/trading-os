@@ -126,7 +126,7 @@ def cmd_alert(ns: argparse.Namespace) -> int:
     hub = build_datahub()
     store = hub.store
     as_of = date.fromisoformat(ns.as_of) if ns.as_of else date.today()
-    watchlist = _records_from_table(store.get_watchlist_state(as_of=as_of))
+    watchlist = _watchlist_records_for_alerts(store, as_of)
     quotes = _records_from_table(hub.get_quote_snapshot(as_of, policy="cache_first"))
     existing_alerts = _records_from_table(store.get_alerts(as_of=as_of))
     existing_cooldowns = {
@@ -187,6 +187,67 @@ def cmd_backtest_recipe(ns: argparse.Namespace) -> int:
     print(f"run_id: {result.run.run_id}")
     print(f"manifest: {result.run.path / 'manifest.json'}")
     return 0
+
+
+def _watchlist_records_for_alerts(store: ResearchStore, as_of: date) -> list[dict[str, Any]]:
+    stored = _latest_symbol_records(_records_from_table(store.get_watchlist_state(as_of=as_of)))
+    exported = _read_exported_watchlist_state(as_of)
+    if exported is not None:
+        return _merge_watchlist_records(exported, stored)
+    return stored
+
+
+def _read_exported_watchlist_state(as_of: date) -> list[dict[str, Any]] | None:
+    path = repo_root() / "artifacts" / "watchlist" / "state.json"
+    if not path.exists():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    try:
+        payload_as_of = date.fromisoformat(str(payload.get("as_of")))
+    except ValueError:
+        return None
+    if payload_as_of != as_of:
+        return None
+    records = payload.get("watchlist_state")
+    if not isinstance(records, list):
+        return None
+    return [record for record in records if isinstance(record, dict)]
+
+
+def _latest_symbol_records(records: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    latest: dict[str, dict[str, Any]] = {}
+    for record in sorted(records, key=_event_record_sort_key):
+        symbol = str(record.get("symbol") or "").strip()
+        if not symbol:
+            continue
+        latest[symbol] = {**record, "symbol": symbol}
+    return sorted(latest.values(), key=lambda row: str(row["symbol"]))
+
+
+def _merge_watchlist_records(
+    exported: list[dict[str, Any]], stored: list[dict[str, Any]]
+) -> list[dict[str, Any]]:
+    by_symbol: dict[str, dict[str, Any]] = {}
+    for record in [*exported, *stored]:
+        symbol = str(record.get("symbol") or "").strip()
+        if not symbol:
+            continue
+        by_symbol[symbol] = {**record, "symbol": symbol}
+    return sorted(by_symbol.values(), key=lambda row: str(row["symbol"]))
+
+
+def _event_record_sort_key(record: dict[str, Any]) -> tuple[str, str]:
+    return (_date_key(record.get("as_of")), str(record.get("fetched_at") or ""))
+
+
+def _date_key(value: Any) -> str:
+    try:
+        return date.fromisoformat(str(value)).isoformat()
+    except (TypeError, ValueError):
+        return ""
 
 
 def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
