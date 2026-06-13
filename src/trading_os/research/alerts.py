@@ -62,9 +62,6 @@ def evaluate_watchlist_alerts(
 
 
 def _china_date(as_of: str) -> str:
-    if "T" not in as_of:
-        return datetime.fromisoformat(as_of).date().isoformat()
-
     parsed = datetime.fromisoformat(as_of)
     if parsed.tzinfo is None:
         return parsed.date().isoformat()

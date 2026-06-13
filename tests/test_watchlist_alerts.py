@@ -424,6 +424,19 @@ def test_alert_monitor_cooldown_date_uses_china_trading_date_for_aware_datetime(
     assert alerts[0]["cooldown_key"] == "SSE:600000:breakout_confirmed:2026-06-12"
 
 
+def test_alert_monitor_cooldown_date_normalizes_space_separated_aware_datetime():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [{"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0}]
+    quotes = [{"symbol": "SSE:600000", "close": 12.2}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-11 16:30:00+00:00", existing_cooldowns=set()
+    )
+
+    assert alerts[0]["cooldown_key"] == "SSE:600000:breakout_confirmed:2026-06-12"
+
+
 def test_alert_monitor_ignores_non_watchlist_quotes():
     from trading_os.research.alerts import evaluate_watchlist_alerts
 
