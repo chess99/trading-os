@@ -132,7 +132,7 @@ class DataHub:
             source = self._provider_name(provider)
             df = provider.fetch_fundamentals(symbols_to_fetch, as_of, periods)
         if df is not None and not df.empty:
-            if not cached.empty:
+            if policy != "refresh" and not cached.empty:
                 df = _merge_fundamentals(cached, df)
             self.store.write_fundamentals(
                 df, as_of=as_of, source=source, provenance={"provider": source}
@@ -279,18 +279,17 @@ def _symbols_with_missing_bar_coverage(
 
     import pandas as pd
 
-    start_ts = pd.Timestamp(start, tz="UTC")
-    end_ts = pd.Timestamp(end, tz="UTC")
-    latest_required = end_ts - pd.Timedelta(days=1)
+    expected_dates = set(pd.bdate_range(start=start, end=end, inclusive="left").date)
     result: list[str] = []
     for symbol in symbols:
         rows = cached[cached["symbol"] == symbol]
         if rows.empty:
             result.append(symbol)
             continue
-        earliest = pd.to_datetime(rows["ts"], utc=True).min()
-        latest = pd.to_datetime(rows["ts"], utc=True).max()
-        if earliest > start_ts or latest < latest_required:
+        if not expected_dates:
+            continue
+        cached_dates = set(pd.to_datetime(rows["ts"], utc=True).dt.date)
+        if not expected_dates.issubset(cached_dates):
             result.append(symbol)
     return result
 
