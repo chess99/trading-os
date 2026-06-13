@@ -354,6 +354,76 @@ def test_alert_monitor_deduplicates_by_cooldown_key():
     assert alerts == []
 
 
+def test_alert_monitor_deduplicates_duplicate_watchlist_rows_in_same_evaluation():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [
+        {"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0},
+        {"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0},
+    ]
+    quotes = [{"symbol": "SSE:600000", "close": 12.2}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-12T10:30:00+08:00", existing_cooldowns=set()
+    )
+
+    assert len(alerts) == 1
+
+
+def test_alert_monitor_uses_valid_buy_zone_high_as_upper_bound():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [
+        {
+            "symbol": "SSE:600000",
+            "status": "watching",
+            "pivot_price": 12.0,
+            "buy_zone_high": 12.6,
+        }
+    ]
+    quotes = [{"symbol": "SSE:600000", "close": 12.7}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-12T10:30:00+08:00", existing_cooldowns=set()
+    )
+
+    assert alerts == []
+
+
+@pytest.mark.parametrize("buy_zone_high", [None, "bad", float("nan"), 0.0])
+def test_alert_monitor_falls_back_to_pivot_when_buy_zone_high_missing_or_invalid(buy_zone_high):
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [
+        {
+            "symbol": "SSE:600000",
+            "status": "watching",
+            "pivot_price": 12.0,
+            "buy_zone_high": buy_zone_high,
+        }
+    ]
+    quotes = [{"symbol": "SSE:600000", "close": 12.7}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-12T10:30:00+08:00", existing_cooldowns=set()
+    )
+
+    assert len(alerts) == 1
+
+
+def test_alert_monitor_cooldown_date_uses_china_trading_date_for_aware_datetime():
+    from trading_os.research.alerts import evaluate_watchlist_alerts
+
+    watchlist = [{"symbol": "SSE:600000", "status": "watching", "pivot_price": 12.0}]
+    quotes = [{"symbol": "SSE:600000", "close": 12.2}]
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist, quotes, as_of="2026-06-11T16:30:00+00:00", existing_cooldowns=set()
+    )
+
+    assert alerts[0]["cooldown_key"] == "SSE:600000:breakout_confirmed:2026-06-12"
+
+
 def test_alert_monitor_ignores_non_watchlist_quotes():
     from trading_os.research.alerts import evaluate_watchlist_alerts
 
