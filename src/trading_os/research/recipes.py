@@ -8,8 +8,12 @@ import pandas as pd
 
 from ..journal.event_log import EventLog
 from ..risk.manager import RiskManager
+from .calendar import TradingCalendar
 from .datahub import DataHub
+from .decisions import build_canslim_decisions
 from .store import ResearchRun
+from .technical import detect_technical_setup
+from .watchlist import update_watchlist_from_decisions
 
 
 @dataclass(frozen=True, slots=True)
@@ -70,7 +74,9 @@ def run_canslim_screen(
     filtered["low_turnover"] = len(merged) - len(liquid)
     symbols = liquid["symbol"].astype(str).tolist()
 
-    fundamentals = hub.get_fundamentals(symbols, as_of=as_of, policy="cache_first")
+    fundamentals = hub.store.get_fundamentals(symbols, as_of=as_of)
+    if fundamentals.empty:
+        fundamentals = hub.get_fundamentals(symbols, as_of=as_of, policy="cache_first")
     data_coverage["fundamentals"] = _snapshot_coverage(fundamentals)
     if fundamentals.empty:
         filtered["insufficient_data"] = len(symbols)
@@ -97,7 +103,7 @@ def run_canslim_screen(
             quarter_history_missing, as_of=as_of, periods=8, policy="refresh"
         )
         if refreshed is not None and not refreshed.empty:
-            fundamentals = hub.get_fundamentals(symbols, as_of=as_of, policy="cache_first")
+            fundamentals = hub.store.get_fundamentals(symbols, as_of=as_of)
             data_coverage["fundamentals"] = _snapshot_coverage(fundamentals)
             fund_by_symbol = (
                 fundamentals.sort_values(["as_of", "fetched_at"])
@@ -146,7 +152,8 @@ def run_canslim_screen(
 
     rs_limitations: list[str] = []
     try:
-        bars = hub.get_bars(
+        bars = _get_bars_with_partial_fallback(
+            hub,
             prelim_symbols,
             start=as_of - timedelta(days=420),
             end=as_of + timedelta(days=1),
@@ -251,7 +258,8 @@ def run_company_research(
     news = hub.get_news(
         [symbol], as_of=as_of, lookback_months=lookback_months, policy="cache_first"
     )
-    bars = hub.get_bars(
+    bars = _get_bars_with_partial_fallback(
+        hub,
         [symbol],
         start=as_of - timedelta(days=420),
         end=as_of + timedelta(days=1),
@@ -378,6 +386,111 @@ def run_daily_research(hub: DataHub, *, as_of: date) -> RecipeResult:
     )
 
 
+def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> RecipeResult:
+    calendar = TradingCalendar()
+    effective_as_of = calendar.resolve_effective_as_of(requested_as_of)
+    run = hub.store.start_run(
+        "daily_canslim_research",
+        inputs={
+            "requested_as_of": requested_as_of.isoformat(),
+            "effective_as_of": effective_as_of.isoformat(),
+        },
+    )
+    trace = [
+        "# daily_canslim_research trace",
+        f"- requested_as_of: `{requested_as_of.isoformat()}`",
+        f"- effective_as_of: `{effective_as_of.isoformat()}`",
+        "- run CANSLIM screen with top_n=30 display limit",
+    ]
+
+    screen = run_canslim_screen(hub, as_of=effective_as_of, top_n=30)
+    all_candidates = _read_screen_all_candidates(screen)
+    strict_candidates = [
+        row
+        for row in all_candidates
+        if str(row.get("classification")) == "strict_canslim_candidate"
+    ]
+    strict_symbols = [str(row["symbol"]) for row in strict_candidates if row.get("symbol")]
+    trace.append(f"- strict candidates loaded from all_candidates.csv: `{len(strict_candidates)}`")
+
+    bars = hub.get_bars(
+        strict_symbols,
+        start=effective_as_of - timedelta(days=420),
+        end=effective_as_of + timedelta(days=1),
+        adjustment="qfq",
+        policy="lazy_fill",
+    )
+    trace.append("- lazy-fill bars only for strict CANSLIM symbols")
+
+    setups = {
+        symbol: {
+            **detect_technical_setup(symbol, bars),
+            "as_of": effective_as_of.isoformat(),
+            "source_run_id": screen.run.run_id,
+        }
+        for symbol in strict_symbols
+    }
+    technical_setups = list(setups.values())
+    hub.store.write_technical_setups(technical_setups)
+
+    decisions = build_canslim_decisions(
+        strict_candidates,
+        setups,
+        as_of=effective_as_of.isoformat(),
+        source_run_id=screen.run.run_id,
+    )
+    hub.store.write_decisions(decisions)
+    trace.append(f"- decisions written: `{len(decisions)}`")
+
+    current_watchlist = _current_watchlist_records(hub, effective_as_of)
+    watchlist_state = update_watchlist_from_decisions(current_watchlist, decisions)
+    watchlist_state = [
+        {**row, "as_of": effective_as_of.isoformat(), "source_run_id": row.get("source_run_id")}
+        for row in watchlist_state
+    ]
+    hub.store.write_watchlist_state(watchlist_state)
+    trace.append(f"- watchlist rows written: `{len(watchlist_state)}`")
+
+    report = _daily_canslim_report(
+        requested_as_of=requested_as_of,
+        effective_as_of=effective_as_of,
+        screen=screen,
+        strict_candidates=strict_candidates,
+        decisions=decisions,
+        watchlist_state=watchlist_state,
+    )
+    manifest = {
+        "requested_as_of": requested_as_of.isoformat(),
+        "effective_as_of": effective_as_of.isoformat(),
+        "child_runs": [screen.run.run_id],
+        "strict_candidates_processed": len(strict_candidates),
+        "decisions_total": len(decisions),
+        "outputs": {
+            "report": str(run.path / "report.md"),
+            "manifest": str(run.path / "manifest.json"),
+        },
+    }
+    hub.store.write_run_artifacts(
+        run,
+        manifest=manifest,
+        trace_lines=trace,
+        report=report,
+        tables={
+            "decisions": pd.DataFrame(decisions),
+            "watchlist_state": pd.DataFrame(watchlist_state),
+            "technical_setups": pd.DataFrame(technical_setups),
+        },
+    )
+    return RecipeResult(
+        "daily_canslim_research",
+        run,
+        manifest,
+        report,
+        decisions,
+        screen.filtered_out,
+    )
+
+
 def _finish_result(
     hub: DataHub,
     run: ResearchRun,
@@ -431,6 +544,51 @@ def _finish_result(
         },
     )
     return RecipeResult(recipe, run, manifest, report, candidates, filtered)
+
+
+def _read_screen_all_candidates(screen: RecipeResult) -> list[dict[str, Any]]:
+    path = screen.run.path / "tables" / "all_candidates.csv"
+    if not path.exists():
+        return []
+    try:
+        df = pd.read_csv(path)
+    except pd.errors.EmptyDataError:
+        return []
+    if df.empty:
+        return []
+    return df.to_dict("records")
+
+
+def _current_watchlist_records(hub: DataHub, as_of: date) -> list[dict[str, Any]]:
+    try:
+        current = hub.store.get_watchlist_state(as_of=as_of)
+    except TypeError:
+        current = hub.store.get_watchlist_state()
+    return current.to_dict("records") if current is not None and not current.empty else []
+
+
+def _get_bars_with_partial_fallback(
+    hub: DataHub,
+    symbols: list[str],
+    *,
+    start: date,
+    end: date,
+    adjustment: str,
+    policy: str,
+) -> pd.DataFrame:
+    try:
+        return hub.get_bars(
+            symbols,
+            start=start,
+            end=end,
+            adjustment=adjustment,
+            policy=policy,
+        )
+    except Exception:
+        cached = hub.store.get_bars(symbols, start=start, end=end)
+        if cached is not None and not cached.empty:
+            return cached
+        raise
 
 
 def _relative_strength(symbols: list[str], bars: pd.DataFrame) -> dict[str, float]:
@@ -709,4 +867,64 @@ def _canslim_report(
             f"- {rank}. {symbol} {name} score={score} "
             f"classification={classification} missing={missing}"
         )
+    return "\n".join(lines) + "\n"
+
+
+def _daily_canslim_report(
+    *,
+    requested_as_of: date,
+    effective_as_of: date,
+    screen: RecipeResult,
+    strict_candidates: list[dict[str, Any]],
+    decisions: list[dict[str, Any]],
+    watchlist_state: list[dict[str, Any]],
+) -> str:
+    lines = [
+        "# Daily CANSLIM Research",
+        "",
+        f"- requested_as_of: `{requested_as_of.isoformat()}`",
+        f"- effective_as_of: `{effective_as_of.isoformat()}`",
+        f"- screen_run: `{screen.run.run_id}`",
+        f"- full_candidates: `{screen.manifest.get('candidates_total')}`",
+        f"- displayed_candidates: `{screen.manifest.get('displayed_candidates_total')}`",
+        f"- strict_candidates_processed: `{len(strict_candidates)}`",
+        f"- decisions_total: `{len(decisions)}`",
+        "",
+        "## Strict Candidates",
+    ]
+    if strict_candidates:
+        for row in strict_candidates:
+            lines.append(f"- {row.get('symbol')} score={row.get('score')}")
+    else:
+        lines.append("- No strict CANSLIM candidates.")
+
+    lines.extend(["", "## Decisions"])
+    if decisions:
+        for row in decisions:
+            lines.append(
+                f"- {row['symbol']} decision={row['decision']} "
+                f"pivot={row.get('pivot_price')} stop={row.get('stop_loss')}"
+            )
+    else:
+        lines.append("- No decisions generated.")
+
+    lines.extend(["", "## Watchlist State"])
+    if watchlist_state:
+        for row in watchlist_state:
+            lines.append(
+                f"- {row['symbol']} status={row.get('status')} "
+                f"pivot={row.get('pivot_price')}"
+            )
+    else:
+        lines.append("- Watchlist is empty.")
+
+    lines.extend(
+        [
+            "",
+            "## Data Lineage",
+            "",
+            f"- screen_manifest: `{screen.run.path / 'manifest.json'}`",
+            f"- screen_report: `{screen.run.path / 'report.md'}`",
+        ]
+    )
     return "\n".join(lines) + "\n"

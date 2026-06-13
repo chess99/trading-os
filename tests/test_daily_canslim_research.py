@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from datetime import date
+
 import pytest
 
 pd = pytest.importorskip("pandas")
@@ -338,3 +340,100 @@ def test_decision_board_duplicate_strict_candidates_emit_one_decision():
     assert len(decisions) == 1
     assert decisions[0]["symbol"] == "SSE:600000"
     assert decisions[0]["score"] == 9.0
+
+
+class DailyProvider:
+    name = "daily-fixture"
+    capabilities = {"universe", "quote_snapshot_eod", "bars_daily"}
+
+    def __init__(self) -> None:
+        self.bars_calls: list[list[str]] = []
+
+    def fetch_universe(self, as_of):
+        return pd.DataFrame(
+            [
+                {"symbol": "SSE:600000", "name": "A", "is_st": False, "is_active": True},
+                {"symbol": "SSE:600001", "name": "B", "is_st": False, "is_active": True},
+                {"symbol": "SSE:600002", "name": "C", "is_st": False, "is_active": True},
+            ]
+        )
+
+    def fetch_quote_snapshot(self, as_of):
+        return pd.DataFrame(
+            [
+                {"symbol": "SSE:600000", "name": "A", "close": 12.0, "amount": 30_000_000.0},
+                {"symbol": "SSE:600001", "name": "B", "close": 10.0, "amount": 30_000_000.0},
+                {"symbol": "SSE:600002", "name": "C", "close": 9.0, "amount": 30_000_000.0},
+            ]
+        )
+
+    def fetch_bars(self, symbols, start, end, adjustment):
+        self.bars_calls.append(list(symbols))
+        rows = []
+        multipliers = {"SSE:600000": 0.02, "SSE:600001": 0.02, "SSE:600002": 0.001}
+        for symbol in symbols:
+            for idx, ts in enumerate(pd.bdate_range(start=start, end=end, inclusive="left")):
+                rows.append(
+                    {
+                        "symbol": symbol,
+                        "ts": ts,
+                        "close": 10.0 + idx * multipliers.get(symbol, 0.01),
+                        "volume": 1_000_000.0,
+                    }
+                )
+        return pd.DataFrame(rows)
+
+
+def test_daily_canslim_research_processes_all_strict_candidates(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600001",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.40,
+                    "roe": 0.24,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600002",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.05,
+                    "roe": 0.21,
+                    "positive_quarters": 8,
+                },
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = DailyProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    assert result.recipe == "daily_canslim_research"
+    assert result.manifest["requested_as_of"] == "2026-06-13"
+    assert result.manifest["effective_as_of"] == "2026-06-12"
+    assert result.manifest["strict_candidates_processed"] == 2
+    assert result.manifest["decisions_total"] == 2
+    assert (result.run.path / "report.md").exists()
+    assert (result.run.path / "tables" / "decisions.csv").exists()
+    assert (result.run.path / "tables" / "watchlist_state.csv").exists()
+    assert (result.run.path / "tables" / "technical_setups.csv").exists()
+    assert provider.bars_calls[-1] == ["SSE:600000", "SSE:600001"]
+    assert not store.get_decisions(as_of=date(2026, 6, 12)).empty
+    assert not store.get_watchlist_state(as_of=date(2026, 6, 12)).empty
+    assert not store.get_technical_setups(as_of=date(2026, 6, 12)).empty
