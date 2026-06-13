@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Any, Protocol
 
-from .providers import ProviderFetchError, ProviderResult, ProviderRouter
+from .providers import MissingCapabilityError, ProviderFetchError, ProviderResult, ProviderRouter
 from .store import ResearchStore
 
 
@@ -156,7 +156,35 @@ class DataHub:
             return cached
         if policy == "offline":
             raise MissingDataError(f"estimates missing for as_of={as_of}")
-        return cached
+        provider = self._provider()
+        if isinstance(provider, ProviderRouter):
+            try:
+                result = self._router_fetch(
+                    provider, "estimates", "fetch_estimates", symbols, as_of
+                )
+            except MissingCapabilityError as exc:
+                if policy == "refresh":
+                    raise MissingDataError("estimates provider is not available") from exc
+                return cached
+            source = result.provider_name
+            df = result.data
+        else:
+            if not hasattr(provider, "fetch_estimates"):
+                if policy == "refresh":
+                    raise MissingDataError("estimates provider is not available")
+                return cached
+            source = self._provider_name(provider)
+            df = provider.fetch_estimates(symbols, as_of)
+            if policy == "refresh":
+                self._ensure_non_empty(df, "estimates", source)
+        if df is not None and not df.empty:
+            self.store.write_estimates(
+                df, as_of=as_of, source=source, provenance={"provider": source}
+            )
+        final = self.store.get_estimates(symbols, as_of=as_of)
+        if policy == "refresh":
+            _ensure_fresh_symbols(final, symbols, as_of=as_of, dataset="estimates")
+        return final
 
     def get_news(
         self,
@@ -171,7 +199,38 @@ class DataHub:
             return cached
         if policy == "offline":
             raise MissingDataError(f"news missing for as_of={as_of}")
-        return cached
+        provider = self._provider()
+        if isinstance(provider, ProviderRouter):
+            try:
+                result = self._router_fetch(
+                    provider, "news", "fetch_news", symbols, as_of, lookback_months
+                )
+            except MissingCapabilityError as exc:
+                if policy == "refresh":
+                    raise MissingDataError("news provider is not available") from exc
+                return cached
+            source = result.provider_name
+            df = result.data
+        else:
+            if not hasattr(provider, "fetch_news"):
+                if policy == "refresh":
+                    raise MissingDataError("news provider is not available")
+                return cached
+            source = self._provider_name(provider)
+            df = provider.fetch_news(symbols, as_of, lookback_months)
+            if policy == "refresh":
+                self._ensure_non_empty(df, "news", source)
+        if df is not None and not df.empty:
+            self.store.write_news(
+                df,
+                as_of=as_of,
+                source=source,
+                provenance={"provider": source, "lookback_months": lookback_months},
+            )
+        final = self.store.get_news(symbols, as_of=as_of)
+        if policy == "refresh":
+            _ensure_fresh_symbols(final, symbols, as_of=as_of, dataset="news")
+        return final
 
     def _provider(self) -> Any:
         if self.provider is None:
@@ -314,6 +373,20 @@ def _cached_symbols(cached: Any) -> set[str]:
     if cached is None or cached.empty or "symbol" not in cached.columns:
         return set()
     return set(cached["symbol"].astype(str))
+
+
+def _ensure_fresh_symbols(cached: Any, symbols: list[str], *, as_of: date, dataset: str) -> None:
+    if (
+        cached is None
+        or cached.empty
+        or "symbol" not in cached.columns
+        or "as_of" not in cached.columns
+    ):
+        raise MissingDataError(f"{dataset} missing for {','.join(symbols)} as_of={as_of}")
+    fresh = cached[cached["as_of"].astype(str).eq(as_of.isoformat())]
+    remaining = [symbol for symbol in symbols if symbol not in _cached_symbols(fresh)]
+    if remaining:
+        raise MissingDataError(f"{dataset} missing for {','.join(remaining)} as_of={as_of}")
 
 
 def _merge_fundamentals(cached: Any, fetched: Any) -> Any:

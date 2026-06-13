@@ -178,6 +178,70 @@ class WorkingRouterProvider:
         )
 
 
+class EnrichmentProvider(FakeProvider):
+    def fetch_estimates(self, symbols, as_of):
+        self.calls.append(f"estimates:{','.join(symbols)}:{as_of.isoformat()}")
+        return pd.DataFrame(
+            [{"symbol": symbols[0], "eps_estimate": 1.23, "target_price": 15.0}]
+        )
+
+    def fetch_news(self, symbols, as_of, lookback_months):
+        self.calls.append(f"news:{','.join(symbols)}:{as_of.isoformat()}:{lookback_months}")
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbols[0],
+                    "title": "订单增长",
+                    "published_at": "2026-06-01T09:00:00+08:00",
+                    "source_url": "https://example.test/news/1",
+                }
+            ]
+        )
+
+
+class EmptyEnrichmentProvider(EnrichmentProvider):
+    def fetch_estimates(self, symbols, as_of):
+        self.calls.append(f"estimates:{','.join(symbols)}:{as_of.isoformat()}")
+        return pd.DataFrame()
+
+    def fetch_news(self, symbols, as_of, lookback_months):
+        self.calls.append(f"news:{','.join(symbols)}:{as_of.isoformat()}:{lookback_months}")
+        return pd.DataFrame()
+
+
+class EmptyEnrichmentRouterProvider:
+    name = "empty_enrichment"
+    capabilities = {"estimates", "news"}
+
+    def fetch_estimates(self, symbols, as_of):
+        return pd.DataFrame()
+
+    def fetch_news(self, symbols, as_of, lookback_months):
+        return pd.DataFrame()
+
+
+class WorkingEnrichmentRouterProvider:
+    name = "working_enrichment"
+    capabilities = {"estimates", "news"}
+
+    def fetch_estimates(self, symbols, as_of):
+        return pd.DataFrame(
+            [{"symbol": symbols[0], "eps_estimate": 1.45, "target_price": 18.0}]
+        )
+
+    def fetch_news(self, symbols, as_of, lookback_months):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbols[0],
+                    "title": f"{lookback_months}个月订单跟踪",
+                    "published_at": "2026-06-02T09:00:00+08:00",
+                    "source_url": "https://example.test/news/router",
+                }
+            ]
+        )
+
+
 class FailingQuoteRouterProvider:
     name = "quote_failing"
     capabilities = {"quote_snapshot_eod"}
@@ -502,6 +566,139 @@ def test_datahub_with_provider_router_refreshes_fundamentals_through_fallback(tm
     assert fundamentals["source"].unique().tolist() == ["working"]
     assert fundamentals.iloc[0]["roe"] == 0.18
     assert health["capability"].tolist() == ["fundamentals"]
+
+
+def test_datahub_fetches_estimates_when_provider_supports_it(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    provider = EnrichmentProvider()
+    hub = DataHub(ResearchStore(tmp_path / "research"), provider=provider)
+
+    estimates = hub.get_estimates(["SSE:600000"], as_of=date(2026, 6, 12))
+
+    assert provider.calls == ["estimates:SSE:600000:2026-06-12"]
+    assert estimates.iloc[0]["target_price"] == 15.0
+    assert estimates.iloc[0]["source"] == "EnrichmentProvider"
+
+
+def test_datahub_fetches_news_when_provider_supports_it(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    provider = EnrichmentProvider()
+    hub = DataHub(ResearchStore(tmp_path / "research"), provider=provider)
+
+    news = hub.get_news(["SSE:600000"], as_of=date(2026, 6, 12), lookback_months=12)
+
+    assert provider.calls == ["news:SSE:600000:2026-06-12:12"]
+    assert news.iloc[0]["title"] == "订单增长"
+    assert news.iloc[0]["source"] == "EnrichmentProvider"
+
+
+def test_datahub_cache_first_estimates_does_not_refetch_cached_data(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_estimates(
+        pd.DataFrame([{"symbol": "SSE:600000", "target_price": 12.0}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = EnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    estimates = hub.get_estimates(["SSE:600000"], as_of=date(2026, 6, 12))
+
+    assert provider.calls == []
+    assert estimates.iloc[0]["target_price"] == 12.0
+    assert estimates.iloc[0]["source"] == "fixture"
+
+
+def test_datahub_cache_first_news_returns_cached_data_when_provider_is_unsupported(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_news(
+        pd.DataFrame([{"symbol": "SSE:600000", "title": "cached"}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = FakeProvider()
+    hub = DataHub(store, provider=provider)
+
+    news = hub.get_news(["SSE:600000"], as_of=date(2026, 6, 12))
+
+    assert provider.calls == []
+    assert news.iloc[0]["title"] == "cached"
+
+
+def test_datahub_refresh_estimates_rejects_empty_provider_without_returning_stale_cache(tmp_path):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_estimates(
+        pd.DataFrame([{"symbol": "SSE:600000", "target_price": 12.0}]),
+        as_of=date(2026, 6, 11),
+        source="fixture",
+    )
+    provider = EmptyEnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    with pytest.raises(MissingDataError):
+        hub.get_estimates(["SSE:600000"], as_of=date(2026, 6, 12), policy="refresh")
+
+    assert provider.calls == ["estimates:SSE:600000:2026-06-12"]
+    stale = store.get_estimates(["SSE:600000"], as_of=date(2026, 6, 12))
+    assert stale.iloc[0]["as_of"] == "2026-06-11"
+    assert stale.iloc[0]["source"] == "fixture"
+
+
+def test_datahub_refresh_news_rejects_empty_provider_without_returning_stale_cache(tmp_path):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_news(
+        pd.DataFrame([{"symbol": "SSE:600000", "title": "cached"}]),
+        as_of=date(2026, 6, 11),
+        source="fixture",
+    )
+    provider = EmptyEnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    with pytest.raises(MissingDataError):
+        hub.get_news(["SSE:600000"], as_of=date(2026, 6, 12), policy="refresh")
+
+    assert provider.calls == ["news:SSE:600000:2026-06-12:12"]
+    stale = store.get_news(["SSE:600000"], as_of=date(2026, 6, 12))
+    assert stale.iloc[0]["as_of"] == "2026-06-11"
+    assert stale.iloc[0]["source"] == "fixture"
+
+
+def test_datahub_with_provider_router_fetches_news_through_fallback(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.providers import ProviderRouter
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    hub = DataHub(
+        store,
+        provider=ProviderRouter(
+            [EmptyEnrichmentRouterProvider(), WorkingEnrichmentRouterProvider()]
+        ),
+    )
+
+    news = hub.get_news(["SSE:600000"], as_of=date(2026, 6, 12), policy="refresh")
+    health = store.get_provider_health()
+
+    assert news.iloc[0]["title"] == "12个月订单跟踪"
+    assert news["source"].unique().tolist() == ["working_enrichment"]
+    assert health["provider"].tolist() == ["empty_enrichment"]
+    assert health["capability"].tolist() == ["news"]
 
 
 def test_datahub_cache_first_fetches_missing_fundamental_symbols_only(tmp_path):
