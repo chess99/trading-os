@@ -413,7 +413,8 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
     strict_symbols = [str(row["symbol"]) for row in strict_candidates if row.get("symbol")]
     trace.append(f"- strict candidates loaded from all_candidates.csv: `{len(strict_candidates)}`")
 
-    bars = hub.get_bars(
+    bars = _get_bars_with_partial_fallback(
+        hub,
         strict_symbols,
         start=effective_as_of - timedelta(days=420),
         end=effective_as_of + timedelta(days=1),

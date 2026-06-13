@@ -384,6 +384,13 @@ class DailyProvider:
         return pd.DataFrame(rows)
 
 
+class DailyProviderWithHolidayGap(DailyProvider):
+    def fetch_bars(self, symbols, start, end, adjustment):
+        full = super().fetch_bars(symbols, start, end, adjustment)
+        gap = pd.Timestamp("2026-01-01")
+        return full[pd.to_datetime(full["ts"]).dt.normalize() != gap].reset_index(drop=True)
+
+
 def test_daily_canslim_research_processes_all_strict_candidates(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.recipes import run_daily_canslim_research
@@ -434,6 +441,52 @@ def test_daily_canslim_research_processes_all_strict_candidates(tmp_path):
     assert (result.run.path / "tables" / "watchlist_state.csv").exists()
     assert (result.run.path / "tables" / "technical_setups.csv").exists()
     assert provider.bars_calls[-1] == ["SSE:600000", "SSE:600001"]
+    assert not store.get_decisions(as_of=date(2026, 6, 12)).empty
+    assert not store.get_watchlist_state(as_of=date(2026, 6, 12)).empty
+    assert not store.get_technical_setups(as_of=date(2026, 6, 12)).empty
+
+
+def test_daily_canslim_research_continues_when_strict_bars_have_partial_gap(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                },
+                {
+                    "symbol": "SSE:600001",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.40,
+                    "roe": 0.24,
+                    "positive_quarters": 8,
+                },
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = DailyProviderWithHolidayGap()
+    hub = DataHub(store, provider=provider)
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    assert result.manifest["strict_candidates_processed"] == 2
+    assert result.manifest["decisions_total"] == 2
+    assert {decision["symbol"] for decision in result.candidates} == {
+        "SSE:600000",
+        "SSE:600001",
+    }
+    assert (result.run.path / "report.md").exists()
+    assert (result.run.path / "tables" / "technical_setups.csv").exists()
     assert not store.get_decisions(as_of=date(2026, 6, 12)).empty
     assert not store.get_watchlist_state(as_of=date(2026, 6, 12)).empty
     assert not store.get_technical_setups(as_of=date(2026, 6, 12)).empty
