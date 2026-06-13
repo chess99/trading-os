@@ -182,6 +182,41 @@ class EnrichmentProvider(FakeProvider):
     def fetch_estimates(self, symbols, as_of):
         self.calls.append(f"estimates:{','.join(symbols)}:{as_of.isoformat()}")
         return pd.DataFrame(
+            [
+                {"symbol": symbol, "eps_estimate": 1.23, "target_price": 15.0}
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_news(self, symbols, as_of, lookback_months):
+        self.calls.append(f"news:{','.join(symbols)}:{as_of.isoformat()}:{lookback_months}")
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "title": "订单增长",
+                    "published_at": "2026-06-01T09:00:00+08:00",
+                    "source_url": "https://example.test/news/1",
+                }
+                for symbol in symbols
+            ]
+        )
+
+
+class EmptyEnrichmentProvider(EnrichmentProvider):
+    def fetch_estimates(self, symbols, as_of):
+        self.calls.append(f"estimates:{','.join(symbols)}:{as_of.isoformat()}")
+        return pd.DataFrame()
+
+    def fetch_news(self, symbols, as_of, lookback_months):
+        self.calls.append(f"news:{','.join(symbols)}:{as_of.isoformat()}:{lookback_months}")
+        return pd.DataFrame()
+
+
+class PartialEnrichmentProvider(EnrichmentProvider):
+    def fetch_estimates(self, symbols, as_of):
+        self.calls.append(f"estimates:{','.join(symbols)}:{as_of.isoformat()}")
+        return pd.DataFrame(
             [{"symbol": symbols[0], "eps_estimate": 1.23, "target_price": 15.0}]
         )
 
@@ -197,16 +232,6 @@ class EnrichmentProvider(FakeProvider):
                 }
             ]
         )
-
-
-class EmptyEnrichmentProvider(EnrichmentProvider):
-    def fetch_estimates(self, symbols, as_of):
-        self.calls.append(f"estimates:{','.join(symbols)}:{as_of.isoformat()}")
-        return pd.DataFrame()
-
-    def fetch_news(self, symbols, as_of, lookback_months):
-        self.calls.append(f"news:{','.join(symbols)}:{as_of.isoformat()}:{lookback_months}")
-        return pd.DataFrame()
 
 
 class EmptyEnrichmentRouterProvider:
@@ -616,13 +641,43 @@ def test_datahub_cache_first_estimates_does_not_refetch_cached_data(tmp_path):
     assert estimates.iloc[0]["source"] == "fixture"
 
 
+def test_datahub_cache_first_estimates_fetches_missing_symbols_only(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_estimates(
+        pd.DataFrame([{"symbol": "SSE:600000", "target_price": 12.0}]),
+        as_of=date(2026, 6, 11),
+        source="fixture",
+    )
+    provider = EnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    estimates = hub.get_estimates(
+        ["SSE:600000", "SZSE:000001"],
+        as_of=date(2026, 6, 12),
+        policy="cache_first",
+    )
+
+    assert provider.calls == ["estimates:SZSE:000001:2026-06-12"]
+    cached = estimates[estimates["symbol"] == "SSE:600000"].iloc[0]
+    fetched = estimates[estimates["symbol"] == "SZSE:000001"].iloc[0]
+    assert cached["target_price"] == 12.0
+    assert cached["source"] == "fixture"
+    assert cached["as_of"] == "2026-06-11"
+    assert fetched["target_price"] == 15.0
+    assert fetched["source"] == "EnrichmentProvider"
+    assert fetched["as_of"] == "2026-06-12"
+
+
 def test_datahub_cache_first_news_returns_cached_data_when_provider_is_unsupported(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore
 
     store = ResearchStore(tmp_path / "research")
     store.write_news(
-        pd.DataFrame([{"symbol": "SSE:600000", "title": "cached"}]),
+        pd.DataFrame([{"symbol": "SSE:600000", "title": "cached", "lookback_months": 12}]),
         as_of=date(2026, 6, 12),
         source="fixture",
     )
@@ -633,6 +688,64 @@ def test_datahub_cache_first_news_returns_cached_data_when_provider_is_unsupport
 
     assert provider.calls == []
     assert news.iloc[0]["title"] == "cached"
+
+
+def test_datahub_cache_first_news_fetches_missing_symbols_only(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_news(
+        pd.DataFrame([{"symbol": "SSE:600000", "title": "cached", "lookback_months": 12}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = EnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    news = hub.get_news(
+        ["SSE:600000", "SZSE:000001"],
+        as_of=date(2026, 6, 12),
+        lookback_months=12,
+        policy="cache_first",
+    )
+
+    assert provider.calls == ["news:SZSE:000001:2026-06-12:12"]
+    cached = news[news["symbol"] == "SSE:600000"].iloc[0]
+    fetched = news[news["symbol"] == "SZSE:000001"].iloc[0]
+    assert cached["title"] == "cached"
+    assert cached["source"] == "fixture"
+    assert cached["as_of"] == "2026-06-12"
+    assert fetched["title"] == "订单增长"
+    assert fetched["source"] == "EnrichmentProvider"
+    assert fetched["lookback_months"] == 12
+
+
+def test_datahub_cache_first_news_refetches_when_cached_lookback_is_too_short(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_news(
+        pd.DataFrame([{"symbol": "SSE:600000", "title": "three month", "lookback_months": 3}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = EnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    news = hub.get_news(
+        ["SSE:600000"],
+        as_of=date(2026, 6, 12),
+        lookback_months=12,
+        policy="cache_first",
+    )
+
+    assert provider.calls == ["news:SSE:600000:2026-06-12:12"]
+    latest = news[news["symbol"] == "SSE:600000"].iloc[0]
+    assert latest["title"] == "订单增长"
+    assert latest["source"] == "EnrichmentProvider"
+    assert latest["lookback_months"] == 12
 
 
 def test_datahub_refresh_estimates_rejects_empty_provider_without_returning_stale_cache(tmp_path):
@@ -677,6 +790,67 @@ def test_datahub_refresh_news_rejects_empty_provider_without_returning_stale_cac
     stale = store.get_news(["SSE:600000"], as_of=date(2026, 6, 12))
     assert stale.iloc[0]["as_of"] == "2026-06-11"
     assert stale.iloc[0]["source"] == "fixture"
+
+
+def test_datahub_refresh_estimates_rejects_partial_provider_without_returning_stale_cache(
+    tmp_path,
+):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_estimates(
+        pd.DataFrame(
+            [
+                {"symbol": "SSE:600000", "target_price": 12.0},
+                {"symbol": "SZSE:000001", "target_price": 13.0},
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = PartialEnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    with pytest.raises(MissingDataError):
+        hub.get_estimates(
+            ["SSE:600000", "SZSE:000001"],
+            as_of=date(2026, 6, 12),
+            policy="refresh",
+        )
+
+    assert provider.calls == ["estimates:SSE:600000,SZSE:000001:2026-06-12"]
+
+
+def test_datahub_refresh_news_rejects_partial_provider_without_returning_stale_cache(
+    tmp_path,
+):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_news(
+        pd.DataFrame(
+            [
+                {"symbol": "SSE:600000", "title": "cached one", "lookback_months": 12},
+                {"symbol": "SZSE:000001", "title": "cached two", "lookback_months": 12},
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = PartialEnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    with pytest.raises(MissingDataError):
+        hub.get_news(
+            ["SSE:600000", "SZSE:000001"],
+            as_of=date(2026, 6, 12),
+            lookback_months=12,
+            policy="refresh",
+        )
+
+    assert provider.calls == ["news:SSE:600000,SZSE:000001:2026-06-12:12"]
 
 
 def test_datahub_with_provider_router_fetches_news_through_fallback(tmp_path):

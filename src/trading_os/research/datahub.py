@@ -3,6 +3,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import date
 from typing import Any, Protocol
+from uuid import uuid4
 
 from .providers import MissingCapabilityError, ProviderFetchError, ProviderResult, ProviderRouter
 from .store import ResearchStore
@@ -152,15 +153,22 @@ class DataHub:
 
     def get_estimates(self, symbols: list[str], *, as_of: date, policy: str = "cache_first") -> Any:
         cached = self.store.get_estimates(symbols, as_of=as_of)
-        if policy in {"cache_first", "offline", "lazy_fill"} and not cached.empty:
+        cached_symbols = _cached_symbols(cached)
+        missing = [symbol for symbol in symbols if symbol not in cached_symbols]
+        if policy in {"cache_first", "lazy_fill"} and not missing:
             return cached
         if policy == "offline":
-            raise MissingDataError(f"estimates missing for as_of={as_of}")
+            if missing:
+                raise MissingDataError(f"estimates missing for {','.join(missing)} as_of={as_of}")
+            return cached
+        symbols_to_fetch = list(symbols) if policy == "refresh" else missing
+        if not symbols_to_fetch:
+            return cached
         provider = self._provider()
         if isinstance(provider, ProviderRouter):
             try:
                 result = self._router_fetch(
-                    provider, "estimates", "fetch_estimates", symbols, as_of
+                    provider, "estimates", "fetch_estimates", symbols_to_fetch, as_of
                 )
             except MissingCapabilityError as exc:
                 if policy == "refresh":
@@ -174,16 +182,22 @@ class DataHub:
                     raise MissingDataError("estimates provider is not available")
                 return cached
             source = self._provider_name(provider)
-            df = provider.fetch_estimates(symbols, as_of)
+            df = provider.fetch_estimates(symbols_to_fetch, as_of)
             if policy == "refresh":
                 self._ensure_non_empty(df, "estimates", source)
         if df is not None and not df.empty:
-            self.store.write_estimates(
-                df, as_of=as_of, source=source, provenance={"provider": source}
+            if policy == "refresh":
+                _ensure_symbols_present(df, symbols, as_of=as_of, dataset="estimates")
+            self._write_estimates(
+                df,
+                as_of=as_of,
+                source=source,
+                provenance={"provider": source},
+                append=True,
             )
+        elif policy == "refresh":
+            raise MissingDataError(f"estimates missing for {','.join(symbols)} as_of={as_of}")
         final = self.store.get_estimates(symbols, as_of=as_of)
-        if policy == "refresh":
-            _ensure_fresh_symbols(final, symbols, as_of=as_of, dataset="estimates")
         return final
 
     def get_news(
@@ -194,16 +208,26 @@ class DataHub:
         lookback_months: int = 12,
         policy: str = "cache_first",
     ) -> Any:
-        cached = self.store.get_news(symbols, as_of=as_of)
-        if policy in {"cache_first", "offline", "lazy_fill"} and not cached.empty:
+        cached = _news_with_lookback(
+            self.store.get_news(symbols, as_of=as_of),
+            lookback_months=lookback_months,
+        )
+        cached_symbols = _cached_symbols(cached)
+        missing = [symbol for symbol in symbols if symbol not in cached_symbols]
+        if policy in {"cache_first", "lazy_fill"} and not missing:
             return cached
         if policy == "offline":
-            raise MissingDataError(f"news missing for as_of={as_of}")
+            if missing:
+                raise MissingDataError(f"news missing for {','.join(missing)} as_of={as_of}")
+            return cached
+        symbols_to_fetch = list(symbols) if policy == "refresh" else missing
+        if not symbols_to_fetch:
+            return cached
         provider = self._provider()
         if isinstance(provider, ProviderRouter):
             try:
                 result = self._router_fetch(
-                    provider, "news", "fetch_news", symbols, as_of, lookback_months
+                    provider, "news", "fetch_news", symbols_to_fetch, as_of, lookback_months
                 )
             except MissingCapabilityError as exc:
                 if policy == "refresh":
@@ -217,25 +241,71 @@ class DataHub:
                     raise MissingDataError("news provider is not available")
                 return cached
             source = self._provider_name(provider)
-            df = provider.fetch_news(symbols, as_of, lookback_months)
+            df = provider.fetch_news(symbols_to_fetch, as_of, lookback_months)
             if policy == "refresh":
                 self._ensure_non_empty(df, "news", source)
         if df is not None and not df.empty:
-            self.store.write_news(
+            df = df.copy()
+            df["lookback_months"] = lookback_months
+            if policy == "refresh":
+                _ensure_symbols_present(df, symbols, as_of=as_of, dataset="news")
+            self._write_news(
                 df,
                 as_of=as_of,
                 source=source,
                 provenance={"provider": source, "lookback_months": lookback_months},
+                append=True,
             )
-        final = self.store.get_news(symbols, as_of=as_of)
-        if policy == "refresh":
-            _ensure_fresh_symbols(final, symbols, as_of=as_of, dataset="news")
+        elif policy == "refresh":
+            raise MissingDataError(f"news missing for {','.join(symbols)} as_of={as_of}")
+        final = _news_with_lookback(
+            self.store.get_news(symbols, as_of=as_of),
+            lookback_months=lookback_months,
+        )
         return final
 
     def _provider(self) -> Any:
         if self.provider is None:
             self.provider = AkshareResearchProvider()
         return self.provider
+
+    def _write_estimates(
+        self,
+        df: Any,
+        *,
+        as_of: date,
+        source: str,
+        provenance: dict[str, Any],
+        append: bool = False,
+    ) -> None:
+        partition = _append_partition(as_of) if append else as_of.isoformat()
+        self.store._write_snapshot_dataset(
+            "estimates",
+            df,
+            as_of=as_of,
+            source=source,
+            provenance=provenance,
+            partition=partition,
+        )
+
+    def _write_news(
+        self,
+        df: Any,
+        *,
+        as_of: date,
+        source: str,
+        provenance: dict[str, Any],
+        append: bool = False,
+    ) -> None:
+        partition = _append_partition(as_of) if append else as_of.isoformat()
+        self.store._write_snapshot_dataset(
+            "news",
+            df,
+            as_of=as_of,
+            source=source,
+            provenance=provenance,
+            partition=partition,
+        )
 
     def _router_fetch(
         self, provider: ProviderRouter, capability: str, method_name: str, *args: Any
@@ -375,18 +445,26 @@ def _cached_symbols(cached: Any) -> set[str]:
     return set(cached["symbol"].astype(str))
 
 
-def _ensure_fresh_symbols(cached: Any, symbols: list[str], *, as_of: date, dataset: str) -> None:
-    if (
-        cached is None
-        or cached.empty
-        or "symbol" not in cached.columns
-        or "as_of" not in cached.columns
-    ):
-        raise MissingDataError(f"{dataset} missing for {','.join(symbols)} as_of={as_of}")
-    fresh = cached[cached["as_of"].astype(str).eq(as_of.isoformat())]
-    remaining = [symbol for symbol in symbols if symbol not in _cached_symbols(fresh)]
-    if remaining:
-        raise MissingDataError(f"{dataset} missing for {','.join(remaining)} as_of={as_of}")
+def _news_with_lookback(cached: Any, *, lookback_months: int) -> Any:
+    if cached is None or cached.empty or "lookback_months" not in cached.columns:
+        return cached.iloc[0:0].copy() if cached is not None else cached
+
+    import pandas as pd
+
+    out = cached.copy()
+    lookbacks = pd.to_numeric(out["lookback_months"], errors="coerce")
+    return out[lookbacks >= lookback_months].reset_index(drop=True)
+
+
+def _append_partition(as_of: date) -> str:
+    return f"{as_of.isoformat()}-{uuid4().hex[:8]}"
+
+
+def _ensure_symbols_present(data: Any, symbols: list[str], *, as_of: date, dataset: str) -> None:
+    present = _cached_symbols(data)
+    missing = [symbol for symbol in symbols if symbol not in present]
+    if missing:
+        raise MissingDataError(f"{dataset} missing for {','.join(missing)} as_of={as_of}")
 
 
 def _merge_fundamentals(cached: Any, fetched: Any) -> Any:
