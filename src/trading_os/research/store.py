@@ -94,30 +94,25 @@ class ResearchStore:
         return self._write_event_dataset("decisions", records)
 
     def get_decisions(self, as_of: date | None = None) -> Any:
-        df = self._read_dataset("decisions")
-        if as_of is None or df.empty or "as_of" not in df.columns:
-            return df
-        as_of_values = self._pd.to_datetime(df["as_of"], errors="coerce").dt.date
-        df = df[as_of_values <= as_of]
-        return df.reset_index(drop=True)
+        return self._read_event_dataset("decisions", as_of=as_of)
 
     def write_watchlist_state(self, records: list[dict[str, Any]]) -> Path:
         return self._write_event_dataset("watchlist_state", records)
 
-    def get_watchlist_state(self) -> Any:
-        return self._read_dataset("watchlist_state")
+    def get_watchlist_state(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("watchlist_state", as_of=as_of)
 
     def write_alerts(self, records: list[dict[str, Any]]) -> Path:
         return self._write_event_dataset("alerts", records)
 
-    def get_alerts(self) -> Any:
-        return self._read_dataset("alerts")
+    def get_alerts(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("alerts", as_of=as_of)
 
     def write_technical_setups(self, records: list[dict[str, Any]]) -> Path:
         return self._write_event_dataset("technical_setups", records)
 
-    def get_technical_setups(self) -> Any:
-        return self._read_dataset("technical_setups")
+    def get_technical_setups(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("technical_setups", as_of=as_of)
 
     def write_fundamentals(
         self,
@@ -278,8 +273,19 @@ class ResearchStore:
             return self._dataset_path(dataset, "empty")
         if "fetched_at" not in out.columns:
             out["fetched_at"] = datetime.now(timezone.utc).isoformat()
-        partition = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + uuid4().hex[:8]
+        partition = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f") + "-" + uuid4().hex[:8]
         return self._write_dataset(dataset, out, partition)
+
+    def _read_event_dataset(self, dataset: str, as_of: date | None = None) -> Any:
+        df = self._read_dataset(dataset)
+        if df.empty:
+            return df
+        if as_of is not None and "as_of" in df.columns:
+            as_of_values = self._pd.to_datetime(df["as_of"], errors="coerce").dt.date
+            df = df[as_of_values <= as_of]
+        if "fetched_at" in df.columns:
+            df = df.sort_values("fetched_at")
+        return df.reset_index(drop=True)
 
     def _read_latest_snapshot(self, dataset: str, *, as_of: date, key: str) -> Any:
         df = self._read_dataset(dataset)
