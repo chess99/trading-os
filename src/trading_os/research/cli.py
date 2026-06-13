@@ -233,14 +233,26 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     daily.add_argument("--as-of", required=True, dest="as_of")
     daily.set_defaults(func=cmd_research)
     daily_canslim = research_sub.add_parser(
-        "daily-canslim", help="Run full daily CANSLIM research closure"
+        "daily-canslim",
+        help="Run full daily CANSLIM research closure",
+        description=(
+            "Run full daily CANSLIM research closure: resolve the completed trading day, "
+            "screen all A-shares, research every strict candidate, update decisions and "
+            "watchlist state, and export the human report."
+        ),
     )
     daily_canslim.add_argument("--as-of", required=True, dest="as_of")
     daily_canslim.set_defaults(func=cmd_research)
 
     alert = sub.add_parser("alert", help="Run watchlist-only alert monitoring")
     alert_sub = alert.add_subparsers(dest="alert_cmd", required=True)
-    monitor = alert_sub.add_parser("monitor")
+    monitor = alert_sub.add_parser(
+        "monitor",
+        description=(
+            "Run the watchlist-only alert monitor once. It evaluates existing watchlist "
+            "entries against the quote snapshot and does not scan the full market."
+        ),
+    )
     monitor.add_argument("--mode", choices=["watchlist"], required=True)
     monitor.add_argument("--once", action="store_true")
     monitor.add_argument("--as-of", dest="as_of")

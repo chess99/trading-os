@@ -64,6 +64,19 @@ def test_research_cli_parses_daily_canslim_command():
     assert ns.as_of == "2026-06-12"
 
 
+def test_research_daily_canslim_help_describes_closure(capsys):
+    from trading_os.cli_internal.app import build_parser
+
+    parser = build_parser()
+    with pytest.raises(SystemExit) as exc:
+        parser.parse_args(["research", "daily-canslim", "--help"])
+
+    assert exc.value.code == 0
+    help_text = capsys.readouterr().out
+    assert "daily CANSLIM research closure" in help_text
+    assert "--as-of" in help_text
+
+
 def test_data_provider_status_command_parses():
     from trading_os.cli_internal.app import build_parser
 
@@ -97,6 +110,19 @@ def test_alert_monitor_parser_accepts_watchlist_once_as_of():
     assert ns.mode == "watchlist"
     assert ns.once is True
     assert ns.as_of == "2026-06-12"
+
+
+def test_alert_monitor_help_describes_watchlist_mode(capsys):
+    from trading_os.cli_internal.app import build_parser
+
+    parser = build_parser()
+    with pytest.raises(SystemExit) as exc:
+        parser.parse_args(["alert", "monitor", "--help"])
+
+    assert exc.value.code == 0
+    help_text = capsys.readouterr().out
+    assert "watchlist-only alert monitor" in help_text
+    assert "--mode {watchlist}" in help_text
 
 
 def test_alert_monitor_without_once_fails_fast():
