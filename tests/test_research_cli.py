@@ -64,6 +64,26 @@ def test_research_cli_parses_daily_canslim_command():
     assert ns.as_of == "2026-06-12"
 
 
+def test_data_provider_status_command_parses():
+    from trading_os.cli_internal.app import build_parser
+
+    parser = build_parser()
+    ns = parser.parse_args(["data", "provider", "status"])
+
+    assert ns.data_cmd == "provider"
+    assert ns.provider_cmd == "status"
+
+
+def test_data_provider_probe_command_parses():
+    from trading_os.cli_internal.app import build_parser
+
+    parser = build_parser()
+    ns = parser.parse_args(["data", "provider", "probe"])
+
+    assert ns.data_cmd == "provider"
+    assert ns.provider_cmd == "probe"
+
+
 def test_alert_monitor_parser_accepts_watchlist_once_as_of():
     from trading_os.cli_internal.app import build_parser
 

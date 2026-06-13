@@ -73,6 +73,16 @@ def cmd_data(ns: argparse.Namespace) -> int:
         if stats.errors:
             print(json.dumps({"errors": stats.errors}, ensure_ascii=False, indent=2))
         return 0
+    if ns.data_cmd == "provider":
+        if ns.provider_cmd == "status":
+            health = hub.store.get_provider_health()
+            print(health.to_json(orient="records", force_ascii=False))
+            return 0
+        if ns.provider_cmd == "probe":
+            provider = hub._provider()
+            payload = {"providers": [_provider_display_name(provider)]}
+            print(json.dumps(payload, ensure_ascii=False, indent=2))
+            return 0
     raise RuntimeError(f"unknown data command: {ns.data_cmd}")
 
 
@@ -197,6 +207,12 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     migrate.add_argument("--as-of", required=True, dest="as_of")
     migrate.add_argument("--source-dir", default="data/fundamental")
     migrate.set_defaults(func=cmd_data)
+    provider = data_sub.add_parser("provider", help="Inspect research data providers")
+    provider_sub = provider.add_subparsers(dest="provider_cmd", required=True)
+    provider_status = provider_sub.add_parser("status", help="Show provider health records")
+    provider_status.set_defaults(func=cmd_data)
+    provider_probe = provider_sub.add_parser("probe", help="Probe configured provider capabilities")
+    provider_probe.set_defaults(func=cmd_data)
 
     research = sub.add_parser("research", help="Run deterministic research recipes")
     research_sub = research.add_subparsers(dest="research_cmd", required=True)
@@ -254,3 +270,7 @@ def _records_from_table(table: Any) -> list[dict[str, Any]]:
     if hasattr(table, "to_dict"):
         return table.to_dict("records")
     return list(table)
+
+
+def _provider_display_name(provider: Any) -> str:
+    return str(getattr(provider, "name", provider.__class__.__name__))
