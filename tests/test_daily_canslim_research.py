@@ -490,3 +490,36 @@ def test_daily_canslim_research_continues_when_strict_bars_have_partial_gap(tmp_
     assert not store.get_decisions(as_of=date(2026, 6, 12)).empty
     assert not store.get_watchlist_state(as_of=date(2026, 6, 12)).empty
     assert not store.get_technical_setups(as_of=date(2026, 6, 12)).empty
+
+
+def test_daily_canslim_research_writes_human_report(tmp_path, monkeypatch):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_daily_canslim_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    import trading_os.research.recipes as recipes
+
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
+    hub = DataHub(store, provider=DailyProvider())
+
+    result = run_daily_canslim_research(hub, requested_as_of=date(2026, 6, 13))
+
+    report_path = tmp_path / "artifacts" / "research" / "daily-canslim-20260612.md"
+    assert report_path.exists()
+    assert str(report_path) == result.manifest["human_report"]

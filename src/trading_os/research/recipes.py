@@ -7,6 +7,7 @@ from typing import Any
 import pandas as pd
 
 from ..journal.event_log import EventLog
+from ..paths import repo_root
 from ..risk.manager import RiskManager
 from .calendar import TradingCalendar
 from .datahub import DataHub
@@ -460,12 +461,22 @@ def run_daily_canslim_research(hub: DataHub, *, requested_as_of: date) -> Recipe
         decisions=decisions,
         watchlist_state=watchlist_state,
     )
+    human_report_path = (
+        repo_root()
+        / "artifacts"
+        / "research"
+        / f"daily-canslim-{effective_as_of:%Y%m%d}.md"
+    )
+    human_report_path.parent.mkdir(parents=True, exist_ok=True)
+    human_report_path.write_text(report, encoding="utf-8")
+
     manifest = {
         "requested_as_of": requested_as_of.isoformat(),
         "effective_as_of": effective_as_of.isoformat(),
         "child_runs": [screen.run.run_id],
         "strict_candidates_processed": len(strict_candidates),
         "decisions_total": len(decisions),
+        "human_report": str(human_report_path),
         "outputs": {
             "report": str(run.path / "report.md"),
             "manifest": str(run.path / "manifest.json"),
