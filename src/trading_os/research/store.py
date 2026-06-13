@@ -90,6 +90,35 @@ class ResearchStore:
     def get_provider_health(self) -> Any:
         return self._read_dataset("provider_health")
 
+    def write_decisions(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("decisions", records)
+
+    def get_decisions(self, as_of: date | None = None) -> Any:
+        df = self._read_dataset("decisions")
+        if as_of is None or df.empty or "as_of" not in df.columns:
+            return df
+        as_of_values = self._pd.to_datetime(df["as_of"], errors="coerce").dt.date
+        df = df[as_of_values <= as_of]
+        return df.reset_index(drop=True)
+
+    def write_watchlist_state(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("watchlist_state", records)
+
+    def get_watchlist_state(self) -> Any:
+        return self._read_dataset("watchlist_state")
+
+    def write_alerts(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("alerts", records)
+
+    def get_alerts(self) -> Any:
+        return self._read_dataset("alerts")
+
+    def write_technical_setups(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("technical_setups", records)
+
+    def get_technical_setups(self) -> Any:
+        return self._read_dataset("technical_setups")
+
     def write_fundamentals(
         self,
         df: Any,
@@ -242,6 +271,15 @@ class ResearchStore:
         out["provenance"] = json.dumps(provenance or {}, ensure_ascii=False)
         out["freshness_policy"] = freshness_policy
         return self._write_dataset(dataset, out, partition or as_of.isoformat())
+
+    def _write_event_dataset(self, dataset: str, records: list[dict[str, Any]]) -> Path:
+        out = self._normalize_frame(records)
+        if out.empty:
+            return self._dataset_path(dataset, "empty")
+        if "fetched_at" not in out.columns:
+            out["fetched_at"] = datetime.now(timezone.utc).isoformat()
+        partition = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + uuid4().hex[:8]
+        return self._write_dataset(dataset, out, partition)
 
     def _read_latest_snapshot(self, dataset: str, *, as_of: date, key: str) -> Any:
         df = self._read_dataset(dataset)
