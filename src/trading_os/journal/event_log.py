@@ -15,6 +15,7 @@ Event types:
     STRATEGY_ERROR — strategy raised an exception
     SESSION_START  — trading session started
     SESSION_END    — trading session ended
+    ALERT          — watchlist or research alert emitted
 """
 from __future__ import annotations
 
@@ -36,6 +37,7 @@ EventType = Literal[
     "STRATEGY_ERROR",
     "SESSION_START",
     "SESSION_END",
+    "ALERT",
 ]
 
 _CREATE_TABLE = """

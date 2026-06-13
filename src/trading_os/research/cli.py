@@ -3,14 +3,18 @@ from __future__ import annotations
 import argparse
 import json
 from datetime import date
+from typing import Any
 
+from ..journal.event_log import EventLog
 from ..paths import repo_root
+from .alerts import evaluate_watchlist_alerts
 from .datahub import DataHub
 from .migration import migrate_legacy_fundamentals
 from .recipes import (
     run_backtest_recipe,
     run_canslim_screen,
     run_company_research,
+    run_daily_canslim_research,
     run_daily_research,
     run_factor_research,
 )
@@ -88,11 +92,65 @@ def cmd_research(ns: argparse.Namespace) -> int:
         )
     elif ns.research_cmd == "daily":
         result = run_daily_research(hub, as_of=date.fromisoformat(ns.as_of))
+    elif ns.research_cmd == "daily-canslim":
+        result = run_daily_canslim_research(
+            hub,
+            requested_as_of=date.fromisoformat(ns.as_of),
+        )
     else:  # pragma: no cover
         raise RuntimeError(f"unknown research command: {ns.research_cmd}")
     print(f"run_id: {result.run.run_id}")
     print(f"manifest: {result.run.path / 'manifest.json'}")
     print(f"report: {result.run.path / 'report.md'}")
+    return 0
+
+
+def cmd_alert(ns: argparse.Namespace) -> int:
+    if ns.alert_cmd != "monitor" or ns.mode != "watchlist":  # pragma: no cover
+        raise RuntimeError(f"unknown alert command: {ns.alert_cmd}")
+    if not ns.once:
+        raise RuntimeError(
+            "watchlist alert monitor requires --once; scheduler loop is not available"
+        )
+
+    hub = build_datahub()
+    store = hub.store
+    as_of = date.fromisoformat(ns.as_of) if ns.as_of else date.today()
+    watchlist = _records_from_table(store.get_watchlist_state(as_of=as_of))
+    quotes = _records_from_table(hub.get_quote_snapshot(as_of, policy="cache_first"))
+    existing_alerts = _records_from_table(store.get_alerts(as_of=as_of))
+    existing_cooldowns = {
+        str(record["cooldown_key"])
+        for record in existing_alerts
+        if record.get("cooldown_key") not in {None, ""}
+    }
+
+    alerts = evaluate_watchlist_alerts(
+        watchlist,
+        quotes,
+        as_of=as_of.isoformat(),
+        existing_cooldowns=existing_cooldowns,
+    )
+    store.write_alerts(alerts)
+
+    event_log = EventLog(repo_root() / "artifacts" / "alerts.db")
+    for alert in alerts:
+        event_log.write("ALERT", alert)
+
+    print(
+        json.dumps(
+            {
+                "as_of": as_of.isoformat(),
+                "alerts_count": len(alerts),
+                "alerts": [
+                    {"alert_id": alert.get("alert_id"), "symbol": alert.get("symbol")}
+                    for alert in alerts
+                ],
+            },
+            ensure_ascii=False,
+            indent=2,
+        )
+    )
     return 0
 
 
@@ -158,6 +216,19 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     )
     daily.add_argument("--as-of", required=True, dest="as_of")
     daily.set_defaults(func=cmd_research)
+    daily_canslim = research_sub.add_parser(
+        "daily-canslim", help="Run full daily CANSLIM research closure"
+    )
+    daily_canslim.add_argument("--as-of", required=True, dest="as_of")
+    daily_canslim.set_defaults(func=cmd_research)
+
+    alert = sub.add_parser("alert", help="Run watchlist-only alert monitoring")
+    alert_sub = alert.add_subparsers(dest="alert_cmd", required=True)
+    monitor = alert_sub.add_parser("monitor")
+    monitor.add_argument("--mode", choices=["watchlist"], required=True)
+    monitor.add_argument("--once", action="store_true")
+    monitor.add_argument("--as-of", dest="as_of")
+    monitor.set_defaults(func=cmd_alert)
 
     factor = sub.add_parser("factor", help="Run factor research")
     factor_sub = factor.add_subparsers(dest="factor_cmd", required=True)
@@ -173,3 +244,13 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     backtest_run.add_argument("--start", required=True)
     backtest_run.add_argument("--end", required=True)
     backtest_run.set_defaults(func=cmd_backtest_recipe)
+
+
+def _records_from_table(table: Any) -> list[dict[str, Any]]:
+    if table is None:
+        return []
+    if hasattr(table, "empty") and table.empty:
+        return []
+    if hasattr(table, "to_dict"):
+        return table.to_dict("records")
+    return list(table)
