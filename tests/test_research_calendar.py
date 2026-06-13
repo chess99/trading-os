@@ -37,3 +37,13 @@ def test_trading_day_after_eod_cutoff_uses_same_day():
     assert cal.resolve_effective_as_of(date(2026, 6, 12), now_time=time(18, 30)) == date(
         2026, 6, 12
     )
+
+
+def test_historical_trading_day_ignores_current_day_eod_cutoff():
+    from trading_os.research.calendar import TradingCalendar
+
+    cal = TradingCalendar()
+
+    assert cal.resolve_effective_as_of(
+        date(2026, 6, 1), now_date=date(2026, 6, 12), now_time=time(15, 30)
+    ) == date(2026, 6, 1)
