@@ -416,15 +416,34 @@ Production smoke tests:
 
 ## Open Decisions Before Implementation
 
-These do not block the design, but they affect implementation priority:
+These decisions were revisited on 2026-06-14 after reviewing the local vendor reference
+repositories and current public provider documentation. See:
 
-- Which paid provider to buy or configure first: Tushare Pro, RQData, or JQData.
-- Which notification channel to use first.
-- Whether intraday alerting should run as a local long-lived process, a Codex automation, or an external scheduler.
+`docs/research/canslim-daily-system-vendor-data-source-review.md`
 
-Default implementation assumption:
+Resolved defaults:
 
-- Start with Tushare Pro as the first paid provider because it is pragmatic for A-share daily data.
-- Use free providers as fallback.
-- Build daily EOD closure before intraday alerts.
-- Add intraday monitor only for watchlist symbols.
+- **Provider route:** implement `TushareResearchProvider` first for pragmatic coverage, then add
+  `RqdataResearchProvider` as the production-quality target for point-in-time fundamentals,
+  factor research, and backtests. Keep JQData as a paid alternative when RQData onboarding or
+  cost is not acceptable.
+- **Fallback route:** keep AkShare as a broad free fallback and exploratory source, but never as
+  the sole source for formal trading advice or backtest proof.
+- **Notification route:** add a `Notifier` abstraction with local/stdout delivery for tests and
+  Feishu or DingTalk webhook as the first practical mobile channel. Alert generation and alert
+  delivery must be separately auditable.
+- **Automation route:** run daily research through Codex automation or an external cron-like
+  runner that invokes deterministic CLI recipes. Do not reintroduce the old blocking scheduler
+  tables or daily bulk-refresh semantics.
+- **Agent route:** use agents above the evidence layer for explanation, bull/bear/risk review,
+  and user communication. Do not let an LLM promote a symbol to actionable status without
+  deterministic provider-backed evidence, complete deep research, and valid watchlist state.
+
+Current implementation status after the first implementation pass:
+
+- `research daily-canslim` exists and processes all strict candidates plus active watchlist
+  symbols.
+- Deep research failures or incomplete packets are downgraded before watchlist update.
+- `alert monitor --mode watchlist --once` exists and does not use stale watchlist state.
+- Remaining implementation work is provider hardening, research completeness scoring, notification
+  delivery, and a mature CANSLIM base detector.

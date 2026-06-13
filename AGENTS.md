@@ -116,6 +116,18 @@ data/research/runs/{run_id}/report.md
 
 CANSLIM 快筛不应触发全市场逐标的历史 K 线刷新。需要历史价格时，只对已通过前置过滤的标的懒补齐，或使用已累计的 quote/bars 缓存计算相对强度。
 
+### Provider 路线
+
+数据源选择以 `docs/research/canslim-daily-system-vendor-data-source-review.md`
+为准：
+
+- 短期优先实现 `TushareResearchProvider`，用于补齐 A 股日线、交易日历、基础资料、
+  财务报表、主营构成和部分股东/估值字段。
+- 生产级目标是 `RqdataResearchProvider`，尤其用于 point-in-time 财务、因子研究和
+  回测；JQData 是付费替代选项。
+- AkShare 只作为免费 fallback 和探索源，不应作为正式交易建议或回测证明的唯一事实源。
+- Provider 失败、降级和缺失能力必须写入 manifest/provider health，并影响报告置信度。
+
 ## Workflow 指引
 
 ### Daily CANSLIM Closure
