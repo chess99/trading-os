@@ -40,11 +40,23 @@ def run_canslim_screen(
     ]
     universe = hub.get_universe(as_of, policy="cache_first")
     quotes = hub.get_quote_snapshot(as_of, policy="cache_first")
+    data_coverage = {
+        "universe_snapshot": _snapshot_coverage(universe),
+        "quote_snapshot": _snapshot_coverage(quotes),
+    }
     trace.append("- load quote snapshot")
 
     filtered = {"st_or_inactive": 0, "low_turnover": 0, "insufficient_data": 0, "no_signal": 0}
     if universe.empty or quotes.empty:
-        return _finish_result(hub, run, "canslim_screen", trace, [], filtered)
+        return _finish_result(
+            hub,
+            run,
+            "canslim_screen",
+            trace,
+            [],
+            filtered,
+            data_coverage=data_coverage,
+        )
 
     universe = universe.copy()
     universe["is_st"] = universe.get("is_st", False).astype(bool)
@@ -59,9 +71,18 @@ def run_canslim_screen(
     symbols = liquid["symbol"].astype(str).tolist()
 
     fundamentals = hub.get_fundamentals(symbols, as_of=as_of, policy="cache_first")
+    data_coverage["fundamentals"] = _snapshot_coverage(fundamentals)
     if fundamentals.empty:
         filtered["insufficient_data"] = len(symbols)
-        return _finish_result(hub, run, "canslim_screen", trace, [], filtered)
+        return _finish_result(
+            hub,
+            run,
+            "canslim_screen",
+            trace,
+            [],
+            filtered,
+            data_coverage=data_coverage,
+        )
 
     fund_by_symbol = (
         fundamentals.sort_values(["as_of", "fetched_at"]).groupby("symbol", as_index=False).tail(1)
@@ -77,6 +98,7 @@ def run_canslim_screen(
         )
         if refreshed is not None and not refreshed.empty:
             fundamentals = hub.get_fundamentals(symbols, as_of=as_of, policy="cache_first")
+            data_coverage["fundamentals"] = _snapshot_coverage(fundamentals)
             fund_by_symbol = (
                 fundamentals.sort_values(["as_of", "fetched_at"])
                 .groupby("symbol", as_index=False)
@@ -119,6 +141,7 @@ def run_canslim_screen(
             [],
             filtered,
             limitations=["No symbols passed core EPS-growth and ROE filters."],
+            data_coverage=data_coverage,
         )
 
     rs_limitations: list[str] = []
@@ -136,6 +159,7 @@ def run_canslim_screen(
         message = f"RS bars unavailable: {exc}"
         rs_limitations.append(message)
         trace.append(f"- {message}")
+    data_coverage["bars"] = _bars_coverage(bars)
     rs = _relative_strength(prelim_symbols, bars)
     rs_threshold = _percentile_threshold(rs, pct=0.20)
 
@@ -198,6 +222,7 @@ def run_canslim_screen(
         filtered,
         limitations=limitations,
         all_candidates=candidates,
+        data_coverage=data_coverage,
     )
 
 
@@ -362,6 +387,7 @@ def _finish_result(
     filtered: dict[str, int],
     limitations: list[str] | None = None,
     all_candidates: list[dict[str, Any]] | None = None,
+    data_coverage: dict[str, Any] | None = None,
 ) -> RecipeResult:
     all_candidates = all_candidates if all_candidates is not None else candidates
     strict_total = sum(
@@ -382,6 +408,7 @@ def _finish_result(
         "provisional_candidates_total": provisional_total,
         "filtered_out": filtered,
         "limitations": limitations or [],
+        "data_coverage": data_coverage or {},
         "outputs": {
             "report": str(run.path / "report.md"),
             "manifest": str(run.path / "manifest.json"),
@@ -427,6 +454,39 @@ def _percentile_threshold(values: dict[str, float], *, pct: float) -> float:
     ordered = sorted(values.values(), reverse=True)
     idx = min(len(ordered) - 1, max(0, int(len(ordered) * pct)))
     return ordered[idx]
+
+
+def _snapshot_coverage(df: pd.DataFrame) -> dict[str, Any]:
+    if df is None or df.empty:
+        return {"rows": 0}
+    result: dict[str, Any] = {"rows": len(df)}
+    for column in ["as_of", "source", "freshness_policy"]:
+        if column in df.columns:
+            values = sorted(str(v) for v in df[column].dropna().unique())
+            result[column] = values
+    if "fetched_at" in df.columns:
+        fetched = df["fetched_at"].dropna().astype(str)
+        if not fetched.empty:
+            result["fetched_at_min"] = fetched.min()
+            result["fetched_at_max"] = fetched.max()
+    return result
+
+
+def _bars_coverage(df: pd.DataFrame) -> dict[str, Any]:
+    if df is None or df.empty:
+        return {"rows": 0, "symbols": 0}
+    ts = pd.to_datetime(df["ts"], utc=True, errors="coerce") if "ts" in df.columns else None
+    result: dict[str, Any] = {
+        "rows": len(df),
+        "symbols": int(df["symbol"].nunique()) if "symbol" in df.columns else 0,
+    }
+    if ts is not None and not ts.dropna().empty:
+        result["ts_min"] = ts.min().date().isoformat()
+        result["ts_max"] = ts.max().date().isoformat()
+    for column in ["source", "freshness_policy"]:
+        if column in df.columns:
+            result[column] = sorted(str(v) for v in df[column].dropna().unique())
+    return result
 
 
 def _float(value: Any) -> float | None:

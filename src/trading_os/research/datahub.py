@@ -23,7 +23,11 @@ class DataHub:
 
     def get_universe(self, as_of: date, *, policy: str = "cache_first") -> Any:
         cached = self.store.get_universe(as_of=as_of)
-        if policy in {"cache_first", "offline", "lazy_fill"} and not cached.empty:
+        if (
+            policy in {"cache_first", "offline", "lazy_fill"}
+            and not cached.empty
+            and _snapshot_matches_as_of(cached, as_of)
+        ):
             return cached
         if policy == "offline":
             raise MissingDataError(f"universe_snapshot missing for as_of={as_of}")
@@ -35,7 +39,11 @@ class DataHub:
 
     def get_quote_snapshot(self, as_of: date, *, policy: str = "cache_first") -> Any:
         cached = self.store.get_quote_snapshot(as_of=as_of)
-        if policy in {"cache_first", "offline", "lazy_fill"} and not cached.empty:
+        if (
+            policy in {"cache_first", "offline", "lazy_fill"}
+            and not cached.empty
+            and _snapshot_matches_as_of(cached, as_of)
+        ):
             return cached
         if policy == "offline":
             raise MissingDataError(f"quote_snapshot missing for as_of={as_of}")
@@ -57,8 +65,7 @@ class DataHub:
         policy: str = "lazy_fill",
     ) -> Any:
         cached = self.store.get_bars(symbols, start=start, end=end)
-        cached_symbols = set(cached["symbol"].unique()) if not cached.empty else set()
-        missing = [sym for sym in symbols if sym not in cached_symbols]
+        missing = _symbols_with_missing_bar_coverage(cached, symbols, start=start, end=end)
         if missing and policy == "offline":
             raise MissingDataError(f"bars missing for {','.join(missing)}")
         if missing and policy in {"lazy_fill", "refresh", "cache_first"}:
@@ -206,6 +213,36 @@ def _canonical_from_code(code: str) -> str:
     code = str(code).zfill(6)
     exchange = "SSE" if code.startswith("6") else "SZSE"
     return f"{exchange}:{code}"
+
+
+def _snapshot_matches_as_of(cached: Any, as_of: date) -> bool:
+    if cached is None or cached.empty or "as_of" not in cached.columns:
+        return False
+    return cached["as_of"].astype(str).eq(as_of.isoformat()).all()
+
+
+def _symbols_with_missing_bar_coverage(
+    cached: Any, symbols: list[str], *, start: date, end: date
+) -> list[str]:
+    if cached is None or cached.empty:
+        return list(symbols)
+    if "symbol" not in cached.columns or "ts" not in cached.columns:
+        return list(symbols)
+
+    import pandas as pd
+
+    end_ts = pd.Timestamp(end, tz="UTC")
+    latest_required = end_ts - pd.Timedelta(days=1)
+    result: list[str] = []
+    for symbol in symbols:
+        rows = cached[cached["symbol"] == symbol]
+        if rows.empty:
+            result.append(symbol)
+            continue
+        latest = pd.to_datetime(rows["ts"], utc=True).max()
+        if latest < latest_required:
+            result.append(symbol)
+    return result
 
 
 def _merge_fundamentals(cached: Any, fetched: Any) -> Any:

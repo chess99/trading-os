@@ -198,6 +198,8 @@ def test_canslim_screen_uses_snapshots_and_lazy_bars_without_bulk_refresh(tmp_pa
     assert result.filtered_out["st_or_inactive"] == 1
     assert result.filtered_out["no_signal"] == 1
     assert provider.bars_calls == [["SSE:600000"]]
+    assert result.manifest["data_coverage"]["quote_snapshot"]["as_of"] == ["2026-05-30"]
+    assert result.manifest["data_coverage"]["bars"]["symbols"] == 1
     assert (result.run.path / "manifest.json").exists()
     assert (result.run.path / "report.md").exists()
 
