@@ -391,7 +391,8 @@ class DailyProviderWithHolidayGap(DailyProvider):
         return full[pd.to_datetime(full["ts"]).dt.normalize() != gap].reset_index(drop=True)
 
 
-def test_daily_canslim_research_processes_all_strict_candidates(tmp_path):
+def test_daily_canslim_research_processes_all_strict_candidates(tmp_path, monkeypatch):
+    import trading_os.research.recipes as recipes
     from trading_os.research.datahub import DataHub
     from trading_os.research.recipes import run_daily_canslim_research
     from trading_os.research.store import ResearchStore
@@ -426,6 +427,7 @@ def test_daily_canslim_research_processes_all_strict_candidates(tmp_path):
         as_of=date(2026, 6, 12),
         source="fixture",
     )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
     provider = DailyProvider()
     hub = DataHub(store, provider=provider)
 
@@ -446,7 +448,8 @@ def test_daily_canslim_research_processes_all_strict_candidates(tmp_path):
     assert not store.get_technical_setups(as_of=date(2026, 6, 12)).empty
 
 
-def test_daily_canslim_research_continues_when_strict_bars_have_partial_gap(tmp_path):
+def test_daily_canslim_research_continues_when_strict_bars_have_partial_gap(tmp_path, monkeypatch):
+    import trading_os.research.recipes as recipes
     from trading_os.research.datahub import DataHub
     from trading_os.research.recipes import run_daily_canslim_research
     from trading_os.research.store import ResearchStore
@@ -474,6 +477,7 @@ def test_daily_canslim_research_continues_when_strict_bars_have_partial_gap(tmp_
         as_of=date(2026, 6, 12),
         source="fixture",
     )
+    monkeypatch.setattr(recipes, "repo_root", lambda: tmp_path)
     provider = DailyProviderWithHolidayGap()
     hub = DataHub(store, provider=provider)
 
