@@ -40,6 +40,7 @@ class DataHub:
         else:
             source = self._provider_name(provider)
             df = provider.fetch_universe(as_of)
+            self._ensure_non_empty(df, "universe", source)
         self.store.write_universe(df, as_of=as_of, source=source, provenance={"provider": source})
         return self.store.get_universe(as_of=as_of)
 
@@ -63,6 +64,7 @@ class DataHub:
         else:
             source = self._provider_name(provider)
             df = provider.fetch_quote_snapshot(as_of)
+            self._ensure_non_empty(df, "quote_snapshot_eod", source)
         self.store.write_quote_snapshot(
             df, as_of=as_of, source=source, provenance={"provider": source}
         )
@@ -93,9 +95,14 @@ class DataHub:
             else:
                 source = self._provider_name(provider)
                 df = provider.fetch_bars(symbols_to_fetch, start, end, adjustment)
+                self._ensure_non_empty(df, "bars_daily", source)
             if df is not None and not df.empty:
                 self.store.write_bars(df, source=source, provenance={"provider": source})
-        return self.store.get_bars(symbols, start=start, end=end)
+        final = self.store.get_bars(symbols, start=start, end=end)
+        remaining = _symbols_with_missing_bar_coverage(final, symbols, start=start, end=end)
+        if remaining and policy in {"lazy_fill", "refresh"}:
+            raise MissingDataError(f"bars missing for {','.join(remaining)}")
+        return final
 
     def get_fundamentals(
         self,
@@ -131,13 +138,19 @@ class DataHub:
                 return cached
             source = self._provider_name(provider)
             df = provider.fetch_fundamentals(symbols_to_fetch, as_of, periods)
+            if policy == "refresh":
+                self._ensure_non_empty(df, "fundamentals", source)
         if df is not None and not df.empty:
             if policy != "refresh" and not cached.empty:
                 df = _merge_fundamentals(cached, df)
             self.store.write_fundamentals(
                 df, as_of=as_of, source=source, provenance={"provider": source}
             )
-        return self.store.get_fundamentals(symbols, as_of=as_of)
+        final = self.store.get_fundamentals(symbols, as_of=as_of)
+        remaining = [symbol for symbol in symbols_to_fetch if symbol not in _cached_symbols(final)]
+        if remaining and policy == "refresh":
+            raise MissingDataError(f"fundamentals missing for {','.join(remaining)} as_of={as_of}")
+        return final
 
     def get_estimates(self, symbols: list[str], *, as_of: date, policy: str = "cache_first") -> Any:
         cached = self.store.get_estimates(symbols, as_of=as_of)
@@ -177,6 +190,11 @@ class DataHub:
             raise
         self.store.write_provider_health(result.failures)
         return result
+
+    @staticmethod
+    def _ensure_non_empty(data: Any, capability: str, source: str) -> None:
+        if data is None or getattr(data, "empty", False) is True:
+            raise MissingDataError(f"{capability} provider {source} returned no data")
 
     @staticmethod
     def _provider_name(provider: Any) -> str:

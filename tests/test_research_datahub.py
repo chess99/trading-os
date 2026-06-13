@@ -37,7 +37,39 @@ class FakeProvider:
             [
                 {
                     "symbol": symbol,
-                    "ts": pd.Timestamp(end) - pd.Timedelta(days=1),
+                    "ts": ts,
+                    "open": 10.0,
+                    "high": 10.0,
+                    "low": 10.0,
+                    "close": 10.0,
+                    "volume": 1_000_000.0,
+                }
+                for symbol in symbols
+                for ts in pd.bdate_range(start=start, end=end, inclusive="left")
+            ]
+        )
+
+
+class EmptyQuoteProvider(FakeProvider):
+    def fetch_quote_snapshot(self, as_of: date):
+        self.calls.append(f"quotes:{as_of.isoformat()}")
+        return pd.DataFrame()
+
+
+class EmptyBarsProvider(FakeProvider):
+    def fetch_bars(self, symbols, start, end, adjustment):
+        self.calls.append(f"bars:{','.join(symbols)}:{start.isoformat()}:{end.isoformat()}")
+        return pd.DataFrame()
+
+
+class IncompleteBarsProvider(FakeProvider):
+    def fetch_bars(self, symbols, start, end, adjustment):
+        self.calls.append(f"bars:{','.join(symbols)}:{start.isoformat()}:{end.isoformat()}")
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "ts": "2026-05-04",
                     "open": 10.0,
                     "high": 10.0,
                     "low": 10.0,
@@ -120,7 +152,7 @@ class WorkingRouterProvider:
             [
                 {
                     "symbol": symbol,
-                    "ts": pd.Timestamp(end) - pd.Timedelta(days=1),
+                    "ts": ts,
                     "open": 10.0,
                     "high": 10.0,
                     "low": 10.0,
@@ -128,6 +160,7 @@ class WorkingRouterProvider:
                     "volume": 1_000_000.0,
                 }
                 for symbol in symbols
+                for ts in pd.bdate_range(start=start, end=end, inclusive="left")
             ]
         )
 
@@ -181,6 +214,30 @@ def test_datahub_cache_first_refetches_stale_daily_snapshot(tmp_path):
     assert second["as_of"].unique().tolist() == ["2026-05-31"]
 
 
+def test_datahub_direct_quote_refresh_rejects_empty_provider_without_returning_stale_cache(
+    tmp_path,
+):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_quote_snapshot(
+        pd.DataFrame([{"symbol": "SSE:600000", "close": 9.0, "amount": 1_000_000.0}]),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    provider = EmptyQuoteProvider()
+    hub = DataHub(store, provider=provider)
+
+    with pytest.raises(MissingDataError):
+        hub.get_quote_snapshot(date(2026, 5, 31), policy="refresh")
+
+    assert provider.calls == ["quotes:2026-05-31"]
+    stale = store.get_quote_snapshot(as_of=date(2026, 5, 31))
+    assert stale["as_of"].unique().tolist() == ["2026-05-30"]
+    assert stale["source"].unique().tolist() == ["fixture"]
+
+
 def test_datahub_lazy_fill_refetches_bars_when_date_coverage_is_stale(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore
@@ -213,7 +270,62 @@ def test_datahub_lazy_fill_refetches_bars_when_date_coverage_is_stale(tmp_path):
     )
 
     assert provider.calls == ["bars:SSE:600000:2026-05-01:2026-05-31"]
-    assert pd.to_datetime(bars["ts"], utc=True).max().date().isoformat() == "2026-05-30"
+    assert pd.to_datetime(bars["ts"], utc=True).max().date().isoformat() == "2026-05-29"
+
+
+def test_datahub_direct_bars_lazy_fill_rejects_empty_provider_instead_of_partial_cache(
+    tmp_path,
+):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_bars(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "ts": "2026-05-04",
+                    "open": 9.0,
+                    "high": 9.0,
+                    "low": 9.0,
+                    "close": 9.0,
+                    "volume": 1_000_000.0,
+                }
+            ]
+        ),
+        source="fixture",
+    )
+    provider = EmptyBarsProvider()
+    hub = DataHub(store, provider=provider)
+
+    with pytest.raises(MissingDataError):
+        hub.get_bars(
+            ["SSE:600000"],
+            start=date(2026, 5, 4),
+            end=date(2026, 5, 8),
+            policy="lazy_fill",
+        )
+
+    assert provider.calls == ["bars:SSE:600000:2026-05-04:2026-05-08"]
+
+
+def test_datahub_direct_bars_lazy_fill_rejects_incomplete_provider_data(tmp_path):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    provider = IncompleteBarsProvider()
+    hub = DataHub(ResearchStore(tmp_path / "research"), provider=provider)
+
+    with pytest.raises(MissingDataError):
+        hub.get_bars(
+            ["SSE:600000"],
+            start=date(2026, 5, 4),
+            end=date(2026, 5, 8),
+            policy="lazy_fill",
+        )
+
+    assert provider.calls == ["bars:SSE:600000:2026-05-04:2026-05-08"]
 
 
 def test_datahub_lazy_fill_refetches_bars_when_cache_does_not_cover_start(tmp_path):
@@ -226,7 +338,7 @@ def test_datahub_lazy_fill_refetches_bars_when_cache_does_not_cover_start(tmp_pa
             [
                 {
                     "symbol": "SSE:600000",
-                    "ts": "2026-05-30",
+                    "ts": "2026-05-29",
                     "open": 9.0,
                     "high": 9.0,
                     "low": 9.0,
@@ -303,7 +415,7 @@ def test_datahub_refresh_refetches_bars_when_date_coverage_is_complete(tmp_path)
             [
                 {
                     "symbol": "SSE:600000",
-                    "ts": "2026-05-30",
+                    "ts": "2026-05-29",
                     "open": 9.0,
                     "high": 9.0,
                     "low": 9.0,
@@ -326,8 +438,8 @@ def test_datahub_refresh_refetches_bars_when_date_coverage_is_complete(tmp_path)
 
     assert provider.calls == ["bars:SSE:600000:2026-05-01:2026-05-31"]
     assert bars[["symbol", "ts"]].duplicated().sum() == 0
-    assert bars["source"].tolist() == ["FakeProvider"]
-    assert bars["close"].tolist() == [10.0]
+    assert bars["source"].unique().tolist() == ["FakeProvider"]
+    assert bars["close"].unique().tolist() == [10.0]
 
 
 def test_datahub_with_provider_router_fetches_universe_through_fallback(tmp_path):
@@ -362,7 +474,7 @@ def test_datahub_with_provider_router_lazy_fills_bars_through_fallback(tmp_path)
     )
     health = store.get_provider_health()
 
-    assert bars["symbol"].tolist() == ["SSE:600000"]
+    assert bars["symbol"].unique().tolist() == ["SSE:600000"]
     assert bars["source"].unique().tolist() == ["working"]
     assert health["capability"].tolist() == ["bars_daily"]
 
