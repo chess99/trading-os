@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Any, Protocol
 
+from .providers import ProviderRouter
 from .store import ResearchStore
 
 
@@ -48,8 +49,14 @@ class DataHub:
         if policy == "offline":
             raise MissingDataError(f"quote_snapshot missing for as_of={as_of}")
         provider = self._provider()
-        source = self._provider_name(provider)
-        df = provider.fetch_quote_snapshot(as_of)
+        if isinstance(provider, ProviderRouter):
+            result = provider.fetch("quote_snapshot_eod", "fetch_quote_snapshot", as_of)
+            self.store.write_provider_health(result.failures)
+            source = result.provider_name
+            df = result.data
+        else:
+            source = self._provider_name(provider)
+            df = provider.fetch_quote_snapshot(as_of)
         self.store.write_quote_snapshot(
             df, as_of=as_of, source=source, provenance={"provider": source}
         )

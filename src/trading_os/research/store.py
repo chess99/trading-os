@@ -78,6 +78,16 @@ class ResearchStore:
     def get_quote_snapshot(self, *, as_of: date) -> Any:
         return self._read_latest_snapshot("quote_snapshot", as_of=as_of, key="symbol")
 
+    def write_provider_health(self, records: list[dict[str, Any]]) -> Path:
+        df = self._normalize_frame(records)
+        if df.empty:
+            return self._dataset_path("provider_health", "empty")
+        partition = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + uuid4().hex[:8]
+        return self._write_dataset("provider_health", df, partition)
+
+    def get_provider_health(self) -> Any:
+        return self._read_dataset("provider_health")
+
     def write_fundamentals(
         self,
         df: Any,
