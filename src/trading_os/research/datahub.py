@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from datetime import date
+from importlib.util import find_spec
 from typing import Any, Protocol
 from uuid import uuid4
 
@@ -583,14 +584,7 @@ class AkshareResearchProvider:
 
 
 def _default_provider_from_env() -> Any:
-    order = [
-        name.strip().lower()
-        for name in os.environ.get(
-            "TRADING_OS_PROVIDER_ORDER",
-            "rqdata,jqdata,tushare,akshare",
-        ).split(",")
-        if name.strip()
-    ]
+    order = _provider_order_from_env()
     providers = []
     for name in order:
         if name == "rqdata":
@@ -623,6 +617,71 @@ def _default_provider_from_env() -> Any:
     if len(providers) == 1:
         return providers[0]
     return ProviderRouter(providers)
+
+
+def provider_diagnostics() -> dict[str, Any]:
+    order = _provider_order_from_env()
+    return {
+        "order": order,
+        "providers": [_provider_config_status(name) for name in order],
+    }
+
+
+def _provider_order_from_env() -> list[str]:
+    return [
+        name.strip().lower()
+        for name in os.environ.get(
+            "TRADING_OS_PROVIDER_ORDER",
+            "rqdata,jqdata,tushare,akshare",
+        ).split(",")
+        if name.strip()
+    ]
+
+
+def _provider_config_status(name: str) -> dict[str, Any]:
+    specs = {
+        "rqdata": {
+            "env": ["RQDATA_USERNAME", "RQDATA_PASSWORD"],
+            "package": "rqdatac",
+            "capabilities": ["universe", "quote_snapshot_eod", "bars_daily", "fundamentals"],
+        },
+        "jqdata": {
+            "env": ["JQDATA_USERNAME", "JQDATA_PASSWORD"],
+            "package": "jqdatasdk",
+            "capabilities": ["universe", "quote_snapshot_eod", "bars_daily", "fundamentals"],
+        },
+        "tushare": {
+            "env": ["TUSHARE_TOKEN"],
+            "package": "tushare",
+            "capabilities": [
+                "universe",
+                "quote_snapshot_eod",
+                "bars_daily",
+                "fundamentals",
+                "segments",
+                "institutional",
+                "peers",
+                "news",
+                "guidance",
+            ],
+        },
+        "akshare": {
+            "env": [],
+            "package": "akshare",
+            "capabilities": ["universe", "quote_snapshot_eod", "bars_daily", "fundamentals"],
+        },
+    }
+    spec = specs.get(name, {"env": [], "package": None, "capabilities": []})
+    missing_env = [env_name for env_name in spec["env"] if not os.environ.get(env_name)]
+    package_name = spec.get("package")
+    return {
+        "name": name,
+        "configured": not missing_env,
+        "missing_env": missing_env,
+        "package": package_name,
+        "dependency_available": bool(package_name and find_spec(str(package_name)) is not None),
+        "capabilities": list(spec["capabilities"]),
+    }
 
 
 def _canonical_from_code(code: str) -> str:

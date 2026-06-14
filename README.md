@@ -68,6 +68,9 @@ Tushare 获取 A 股股票池、日行情、复权日线、财务指标、主营
 新闻公告和指引线索；未配置付费源时回落到 AkShare。AkShare 只适合免费探索和补充，
 不应作为正式交易建议或严肃回测的唯一事实源。
 
+`data provider probe` 会输出 provider 顺序、缺失环境变量、可选依赖是否可 import、
+以及各 provider 声明的能力。跑 daily 前先看这个输出，可以提前发现账号或依赖缺口。
+
 ## 常用命令
 
 ```bash

@@ -139,6 +139,9 @@ CANSLIM 快筛不应触发全市场逐标的历史 K 线刷新。需要历史价
   回测；JQData 是付费替代选项。
 - AkShare 只作为免费 fallback 和探索源，不应作为正式交易建议或回测证明的唯一事实源。
 - Provider 失败、降级和缺失能力必须写入 manifest/provider health，并影响报告置信度。
+- 运行正式 daily 或深研前，先用 `python -m trading_os data provider probe` 查看
+  provider diagnostics；缺失环境变量、可选依赖不可 import、或 provider capability
+  缺口都必须在最终回答里说明。
 
 ## Workflow 指引
 

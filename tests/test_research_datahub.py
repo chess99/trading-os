@@ -1086,6 +1086,28 @@ def test_default_provider_from_env_prefers_paid_providers_when_credentials_exist
     assert [item.name for item in provider.providers] == ["rqdata", "akshare"]
 
 
+def test_provider_diagnostics_reports_config_and_capabilities(monkeypatch):
+    from trading_os.research.datahub import provider_diagnostics
+
+    monkeypatch.delenv("TRADING_OS_PROVIDER_ORDER", raising=False)
+    monkeypatch.delenv("RQDATA_USERNAME", raising=False)
+    monkeypatch.delenv("RQDATA_PASSWORD", raising=False)
+    monkeypatch.delenv("JQDATA_USERNAME", raising=False)
+    monkeypatch.delenv("JQDATA_PASSWORD", raising=False)
+    monkeypatch.delenv("TUSHARE_TOKEN", raising=False)
+
+    diagnostics = provider_diagnostics()
+    providers = {row["name"]: row for row in diagnostics["providers"]}
+
+    assert diagnostics["order"] == ["rqdata", "jqdata", "tushare", "akshare"]
+    assert providers["rqdata"]["configured"] is False
+    assert providers["rqdata"]["missing_env"] == ["RQDATA_USERNAME", "RQDATA_PASSWORD"]
+    assert providers["jqdata"]["missing_env"] == ["JQDATA_USERNAME", "JQDATA_PASSWORD"]
+    assert providers["tushare"]["missing_env"] == ["TUSHARE_TOKEN"]
+    assert providers["akshare"]["configured"] is True
+    assert "bars_daily" in providers["rqdata"]["capabilities"]
+
+
 def test_datahub_refresh_fundamentals_does_not_promote_stale_missing_symbols(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore

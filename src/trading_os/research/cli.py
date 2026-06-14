@@ -8,7 +8,7 @@ from typing import Any
 from ..journal.event_log import EventLog
 from ..paths import repo_root
 from .alerts import evaluate_watchlist_alerts
-from .datahub import DataHub
+from .datahub import DataHub, provider_diagnostics
 from .migration import migrate_legacy_fundamentals
 from .notifier import build_notifier, deliver_alerts
 from .recipes import (
@@ -81,7 +81,10 @@ def cmd_data(ns: argparse.Namespace) -> int:
             return 0
         if ns.provider_cmd == "probe":
             provider = hub._provider()
-            payload = {"providers": [_provider_display_name(provider)]}
+            payload = {
+                "providers": [_provider_display_name(provider)],
+                "diagnostics": provider_diagnostics(),
+            }
             print(json.dumps(payload, ensure_ascii=False, indent=2))
             return 0
     raise RuntimeError(f"unknown data command: {ns.data_cmd}")

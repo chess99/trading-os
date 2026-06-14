@@ -99,6 +99,26 @@ def test_data_provider_probe_command_parses():
     assert ns.provider_cmd == "probe"
 
 
+def test_data_provider_probe_prints_diagnostics(monkeypatch, capsys):
+    from trading_os.cli_internal.app import build_parser
+
+    monkeypatch.delenv("TRADING_OS_PROVIDER_ORDER", raising=False)
+    monkeypatch.delenv("RQDATA_USERNAME", raising=False)
+    monkeypatch.delenv("RQDATA_PASSWORD", raising=False)
+    monkeypatch.delenv("JQDATA_USERNAME", raising=False)
+    monkeypatch.delenv("JQDATA_PASSWORD", raising=False)
+    monkeypatch.delenv("TUSHARE_TOKEN", raising=False)
+    parser = build_parser()
+    ns = parser.parse_args(["data", "provider", "probe"])
+
+    assert ns.func(ns) == 0
+
+    payload = json.loads(capsys.readouterr().out)
+    assert "ProviderRouter" not in payload["providers"][0]
+    assert "diagnostics" in payload
+    assert payload["diagnostics"]["order"][0] == "rqdata"
+
+
 def test_alert_monitor_parser_accepts_watchlist_once_as_of():
     from trading_os.cli_internal.app import build_parser
 
