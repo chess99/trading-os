@@ -202,6 +202,62 @@ class EnrichmentProvider(FakeProvider):
             ]
         )
 
+    def fetch_segments(self, symbols, as_of):
+        self.calls.append(f"segments:{','.join(symbols)}:{as_of.isoformat()}")
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "period": "2025-12-31",
+                    "segment_name": "汽车玻璃",
+                    "revenue": 100.0,
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_institutional(self, symbols, as_of):
+        self.calls.append(f"institutional:{','.join(symbols)}:{as_of.isoformat()}")
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "holder_name": "机构A",
+                    "holding_ratio": 0.05,
+                    "period": "2026-03-31",
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_peers(self, symbols, as_of):
+        self.calls.append(f"peers:{','.join(symbols)}:{as_of.isoformat()}")
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "peer_symbol": "SSE:600001",
+                    "peer_name": "同业公司",
+                    "industry": "汽车零部件",
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_guidance(self, symbols, as_of, lookback_months):
+        self.calls.append(f"guidance:{','.join(symbols)}:{as_of.isoformat()}:{lookback_months}")
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "published_at": "2026-05-01T09:00:00+08:00",
+                    "guidance_type": "capacity",
+                    "summary": "产能释放",
+                }
+                for symbol in symbols
+            ]
+        )
+
 
 class EmptyEnrichmentProvider(EnrichmentProvider):
     def fetch_estimates(self, symbols, as_of):
@@ -210,6 +266,10 @@ class EmptyEnrichmentProvider(EnrichmentProvider):
 
     def fetch_news(self, symbols, as_of, lookback_months):
         self.calls.append(f"news:{','.join(symbols)}:{as_of.isoformat()}:{lookback_months}")
+        return pd.DataFrame()
+
+    def fetch_segments(self, symbols, as_of):
+        self.calls.append(f"segments:{','.join(symbols)}:{as_of.isoformat()}")
         return pd.DataFrame()
 
 
@@ -873,6 +933,75 @@ def test_datahub_with_provider_router_fetches_news_through_fallback(tmp_path):
     assert news["source"].unique().tolist() == ["working_enrichment"]
     assert health["provider"].tolist() == ["empty_enrichment"]
     assert health["capability"].tolist() == ["news"]
+
+
+def test_datahub_fetches_structured_company_enrichment_when_provider_supports_it(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    provider = EnrichmentProvider()
+    hub = DataHub(ResearchStore(tmp_path / "research"), provider=provider)
+
+    segments = hub.get_segments(["SSE:600000"], as_of=date(2026, 6, 12))
+    institutional = hub.get_institutional(["SSE:600000"], as_of=date(2026, 6, 12))
+    peers = hub.get_peers(["SSE:600000"], as_of=date(2026, 6, 12))
+    guidance = hub.get_guidance(
+        ["SSE:600000"],
+        as_of=date(2026, 6, 12),
+        lookback_months=12,
+    )
+
+    assert provider.calls[-4:] == [
+        "segments:SSE:600000:2026-06-12",
+        "institutional:SSE:600000:2026-06-12",
+        "peers:SSE:600000:2026-06-12",
+        "guidance:SSE:600000:2026-06-12:12",
+    ]
+    assert segments.iloc[0]["segment_name"] == "汽车玻璃"
+    assert institutional.iloc[0]["holder_name"] == "机构A"
+    assert peers.iloc[0]["peer_symbol"] == "SSE:600001"
+    assert guidance.iloc[0]["summary"] == "产能释放"
+    assert guidance.iloc[0]["lookback_months"] == 12
+
+
+def test_datahub_cache_first_structured_company_enrichment_fetches_missing_symbols_only(
+    tmp_path,
+):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_segments(
+        pd.DataFrame([{"symbol": "SSE:600000", "segment_name": "cached"}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    provider = EnrichmentProvider()
+    hub = DataHub(store, provider=provider)
+
+    segments = hub.get_segments(
+        ["SSE:600000", "SZSE:000001"],
+        as_of=date(2026, 6, 12),
+        policy="cache_first",
+    )
+
+    assert provider.calls == ["segments:SZSE:000001:2026-06-12"]
+    cached = segments[segments["symbol"] == "SSE:600000"].iloc[0]
+    fetched = segments[segments["symbol"] == "SZSE:000001"].iloc[0]
+    assert cached["segment_name"] == "cached"
+    assert cached["source"] == "fixture"
+    assert fetched["segment_name"] == "汽车玻璃"
+    assert fetched["source"] == "EnrichmentProvider"
+
+
+def test_datahub_refresh_structured_company_enrichment_requires_provider(tmp_path):
+    from trading_os.research.datahub import DataHub, MissingDataError
+    from trading_os.research.store import ResearchStore
+
+    hub = DataHub(ResearchStore(tmp_path / "research"), provider=FakeProvider())
+
+    with pytest.raises(MissingDataError, match="segments provider is not available"):
+        hub.get_segments(["SSE:600000"], as_of=date(2026, 6, 12), policy="refresh")
 
 
 def test_datahub_cache_first_fetches_missing_fundamental_symbols_only(tmp_path):

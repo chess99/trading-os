@@ -147,7 +147,12 @@ def cmd_alert(ns: argparse.Namespace) -> int:
     event_log = EventLog(repo_root() / "artifacts" / "alerts.db")
     for alert in alerts:
         event_log.write("ALERT", alert)
-    notifier = build_notifier(ns.notify, webhook_url=ns.webhook_url)
+    notifier = build_notifier(
+        ns.notify,
+        webhook_url=ns.webhook_url,
+        telegram_bot_token=ns.telegram_bot_token,
+        telegram_chat_id=ns.telegram_chat_id,
+    )
     deliveries = deliver_alerts(alerts, notifier, max_attempts=ns.notify_attempts)
     store.write_alert_deliveries(deliveries)
     for delivery in deliveries:
@@ -324,8 +329,14 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     monitor.add_argument("--mode", choices=["watchlist"], required=True)
     monitor.add_argument("--once", action="store_true")
     monitor.add_argument("--as-of", dest="as_of")
-    monitor.add_argument("--notify", choices=["none", "stdout", "webhook"], default="none")
+    monitor.add_argument(
+        "--notify",
+        choices=["none", "stdout", "webhook", "feishu", "dingtalk", "telegram", "system"],
+        default="none",
+    )
     monitor.add_argument("--webhook-url", dest="webhook_url")
+    monitor.add_argument("--telegram-bot-token", dest="telegram_bot_token")
+    monitor.add_argument("--telegram-chat-id", dest="telegram_chat_id")
     monitor.add_argument("--notify-attempts", dest="notify_attempts", type=int, default=3)
     monitor.set_defaults(func=cmd_alert)
 

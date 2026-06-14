@@ -209,7 +209,7 @@ class DataHub:
         lookback_months: int = 12,
         policy: str = "cache_first",
     ) -> Any:
-        cached = _news_with_lookback(
+        cached = _records_with_lookback(
             self.store.get_news(symbols, as_of=as_of),
             lookback_months=lookback_months,
         )
@@ -259,16 +259,195 @@ class DataHub:
             )
         elif policy == "refresh":
             raise MissingDataError(f"news missing for {','.join(symbols)} as_of={as_of}")
-        final = _news_with_lookback(
+        final = _records_with_lookback(
             self.store.get_news(symbols, as_of=as_of),
             lookback_months=lookback_months,
         )
         return final
 
+    def get_segments(
+        self,
+        symbols: list[str],
+        *,
+        as_of: date,
+        policy: str = "cache_first",
+    ) -> Any:
+        return self._get_company_enrichment(
+            "segments",
+            symbols,
+            as_of=as_of,
+            policy=policy,
+        )
+
+    def get_institutional(
+        self,
+        symbols: list[str],
+        *,
+        as_of: date,
+        policy: str = "cache_first",
+    ) -> Any:
+        return self._get_company_enrichment(
+            "institutional",
+            symbols,
+            as_of=as_of,
+            policy=policy,
+        )
+
+    def get_peers(
+        self,
+        symbols: list[str],
+        *,
+        as_of: date,
+        policy: str = "cache_first",
+    ) -> Any:
+        return self._get_company_enrichment(
+            "peers",
+            symbols,
+            as_of=as_of,
+            policy=policy,
+        )
+
+    def get_guidance(
+        self,
+        symbols: list[str],
+        *,
+        as_of: date,
+        lookback_months: int = 12,
+        policy: str = "cache_first",
+    ) -> Any:
+        return self._get_company_enrichment(
+            "guidance",
+            symbols,
+            as_of=as_of,
+            policy=policy,
+            lookback_months=lookback_months,
+        )
+
     def _provider(self) -> Any:
         if self.provider is None:
             self.provider = _default_provider_from_env()
         return self.provider
+
+    def _get_company_enrichment(
+        self,
+        dataset: str,
+        symbols: list[str],
+        *,
+        as_of: date,
+        policy: str,
+        lookback_months: int | None = None,
+    ) -> Any:
+        cached = self._read_company_enrichment(dataset, symbols, as_of=as_of)
+        if lookback_months is not None and not cached.empty:
+            cached = _records_with_lookback(cached, lookback_months=lookback_months)
+        cached_symbols = _cached_symbols(cached)
+        missing = [symbol for symbol in symbols if symbol not in cached_symbols]
+        if policy in {"cache_first", "lazy_fill"} and not missing:
+            return cached
+        if policy == "offline":
+            if missing:
+                raise MissingDataError(f"{dataset} missing for {','.join(missing)} as_of={as_of}")
+            return cached
+        symbols_to_fetch = list(symbols) if policy == "refresh" else missing
+        if not symbols_to_fetch:
+            return cached
+
+        provider = self._provider()
+        method_name = f"fetch_{dataset}"
+        if isinstance(provider, ProviderRouter):
+            try:
+                result = self._router_fetch(
+                    provider,
+                    dataset,
+                    method_name,
+                    *self._company_enrichment_args(
+                        symbols_to_fetch,
+                        as_of,
+                        lookback_months=lookback_months,
+                    ),
+                )
+            except MissingCapabilityError as exc:
+                if policy == "refresh":
+                    raise MissingDataError(f"{dataset} provider is not available") from exc
+                return cached
+            source = result.provider_name
+            df = result.data
+        else:
+            if not hasattr(provider, method_name):
+                if policy == "refresh":
+                    raise MissingDataError(f"{dataset} provider is not available")
+                return cached
+            source = self._provider_name(provider)
+            method = getattr(provider, method_name)
+            df = method(
+                *self._company_enrichment_args(
+                    symbols_to_fetch,
+                    as_of,
+                    lookback_months=lookback_months,
+                )
+            )
+            if policy == "refresh":
+                self._ensure_non_empty(df, dataset, source)
+
+        if df is not None and not df.empty:
+            df = df.copy()
+            if lookback_months is not None:
+                df["lookback_months"] = lookback_months
+            if policy == "refresh":
+                _ensure_symbols_present(df, symbols, as_of=as_of, dataset=dataset)
+            self._write_company_enrichment(
+                dataset,
+                df,
+                as_of=as_of,
+                source=source,
+                provenance={
+                    "provider": source,
+                    **({"lookback_months": lookback_months} if lookback_months else {}),
+                },
+                append=True,
+            )
+        elif policy == "refresh":
+            raise MissingDataError(f"{dataset} missing for {','.join(symbols)} as_of={as_of}")
+
+        final = self._read_company_enrichment(dataset, symbols, as_of=as_of)
+        if lookback_months is not None:
+            final = _records_with_lookback(final, lookback_months=lookback_months)
+        return final
+
+    @staticmethod
+    def _company_enrichment_args(
+        symbols: list[str],
+        as_of: date,
+        *,
+        lookback_months: int | None,
+    ) -> tuple[Any, ...]:
+        if lookback_months is None:
+            return symbols, as_of
+        return symbols, as_of, lookback_months
+
+    def _read_company_enrichment(self, dataset: str, symbols: list[str], *, as_of: date) -> Any:
+        reader = getattr(self.store, f"get_{dataset}")
+        return reader(symbols, as_of=as_of)
+
+    def _write_company_enrichment(
+        self,
+        dataset: str,
+        df: Any,
+        *,
+        as_of: date,
+        source: str,
+        provenance: dict[str, Any],
+        append: bool = False,
+    ) -> None:
+        partition = _append_partition(as_of) if append else as_of.isoformat()
+        self.store._write_snapshot_dataset(
+            dataset,
+            df,
+            as_of=as_of,
+            source=source,
+            provenance=provenance,
+            partition=partition,
+        )
 
     def _write_estimates(
         self,
@@ -470,7 +649,7 @@ def _cached_symbols(cached: Any) -> set[str]:
     return set(cached["symbol"].astype(str))
 
 
-def _news_with_lookback(cached: Any, *, lookback_months: int) -> Any:
+def _records_with_lookback(cached: Any, *, lookback_months: int) -> Any:
     if cached is None or cached.empty or "lookback_months" not in cached.columns:
         return cached.iloc[0:0].copy() if cached is not None else cached
 

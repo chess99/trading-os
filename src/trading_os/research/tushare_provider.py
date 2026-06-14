@@ -17,7 +17,15 @@ class TushareResearchProvider:
     pro_client: Any | None = None
 
     name = "tushare"
-    capabilities = {"universe", "quote_snapshot_eod", "bars_daily", "fundamentals"}
+    capabilities = {
+        "universe",
+        "quote_snapshot_eod",
+        "bars_daily",
+        "fundamentals",
+        "segments",
+        "institutional",
+        "peers",
+    }
 
     def _client(self) -> Any:
         if self.pro_client is not None:
@@ -112,6 +120,77 @@ class TushareResearchProvider:
             row = _latest_fina_indicator(symbol, raw, as_of=as_of, periods=periods)
             if row:
                 rows.append(row)
+        return pd.DataFrame(rows)
+
+    def fetch_segments(self, symbols: list[str], as_of: date) -> Any:
+        import pandas as pd
+
+        rows = []
+        for symbol in symbols:
+            raw = _safe_client_call(
+                self._client(),
+                "fina_mainbz",
+                ts_code=_ts_code_from_canonical(symbol),
+                start_date="",
+                end_date=_yyyymmdd(as_of),
+                type="P",
+            )
+            if raw is None or raw.empty:
+                continue
+            rows.extend(_segment_rows(symbol, raw, as_of=as_of))
+        return pd.DataFrame(rows)
+
+    def fetch_institutional(self, symbols: list[str], as_of: date) -> Any:
+        import pandas as pd
+
+        rows = []
+        for symbol in symbols:
+            raw = _safe_client_call(
+                self._client(),
+                "top10_holders",
+                ts_code=_ts_code_from_canonical(symbol),
+                start_date="",
+                end_date=_yyyymmdd(as_of),
+            )
+            if raw is None or raw.empty:
+                continue
+            rows.extend(_institutional_rows(symbol, raw, as_of=as_of))
+        return pd.DataFrame(rows)
+
+    def fetch_peers(self, symbols: list[str], as_of: date) -> Any:  # noqa: ARG002
+        import pandas as pd
+
+        rows = []
+        for symbol in symbols:
+            industry = _first_industry_name(
+                _safe_client_call(
+                    self._client(),
+                    "index_member_all",
+                    ts_code=_ts_code_from_canonical(symbol),
+                )
+            )
+            if not industry:
+                continue
+            raw = _safe_client_call(self._client(), "bak_basic", trade_date="")
+            if raw is None or raw.empty or "industry" not in raw.columns:
+                continue
+            peers = raw[raw["industry"].astype(str) == industry].copy()
+            if peers.empty:
+                continue
+            for record in peers.head(10).to_dict("records"):
+                peer_symbol = _canonical_from_ts_code(record.get("ts_code"))
+                if not peer_symbol or peer_symbol == symbol:
+                    continue
+                rows.append(
+                    {
+                        "symbol": symbol,
+                        "peer_symbol": peer_symbol,
+                        "peer_name": record.get("name"),
+                        "industry": industry,
+                        "market_cap": record.get("total_mv"),
+                        "pe_ttm": record.get("pe"),
+                    }
+                )
         return pd.DataFrame(rows)
 
 
@@ -229,6 +308,66 @@ def _positive_quarters(history: Any) -> int | None:
                 break
             count += 1
         return count
+    return None
+
+
+def _segment_rows(symbol: str, raw: Any, *, as_of: date) -> list[dict[str, Any]]:
+    import pandas as pd
+
+    df = raw.copy()
+    if "end_date" not in df.columns:
+        return []
+    df["end_date"] = pd.to_datetime(df["end_date"], format="%Y%m%d", errors="coerce")
+    df = df[df["end_date"].dt.date <= as_of]
+    rows = []
+    for record in df.dropna(subset=["end_date"]).to_dict("records"):
+        rows.append(
+            {
+                "symbol": symbol,
+                "period": record["end_date"].date().isoformat(),
+                "segment_name": record.get("bz_item"),
+                "revenue": record.get("bz_sales"),
+                "gross_profit": record.get("bz_profit"),
+                "cost": record.get("bz_cost"),
+                "currency": record.get("curr_type"),
+            }
+        )
+    return rows
+
+
+def _institutional_rows(symbol: str, raw: Any, *, as_of: date) -> list[dict[str, Any]]:
+    import pandas as pd
+
+    df = raw.copy()
+    if "end_date" not in df.columns:
+        return []
+    df["end_date"] = pd.to_datetime(df["end_date"], format="%Y%m%d", errors="coerce")
+    if "ann_date" in df.columns:
+        df["ann_date"] = pd.to_datetime(df["ann_date"], format="%Y%m%d", errors="coerce")
+        df = df[(df["ann_date"].dt.date <= as_of) | df["ann_date"].isna()]
+    else:
+        df = df[df["end_date"].dt.date <= as_of]
+    rows = []
+    for record in df.dropna(subset=["end_date"]).to_dict("records"):
+        rows.append(
+            {
+                "symbol": symbol,
+                "period": record["end_date"].date().isoformat(),
+                "pub_date": _date_or_none(record.get("ann_date")),
+                "holder_name": record.get("holder_name"),
+                "shares": record.get("hold_amount"),
+                "holding_ratio": _ratio(record, "hold_ratio"),
+            }
+        )
+    return rows
+
+
+def _first_industry_name(raw: Any) -> str | None:
+    if raw is None or raw.empty:
+        return None
+    for column in ("index_name", "industry", "name"):
+        if column in raw.columns and not raw[column].dropna().empty:
+            return str(raw[column].dropna().iloc[0])
     return None
 
 

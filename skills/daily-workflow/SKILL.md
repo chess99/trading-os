@@ -75,10 +75,11 @@ data/research/runs/{run_id}/report.md
 python -m trading_os alert monitor --mode watchlist --once --as-of YYYY-MM-DD
 ```
 
-如需要真实通知，使用 webhook，并保留投递审计：
+如需要真实通知，使用 webhook/飞书/钉钉/Telegram/系统通知，并保留投递审计：
 
 ```bash
 python -m trading_os alert monitor --mode watchlist --once --as-of YYYY-MM-DD --notify webhook --webhook-url URL --notify-attempts 3
+python -m trading_os alert monitor --mode watchlist --once --as-of YYYY-MM-DD --notify telegram --telegram-bot-token TOKEN --telegram-chat-id CHAT_ID --notify-attempts 3
 ```
 
 不要把本地生成 alert 等同于已经通知用户；必须检查 alert deliveries 和 EventLog。

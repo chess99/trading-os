@@ -4,7 +4,14 @@ from dataclasses import dataclass
 from typing import Any
 
 CORE_COMPANY_DATASETS = ("quotes", "fundamentals", "bars")
-ENRICHMENT_COMPANY_DATASETS = ("estimates", "news")
+ENRICHMENT_COMPANY_DATASETS = (
+    "estimates",
+    "news",
+    "segments",
+    "institutional",
+    "peers",
+    "guidance",
+)
 
 
 @dataclass(frozen=True, slots=True)

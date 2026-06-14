@@ -131,6 +131,59 @@ class FakeTushareClient:
             ]
         )
 
+    def fina_mainbz(self, **kwargs):
+        return pd.DataFrame(
+            [
+                {
+                    "ts_code": kwargs["ts_code"],
+                    "end_date": "20251231",
+                    "bz_item": "汽车玻璃",
+                    "bz_sales": 1000.0,
+                    "bz_profit": 300.0,
+                    "bz_cost": 700.0,
+                    "curr_type": "CNY",
+                }
+            ]
+        )
+
+    def top10_holders(self, **kwargs):
+        return pd.DataFrame(
+            [
+                {
+                    "ts_code": kwargs["ts_code"],
+                    "ann_date": "20260420",
+                    "end_date": "20260331",
+                    "holder_name": "机构A",
+                    "hold_amount": 100.0,
+                    "hold_ratio": 5.0,
+                }
+            ]
+        )
+
+    def index_member_all(self, **kwargs):
+        return pd.DataFrame(
+            [
+                {
+                    "ts_code": kwargs["ts_code"],
+                    "index_code": "881123.TI",
+                    "index_name": "汽车零部件",
+                }
+            ]
+        )
+
+    def bak_basic(self, **kwargs):
+        return pd.DataFrame(
+            [
+                {
+                    "ts_code": "600001.SH",
+                    "name": "同业公司",
+                    "industry": "汽车零部件",
+                    "total_mv": 500.0,
+                    "pe": 20.0,
+                }
+            ]
+        )
+
 
 def test_tushare_provider_normalizes_universe():
     from trading_os.research.tushare_provider import TushareResearchProvider
@@ -195,3 +248,20 @@ def test_tushare_provider_normalizes_fundamentals():
     assert row["revenue_growth_yoy"] == 0.28
     assert row["roe"] == 0.22
     assert row["positive_quarters"] == 2
+
+
+def test_tushare_provider_normalizes_segments_institutional_and_peers():
+    from trading_os.research.tushare_provider import TushareResearchProvider
+
+    provider = TushareResearchProvider(pro_client=FakeTushareClient())
+
+    segments = provider.fetch_segments(["SSE:600000"], as_of=date(2026, 6, 12))
+    institutional = provider.fetch_institutional(["SSE:600000"], as_of=date(2026, 6, 12))
+    peers = provider.fetch_peers(["SSE:600000"], as_of=date(2026, 6, 12))
+
+    assert segments.iloc[0]["segment_name"] == "汽车玻璃"
+    assert segments.iloc[0]["revenue"] == 1000.0
+    assert institutional.iloc[0]["holder_name"] == "机构A"
+    assert institutional.iloc[0]["holding_ratio"] == 0.05
+    assert peers.iloc[0]["peer_symbol"] == "SSE:600001"
+    assert peers.iloc[0]["peer_name"] == "同业公司"

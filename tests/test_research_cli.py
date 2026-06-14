@@ -149,6 +149,31 @@ def test_alert_monitor_parser_accepts_notify_attempts():
     assert ns.notify_attempts == 3
 
 
+def test_alert_monitor_parser_accepts_named_notification_channels():
+    from trading_os.cli_internal.app import build_parser
+
+    parser = build_parser()
+    ns = parser.parse_args(
+        [
+            "alert",
+            "monitor",
+            "--mode",
+            "watchlist",
+            "--once",
+            "--notify",
+            "telegram",
+            "--telegram-bot-token",
+            "token",
+            "--telegram-chat-id",
+            "chat-1",
+        ]
+    )
+
+    assert ns.notify == "telegram"
+    assert ns.telegram_bot_token == "token"
+    assert ns.telegram_chat_id == "chat-1"
+
+
 def test_alert_monitor_help_describes_watchlist_mode(capsys):
     from trading_os.cli_internal.app import build_parser
 

@@ -262,6 +262,12 @@ def run_company_research(
     news = hub.get_news(
         [symbol], as_of=as_of, lookback_months=lookback_months, policy="cache_first"
     )
+    segments = hub.get_segments([symbol], as_of=as_of, policy="cache_first")
+    institutional = hub.get_institutional([symbol], as_of=as_of, policy="cache_first")
+    peers = hub.get_peers([symbol], as_of=as_of, policy="cache_first")
+    guidance = hub.get_guidance(
+        [symbol], as_of=as_of, lookback_months=lookback_months, policy="cache_first"
+    )
     bars = _get_bars_with_partial_fallback(
         hub,
         [symbol],
@@ -273,7 +279,10 @@ def run_company_research(
     trace = [
         "# company_research trace",
         f"- symbol: `{symbol}`",
-        "- load quote, fundamentals, bars, estimates, and news through DataHub",
+        (
+            "- load quote, fundamentals, bars, estimates, news, segments, institutional, "
+            "peers, and guidance through DataHub"
+        ),
         "- write structured report with explicit data limitations",
     ]
     tables = {
@@ -282,6 +291,10 @@ def run_company_research(
         "bars": bars,
         "estimates": estimates,
         "news": news,
+        "segments": segments,
+        "institutional": institutional,
+        "peers": peers,
+        "guidance": guidance,
     }
     report = _company_report(symbol, as_of, template, valuation_mode, tables)
     datasets = {
@@ -290,6 +303,10 @@ def run_company_research(
         "bars": not bars.empty,
         "estimates": not estimates.empty,
         "news": not news.empty,
+        "segments": not segments.empty,
+        "institutional": not institutional.empty,
+        "peers": not peers.empty,
+        "guidance": not guidance.empty,
     }
     completeness = evaluate_company_research_completeness(datasets)
     manifest = {
@@ -975,13 +992,28 @@ def _company_report(
     bars = tables.get("bars", pd.DataFrame())
     estimates = tables.get("estimates", pd.DataFrame())
     news = tables.get("news", pd.DataFrame())
+    segments = tables.get("segments", pd.DataFrame())
+    institutional = tables.get("institutional", pd.DataFrame())
+    peers = tables.get("peers", pd.DataFrame())
+    guidance = tables.get("guidance", pd.DataFrame())
     latest_price = "N/A" if quote.empty or "close" not in quote else quote.iloc[0]["close"]
     latest_roe = (
         "N/A" if fundamentals.empty or "roe" not in fundamentals else fundamentals.iloc[0]["roe"]
     )
     if template == "canslim":
         return _canslim_company_report(
-            symbol, as_of, valuation_mode, quote, fundamentals, bars, estimates, news
+            symbol,
+            as_of,
+            valuation_mode,
+            quote,
+            fundamentals,
+            bars,
+            estimates,
+            news,
+            segments,
+            institutional,
+            peers,
+            guidance,
         )
     return (
         f"# Company Research: {symbol}\n\n"
@@ -1005,6 +1037,10 @@ def _canslim_company_report(
     bars: pd.DataFrame,
     estimates: pd.DataFrame,
     news: pd.DataFrame,
+    segments: pd.DataFrame,
+    institutional: pd.DataFrame,
+    peers: pd.DataFrame,
+    guidance: pd.DataFrame,
 ) -> str:
     latest_quote = quote.iloc[0].to_dict() if not quote.empty else {}
     latest_fund = fundamentals.iloc[0].to_dict() if not fundamentals.empty else {}
@@ -1112,12 +1148,53 @@ def _canslim_company_report(
             "",
             "## Institutional Sponsorship and Peer Context",
             "",
-            "- Institutional sponsorship, peer positioning, ownership trend, and industry "
-            "crowding require provider coverage that is not guaranteed in cached datasets.",
-            "- Missing sponsorship or peer fields reduce confidence and block automatic trade "
-            "status until provider-backed evidence is available.",
+        ]
+    )
+    _append_records_section(
+        lines,
+        institutional,
+        symbol,
+        empty_line="- No cached institutional sponsorship data is available for this symbol.",
+        keys=["period", "holder_name", "holding_ratio", "shares"],
+        limit=10,
+    )
+    _append_records_section(
+        lines,
+        peers,
+        symbol,
+        empty_line="- No cached peer comparison data is available for this symbol.",
+        keys=["peer_symbol", "peer_name", "industry", "market_cap", "pe_ttm", "roe"],
+        limit=10,
+    )
+    lines.extend(
+        [
+            "",
+            "## Business Segments",
             "",
         ]
+    )
+    _append_records_section(
+        lines,
+        segments,
+        symbol,
+        empty_line="- No cached business segment data is available for this symbol.",
+        keys=["period", "segment_name", "revenue", "gross_margin", "revenue_growth_yoy"],
+        limit=10,
+    )
+    lines.extend(
+        [
+            "",
+            "## Management Guidance and Catalysts",
+            "",
+        ]
+    )
+    _append_records_section(
+        lines,
+        guidance,
+        symbol,
+        empty_line="- No cached management guidance or catalyst data is available for this symbol.",
+        keys=["published_at", "guidance_type", "summary", "source_url"],
+        limit=10,
     )
     lines.extend(
         [
@@ -1149,6 +1226,24 @@ def _filter_symbol_rows(df: pd.DataFrame, symbol: str) -> pd.DataFrame:
     if df.empty or "symbol" not in df.columns:
         return df
     return df[df["symbol"].astype(str) == symbol].reset_index(drop=True)
+
+
+def _append_records_section(
+    lines: list[str],
+    df: pd.DataFrame,
+    symbol: str,
+    *,
+    empty_line: str,
+    keys: list[str],
+    limit: int,
+) -> None:
+    symbol_rows = _filter_symbol_rows(df, symbol)
+    if symbol_rows.empty:
+        lines.append(empty_line)
+        return
+    for record in symbol_rows.head(limit).to_dict("records"):
+        parts = [f"{key}=`{_fmt(record.get(key))}`" for key in keys if key in record]
+        lines.append("- " + " ".join(parts))
 
 
 def _sort_by_recency(

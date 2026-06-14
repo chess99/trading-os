@@ -17,7 +17,14 @@ def test_company_research_completeness_complete_with_core_data_and_missing_enric
     assert result.complete is True
     assert result.status == "complete"
     assert result.core_missing == []
-    assert result.enrichment_missing == ["estimates", "news"]
+    assert result.enrichment_missing == [
+        "estimates",
+        "news",
+        "segments",
+        "institutional",
+        "peers",
+        "guidance",
+    ]
     assert result.score == 0.75
 
 
@@ -37,8 +44,8 @@ def test_company_research_completeness_incomplete_when_core_data_missing():
     assert result.complete is False
     assert result.status == "incomplete"
     assert result.core_missing == ["fundamentals"]
-    assert result.enrichment_missing == []
-    assert result.score == 0.75
+    assert result.enrichment_missing == ["segments", "institutional", "peers", "guidance"]
+    assert result.score == 0.5833
 
 
 def test_status_from_company_manifest_uses_completeness_payload():

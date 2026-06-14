@@ -105,6 +105,10 @@ data/research/runs/{run_id}/report.md
 - `fundamentals`：财务指标和报表摘要。
 - `estimates`：一致预期、估值快照、目标价等。
 - `news`：新闻、公告、事件。
+- `segments`：主营构成、产品/地区分部。
+- `institutional`：股东和机构持仓线索。
+- `peers`：同业和行业比较样本。
+- `guidance`：管理层指引、订单、产能、产品周期等催化线索。
 - `factors`：因子横截面和历史结果。
 - `run_manifest`：每次研究运行的输入、数据版本、步骤和输出路径。
 
@@ -125,7 +129,8 @@ CANSLIM 快筛不应触发全市场逐标的历史 K 线刷新。需要历史价
 AkShare：
 
 - `TushareResearchProvider` 已作为第一阶段 A 股 provider，用于股票池、日行情、
-  复权日线和财务指标；主营构成、股东/机构、新闻公告仍需后续 provider 能力补齐。
+  复权日线、财务指标、主营构成、机构持仓线索和同业样本；新闻公告和管理层指引
+  仍需后续 provider 能力补齐。
 - 生产级目标是 `RqdataResearchProvider`，尤其用于 point-in-time 财务、因子研究和
   回测；JQData 是付费替代选项。
 - AkShare 只作为免费 fallback 和探索源，不应作为正式交易建议或回测证明的唯一事实源。
@@ -158,7 +163,9 @@ python -m trading_os alert monitor --mode watchlist --once
 ```
 
 观察池盘中提醒只评估机器可读的 `artifacts/watchlist/state.json` 条目，不做全市场盘中扫描。
-需要真实发送时使用 `--notify webhook --webhook-url URL --notify-attempts 3`；投递结果必须写入
+需要真实发送时使用 `--notify webhook|feishu|dingtalk|telegram|system`；
+飞书/钉钉走 `--webhook-url` 或对应环境变量，Telegram 走
+`--telegram-bot-token` / `--telegram-chat-id` 或对应环境变量。投递结果必须写入
 ResearchStore alert deliveries 和 EventLog，不能只生成本地 alert 后声称已通知。
 
 ### CANSLIM 快筛

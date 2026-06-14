@@ -39,6 +39,10 @@ artifacts/
 - `fundamentals`：财务指标和报表摘要。
 - `estimates`：一致预期、估值快照、目标价等。
 - `news`：新闻、公告、事件。
+- `segments`：主营构成、产品/地区分部。
+- `institutional`：股东和机构持仓线索。
+- `peers`：同业和行业比较样本。
+- `guidance`：管理层指引、订单、产能、产品周期等催化线索。
 - `factors`：因子横截面和历史结果。
 - `run_manifest`：每次研究运行的输入、数据版本、步骤和输出路径。
 
@@ -52,7 +56,7 @@ export TRADING_OS_PROVIDER_ORDER=tushare,akshare
 python -m trading_os data provider probe
 ```
 
-配置 `TUSHARE_TOKEN` 后，DataHub 优先使用 Tushare 获取 A 股股票池、日行情、复权日线和财务指标；未配置时回落到 AkShare。AkShare 只适合免费探索和补充，不应作为正式交易建议或严肃回测的唯一事实源。
+配置 `TUSHARE_TOKEN` 后，DataHub 优先使用 Tushare 获取 A 股股票池、日行情、复权日线、财务指标、主营构成、机构持仓线索和同业样本；未配置时回落到 AkShare。AkShare 只适合免费探索和补充，不应作为正式交易建议或严肃回测的唯一事实源。
 
 ## 常用命令
 
@@ -78,8 +82,9 @@ python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 # 观察池提醒监控，本地生成提醒
 python -m trading_os alert monitor --mode watchlist --once
 
-# 观察池提醒监控，发送 webhook 并最多重试 3 次
+# 观察池提醒监控，发送 webhook/飞书/钉钉/Telegram/系统通知，并最多重试 3 次
 python -m trading_os alert monitor --mode watchlist --once --notify webhook --webhook-url URL --notify-attempts 3
+python -m trading_os alert monitor --mode watchlist --once --notify telegram --telegram-bot-token TOKEN --telegram-chat-id CHAT_ID
 
 # 因子研究和回测
 python -m trading_os factor run momentum_roe --as-of YYYY-MM-DD
@@ -121,8 +126,9 @@ manifest 后停止，必须完成决策、观察池更新和人类可读日报�
 python -m trading_os alert monitor --mode watchlist --once
 ```
 
-提醒监控只评估机器可读的观察池条目，不做全市场盘中扫描。使用 `--notify webhook`
-时会把最终投递结果写入 ResearchStore 和 EventLog；`--notify-attempts` 控制失败重试次数。
+提醒监控只评估机器可读的观察池条目，不做全市场盘中扫描。使用 `--notify webhook`、
+`feishu`、`dingtalk`、`telegram` 或 `system` 时会把最终投递结果写入 ResearchStore
+和 EventLog；`--notify-attempts` 控制失败重试次数。
 
 ### CANSLIM 快筛
 

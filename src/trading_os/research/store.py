@@ -175,6 +175,46 @@ class ResearchStore:
             df = df[df["symbol"].isin(symbols)].reset_index(drop=True)
         return df
 
+    def write_segments(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "segments", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_segments(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("segments", symbols=symbols, as_of=as_of)
+
+    def write_institutional(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "institutional", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_institutional(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("institutional", symbols=symbols, as_of=as_of)
+
+    def write_peers(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "peers", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_peers(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("peers", symbols=symbols, as_of=as_of)
+
+    def write_guidance(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "guidance", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_guidance(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("guidance", symbols=symbols, as_of=as_of)
+
     def write_factors(
         self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
     ) -> Path:
@@ -343,6 +383,18 @@ class ResearchStore:
             .sort_values("symbol")
             .reset_index(drop=True)
         )
+
+    def _get_symbol_snapshot(
+        self,
+        dataset: str,
+        *,
+        symbols: list[str] | None,
+        as_of: date,
+    ) -> Any:
+        df = self._read_latest_snapshot(dataset, as_of=as_of, key="symbol")
+        if symbols is not None and not df.empty:
+            df = df[df["symbol"].isin(symbols)].reset_index(drop=True)
+        return df
 
     def _dataset_path(self, dataset: str, partition: str) -> Path:
         return self.datasets / dataset / f"{partition}.parquet"

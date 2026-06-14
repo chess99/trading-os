@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 from dataclasses import dataclass
 from datetime import datetime, timezone
-from typing import Any, Protocol
+from typing import Any, Callable, Protocol
 from urllib import request
 
 
@@ -59,16 +60,112 @@ class WebhookNotifier:
             )
 
 
-def build_notifier(mode: str, *, webhook_url: str | None = None) -> Notifier | None:
+@dataclass(frozen=True, slots=True)
+class TelegramNotifier:
+    bot_token: str
+    chat_id: str
+    destination: str = "telegram"
+    timeout_seconds: float = 5.0
+
+    def send(self, alert: dict[str, Any]) -> dict[str, Any]:
+        url = f"https://api.telegram.org/bot{self.bot_token}/sendMessage"
+        payload = json.dumps(
+            {
+                "chat_id": self.chat_id,
+                "text": _webhook_payload(alert)["text"],
+                "disable_web_page_preview": True,
+            },
+            ensure_ascii=False,
+        ).encode("utf-8")
+        req = request.Request(
+            url,
+            data=payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with request.urlopen(req, timeout=self.timeout_seconds) as response:
+                body = response.read(500).decode("utf-8", errors="replace")
+            return _delivery_result(
+                alert,
+                destination=self.destination,
+                success=True,
+                message=f"telegram status={response.status} body={body}",
+            )
+        except Exception as exc:
+            return _delivery_result(
+                alert,
+                destination=self.destination,
+                success=False,
+                message=str(exc),
+            )
+
+
+@dataclass(frozen=True, slots=True)
+class SystemNotifier:
+    destination: str = "system"
+    command_runner: Callable[[list[str]], int] = subprocess.call
+
+    def send(self, alert: dict[str, Any]) -> dict[str, Any]:
+        payload = _webhook_payload(alert)
+        command = [
+            "osascript",
+            "-e",
+            (
+                'display notification '
+                f'{json.dumps(payload["text"], ensure_ascii=False)} '
+                'with title '
+                f'{json.dumps(payload["title"], ensure_ascii=False)}'
+            ),
+        ]
+        try:
+            exit_code = self.command_runner(command)
+        except Exception as exc:
+            return _delivery_result(
+                alert,
+                destination=self.destination,
+                success=False,
+                message=str(exc),
+            )
+        return _delivery_result(
+            alert,
+            destination=self.destination,
+            success=exit_code == 0,
+            message=f"system notification exit_code={exit_code}",
+        )
+
+
+def build_notifier(
+    mode: str,
+    *,
+    webhook_url: str | None = None,
+    telegram_bot_token: str | None = None,
+    telegram_chat_id: str | None = None,
+) -> Notifier | None:
     if mode == "none":
         return None
     if mode == "stdout":
         return StdoutNotifier()
-    if mode == "webhook":
-        url = webhook_url or os.environ.get("TRADING_OS_ALERT_WEBHOOK_URL")
+    if mode in {"webhook", "feishu", "dingtalk"}:
+        env_name = {
+            "webhook": "TRADING_OS_ALERT_WEBHOOK_URL",
+            "feishu": "TRADING_OS_FEISHU_WEBHOOK_URL",
+            "dingtalk": "TRADING_OS_DINGTALK_WEBHOOK_URL",
+        }[mode]
+        url = webhook_url or os.environ.get(env_name)
         if not url:
-            raise RuntimeError("--webhook-url or TRADING_OS_ALERT_WEBHOOK_URL is required")
-        return WebhookNotifier(url=url)
+            raise RuntimeError(f"--webhook-url or {env_name} is required")
+        return WebhookNotifier(url=url, destination=mode)
+    if mode == "telegram":
+        token = telegram_bot_token or os.environ.get("TRADING_OS_TELEGRAM_BOT_TOKEN")
+        chat_id = telegram_chat_id or os.environ.get("TRADING_OS_TELEGRAM_CHAT_ID")
+        if not token or not chat_id:
+            raise RuntimeError(
+                "--telegram-bot-token/--telegram-chat-id or TRADING_OS_TELEGRAM_* is required"
+            )
+        return TelegramNotifier(bot_token=token, chat_id=chat_id)
+    if mode == "system":
+        return SystemNotifier()
     raise RuntimeError(f"unknown notify mode: {mode}")
 
 

@@ -108,6 +108,81 @@ class EnrichingFundamentalsProvider(RecipeProvider):
         )
 
 
+class CompanyEnrichmentProvider(EnrichingFundamentalsProvider):
+    def fetch_estimates(self, symbols, as_of):
+        return pd.DataFrame(
+            [
+                {"symbol": symbol, "target_price": 30.0, "estimate_date": "2026-06-01"}
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_news(self, symbols, as_of, lookback_months):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "title": "公告订单增长",
+                    "published_at": "2026-06-01T09:00:00+08:00",
+                    "source_url": "https://example.test/news",
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_segments(self, symbols, as_of):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "period": "2025-12-31",
+                    "segment_name": "汽车玻璃",
+                    "revenue": 100.0,
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_institutional(self, symbols, as_of):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "holder_name": "机构A",
+                    "holding_ratio": 0.05,
+                    "period": "2026-03-31",
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_peers(self, symbols, as_of):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "peer_symbol": "SSE:600001",
+                    "peer_name": "同业公司",
+                    "industry": "汽车零部件",
+                }
+                for symbol in symbols
+            ]
+        )
+
+    def fetch_guidance(self, symbols, as_of, lookback_months):
+        return pd.DataFrame(
+            [
+                {
+                    "symbol": symbol,
+                    "guidance_type": "capacity",
+                    "summary": "产能释放",
+                    "published_at": "2026-05-01T09:00:00+08:00",
+                }
+                for symbol in symbols
+            ]
+        )
+
+
 class ManyCandidatesProvider(RecipeProvider):
     def fetch_universe(self, as_of: date):
         return pd.DataFrame(
@@ -564,6 +639,37 @@ def test_company_research_canslim_report_includes_enrichment_sections(tmp_path):
     assert "## Estimates and Valuation Context" in result.report
     assert "target_price" in result.report
     assert "## Institutional Sponsorship and Peer Context" in result.report
+
+
+def test_company_research_manifest_and_report_include_structured_enrichment(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_company_research
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_quote_snapshot(
+        pd.DataFrame([{"symbol": "SSE:600000", "close": 20.0, "amount": 40_000_000.0}]),
+        as_of=date(2026, 6, 12),
+        source="fixture",
+    )
+    hub = DataHub(store, provider=CompanyEnrichmentProvider())
+
+    result = run_company_research(
+        hub,
+        "SSE:600000",
+        as_of=date(2026, 6, 12),
+        template="canslim",
+    )
+
+    for dataset in ["segments", "institutional", "peers", "guidance"]:
+        assert result.manifest["datasets"][dataset] is True
+        assert (result.run.path / "tables" / f"{dataset}.csv").exists()
+    assert "## Business Segments" in result.report
+    assert "汽车玻璃" in result.report
+    assert "机构A" in result.report
+    assert "同业公司" in result.report
+    assert "## Management Guidance and Catalysts" in result.report
+    assert "产能释放" in result.report
 
 
 def test_company_research_canslim_report_sorts_news_latest_first_and_filters_symbol():
