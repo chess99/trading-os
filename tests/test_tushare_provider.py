@@ -184,6 +184,31 @@ class FakeTushareClient:
             ]
         )
 
+    def news(self, **kwargs):
+        return pd.DataFrame(
+            [
+                {
+                    "datetime": "2026-05-01 09:00:00",
+                    "title": "公司新增订单增长",
+                    "content": "公司披露订单增长和产能释放。",
+                    "url": "https://example.test/news",
+                    "src": "测试新闻",
+                }
+            ]
+        )
+
+    def anns_d(self, **kwargs):
+        return pd.DataFrame(
+            [
+                {
+                    "ts_code": kwargs["ts_code"],
+                    "ann_date": "20260420",
+                    "title": "关于新产品周期的公告",
+                    "url": "https://example.test/ann",
+                }
+            ]
+        )
+
 
 def test_tushare_provider_normalizes_universe():
     from trading_os.research.tushare_provider import TushareResearchProvider
@@ -265,3 +290,22 @@ def test_tushare_provider_normalizes_segments_institutional_and_peers():
     assert institutional.iloc[0]["holding_ratio"] == 0.05
     assert peers.iloc[0]["peer_symbol"] == "SSE:600001"
     assert peers.iloc[0]["peer_name"] == "同业公司"
+
+
+def test_tushare_provider_normalizes_news_and_guidance():
+    from trading_os.research.tushare_provider import TushareResearchProvider
+
+    provider = TushareResearchProvider(pro_client=FakeTushareClient())
+
+    news = provider.fetch_news(["SSE:600000"], as_of=date(2026, 6, 12), lookback_months=12)
+    guidance = provider.fetch_guidance(
+        ["SSE:600000"],
+        as_of=date(2026, 6, 12),
+        lookback_months=12,
+    )
+
+    assert news["symbol"].tolist() == ["SSE:600000", "SSE:600000"]
+    assert set(news["event_type"].tolist()) == {"news", "announcement"}
+    assert "新增订单增长" in news.iloc[0]["title"]
+    assert guidance.iloc[0]["guidance_type"] in {"orders", "capacity", "product_cycle"}
+    assert "订单" in guidance.iloc[0]["summary"]

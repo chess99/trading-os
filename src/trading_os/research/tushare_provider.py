@@ -25,6 +25,8 @@ class TushareResearchProvider:
         "segments",
         "institutional",
         "peers",
+        "news",
+        "guidance",
     }
 
     def _client(self) -> Any:
@@ -191,6 +193,55 @@ class TushareResearchProvider:
                         "pe_ttm": record.get("pe"),
                     }
                 )
+        return pd.DataFrame(rows)
+
+    def fetch_news(self, symbols: list[str], as_of: date, lookback_months: int) -> Any:
+        import pandas as pd
+
+        rows = []
+        for symbol in symbols:
+            ts_code = _ts_code_from_canonical(symbol)
+            start_date = _lookback_start(as_of, lookback_months)
+            raw_news = _safe_client_call(
+                self._client(),
+                "news",
+                start_date=start_date,
+                end_date=_yyyymmdd(as_of),
+            )
+            rows.extend(_news_rows(symbol, raw_news, event_type="news", as_of=as_of))
+            raw_ann = _safe_client_call(
+                self._client(),
+                "anns_d",
+                ts_code=ts_code,
+                start_date=start_date,
+                end_date=_yyyymmdd(as_of),
+            )
+            rows.extend(
+                _news_rows(symbol, raw_ann, event_type="announcement", as_of=as_of)
+            )
+        return pd.DataFrame(rows)
+
+    def fetch_guidance(self, symbols: list[str], as_of: date, lookback_months: int) -> Any:
+        import pandas as pd
+
+        news = self.fetch_news(symbols, as_of=as_of, lookback_months=lookback_months)
+        if news.empty:
+            return pd.DataFrame()
+        rows = []
+        for record in news.to_dict("records"):
+            guidance_type = _guidance_type(record)
+            if guidance_type is None:
+                continue
+            rows.append(
+                {
+                    "symbol": record.get("symbol"),
+                    "published_at": record.get("published_at"),
+                    "guidance_type": guidance_type,
+                    "summary": record.get("title") or record.get("summary"),
+                    "source_url": record.get("source_url"),
+                    "source_event_type": record.get("event_type"),
+                }
+            )
         return pd.DataFrame(rows)
 
 
@@ -369,6 +420,67 @@ def _first_industry_name(raw: Any) -> str | None:
         if column in raw.columns and not raw[column].dropna().empty:
             return str(raw[column].dropna().iloc[0])
     return None
+
+
+def _news_rows(symbol: str, raw: Any, *, event_type: str, as_of: date) -> list[dict[str, Any]]:
+    if raw is None or raw.empty:
+        return []
+    rows = []
+    for record in raw.to_dict("records"):
+        published_at = _published_at(record)
+        if published_at is None or published_at.date() > as_of:
+            continue
+        rows.append(
+            {
+                "symbol": symbol,
+                "event_type": event_type,
+                "published_at": published_at.isoformat(),
+                "title": record.get("title"),
+                "summary": record.get("content") or record.get("summary"),
+                "source": record.get("src") or record.get("source"),
+                "source_url": record.get("url"),
+            }
+        )
+    return sorted(rows, key=lambda row: str(row.get("published_at")), reverse=True)
+
+
+def _published_at(record: dict[str, Any]) -> Any:
+    import pandas as pd
+
+    value = (
+        record.get("datetime")
+        or record.get("pub_time")
+        or record.get("ann_date")
+        or record.get("publish_time")
+    )
+    parsed = pd.to_datetime(value, errors="coerce")
+    if pd.isna(parsed):
+        return None
+    return parsed
+
+
+def _guidance_type(record: dict[str, Any]) -> str | None:
+    text = f"{record.get('title') or ''} {record.get('summary') or ''}"
+    rules = [
+        ("orders", ("订单", "中标", "合同")),
+        ("capacity", ("产能", "扩产", "投产", "产线")),
+        ("product_cycle", ("新产品", "产品周期", "车型", "量产")),
+        ("management_guidance", ("指引", "预计", "目标", "规划")),
+    ]
+    for name, keywords in rules:
+        if any(keyword in text for keyword in keywords):
+            return name
+    return None
+
+
+def _lookback_start(as_of: date, lookback_months: int) -> str:
+    month = as_of.month - lookback_months
+    year = as_of.year
+    while month <= 0:
+        month += 12
+        year -= 1
+    day = min(as_of.day, 28)
+    return date(year, month, day).strftime("%Y%m%d")
 
 
 def _ratio(row: Any, *columns: str) -> float | None:

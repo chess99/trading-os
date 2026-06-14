@@ -585,12 +585,31 @@ class AkshareResearchProvider:
 def _default_provider_from_env() -> Any:
     order = [
         name.strip().lower()
-        for name in os.environ.get("TRADING_OS_PROVIDER_ORDER", "tushare,akshare").split(",")
+        for name in os.environ.get(
+            "TRADING_OS_PROVIDER_ORDER",
+            "rqdata,jqdata,tushare,akshare",
+        ).split(",")
         if name.strip()
     ]
     providers = []
     for name in order:
-        if name == "tushare":
+        if name == "rqdata":
+            username = os.environ.get("RQDATA_USERNAME")
+            password = os.environ.get("RQDATA_PASSWORD")
+            if not username or not password:
+                continue
+            from .rqdata_provider import RqdataResearchProvider
+
+            providers.append(RqdataResearchProvider(username=username, password=password))
+        elif name == "jqdata":
+            username = os.environ.get("JQDATA_USERNAME")
+            password = os.environ.get("JQDATA_PASSWORD")
+            if not username or not password:
+                continue
+            from .jqdata_provider import JqdataResearchProvider
+
+            providers.append(JqdataResearchProvider(username=username, password=password))
+        elif name == "tushare":
             token = os.environ.get("TUSHARE_TOKEN")
             if not token:
                 continue

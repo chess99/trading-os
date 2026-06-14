@@ -1060,6 +1060,32 @@ def test_datahub_cache_first_fundamentals_does_not_promote_stale_cached_symbols(
     assert fetched["roe"] == 0.20
 
 
+def test_default_provider_from_env_supports_paid_provider_order(monkeypatch):
+    from trading_os.research.datahub import _default_provider_from_env
+
+    monkeypatch.setenv("TRADING_OS_PROVIDER_ORDER", "rqdata,jqdata,akshare")
+    monkeypatch.setenv("RQDATA_USERNAME", "user")
+    monkeypatch.setenv("RQDATA_PASSWORD", "pass")
+    monkeypatch.setenv("JQDATA_USERNAME", "user")
+    monkeypatch.setenv("JQDATA_PASSWORD", "pass")
+
+    provider = _default_provider_from_env()
+
+    assert [item.name for item in provider.providers] == ["rqdata", "jqdata", "akshare"]
+
+
+def test_default_provider_from_env_prefers_paid_providers_when_credentials_exist(monkeypatch):
+    from trading_os.research.datahub import _default_provider_from_env
+
+    monkeypatch.delenv("TRADING_OS_PROVIDER_ORDER", raising=False)
+    monkeypatch.setenv("RQDATA_USERNAME", "user")
+    monkeypatch.setenv("RQDATA_PASSWORD", "pass")
+
+    provider = _default_provider_from_env()
+
+    assert [item.name for item in provider.providers] == ["rqdata", "akshare"]
+
+
 def test_datahub_refresh_fundamentals_does_not_promote_stale_missing_symbols(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.store import ResearchStore

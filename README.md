@@ -52,11 +52,21 @@ artifacts/
 
 ```bash
 export TUSHARE_TOKEN=...
-export TRADING_OS_PROVIDER_ORDER=tushare,akshare
+export TRADING_OS_PROVIDER_ORDER=rqdata,jqdata,tushare,akshare
 python -m trading_os data provider probe
 ```
 
-配置 `TUSHARE_TOKEN` 后，DataHub 优先使用 Tushare 获取 A 股股票池、日行情、复权日线、财务指标、主营构成、机构持仓线索和同业样本；未配置时回落到 AkShare。AkShare 只适合免费探索和补充，不应作为正式交易建议或严肃回测的唯一事实源。
+付费数据源依赖可用：
+
+```bash
+pip install 'trading-os[data_paid]'
+```
+
+配置 `RQDATA_USERNAME/RQDATA_PASSWORD` 或 `JQDATA_USERNAME/JQDATA_PASSWORD` 后，DataHub
+可以把 RQData/JQData 作为优先 provider。配置 `TUSHARE_TOKEN` 后，DataHub 可使用
+Tushare 获取 A 股股票池、日行情、复权日线、财务指标、主营构成、机构持仓线索、同业样本、
+新闻公告和指引线索；未配置付费源时回落到 AkShare。AkShare 只适合免费探索和补充，
+不应作为正式交易建议或严肃回测的唯一事实源。
 
 ## 常用命令
 

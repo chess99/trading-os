@@ -125,12 +125,16 @@ CANSLIM 快筛不应触发全市场逐标的历史 K 线刷新。需要历史价
 
 数据源选择以 `docs/research/canslim-daily-system-vendor-data-source-review.md`
 为准。当前 DataHub 默认读取 `TRADING_OS_PROVIDER_ORDER`，未设置时按
-`tushare,akshare` 解析；只有配置了 `TUSHARE_TOKEN` 才会启用 Tushare，否则回落到
-AkShare：
+`rqdata,jqdata,tushare,akshare` 解析；配置 `RQDATA_USERNAME/RQDATA_PASSWORD`、
+`JQDATA_USERNAME/JQDATA_PASSWORD` 或 `TUSHARE_TOKEN` 后才会启用对应 provider，
+否则回落到 AkShare：
 
+- `RqdataResearchProvider` 和 `JqdataResearchProvider` 已作为付费数据源 adapter
+  接入，覆盖股票池、日行情/日线和财务指标入口；更完整的 PIT 财务、行业分类和
+  估值字段仍需按真实账号权限逐步扩展。
 - `TushareResearchProvider` 已作为第一阶段 A 股 provider，用于股票池、日行情、
-  复权日线、财务指标、主营构成、机构持仓线索和同业样本；新闻公告和管理层指引
-  仍需后续 provider 能力补齐。
+  复权日线、财务指标、主营构成、机构持仓线索、同业样本、新闻公告和指引线索；
+  新闻和指引依赖接口权限，失败时必须在 manifest/provider health 中体现。
 - 生产级目标是 `RqdataResearchProvider`，尤其用于 point-in-time 财务、因子研究和
   回测；JQData 是付费替代选项。
 - AkShare 只作为免费 fallback 和探索源，不应作为正式交易建议或回测证明的唯一事实源。
