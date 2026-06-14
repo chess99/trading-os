@@ -18,7 +18,7 @@ src/trading_os/
   backtest/      事件驱动回测引擎，包含 A 股交易规则
   paper/         模拟交易引擎，带 EventLog 审计
   risk/          硬性风控门控
-  data/          历史数据 schema、兼容数据源 adapter、旧数据兼容层
+  data/          轻量 schema 和 ResearchStore 所需数据源 adapter
   journal/       SQLite append-only 事件日志
 
 skills/          Agent 工作流说明
@@ -44,6 +44,16 @@ artifacts/
 
 `DataHub` 是唯一数据入口，支持 `cache_first`、`refresh`、`offline`、`lazy_fill` 策略。研究 recipe 不应绕过 DataHub 直接访问数据源。
 
+默认 provider 顺序由环境变量控制：
+
+```bash
+export TUSHARE_TOKEN=...
+export TRADING_OS_PROVIDER_ORDER=tushare,akshare
+python -m trading_os data provider probe
+```
+
+配置 `TUSHARE_TOKEN` 后，DataHub 优先使用 Tushare 获取 A 股股票池、日行情、复权日线和财务指标；未配置时回落到 AkShare。AkShare 只适合免费探索和补充，不应作为正式交易建议或严肃回测的唯一事实源。
+
 ## 常用命令
 
 ```bash
@@ -65,8 +75,11 @@ python -m trading_os research company SSE:600660 --template quality_growth --as-
 # Daily CANSLIM 收口
 python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 
-# 观察池提醒监控
+# 观察池提醒监控，本地生成提醒
 python -m trading_os alert monitor --mode watchlist --once
+
+# 观察池提醒监控，发送 webhook 并最多重试 3 次
+python -m trading_os alert monitor --mode watchlist --once --notify webhook --webhook-url URL --notify-attempts 3
 
 # 因子研究和回测
 python -m trading_os factor run momentum_roe --as-of YYYY-MM-DD
@@ -108,7 +121,8 @@ manifest 后停止，必须完成决策、观察池更新和人类可读日报�
 python -m trading_os alert monitor --mode watchlist --once
 ```
 
-提醒监控只评估机器可读的观察池条目，不做全市场盘中扫描。
+提醒监控只评估机器可读的观察池条目，不做全市场盘中扫描。使用 `--notify webhook`
+时会把最终投递结果写入 ResearchStore 和 EventLog；`--notify-attempts` 控制失败重试次数。
 
 ### CANSLIM 快筛
 

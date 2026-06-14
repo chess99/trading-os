@@ -12,6 +12,7 @@ from ..journal.event_log import EventLog
 from ..paths import repo_root
 from ..risk.manager import RiskManager
 from .calendar import TradingCalendar
+from .completeness import evaluate_company_research_completeness, status_from_company_manifest
 from .datahub import DataHub
 from .decisions import build_canslim_decisions
 from .store import ResearchRun
@@ -283,16 +284,20 @@ def run_company_research(
         "news": news,
     }
     report = _company_report(symbol, as_of, template, valuation_mode, tables)
+    datasets = {
+        "quotes": not tables["quotes"].empty,
+        "fundamentals": not fundamentals.empty,
+        "bars": not bars.empty,
+        "estimates": not estimates.empty,
+        "news": not news.empty,
+    }
+    completeness = evaluate_company_research_completeness(datasets)
     manifest = {
         "steps": [{"name": "load_company_datasets"}, {"name": "write_report"}],
         "template": template,
-        "datasets": {
-            "quotes": not tables["quotes"].empty,
-            "fundamentals": not fundamentals.empty,
-            "bars": not bars.empty,
-            "estimates": not estimates.empty,
-            "news": not news.empty,
-        },
+        "datasets": datasets,
+        "completeness": completeness.to_manifest(),
+        "complete": completeness.complete,
         "outputs": {"report": str(run.path / "report.md")},
         "limitations": [
             "Missing datasets are reported as unavailable; no synthetic investment data is used."
@@ -781,26 +786,7 @@ def _downgrade_failed_deep_research_decisions(
 
 
 def _deep_research_status(company: RecipeResult) -> dict[str, Any]:
-    manifest = company.manifest or {}
-    explicit_status = str(manifest.get("status") or "").strip().lower()
-    if explicit_status in {"failed", "incomplete"}:
-        return {"status": explicit_status}
-    if manifest.get("complete") is False or manifest.get("is_complete") is False:
-        return {"status": "incomplete", "reason": "company research marked incomplete"}
-
-    datasets = manifest.get("datasets")
-    if isinstance(datasets, dict):
-        missing_core = [
-            name
-            for name in ("quotes", "fundamentals", "bars")
-            if datasets.get(name) is not True
-        ]
-        if missing_core:
-            return {
-                "status": "incomplete",
-                "missing_core_datasets": missing_core,
-            }
-
+    status = status_from_company_manifest(company.manifest or {})
     report_path = company.run.path / "report.md"
     manifest_path = company.run.path / "manifest.json"
     if not report_path.exists() or not manifest_path.exists():
@@ -808,7 +794,11 @@ def _deep_research_status(company: RecipeResult) -> dict[str, Any]:
             "status": "incomplete",
             "reason": "company research artifacts missing",
         }
-    return {"status": "ok"}
+    if status["status"] == "complete":
+        return {"status": "ok"}
+    if status["status"] == "ok":
+        return status
+    return status
 
 
 def _clean_symbol(value: Any) -> str | None:
@@ -1351,4 +1341,6 @@ def _format_deep_research_issue(row: dict[str, Any]) -> str:
         parts.append(f"reason={row['reason']}")
     if row.get("missing_core_datasets"):
         parts.append(f"missing_core_datasets={row['missing_core_datasets']}")
+    if row.get("missing_enrichment_datasets"):
+        parts.append(f"missing_enrichment_datasets={row['missing_enrichment_datasets']}")
     return " ".join(parts)

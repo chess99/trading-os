@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from datetime import date
 from typing import Any, Protocol
@@ -266,7 +267,7 @@ class DataHub:
 
     def _provider(self) -> Any:
         if self.provider is None:
-            self.provider = AkshareResearchProvider()
+            self.provider = _default_provider_from_env()
         return self.provider
 
     def _write_estimates(
@@ -400,6 +401,30 @@ class AkshareResearchProvider:
             if row:
                 rows.append(row)
         return pd.DataFrame(rows)
+
+
+def _default_provider_from_env() -> Any:
+    order = [
+        name.strip().lower()
+        for name in os.environ.get("TRADING_OS_PROVIDER_ORDER", "tushare,akshare").split(",")
+        if name.strip()
+    ]
+    providers = []
+    for name in order:
+        if name == "tushare":
+            token = os.environ.get("TUSHARE_TOKEN")
+            if not token:
+                continue
+            from .tushare_provider import TushareResearchProvider
+
+            providers.append(TushareResearchProvider(token=token))
+        elif name == "akshare":
+            providers.append(AkshareResearchProvider())
+    if not providers:
+        providers.append(AkshareResearchProvider())
+    if len(providers) == 1:
+        return providers[0]
+    return ProviderRouter(providers)
 
 
 def _canonical_from_code(code: str) -> str:

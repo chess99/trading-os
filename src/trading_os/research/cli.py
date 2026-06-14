@@ -10,6 +10,7 @@ from ..paths import repo_root
 from .alerts import evaluate_watchlist_alerts
 from .datahub import DataHub
 from .migration import migrate_legacy_fundamentals
+from .notifier import build_notifier, deliver_alerts
 from .recipes import (
     run_backtest_recipe,
     run_canslim_screen,
@@ -146,12 +147,18 @@ def cmd_alert(ns: argparse.Namespace) -> int:
     event_log = EventLog(repo_root() / "artifacts" / "alerts.db")
     for alert in alerts:
         event_log.write("ALERT", alert)
+    notifier = build_notifier(ns.notify, webhook_url=ns.webhook_url)
+    deliveries = deliver_alerts(alerts, notifier, max_attempts=ns.notify_attempts)
+    store.write_alert_deliveries(deliveries)
+    for delivery in deliveries:
+        event_log.write("ALERT_DELIVERY", delivery)
 
     print(
         json.dumps(
             {
                 "as_of": as_of.isoformat(),
                 "alerts_count": len(alerts),
+                "deliveries_count": len(deliveries),
                 "alerts": [
                     {"alert_id": alert.get("alert_id"), "symbol": alert.get("symbol")}
                     for alert in alerts
@@ -317,6 +324,9 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     monitor.add_argument("--mode", choices=["watchlist"], required=True)
     monitor.add_argument("--once", action="store_true")
     monitor.add_argument("--as-of", dest="as_of")
+    monitor.add_argument("--notify", choices=["none", "stdout", "webhook"], default="none")
+    monitor.add_argument("--webhook-url", dest="webhook_url")
+    monitor.add_argument("--notify-attempts", dest="notify_attempts", type=int, default=3)
     monitor.set_defaults(func=cmd_alert)
 
     factor = sub.add_parser("factor", help="Run factor research")
@@ -346,4 +356,10 @@ def _records_from_table(table: Any) -> list[dict[str, Any]]:
 
 
 def _provider_display_name(provider: Any) -> str:
+    if hasattr(provider, "providers"):
+        names = [
+            str(getattr(item, "name", item.__class__.__name__))
+            for item in getattr(provider, "providers", [])
+        ]
+        return "ProviderRouter(" + ",".join(names) + ")"
     return str(getattr(provider, "name", provider.__class__.__name__))

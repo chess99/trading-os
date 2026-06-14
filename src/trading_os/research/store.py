@@ -108,6 +108,12 @@ class ResearchStore:
     def get_alerts(self, as_of: date | None = None) -> Any:
         return self._read_event_dataset("alerts", as_of=as_of)
 
+    def write_alert_deliveries(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("alert_deliveries", records)
+
+    def get_alert_deliveries(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("alert_deliveries", as_of=as_of)
+
     def write_technical_setups(self, records: list[dict[str, Any]]) -> Path:
         return self._write_event_dataset("technical_setups", records)
 

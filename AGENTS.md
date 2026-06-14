@@ -76,6 +76,7 @@ python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 
 # 观察池盘中提醒
 python -m trading_os alert monitor --mode watchlist --once
+python -m trading_os alert monitor --mode watchlist --once --notify webhook --webhook-url URL --notify-attempts 3
 
 # 因子研究和回测
 python -m trading_os factor run momentum_roe --as-of YYYY-MM-DD
@@ -119,10 +120,12 @@ CANSLIM 快筛不应触发全市场逐标的历史 K 线刷新。需要历史价
 ### Provider 路线
 
 数据源选择以 `docs/research/canslim-daily-system-vendor-data-source-review.md`
-为准：
+为准。当前 DataHub 默认读取 `TRADING_OS_PROVIDER_ORDER`，未设置时按
+`tushare,akshare` 解析；只有配置了 `TUSHARE_TOKEN` 才会启用 Tushare，否则回落到
+AkShare：
 
-- 短期优先实现 `TushareResearchProvider`，用于补齐 A 股日线、交易日历、基础资料、
-  财务报表、主营构成和部分股东/估值字段。
+- `TushareResearchProvider` 已作为第一阶段 A 股 provider，用于股票池、日行情、
+  复权日线和财务指标；主营构成、股东/机构、新闻公告仍需后续 provider 能力补齐。
 - 生产级目标是 `RqdataResearchProvider`，尤其用于 point-in-time 财务、因子研究和
   回测；JQData 是付费替代选项。
 - AkShare 只作为免费 fallback 和探索源，不应作为正式交易建议或回测证明的唯一事实源。
@@ -155,6 +158,8 @@ python -m trading_os alert monitor --mode watchlist --once
 ```
 
 观察池盘中提醒只评估机器可读的 `artifacts/watchlist/state.json` 条目，不做全市场盘中扫描。
+需要真实发送时使用 `--notify webhook --webhook-url URL --notify-attempts 3`；投递结果必须写入
+ResearchStore alert deliveries 和 EventLog，不能只生成本地 alert 后声称已通知。
 
 ### CANSLIM 快筛
 

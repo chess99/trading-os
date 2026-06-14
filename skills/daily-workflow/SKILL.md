@@ -69,6 +69,20 @@ data/research/runs/{run_id}/report.md
 `--top` 只限制展示结果，不能限制下游 strict-candidate processing。workflow 不能在
 写完 run manifests 后停止，必须完成日报、决策和观察池更新。
 
+如用户要求盘中或收盘提醒，Daily 完成后只运行观察池提醒：
+
+```bash
+python -m trading_os alert monitor --mode watchlist --once --as-of YYYY-MM-DD
+```
+
+如需要真实通知，使用 webhook，并保留投递审计：
+
+```bash
+python -m trading_os alert monitor --mode watchlist --once --as-of YYYY-MM-DD --notify webhook --webhook-url URL --notify-attempts 3
+```
+
+不要把本地生成 alert 等同于已经通知用户；必须检查 alert deliveries 和 EventLog。
+
 ## 自选池解释规则
 
 池中标的解释仍按体系分离：

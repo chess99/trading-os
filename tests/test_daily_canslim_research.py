@@ -150,6 +150,33 @@ def test_detects_setup_with_no_valid_volume_values_uses_zero_baseline():
     assert setup["volume_baseline"] == 0.0
 
 
+def test_detects_flat_base_candidate_and_breakout_volume_confirmation():
+    from trading_os.research.technical import detect_technical_setup
+
+    closes = [10.0, 10.2, 10.4, 10.1, 10.5, 10.3, 10.6, 10.4, 10.7, 10.5] * 4
+    closes[-1] = 10.95
+    rows = []
+    for index, close in enumerate(closes, start=1):
+        rows.append(
+            {
+                "symbol": "SSE:600000",
+                "ts": f"2026-05-{index:02d}",
+                "close": close,
+                "volume": 1000 if index < len(closes) else 1800,
+            }
+        )
+    bars = pd.DataFrame(rows)
+
+    setup = detect_technical_setup("SSE:600000", bars)
+
+    assert setup["status"] == "actionable_watch"
+    assert setup["setup_type"] == "flat_base_candidate"
+    assert setup["base_length_days"] == 40
+    assert setup["base_depth_pct"] < 0.1
+    assert setup["breakout_volume_confirmed"] is True
+    assert setup["volume_multiple"] >= 1.4
+
+
 def test_decision_board_emits_one_decision_per_strict_candidate():
     from trading_os.research.decisions import build_canslim_decisions
 

@@ -104,7 +104,17 @@ def test_alert_monitor_parser_accepts_watchlist_once_as_of():
 
     parser = build_parser()
     ns = parser.parse_args(
-        ["alert", "monitor", "--mode", "watchlist", "--once", "--as-of", "2026-06-12"]
+        [
+            "alert",
+            "monitor",
+            "--mode",
+            "watchlist",
+            "--once",
+            "--as-of",
+            "2026-06-12",
+            "--notify",
+            "stdout",
+        ]
     )
 
     assert ns.cmd == "alert"
@@ -112,6 +122,31 @@ def test_alert_monitor_parser_accepts_watchlist_once_as_of():
     assert ns.mode == "watchlist"
     assert ns.once is True
     assert ns.as_of == "2026-06-12"
+
+
+def test_alert_monitor_parser_accepts_notify_attempts():
+    from trading_os.cli_internal.app import build_parser
+
+    parser = build_parser()
+    ns = parser.parse_args(
+        [
+            "alert",
+            "monitor",
+            "--mode",
+            "watchlist",
+            "--once",
+            "--notify",
+            "webhook",
+            "--webhook-url",
+            "https://example.invalid/hook",
+            "--notify-attempts",
+            "3",
+        ]
+    )
+
+    assert ns.notify == "webhook"
+    assert ns.webhook_url == "https://example.invalid/hook"
+    assert ns.notify_attempts == 3
 
 
 def test_alert_monitor_help_describes_watchlist_mode(capsys):
@@ -168,22 +203,44 @@ def test_alert_monitor_once_writes_alerts_and_event_log(tmp_path, monkeypatch, c
 
     parser = build_parser()
     ns = parser.parse_args(
-        ["alert", "monitor", "--mode", "watchlist", "--once", "--as-of", "2026-06-12"]
+        [
+            "alert",
+            "monitor",
+            "--mode",
+            "watchlist",
+            "--once",
+            "--as-of",
+            "2026-06-12",
+            "--notify",
+            "stdout",
+        ]
     )
 
     assert ns.func(ns) == 0
 
     out = capsys.readouterr().out
     assert '"alerts_count": 1' in out
+    assert '"deliveries_count": 1' in out
     assert "SSE:600660" in out
 
     alerts = store.get_alerts(as_of=research_cli.date.fromisoformat("2026-06-12"))
     assert len(alerts) == 1
     assert alerts.iloc[0]["symbol"] == "SSE:600660"
+    deliveries = store.get_alert_deliveries(
+        as_of=research_cli.date.fromisoformat("2026-06-12")
+    )
+    assert len(deliveries) == 1
+    assert deliveries.iloc[0]["destination"] == "stdout"
+    assert bool(deliveries.iloc[0]["success"]) is True
 
     events = EventLog(tmp_path / "artifacts" / "alerts.db").query(event_type="ALERT")
     assert len(events) == 1
     assert events[0]["payload"]["symbol"] == "SSE:600660"
+    delivery_events = EventLog(tmp_path / "artifacts" / "alerts.db").query(
+        event_type="ALERT_DELIVERY"
+    )
+    assert len(delivery_events) == 1
+    assert delivery_events[0]["payload"]["destination"] == "stdout"
 
 
 def test_alert_monitor_uses_latest_watchlist_status_when_json_is_absent(
