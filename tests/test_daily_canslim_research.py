@@ -177,6 +177,58 @@ def test_detects_flat_base_candidate_and_breakout_volume_confirmation():
     assert setup["volume_multiple"] >= 1.4
 
 
+def test_detects_cup_base_candidate_with_pivot_and_recovery_quality():
+    from trading_os.research.technical import detect_technical_setup
+
+    closes = (
+        [30.0, 29.0, 28.0, 26.0, 24.0, 22.0, 21.0, 20.5, 21.0, 22.0]
+        + [23.0, 24.0, 25.5, 27.0, 28.0, 29.0, 29.5, 29.0, 29.8, 30.2]
+        + [29.6, 29.7, 29.9, 30.0, 30.1, 30.0, 29.8, 30.0, 30.15, 30.05]
+    )
+    bars = pd.DataFrame(
+        [
+            {
+                "symbol": "SSE:600000",
+                "ts": f"2026-04-{index:02d}",
+                "close": close,
+                "volume": 1200 if index < 20 else 900,
+            }
+            for index, close in enumerate(closes, start=1)
+        ]
+    )
+
+    setup = detect_technical_setup("SSE:600000", bars)
+
+    assert setup["setup_type"] == "cup_base_candidate"
+    assert setup["base_depth_pct"] > 0.25
+    assert setup["recovery_pct"] >= 0.9
+    assert setup["volume_dry_up"] is True
+    assert setup["risk_flags"] == []
+
+
+def test_detects_extended_from_pivot_risk_flag():
+    from trading_os.research.technical import detect_technical_setup
+
+    closes = [10.0, 10.2, 10.1, 10.3, 10.2] * 8 + [11.0, 12.4]
+    bars = pd.DataFrame(
+        [
+            {
+                "symbol": "SSE:600000",
+                "ts": f"2026-05-{index:02d}",
+                "close": close,
+                "volume": 1000,
+            }
+            for index, close in enumerate(closes, start=1)
+        ]
+    )
+
+    setup = detect_technical_setup("SSE:600000", bars)
+
+    assert setup["status"] == "wait_for_breakout"
+    assert "extended_from_pivot" in setup["risk_flags"]
+    assert setup["entry_quality"] == "extended"
+
+
 def test_decision_board_emits_one_decision_per_strict_candidate():
     from trading_os.research.decisions import build_canslim_decisions
 
