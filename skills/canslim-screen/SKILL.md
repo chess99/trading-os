@@ -14,6 +14,12 @@ description: |
 
 基于威廉·欧奈尔《笑傲股市》（How to Make Money in Stocks）的 CANSLIM 方法。
 
+> 当前 Trading OS 的生产级全 A 筛选以 `skills/canslim-system/SKILL.md`、
+> `skills/daily-workflow/SKILL.md` 和 `artifacts/README.md` 为准。
+> 本 skill 只保留 CANSLIM 评分知识，不规范目录结构，也不能替代 daily closure。
+> 最终交付报告必须写入 `artifacts/research/`；机器证据链留在
+> `data/research/runs/{run_id}/`。
+
 欧奈尔的核心洞见：**最大涨幅的股票在起涨前，都有共同的基本面特征。**
 技术面告诉你何时买，基本面告诉你该买什么。两者缺一不可。
 

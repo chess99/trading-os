@@ -46,6 +46,41 @@ def test_fetch_daily_bars_uses_eastmoney_and_normalizes_volume():
     assert df["source"].unique().tolist() == ["eastmoney"]
 
 
+def test_fetch_daily_bars_falls_back_to_akshare_daily_when_eastmoney_fails():
+    from trading_os.data.schema import Adjustment, Exchange
+    from trading_os.data.sources.akshare_source import fetch_daily_bars
+
+    fallback = pd.DataFrame(
+        {
+            "date": pd.date_range("2024-01-01", periods=2, freq="B"),
+            "open": [10.0, 10.1],
+            "high": [10.5, 10.6],
+            "low": [9.5, 9.6],
+            "close": [10.2, 10.3],
+            "volume": [1_000_000.0, 2_000_000.0],
+            "amount": [10_000_000.0, 21_000_000.0],
+        }
+    )
+    mock_ak = MagicMock()
+    mock_ak.stock_zh_a_hist.side_effect = RuntimeError("eastmoney unavailable")
+    mock_ak.stock_zh_a_daily.return_value = fallback
+
+    with patch.dict("sys.modules", {"akshare": mock_ak}):
+        df, source = fetch_daily_bars(
+            "600000",
+            exchange=Exchange.SSE,
+            start="2024-01-01",
+            end="2024-01-10",
+            adjustment=Adjustment.QFQ,
+        )
+
+    assert source == "sina_daily"
+    assert mock_ak.stock_zh_a_daily.call_args.kwargs["symbol"] == "sh600000"
+    assert df["symbol"].unique().tolist() == ["SSE:600000"]
+    assert df["volume"].tolist() == [1_000_000.0, 2_000_000.0]
+    assert df["source"].unique().tolist() == ["sina_daily"]
+
+
 def test_fetch_daily_bars_rejects_non_equity_asset_type():
     from trading_os.data.schema import Adjustment, AssetType, Exchange
     from trading_os.data.sources.akshare_source import fetch_daily_bars

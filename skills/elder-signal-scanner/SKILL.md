@@ -5,7 +5,7 @@ description: |
   当用户说"扫描市场"、"看看今天有什么机会"、"帮我筛选标的"、"有哪些股票值得看"、
   "跑一下信号扫描"、"今天哪些标的有信号"时触发（模式 A：用户提供候选池）。
   当用户说"读取 Elder 研究运行结果"、"分析昨天的 Elder 候选"时触发
-  （模式 B：读取 artifacts/runs/{run_id}/manifest.json 和 report.md）。
+  （模式 B：读取 data/research/runs/{run_id}/manifest.json 和 report.md）。
   通常由 elder-system 调用，也可以单独使用。
   输出按信号强度排序的候选清单，供 elder-screen 做进一步深度分析。
 ---
@@ -153,15 +153,15 @@ description: |
 
 ## 模式 B：读取 recipe 运行结果
 
-当用户说"读取 Elder 研究运行结果"、"分析昨天的 Elder 候选"时，从 `artifacts/runs/{run_id}/` 读取证据链：
+当用户说"读取 Elder 研究运行结果"、"分析昨天的 Elder 候选"时，从 `data/research/runs/{run_id}/` 读取证据链：
 
 ```bash
 # 查看运行证据链
 python -m trading_os data status
 
 # 读取指定 run
-cat artifacts/runs/{run_id}/manifest.json
-cat artifacts/runs/{run_id}/report.md
+cat data/research/runs/{run_id}/manifest.json
+cat data/research/runs/{run_id}/report.md
 ```
 
 读取 manifest/report 后，对候选列表中的每只股票：

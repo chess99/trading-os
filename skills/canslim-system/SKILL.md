@@ -12,8 +12,28 @@ description: |
 CANSLIM 是 ResearchStore + DataHub + research recipe 驱动的成长股研究体系。
 
 Agent 不直接拼接底层数据脚本，不直接读 parquet，不把快筛结果当作买入结论。
+Recipe 和脚本只提供证据链、候选表和草稿。最终研究报告必须由 agent 以研究员/基金经理身份
+亲自阅读 manifest、trace、候选表、单标的深研和 watchlist 后改写；不能把自动生成的
+Markdown、CSV 摘要或路径清单直接交给用户冒充研究结论。
 
 ## 快筛入口
+
+Daily CANSLIM closure command:
+
+```bash
+python -m trading_os research daily-canslim --as-of YYYY-MM-DD
+```
+
+Required final user-facing outputs:
+
+- `artifacts/research/daily-canslim-YYYYMMDD.md`
+- `artifacts/research/canslim-strict-review-YYYYMMDD.md`
+- `artifacts/watchlist/state.json`
+- linked `data/research/runs/{run_id}/manifest.json`
+
+Daily CANSLIM closure 会解析最近一个已完成交易日，运行全 A CANSLIM 快筛，研究每一个
+strict 候选，写入决策并更新观察池。Agent 必须总结 decisions 和 watchlist changes；
+cannot only return run manifest paths。
 
 全 A 快筛使用：
 
@@ -30,6 +50,30 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 5. 输出候选、评分拆解、过滤统计、manifest、trace 和 report。
 
 快筛不应触发全市场逐标的历史 K 线刷新。
+
+`--top` 只是展示上限：
+
+- `report.md` 和 `tables/candidates.csv` 只展示前 N 个候选。
+- 实际候选总数必须读 `manifest.json` 的 `candidates_total`。
+- 严格候选总数必须读 `strict_candidates_total`。
+- 全量候选明细必须读 `tables/all_candidates.csv`。
+- Daily CANSLIM closure 中的 `--top` display limits never limit downstream strict-candidate processing。
+
+不要把 `Displayed Candidates` 当作全量扫描结果。
+
+## 快筛后的默认动作
+
+扫描完成后，agent 应按以下顺序推进：
+
+1. 读取 manifest、report、`tables/all_candidates.csv`，解释全量候选数、展示数量、过滤统计和数据限制。
+2. 对全部 `strict_canslim_candidate` 建立深研队列；不要任意只取 top 3。
+3. 只在 strict 数量过多、用户要求压缩成本，或深研 recipe 明确受限时，才按分数/RS/流动性分批执行。
+4. `provisional_research_queue` 不是正式候选；先补缺失字段或说明限制，再决定是否深研。
+5. 深研完成后，必须在 `artifacts/research/` 写一份人类可读完整复核报告；有 strict 候选时文件名使用 `canslim-strict-review-YYYYMMDD.md`。不能只返回 `data/research/runs/...` 路径，也不能留下“后续再补”的维度后停止。
+6. 完整复核报告必须体现 agent 的研究判断：今天最值得看的标的、为什么值得看、哪些只是等待突破、哪些需要降级、关键风险和下一步动作；不能只是脚本生成的列表、指标转述或路径清单。
+7. 完整复核报告必须包括：全量候选数、strict/provisional 数、全部 strict 标的、单标的报告路径、近 12 个月公告/事件、管理层指引/订单/产能/产品线索、机构持仓、主营构成、同业拥挤度、base/pivot/突破放量技术确认、数据限制、下一步队列。
+8. 如果某个外部数据源真实失败，必须列明失败接口、失败原因、替代口径和对置信度的影响；不得把缺口写成待办后直接结束。
+9. 完整复核报告完成后，再进入 watchlist、回测和风控。
 
 ## 单标的深研入口
 

@@ -113,3 +113,27 @@ def test_research_store_writes_run_artifacts(tmp_path):
     assert (run.path / "trace.md").read_text(encoding="utf-8") == "loaded fixture data\n"
     assert (run.path / "report.md").read_text(encoding="utf-8") == "# Report\n"
     assert (run.path / "tables" / "candidates.csv").exists()
+
+
+def test_research_store_fundamentals_append_mode_preserves_deterministic_default_path(tmp_path):
+    from trading_os.research.store import ResearchStore
+
+    store = ResearchStore(tmp_path / "research")
+    default_path = store.write_fundamentals(
+        pd.DataFrame([{"symbol": "SSE:600000", "roe": 0.10}]),
+        as_of=date(2026, 6, 1),
+        source="fixture",
+    )
+    append_path = store.write_fundamentals(
+        pd.DataFrame([{"symbol": "SZSE:000001", "roe": 0.20}]),
+        as_of=date(2026, 6, 1),
+        source="provider",
+        append=True,
+    )
+
+    assert default_path.name == "2026-06-01.parquet"
+    assert append_path.name.startswith("2026-06-01-")
+    assert sorted(store.get_fundamentals(as_of=date(2026, 6, 1))["symbol"].tolist()) == [
+        "SSE:600000",
+        "SZSE:000001",
+    ]

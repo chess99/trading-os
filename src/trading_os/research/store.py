@@ -78,6 +78,48 @@ class ResearchStore:
     def get_quote_snapshot(self, *, as_of: date) -> Any:
         return self._read_latest_snapshot("quote_snapshot", as_of=as_of, key="symbol")
 
+    def write_provider_health(self, records: list[dict[str, Any]]) -> Path:
+        df = self._normalize_frame(records)
+        if df.empty:
+            return self._dataset_path("provider_health", "empty")
+        if "recorded_at" not in df.columns:
+            df["recorded_at"] = datetime.now(timezone.utc).isoformat()
+        partition = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S") + "-" + uuid4().hex[:8]
+        return self._write_dataset("provider_health", df, partition)
+
+    def get_provider_health(self) -> Any:
+        return self._read_dataset("provider_health")
+
+    def write_decisions(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("decisions", records)
+
+    def get_decisions(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("decisions", as_of=as_of)
+
+    def write_watchlist_state(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("watchlist_state", records)
+
+    def get_watchlist_state(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("watchlist_state", as_of=as_of)
+
+    def write_alerts(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("alerts", records)
+
+    def get_alerts(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("alerts", as_of=as_of)
+
+    def write_alert_deliveries(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("alert_deliveries", records)
+
+    def get_alert_deliveries(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("alert_deliveries", as_of=as_of)
+
+    def write_technical_setups(self, records: list[dict[str, Any]]) -> Path:
+        return self._write_event_dataset("technical_setups", records)
+
+    def get_technical_setups(self, as_of: date | None = None) -> Any:
+        return self._read_event_dataset("technical_setups", as_of=as_of)
+
     def write_fundamentals(
         self,
         df: Any,
@@ -86,7 +128,11 @@ class ResearchStore:
         source: str,
         provenance: dict[str, Any] | None = None,
         freshness_policy: str = "quarterly",
+        append: bool = False,
     ) -> Path:
+        partition = as_of.isoformat()
+        if append:
+            partition += "-" + uuid4().hex[:8]
         return self._write_snapshot_dataset(
             "fundamentals",
             df,
@@ -94,6 +140,7 @@ class ResearchStore:
             source=source,
             provenance=provenance,
             freshness_policy=freshness_policy,
+            partition=partition,
         )
 
     def get_fundamentals(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
@@ -110,7 +157,7 @@ class ResearchStore:
         )
 
     def get_estimates(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
-        df = self._read_latest_snapshot("estimates", as_of=as_of, key="symbol")
+        df = self._read_latest_estimates(as_of=as_of)
         if symbols is not None and not df.empty:
             df = df[df["symbol"].isin(symbols)].reset_index(drop=True)
         return df
@@ -127,6 +174,46 @@ class ResearchStore:
         if symbols is not None and not df.empty:
             df = df[df["symbol"].isin(symbols)].reset_index(drop=True)
         return df
+
+    def write_segments(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "segments", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_segments(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("segments", symbols=symbols, as_of=as_of)
+
+    def write_institutional(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "institutional", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_institutional(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("institutional", symbols=symbols, as_of=as_of)
+
+    def write_peers(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "peers", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_peers(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("peers", symbols=symbols, as_of=as_of)
+
+    def write_guidance(
+        self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
+    ) -> Path:
+        return self._write_snapshot_dataset(
+            "guidance", df, as_of=as_of, source=source, provenance=provenance
+        )
+
+    def get_guidance(self, symbols: list[str] | None = None, *, as_of: date) -> Any:
+        return self._get_symbol_snapshot("guidance", symbols=symbols, as_of=as_of)
 
     def write_factors(
         self, df: Any, *, as_of: date, source: str, provenance: dict[str, Any] | None = None
@@ -163,6 +250,11 @@ class ResearchStore:
         end_ts = self._pd.Timestamp(end, tz="UTC")
         df = df[df["symbol"].isin(symbols)]
         df = df[(df["ts"] >= start_ts) & (df["ts"] < end_ts)]
+        sort_columns = ["symbol", "ts"]
+        if "fetched_at" in df.columns:
+            sort_columns.append("fetched_at")
+        df = df.sort_values(sort_columns)
+        df = df.drop_duplicates(["symbol", "ts"], keep="last")
         return df.sort_values(["symbol", "ts"]).reset_index(drop=True)
 
     def start_run(self, recipe: str, *, inputs: dict[str, Any]) -> ResearchRun:
@@ -211,6 +303,7 @@ class ResearchStore:
         source: str,
         provenance: dict[str, Any] | None,
         freshness_policy: str = "daily",
+        partition: str | None = None,
     ) -> Path:
         out = self._normalize_frame(df)
         out["as_of"] = as_of.isoformat()
@@ -218,7 +311,27 @@ class ResearchStore:
         out["fetched_at"] = datetime.now(timezone.utc).isoformat()
         out["provenance"] = json.dumps(provenance or {}, ensure_ascii=False)
         out["freshness_policy"] = freshness_policy
-        return self._write_dataset(dataset, out, as_of.isoformat())
+        return self._write_dataset(dataset, out, partition or as_of.isoformat())
+
+    def _write_event_dataset(self, dataset: str, records: list[dict[str, Any]]) -> Path:
+        out = self._normalize_frame(records)
+        if out.empty:
+            return self._dataset_path(dataset, "empty")
+        if "fetched_at" not in out.columns:
+            out["fetched_at"] = datetime.now(timezone.utc).isoformat()
+        partition = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f") + "-" + uuid4().hex[:8]
+        return self._write_dataset(dataset, out, partition)
+
+    def _read_event_dataset(self, dataset: str, as_of: date | None = None) -> Any:
+        df = self._read_dataset(dataset)
+        if df.empty:
+            return df
+        if as_of is not None and "as_of" in df.columns:
+            as_of_values = self._pd.to_datetime(df["as_of"], errors="coerce").dt.date
+            df = df[as_of_values <= as_of]
+        if "fetched_at" in df.columns:
+            df = df.sort_values("fetched_at")
+        return df.reset_index(drop=True)
 
     def _read_latest_snapshot(self, dataset: str, *, as_of: date, key: str) -> Any:
         df = self._read_dataset(dataset)
@@ -229,6 +342,59 @@ class ResearchStore:
             return df.reset_index(drop=True)
         df = df.sort_values(["as_of", "fetched_at"])
         return df.groupby(key, as_index=False).tail(1).sort_values(key).reset_index(drop=True)
+
+    def _read_latest_estimates(self, *, as_of: date) -> Any:
+        df = self._read_dataset("estimates")
+        if df.empty:
+            return df
+        df = df[df["as_of"] <= as_of.isoformat()]
+        if df.empty:
+            return df.reset_index(drop=True)
+
+        out = df.copy()
+        sort_columns = []
+        ascending = []
+        for column in ["estimate_date", "report_date", "published_at", "as_of", "fetched_at"]:
+            if column not in out.columns:
+                continue
+            parsed_column = f"__parsed_{column}"
+            out[parsed_column] = self._pd.to_datetime(out[column], errors="coerce", utc=True)
+            sort_columns.append(parsed_column)
+            ascending.append(False)
+
+        if not sort_columns:
+            return (
+                out.sort_values(["as_of", "fetched_at"])
+                .groupby("symbol", as_index=False)
+                .tail(1)
+                .sort_values("symbol")
+                .reset_index(drop=True)
+            )
+
+        return (
+            out.sort_values(
+                sort_columns,
+                ascending=ascending,
+                na_position="last",
+                kind="mergesort",
+            )
+            .drop_duplicates("symbol", keep="first")
+            .drop(columns=sort_columns)
+            .sort_values("symbol")
+            .reset_index(drop=True)
+        )
+
+    def _get_symbol_snapshot(
+        self,
+        dataset: str,
+        *,
+        symbols: list[str] | None,
+        as_of: date,
+    ) -> Any:
+        df = self._read_latest_snapshot(dataset, as_of=as_of, key="symbol")
+        if symbols is not None and not df.empty:
+            df = df[df["symbol"].isin(symbols)].reset_index(drop=True)
+        return df
 
     def _dataset_path(self, dataset: str, partition: str) -> Path:
         return self.datasets / dataset / f"{partition}.parquet"
