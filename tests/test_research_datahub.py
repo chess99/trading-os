@@ -1224,6 +1224,53 @@ def test_akshare_quote_snapshot_falls_back_to_legacy_spot(tmp_path, monkeypatch)
     assert quotes.iloc[0]["source"] == "akshare"
 
 
+def test_akshare_ths_fundamentals_extracts_canslim_core_fields():
+    from trading_os.research.datahub import _quarter_history_from_ths
+
+    raw = pd.DataFrame(
+        [
+            {
+                "symbol": "SSE:600000",
+                "report_date": "2026-03-31",
+                "metric_name": "parent_holder_net_profit",
+                "single": 100.0,
+                "single_yoy": 0.25,
+                "value": 100.0,
+            },
+            {
+                "symbol": "SSE:600000",
+                "report_date": "2026-03-31",
+                "metric_name": "basic_eps",
+                "single": 1.0,
+                "single_yoy": 0.35,
+                "value": 1.0,
+            },
+            {
+                "symbol": "SSE:600000",
+                "report_date": "2026-03-31",
+                "metric_name": "index_weighted_avg_roe",
+                "single": 22.0,
+                "single_yoy": None,
+                "value": 22.0,
+            },
+            {
+                "symbol": "SSE:600000",
+                "report_date": "2025-12-31",
+                "metric_name": "parent_holder_net_profit",
+                "single": 90.0,
+                "single_yoy": 0.20,
+                "value": 90.0,
+            },
+        ]
+    )
+
+    row = _quarter_history_from_ths("SSE:600000", raw, as_of=date(2026, 7, 3))
+
+    assert row["eps_growth_yoy"] == 0.35
+    assert row["roe"] == 0.22
+    assert row["positive_quarters"] == 2
+
+
 def test_datahub_offline_raises_when_cache_missing(tmp_path):
     from trading_os.research.datahub import DataHub, MissingDataError
     from trading_os.research.store import ResearchStore

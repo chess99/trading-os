@@ -794,9 +794,50 @@ def _quarter_history_from_ths(
         positive_quarters += 1
 
     latest = profit.iloc[0]
+    latest_rows = df[df["report_date"] == latest["report_date"]]
+    basic_eps = _metric_row(latest_rows, "basic_eps")
+    weighted_roe = _metric_row(latest_rows, "index_weighted_avg_roe")
+    full_diluted_roe = _metric_row(latest_rows, "index_full_diluted_roe")
+    revenue_growth = _metric_row(
+        latest_rows,
+        "calculate_operating_income_total_yoy_growth_ratio",
+    )
+    profit_growth = _metric_row(
+        latest_rows,
+        "calculate_parent_holder_net_profit_yoy_growth_ratio",
+    )
     return {
         "symbol": symbol,
         "period": latest["report_date"].date().isoformat(),
         "pub_date": latest["report_date"].date().isoformat(),
+        "eps_growth_yoy": _numeric_or_none(basic_eps.get("single_yoy")),
+        "roe": _percent_or_none(weighted_roe.get("value") or full_diluted_roe.get("value")),
+        "revenue_growth_yoy": _percent_or_none(revenue_growth.get("value")),
+        "net_profit_growth_yoy": _percent_or_none(profit_growth.get("value")),
         "positive_quarters": positive_quarters,
     }
+
+
+def _metric_row(df: Any, metric_name: str) -> dict[str, Any]:
+    rows = df[df["metric_name"] == metric_name]
+    if rows.empty:
+        return {}
+    return rows.iloc[0].to_dict()
+
+
+def _numeric_or_none(value: Any) -> float | None:
+    import pandas as pd
+
+    try:
+        if pd.isna(value):
+            return None
+        return float(value)
+    except Exception:
+        return None
+
+
+def _percent_or_none(value: Any) -> float | None:
+    numeric = _numeric_or_none(value)
+    if numeric is None:
+        return None
+    return numeric / 100.0 if abs(numeric) > 1 else numeric

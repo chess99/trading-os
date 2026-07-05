@@ -90,9 +90,20 @@ def run_canslim_screen(
     prefilter_output_total = len(liquid)
     symbols = liquid["symbol"].astype(str).tolist()
 
-    fundamentals = hub.store.get_fundamentals(symbols, as_of=as_of)
-    if fundamentals.empty:
-        fundamentals = hub.get_fundamentals(symbols, as_of=as_of, policy="cache_first")
+    fundamentals = hub.get_fundamentals(symbols, as_of=as_of, policy="cache_first")
+    core_fundamentals_missing = _core_fundamentals_missing_symbols(fundamentals, symbols)
+    if core_fundamentals_missing:
+        trace.append(
+            "- refresh core fundamentals for "
+            f"`{len(core_fundamentals_missing)}` symbols with incomplete cached fields"
+        )
+        refreshed = hub.get_fundamentals(
+            core_fundamentals_missing,
+            as_of=as_of,
+            policy="refresh",
+        )
+        if refreshed is not None and not refreshed.empty:
+            fundamentals = hub.store.get_fundamentals(symbols, as_of=as_of)
     data_coverage["fundamentals"] = _snapshot_coverage(fundamentals)
     if fundamentals.empty:
         filtered["insufficient_data"] = len(symbols)
@@ -1012,6 +1023,29 @@ def _core_pass_symbols_missing_quarter_history(
             continue
         positive_quarters = _int_or_none(row.get("positive_quarters"))
         if eps_growth >= 0.18 and roe >= 0.17 and positive_quarters is None:
+            result.append(symbol)
+    return result
+
+
+def _core_fundamentals_missing_symbols(
+    fundamentals: pd.DataFrame, symbols: list[str]
+) -> list[str]:
+    if fundamentals.empty:
+        return []
+    if "symbol" not in fundamentals.columns:
+        return []
+    latest = (
+        fundamentals.sort_values(["as_of", "fetched_at"])
+        .groupby("symbol", as_index=False)
+        .tail(1)
+    )
+    latest_by_symbol = {str(row["symbol"]): row for row in latest.to_dict("records")}
+    result = []
+    for symbol in symbols:
+        row = latest_by_symbol.get(symbol)
+        if row is None:
+            continue
+        if _float(row.get("eps_growth_yoy")) is None or _float(row.get("roe")) is None:
             result.append(symbol)
     return result
 

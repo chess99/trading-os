@@ -279,6 +279,103 @@ def test_canslim_screen_uses_snapshots_and_lazy_bars_without_bulk_refresh(tmp_pa
     assert (result.run.path / "report.md").exists()
 
 
+def test_canslim_screen_fetches_missing_fundamentals_when_cache_is_partial(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    class PartialCacheProvider(RecipeProvider):
+        def __init__(self) -> None:
+            super().__init__()
+            self.fundamental_calls: list[list[str]] = []
+
+        def fetch_fundamentals(self, symbols, as_of, periods):
+            self.fundamental_calls.append(list(symbols))
+            return pd.DataFrame(
+                [
+                    {
+                        "symbol": symbol,
+                        "period": "2026Q1",
+                        "eps_growth_yoy": 0.05,
+                        "roe": 0.10,
+                        "positive_quarters": 8,
+                    }
+                    for symbol in symbols
+                ]
+            )
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {
+                    "symbol": "SSE:600000",
+                    "period": "2026Q1",
+                    "eps_growth_yoy": 0.35,
+                    "roe": 0.22,
+                    "positive_quarters": 8,
+                }
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="fixture",
+    )
+    provider = PartialCacheProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
+
+    assert provider.fundamental_calls == [["SSE:600001"]]
+    assert result.filtered_out["insufficient_data"] == 0
+    assert result.filtered_out["no_signal"] == 1
+
+
+def test_canslim_screen_refreshes_incomplete_cached_fundamental_fields(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    class RepairingProvider(RecipeProvider):
+        def __init__(self) -> None:
+            super().__init__()
+            self.fundamental_calls: list[list[str]] = []
+
+        def fetch_fundamentals(self, symbols, as_of, periods):
+            self.fundamental_calls.append(list(symbols))
+            return pd.DataFrame(
+                [
+                    {
+                        "symbol": symbol,
+                        "period": "2026Q1",
+                        "eps_growth_yoy": 0.05,
+                        "roe": 0.10,
+                        "positive_quarters": 8,
+                    }
+                    for symbol in symbols
+                ]
+            )
+
+    store = ResearchStore(tmp_path / "research")
+    store.write_fundamentals(
+        pd.DataFrame(
+            [
+                {"symbol": "SSE:600000", "period": "2026Q1", "positive_quarters": 8},
+                {"symbol": "SSE:600001", "period": "2026Q1", "positive_quarters": 8},
+            ]
+        ),
+        as_of=date(2026, 5, 30),
+        source="old_schema",
+    )
+    provider = RepairingProvider()
+    hub = DataHub(store, provider=provider)
+
+    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
+
+    assert provider.fundamental_calls == [["SSE:600000", "SSE:600001"]]
+    assert result.filtered_out["insufficient_data"] == 0
+    assert result.filtered_out["no_signal"] == 2
+
+
 def test_canslim_screen_marks_missing_quarter_history_as_provisional(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.recipes import run_canslim_screen
@@ -342,7 +439,9 @@ def test_canslim_screen_enriches_missing_quarter_history_when_provider_supports_
     provider = EnrichingFundamentalsProvider()
     hub = DataHub(store, provider=provider)
 
-    result = run_canslim_screen(hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=1)
+    result = run_canslim_screen(
+        hub, as_of=date(2026, 5, 30), top_n=10, min_turnover=30_000_000
+    )
 
     assert provider.fundamental_calls == [["SSE:600000"]]
     assert [candidate["symbol"] for candidate in result.candidates] == ["SSE:600000"]

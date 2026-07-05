@@ -1,0 +1,134 @@
+# Daily CANSLIM Research
+
+- requested_as_of: `2026-07-05`
+- effective_as_of: `2026-07-03`
+- screen_run: `20260705T132519Z-canslim_screen-8d1ca4a4`
+- full_candidates: `139`
+- displayed_candidates: `30`
+- strict_candidates_processed: `28`
+- decisions_total: `28`
+
+## Strict Candidates
+- SSE:600345 score=10.0
+- SSE:600961 score=10.0
+- SSE:688017 score=10.0
+- SSE:688045 score=10.0
+- SSE:688097 score=10.0
+- SSE:688237 score=10.0
+- SSE:688295 score=10.0
+- SSE:688347 score=10.0
+- SSE:688449 score=10.0
+- SSE:688479 score=10.0
+- SSE:688535 score=10.0
+- SSE:688593 score=10.0
+- SSE:688627 score=10.0
+- SZSE:002185 score=10.0
+- SZSE:002436 score=10.0
+- SZSE:002842 score=10.0
+- SZSE:300308 score=10.0
+- SZSE:300475 score=10.0
+- SZSE:300486 score=10.0
+- SZSE:300806 score=10.0
+- SZSE:301045 score=10.0
+- SZSE:301071 score=10.0
+- SZSE:301308 score=10.0
+- SZSE:301369 score=10.0
+- SSE:688720 score=9.0
+- SZSE:000636 score=9.0
+- SZSE:002364 score=9.0
+- SZSE:002674 score=9.0
+
+## Deep Research Runs
+- SSE:600345 status=ok report=D:\code\trading-os\data\research\runs\20260705T142930Z-company_research-b0b4d68a\report.md
+- SSE:600961 status=ok report=D:\code\trading-os\data\research\runs\20260705T142931Z-company_research-8d558299\report.md
+- SSE:688017 status=ok report=D:\code\trading-os\data\research\runs\20260705T142932Z-company_research-84e48e3b\report.md
+- SSE:688045 status=ok report=D:\code\trading-os\data\research\runs\20260705T142933Z-company_research-a04f919e\report.md
+- SSE:688097 status=ok report=D:\code\trading-os\data\research\runs\20260705T142933Z-company_research-1ccbb382\report.md
+- SSE:688237 status=ok report=D:\code\trading-os\data\research\runs\20260705T142935Z-company_research-7e2665e1\report.md
+- SSE:688295 status=ok report=D:\code\trading-os\data\research\runs\20260705T142936Z-company_research-34bf1b5d\report.md
+- SSE:688347 status=ok report=D:\code\trading-os\data\research\runs\20260705T142938Z-company_research-68be1115\report.md
+- SSE:688449 status=ok report=D:\code\trading-os\data\research\runs\20260705T142939Z-company_research-1eb9d7f7\report.md
+- SSE:688479 status=ok report=D:\code\trading-os\data\research\runs\20260705T142940Z-company_research-af439cf5\report.md
+- SSE:688535 status=ok report=D:\code\trading-os\data\research\runs\20260705T142942Z-company_research-df82e2c0\report.md
+- SSE:688593 status=ok report=D:\code\trading-os\data\research\runs\20260705T142945Z-company_research-63781248\report.md
+- SSE:688627 status=ok report=D:\code\trading-os\data\research\runs\20260705T142947Z-company_research-3c235933\report.md
+- SZSE:002185 status=ok report=D:\code\trading-os\data\research\runs\20260705T142949Z-company_research-63b009c1\report.md
+- SZSE:002436 status=ok report=D:\code\trading-os\data\research\runs\20260705T142951Z-company_research-94da2dbe\report.md
+- SZSE:002842 status=ok report=D:\code\trading-os\data\research\runs\20260705T142953Z-company_research-403aa578\report.md
+- SZSE:300308 status=ok report=D:\code\trading-os\data\research\runs\20260705T142954Z-company_research-5d71595f\report.md
+- SZSE:300475 status=ok report=D:\code\trading-os\data\research\runs\20260705T142955Z-company_research-1694af7c\report.md
+- SZSE:300486 status=ok report=D:\code\trading-os\data\research\runs\20260705T142956Z-company_research-cdab03a6\report.md
+- SZSE:300806 status=ok report=D:\code\trading-os\data\research\runs\20260705T142957Z-company_research-4b9686db\report.md
+- SZSE:301045 status=ok report=D:\code\trading-os\data\research\runs\20260705T143000Z-company_research-d2406421\report.md
+- SZSE:301071 status=ok report=D:\code\trading-os\data\research\runs\20260705T143001Z-company_research-36e0b312\report.md
+- SZSE:301308 status=ok report=D:\code\trading-os\data\research\runs\20260705T143002Z-company_research-c36775ec\report.md
+- SZSE:301369 status=ok report=D:\code\trading-os\data\research\runs\20260705T143005Z-company_research-aa2af40e\report.md
+- SSE:688720 status=ok report=D:\code\trading-os\data\research\runs\20260705T143007Z-company_research-774273c0\report.md
+- SZSE:000636 status=ok report=D:\code\trading-os\data\research\runs\20260705T143008Z-company_research-0d3ec71c\report.md
+- SZSE:002364 status=ok report=D:\code\trading-os\data\research\runs\20260705T143013Z-company_research-3813d4f5\report.md
+- SZSE:002674 status=ok report=D:\code\trading-os\data\research\runs\20260705T143015Z-company_research-4c21ff32\report.md
+
+## Decisions
+- SSE:600345 decision=wait_for_breakout pivot=73.0 stop=67.16
+- SSE:600961 decision=wait_for_breakout pivot=35.71 stop=32.8532
+- SSE:688017 decision=actionable_watch pivot=488.0 stop=448.96
+- SSE:688045 decision=wait_for_breakout pivot=80.78 stop=74.3176
+- SSE:688097 decision=wait_for_breakout pivot=72.67 stop=66.8564
+- SSE:688237 decision=wait_for_breakout pivot=58.51 stop=53.8292
+- SSE:688295 decision=wait_for_breakout pivot=65.0 stop=59.8
+- SSE:688347 decision=wait_for_breakout pivot=339.14 stop=312.0088
+- SSE:688449 decision=wait_for_breakout pivot=88.55 stop=81.466
+- SSE:688479 decision=wait_for_breakout pivot=38.78 stop=35.6776
+- SSE:688535 decision=wait_for_breakout pivot=187.0 stop=172.04
+- SSE:688593 decision=wait_for_breakout pivot=42.8 stop=39.376
+- SSE:688627 decision=wait_for_breakout pivot=715.0 stop=657.8
+- SZSE:002185 decision=wait_for_breakout pivot=22.56 stop=20.7552
+- SZSE:002436 decision=wait_for_breakout pivot=53.53 stop=49.2476
+- SZSE:002842 decision=wait_for_breakout pivot=52.49 stop=48.2908
+- SZSE:300308 decision=wait_for_breakout pivot=1382.33 stop=1271.7436
+- SZSE:300475 decision=wait_for_breakout pivot=306.25 stop=281.75
+- SZSE:300486 decision=wait_for_breakout pivot=29.98 stop=27.5816
+- SZSE:300806 decision=wait_for_breakout pivot=117.88 stop=108.4496
+- SZSE:301045 decision=wait_for_breakout pivot=98.31 stop=90.4452
+- SZSE:301071 decision=wait_for_breakout pivot=102.96 stop=94.7232
+- SZSE:301308 decision=wait_for_breakout pivot=723.1 stop=665.252
+- SZSE:301369 decision=wait_for_breakout pivot=245.0 stop=225.4
+- SSE:688720 decision=wait_for_breakout pivot=101.0 stop=92.92
+- SZSE:000636 decision=wait_for_breakout pivot=80.27 stop=73.8484
+- SZSE:002364 decision=wait_for_breakout pivot=59.05 stop=54.326
+- SZSE:002674 decision=wait_for_breakout pivot=31.7 stop=29.164
+
+## Watchlist State
+- SSE:600345 status=watching pivot=73.0
+- SSE:600961 status=watching pivot=35.71
+- SSE:688017 status=actionable pivot=488.0
+- SSE:688045 status=watching pivot=80.78
+- SSE:688097 status=watching pivot=72.67
+- SSE:688237 status=watching pivot=58.51
+- SSE:688295 status=watching pivot=65.0
+- SSE:688347 status=watching pivot=339.14
+- SSE:688449 status=watching pivot=88.55
+- SSE:688479 status=watching pivot=38.78
+- SSE:688535 status=watching pivot=187.0
+- SSE:688593 status=watching pivot=42.8
+- SSE:688627 status=watching pivot=715.0
+- SSE:688720 status=watching pivot=101.0
+- SZSE:000636 status=watching pivot=80.27
+- SZSE:002185 status=watching pivot=22.56
+- SZSE:002364 status=watching pivot=59.05
+- SZSE:002436 status=watching pivot=53.53
+- SZSE:002674 status=watching pivot=31.7
+- SZSE:002842 status=watching pivot=52.49
+- SZSE:300308 status=watching pivot=1382.33
+- SZSE:300475 status=watching pivot=306.25
+- SZSE:300486 status=watching pivot=29.98
+- SZSE:300806 status=watching pivot=117.88
+- SZSE:301045 status=watching pivot=98.31
+- SZSE:301071 status=watching pivot=102.96
+- SZSE:301308 status=watching pivot=723.1
+- SZSE:301369 status=watching pivot=245.0
+
+## Data Lineage
+
+- screen_manifest: `D:\code\trading-os\data\research\runs\20260705T132519Z-canslim_screen-8d1ca4a4\manifest.json`
+- screen_report: `D:\code\trading-os\data\research\runs\20260705T132519Z-canslim_screen-8d1ca4a4\report.md`
