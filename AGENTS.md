@@ -24,8 +24,12 @@ Agent 负责：
 - 选择合适的 recipe。
 - 解释 manifest / trace / report。
 - 在缺数据或口径受限时说明限制，不编造。
+- 以研究员或基金经理身份阅读 recipe 产物，形成自己的判断、排序、风险提示和下一步建议。
 
 Agent 不应该每次临场拼接底层脚本，也不应该绕过 DataHub 直接读写数据源。
+脚本和 recipe 只能生成证据链、结构化表格和研究草稿；最终交给用户或老板的汇报必须由
+agent 亲自复核、取舍和改写。不能把脚本自动生成的 Markdown、CSV 摘要、manifest 路径
+直接冒充研究报告；如果报告只是流水账、字段堆砌、缺少结论和投资含义，必须继续重写。
 
 ## 代码架构
 
@@ -160,6 +164,9 @@ python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 
 `--top` 只限制展示结果，绝不能限制下游 strict 候选处理。workflow 不能在写完
 run manifest 后停止，必须完成决策、观察池更新和人类可读日报。
+这里的“人类可读日报”不是脚本模板输出的同义词。Agent 必须把它当作给老板的研究汇报：
+先阅读 manifest、trace、候选表、单标的深研报告和 watchlist，再写出结论、优先级、
+关键风险、数据口径限制和可执行的下一步。若自动生成件不达标，agent 必须手工改写后再交付。
 
 ### Watchlist Alert Monitor
 
@@ -194,6 +201,8 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 - `provisional_research_queue` 只在缺失字段补齐、或用户明确要求扩大覆盖时继续深研。
 - 深研完成后必须在 `artifacts/research/` 生成一份人类可读的完整复核报告，不能只把
   `data/research/runs/...` 或 run manifest 路径甩给用户，也不能留下“后续再补”的维度后停止。
+- 完整复核报告必须体现 agent 的研究判断：哪些标的最值得今天看、为什么、哪些只是等待突破、
+  哪些因为数据或形态问题应降级；不能只是脚本生成的列表、指标转述或路径清单。
 - 完整复核报告必须列出全量候选数、strict/provisional 数、全部 strict 标的、单标的报告路径、近 12 个月公告/事件、管理层指引/订单/产能/产品线索、机构持仓、主营构成、同业拥挤度、base/pivot/突破放量技术确认、数据限制和下一步队列。
 - 如果某个外部数据源真实失败，报告必须列明失败接口、失败原因、已使用的替代口径和对结论置信度的影响；不得把缺口写成待办后直接结束。
 - 完整复核完成后再进入 watchlist、回测或风控流程。

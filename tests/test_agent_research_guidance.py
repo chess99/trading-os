@@ -74,6 +74,23 @@ def test_canslim_guidance_requires_complete_post_screen_review():
             assert term in text
 
 
+def test_research_guidance_requires_agent_written_boss_ready_reports():
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+    canslim = Path("skills/canslim-system/SKILL.md").read_text(encoding="utf-8")
+    daily = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
+
+    for text in [agents, canslim, daily]:
+        assert "研究员" in text
+        assert "基金经理" in text
+        assert "脚本" in text
+        assert "草稿" in text
+        assert "不能把自动生成" in text or "不能把脚本自动生成" in text
+        assert "研究判断" in text
+
+    assert "老板" in agents or "老板" in daily
+    assert "流水账" in agents or "流水账" in daily
+
+
 def test_docs_reference_daily_canslim_closure():
     agents = Path("AGENTS.md").read_text(encoding="utf-8")
     readme = Path("README.md").read_text(encoding="utf-8")

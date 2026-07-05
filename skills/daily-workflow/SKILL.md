@@ -22,10 +22,14 @@ python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 2. 运行 Daily CANSLIM closure recipe。
 3. 读取本次 run 的 `manifest.json`、`trace.md`、`report.md`。
 4. 读取 `artifacts/research/daily-canslim-YYYYMMDD.md` 和 `artifacts/watchlist/state.json`。
-5. 向用户解释候选清单、每个 strict 候选的决策、观察池变化和数据口径限制。
+5. 以研究员/基金经理身份复核脚本产物，必要时手工改写日报；脚本输出只能算证据和草稿。
+6. 向用户解释候选清单、每个 strict 候选的决策、观察池变化和数据口径限制。
+7. 最终汇报必须给出结论、优先级、风险、数据限制和下一步动作，不能只是路径、表格或流水账。
 
 不要手工串联底层数据脚本。不要直接读取 parquet。不要在缺失数据时编造结论。
 不能只输出 run manifest 路径；必须总结决策和 watchlist changes。
+不能把自动生成的 Markdown 直接当成研究报告交付；如果它缺少研究判断、老板级摘要或投资含义，
+agent 必须继续重写。
 
 ## 数据语义
 
