@@ -27,6 +27,7 @@ python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 Required final user-facing outputs:
 
 - `artifacts/research/daily-canslim-YYYYMMDD.md`
+- `artifacts/research/canslim-strict-review-YYYYMMDD.md`
 - `artifacts/watchlist/state.json`
 - linked `data/research/runs/{run_id}/manifest.json`
 
@@ -68,7 +69,7 @@ python -m trading_os research run canslim_screen --as-of YYYY-MM-DD --top 30
 2. 对全部 `strict_canslim_candidate` 建立深研队列；不要任意只取 top 3。
 3. 只在 strict 数量过多、用户要求压缩成本，或深研 recipe 明确受限时，才按分数/RS/流动性分批执行。
 4. `provisional_research_queue` 不是正式候选；先补缺失字段或说明限制，再决定是否深研。
-5. 深研完成后，必须在 `artifacts/research/` 写一份人类可读完整复核报告；不能只返回 `data/research/runs/...` 路径，也不能留下“后续再补”的维度后停止。
+5. 深研完成后，必须在 `artifacts/research/` 写一份人类可读完整复核报告；有 strict 候选时文件名使用 `canslim-strict-review-YYYYMMDD.md`。不能只返回 `data/research/runs/...` 路径，也不能留下“后续再补”的维度后停止。
 6. 完整复核报告必须体现 agent 的研究判断：今天最值得看的标的、为什么值得看、哪些只是等待突破、哪些需要降级、关键风险和下一步动作；不能只是脚本生成的列表、指标转述或路径清单。
 7. 完整复核报告必须包括：全量候选数、strict/provisional 数、全部 strict 标的、单标的报告路径、近 12 个月公告/事件、管理层指引/订单/产能/产品线索、机构持仓、主营构成、同业拥挤度、base/pivot/突破放量技术确认、数据限制、下一步队列。
 8. 如果某个外部数据源真实失败，必须列明失败接口、失败原因、替代口径和对置信度的影响；不得把缺口写成待办后直接结束。

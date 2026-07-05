@@ -25,7 +25,10 @@ skills/          Agent 工作流说明
 data/research/
   runs/          recipe 运行证据链：manifest、trace、tables、charts、report
 artifacts/
-  research/      单标的最终深度研究报告
+  README.md      交付层目录契约
+  research/      最终人类可读研究汇报、strict 复核、单标的深研终稿
+  research/archive/
+                 退出当前事实源的旧批量研究产物，仅供历史追溯
   watchlist/     自选池状态和逐标的追踪
 ```
 
@@ -174,11 +177,18 @@ python -m trading_os alert monitor --mode watchlist --once
 ## Artifact 边界
 
 - `data/research/runs/`：recipe 的完整运行证据链，是新的默认事实源。
-- `artifacts/research/`：只放单个标的最终深度研究报告。
+- `artifacts/research/`：只放最终人类可读研究交付件，包括 daily 汇报、strict 复核备忘录、单标的最终深度研究报告。
+- `artifacts/research/archive/`：只放退出当前事实源的旧批量扫描、旧 CSV 中间表和旧复核产物，不作为新研究输入。
 - `artifacts/watchlist/`：自选池状态和逐标的追踪。
 - `artifacts/journal/`：事件日志和交易审计数据，通常不入库。
 
-历史批量扫描和旧日常产物已经退出当前事实源；需要查看历史时使用 git history。
+历史批量扫描和旧日常产物已经退出当前事实源；需要查看历史时使用 git history 或 `artifacts/research/archive/`。
+
+关键命名：
+
+- Daily CANSLIM 汇报：`daily-canslim-YYYYMMDD.md`
+- CANSLIM strict 复核：`canslim-strict-review-YYYYMMDD.md`
+- 单标的 CANSLIM 深研：`canslim-{EXCHANGE}{TICKER}-YYYYMMDD.md`
 
 ## 开源协议
 

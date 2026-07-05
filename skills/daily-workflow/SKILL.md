@@ -49,6 +49,7 @@ python -m trading_os research daily-canslim --as-of YYYY-MM-DD
 Required final user-facing outputs:
 
 - `artifacts/research/daily-canslim-YYYYMMDD.md`
+- `artifacts/research/canslim-strict-review-YYYYMMDD.md`（存在 strict 候选时）
 - `artifacts/watchlist/state.json`
 - linked `data/research/runs/{run_id}/manifest.json`
 
@@ -61,6 +62,10 @@ data/research/runs/{run_id}/tables/*.csv
 data/research/runs/{run_id}/charts/*.png
 data/research/runs/{run_id}/report.md
 ```
+
+`data/research/runs/{run_id}/report.md` 是机器证据摘要，不是最终交付报告。
+最终给用户看的 daily 汇报和 strict 复核必须放在 `artifacts/research/`。
+旧 CSV、中间表和退出当前事实源的历史复核放入 `artifacts/research/archive/`。
 
 回答用户时必须引用本次 run 的 manifest/report 路径，并说明：
 

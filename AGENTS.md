@@ -47,7 +47,10 @@ skills/          Agent 工作流说明
 data/research/
   runs/          每次 recipe 运行的 manifest、trace、tables、charts、report
 artifacts/
-  research/      单标的最终深度研究报告，git 追踪
+  README.md      交付层目录契约
+  research/      最终人类可读研究汇报、strict 复核、单标的深研终稿
+  research/archive/
+                 退出当前事实源的旧批量研究产物，仅供历史追溯
   watchlist/     自选池状态和逐标的追踪
 ```
 
@@ -243,14 +246,18 @@ python -m trading_os backtest run strategy_name --start YYYY-MM-DD --end YYYY-MM
 产物边界：
 
 - `data/research/runs/`：recipe 的完整运行证据链，是默认产物目录。
-- `artifacts/research/`：放人类可读的研究汇总、单标的最终深度研究报告。
+- `artifacts/research/`：放最终人类可读研究交付件，包括 daily 汇报、strict 复核备忘录、单标的最终深度研究报告。
+- `artifacts/research/archive/`：放退出当前事实源的旧批量扫描、旧 CSV 中间表和旧复核产物；不得作为新研究输入。
 - `artifacts/watchlist/`：自选池状态和逐标的追踪。
 - `artifacts/journal/`：事件日志和交易审计数据，通常不入库。
 
-旧日常产物和旧批量扫描产物已经退出当前事实源；需要查看历史时使用 git history，不要把旧文件当作新的研究输入。
+旧日常产物和旧批量扫描产物已经退出当前事实源；需要查看历史时使用 git history 或
+`artifacts/research/archive/`，不要把旧文件当作新的研究输入。
 
 单标的深度研究报告命名：
 
+- Daily CANSLIM：`daily-canslim-YYYYMMDD.md`
+- CANSLIM strict 复核：`canslim-strict-review-YYYYMMDD.md`
 - Value：`value-{EXCHANGE}{TICKER}-YYYYMMDD.md`
 - CANSLIM：`canslim-{EXCHANGE}{TICKER}-YYYYMMDD.md`
 - Elder：`elder-{EXCHANGE}{TICKER}-YYYYMMDD.md`

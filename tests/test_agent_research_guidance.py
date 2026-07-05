@@ -108,6 +108,7 @@ def test_daily_skill_requires_human_report_and_watchlist_state():
     text = Path("skills/daily-workflow/SKILL.md").read_text(encoding="utf-8")
 
     assert "artifacts/research/daily-canslim-YYYYMMDD.md" in text
+    assert "artifacts/research/canslim-strict-review-YYYYMMDD.md" in text
     assert "artifacts/watchlist/state.json" in text
     assert "data/research/runs/{run_id}/manifest.json" in text
     assert "artifacts/runs/{run_id}" not in text
@@ -163,7 +164,24 @@ def test_gitignore_tracks_new_artifact_boundaries_not_retired_scan_daily():
     text = Path(".gitignore").read_text(encoding="utf-8")
 
     assert "!artifacts/research/" in text
+    assert "!artifacts/README.md" in text
     assert "!artifacts/watchlist/" in text
     assert "!artifacts/runs/" in text
     assert "!artifacts/daily/" not in text
     assert "!artifacts/scan/" not in text
+
+
+def test_artifact_contract_separates_delivery_from_run_evidence():
+    artifacts = Path("artifacts/README.md").read_text(encoding="utf-8")
+    research = Path("artifacts/research/README.md").read_text(encoding="utf-8")
+    agents = Path("AGENTS.md").read_text(encoding="utf-8")
+    readme = Path("README.md").read_text(encoding="utf-8")
+    screen = Path("skills/canslim-screen/SKILL.md").read_text(encoding="utf-8")
+
+    for text in [artifacts, research, agents, readme]:
+        assert "archive/" in text
+        assert "canslim-strict-review-YYYYMMDD.md" in text
+
+    assert "data/research/runs/{run_id}/" in artifacts
+    assert "机器证据链" in screen
+    assert "只放单个标的最终深度研究报告" not in readme

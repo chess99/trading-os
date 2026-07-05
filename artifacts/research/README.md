@@ -1,22 +1,19 @@
 # Research Artifacts
 
-`artifacts/research/` 只保存单个标的的最终深度研究报告。
+本目录只放最终人类可读研究交付件。
 
-命名：
+允许放入：
 
-- `value-{EXCHANGE}{TICKER}-YYYYMMDD.md`
-- `canslim-{EXCHANGE}{TICKER}-YYYYMMDD.md`
-- `elder-{EXCHANGE}{TICKER}-YYYYMMDD.md`
+- `daily-canslim-YYYYMMDD.md`：每日 CANSLIM 投研汇报。
+- `canslim-strict-review-YYYYMMDD.md`：每日 strict 候选完整复核备忘录。
+- `canslim-{EXCHANGE}{TICKER}-YYYYMMDD.md`：单标的 CANSLIM 深研终稿。
+- `value-{EXCHANGE}{TICKER}-YYYYMMDD.md`：单标的 Value 深研终稿。
+- `elder-{EXCHANGE}{TICKER}-YYYYMMDD.md`：单标的 Elder 深研终稿。
 
 不要放入：
 
-- daily 拆解、TODO、后续处理记录
-- 扫描候选清单或扫描解读
-- 临时笔记
-- 原始扫描 JSON
+- recipe 中间表、临时 CSV、原始 JSON。
+- 只包含路径或字段罗列的机器报告。
+- 未经 agent 复核改写的脚本草稿。
 
-这些内容分别放在：
-
-- `artifacts/daily/YYYYMMDD.md`
-- `artifacts/scan/{system}-YYYYMMDD.json`
-- `artifacts/scan/{system}-YYYYMMDD.md`
+旧批量扫描和旧 daily 产物统一放入 `archive/`，不得作为当前研究事实源。
