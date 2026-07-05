@@ -96,7 +96,13 @@ def cmd_research(ns: argparse.Namespace) -> int:
         as_of = date.fromisoformat(ns.as_of)
         if ns.recipe != "canslim_screen":
             raise RuntimeError(f"unknown research recipe: {ns.recipe}")
-        result = run_canslim_screen(hub, as_of=as_of, top_n=ns.top, min_turnover=ns.min_turnover)
+        result = run_canslim_screen(
+            hub,
+            as_of=as_of,
+            top_n=ns.top,
+            min_turnover=ns.min_turnover,
+            symbol_limit=ns.symbol_limit,
+        )
     elif ns.research_cmd == "company":
         result = run_company_research(
             hub,
@@ -297,6 +303,12 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     run.add_argument("--as-of", required=True, dest="as_of")
     run.add_argument("--top", type=int, default=30)
     run.add_argument("--min-turnover", type=float, default=10_000_000.0)
+    run.add_argument(
+        "--symbol-limit",
+        type=int,
+        default=None,
+        help="Diagnostic smoke limit for symbols entering provider-heavy screening stages",
+    )
     run.set_defaults(func=cmd_research)
     company = research_sub.add_parser("company", help="Run company research")
     company.add_argument("symbol")

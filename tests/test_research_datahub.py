@@ -1183,6 +1183,47 @@ def test_datahub_persists_provider_health_when_all_router_quote_providers_fail(t
     assert health["recorded_at"].notna().all()
 
 
+def test_akshare_quote_snapshot_falls_back_to_legacy_spot(tmp_path, monkeypatch):
+    import akshare as ak
+
+    from trading_os.research.datahub import AkshareResearchProvider, DataHub
+    from trading_os.research.store import ResearchStore
+
+    def fail_em():
+        raise RuntimeError("eastmoney down")
+
+    def legacy_spot():
+        return pd.DataFrame(
+            [
+                {
+                    "代码": "600000",
+                    "名称": "浦发银行",
+                    "最新价": 10.0,
+                    "成交量": 1000.0,
+                    "成交额": 10_000.0,
+                },
+                {
+                    "代码": "920000",
+                    "名称": "北交所样本",
+                    "最新价": 12.0,
+                    "成交量": 1000.0,
+                    "成交额": 12_000.0,
+                },
+            ]
+        )
+
+    monkeypatch.setattr(ak, "stock_zh_a_spot_em", fail_em)
+    monkeypatch.setattr(ak, "stock_zh_a_spot", legacy_spot)
+
+    store = ResearchStore(tmp_path / "research")
+    hub = DataHub(store, provider=AkshareResearchProvider())
+
+    quotes = hub.get_quote_snapshot(date(2026, 7, 3), policy="refresh")
+
+    assert quotes["symbol"].tolist() == ["SSE:600000"]
+    assert quotes.iloc[0]["source"] == "akshare"
+
+
 def test_datahub_offline_raises_when_cache_missing(tmp_path):
     from trading_os.research.datahub import DataHub, MissingDataError
     from trading_os.research.store import ResearchStore

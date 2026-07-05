@@ -66,6 +66,30 @@ def test_research_cli_parses_daily_canslim_command():
     assert ns.as_of == "2026-06-12"
 
 
+def test_research_canslim_screen_accepts_symbol_limit():
+    from trading_os.cli_internal.app import build_parser
+
+    parser = build_parser()
+    ns = parser.parse_args(
+        [
+            "research",
+            "run",
+            "canslim_screen",
+            "--as-of",
+            "2026-07-03",
+            "--top",
+            "10",
+            "--symbol-limit",
+            "20",
+        ]
+    )
+
+    assert ns.research_cmd == "run"
+    assert ns.recipe == "canslim_screen"
+    assert ns.top == 10
+    assert ns.symbol_limit == 20
+
+
 def test_research_daily_canslim_help_describes_closure(capsys):
     from trading_os.cli_internal.app import build_parser
 

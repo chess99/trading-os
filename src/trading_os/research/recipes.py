@@ -36,10 +36,16 @@ def run_canslim_screen(
     as_of: date,
     top_n: int = 30,
     min_turnover: float = 10_000_000.0,
+    symbol_limit: int | None = None,
 ) -> RecipeResult:
     run = hub.store.start_run(
         "canslim_screen",
-        inputs={"as_of": as_of.isoformat(), "top_n": top_n, "min_turnover": min_turnover},
+        inputs={
+            "as_of": as_of.isoformat(),
+            "top_n": top_n,
+            "min_turnover": min_turnover,
+            "symbol_limit": symbol_limit,
+        },
     )
     trace = [
         "# canslim_screen trace",
@@ -76,6 +82,9 @@ def run_canslim_screen(
     amount = pd.to_numeric(merged.get("amount", 0), errors="coerce").fillna(0)
     liquid = merged[amount >= min_turnover].copy()
     filtered["low_turnover"] = len(merged) - len(liquid)
+    if symbol_limit is not None:
+        liquid = liquid.sort_values("amount", ascending=False).head(symbol_limit).copy()
+        trace.append(f"- diagnostic symbol_limit applied: `{symbol_limit}`")
     symbols = liquid["symbol"].astype(str).tolist()
 
     fundamentals = hub.store.get_fundamentals(symbols, as_of=as_of)

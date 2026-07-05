@@ -526,7 +526,10 @@ class AkshareResearchProvider:
         import akshare as ak
         import pandas as pd
 
-        raw = ak.stock_zh_a_spot_em()
+        try:
+            raw = ak.stock_zh_a_spot_em()
+        except Exception:
+            raw = ak.stock_zh_a_spot()
         if raw is None or raw.empty:
             return pd.DataFrame()
         out = pd.DataFrame(
@@ -684,8 +687,10 @@ def _provider_config_status(name: str) -> dict[str, Any]:
     }
 
 
-def _canonical_from_code(code: str) -> str:
-    code = str(code).zfill(6)
+def _canonical_from_code(code: str) -> str | None:
+    code = str(code).lower().removeprefix("sh").removeprefix("sz").removeprefix("bj").zfill(6)
+    if code.startswith(("4", "8", "9")):
+        return None
     exchange = "SSE" if code.startswith("6") else "SZSE"
     return f"{exchange}:{code}"
 
