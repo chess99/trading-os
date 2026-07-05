@@ -391,6 +391,63 @@ def test_canslim_screen_top_n_only_limits_displayed_candidates(tmp_path):
     assert "Displayed Candidates: 2" in report
 
 
+def test_canslim_screen_prefilter_limit_bounds_fundamental_fetch_scope(tmp_path):
+    from trading_os.research.datahub import DataHub
+    from trading_os.research.recipes import run_canslim_screen
+    from trading_os.research.store import ResearchStore
+
+    class TrackingProvider(ManyCandidatesProvider):
+        def __init__(self) -> None:
+            super().__init__()
+            self.fundamental_calls: list[list[str]] = []
+
+        def fetch_fundamentals(self, symbols, as_of, periods):
+            self.fundamental_calls.append(list(symbols))
+            return pd.DataFrame(
+                [
+                    {
+                        "symbol": symbol,
+                        "period": "2026Q1",
+                        "eps_growth_yoy": 0.35,
+                        "roe": 0.22,
+                        "positive_quarters": 8,
+                    }
+                    for symbol in symbols
+                ]
+            )
+
+        def fetch_quote_snapshot(self, as_of: date):
+            quotes = super().fetch_quote_snapshot(as_of)
+            quotes["amount"] = [
+                10_000_000.0,
+                50_000_000.0,
+                20_000_000.0,
+                70_000_000.0,
+                30_000_000.0,
+            ]
+            return quotes
+
+    provider = TrackingProvider()
+    hub = DataHub(ResearchStore(tmp_path / "research"), provider=provider)
+
+    result = run_canslim_screen(
+        hub,
+        as_of=date(2026, 5, 30),
+        top_n=10,
+        min_turnover=1,
+        prefilter_limit=2,
+    )
+
+    assert provider.fundamental_calls == [["SSE:600003", "SSE:600001"]]
+    assert result.manifest["prefilter"] == {
+        "mode": "liquidity",
+        "input_total": 5,
+        "output_total": 2,
+        "limit": 2,
+    }
+    assert result.manifest["candidates_total"] == 2
+
+
 def test_canslim_screen_skips_bars_for_core_fundamental_failures(tmp_path):
     from trading_os.research.datahub import DataHub
     from trading_os.research.recipes import run_canslim_screen

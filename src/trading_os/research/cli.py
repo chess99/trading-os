@@ -101,7 +101,7 @@ def cmd_research(ns: argparse.Namespace) -> int:
             as_of=as_of,
             top_n=ns.top,
             min_turnover=ns.min_turnover,
-            symbol_limit=ns.symbol_limit,
+            prefilter_limit=ns.prefilter_limit,
         )
     elif ns.research_cmd == "company":
         result = run_company_research(
@@ -304,10 +304,10 @@ def register_research_kernel_commands(sub: argparse._SubParsersAction) -> None:
     run.add_argument("--top", type=int, default=30)
     run.add_argument("--min-turnover", type=float, default=10_000_000.0)
     run.add_argument(
-        "--symbol-limit",
+        "--prefilter-limit",
         type=int,
         default=None,
-        help="Diagnostic smoke limit for symbols entering provider-heavy screening stages",
+        help="Limit symbols entering provider-heavy screening stages after liquidity ranking",
     )
     run.set_defaults(func=cmd_research)
     company = research_sub.add_parser("company", help="Run company research")

@@ -36,7 +36,7 @@ def run_canslim_screen(
     as_of: date,
     top_n: int = 30,
     min_turnover: float = 10_000_000.0,
-    symbol_limit: int | None = None,
+    prefilter_limit: int | None = None,
 ) -> RecipeResult:
     run = hub.store.start_run(
         "canslim_screen",
@@ -44,7 +44,8 @@ def run_canslim_screen(
             "as_of": as_of.isoformat(),
             "top_n": top_n,
             "min_turnover": min_turnover,
-            "symbol_limit": symbol_limit,
+            "prefilter": "liquidity",
+            "prefilter_limit": prefilter_limit,
         },
     )
     trace = [
@@ -82,9 +83,11 @@ def run_canslim_screen(
     amount = pd.to_numeric(merged.get("amount", 0), errors="coerce").fillna(0)
     liquid = merged[amount >= min_turnover].copy()
     filtered["low_turnover"] = len(merged) - len(liquid)
-    if symbol_limit is not None:
-        liquid = liquid.sort_values("amount", ascending=False).head(symbol_limit).copy()
-        trace.append(f"- diagnostic symbol_limit applied: `{symbol_limit}`")
+    prefilter_input_total = len(liquid)
+    if prefilter_limit is not None:
+        liquid = liquid.sort_values("amount", ascending=False).head(prefilter_limit).copy()
+        trace.append(f"- liquidity prefilter_limit applied: `{prefilter_limit}`")
+    prefilter_output_total = len(liquid)
     symbols = liquid["symbol"].astype(str).tolist()
 
     fundamentals = hub.store.get_fundamentals(symbols, as_of=as_of)
@@ -101,6 +104,12 @@ def run_canslim_screen(
             [],
             filtered,
             data_coverage=data_coverage,
+            prefilter={
+                "mode": "liquidity",
+                "input_total": prefilter_input_total,
+                "output_total": prefilter_output_total,
+                "limit": prefilter_limit,
+            },
         )
 
     fund_by_symbol = (
@@ -161,6 +170,12 @@ def run_canslim_screen(
             filtered,
             limitations=["No symbols passed core EPS-growth and ROE filters."],
             data_coverage=data_coverage,
+            prefilter={
+                "mode": "liquidity",
+                "input_total": prefilter_input_total,
+                "output_total": prefilter_output_total,
+                "limit": prefilter_limit,
+            },
         )
 
     rs_limitations: list[str] = []
@@ -243,6 +258,12 @@ def run_canslim_screen(
         limitations=limitations,
         all_candidates=candidates,
         data_coverage=data_coverage,
+        prefilter={
+            "mode": "liquidity",
+            "input_total": prefilter_input_total,
+            "output_total": prefilter_output_total,
+            "limit": prefilter_limit,
+        },
     )
 
 
@@ -625,6 +646,7 @@ def _finish_result(
     limitations: list[str] | None = None,
     all_candidates: list[dict[str, Any]] | None = None,
     data_coverage: dict[str, Any] | None = None,
+    prefilter: dict[str, Any] | None = None,
 ) -> RecipeResult:
     all_candidates = all_candidates if all_candidates is not None else candidates
     strict_total = sum(
@@ -644,6 +666,7 @@ def _finish_result(
         "strict_candidates_total": strict_total,
         "provisional_candidates_total": provisional_total,
         "filtered_out": filtered,
+        "prefilter": prefilter or {},
         "limitations": limitations or [],
         "data_coverage": data_coverage or {},
         "outputs": {
