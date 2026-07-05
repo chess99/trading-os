@@ -774,6 +774,12 @@ def test_daily_canslim_research_writes_human_report(tmp_path, monkeypatch):
     report_path = tmp_path / "artifacts" / "research" / "daily-canslim-20260612.md"
     assert report_path.exists()
     assert str(report_path) == result.manifest["human_report"]
+    report = report_path.read_text(encoding="utf-8")
+    assert "CANSLIM 全 A 快筛日报" in report
+    assert "一句话结论" in report
+    assert "现在该看的票" in report
+    assert "Strict 候选清单" in report
+    assert "报告展示候选" in report
 
 
 def test_daily_canslim_research_exports_watchlist_state_json(tmp_path, monkeypatch):
@@ -866,7 +872,8 @@ def test_daily_canslim_research_runs_company_research_for_every_strict(
         "SSE:600001",
     }
     assert all((tmp_path / item["report"]).exists() for item in deep_research_runs)
-    assert "## Deep Research Runs" in result.report
+    assert "## 证据链" in result.report
+    assert "deep_research_runs" in result.report
     assert all(item["report"] in result.report for item in deep_research_runs)
 
 

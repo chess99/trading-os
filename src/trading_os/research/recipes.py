@@ -1431,65 +1431,191 @@ def _daily_canslim_report(
     decisions: list[dict[str, Any]],
     watchlist_state: list[dict[str, Any]],
 ) -> str:
-    lines = [
-        "# Daily CANSLIM Research",
-        "",
-        f"- requested_as_of: `{requested_as_of.isoformat()}`",
-        f"- effective_as_of: `{effective_as_of.isoformat()}`",
-        f"- screen_run: `{screen.run.run_id}`",
-        f"- full_candidates: `{screen.manifest.get('candidates_total')}`",
-        f"- displayed_candidates: `{screen.manifest.get('displayed_candidates_total')}`",
-        f"- strict_candidates_processed: `{len(strict_candidates)}`",
-        f"- decisions_total: `{len(decisions)}`",
-        "",
-        "## Strict Candidates",
+    decision_by_symbol = {str(row.get("symbol")): row for row in decisions}
+    actionable = [
+        row
+        for row in decisions
+        if row.get("decision") == "actionable_watch" or row.get("status") == "actionable"
     ]
+    watch_count = sum(1 for row in watchlist_state if row.get("status") == "watching")
+    failed_deep_research = [row for row in deep_research_runs if row.get("status") != "ok"]
+    full_candidates = screen.manifest.get("candidates_total", 0)
+    displayed_candidates = screen.manifest.get("displayed_candidates_total", 0)
+    strict_total = screen.manifest.get("strict_candidates_total", len(strict_candidates))
+    provisional_total = screen.manifest.get("provisional_candidates_total", 0)
+    filtered_out = screen.manifest.get("filtered_out", {})
+    data_coverage = screen.manifest.get("data_coverage", {})
+    provider_sources = _coverage_sources(data_coverage)
+
+    lines = [
+        f"# CANSLIM 全 A 快筛日报（{effective_as_of.isoformat()}）",
+        "",
+        "## 一句话结论",
+        "",
+        (
+            f"本次按 `{requested_as_of.isoformat()}` 发起，因交易日历落到 "
+            f"`{effective_as_of.isoformat()}` 收盘口径。全 A 快筛得到 "
+            f"`{full_candidates}` 个候选，其中 `{strict_total}` 个 strict、"
+            f"`{provisional_total}` 个 provisional；已对全部 strict 标的完成深研和决策。"
+        ),
+        "",
+        (
+            f"当前可行动观察标的 `{len(actionable)}` 个，观察池待突破 `{watch_count}` 个。"
+            if actionable
+            else f"当前没有可行动观察标的，观察池待突破 `{watch_count}` 个。"
+        ),
+        "",
+        "## 关键数字",
+        "",
+        f"- 请求日期：`{requested_as_of.isoformat()}`",
+        f"- 有效研究日：`{effective_as_of.isoformat()}`",
+        f"- 全量候选：`{full_candidates}`",
+        f"- 报告展示候选：`{displayed_candidates}`（仅展示上限，不是筛选范围）",
+        f"- strict 候选：`{strict_total}`",
+        f"- provisional 候选：`{provisional_total}`",
+        f"- 已处理 strict 深研：`{len(strict_candidates)}`",
+        f"- 已生成决策：`{len(decisions)}`",
+        "",
+        "## 现在该看的票",
+    ]
+
+    if actionable:
+        lines.extend(
+            [
+                "",
+                "| 标的 | 决策 | Pivot | 买入区上沿 | 止损 |",
+                "|---|---:|---:|---:|---:|",
+            ]
+        )
+        for row in actionable:
+            symbol = str(row.get("symbol"))
+            lines.append(
+                "| "
+                f"{symbol} | {row.get('decision')} | "
+                f"{_fmt_number(row.get('pivot_price'))} | "
+                f"{_fmt_number(row.get('buy_zone_high'))} | "
+                f"{_fmt_number(row.get('stop_loss'))} |"
+            )
+    else:
+        lines.append("")
+        lines.append("没有标的进入 `actionable_watch`。")
+
+    lines.extend(["", "## Strict 候选清单", ""])
     if strict_candidates:
-        for row in strict_candidates:
-            lines.append(f"- {row.get('symbol')} score={row.get('score')}")
+        lines.append(
+            "| 排名 | 标的 | 名称 | 分数 | 决策 | Pivot | 止损 | "
+            "EPS YoY | ROE | RS | 连续盈利季度 |"
+        )
+        lines.append("|---:|---|---|---:|---|---:|---:|---:|---:|---:|---:|")
+        for index, row in enumerate(strict_candidates, start=1):
+            symbol = str(row.get("symbol"))
+            signals = row.get("signals") if isinstance(row.get("signals"), dict) else {}
+            decision = decision_by_symbol.get(symbol, {})
+            lines.append(
+                "| "
+                f"{row.get('rank', index)} | "
+                f"{symbol} | "
+                f"{row.get('name') or ''} | "
+                f"{_fmt_number(row.get('score'))} | "
+                f"{decision.get('decision', 'not_generated')} | "
+                f"{_fmt_number(decision.get('pivot_price'))} | "
+                f"{_fmt_number(decision.get('stop_loss'))} | "
+                f"{_fmt_pct(signals.get('eps_growth_yoy'))} | "
+                f"{_fmt_pct(signals.get('roe'))} | "
+                f"{_fmt_number(signals.get('relative_strength'))} | "
+                f"{signals.get('positive_quarters', '')} |"
+            )
     else:
-        lines.append("- No strict CANSLIM candidates.")
+        lines.append("没有 strict CANSLIM 候选。")
 
-    lines.extend(["", "## Deep Research Runs"])
+    lines.extend(["", "## 深研报告索引", ""])
     if deep_research_runs:
+        lines.append("| 标的 | 状态 | 报告 |")
+        lines.append("|---|---|---|")
         for row in deep_research_runs:
-            if row["status"] == "ok":
-                lines.append(f"- {row['symbol']} status=ok report={row['report']}")
+            if row.get("status") == "ok":
+                lines.append(f"| {row.get('symbol')} | ok | `{row.get('report')}` |")
             else:
-                lines.append(_format_deep_research_issue(row))
+                lines.append(
+                    f"| {row.get('symbol')} | {row.get('status')} | "
+                    f"{_format_deep_research_issue(row).lstrip('- ')} |"
+                )
     else:
-        lines.append("- No strict candidate deep research runs.")
+        lines.append("没有 strict 标的深研报告。")
 
-    lines.extend(["", "## Decisions"])
-    if decisions:
-        for row in decisions:
-            lines.append(
-                f"- {row['symbol']} decision={row['decision']} "
-                f"pivot={row.get('pivot_price')} stop={row.get('stop_loss')}"
-            )
+    lines.extend(["", "## 过滤漏斗", ""])
+    if filtered_out:
+        lines.extend(
+            [
+                f"- ST/非活跃：`{filtered_out.get('st_or_inactive', 0)}`",
+                f"- 流动性不足：`{filtered_out.get('low_turnover', 0)}`",
+                f"- 数据不足：`{filtered_out.get('insufficient_data', 0)}`",
+                f"- 无信号：`{filtered_out.get('no_signal', 0)}`",
+            ]
+        )
     else:
-        lines.append("- No decisions generated.")
+        lines.append("本次 manifest 未记录过滤漏斗。")
 
-    lines.extend(["", "## Watchlist State"])
-    if watchlist_state:
-        for row in watchlist_state:
-            lines.append(
-                f"- {row['symbol']} status={row.get('status')} "
-                f"pivot={row.get('pivot_price')}"
-            )
+    lines.extend(["", "## 数据口径和限制", ""])
+    if provider_sources:
+        lines.append(f"- 数据源：`{', '.join(provider_sources)}`")
     else:
-        lines.append("- Watchlist is empty.")
+        lines.append("- 数据源：manifest 未记录")
+    lines.extend(
+        [
+            "- 本次筛选是研究队列和观察池更新，不是自动买入结论。",
+            "- 当前 AkShare 作为免费数据源 fallback；未启用 RQData/JQData/Tushare 付费口径。",
+            "- `displayed_candidates` 只限制屏幕报告展示数量；"
+            "全量候选以 manifest 的 `candidates_total` 为准。",
+        ]
+    )
+    if failed_deep_research:
+        lines.append("- 以下 strict 标的深研失败，需要人工复核：")
+        for row in failed_deep_research:
+            lines.append(f"  - {_format_deep_research_issue(row).lstrip('- ')}")
+    else:
+        lines.append("- 所有 strict 标的深研状态均为 `ok`。")
 
     lines.extend(
         [
             "",
-            "## Data Lineage",
+            "## 证据链",
             "",
-            f"- screen_manifest: `{screen.run.path / 'manifest.json'}`",
-            f"- screen_report: `{screen.run.path / 'report.md'}`",
+            f"- Daily run：`{screen.run.run_id}` 的上层 daily manifest 见本 run 目录",
+            f"- Screen manifest：`{screen.run.path / 'manifest.json'}`",
+            f"- Screen report：`{screen.run.path / 'report.md'}`",
+            "- 单标的深研报告路径见上方“深研报告索引”和 daily run manifest 的 "
+            "`deep_research_runs`。",
         ]
     )
     return "\n".join(lines) + "\n"
+
+
+def _coverage_sources(data_coverage: dict[str, Any]) -> list[str]:
+    sources: set[str] = set()
+    for coverage in data_coverage.values():
+        if not isinstance(coverage, dict):
+            continue
+        source = coverage.get("source")
+        if isinstance(source, list):
+            sources.update(str(item) for item in source if item)
+        elif source:
+            sources.add(str(source))
+    return sorted(sources)
+
+
+def _fmt_number(value: Any) -> str:
+    numeric = _float(value)
+    if numeric is None:
+        return ""
+    return f"{numeric:.4f}".rstrip("0").rstrip(".")
+
+
+def _fmt_pct(value: Any) -> str:
+    numeric = _float(value)
+    if numeric is None:
+        return ""
+    return f"{numeric * 100:.1f}%"
 
 
 def _format_deep_research_issue(row: dict[str, Any]) -> str:
