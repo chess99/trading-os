@@ -45,6 +45,9 @@ def validate_company_dir(company_dir: str | Path) -> dict[str, Any]:
         raise AssetValidationError(f"market must be one of {sorted(ALLOWED_MARKETS)}")
     if not meta["symbol"].startswith(meta["market"] + ":"):
         raise AssetValidationError("symbol market prefix must match market field")
+    if meta["symbol"] != f"{meta['market']}:{meta['ticker']}":
+        raise AssetValidationError("symbol must match market and ticker fields")
+    _require_company_dir_layout(path, meta)
     if meta["status"] not in ALLOWED_STATUSES:
         raise AssetValidationError(f"status must be one of {sorted(ALLOWED_STATUSES)}")
     if meta["current_rating"] not in ALLOWED_RATINGS:
@@ -78,6 +81,13 @@ def _require_string(meta: dict[str, Any], key: str) -> None:
     value = meta.get(key)
     if not isinstance(value, str) or not value.strip():
         raise AssetValidationError(f"{key} must be a non-empty string")
+
+
+def _require_company_dir_layout(company_dir: Path, meta: dict[str, Any]) -> None:
+    if company_dir.parent.name != meta["market"] or company_dir.name != meta["ticker"]:
+        raise AssetValidationError(
+            "company directory must match research/companies/{MARKET}/{TICKER}"
+        )
 
 
 def _require_number_range(meta: dict[str, Any], key: str) -> None:

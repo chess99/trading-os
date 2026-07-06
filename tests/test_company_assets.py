@@ -97,6 +97,34 @@ def test_invalid_rating_is_rejected(tmp_path: Path):
         validate_company_dir(company_dir)
 
 
+def test_symbol_must_match_market_and_ticker_fields(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["symbol"] = "CN:000001"
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="symbol"):
+        validate_company_dir(company_dir)
+
+
+def test_company_directory_must_match_market_and_ticker(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    wrong_dir = tmp_path / "research" / "companies" / "CN" / "000001"
+    wrong_dir.parent.mkdir(parents=True, exist_ok=True)
+    company_dir.rename(wrong_dir)
+
+    with pytest.raises(AssetValidationError, match="company directory"):
+        validate_company_dir(wrong_dir)
+
+
 def test_missing_latest_report_is_rejected(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
