@@ -52,3 +52,66 @@ def test_evaluate_price_alerts_detects_triggered_snapshot():
     assert triggered["triggered_count"] == 1
     assert triggered["triggered"][0]["symbol"] == "CN:600519"
     assert triggered["triggered"][0]["observed_price"] == 1099.5
+
+
+def test_evaluate_price_alerts_skips_non_dict_quote_rows():
+    from trading_os.research_assets.alerts import evaluate_price_alerts
+
+    alerts = {
+        "schema_version": 1,
+        "items": [
+            {
+                "symbol": "CN:600519",
+                "name": "Kweichow Moutai",
+                "type": "price_below",
+                "price": 1100,
+                "reason": "Enter buy zone.",
+                "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
+            }
+        ],
+    }
+    quotes = [
+        None,
+        {"symbol": "CN:600519", "price": 1099.5, "as_of": "2026-07-06T10:30:00+08:00"},
+    ]
+
+    triggered = evaluate_price_alerts(alerts, quotes)
+
+    assert triggered["triggered_count"] == 1
+    assert triggered["triggered"][0]["symbol"] == "CN:600519"
+    assert triggered["triggered"][0]["observed_price"] == 1099.5
+
+
+def test_evaluate_price_alerts_ignores_bool_price_values():
+    from trading_os.research_assets.alerts import evaluate_price_alerts
+
+    alerts = {
+        "schema_version": 1,
+        "items": [
+            {
+                "symbol": "CN:600519",
+                "name": "Kweichow Moutai",
+                "type": "price_below",
+                "price": 1100,
+                "reason": "Enter buy zone.",
+                "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
+            },
+            {
+                "symbol": "CN:000001",
+                "name": "Ping An Bank",
+                "type": "price_above",
+                "price": 10,
+                "reason": "Breakout.",
+                "latest_report": "companies/CN/000001/reports/2026-07-06-initial.md",
+            },
+        ],
+    }
+    quotes = [
+        {"symbol": "CN:600519", "price": True, "as_of": "2026-07-06T10:30:00+08:00"},
+        {"symbol": "CN:000001", "price": False, "as_of": "2026-07-06T10:30:00+08:00"},
+    ]
+
+    triggered = evaluate_price_alerts(alerts, quotes)
+
+    assert triggered["triggered_count"] == 0
+    assert triggered["triggered"] == []

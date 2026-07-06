@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
@@ -46,7 +47,11 @@ def write_price_alerts(research_root: str | Path, output_path: str | Path) -> Pa
 def evaluate_price_alerts(
     alerts: dict[str, Any], quotes: list[dict[str, Any]]
 ) -> dict[str, Any]:
-    quote_by_symbol = {str(item["symbol"]): item for item in quotes if "symbol" in item}
+    quote_by_symbol = {
+        str(item["symbol"]): item
+        for item in quotes
+        if isinstance(item, Mapping) and "symbol" in item
+    }
     triggered: list[dict[str, Any]] = []
     for alert in alerts.get("items", []):
         quote = quote_by_symbol.get(str(alert.get("symbol")))
@@ -71,6 +76,8 @@ def load_json(path: str | Path) -> Any:
 def _price_from_quote(quote: dict[str, Any]) -> float | None:
     for key in ("price", "close", "last"):
         value = quote.get(key)
+        if isinstance(value, bool):
+            continue
         if isinstance(value, (int, float)):
             return float(value)
     return None
