@@ -151,9 +151,9 @@ Required fields:
 
 ```json
 {
-  "symbol": "TEST:000001",
-  "market": "TEST",
-  "ticker": "000001",
+  "symbol": "US:EXAMPLE",
+  "market": "US",
+  "ticker": "EXAMPLE",
   "name": "Example Company",
   "currency": "USD",
   "status": "active",
