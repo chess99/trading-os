@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CN A-share Screening Results",
+  "type": "object",
+  "required": ["schema_version", "market", "as_of", "method", "results"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 1},
+    "market": {"type": "string", "const": "CN"},
+    "as_of": {"type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$"},
+    "method": {"type": "string", "minLength": 1},
+    "results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "symbol",
+          "name",
+          "decision",
+          "priority",
+          "reason",
+          "evidence",
+          "next_action"
+        ],
+        "properties": {
+          "symbol": {"type": "string", "pattern": "^CN:[0-9]{6}$"},
+          "name": {"type": "string", "minLength": 1},
+          "decision": {
+            "type": "string",
+            "enum": [
+              "deep_research",
+              "watch_only",
+              "skip_risk",
+              "skip_too_small",
+              "skip_not_in_scope",
+              "needs_manual_review"
+            ]
+          },
+          "priority": {"type": ["integer", "null"], "minimum": 1, "maximum": 5},
+          "reason": {"type": "string", "minLength": 1},
+          "evidence": {"type": "array", "items": {"type": "string"}},
+          "next_action": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

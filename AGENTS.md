@@ -10,6 +10,9 @@ research timeline under `research/companies/`.
 - `meta.json` is the only mutable company state file.
 - `research/index.json`, `automation/review_schedule.json`, and `automation/price_alerts.json`
   are generated files.
+- `coverage/` is the pre-research coverage layer. It records universe snapshots,
+  screening decisions, research queues, skipped-company reasons, and long-running
+  batch state before any company receives a full research report.
 
 ## Company Directory
 
@@ -23,12 +26,16 @@ research/companies/{MARKET}/{TICKER}/
 
 ## Agent Rules
 
+- For broad A-share work, screen through `coverage/` first. Do not deep-research
+  every company by default.
+- Follow `playbooks/screening.md` before creating large research queues.
 - Research one company per agent unless the user explicitly asks for synthesis.
 - Read the previous `latest_report` before writing a follow-up.
 - Write a new report for every new research run.
 - Write company research reports in Chinese unless the user explicitly asks for another language.
 - Update `meta.json` only after the report is complete.
 - Run validation and rebuild generated files before committing.
+- Record skipped companies with structured reasons instead of silently dropping them.
 - Do not revive old recipe, DataHub, CANSLIM, Elder, Value, backtest, or paper-trading workflows.
 
 ## Commands

@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CN A-share Research Queue",
+  "type": "object",
+  "required": ["schema_version", "market", "created_at", "items"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 1},
+    "market": {"type": "string", "const": "CN"},
+    "created_at": {"type": "string", "minLength": 1},
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "symbol",
+          "name",
+          "task_type",
+          "priority",
+          "status",
+          "reason",
+          "target_company_dir"
+        ],
+        "properties": {
+          "symbol": {"type": "string", "pattern": "^CN:[0-9]{6}$"},
+          "name": {"type": "string", "minLength": 1},
+          "task_type": {"type": "string", "enum": ["initial_research", "followup_review"]},
+          "priority": {"type": "integer", "minimum": 1, "maximum": 5},
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "running",
+              "completed",
+              "failed",
+              "skipped",
+              "needs_review"
+            ]
+          },
+          "reason": {"type": "string", "minLength": 1},
+          "target_company_dir": {"type": "string", "minLength": 1},
+          "assigned_agent": {"type": ["string", "null"]},
+          "started_at": {"type": ["string", "null"]},
+          "finished_at": {"type": ["string", "null"]},
+          "result_path": {"type": ["string", "null"]},
+          "failure_reason": {"type": ["string", "null"]},
+          "next_action": {"type": ["string", "null"]}
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

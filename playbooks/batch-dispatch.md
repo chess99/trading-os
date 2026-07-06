@@ -13,12 +13,13 @@ Use this playbook when a main agent assigns many companies to subagents.
 ## Main Agent Steps
 
 1. Prepare a company list with market, ticker, name, and research reason.
-2. Dispatch one company per subagent.
-3. Require each subagent to follow `playbooks/company-research.md` or `playbooks/followup-review.md`.
-4. Review every generated report for sourcing, valuation, position plan, and trigger quality.
-5. Reject reports that read like data dumps or lack a decision.
-6. Run `python -m trading_os company validate <company-dir>` for each company.
-7. Run `python -m trading_os index rebuild`.
-8. Run `python -m trading_os schedule build`.
-9. Run `python -m trading_os alerts build`.
-10. Commit only reviewed company assets, generated indexes, and generated automation files.
+2. For broad A-share work, require the list to come from `coverage/` screening results.
+3. Dispatch one company per subagent.
+4. Require each subagent to follow `playbooks/company-research.md` or `playbooks/followup-review.md`.
+5. Review every generated report for sourcing, valuation, position plan, and trigger quality.
+6. Reject reports that read like data dumps or lack a decision.
+7. Run `python -m trading_os company validate <company-dir>` for each company.
+8. Run `python -m trading_os index rebuild`.
+9. Run `python -m trading_os schedule build`.
+10. Run `python -m trading_os alerts build`.
+11. Commit only reviewed company assets, generated indexes, and generated automation files.
