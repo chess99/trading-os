@@ -20,4 +20,4 @@ Use this playbook when a main agent assigns many companies to subagents.
 7. Run `python -m trading_os index rebuild`.
 8. Run `python -m trading_os schedule build`.
 9. Run `python -m trading_os alerts build`.
-10. Commit only reviewed company assets and generated indexes.
+10. Commit only reviewed company assets, generated indexes, and generated automation files.
