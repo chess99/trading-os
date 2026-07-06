@@ -12,7 +12,7 @@ follow-up triggers, and price alerts.
 ```text
 research/
   companies/
-    CN/600519/
+    {MARKET}/{TICKER}/
       meta.json
       reports/
   index.json

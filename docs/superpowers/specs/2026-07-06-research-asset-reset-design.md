@@ -70,7 +70,7 @@ The reset branch should converge on this structure:
 ```text
 research/
   companies/
-    CN/600519/
+    {MARKET}/{TICKER}/
       meta.json
       reports/
         2026-07-06-initial.md
@@ -78,14 +78,6 @@ research/
       sources/
         2026-07-06/
           sources.json
-    HK/09660/
-      meta.json
-      reports/
-        2026-07-06-initial.md
-    US/SPCX/
-      meta.json
-      reports/
-        2026-07-06-initial.md
   index.json
 
 playbooks/
@@ -121,15 +113,11 @@ explicitly reintroduced for the new asset workflow.
 
 Each company is identified by a stable symbol in the form:
 
-- `CN:600519`
-- `HK:09660`
-- `US:SPCX`
+- `{MARKET}:{TICKER}`
 
-The filesystem path uses market and raw ticker:
+The filesystem path uses market and raw ticker placeholders:
 
-- `research/companies/CN/600519/`
-- `research/companies/HK/09660/`
-- `research/companies/US/SPCX/`
+- `research/companies/{MARKET}/{TICKER}/`
 
 ### Immutable Reports
 
@@ -163,11 +151,11 @@ Required fields:
 
 ```json
 {
-  "symbol": "CN:600519",
-  "market": "CN",
-  "ticker": "600519",
-  "name": "贵州茅台",
-  "currency": "CNY",
+  "symbol": "TEST:000001",
+  "market": "TEST",
+  "ticker": "000001",
+  "name": "Example Company",
+  "currency": "USD",
   "status": "active",
   "current_rating": "watch",
   "current_thesis": "High-quality cash compounder, but buy only with sufficient margin of safety.",
@@ -490,7 +478,8 @@ automatic subagent dispatch can be added after the asset model proves useful.
 The first implementation should not seed example company assets by default. This keeps the
 reset focused on the asset model, validator, index, templates, and automation files.
 
-If the user explicitly asks to seed initial examples, use these three recent research cases:
+The following real companies are not present in the baseline reset. If the user
+explicitly asks to seed initial examples, use these three recent research cases:
 
 - `HK:09660` Horizon Robotics
 - `CN:600519` 贵州茅台

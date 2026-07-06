@@ -133,12 +133,12 @@ import pytest
 
 
 def write_company(root: Path, *, rating: str = "watch") -> Path:
-    company_dir = root / "research" / "companies" / "CN" / "600519"
+    company_dir = root / "research" / "companies" / "TEST" / "000001"
     reports = company_dir / "reports"
     reports.mkdir(parents=True)
     report_path = reports / "2026-07-06-initial.md"
     report_path.write_text(
-        "# Company Research: 贵州茅台 (CN:600519)\n\n"
+        "# Company Research: Example Company (TEST:000001)\n\n"
         "Date: 2026-07-06\n"
         "Research Type: initial\n"
         "Analyst: agent\n\n"
@@ -171,10 +171,10 @@ def write_company(root: Path, *, rating: str = "watch") -> Path:
         encoding="utf-8",
     )
     meta = {
-        "symbol": "CN:600519",
-        "market": "CN",
-        "ticker": "600519",
-        "name": "贵州茅台",
+        "symbol": "TEST:000001",
+        "market": "TEST",
+        "ticker": "000001",
+        "name": "Example Company",
         "currency": "CNY",
         "status": "active",
         "current_rating": rating,
@@ -210,7 +210,7 @@ def test_valid_company_asset_loads(tmp_path: Path):
 
     meta = validate_company_dir(company_dir)
 
-    assert meta["symbol"] == "CN:600519"
+    assert meta["symbol"] == "TEST:000001"
     assert meta["latest_report"] == "reports/2026-07-06-initial.md"
 
 
@@ -255,8 +255,8 @@ def test_build_index_from_company_metadata(tmp_path: Path):
 
     assert index["schema_version"] == 1
     assert index["company_count"] == 1
-    assert index["companies"][0]["symbol"] == "CN:600519"
-    assert index["companies"][0]["latest_report"] == "companies/CN/600519/reports/2026-07-06-initial.md"
+    assert index["companies"][0]["symbol"] == "TEST:000001"
+    assert index["companies"][0]["latest_report"] == "companies/TEST/000001/reports/2026-07-06-initial.md"
 
 
 def test_write_index_does_not_replace_existing_file_when_invalid(tmp_path: Path):
@@ -298,7 +298,7 @@ def test_build_review_schedule_from_date_triggers(tmp_path: Path):
     schedule = build_review_schedule(tmp_path / "research")
 
     assert schedule["schema_version"] == 1
-    assert schedule["items"][0]["symbol"] == "CN:600519"
+    assert schedule["items"][0]["symbol"] == "TEST:000001"
     assert schedule["items"][0]["date"] == "2026-08-31"
 
 
@@ -310,7 +310,7 @@ def test_build_price_alerts_from_price_triggers(tmp_path: Path):
     alerts = build_price_alerts(tmp_path / "research")
 
     assert alerts["schema_version"] == 1
-    assert alerts["items"][0]["symbol"] == "CN:600519"
+    assert alerts["items"][0]["symbol"] == "TEST:000001"
     assert alerts["items"][0]["price"] == 1100
 
 
@@ -321,21 +321,21 @@ def test_evaluate_price_alerts_detects_triggered_snapshot():
         "schema_version": 1,
         "items": [
             {
-                "symbol": "CN:600519",
-                "name": "贵州茅台",
+                "symbol": "TEST:000001",
+                "name": "Example Company",
                 "type": "price_below",
                 "price": 1100,
                 "reason": "Enter buy zone.",
-                "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
+                "latest_report": "companies/TEST/000001/reports/2026-07-06-initial.md",
             }
         ],
     }
-    quotes = [{"symbol": "CN:600519", "price": 1099.5, "as_of": "2026-07-06T10:30:00+08:00"}]
+    quotes = [{"symbol": "TEST:000001", "price": 1099.5, "as_of": "2026-07-06T10:30:00+08:00"}]
 
     triggered = evaluate_price_alerts(alerts, quotes)
 
     assert triggered["triggered_count"] == 1
-    assert triggered["triggered"][0]["symbol"] == "CN:600519"
+    assert triggered["triggered"][0]["symbol"] == "TEST:000001"
     assert triggered["triggered"][0]["observed_price"] == 1099.5
 ```
 
@@ -360,7 +360,7 @@ def test_cli_company_validate_success(tmp_path: Path, capsys):
     code = main(["company", "validate", str(company_dir)])
 
     assert code == 0
-    assert "CN:600519" in capsys.readouterr().out
+    assert "TEST:000001" in capsys.readouterr().out
 
 
 def test_cli_index_rebuild_writes_index(tmp_path: Path):
@@ -386,12 +386,12 @@ def test_cli_alerts_check_uses_quote_snapshot(tmp_path: Path, capsys):
                 "schema_version": 1,
                 "items": [
                     {
-                        "symbol": "CN:600519",
-                        "name": "贵州茅台",
+                        "symbol": "TEST:000001",
+                        "name": "Example Company",
                         "type": "price_below",
                         "price": 1100,
                         "reason": "Enter buy zone.",
-                        "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
+                        "latest_report": "companies/TEST/000001/reports/2026-07-06-initial.md",
                     }
                 ],
             },
@@ -400,7 +400,7 @@ def test_cli_alerts_check_uses_quote_snapshot(tmp_path: Path, capsys):
         encoding="utf-8",
     )
     quotes_path.write_text(
-        json.dumps([{"symbol": "CN:600519", "price": 1090}], ensure_ascii=False),
+        json.dumps([{"symbol": "TEST:000001", "price": 1090}], ensure_ascii=False),
         encoding="utf-8",
     )
 
@@ -1582,7 +1582,7 @@ follow-up triggers, and price alerts.
 ```text
 research/
   companies/
-    CN/600519/
+    {MARKET}/{TICKER}/
       meta.json
       reports/
   index.json
