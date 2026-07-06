@@ -13,10 +13,10 @@ read the Markdown research timeline.
 
 ## Context
 
-The current repository is centered on `ResearchStore`, `DataHub`, CANSLIM/Elder/Value
-skills, daily recipes, run manifests, watchlists, and historical artifacts. That
-architecture was useful for deterministic screening and evidence-chain recipes, but
-the new direction is different:
+Before this reset, the repository was centered on `ResearchStore`, `DataHub`,
+CANSLIM/Elder/Value skills, daily recipes, run manifests, watchlists, and historical
+artifacts. That removed architecture was useful for deterministic screening and
+evidence-chain recipes, but the new direction is different:
 
 - The repository's main asset should be the research result itself.
 - A company can be researched repeatedly over time.
