@@ -31,6 +31,13 @@ def test_coverage_examples_are_valid_json():
         assert payload["market"] == "CN"
 
 
+def test_coverage_jsonl_working_files_exist():
+    root = Path(__file__).resolve().parents[1]
+
+    for name in ["companies.jsonl", "screening.jsonl", "research_queue.jsonl", "runs.jsonl"]:
+        assert (root / "coverage" / "cn-a" / name).exists()
+
+
 def test_screening_example_uses_fixed_decision_protocol():
     root = Path(__file__).resolve().parents[1]
     payload = json.loads(
@@ -74,5 +81,8 @@ def test_docs_route_full_market_work_through_coverage():
     assert "coverage/" in readme
     assert "AGENTS.md" in claude
     assert "coverage/" in claude
+    assert "coverage status" in agents
+    assert "coverage validate" in readme
     assert "deep_research" in screening
     assert "skip_not_in_scope" in screening
+    assert "JSONL" in screening

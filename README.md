@@ -42,6 +42,8 @@ python -m trading_os index rebuild
 python -m trading_os schedule build
 python -m trading_os alerts build
 python -m trading_os alerts check --quotes <quote-snapshot.json>
+python -m trading_os coverage status
+python -m trading_os coverage validate
 ```
 
 ## Research Workflow

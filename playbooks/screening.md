@@ -34,12 +34,13 @@
 
 ## 输出
 
-每轮筛选至少产出：
+每轮筛选至少更新这些 Git 友好的 JSONL 文件：
 
 ```text
-coverage/cn-a/screening-YYYY-MM-DD-pass-NNN.json
-coverage/cn-a/research-queue-YYYY-MM-DD-pass-NNN.json
-coverage/cn-a/runs/YYYY-MM-DD-screening-pass-NNN.json
+coverage/cn-a/companies.jsonl
+coverage/cn-a/screening.jsonl
+coverage/cn-a/research_queue.jsonl
+coverage/cn-a/runs.jsonl
 ```
 
 筛选结果必须包含：
@@ -54,15 +55,30 @@ coverage/cn-a/runs/YYYY-MM-DD-screening-pass-NNN.json
 
 研究队列只放 `deep_research` 和少量主 agent 认可的 `needs_manual_review`。
 
+## Agent 辅助工具
+
+优先用薄封装更新 JSONL，避免手写时破坏格式、重复 symbol 或打乱排序：
+
+```bash
+python -m trading_os coverage validate
+python -m trading_os coverage status
+python -m trading_os coverage get CN:600519
+python -m trading_os coverage list --decision deep_research
+python -m trading_os coverage set-screening CN:300750 --name 宁德时代 --decision deep_research --priority 1 --reason "动力电池龙头" --evidence "行业龙头" --next-action "加入研究队列"
+python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1 --reason "筛选结果为 deep_research"
+```
+
+这些命令是给 agent 用的安全编辑器，不要求用户手动执行。
+
 ## 长程恢复规则
 
 下一个 agent 接手时：
 
 1. 先读 `coverage/README.md`。
 2. 再读本文件。
-3. 再读最新的 `coverage/cn-a/runs/*.json`。
+3. 再读 `coverage/cn-a/runs.jsonl` 和 `coverage/cn-a/research_queue.jsonl`。
 4. 继续处理 `pending`、`failed`、`needs_review`，不要重跑已完成项目。
-5. 每批完成后更新 run 文件，并提交本批筛选资产。
+5. 每批完成后更新 JSONL 文件，并提交本批筛选资产。
 
 ## 质量标准
 

@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+import pytest
+
 from tests.test_company_assets import write_company
 
 
@@ -15,6 +17,16 @@ def test_cli_company_validate_success(tmp_path: Path, capsys):
 
     assert code == 0
     assert "CN:600519" in capsys.readouterr().out
+
+
+def test_cli_help_lists_coverage_command(capsys):
+    from trading_os.cli import main
+
+    with pytest.raises(SystemExit) as exc:
+        main(["--help"])
+
+    assert exc.value.code == 0
+    assert "coverage" in capsys.readouterr().out
 
 
 def test_cli_index_rebuild_writes_index(tmp_path: Path):
@@ -159,3 +171,71 @@ def test_cli_index_rebuild_invalid_metadata_writes_json_error_to_stderr(
     payload = json.loads(captured.err)
     assert payload["ok"] is False
     assert any("latest_report" in error for error in payload["errors"])
+
+
+def test_cli_coverage_set_screening_get_list_and_status(tmp_path: Path, capsys):
+    from trading_os.cli import main
+
+    root = tmp_path / "coverage" / "cn-a"
+
+    code = main(
+        [
+            "coverage",
+            "set-screening",
+            "CN:300750",
+            "--root",
+            str(root),
+            "--name",
+            "宁德时代",
+            "--decision",
+            "deep_research",
+            "--priority",
+            "1",
+            "--reason",
+            "动力电池龙头，值得完整研究。",
+            "--evidence",
+            "行业龙头",
+            "--next-action",
+            "加入研究队列。",
+        ]
+    )
+    assert code == 0
+
+    code = main(["coverage", "get", "CN:300750", "--root", str(root)])
+    assert code == 0
+    assert "宁德时代" in capsys.readouterr().out
+
+    code = main(["coverage", "list", "--root", str(root), "--decision", "deep_research"])
+    assert code == 0
+    assert "CN:300750" in capsys.readouterr().out
+
+    code = main(["coverage", "status", "--root", str(root)])
+    assert code == 0
+    assert '"deep_research": 1' in capsys.readouterr().out
+
+
+def test_cli_coverage_enqueue_and_validate(tmp_path: Path, capsys):
+    from trading_os.cli import main
+
+    root = tmp_path / "coverage" / "cn-a"
+
+    code = main(
+        [
+            "coverage",
+            "enqueue",
+            "CN:300750",
+            "--root",
+            str(root),
+            "--name",
+            "宁德时代",
+            "--priority",
+            "1",
+            "--reason",
+            "筛选结果为 deep_research。",
+        ]
+    )
+    assert code == 0
+
+    code = main(["coverage", "validate", "--root", str(root)])
+    assert code == 0
+    assert '"ok": true' in capsys.readouterr().out
