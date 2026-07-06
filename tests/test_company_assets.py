@@ -107,6 +107,24 @@ def test_missing_latest_report_is_rejected(tmp_path: Path):
         validate_company_dir(company_dir)
 
 
+def test_latest_report_missing_from_report_history_is_rejected(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    second_report = company_dir / "reports" / "2026-08-31-h1-review.md"
+    second_report.write_text("# H1 Review\n", encoding="utf-8")
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["latest_report"] = "reports/2026-08-31-h1-review.md"
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="latest_report"):
+        validate_company_dir(company_dir)
+
+
 def test_latest_report_absolute_path_outside_company_dir_is_rejected(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
@@ -125,20 +143,107 @@ def test_latest_report_absolute_path_outside_company_dir_is_rejected(tmp_path: P
         validate_company_dir(company_dir)
 
 
+def test_latest_report_outside_reports_is_rejected(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    sources = company_dir / "sources"
+    sources.mkdir()
+    (sources / "note.md").write_text("# Note\n", encoding="utf-8")
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["latest_report"] = "sources/note.md"
+    meta["report_history"] = ["sources/note.md"]
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="latest_report"):
+        validate_company_dir(company_dir)
+
+
+def test_latest_report_without_report_date_is_rejected(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    (company_dir / "reports" / "not-a-date.md").write_text("# Bad\n", encoding="utf-8")
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["latest_report"] = "reports/not-a-date.md"
+    meta["report_history"] = ["reports/not-a-date.md"]
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="latest_report"):
+        validate_company_dir(company_dir)
+
+
 def test_latest_report_directory_named_markdown_is_rejected(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    (company_dir / "reports" / "not-a-report.md").mkdir()
+    (company_dir / "reports" / "2026-07-06-dir.md").mkdir()
     meta_path = company_dir / "meta.json"
     meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = "reports/not-a-report.md"
+    meta["latest_report"] = "reports/2026-07-06-dir.md"
+    meta["report_history"] = ["reports/2026-07-06-dir.md"]
     meta_path.write_text(
         json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
 
     with pytest.raises(AssetValidationError, match="report file"):
+        validate_company_dir(company_dir)
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("fair_value_range", [True, 1450], "fair_value_range"),
+        ("position_plan", [{"condition": "price <= 1150", "max_weight": True}], "max_weight"),
+        (
+            "price_triggers",
+            [{"type": "price_below", "price": True, "reason": "Enter buy zone."}],
+            "price",
+        ),
+    ],
+)
+def test_boolean_numeric_values_are_rejected(
+    tmp_path: Path, field: str, value: object, message: str
+):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta[field] = value
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match=message):
+        validate_company_dir(company_dir)
+
+
+def test_impossible_review_trigger_date_is_rejected(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["review_triggers"] = [
+        {"type": "date", "date": "2026-99-99", "reason": "Impossible date."}
+    ]
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="review_triggers date"):
         validate_company_dir(company_dir)
 
 

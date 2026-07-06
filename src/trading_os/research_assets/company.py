@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime as dt
 import json
 import re
 from pathlib import Path
@@ -11,6 +12,7 @@ ALLOWED_MARKETS = {"CN", "HK", "US"}
 ALLOWED_REVIEW_TRIGGER_TYPES = {"date"}
 ALLOWED_PRICE_TRIGGER_TYPES = {"price_below", "price_above"}
 SYMBOL_RE = re.compile(r"^(CN|HK|US):[A-Z0-9.]+$")
+REPORT_RE = re.compile(r"^reports/(\d{4}-\d{2}-\d{2})-[a-z0-9][a-z0-9-]*\.md$")
 
 
 class AssetValidationError(ValueError):
@@ -54,6 +56,8 @@ def validate_company_dir(company_dir: str | Path) -> dict[str, Any]:
     _require_number_range(meta, "sell_or_reduce_zone")
     _require_report(path, meta["latest_report"], "latest_report")
     _require_report_list(path, meta.get("report_history"), "report_history")
+    if meta["latest_report"] not in meta["report_history"]:
+        raise AssetValidationError("latest_report must appear in report_history")
     _require_position_plan(meta.get("position_plan"))
     _require_review_triggers(meta.get("review_triggers"))
     _require_price_triggers(meta.get("price_triggers"))
@@ -81,13 +85,29 @@ def _require_number_range(meta: dict[str, Any], key: str) -> None:
     if not isinstance(value, list) or len(value) != 2:
         raise AssetValidationError(f"{key} must be a two-item number list")
     low, high = value
-    if not isinstance(low, (int, float)) or not isinstance(high, (int, float)):
+    if not _is_number(low) or not _is_number(high):
         raise AssetValidationError(f"{key} values must be numbers")
     if low > high:
         raise AssetValidationError(f"{key} lower bound must be <= upper bound")
 
 
+def _is_number(value: Any) -> bool:
+    return isinstance(value, (int, float)) and not isinstance(value, bool)
+
+
 def _require_report(company_dir: Path, rel_path: str, field: str) -> None:
+    normalized = rel_path.replace("\\", "/")
+    match = REPORT_RE.match(normalized)
+    if not match:
+        raise AssetValidationError(
+            f"{field} must match reports/YYYY-MM-DD-slug.md"
+        )
+    try:
+        dt.date.fromisoformat(match.group(1))
+    except ValueError as exc:
+        raise AssetValidationError(
+            f"{field} must match reports/YYYY-MM-DD-slug.md"
+        ) from exc
     report_path = Path(rel_path)
     if report_path.is_absolute():
         raise AssetValidationError(f"{field} must be a relative path inside company dir")
@@ -126,7 +146,7 @@ def _require_position_plan(value: Any) -> None:
         max_weight = item.get("max_weight")
         if not isinstance(condition, str) or not condition.strip():
             raise AssetValidationError("position_plan condition must be a non-empty string")
-        if not isinstance(max_weight, (int, float)) or max_weight < 0 or max_weight > 1:
+        if not _is_number(max_weight) or max_weight < 0 or max_weight > 1:
             raise AssetValidationError("position_plan max_weight must be between 0 and 1")
 
 
@@ -141,6 +161,12 @@ def _require_review_triggers(value: Any) -> None:
         date = item.get("date")
         if not isinstance(date, str) or not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
             raise AssetValidationError("review_triggers date must use YYYY-MM-DD")
+        try:
+            dt.date.fromisoformat(date)
+        except ValueError as exc:
+            raise AssetValidationError(
+                "review_triggers date must be a real YYYY-MM-DD date"
+            ) from exc
         if not isinstance(item.get("reason"), str) or not item["reason"].strip():
             raise AssetValidationError("review_triggers reason must be a non-empty string")
 
@@ -155,7 +181,7 @@ def _require_price_triggers(value: Any) -> None:
             raise AssetValidationError(
                 "price_triggers type must be price_below or price_above"
             )
-        if not isinstance(item.get("price"), (int, float)):
+        if not _is_number(item.get("price")):
             raise AssetValidationError("price_triggers price must be numeric")
         if not isinstance(item.get("reason"), str) or not item["reason"].strip():
             raise AssetValidationError("price_triggers reason must be a non-empty string")
