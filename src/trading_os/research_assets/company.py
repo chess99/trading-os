@@ -88,11 +88,21 @@ def _require_number_range(meta: dict[str, Any], key: str) -> None:
 
 
 def _require_report(company_dir: Path, rel_path: str, field: str) -> None:
-    if rel_path.startswith("/") or ".." in Path(rel_path).parts:
+    report_path = Path(rel_path)
+    if report_path.is_absolute():
         raise AssetValidationError(f"{field} must be a relative path inside company dir")
-    target = company_dir / rel_path
+    company_root = company_dir.resolve()
+    target = (company_root / report_path).resolve()
+    try:
+        target.relative_to(company_root)
+    except ValueError as exc:
+        raise AssetValidationError(
+            f"{field} must be a relative path inside company dir"
+        ) from exc
     if not target.exists():
         raise AssetValidationError(f"{field} points to missing report: {rel_path}")
+    if not target.is_file():
+        raise AssetValidationError(f"{field} must point to a report file")
     if target.suffix.lower() != ".md":
         raise AssetValidationError(f"{field} must point to a Markdown report")
 

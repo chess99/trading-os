@@ -105,3 +105,47 @@ def test_missing_latest_report_is_rejected(tmp_path: Path):
 
     with pytest.raises(AssetValidationError, match="latest_report"):
         validate_company_dir(company_dir)
+
+
+def test_latest_report_absolute_path_outside_company_dir_is_rejected(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    outside_report = tmp_path / "outside.md"
+    outside_report.write_text("# Outside\n", encoding="utf-8")
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["latest_report"] = str(outside_report)
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="latest_report"):
+        validate_company_dir(company_dir)
+
+
+def test_latest_report_directory_named_markdown_is_rejected(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    (company_dir / "reports" / "not-a-report.md").mkdir()
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["latest_report"] = "reports/not-a-report.md"
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="report file"):
+        validate_company_dir(company_dir)
+
+
+def test_research_assets_star_import_succeeds():
+    namespace: dict[str, object] = {}
+
+    exec("from trading_os.research_assets import *", namespace)
+
+    assert "AssetValidationError" in namespace
+    assert "validate_company_dir" in namespace
