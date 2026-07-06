@@ -1,13 +1,16 @@
 # A 股筛选 Playbook
 
-使用本 playbook 时，目标不是写完整公司研究，而是在深度研究前完成低成本分流。
+使用本 playbook 时，目标不是节省研究算力，而是让全市场研究有序展开。
+筛选层只做三件事：确认是否属于研究范围、标记硬风险、安排研究优先级。
 
-## 边界
+## 核心口径
 
-- 一轮筛选可以覆盖很多公司，但每条记录必须独立给出理由。
-- 不要在筛选阶段写完整估值报告。
-- 不要因为暂时跳过就删除公司。跳过理由必须保存在筛选结果里。
-- 执行主体是 agent；不要要求用户手动运行命令。
+- 默认应研尽研。普通 A 股公司原则上都进入研究队列。
+- 小市值、低成交、亏损、PE 为负、行业冷门，都不能作为硬跳过理由。
+- 流动性只影响优先级，不影响是否研究；本仓库面向个人投资者，不按机构容量筛股票。
+- ST、*ST、重大异常公司不直接跳过，先进入 `needs_manual_review`。
+- 只有退市整理、明显非普通股票、数据不可识别等硬排除项，才使用 `skip_*`。
+- 筛选结论不是投资结论，只决定研究顺序和任务状态。
 
 ## 输入
 
@@ -17,20 +20,25 @@
 
 ## 分流结果
 
-- `deep_research`：值得完整研究，进入研究队列。
-- `watch_only`：值得保留观察，但暂不写完整报告。
-- `skip_risk`：风险、治理、财务质量或退市风险过高。
-- `skip_too_small`：规模、流动性或覆盖价值太低。
-- `skip_not_in_scope`：不是当前范围内的普通 A 股公司。
-- `needs_manual_review`：信息冲突、业务复杂或数据不足，需要主 agent 判断。
+- `deep_research`：进入完整公司研究队列。
+- `watch_only`：已有研究档案或等待既定复查，不重复创建初始研究任务。
+- `skip_risk`：退市整理、明显无法作为普通股票研究的硬风险项。
+- `skip_too_small`：原则上少用；只用于极端微型、数据质量极差且无法形成研究任务的标的。
+- `skip_not_in_scope`：不在当前普通 A 股研究范围内，如 ETF、基金、债券、B 股、优先股、壳资源等。
+- `needs_manual_review`：ST、*ST、数据冲突、证券状态异常，需主 agent 决定是否按特殊情况研究。
 
 ## 第一轮筛选顺序
 
-1. 先排除非普通 A 股：ETF、基金、债券、B 股、优先股、退市整理、壳资源等。
-2. 再排除明显风险：ST、高退市风险、重大违规、持续资不抵债、财报可信度过低。
-3. 再排除低覆盖价值：市值太小、成交太弱、业务不可理解、深研收益明显不值得。
-4. 保留值得深研的公司：行业龙头、现金牛、长期复利资产、成长赛道核心、周期底部、困境反转、特殊资产。
-5. 对复杂但可能重要的公司，标记为 `needs_manual_review`，不要草率跳过。
+1. 排除非普通 A 股：ETF、基金、债券、B 股、优先股、退市整理、明显壳资源等。
+2. 将 ST、*ST、重大异常、数据冲突标记为 `needs_manual_review`，不要直接删除。
+3. 对所有其余普通 A 股标记为 `deep_research`。
+4. 按优先级排序研究队列：
+   - P1：超大市值核心资产。
+   - P2：大市值或高成交关注度公司。
+   - P3：具备一定规模的中优先级公司。
+   - P4：规模较小、关注度一般或信息密度较低的公司。
+   - P5：小市值、亏损、数据不充分或需要更多资料验证的公司。
+5. 已有初始研究报告的公司不重复排队，标为 `watch_only` 并按 `meta.json` 的复查计划跟踪。
 
 ## 输出
 
@@ -53,11 +61,12 @@ coverage/cn-a/runs.jsonl
 - `evidence`
 - `next_action`
 
-研究队列只放 `deep_research` 和少量主 agent 认可的 `needs_manual_review`。
+研究队列应包含 `deep_research`。`needs_manual_review` 可以进入队列，但状态应为
+`needs_review`，由主 agent 先做特殊情况判断。
 
 ## Agent 辅助工具
 
-优先用薄封装更新 JSONL，避免手写时破坏格式、重复 symbol 或打乱排序：
+优先使用薄封装更新 JSONL，避免手写时破坏格式、重复 symbol 或打乱排序：
 
 ```bash
 python -m trading_os coverage validate
@@ -68,21 +77,21 @@ python -m trading_os coverage set-screening CN:300750 --name 宁德时代 --deci
 python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1 --reason "筛选结果为 deep_research"
 ```
 
-这些命令是给 agent 用的安全编辑器，不要求用户手动执行。
+这些命令是给 agent 用的安全编辑器，不要要求用户手动执行。
 
 ## 长程恢复规则
 
 下一个 agent 接手时：
 
 1. 先读 `coverage/README.md`。
-2. 再读本文件。
+2. 再读本文档。
 3. 再读 `coverage/cn-a/runs.jsonl` 和 `coverage/cn-a/research_queue.jsonl`。
-4. 继续处理 `pending`、`failed`、`needs_review`，不要重跑已完成项目。
-5. 每批完成后更新 JSONL 文件，并提交本批筛选资产。
+4. 继续处理 `pending`、`failed`、`needs_review`，不要重新开始整轮任务。
+5. 每批完成后更新 JSONL 文件，并提交本批筛选或研究资产。
 
 ## 质量标准
 
-- `deep_research` 必须说明为什么值得花完整研究成本。
-- `skip_*` 必须说明跳过原因，不能只写“不看”。
+- `deep_research` 的理由只需说明为什么进入研究队列，不要伪装成估值结论。
+- `skip_*` 必须说明硬跳过原因，不能因为小市值、低流动性或亏损而跳过。
 - `needs_manual_review` 必须说明卡点是什么。
 - 不能把估值判断伪装成筛选结论；估值只在公司研究报告中完成。

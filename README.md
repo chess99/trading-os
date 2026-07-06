@@ -28,7 +28,9 @@ src/trading_os/research_assets/
 
 - Do not overwrite historical reports.
 - Write company research reports in Chinese unless explicitly requested otherwise.
-- For broad A-share work, use `coverage/` to screen first and record skipped-company reasons.
+- For broad A-share work, use `coverage/` to assign research priority, risk labels,
+  and resumable queue state. The default A-share policy is to research as many
+  ordinary companies as practical.
 - Update `meta.json` after each accepted research report.
 - Rebuild `research/index.json` from metadata.
 - Use price alerts as review triggers, not automatic trades.

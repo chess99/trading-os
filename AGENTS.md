@@ -26,8 +26,10 @@ research/companies/{MARKET}/{TICKER}/
 
 ## Agent Rules
 
-- For broad A-share work, screen through `coverage/` first. Do not deep-research
-  every company by default.
+- For broad A-share work, screen through `coverage/` first to assign priority,
+  risk labels, and resumable queue state. The default policy is to research as
+  many ordinary A-share companies as practical; do not use small size, low
+  liquidity, or temporary losses as hard skip reasons.
 - Follow `playbooks/screening.md` before creating large research queues.
 - Research one company per agent unless the user explicitly asks for synthesis.
 - Read the previous `latest_report` before writing a follow-up.
@@ -36,6 +38,8 @@ research/companies/{MARKET}/{TICKER}/
 - Update `meta.json` only after the report is complete.
 - Run validation and rebuild generated files before committing.
 - Record skipped companies with structured reasons instead of silently dropping them.
+  Use `skip_*` sparingly for hard exclusions such as delisting or out-of-scope
+  securities.
 - Do not revive old recipe, DataHub, CANSLIM, Elder, Value, backtest, or paper-trading workflows.
 
 ## Commands

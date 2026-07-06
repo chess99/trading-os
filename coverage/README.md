@@ -1,16 +1,17 @@
 # Coverage Protocol
 
-`coverage/` 是全市场覆盖与筛选层。它不存放完整公司研究结论，也不替代
-`research/companies/`。它的职责只有一个：在深度研究之前，把股票池分流成
-“需要深研、只观察、跳过、人工复核”等状态，并留下可恢复的长程任务记录。
+`coverage/` 是全市场覆盖与任务编排层。它不保存完整公司研究结论，也不替代
+`research/companies/`。它的职责是：在深度研究之前，把股票池整理成可恢复的研究队列，
+记录优先级、风险标签、复核状态和跳过理由。
 
 ## 核心原则
 
-- 筛选结果也是资产。跳过一家公司必须留下结构化理由，避免未来重复消耗研究资源。
-- 筛选层只判断“是否值得投入深度研究火力”，不做完整估值报告。
+- 默认应研尽研。普通 A 股公司原则上都应进入研究体系。
+- 筛选不是为了大幅减少研究对象，而是为了安排顺序、识别硬风险、保证长程任务可恢复。
+- 小市值、低流动性、亏损、PE 为负、行业冷门，都不能作为硬跳过理由。
+- ST、*ST、重大异常公司进入 `needs_manual_review`，不要直接排除。
+- `skip_*` 只用于硬排除项，例如退市整理、明显不在普通 A 股范围内、数据无法识别。
 - 完整研究报告只写入 `research/companies/{MARKET}/{TICKER}/reports/`。
-- 长程任务必须能中断后恢复。每个批次用 run 记录状态、失败原因和下一步动作。
-- 执行主体默认是 Codex、Claude 或其他 agent；不要假设用户会手动运行命令。
 
 ## 目录
 
@@ -33,29 +34,26 @@ coverage/
 ```
 
 `*.jsonl` 是全市场覆盖状态的工作真相。每一行是一家公司或一个任务，便于 Git diff，
-也便于 agent 用工具安全查询和更新。`*.schema.json` 与 `*.example.json` 用来说明
-结构和约束。
+也便于 agent 用工具安全查询和更新。`*.schema.json` 与 `*.example.json` 用来说明结构和约束。
 
 ## 分流结果
 
-筛选结果使用固定枚举：
+- `deep_research`：进入完整公司研究队列。
+- `watch_only`：已有研究档案或等待既定复查，不重复创建初始研究任务。
+- `skip_risk`：退市整理、明显无法作为普通股票研究的硬风险项。
+- `skip_too_small`：原则上少用；不能因为普通小市值或低流动性而跳过。
+- `skip_not_in_scope`：不在当前普通 A 股研究范围内，如 ETF、基金、债券、B 股、优先股等。
+- `needs_manual_review`：ST、*ST、数据冲突、证券状态异常，需主 agent 先判断研究路径。
 
-- `deep_research`：值得进入完整公司研究。
-- `watch_only`：值得保留在观察池，但暂不写完整报告。
-- `skip_risk`：风险、治理、财务质量或退市风险过高，跳过。
-- `skip_too_small`：规模、流动性或覆盖价值过低，跳过。
-- `skip_not_in_scope`：不在当前研究范围，如 ETF、基金、债券、B 股、优先股、壳资源等。
-- `needs_manual_review`：信息冲突、业务复杂或数据不足，需要主 agent 决定。
+## A 股首筛建议
 
-## A 股第一轮筛选建议
+第一轮只做低成本分流：
 
-第一轮只做低成本分流，目标是减少深研浪费：
-
-1. 排除非普通 A 股、退市整理、长期停牌、明显壳化或不在能力圈的证券。
-2. 排除 ST、高退市风险、重大违规、持续资不抵债或财报可信度过低的公司。
-3. 排除市值和成交额过低、深研收益明显小于成本的公司。
-4. 保留龙头、现金牛、长期复利资产、成长赛道核心公司、周期底部候选、困境反转和特殊资产。
-5. 对数据冲突或业务复杂但可能重要的公司，标为 `needs_manual_review`，不要随手跳过。
+1. 排除非普通 A 股和退市整理类硬排除项。
+2. 将 ST、*ST、重大异常和数据冲突标为 `needs_manual_review`。
+3. 其余普通 A 股默认标为 `deep_research`。
+4. 用优先级控制执行顺序，而不是决定是否研究。
+5. 已有初始研究报告的公司标为 `watch_only`，按 `meta.json` 的复查计划跟踪。
 
 ## Agent 辅助工具
 
@@ -70,7 +68,7 @@ python -m trading_os coverage set-screening CN:300750 --name 宁德时代 --deci
 python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1 --reason "筛选结果为 deep_research"
 ```
 
-这些命令是给 Codex、Claude 或其他 agent 用的安全编辑器，不要求用户手动执行。
+这些命令是给 Codex、Claude 或其他 agent 用的安全编辑器，不要要求用户手动执行。
 
 ## 长程执行
 
@@ -92,7 +90,7 @@ python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1
 
 ## 与研究资产的关系
 
-- `coverage/cn-a/screening.jsonl` 决定哪些股票进入研究队列。
+- `coverage/cn-a/screening.jsonl` 决定研究顺序和复核状态。
 - `coverage/cn-a/research_queue.jsonl` 是深研任务队列。
 - `research/companies/` 保存真正的研究报告和当前公司状态。
 - `research/index.json`、`automation/review_schedule.json`、`automation/price_alerts.json`
