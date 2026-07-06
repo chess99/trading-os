@@ -69,7 +69,7 @@ def validate_company_dir(company_dir: str | Path) -> dict[str, Any]:
 
 def _read_json(path: Path) -> dict[str, Any]:
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
     except json.JSONDecodeError as exc:
         raise AssetValidationError(f"invalid JSON in {path}: {exc}") from exc
     if not isinstance(data, dict):

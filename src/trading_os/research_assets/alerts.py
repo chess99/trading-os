@@ -70,7 +70,7 @@ def evaluate_price_alerts(
 
 
 def load_json(path: str | Path) -> Any:
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+    return json.loads(Path(path).read_text(encoding="utf-8-sig"))
 
 
 def _price_from_quote(quote: dict[str, Any]) -> float | None:

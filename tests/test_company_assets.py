@@ -88,6 +88,19 @@ def test_valid_company_asset_loads(tmp_path: Path):
     assert meta["latest_report"] == "reports/2026-07-06-initial.md"
 
 
+def test_meta_json_with_utf8_bom_loads(tmp_path: Path):
+    from trading_os.research_assets.company import validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    meta_path = company_dir / "meta.json"
+    text = meta_path.read_text(encoding="utf-8")
+    meta_path.write_text("\ufeff" + text, encoding="utf-8")
+
+    meta = validate_company_dir(company_dir)
+
+    assert meta["symbol"] == "CN:600519"
+
+
 def test_invalid_rating_is_rejected(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 

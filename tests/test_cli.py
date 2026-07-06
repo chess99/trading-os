@@ -64,6 +64,42 @@ def test_cli_alerts_check_uses_quote_snapshot(tmp_path: Path, capsys):
     assert "triggered_count" in capsys.readouterr().out
 
 
+def test_cli_alerts_check_accepts_utf8_bom_json(tmp_path: Path, capsys):
+    from trading_os.cli import main
+
+    alerts_path = tmp_path / "alerts.json"
+    quotes_path = tmp_path / "quotes.json"
+    alerts_path.write_text(
+        "\ufeff"
+        + json.dumps(
+            {
+                "schema_version": 1,
+                "items": [
+                    {
+                        "symbol": "CN:600519",
+                        "name": "璐靛窞鑼呭彴",
+                        "type": "price_below",
+                        "price": 1100,
+                        "reason": "Enter buy zone.",
+                        "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
+                    }
+                ],
+            },
+            ensure_ascii=False,
+        ),
+        encoding="utf-8",
+    )
+    quotes_path.write_text(
+        "\ufeff" + json.dumps([{"symbol": "CN:600519", "price": 1090}], ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+    code = main(["alerts", "check", "--alerts", str(alerts_path), "--quotes", str(quotes_path)])
+
+    assert code == 0
+    assert '"triggered_count": 1' in capsys.readouterr().out
+
+
 def test_cli_alerts_check_rejects_non_object_alerts(tmp_path: Path, capsys):
     from trading_os.cli import main
 
