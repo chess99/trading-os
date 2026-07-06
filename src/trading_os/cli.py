@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from typing import TextIO
 
 from .research_assets.alerts import (
     evaluate_price_alerts,
@@ -73,14 +74,7 @@ def cmd_company_validate(ns: argparse.Namespace) -> int:
 def cmd_index_rebuild(ns: argparse.Namespace) -> int:
     result = write_index(ns.research_root)
     if not result.ok:
-        print(
-            json.dumps(
-                {"ok": False, "errors": result.errors},
-                ensure_ascii=False,
-                indent=2,
-            )
-        )
-        return 1
+        return _write_failure({"ok": False, "errors": result.errors})
     print(json.dumps({"ok": True, "path": str(result.path)}, ensure_ascii=False, indent=2))
     return 0
 
@@ -94,6 +88,8 @@ def cmd_alerts_build(ns: argparse.Namespace) -> int:
 def cmd_alerts_check(ns: argparse.Namespace) -> int:
     alerts = load_json(ns.alerts)
     quotes = load_json(ns.quotes)
+    if not isinstance(alerts, dict):
+        raise RuntimeError("alerts file must be a JSON object")
     if not isinstance(quotes, list):
         raise RuntimeError("quote snapshot must be a JSON list")
     result = evaluate_price_alerts(alerts, quotes)
@@ -116,8 +112,12 @@ def main(argv: list[str] | None = None) -> int:
     try:
         return int(func(ns))
     except (AssetValidationError, RuntimeError, FileNotFoundError, json.JSONDecodeError) as exc:
-        print(str(exc), file=sys.stderr)
-        return 1
+        return _write_failure({"ok": False, "error": str(exc)})
+
+
+def _write_failure(payload: dict[str, object], stream: TextIO | None = None) -> int:
+    print(json.dumps(payload, ensure_ascii=False, indent=2), file=stream or sys.stderr)
+    return 1
 
 
 if __name__ == "__main__":
