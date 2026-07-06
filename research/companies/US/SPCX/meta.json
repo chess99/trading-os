@@ -1,0 +1,30 @@
+{
+  "symbol": "US:SPCX",
+  "market": "US",
+  "ticker": "SPCX",
+  "name": "SpaceX / Space Exploration Technologies",
+  "currency": "USD",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "Exceptional space and satellite platform, but current public-market valuation appears to price in too much success before enough public operating evidence.",
+  "fair_value_range": [80, 120],
+  "buy_zone": [60, 90],
+  "sell_or_reduce_zone": [180, 230],
+  "position_plan": [
+    {"condition": "price > 120; no new position", "max_weight": 0.0},
+    {"condition": "90 <= price <= 120; research-only watch pending fresh public earnings evidence", "max_weight": 0.0},
+    {"condition": "60 <= price < 90 and public reporting confirms Starlink growth and margin progress", "max_weight": 0.03},
+    {"condition": "price < 60 after fresh review confirms no company-specific impairment", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-06-initial.md",
+  "report_history": ["reports/2026-07-06-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-15", "reason": "Review first post-listing earnings update or quarterly filing."},
+    {"type": "date", "date": "2026-11-15", "reason": "Review Starlink growth, launch cadence, margin, and capex after the next quarterly update."}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 90, "reason": "Potential entry-zone review; reassess valuation and public operating evidence."},
+    {"type": "price_above", "price": 180, "reason": "Valuation may outrun evidence; reassess reduce discipline."}
+  ],
+  "updated_at": "2026-07-06T00:00:00+08:00"
+}

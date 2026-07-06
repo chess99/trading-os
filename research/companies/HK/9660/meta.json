@@ -1,0 +1,30 @@
+{
+  "symbol": "HK:9660",
+  "market": "HK",
+  "ticker": "9660",
+  "name": "Horizon Robotics",
+  "currency": "HKD",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "High-growth Chinese intelligent driving platform with real production revenue, but still loss-making and only attractive with valuation discipline.",
+  "fair_value_range": [4.8, 6.8],
+  "buy_zone": [3.6, 4.4],
+  "sell_or_reduce_zone": [8.5, 11.0],
+  "position_plan": [
+    {"condition": "price > 4.40; wait for better entry or stronger operating leverage evidence", "max_weight": 0.0},
+    {"condition": "4.00 <= price <= 4.40 and growth/margin thesis intact", "max_weight": 0.02},
+    {"condition": "3.60 <= price < 4.00 and no thesis impairment", "max_weight": 0.04},
+    {"condition": "price < 3.60 after fresh review confirms valuation-driven decline", "max_weight": 0.06}
+  ],
+  "latest_report": "reports/2026-07-06-initial.md",
+  "report_history": ["reports/2026-07-06-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "Review 2026 interim results for growth, gross margin, and loss narrowing."},
+    {"type": "date", "date": "2026-11-30", "reason": "Review Q3 or post-interim operating updates and OEM design-win evidence."}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 4.4, "reason": "Enters buy-zone watch area; redo valuation and thesis check."},
+    {"type": "price_above", "price": 8.5, "reason": "Valuation may outrun confirmed operating leverage; review reduce discipline."}
+  ],
+  "updated_at": "2026-07-06T00:00:00+08:00"
+}

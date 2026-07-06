@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:600519",
+  "market": "CN",
+  "ticker": "600519",
+  "name": "Kweichow Moutai",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "hold",
+  "current_thesis": "Exceptional baijiu cash compounder, but current price is only reasonable; new money should wait for a larger margin of safety or stronger growth evidence.",
+  "fair_value_range": [1250, 1450],
+  "buy_zone": [1050, 1150],
+  "sell_or_reduce_zone": [1550, 1800],
+  "position_plan": [
+    {"condition": "price > 1450; do not add and consider trimming oversized positions", "max_weight": 0.08},
+    {"condition": "1150 <= price <= 1250 and channel/earnings quality stable", "max_weight": 0.04},
+    {"condition": "1050 <= price < 1150 and thesis intact", "max_weight": 0.08},
+    {"condition": "price < 1050 after fresh review confirms no structural impairment", "max_weight": 0.12}
+  ],
+  "latest_report": "reports/2026-07-06-initial.md",
+  "report_history": ["reports/2026-07-06-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "Review semiannual report for growth, cash flow, channel pressure, and dividend signals."},
+    {"type": "date", "date": "2026-10-31", "reason": "Review Q3 results and premium baijiu demand/channel signals."}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 1150, "reason": "Approaches buy zone; redo channel and valuation check."},
+    {"type": "price_above", "price": 1550, "reason": "Approaches reduce zone; check whether multiple outruns growth."}
+  ],
+  "updated_at": "2026-07-06T00:00:00+08:00"
+}

@@ -42,3 +42,41 @@ def test_write_index_does_not_replace_existing_file_when_invalid(tmp_path: Path)
     assert result.ok is False
     assert json.loads(index_path.read_text(encoding="utf-8"))["company_count"] == 0
     assert "latest_report" in result.errors[0]
+
+
+def test_repository_company_assets_validate():
+    from trading_os.research_assets.company import validate_company_dir
+
+    root = Path(__file__).resolve().parents[1]
+    company_dirs = sorted(
+        path
+        for path in (root / "research" / "companies").glob("*/*")
+        if (path / "meta.json").exists()
+    )
+
+    assert company_dirs
+    assert [validate_company_dir(path)["symbol"] for path in company_dirs] == [
+        "CN:600519",
+        "HK:9660",
+        "US:SPCX",
+    ]
+
+
+def test_generated_files_match_repository_assets():
+    from trading_os.research_assets.alerts import build_price_alerts
+    from trading_os.research_assets.index import build_index
+    from trading_os.research_assets.schedule import build_review_schedule
+
+    root = Path(__file__).resolve().parents[1]
+
+    index_payload = json.loads(
+        (root / "research" / "index.json").read_text(encoding="utf-8")
+    )
+
+    assert index_payload == build_index(root / "research")
+    assert json.loads(
+        (root / "automation" / "review_schedule.json").read_text(encoding="utf-8")
+    ) == build_review_schedule(root / "research")
+    assert json.loads(
+        (root / "automation" / "price_alerts.json").read_text(encoding="utf-8")
+    ) == build_price_alerts(root / "research")
