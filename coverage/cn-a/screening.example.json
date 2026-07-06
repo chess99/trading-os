@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "market": "CN",
+  "as_of": "2026-07-06",
+  "method": "低成本第一轮分流：只判断是否值得投入完整公司研究，不做完整估值。",
+  "results": [
+    {
+      "symbol": "CN:600519",
+      "name": "贵州茅台",
+      "decision": "deep_research",
+      "priority": 1,
+      "reason": "高质量现金流资产，具备长期研究价值，已经有种子报告，可作为后续 A 股研究格式标杆。",
+      "evidence": ["高端白酒龙头", "长期高利润率和强现金流", "已有 research/companies/CN/600519 资产"],
+      "next_action": "后续按财报和价格触发器复查，不需要重复写初始报告。"
+    },
+    {
+      "symbol": "CN:300750",
+      "name": "宁德时代",
+      "decision": "deep_research",
+      "priority": 1,
+      "reason": "全球动力电池龙头，行业空间大且竞争格局重要，值得完整研究。",
+      "evidence": ["新能源核心资产", "A 股代表性成长公司", "业务和估值对全市场判断有参考价值"],
+      "next_action": "加入 research-queue，写初始公司研究报告。"
+    },
+    {
+      "symbol": "CN:000000",
+      "name": "示例非范围证券",
+      "decision": "skip_not_in_scope",
+      "priority": null,
+      "reason": "不是普通 A 股上市公司，不进入公司深度研究。",
+      "evidence": ["security_type=fund"],
+      "next_action": "记录跳过理由，后续除非用户扩大研究范围，否则不要研究。"
+    }
+  ]
+}

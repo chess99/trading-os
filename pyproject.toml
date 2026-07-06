@@ -4,39 +4,18 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "trading-os"
-version = "0.0.1"
-description = "Personal Trading OS: data, research, backtest, execution, risk, journaling."
+version = "0.1.0"
+description = "Markdown-first research asset repository tools."
 readme = "README.md"
 license = { text = "MIT" }
 authors = [{ name = "zcs" }]
-
 requires-python = ">=3.10,<3.15"
-
-dependencies = [
-  "pandas>=2.0",
-  "pyarrow>=14.0",
-]
+dependencies = []
 
 [project.optional-dependencies]
 dev = [
   "pytest>=8",
   "ruff>=0.4",
-  "pyyaml>=6",
-]
-
-data_ashare = [
-  "akshare>=1.10",
-  "tushare>=1.4",
-]
-
-data_paid = [
-  "rqdatac",
-  "jqdatasdk",
-]
-
-agent = [
-  "anthropic>=0.40",
-  "pydantic>=2.0",
 ]
 
 [tool.setuptools]
