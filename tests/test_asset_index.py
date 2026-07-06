@@ -16,7 +16,10 @@ def test_build_index_from_company_metadata(tmp_path: Path):
     assert index["schema_version"] == 1
     assert index["company_count"] == 1
     assert index["companies"][0]["symbol"] == "CN:600519"
-    assert index["companies"][0]["latest_report"] == "companies/CN/600519/reports/2026-07-06-initial.md"
+    assert (
+        index["companies"][0]["latest_report"]
+        == "companies/CN/600519/reports/2026-07-06-initial.md"
+    )
 
 
 def test_write_index_does_not_replace_existing_file_when_invalid(tmp_path: Path):
@@ -25,7 +28,10 @@ def test_write_index_does_not_replace_existing_file_when_invalid(tmp_path: Path)
     company_dir = write_company(tmp_path)
     research_root = tmp_path / "research"
     index_path = research_root / "index.json"
-    index_path.write_text('{"schema_version": 1, "company_count": 0, "companies": []}\n', encoding="utf-8")
+    index_path.write_text(
+        '{"schema_version": 1, "company_count": 0, "companies": []}\n',
+        encoding="utf-8",
+    )
     meta_path = company_dir / "meta.json"
     meta = json.loads(meta_path.read_text(encoding="utf-8"))
     meta["latest_report"] = "reports/missing.md"
