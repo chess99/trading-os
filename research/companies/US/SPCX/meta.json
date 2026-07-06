@@ -2,29 +2,29 @@
   "symbol": "US:SPCX",
   "market": "US",
   "ticker": "SPCX",
-  "name": "SpaceX / Space Exploration Technologies",
+  "name": "SpaceX / 太空探索技术公司",
   "currency": "USD",
   "status": "active",
   "current_rating": "avoid",
-  "current_thesis": "Exceptional space and satellite platform, but current public-market valuation appears to price in too much success before enough public operating evidence.",
+  "current_thesis": "极优秀的航天和卫星互联网平台，但当前公开市场估值已经计入太多成功，新增资金应等待估值回落或更多公开经营证据。",
   "fair_value_range": [80, 120],
   "buy_zone": [60, 90],
   "sell_or_reduce_zone": [180, 230],
   "position_plan": [
-    {"condition": "price > 120; no new position", "max_weight": 0.0},
-    {"condition": "90 <= price <= 120; research-only watch pending fresh public earnings evidence", "max_weight": 0.0},
-    {"condition": "60 <= price < 90 and public reporting confirms Starlink growth and margin progress", "max_weight": 0.03},
-    {"condition": "price < 60 after fresh review confirms no company-specific impairment", "max_weight": 0.05}
+    {"condition": "价格高于 120 美元，不新增仓位", "max_weight": 0.0},
+    {"condition": "价格在 90-120 美元，只保持研究观察，等待新的公开业绩证据", "max_weight": 0.0},
+    {"condition": "价格在 60-90 美元，且公开报告确认 Starlink 增长和利润率改善", "max_weight": 0.03},
+    {"condition": "价格低于 60 美元，且新一轮研究确认没有公司特定损害", "max_weight": 0.05}
   ],
   "latest_report": "reports/2026-07-06-initial.md",
   "report_history": ["reports/2026-07-06-initial.md"],
   "review_triggers": [
-    {"type": "date", "date": "2026-08-15", "reason": "Review first post-listing earnings update or quarterly filing."},
-    {"type": "date", "date": "2026-11-15", "reason": "Review Starlink growth, launch cadence, margin, and capex after the next quarterly update."}
+    {"type": "date", "date": "2026-08-15", "reason": "复查上市后首份业绩更新或季度文件。"},
+    {"type": "date", "date": "2026-11-15", "reason": "复查 Starlink 增长、发射频率、利润率和资本开支。"}
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 90, "reason": "Potential entry-zone review; reassess valuation and public operating evidence."},
-    {"type": "price_above", "price": 180, "reason": "Valuation may outrun evidence; reassess reduce discipline."}
+    {"type": "price_below", "price": 90, "reason": "可能进入买入观察区，需要重估估值和公开经营证据。"},
+    {"type": "price_above", "price": 180, "reason": "估值可能跑在证据前面，需要复查减仓纪律。"}
   ],
   "updated_at": "2026-07-06T00:00:00+08:00"
 }

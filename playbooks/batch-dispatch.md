@@ -6,6 +6,7 @@ Use this playbook when a main agent assigns many companies to subagents.
 
 - One subagent researches exactly one company.
 - A subagent writes only inside that company's directory.
+- Company research reports should be written in Chinese unless the user explicitly asks otherwise.
 - The main agent owns assignment, review, index rebuild, and commits.
 - Failed runs should leave no partial report unless the failure analysis is itself useful.
 

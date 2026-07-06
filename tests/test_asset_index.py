@@ -62,6 +62,15 @@ def test_repository_company_assets_validate():
     ]
 
 
+def test_seeded_repository_reports_are_chinese():
+    root = Path(__file__).resolve().parents[1]
+    report_paths = sorted((root / "research" / "companies").glob("*/*/reports/*.md"))
+
+    assert report_paths
+    for path in report_paths:
+        assert path.read_text(encoding="utf-8").startswith("# 公司研究：")
+
+
 def test_generated_files_match_repository_assets():
     from trading_os.research_assets.alerts import build_price_alerts
     from trading_os.research_assets.index import build_index

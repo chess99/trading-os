@@ -26,6 +26,7 @@ research/companies/{MARKET}/{TICKER}/
 - Research one company per agent unless the user explicitly asks for synthesis.
 - Read the previous `latest_report` before writing a follow-up.
 - Write a new report for every new research run.
+- Write company research reports in Chinese unless the user explicitly asks for another language.
 - Update `meta.json` only after the report is complete.
 - Run validation and rebuild generated files before committing.
 - Do not revive old recipe, DataHub, CANSLIM, Elder, Value, backtest, or paper-trading workflows.

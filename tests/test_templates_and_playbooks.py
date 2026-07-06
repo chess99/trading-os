@@ -11,19 +11,19 @@ def test_company_report_template_contains_required_sections():
     text = (root / "templates" / "company-report.md").read_text(encoding="utf-8")
 
     for heading in [
-        "## One-line Conclusion",
-        "## Decision",
-        "## Business Understanding",
-        "## Industry and Competitive Context",
-        "## Company Quality",
-        "## Financial Quality",
-        "## Valuation",
-        "## Price and Position Plan",
-        "## Key Assumptions",
-        "## Follow-up Triggers",
-        "## Risks",
-        "## Previous Thesis Review",
-        "## Sources",
+        "## 一句话结论",
+        "## 决策",
+        "## 业务理解",
+        "## 行业与竞争格局",
+        "## 公司质量",
+        "## 财务质量",
+        "## 估值",
+        "## 价格与仓位计划",
+        "## 关键假设",
+        "## 跟踪触发器",
+        "## 风险",
+        "## 上一轮判断复盘",
+        "## 来源",
     ]:
         assert heading in text
 
@@ -36,6 +36,8 @@ def test_playbooks_state_immutable_report_rule():
     assert "Do not overwrite existing reports" in company
     assert "Read the previous latest_report" in followup
     assert "Previous Thesis Review" in followup
+    assert "Write the report in Chinese" in company
+    assert "Write the report in Chinese" in followup
 
 
 def test_meta_schema_is_valid_json_and_has_validator_aligned_constraints():

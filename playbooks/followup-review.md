@@ -21,6 +21,7 @@ Review exactly one company. Read the previous latest_report before doing new res
 
 ## Output Rules
 
+- Write the report in Chinese unless the user explicitly requests another language.
 - Never replace the previous report.
 - The new report must explicitly name the previous latest_report.
 - The new report must explain what changed.

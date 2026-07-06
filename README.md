@@ -26,6 +26,7 @@ src/trading_os/research_assets/
 ## Rules
 
 - Do not overwrite historical reports.
+- Write company research reports in Chinese unless explicitly requested otherwise.
 - Update `meta.json` after each accepted research report.
 - Rebuild `research/index.json` from metadata.
 - Use price alerts as review triggers, not automatic trades.

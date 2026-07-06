@@ -2,29 +2,29 @@
   "symbol": "CN:600519",
   "market": "CN",
   "ticker": "600519",
-  "name": "Kweichow Moutai",
+  "name": "贵州茅台",
   "currency": "CNY",
   "status": "active",
   "current_rating": "hold",
-  "current_thesis": "Exceptional baijiu cash compounder, but current price is only reasonable; new money should wait for a larger margin of safety or stronger growth evidence.",
+  "current_thesis": "极高质量的高端白酒现金流资产，但当前价格只是合理偏便宜，新增资金应等待更大安全边际或增长重新加速证据。",
   "fair_value_range": [1250, 1450],
   "buy_zone": [1050, 1150],
   "sell_or_reduce_zone": [1550, 1800],
   "position_plan": [
-    {"condition": "price > 1450; do not add and consider trimming oversized positions", "max_weight": 0.08},
-    {"condition": "1150 <= price <= 1250 and channel/earnings quality stable", "max_weight": 0.04},
-    {"condition": "1050 <= price < 1150 and thesis intact", "max_weight": 0.08},
-    {"condition": "price < 1050 after fresh review confirms no structural impairment", "max_weight": 0.12}
+    {"condition": "价格高于 1450 元，不加仓，并考虑是否需要修剪过高仓位", "max_weight": 0.08},
+    {"condition": "价格在 1150-1250 元，且批价和盈利质量稳定", "max_weight": 0.04},
+    {"condition": "价格在 1050-1150 元，且核心假设完整", "max_weight": 0.08},
+    {"condition": "价格低于 1050 元，且新一轮研究确认没有结构性损害", "max_weight": 0.12}
   ],
   "latest_report": "reports/2026-07-06-initial.md",
   "report_history": ["reports/2026-07-06-initial.md"],
   "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "Review semiannual report for growth, cash flow, channel pressure, and dividend signals."},
-    {"type": "date", "date": "2026-10-31", "reason": "Review Q3 results and premium baijiu demand/channel signals."}
+    {"type": "date", "date": "2026-08-31", "reason": "复查半年报，重点看增长、现金流、渠道压力和分红信号。"},
+    {"type": "date", "date": "2026-10-31", "reason": "复查三季报，以及高端白酒需求和渠道信号。"}
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 1150, "reason": "Approaches buy zone; redo channel and valuation check."},
-    {"type": "price_above", "price": 1550, "reason": "Approaches reduce zone; check whether multiple outruns growth."}
+    {"type": "price_below", "price": 1150, "reason": "接近买入区间，需要重做渠道和估值检查。"},
+    {"type": "price_above", "price": 1550, "reason": "接近减仓区间，需要检查估值倍数是否跑赢增长。"}
   ],
   "updated_at": "2026-07-06T00:00:00+08:00"
 }

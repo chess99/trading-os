@@ -29,6 +29,7 @@ Research exactly one company. Do not edit another company directory. Do not over
 
 ## Output Rules
 
+- Write the report in Chinese unless the user explicitly requests another language.
 - Reports are immutable research snapshots.
 - Do not overwrite existing reports.
 - Do not edit a historical report to change the judgment.

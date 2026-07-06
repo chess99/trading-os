@@ -18,4 +18,4 @@ Price alerts are review triggers, not trade instructions.
 
 ## Output
 
-The output is a new research report and updated metadata. It is not an automatic order.
+The output is a new Chinese research report and updated metadata. It is not an automatic order.

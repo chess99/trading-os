@@ -1,57 +1,57 @@
-# Company Research: {Name} ({Symbol})
+# 公司研究：{名称}（{Symbol}）
 
-Date: YYYY-MM-DD
-Research Type: initial | followup | earnings_review | price_trigger_review
-Analyst: agent
+日期：YYYY-MM-DD
+研究类型：initial | followup | earnings_review | price_trigger_review
+分析师：agent
 
-## One-line Conclusion
+## 一句话结论
 
-State the current investment judgment in one sentence.
+用一句话说明当前投资判断。
 
-## Decision
+## 决策
 
-State the current action class: buy, watch, hold, avoid, sell, or research_only.
+说明当前动作分类：buy、watch、hold、avoid、sell 或 research_only。
 
-## Business Understanding
+## 业务理解
 
-Explain what the company sells, who pays, why customers choose it, and how durable the business model is.
+解释公司卖什么、谁付钱、客户为什么选择它，以及商业模式是否持久。
 
-## Industry and Competitive Context
+## 行业与竞争格局
 
-Explain the industry structure, growth drivers, cycle position, competitors, substitutes, and bargaining power.
+解释行业结构、增长驱动、周期位置、竞争对手、替代品和议价能力。
 
-## Company Quality
+## 公司质量
 
-Assess moat, management, capital allocation, product quality, customer stickiness, and governance.
+评估护城河、管理层、资本配置、产品质量、客户黏性和治理。
 
-## Financial Quality
+## 财务质量
 
-Assess revenue growth, margins, cash conversion, capital intensity, leverage, dilution, and accounting quality.
+评估收入增长、利润率、现金转化、资本开支强度、杠杆、稀释和会计质量。
 
-## Valuation
+## 估值
 
-Give a fair value range, valuation method, key assumptions, and sensitivity to the most important variables.
+给出合理价值区间、估值方法、关键假设，以及对最重要变量的敏感性。
 
-## Price and Position Plan
+## 价格与仓位计划
 
-Give buy zone, reduce zone, maximum position size, add rules, and conditions that must be checked before acting.
+给出买入区间、减仓区间、最大仓位、加仓规则，以及行动前必须检查的条件。
 
-## Key Assumptions
+## 关键假设
 
-List the explicit assumptions the thesis depends on.
+列出投资判断依赖的明确假设。
 
-## Follow-up Triggers
+## 跟踪触发器
 
-List dates, filings, earnings releases, product milestones, regulatory events, price levels, or industry events that require review.
+列出需要复查的日期、财报、公告、产品里程碑、价格水平或行业事件。
 
-## Risks
+## 风险
 
-List the risks that can impair intrinsic value or invalidate the thesis.
+列出可能损害内在价值或推翻投资假设的风险。
 
-## Previous Thesis Review
+## 上一轮判断复盘
 
-For an initial report, state that no previous report exists. For later reports, review the prior `latest_report` and classify each prior assumption as confirmed, weakened, or disproven.
+初始报告说明没有上一轮报告。后续报告需要阅读上一份 `latest_report`，并把上一轮关键假设分别归类为确认、削弱、证伪或仍未验证。
 
-## Sources
+## 来源
 
-List primary filings, company materials, exchange disclosures, credible industry reports, and market data sources used.
+列出使用过的主要公告、公司材料、交易所披露、可信行业报告和市场数据来源。
