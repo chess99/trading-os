@@ -340,7 +340,7 @@ date-based review triggers.
 ### Price Alerts
 
 `automation/price_alerts.json` is derived from company metadata. It lists active price
-triggers. A later command can read quotes and report triggered symbols.
+triggers. The CLI can read a supplied quote snapshot and report triggered symbols.
 
 The first implementation may use manually supplied quote snapshots. Live quote provider
 integration is not required for the reset foundation.
@@ -353,15 +353,10 @@ Recommended commands:
 
 ```bash
 python -m trading_os index rebuild
-python -m trading_os company validate research/companies/CN/600519
+python -m trading_os company validate <company-dir>
 python -m trading_os alerts build
 python -m trading_os schedule build
-```
-
-Optional later command:
-
-```bash
-python -m trading_os alerts check --quotes path/to/quotes.json
+python -m trading_os alerts check --quotes <quote-snapshot.json>
 ```
 
 The CLI should not perform investment research itself. Research is done by agents using

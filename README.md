@@ -34,11 +34,11 @@ src/trading_os/research_assets/
 ## Commands
 
 ```bash
-python -m trading_os company validate research/companies/CN/600519
+python -m trading_os company validate <company-dir>
 python -m trading_os index rebuild
 python -m trading_os schedule build
 python -m trading_os alerts build
-python -m trading_os alerts check --quotes quotes/latest.json
+python -m trading_os alerts check --quotes <quote-snapshot.json>
 ```
 
 ## Research Workflow
