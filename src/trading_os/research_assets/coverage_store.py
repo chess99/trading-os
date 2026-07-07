@@ -189,7 +189,7 @@ def _validate_file(path: Path, validator: Any) -> None:
     seen: set[str] = set()
     for item in read_jsonl(path):
         symbol = item.get("symbol")
-        if isinstance(symbol, str):
+        if path.name != RUNS_FILE and isinstance(symbol, str):
             if symbol in seen:
                 raise CoverageValidationError(f"duplicate symbol in {path}: {symbol}")
             seen.add(symbol)

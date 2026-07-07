@@ -66,6 +66,25 @@ def test_validate_coverage_root_rejects_duplicate_symbols(tmp_path: Path):
         validate_coverage_root(root)
 
 
+def test_validate_coverage_root_allows_multiple_runs_for_same_symbol(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import validate_coverage_root
+
+    root = tmp_path / "coverage" / "cn-a"
+    root.mkdir(parents=True)
+    (root / "runs.jsonl").write_text(
+        "\n".join(
+            [
+                json.dumps({"symbol": "CN:600519", "run_id": "run-1"}),
+                json.dumps({"symbol": "CN:600519", "run_id": "run-2"}),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    assert validate_coverage_root(root)["runs"]["total"] == 2
+
+
 def test_coverage_status_counts_screening_and_queue(tmp_path: Path):
     from trading_os.research_assets.coverage_store import coverage_status
 

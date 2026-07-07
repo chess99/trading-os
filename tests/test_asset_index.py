@@ -57,6 +57,7 @@ def test_repository_company_assets_validate():
     assert company_dirs
     assert [validate_company_dir(path)["symbol"] for path in company_dirs] == [
         "CN:600519",
+        "CN:601138",
         "HK:9660",
         "US:SPCX",
     ]

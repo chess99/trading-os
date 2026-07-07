@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:601138",
+  "market": "CN",
+  "ticker": "601138",
+  "name": "工业富联",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "AI服务器全球龙头，FY2025营收9029亿(+48%)净利353亿(+52%)，但毛利率仅7%、FY2025 OCF仅52亿、PE 35.7x已反映乐观预期，安全边际不足，观察待回调",
+  "fair_value_range": [
+    48,
+    55
+  ],
+  "buy_zone": [
+    38,
+    48
+  ],
+  "sell_or_reduce_zone": [
+    70,
+    90
+  ],
+  "position_plan": [
+    {
+      "condition": "当前63元附近，估值偏贵不建仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格回调至48元以下且基本面未恶化（FY2026季度收入增速维持20%以上，毛利率稳定6.5%以上）",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "价格回调至38-48元且基本面维持",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格跌破30元且财务质量未恶化（OCF/净利恢复至0.7以上）",
+      "max_weight": 0.04
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-failed.md",
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "FY2026半年报披露，重点跟踪云计算收入增速与毛利率、是否提示AI服务器OCF改善"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "FY2026三季报，跟踪全年业绩兑现度，关注北美CSP Q3季度capex指引"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查关税/出口管制政策是否发生重大变化，可能影响墨西哥/越南产能和NVIDIA产品交付"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 48,
+      "reason": "进入有安全边际的买入区间（PE 20x以下）"
+    },
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "进入强吸引力买入区间，分批建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "reason": "进入泡沫区间，已持仓应减仓"
+    }
+  ],
+  "updated_at": "2026-07-07T14:30:00+08:00"
+}
