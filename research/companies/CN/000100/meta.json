@@ -1,0 +1,60 @@
+{
+  "symbol": "CN:000100",
+  "market": "CN",
+  "ticker": "000100",
+  "name": "TCL科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "TCL华星盈利修复和行业集中度提升支撑公司价值，但当前5.19元、约1.72倍PB已部分反映周期改善，且2026年7月面板价格转弱、TCL中环仍处修复验证期，因此暂列观察而非重仓买入。",
+  "fair_value_range": [
+    5.4,
+    6.6
+  ],
+  "buy_zone": [
+    4.2,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    8.2
+  ],
+  "position_plan": [
+    {
+      "stage": "watch",
+      "weight": 0.0,
+      "max_weight": 0.04,
+      "condition": "当前价格处于公允价值下沿附近，但不具备典型周期底部安全边际；等待面板价格重新上行或股价回到买入观察区。"
+    },
+    {
+      "stage": "initial",
+      "weight": 0.02,
+      "max_weight": 0.04,
+      "condition": "股价进入4.20-4.80元且经营现金流未恶化，或面板价格连续两个月止跌回升。"
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报、面板价格趋势、TCL中环亏损收窄和集团现金流。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入买入观察区，若经营现金流和面板价格未恶化则重新评估加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "进入减仓区，检查乐观情景是否已被充分定价。"
+    }
+  ],
+  "updated_at": "2026-07-07T00:00:00+08:00"
+}
