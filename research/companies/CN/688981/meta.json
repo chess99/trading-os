@@ -1,0 +1,78 @@
+{
+  "symbol": "CN:688981",
+  "market": "CN",
+  "ticker": "688981",
+  "name": "中芯国际",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中芯国际是中国大陆晶圆代工核心资产，受益于本土供应链安全、产能扩张和成熟/特色工艺平台迭代；但当前154.50元股价已反映乐观国产替代和先进制程期权，2025年ROE仅3.4%、资本开支仍高，缺少安全边际。等待110元以下或盈利质量明显上台阶后再建立仓位。",
+  "fair_value_range": [
+    105,
+    135
+  ],
+  "buy_zone": [
+    80,
+    110
+  ],
+  "sell_or_reduce_zone": [
+    150,
+    190
+  ],
+  "position_plan": [
+    {
+      "condition": "价格高于150元或估值仍处乐观情景区间，且未出现毛利率、利用率和自由现金流同时改善的证据",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格回落至110-135元，仅观察或在业绩显著超预期时小额试探",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格回落至95-110元，且产能利用率维持90%以上、毛利率不低于20%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格回落至80-95元，且出口管制、客户结构和现金流未恶化",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "价格低于80元，且基本面未发生逻辑破坏",
+      "max_weight": 0.04
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：收入增速、毛利率、产能利用率、资本开支和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报：资本开支是否见顶、ROE和自由现金流是否改善"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 110,
+      "reason": "进入安全边际买入区上沿，准备第一笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 85,
+      "reason": "进入强吸引力买入区，若基本面未破坏可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 150,
+      "reason": "高于合理区间，已有仓位应复核是否减仓"
+    }
+  ],
+  "updated_at": "2026-07-07T21:08:45+08:00"
+}
