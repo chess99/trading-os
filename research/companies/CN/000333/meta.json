@@ -1,0 +1,54 @@
+{
+  "symbol": "CN:000333",
+  "market": "CN",
+  "ticker": "000333",
+  "name": "美的集团",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "美的集团是高质量核心资产，但79元附近估值处于合理中部，安全边际不足，等待62-70元区间更有吸引力。",
+  "fair_value_range": [72, 92],
+  "buy_zone": [62, 70],
+  "sell_or_reduce_zone": [95, 110],
+  "position_plan": [
+    {
+      "condition": "股价处于买入区间且基本面未恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于强吸引力区间且扣非利润和现金流未恶化",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价处于合理区间但未进入买入区间，仅作为核心观察仓",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年度报告披露后复查扣非利润、海外增长和ToB业务利润率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季度报告披露后复查全年盈利和现金流假设"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 70,
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 95,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-07T23:30:00+08:00"
+}

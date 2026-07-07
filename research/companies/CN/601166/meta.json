@@ -1,0 +1,65 @@
+{
+  "symbol": "CN:601166",
+  "market": "CN",
+  "ticker": "601166",
+  "name": "兴业银行",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "buy",
+  "current_thesis": "兴业银行是资产质量优于行业、特色金融能力突出的股份行核心资产，当前约0.43倍PB和6%以上股息率已反映较悲观预期，适合分批买入但不宜重仓押注高增长。",
+  "fair_value_range": [
+    20,
+    24
+  ],
+  "buy_zone": [
+    15,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    28
+  ],
+  "position_plan": [
+    {
+      "condition": "股价处于买入区间且基本面未恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于16元且不良率、拨备覆盖率、核心一级资本充足率保持稳定",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于15元且无资产质量恶化证据",
+      "max_weight": 0.06
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的净息差、资产质量、核心一级资本充足率和分红假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及全年盈利趋势"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-07T23:30:00+08:00"
+}
