@@ -1,0 +1,128 @@
+{
+  "symbol": "CN:000630",
+  "market": "CN",
+  "ticker": "000630",
+  "name": "铜陵有色",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "铜陵有色具备220万吨级阴极铜产能、米拉多等资源端改善和较高分红，但仍是强周期铜公司，利润受铜价、TC/RC、库存、套保和海外项目合同节奏影响显著。2026-07-07股价6.08元处于合理价值区间中上部，安全边际不足，适合观察或小跟踪仓，等待5.20元以下或米拉多二期确定性提高后再加仓。",
+  "fair_value_range": [
+    5.2,
+    6.6
+  ],
+  "buy_zone": [
+    4.7,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    8.5
+  ],
+  "position_plan": [
+    {
+      "condition": "price_below_4.2",
+      "price_range": [
+        0,
+        4.2
+      ],
+      "action": "strong_buy",
+      "target_weight": 0.04,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price_4.2_to_4.7",
+      "price_range": [
+        4.2,
+        4.7
+      ],
+      "action": "buy",
+      "target_weight": 0.03,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price_4.7_to_5.2",
+      "price_range": [
+        4.7,
+        5.2
+      ],
+      "action": "start_or_add",
+      "target_weight": 0.02,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price_5.2_to_6.6",
+      "price_range": [
+        5.2,
+        6.6
+      ],
+      "action": "watch_or_tracking_position",
+      "target_weight": 0.015,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price_6.6_to_7.2",
+      "price_range": [
+        6.6,
+        7.2
+      ],
+      "action": "hold_only",
+      "target_weight": 0.01,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price_above_7.2",
+      "price_range": [
+        7.2,
+        999
+      ],
+      "action": "reduce_or_avoid",
+      "target_weight": 0,
+      "max_weight": 0.04
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报、米拉多铜矿二期采矿合同进展、自产铜精矿产量和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、存货跌价准备、铜价和铜精矿TC/RC变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红兑现、资产负债率和米拉多二期投产达产情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "reason": "复核2027年中报及资源端利润占比变化"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入有安全边际买入区上沿，复核铜价、TC/RC、米拉多进展和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 4.7,
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "高于不应追高价，除非米拉多二期和铜价同时超预期，否则降低仓位"
+    }
+  ],
+  "updated_at": "2026-07-07T16:30:00+08:00"
+}
