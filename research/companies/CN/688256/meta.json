@@ -1,0 +1,98 @@
+{
+  "symbol": "CN:688256",
+  "market": "CN",
+  "ticker": "688256",
+  "name": "寒武纪",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "寒武纪是国产AI加速芯片战略稀缺标的，2025年和2026Q1业绩拐点已被验证；但当前估值已显著透支订单、毛利率、供应链和软件生态持续顺利兑现的乐观预期，因此评级为watch，650元以下才考虑第一笔观察仓。",
+  "quality_rating": "A-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    600,
+    850
+  ],
+  "buy_zone": [
+    450,
+    650
+  ],
+  "sell_or_reduce_zone": [
+    1000,
+    1400
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入450-650元且订单、毛利率、供应链未恶化",
+      "price_range": [
+        450,
+        650
+      ],
+      "action": "first_buy",
+      "weight": 0.005,
+      "max_weight": 0.02,
+      "notes": "650元以下才考虑第一笔观察仓。"
+    },
+    {
+      "condition": "股价跌入350-450元且基本面验证仍在推进",
+      "price_range": [
+        350,
+        450
+      ],
+      "action": "accumulate",
+      "weight": 0.02,
+      "max_weight": 0.03,
+      "notes": "基本面未恶化时分批提高仓位。"
+    },
+    {
+      "condition": "股价低于350元且公司战略地位和商业化趋势未破坏",
+      "price_range": [
+        0,
+        350
+      ],
+      "action": "strong_buy",
+      "weight": 0.03,
+      "max_weight": 0.04,
+      "notes": "极端低估且订单、供应链未恶化时最高4%。"
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、利润、经营现金流、合同负债和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及全年业绩可兑现性。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 650,
+      "reason": "进入可考虑第一笔观察仓区间。"
+    },
+    {
+      "type": "price_below",
+      "price": 450,
+      "reason": "进入强安全边际区，若基本面未恶化可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 1000,
+      "reason": "高于合理区间上沿，不新增并复核减仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 1400,
+      "reason": "显著透支乐观预期，除非业绩大幅上修否则降低风险暴露。"
+    }
+  ],
+  "updated_at": "2026-07-07T22:20:00+08:00"
+}

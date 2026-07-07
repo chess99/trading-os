@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:688041",
+  "market": "CN",
+  "ticker": "688041",
+  "name": "海光信息",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "海光信息是国产高端CPU和DCU的战略稀缺资产，受益于信创、AI算力和国产替代；但2026-07-06约339元股价对应估值已显著透支乐观预期，当前应观察等待安全边际。",
+  "fair_value_range": [
+    160,
+    230
+  ],
+  "buy_zone": [
+    120,
+    160
+  ],
+  "sell_or_reduce_zone": [
+    280,
+    360
+  ],
+  "position_plan": [
+    {
+      "condition": "price_above_280",
+      "action": "no_new_position_or_reduce",
+      "target_weight": 0,
+      "max_weight": 0
+    },
+    {
+      "condition": "price_160_to_230_and_fundamentals_intact",
+      "action": "starter_watch_position",
+      "target_weight": 0.02,
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price_120_to_160_and_fundamentals_intact",
+      "action": "buy_with_margin_of_safety",
+      "target_weight": 0.05,
+      "max_weight": 0.05
+    },
+    {
+      "condition": "price_80_to_120_and_no_thesis_break",
+      "action": "strong_buy_zone",
+      "target_weight": 0.08,
+      "max_weight": 0.08
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点验证收入增速、利润率、现金流、客户集中和DCU进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和AI算力订单兑现情况。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 230,
+      "reason": "进入合理价值区间上沿，开始复核是否可建立观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 160,
+      "reason": "进入安全边际买入区间，若基本面未破坏可分批买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 280,
+      "reason": "高于不应追高区间，已有仓位需审视估值风险。"
+    }
+  ],
+  "updated_at": "2026-07-07T22:10:14+08:00"
+}
