@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:688012",
+  "market": "CN",
+  "ticker": "688012",
+  "name": "中微公司",
+  "currency": "CNY",
+  "status": "active",
+  "priority": "P1",
+  "analyst": "codex-subagent-688012",
+  "current_rating": "watch",
+  "rating_updated_at": "2026-07-07T22:30:00+08:00",
+  "fair_value_range": [
+    230,
+    310
+  ],
+  "buy_zone": [
+    180,
+    240
+  ],
+  "sell_or_reduce_zone": [
+    360,
+    460
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于360元",
+      "action": "不新增，已有仓位降为观察仓",
+      "target_weight": 0,
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价在220-240元且基本面未恶化",
+      "action": "建立第一笔观察仓",
+      "target_weight": 0.015,
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于180元且订单、毛利率和扣非利润未恶化",
+      "action": "分批加仓",
+      "target_weight": 0.04,
+      "max_weight": 0.06
+    }
+  ],
+  "thesis": "公司是国产半导体刻蚀设备龙头，薄膜设备和MOCVD提供第二增长曲线，但约4000亿元市值已经显著透支国产替代和先进制程乐观预期，当前评级为watch。",
+  "current_thesis": "公司是国产半导体刻蚀设备龙头，薄膜设备和MOCVD提供第二增长曲线，但约4000亿元市值已经显著透支国产替代和先进制程乐观预期，当前评级为watch。",
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报后复核收入、扣非利润、毛利率、合同负债和薄膜设备放量。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年报和2027年一季报后复核估值与平台化兑现。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 240,
+      "reason": "进入安全边际买入区，若基本面未恶化可建观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 180,
+      "reason": "进入强吸引力买入区，需复核订单和毛利后考虑加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 360,
+      "reason": "高于不应追高区，除非扣非利润和订单显著超预期，否则不新增。"
+    },
+    {
+      "type": "price_above",
+      "price": 460,
+      "reason": "进入极度乐观估值区，已有仓位应考虑降风险。"
+    }
+  ],
+  "updated_at": "2026-07-07T22:30:00+08:00"
+}

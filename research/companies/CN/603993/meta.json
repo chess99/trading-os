@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:603993",
+  "market": "CN",
+  "ticker": "603993",
+  "name": "洛阳钼业",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "洛阳钼业拥有全球稀缺的低成本铜钴资源和KFM/TFM放量弹性，是A股优质资源平台；但2026年7月股价已接近基准合理价值区间，且刚果金政策、钴出口配额和铜价周期风险仍高，因此当前观察等待16.5元以下安全边际买点。",
+  "quality_rating": "A-",
+  "valuation_rating": "watch",
+  "fair_value_range": [
+    18.0,
+    23.0
+  ],
+  "buy_zone": [
+    14.0,
+    16.5
+  ],
+  "sell_or_reduce_zone": [
+    23.0,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入14.0-16.5元且铜钴基本面未恶化",
+      "price_range": [
+        14.0,
+        16.5
+      ],
+      "action": "建立第一笔",
+      "target_weight": 0.015,
+      "max_weight": 0.06,
+      "note": "当前价不新增；跌入16.5元以下建立1.0%-1.5%第一笔。"
+    },
+    {
+      "condition": "股价跌入12.0-14.0元且KFM/TFM稳产、刚果金政策无新增重大负面",
+      "price_range": [
+        12.0,
+        14.0
+      ],
+      "action": "提高仓位",
+      "target_weight": 0.04,
+      "max_weight": 0.06,
+      "note": "若基本面未恶化，提高至3%-4%。"
+    },
+    {
+      "condition": "股价跌破12.0元且下跌主要来自周期恐慌而非资产永久受损",
+      "price_range": [
+        0.0,
+        12.0
+      ],
+      "action": "强吸引力加仓",
+      "target_weight": 0.06,
+      "max_weight": 0.06,
+      "note": "若只是周期恐慌而非资产受损，可提高至5%-6%。"
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、KFM/TFM产销量、铜钴价格和刚果金出口政策。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报、资本开支、自由现金流和分红。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "进入安全边际买入区，评估第一笔仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "reason": "进入强性价比区间，若基本面未恶化可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "超过不应追高价，复核盈利上修是否足以支撑估值。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度铜产量、销量和单位成本",
+    "季度钴产量、销量、库存和刚果金出口政策",
+    "LME铜价、钴价及全球库存",
+    "TFM/KFM稳产、技改资本开支和回收率",
+    "经营现金流、自由现金流、净债务和分红率"
+  ],
+  "updated_at": "2026-07-07T22:30:00+08:00"
+}
