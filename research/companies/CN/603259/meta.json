@@ -1,0 +1,92 @@
+{
+  "symbol": "CN:603259",
+  "market": "CN",
+  "ticker": "603259",
+  "name": "药明康德",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "药明康德是全球一体化CRDM龙头，订单和TIDES增长支持长期价值；但1260H清单与BIOSECURE相关监管风险抬升客户迁移和估值折价，当前122.97元缺乏足够安全边际，等待85-105元买入区或监管风险缓释。",
+  "fair_value_range": [
+    110,
+    145
+  ],
+  "buy_zone": [
+    85,
+    105
+  ],
+  "sell_or_reduce_zone": [
+    150,
+    210
+  ],
+  "max_position_weight": 0.08,
+  "position_plan": [
+    {
+      "price_range": [
+        105,
+        145
+      ],
+      "action": "watch_or_hold",
+      "condition": "105元至145元且监管风险未明显缓释",
+      "max_weight": 0.02,
+      "target_weight": 0.02,
+      "notes": "当前价格缺乏足够安全边际，122.97元仅观察或持有。"
+    },
+    {
+      "price_range": [
+        85,
+        105
+      ],
+      "action": "accumulate",
+      "condition": "85元至105元且订单、backlog和现金流未恶化",
+      "max_weight": 0.05,
+      "target_weight": 0.05,
+      "notes": "订单未恶化时分批买入。"
+    },
+    {
+      "price_range": [
+        0,
+        85
+      ],
+      "action": "strong_accumulate",
+      "condition": "低于85元且基本面未破坏",
+      "max_weight": 0.08,
+      "target_weight": 0.08,
+      "notes": "基本面未破坏时最高不超过8%。"
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、订单、TIDES增长和现金流质量。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报及BIOSECURE/1260H相关监管进展。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 105,
+      "reason": "进入安全边际买入区，复核订单和监管风险后考虑建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 85,
+      "reason": "进入强吸引力区，若基本面未破坏可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 150,
+      "reason": "高于不应追高价，除非监管风险显著解除，否则减少新增或减仓。"
+    }
+  ],
+  "updated_at": "2026-07-07T00:00:00+08:00"
+}
