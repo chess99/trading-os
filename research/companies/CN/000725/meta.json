@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:000725",
+  "market": "CN",
+  "ticker": "000725",
+  "name": "京东方A",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "京东方A是全球显示面板龙头，LCD规模、现金流和车载显示份额优势明确，但业务仍高度周期、资本开支重、ROE偏低。2026-07-07收盘价7.58元接近6.20-7.60元合理价值区间上沿，安全边际不足，适合观察或持有，不宜追买。",
+  "fair_value_range": [
+    6.2,
+    7.6
+  ],
+  "buy_zone": [
+    5.2,
+    6.2
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    10.0
+  ],
+  "position_plan": [
+    {
+      "condition": "current_price_near_fair_value",
+      "action": "watch_only",
+      "target_weight": 0.0,
+      "max_weight": 0.01,
+      "notes": "当前价接近合理价值上沿，仅适合0%-1%观察仓。"
+    },
+    {
+      "condition": "price_below_6.2",
+      "action": "start_position",
+      "target_weight": 0.02,
+      "max_weight": 0.03,
+      "notes": "进入安全边际区，复核行业报价和现金流后分批。"
+    },
+    {
+      "condition": "price_below_4.8",
+      "action": "increase_position",
+      "target_weight": 0.04,
+      "max_weight": 0.05,
+      "notes": "进入强吸引力区，若基本面未破坏可提高仓位，上限5%。"
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年度报告披露后需要复核盈利质量",
+      "condition": "2026年半年度报告披露",
+      "action": "复核扣非利润、毛利率、经营现金流和资本开支"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "面板价格与库存是周期拐点的领先指标",
+      "condition": "LCD TV/IT/车载面板价格连续两个月明显下跌或库存上升",
+      "action": "复核景气周期与估值下限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "OLED和车载显示决定成长资产估值能否兑现",
+      "condition": "8.6代AMOLED、柔性OLED、车载显示出现重大客户、良率、专利诉讼或量产变化",
+      "action": "复核成长资产估值"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报后需要确认资本开支、减值和自由现金流",
+      "condition": "年度资本开支持续高于经营现金流，或出现大额资产减值",
+      "action": "复核自由现金流和ROE假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "价格触及买入区或减仓区时需要重新决策",
+      "condition": "股价低于6.20元或高于8.50元",
+      "action": "复核买入或减仓计划"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "reason": "进入安全边际买入区上沿",
+      "message": "进入安全边际买入区上沿，复核行业报价和现金流后考虑第一笔仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入强吸引力买入区",
+      "message": "进入强吸引力区，若基本面未破坏可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "超过不应追高价",
+      "message": "超过不应追高价，若无盈利质量上修应考虑降风险。"
+    }
+  ],
+  "updated_at": "2026-07-07T16:30:00+08:00"
+}
