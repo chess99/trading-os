@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:000021",
+  "market": "CN",
+  "ticker": "000021",
+  "name": "深科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "深科技具备电子制造、存储封测和计量终端的真实制造能力，但当前估值已提前反映存储上行、AI服务器相关需求和封测扩产成功，等待31元以下且扣非利润/产能利用率验证后再考虑开仓。",
+  "quality_rating": "B+",
+  "valuation_rating": "expensive",
+  "fair_value_range": [
+    31,
+    40
+  ],
+  "buy_zone": [
+    26,
+    31
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    64
+  ],
+  "strong_buy_zone": [
+    20,
+    26
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理区间且接近乐观情景下沿",
+      "action": "不买第一笔，保持跟踪",
+      "target_weight": 0,
+      "max_weight": 0.05,
+      "notes": "等待31元以下且存储封测扩产/扣非利润验证后再开仓。"
+    },
+    {
+      "condition": "股价回到26-31元且基本面未破坏",
+      "action": "建立1%-3%仓位",
+      "target_weight": 0.02,
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价回到20-26元且逻辑未破坏",
+      "action": "提高至3%-5%仓位",
+      "target_weight": 0.04,
+      "max_weight": 0.05
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报后复核扣非利润、现金流、存储封测扩产进度和客户集中度。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报后复核全年收入结构、ROE和资本开支回报。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 31,
+      "reason": "进入安全边际买入区上沿，复核基本面后可考虑第一笔仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "进入强吸引力区间，若逻辑未破坏可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "高于不应追高价，已有仓位应考虑降低至观察仓。"
+    }
+  ],
+  "updated_at": "2026-07-07T00:00:00+08:00",
+  "analyst": "codex-subagent-000021",
+  "research_type": "initial",
+  "priority": "P2"
+}
