@@ -1,0 +1,116 @@
+{
+  "symbol": "CN:002851",
+  "name": "麦格米特",
+  "market": "CN",
+  "ticker": "002851",
+  "company_name": "麦格米特",
+  "status": "active",
+  "updated_at": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "麦格米特是平台型电力电子公司，AI服务器电源带来真实增长期权，但2026-07-08股价已显著透支乐观兑现，不适合追高，等待80-105元区间分层建仓。",
+  "quality_rating": "A-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    75,
+    105
+  ],
+  "buy_zone": [
+    65,
+    80
+  ],
+  "buy_zone_detail": {
+    "safe_margin_price": 80,
+    "strong_buy_price": 65,
+    "currency": "CNY"
+  },
+  "sell_or_reduce_zone": [
+    120,
+    130
+  ],
+  "sell_or_reduce_zone_detail": {
+    "reduce_above": 130,
+    "do_not_chase_above": 120,
+    "currency": "CNY"
+  },
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价大于130元",
+      "price_range": ">130",
+      "action": "不追高或减仓评估",
+      "target_weight": 0.005,
+      "max_weight": 0.07
+    },
+    {
+      "condition": "股价在105至130元",
+      "price_range": "105-130",
+      "action": "观察",
+      "target_weight": 0.01,
+      "max_weight": 0.07
+    },
+    {
+      "condition": "股价在80至105元",
+      "price_range": "80-105",
+      "action": "试探买入",
+      "target_weight": 0.03,
+      "max_weight": 0.07
+    },
+    {
+      "condition": "股价在65至80元",
+      "price_range": "65-80",
+      "action": "分批买入",
+      "target_weight": 0.05,
+      "max_weight": 0.07
+    },
+    {
+      "condition": "股价小于65元",
+      "price_range": "<65",
+      "action": "强吸引力买入，复核基本面后接近上限",
+      "target_weight": 0.07,
+      "max_weight": 0.07
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 105,
+      "reason": "进入合理价值区间上沿，可启动1%试探仓并复核订单兑现。"
+    },
+    {
+      "type": "price_below",
+      "price": 80,
+      "reason": "达到安全边际买入价，可提升至3%左右仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 130,
+      "reason": "高于乐观估值区间，需要避免追高或评估降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报中AI服务器电源收入、毛利率、经营现金流和存货应收变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报订单兑现、利润弹性和估值假设。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "AI服务器电源收入和订单兑现",
+    "综合毛利率和扣非净利率",
+    "经营现金流与归母净利润匹配度",
+    "存货和应收账款相对收入增速",
+    "研发费用率与新品收入占比",
+    "前五大客户集中度和海外收入占比"
+  ]
+}
