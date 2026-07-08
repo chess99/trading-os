@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:300037",
+  "market": "CN",
+  "ticker": "300037",
+  "name": "新宙邦",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "电解液巨头转型高端氟化工，有机氟业务是核心利润引擎。当前估值偏贵，等待回调买入机会。",
+  "fair_value_range": [
+    55,
+    65
+  ],
+  "buy_zone": [
+    45,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    80,
+    100
+  ],
+  "position_plan": [
+    {
+      "condition": "price <= 52",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price <= 42",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "price <= 35",
+      "max_weight": 0.1
+    }
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年中报披露后跟踪复核"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年报披露后年度复核"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 52,
+      "reason": "进入合理偏低区间，启动首笔建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "进入强吸引力区间，重仓买入"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "进入偏贵区域，减持或观察"
+    }
+  ],
+  "updated_at": "2026-07-08T00:00:00+08:00"
+}
