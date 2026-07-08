@@ -36,22 +36,47 @@
     "currency": "CNY",
     "method": "正常化盈利 7-9 亿元、25-32 倍 PE 与 DCF 交叉校验"
   },
-  "fair_value_range": "18-24 元",
-  "buy_zone": {
+  "fair_value_range": [
+    18,
+    24
+  ],
+  "buy_zone": [
+    13,
+    16
+  ],
+  "buy_zone_notes": {
     "watch": "24 元以下只适合跟踪仓",
     "margin_of_safety": "16 元以下",
     "strong_buy": "13 元以下"
   },
-  "sell_or_reduce_zone": {
+  "sell_or_reduce_zone": [
+    28,
+    32
+  ],
+  "sell_or_reduce_zone_notes": {
     "reduce": "28 元以上不追高，重仓应降至观察仓",
     "strong_reduce": "32 元以上除非 Q2/Q3 盈利和现金流继续超预期，否则减仓"
   },
-  "position_plan": {
-    "first_weight": 0.005,
-    "normal_weight": 0.02,
-    "max_weight": 0.04,
-    "plan": "24 元以下可建立 0.5%-1.0% 跟踪仓；16 元以下提高到 1%-2.5%；13 元以下且钨价企稳、现金流改善时最高 4%。"
-  },
+  "position_plan": [
+    {
+      "condition": "24 元以下",
+      "action": "建立 0.5%-1.0% 跟踪仓",
+      "weight": 0.005,
+      "max_weight": 0.01
+    },
+    {
+      "condition": "16 元以下",
+      "action": "提高到 1%-2.5%",
+      "weight": 0.015,
+      "max_weight": 0.025
+    },
+    {
+      "condition": "13 元以下且钨价企稳、现金流改善",
+      "action": "可提高到强吸引力仓位",
+      "weight": 0.03,
+      "max_weight": 0.04
+    }
+  ],
   "watch": [
     "55% 黑钨精矿、APT、钨粉、碳化钨粉长单报价",
     "经营活动现金流净额与净利润匹配度",

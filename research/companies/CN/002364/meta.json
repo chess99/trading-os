@@ -5,39 +5,55 @@
   "name": "中恒电气",
   "company_name": "中恒电气",
   "currency": "CNY",
-  "status": "watchlist",
+  "status": "active",
   "latest_report": "reports/2026-07-08-initial.md",
   "updated_at": "2026-07-08T12:00:00+08:00",
   "conclusion": "AIDC/HVDC直流供电逻辑真实，但以2026-07-08约50.20元、约285.8亿元市值计，估值显著高于当前可验证盈利，当前不买不追高，等待回到18-28元合理区间或业绩大幅上修。",
   "current_thesis": "公司在AIDC/HVDC直流供电、通信电源和电力数字化上有真实技术与客户验证，但当前估值已提前反映远期乐观情景，需等待价格回落或订单利润显著上修。",
   "rating": "观察/暂不买入",
-  "current_rating": "观察/暂不买入",
+  "current_rating": "watch",
   "quality_rating": "B",
   "valuation_rating": "D/明显高估",
-  "fair_value_range": "18-28元",
+  "fair_value_range": [
+    18,
+    28
+  ],
+  "fair_value_range_text": "18-28元",
   "fair_value_range_cny": {
     "low": 18,
     "high": 28
   },
-  "buy_zone": {
+  "buy_zone": [
+    14,
+    18
+  ],
+  "buy_zone_detail": {
     "price_below": 18,
     "strong_buy_below": 14,
     "currency": "CNY",
     "reason": "18元以下对应约100亿元市值，开始反映AIDC/HVDC成长但保留安全边际；14元以下接近悲观情景。"
   },
-  "sell_or_reduce_zone": {
+  "sell_or_reduce_zone": [
+    32,
+    45
+  ],
+  "sell_or_reduce_zone_detail": {
     "price_above": 32,
     "hard_reduce_above": 45,
     "currency": "CNY",
     "reason": "32元以上已高于基准合理区间，45元以上需要大额订单和盈利跃迁才能解释。"
   },
-  "position_plan": {
-    "max_weight": 0.02,
-    "initial_weight": 0,
-    "first_buy_condition": "股价跌破18元且最近一期财报显示数据中心电源收入、毛利率和经营现金流未恶化时，试仓0.5%-0.8%。",
-    "add_condition": "800V/HVDC大额订单、合同负债和现金流同步验证后再加仓。",
-    "avoid_condition": "32元以上不新增，45元以上按主题高估处理。"
-  },
+  "position_plan": [
+    {
+      "max_weight": 0.02,
+      "initial_weight": 0,
+      "action": "watch",
+      "condition": "当前不买不追高；股价跌入18元以下且基本面未恶化时才考虑试仓。",
+      "first_buy_condition": "股价跌破18元且最近一期财报显示数据中心电源收入、毛利率和经营现金流未恶化时，试仓0.5%-0.8%。",
+      "add_condition": "800V/HVDC大额订单、合同负债和现金流同步验证后再加仓。",
+      "avoid_condition": "32元以上不新增，45元以上按主题高估处理。"
+    }
+  ],
   "watch": [
     "数据中心电源收入增速、毛利率及占比",
     "800V/HVDC项目中标、交付和收入确认节奏",
