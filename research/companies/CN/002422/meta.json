@@ -6,7 +6,7 @@
   "company_name": "科伦药业",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "质量A-，估值C+，观察/等待安全边际",
+  "current_rating": "watch",
   "current_thesis": "成熟输液和仿制药现金流支撑研发，川宁生物提供原料药/合成生物学弹性，科伦博泰 ADC 创新药进入兑现期；但 2025-2026Q1 利润仍下行，当前价格已反映较多预期。",
   "latest_report": "reports/2026-07-08-initial.md",
   "updated_at": "2026-07-08T12:30:00+08:00",
@@ -29,24 +29,40 @@
     "high": 46,
     "method": "相对估值、保守自由现金流、悲观/基准/乐观情景估值加权"
   },
-  "buy_zone": {
+  "fair_value_range": [
+    36,
+    46
+  ],
+  "buy_zone": [
+    30,
+    35
+  ],
+  "buy_zone_detail": {
     "currency": "CNY",
     "watch_below": 42,
     "safe_below": 35,
     "strong_below": 30
   },
-  "sell_or_reduce_zone": {
+  "sell_or_reduce_zone": [
+    48,
+    52
+  ],
+  "sell_or_reduce_zone_detail": {
     "currency": "CNY",
     "do_not_chase_above": 48,
     "reduce_if_overweight_above": 52
   },
-  "position_plan": {
-    "max_weight": 0.05,
-    "first_position_weight": 0.01,
-    "add_below": 35,
-    "strong_add_below": 30,
-    "notes": "当前价仅适合观察仓；安全边际出现在 35 元以下。"
-  },
+  "position_plan": [
+    {
+      "condition": "当前 42-48 元区间",
+      "action": "不追高，仅保留观察仓",
+      "max_weight": 0.05,
+      "first_position_weight": 0.01,
+      "add_below": 35,
+      "strong_add_below": 30,
+      "notes": "当前价仅适合观察仓；安全边际出现在 35 元以下。"
+    }
+  ],
   "watch": [
     "2026 年单季度收入和归母净利润是否转正",
     "科伦博泰四个商业化创新药收入是否明显超过 2025 年 5.43 亿元",

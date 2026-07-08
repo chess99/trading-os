@@ -6,7 +6,7 @@
   "name": "雅克科技",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "质量A-，估值D，观察/不追高",
+  "current_rating": "watch",
   "current_thesis": "公司具备电子材料平台化、客户验证壁垒和LNG深冷复材增长弹性，但当前市值已接近乐观情景，需等待价格回落或业绩快速兑现。",
   "latest_report": "reports/2026-07-08-initial.md",
   "updated_at": "2026-07-08T12:30:00+08:00",
@@ -30,21 +30,50 @@
     "range": [110, 145],
     "method": "相对估值、简化DCF、悲观/基准/乐观情景交叉验证"
   },
+  "fair_value_range": [110, 145],
   "reasonable_price_range": [110, 145],
-  "buy_zone": {
+  "buy_zone": [80, 100],
+  "buy_zone_detail": {
     "watch_below": 145,
     "safe_below": 100,
     "strong_below": 80,
     "currency": "CNY",
     "reason": "低于100元时对应TTM PE约47倍以下，才开始补偿半导体材料验证、商誉和产能爬坡风险。"
   },
-  "sell_or_reduce_zone": {
+  "sell_or_reduce_zone": [160, 999],
+  "sell_or_reduce_zone_detail": {
     "reduce_above": 160,
     "avoid_chasing_above": 160,
     "current_assessment": "当前194.80元属于不追高区间，已有仓位宜控制风险。",
     "reason": "160元以上已接近乐观情景定价，需要前驱体、光刻胶、硅微粉和LNG同时较快兑现。"
   },
-  "position_plan": {
+  "position_plan": [
+    {
+      "condition": "current_price_above_160",
+      "action": "不新增仓位，不追高",
+      "target_weight": 0.0,
+      "max_weight": 0.0
+    },
+    {
+      "condition": "price_below_135",
+      "action": "建立观察仓",
+      "target_weight": 0.01,
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price_below_100_and_thesis_intact",
+      "action": "分批加至主仓",
+      "target_weight": 0.04,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price_below_80_and_thesis_intact",
+      "action": "提高至上限仓位",
+      "target_weight": 0.05,
+      "max_weight": 0.05
+    }
+  ],
+  "position_plan_detail": {
     "max_weight": 0.05,
     "first_entry_weight": 0.0,
     "first_entry_price": "135元以下仅0.5%-1%观察仓；100元以下考虑2%-4%；80元以下可提高至3%-5%。",

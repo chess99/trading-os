@@ -39,24 +39,31 @@
     },
     "reason": "当前盈利和现金流不足以支撑高估值，需在估值回落后才有安全边际。"
   },
-  "sell_or_reduce_zone": {
+  "sell_or_reduce_zone": [
+    70,
+    100
+  ],
+  "sell_or_reduce_zone_detail": {
     "currency": "CNY",
     "reduce_above": 70,
     "avoid_chasing_above": 45,
     "strong_reduce_above": 100,
     "reason": "70 元以上主题溢价很厚，100 元附近风险收益明显不对称。"
   },
-  "position_plan": {
-    "max_weight": 0.04,
-    "current_action": "不买不追；已有仓位在高位降低风险暴露。",
-    "first_position_weight": 0.005,
-    "normal_position_weight": 0.02,
-    "conditions": [
-      "股价回到 25-35 元且 2026 中报或三季报显示扣非利润改善时，最多 0.5%-1% 试仓。",
-      "18-25 元且锗价、订单、现金流未恶化时，可分批提高到 2%-3%。",
-      "12-18 元且基本面未破坏时，最高不超过 4%。"
-    ]
-  },
+  "position_plan": [
+    {
+      "condition": "仅在股价回到 25-35 元且扣非利润改善时试仓，18-25 元且基本面未破坏时分批加仓；100 元附近不新开仓。",
+      "max_weight": 0.04,
+      "current_action": "不买不追；已有仓位在高位降低风险暴露。",
+      "first_position_weight": 0.005,
+      "normal_position_weight": 0.02,
+      "conditions": [
+        "股价回到 25-35 元且 2026 中报或三季报显示扣非利润改善时，最多 0.5%-1% 试仓。",
+        "18-25 元且锗价、订单、现金流未恶化时，可分批提高到 2%-3%。",
+        "12-18 元且基本面未破坏时，最高不超过 4%。"
+      ]
+    }
+  ],
   "watch": [
     "2026 半年报扣非净利润和综合毛利率",
     "太阳能锗晶片 125 万片产能利用率及 250 万片扩产进度",
