@@ -7,12 +7,12 @@
   "currency": "CNY",
   "latest_report": "reports/2026-07-08-initial.md",
   "status": "active",
-  "updated_at": "2026-07-08T23:00:00+08:00",
-  "conclusion": "天齐锂业是资源质量很强的锂周期龙头，2026-07-08 收盘价 53.27 元处于合理区间中部；可小仓观察，不适合追高。",
+  "updated_at": "2026-07-08T16:39:30+08:00",
+  "conclusion": "天齐锂业今日跌停至53.27元（-10%），PB降至1.24x（腾讯口径）/1.96x（归母口径）。格林布什资源质量A股最优，2026Q1利润弹性巨大，但Q1经营现金流仅2.59亿（净利润18.76亿）是最大警示信号。当前价格处于合理偏低区间，可在观察仓（1%）试探，等待半年报验证利润质量后追加。",
   "current_rating": "watch",
-  "current_thesis": "格林布什资源禀赋和 SQM 权益提供强周期弹性；当前估值已反映部分 2026 年锂价修复，等待更低买点或财报验证。",
+  "current_thesis": "锂价16.4万元/吨下公司利润弹性显著，但50元上方赔率一般。今日跌停后可在50-55区间建观察仓1-2%，目标45元以下加仓。核心风险：锂价下行、现金流持续弱于利润、泰利森三期火情爬产延误、管理层高位扩张。",
   "quality_rating": "B+",
-  "valuation_rating": "中性偏合理",
+  "valuation_rating": "合理偏低",
   "fair_value_range": [
     42,
     62
@@ -24,90 +24,105 @@
   },
   "buy_zone": [
     38,
-    45
+    48
   ],
-  "buy_zone_note": "低于 45 元开始有周期安全边际；低于 38 元接近保守 PB 与资源底部价值。",
+  "buy_zone_note": "低于45元开始有周期安全边际；低于38元接近保守PB与资源底部价值。今日大跌后53.27尚未进入安全边际买入区。",
   "sell_or_reduce_zone": [
-    65,
-    75
+    66,
+    78
   ],
-  "sell_or_reduce_zone_note": "65 元以上需要更强利润兑现支撑；75 元以上市场已计入较乐观锂价。",
+  "sell_or_reduce_zone_note": "66元以上需要更强利润兑现支撑；78元以上市场已计入较乐观锂价，应减仓。",
   "max_weight": 0.06,
   "position_plan": [
     {
-      "zone": "45-55",
-      "condition": "股价 45-55 元且无新增基本面恶化",
+      "zone": "50-55",
+      "condition": "股价50-55元且无新增基本面恶化",
       "action": "观察仓",
       "weight": 0.01,
       "max_weight": 0.02,
-      "reason": "当前价附近赔率一般，只小仓验证。"
+      "reason": "当前价附近PB~2x，赔率不差但安全边际一般。可做1%观察，等待半年报Q2确认利润质量。"
+    },
+    {
+      "zone": "45-50",
+      "condition": "股价45-50元且锂价未跌破12万元/吨",
+      "action": "分批加仓",
+      "weight": 0.02,
+      "max_weight": 0.03,
+      "reason": "进入PB~1.7x安全边际区，适合逐步加仓。"
     },
     {
       "zone": "38-45",
-      "condition": "股价 38-45 元且锂价未跌破 10 万元/吨",
-      "action": "分批加仓",
-      "weight": 0.03,
-      "max_weight": 0.04,
-      "reason": "进入安全边际区。"
+      "condition": "股价38-45元且锂价未跌破10万元/吨",
+      "action": "提高到中仓",
+      "weight": 0.04,
+      "max_weight": 0.05,
+      "reason": "进入强吸引力区，PB~1.3-1.5x，接近周期底部估值。"
     },
     {
       "zone": "低于38",
-      "condition": "股价低于 38 元且资产负债表、锂价和格林布什经营未出现结构性恶化",
+      "condition": "股价低于38元且资产负债表、锂价和格林布什经营未出现结构性恶化",
       "action": "提高到目标仓",
       "weight": 0.05,
       "max_weight": 0.06,
-      "reason": "若基本面未恶化，赔率明显改善。"
+      "reason": "极低估区，若基本面未恶化，赔率明显改善。"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
+      "price": 50,
+      "currency": "CNY",
+      "reason": "接近安全边际买入区上沿，复核锂价与现金流后可小仓试探。"
+    },
+    {
+      "type": "price_below",
       "price": 45,
       "currency": "CNY",
-      "reason": "进入安全边际买入区，复核锂价与现金流后可分批加仓。"
+      "reason": "进入安全边际买入区，可分步加仓。"
     },
     {
       "type": "price_below",
       "price": 38,
       "currency": "CNY",
-      "reason": "进入强吸引力区，若基本面未恶化，赔率明显改善。"
+      "reason": "进入强吸引力区，若基本面未恶化，可加大仓位。"
     },
     {
       "type": "price_above",
-      "price": 65,
+      "price": 66,
       "currency": "CNY",
       "reason": "进入不追高区，需要半年报或三季报利润兑现支撑。"
     },
     {
       "type": "price_above",
-      "price": 75,
+      "price": 78,
       "currency": "CNY",
-      "reason": "进入减仓复核区，除非锂价和矿端产量继续超预期。"
+      "reason": "进入减仓复核区，除非锂价、矿端产量和SQM继续超预期。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核 2026 年半年报利润质量、经营现金流、锂价敏感性和资本开支。"
+      "date": "2026-08-28",
+      "reason": "复核2026年半年报利润质量、经营现金流、锂价敏感性和泰利森火情影响。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "复核三季报，判断一季度高利润是否具有持续性。"
+      "reason": "复核三季报，判断Q1较高利润是否具有持续性。"
     },
     {
       "type": "date",
       "date": "2027-03-31",
-      "reason": "复核 2026 年年报、分红、债务工具发行与 SQM 权益变化。"
+      "reason": "复核2026年年报、分红、债务工具发行与SQM权益变化。"
     }
   ],
-  "review_plan": "每次财报后复核锂价中枢、格林布什产销量与成本、经营现金流/净利润、资产负债率、SQM 投资收益、资本开支和融资安排。",
+  "review_plan": "每次财报后复核锂价中枢、格林布什产销量与成本、经营现金流/净利润、资产负债率、SQM投资收益、资本开支和融资安排。尤其在当前阶段关注Q2现金流/净利润比值是否改善。",
   "key_risks": [
-    "电池级碳酸锂价格跌破 10 万元/吨并持续，利润弹性反向释放。",
+    "电池级碳酸锂价格跌破12万元/吨并持续，利润弹性反向释放，2026-2027年预期利润大幅缩水。",
+    "泰利森三期火情导致爬产进度延迟超过3个月，影响矿端销量和市场信心。",
+    "Q1经营现金流/净利润仅13.8%，若Q2仍未能修复至50%以上，利润质量存疑。",
     "全球锂资源复产和扩产快于需求，行业重新过剩。",
-    "格林布什产量、成本或定价机制不及预期。",
-    "SQM 权益收益、智利政策或处置节奏扰动净利润和净资产。",
+    "SQM权益收益、智利政策或处置节奏扰动净利润和净资产。",
     "周期高位重新激进融资、扩产或并购，削弱股东回报。",
     "汇率、海外监管和少数股东损益导致报表波动。"
   ],
@@ -115,10 +130,11 @@
     "https://static.cninfo.com.cn/finalpage/2026-03-28/1225044816.PDF",
     "https://pdf.dfcfw.com/pdf/H2_AN202603271820811002_1.pdf",
     "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-28/4a8892e0-e8b7-4f89-a187-feb60666b9c1.PDF",
-    "https://cn.investing.com/equities/tianqi-lithium-a",
-    "https://www.futunn.com/stock/002466-SZ",
     "https://hq.smm.cn/h5/Li2CO3",
-    "https://www.cfi.net.cn/p20260707001406.html",
+    "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202606101823427210&client_source=web&page_index=1",
+    "https://np-cnotice-stock.eastmoney.com/api/content/ann?art_code=AN202607071826775492&client_source=web&page_index=1",
+    "https://emweb.eastmoney.com/PC_HSF10/NewFinanceAnalysis/ZyzbAjaxNew?type=0&code=SZ002466",
+    "https://www.futunn.com/stock/002466-SZ",
     "https://www.news.cn/fortune/20260703/7413a1edcc9b4d6a88b703b41f62a5d6/c.html"
   ],
   "report_history": [

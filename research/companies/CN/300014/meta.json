@@ -1,0 +1,106 @@
+{
+  "symbol": "CN:300014",
+  "market": "CN",
+  "ticker": "300014",
+  "name": "亿纬锂能",
+  "company_name": "亿纬锂能",
+  "status": "active",
+  "updated_at": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "谨慎增配",
+  "current_thesis": "动力与储能电池放量后，2026 年主业利润进入修复期；公司具备多产品矩阵、客户认证和全球化产能优势，但锂电价格战、重资产扩张和现金流波动仍限制估值上限。当前价格不贵但缺少足够安全边际，适合小仓跟踪、回撤加仓。",
+  "current_rating": "watch",
+  "quality_rating": "A-",
+  "valuation_rating": "B",
+  "fair_value_range": [
+    62,
+    78
+  ],
+  "buy_zone": [
+    45,
+    52
+  ],
+  "sell_or_reduce_zone": [
+    80,
+    92
+  ],
+  "base_currency": "CNY",
+  "currency": "CNY",
+  "position_plan": [
+    {
+      "zone": "initial_tracking",
+      "condition": "52-62 元且尚无仓位",
+      "action": "建立小仓跟踪",
+      "target_weight": 0.01,
+      "max_weight": 0.015
+    },
+    {
+      "zone": "buy_zone",
+      "condition": "45-52 元且基本面未恶化",
+      "action": "分批加仓",
+      "target_weight": 0.03,
+      "max_weight": 0.04
+    },
+    {
+      "zone": "strong_buy_zone",
+      "condition": "低于 45 元且中报/三季报验证良好",
+      "action": "提高到核心观察仓",
+      "target_weight": 0.05,
+      "max_weight": 0.06
+    },
+    {
+      "zone": "reduce_zone",
+      "condition": "高于 80 元且盈利没有同步上修",
+      "action": "停止加仓并视估值降仓",
+      "target_weight": 0.02,
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 52,
+      "reason": "进入安全买入区，若基本面未恶化可复核并加仓"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入强吸引买入区，若中报和现金流验证良好可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "进入不追高区，需复核盈利上修是否足以支撑估值"
+    },
+    {
+      "type": "price_above",
+      "price": 92,
+      "reason": "估值预期过满，若无盈利显著上修应考虑降仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报正式数据、储能毛利率、经营现金流和全年利润中枢"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报，确认 H2 价格、出货和现金流是否延续"
+    }
+  ],
+  "key_tracking_metrics": [
+    "储能电池出货量和单 Wh 价格",
+    "动力电池出货和客户结构",
+    "扣非归母净利润增速",
+    "经营现金流净额",
+    "存货和应收账款周转",
+    "新产线产能利用率和在建工程转固",
+    "海外订单与海外产能建设进度",
+    "资产负债率和利息费用"
+  ]
+}

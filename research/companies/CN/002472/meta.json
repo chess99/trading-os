@@ -3,69 +3,55 @@
   "market": "CN",
   "ticker": "002472",
   "name": "双环传动",
-  "company_name": "双环传动",
+  "company_name": "浙江双环传动机械股份有限公司",
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "双环传动是新能源汽车电驱齿轮外包、海外客户导入、智能执行机构和机器人减速器国产化共同驱动的高质量精密传动龙头，但当前估值偏贵，需要等待 32-34 元安全边际或业绩显著上修。",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "conclusion": "双环传动是新能源汽车电驱齿轮外包、海外客户导入、智能执行机构和机器人减速器国产化共同驱动的高质量精密传动龙头，但 2026-07-08 股价 42.34 元、总市值约 359.9 亿元、TTM PE 约 28.3 倍，当前估值偏贵，不宜追高，等待 32-34 元安全边际或业绩显著上修。",
+  "current_thesis": "双环传动是 A 股少数同时受益于新能源车电驱齿轮外包、海外客户导入、同轴减速箱渗透和机器人减速器国产化的精密传动平台型公司，业务质量经 2024-2025 年验证，2025 年新能源齿轮收入占比 45%、境外收入同比增 58.88%。但 2026-07-08 收盘 42.34 元（PE TTM 28.35x、PB 3.57x、市值约 360 亿元），已提前反映未来 1-2 年成长预期，且 2026Q1 扣非净利同比转负（-4.04%）。当前价格缺乏安全边际，不宜追高，等待回落至 32-34 元或 2026 年中报验证海外量产放量节奏。",
   "quality_rating": "A-",
   "valuation_rating": "偏贵/等待",
-  "fair_value_range": [
-    32,
-    38
-  ],
-  "buy_zone": [
-    32,
-    34
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
+  "fair_value_range": [32, 38],
+  "buy_zone": [32, 34],
+  "strong_attraction_zone": [26, 30],
+  "sell_or_reduce_zone": [48, 55],
+  "do_not_chase_above": 40,
   "position_plan": [
     {
-      "max_weight": 0.06,
+      "zone": "40 CNY 以上",
+      "condition": "股价高于 40 CNY",
       "action": "wait",
-      "condition": "股价高于 41 CNY",
-      "zone": "41 CNY 以上",
       "target_weight": 0,
+      "max_weight": 0.06,
       "reason": "当前估值偏贵，不追高，等待回落或中报验证"
     },
     {
-      "max_weight": 0.06,
-      "action": "starter_buy",
-      "condition": "股价回落至 32-34 CNY 且新能源齿轮、海外项目、现金流未恶化",
       "zone": "32-34 CNY",
-      "target_weight": 0.01,
-      "reason": "进入安全边际买入区，可建立 0.5%-1.0% 第一笔仓位"
+      "condition": "股价回落至 32-34 CNY 且新能源齿轮、海外项目、现金流未恶化",
+      "action": "starter_buy",
+      "target_weight": 0.02,
+      "max_weight": 0.06,
+      "reason": "进入有安全边际的买入区，可建立 1%-2% 第一笔仓位"
     },
     {
-      "max_weight": 0.06,
-      "action": "add",
-      "condition": "股价回落至 28-30 CNY 且基本面未破坏",
       "zone": "28-30 CNY",
-      "target_weight": 0.04,
-      "reason": "若基本面未破坏，赔率明显改善，可加至 3%-4%，最高不超过 6%"
+      "condition": "股价回落至 28-30 CNY 且基本面未破坏",
+      "action": "add",
+      "target_weight": 0.05,
+      "max_weight": 0.06,
+      "reason": "若基本面未破坏，赔率明显改善，可加至 4%-5%，最高不超过 6%"
+    },
+    {
+      "zone": "26 CNY 以下",
+      "condition": "股价回落至 26 CNY 以下且基本面未恶化",
+      "action": "heavy_buy",
+      "target_weight": 0.06,
+      "max_weight": 0.06,
+      "reason": "明显低估区，单票上限 6%"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入安全边际买入区，复查中报和订单后可建立第一笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入强吸引力区，若基本面未破坏，可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "估值明显透支，若 2026-2027 年利润未上修，考虑减仓"
-    }
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
   ],
   "review_triggers": [
     {
@@ -77,9 +63,35 @@
       "type": "date",
       "date": "2026-10-31",
       "reason": "复查 2026 年三季报，确认全年利润增速和订单兑现"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查 2026 年年报，确认全年业绩和分红"
     }
   ],
-  "review_plan": "至少在 2026 年中报和三季报后复查；若股价跌破 34 元或上破 48 元，提前复核估值与仓位。跟踪新能源齿轮收入占比、海外项目量产、匈牙利工厂产能利用率、毛利率、经营现金流/净利润、应收账款和存货。",
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 34,
+      "reason": "进入有安全边际的买入区，复查中报和订单后可建立第一笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入强吸引力区，若基本面未破坏，可提高仓位至 4%-5%"
+    },
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "明显低估，单票仓位接近上限"
+    },
+    {
+      "type": "price_above",
+      "price": 48,
+      "reason": "估值明显透支，若 2026-2027 年利润未上修，考虑减仓"
+    }
+  ],
   "key_risks": [
     "新能源汽车价格战向上游传导，客户年降超过公司降本能力",
     "海外客户定点、匈牙利工厂产能爬坡或交付低于预期",
@@ -88,18 +100,20 @@
     "应收账款和存货扩张导致现金流恶化",
     "机器人减速器商业化低于市场预期",
     "汇率、关税、贸易壁垒和地缘政治影响海外收入",
-    "分拆上市、委托理财、套保和股权激励带来治理或会计波动"
+    "短期借款大幅扩张（2025 末 31.2 亿元，同比 +57%）带来期限错配和利率风险",
+    "环动科技分拆上市进度低于预期或终止",
+    "估值风险：当前 PE 28.35x 对应增速放缓（2026Q1 扣非净利同比 -4.04%），存在向下修正空间"
   ],
+  "review_plan": "至少在 2026 年中报和三季报后复查；若股价跌破 34 元或上破 48 元，提前复核估值与仓位。跟踪新能源齿轮收入占比、海外项目量产、匈牙利工厂产能利用率、毛利率、经营现金流/净利润、应收账款和存货。",
   "sources": [
     "浙江双环传动机械股份有限公司《2025 年年度报告》，2026-04-24，sources/2025_annual_report.pdf",
     "浙江双环传动机械股份有限公司《2026 年第一季度报告》，2026-04-24，sources/2026_q1_report.pdf",
     "双环传动投资者关系活动记录表，2026-04-27，sources/20260427_ir_record.pdf",
     "新浪财经公告镜像与 PDF 链接，sources/sina_bulletins.html",
-    "腾讯行情 qt.gtimg.cn/q=sz002472，2026-07-08 15:40:42，sources/quote_tencent_2026-07-08.txt",
-    "新浪行情 hq.sinajs.cn/list=sz002472，2026-07-08 15:35:45，sources/quote_sina_2026-07-08.txt"
+    "腾讯行情 qt.gtimg.cn/q=sz002472，2026-07-08 16:14:42，sources/quote_tencent_2026-07-08.txt",
+    "新浪行情 hq.sinajs.cn/list=sz002472，2026-07-08 15:35:45，sources/quote_sina_2026-07-08.txt",
+    "东方财富 PC_HSF10 财报分析接口，2026-07-08",
+    "竞争对手行情（精锻科技、豪能股份、中马传动、蓝黛科技、绿的谐波），腾讯行情 2026-07-08"
   ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08T16:30:00+08:00"
+  "updated_at": "2026-07-08T16:50:00+08:00"
 }
