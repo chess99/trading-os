@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:001389",
+  "market": "CN",
+  "ticker": "001389",
+  "name": "广合科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "国内服务器PCB内资龙头，AI算力需求驱动高增长。当前A股PE~77x估值偏贵，安全边际不足，等待回调或通过H股建仓。H股较A股折价约30%，更具性价比。",
+  "fair_value_range": [120, 160],
+  "buy_zone": [90, 120],
+  "sell_or_reduce_zone": [200, 280],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价进入强吸引力区间（<90元）", "max_weight": 0.08},
+    {"condition": "通过H股建仓（折价>30%）", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-08", "reason": "2026年中报披露，验证上半年业绩是否符合预期"},
+    {"type": "date", "date": "2026-10-28", "reason": "2026年三季报披露，检验增长持续性"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 120, "reason": "进入合理偏低区间，可开始建仓"},
+    {"type": "price_below", "price": 90, "reason": "进入强吸引力买入区间"},
+    {"type": "price_above", "price": 200, "reason": "进入减仓区间"}
+  ],
+  "updated_at": "2026-07-08T10:00:00+08:00"
+}

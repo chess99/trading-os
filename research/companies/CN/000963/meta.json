@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:000963",
+  "market": "CN",
+  "ticker": "000963",
+  "name": "华东医药",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "综合药企，传统仿制药+商业业务稳定但增长乏力，医美第二曲线2026Q1显著减速。缺乏创新药管线催化，当前估值基本合理无安全边际。等待医美业务拐点或创新药突破，建议观察。",
+  "fair_value_range": [23, 30],
+  "buy_zone": [22, 26],
+  "sell_or_reduce_zone": [34, 38],
+  "position_plan": [
+    {"condition": "股价进入22~26元偏低区间，基本面未恶化", "max_weight": 0.02},
+    {"condition": "股价低于22元低估区间", "max_weight": 0.03},
+    {"condition": "医美业务连续两季同比增速转正且超10%", "max_weight": 0.02}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-25", "reason": "2026年半年报发布前后复查，重点关注医美业务季度增速和百令胶囊集采进展"},
+    {"type": "date", "date": "2026-10-28", "reason": "2026年三季报复查，验证全年盈利预测"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 26, "reason": "进入偏低估值区间，可开始考虑建立观察仓"},
+    {"type": "price_below", "price": 22, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 34, "reason": "进入偏贵区间，不应追高"},
+    {"type": "price_above", "price": 38, "reason": "进入高估区间，考虑减仓"}
+  ],
+  "updated_at": "2026-07-08T16:00:00+08:00"
+}

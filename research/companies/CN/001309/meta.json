@@ -1,0 +1,29 @@
+{
+  "symbol": "CN:001309",
+  "market": "CN",
+  "ticker": "001309",
+  "name": "德明利",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "存储模组渠道型公司，在存储芯片周期上行中业绩爆发，但商业模式壁垒低、高杠杆运营、现金流持续为负。2026Q1出现极端异常利润暴增（毛利率从15%跳升至57%）大概率不可持续。当前市值2121亿、PE 304x、PB 65x，已严重泡沫。建议不买，等待周期正常化后的合理价格区间。",
+  "fair_value_range": [40, 150],
+  "buy_zone": [0, 100],
+  "sell_or_reduce_zone": [300, 1000],
+  "position_plan": [
+    {"condition": "股价跌至60-150元区间，且存储价格企稳，经营现金流转正", "max_weight": 0.02},
+    {"condition": "股价跌至60元以下，充分反映悲观预期", "max_weight": 0.04}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报发布后复查，验证Q1异常是否延续及毛利率回归情况"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报，确认周期方向"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 100, "reason": "进入可关注的价格区间，开始跟踪"},
+    {"type": "price_below", "price": 60, "reason": "进入强吸引力买入区间，考虑建仓"},
+    {"type": "price_above", "price": 300, "reason": "不应追高区间，持有者考虑减仓"}
+  ],
+  "updated_at": "2026-07-08T05:30:00+08:00"
+}

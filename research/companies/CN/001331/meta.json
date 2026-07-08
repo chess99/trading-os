@@ -1,0 +1,28 @@
+{
+  "symbol": "CN:001331",
+  "market": "CN",
+  "ticker": "001331",
+  "name": "胜通能源",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "LNG贸易中间商，毛利率极低（2025年仅0.22%），连续三年扣非亏损，无护城河。PB约11.6倍远超同行（1-3倍），估值严重脱离基本面。回避。",
+  "fair_value_range": [15, 28],
+  "buy_zone": [10, 15],
+  "sell_or_reduce_zone": [30, 61],
+  "position_plan": [
+    {"condition": "股价处于10-15元且毛利率回升至2%以上、经营性现金流持续为正", "max_weight": 0.02},
+    {"condition": "股价跌至10元以下且确认公司经营可持续", "max_weight": 0.01}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-07-09", "reason": "仅保留日期类型的review_trigger；股价触发由price_triggers管理"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报公布后复查毛利率和盈利趋势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 30, "reason": "进入重新评估区间，需核实最新财务数据"},
+    {"type": "price_below", "price": 15, "reason": "进入有条件关注的买入区间"}
+  ],
+  "updated_at": "2026-07-08T04:00:00+08:00"
+}

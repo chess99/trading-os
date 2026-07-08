@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:002028",
+  "market": "CN",
+  "ticker": "002028",
+  "name": "思源电气",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国输变电设备领域优质公司，ROE 22%+，收入CAGR约30%，但当前PE约40x已反映较高增长预期，安全边际不足。等待回调至130-150元区间分批建仓。",
+  "fair_value_range": [140, 170],
+  "buy_zone": [130, 150],
+  "sell_or_reduce_zone": [180, 200],
+  "position_plan": [
+    {"condition": "股价在130-150元区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价在120-130元区间且季度业绩符合预期", "max_weight": 0.04},
+    {"condition": "股价低于120元且基本面确认健康", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026年中报披露后复查"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"},
+    {"type": "date", "date": "2027-04-30", "reason": "2026年年报披露后全面复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 150, "reason": "进入有安全边际的买入区间，关注建仓机会"},
+    {"type": "price_below", "price": 130, "reason": "进入加仓区间，确认基本面后加仓"},
+    {"type": "price_above", "price": 180, "reason": "进入减仓/不应追高区间，不建立新仓位"},
+    {"type": "price_above", "price": 200, "reason": "泡沫区间，大幅减仓"}
+  ],
+  "updated_at": "2026-07-08T18:00:00+08:00"
+}

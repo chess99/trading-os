@@ -5,99 +5,29 @@
   "name": "中国长城",
   "currency": "CNY",
   "status": "active",
-  "analyst": "codex-subagent-000066",
-  "priority": "P2",
-  "current_rating": "watch",
-  "current_thesis": "中国长城处于信创整机、国产服务器、飞腾生态和AI服务器电源预期共振期，2025年收入恢复、2026Q1亏损收窄，但经营现金流为负且存货大幅上升，当前高波动后的估值已部分透支信创预期，适合观察并等待回落或财务兑现后买入。",
-  "fair_value_range": [
-    16.0,
-    20.5
-  ],
-  "buy_zone": [
-    14.5,
-    16.2
-  ],
-  "sell_or_reduce_zone": [
-    20.5,
-    25.0
-  ],
+  "current_rating": "avoid",
+  "current_thesis": "连续三年巨亏，毛利率持续下行至15-16%，经营现金流持续为负，核心整机组装业务缺乏护城河。2025年虽减亏至-0.56亿但扣非基础不扎实（下半年转亏）。PB 5.5x对于一个持续亏损且经营现金流为负的公司显著偏高。飞腾股权提供部分战略价值，但不足以支撑当前估值。建议回避。",
+  "fair_value_range": [5, 10],
+  "buy_zone": [3.4, 5],
+  "sell_or_reduce_zone": [15, 25],
   "position_plan": [
-    {
-      "condition": "current_price_above_buy_zone",
-      "action": "tracking_only",
-      "weight": 0.005,
-      "max_weight": 0.01,
-      "note": "当前价格处于合理区间中上部，仅适合跟踪仓。"
-    },
-    {
-      "condition": "price_in_buy_zone",
-      "action": "buy_in_two_tranches",
-      "weight": 0.01,
-      "max_weight": 0.025,
-      "note": "回落至14.5-16.2元后分批，需确认基本面无恶化。"
-    },
-    {
-      "condition": "fundamental_confirmation",
-      "action": "increase_after_cash_flow_and_loss_improve",
-      "weight": 0.025,
-      "max_weight": 0.03,
-      "note": "以扣非亏损收窄、经营现金流改善和存货下降作为加仓条件。"
-    }
+    {"condition": "股价<3.4元且基本面边际改善（毛利率企稳、经营现金流转正）", "max_weight": 0.01},
+    {"condition": "股价3.4-5.0元，继续亏损但亏损缩窄", "max_weight": 0.005},
+    {"condition": "股价>15元或继续巨亏", "max_weight": 0}
   ],
-  "valuation": {
-    "base_case_price": 18.0,
-    "bear_case_price": 12.7,
-    "bull_case_price": 25.1,
-    "method": "PE为负，不机械使用PE；采用PS、PB、SOTP和正常化利润交叉验证。"
-  },
-  "market_snapshot": {
-    "price": 18.82,
-    "market_cap_cny": 60709538836.16,
-    "pb": 5.553,
-    "pe_ttm": -1107.059,
-    "turnover_rate_pct": 6.3972,
-    "as_of": "2026-07-06",
-    "source": "Sina Market_Center.getHQNodeData hs_a"
-  },
-  "latest_report": "reports/2026-07-07-initial.md",
+  "latest_report": "reports/2026-07-08-initial.md",
   "report_history": [
-    "reports/2026-07-07-initial.md"
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-08-initial.md"
   ],
   "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增长、扣非亏损、经营现金流和存货兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证旺季订单、AI服务器电源和信创整机交付。"
-    }
+    {"type": "date", "date": "2026-08-28", "reason": "2026年中报披露后复查毛利率和经营现金流趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查亏损收窄进度"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.2,
-      "reason": "进入买入区间上沿，复核基本面无恶化后可考虑第一笔或第二笔。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.8,
-      "reason": "进入强吸引力区间，若订单和现金流未恶化，提升为核心观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "超过不追高价，若缺少利润和现金流验证，降低仓位或停止加仓。"
-    }
+    {"type": "price_below", "price": 5, "reason": "进入合理偏低区间，研究是否基本面改善"},
+    {"type": "price_below", "price": 3.4, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 15, "reason": "进入减仓或不应追高区间"}
   ],
-  "key_monitoring_items": [
-    "2026H1收入增速是否保持10%以上",
-    "计算产业毛利率是否维持改善",
-    "存货是否从2026Q1的77.98亿元下降或不再高增长",
-    "经营现金流是否转正",
-    "飞腾D3000M/S5000C-E生态产品和AI服务器电源订单兑现"
-  ],
-  "updated_at": "2026-07-07T22:50:00+08:00"
+  "updated_at": "2026-07-08T22:00:00+08:00"
 }

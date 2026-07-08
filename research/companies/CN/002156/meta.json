@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:002156",
+  "market": "CN",
+  "ticker": "002156",
+  "name": "通富微电",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "通富微电国内封测第二，深度绑定AMD受益于AI芯片封装需求增长。然而当前PE~87x已充分定价乐观预期，自由现金流持续为负、高杠杆（资产负债率65%）是结构性弱点。应等待估值回归（¥45以下）再考虑建仓。",
+  "fair_value_range": [37, 52],
+  "buy_zone": [36, 45],
+  "sell_or_reduce_zone": [68, 100],
+  "position_plan": [
+    {"condition": "股价回落至¥45-55区间且AMD增长趋势不变", "max_weight": 0.03},
+    {"condition": "股价回落至¥36-45区间且基本面未恶化", "max_weight": 0.05},
+    {"condition": "股价回落至¥30-36区间且基本面未恶化", "max_weight": 0.08}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026半年报发布后复查（预计8月底前）"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026三季报发布后复查；复查AMD AI GPU出货进展"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 45, "reason": "进入有安全边际的买入区间（合理偏低）"},
+    {"type": "price_below", "price": 36, "reason": "进入强吸引力买入区间"},
+    {"type": "price_above", "price": 68, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T08:00:00+08:00"
+}

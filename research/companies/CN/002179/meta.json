@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:002179",
+  "market": "CN",
+  "ticker": "002179",
+  "name": "中航光电",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "军工连接器龙头遭遇军品降价和毛利率骤降，2025年净利润同比-35.6%，2026Q1延续恶化趋势（-37.8%）。当前920亿市值对应2025年PE 42.5x，基于2026年预期盈利PE超过50x，缺乏安全边际。等待毛利率触底和军品审价完成信号后再评估。",
+  "fair_value_range": [28, 35],
+  "buy_zone": [25, 28],
+  "sell_or_reduce_zone": [38, 43],
+  "position_plan": [
+    {"condition": "股价30-35元且毛利率企稳", "max_weight": 0.01},
+    {"condition": "股价25-28元且基本面未恶化", "max_weight": 0.02},
+    {"condition": "股价低于25元", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "检查2026半年报，重点关注毛利率、净利润和经营现金流"},
+    {"type": "date", "date": "2026-10-28", "reason": "检查2026年三季报，确认毛利率是否企稳"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 28, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 38, "reason": "进入不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T07:30:00+08:00"
+}

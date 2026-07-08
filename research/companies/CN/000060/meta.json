@@ -5,89 +5,28 @@
   "name": "中金岭南",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "铅锌资源底盘叠加铜冶炼周期弹性，2026年金属价格强势推动利润修复；但铜精矿加工费低位、冶炼利润波动和矿山安全环保风险使当前价格仅适合观察或小仓试探，等待6.5元以下形成更明确安全边际。",
-  "fair_value_range": [
-    7.2,
-    9.0
-  ],
-  "buy_zone": [
-    5.8,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.0
-  ],
+  "current_rating": "avoid",
+  "current_thesis": "低毛利率、高杠杆的铅锌铜综合矿业公司，贸易占比过大拉低利润质量，ROE仅5.11%(2025)。当前PE~33x、PB~1.57x，估值偏贵且缺乏安全边际。2026Q1同比改善但基数低，建议等待4.0-5.5元区间再考虑。",
+  "fair_value_range": [4.0, 6.0],
+  "buy_zone": [4.0, 5.5],
+  "sell_or_reduce_zone": [7.5, 10.0],
   "position_plan": [
-    {
-      "condition": "股价位于4.9-5.5元且未出现矿山事故、现金流恶化或金属价格趋势反转",
-      "price_range": [
-        4.9,
-        5.5
-      ],
-      "action": "strong_buy",
-      "target_weight": 0.032,
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价位于5.8-6.5元，金属价格和矿山经营未明显低于基准假设",
-      "price_range": [
-        5.8,
-        6.5
-      ],
-      "action": "buy",
-      "target_weight": 0.025,
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价位于6.5-7.2元，尚未进入足够安全边际，仅适合观察仓",
-      "price_range": [
-        6.5,
-        7.2
-      ],
-      "action": "watch_small_position",
-      "target_weight": 0.01,
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于8.8元且盈利、资源量或加工费没有进一步上修",
-      "price_range": [
-        8.8,
-        10.0
-      ],
-      "action": "reduce_or_avoid_chasing",
-      "target_weight": 0.005,
-      "max_weight": 0.04
-    }
+    {"condition": "股价处于4.0-5.5元买入区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价3.5-4.0元出现深度周期底部机会", "max_weight": 0.03},
+    {"condition": "股价高于7.5元不买入", "max_weight": 0.0}
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
+  "latest_report": "reports/2026-07-08-initial.md",
   "report_history": [
-    "reports/2026-07-07-initial.md"
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-08-initial.md"
   ],
   "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、经营现金流、矿山产量和铜加工费"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和金属价格周期位置"
-    }
+    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报，关注毛利率变化、贸易业务占比、存货变化"},
+    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报和金属价格周期位置"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入安全边际买入区，复核金属价格、铜加工费和矿山经营后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "进入不应追高/减仓区，复核盈利是否足以支撑估值上修"
-    }
+    {"type": "price_below", "price": 5.5, "reason": "进入可关注买入区间，复核基本面后考虑建仓"},
+    {"type": "price_above", "price": 7.5, "reason": "进入不应追高区间"}
   ],
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "updated_at": "2026-07-08T18:30:00+08:00"
 }

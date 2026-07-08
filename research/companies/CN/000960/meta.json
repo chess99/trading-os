@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:000960",
+  "market": "CN",
+  "ticker": "000960",
+  "name": "锡业股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "全球锡行业龙头，受益于锡供给刚性与AI/半导体/光伏需求，盈利持续改善。但当前PE 32x已部分反映乐观预期，风险回报不对称，等待回调至30元以下建仓。",
+  "fair_value_range": [25, 35],
+  "buy_zone": [20, 30],
+  "sell_or_reduce_zone": [40, 999],
+  "position_plan": [
+    {"condition": "股价处于25-30元区间且锡价维持2.8万美元以上", "max_weight": 0.02},
+    {"condition": "股价处于20-25元区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价低于20元", "max_weight": 0.04}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年中报数据核验"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 30, "reason": "进入合理偏低区间，启动建仓评估"},
+    {"type": "price_below", "price": 25, "reason": "进入有安全边际买入区间"},
+    {"type": "price_above", "price": 40, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T22:00:00+08:00"
+}

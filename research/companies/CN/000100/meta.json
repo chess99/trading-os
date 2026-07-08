@@ -6,55 +6,53 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "TCL华星盈利修复和行业集中度提升支撑公司价值，但当前5.19元、约1.72倍PB已部分反映周期改善，且2026年7月面板价格转弱、TCL中环仍处修复验证期，因此暂列观察而非重仓买入。",
-  "fair_value_range": [
-    5.4,
-    6.6
-  ],
-  "buy_zone": [
-    4.2,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    8.2
-  ],
+  "current_thesis": "TCL华星面板业务处于周期上行阶段，2025年归母净利润45亿（+189%），经营现金流440亿，整体财务质量改善。但光伏业务（TCL中环）持续亏损，高负债率（65%）和扣非利润质量（非经常性损益占比35%）构成主要风险。当前股价5.26元处于合理偏低下沿，但安全边际不足，建议观察等待光伏业务企稳信号或面板价格回调后的更好买点。",
+  "fair_value_range": [5.0, 6.5],
+  "buy_zone": [4.0, 4.8],
+  "sell_or_reduce_zone": [6.5, 8.0],
   "position_plan": [
     {
-      "stage": "watch",
-      "weight": 0.0,
-      "max_weight": 0.04,
-      "condition": "当前价格处于公允价值下沿附近，但不具备典型周期底部安全边际；等待面板价格重新上行或股价回到买入观察区。"
+      "condition": "股价低于4.8元且光伏业务减亏趋势确认",
+      "max_weight": 0.03
     },
     {
-      "stage": "initial",
-      "weight": 0.02,
-      "max_weight": 0.04,
-      "condition": "股价进入4.20-4.80元且经营现金流未恶化，或面板价格连续两个月止跌回升。"
+      "condition": "股价低于4.0元",
+      "max_weight": 0.05
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
+  "latest_report": "reports/2026-07-08-initial.md",
   "report_history": [
-    "reports/2026-07-07-initial.md"
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-08-initial.md"
   ],
   "review_triggers": [
     {
       "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年中报后复核面板利润率、光伏亏损收窄程度、现金流和负债率变化"
+    },
+    {
+      "type": "date",
       "date": "2026-10-31",
-      "reason": "复核三季报、面板价格趋势、TCL中环亏损收窄和集团现金流。"
+      "reason": "三季报后复核全年盈利指引和光伏业务趋势"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 4.5,
-      "reason": "进入买入观察区，若经营现金流和面板价格未恶化则重新评估加仓。"
+      "price": 4.8,
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入强吸引力买入区间"
     },
     {
       "type": "price_above",
-      "price": 7.0,
-      "reason": "进入减仓区，检查乐观情景是否已被充分定价。"
+      "price": 6.5,
+      "reason": "进入减仓或不应追高区间"
     }
   ],
-  "updated_at": "2026-07-07T00:00:00+08:00"
+  "updated_at": "2026-07-08T16:00:00+08:00"
 }

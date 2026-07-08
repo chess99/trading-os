@@ -1,0 +1,29 @@
+{
+  "symbol": "CN:002185",
+  "market": "CN",
+  "ticker": "002185",
+  "name": "华天科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "封测行业第三，受益于2024-2025年半导体复苏周期营收恢复增长，但毛利率低(13%)、ROE仅4%、自由现金流持续为负。当前PE 103x、PB 4.0x估值远超合理区间(合理8-12元)，没有安全边际。不构成买入条件。",
+  "fair_value_range": [8, 12],
+  "buy_zone": [6, 8],
+  "sell_or_reduce_zone": [15, 20],
+  "position_plan": [
+    {"condition": "股价跌至6-8元区间（PB 1.1-1.5x），基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价低于6元，极端悲观情景提供足够安全边际", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-10-29", "reason": "2026年三季报发布后，评估行业景气度和毛利率变化"},
+    {"type": "date", "date": "2027-04-29", "reason": "2026年年报发布后全面复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 12, "reason": "进入合理估值的上沿，开始关注"},
+    {"type": "price_below", "price": 8, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 15, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T07:30:00+08:00"
+}

@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:002050",
+  "market": "CN",
+  "ticker": "002050",
+  "name": "三花智控",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "全球制冷空调控制元器件龙头，汽车热管理高速成长。公司质量优秀但当前PE>44x处于历史高位，2026Q1增速明显放缓，缺乏安全边际。等待回调至35元以下再考虑建仓。",
+  "fair_value_range": [33, 38],
+  "buy_zone": [25, 32],
+  "sell_or_reduce_zone": [40, 50],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.05},
+    {"condition": "股价在28-32元区间（合理偏低）", "max_weight": 0.02},
+    {"condition": "股价低于25元（强吸引力）", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-28", "reason": "2026年中报披露后复查"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 35, "reason": "进入关注区间，准备研究建仓"},
+    {"type": "price_below", "price": 28, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 40, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T22:00:00+08:00"
+}

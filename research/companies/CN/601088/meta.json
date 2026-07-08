@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:601088",
+  "market": "CN",
+  "ticker": "601088",
+  "name": "中国神华",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "煤电运化一体化龙头，质量优秀但2025分红骤降至39%是重大信号；当前估值合理偏低，安全边际尚不充分，宜在35元以下分批建仓至多5%仓位",
+  "fair_value_range": [
+    34,
+    42
+  ],
+  "buy_zone": [
+    30,
+    35
+  ],
+  "sell_or_reduce_zone": [
+    50,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "股价处于30-35元买入区间且基本面未恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价跌至30元以下（强吸引力买入价格）",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价在35-42元合理偏低区间",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "date": "2026-08-31",
+      "reason": "2026中报披露后核实分红政策与煤价走势",
+      "type": "date"
+    },
+    {
+      "date": "2027-03-31",
+      "reason": "2026年报披露，确认分红率是否恢复及新能源转型进展",
+      "type": "date"
+    }
+  ],
+  "price_triggers": [
+    {
+      "price": 35,
+      "reason": "进入有安全边际的买入区间（PE<13x，PB<1.6x）",
+      "type": "price_below"
+    },
+    {
+      "price": 30,
+      "reason": "进入强吸引力买入价格区间（PE<11x，股息率>4.5%）",
+      "type": "price_below"
+    },
+    {
+      "price": 50,
+      "reason": "进入减仓区间，安全边际不足（PE>19x）",
+      "type": "price_above"
+    }
+  ],
+  "updated_at": "2026-07-07T13:30:00+08:00"
+}

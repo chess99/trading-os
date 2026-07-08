@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:600183",
+  "market": "CN",
+  "ticker": "600183",
+  "name": "生益科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "覆铜板全球第二龙头，2024-2026年受益AI服务器需求进入强劲上行周期，基本面优秀。但当前PE~106x已严重透支预期，安全边际为零。好公司+坏价格——等待估值回归至70-100元安全区间后再考虑建仓。",
+  "fair_value_range": [70, 100],
+  "buy_zone": [55, 70],
+  "sell_or_reduce_zone": [130, 999],
+  "position_plan": [
+    {"condition": "股价进入55-70元区间（有安全边际）", "max_weight": 0.05},
+    {"condition": "股价进入70-100元区间（合理偏低）", "max_weight": 0.02},
+    {"condition": "股价大于130元", "max_weight": 0}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-15", "reason": "2026年中报预期披露（预计8月）- 验证H1增速是否持续"},
+    {"type": "date", "date": "2026-10-28", "reason": "2026年三季报- 验证增长趋势是否可持续"},
+    {"type": "date", "date": "2026-07-31", "reason": "股价接近100元纳入关注"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 100, "reason": "进入合理偏低区间，开始关注"},
+    {"type": "price_below", "price": 70, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 130, "reason": "维持泡沫判断，不应追高"}
+  ],
+  "updated_at": "2026-07-07T13:30:00+08:00"
+}

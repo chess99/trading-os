@@ -6,115 +6,28 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "research_type": "initial",
-  "analyst": "codex-subagent-000034",
-  "updated_at": "2026-07-07T20:00:00+08:00",
-  "latest_price": {
-    "price": 26.82,
-    "as_of": "2026-07-07",
-    "source": "Sina Finance"
-  },
-  "market_snapshot": {
-    "as_of": "2026-07-06",
-    "price": 28.88,
-    "market_cap_cny": 29363441467.44,
-    "pb": 2.615,
-    "pe_ttm": 37.453,
-    "source": "Sina Market_Center.getHQNodeData hs_a"
-  },
-  "fair_value_range": [
-    20.0,
-    25.0
-  ],
-  "buy_zone": [
-    16.0,
-    20.0
-  ],
-  "strong_buy_zone": [
-    14.0,
-    16.0
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    33.0
-  ],
+  "current_thesis": "中国最大IT分销商之一，营收超1400亿但毛利率极薄（~3.4%），转型云计算和信创方向正确但体量仍小。归母净利润连续两年大幅下滑（2024年-35.8%, 2025年-30.5%），ROE从14.65%跌至5.05%，经营现金流2025年大幅流出24亿。当前PE过高（基于实际利润约56x），估值偏贵，基本面疲弱与转型故事之间存在矛盾，建议观察等待更佳买点。",
+  "fair_value_range": [16, 22],
+  "buy_zone": [14, 18],
+  "sell_or_reduce_zone": [28, 50],
   "position_plan": [
-    {
-      "price_range": [
-        20.0,
-        25.0
-      ],
-      "action": "watch_or_small_tracking",
-      "condition": "股价处于合理价值区间且现金流尚未证明改善。",
-      "target_weight": 0.015,
-      "max_weight": 0.02,
-      "notes": "合理区间内只保留观察仓。"
-    },
-    {
-      "price_range": [
-        16.0,
-        20.0
-      ],
-      "action": "buy_in_batches",
-      "condition": "股价进入安全边际区，且扣非利润、应收和存货没有继续恶化。",
-      "target_weight": 0.03,
-      "max_weight": 0.04,
-      "notes": "进入安全边际区后分批建仓。"
-    },
-    {
-      "price_range": [
-        14.0,
-        16.0
-      ],
-      "action": "increase_if_thesis_intact",
-      "condition": "股价进入强吸引力区，AI/信创订单和经营现金流未出现逻辑破坏。",
-      "target_weight": 0.05,
-      "max_weight": 0.06,
-      "notes": "基本面未恶化时进入强吸引力区。"
-    }
+    {"condition": "股价低于14元且基本面未进一步恶化", "max_weight": 0.02},
+    {"condition": "股价处于14-18元区间", "max_weight": 0.01},
+    {"condition": "股价回到18-22元合理区间", "max_weight": 0.005}
   ],
-  "thesis": "IT分销基本盘提供规模和渠道，数云融合及鲲鹏/昇腾生态带来成长弹性；但低毛利、高营运资金占用、应收存货和现金流风险要求更高安全边际。",
-  "current_thesis": "IT分销基本盘提供规模和渠道，数云融合及鲲鹏/昇腾生态带来成长弹性；但低毛利、高营运资金占用、应收存货和现金流风险要求更高安全边际。",
-  "key_risks": [
-    "AI服务器和信创订单毛利率低于预期",
-    "经营现金流持续为负且应收存货继续扩张",
-    "分销业务竞争加剧导致利润率下滑",
-    "短期借款和财务费用继续上升",
-    "大额减值或金融资产波动拖累利润"
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-08-initial.md"
   ],
   "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利润、现金流、应收和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及AI服务器/信创订单兑现情况。"
-    }
+    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报发布后复查收入、扣非净利润、现金流、应收和存货"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查AI服务器/信创订单兑现情况"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入安全边际买入区，重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入强吸引力区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "进入不应追高区，若缺乏利润和现金流兑现则考虑减仓。"
-    }
+    {"type": "price_below", "price": 18, "reason": "进入合理偏低区间，开始密切观察"},
+    {"type": "price_below", "price": 14, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 28, "reason": "进入高估区间，不应追高"}
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ]
+  "updated_at": "2026-07-08T22:00:00+08:00"
 }
