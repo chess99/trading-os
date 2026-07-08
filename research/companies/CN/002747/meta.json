@@ -1,0 +1,102 @@
+{
+  "symbol": "CN:002747",
+  "market": "CN",
+  "ticker": "002747",
+  "company_name": "埃斯顿",
+  "name": "埃斯顿",
+  "updated_at": "2026-07-08",
+  "status": "active",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "国产工业机器人第一梯队公司，核心部件和本体协同具备长期价值，但当前价格显著透支利润率修复预期，需等待估值回落或连续季度兑现现金流改善。",
+  "quality_rating": "B+",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    18,
+    25
+  ],
+  "buy_zone": [
+    12,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    999
+  ],
+  "base_currency": "CNY",
+  "currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前股价约 44.10 元，高于不应追高价格，等待跌至 18 元以下或基本面连续兑现后再建正式仓位",
+      "action": "watch",
+      "max_weight": 0.05,
+      "current_price_reference": 44.1,
+      "initial_weight": 0,
+      "add_rules": [
+        {
+          "price_below": 18,
+          "weight": 0.015,
+          "reason": "进入安全边际买入区，且需复核基本面未恶化"
+        },
+        {
+          "price_below": 15,
+          "weight": 0.03,
+          "reason": "进入强吸引力买入区，可提高仓位"
+        },
+        {
+          "price_below": 12,
+          "weight": 0.05,
+          "reason": "极端折价，若订单、毛利率和现金流未恶化，可接近最大仓位"
+        }
+      ]
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "跌入安全边际买入区，启动第一笔正式仓位复核"
+    },
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "跌入强吸引力买入区，复核后可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "超过减仓或回避区，基本面未同步兑现时不应追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、利润率、现金流和订单变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否延续利润修复"
+    },
+    {
+      "type": "date",
+      "date": "2026-07-08",
+      "reason": "若机器人主业毛利率跌破 25%、经营现金流继续恶化或股价跌破 18 元，立即重估仓位"
+    }
+  ],
+  "key_tracking_metrics": [
+    "工业机器人及智能制造系统收入增速",
+    "自动化核心部件及运动控制系统收入增速",
+    "综合毛利率和机器人业务毛利率",
+    "销售费用率、管理费用率、研发费用率",
+    "经营活动现金流量净额",
+    "应收账款和存货周转",
+    "海外收入占比和 CLOOS 盈利情况",
+    "机器人出货量及国产品牌市场排名"
+  ]
+}
