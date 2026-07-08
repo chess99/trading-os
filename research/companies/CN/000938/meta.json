@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:000938",
+  "market": "CN",
+  "ticker": "000938",
+  "name": "紫光股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国ICT基础设施龙头（新华三H3C），受益于AI算力需求爆发，但高杠杆（82%负债率）和极低净利率（~1.7%）是结构性问题。当前PE 58.8x(TTM)/31.4x(2026E)已隐含较高乐观预期，等待回调至安全边际区间。",
+  "fair_value_range": [22, 28],
+  "buy_zone": [18, 24],
+  "sell_or_reduce_zone": [40, 100],
+  "position_plan": [
+    {"condition": "股价低于18元，进入深度低估区间", "max_weight": 0.05},
+    {"condition": "股价18-24元，有安全边际区间，分批买入", "max_weight": 0.04},
+    {"condition": "股价24-28元，合理偏低，可建小仓", "max_weight": 0.01},
+    {"condition": "股价28-34元，偏贵区间，仅持有不买入", "max_weight": 0.00},
+    {"condition": "股价>34元，泡沫区间，不追高", "max_weight": 0.00}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026半年报披露后复查毛利率和收入增速"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查全年业绩预期"},
+    {"type": "price", "price": 24, "reason": "股价进入合理偏低区间，重新评估是否建仓"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 24, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 40, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T09:45:00+08:00"
+}
