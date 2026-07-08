@@ -3,92 +3,43 @@
   "market": "CN",
   "ticker": "300102",
   "name": "乾照光电",
-  "company_name": "乾照光电",
-  "updated_at": "2026-07-08",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观察 / 中性偏谨慎",
-  "current_thesis": "乾照光电处在LED芯片行业修复与Mini/Micro LED、化合物半导体期权并存阶段，2025年恢复盈利、2026年一季度利润弹性明显，但2026-07-08股价约20.46元已反映较多增长预期，适合等待价格回到安全区或等待毛利率、订单、现金流继续验证。",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    18.0,
-    22.0
-  ],
-  "buy_zone": [
-    14.0,
-    16.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "base_currency": "CNY",
+  "company_name": "厦门乾照光电股份有限公司",
   "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "乾照光电是LED芯片二线制造商，2025年行业（三安/华灿）巨额亏损背景下维持微利（扣非仅0.37亿），经营性现金流真实改善（OCF 5.6亿为利润4.9倍），但2026Q1营收同比-47%为重大红旗信号。当前P/B 4.38x为全行业最高，远超三安（2.38x）和聚灿（2.59x），股价20.46元的支撑完全依赖'化合物半导体+Mini LED'成长期权，而该期权在财务数据中无任何验证。不建议买入，建议等待8-13元合理区间或2026H1营收逐季验证后再评估。",
+  "quality_rating": "B-",
+  "valuation_rating": "D+",
+  "fair_value_range": [8.0, 13.0],
+  "buy_zone": [5.0, 7.0],
+  "strong_attraction_zone": [0, 5.0],
+  "sell_or_reduce_zone": [14.0, 18.0],
+  "do_not_chase_above": 14.0,
   "position_plan": [
-    {
-      "condition": "当前价格接近合理价值上沿，默认观察或小仓跟踪；只有价格回到安全区且基本面验证改善时才加仓",
-      "status": "watchlist_or_small_tracking_position",
-      "initial_weight": 0.005,
-      "max_weight": 0.04,
-      "add_rules": [
-        "价格低于16.5元且最新财报显示收入、毛利率、经营现金流同向改善时，可提高至1.5%-3.0%",
-        "价格低于12.0元且基本面未恶化时，可评估提高至3.0%-4.0%"
-      ],
-      "reduce_rules": [
-        "价格高于24.0元且没有订单或利润超预期验证时，降低仓位",
-        "连续两个季度毛利率回落且经营现金流弱于净利润时，降至观察仓或清仓"
-      ]
-    }
+    {"zone":"18元以上","condition":"股价超出合理价值上沿40%+，已完全反映成长期权","action":"不买入，已有持仓建议减仓","target_weight":0.0,"max_weight":0.0},
+    {"zone":"14-18元","condition":"偏贵区间，但不至极端泡沫","action":"不新增，已有仓位可持有观望","target_weight":0.0,"max_weight":0.005},
+    {"zone":"8-13元","condition":"合理估值区间且基本面未进一步恶化","action":"可建立轻仓观察","target_weight":0.01,"max_weight":0.01},
+    {"zone":"5-7元","condition":"有安全边际且最新财报营收恢复正增长","action":"逢低建仓","target_weight":0.02,"max_weight":0.02},
+    {"zone":"0-5元","condition":"深度价值区间且营收恢复正增长、扣非转正","action":"分批加仓","target_weight":0.03,"max_weight":0.03}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type":"date","date":"2026-08-31","reason":"复核2026年半年报，核心关注：营收同比是否改善、毛利率能否维持18%+、扣非净利润绝对值"},
+    {"type":"date","date":"2026-10-31","reason":"复核2026年三季报，判断行业供需是否触底"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "进入安全买入区，需同时复核最新季度毛利率、现金流和订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入强吸引买入区，若基本面未恶化可重新评估较高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入减仓观察区，当前基本面若未显著超预期则估值保护不足"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "超过乐观情景中枢，需要强订单和利润兑现支撑，否则应大幅降低仓位"
-    }
+    {"type":"price_below","price":8.0,"reason":"进入合理估值区间下沿，关注2026H1营收数据后评估"},
+    {"type":"price_below","price":5.0,"reason":"进入强吸引买入区，需确认营收恢复正增长和扣非转正"},
+    {"type":"price_above","price":18.0,"reason":"超出合理价值上沿40%+，不适合建立新仓"}
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、毛利率、扣非净利润、经营现金流、存货和Mini/Micro LED进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断一季度利润弹性是否具备持续性"
-    }
+  "key_risks": [
+    "营收持续下滑（2026Q1同比-47%）",
+    "行业价格战导致毛利率受压",
+    "Mini LED/化合物半导体期权兑现不及预期",
+    "重资产折旧压力（固定资产27.8亿）",
+    "非经常性损益依赖（2025年占利润68%）",
+    "相对估值回调风险（P/B 4.38x全行业最高）"
   ],
-  "key_tracking_metrics": [
-    "营业收入同比和环比",
-    "综合毛利率",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "存货余额和跌价准备",
-    "应收账款增速",
-    "Mini LED、Micro LED、VCSEL、砷化镓太阳能电池订单或量产进展",
-    "资本开支、在建工程和折旧变化",
-    "竞品扩产、降价、毛利率变化"
-  ]
+  "updated_at": "2026-07-08T22:30:00+08:00"
 }
