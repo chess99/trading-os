@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:300398",
+  "market": "CN",
+  "ticker": "300398",
+  "name": "飞凯材料",
+  "company_name": "飞凯材料",
+  "status": "active",
+  "updated_at": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "观察 / 不追高",
+  "current_rating": "watch",
+  "quality_rating": "B+",
+  "valuation_rating": "D",
+  "current_thesis": "飞凯材料是电子化学材料平台型公司，显示材料提供现金流，半导体材料提供估值弹性。2025 年利润和现金流明显改善，2026Q1 扣非利润继续高增长，但 2026-07-08 股价 46.96 元对应估值已偏乐观，当前不适合追高，应等待 32-38 元合理区间或 26-30 元安全买入区。",
+  "fair_value_range": [
+    32,
+    38
+  ],
+  "buy_zone": [
+    26,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    48,
+    55
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前股价 46.96 元，高于合理价值区间，不新开仓",
+      "action": "do_not_open_position",
+      "target_weight": 0,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价进入 32-38 元且基本面未恶化",
+      "action": "open_tracking_position",
+      "target_weight": 0.01,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价进入 26-30 元且 2026 半年报扣非利润仍增长",
+      "action": "build_position",
+      "target_weight": 0.03,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于 25 元且经营现金流维持健康",
+      "action": "increase_to_max_watch_position",
+      "target_weight": 0.04,
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "进入合理价值上沿，复查半导体材料增长和半年报质量，决定是否建观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入安全买入区，若扣非利润和经营现金流仍健康，可分批买入"
+    },
+    {
+      "type": "price_above",
+      "price": 48,
+      "reason": "进入减仓或回避区，除非业绩显著上修，否则赔率不足"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "明显依赖乐观情景定价，需要复查是否高估"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查 2026 年半年报，重点验证半导体材料收入、毛利率、扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查 2026 年三季报，判断全年利润中枢是否需要上修或下修"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026H1 revenue growth",
+    "2026H1 deducted net profit growth",
+    "operating cash flow versus net profit",
+    "semiconductor materials revenue growth",
+    "semiconductor materials gross margin",
+    "display materials gross margin",
+    "R&D expense ratio",
+    "accounts receivable and inventory turnover",
+    "customer qualification progress for semiconductor packaging materials",
+    "share count and shareholder return actions"
+  ]
+}
