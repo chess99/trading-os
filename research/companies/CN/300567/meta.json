@@ -23,10 +23,15 @@
     90,
     130
   ],
+  "strong_attraction_zone": [
+    0,
+    90
+  ],
   "sell_or_reduce_zone": [
     230,
     999
   ],
+  "do_not_chase_above": 230,
   "base_currency": "CNY",
   "status": "active",
   "position_plan": [
@@ -34,25 +39,29 @@
       "condition": "股价低于90元，且半导体订单和毛利率未恶化",
       "action": "强吸引力买入，分三笔建立核心观察仓",
       "max_weight": 0.06,
-      "reason": "赔率明显改善，价格开始覆盖半导体业务兑现不及预期的风险"
+      "target_weight": 0.06,
+      "zone": "strong_attraction"
     },
     {
       "condition": "股价90-130元，2026中报确认半导体收入继续增长且现金流未失控",
       "action": "分批买入",
       "max_weight": 0.04,
-      "reason": "进入有安全边际的买入区，仍需保留订单验收不确定性的折扣"
+      "target_weight": 0.04,
+      "zone": "buy"
     },
     {
       "condition": "股价130-180元，半导体先进制程重复订单继续增加",
       "action": "小仓试探或持有",
       "max_weight": 0.02,
-      "reason": "接近合理价值中枢，只有在基本面继续验证时才值得少量参与"
+      "target_weight": 0.02,
+      "zone": "watch"
     },
     {
       "condition": "股价高于230元",
       "action": "不新增，已有仓位逐步降低风险暴露",
       "max_weight": 0,
-      "reason": "价格需要2028年乐观情景支撑，容错率低"
+      "target_weight": 0,
+      "zone": "do_not_chase"
     }
   ],
   "price_triggers": [
@@ -83,6 +92,15 @@
       "date": "2026-10-31",
       "reason": "复查2026年三季报，判断全年利润兑现和估值消化进度"
     }
+  ],
+  "key_risks": [
+    "先进制程订单验收低于预期，收入确认延后",
+    "半导体量检测设备技术指标与海外龙头差距扩大，复购不及预期",
+    "客户集中度高，单一客户资本开支变化影响订单",
+    "显示业务再次价格竞争，拖累毛利率",
+    "研发费用和人员投入持续高企，收入放量但利润不放量",
+    "存货和应收账款上升导致现金流恶化",
+    "当前估值过高，市场风险偏好下降时估值压缩"
   ],
   "key_tracking_metrics": [
     "半导体业务收入增速",
