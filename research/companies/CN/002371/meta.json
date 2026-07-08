@@ -1,0 +1,28 @@
+{
+  "symbol": "CN:002371",
+  "market": "CN",
+  "ticker": "002371",
+  "name": "北方华创",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国半导体设备平台型龙头，品类最全、营收规模最大，深度受益于国产替代加速。但当前PE~105x已充分反映高增长预期，缺乏安全边际。等待市场回调至450元以下再考虑介入。",
+  "fair_value_range": [2500, 4500],
+  "buy_zone": [300, 450],
+  "sell_or_reduce_zone": [800, 1200],
+  "position_plan": [
+    {"condition": "股价低于450元，基本面未恶化", "max_weight": 0.01},
+    {"condition": "股价低于300元，国产替代逻辑不变", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年中报披露后复查"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 450, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 900, "reason": "进入泡沫区间，减仓或观察"}
+  ],
+  "updated_at": "2026-07-07T22:30:00+08:00"
+}

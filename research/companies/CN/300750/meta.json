@@ -1,0 +1,34 @@
+{
+  "symbol": "CN:300750",
+  "market": "CN",
+  "ticker": "300750",
+  "name": "宁德时代",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "全球动力电池与储能电池绝对龙头，竞争壁垒极高、盈利能力远超同行。但当前近1.73万亿市值已反映大量乐观预期，未来增速将显著放缓（从+42%降至~20-25%），当前估值PE 21.8x（TTM）缺乏明显安全边际，建议等待280-320元区间再考虑分批建仓。",
+  "fair_value_range": [290, 370],
+  "buy_zone": [240, 280],
+  "sell_or_reduce_zone": [420, 500],
+  "position_plan": [
+    {"condition": "股价低于240元（强吸引力区间）", "max_weight": 0.08},
+    {"condition": "股价在240-280元（有安全边际买入区间）", "max_weight": 0.05},
+    {"condition": "股价在280-320元（合理区间，分批建仓）", "max_weight": 0.03},
+    {"condition": "股价在320-360元（合理偏高，续持但不加仓）", "max_weight": 0.02},
+    {"condition": "股价高于420元（泡沫区间，减仓）", "max_weight": 0.01}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年半年报披露后复查收入和毛利率趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查盈利预测"},
+    {"type": "date", "date": "2027-03-31", "reason": "2026年年报披露后进行全面复盘"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 280, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_below", "price": 240, "reason": "进入强吸引力买入区间"},
+    {"type": "price_above", "price": 420, "reason": "进入泡沫或减仓区间"},
+    {"type": "price_above", "price": 360, "reason": "进入偏贵区间，不宜追高"}
+  ],
+  "updated_at": "2026-07-07T16:30:00+08:00"
+}

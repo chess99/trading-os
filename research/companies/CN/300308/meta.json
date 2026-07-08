@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:300308",
+  "market": "CN",
+  "ticker": "300308",
+  "name": "中际旭创",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "全球光模块绝对龙头，AI算力基建核心受益者，2024-2026年处于业绩爆发期，但当前约115x PE已充分反映乐观预期，安全边际不足，建议等待回调至800元以下再考虑建仓",
+  "fair_value_range": [600, 800],
+  "buy_zone": [500, 650],
+  "sell_or_reduce_zone": [1000, 1300],
+  "position_plan": [
+    {"condition": "股价回落至800-1000元区间且基本面未恶化", "max_weight": 0.02},
+    {"condition": "股价回落至650-800元区间", "max_weight": 0.05},
+    {"condition": "股价回落至500-650元区间", "max_weight": 0.08},
+    {"condition": "股价低于500元", "max_weight": 0.10}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-20", "reason": "2026年中报发布后复查业绩增速及毛利率趋势"},
+    {"type": "date", "date": "2026-10-25", "reason": "2026年三季报后复查增长趋势和竞争格局变化"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 800, "reason": "进入轻仓试探区间"},
+    {"type": "price_below", "price": 650, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 1300, "reason": "进入减仓或泡沫区间"}
+  ],
+  "updated_at": "2026-07-07T19:10:00+08:00"
+}

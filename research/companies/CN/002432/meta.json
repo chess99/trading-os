@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:002432",
+  "market": "CN",
+  "ticker": "002432",
+  "name": "九安医疗",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "后疫情时代主业萎缩95%，核心价值来自巨额现金和投资组合（净现金约87亿+证券投资约60亿），糖尿病照护业务尚在早期。当前60元股价已高于资产价值和正常化盈利支撑区间（35-48元），存在概念炒作风险，不推荐当前价格买入。",
+  "fair_value_range": [35, 48],
+  "buy_zone": [28, 35],
+  "sell_or_reduce_zone": [55, 95],
+  "position_plan": [
+    {"condition": "股价低于28元", "max_weight": 0.05},
+    {"condition": "股价在28-35元区间", "max_weight": 0.03},
+    {"condition": "股价在35-45元区间", "max_weight": 0.02},
+    {"condition": "股价高于55元", "max_weight": 0.0}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026半年报披露后复查，重点关注收入企稳和糖尿病照护收入增长"},
+    {"type": "date", "date": "2026-10-29", "reason": "2026三季报：投资收益趋势和主业盈利能力"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 35, "reason": "进入合理偏低区间，可轻仓买入"},
+    {"type": "price_below", "price": 28, "reason": "进入有安全边际的买入区间，分批建仓"},
+    {"type": "price_above", "price": 55, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T13:30:00+08:00"
+}

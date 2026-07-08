@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:600036",
+  "market": "CN",
+  "ticker": "600036",
+  "name": "招商银行",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "招商银行是中国质量最优的全国性股份制银行，当前PE6.6x/PB0.84x处于历史极低水平。ROE13.4%维持优秀水平，拨备覆盖率高提供安全垫。核心风险是净息差持续收窄（1.87%且仍在下降）和房地产尾部风险。当前价格37.73元处于强吸引力区上沿，适合小仓试探，不急于重仓。",
+  "fair_value_range": [40, 55],
+  "buy_zone": [32, 44],
+  "sell_or_reduce_zone": [55, 65],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.05},
+    {"condition": "股价32-38元强吸引力区间，分批建仓", "max_weight": 0.04},
+    {"condition": "股价38-44元，小仓试探", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年中报发布后复查净息差趋势和资产质量"},
+    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报复查"},
+    {"type": "date", "date": "2027-03-28", "reason": "2026年年报复查ROE和分红"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 38, "reason": "进入有安全边际的买入区间，考虑建仓"},
+    {"type": "price_below", "price": 32, "reason": "进入强吸引力区间，积极加仓"},
+    {"type": "price_above", "price": 55, "reason": "进入减仓或不应追高区间"},
+    {"type": "price_above", "price": 65, "reason": "进入泡沫区间，大幅减仓"}
+  ],
+  "updated_at": "2026-07-07T19:00:00+08:00"
+}
