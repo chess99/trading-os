@@ -1,0 +1,125 @@
+{
+  "symbol": "CN:002202",
+  "market": "CN",
+  "ticker": "002202",
+  "name": "金风科技",
+  "company_name": "金风科技",
+  "priority": "P2",
+  "current_rating": "watch",
+  "status": "active",
+  "rating_updated": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "latest_report_date": "2026-07-08",
+  "research_type": "initial",
+  "analyst": "codex-subagent-002202",
+  "price_cny": 22.19,
+  "market_cap_cny": 93730000000,
+  "currency": "CNY",
+  "fair_value_range": [17.0, 21.0],
+  "reasonable_price_range": [17.0, 21.0],
+  "buy_zone": [14.0, 16.5],
+  "sell_or_reduce_zone": [22.0, 27.5],
+  "buy_below": 16.5,
+  "strong_buy_below": 14.0,
+  "do_not_chase_above": 22.0,
+  "max_weight": 0.08,
+  "confidence": "medium",
+  "current_thesis": "全球风机龙头，订单和毛利率修复明确，但应收、负债和现金流约束估值；22元以上不追，16.5元以下才有安全边际。",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "position_plan": [
+    {
+      "condition": "price_above_22",
+      "zone": "do_not_chase",
+      "price_range": [22.0, 27.5],
+      "action": "不追高，已有仓位持有观察",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "price_between_18_and_21",
+      "zone": "watch_small",
+      "price_range": [18.0, 21.0],
+      "action": "只允许小仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price_below_16_5_and_thesis_intact",
+      "zone": "buy",
+      "price_range": [14.0, 16.5],
+      "action": "基本面未破可分批买入",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "price_below_14_and_cash_flow_improves",
+      "zone": "strong_buy",
+      "price_range": [0.0, 14.0],
+      "action": "现金流改善时提高仓位",
+      "max_weight": 0.08
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "wind_turbine_margin_below_8_or_above_11",
+      "reason": "风机毛利率跌破8%需降级，高于11%可上修盈利假设",
+      "note": "风机毛利率跌破8%需降级，高于11%可上修盈利假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "external_backlog_declines_two_quarters",
+      "reason": "外部在手订单连续两个季度下降需复盘增长假设",
+      "note": "外部在手订单连续两个季度下降需复盘增长假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "overseas_orders_cancelled_delayed_or_loss_making",
+      "reason": "海外订单若出现重大取消、延期或亏损交付需复盘估值溢价",
+      "note": "海外订单若出现重大取消、延期或亏损交付需复盘估值溢价"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "operating_cash_flow_lags_profit_two_quarters",
+      "reason": "经营现金流连续两个季度显著弱于归母净利润需降低仓位",
+      "note": "经营现金流连续两个季度显著弱于归母净利润需降低仓位"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "onshore_bid_price_below_1400_cny_per_kw",
+      "reason": "陆风不含塔筒中标价持续低于1400元/kW意味着价格战反复",
+      "note": "陆风不含塔筒中标价持续低于1400元/kW意味着价格战反复"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "price_below_14_or_above_22",
+      "reason": "股价进入强买或不追高区间时复盘仓位",
+      "note": "股价进入强买或不追高区间时复盘仓位"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "direction": "below",
+      "reason": "进入安全边际买入价"
+    },
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "direction": "below",
+      "reason": "进入强吸引力买入价"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "direction": "above",
+      "reason": "进入不应追高区间"
+    }
+  ],
+  "as_of": "2026-07-08",
+  "updated_at": "2026-07-08"
+}

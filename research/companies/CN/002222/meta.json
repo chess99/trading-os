@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:002222",
+  "market": "CN",
+  "ticker": "002222",
+  "name": "福晶科技",
+  "currency": "CNY",
+  "status": "active",
+  "company_dir": "research/companies/CN/002222",
+  "current_rating": "watch",
+  "quality_rating": "A-",
+  "valuation_rating": "expensive",
+  "priority": "P2",
+  "analyst": "codex-subagent-002222",
+  "last_review_date": "2026-07-08",
+  "last_research_type": "initial",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "price": {
+    "as_of": "2026-07-08",
+    "currency": "CNY",
+    "last": 76.66,
+    "market_cap": 36050000000,
+    "source": "Investing.com / Moomoo secondary quote pages; medium confidence"
+  },
+  "fair_value_range": [
+    38,
+    52
+  ],
+  "buy_zone": [
+    32,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    60,
+    80
+  ],
+  "buy_below": 42,
+  "strong_buy_below": 32,
+  "do_not_chase_above": 60,
+  "max_weight": 0.03,
+  "first_position_weight": 0.005,
+  "position_plan": [
+    {
+      "condition": "current_price_above_fair_value",
+      "action": "watch_or_research_position_only",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "price_between_32_and_42_with_thesis_intact",
+      "action": "accumulate",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "price_below_32_with_thesis_intact",
+      "action": "strong_buy",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price_above_60_without_order_or_margin_evidence",
+      "action": "do_not_add_or_reduce",
+      "max_weight": 0.005
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核收入与净利润增速差、毛利率、存货应收和 AI 光通信/半导体订单证据"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "action": "review_for_buy",
+      "reason": "进入安全边际买入价"
+    },
+    {
+      "type": "price_below",
+      "price": 32,
+      "action": "review_for_strong_buy",
+      "reason": "进入强吸引力买入价"
+    },
+    {
+      "type": "price_above",
+      "price": 60,
+      "action": "do_not_chase_review",
+      "reason": "高于不应追高价"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "action": "review_for_reduce",
+      "reason": "接近乐观情景价格"
+    }
+  ],
+  "confidence": "medium_low",
+  "current_thesis": "高质量光学晶体和精密光学平台，但当前股价已反映较多 AI 光通信/OCS 期权，等待业绩和订单证据或更好价格。",
+  "thesis": "高质量光学晶体和精密光学平台，但当前股价已反映较多 AI 光通信/OCS 期权，等待业绩和订单证据或更好价格。",
+  "updated_at": "2026-07-08"
+}

@@ -1,0 +1,165 @@
+{
+  "symbol": "CN:001289",
+  "market": "CN",
+  "ticker": "001289",
+  "name": "龙源电力",
+  "company_name": "龙源电力",
+  "priority": "P2",
+  "analyst": "codex-subagent-001289",
+  "status": "active",
+  "research_type": "initial",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "last_report_date": "2026-07-08",
+  "last_updated": "2026-07-08",
+  "updated_at": "2026-07-08",
+  "current_rating": "watch",
+  "quality_rating": "B+",
+  "valuation_rating": "expensive_watch",
+  "confidence": "medium",
+  "current_thesis": "龙源电力是中国风电运营龙头，装机规模、央企信用和长期资产久期构成质量基础；但2025年以来利用小时、电价市场化和高杠杆压低ROE与现金流安全边际。以16.11元快照价看已接近合理区间上沿，当前评级为watch，等待13元以下价格或盈利拐点确认。",
+  "reasonable_price_range": [
+    13.0,
+    16.0
+  ],
+  "fair_value_range": [
+    13.0,
+    16.0
+  ],
+  "buy_price": 13.0,
+  "buy_zone": [
+    11.5,
+    13.0
+  ],
+  "strong_buy_price": 11.5,
+  "sell_or_reduce_zone": [
+    16.0,
+    17.0
+  ],
+  "do_not_chase_price": 17.0,
+  "max_weight": 0.04,
+  "first_position_weight": 0.01,
+  "currency": "CNY",
+  "as_of_price": {
+    "date": "2026-07-06",
+    "price": 16.11,
+    "market_cap_cny": 134676638402.04,
+    "pe_ttm": 29.756,
+    "pb": 1.756,
+    "source": "Sina Market_Center.getHQNodeData hs_a"
+  },
+  "key_points": [
+    "风电运营龙头，2025年末控股装机46.27GW，其中风电29.45GW。",
+    "2025年归母净利润同比下降26.17%，2026Q1归母净利润同比下降10.52%，利润拐点尚未确认。",
+    "新能源电价市场化、利用小时波动和高资本开支是主要估值约束。",
+    "当前16.11元接近合理区间上沿，建议观察，不追高。"
+  ],
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "price_above_16",
+      "price_range": [
+        16.0,
+        999.0
+      ],
+      "action": "do_not_buy",
+      "target_weight": 0.0,
+      "max_weight": 0.0,
+      "note": "16元以上不主动买，已有仓位等待半年报和月度经营数据验证。"
+    },
+    {
+      "condition": "price_13_to_16",
+      "price_range": [
+        13.0,
+        16.0
+      ],
+      "action": "track_only",
+      "target_weight": 0.015,
+      "max_weight": 0.015,
+      "note": "合理但不便宜，仅适合小仓跟踪。"
+    },
+    {
+      "condition": "price_11_5_to_13",
+      "price_range": [
+        11.5,
+        13.0
+      ],
+      "action": "accumulate",
+      "target_weight": 0.03,
+      "max_weight": 0.03,
+      "note": "进入安全边际区间，可分批建仓。"
+    },
+    {
+      "condition": "price_below_11_5",
+      "price_range": [
+        0.0,
+        11.5
+      ],
+      "action": "strong_accumulate",
+      "target_weight": 0.04,
+      "max_weight": 0.04,
+      "note": "强吸引力区间，前提是基本面未结构性恶化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "发布2026年半年报或年度报告",
+      "reason": "半年报可验证利润下滑是否延续，并更新电价、现金流和负债假设。",
+      "action": "refresh_model"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-10",
+      "condition": "连续两个月风电发电量或利用小时显著偏离预期",
+      "reason": "风电利用小时是公司利润弹性的核心变量。",
+      "action": "review_thesis"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "风电或光伏平均上网电价继续明显下降",
+      "reason": "电价市场化可能改变存量资产回报率和合理估值中枢。",
+      "action": "review_fair_value"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "资产负债率、资本开支或融资成本显著上升",
+      "reason": "高杠杆和高资本开支会削弱股东现金回报和安全边际。",
+      "action": "review_risk"
+    },
+    {
+      "type": "date",
+      "date": "2026-07-31",
+      "condition": "股价跌破13元或升破17元",
+      "reason": "跌破买入区或升破不追高区均需要重新评估仓位动作。",
+      "action": "review_position"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "condition": "price_below_or_equal_13",
+      "price": 13.0,
+      "direction": "below",
+      "reason": "进入安全边际买入区，需要复核基本面后考虑建仓。"
+    },
+    {
+      "type": "price_above",
+      "condition": "price_above_or_equal_17",
+      "price": 17.0,
+      "direction": "above",
+      "reason": "进入不应追高区，需要复核是否存在基本面上修证据。"
+    }
+  ],
+  "next_watch_items": [
+    "2026年半年报归母净利润和经营现金流",
+    "月度风电发电量和利用小时",
+    "风电、光伏平均上网电价",
+    "资本开支、有息负债和资产负债率",
+    "绿证及补贴回款"
+  ]
+}
