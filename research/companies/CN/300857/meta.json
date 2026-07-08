@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:300857",
+  "market": "CN",
+  "ticker": "300857",
+  "name": "协创数据",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "协创数据正从代工制造向AI算力基础设施提供商快速转型，2025-2026年营收和利润实现翻倍级增长，但当前PE约83倍已远超可比公司，市场已充分定价乐观预期。高杠杆扩张叠加现金流质量待验证，安全边际不足。继续观察但不买入。",
+  "fair_value_range": [
+    100,
+    180
+  ],
+  "buy_zone": [
+    80,
+    120
+  ],
+  "sell_or_reduce_zone": [
+    280,
+    350
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌至120元以下且基本面未恶化（算力业务增速维持>50%）",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价跌至80元以下（深度低估区间）",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026年中报验证后，若净利润>15亿且OCF/净利>0.8，可在150元以下建仓",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-30",
+      "reason": "2026年中报发布后，验证增速和盈利能力"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-28",
+      "reason": "2026年三季报发布后，检查增长趋势是否持续"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 120,
+      "reason": "进入有安全边际的买入区间，需验证基本面"
+    },
+    {
+      "type": "price_below",
+      "price": 80,
+      "reason": "进入强吸引力买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 280,
+      "reason": "进入减仓或不应追高区间"
+    },
+    {
+      "type": "price_above",
+      "price": 350,
+      "reason": "严重泡沫区间"
+    }
+  ],
+  "updated_at": "2026-07-09T12:00:00+08:00"
+}

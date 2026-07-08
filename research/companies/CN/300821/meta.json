@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:300821",
+  "market": "CN",
+  "ticker": "300821",
+  "name": "东岳硅材",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "2026一季度已出现量价齐升的周期反转信号，但当前股价26.44元对应PE 230倍、PB 6.22倍，远高于同行业可比值，安全边际不足。应等待价格回落至6.5-8.5元买入区间，并用半年报确认盈利不只是季节性反弹后再做仓位决策。",
+  "fair_value_range": [8.5, 12.0],
+  "buy_zone": [6.5, 8.5],
+  "sell_or_reduce_zone": [14.0, 17.0],
+  "position_plan": [
+    {"condition": "股价低于8.50元且半年报确认毛利率维持15%以上、扣非净利润显著转正", "max_weight": 0.04},
+    {"condition": "股价在8.50-12.00元且基本面继续向好", "max_weight": 0.02},
+    {"condition": "股价高于14.00元或被行业新增产能/价格战破坏基本面假设", "max_weight": 0.0}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报，重点验证毛利率是否维持15%以上、净利润实质转正、产能利用率与销量趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "三季度报告，重点验证经营趋势延续性和下游深加工产品结构变化"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 8.5, "reason": "进入合理价值区间下沿，需重新判断是否属于有安全边际的买入区间"},
+    {"type": "price_above", "price": 14.0, "reason": "进入减仓区间，需重新判断估值是否已超前兑现2026全年盈利预期"},
+    {"type": "price_below", "price": 6.5, "reason": "进入强吸引力买入区间下沿，需确认下跌来自估值系统性压缩而非基本面破坏"}
+  ],
+  "updated_at": "2026-07-08T23:00:00+08:00"
+}
