@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:300438",
+  "market": "CN",
+  "ticker": "300438",
+  "name": "鹏辉能源",
+  "company_name": "鹏辉能源",
+  "status": "active",
+  "updated_at": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "观察/小仓位试探",
+  "current_thesis": "鹏辉能源处在储能电池需求扩张与行业价格竞争并存的阶段。2025年扭亏、2026年一季度延续改善，经营拐点已有证据，但当前股价接近中性合理价值区间，安全边际不足；适合等待回撤或中报继续验证毛利率、现金流和储能订单质量。",
+  "current_rating": "watch",
+  "quality_rating": "B+",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    70,
+    82
+  ],
+  "buy_zone": [
+    48,
+    60
+  ],
+  "sell_or_reduce_zone": [
+    88,
+    105
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_near_fair_value_lower_bound",
+      "action": "watch_or_probe_only",
+      "max_weight": 0.04,
+      "initial_weight": 0.01,
+      "current_action": "不追高；若必须建仓，仅0.5%-1.0%观察仓，等待2026年中报验证。",
+      "add_rules": [
+        {
+          "condition": "price_below_60_without_fundamental_deterioration",
+          "target_weight": 0.02
+        },
+        {
+          "condition": "price_below_48_and_margin_cashflow_orders_improve",
+          "target_weight": 0.04
+        }
+      ],
+      "reduce_rules": [
+        {
+          "condition": "price_above_88_without_earnings_upgrade",
+          "target_weight": 0.015
+        },
+        {
+          "condition": "fundamental_stop_loss_triggered",
+          "target_weight": 0
+        }
+      ]
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 60,
+      "reason": "进入安全买入观察区，若毛利率、订单和现金流未恶化，可考虑加至轻仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 48,
+      "reason": "进入强吸引买入区，若基本面继续改善，赔率显著提高。"
+    },
+    {
+      "type": "price_above",
+      "price": 88,
+      "reason": "超过合理价值上沿且未见业绩上修时，估值透支风险上升，应复核减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "预计2026年中报披露窗口后复查收入质量、毛利率、经营现金流、应收存货和储能订单。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "预计2026年三季报披露窗口后复查全年利润修复连续性。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入同比和环比",
+    "单季毛利率",
+    "单季净利率",
+    "储能业务收入占比和毛利贡献",
+    "经营现金流净额",
+    "应收账款周转",
+    "存货周转",
+    "资本开支和在建工程",
+    "海外订单和大储订单",
+    "钠离子/固态电池商业化进展",
+    "行业储能电芯价格",
+    "主要竞品扩产和报价变化"
+  ]
+}
