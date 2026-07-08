@@ -1,0 +1,137 @@
+{
+  "symbol": "CN:000792",
+  "market": "CN",
+  "ticker": "000792",
+  "name": "盐湖股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "盐湖股份是中国稀缺的钾肥现金牛叠加盐湖提锂弹性资产，2025-2026 年受益于钾肥高毛利、碳酸锂产能释放和五矿盐湖并表，财务质量强、净现金厚。但当前 28.37 元附近已反映 2026H1 高景气预告，周期价格和分红恢复仍需验证，适合观察而非追高。",
+  "fair_value_range": [
+    26.0,
+    32.0
+  ],
+  "buy_zone": [
+    20.0,
+    24.0
+  ],
+  "sell_or_reduce_zone": [
+    36.0,
+    42.0
+  ],
+  "position_plan": [
+    {
+      "price_range": [
+        16.0,
+        20.0
+      ],
+      "condition": "股价处于16-20元且钾肥、碳酸锂基本面未明显恶化",
+      "action": "strong_buy",
+      "target_weight": [
+        0.05,
+        0.07
+      ],
+      "max_weight": 0.07
+    },
+    {
+      "price_range": [
+        20.0,
+        24.0
+      ],
+      "condition": "股价处于20-24元安全边际区间",
+      "action": "buy",
+      "target_weight": [
+        0.03,
+        0.05
+      ],
+      "max_weight": 0.07
+    },
+    {
+      "price_range": [
+        24.0,
+        26.0
+      ],
+      "condition": "股价处于24-26元且需要建立跟踪仓",
+      "action": "small_tracking_position",
+      "target_weight": [
+        0.01,
+        0.03
+      ],
+      "max_weight": 0.07
+    },
+    {
+      "price_range": [
+        26.0,
+        32.0
+      ],
+      "condition": "股价处于26-32元合理价值区间",
+      "action": "watch",
+      "target_weight": [
+        0.0,
+        0.02
+      ],
+      "max_weight": 0.07
+    },
+    {
+      "price_range": [
+        36.0,
+        42.0
+      ],
+      "condition": "股价处于36-42元且缺乏新增基本面验证",
+      "action": "reduce_or_avoid_chasing",
+      "target_weight": [
+        0.0,
+        0.01
+      ],
+      "max_weight": 0.07
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后复核归母净利润、扣非净利润、产销量、库存和五矿盐湖并表影响",
+      "condition": "2026年半年报披露后",
+      "action": "核对归母净利润、扣非净利润、产销量、库存和五矿盐湖并表影响"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后复核钾肥和碳酸锂毛利率、库存、经营现金流和全年利润中枢",
+      "condition": "2026年三季报披露后",
+      "action": "复核钾肥和碳酸锂毛利率、库存、经营现金流和全年利润中枢"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后复核分红恢复、五矿盐湖并表效果、资本开支和正常化估值",
+      "condition": "2026年年报披露后",
+      "action": "复核分红恢复、五矿盐湖并表效果、资本开支和正常化估值"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24.0,
+      "reason": "进入安全边际买入区",
+      "action": "进入安全边际买入区，复核钾肥和锂价后考虑加至3%-5%"
+    },
+    {
+      "type": "price_below",
+      "price": 20.0,
+      "reason": "进入强吸引力买入区",
+      "action": "进入强吸引力区间，若基本面未恶化可考虑加至5%-7%"
+    },
+    {
+      "type": "price_above",
+      "price": 36.0,
+      "reason": "高于不应追高区间下沿",
+      "action": "安全边际不足，停止新增并评估减仓"
+    }
+  ],
+  "updated_at": "2026-07-07"
+}
