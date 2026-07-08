@@ -1,96 +1,28 @@
 {
   "symbol": "CN:300179",
-  "name": "四方达",
   "market": "CN",
   "ticker": "300179",
-  "company_name": "四方达",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观望/减仓",
-  "status": "active",
-  "current_thesis": "四方达是有技术积累的超硬材料制造公司，传统业务在2025年恢复增长、2026Q1利润明显修复，并具备CVD金刚石、培育钻石和金刚石钻针等新材料期权。但2026-07-08约50.51元股价对应约245亿元市值，已显著透支远期乐观情形；在订单、毛利率、现金流和项目达产未验证前，不适合新资金追高。",
-  "current_rating": "watch",
-  "quality_rating": "B",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    16,
-    24
-  ],
-  "buy_zone": [
-    10,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    50
-  ],
-  "base_currency": "CNY",
+  "name": "四方达",
   "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "国内复合超硬材料龙头，PDC复合片技术壁垒高、油气主业毛利率约59%。但扣非净利润连续三年下滑（2025年仅0.51亿元），经营性现金流转负，毛利率从55%降至41%。当前股价~50.5元、市值~245亿，PE~263x/扣非PE~480x、PB~19x，已极度高估。实控人家族及高管2026年高位减持，20亿定增将显著摊薄。现价仅反映极乐观CVD/钻针情景预期，无安全边际，风险收益比极差。",
+  "fair_value_range": [12, 18],
+  "buy_zone": [10, 14],
+  "sell_or_reduce_zone": [35, 50],
   "position_plan": [
-    {
-      "condition": "当前约50.51元，估值接近极乐观情景",
-      "action": "不买，已有仓位降至观察仓",
-      "weight": 0,
-      "max_weight": 0.005
-    },
-    {
-      "condition": "股价低于14元且季度经营未恶化",
-      "action": "建立观察仓",
-      "weight": 0.005,
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于10元且基本面未恶化",
-      "action": "提高至强吸引区仓位",
-      "weight": 0.02,
-      "max_weight": 0.03
-    }
+    {"condition": "当前约50.5元，泡沫区间", "max_weight": 0},
+    {"condition": "股价处于买入区间(10-14元)且扣非净利润连续2季同比为正、经营性现金流转正", "max_weight": 0.02},
+    {"condition": "股价<10元且基本面未继续恶化", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-10-31", "reason": "复查2026三季报，确认利润修复趋势、定增进展、CVD减亏进度"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入安全买入区，可建立观察仓并重新核验季度经营数据"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入强吸引买入区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "高于不追高价，若缺乏订单和利润兑现应卖出或降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "reason": "接近极乐观情景估值，风险收益比明显恶化"
-    }
+    {"type": "price_below", "price": 14, "reason": "进入安全买入区间，需重新核验季度经营数据和扣非净利润趋势"},
+    {"type": "price_above", "price": 35, "reason": "进入卖出/减仓区间，风险收益比恶化"}
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报、定增进展、钻针项目订单和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报，确认全年利润修复和新业务兑现程度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入增速",
-    "归母净利润和扣非净利润增速",
-    "综合毛利率和净利率",
-    "经营现金流净额与净利润匹配度",
-    "CVD金刚石和培育钻石业务收入占比",
-    "金刚石钻针项目订单、客户认证、良率和产能利用率",
-    "定增审批进度、发行价格和摊薄比例",
-    "应收账款和存货周转变化"
-  ]
+  "updated_at": "2026-07-08T21:00:00+08:00"
 }

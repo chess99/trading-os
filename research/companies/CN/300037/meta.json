@@ -3,68 +3,54 @@
   "market": "CN",
   "ticker": "300037",
   "name": "新宙邦",
+  "company_name": "深圳新宙邦科技股份有限公司",
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "电解液巨头转型高端氟化工，有机氟业务是核心利润引擎。当前估值偏贵，等待回调买入机会。",
-  "fair_value_range": [
-    55,
-    65
-  ],
-  "buy_zone": [
-    45,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    80,
-    100
-  ],
+  "current_thesis": "新宙邦是国内领先的电解液+有机氟+电子化学品平台型企业。电池化学品贡献69%收入但毛利率仅11%，有机氟化学品（毛利率62%）和电子化学品（毛利率48%）是真正利润引擎。2025年净利润约11亿(+16.5%),2026Q1净利润+109%高增。静态PE 53x、动态约30x，处于合理偏上位置。当前77.43元安全边际不足，建议观察，等待55-65元开始建仓。",
+  "quality_rating": "良好",
+  "valuation_rating": "合理偏高",
+  "fair_value_range": [452, 543],
+  "buy_zone": [415, 490],
+  "strong_attraction_zone": [302, 339],
+  "sell_or_reduce_zone": [603, 754],
+  "do_not_chase_above": 603,
   "position_plan": [
-    {
-      "condition": "price <= 52",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "price <= 42",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "price <= 35",
-      "max_weight": 0.1
-    }
+    {"zone": "当前77元", "condition": "当前价格77.43元，高于合理估值上沿，安全边际不足", "action": "wait", "target_weight": 0.0, "max_weight": 0.00, "reason": "当前不满足安全边际条件"},
+    {"zone": "65-75元", "condition": "进入合理区间上沿", "action": "wait", "target_weight": 0.0, "max_weight": 0.01, "reason": "接近合理区间，开始关注"},
+    {"zone": "55-65元", "condition": "进入合理估值区间，有安全边际", "action": "starter_buy", "target_weight": 0.03, "max_weight": 0.04, "reason": "进入基准合理区间，可分批建仓"},
+    {"zone": "45-55元", "condition": "有明显安全边际", "action": "add", "target_weight": 0.05, "max_weight": 0.06, "reason": "估值具有吸引力，积极买入"},
+    {"zone": "40元以下", "condition": "强吸引力", "action": "heavy_buy", "target_weight": 0.06, "max_weight": 0.06, "reason": "强吸引力，上限仓位"}
   ],
   "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
+  "report_history": ["reports/2026-07-08-initial.md"],
   "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后跟踪复核"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露后年度复核"
-    }
+    {"type": "date", "date": "2026-08-31", "reason": "2026年中报披露后跟踪复核，关注电池化学品毛利率和应收账款变化"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报发布后评估全年业绩趋势"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 52,
-      "reason": "进入合理偏低区间，启动首笔建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入强吸引力区间，重仓买入"
-    },
-    {
-      "type": "price_above",
-      "price": 80,
-      "reason": "进入偏贵区域，减持或观察"
-    }
+    {"type": "price_below", "price": 65, "reason": "进入合理区间上沿，开始关注是否建仓"},
+    {"type": "price_below", "price": 55, "reason": "进入有安全边际的买入区间，启动建仓"},
+    {"type": "price_above", "price": 85, "reason": "估值泡沫加大，减仓或不应追高"}
   ],
-  "updated_at": "2026-07-08T00:00:00+08:00"
+  "key_risks": [
+    "电解液产能过剩风险：行业总体产能远超需求，价格战可能再次加剧",
+    "电池化学品毛利率仅11%，收入占比69%但利润贡献有限",
+    "应收账款快速增长（+51%），增速远超营收(+23%)，回款质量需关注",
+    "海外项目政治/汇率/运营风险；资本开支大，现金流压力",
+    "有机氟业务2025年收入-6.7%，并非无懈可击",
+    "6人一致行动人无实际控制人，长期治理稳定性不确定",
+    "宙邦转债18亿若转股摊薄约10-15%",
+    "研发费用资本化率从0.71%升至9.08%，需关注盈利质量"
+  ],
+  "review_plan": "2026年中报和三季报后复盘，重点跟踪电池化学品毛利率、应收账款恶化趋势、经营现金流/利润比、有机氟收入增速等关键指标。",
+  "sources": [
+    "深圳新宙邦科技股份有限公司 2025年年度报告全文（PDF，CNINFO公告，2026-03-24发布）",
+    "深圳新宙邦科技股份有限公司 2025年年度报告摘要（PDF，CNINFO公告，2026-03-24发布）",
+    "深圳新宙邦科技股份有限公司 2024年年度报告摘要（PDF，CNINFO公告，2025-03-25发布）",
+    "新宙邦财务数据（新浪财经F10，2026-07-08获取）",
+    "新宙邦运营业务数据（同花顺F10，2026-07-08获取）",
+    "实时行情：新浪财经HQ API，2026-07-08收盘价77.43元"
+  ],
+  "updated_at": "2026-07-08T20:00:00+08:00"
 }
