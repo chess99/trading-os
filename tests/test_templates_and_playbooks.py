@@ -40,6 +40,32 @@ def test_playbooks_state_immutable_report_rule():
     assert "Write the report in Chinese" in followup
 
 
+def test_research_prompts_include_miller_style_value_discipline():
+    root = Path(__file__).resolve().parents[1]
+    template = (root / "templates" / "company-report.md").read_text(encoding="utf-8")
+    worker = (root / "automation" / "scripts" / "_worker_prompt.md").read_text(
+        encoding="utf-8"
+    )
+    company = (root / "playbooks" / "company-research.md").read_text(encoding="utf-8")
+    followup = (root / "playbooks" / "followup-review.md").read_text(encoding="utf-8")
+    combined = "\n".join([template, worker, company, followup])
+
+    for phrase in [
+        "自由现金流",
+        "市场隐含预期",
+        "资本回报",
+        "永久资本损失",
+        "情景与赔率",
+        "多因素估值中心倾向",
+        "低估值指标",
+    ]:
+        assert phrase in combined
+
+    assert "低估值指标" in worker
+    assert "Miller-Style Value Discipline" in company
+    assert "Miller-Style Follow-up Discipline" in followup
+
+
 def test_meta_schema_is_valid_json_and_has_validator_aligned_constraints():
     root = Path(__file__).resolve().parents[1]
     schema = json.loads(

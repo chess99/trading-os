@@ -19,6 +19,16 @@ Review exactly one company. Read the previous latest_report before doing new res
 9. Update `meta.json` with the latest state and new report pointer.
 10. Rebuild the repository index and automation files.
 
+## Miller-Style Follow-up Discipline
+
+- Re-read the prior thesis as a business-value claim, not just a price target.
+- Classify each prior key assumption as confirmed, weakened, disproven, still untested, or only affected by short-term sentiment.
+- Re-check whether the latest price changes the market implied expectations: is the market making a temporary problem permanent, or making growth too certain?
+- Re-underwrite free cash flow, capital returns versus cost of capital, management capital allocation, and accounting quality before changing buy zones or adding exposure.
+- Price weakness alone is not a reason to average down. Add only if core business value is intact and the probability/odds improved.
+- Sell or reduce only when valuation is reached/exceeded, opportunity cost is better elsewhere, or the investment logic has changed.
+- Keep short-term volatility separate from permanent capital loss risk.
+
 ## Output Rules
 
 - Write the report in Chinese unless the user explicitly requests another language.

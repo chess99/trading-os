@@ -27,6 +27,19 @@ Research exactly one company. Do not edit another company directory. Do not over
 11. Write a new report under `reports/YYYY-MM-DD-slug.md`.
 12. Update `meta.json` so `latest_report` points to the new report and `report_history` includes it.
 
+## Miller-Style Value Discipline
+
+Use low valuation multiples as clues, not conclusions. High PE/PB/PS is not an automatic exclusion either. First understand the long-term business model, then decide whether today's price is below intrinsic business value.
+
+- Treat value as the present value of future free cash flow, not as a static accounting multiple.
+- Explain whether growth creates value by earning capital returns above the cost of capital.
+- Reverse-read the market price: state what revenue growth, margin, free cash flow, capital return, and duration the current price appears to imply.
+- Use multi-factor valuation to find a central tendency: relative multiples, cash-flow methods, asset/private-market references, transaction references, and history where relevant.
+- Frame scenarios as probability and odds: downside permanent capital loss risk, base case value, upside payoff, and whether the payoff compensates for uncertainty.
+- Treat accounting data and models as fragile. Check one-off items, capitalized expenses, working capital, M&A accounting, leverage, cyclically inflated earnings, and management-adjusted numbers.
+- Do not mechanically average down. Re-underwrite the thesis after a price drop; add only if business value is intact and the odds improved.
+- Sell or reduce because valuation is reached/exceeded, a better risk-reward opportunity appears, or the original thesis changes, not because of price movement alone.
+
 ## Output Rules
 
 - Write the report in Chinese unless the user explicitly requests another language.
