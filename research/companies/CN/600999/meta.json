@@ -1,0 +1,99 @@
+{
+  "symbol": "CN:600999",
+  "market": "CN",
+  "ticker": "600999",
+  "name": "招商证券",
+  "company_name": "招商证券",
+  "status": "active",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "招商证券是质量中上、资本充足、财富管理与机构业务基础较强的大型综合券商，但截至2026-07-09估值已接近合理区间中上沿，更适合观察等待17-19元更优买点，而不是在21元以上追高重仓。",
+  "quality_rating": "good",
+  "valuation_rating": "neutral_to_slightly_expensive",
+  "fair_value_range": [
+    19.0,
+    24.0
+  ],
+  "buy_zone": [
+    17.0,
+    19.0
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    28.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价小于等于16.5元，且行业成交额未明显塌陷",
+      "action": "aggressive_buy",
+      "max_weight": 0.2,
+      "reason": "明显低于基准价值，赔率足以补偿券商高beta风险"
+    },
+    {
+      "condition": "股价在16.5-19.0元之间，且托管客户资产、两融市占率保持改善",
+      "action": "build_position",
+      "max_weight": 0.15,
+      "reason": "进入安全边际区间，可分批建仓"
+    },
+    {
+      "condition": "股价在19.0-22.5元之间",
+      "action": "watch_or_hold_small",
+      "max_weight": 0.05,
+      "reason": "估值基本合理但赔率一般，只适合观察仓"
+    },
+    {
+      "condition": "股价高于24.0元",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0,
+      "reason": "超过我定义的合理上沿，不值得追高"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 19.0,
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "进入强吸引力买点，可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "超过合理价值上沿，停止追高并考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，确认利润增长质量和ROE持续性"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报与行业成交额、两融、投行业务景气变化"
+    }
+  ],
+  "key_tracking_metrics": [
+    "A股股票基金成交额",
+    "公司境内股票基金交易量及市场份额",
+    "托管客户资产",
+    "非货币基金/权益基金/指数基金保有规模",
+    "融资融券余额及市场份额",
+    "托管外包规模及私募托管市场份额",
+    "投资及交易业务收入占比",
+    "归母净利润与加权平均净资产收益率",
+    "风险覆盖率、流动性覆盖率、净稳定资金率",
+    "投行业务股权承销和债券承销排名"
+  ]
+}
