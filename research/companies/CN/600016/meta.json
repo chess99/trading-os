@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:600016",
+  "market": "CN",
+  "ticker": "600016",
+  "name": "民生银行",
+  "company_name": "民生银行",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "观察/低位小仓",
+  "current_thesis": "民生银行具备低估值和较高股息率吸引力，但净息差低、拨备覆盖率偏低、核心一级资本缓冲一般，投资价值主要来自修复赔率而非高质量成长。适合在低 PB 与资产质量稳定同时出现时分批配置，未验证改善前控制仓位。",
+  "current_rating": "watch",
+  "quality_rating": "B-",
+  "valuation_rating": "undervalued_with_quality_discount",
+  "status": "active",
+  "fair_value_range": [
+    3.9,
+    5.0
+  ],
+  "buy_zone": [
+    2.8,
+    3.3
+  ],
+  "sell_or_reduce_zone": [
+    4.8,
+    5.5
+  ],
+  "base_currency": "CNY",
+  "currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于2.80元且最近一期不良率未较上一期上升超过10bp",
+      "action": "分批买入",
+      "max_weight": 0.06,
+      "reason": "PB折价和股息率提供较强安全边际，但仍需资产质量约束"
+    },
+    {
+      "condition": "股价处于2.80-3.30元且拨备覆盖率不低于135%",
+      "action": "小仓试错或逢低加仓",
+      "max_weight": 0.04,
+      "reason": "估值便宜但质量折价尚未消除"
+    },
+    {
+      "condition": "股价处于3.30-3.90元且基本面未明显改善",
+      "action": "观察或仅保留底仓",
+      "max_weight": 0.02,
+      "reason": "赔率下降，需要等待ROE、拨备和不良率改善确认"
+    },
+    {
+      "condition": "股价高于4.80元且ROE、拨备覆盖率、不良率没有同步改善",
+      "action": "减仓",
+      "max_weight": 0.01,
+      "reason": "估值接近或超过保守合理区间，质量折价仍应存在"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "reason": "进入强吸引力买入区，需要复核资产质量后考虑提高仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 3.3,
+      "reason": "进入有安全边际买入区，可评估首笔或小幅加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "进入不应追高和减仓观察区，若基本面未改善应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报中的净息差、不良率、拨备覆盖率、资本充足率和分红可持续性"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，确认利润、资产质量和资本趋势是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复查2026年年报和利润分配预案，重新评估合理估值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "净息差",
+    "不良贷款率",
+    "关注贷款率",
+    "逾期贷款率",
+    "拨备覆盖率",
+    "核心一级资本充足率",
+    "归属于普通股股东的净利润增速",
+    "ROE",
+    "每股现金分红",
+    "房地产和零售贷款风险敞口"
+  ]
+}
