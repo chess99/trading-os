@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:688766",
+  "market": "CN",
+  "ticker": "688766",
+  "name": "普冉股份",
+  "company_name": "普冉股份",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "普冉股份是利基型非易失性存储景气上行与SHM平台化扩张的高弹性标的，但截至2026-07-10股价已显著反映乐观周期预期；当前更适合跟踪等待回调，买入需等估值回到240-330元区间并确认毛利率、存货和SHM整合未恶化。",
+  "quality_rating": "A-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    320,
+    460
+  ],
+  "buy_zone": [
+    240,
+    330
+  ],
+  "sell_or_reduce_zone": [
+    560,
+    700
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "现价高于560元或估值仍隐含强景气永久化",
+      "action": "不新增标准仓位，仅允许0%-0.5%研究型观察仓",
+      "max_weight": 0.005,
+      "reason": "当前价格已接近乐观情景估值，安全边际不足"
+    },
+    {
+      "condition": "股价跌入240-330元且NOR/SLC NAND价格未连续下跌、公司毛利率仍高于35%",
+      "action": "分批建立初始仓位",
+      "max_weight": 0.02,
+      "reason": "价格回到基准合理价值下沿附近，且基本面尚未破坏"
+    },
+    {
+      "condition": "股价低于280元、2026年预期PE回到25-35倍且SHM整合顺利",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04,
+      "reason": "估值进入可承受区间，同时平台化逻辑仍在"
+    },
+    {
+      "condition": "连续两个季度毛利率低于30%或存货跌价显著增加",
+      "action": "降至0或仅保留跟踪仓",
+      "max_weight": 0.005,
+      "reason": "存储上行周期可能结束，周期高估值需要下修"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 330,
+      "reason": "进入买入区间上沿，复核行业价格和Q2/Q3毛利率后可考虑首笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 280,
+      "reason": "进入更有吸引力的估值区间，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 560,
+      "reason": "进入减仓区间，价格已显著反映乐观周期预期"
+    },
+    {
+      "type": "price_above",
+      "price": 700,
+      "reason": "高于减仓区间上沿，除非盈利预测继续大幅上修，否则风险收益比恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入、毛利率、存货、SHM并表和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和存储价格趋势，判断涨价周期是否延续"
+    }
+  ],
+  "key_tracking_metrics": [
+    "NOR Flash合约价与交期",
+    "SLC NAND合约价与交期",
+    "季度营业收入",
+    "季度毛利率",
+    "归母净利润",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "存货金额与存货周转",
+    "存货跌价准备",
+    "SHM收入和毛利率",
+    "少数股东损益",
+    "车规和工业客户导入",
+    "MCU收入占比和毛利率",
+    "VCM Driver/OIS产品出货",
+    "重大资产重组审核进度"
+  ]
+}
