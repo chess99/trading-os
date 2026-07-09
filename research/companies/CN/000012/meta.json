@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:000012",
+  "market": "CN",
+  "ticker": "000012",
+  "name": "南 玻Ａ",
+  "company_name": "南 玻Ａ",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "quality_rating": "B-",
+  "valuation_rating": "B",
+  "current_thesis": "南玻A具备浮法玻璃、工程玻璃、电子玻璃、光伏玻璃和硅料资产组合，PB接近资产底但2025年扣非亏损、2026Q1扣非亏损扩大且库存上升，董事会延期换届带来治理折价；当前适合观察，等待行业价格止跌、库存下降、现金流改善和治理进展后再考虑买入。",
+  "fair_value_range": [
+    4.3,
+    5.3
+  ],
+  "buy_zone": [
+    3.6,
+    4.0
+  ],
+  "sell_or_reduce_zone": [
+    5.6,
+    6.2
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于4.00元，且浮法或光伏玻璃价格至少4周止跌，库存开始下降",
+      "action": "建立观察仓",
+      "max_weight": 0.015,
+      "reason": "PB折价足够且周期底部信号初现，但扣非亏损尚未修复"
+    },
+    {
+      "condition": "2026中报或三季报扣非亏损明显收窄，经营现金流同比改善，存货下降",
+      "action": "加仓",
+      "max_weight": 0.03,
+      "reason": "盈利底、现金流底和库存拐点同时出现，买入胜率提高"
+    },
+    {
+      "condition": "董事会完成换届，玻璃价格连续上涨，ROE修复趋势明确",
+      "action": "提升至核心观察仓",
+      "max_weight": 0.04,
+      "reason": "治理折价收敛，资产重估和周期修复可同时发生"
+    },
+    {
+      "condition": "股价高于5.60元但扣非利润和库存未改善",
+      "action": "减仓或不追高",
+      "max_weight": 0.01,
+      "reason": "价格先于基本面透支，风险收益比恶化"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入初始买入区，若同时出现玻璃价格止跌和库存下降，可建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "跌至净资产深折价区，适合重新评估悲观情景是否已充分反映"
+    },
+    {
+      "type": "price_above",
+      "price": 5.6,
+      "reason": "进入减仓区，若基本面未右侧确认，应降低仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "高于当前合理区间上沿较多，除非扣非利润明显修复，否则风险收益比不佳"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报，重点核验扣非利润、经营现金流、存货和光伏玻璃/硅料资产"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报和玻璃旺季价格走势，判断是否从观察转为可买"
+    }
+  ],
+  "key_tracking_metrics": [
+    "浮法玻璃5mm现货价格",
+    "浮法玻璃库存天数",
+    "浮法玻璃产能利用率和冷修日熔量",
+    "光伏玻璃2.0mm镀膜价格",
+    "光伏玻璃3.2mm镀膜价格",
+    "光伏玻璃库存和组件排产",
+    "高纯晶硅售价和青海基地产销量",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "存货余额",
+    "应收账款坏账和信用减值损失",
+    "董事会换届进展",
+    "回购股份用途和注销进展"
+  ]
+}
