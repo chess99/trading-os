@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:601601",
+  "market": "CN",
+  "ticker": "601601",
+  "name": "中国太保",
+  "company_name": "中国太保",
+  "status": "active",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "中国太保当前核心投资逻辑是：寿险新业务价值仍在增长，财险综合成本率保持纪律，资本充足且当前股价仅对应约0.46倍2025年末P/EV，估值偏低；主要风险在低利率环境下的再投资收益率下行和分红险价值兑现质量。",
+  "quality_rating": "A-",
+  "valuation_rating": "undervalued",
+  "fair_value_range": [
+    31,
+    38
+  ],
+  "buy_zone": [
+    25,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    39,
+    45
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 24",
+      "action": "aggressive_buy",
+      "max_weight": 0.1,
+      "reason": "进入强吸引力买点，P/EV 预计接近或低于 0.40x。"
+    },
+    {
+      "condition": "24 < price <= 27",
+      "action": "buy",
+      "max_weight": 0.08,
+      "reason": "低于保守合理价值下沿，安全边际较充足。"
+    },
+    {
+      "condition": "27 < price <= 30",
+      "action": "start_position",
+      "max_weight": 0.06,
+      "reason": "估值偏低但低利率风险仍在，适合小到中等建仓。"
+    },
+    {
+      "condition": "30 < price <= 34",
+      "action": "hold_or_small_buy",
+      "max_weight": 0.04,
+      "reason": "接近合理价值区间下沿，赔率仍有但不够极致。"
+    },
+    {
+      "condition": "price >= 39",
+      "action": "reduce_or_stop_buying",
+      "max_weight": 0.02,
+      "reason": "接近或高于本轮保守目标价，不宜追高。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 27,
+      "reason": "进入更有把握的加仓区间。"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入强吸引力买点，考虑把仓位提升到目标上限。"
+    },
+    {
+      "type": "price_above",
+      "price": 39,
+      "reason": "接近不应追高区间，需复核基本面是否同步上修。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报中的寿险新业务价值、财险综合成本率和投资收益率。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "寿险新业务价值增速",
+    "寿险新业务价值率",
+    "代理人与银保新保期缴占比",
+    "分红险占比与13个月继续率",
+    "财险综合成本率",
+    "净投资收益率",
+    "总投资收益率",
+    "集团内含价值增速",
+    "寿险与产险偿付能力充足率",
+    "年度现金分红与分红率"
+  ]
+}
