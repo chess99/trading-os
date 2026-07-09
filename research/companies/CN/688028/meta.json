@@ -1,0 +1,112 @@
+{
+  "symbol": "CN:688028",
+  "market": "CN",
+  "ticker": "688028",
+  "name": "沃尔德",
+  "company_name": "沃尔德",
+  "status": "active",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "沃尔德具备超硬刀具、PCD/PCBN、精密切削工具和CVD金刚石材料的真实产业价值，但2026-07-09约205亿元市值已显著透支核心刀具业务利润和新业务期权，当前不适合开新仓，等待价格回到公允价值区间并由订单、毛利率和现金流共同验证。",
+  "quality_rating": "B",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    45,
+    65
+  ],
+  "buy_zone": [
+    35,
+    50
+  ],
+  "sell_or_reduce_zone": [
+    90,
+    120
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price_above_120_or_market_cap_above_180bn_without_new_profit_evidence",
+      "action": "avoid_new_buy_and_reduce_existing_position",
+      "max_weight": 0,
+      "reason": "当前估值主要由远期期权和主题交易支撑，缺乏已兑现利润匹配。"
+    },
+    {
+      "condition": "price_between_90_and_120",
+      "action": "research_only_or_keep_tiny_watch_position",
+      "max_weight": 0.005,
+      "reason": "仍高于基准公允价值，仅适合跟踪订单和毛利率验证。"
+    },
+    {
+      "condition": "price_between_60_and_90_and_revenue_margin_cashflow_improve",
+      "action": "allow_small_tracking_position",
+      "max_weight": 0.01,
+      "reason": "价格仍偏贵，但若基本面连续改善，可用小仓位保持研究敏感度。"
+    },
+    {
+      "condition": "price_between_45_and_60_with_no_fundamental_deterioration",
+      "action": "start_initial_position",
+      "max_weight": 0.02,
+      "reason": "接近公允价值区间，可建立首笔研究仓并等待半年报确认。"
+    },
+    {
+      "condition": "price_below_45_and_fundamentals_stable",
+      "action": "accumulate_in_batches",
+      "max_weight": 0.03,
+      "reason": "进入买入区，但公司规模和周期属性决定仓位仍需受限。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 60,
+      "reason": "进入可研究建仓区，需要复核订单、毛利率和现金流。"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入买入区，若基本面未恶化可考虑分批买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 120,
+      "reason": "明显高于基准公允价值，需避免新增仓位并复核估值泡沫。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入增速、毛利率、现金流和CVD业务进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润增长是否持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和并购整合效果。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "quarterly_revenue_growth",
+    "gross_margin",
+    "net_profit_growth",
+    "deducted_net_profit_growth",
+    "operating_cash_flow_to_net_profit",
+    "accounts_receivable_turnover",
+    "inventory_turnover",
+    "pcd_pcbn_tools_revenue_mix",
+    "cvd_diamond_order_and_revenue_progress",
+    "semiconductor_processing_customer_validation",
+    "ma_integration_and_goodwill_risk",
+    "rd_expense_ratio"
+  ]
+}

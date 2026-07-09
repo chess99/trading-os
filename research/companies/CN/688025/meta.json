@@ -1,0 +1,115 @@
+{
+  "symbol": "CN:688025",
+  "market": "CN",
+  "ticker": "688025",
+  "name": "杰普特",
+  "company_name": "杰普特",
+  "status": "active",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "杰普特具备高端MOPA激光器、激光/光学智能装备和光通信光纤器件三条增长线，2025-2026Q1经营加速且客户质量较高，但2026-07-09股价已明显反映牛市预期，当前以跟踪为主，等待更好的安全边际。",
+  "quality_rating": "A-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    250,
+    330
+  ],
+  "buy_zone": [
+    170,
+    260
+  ],
+  "sell_or_reduce_zone": [
+    360,
+    445
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 210 and quarterly_orders_intact",
+      "action": "积极分批买入",
+      "max_weight": 0.06,
+      "reason": "强吸引力区间，若订单、毛利率和现金流未被证伪，赔率明显改善"
+    },
+    {
+      "condition": "price > 210 and price <= 260 and 2026_profit_visibility_good",
+      "action": "安全边际买入",
+      "max_weight": 0.04,
+      "reason": "处于安全边际买入价，适合确认中报后提高仓位"
+    },
+    {
+      "condition": "price > 260 and price <= 330",
+      "action": "观察式买入或持有",
+      "max_weight": 0.03,
+      "reason": "接近合理价值区间，仓位取决于光通信和消费电子订单兑现"
+    },
+    {
+      "condition": "price > 330 and price <= 360",
+      "action": "只保留底仓",
+      "max_weight": 0.015,
+      "reason": "估值已偏贵，需要连续业绩超预期支撑"
+    },
+    {
+      "condition": "price > 360",
+      "action": "不追高或逢高减仓",
+      "max_weight": 0.01,
+      "reason": "价格高于不应追高价，安全边际不足"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 260,
+      "reason": "进入安全边际买入区，复核订单和现金流后可分批建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 210,
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 360,
+      "reason": "高于不应追高价，需检查是否存在估值泡沫或主题交易过热"
+    },
+    {
+      "type": "price_above",
+      "price": 430,
+      "reason": "接近牛市情景定价，原则上应减仓或等待业绩继续上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看光纤器件、消费电子检测设备、新能源订单、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认高增长是否持续以及估值是否需要上修或下修"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和全年订单质量，重新评估合理价值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入增速",
+    "归母净利润率",
+    "综合毛利率",
+    "激光器收入和毛利率",
+    "激光/光学智能装备新增订单和毛利率",
+    "光纤器件收入、毛利率和大客户订单持续性",
+    "经营现金流净额/归母净利润",
+    "应收账款和存货周转",
+    "前五大客户收入占比",
+    "研发投入金额和研发投入率"
+  ]
+}
