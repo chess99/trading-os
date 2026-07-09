@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:301018",
+  "market": "CN",
+  "ticker": "301018",
+  "name": "申菱环境",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "国内液冷CDU市场排名第一，受益于AI算力基建和液冷渗透率提升，2025年收入和净利润分别+40%/+88%，数据服务板块新增订单+72%。但PE(TTM)~231x，PS~10.5x，估值极高，安全边际不足。等待回调至60元以下（对应~2025 70x PE）才考虑建立观察仓。",
+  "fair_value_range": [40, 70],
+  "buy_zone": [25, 50],
+  "sell_or_reduce_zone": [90, 120],
+  "position_plan": [
+    {"condition": "股价低于25元，进入深度低估区间", "max_weight": 0.04},
+    {"condition": "股价25-40元，有安全边际区间，分批买入", "max_weight": 0.03},
+    {"condition": "股价40-60元，合理偏低区间，可建小仓", "max_weight": 0.01},
+    {"condition": "股价60-90元，偏贵区间，仅持有不买入", "max_weight": 0.00},
+    {"condition": "股价>90元，泡沫区间，不追高", "max_weight": 0.00}
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": ["reports/2026-07-09-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-29", "reason": "2026半年报披露后复查数据服务板块增速和应收账款趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查全年业绩指引和新增订单趋势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 60, "reason": "进入合理偏低区间，可建观察仓"},
+    {"type": "price_below", "price": 40, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 90, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-09T06:55:00+08:00"
+}

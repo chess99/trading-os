@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:301205",
+  "market": "CN",
+  "ticker": "301205",
+  "name": "联特科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "极度高估（PE 332x、PS 27x、PEG 30.5），基本面质量差——净利率仅8.2%、经营现金流连续3年巨额为负、2026Q1净利暴跌84%且扣非转亏。公司在光模块行业处于三线地位，与龙头中际旭创/新易盛差距巨大。市场给予的AI概念泡沫溢价与基本面严重脱钩。当前价格没有安全边际，风险远大于潜在收益。",
+  "fair_value_range": [38, 80],
+  "buy_zone": [30, 50],
+  "sell_or_reduce_zone": [100, 100],
+  "position_plan": [
+    {"condition": "股价回到35元以下且基本面无恶化（经营现金流好转、毛利稳定、客户订单明确）", "max_weight": 0.03},
+    {"condition": "股价在35-50元区间，基本面改善迹象确认", "max_weight": 0.02},
+    {"condition": "股价在50-80元区间，基本面显著改善", "max_weight": 0.01}
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": ["reports/2026-07-09-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年半年报发布后复查——关注营收增速是否恢复、现金流是否改善、800G进展"},
+    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报发布后复查——验证下半年是否旺季回升"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 80, "reason": "从极端泡沫区域回落至偏高区间，可以重点观察"},
+    {"type": "price_below", "price": 50, "reason": "进入初步合理估值区间，考虑是否小额建仓"},
+    {"type": "price_below", "price": 35, "reason": "进入安全边际区间，考虑分批建仓"},
+    {"type": "price_above", "price": 100, "reason": "仍是泡沫区间，不参与"}
+  ],
+  "updated_at": "2026-07-09T08:00:00+08:00"
+}
