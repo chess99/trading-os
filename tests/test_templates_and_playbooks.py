@@ -11,13 +11,14 @@ def test_company_report_template_contains_required_sections():
     text = (root / "templates" / "company-report.md").read_text(encoding="utf-8")
 
     for heading in [
-        "## 一句话结论",
-        "## 决策",
+        "## 结论版",
         "## 业务理解",
         "## 行业与竞争格局",
         "## 公司质量",
         "## 财务质量",
         "## 估值",
+        "## 市场隐含预期",
+        "## 情景与赔率",
         "## 价格与仓位计划",
         "## 关键假设",
         "## 跟踪触发器",
@@ -67,6 +68,20 @@ def test_research_prompts_include_miller_style_value_discipline():
     assert "低估值指标" in worker
     assert "Miller-Style Value Discipline" in company
     assert "Miller-Style Follow-up Discipline" in followup
+
+
+def test_batch_worker_validation_uses_strict_company_check():
+    root = Path(__file__).resolve().parents[1]
+    batch = (root / "automation" / "scripts" / "batch_research.py").read_text(
+        encoding="utf-8"
+    )
+    worker = (root / "automation" / "scripts" / "_worker_prompt.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert '"--strict"' in batch
+    assert "# 公司研究：{{COMPANY_NAME}}（{{SYMBOL}}）" in worker
+    assert "python -m trading_os company validate {{COMPANY_DIR}} --strict" in worker
 
 
 def test_meta_schema_is_valid_json_and_has_validator_aligned_constraints():

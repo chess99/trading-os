@@ -10,7 +10,11 @@ from .research_assets.alerts import (
     load_json,
     write_price_alerts,
 )
-from .research_assets.company import AssetValidationError, validate_company_dir
+from .research_assets.company import (
+    AssetValidationError,
+    audit_research_assets,
+    validate_company_dir,
+)
 from .research_assets.coverage_store import (
     CoverageValidationError,
     coverage_status,
@@ -35,7 +39,11 @@ def build_parser() -> argparse.ArgumentParser:
     company_sub = company.add_subparsers(dest="company_cmd", required=True)
     validate = company_sub.add_parser("validate", help="Validate one company directory")
     validate.add_argument("path")
+    validate.add_argument("--strict", action="store_true")
     validate.set_defaults(func=cmd_company_validate)
+    audit = company_sub.add_parser("audit", help="Audit company research asset standards")
+    audit.add_argument("--research-root", default="research")
+    audit.set_defaults(func=cmd_company_audit)
 
     index = sub.add_parser("index", help="Build generated research indexes")
     index_sub = index.add_subparsers(dest="index_cmd", required=True)
@@ -116,10 +124,15 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def cmd_company_validate(ns: argparse.Namespace) -> int:
-    meta = validate_company_dir(ns.path)
+    meta = validate_company_dir(ns.path, strict=ns.strict)
     print(
         json.dumps({"ok": True, "symbol": meta["symbol"]}, ensure_ascii=False, indent=2)
     )
+    return 0
+
+
+def cmd_company_audit(ns: argparse.Namespace) -> int:
+    print(json.dumps(audit_research_assets(ns.research_root), ensure_ascii=False, indent=2))
     return 0
 
 

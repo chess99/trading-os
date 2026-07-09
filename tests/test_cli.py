@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from tests.test_company_assets import write_company
+from tests.test_company_assets import write_company, write_strict_company
 
 
 def test_cli_company_validate_success(tmp_path: Path, capsys):
@@ -17,6 +17,78 @@ def test_cli_company_validate_success(tmp_path: Path, capsys):
 
     assert code == 0
     assert "CN:600519" in capsys.readouterr().out
+
+
+def test_cli_company_validate_strict_success(tmp_path: Path, capsys):
+    from trading_os.cli import main
+
+    company_dir = write_strict_company(tmp_path)
+
+    code = main(["company", "validate", str(company_dir), "--strict"])
+
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload == {"ok": True, "symbol": "CN:600519"}
+
+
+def test_cli_company_validate_strict_failure_writes_json_error(
+    tmp_path: Path, capsys
+):
+    from trading_os.cli import main
+
+    company_dir = write_company(tmp_path)
+
+    code = main(["company", "validate", str(company_dir), "--strict"])
+
+    captured = capsys.readouterr()
+    assert code == 1
+    assert captured.out == ""
+    payload = json.loads(captured.err)
+    assert payload["ok"] is False
+    assert "report title" in payload["error"]
+
+
+def test_cli_company_audit_summarizes_report_and_meta_drift(tmp_path: Path, capsys):
+    from trading_os.cli import main
+
+    strict_dir = write_strict_company(tmp_path)
+    legacy_dir = tmp_path / "research" / "companies" / "CN" / "000001"
+    (legacy_dir / "reports").mkdir(parents=True)
+    (legacy_dir / "reports" / "2026-07-06-initial.md").write_text(
+        "# 公司研究：平安银行（CN:000001）\n"
+        "日期：2026-07-06\n"
+        "研究类型：initial\n"
+        "分析师：agent\n\n"
+        "## 结论版\n\n"
+        "缺少大量标准章节。\n",
+        encoding="utf-8",
+    )
+    legacy_meta = json.loads((strict_dir / "meta.json").read_text(encoding="utf-8"))
+    legacy_meta.update(
+        {
+            "symbol": "CN:000001",
+            "ticker": "000001",
+            "name": "平安银行",
+            "latest_report": "reports/2026-07-06-initial.md",
+            "report_history": ["reports/2026-07-06-initial.md"],
+            "current_price": 10.5,
+        }
+    )
+    (legacy_dir / "meta.json").write_text(
+        json.dumps(legacy_meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    code = main(["company", "audit", "--research-root", str(tmp_path / "research")])
+
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["company_count"] == 2
+    assert payload["analyst_counts"]["codex"] == 1
+    assert payload["analyst_counts"]["generic_or_unknown"] == 1
+    assert payload["extra_meta_keys"][0] == {"key": "current_price", "count": 1}
+    assert payload["price_like_meta_keys"][0] == {"key": "current_price", "count": 1}
+    assert payload["strict_issue_count"] > 0
 
 
 def test_cli_help_lists_coverage_command(capsys):

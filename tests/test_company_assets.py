@@ -77,6 +77,56 @@ def write_company(root: Path, *, rating: str = "watch") -> Path:
     return company_dir
 
 
+def write_strict_company(root: Path) -> Path:
+    company_dir = write_company(root)
+    report_path = company_dir / "reports" / "2026-07-06-initial.md"
+    report_path.write_text(
+        "# 公司研究：贵州茅台（CN:600519）\n"
+        "日期：2026-07-06\n"
+        "研究类型：initial\n"
+        "分析师：Codex + GPT-5\n\n"
+        "## 结论版\n\n"
+        "### 一句话结论\n\n"
+        "贵州茅台是高质量现金流资产，但买入必须等待安全边际。\n\n"
+        "## 业务理解\n\n"
+        "公司销售高端白酒，核心利润来自飞天茅台。\n\n"
+        "## 行业与竞争格局\n\n"
+        "高端白酒集中度高，品牌和渠道壁垒明显。\n\n"
+        "## 公司质量\n\n"
+        "品牌护城河强，现金转换质量高。\n\n"
+        "## 财务质量\n\n"
+        "利润率和自由现金流质量长期领先。\n\n"
+        "## 估值\n\n"
+        "合理价值区间为 1150-1450 元。\n\n"
+        "## 市场隐含预期\n\n"
+        "当前价格隐含稳健增长和利润率维持。\n\n"
+        "## 情景与赔率\n\n"
+        "基准情景赔率一般，低价区间赔率改善。\n\n"
+        "## 价格与仓位计划\n\n"
+        "买入区间为 1000-1100 元，减仓区间为 1500-1800 元。\n\n"
+        "## 关键假设\n\n"
+        "- 高端白酒需求保持韧性。\n\n"
+        "## 跟踪触发器\n\n"
+        "- 半年报后复盘收入和现金流。\n\n"
+        "## 风险\n\n"
+        "- 需求走弱或渠道库存恶化。\n\n"
+        "## 上一轮判断复盘\n\n"
+        "初始报告，无上一轮判断。\n\n"
+        "## 来源\n\n"
+        "- 公司公告。\n",
+        encoding="utf-8",
+    )
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["name"] = "贵州茅台"
+    meta["current_thesis"] = "高质量现金流资产，但需要估值纪律。"
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return company_dir
+
+
 def test_valid_company_asset_loads(tmp_path: Path):
     from trading_os.research_assets.company import validate_company_dir
 
@@ -86,6 +136,77 @@ def test_valid_company_asset_loads(tmp_path: Path):
 
     assert meta["symbol"] == "CN:600519"
     assert meta["latest_report"] == "reports/2026-07-06-initial.md"
+
+
+def test_strict_company_asset_accepts_standard_chinese_report(tmp_path: Path):
+    from trading_os.research_assets.company import validate_company_dir
+
+    company_dir = write_strict_company(tmp_path)
+
+    meta = validate_company_dir(company_dir, strict=True)
+
+    assert meta["symbol"] == "CN:600519"
+
+
+def test_strict_company_asset_rejects_untraceable_analyst(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_strict_company(tmp_path)
+    report_path = company_dir / "reports" / "2026-07-06-initial.md"
+    report_path.write_text(
+        report_path.read_text(encoding="utf-8").replace(
+            "分析师：Codex + GPT-5",
+            "分析师：agent",
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="analyst"):
+        validate_company_dir(company_dir, strict=True)
+
+
+def test_strict_company_asset_rejects_missing_report_type(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_strict_company(tmp_path)
+    report_path = company_dir / "reports" / "2026-07-06-initial.md"
+    report_path.write_text(
+        report_path.read_text(encoding="utf-8").replace("研究类型：initial\n", ""),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="research type"):
+        validate_company_dir(company_dir, strict=True)
+
+
+def test_strict_company_asset_rejects_missing_required_section(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_strict_company(tmp_path)
+    report_path = company_dir / "reports" / "2026-07-06-initial.md"
+    report_path.write_text(
+        report_path.read_text(encoding="utf-8").replace("## 市场隐含预期", "## 市场预期"),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="section"):
+        validate_company_dir(company_dir, strict=True)
+
+
+def test_strict_company_asset_rejects_extra_meta_keys(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_strict_company(tmp_path)
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["current_price"] = 1200
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(AssetValidationError, match="extra meta"):
+        validate_company_dir(company_dir, strict=True)
 
 
 def test_meta_json_with_utf8_bom_loads(tmp_path: Path):

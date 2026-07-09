@@ -1,14 +1,15 @@
 # 公司研究：{名称}（{Symbol}）
-
 日期：YYYY-MM-DD
 研究类型：initial | followup | earnings_review | price_trigger_review
-分析师：具体工具 + 模型（例如 Claude Code 2.1.195 + glm-5.2；Codex + GPT-5；模型无法确认时写 model unknown）
+分析师：具体工具 + 模型（例如：Codex + GPT-5；Claude Code 2.1.195 + glm-5.2）
 
-## 一句话结论
+## 结论版
+
+### 一句话结论
 
 用一句话说明当前投资判断。
 
-## 决策
+### 决策
 
 说明当前动作分类：buy、watch、hold、avoid、sell 或 research_only。
 
@@ -26,7 +27,7 @@
 
 ## 财务质量
 
-评估收入增长、利润率、自由现金流、现金转化、资本开支强度、杠杆、稀释和会计质量。说明 ROIC/ROE/ROA 等资本回报是否高于资本成本，以及增长是在创造价值还是消耗价值。
+评估收入增长、利润率、自由现金流、现金转换、资本开支强度、杠杆、稀释和会计质量。说明 ROIC/ROE/ROA 等资本回报是否高于资本成本，以及增长是在创造价值还是消耗价值。
 
 ## 估值
 
