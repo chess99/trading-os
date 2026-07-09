@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688578",
+  "market": "CN",
+  "ticker": "688578",
+  "name": "艾力斯",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "艾力斯已凭伏美替尼跨过创新药商业化死亡谷，2025 年和 2026Q1 收入、利润、经营现金流均高增长，ROE 显著高于资本成本；但收入和利润高度依赖伏美替尼，当前 121.64 元约对应 22.7 倍 TTM PE，已反映主药继续放量和新适应症兑现预期，缺少足够安全边际，适合跟踪等待。",
+  "fair_value_range": [
+    105,
+    135
+  ],
+  "buy_zone": [
+    85,
+    100
+  ],
+  "sell_or_reduce_zone": [
+    155,
+    170
+  ],
+  "position_plan": [
+    {
+      "condition": "当前 121.64 元处于合理价值区间内，评级 watch，不主动买入。",
+      "max_weight": 0
+    },
+    {
+      "condition": "85-100 元且伏美替尼增长、销售费用率、关键适应症进展重验通过后，可建观察仓。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "80 元以下且核心假设未破坏时，可提高到核心仓位。",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "强吸引力价格叠加基本面上修时，允许最高仓位；价格下跌不能机械补仓，必须重验核心假设。",
+      "max_weight": 0.08
+    }
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报：伏美替尼收入、销售费用率、经营现金流和戈来雷塞放量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报：收入增速是否继续高于费用增速，是否需要调整合理价值区间。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报：医保续约、适应症进展、现金分红和全年盈利质量。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 100,
+      "reason": "进入买入观察区，重验伏美替尼增长、费用率和临床进展。"
+    },
+    {
+      "type": "price_below",
+      "price": 80,
+      "reason": "进入强吸引力区，若核心假设未破坏可考虑提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 145,
+      "reason": "高于合理价值中枢上沿，除非基本面上修，否则不追高。"
+    },
+    {
+      "type": "price_above",
+      "price": 155,
+      "reason": "进入减仓复核区，评估是否已过度反映乐观情景。"
+    }
+  ],
+  "updated_at": "2026-07-09"
+}

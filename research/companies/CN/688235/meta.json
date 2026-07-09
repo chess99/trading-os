@@ -6,56 +6,57 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "百济神州已验证全球创新药商业化能力，BRUKINSA海外放量和2026年盈利拐点构成长期价值；但当前A股估值已接近基准合理区间上沿，需要等待更低价格或后续业绩/管线超预期来提供安全边际。",
+  "current_thesis": "百济神州已验证全球创新药商业化能力，BRUKINSA海外放量、2026Q1经营杠杆和sonrotoclax获FDA加速批准共同确认长期价值；但260元附近已接近基准合理价值上沿，新增买入需要等待更低价格或后续业绩/管线超预期提供安全边际。",
   "quality_rating": "A-",
   "valuation_rating": "neutral_to_expensive",
   "fair_value_range": [
-    210,
-    265
+    215,
+    275
   ],
   "buy_zone": [
-    180,
-    220
+    185,
+    225
   ],
   "sell_or_reduce_zone": [
-    285,
-    350
+    320,
+    360
   ],
   "position_plan": [
     {
-      "condition": "股价在220-265元，估值处于合理区间上半段",
+      "condition": "股价在250-285元，估值处于合理区间上半段或偏贵",
       "price_range": [
-        220,
-        265
+        250,
+        285
       ],
       "action": "observe_or_tiny_probe",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "target_weight": 0.005,
+      "max_weight": 0.015
     },
     {
-      "condition": "股价在180-220元，进入安全边际买入区",
+      "condition": "股价在185-225元，进入安全边际买入区",
       "price_range": [
-        180,
-        220
+        185,
+        225
       ],
       "action": "accumulate",
       "target_weight": 0.03,
       "max_weight": 0.05
     },
     {
-      "condition": "股价低于180元且未发生根本性坏消息",
+      "condition": "股价低于185元且未发生根本性坏消息",
       "price_range": [
         0,
-        180
+        185
       ],
       "action": "buy_with_margin_of_safety",
       "target_weight": 0.05,
       "max_weight": 0.07
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
+  "latest_report": "reports/2026-07-09-followup.md",
   "report_history": [
-    "reports/2026-07-07-initial.md"
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-09-followup.md"
   ],
   "review_triggers": [
     {
@@ -67,35 +68,48 @@
       "type": "date",
       "date": "2026-12-31",
       "reason": "复核全年指引兑现、医保谈判/海外监管和核心管线进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-11-15",
+      "reason": "复核2026Q2/Q3业绩中BRUKINSA美国和欧洲增速、经营利润率、自由现金流与sonrotoclax商业化进展。"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 220,
+      "price": 225,
       "reason": "进入可买区，复核基本面后可分批建仓。"
     },
     {
       "type": "price_below",
-      "price": 180,
+      "price": 185,
       "reason": "进入强安全边际区，若无基本面恶化可提高仓位。"
     },
     {
       "type": "price_above",
       "price": 285,
       "reason": "高于不应追高价，停止新增并复核是否需要降风险。"
+    },
+    {
+      "type": "price_above",
+      "price": 320,
+      "reason": "进入减仓复核区，若无基本面上修证据应降低仓位风险。"
     }
   ],
   "key_metrics": {
-    "current_price": 263.16,
-    "price_date": "2026-07-07",
-    "estimated_market_cap_cny": 405600000000,
+    "current_price": 260.78,
+    "price_date": "2026-07-09",
+    "estimated_market_cap_cny": 401970000000,
     "fy2025_revenue_usd": 5300000000,
     "fy2025_brukinsa_sales_usd": 3900000000,
     "fy2025_tevimbra_sales_usd": 737000000,
-    "q1_2026_revenue_usd": 1510000000,
-    "q1_2026_brukinsa_sales_usd": 1100000000,
+    "q1_2026_revenue_usd": 1513438000,
+    "q1_2026_brukinsa_sales_usd": 1094843000,
     "q1_2026_tevimbra_sales_usd": 206000000,
+    "q1_2026_gaap_operating_income_usd": 249902000,
+    "q1_2026_net_income_usd": 227357000,
+    "q1_2026_free_cash_flow_usd": 161000000,
     "fy2026_revenue_guidance_usd": [
       6300000000,
       6500000000
@@ -105,7 +119,7 @@
       850000000
     ]
   },
-  "analyst": "codex-subagent-688235",
-  "research_type": "initial",
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "analyst": "Codex subagent + GPT-5",
+  "research_type": "followup",
+  "updated_at": "2026-07-09T23:59:00+08:00"
 }

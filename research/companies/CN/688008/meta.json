@@ -6,25 +6,77 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "全球DDR5内存接口芯片龙头，AI服务器驱动增长。2025年营收54.56亿(+49.9%)，归母净利润22.36亿(+58.4%)，毛利率62.2%，净利率41.0%，ROE 18.3%，资产负债表极度健康（净现金93亿，零有息负债）。当前253元对应2025PE 128x，估值偏贵已隐含乐观预期，建议等待150-180元安全边际区间建仓。",
+  "current_thesis": "全球DDR5内存接口芯片龙头，正从内存接口扩展到PCIe Retimer、CXL MXC、CKD、时钟等高速互连产品。2025年营收54.56亿元(+49.94%)、归母净利润22.36亿元(+58.35%)、扣非归母净利润20.22亿元(+61.95%)；2026Q1营收14.61亿元(+19.5%)、归母净利润8.47亿元(+61.3%)，但扣非净利润6.04亿元(+20.1%)且含较大非经常性收益。公司质量优秀、ROE高于资本成本、现金流健康，但2026-07-09 A股收盘285.80元已高于合理价值区间，隐含2026-2028年持续高增长和新品快速放量，当前只观察不追高。",
   "quality_rating": "优秀",
   "valuation_rating": "偏贵",
-  "fair_value_range": [180, 220],
-  "buy_zone": [150, 180],
-  "sell_or_reduce_zone": [260, 340],
+  "fair_value_range": [210, 250],
+  "buy_zone": [165, 205],
+  "sell_or_reduce_zone": [300, 360],
   "position_plan": [
-    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03}
+    {
+      "condition": "165-205元且扣非利润、互连类毛利率、新产品收入占比、库存周转均未恶化",
+      "action": "分批建仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "145元以下且核心假设重验通过",
+      "action": "提高到强吸引力仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "260元以上",
+      "action": "不新增；已有较高仓位进入风险复核",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "300-360元",
+      "action": "分批减仓或只保留观察仓",
+      "max_weight": 0.01
+    }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
+  "latest_report": "reports/2026-07-09-followup.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-09-followup.md"
+  ],
   "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报：增速趋势、毛利率、新产品收入占比"},
-    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报：retimer放量和DDR5子代结构变化"}
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报：扣非利润增速、互连类毛利率、新产品收入占比、库存周转"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：Retimer/CXL/CKD放量、DDR5子代结构变化和现金流质量"
+    }
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 180, "reason": "进入合理偏低区间上沿，考虑首笔观察仓"},
-    {"type": "price_below", "price": 150, "reason": "进入安全边际买入区间，加大建仓力度"},
-    {"type": "price_above", "price": 260, "reason": "进入不应追高区间，若持有考虑减仓"}
+    {
+      "type": "price_below",
+      "price": 205,
+      "reason": "进入可买区间上沿，需重验扣非利润、毛利率、新品收入占比和库存"
+    },
+    {
+      "type": "price_below",
+      "price": 165,
+      "reason": "进入安全边际较好的买入区，可考虑提高建仓力度"
+    },
+    {
+      "type": "price_below",
+      "price": 145,
+      "reason": "进入强吸引力价格区，核心假设未破时可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 260,
+      "reason": "进入不应追高区间，停止新增并复核估值风险"
+    },
+    {
+      "type": "price_above",
+      "price": 300,
+      "reason": "进入减仓区间，已有仓位分批降低风险"
+    }
   ],
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "updated_at": "2026-07-09T23:59:00+08:00"
 }
