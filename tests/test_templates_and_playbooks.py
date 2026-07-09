@@ -26,6 +26,8 @@ def test_company_report_template_contains_required_sections():
         "## 来源",
     ]:
         assert heading in text
+    assert "分析师：agent" not in text
+    assert "具体工具 + 模型" in text
 
 
 def test_playbooks_state_immutable_report_rule():
@@ -38,6 +40,7 @@ def test_playbooks_state_immutable_report_rule():
     assert "Previous Thesis Review" in followup
     assert "Write the report in Chinese" in company
     assert "Write the report in Chinese" in followup
+    assert "actual tool and model" in company
 
 
 def test_research_prompts_include_miller_style_value_discipline():

@@ -43,6 +43,9 @@ Use low valuation multiples as clues, not conclusions. High PE/PB/PS is not an a
 ## Output Rules
 
 - Write the report in Chinese unless the user explicitly requests another language.
+- The report analyst line must identify the actual tool and model used, not a
+  generic label such as `agent`. Examples: `Claude Code 2.1.195 + glm-5.2`,
+  `Codex + GPT-5`; if the model cannot be verified, write `model unknown`.
 - Reports are immutable research snapshots.
 - Do not overwrite existing reports.
 - Do not edit a historical report to change the judgment.

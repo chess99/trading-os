@@ -2,7 +2,7 @@
 
 日期：YYYY-MM-DD
 研究类型：initial | followup | earnings_review | price_trigger_review
-分析师：agent
+分析师：具体工具 + 模型（例如 Claude Code 2.1.195 + glm-5.2；Codex + GPT-5；模型无法确认时写 model unknown）
 
 ## 一句话结论
 

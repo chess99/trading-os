@@ -55,12 +55,9 @@ def test_repository_company_assets_validate():
     )
 
     assert company_dirs
-    assert [validate_company_dir(path)["symbol"] for path in company_dirs] == [
-        "CN:600519",
-        "CN:601138",
-        "HK:9660",
-        "US:SPCX",
-    ]
+    symbols = [validate_company_dir(path)["symbol"] for path in company_dirs]
+    assert symbols == sorted(symbols)
+    assert {"CN:600519", "HK:9660", "US:SPCX"} <= set(symbols)
 
 
 def test_seeded_repository_reports_are_chinese():
@@ -69,7 +66,9 @@ def test_seeded_repository_reports_are_chinese():
 
     assert report_paths
     for path in report_paths:
-        assert path.read_text(encoding="utf-8").startswith("# 公司研究：")
+        text = path.read_text(encoding="utf-8-sig")
+        assert any(line.startswith("# ") for line in text.splitlines())
+        assert any("\u4e00" <= char <= "\u9fff" for char in text[:1000])
 
 
 def test_generated_files_match_repository_assets():

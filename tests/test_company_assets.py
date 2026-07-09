@@ -15,7 +15,7 @@ def write_company(root: Path, *, rating: str = "watch") -> Path:
         "# Company Research: 贵州茅台 (CN:600519)\n\n"
         "Date: 2026-07-06\n"
         "Research Type: initial\n"
-        "Analyst: agent\n\n"
+        "Analyst: Test Fixture + model unknown\n\n"
         "## One-line Conclusion\n\n"
         "High-quality cash compounder with valuation discipline required.\n\n"
         "## Decision\n\n"
