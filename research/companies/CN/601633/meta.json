@@ -3,107 +3,40 @@
   "market": "CN",
   "ticker": "601633",
   "name": "长城汽车",
-  "company_name": "长城汽车",
+  "company_name": "长城汽车股份有限公司",
+  "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "长城汽车具备坦克越野品牌与出口能力两项核心资产，但2026Q1利润显著承压，说明新能源转型、主流SUV竞争和价格战仍在侵蚀盈利；15元附近已不贵但安全边际一般，更适合观察或小仓位试仓，14元以下才进入更有吸引力的买点区间。",
+  "current_thesis": "长城汽车具备坦克越野品牌与出口能力两项核心资产,但2026Q1利润显著承压,说明新能源转型、主流SUV竞争和价格战仍在侵蚀盈利;15元附近已不贵但安全边际一般,更适合观察或小仓位试仓,14元以下才进入更有吸引力的买点区间。",
   "quality_rating": "B+",
   "valuation_rating": "neutral_to_cheap",
-  "fair_value_range": [
-    15.5,
-    19.5
-  ],
-  "buy_zone": [
-    12.5,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
+  "fair_value_range": [15.5, 19.5],
+  "buy_zone": [12.5, 14.5],
+  "strong_attraction_zone": [10.0, 12.5],
+  "sell_or_reduce_zone": [22.0, 999.0],
+  "do_not_chase_above": 21.0,
   "position_plan": [
-    {
-      "condition": "A股价格高于22元或市场再次一致性追捧越野叙事",
-      "action": "avoid_or_trim",
-      "max_weight": 0.01,
-      "reason": "估值已进入明显乐观区间，利润波动无法支持高仓位。"
-    },
-    {
-      "condition": "A股价格在15.5-18.5元之间，且2026H1利润尚未确认修复",
-      "action": "watch_or_probe",
-      "max_weight": 0.04,
-      "reason": "价格接近合理值但安全边际不足，只适合观察或轻仓试错。"
-    },
-    {
-      "condition": "A股价格在12.5-14.5元之间，且出口、坦克、哈弗新能源三项指标未明显恶化",
-      "action": "accumulate",
-      "max_weight": 0.08,
-      "reason": "进入有安全边际的买入区，赔率开始明显改善。"
-    },
-    {
-      "condition": "A股价格低于12.5元，且未出现库存失控或全年利润塌陷",
-      "action": "buy_aggressively",
-      "max_weight": 0.1,
-      "reason": "接近悲观情景定价，适合逆向提高仓位，但前提是逻辑未坏。"
-    }
+    {"zone": "19.5-21元", "condition": "合理偏贵", "action": "观察", "target_weight": 0.01, "max_weight": 0.02},
+    {"zone": "15.5-19.5元", "condition": "合理区间", "action": "小仓试探", "target_weight": 0.03, "max_weight": 0.04},
+    {"zone": "12.5-14.5元", "condition": "买入区", "action": "分批买入", "target_weight": 0.05, "max_weight": 0.06},
+    {"zone": "10-12.5元", "condition": "强吸引力区", "action": "建仓至6%", "target_weight": 0.06, "max_weight": 0.06}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026半年报披露,关注坦克品牌销量与利润率"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入安全边际初步成立区间，应复核中报前的终端销量和利润质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入强吸引力买入区，需确认下跌是否仅为情绪而非基本面断裂。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "接近或超过基准估值上沿，除非盈利上修，否则不宜追高。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "基本进入乐观情景定价，应考虑减仓或退出观察仓。"
-    }
+    {"type": "price_below", "price": 14.5, "reason": "进入买入区"},
+    {"type": "price_above", "price": 21, "reason": "不追高/减仓评估"}
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看净利润、单车盈利、海外利润率和渠道库存。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报与管理层对2027年的指引。"
-    }
+  "key_risks": [
+    "新能源转型慢于同行,主流SUV竞争激烈",
+    "价格战持续侵蚀盈利",
+    "2026Q1利润显著承压",
+    "海外出口受关税与地缘影响",
+    "坦克品牌高端化不及预期",
+    "очной混动与PHEV技术迭代"
   ],
-  "key_tracking_metrics": [
-    "海外销量及海外单车盈利",
-    "坦克品牌月销量与均价",
-    "哈弗新能源销量占比",
-    "魏牌销量连续性",
-    "欧拉销量是否止跌",
-    "单车收入与单车毛利",
-    "销售费用率和研发费用率",
-    "经营活动现金流净额",
-    "渠道库存与终端折扣",
-    "2026H1与2026Q3归母净利润同比趋势"
-  ]
+  "updated_at": "2026-07-08T16:00:00+08:00"
 }
