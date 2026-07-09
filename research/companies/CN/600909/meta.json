@@ -3,100 +3,31 @@
   "market": "CN",
   "ticker": "600909",
   "name": "华安证券",
-  "company_name": "华安证券",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_thesis": "公司基本面改善真实存在，资管表现亮眼、安徽区域根基扎实，但当前股价已经明显跑在可验证ROE和同业估值前面，更像景气与主题驱动下的高弹性交易标的，而不是具备足够安全边际的买点。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "overvalued",
-  "fair_value_range": [
-    6.3,
-    7.4
-  ],
-  "buy_zone": [
-    5.8,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.5
-  ],
   "currency": "CNY",
-  "base_currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "区域根基扎实、华安资管改善明显，但盈利弹性和竞争壁垒不足以支撑当前约1.9倍PB估值；当前价格已透支2026-2027高景气弹性与区域科创想象力，对新买入者不友好，观察不买。",
+  "fair_value_range": [6.3, 7.4],
+  "buy_zone": [5.8, 6.6],
+  "sell_or_reduce_zone": [8.8, 10.5],
   "position_plan": [
-    {
-      "condition": "股价小于等于5.8元，且行业成交额未明显恶化",
-      "action": "积极买入",
-      "max_weight": 0.2,
-      "reason": "接近每股净资产与悲观情景估值区间，赔率较好。"
-    },
-    {
-      "condition": "股价在5.8元到6.6元之间",
-      "action": "试探建仓",
-      "max_weight": 0.1,
-      "reason": "进入安全边际区间，但仍需观察行业景气与中报兑现。"
-    },
-    {
-      "condition": "股价在6.6元到7.4元之间",
-      "action": "小仓观察",
-      "max_weight": 0.05,
-      "reason": "接近合理价值区间，胜率尚可但赔率一般。"
-    },
-    {
-      "condition": "股价大于等于8.8元",
-      "action": "不追高或减仓",
-      "max_weight": 0.0,
-      "reason": "估值显著高于可比区域券商，需防范估值回归。"
-    }
+    {"condition": "股价<=5.8元且基本面未恶化（资管高增延续、经纪与两融底盘未恶化、ROE中枢未下台阶）", "max_weight": 0.03},
+    {"condition": "股价在5.8-6.6元区间，进入初步安全边际且中报未证伪核心假设", "max_weight": 0.015},
+    {"condition": "股价在6.6-7.4元区间，接近合理价值上沿", "max_weight": 0.005},
+    {"condition": "股价在7.4-8.8元区间，胜率与赔率均不足", "max_weight": 0},
+    {"condition": "股价>=8.8元，市场已透支景气与主题故事", "max_weight": 0}
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": ["reports/2026-07-09-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026年中报后复查经纪、自营、资管、投行四条线利润贡献与高景气延续性"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查景气延续性"},
+    {"type": "date", "date": "2027-04-30", "reason": "2026年报后全面复查可持续ROE中枢与估值体系"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入具备初步安全边际的试探建仓区。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入强吸引力买入区，可显著提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "进入不应追高区，若已持有应审视减仓。"
-    }
+    {"type": "price_below", "price": 6.6, "reason": "进入具备初步安全边际的试探建仓区"},
+    {"type": "price_below", "price": 5.8, "reason": "进入强吸引力买入区，可显著提高仓位（受单标的上限约束）"},
+    {"type": "price_above", "price": 8.8, "reason": "进入不应追高区，若已持有应审视减仓"}
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，经纪、资管、自营与投行业务兑现度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证高景气是否延续。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "A股日均成交额",
-    "两融余额",
-    "经纪业务手续费净收入同比",
-    "资产管理业务手续费净收入同比",
-    "华安资管营业收入与净利润",
-    "投行业务手续费净收入",
-    "债券承销规模与股权主承销项目数",
-    "投资收益与公允价值变动收益波动",
-    "归母ROE",
-    "每股净资产",
-    "风险覆盖率",
-    "资本杠杆率",
-    "现金分红比例"
-  ]
+  "updated_at": "2026-07-09T21:30:00+08:00"
 }

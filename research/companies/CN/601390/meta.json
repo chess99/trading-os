@@ -3,13 +3,10 @@
   "market": "CN",
   "ticker": "601390",
   "name": "中国中铁",
-  "company_name": "中国中铁",
+  "company_name": "中国中铁股份有限公司",
+  "currency": "CNY",
+  "base_currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
   "rating": "buy",
   "current_rating": "buy",
   "current_thesis": "中国中铁当前核心逻辑是低估值央企工程平台加资源业务第二曲线：铁路/市政/海外订单提供收入底盘，矿产资源改善利润率，但应收、现金流、地产和海外风险决定只能按价格纪律分批买入。",
@@ -23,36 +20,65 @@
     3.6,
     4.3
   ],
+  "strong_attraction_zone": [
+    3.0,
+    3.3
+  ],
   "sell_or_reduce_zone": [
     5.4,
     6.2
   ],
-  "currency": "CNY",
-  "base_currency": "CNY",
+  "do_not_chase_above": 5.4,
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-09-initial.md"
+  ],
+  "updated_at": "2026-07-08T23:59:00+08:00",
   "position_plan": [
     {
+      "zone": "3.61-4.30",
       "condition": "股价在3.61-4.30元且中报前后未出现现金流和订单明显恶化",
       "action": "首笔建仓",
+      "target_weight": 0.1,
       "max_weight": 0.2,
       "reason": "估值便宜但基本面仍需验证，适合试仓而非满仓。"
     },
     {
+      "zone": "3.31-3.60",
       "condition": "股价回落至3.31-3.60元，且资源业务与主业订单未明显失速",
       "action": "继续加仓",
+      "target_weight": 0.3,
       "max_weight": 0.5,
       "reason": "进入更有安全边际区间，可把仓位提升到中等水平。"
     },
     {
+      "zone": "<=3.30",
       "condition": "股价低于3.30元，且无重大信用、地产或海外黑天鹅",
       "action": "积极加仓",
+      "target_weight": 0.7,
       "max_weight": 1.0,
       "reason": "市场大概率过度悲观，赔率显著改善。"
     },
     {
+      "zone": ">5.40",
       "condition": "股价高于5.40元且现金流、分红、资源利润未同步超预期改善",
       "action": "减仓或停止加仓",
+      "target_weight": 0.05,
       "max_weight": 0.1,
       "reason": "进入追高区，估值对基本面要求明显抬升。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报：复核经营现金流、应收和合同资产、资源业务毛利率、订单结构。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026三季报和前三季度新签合同额，确认订单和现金流修复是否延续。"
     }
   ],
   "price_triggers": [
@@ -77,18 +103,6 @@
       "reason": "超过不应追高区间下沿，需要考虑减仓或停止追价。"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报中的经营现金流、应收和合同资产、资源业务毛利率、订单结构。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和前三季度新签合同额，确认订单和现金流修复是否延续。"
-    }
-  ],
   "key_tracking_metrics": [
     "新签合同额总量及铁路/市政/房建/海外分项同比",
     "未完合同额变化",
@@ -98,5 +112,14 @@
     "房地产销售额、库存和减值情况",
     "现金分红率与回购进展",
     "海外重大项目利润率和风险事件"
+  ],
+  "key_risks": [
+    "订单风险：2026Q1新签同比-10.4%，铁路和房建明显偏弱",
+    "现金流风险：Q1经营现金流-368.61亿元，若全年不修复估值继续承压",
+    "应收与合同资产风险：回款放慢侵蚀自由现金流和估值",
+    "房地产尾部风险：地产库存、减值和合作方风险仍可能拖累利润和现金流",
+    "资源价格与海外政治风险：矿产资源板块受铜、钼价格与海外矿区政策、汇率影响",
+    "央企估值天花板：市场可能长期只给低PB、低PE",
+    "永续资本损失来源：地产大额减值、海外矿区被征用或重大合规事件、应收坏账集中确认"
   ]
 }

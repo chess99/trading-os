@@ -3,18 +3,13 @@
   "market": "CN",
   "ticker": "601600",
   "name": "中国铝业",
-  "company_name": "中国铝业",
+  "company_name": "中国铝业股份有限公司",
+  "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
   "current_rating": "watch",
+  "current_thesis": "中国铝业是具备铝土矿、氧化铝、原铝和能源配套的一体化央企平台，公司质量较高，但2026-07-06股价8.48元已基本反映中高景气与资源扩张预期，更适合观察，等待6.4至7.2元区间再提高仓位。",
   "quality_rating": "A-",
   "valuation_rating": "neutral_to_expensive",
-  "current_thesis": "中国铝业是具备资源、氧化铝、原铝和能源配套的一体化央企平台，质量较高，但2026-07-09股价已基本反映中高景气与资源扩张预期，更适合观察，等待6.4至7.2元区间再提高仓位。",
   "fair_value_range": [
     7.4,
     9.2
@@ -23,77 +18,91 @@
     6.4,
     7.2
   ],
+  "strong_attraction_zone": [
+    5.8,
+    6.3
+  ],
   "sell_or_reduce_zone": [
     9.8,
     12.0
   ],
-  "currency": "CNY",
-  "base_currency": "CNY",
+  "do_not_chase_above": 9.8,
   "position_plan": [
     {
+      "zone": ">9.8",
       "condition": "股价高于9.8元且基本面无新增超预期",
       "action": "avoid_chasing_or_reduce",
-      "max_weight": 0.03,
-      "reason": "估值已提前反映高景气与资源预期，赔率偏弱。"
+      "target_weight": 0.0,
+      "max_weight": 0.03
     },
     {
-      "condition": "股价处于7.4至9.2元合理区间",
+      "zone": "9.2-9.8",
+      "condition": "股价高于合理区间上沿",
+      "action": "hold_or_reduce",
+      "target_weight": 0.02,
+      "max_weight": 0.05
+    },
+    {
+      "zone": "7.4-9.2",
+      "condition": "股价处于合理区间",
       "action": "watch_or_probe",
-      "max_weight": 0.08,
-      "reason": "可以跟踪性建仓，但安全边际一般。"
+      "target_weight": 0.02,
+      "max_weight": 0.08
     },
     {
-      "condition": "股价回到6.4至7.2元且景气未明显恶化",
+      "zone": "6.4-7.2",
+      "condition": "股价回到安全边际买入带且景气未明显恶化",
       "action": "accumulate",
-      "max_weight": 0.15,
-      "reason": "开始出现较明确的安全边际。"
+      "target_weight": 0.08,
+      "max_weight": 0.15
     },
     {
-      "condition": "股价回到5.8至6.3元且逻辑止损条件未触发",
+      "zone": "5.8-6.3",
+      "condition": "股价进入强吸引力买入带且逻辑止损条件未触发",
       "action": "buy_aggressively",
-      "max_weight": 0.25,
-      "reason": "市场通常已计入较悲观假设，赔率显著改善。"
+      "target_weight": 0.15,
+      "max_weight": 0.25
+    }
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报：复核吨盈利、现金流和分红兑现情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报与景气拐点是否出现"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
       "price": 7.2,
-      "reason": "进入安全边际买入带，适合重新评估加仓。"
+      "reason": "进入安全边际买入带，重新评估加仓"
     },
     {
       "type": "price_below",
       "price": 6.3,
-      "reason": "进入强吸引力买入带，前提是基本面未破坏。"
+      "reason": "进入强吸引力买入带，前提是基本面未破坏"
     },
     {
       "type": "price_above",
       "price": 9.8,
-      "reason": "超过我给出的合理估值上沿较多，不宜追高。"
+      "reason": "超过合理估值上沿较多，不宜追高"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、吨盈利、现金流和分红兑现情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报与景气拐点是否出现。"
-    }
+  "key_risks": [
+    "铝价与氧化铝价同步下行压制利润弹性",
+    "海外铝土矿项目地缘政治与减值风险",
+    "电解铝产能约束政策松动",
+    "周期顶部资本开支偏高导致回报递减",
+    "央企关联交易与治理透明度风险"
   ],
-  "key_tracking_metrics": [
-    "沪铝与LME铝价趋势",
-    "氧化铝现货价格",
-    "原铝吨盈利",
-    "氧化铝吨盈利",
-    "铝土矿与氧化铝资源自给率变化",
-    "经营现金流与归母净利润匹配度",
-    "资本开支强度与ROE",
-    "每股分红与股息率",
-    "海外资源项目交割与整合进度",
-    "绿电占比与能耗政策变化"
-  ]
+  "updated_at": "2026-07-08T23:59:00+08:00"
 }
