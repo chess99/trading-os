@@ -1,0 +1,97 @@
+{
+  "symbol": "CN:000029",
+  "market": "CN",
+  "ticker": "000029",
+  "name": "深深房Ａ",
+  "company_name": "深深房Ａ",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "深圳国资控股、低杠杆资产负债表和潜在资本运作使公司值得跟踪，但现有项目储备和盈利能力无法支撑当前高PB估值，当前以观察为主，不追高买入。",
+  "quality_rating": "B-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    4.0,
+    7.0
+  ],
+  "buy_zone": [
+    3.8,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    24.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于5.2元且PB低于约1.5倍，无新增重大诉讼、减值或现金流恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01,
+      "reason": "价格接近可验证净资产折价后的合理区间，赔率开始改善"
+    },
+    {
+      "condition": "价格低于4.2元，且货币资金与交易性金融资产合计仍超过12亿元，负债率维持低位",
+      "action": "提高至资产仓",
+      "max_weight": 0.02,
+      "reason": "低杠杆资产负债表提供一定下行保护"
+    },
+    {
+      "condition": "披露可量化每股NAV或盈利增厚的重大资产注入、重组预案并通过董事会审议",
+      "action": "重新估值后小幅参与",
+      "max_weight": 0.03,
+      "reason": "只有公告级资本运作才能支撑高于资产价值的估值"
+    },
+    {
+      "condition": "价格高于12元且无实质重组公告",
+      "action": "不买入或降至零仓位",
+      "max_weight": 0.0,
+      "reason": "估值显著脱离现有业务和账面净资产"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入观察买入区上沿，需复核PB、现金和存货风险"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "接近基准NAV折价区，可能具备小仓位资产赔率"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "若无资产注入或重组公告，高估值应回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的合同负债、存货、其他应收款和现金资产"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查三季报经营结转、销售回款和是否出现国资资产整合进展"
+    }
+  ],
+  "key_tracking_metrics": [
+    "合同负债余额",
+    "存货余额及跌价准备",
+    "其他应收款余额和回收进度",
+    "货币资金与交易性金融资产合计",
+    "深圳和汕头项目销售回款",
+    "重大资产重组或资产注入公告",
+    "A/B股折溢价",
+    "PB估值倍数"
+  ]
+}
