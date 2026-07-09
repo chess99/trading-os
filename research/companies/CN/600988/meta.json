@@ -3,124 +3,31 @@
   "market": "CN",
   "ticker": "600988",
   "name": "赤峰黄金",
-  "company_name": "赤峰吉隆黄金矿业股份有限公司",
   "currency": "CNY",
-  "base_currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "赤峰黄金是具备金价高弹性、海外扩张和资源增储期权的中型黄金股；31元附近可先打底仓但不宜重仓，26元以下安全边际更充分，核心跟踪点是瓦萨成本改善、塞班/SND进展与紫金入主后的资本配置。",
-  "quality_rating": "good",
-  "valuation_rating": "neutral_to_attractive",
-  "fair_value_range": [
-    34,
-    45
-  ],
-  "buy_zone": [
-    26,
-    31
-  ],
-  "strong_attraction_zone": [
-    22,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    50
-  ],
-  "do_not_chase_above": 40,
+  "current_thesis": "中型国际黄金生产商，具备金价高弹性 + 海外扩张 + 资源增储期权；31元附近可打底仓但不宜重仓，26元以下安全边际更充分，核心跟踪瓦萨成本、塞班/SND与紫金入主资本配置。",
+  "fair_value_range": [34, 45],
+  "buy_zone": [26, 31],
+  "sell_or_reduce_zone": [40, 50],
   "position_plan": [
-    {
-      "zone": ">40",
-      "condition": "股价高于40元且无新增超预期资源或产量催化",
-      "action": "不追高或逢高减仓",
-      "target_weight": 0.0,
-      "max_weight": 0.05
-    },
-    {
-      "zone": "31-34",
-      "condition": "股价在31元至34元之间且基本面未恶化",
-      "action": "首笔试探性建仓",
-      "target_weight": 0.1,
-      "max_weight": 0.2
-    },
-    {
-      "zone": "26-31",
-      "condition": "股价在26元至31元之间且半年报显示成本可控、AISC回落",
-      "action": "分两到三笔加仓",
-      "target_weight": 0.25,
-      "max_weight": 0.35
-    },
-    {
-      "zone": "22-26",
-      "condition": "股价在22元至26元之间且金价与矿山经营逻辑未破坏",
-      "action": "强吸引力买入",
-      "target_weight": 0.35,
-      "max_weight": 0.5
-    },
-    {
-      "zone": "<22",
-      "condition": "股价低于22元且基本面未恶化",
-      "action": "仅在基本面未破坏时重仓",
-      "target_weight": 0.45,
-      "max_weight": 0.6
-    }
+    {"condition": "股价处于首笔试探性建仓区间（31-34元）且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价回落至26元以下、半年报显示成本可控且AISC回落，分两到三笔加仓", "max_weight": 0.05},
+    {"condition": "股价高于40元且无新增超预期资源或产量催化，停止加仓或逢高减仓", "max_weight": 0}
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
+  "latest_report": "reports/2026-07-09-initial.md",
   "report_history": [
     "reports/2026-07-08-initial.md",
     "reports/2026-07-09-initial.md"
   ],
   "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的产量、AISC、经营现金流与紫金入主进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年14.7吨目标与成本走势"
-    }
+    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报中的产量、AISC、经营现金流与紫金入主进展"},
+    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报，确认全年14.7吨目标与成本走势"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 31,
-      "reason": "进入基础建仓区间，重新评估是否执行首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入有安全边际的买入区间，可考虑提高仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入极端错杀区，须先验证基本面是否破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "接近不应追高区间，检查是否需要停止加仓或减仓"
-    }
+    {"type": "price_below", "price": 31, "reason": "进入基础建仓区间，重新评估是否执行首笔仓位"},
+    {"type": "price_below", "price": 26, "reason": "进入有安全边际的买入区间，可考虑提高仓位"},
+    {"type": "price_above", "price": 40, "reason": "接近不应追高区间，检查是否需要停止加仓或减仓"}
   ],
-  "key_tracking_metrics": [
-    "2026年黄金产销量是否完成14.7吨目标",
-    "整体矿产金AISC是否从2026Q1的483.87元/克回落",
-    "加纳瓦萨AISC是否回落到2000美元/盎司以下",
-    "老挝塞班处理量、回收率与扩产进度",
-    "SND项目资源转储量、可研与建设进度",
-    "资产负债率与货币资金水平",
-    "紫金入主交割与同业竞争解决方案进度",
-    "新增并购或大额资本开支纪律"
-  ],
-  "key_risks": [
-    "金价中枢回落导致利润弹性丢失",
-    "加纳瓦萨矿山AISC与产量恢复不及预期",
-    "老挝塞班/SND项目资源向储量转化不及预期",
-    "紫金入主后整合与同业竞争处理路径不达预期或损害小股东利益",
-    "海外政治与税制风险进一步上升",
-    "高金价周期下的扩张冲动与高溢价并购"
-  ],
-  "updated_at": "2026-07-08T23:59:00"
+  "updated_at": "2026-07-09T00:00:00+08:00"
 }

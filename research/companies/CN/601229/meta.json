@@ -3,103 +3,81 @@
   "market": "CN",
   "ticker": "601229",
   "name": "上海银行",
-  "company_name": "上海银行",
+  "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "current_thesis": "上海银行是低估值、高股息、区域壁垒较强的上海本地城商行，当前价格已处于可买区，但需持续跟踪净息差、房地产资产质量和潜在城投敞口。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "quality_rating": "good",
-  "valuation_rating": "attractive",
+  "current_rating": "watch",
+  "current_thesis": "估值便宜但增速几乎停滞、可转债摊薄落地、新增诉讼信号，下行有限但赔率不充分，需等中报验证后再决定方向。",
   "fair_value_range": [
-    10.5,
-    12.3
+    10.0,
+    11.5
   ],
   "buy_zone": [
-    8.3,
-    9.4
+    8.4,
+    9.2
   ],
   "sell_or_reduce_zone": [
-    11.8,
+    11.5,
     13.2
   ],
-  "currency": "CNY",
-  "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "股价小于等于8.0元且基本面未恶化",
-      "action": "积极加仓",
-      "max_weight": 0.08,
-      "reason": "对应悲观情景下沿附近，安全边际显著"
+      "condition": "股价<=7.6元且基本面未恶化",
+      "max_weight": 0.05
     },
     {
-      "condition": "股价在8.0至8.6元之间",
-      "action": "分批买入",
-      "max_weight": 0.06,
-      "reason": "估值低于合理价值较多，适合提高仓位"
+      "condition": "股价在7.6至8.4元之间",
+      "max_weight": 0.03
     },
     {
-      "condition": "股价在8.6至9.4元之间",
-      "action": "建立或增加底仓",
-      "max_weight": 0.04,
-      "reason": "处于安全边际买入区间"
+      "condition": "股价在8.4至9.2元之间",
+      "max_weight": 0.02
     },
     {
-      "condition": "股价在9.4至10.5元之间",
-      "action": "持有或小幅试仓",
-      "max_weight": 0.03,
-      "reason": "仍有一定低估，但赔率开始收敛"
+      "condition": "股价在9.2至10.0元之间",
+      "max_weight": 0.015
     },
     {
-      "condition": "股价高于11.8元",
-      "action": "停止追高并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "接近乐观估值区间，上行空间有限"
+      "condition": "股价在10.0至11.5元之间",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价>11.5元",
+      "max_weight": 0.005
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.6,
-      "reason": "进入积极买入区，可将仓位从观察仓提升至标准仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入强吸引力价格带，可考虑显著加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 11.8,
-      "reason": "接近我给出的不应追高价格，应评估减仓或至少停止新增"
-    }
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md",
+    "reports/2026-07-10-initial.md"
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-28",
-      "reason": "预计中报窗口，重点复查净息差、地产不良、分红与资本情况"
+      "reason": "中报披露日，重点复查净息差、利息净收入、房地产不良率、信用减值损失、规模与利润增速"
     },
     {
       "type": "date",
       "date": "2026-10-30",
-      "reason": "三季报窗口，验证盈利韧性与风险暴露是否继续稳定"
+      "reason": "三季报披露日，验证盈利韧性与风险暴露是否稳定"
     }
   ],
-  "key_tracking_metrics": [
-    "净息差是否稳定在1.10%以上",
-    "不良贷款率是否维持在1.20%附近",
-    "房地产业不良率是否回落",
-    "拨备覆盖率是否维持在220%以上",
-    "科技贷款余额增速",
-    "普惠贷款余额增速",
-    "绿色贷款余额增速",
-    "零售AUM与养老金客户AUM增速",
-    "核心一级资本充足率",
-    "分红政策是否维持稳定"
-  ]
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.4,
+      "reason": "进入有安全边际的买入区间，可考虑从观察仓提升到分批仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 7.6,
+      "reason": "进入强吸引力带（股息率6.8%+、PB≈0.43x），可考虑加仓但需结合中报验证后决策"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "接近乐观上沿，进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-10T00:00:00+08:00"
 }
