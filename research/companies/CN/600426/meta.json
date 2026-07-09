@@ -4,94 +4,118 @@
   "ticker": "600426",
   "name": "华鲁恒升",
   "company_name": "华鲁恒升",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "observe_positive",
   "status": "active",
-  "current_thesis": "低成本煤化工平台型龙头，具备多产品联产、现金流韧性和分红改善；当前价格处于合理区间下沿附近，但仍需等待更强安全边际或产品价差持续修复确认。",
+  "rating": "observe_positive",
   "current_rating": "watch",
+  "current_thesis": "低成本煤化工平台型龙头，现金流与分红持续改善；明日(2026-07-10)除权后参考价约 18.32 元落在合理区间偏下沿，建议小仓试探，加仓位在除权后 14.42-16.73 元。",
   "quality_rating": "A-",
   "valuation_rating": "B+",
+  "currency": "CNY",
+  "base_currency": "CNY",
   "fair_value_range": [
+    16.73,
+    21.35
+  ],
+  "buy_zone": [
+    14.42,
+    16.73
+  ],
+  "strong_buy_zone": [
+    12.12,
+    14.42
+  ],
+  "sell_or_reduce_zone": [
+    22.88,
+    33
+  ],
+  "pre_xr_fair_value_range": [
     22,
     28
   ],
-  "buy_zone": [
+  "pre_xr_buy_zone": [
     19,
     22
   ],
-  "sell_or_reduce_zone": [
+  "pre_xr_strong_buy_zone": [
+    16,
+    19
+  ],
+  "pre_xr_sell_or_reduce_zone": [
     30,
     44
   ],
-  "base_currency": "CNY",
-  "currency": "CNY",
+  "price_basis_note": "口径：2026-07-09 为股权登记日，方案 10转3派2.50元/股，除权除息日 2026-07-10。区间均为除权后口径 = (除权前价 - 0.25) / 1.3。",
+  "latest_report": "reports/2026-07-09-initial-update.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md",
+    "reports/2026-07-09-initial-update.md"
+  ],
   "position_plan": [
     {
-      "condition": "价格低于22元且尿素、醋酸、DMF价差未出现系统性恶化",
-      "action": "分批买入或加仓",
-      "max_weight": 0.1,
+      "condition": "除权后股价 18.3 元附近（今日登记日收盘参考位）",
+      "max_weight": 0.03,
+      "reason": "合理下沿试探仓，等更便宜周期价格再加仓"
+    },
+    {
+      "condition": "除权后股价处于买入区间 14.42-16.73 元且尿素/醋酸/DMF 价差未系统性恶化",
+      "max_weight": 0.08,
       "reason": "进入有安全边际区间，低成本龙头的周期修复赔率较好"
     },
     {
-      "condition": "价格低于19元且资产负债表、分红和项目投产逻辑未破坏",
-      "action": "积极加仓",
+      "condition": "除权后股价低于 14.42 元且资产负债表/分红/项目投产逻辑未破坏",
       "max_weight": 0.12,
-      "reason": "强吸引力价格，隐含中枢利润估值较低"
+      "reason": "强吸引力价格，隐含中枢利润 PE 约 7-9 倍"
     },
     {
-      "condition": "价格在22至28元之间",
-      "action": "持有或小仓观察",
-      "max_weight": 0.05,
+      "condition": "除权后股价 16.73-21.35 元（合理价值区）",
+      "max_weight": 0.03,
       "reason": "处于合理价值区，需用后续业绩和价差修复证明上行空间"
     },
     {
-      "condition": "价格高于30元且盈利预测没有明显上修",
-      "action": "停止加仓并考虑减仓",
-      "max_weight": 0.02,
+      "condition": "除权后股价高于 22.88 元且盈利预测无明显上修",
+      "max_weight": 0.01,
       "reason": "周期股不宜在偏贵区追高，收益风险比下降"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 22,
-      "reason": "进入初步买入区，需要复核尿素、醋酸、DMF价差和煤价"
+      "price": 16.73,
+      "reason": "除权后进入初步买入区，需复核尿素/醋酸/DMF 价差和煤价"
     },
     {
       "type": "price_below",
-      "price": 19,
-      "reason": "进入强吸引力买入区，若基本面未破坏可提高仓位"
+      "price": 14.42,
+      "reason": "除权后进入强吸引力买入区，若基本面未破坏可提高仓位"
     },
     {
       "type": "price_above",
-      "price": 30,
-      "reason": "进入不应追高区，需要复核是否应减仓或等待盈利上修"
+      "price": 22.88,
+      "reason": "除权后进入不应追高区，需复核是否减仓或等待盈利上修"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复查2026年半年报、荆州基地进展、中期分红和经营现金流"
+      "reason": "复查 2026 年半年报、荆州基地进展、中期分红和经营现金流"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "复查2026年三季报及尿素、醋酸、DMF价差变化"
+      "reason": "复查 2026 年三季报及尿素/醋酸/DMF 价差变化"
     }
   ],
   "key_tracking_metrics": [
     "尿素价格与原料煤价差",
-    "DMF价格、开工率、库存和价差",
+    "DMF 价格、开工率、库存和价差",
     "醋酸价格与行业新增产能",
     "原料煤采购价格",
     "经营活动现金流净额/归母净利润",
     "荆州基地投产爬坡与资本开支",
     "毛利率和归母净利率",
-    "现金分红比例和中期分红落地情况"
-  ]
+    "现金分红比例和中期分红落地情况",
+    "除权后 18.3 元附近的成交与情绪节奏"
+  ],
+  "updated_at": "2026-07-09T13:25:00+08:00"
 }
