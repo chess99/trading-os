@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:300474",
+  "market": "CN",
+  "ticker": "300474",
+  "name": "景嘉微",
+  "company_name": "景嘉微",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "景嘉微具备国产GPU、图形显控和军工电子稀缺性，但2025年和2026年一季度仍处亏损阶段，当前更适合等待订单、现金流和盈利拐点确认后再提高仓位。",
+  "quality_rating": "medium_high",
+  "valuation_rating": "expensive",
+  "fair_value_range": [
+    360,
+    480
+  ],
+  "buy_zone": [
+    280,
+    360
+  ],
+  "sell_or_reduce_zone": [
+    560,
+    700
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于360元且半年报显示收入增长、亏损收窄、经营现金流改善",
+      "action": "建立首笔观察仓",
+      "max_weight": 0.015,
+      "reason": "价格进入买入区且基本面出现初步兑现证据"
+    },
+    {
+      "condition": "价格低于300元且核心订单、研发进展和现金流未恶化",
+      "action": "提高至小仓位",
+      "max_weight": 0.03,
+      "reason": "安全边际改善，适合用小仓位跟踪国产GPU期权"
+    },
+    {
+      "condition": "公告确认GPU或AI SoC批量订单并连续两个季度收入、毛利率、现金流同步改善",
+      "action": "提高至中等仓位",
+      "max_weight": 0.06,
+      "reason": "商业化进入可验证阶段，高估值有业绩支撑"
+    },
+    {
+      "condition": "价格高于560元但订单和盈利未同步兑现",
+      "action": "不追买并减仓观察仓",
+      "max_weight": 0.005,
+      "reason": "高估值主要由预期支撑，缺少财务兑现时回撤风险较高"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 360,
+      "reason": "进入买入区上沿，适合结合订单和现金流复核首笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 300,
+      "reason": "进入较有安全边际区间，若基本面未恶化可提高观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 560,
+      "reason": "超过合理价值区间上沿，缺少业绩兑现时不宜追买"
+    },
+    {
+      "type": "price_above",
+      "price": 700,
+      "reason": "乐观情景上沿，需要大规模订单和盈利拐点共同支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、亏损、现金流、研发费用和GPU订单进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报订单确认、毛利率和经营现金流改善情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报是否出现盈利和现金流拐点"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入同比和环比",
+    "芯片/GPU/AI SoC相关收入占比",
+    "归母净利润和扣非归母净利润",
+    "毛利率",
+    "经营活动现金流净额",
+    "研发费用率和研发人员数量",
+    "存货、应收账款、合同负债变化",
+    "JM11、CH37或下一代GPU客户验证和批量订单公告",
+    "军工图形显控订单与验收节奏",
+    "可比国产算力芯片公司估值与商业化进展"
+  ]
+}
