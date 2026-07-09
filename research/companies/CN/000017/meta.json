@@ -1,0 +1,99 @@
+{
+  "symbol": "CN:000017",
+  "market": "CN",
+  "ticker": "000017",
+  "name": "深中华A",
+  "company_name": "深中华A",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "深中华A的经营实质已转为黄金珠宝B端供应链批发，2025年利润改善但现金流、存货、客户集中度和估值风险突出；当前价格主要反映小市值和题材交易，不适合买入。",
+  "quality_rating": "low_to_medium",
+  "valuation_rating": "overvalued",
+  "fair_value_range": [
+    1.8,
+    2.6
+  ],
+  "buy_zone": [
+    1.2,
+    1.8
+  ],
+  "sell_or_reduce_zone": [
+    3.2,
+    6.55
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_above_3.2_or_after_abnormal_volatility_without_fundamental_change",
+      "action": "avoid_or_reduce",
+      "max_weight": 0,
+      "reason": "current valuation is far above verified earnings power and company has stated no major restructuring or acquisition plan"
+    },
+    {
+      "condition": "price_between_1.8_and_2.6_with_cash_flow_still_negative",
+      "action": "watch_only",
+      "max_weight": 0,
+      "reason": "fair value range requires proof that earnings convert to operating cash flow before taking risk"
+    },
+    {
+      "condition": "price_between_1.2_and_1.8_and_operating_cash_flow_turns_positive_with_inventory_control",
+      "action": "research_starter_position",
+      "max_weight": 0.005,
+      "reason": "only a small research position is justified if price discounts concentration and cash conversion risks"
+    },
+    {
+      "condition": "two_year_positive_operating_cash_flow_and_customer_concentration_below_50_percent",
+      "action": "allow_small_core_position",
+      "max_weight": 0.01,
+      "reason": "larger weight requires evidence of durable supply-chain economics rather than one-year profit growth"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.6,
+      "reason": "recheck if market price enters the upper end of fair value range"
+    },
+    {
+      "type": "price_below",
+      "price": 1.8,
+      "reason": "evaluate first research position only if cash flow and inventory data improve"
+    },
+    {
+      "type": "price_above",
+      "price": 6.55,
+      "reason": "review speculative risk if price exceeds the latest verified close after abnormal volatility"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "review after expected 2026 interim report disclosure window"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "review after expected 2026 third-quarter report disclosure window"
+    }
+  ],
+  "key_tracking_metrics": [
+    "operating_cash_flow_net",
+    "revenue_growth",
+    "deducted_net_profit_growth",
+    "inventory_balance",
+    "accounts_receivable_balance",
+    "top_five_customer_sales_ratio",
+    "top_five_supplier_purchase_ratio",
+    "gross_margin_gold_jewelry",
+    "controlling_shareholder_reduction_or_pledge",
+    "abnormal_trading_or_regulatory_inquiry"
+  ]
+}
