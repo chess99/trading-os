@@ -1,0 +1,102 @@
+{
+  "symbol": "CN:601818",
+  "market": "CN",
+  "ticker": "601818",
+  "name": "光大银行",
+  "company_name": "光大银行",
+  "status": "active",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "低估值、可收息、等待息差与资产质量企稳的全国性股份行；以0.36倍左右PB交易，当前更适合分批买入而非追高重仓。",
+  "quality_rating": "B+",
+  "valuation_rating": "A-",
+  "fair_value_range": [
+    3.8,
+    4.6
+  ],
+  "buy_zone": [
+    2.9,
+    3.2
+  ],
+  "sell_or_reduce_zone": [
+    4.8,
+    5.4
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价小于等于2.85元且基本面未明显恶化",
+      "action": "积极买入并把仓位逐步提升到10%",
+      "max_weight": 0.1,
+      "reason": "对应极低PB，赔率显著高于风险。"
+    },
+    {
+      "condition": "股价在2.85至3.20元之间",
+      "action": "分批建仓",
+      "max_weight": 0.07,
+      "reason": "处于有安全边际的买入区间。"
+    },
+    {
+      "condition": "股价在3.20至3.80元之间且中报验证息差与资产质量稳定",
+      "action": "持有或小幅加仓",
+      "max_weight": 0.05,
+      "reason": "估值仍不贵，但安全边际下降，需要基本面验证。"
+    },
+    {
+      "condition": "股价高于4.40元且没有看到ROE持续回升到8%左右",
+      "action": "减仓到观察仓",
+      "max_weight": 0.02,
+      "reason": "价格已接近或进入乐观估值区，追高回报风险比偏弱。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.85,
+      "reason": "进入强吸引力买入区，适合提高目标仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入有安全边际的买入区，可开始分批建仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.4,
+      "reason": "接近不应追高区域，需要检查估值是否透支。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "进入明显高于基准合理价值的区域，优先减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报中的净息差、不良率、拨备覆盖率和中收恢复情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，确认资产质量与盈利趋势是否延续。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "净息差",
+    "不良贷款率",
+    "拨备覆盖率",
+    "归母净利润同比增速",
+    "手续费及佣金净收入同比增速",
+    "加权平均净资产收益率",
+    "核心一级资本充足率",
+    "现金分红率"
+  ]
+}
