@@ -1,0 +1,116 @@
+{
+  "symbol": "CN:603728",
+  "market": "CN",
+  "ticker": "603728",
+  "name": "鸣志电器",
+  "company_name": "鸣志电器",
+  "status": "active",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "鸣志电器具备小型精密运动控制、海外渠道和机器人/空心杯业务期权，产业质量值得跟踪；但 2026-07-09 股价已充分反映远期乐观预期，当前缺乏安全边际，适合观察而非追高买入。",
+  "quality_rating": "B+",
+  "valuation_rating": "expensive",
+  "fair_value_range": [
+    35,
+    48
+  ],
+  "buy_zone": [
+    28,
+    38
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    80
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price_above_65",
+      "action": "do_not_add_reduce_to_tracking_position",
+      "max_weight": 0.01,
+      "reason": "估值主要依赖远期机器人期权，缺乏安全边际。"
+    },
+    {
+      "condition": "price_between_55_and_65",
+      "action": "watch_only",
+      "max_weight": 0.02,
+      "reason": "当前利润基数无法支撑估值，不应追高。"
+    },
+    {
+      "condition": "price_between_38_and_55",
+      "action": "wait_for_earnings_and_order_validation",
+      "max_weight": 0.03,
+      "reason": "产业逻辑成立但价格仍未充分反映兑现风险。"
+    },
+    {
+      "condition": "price_between_28_and_38",
+      "action": "accumulate_in_batches_if_fundamentals_remain_intact",
+      "max_weight": 0.06,
+      "reason": "价格开始覆盖传统业务和部分成长性，具备一定安全边际。"
+    },
+    {
+      "condition": "price_between_24_and_28",
+      "action": "strong_buy_after_risk_review",
+      "max_weight": 0.08,
+      "reason": "若基本面未恶化，赔率明显改善。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "进入有安全边际的首批买入观察区。"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入强吸引力买入区，但需同步复核基本面是否破坏。"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "进入不应追高区，已有仓位需复核估值风险。"
+    },
+    {
+      "type": "price_above",
+      "price": 65,
+      "reason": "进入减仓或仅保留跟踪仓区间。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查 2026 年中报，重点验证收入增速、毛利率、机器人/空心杯/伺服业务进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查 2026 年三季报，确认利润率和订单兑现是否持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查 2026 年报，重新评估合理价值区间和仓位上限。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "quarterly_revenue_growth",
+    "gross_margin",
+    "net_margin",
+    "robotics_related_orders_or_revenue",
+    "coreless_motor_progress",
+    "servo_and_motion_control_revenue",
+    "overseas_revenue_growth",
+    "rd_expense_ratio",
+    "operating_cash_flow",
+    "inventory_and_accounts_receivable_growth",
+    "top_five_customer_concentration"
+  ]
+}
