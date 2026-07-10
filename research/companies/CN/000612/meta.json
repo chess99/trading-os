@@ -1,0 +1,106 @@
+{
+  "symbol": "CN:000612",
+  "market": "CN",
+  "ticker": "000612",
+  "name": "焦作万方",
+  "company_name": "焦作万方",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "hold",
+  "current_rating": "hold",
+  "quality_rating": "medium",
+  "valuation_rating": "fair",
+  "current_thesis": "焦作万方是电解铝强周期下的中小市值利润弹性标的，2025年和2026Q1受益于铝价高位及氧化铝、电力成本下行，现金流和分红改善；但规模、绿电属性和上游资源完整度弱于云铝、神火、中国铝业，三门峡铝业重组仍有审批、定价和整合不确定性。当前价格适合持有或小仓观察，优先等待8.8元以下或半年报确认利润持续性后再加仓。",
+  "fair_value_range": [
+    10.5,
+    13.5
+  ],
+  "buy_zone": [
+    7.8,
+    8.8
+  ],
+  "sell_or_reduce_zone": [
+    13.5,
+    15.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_around_10_01_and_no_existing_position",
+      "action": "build_watch_position_only",
+      "max_weight": 0.02,
+      "reason": "当前价格处于公允区间下沿但高于舒服买入区，周期利润已明显兑现，适合观察仓而非重仓追买。"
+    },
+    {
+      "condition": "price_below_8_8_and_aluminum_price_cost_spread_stable",
+      "action": "add_in_batches",
+      "max_weight": 0.04,
+      "reason": "进入买入区后安全边际改善，若铝价、氧化铝和电力成本未恶化，可提高到中等周期仓位。"
+    },
+    {
+      "condition": "price_below_7_8_or_h1_2026_confirms_profit_resilience_and_restructuring_progress_clear",
+      "action": "increase_to_full_tactical_weight",
+      "max_weight": 0.06,
+      "reason": "深度折价或利润持续性与重组确定性同步提高时，赔率足以支持完整战术仓位。"
+    },
+    {
+      "condition": "price_above_13_5_without_new_profit_upgrade",
+      "action": "reduce_position",
+      "max_weight": 0.03,
+      "reason": "超过减仓区下沿后，若没有铝价上行或三门峡铝业重组增厚验证，风险收益比下降。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入买入区上沿，若基本面未恶化，可启动分批加仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 7.8,
+      "reason": "进入深度买入区，周期回撤安全边际明显改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "进入减仓区下沿，需确认是否有利润上修或重组落地支撑。"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "进入高估区，除非重组显著增厚，否则应大幅降低周期仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报，重点验证Q2利润、经营现金流、吨铝毛利和库存。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报和三门峡铝业重组进展，更新全年盈利和估值区间。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "SHFE/LME铝价月均价与库存",
+    "国内氧化铝现货价格",
+    "电煤价格与公司电力成本",
+    "季度电解铝产量、销量和库存",
+    "铝液直供比例和河南省内客户需求",
+    "单吨毛利和营业成本中原材料/电力占比",
+    "经营活动现金流量净额",
+    "货币资金、受限资金和应收股利回款",
+    "三门峡铝业重组审核、作价、承诺利润和并表进度",
+    "关联采购销售金额及定价公允性",
+    "碳排放配额履约支出和节能降碳改造进度",
+    "现金分红比例和实际派息"
+  ]
+}
