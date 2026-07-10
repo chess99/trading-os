@@ -1,0 +1,94 @@
+{
+  "symbol": "CN:000563",
+  "market": "CN",
+  "ticker": "000563",
+  "name": "陕国投Ａ",
+  "company_name": "陕国投Ａ",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "陕国投A具备信托牌照、陕西国资背景、净资本充足和稳定分红优势，但2026Q1收入利润承压，传统非标业务退坡与固有投资收益波动仍需观察；当前价格处于合理区间低位，等待2.65元以下再小仓位试买。",
+  "quality_rating": "B",
+  "valuation_rating": "B",
+  "fair_value_range": [
+    2.8,
+    3.4
+  ],
+  "buy_zone": [
+    2.45,
+    2.7
+  ],
+  "sell_or_reduce_zone": [
+    3.45,
+    3.8
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 2.65 and 2026 interim results do not show further asset quality deterioration",
+      "action": "initiate small position",
+      "max_weight": 0.01,
+      "reason": "Price enters buy zone with PB below about 0.72x 2025 book value and dividend yield above 3%."
+    },
+    {
+      "condition": "price <= 2.45 and net capital ratio remains above 180%",
+      "action": "add cautiously",
+      "max_weight": 0.03,
+      "reason": "Deeper discount compensates for trust industry transition and 2026Q1 earnings pressure."
+    },
+    {
+      "condition": "price >= 3.45 without ROE recovery above 8%",
+      "action": "reduce or keep only tracking position",
+      "max_weight": 0.01,
+      "reason": "Valuation approaches upper fair value while earnings momentum remains insufficient."
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.65,
+      "reason": "First-entry zone for a small starter position."
+    },
+    {
+      "type": "price_below",
+      "price": 2.45,
+      "reason": "Deep value zone if net capital and asset quality remain stable."
+    },
+    {
+      "type": "price_above",
+      "price": 3.45,
+      "reason": "Review for reduction near the upper fair value range."
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "Review 2026 interim report for fee income, investment income, net capital, and asset exposure changes."
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "Review 2026 annual report and dividend policy."
+    }
+  ],
+  "key_tracking_metrics": [
+    "trust_assets_total",
+    "active_management_trust_assets",
+    "fee_and_commission_net_income",
+    "investment_income",
+    "fair_value_change_income",
+    "net_capital",
+    "net_capital_to_risk_capital",
+    "infrastructure_exposure",
+    "real_estate_exposure",
+    "dividend_payout_ratio",
+    "roe"
+  ]
+}
