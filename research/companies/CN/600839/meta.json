@@ -3,102 +3,31 @@
   "market": "CN",
   "ticker": "600839",
   "name": "四川长虹",
-  "company_name": "四川长虹",
+  "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-10",
+  "current_rating": "watch",
+  "current_thesis": "四川长虹是家电、压缩机和ICT综合服务的国资综合平台，但2025年扣非利润弱、2026Q1盈利下滑，华鲲振宇和AI服务器题材对上市公司直接业绩贡献尚未核验；当前价格已反映较多题材溢价，适合观察而非追买。",
+  "fair_value_range": [5.4, 6.6],
+  "buy_zone": [4.8, 5.6],
+  "sell_or_reduce_zone": [7.8, 9.0],
+  "position_plan": [
+    {"condition": "股价低于5.60元且应收/存货/扣非未恶化", "max_weight": 0.01},
+    {"condition": "股价低于5.10元且扣非归母利润、经营现金流和ICT利润率同步改善", "max_weight": 0.025},
+    {"condition": "AI服务器或智算业务进入上市公司合并报表并形成可核验利润", "max_weight": 0.04}
+  ],
   "latest_report": "reports/2026-07-10-initial.md",
   "report_history": [
     "reports/2026-07-10-initial.md"
   ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "四川长虹是家电、压缩机和ICT综合服务的国资综合平台，但2025年扣非利润弱、2026Q1盈利下滑，华鲲振宇和AI服务器题材对上市公司直接业绩贡献尚未核验；当前价格已反映较多题材溢价，适合观察而非追买。",
-  "quality_rating": "C+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.4,
-    6.6
-  ],
-  "buy_zone": [
-    4.8,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
-    {
-      "condition": "价格低于5.60元且2026中报未显示应收、存货和扣非利润继续恶化",
-      "action": "建立0.5%-1.0%首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "进入买入区上沿但仍需验证利润质量"
-    },
-    {
-      "condition": "价格低于5.10元且扣非归母利润、经营现金流和ICT利润率同步改善",
-      "action": "加仓至2.0%-2.5%",
-      "max_weight": 0.025,
-      "reason": "估值安全边际与基本面改善同时出现"
-    },
-    {
-      "condition": "AI服务器或智算业务进入上市公司合并报表并形成可核验利润",
-      "action": "重新评估上限仓位至4.0%",
-      "max_weight": 0.04,
-      "reason": "题材从期权转为可估值利润来源"
-    },
-    {
-      "condition": "价格高于7.80元但无扣非利润修复或AI业务并表证据",
-      "action": "不追高并降低已有仓位",
-      "max_weight": 0.0,
-      "reason": "估值主要依赖题材溢价，风险收益不佳"
-    }
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026年中报披露后复核扣非利润、现金流、应收存货和ICT业务质量"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复核利润修复持续性"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入首笔观察买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度安全边际区，需复核财务质量后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "进入减仓观察区，检查是否仅由AI/国资题材推动"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "明显高于基准估值，除非有并表级别新信息否则应回避或减仓"
-    }
+    {"type": "price_below", "price": 5.6, "reason": "进入有安全边际的买入区间，需复核财务质量后考虑首笔"},
+    {"type": "price_below", "price": 4.8, "reason": "进入深度安全边际区，需复核财务质量后考虑加仓"},
+    {"type": "price_above", "price": 7.8, "reason": "进入减仓或不应追高区间，检查是否仅由AI/国资题材推动"},
+    {"type": "price_above", "price": 9.0, "reason": "明显高于基准估值，除非有并表级别新信息否则应回避或减仓"}
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年中报披露后复核扣非利润、现金流、应收存货和ICT业务质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报披露后复核利润修复持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026中报扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款余额及周转天数",
-    "存货余额及周转天数",
-    "长虹佳华ICT综合服务收入和净利率",
-    "长虹华意新能源汽车空调压缩机销量和利润率",
-    "智能家居业务毛利率和高端产品占比",
-    "华鲲振宇或AI服务器业务是否进入合并报表",
-    "回购和分红执行进度",
-    "控股股东资产注入或并购重组公告"
-  ]
+  "updated_at": "2026-07-10T21:30:00+08:00"
 }

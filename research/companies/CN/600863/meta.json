@@ -3,18 +3,10 @@
   "market": "CN",
   "ticker": "600863",
   "name": "华能蒙电",
-  "company_name": "华能蒙电",
+  "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "华能蒙电具备内蒙古煤电一体化、外送电、容量电价和新能源扩张带来的中期现金流支撑，但当前价格接近合理价值中枢，安全边际不足，宜观察或小仓跟踪，等待4.30元以下或业绩兑现后再提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "neutral",
+  "current_thesis": "煤电一体化+容量电价+新能源扩张支撑中期现金流，当前价格接近合理价值中枢，安全边际不足，宜观察回撤或业绩兑现后再加仓。",
   "fair_value_range": [
     4.7,
     5.6
@@ -27,32 +19,38 @@
     5.8,
     6.5
   ],
-  "currency": "CNY",
-  "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "价格跌入4.30元以下，且最新季报显示煤价、售电量、上网电价无明显恶化",
-      "action": "分批买入",
-      "max_weight": 0.06,
-      "reason": "进入安全边际较好的买入区，煤电一体化和容量电价提供现金流支撑"
+      "condition": "价格跌入4.30元以下且最新季报显示煤价、售电量、上网电价无明显恶化",
+      "max_weight": 0.06
     },
     {
-      "condition": "价格跌入3.80元以下，且未出现治理、分红或政策重大负面变化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.08,
-      "reason": "悲观估值附近具备较高赔率，可承受煤价和电价波动"
+      "condition": "价格跌入3.80元以下且无治理、分红或政策重大负面变化",
+      "max_weight": 0.08
     },
     {
-      "condition": "价格处于4.70元至5.60元之间",
-      "action": "持有或仅建立1%-2%观察仓",
-      "max_weight": 0.02,
-      "reason": "当前价格接近合理价值中枢，安全边际不足"
+      "condition": "价格处于4.70-5.60元合理价值中枢",
+      "max_weight": 0.02
     },
     {
       "condition": "价格高于5.80元且业绩、分红或新能源投产未同步超预期",
-      "action": "减持",
-      "max_weight": 0.03,
-      "reason": "价格进入乐观区间，估值对煤价、电价和容量电价执行的容错率下降"
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报，重点核验容量电价、煤价、上网电价、新能源投产和分红"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，确认全年盈利中枢和仓位上限"
     }
   ],
   "price_triggers": [
@@ -72,33 +70,5 @@
       "reason": "进入乐观估值区间，需要评估是否减持或等待业绩兑现"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点核验容量电价、煤价、上网电价、新能源投产和分红"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认全年盈利中枢和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度发电量",
-    "季度售电量",
-    "平均上网电价",
-    "入炉标煤单价",
-    "长协煤履约率",
-    "容量电价确认收入",
-    "新能源新增装机",
-    "新能源利用小时",
-    "弃风弃光率",
-    "经营现金流净额",
-    "资本开支",
-    "有息负债",
-    "资产负债率",
-    "现金分红率",
-    "外送电量和外送结算电价"
-  ]
+  "updated_at": "2026-07-10T21:30:00+08:00"
 }

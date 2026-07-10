@@ -3,56 +3,45 @@
   "market": "CN",
   "ticker": "600918",
   "name": "中泰证券",
-  "company_name": "中泰证券",
+  "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-10",
+  "current_rating": "watch",
+  "current_thesis": "中泰证券具备山东国资背景、完整券商牌照和补资本后业务弹性，但2025年加权ROE仅3.32%，当前PB约0.95已隐含折价，建议在PB<0.9倍且行业成交回暖时建立观察仓。",
+  "fair_value_range": [5.4, 6.2],
+  "buy_zone": [4.8, 5.3],
+  "sell_or_reduce_zone": [7.4, 8.2],
+  "position_plan": [
+    {
+      "condition": "股价处于4.8-5.3元买入区间且A股成交额、券商指数未继续恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "PB低于0.85倍且连续一个季度成交额、两融余额或公司利润出现改善",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度ROE上行，手续费净收入与投资收益共同改善，风控指标保持充足",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格升至7.4元以上但ROE与行业成交未同步验证",
+      "max_weight": 0.005
+    }
+  ],
   "latest_report": "reports/2026-07-10-initial.md",
   "report_history": [
     "reports/2026-07-10-initial.md"
   ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中泰证券具备山东国资背景、综合券商牌照和低PB修复弹性，但ROE中枢偏低，需等待更便宜买点或行业成交与公司资本效率改善验证后再提高仓位。",
-  "quality_rating": "B",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    5.8,
-    7.0
-  ],
-  "buy_zone": [
-    4.8,
-    5.3
-  ],
-  "sell_or_reduce_zone": [
-    7.4,
-    8.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "review_triggers": [
     {
-      "condition": "价格进入4.8-5.3元区间，且A股成交额和券商指数未继续恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "低于中性合理价值且PB具备安全边际，但ROE修复尚需验证"
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的ROE、净资本、手续费净收入和投资收益"
     },
     {
-      "condition": "PB低于0.85倍，且连续一个季度成交额、两融余额或公司利润出现改善",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.02,
-      "reason": "低估值与行业贝塔改善共振，风险收益比提升"
-    },
-    {
-      "condition": "连续两个季度ROE上行，手续费净收入和投资收益共同改善，风控指标保持充足",
-      "action": "提高至目标上限仓位",
-      "max_weight": 0.03,
-      "reason": "公司资本效率改善被财报验证，可承受更高券商周期敞口"
-    },
-    {
-      "condition": "价格升至7.4元以上但ROE和行业成交未同步验证",
-      "action": "分批减仓",
-      "max_weight": 0.005,
-      "reason": "估值修复可能领先基本面，需锁定周期收益"
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和市场成交活跃度是否验证券商贝塔"
     }
   ],
   "price_triggers": [
@@ -77,27 +66,5 @@
       "reason": "高于减仓区上沿，除非牛市成交持续放量否则应降低仓位"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的ROE、净资本、手续费净收入和投资收益"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和市场成交活跃度是否验证券商贝塔"
-    }
-  ],
-  "key_tracking_metrics": [
-    "日均股基成交额",
-    "两融余额和公司融资融券市占率",
-    "归母净利润和年化ROE",
-    "手续费及佣金净收入",
-    "投资收益和公允价值变动收益",
-    "净资本、风险覆盖率、资本杠杆率、流动性覆盖率",
-    "投行业务承销规模和项目排名",
-    "资产管理规模和主动管理占比",
-    "重大合规处罚、诉讼仲裁和信用减值"
-  ]
+  "updated_at": "2026-07-10T22:35:00+08:00"
 }
