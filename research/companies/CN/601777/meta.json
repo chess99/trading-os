@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:601777",
+  "market": "CN",
+  "ticker": "601777",
+  "name": "千里科技",
+  "company_name": "千里科技",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "avoid",
+  "current_thesis": "千里科技具备传统汽车/摩托制造现金流和智能驾驶期权，但截至2026-07-10扣非盈利、智驾外部订单和新能源车销量仍未充分验证；当前价格已包含较高题材溢价，适合观察而非正式买入。",
+  "quality_rating": "medium_low",
+  "valuation_rating": "expensive",
+  "fair_value_range": [
+    5.5,
+    7.0
+  ],
+  "buy_zone": [
+    4.5,
+    5.5
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    10.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_above_7_without_new_verified_smart_driving_orders",
+      "action": "no_formal_position_or_keep_tracking_position_only",
+      "max_weight": 0.005,
+      "reason": "当前市值已包含较多智驾期权，扣非盈利和新能源车销量尚未验证。"
+    },
+    {
+      "condition": "price_below_5_5_and_2026_interim_shows_deducted_profit_improving",
+      "action": "start_small_position",
+      "max_weight": 0.015,
+      "reason": "价格进入买入区间上沿，同时需要扣非利润、智能驾驶收入和现金流改善共同确认。"
+    },
+    {
+      "condition": "price_below_4_5_and_operating_cash_flow_remains_positive",
+      "action": "increase_to_core_watch_position",
+      "max_weight": 0.025,
+      "reason": "估值回到传统制造和智驾期权折价后更有安全边际，但仍不适合重仓。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入初始买入观察区，复核2026中报扣非利润、智能驾驶收入和现金流。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入较有安全边际区间，若基本面未恶化可评估提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "高于基准合理价值上沿，若无新增订单或扣非盈利改善应减持或回避。"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "题材溢价过高，需要明确智驾规模化订单和盈利路径才能支撑。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报中的智能驾驶收入、研发费用、扣非利润、现金流和关联交易。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及月度产销趋势，判断新能源车销量是否恢复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报、H股进展及全年智驾商业化兑现情况。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "monthly_vehicle_sales_total",
+    "monthly_new_energy_vehicle_sales",
+    "smart_driving_revenue",
+    "smart_driving_gross_margin",
+    "r_and_d_expense",
+    "deducted_net_profit",
+    "operating_cash_flow",
+    "related_party_sales_ratio",
+    "related_party_purchase_ratio",
+    "impairment_losses",
+    "h_share_listing_progress"
+  ]
+}
