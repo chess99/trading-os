@@ -1,0 +1,102 @@
+{
+  "symbol": "CN:600795",
+  "market": "CN",
+  "ticker": "600795",
+  "name": "国电电力",
+  "company_name": "国电电力",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "quality_rating": "high",
+  "valuation_rating": "fair",
+  "fair_value_range": [
+    5.2,
+    5.8
+  ],
+  "buy_zone": [
+    4.1,
+    4.4
+  ],
+  "sell_or_reduce_zone": [
+    6.3,
+    7.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_near_4_76_and_no_negative_change_in_coal_price_or_power_tariff",
+      "action": "open_observation_position",
+      "max_weight": 0.02,
+      "reason": "股息率约5.1%，估值不贵，但2026Q1电价压力仍需验证。"
+    },
+    {
+      "condition": "price_at_or_below_4_40_and_tracking_metrics_stable",
+      "action": "add_position",
+      "max_weight": 0.04,
+      "reason": "进入买入区间，股息率和安全边际改善。"
+    },
+    {
+      "condition": "price_at_or_below_4_10_and_2026_interim_recurring_profit_remains_healthy",
+      "action": "add_to_full_position",
+      "max_weight": 0.06,
+      "reason": "悲观估值附近且基本面未破坏，可提高至单票上限。"
+    },
+    {
+      "condition": "price_at_or_above_6_30_without_earnings_upgrade",
+      "action": "reduce_position",
+      "max_weight": 0.02,
+      "reason": "价格超过基准合理价值上沿，除非煤价、电价和容量电价兑现超预期。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.4,
+      "reason": "进入买入区间，可复核煤价、电价和中报后考虑加仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.1,
+      "reason": "接近悲观情景估值下沿，若基本面未恶化可考虑提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.3,
+      "reason": "达到减仓区间，需要盈利上修才能继续持有高仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查售电均价、煤价、容量电价、资本开支和分红可持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报，判断全年扣非利润是否能维持基准情景。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "平均上网电价",
+    "入炉标煤单价",
+    "市场化交易电量占比",
+    "市场化电量电价溢价",
+    "火电利用小时",
+    "容量电价收入及政策落地",
+    "控股装机和权益装机结构",
+    "非化石能源装机占比",
+    "固定资产投资完成额",
+    "资产负债率",
+    "带息负债余额",
+    "财务费用",
+    "扣非归母净利润",
+    "现金分红率"
+  ]
+}
