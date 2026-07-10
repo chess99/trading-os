@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:000545",
+  "market": "CN",
+  "ticker": "000545",
+  "name": "金浦钛业",
+  "company_name": "金浦钛业",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "金浦钛业是硫酸法钛白粉困境资产，当前亏损、经营现金流为负、账户冻结、应付账款逾期、控股股东股份冻结及南京钛白环保刑事案件等风险尚未出清；在价格约2.65元附近，市场已经给了周期修复和控制权期权，但基本面仍不支持买方主动建仓。",
+  "quality_rating": "low",
+  "valuation_rating": "expensive_distressed",
+  "fair_value_range": [
+    1.4,
+    2.1
+  ],
+  "buy_zone": [
+    0.9,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    2.4,
+    3.2
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格约2.65元且现金流、债务逾期、环保案件未明显改善",
+      "action": "不买入，已有仓位减至事件观察仓或清仓",
+      "max_weight": 0,
+      "reason": "亏损、经营现金流为负、账户冻结和环保刑事案件使赔率不足"
+    },
+    {
+      "condition": "股价跌至1.20元以下，且账户冻结降至货币资金5%以内、逾期债务显著清理",
+      "action": "仅建立观察仓",
+      "max_weight": 0.005,
+      "reason": "困境折价可能覆盖部分尾部风险，但仍需等待经营验证"
+    },
+    {
+      "condition": "连续两个季度经营现金流为正、钛白粉吨毛利转正、南京钛白案件无重大新增处罚",
+      "action": "重新评估并小幅提高仓位",
+      "max_weight": 0.01,
+      "reason": "从困境资产转为周期修复资产后才具备买方跟踪价值"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入困境折价观察区，可复核债务、环保和现金流是否同步改善"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "若无经营现金流和毛利率修复，价格已超过基准合理价值上沿，应回避或减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、毛利率、经营现金流、受限资金和逾期债务"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和南京钛白环保刑事案件进展"
+    }
+  ],
+  "key_tracking_metrics": [
+    "钛白粉金红石型与锐钛型成交价",
+    "攀西46%钛精矿价格",
+    "硫酸和硫磺采购价格",
+    "公司钛白粉产量、销量和产能利用率",
+    "单季度毛利率和吨毛利",
+    "经营活动现金流净额",
+    "货币资金、受限资金和银行账户冻结金额",
+    "应付账款逾期金额",
+    "南京钛白污染环境案件进展",
+    "控股股东股份质押、冻结、司法拍卖和控制权变化"
+  ]
+}
