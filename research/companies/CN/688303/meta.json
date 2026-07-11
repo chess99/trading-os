@@ -1,0 +1,33 @@
+{
+  "symbol": "CN:688303",
+  "market": "CN",
+  "ticker": "688303",
+  "name": "大全能源",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "大全能源低负债、现金垫厚、资产负债表能熬过当前硅料周期，但 2026-07-11 硅料价格 3.27 万元/吨仍低于公司 4Q25 现金成本 3.4 万元/吨约 0.13 万元/吨，行业出清尚未被数据确认，当前 16.95 元、PB 0.95 已经定价一部分熬过去的乐观假设，不是确定性买入位置。维持 watch，等待 12-14 元或硅料价格站上 3.4 万元/吨并连续 4 周且行业库存去化后再小仓位介入。",
+  "fair_value_range": [15, 19],
+  "buy_zone": [12, 14],
+  "sell_or_reduce_zone": [22, 26],
+  "position_plan": [
+    {"condition": "股价处于 12-14 元买入区间且未出现重大资产负债表恶化", "max_weight": 0.01},
+    {"condition": "N 型硅料价格连续 4 周 ≥3.4 万元/吨且行业开工率下降、库存去化被验证", "max_weight": 0.03},
+    {"condition": "股价达 22-26 元但硅料价格仍 ≤4.0 万元/吨，减仓或不追高", "max_weight": 0}
+  ],
+  "latest_report": "reports/2026-07-11-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md",
+    "reports/2026-07-11-initial.md"
+  ],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "复核 2026 年半年报：核证 2025 归母 -26.99 亿 vs -11.29 亿差异；销量恢复、库存去化、存货跌价准备变化、经营现金流是否仍为正"},
+    {"type": "date", "date": "2026-10-31", "reason": "复核 2026 三季报与硅料价格周期变化、能耗新国标执行细则对大全线影响"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 14, "reason": "进入初始买入区间，复核行业价格与资产负债表后试探建仓"},
+    {"type": "price_below", "price": 12, "reason": "进入悲观情景上沿，复核是否存在非周期性风险"},
+    {"type": "price_above", "price": 22, "reason": "进入减仓观察区，若硅料价格仍 ≤4.0 万元/吨应控制仓位不追高"}
+  ],
+  "updated_at": "2026-07-11T00:00:00+08:00"
+}
