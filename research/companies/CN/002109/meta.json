@@ -1,0 +1,94 @@
+{
+  "symbol": "CN:002109",
+  "market": "CN",
+  "ticker": "002109",
+  "name": "兴化股份",
+  "company_name": "兴化股份",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "quality_rating": "low",
+  "valuation_rating": "overvalued",
+  "current_thesis": "兴化股份处于煤化工弱周期和ST风险叠加阶段，2025年、2026年一季度及2026年上半年业绩预告均显示亏损扩大，当前不适合建立常规仓位；只有经营现金流转正、产品价差修复、毛利率回升且ST风险边际下降后，才可从avoid上调至watch并考虑1%以内观察仓。",
+  "fair_value_range": [
+    1.6,
+    2.2
+  ],
+  "buy_zone": [
+    1.4,
+    1.8
+  ],
+  "sell_or_reduce_zone": [
+    2.6,
+    3.2
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且2026年上半年预告继续亏损",
+      "action": "不买入，仅跟踪半年报和产品价差",
+      "max_weight": 0,
+      "reason": "连续亏损、经营现金流转负、ST状态和债务压力使风险收益不对称"
+    },
+    {
+      "condition": "股价跌至1.80元以下，且最近一个季度经营现金流转正、亏损明显收窄",
+      "action": "建立观察仓",
+      "max_weight": 0.01,
+      "reason": "价格进入折价区间后仍需经营拐点确认，首笔仓位应很小"
+    },
+    {
+      "condition": "单季归母净利润转正、毛利率回到8%以上、经营现金流连续两个季度为正且ST风险边际下降",
+      "action": "提高到小仓位持有",
+      "max_weight": 0.03,
+      "reason": "只有现金流和利润共同修复，亏损资产才可能重新按周期修复资产定价"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.8,
+      "reason": "进入观察买入区上沿，需要复核半年报、现金流和产品价差"
+    },
+    {
+      "type": "price_below",
+      "price": 1.4,
+      "reason": "进入悲观估值区间，需要判断是否为财务风险释放而非机会"
+    },
+    {
+      "type": "price_above",
+      "price": 2.6,
+      "reason": "若无利润和现金流修复，股价高于该区间应考虑减仓或不追涨"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "预计2026年半年报披露完成后，复核亏损来源、分产品毛利率、现金流和债务变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核是否出现单季经营拐点和ST风险边际变化"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入同比增速",
+    "季度归母净利润及扣非归母净利润",
+    "季度毛利率",
+    "经营活动现金流净额",
+    "货币资金与有息负债",
+    "资产负债率",
+    "甲醇、合成氨及主力产品价差",
+    "煤炭采购成本",
+    "主要装置开工率和检修停产情况",
+    "安全环保处罚或重大事故",
+    "ST风险解除进展"
+  ]
+}
