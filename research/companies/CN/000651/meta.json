@@ -6,114 +6,25 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "格力电器是高ROE、高分红、强空调品牌和制造体系支撑的成熟龙头；2025年收入与利润下滑但经营现金流强，2026Q1收入小幅恢复。当前估值约7.4倍PE、股息率约7.8%，已不贵，但主业增长、治理和资本配置仍需折价，适合观察或小仓试探，等待35元以下更好的安全边际。",
-  "fair_value_range": [
-    40,
-    48
-  ],
-  "buy_zone": [
-    32,
-    35
-  ],
-  "sell_or_reduce_zone": [
-    49,
-    65
-  ],
+  "current_thesis": "格力电器估值和股息率有吸引力，但2025年收入利润均下降约一成，2026Q1扣非利润仍未恢复，38.25元只适合观察仓，等待32-35元安全边际。",
+  "fair_value_range": [40, 48],
+  "buy_zone": [32, 35],
+  "sell_or_reduce_zone": [49, 60],
   "position_plan": [
-    {
-      "zone": "observe",
-      "condition": "36-40元，估值略低但安全边际不足",
-      "price_range": [
-        36,
-        40
-      ],
-      "target_weight": 0.02,
-      "max_weight": 0.02,
-      "action": "38元附近仅适合1%-2%观察仓。"
-    },
-    {
-      "zone": "buy",
-      "condition": "32-35元，进入有安全边际买入区间且经营未恶化",
-      "price_range": [
-        32,
-        35
-      ],
-      "target_weight": 0.04,
-      "max_weight": 0.04,
-      "action": "35元以下且经营未恶化可加仓至3%-4%。"
-    },
-    {
-      "zone": "strong_buy",
-      "condition": "28-31元，分红和回购逻辑未被破坏",
-      "price_range": [
-        28,
-        31
-      ],
-      "target_weight": 0.06,
-      "max_weight": 0.06,
-      "action": "31元以下可考虑加至5%-6%，6%为最大仓位。"
-    },
-    {
-      "zone": "reduce",
-      "condition": "49元以上且基本面未显著超预期",
-      "price_range": [
-        49,
-        65
-      ],
-      "target_weight": 0.03,
-      "max_weight": 0.03,
-      "action": "49元以上不追高，视基本面和回购兑现减仓。"
-    }
+    {"condition": "36-40元仅保留观察仓", "max_weight": 0.02},
+    {"condition": "32-35元且经营未继续恶化", "max_weight": 0.04},
+    {"condition": "28-31元且分红、回购和治理逻辑完整", "max_weight": 0.06}
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
+  "latest_report": "reports/2026-07-11-deep-review.md",
+  "report_history": ["reports/2026-07-07-initial.md", "reports/2026-07-11-deep-review.md"],
   "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后，复核收入、扣非净利润、经营现金流、消费电器毛利率和回购执行。",
-      "reason": "中报能验证2026年旺季前半段经营是否企稳。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后，复核旺季经营、分红预期、回购注销比例和全年盈利趋势。",
-      "reason": "三季报基本决定全年空调主业和现金流趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后，复核每股分红是否维持、回购是否兑现、主业收入是否恢复。",
-      "reason": "年报能验证高分红和回购注销是否兑现为每股价值。"
-    },
-    {
-      "type": "date",
-      "date": "2027-07-07",
-      "condition": "年度复盘估值区间，重点检查连续两个半年度扣非净利润、毛利率、分红率和资本配置风险。",
-      "reason": "距初始研究满一年，需要重估合理价格和买入区间。"
-    }
+    {"type": "date", "date": "2026-08-31", "reason": "复查半年报扣非利润、现金流、毛利率和回购注销"},
+    {"type": "date", "date": "2026-10-31", "reason": "复查三季报旺季经营和分红预期"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "note": "进入有安全边际买入区间，复核基本面后可加至3%-4%。",
-      "reason": "低于买入区间上沿，较合理价值下沿有约12%以上折价。"
-    },
-    {
-      "type": "price_below",
-      "price": 31,
-      "note": "进入强吸引力区间，若分红与回购逻辑未破坏，可考虑加至5%-6%。",
-      "reason": "低于强吸引力区间上沿，股息率和安全边际显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 49,
-      "note": "超过合理区间上沿，不再新增，视基本面和回购兑现减仓。",
-      "reason": "高于合理价值区间上沿，除非基本面上修，否则风险收益转弱。"
-    }
+    {"type": "price_below", "price": 35, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_below", "price": 31, "reason": "进入强吸引力区间，复核分红与回购"},
+    {"type": "price_above", "price": 49, "reason": "超过合理价值上沿，评估减仓"}
   ],
-  "updated_at": "2026-07-07"
+  "updated_at": "2026-07-11T18:00:00+08:00"
 }

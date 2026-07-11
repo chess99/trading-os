@@ -6,49 +6,24 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "美的集团是高质量核心资产，但79元附近估值处于合理中部，安全边际不足，等待62-70元区间更有吸引力。",
+  "current_thesis": "美的集团是本批业务组合最均衡的高质量制造平台，但78.99元处于合理价值中部，2026Q1扣非净利润下降14.02%仍待半年报验证，当前只适合研究仓。",
   "fair_value_range": [72, 92],
   "buy_zone": [62, 70],
   "sell_or_reduce_zone": [95, 110],
   "position_plan": [
-    {
-      "condition": "股价处于买入区间且基本面未恶化",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于强吸引力区间且扣非利润和现金流未恶化",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价处于合理区间但未进入买入区间，仅作为核心观察仓",
-      "max_weight": 0.01
-    }
+    {"condition": "70元以上仅保留研究仓", "max_weight": 0.01},
+    {"condition": "62-70元且扣非利润与现金流未继续恶化", "max_weight": 0.03},
+    {"condition": "62元以下且复核确认长期价值未受损", "max_weight": 0.04}
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
+  "latest_report": "reports/2026-07-11-deep-review.md",
+  "report_history": ["reports/2026-07-07-initial.md", "reports/2026-07-11-deep-review.md"],
   "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年度报告披露后复查扣非利润、海外增长和ToB业务利润率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季度报告披露后复查全年盈利和现金流假设"
-    }
+    {"type": "date", "date": "2026-08-31", "reason": "复查半年报扣非利润、海外增长、ToB利润率和现金转换"},
+    {"type": "date", "date": "2026-10-31", "reason": "复查三季报并确认Q1利润背离是否延续"}
   ],
   "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入有安全边际的买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "进入减仓或不应追高区间"
-    }
+    {"type": "price_below", "price": 70, "reason": "进入有安全边际的买入区间上沿"},
+    {"type": "price_above", "price": 95, "reason": "进入需要盈利上修支撑的减仓区间"}
   ],
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "updated_at": "2026-07-11T18:00:00+08:00"
 }
