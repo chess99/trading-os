@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:000712",
+  "market": "CN",
+  "ticker": "000712",
+  "name": "锦龙股份",
+  "company_name": "锦龙股份",
+  "status": "active",
+  "updated_at": "2026-07-11",
+  "latest_report": "reports/2026-07-11-initial.md",
+  "report_history": [
+    "reports/2026-07-11-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "锦龙股份是券商股权控股平台，核心价值来自中山证券67.78%控股权、东莞证券20%参股权和潜在股权处置/重组期权；但中山证券盈利能力弱且监管历史较重，母公司治理和杠杆约束需要折价。当前若在8.5元附近，估值已接近乐观情景下沿，缺乏安全边际，宜等待5.6元以下或公告催化兑现后再评估买入。",
+  "quality_rating": "low_to_medium",
+  "valuation_rating": "expensive",
+  "fair_value_range": [
+    5.2,
+    6.8
+  ],
+  "buy_zone": [
+    4.8,
+    5.6
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    10.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于5.6元且无新增重大监管、债务或控制权负面公告",
+      "action": "建立观察仓",
+      "max_weight": 0.02,
+      "reason": "进入估值买入区后，券商资产NAV折价和事件期权开始具备安全边际"
+    },
+    {
+      "condition": "价格低于5.6元且东莞证券股权处置、中山证券盈利修复或控制权改善得到公告确认",
+      "action": "提高至事件驱动仓位",
+      "max_weight": 0.03,
+      "reason": "公告催化可提高SOTP兑现概率，但公司治理和券商周期风险仍限制仓位"
+    },
+    {
+      "condition": "价格高于8.5元且无可计量资产处置或重组公告兑现",
+      "action": "不加仓并逐步减仓",
+      "max_weight": 0.005,
+      "reason": "价格已接近乐观情景下沿，安全边际不足"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.6,
+      "reason": "进入买入区上沿，重新评估是否可建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "进入减仓区下沿，检查是否只有情绪溢价而无公告兑现"
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "reason": "超过乐观情景上沿，除非资产处置或重组已兑现，否则风险收益比明显恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、中山证券盈利和东莞证券股权处置进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、证券板块beta和控制权变化"
+    }
+  ],
+  "key_tracking_metrics": [
+    "东莞证券20%股权处置、质押、挂牌或资本运作进展",
+    "中山证券净利润、净资本和风险控制指标",
+    "中山证券新增监管措施或行政处罚",
+    "控股股东及一致行动人股权拍卖、质押、冻结和控制权变化",
+    "母公司债务、担保、现金余额和金融资产变现能力",
+    "券商指数、市场成交额、两融余额和权益市场风险偏好",
+    "公司PB相对中小券商可比公司的溢价或折价"
+  ]
+}
