@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:001322",
+  "market": "CN",
+  "ticker": "001322",
+  "name": "箭牌家居",
+  "company_name": "箭牌家居",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "quality_rating": "medium_plus",
+  "valuation_rating": "fair_to_expensive",
+  "current_thesis": "箭牌家居具备全国卫浴品牌、经销渠道和智能坐便器产品升级基础，但 2025 年盈利和经营现金流仍处低谷，2026Q1 仍亏损；当前价格接近合理价值中枢，适合观察或小仓试错，等待经销零售、毛利率、经营现金流和治理风险改善后再提高仓位。",
+  "fair_value_range": [
+    5.3,
+    7.2
+  ],
+  "buy_zone": [
+    4.6,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    7.8,
+    9.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_around_6_19_without_half_year_recovery_confirmation",
+      "action": "watch_or_open_observation_position_only",
+      "max_weight": 0.01,
+      "reason": "当前价格接近加权合理价值，2025 年利润和现金流仍处低谷，未到重仓买点。"
+    },
+    {
+      "condition": "price_below_5_20_and_2026H1_cashflow_margin_and_retail_channel_improve",
+      "action": "add_to_small_position",
+      "max_weight": 0.02,
+      "reason": "跌入买入区间且经营验证出现，可将观察仓提升为小仓位。"
+    },
+    {
+      "condition": "price_below_4_60_without_fundamental_deterioration",
+      "action": "add_countercyclical_position",
+      "max_weight": 0.03,
+      "reason": "估值回到更有安全边际的位置，但仍受地产后周期和治理风险约束。"
+    },
+    {
+      "condition": "net_margin_above_3_percent_and_operating_cashflow_covers_profit_for_two_half_years",
+      "action": "allow_core_position",
+      "max_weight": 0.04,
+      "reason": "只有盈利质量和现金流验证后，品牌渠道资产才值得更高仓位。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入初始买入区间，复核半年报经营现金流、毛利率和经销零售增速。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "进入高安全边际区间，若基本面未恶化可考虑加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.8,
+      "reason": "进入减仓观察区，若盈利和现金流没有同步修复则降低仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "进入乐观情景估值上沿附近，除非净利率恢复至 4% 左右，否则应卖出或大幅减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点验证收入、毛利率、经营现金流、应收账款和合同负债。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认 Q2/Q3 是否恢复盈利和现金流改善。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "domestic_dealer_retail_revenue_growth",
+    "smart_toilet_sales_volume_growth_and_revenue_mix",
+    "gross_margin",
+    "operating_cashflow_net",
+    "accounts_receivable",
+    "inventory",
+    "contract_liabilities",
+    "short_term_borrowings",
+    "dealer_logistics_model_transition",
+    "controlling_shareholder_pledge_and_controller_share_freeze_progress"
+  ]
+}
