@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:001227",
+  "market": "CN",
+  "ticker": "001227",
+  "name": "兰州银行",
+  "company_name": "兰州银行",
+  "status": "active",
+  "updated_at": "2026-07-11",
+  "latest_report": "reports/2026-07-11-initial.md",
+  "report_history": [
+    "reports/2026-07-11-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "低PB和稳定分红提供一定底部，但净息差、ROE、资本安全垫、房地产及地方平台相关敞口仍需2026年中报验证；当前只适合观察或小仓试探，不适合重仓买入。",
+  "quality_rating": "B-",
+  "valuation_rating": "cheap_but_needs_asset_quality_confirmation",
+  "fair_value_range": [
+    2.1,
+    2.55
+  ],
+  "buy_zone": [
+    1.75,
+    1.95
+  ],
+  "sell_or_reduce_zone": [
+    2.55,
+    3.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格进入1.75-1.95元且2026年中报前无新增重大资产质量负面公告",
+      "action": "建立观察仓",
+      "max_weight": 0.01,
+      "reason": "低于基准合理价值区间下沿，税前股息率提供一定底部收益，但资产质量仍需验证"
+    },
+    {
+      "condition": "价格低于1.85元且中报显示不良率低于1.85%、拨备覆盖率高于185%、核心一级资本充足率不低于8.4%",
+      "action": "加至小仓",
+      "max_weight": 0.02,
+      "reason": "估值折价足够且关键风控指标未恶化，可用小仓参与PB修复"
+    },
+    {
+      "condition": "价格高于2.55元或PB高于0.47倍而ROE、净息差、资产质量没有同步改善",
+      "action": "停止加仓并分批减仓",
+      "max_weight": 0.0,
+      "reason": "价格达到基准合理价值上沿，继续持有的风险补偿不足"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.95,
+      "reason": "进入首笔观察仓买入区，需要复核最新公告和资产质量指标"
+    },
+    {
+      "type": "price_below",
+      "price": 1.75,
+      "reason": "进入悲观情景下沿，若基本面未恶化可重新评估加仓赔率"
+    },
+    {
+      "type": "price_above",
+      "price": 2.55,
+      "reason": "达到基准合理价值上沿，应复核是否需要减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "接近乐观情景估值，需要强基本面兑现支撑，否则应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报，重点确认净息差、不良率、逾期率、拨备覆盖率和资本充足率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，判断全年利润和资产质量趋势"
+    }
+  ],
+  "key_tracking_metrics": [
+    "收盘价与PB",
+    "净息差",
+    "不良贷款率",
+    "关注类贷款占比",
+    "逾期贷款率",
+    "拨备覆盖率",
+    "拨贷比",
+    "核心一级资本充足率",
+    "房地产行业贷款余额及不良率",
+    "个人住房贷款余额",
+    "租赁和商务服务业贷款余额",
+    "水利环境和公共设施管理业贷款余额",
+    "前十大借款人集中度",
+    "每股分红和分红率",
+    "主要股东质押冻结进展"
+  ]
+}
