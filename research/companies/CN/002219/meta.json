@@ -1,0 +1,99 @@
+{
+  "symbol": "CN:002219",
+  "market": "CN",
+  "ticker": "002219",
+  "name": "新里程",
+  "company_name": "新里程",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "新里程具备区域医院网络、康养资产注入和利润修复弹性，但 2025-2026Q1 收入利润承压、短债与商誉减值风险、历史治理瑕疵使当前安全边际不足；等待医疗服务收入、经营现金流和资产注入质量验证后再考虑买入。",
+  "quality_rating": "medium_low",
+  "valuation_rating": "expensive",
+  "fair_value_range": [
+    1.55,
+    1.85
+  ],
+  "buy_zone": [
+    1.2,
+    1.45
+  ],
+  "sell_or_reduce_zone": [
+    2.35,
+    2.8
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 1.45 and 2026H1 medical service revenue turns positive with operating cash flow positive",
+      "action": "open_tracking_position",
+      "max_weight": 0.01,
+      "reason": "Only buy when valuation returns to the buy zone and core hospital operations show evidence of recovery."
+    },
+    {
+      "condition": "1.55 <= price and price <= 2.1",
+      "action": "hold_or_watch_no_add",
+      "max_weight": 0.02,
+      "reason": "Current valuation already prices in part of the recovery and asset injection expectation."
+    },
+    {
+      "condition": "price >= 2.35 without verified profit recovery or accretive asset injection",
+      "action": "reduce",
+      "max_weight": 0.01,
+      "reason": "Upside becomes driven mainly by expectation rather than verified earnings and cash flow."
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.45,
+      "reason": "Enter buy-zone review for a first small position if operating data is improving."
+    },
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "Re-underwrite downside risk, debt pressure and impairment risk before adding."
+    },
+    {
+      "type": "price_above",
+      "price": 2.35,
+      "reason": "Review for reduction unless earnings and cash flow have caught up with valuation."
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "Review after 2026 interim report for medical service revenue, cash flow, debt and impairment updates."
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "Review after 2026 third-quarter report for trend confirmation and asset injection progress."
+    }
+  ],
+  "key_tracking_metrics": [
+    "medical_service_revenue_growth",
+    "medical_service_gross_margin",
+    "outpatient_visits",
+    "inpatient_visits",
+    "bed_utilization_rate",
+    "revenue_per_bed",
+    "medical_insurance_receivable_days",
+    "operating_cash_flow",
+    "short_term_debt",
+    "accounts_payable",
+    "asset_liability_ratio",
+    "goodwill_and_impairment",
+    "pharmaceutical_segment_revenue_and_margin",
+    "eldercare_revenue_and_margin",
+    "related_party_asset_injection_terms",
+    "regulatory_rectification_progress"
+  ]
+}
