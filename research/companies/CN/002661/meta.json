@@ -1,0 +1,124 @@
+{
+  "symbol": "CN:002661",
+  "market": "CN",
+  "ticker": "002661",
+  "name": "克明食品",
+  "company_name": "陈克明食品股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "克明食品具备挂面龙头品牌和渠道基础，2025年现金流改善明显，但2026Q1利润同比大幅下滑、ROE偏低且生猪/屠宰业务增加波动。当前价格接近基准合理价值区，缺少足够安全边际，等待5.8元以下或连续季度利润修复证据。",
+  "quality_rating": "中低",
+  "valuation_rating": "中性",
+  "fair_value_range": [
+    6.5,
+    8.5
+  ],
+  "buy_zone": [
+    5.0,
+    5.8
+  ],
+  "sell_or_reduce_zone": [
+    10.0,
+    12.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于或等于5.80元，且食品主业收入没有连续两个季度下滑，经营现金流仍为正",
+      "action": "建立1%-2%观察仓",
+      "max_weight": 0.02,
+      "rationale": "进入安全边际区，但利润连续性仍需验证"
+    },
+    {
+      "condition": "价格低于或等于5.20元，且扣非净利润恢复趋势明确，生猪业务没有继续侵蚀现金流",
+      "action": "加仓至3%-4%",
+      "max_weight": 0.04,
+      "rationale": "悲观情景保护更充分，赔率改善"
+    },
+    {
+      "condition": "价格处于6.50-8.50元，且尚未看到连续两个季度扣非净利率改善",
+      "action": "仅跟踪，不追买",
+      "max_weight": 0.0,
+      "rationale": "当前估值接近基准合理价值，缺少安全边际"
+    },
+    {
+      "condition": "价格高于或等于10.00元，且没有年化归母净利润超过1.6亿元的证据",
+      "action": "减仓或放弃新买入",
+      "max_weight": 0.0,
+      "rationale": "估值已进入乐观情景，需要经营兑现支撑"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "currency": "CNY",
+      "action": "review_for_initial_position",
+      "reason": "进入安全边际区，可复核是否建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "currency": "CNY",
+      "action": "review_for_add_position",
+      "reason": "接近悲观情景估值下沿，赔率改善"
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "currency": "CNY",
+      "action": "review_for_reduce_or_avoid",
+      "reason": "进入乐观情景区间，需要利润兑现支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露",
+      "action": "复核食品加工收入、扣非净利率和经营现金流",
+      "reason": "中报将验证2026Q1利润下滑是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "青岛亚是加并表后披露收入、利润或客户进展",
+      "action": "复核冷冻面增长假设",
+      "reason": "收购协同是估值上行期权，需要并表数据验证"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "生猪和屠宰业务出现连续季度大额亏损或现金流恶化",
+      "action": "复核估值折价",
+      "reason": "周期业务可能继续拖累食品主业估值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "食品主业收入连续两个季度同比下滑",
+      "action": "复核买入区间",
+      "reason": "主业收入下滑会削弱安全边际假设"
+    }
+  ],
+  "key_tracking_metrics": [
+    "食品加工收入增速",
+    "面条收入增速",
+    "方便食品及冷冻面收入增速",
+    "扣非归母净利润",
+    "扣非净利率",
+    "经营活动现金流净额",
+    "ROE",
+    "存货周转",
+    "应收账款周转",
+    "生猪及屠宰业务利润贡献",
+    "青岛亚是加并表收入和利润"
+  ]
+}
