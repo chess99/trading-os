@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688150",
+  "market": "CN",
+  "ticker": "688150",
+  "name": "莱特光电",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "OLED终端材料量产和高毛利证明公司质量较高，Red Host、Green Prime与8.6代线提供增长，但京东方收入占85.56%、2026Q1收入利润双降、扩产及Q布资本开支上升；54.56元约107.5倍TTM PE已透支多重成功预期，等待32元以下与报表验证。",
+  "fair_value_range": [
+    32.0,
+    42.0
+  ],
+  "buy_zone": [
+    26.0,
+    32.0
+  ],
+  "sell_or_reduce_zone": [
+    46.0,
+    58.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于42元且2026年盈利预测未显著上修，或仍只有Q布建设进度而无客户验证",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价进入26-32元，京东方订单稳定、OLED收入恢复且存货增速不再高于收入",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于28元，客户分散、新品量产和Q布客户验证三项至少兑现两项，经营现金流未恶化",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价进入46-58元但盈利预测未同步上修，或京东方份额、毛利率、存货和扩产纪律任一核心假设破坏",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的OLED终端材料收入、京东方占比、Red Host与Green Prime、毛利率、存货及经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、京东方8.6代线材料供货及Q布设备安装和正式客户送样"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、可转债募投进度、Q布客户认证和实际资本开支"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32.0,
+      "reason": "进入买入区上沿，复核OLED收入、京东方订单和存货后可建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 26.0,
+      "reason": "进入较高安全边际区，基本面和扩产纪律未破坏时复核是否加至战略上限"
+    },
+    {
+      "type": "price_above",
+      "price": 46.0,
+      "reason": "进入减仓区，若盈利预测和客户验证未同步上修应降低仓位"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}

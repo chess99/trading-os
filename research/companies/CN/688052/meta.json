@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:688052",
+  "market": "CN",
+  "ticker": "688052",
+  "name": "纳芯微",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "汽车与泛能源驱动收入高速恢复，平台化与国产替代空间真实，但仍亏损、库存与经营现金流恶化，250.60元已透支较多盈利修复预期，等待价格和现金流验证。",
+  "fair_value_range": [170, 210],
+  "buy_zone": [140, 175],
+  "sell_or_reduce_zone": [230, 280],
+  "position_plan": [
+    {
+      "condition": "165-175元且收入同比高于25%、毛利率不低于33%、存货增速低于收入增速",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "145-165元且连续两个季度经营现金流改善、核心汽车项目未失效",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "低于140元后完成重新研究，确认商誉与库存风险可控且2027盈利路径成立",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-07-23",
+      "reason": "第二次临时股东会，核实A/H股激励最终条款与稀释"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "预约披露2026年半年报，复核盈利、现金流、存货与新品放量"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 175,
+      "reason": "进入观察仓候选区，需同步验证毛利率、库存与收入条件"
+    },
+    {
+      "type": "price_below",
+      "price": 140,
+      "reason": "进入深度价值候选区，禁止机械补仓并重新研究基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 230,
+      "reason": "进入减仓或不追价区，复核市场隐含的远期盈利假设"
+    },
+    {
+      "type": "price_above",
+      "price": 280,
+      "reason": "高于基准合理价值，除非基本面显著上修否则继续降低仓位"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}

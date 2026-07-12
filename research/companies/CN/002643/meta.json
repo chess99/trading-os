@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:002643",
+  "market": "CN",
+  "ticker": "002643",
+  "name": "万润股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "液晶、OLED升华前材料和车用沸石具备工艺与客户壁垒，OLED成品材料开始兑现且2026Q1恢复增长；但细分披露不足、扩产规模大且当前17.92元已隐含利润持续高增长，等待业绩验证或更低价格。",
+  "fair_value_range": [12.0, 15.0],
+  "buy_zone": [9.5, 11.5],
+  "sell_or_reduce_zone": [18.5, 22.0],
+  "position_plan": [
+    {
+      "condition": "股价低于9.5元，且客户、现金流和减值风险未恶化",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价处于9.5-11.5元，OLED或沸石至少一项保持增长",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价处于12.0-15.0元且中报验证利润与回款",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于15.0元但未进入减仓区，仅保留跟踪仓",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查Q2利润、应收账款、经营现金流和细分业务恢复。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及C05、蓬莱、PEI和OLED产能爬坡。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报与2027Q1，重估扩产后的资本回报和稳态自由现金流。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入有安全边际买入区，需先复核基本面是否完整。"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入强吸引力区，若基本面未破坏可提高至上限仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.5,
+      "reason": "进入减仓区，需有可验证的盈利预测上修才能维持仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "估值进入乐观情景，原则上退出并重新研究。"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}

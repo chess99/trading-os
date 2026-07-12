@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688550",
+  "market": "CN",
+  "ticker": "688550",
+  "name": "瑞联新材",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "液晶与OLED升华前材料基本盘稳健，医药中间体和PSPI/光刻胶已出现放量证据，但2026Q1毛利率与利润承压，52.58元约30倍TTM PE已预付较多2026H2-2027年增长，等待44元以下或连续报表验证。",
+  "fair_value_range": [
+    44.0,
+    54.0
+  ],
+  "buy_zone": [
+    38.0,
+    44.0
+  ],
+  "sell_or_reduce_zone": [
+    60.0,
+    68.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于48元且半年报尚未证明毛利率恢复和电子材料放量",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价进入38-44元，综合毛利率不低于39%且医药、电子材料增长逻辑未破坏",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于38元，半年报或三季报确认经营现金流恢复、电子材料批量供货和医药多产品商业化",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价进入60-68元但盈利预测未同步上修，或核心基本面止损触发",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的显示材料量价、综合毛利率、医药和电子材料收入、存货及经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及8000万元高性能光电材料项目投产和订单爬坡"
+    },
+    {
+      "type": "date",
+      "date": "2027-05-31",
+      "reason": "复核200吨PSPI项目完工、客户订单和产能利用率计划"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 44.0,
+      "reason": "进入买入区上沿，复核毛利率和订单后可建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 38.0,
+      "reason": "进入高安全边际区，基本面未破坏时复核是否加至4%上限"
+    },
+    {
+      "type": "price_above",
+      "price": 60.0,
+      "reason": "超过合理价值区，若盈利预测未上修应分批减仓"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}

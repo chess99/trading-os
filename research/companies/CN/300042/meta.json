@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:300042",
+  "market": "CN",
+  "ticker": "300042",
+  "name": "朗科科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "存储涨价周期推动2026Q1盈利大幅改善，但存货与借款同步扩张、经营现金流仍为负，专利许可已到期，企业级存储与算力尚未形成重大可审计收入；63.30元已接近乐观情景，当前赔率不合格。",
+  "fair_value_range": [
+    28.0,
+    42.0
+  ],
+  "buy_zone": [
+    22.0,
+    32.0
+  ],
+  "sell_or_reduce_zone": [
+    52.0,
+    65.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入22-32元，且最近季报经营现金流改善、存货周转正常、单季毛利率不低于16%，分三笔建仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于22元，确认下跌并非库存减值、治理恶化或行业结构性衰退导致，且企业级产品或现金流至少一项获得验证。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于52元或单季毛利率跌破16%且经营现金流仍为负，原则上只减不加。",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-08",
+      "reason": "复核2026半年报的单季毛利率、经营现金流、存货、跌价准备、借款与合同负债。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认存储景气延续性、库存现金化和服务器/算力收入进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、自由现金流、存货减值及第二曲线是否形成规模收入。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32.0,
+      "reason": "进入买入区上沿，需重新核验库存成本、现金流和毛利率。"
+    },
+    {
+      "type": "price_below",
+      "price": 22.0,
+      "reason": "进入深度价值复核区，确认不存在基本面证伪后才可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 65.0,
+      "reason": "超过减仓区上沿，除非正常化利润和自由现金流显著超预期，否则退出。"
+    }
+  ],
+  "updated_at": "2026-07-12T00:00:00+08:00"
+}

@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688378",
+  "market": "CN",
+  "ticker": "688378",
+  "name": "奥来德",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "八代线蒸发源已完成交付验收，2026年设备放量和回款推动盈利跃升，但当前价格已预支后续高世代线连续订单、材料规模放量及高利润率延续，等待更好的安全边际。",
+  "fair_value_range": [
+    36,
+    45
+  ],
+  "buy_zone": [
+    30,
+    36
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    65
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于40元，设备与材料盈利预期未继续上修",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价36至40元且半年报确认设备收入、回款和合同负债质量",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价30至36元且设备订单与材料验证逻辑未恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于30元，重新研究后确认内在价值未受损",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-20",
+      "reason": "复核2026年半年报分产品收入、毛利率、合同负债、存货和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报设备收入连续性与材料业务恢复情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、扩产利用率、自由现金流及2027年设备订单"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 36,
+      "reason": "进入买入区，复核订单、验收、材料量产和存货减值后考虑建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入悲观情景价格，必须重新研究而非机械补仓"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "进入减仓区，若2027年盈利预期未同步上修则降低仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 65,
+      "reason": "超过乐观情景上沿，原则上退出估值仓位"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}

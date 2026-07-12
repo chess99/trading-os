@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:603185",
+  "market": "CN",
+  "ticker": "603185",
+  "name": "弘元绿能",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "硅料—硅片—电池—组件一体化成本与资产负债率相对同业有优势，2026Q1扣非亏损收窄且经营现金流转正；但硅料全部自用，不是单一涨价利润弹簧，电池与财务库存激增、自由现金有限及重资产减值风险使当前PB折价仍属合理，仅在更深折价并出现扣非、库存和现金流共同改善时低仓位参与。",
+  "fair_value_range": [
+    12,
+    20
+  ],
+  "buy_zone": [
+    9.5,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    22,
+    28
+  ],
+  "position_plan": [
+    {
+      "condition": "股价处于12.5-20元且扣非盈利与库存改善尚未同时确认",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于9.5-12.5元，且单季扣非转正、存货环比下降、产业链价差稳定",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "有息债务明显上升、受限资金扩大、被迫股权融资或追加重大资产减值",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年中报披露后复核扣非利润、存货、受限资金、资本开支与经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后确认是否连续两个季度扣非转正及自由现金流改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "光伏强制能耗标准实施前复核落后产能实际退出、行业库存和公司产能利用率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入买入区上沿，需同时验证扣非转正、库存下降和产业链价差稳定"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入深度折价区，先做流动性和资产减值专项复核，禁止机械补仓"
+    },
+    {
+      "type": "price_above",
+      "price": 22,
+      "reason": "进入减仓或不追高区，若扣非ROE仍低于6%应兑现周期溢价"
+    }
+  ],
+  "updated_at": "2026-07-12T20:00:00+08:00"
+}

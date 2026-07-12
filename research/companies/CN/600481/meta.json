@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600481",
+  "market": "CN",
+  "ticker": "600481",
+  "name": "双良节能",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "节能节水装备提供真实盈利底盘，但近100GW单晶硅产能、高额受限资产和短债使权益成为高杠杆硅片价差期权；公司不是硅料涨价的纯受益标的，当前价已提前计入明显周期修复。",
+  "fair_value_range": [
+    3.2,
+    4.5
+  ],
+  "buy_zone": [
+    2.4,
+    3.0
+  ],
+  "sell_or_reduce_zone": [
+    5.2,
+    6.2
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于4.5元，且光伏板块仍亏损、自由现金和净债务未明显改善",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价位于3.2至4.5元，节能设备订单稳定但光伏尚未验证盈亏平衡",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价位于2.4至3.0元，且中报确认光伏亏损收窄、短期债务下降、经营现金不依赖集团往来",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于2.4元，节能节水毛利率仍高于25%、无新增重大减值或流动性恶化",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报，分拆节能、新能源装备、硅片和组件毛利，并核对减值、受限资金与短债。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，验证光伏是否接近盈亏平衡及经营现金来源质量。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "进入初始买入观察区，需重估硅片价差、减值和流动性。"
+    },
+    {
+      "type": "price_below",
+      "price": 2.4,
+      "reason": "进入深度折价区，仅在节能底盘和流动性未恶化时考虑提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.2,
+      "reason": "进入减仓区，需检验是否已有光伏盈利和去杠杆支撑。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "超过乐观情景起点并接近转债转股价，应评估估值透支和稀释。"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}

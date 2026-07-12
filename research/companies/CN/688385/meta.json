@@ -3,18 +3,15 @@
   "market": "CN",
   "ticker": "688385",
   "name": "复旦微电",
-  "company_name": "复旦微电",
   "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
+  "updated_at": "2026-07-12T18:00:00+08:00",
+  "latest_report": "reports/2026-07-12-followup.md",
   "report_history": [
-    "reports/2026-07-09-initial.md"
+    "reports/2026-07-09-initial.md",
+    "reports/2026-07-12-followup.md"
   ],
-  "rating": "watch",
   "current_rating": "watch",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "current_thesis": "复旦微电是国产FPGA稀缺平台型公司，非挥发存储器和智能电表MCU提供利润稳定器，2026年扣非利润修复值得跟踪；但当前价格已较充分反映复苏和国产替代预期，需等待55元以下或正式财报继续验证后再建立首笔仓位。",
+  "current_thesis": "复旦微电是国产FPGA稀缺平台型公司，非挥发存储器和智能电表MCU提供利润稳定器，2026H1扣非利润修复方向由业绩预告支持；但正式半年报尚未验证分部毛利率、现金流、存货和应收质量，且7月9日以来没有新增经营公告支持价值上修。维持watch，等待55元以下并结合正式财报再建立首笔仓位。",
   "fair_value_range": [
     50,
     65
@@ -28,7 +25,6 @@
     90
   ],
   "currency": "CNY",
-  "base_currency": "CNY",
   "position_plan": [
     {
       "condition": "股价低于55元，且2026H1正式半年报确认扣非净利润、FPGA收入和毛利率改善",
@@ -43,10 +39,16 @@
       "reason": "国产FPGA稀缺性与安全边际同时具备"
     },
     {
-      "condition": "股价高于75元，或估值主要由一次性公允价值收益驱动",
-      "action": "不新增并择机降低仓位",
+      "condition": "股价处于55-75元，正式半年报尚未同时确认FPGA增长、毛利率和现金流改善",
+      "action": "不新增，仅保留低成本观察仓",
       "max_weight": 0.01,
-      "reason": "当前价格已较充分反映复苏预期，经营利润兑现要求高"
+      "reason": "价格位于合理价值上沿或以上，基本面验证不足"
+    },
+    {
+      "condition": "股价高于75元，或估值主要由一次性公允价值收益驱动",
+      "action": "不新增并降至极小观察仓",
+      "max_weight": 0.005,
+      "reason": "盘中已触发原减仓线但没有新增经营硬证据，经营利润兑现要求高"
     }
   ],
   "price_triggers": [
@@ -69,23 +71,13 @@
   "review_triggers": [
     {
       "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报正式数据、扣非净利质量和产品线毛利率"
+      "date": "2026-08-18",
+      "reason": "按预约披露日复查2026年半年报正式数据、扣非净利质量、产品线毛利率、经营现金流、存货和应收账款"
     },
     {
       "type": "date",
       "date": "2026-10-31",
       "reason": "复查三季报，确认FPGA、非挥发存储器、智能电表MCU修复是否延续"
     }
-  ],
-  "key_tracking_metrics": [
-    "FPGA及其他产品收入增速和毛利率",
-    "2026H1扣非净利润与公允价值变动收益拆分",
-    "综合毛利率是否维持在55%以上",
-    "非挥发存储器收入是否恢复正增长",
-    "安全与识别芯片毛利率是否改善",
-    "智能电表MCU和车规MCU出货增长",
-    "存货余额、存货跌价准备和应收账款周转",
-    "研发投入占收入比例及资本化比例"
   ]
 }

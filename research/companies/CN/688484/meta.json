@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688484",
+  "market": "CN",
+  "ticker": "688484",
+  "name": "南芯科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "南芯科技正由消费电子快充芯片向汽车、工业和智能算力平台扩张，收入增长与研发管线真实，但2025年至2026Q1利润、现金转换和库存质量明显承压，44.27元已计入较强的新品商业化预期，等待29-34元或费用与现金流拐点。",
+  "fair_value_range": [
+    34.0,
+    42.0
+  ],
+  "buy_zone": [
+    29.0,
+    34.0
+  ],
+  "sell_or_reduce_zone": [
+    48.0,
+    55.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于42元且利润和经营现金流尚未出现拐点",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入29-34元且存货、应收账款增速降至不高于收入增速",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于买入区且连续两个季度毛利额增速高于研发及销售费用增速、经营现金流改善",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价进入48-55元但2027年正常化EPS仍低于0.9元",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的分业务增长、毛利率、研发费用率、存货、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断费用经营杠杆和现金转换是否出现拐点"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-25",
+      "reason": "南芯转债进入转股期，复核转股比例、转股价调整和股本稀释"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 34.0,
+      "reason": "进入买入观察区，需复核库存、应收和研发转化效率"
+    },
+    {
+      "type": "price_below",
+      "price": 29.0,
+      "reason": "低于悲观与基准情景交界，先排除客户流失、库存减值或项目延期"
+    },
+    {
+      "type": "price_above",
+      "price": 48.0,
+      "reason": "进入乐观情景定价，若量产和利润未兑现应减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 55.0,
+      "reason": "超过基础合理价值，除非汽车与算力收入、自由现金流显著超预期，否则退出大部分仓位"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}

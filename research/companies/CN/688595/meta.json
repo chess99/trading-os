@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688595",
+  "market": "CN",
+  "ticker": "688595",
+  "name": "芯海科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "模拟信号链新品、BMS/PPG和计算外围芯片已开始放量，但公司仍亏损且经营现金流为负，2026Q1毛利率下滑、库存周转变慢，当前价格已提前反映EC与汽车业务成功，等待23-28元安全边际或盈利现金流验证。",
+  "fair_value_range": [
+    28.0,
+    35.0
+  ],
+  "buy_zone": [
+    23.0,
+    28.0
+  ],
+  "sell_or_reduce_zone": [
+    42.0,
+    50.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格高于35元且公司仍亏损、经营现金流为负",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格进入23-28元，且毛利率不低于30%、存货增速不高于收入增速",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于23元且无客户流失、重大减值或流动性恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度经营现金流转正或接近盈亏平衡，且EC或BMS规模出货获得验证",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报的收入增速、毛利率、经营现金流、存货及分产品增长。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报的涨价传导、计算外围芯片放量和单季盈亏平衡进度。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报是否完成收入增长30%的激励目标，以及现金转换和完全摊薄股本。"
+    },
+    {
+      "type": "date",
+      "date": "2027-06-30",
+      "reason": "核验延期后的汽车MCU募投项目、ASIL-D产品认证和客户导入。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 28.0,
+      "reason": "进入买入复核区，确认毛利率、库存和经营现金流未恶化后才建立小仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 23.0,
+      "reason": "进入深度价值复核区，区分估值错杀与产品、库存或流动性恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 42.0,
+      "reason": "进入减仓区；若盈利或大客户量产未同步上修，应降低仓位。"
+    }
+  ],
+  "updated_at": "2026-07-12T18:00:00+08:00"
+}

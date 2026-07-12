@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688508",
+  "market": "CN",
+  "ticker": "688508",
+  "name": "芯朋微",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "芯朋微具备高压电源管理芯片、家电客户基础和服务器一次至三次电源全链路期权，但2025年利润主要由金融资产公允价值收益抬升，扣非ROE和现金转化偏低，2026Q1收入、扣非利润及现金流同步走弱；89.18元已计入服务器快速放量的乐观预期，等待45至55元或经营证据显著增强。",
+  "fair_value_range": [
+    54,
+    68
+  ],
+  "buy_zone": [
+    45,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    82,
+    100
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于68元且服务器收入绝对额、二三次电源量产及经营现金流尚无新增硬证据",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入45至55元且存货周转、资产减值、家电毛利率与服务器量产假设未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于45元且半年报或三季报确认经营现金流修复、服务器批量交付和库存去化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价进入82至100元且缺乏足以提高合理价值的新经营证据",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核半年报的服务器收入、分部毛利率、存货周转、资产减值、经营现金流和研发投入。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报、服务器二三次电源量产转化及高管减持实施情况。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报与2027Q1的扣非利润、现金转化、库存去化和服务器汽车商业化。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入买入区上沿，先复核库存减值、家电毛利率和服务器量产证据。"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入深度折价区，仅在核心假设完整且现金流改善时提高至最大3%仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 82,
+      "reason": "进入减仓区，若没有服务器收入和现金流硬证据则分批降低仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 100,
+      "reason": "明显超过基准合理价值上沿，缺乏价值上修证据时退出战术仓。"
+    }
+  ],
+  "updated_at": "2026-07-12"
+}
