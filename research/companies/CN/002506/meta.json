@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:002506",
+  "market": "CN",
+  "ticker": "002506",
+  "name": "协鑫集成",
+  "company_name": "协鑫集成科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "协鑫集成具备组件规模和协鑫体系资源，但2025年归母净亏11.66亿元、2026Q1继续亏损1.87亿元，归母权益降至9.42亿元，资产负债表脆弱；当前2.70元对应约157.8亿元市值和约16.8倍2026Q1 PB，已显著透支光伏反转期权，缺少安全边际。",
+  "quality_rating": "D+",
+  "valuation_rating": "高估",
+  "fair_value_range": [
+    0.6,
+    1.2
+  ],
+  "buy_zone": [
+    0.5,
+    0.8
+  ],
+  "sell_or_reduce_zone": [
+    1.5,
+    2.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "<=0.50",
+      "action": "可建立1.0%-1.5%观察仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "0.50-0.80",
+      "action": "可建立0.5%-1.0%观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "0.80-1.20",
+      "action": "观察，不主动买",
+      "max_weight": 0
+    },
+    {
+      "condition": "1.20-1.50",
+      "action": "不加仓",
+      "max_weight": 0
+    },
+    {
+      "condition": ">1.50",
+      "action": "不买，已有仓位考虑减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "condition": "price <= 0.80",
+      "price": 0.8,
+      "reason": "进入有安全边际买入价",
+      "action": "复查是否建立0.5%-1.0%观察仓"
+    },
+    {
+      "type": "price_below",
+      "condition": "price <= 0.50",
+      "price": 0.5,
+      "reason": "进入强吸引力买入价",
+      "action": "复查是否建立1.0%-1.5%观察仓"
+    },
+    {
+      "type": "price_above",
+      "condition": "price > 1.50",
+      "price": 1.5,
+      "reason": "高于不应追高价",
+      "action": "不追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026半年度报告预计披露后",
+      "reason": "验证收入下滑、毛利率、净亏损和经营现金流是否改善",
+      "action": "复查收入、毛利率、净亏损和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026三季度报告预计披露后",
+      "reason": "验证盈利拐点、归母权益和现金流是否稳定",
+      "action": "复查盈利拐点、归母权益和现金流"
+    }
+  ],
+  "key_tracking_metrics": [
+    "组件毛利率",
+    "单季度归母净利润",
+    "经营活动现金流净额",
+    "归母权益",
+    "资产负债率",
+    "海外收入占比",
+    "应收账款周转与坏账计提",
+    "存货周转与跌价准备",
+    "股东质押比例",
+    "担保与关联交易实际发生额"
+  ]
+}
