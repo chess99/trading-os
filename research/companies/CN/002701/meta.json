@@ -1,0 +1,98 @@
+{
+  "symbol": "CN:002701",
+  "market": "CN",
+  "ticker": "002701",
+  "name": "奥瑞金",
+  "company_name": "奥瑞金科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "金属包装龙头，客户和产能网络有真实壁垒，中粮包装整合带来规模和协同弹性；但2025年扣非利润未增长、两片罐毛利率偏低、应收账款和净债务较高，当前约4.60元只适合观察或小仓，4.50元以下才进入更有纪律的买入区。",
+  "quality_rating": "中上",
+  "valuation_rating": "偏低但安全边际尚需价格配合",
+  "fair_value_range": [5.5, 6.8],
+  "buy_zone": [4.0, 4.5],
+  "sell_or_reduce_zone": [6.8, 7.2],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于或等于4.50元，且未出现核心客户流失、应收账款恶化或中粮包装整合失败迹象",
+      "action": "分批建仓",
+      "target_position": "2%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价低于或等于4.20元，且2026年扣非利润和经营现金流趋势保持改善",
+      "action": "提高到中等仓位",
+      "target_position": "5%-7%",
+      "max_weight": 0.07
+    },
+    {
+      "condition": "股价高于6.80元且扣非利润没有明显上修",
+      "action": "减仓或停止加仓",
+      "target_position": "0%-3%",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "unit": "CNY/share",
+      "reason": "低于纪律买入区上沿，安全边际开始足够",
+      "action": "进入分批买入区，复核最新财报和应收账款"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "unit": "CNY/share",
+      "reason": "相对合理价值中枢折价约三成，若基本面未恶化赔率较好",
+      "action": "若基本面未恶化，可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "unit": "CNY/share",
+      "reason": "接近合理价值区间上沿，除非盈利上修否则安全边际消失",
+      "action": "进入减仓观察区，除非盈利预测上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "预计2026年半年度报告披露后",
+      "reason": "预计2026年半年度报告披露后",
+      "action": "复核扣非利润、经营现金流、应收账款和二片罐毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "预计2026年三季度报告披露后",
+      "reason": "预计2026年三季度报告披露后",
+      "action": "复核中粮包装整合、净债务和全年盈利假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "预计2026年年度报告披露后",
+      "reason": "预计2026年年度报告披露后",
+      "action": "重估合理价值、买入区和仓位上限"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润",
+    "经营现金流净额/扣非归母净利润",
+    "应收账款周转和应收账款增速",
+    "二片罐毛利率",
+    "净债务/EBITDA",
+    "财务费用",
+    "前五大客户销售占比"
+  ]
+}
