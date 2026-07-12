@@ -1,0 +1,101 @@
+{
+  "symbol": "CN:002282",
+  "market": "CN",
+  "ticker": "002282",
+  "name": "博深股份",
+  "company_name": "博深股份",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "博深股份是现金流尚可、估值不贵但ROE偏低的工业耗材与轨交材料组合。涂附磨具提供收入底盘，金刚石工具提供出口弹性，轨交制动材料在2025年扭亏并可能受益于CR450批量供货；当前5.71元接近合理价值区间下沿但安全边际不足，等待4.80元以下或半年报确认现金流与轨交盈利持续性后再建立首笔仓位。",
+  "quality_rating": "medium",
+  "valuation_rating": "neutral",
+  "fair_value_range": [
+    5.8,
+    7.2
+  ],
+  "buy_zone": [
+    4.5,
+    5.1
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    8.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price_below_4.80_or_2026H1_cashflow_confirms",
+      "action": "build_initial_watch_position",
+      "max_weight": 0.015,
+      "reason": "当前估值接近合理区间下沿但安全边际不足，低于4.80元或现金流确认后可建立观察仓。"
+    },
+    {
+      "condition": "price_below_4.50_and_core_financials_stable",
+      "action": "add_position",
+      "max_weight": 0.04,
+      "reason": "若价格进入更深折价且收入、扣非利润和经营现金流未恶化，赔率改善。"
+    },
+    {
+      "condition": "rail_brake_business_profitable_for_two_periods_with_order_visibility",
+      "action": "raise_cap_selectively",
+      "max_weight": 0.05,
+      "reason": "轨交制动材料若持续盈利并获得订单验证，可提高利润中枢和估值上限。"
+    },
+    {
+      "condition": "price_above_7.20_without_profit_upgrade",
+      "action": "reduce_position",
+      "max_weight": 0.02,
+      "reason": "价格超过合理价值区间上沿但基本面未上修时，风险收益转弱。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入首笔观察仓触发区，安全边际开始出现。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入核心买入区，可在基本面未恶化时加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "超过合理价值区间上沿，需检查是否有利润上修支撑。"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "进入乐观估值区，除非利润中枢明显上移，否则应大幅减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看经营现金流、轨交装备盈利持续性和出口毛利率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1利润下滑是否延续。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "涂附磨具收入增速与营业利润率",
+    "金刚石工具出口收入、毛利率与汇率影响",
+    "轨交制动盘和动车组闸片收入、毛利率、订单进展",
+    "合并毛利率、扣非净利率、销售费用率、研发费用率",
+    "经营现金流净额与归母净利润比值",
+    "应收账款周转、存货周转和信用减值",
+    "ROE、分红率、资本开支和国资协同进展"
+  ]
+}
