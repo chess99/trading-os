@@ -1,0 +1,132 @@
+{
+  "symbol": "CN:002590",
+  "market": "CN",
+  "ticker": "002590",
+  "name": "万安科技",
+  "company_name": "浙江万安科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是汽车底盘控制系统和轻量化底盘二线供应商，受益于底盘电控、商用车安全法规和新能源车结构升级，但当前利润率偏薄、应收和存货占用高，新产品期权尚未充分兑现。以2026-07-10收盘价9.55元计，价格位于合理区间上半段，安全边际不足。",
+  "quality_rating": "B-",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    7.5,
+    10.5
+  ],
+  "buy_zone": [
+    6.3,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    11.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格处于7.5-10.5元合理区间内",
+      "action": "观察，首笔仓位0%，最高仓位5%",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格<=7.5元且基本面未恶化",
+      "action": "建立1%-3%仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格<=6.3元且现金流和订单未恶化",
+      "action": "提高至3%-5%仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格>11.5元且扣非利润没有上修",
+      "action": "不追高，已有仓位降风险",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "direction": "below",
+      "reason": "低于基准价值约20%，开始具备安全边际",
+      "action": "进入有安全边际买入区，复核基本面后建立1%-3%仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 6.3,
+      "direction": "below",
+      "reason": "接近悲观和资产锚区间，赔率明显改善",
+      "action": "进入强吸引力区，现金流和订单未恶化时提高至3%-5%仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "direction": "above",
+      "reason": "达到合理价值区间上沿，需要业绩上修支撑",
+      "action": "进入合理价值上沿，复核是否已有业绩上修证据"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "direction": "above",
+      "reason": "开始预支智能底盘和机器人期权，安全边际不足",
+      "action": "不追高，已有仓位考虑降风险"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报预计已披露",
+      "trigger": "2026年半年报披露",
+      "action": "复查收入、扣非净利率、经营现金流和应收存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报窗口复查新产品进展",
+      "trigger": "新增EMB/EHB/AEB/固定卡钳/轻量化副车架量产或重大定点公告",
+      "action": "复核增长假设和估值上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报可验证连续季度利润和现金流质量",
+      "trigger": "连续两个季度扣非净利润同比下滑或经营现金流/归母净利润低于0.8",
+      "action": "下调质量评级并复核买入区间"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "价格战和营运资本风险需要在季报中复查",
+      "trigger": "毛利率跌破14%或应收账款加应收款项融资明显快于收入增长",
+      "action": "提高风险折价"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "年末复查非主业投资和资本配置纪律",
+      "trigger": "非主业机器人或具身智能投资继续扩大",
+      "action": "复核资本配置纪律"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入同比增速",
+    "扣非归母净利润和扣非净利率",
+    "经营活动现金流净额/归母净利润",
+    "综合毛利率和主营毛利率",
+    "应收账款+应收款项融资/营业收入",
+    "存货余额、存货周转和跌价准备",
+    "EMB/EHB/AEB/EPB/固定卡钳/XEPS新增定点和量产收入",
+    "资本开支和非主业投资金额",
+    "主要客户新增定点及生命周期销售金额"
+  ]
+}

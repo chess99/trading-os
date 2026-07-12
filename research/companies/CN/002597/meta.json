@@ -1,0 +1,143 @@
+{
+  "symbol": "CN:002597",
+  "market": "CN",
+  "ticker": "002597",
+  "name": "金禾实业",
+  "company_name": "安徽金禾实业股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "金禾实业是国内甜味剂和精细化工一体化龙头，资产负债表稳健，但2026Q1利润同比大幅下滑，显示甜味剂景气恢复尚未确认；2026-07-10收盘价19.59元接近基准合理区间中枢偏上，等待16.5元以下或连续两个季度毛利率和净利率修复后再开仓。",
+  "quality_rating": "B+",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    17.0,
+    22.5
+  ],
+  "buy_zone": [
+    14.0,
+    16.5
+  ],
+  "sell_or_reduce_zone": [
+    23.5,
+    28.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价小于等于14.0元且未发生基本面破坏",
+      "max_weight": 0.05,
+      "price": "<=14.0",
+      "position": "4%-5%",
+      "action": "强吸引力买入"
+    },
+    {
+      "condition": "股价在14.0元到16.5元之间且食品添加剂毛利率不继续恶化",
+      "max_weight": 0.03,
+      "price": "14.0-16.5",
+      "position": "2%-3%",
+      "action": "有安全边际买入"
+    },
+    {
+      "condition": "股价在16.5元到19.0元之间且至少看到一个季度毛利率环比修复",
+      "max_weight": 0.015,
+      "price": "16.5-19.0",
+      "position": "0%-1.5%",
+      "action": "小仓跟踪，需看到毛利率环比修复"
+    },
+    {
+      "condition": "股价在19.0元到22.5元之间",
+      "max_weight": 0.0,
+      "price": "19.0-22.5",
+      "position": "0%",
+      "action": "观察"
+    },
+    {
+      "condition": "股价高于23.5元且利润恢复尚未被报表验证",
+      "max_weight": 0.0,
+      "price": ">23.5",
+      "position": "0%或降低观察仓",
+      "action": "不追高"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "direction": "below",
+      "reason": "低于安全边际买入价，基准情景下有约25%以上上行空间",
+      "action": "进入有安全边际买入区，复查基本面后可开首笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "direction": "below",
+      "reason": "低于悲观情景上沿，资产价格保护更强",
+      "action": "进入强吸引力买入区，若基本面未破坏可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 23.5,
+      "direction": "above",
+      "reason": "高于基准合理区间，缺少安全边际",
+      "action": "不应追高，除非利润恢复已被报表验证"
+    },
+    {
+      "type": "price_above",
+      "price": 28.0,
+      "direction": "above",
+      "reason": "进入乐观情景估值区，需要已验证的利润恢复支撑",
+      "action": "考虑降低到观察仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026H1报告披露后复查食品添加剂毛利率、归母净利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026Q3报告披露后判断毛利率和净利率是否连续修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后复算正常化利润和估值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "name": "食品添加剂毛利率",
+      "current": "2025年30.37%",
+      "watch": "低于25%警惕，高于30%且环比修复为正面"
+    },
+    {
+      "name": "归母净利润",
+      "current": "2025年3.47亿元；2026Q1 0.96亿元",
+      "watch": "年化低于3亿元警惕，恢复到5.5亿元以上确认改善"
+    },
+    {
+      "name": "经营现金流净额",
+      "current": "2025年5.61亿元；2026Q1 -0.28亿元",
+      "watch": "经营现金流/净利润连续低于1需要复查"
+    },
+    {
+      "name": "电子化学品收入",
+      "current": "2025年0.83亿元，同比增长185.50%",
+      "watch": "年收入突破2亿元且毛利率改善为正面"
+    },
+    {
+      "name": "PB",
+      "current": "2026-07-10约1.41倍",
+      "watch": "低于1.2倍才有更强资产安全边际"
+    }
+  ]
+}
