@@ -1,0 +1,121 @@
+{
+  "symbol": "CN:002733",
+  "market": "CN",
+  "ticker": "002733",
+  "name": "雄韬股份",
+  "company_name": "深圳市雄韬电源科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司受益于数据中心UPS备电、海外通信储能和越南产能布局，但2025年ROE仅约2.94%、2026Q1归母利润同比仅增0.76%，当前价格对应约112倍TTM PE，已经显著透支乐观情景；在订单、毛利率、现金流和ROE共同验证前不买。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    8.0,
+    12.0
+  ],
+  "buy_zone": [
+    0.0,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于9元，且最近一期报告未出现应收账款、存货或经营现金流明显恶化",
+      "action": "建立观察仓",
+      "target_position": "0.5%-1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于9-12元，且数据中心UPS收入、毛利率和回款质量连续两个季度改善",
+      "action": "维持小仓位或等待更清晰验证",
+      "target_position": "0%-0.5%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价高于16元但归母净利润和ROE未出现同步提升",
+      "action": "不新增并考虑减仓",
+      "target_position": "0%",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "currency": "CNY",
+      "reason": "低于合理价值上沿约25%，进入安全边际复核区",
+      "action": "进入买入复核区"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "currency": "CNY",
+      "reason": "显著高于合理价值区间且需要高利润增长兑现",
+      "action": "进入减仓复核区"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露窗口后，重点复核收入增长、利润率、现金流、ROE和数据中心UPS订单",
+      "reason": "中报可验证AI数据中心和海外订单是否开始转化为收入与利润",
+      "action": "复核收入增长、利润率、现金流和ROE"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露窗口后，复核全年订单兑现和毛利率趋势",
+      "reason": "三季报可观察收入增长是否带来经营杠杆",
+      "action": "复核增长假设和估值区间"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露窗口后，复核海外收入、数据中心UPS贡献和资本开支效率",
+      "reason": "年报可验证分产品、分地区和现金流质量",
+      "action": "重估质量评级和合理价值"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027年中报披露窗口后，复核利润兑现是否足以支撑观察评级",
+      "reason": "若2027年仍未兑现利润弹性，应降低长期成长假设",
+      "action": "决定是否维持观察或下调为回避"
+    },
+    {
+      "type": "date",
+      "date": "2027-10-31",
+      "condition": "2027年三季报披露窗口后，复核订单、毛利率和经营现金流是否连续改善",
+      "reason": "连续季度改善是从主题股转为基本面资产的必要条件",
+      "action": "调整仓位计划"
+    },
+    {
+      "type": "date",
+      "date": "2028-04-30",
+      "condition": "2027年年报披露窗口后，复核1-3年跟踪指标并重做初始假设",
+      "reason": "完整年度数据可评估本次初始研究假设是否成立",
+      "action": "重新出具跟踪研究"
+    }
+  ],
+  "key_tracking_metrics": [
+    "数据中心UPS相关收入、订单和毛利率",
+    "海外收入占比及越南工厂产能利用率",
+    "综合毛利率和净利率",
+    "经营现金流净额/归母净利润",
+    "应收账款和存货周转",
+    "ROE",
+    "氢能、钠电、固态电池收入贡献"
+  ]
+}
