@@ -1,0 +1,119 @@
+{
+  "symbol": "CN:002357",
+  "market": "CN",
+  "ticker": "002357",
+  "name": "富临运业",
+  "company_name": "四川富临运业集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "四川道路客运区域龙头，站场、线路、资质和天府行平台有区域资产价值，但传统客运收入长期承压，2025年利润主要由投资收益、政府补助和资产处置支撑。当前价格已高于保守合理价值区间，等待6.2元以下安全边际或控制权/分红/新业务改善被核验。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    6.0,
+    7.4
+  ],
+  "buy_zone": [
+    0,
+    6.2
+  ],
+  "sell_or_reduce_zone": [
+    7.4,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_above_buy_zone",
+      "action": "观察，首笔仓位0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "price_lte_6.2",
+      "action": "复核半年报和控制权进展后，可建1%-3%观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price_lte_5.2",
+      "action": "若无重大安全事故和治理恶化，可提高至3%-5%，最大仓位5%",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "reason": "进入有安全边际买入区",
+      "action": "进入有安全边际买入区，复核半年报和控制权进展后可建1%-3%观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入强吸引力买入区",
+      "action": "进入强吸引力买入区，若无重大安全事故和治理恶化，可提高至3%-5%。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.8,
+      "reason": "高于不应追高价",
+      "action": "不追高；已有仓位考虑降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报通常已披露，需要复核基本面和估值假设",
+      "event": "披露2026年半年报或三季报",
+      "action": "复核收入、扣非净利、经营现金流、投资收益和补助占比"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "控制权变化可能改变治理、分红和资产配置预期",
+      "event": "控制权转让完成、失败或披露新的治理安排",
+      "action": "复核治理、资本配置、分红和资产注入预期"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "成都片区资产处置会影响现金、净资产和利润中枢",
+      "event": "成都片区资产/股权转让完成并披露损益和现金流",
+      "action": "重算SOTP和利润中枢"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "道路客运安全事故会直接影响质量评级和估值折扣",
+      "event": "发生重大安全生产事故或监管处罚",
+      "action": "下调质量评级并重新评估仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "分红、资产注入或新业务订单会改变乐观情景概率",
+      "event": "宣布现金分红、资产注入、重大资产处置或低空/无人物流商业化订单",
+      "action": "评估是否进入乐观情景"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "客运收入与站务收入同比增速",
+    "扣非归母净利润",
+    "经营现金流净额/归母净利润",
+    "投资收益及其来源",
+    "政府补助和资产处置收益占利润比例",
+    "天府行日均客流和SaaS外拓收入",
+    "便民快巴线路数、服务人次和上座率",
+    "包车/通勤项目数和收入增速",
+    "有息负债、财务费用和资本开支",
+    "现金分红金额与分红率"
+  ]
+}
