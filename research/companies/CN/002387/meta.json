@@ -1,0 +1,123 @@
+{
+  "symbol": "CN:002387",
+  "market": "CN",
+  "ticker": "002387",
+  "name": "维信诺",
+  "company_name": "维信诺科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备国内 AMOLED 技术和客户卡位，但仍处重资产亏损消化期；2025 年收入 81.44 亿元、归母净利润 -23.89 亿元，2026Q1 仍亏损 -5.28 亿元。当前 8.08 元、约 112.86 亿元市值已隐含较强扭亏预期，安全边际不足，等待 2026 半年报验证毛利率、现金流和亏损收窄。",
+  "quality_rating": "C+",
+  "valuation_rating": "偏贵/安全边际不足",
+  "fair_value_range": [
+    5.8,
+    7.2
+  ],
+  "buy_zone": [
+    4.8,
+    5.8
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    10.4
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 4.8",
+      "action": "强吸引力买入",
+      "position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "4.8 < price <= 5.8",
+      "action": "有安全边际买入",
+      "position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "5.8 < price <= 7.2",
+      "action": "合理区，仅跟踪仓",
+      "position": "0.5%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "7.2 < price <= 8.5",
+      "action": "观察，不新增",
+      "position": "0%-0.5%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "price > 8.5",
+      "action": "不追高/视业绩减仓",
+      "position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "direction": "below",
+      "action": "进入安全边际买入区，复核基本面后可建 1%-2% 仓位",
+      "reason": "低于基准合理价值下沿，开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "direction": "below",
+      "action": "进入强吸引力区，若无重大负面变化可加至 2%-3%",
+      "reason": "接近悲观情景估值下沿，赔率明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "direction": "above",
+      "action": "不追高；若基本面未验证扭亏，回避或减仓",
+      "reason": "接近乐观情景定价，安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 半年报披露后复查收入、毛利率、归母净利润和经营现金流",
+      "reason": "验证 2026 上半年扭亏和现金流改善路径"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026 三季报后复查亏损收窄、现金流和定增进展",
+      "reason": "确认经营修复是否连续，以及资本结构是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026 年报后复查全年收入、毛利率、归母净利润和资本结构",
+      "reason": "判断基准估值假设是否需要重估"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027 半年报后判断扭亏路径是否被验证",
+      "reason": "验证中期盈亏平衡路径"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入增速",
+    "毛利率",
+    "归母净利润及单季亏损收窄幅度",
+    "经营活动现金流量净额",
+    "归母所有者权益",
+    "现金余额与短期债务压力",
+    "主要客户和高端产品导入进展",
+    "定增及摊薄进展"
+  ]
+}
