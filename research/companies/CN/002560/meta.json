@@ -1,0 +1,120 @@
+{
+  "symbol": "CN:002560",
+  "market": "CN",
+  "ticker": "002560",
+  "name": "通达股份",
+  "company_name": "河南通达电缆股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备特高压/电网线缆基本盘、航空零部件高毛利弹性和出口增长，但整体仍是低至中等 ROE、低毛利、营运资本占用较重的制造型公司。2025 年利润与现金流显著修复，2026Q1 增利延续但现金流和存货压力仍在。当前 6.86 元、约 50.4 亿元市值已高于基准合理区间，暂不建仓，等待 4.6 元以下或中报验证利润质量后再评估。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.8,
+    5.8
+  ],
+  "buy_zone": [
+    3.8,
+    4.6
+  ],
+  "sell_or_reduce_zone": [
+    6.3,
+    7.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格 <= 3.8 元且基本面未恶化",
+      "price": "<=3.8",
+      "action": "强吸引力，基本面未坏可分批买入",
+      "position": "5%-7%",
+      "max_weight": 0.07
+    },
+    {
+      "condition": "价格在 3.8-4.6 元且 2026 年中报未证伪",
+      "price": "3.8-4.6",
+      "action": "有安全边际，可开观察仓",
+      "position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格在 4.6-5.8 元且利润质量继续改善",
+      "price": "4.6-5.8",
+      "action": "合理区间，只在中报确认后小仓",
+      "position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格在 5.8-6.8 元",
+      "price": "5.8-6.8",
+      "action": "估值偏满，不加仓",
+      "position": "0% new buy",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格 > 6.8 元",
+      "price": ">6.8",
+      "action": "高于基准合理区间，观察或减仓",
+      "position": "0% new buy",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "direction": "below",
+      "reason": "低于基准合理区间并接近安全边际买入价",
+      "action": "进入有安全边际买入区，允许 2%-3% 观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "direction": "below",
+      "reason": "较合理价值下沿折价超过 20%，风险收益比显著改善",
+      "action": "进入强吸引力买入区，若基本面未坏可提高至 5%-7%"
+    },
+    {
+      "type": "price_above",
+      "price": 6.3,
+      "direction": "above",
+      "reason": "高于基准合理区间上沿附近，已缺少新买安全边际",
+      "action": "不追高，不新增仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "direction": "above",
+      "reason": "需要乐观情景兑现才能支撑，若业绩未上修则估值偏高",
+      "action": "若业绩质量未显著改善，考虑减仓或卖出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年半年报发布",
+      "reason": "2026 年半年报应能验证利润修复、现金流和营运资本压力是否持续改善",
+      "action": "复查收入、扣非净利润、经营现金流、应收账款、存货和预付款"
+    }
+  ],
+  "key_tracking_metrics": [
+    "电线电缆收入增速与毛利率",
+    "航空机械加工收入占比与毛利率",
+    "出口收入占比与回款情况",
+    "扣非归母净利润增速",
+    "ROE",
+    "经营现金流/净利润",
+    "应收账款/营业收入",
+    "存货和预付款变化",
+    "国网/南网/海外项目中标额",
+    "分红、担保、减持和资本配置"
+  ]
+}
