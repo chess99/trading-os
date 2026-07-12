@@ -1,0 +1,137 @@
+{
+  "symbol": "CN:002541",
+  "market": "CN",
+  "ticker": "002541",
+  "name": "鸿路钢构",
+  "company_name": "安徽鸿路钢结构(集团)股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是钢结构制造龙头，规模、产能、客户分散和实控人持股构成中上质量；但 2025 年利润下滑、2026Q1 经营现金流转负，当前 19.66 元已高于合理价值区间上沿，缺少安全边际。",
+  "quality_rating": "B+",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    14.5,
+    18.0
+  ],
+  "buy_zone": [
+    12.0,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    20.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "price": "<=12.0",
+      "action": "强吸引力买入",
+      "target_position": "5%-8%",
+      "max_weight": 0.08,
+      "condition": "未出现现金流恶化、坏账爆发或订单断崖",
+      "decision": "观察",
+      "initial_position": "0%",
+      "max_position": "8%"
+    },
+    {
+      "price": "12.0-14.5",
+      "action": "分批买入",
+      "target_position": "3%-5%",
+      "max_weight": 0.05,
+      "condition": "H1/H2 订单、产量维持正增长，经营现金流滚动 12 个月为正"
+    },
+    {
+      "price": "14.5-18.0",
+      "action": "观察或小仓试探",
+      "target_position": "0%-2%",
+      "max_weight": 0.02,
+      "condition": "只在毛利率确认修复时考虑"
+    },
+    {
+      "price": "18.0-20.0",
+      "action": "持有不加仓",
+      "target_position": "0%-已有仓位",
+      "max_weight": 0.0,
+      "condition": "估值接近上沿，等待业绩验证"
+    },
+    {
+      "price": ">20.0",
+      "action": "不追高/考虑降仓",
+      "target_position": "0%-已有仓位下调",
+      "max_weight": 0.0,
+      "condition": "需要利润率和现金流超预期才能维持"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "direction": "below",
+      "action": "review_for_buy",
+      "reason": "进入有安全边际买入价"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "direction": "below",
+      "action": "review_for_strong_buy",
+      "reason": "进入强吸引力买入价"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "direction": "above",
+      "action": "do_not_chase_or_reduce",
+      "reason": "超过合理价值区间上沿，缺少安全边际"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年中报披露后复核订单、产量、吨收入、吨毛利和经营现金流",
+      "reason": "验证 H1 订单和产量能否转化为利润与现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "滚动 12 个月经营现金流/净利润低于 0.8",
+      "reason": "现金流质量是估值折价的核心变量"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "新签合同额或钢结构产量连续两个季度同比增速低于 5%",
+      "reason": "订单和产量决定成长性是否成立"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "应收账款、合同资产或坏账准备显著上升",
+      "reason": "建筑链条信用风险可能吞噬利润"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "鸿路转债转股、赎回或偿付安排发生重大变化",
+      "reason": "转债到期安排影响现金压力和稀释风险"
+    }
+  ],
+  "key_tracking_metrics": [
+    "新签合同额及同比增速",
+    "钢结构产品产量及同比增速",
+    "吨收入与吨毛利",
+    "归母净利润与扣非净利润",
+    "经营现金流净额/净利润",
+    "应收账款、合同资产、坏账准备",
+    "短期借款、应付票据、可转债余额",
+    "ROE 与市净率"
+  ]
+}
