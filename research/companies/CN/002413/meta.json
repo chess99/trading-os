@@ -1,0 +1,125 @@
+{
+  "symbol": "CN:002413",
+  "market": "CN",
+  "ticker": "002413",
+  "name": "雷科防务",
+  "company_name": "北京雷科防务科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "avoid",
+  "current_thesis": "军工电子、雷达、卫星应用、智能控制和安全存储技术资产真实，2025 年收入恢复、亏损收窄且经营现金流为正；但公司仍处亏损，商誉、应收和存货压力较高，当前 9.62 元对应约 126.92 亿元市值，估值已明显透支扭亏预期，缺乏安全边际。",
+  "quality_rating": "B-/C+",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    4.8,
+    6.3
+  ],
+  "buy_zone": [
+    3.8,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    6.8,
+    8.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "today",
+      "action": "不买",
+      "position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "price <= 3.8",
+      "action": "强吸引力买入",
+      "position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "3.8 < price <= 4.8",
+      "action": "有安全边际买入",
+      "position": "1%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "4.8 < price <= 6.3",
+      "action": "合理区间观察",
+      "position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price > 6.8",
+      "action": "不追高",
+      "position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "price > 8.0",
+      "action": "已有仓位减仓或卖出",
+      "position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "action": "复核 2026 半年报后考虑首笔 1%-2% 仓位",
+      "reason": "进入有安全边际买入价"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "action": "若基本面未恶化，可提高到 3%-5% 仓位",
+      "reason": "进入强吸引力买入价"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "action": "不新增",
+      "reason": "高于不应追高价"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "action": "若已持有，降至观察仓或退出",
+      "reason": "明显超过乐观估值上沿"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年半年报披露后复查收入、毛利率、扣非净利润、经营现金流和合同负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报披露后复查订单兑现、应收账款、存货和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026 年年度报告披露后重估扭亏路径和合理价值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润",
+    "毛利率",
+    "经营活动现金流净额",
+    "合同负债",
+    "应收账款/营业收入",
+    "存货/营业收入",
+    "安全存储收入与毛利率",
+    "商誉和资产减值",
+    "前五大客户销售占比"
+  ]
+}
