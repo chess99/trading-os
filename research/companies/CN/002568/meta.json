@@ -1,0 +1,140 @@
+{
+  "symbol": "CN:002568",
+  "market": "CN",
+  "ticker": "002568",
+  "name": "百润股份",
+  "company_name": "上海百润投资控股集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "RIO/预调鸡尾酒仍具品牌和渠道优势，食用香精提供高毛利稳定业务，崃州威士忌是长期期权；但2026-07-10收盘价17.29元对应约26.8倍TTM归母PE，已接近合理价值上沿，安全边际不足，等待12.5元以下或后续财报证明威士忌和主业复苏。",
+  "quality_rating": "B+",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    13.5,
+    17.5
+  ],
+  "buy_zone": [
+    10.5,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    20.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于或等于10.5元且基本面未发生结构性恶化",
+      "price": "<=10.5",
+      "action": "强吸引力买入",
+      "max_weight": 0.06,
+      "target_position": "4%-6%"
+    },
+    {
+      "condition": "股价位于10.5-12.5元且收入、毛利率、现金流仍在可接受区间",
+      "price": "10.5-12.5",
+      "action": "有安全边际，分批买入",
+      "max_weight": 0.04,
+      "target_position": "2%-4%"
+    },
+    {
+      "condition": "股价位于12.5-14.5元且后续财报有恢复迹象",
+      "price": "12.5-14.5",
+      "action": "小仓试错",
+      "max_weight": 0.02,
+      "target_position": "1%-2%"
+    },
+    {
+      "condition": "股价位于14.5-18.0元且尚未出现连续超预期增长",
+      "price": "14.5-18.0",
+      "action": "观察或持有，不主动加仓",
+      "max_weight": 0.02,
+      "target_position": "0%-2%"
+    },
+    {
+      "condition": "股价高于20.5元且没有威士忌或主业连续超预期验证",
+      "price": ">20.5",
+      "action": "不追高，重仓者考虑降风险",
+      "max_weight": 0,
+      "target_position": "0%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "condition": "股价回落且收入/毛利/现金流未恶化",
+      "reason": "进入安全边际买入区",
+      "action": "开始分批买入"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "condition": "非永久性经营损伤导致的市场下跌",
+      "reason": "进入强吸引力买入区",
+      "action": "提高到核心观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 20.5,
+      "condition": "缺乏连续财报超预期支撑",
+      "reason": "价格超过不应追高区",
+      "action": "不追高或降低风险"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露窗口结束",
+      "reason": "验证2026Q1恢复增长是否延续",
+      "action": "复查收入增速、扣非净利润、经营现金流和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露窗口结束",
+      "reason": "判断全年增长质量和费用效率",
+      "action": "复查复苏是否连续、毛利率和费用效率是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年报披露窗口结束",
+      "reason": "用全年数据重估估值区间和安全边际",
+      "action": "重估合理价值、安全边际买入价和威士忌期权价值"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027年中报披露窗口结束",
+      "reason": "观察1-3年跟踪指标是否出现趋势改善",
+      "action": "复查1-3年跟踪指标并决定是否升级为买入"
+    },
+    {
+      "type": "date",
+      "date": "2028-04-30",
+      "condition": "2027年报披露窗口结束",
+      "reason": "检验长期增长和资本配置是否兑现",
+      "action": "复查长期增长和资本配置是否兑现"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入同比增速",
+    "酒类产品收入和毛利率",
+    "食用香精收入和毛利率",
+    "数字零售渠道收入增速",
+    "销售费用率和广告宣传活动费效率",
+    "经营现金流净额/净利润",
+    "存货余额和周转趋势",
+    "合同负债和经销商数量",
+    "崃州威士忌收入、复购和库存周转"
+  ]
+}
