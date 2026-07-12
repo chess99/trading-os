@@ -1,0 +1,143 @@
+{
+  "symbol": "CN:002588",
+  "market": "CN",
+  "ticker": "002588",
+  "name": "史丹利",
+  "company_name": "史丹利农业集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "史丹利是复合肥龙头中财务质量和现金回报较好的公司，2025年收入122.83亿元、归母净利润10.33亿元、经营现金流12.41亿元，2026Q1继续增长；8.14元对应约8.6倍TTM PE，估值便宜但行业周期、原料波动、担保扩张和Q1现金流弱化仍需中报验证。当前适合小仓位试买或观察，7.60元以下安全边际更充分。",
+  "quality_rating": "B+",
+  "valuation_rating": "A-",
+  "fair_value_range": [
+    9.0,
+    11.0
+  ],
+  "buy_zone": [
+    6.8,
+    7.6
+  ],
+  "sell_or_reduce_zone": [
+    11.2,
+    99.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 6.80",
+      "action": "target_position_pct 6-8",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "6.81 <= price <= 7.60",
+      "action": "target_position_pct 4-6",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "7.61 <= price <= 8.40",
+      "action": "target_position_pct 2-3",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "8.41 <= price <= 9.80",
+      "action": "target_position_pct 0-2",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "9.81 <= price <= 11.20",
+      "action": "hold_only",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "price > 11.20",
+      "action": "reduce_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.4,
+      "condition": "price <= 8.40",
+      "reason": "valuation is below the lower fair-value range but still needs cash-flow confirmation",
+      "action": "starter_buy"
+    },
+    {
+      "type": "price_below",
+      "price": 7.6,
+      "condition": "price <= 7.60",
+      "reason": "margin of safety becomes adequate versus base-case value",
+      "action": "add"
+    },
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "condition": "price <= 6.80",
+      "reason": "price approaches pessimistic-case protection zone",
+      "action": "strong_add"
+    },
+    {
+      "type": "price_above",
+      "price": 11.2,
+      "condition": "price >= 11.20",
+      "reason": "upside is limited unless the thesis is upgraded by new evidence",
+      "action": "reduce_or_avoid"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026H1 report released",
+      "reason": "first full-period check after 2026Q1 cash-flow weakness",
+      "action": "review revenue, adjusted net profit, operating cash flow and product gross margins"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "adjusted_net_profit_yoy_decline_gt_20pct_for_two_quarters",
+      "reason": "earnings momentum would invalidate the growth thesis",
+      "action": "reassess thesis and reduce position"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "debt_to_assets_gt_55pct_or_guarantee_to_equity_rises_above_20pct",
+      "reason": "leverage and guarantees are the main financial-quality risks",
+      "action": "downgrade financial quality"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "compound_fertilizer_volume_or_new_fertilizer_revenue_share_misses_expectation",
+      "reason": "volume and product mix are the core growth drivers",
+      "action": "reassess growth thesis"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "controlling_shareholder_pledge_ratio_rises_with_forced_sale_risk",
+      "reason": "pledge risk can create non-fundamental downside pressure",
+      "action": "reduce or avoid"
+    }
+  ],
+  "key_tracking_metrics": [
+    "复合肥销量",
+    "新型肥料及其他收入占比",
+    "氯基复合肥及磷肥毛利率",
+    "硫基复合肥毛利率",
+    "销售净利率",
+    "经营现金流/归母净利润",
+    "资产负债率",
+    "担保余额/净资产",
+    "股息支付率",
+    "控股股东质押比例"
+  ]
+}

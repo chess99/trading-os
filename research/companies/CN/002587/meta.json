@@ -1,0 +1,131 @@
+{
+  "symbol": "CN:002587",
+  "market": "CN",
+  "ticker": "002587",
+  "name": "奥拓电子",
+  "company_name": "深圳市奥拓电子股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "奥拓电子有LED电影屏、XR/VP、AI+新零售等细分成长机会，但截至2026-07-10收盘价5.86元、约38.2-38.4亿元市值时，TTM利润和现金流不足以支撑估值，需等待价格回落或订单与利润兑现。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    3.6,
+    4.6
+  ],
+  "buy_zone": [
+    0,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    5.2,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "price_zone": "<=3.2",
+      "condition": "股价<=3.2且基本面未破坏",
+      "action": "强吸引力买入",
+      "max_weight": 0.05,
+      "target_position": "3%-5%"
+    },
+    {
+      "price_zone": "3.2-3.8",
+      "condition": "股价>3.2且<=3.8，订单、毛利率、应收账款未恶化",
+      "action": "分批买入",
+      "max_weight": 0.03,
+      "target_position": "1%-3%"
+    },
+    {
+      "price_zone": "3.8-4.6",
+      "condition": "股价>3.8且<=4.6",
+      "action": "观察或极小仓试错",
+      "max_weight": 0.01,
+      "target_position": "0%-1%"
+    },
+    {
+      "price_zone": ">=4.6",
+      "condition": "股价>=4.6",
+      "action": "不新增",
+      "max_weight": 0,
+      "target_position": "0%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "condition": "股价低于或等于安全边际买入价且订单、毛利率、应收账款未恶化",
+      "reason": "进入安全边际买入区",
+      "action": "允许建立1%-3%观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "condition": "股价低于或等于强吸引力买入价且基本面未破坏",
+      "reason": "进入强吸引力买入区",
+      "action": "允许提高到3%-5%"
+    },
+    {
+      "type": "price_above",
+      "price": 5.2,
+      "condition": "股价高于不应追高价且业绩未显著兑现",
+      "reason": "进入不应追高或减仓区",
+      "action": "不买；已有仓位考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026半年报披露后",
+      "reason": "验证收入、扣非净利、经营现金流和应收账款是否支持初始结论",
+      "focus": "复查收入、扣非净利、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026三季报披露后",
+      "reason": "验证订单兑现和全年业绩节奏",
+      "focus": "复查增长逻辑"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年报披露后",
+      "reason": "验证影视、LED电影屏和XR业务是否转化为年度利润",
+      "focus": "复查影视业务期权"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027半年报披露后",
+      "reason": "验证财务质量和应收账款是否改善",
+      "focus": "复查财务质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "年末估值复查",
+      "reason": "价格与基本面可能偏离，需要更新仓位区间",
+      "focus": "复查估值和仓位"
+    }
+  ],
+  "key_tracking_metrics": [
+    "在手订单及中标金额",
+    "LED视频显示系统收入增速",
+    "LED电影屏累计订单与交付块数",
+    "综合毛利率及海外/渠道毛利率",
+    "应收账款/TTM收入",
+    "经营活动现金流净额",
+    "扣非归母净利润"
+  ]
+}
