@@ -1,0 +1,138 @@
+{
+  "symbol": "CN:002708",
+  "market": "CN",
+  "ticker": "002708",
+  "name": "光洋股份",
+  "company_name": "常州光洋轴承股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司汽车轴承与传动零部件主业在2025年修复，但ROE、扣非利润稳定性和经营现金流仍偏弱；当前价格已较充分计入机器人轴承、并购整合和客户放量期权，7元以下才具备较好安全边际。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    6.5,
+    8.5
+  ],
+  "buy_zone": [
+    0,
+    7.0
+  ],
+  "sell_or_reduce_zone": [
+    9.5,
+    11.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于9.5元，或扣非利润和经营现金流继续走弱",
+      "max_weight": 0,
+      "target_position": "0%",
+      "action": "不买入，已有仓位降至观察或清仓"
+    },
+    {
+      "condition": "价格在7.0-8.5元且收入增长、毛利率未恶化",
+      "max_weight": 0.02,
+      "target_position": "1%-2%",
+      "action": "建立观察仓"
+    },
+    {
+      "condition": "价格低于7.0元且连续两个季度扣非利润为正、经营现金流改善",
+      "max_weight": 0.05,
+      "target_position": "3%-5%",
+      "action": "分批买入"
+    },
+    {
+      "condition": "价格低于6.0元且机器人或新能源汽车客户订单可核验、现金流转正",
+      "max_weight": 0.08,
+      "target_position": "5%-8%",
+      "action": "提高至上限仓位"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入有安全边际的买入观察区",
+      "action": "进入买入观察区，复核最新季度扣非利润和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "价格低于保守估值下沿，若基本面未恶化赔率改善",
+      "action": "若基本面未恶化，评估加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "价格高于合理价值区间上沿，估值开始透支改善预期",
+      "action": "停止买入并评估减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "价格明显高于合理价值区间，需业绩超预期支撑",
+      "action": "若没有订单和利润超预期兑现，降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026Q2-Q4单季度扣非归母净利润同比继续下滑",
+      "condition": "2026Q2-Q4单季度扣非归母净利润同比继续下滑",
+      "action": "复核盈利修复假设并下调估值"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "经营活动现金流连续两个季度为负且应收或存货继续上升",
+      "condition": "经营活动现金流连续两个季度为负且应收或存货继续上升",
+      "action": "复核现金流质量和营运资本风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "毛利率跌破16%或净利率回落至2%以下",
+      "condition": "毛利率跌破16%或净利率回落至2%以下",
+      "action": "复核主业竞争压力和成本转嫁能力"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "机器人相关业务披露批量订单、定点客户或明确收入贡献",
+      "condition": "机器人相关业务披露批量订单、定点客户或明确收入贡献",
+      "action": "重新评估新业务期权价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "常熟东南电子线路板业务出现减值、整合不及预期或利润明显低于承诺",
+      "condition": "常熟东南电子线路板业务出现减值、整合不及预期或利润明显低于承诺",
+      "action": "复核并购整合风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "公司实施大额再融资、并购或资本开支计划",
+      "condition": "公司实施大额再融资、并购或资本开支计划",
+      "action": "复核资本配置和股东摊薄风险"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度营业收入同比增速",
+    "扣非归母净利润和扣非净利率",
+    "经营活动现金流净额与净利润匹配度",
+    "毛利率和期间费用率",
+    "前五大客户收入占比和新客户放量",
+    "机器人相关订单、批产客户和收入贡献",
+    "电子线路板业务收入、利润和减值风险",
+    "ROE、ROIC和资本开支"
+  ]
+}
