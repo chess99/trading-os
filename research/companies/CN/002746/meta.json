@@ -1,0 +1,122 @@
+{
+  "symbol": "CN:002746",
+  "market": "CN",
+  "ticker": "002746",
+  "name": "仙坛股份",
+  "company_name": "山东仙坛集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "仙坛股份资产负债表较厚、现金和理财储备充足，白羽鸡产业链一体化带来供应和食品安全控制优势，诸城项目与调理品放量提供增长来源。但白羽鸡初加工周期性强、毛利率低，调理品目前仍未证明高毛利食品化能力。合理价值约5.5-6.8元/股，4.8元以下才有较清晰安全边际。",
+  "quality_rating": "B+",
+  "valuation_rating": "B",
+  "fair_value_range": [5.5, 6.8],
+  "buy_zone": [4.3, 4.8],
+  "sell_or_reduce_zone": [7.0, 8.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于4.8元，且月度销售收入/销量未连续两个月同比下滑，白羽肉鸡景气指数不继续恶化",
+      "max_weight": 0.01,
+      "action": "建立约1%观察仓"
+    },
+    {
+      "condition": "股价低于4.3元，且调理品仍保持同比增长、公司经营现金流没有明显恶化",
+      "max_weight": 0.03,
+      "action": "加至约3%目标仓位"
+    },
+    {
+      "condition": "调理品收入占比持续提升、毛利率稳定高于10%、ROE回到8%以上，同时股价仍低于5.0元",
+      "max_weight": 0.05,
+      "action": "可评估提高至最高5%仓位"
+    },
+    {
+      "condition": "股价高于7.0元但调理品毛利率和ROE没有同步改善",
+      "max_weight": 0,
+      "action": "减仓或停止新增买入"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "currency": "CNY",
+      "reason": "低于0.9倍左右归母PB并接近安全边际起点",
+      "action": "进入可买区，复核月度销售与行业景气后建小仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.3,
+      "currency": "CNY",
+      "reason": "低于0.8倍左右归母PB，若基本面未恶化则赔率明显改善",
+      "action": "进入强买区，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "currency": "CNY",
+      "reason": "接近合理价值上沿，需用调理品毛利率和ROE改善证明估值",
+      "action": "进入减仓区，检查估值是否脱离盈利改善"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "currency": "CNY",
+      "reason": "明显高于本次中周期估值区间，除非第二曲线已被验证",
+      "action": "进入卖出/大幅降仓区，除非调理品和ROE已明显上台阶"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报是验证2026年盈利修复和调理品放量的关键节点",
+      "condition": "发布2026年半年报或三季报后复核收入、归母净利润、扣非净利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "连续月度销售下滑会削弱周期修复和买入区假设",
+      "condition": "连续两个月鸡肉产品销售收入或销量同比转负"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "食品加工和调理品是估值上移的主要变量",
+      "condition": "食品加工行业月度收入增速低于20%或调理品毛利率未改善"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "行业景气继续下行会压缩鸡肉价格和利润弹性",
+      "condition": "白羽肉鸡景气指数跌破90或综合价格指数继续下行"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "疫病、食品安全和资产减值会直接改变安全边际",
+      "condition": "发生禽流感、重大食品安全、合作养殖场质量事故或重大资产减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "资本配置变化会影响净现金价值和长期ROE",
+      "condition": "公司宣布大额资本开支、跨界并购或分红政策变化"
+    }
+  ],
+  "key_tracking_metrics": [
+    "月度鸡肉产品销售收入、销量、单吨收入",
+    "食品加工行业收入、销量及占比",
+    "调理品收入增速、毛利率、产能利用率",
+    "白羽肉鸡景气指数、鸡苗价格、毛鸡价格、肉品价格指数",
+    "玉米、豆粕等饲料原料价格",
+    "经营现金流/净利润、存货、应收账款、短期借款、货币资金和交易性金融资产",
+    "现金分红兑现率和诸城项目投资回报"
+  ]
+}

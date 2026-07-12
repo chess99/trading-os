@@ -1,0 +1,113 @@
+{
+  "symbol": "CN:002749",
+  "market": "CN",
+  "ticker": "002749",
+  "name": "国光股份",
+  "company_name": "四川国光农化股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "国光股份是植物生长调节剂和农化制剂细分龙头，资产负债表净现金、现金流质量好、客户集中度低，合理价值约8.0-10.0元/股；但2026Q1收入和扣非利润下滑，新增固定资产转固后的折旧和产能消化需要观察，7.2元以下才有较好安全边际。",
+  "quality_rating": "高",
+  "valuation_rating": "合理偏低",
+  "fair_value_range": [8.0, 10.0],
+  "buy_zone": [0, 7.2],
+  "sell_or_reduce_zone": [11.5, 999],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于8.5元，且2026年利润未恢复增长",
+      "action": "不新增，仅观察；已有仓位控制在组合2%以内",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于7.2-8.5元，且中报显示毛利率、经营现金流和库存没有同步恶化",
+      "action": "可建立1%-2%跟踪仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于7.2元，且扣非净利润年化仍在3亿元附近",
+      "action": "分批买入至约3%仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于6.6元，且资产负债表保持净现金、基本面未破坏",
+      "action": "可提高至5%上限仓位",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "低于合理价值下沿约10%，开始具备基础安全边际",
+      "action": "进入可买区，复核中报或最近季度数据后分批买入"
+    },
+    {
+      "type": "price_below",
+      "price": 6.6,
+      "reason": "低于保守盈利倍数和DCF下沿，安全边际更充分",
+      "action": "进入强安全边际区，若基本面未破坏可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "高于中性合理价值上沿较多，除非盈利上修否则赔率下降",
+      "action": "进入减仓区，除非利润预期明显上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露后",
+      "reason": "确认2026Q1下滑是否只是季节性扰动",
+      "action": "复核收入、扣非净利润、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露后",
+      "reason": "判断全年盈利是否需要下修",
+      "action": "检查扣非净利润是否连续两个季度同比下滑超过15%"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露后",
+      "reason": "验证全年现金流、分红和库存质量",
+      "action": "复核存货、应收账款、分红和固定资产周转"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027年中报披露后",
+      "reason": "观察新增固定资产转固后的产能消化",
+      "action": "复核扩产项目产能利用率和折旧压力"
+    },
+    {
+      "type": "date",
+      "date": "2028-04-30",
+      "condition": "2027年年报披露后",
+      "reason": "评估中长期增长和资本配置是否符合初始假设",
+      "action": "复核资本配置、分红政策和长期增长假设"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润同比增速",
+    "毛利率",
+    "经营现金流净额/归母净利润",
+    "存货周转和存货同比增速",
+    "应收账款同比增速",
+    "固定资产周转率",
+    "现金分红率",
+    "植物生长调节剂和肥料产品收入增速"
+  ]
+}
