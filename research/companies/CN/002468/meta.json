@@ -1,0 +1,167 @@
+{
+  "symbol": "CN:002468",
+  "market": "CN",
+  "ticker": "002468",
+  "name": "申通快递",
+  "company_name": "申通快递股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "申通快递处于经营修复期，2025 年业务量、市占率、净利润均改善，2026Q1 利润高增，2026 年 5 月业务量和单票收入继续跑赢行业。当前 16.16 元/股约对应 TTM PE 15.5 倍、2026E PE 11-12 倍，进入小仓买入区，但重仓仍需等待更厚安全边际或中报验证。",
+  "quality_rating": "B+",
+  "valuation_rating": "偏低到合理",
+  "fair_value_range": [
+    19.5,
+    23.0
+  ],
+  "buy_zone": [
+    13.8,
+    16.5
+  ],
+  "sell_or_reduce_zone": [
+    23.0,
+    26.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格 16.16 元，处于有安全边际买入区间内",
+      "price_range": "current",
+      "action": "买入",
+      "max_weight": 0.04,
+      "position_pct": 4,
+      "note": "首笔仓位 4%，目标仓位 6%，最大仓位 10%。"
+    },
+    {
+      "condition": "股价小于或等于 13.8 元",
+      "price_range": "<=13.8",
+      "action": "add",
+      "max_weight": 0.1,
+      "position_pct": 10,
+      "note": "强安全边际，加至 8%-10%。"
+    },
+    {
+      "condition": "股价位于 13.8-16.5 元",
+      "price_range": "13.8-16.5",
+      "action": "buy_or_add",
+      "max_weight": 0.06,
+      "position_pct": 6,
+      "note": "有安全边际，建首笔 4%，可加至 6%。"
+    },
+    {
+      "condition": "股价位于 16.5-19.5 元",
+      "price_range": "16.5-19.5",
+      "action": "hold",
+      "max_weight": 0.06,
+      "position_pct": 6,
+      "note": "持有，原则上不追增。"
+    },
+    {
+      "condition": "股价位于 19.5-23.0 元",
+      "price_range": "19.5-23.0",
+      "action": "hold_or_rebalance",
+      "max_weight": 0.06,
+      "position_pct": 6,
+      "note": "接近合理价值，持有或小幅再平衡。"
+    },
+    {
+      "condition": "股价高于 23.0 元",
+      "price_range": ">23.0",
+      "action": "reduce",
+      "max_weight": 0.03,
+      "position_pct": 3,
+      "note": "降至核心观察仓。"
+    },
+    {
+      "condition": "股价高于 26.0 元且盈利未上修",
+      "price_range": ">26.0",
+      "action": "sell_or_major_reduce",
+      "max_weight": 0.0,
+      "position_pct": 0,
+      "note": "若盈利未上修，减仓或卖出。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "低于有安全边际买入价",
+      "condition": "股价小于或等于 16.5 元",
+      "action": "可买入或加至 6%"
+    },
+    {
+      "type": "price_below",
+      "price": 13.8,
+      "reason": "低于强吸引力买入价，安全边际更厚",
+      "condition": "股价小于或等于 13.8 元",
+      "action": "强吸引力买入，加至 8%-10%"
+    },
+    {
+      "type": "price_above",
+      "price": 21.5,
+      "reason": "接近合理价值上沿，继续追高风险回报下降",
+      "condition": "股价高于 21.5 元",
+      "action": "不追高"
+    },
+    {
+      "type": "price_above",
+      "price": 23.0,
+      "reason": "高于合理价值区间上沿",
+      "condition": "股价高于 23.0 元",
+      "action": "减仓观察"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "中报是验证 2026 年利润修复质量的关键节点",
+      "condition": "2026 年中报披露",
+      "action": "复查毛利率、经营现金流、资本开支和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "业务量跑输行业会削弱市占率提升逻辑",
+      "condition": "连续两个月业务量增速低于行业增速",
+      "action": "复查市占率逻辑"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "单票收入下滑意味着价格战风险回升",
+      "condition": "单票收入同比转负或下降超过 5%",
+      "action": "复查价格战风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "可转债影响资本结构和股东回报",
+      "condition": "可转债发行落地",
+      "action": "复查募投回报率和股东稀释风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "丹鸟并表需要验证是否贡献利润而非只贡献收入",
+      "condition": "丹鸟并表只增收入不增利润",
+      "action": "下修估值"
+    }
+  ],
+  "key_tracking_metrics": [
+    "月度快递业务量及同比增速",
+    "月度快递服务单票收入",
+    "市场占有率",
+    "毛利率",
+    "经营现金流/归母净利润",
+    "资产负债率",
+    "丹鸟并表后的收入与利润贡献",
+    "国家邮政局行业快递业务量和快递业务收入增速差"
+  ]
+}
