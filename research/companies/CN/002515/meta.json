@@ -1,0 +1,125 @@
+{
+  "symbol": "CN:002515",
+  "market": "CN",
+  "ticker": "002515",
+  "name": "金字火腿",
+  "company_name": "金字火腿股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "不买",
+  "current_rating": "avoid",
+  "current_thesis": "公司拥有金华火腿品牌、保守资产负债表和新产能期权，但当前约101.57亿元市值对应2025年归母净利润约401倍PE、2026Q1年化约197倍PE，已经显著透支主业增长和跨界投资期权。只有股价回到3.5元以下才具备安全边际。",
+  "quality_rating": "B-",
+  "valuation_rating": "显著高估",
+  "fair_value_range": [
+    3.3,
+    4.8
+  ],
+  "buy_zone": [
+    2.8,
+    3.5
+  ],
+  "sell_or_reduce_zone": [
+    6.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价8.39元，显著高于合理价值区间",
+      "price": "current_8.39",
+      "action": "不买",
+      "position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于3.5元且基本面未恶化",
+      "price": "<=3.5",
+      "action": "基本面未恶化时分批买入",
+      "position": "4%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价低于2.8元且基本面未恶化",
+      "price": "<=2.8",
+      "action": "基本面未恶化时提高目标仓位",
+      "position": "6%-8%",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "股价高于6.0元且无利润跃迁",
+      "price": ">=6.0",
+      "action": "不追高，已有仓位考虑减仓",
+      "position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "trigger": "股价低于3.5元",
+      "reason": "低于有安全边际买入价，接近保守SOTP估值",
+      "action": "进入可买区，复核最新财报后考虑首笔2%"
+    },
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "trigger": "股价低于2.8元",
+      "reason": "低于强吸引力买入价，现金和主业保守价值提供较厚保护",
+      "action": "进入强吸引力区，若基本面未恶化可提高目标仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "trigger": "股价高于6.0元且无利润跃迁",
+      "reason": "高于不应追高区间，当前利润难以支撑估值",
+      "action": "不追高，已有仓位减仓或退出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "trigger": "2026年半年报披露",
+      "reason": "验证Q1高增长是否延续以及利润是否来自主业",
+      "action": "复查收入、归母净利润、经营现金流和费用率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "trigger": "5万吨肉制品数字智能产业基地披露明确产能利用率或利润贡献",
+      "reason": "新产能利用率是收入天花板和估值上修的关键变量",
+      "action": "重估收入天花板和净利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "trigger": "继续新增与主业无关的大额投资",
+      "reason": "跨界投资会消耗现金安全垫并降低资本配置质量",
+      "action": "下修资本配置评级"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "trigger": "发生食品安全、监管处罚或重大品牌事件",
+      "reason": "食品安全和品牌信任是公司核心资产",
+      "action": "立即复核并考虑逻辑止损"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入增速",
+    "归母净利润及扣非归母净利润",
+    "毛利率、净利率和销售费用率",
+    "经营现金流/归母净利润",
+    "存货周转率",
+    "新产能利用率",
+    "货币资金和跨界投资余额",
+    "线上渠道和经销商扩张质量"
+  ]
+}

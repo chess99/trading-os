@@ -1,0 +1,146 @@
+{
+  "symbol": "CN:002521",
+  "market": "CN",
+  "ticker": "002521",
+  "name": "齐峰新材",
+  "company_name": "齐峰新材料股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "齐峰新材是装饰原纸细分龙头，资产负债表稳、现金流改善、乳胶纸和外销提供结构性增量，但装饰原纸仍处成熟周期行业，毛利率薄、ROE偏低，当前6.70元接近合理区间下沿但安全边际不足，等待5.2元以下或2026中报验证利润中枢上修。",
+  "quality_rating": "B",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    5.8,
+    7.2
+  ],
+  "buy_zone": [
+    4.5,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价<=4.5元且基本面未恶化",
+      "price_range": "<=4.5",
+      "action": "强吸引力，分批买入",
+      "max_weight": 0.05,
+      "target_position": "3%-5%"
+    },
+    {
+      "condition": "股价4.5-5.2元且基本面未恶化",
+      "price_range": "4.5-5.2",
+      "action": "有安全边际，试买",
+      "max_weight": 0.03,
+      "target_position": "1%-3%"
+    },
+    {
+      "condition": "股价5.2-7.2元",
+      "price_range": "5.2-7.2",
+      "action": "合理区间，观察为主",
+      "max_weight": 0.01,
+      "target_position": "0%-1%"
+    },
+    {
+      "condition": "股价7.2-8.0元且无利润中枢上修证据",
+      "price_range": "7.2-8.0",
+      "action": "不新增",
+      "max_weight": 0.0,
+      "target_position": "0%"
+    },
+    {
+      "condition": "股价>8.0元且基本面无新增上修证据",
+      "price_range": ">8.0",
+      "action": "不追高/减仓",
+      "max_weight": 0.0,
+      "target_position": "0%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "condition": "股价低于5.2元且基本面未恶化",
+      "price": 5.2,
+      "reason": "进入有安全边际买入价",
+      "action": "进入买入复核"
+    },
+    {
+      "type": "price_below",
+      "condition": "股价低于4.5元且基本面未恶化",
+      "price": 4.5,
+      "reason": "进入强吸引力买入价",
+      "action": "强吸引力买入复核"
+    },
+    {
+      "type": "price_above",
+      "condition": "股价高于8.0元且无利润中枢上修证据",
+      "price": 8.0,
+      "reason": "超过不应追高价",
+      "action": "不追高或减仓"
+    },
+    {
+      "type": "price_above",
+      "condition": "2026年扣非净利润中枢被验证上修至2.4亿元以上",
+      "price": 8.0,
+      "reason": "高价区需要利润中枢上修支撑",
+      "action": "重新评估8元以上价格"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年度报告披露",
+      "reason": "中报能验证产品结构、外销、毛利率和现金流是否延续改善",
+      "action": "复查产品结构、外销、毛利率和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "连续两个季度收入下滑且毛利率低于10%",
+      "reason": "收入与毛利率同时走弱会削弱利润中枢上修假设",
+      "action": "降级并复核退出观察"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "乳胶纸、预浸渍纸、胶带纸收入和毛利率继续改善",
+      "reason": "高毛利新品放量是估值上修的主要依据",
+      "action": "重新上修利润中枢"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "存货或应收账款显著快于收入增长",
+      "reason": "营运资本恶化可能提示需求或渠道质量下降",
+      "action": "复查需求和渠道质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-07-31",
+      "condition": "股价跌破5.2元且基本面未恶化",
+      "reason": "价格进入有安全边际买入区",
+      "action": "进入买入复核"
+    }
+  ],
+  "key_tracking_metrics": [
+    "乳胶纸系列收入增速和毛利率",
+    "装饰原纸系列毛利率",
+    "国外销售收入占比和毛利率",
+    "经营现金流净额/归母净利润",
+    "存货和应收账款增速",
+    "广西基地产能利用率和吨成本",
+    "木浆、钛白粉、能源价格变化",
+    "现金分红与资本开支匹配度"
+  ]
+}
