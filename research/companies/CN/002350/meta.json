@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:002350",
+  "market": "CN",
+  "ticker": "002350",
+  "name": "北京科锐",
+  "company_name": "北京科锐集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "配网升级和海外储能提供增长期权，但公司 2026Q1 仍亏损、ROE 偏低、项目型回款和毛利率尚未验证改善；2026-07-10 收盘价 14.74 元对应约 79.94 亿元市值，已显著高于合理价格区间，当前不具备安全边际。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    5.5,
+    7.5
+  ],
+  "buy_zone": [
+    4.5,
+    5.5
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价 <= 4.50 元且基本面未恶化",
+      "price": "<=4.50",
+      "action": "强吸引力买入",
+      "position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价 4.50-5.50 元且中报毛利率、现金流和应收未恶化",
+      "price": "4.50-5.50",
+      "action": "有安全边际买入",
+      "position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价 5.50-7.50 元且利润修复有证据",
+      "price": "5.50-7.50",
+      "action": "合理区间小仓观察",
+      "position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价 7.50-9.00 元",
+      "price": "7.50-9.00",
+      "action": "观察",
+      "position": "0%",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价 >= 9.00 元且利润未显著超预期",
+      "price": ">=9.00",
+      "action": "不追高/减仓",
+      "position": "0%",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入安全边际买入区",
+      "action": "进入安全边际买入区，复核中报毛利率、现金流和应收后可开 1% 观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入强吸引力买入区",
+      "action": "进入强吸引力买入区，若基本面未恶化可提高到 2%-3%"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "高于不应追高价",
+      "action": "不追高；若已有仓位且利润未显著超预期，考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年半年报预计已披露，复核收入、毛利率、净利润、经营现金流和应收占比"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报预计已披露，复核全年业绩考核达成概率和海外储能进展"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026 年收入是否达到 24 亿元以上",
+    "主业配电及控制设备毛利率是否回到 23%以上",
+    "归母净利率是否提升到 4%以上",
+    "全年经营活动现金流量净额是否为正",
+    "应收账款+合同资产/营业收入是否下降到 28%-32%以下",
+    "境外收入和储能订单是否形成可验证利润贡献",
+    "第二期员工持股计划 2026 年净利润 7800 万元或收入 27 亿元目标是否达成"
+  ]
+}
