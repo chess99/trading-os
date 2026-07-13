@@ -1,0 +1,127 @@
+{
+  "symbol": "CN:002933",
+  "market": "CN",
+  "ticker": "002933",
+  "name": "新兴装备",
+  "company_name": "北京新兴东方航空装备股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司具备军工航空装备配套门槛和订单恢复弹性，但扣非盈利、现金流和客户集中度仍未证明稳定复利能力。合理价值约22-27元/股，18-21元/股才具备较好安全边际；在盈利拐点未确认前不追买。",
+  "quality_rating": "中低",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    22,
+    27
+  ],
+  "buy_zone": [
+    18,
+    21
+  ],
+  "sell_or_reduce_zone": [
+    30,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于21元，且最近两个季度收入同比增长、毛利率未恶化",
+      "action": "建立观察仓",
+      "target_position": "0.5%-1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于19元，同时确认在手订单或合同负债改善、经营现金流转正",
+      "action": "提高到小仓位",
+      "target_position": "1.5%-2.0%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于22-27元且基本面无新增改善证据",
+      "action": "仅观察或维持极小跟踪仓",
+      "target_position": "0%-0.5%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价高于30元但利润率、现金流和新订单未同步改善",
+      "action": "不买或减仓",
+      "target_position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 21,
+      "currency": "CNY",
+      "reason": "进入可买区上沿，接近1倍PB并具备初步安全边际",
+      "action": "进入可买观察区，复核最近一期订单、毛利率和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 19,
+      "currency": "CNY",
+      "reason": "低于2025年末每股净资产，若基本面改善则风险收益明显改善",
+      "action": "若经营数据改善，可考虑小仓买入"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "currency": "CNY",
+      "reason": "超过合理价值上沿且接近1.5倍PB，需盈利拐点支撑",
+      "action": "若无盈利拐点证据，减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报是验证订单恢复是否转化为利润和现金流的首个关键节点",
+      "condition": "发布2026年半年报或三季报",
+      "action": "复核收入确认、毛利率、扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可观察扣非利润是否连续改善",
+      "condition": "连续两个季度扣非归母净利润转正",
+      "action": "上调质量评级并重新估值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "现金流背离会削弱军工订单恢复的投资价值",
+      "condition": "经营活动现金流与利润背离扩大",
+      "action": "下调评级并检查应收账款和存货风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报和重大合同信息会改变1-3年收入中枢假设",
+      "condition": "披露重大合同、型号批产或核心客户订单变化",
+      "action": "重估1-3年收入中枢"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "价格进入买入或减仓区时需要复核仓位纪律",
+      "condition": "股价跌入18-21元可买区或突破30元减仓区",
+      "action": "按价格触发器重新决策仓位"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入同比增速",
+    "毛利率是否稳定在35%以上",
+    "扣非归母净利润是否转正并连续改善",
+    "经营活动现金流净额",
+    "合同负债、存货和应收账款周转变化",
+    "前五大客户集中度",
+    "新产品或新型号批产/订单进展"
+  ]
+}
