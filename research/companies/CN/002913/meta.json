@@ -1,0 +1,120 @@
+{
+  "symbol": "CN:002913",
+  "market": "CN",
+  "ticker": "002913",
+  "name": "奥士康",
+  "company_name": "奥士康科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "奥士康处于 PCB 高端化、AI 服务器、AIPC、汽车电子和海外产能布局的景气方向，但 2025 年收入增长未带来利润扩张，2026Q1 归母净利润同比大幅下滑，当前价格已预支较多修复预期；等待毛利率、减值、现金流和高端订单验证后再买入。",
+  "quality_rating": "中等",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    38,
+    50
+  ],
+  "buy_zone": [
+    32,
+    36
+  ],
+  "sell_or_reduce_zone": [
+    58,
+    65
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于 50 元且 2026Q2 未证明利润修复",
+      "action": "不追高，维持观察",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于或等于 42 元，且经营现金流为正、毛利率环比改善",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于或等于 36 元，且 AI/服务器、汽车电子订单和产能利用率同步改善",
+      "action": "建标准仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价低于或等于 32 元，且无新增大额减值、债务压力或客户流失",
+      "action": "提高到偏高仓位",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "股价高于或等于 60 元但盈利仍未恢复到单季 0.9 亿元以上",
+      "action": "减仓或退出",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "currency": "CNY",
+      "reason": "接近合理价值中枢以下，可重新评估观察仓性价比",
+      "action": "复核 2026Q2/Q3 毛利率和现金流，满足条件可开观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 36,
+      "currency": "CNY",
+      "reason": "进入可买价格区间，需要确认基本面未恶化",
+      "action": "进入买入区，重算 PE、PB 和订单兑现情况"
+    },
+    {
+      "type": "price_below",
+      "price": 32,
+      "currency": "CNY",
+      "reason": "达到更高安全边际，适合在基本面未破坏时加仓",
+      "action": "若基本面未破坏，考虑加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 60,
+      "currency": "CNY",
+      "reason": "价格超过基础合理价值，需要利润兑现支撑",
+      "action": "检查盈利兑现是否支撑估值，不支撑则减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报可验证 Q1 利润异常是否修复",
+      "condition": "复核 2026 年半年报：单季归母净利润、PCB 毛利率、资产减值、经营现金流和有息债务"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可验证利润修复是否具备连续性",
+      "condition": "复核 2026 年三季报：利润修复是否连续、AI/服务器订单和泰国基地爬坡是否兑现"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报可重新评估高端化、资本开支回报和分红能力",
+      "condition": "复核 2026 年报：高端 PCB 收入占比、ROE、分红、资本开支和估值中枢"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入及同比增速",
+    "单季归母净利润和净利率",
+    "PCB 毛利率及四层板及以上板毛利率",
+    "资产减值损失和存货余额",
+    "经营活动现金流净额与归母净利润比值",
+    "投资现金流、资本开支和有息债务",
+    "境外收入占比及泰国基地进展",
+    "前五大客户销售占比",
+    "AI 服务器、高性能服务器、AIPC、汽车电子订单进展"
+  ]
+}
