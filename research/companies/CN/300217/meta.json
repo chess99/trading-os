@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:300217",
+  "market": "CN",
+  "ticker": "300217",
+  "name": "东方电热",
+  "company_name": "镇江东方电热科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备家电热管理基本盘、新能源车元器件和锂电材料增长曲线，以及机器人散热、熔盐储能、硅碳负极设备等期权；但 2025 年利润腰斩、2026 年一季度仍下滑，当前 4.17 元缺少足够安全边际，需等待低价或季度拐点。",
+  "quality_rating": "B-",
+  "valuation_rating": "C+",
+  "fair_value_range": [3.4, 4.5],
+  "buy_zone": [2.8, 3.3],
+  "sell_or_reduce_zone": [5.2, 999.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于4.50元且未出现利润或订单上修",
+      "action": "不买或减仓",
+      "target_position_pct": "0%-0.5%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价处于3.40-4.50元合理区间且季度利润未确认拐点",
+      "action": "观察，不主动加仓",
+      "target_position_pct": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.30元，且最近一季经营现金流为正、信用减值和资产减值未扩大",
+      "action": "建立观察仓",
+      "target_position_pct": "1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于2.80元，且无重大坏账、客户订单或流动性风险",
+      "action": "加至中等小仓",
+      "target_position_pct": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度新能源车元器件和锂电材料高增长，ROE恢复至6%以上",
+      "action": "按新盈利中枢重估后再决定是否加仓",
+      "target_position_pct": "最高3%-4%",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.3,
+      "action": "进入可买区，复核最新季度现金流和减值后可建1%观察仓",
+      "reason": "低于可买区上沿后具备约20%以上安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "action": "进入深度安全边际区，若基本面未恶化可加至2%-3%",
+      "reason": "低于保守估值下沿，风险收益显著改善"
+    },
+    {
+      "type": "price_above",
+      "price": 5.2,
+      "action": "若基本面未同步上修，减仓或退出",
+      "reason": "高于当前合理价值区间，需利润或订单兑现支持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报：收入、扣非净利润、经营现金流、应收和减值是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：新能源车元器件、锂电材料和工业装备转型是否形成利润拐点。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报：ROE、分红、坏账、机器人散热和新设备订单兑现情况。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "新能源汽车元器件季度收入同比增速和毛利率",
+    "锂电池材料收入、销量、动力类预镀镍客户导入进度",
+    "熔盐储能、硅碳负极、固态电解质设备新签订单和收入确认",
+    "机器人液冷散热模组从小批量交付到规模订单的进展",
+    "应收账款、应收票据、应收款项融资合计占营业收入比例",
+    "信用减值损失和资产减值损失变化",
+    "经营活动现金流净额及票据回款质量",
+    "海外收入占比是否持续提升",
+    "ROE是否恢复到6%-8%"
+  ]
+}
