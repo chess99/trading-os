@@ -1,0 +1,105 @@
+{
+  "symbol": "CN:002919",
+  "market": "CN",
+  "ticker": "002919",
+  "name": "名臣健康",
+  "company_name": "名臣健康用品股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "游戏收入已成为主力，但2025年扣非亏损且2026Q1仍增收不增利，买量费用和项目生命周期尚未被证明可稳定转化为股东利润；以2026-07-10收盘价19.05元测算，价格显著高于8.0-11.0元/股合理价值区间，当前不具备安全边际。",
+  "quality_rating": "中低",
+  "valuation_rating": "高估",
+  "fair_value_range": [
+    8.0,
+    11.0
+  ],
+  "buy_zone": [
+    0,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于16.0元，且销售费用率仍高于40%或扣非利润未连续两个季度为正",
+      "action": "不买；已有仓位减仓或退出",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格在7.5-11.0元之间，且最近两个季度扣非归母净利润为正、经营现金流为正",
+      "action": "建立观察仓",
+      "target_position": "0.5%-1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于6.5元，且不存在新增大额商誉/无形资产/应收账款减值，销售费用率低于35%",
+      "action": "提高至小仓位",
+      "target_position": "1.5%-2.5%",
+      "max_weight": 0.025
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "currency": "CNY",
+      "action": "复核是否满足观察仓条件",
+      "reason": "进入可买区间上沿，需要结合扣非利润和销售费用率确认是否有安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "currency": "CNY",
+      "action": "若经营指标同步改善，评估提高仓位",
+      "reason": "价格接近保守估值区间下沿，若基本面改善则风险收益可能转正"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "currency": "CNY",
+      "action": "若基本面未改善，减仓或不参与",
+      "reason": "显著高于合理价值区间，若扣非利润未修复则估值风险偏高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报披露后复核扣非利润、销售费用率、经营现金流和股东减持进度",
+      "reason": "半年报能验证2026Q1增收不增利是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露后复核游戏收入、买量费用率和现金流质量",
+      "reason": "三季报能观察新游戏投放后的费用摊薄和利润修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露后重新评估合理价值、可买价格和仓位上限",
+      "reason": "年报能完整验证游戏转型利润质量和资产减值风险"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润",
+    "销售费用率",
+    "经营活动现金流量净额",
+    "网络游戏收入增速和毛利率",
+    "境外收入占比和毛利率",
+    "应收账款余额及前五大应收占比",
+    "商誉和无形资产减值",
+    "实控人、高管和主要股东减持进度"
+  ]
+}
