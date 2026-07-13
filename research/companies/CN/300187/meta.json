@@ -1,0 +1,112 @@
+{
+  "symbol": "CN:300187",
+  "market": "CN",
+  "ticker": "300187",
+  "name": "永清环保",
+  "company_name": "永清环保股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司有环保运营资产和湖南区域资源，2025-2026Q1 扣非利润明显修复，但净利润仍受非经常性损益影响，工程业务毛利薄，控股股东质押比例高。当前价格已部分反映扣非修复预期，等待半年报验证和质押风险下降。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    4.0,
+    4.8
+  ],
+  "buy_zone": [
+    0,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    5.6,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于 3.80 元，且 2026 半年报扣非利润同比继续增长、经营现金流为正",
+      "action": "建立 0.5 单位观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于 3.80 元，且控股股东质押比例降至 80% 以下、扣非利润连续两个季度改善",
+      "action": "提高到 1.0 单位仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于 5.60 元，且扣非利润或经营现金流未兑现改善",
+      "action": "不追买，已有仓位减半",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "currency": "CNY",
+      "reason": "进入可买价格区间，需复核扣非利润和现金流是否同步改善",
+      "action": "复核半年报后考虑观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 5.6,
+      "currency": "CNY",
+      "reason": "价格超过减仓/不追区间，需确认盈利兑现是否支撑估值",
+      "action": "复核估值与扣非兑现，倾向减仓或不追"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "披露 2026 年半年度报告",
+      "reason": "披露 2026 年半年度报告",
+      "action": "复核扣非利润、经营现金流和估值区间"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "控股股东质押比例出现显著下降或新增质押",
+      "reason": "控股股东质押比例出现显著下降或新增质押",
+      "action": "复核治理折价和仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "江苏永之清 2025 年度剩余业绩补偿款和违约金到账或逾期",
+      "reason": "江苏永之清 2025 年度剩余业绩补偿款和违约金到账或逾期",
+      "action": "复核资产收购质量和非经常性损益"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "重大新签订单、垃圾发电或固废资源化项目投运",
+      "reason": "重大新签订单、垃圾发电或固废资源化项目投运",
+      "action": "复核收入增长和毛利率假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "经营现金流连续两个季度低于同期净利润",
+      "reason": "经营现金流连续两个季度低于同期净利润",
+      "action": "下调质量评级和买入区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润",
+    "经营现金流净额/归母净利润",
+    "环境运营服务收入和毛利率",
+    "环境工程服务毛利率",
+    "控股股东质押股份占其持股比例",
+    "江苏永之清业绩补偿回款进度",
+    "应收账款、合同资产和短期借款",
+    "湖南省外收入占比"
+  ]
+}
