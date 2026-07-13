@@ -1,0 +1,138 @@
+{
+  "symbol": "CN:002838",
+  "market": "CN",
+  "ticker": "002838",
+  "name": "道恩股份",
+  "company_name": "山东道恩高分子材料股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "改性塑料提供规模底盘，弹性体、EPDM 并购整合、DVA/HNBR/PCR 等高端材料提供增长期权；但当前约 60 倍 PE 已反映较多成长预期，2025 年经营现金流仍为负，必须等 2026H1/2026Q3 验证利润质量和现金流后再提高仓位。",
+  "quality_rating": "中等偏上",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    22,
+    28
+  ],
+  "buy_zone": [
+    0,
+    20
+  ],
+  "sell_or_reduce_zone": [
+    38,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 20 元，且最近一期经营现金流未恶化、改性塑料毛利率不低于 10%、热塑性弹性体毛利率不低于 22%",
+      "action": "建立初始观察仓",
+      "target_position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价处于 20-24 元，且 2026H1 或 2026Q3 扣非净利润增速不低于收入增速，经营现金流连续为正",
+      "action": "小仓试错",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于 28 元但缺少 DVA、EPDM 或弹性体利润兑现证据",
+      "action": "不新增仓位，仅跟踪验证",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于 38 元，且未来 12 个月利润无法支持 45 倍以内前瞻 PE",
+      "action": "减仓或回避",
+      "target_position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "currency": "CNY",
+      "reason": "接近合理价值下沿但仍需财报质量确认。",
+      "action": "进入重点复核区，检查最新财报现金流和毛利率。"
+    },
+    {
+      "type": "price_below",
+      "price": 20,
+      "currency": "CNY",
+      "reason": "低于可买价格，安全边际开始出现。",
+      "action": "若基本面未恶化，可评估 2%-3% 初始仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 38,
+      "currency": "CNY",
+      "reason": "明显高于合理价值区间，除非高端材料兑现否则赔率差。",
+      "action": "除非高端材料利润明确兑现，否则降低或放弃仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "中报是验证 Q1 高增长质量的第一个关键窗口。",
+      "condition": "发布 2026 年半年度报告或业绩预告",
+      "action": "复核收入、扣非利润、经营现金流和毛利率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可判断增长是否跨季度延续。",
+      "condition": "发布 2026 年三季度报告",
+      "action": "判断 Q1 高增长是否具备持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "EPDM 并购整合决定弹性体补链价值。",
+      "condition": "宁波爱思开 EPDM 并购整合、扩产、产能利用率或盈利数据披露",
+      "action": "更新 EPDM 补链价值和利润预测。"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "高端新材料订单决定是否给予期权估值。",
+      "condition": "DVA、HNBR、PCR 再生材料、机器人软材料出现批量订单公告",
+      "action": "评估高端材料期权是否进入基准估值。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "现金流与营运资本决定利润质量和安全边际。",
+      "condition": "经营现金流连续两个季度为负或应收账款/存货异常上升",
+      "action": "下调财务质量和合理价值区间。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "核心产品毛利率下滑会破坏估值基础。",
+      "condition": "改性塑料或热塑性弹性体毛利率较 2025 年水平明显下滑",
+      "action": "复核竞争格局和安全边际。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入增速",
+    "扣非归母净利润增速",
+    "经营活动现金流净额/归母净利润",
+    "改性塑料收入与毛利率",
+    "热塑性弹性体收入与毛利率",
+    "EPDM 产能利用率、内部供应占比和毛利率",
+    "DVA/HNBR/PCR/机器人软材料订单进展",
+    "前五大客户销售占比",
+    "应收账款周转天数",
+    "存货周转天数",
+    "有息负债和财务费用"
+  ]
+}
