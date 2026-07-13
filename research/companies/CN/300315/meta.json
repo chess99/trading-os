@@ -1,0 +1,99 @@
+{
+  "symbol": "CN:300315",
+  "market": "CN",
+  "ticker": "300315",
+  "name": "掌趣科技",
+  "company_name": "北京掌趣科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司现金和净资产提供一定资产底，但 2025 年收入下滑、扣非亏损、经营现金流偏弱，2026Q1 扣非仍未转正；3.89 元对应约 105 亿元市值和约 2.25 倍 PB，已包含较多新游戏/小游戏/SLG 修复期权，需等待价格回落或扣非利润与经营现金流验证。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [2.3, 3.1],
+  "buy_zone": [0, 2.2],
+  "sell_or_reduce_zone": [4.5, 999],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于 3.10 元，且扣非利润仍未稳定转正",
+      "action": "不买，仅跟踪",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格进入 2.20-2.50 元，且 2026 中报显示经营现金流转正",
+      "action": "小仓试探",
+      "target_position": "0.5%-1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于 2.20 元，且新游流水/买量 ROI 明确改善、扣非利润连续两个季度为正",
+      "action": "买入",
+      "target_position": "1.0%-2.0%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于 1.80 元，且现金及金融资产无重大减值、管线未证伪",
+      "action": "深度复核后提高仓位",
+      "target_position": "2.0%-3.0%",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "currency": "CNY",
+      "action": "进入可买区，复核中报、现金资产和新游流水",
+      "reason": "价格低于估算合理价值下沿并开始提供安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 1.8,
+      "currency": "CNY",
+      "action": "进入深度价值复核区，检查资产减值和经营现金流",
+      "reason": "价格接近账面净资产且对经营期权折价充分"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "currency": "CNY",
+      "action": "若基本面未兑现，卖出或维持零仓位",
+      "reason": "价格显著高于合理价值区间且需要新游戏兑现支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看扣非净利润、经营现金流、新游戏上线与费用率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认收入修复是否可持续及海外/小游戏进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，检查全年现金流、资产减值和资本配置"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入是否连续超过 2.0 亿元",
+    "扣非净利润是否连续两个季度转正",
+    "经营活动现金流是否转正且与净利润匹配",
+    "新小游戏/SLG 产品上线时间、首月流水、留存和买量 ROI",
+    "海外收入占比是否稳定在 40% 以上并恢复增长",
+    "销售费用率和研发费用率是否随收入增长下降",
+    "货币资金、金融资产、长期股权投资和商誉是否出现新的大额减值",
+    "Webzen Inc. 经营表现及其对投资收益/减值的影响"
+  ]
+}
