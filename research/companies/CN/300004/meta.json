@@ -1,0 +1,131 @@
+{
+  "symbol": "CN:300004",
+  "market": "CN",
+  "ticker": "300004",
+  "name": "南风股份",
+  "company_name": "南方风机股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司具备核电HVAC资质、国资控股和项目履历，但2025年收入利润下滑、2026Q1转亏，应收账款和现金流压力较大；当前8.33元对应估值显著高于合理区间，等待价格回落和经营修复。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.0,
+    5.5
+  ],
+  "buy_zone": [
+    3.8,
+    5.0
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    8.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于3.8元，且最近两个季度经营现金流累计为正，应收账款不继续扩张",
+      "action": "初始买入",
+      "max_weight": 0.01,
+      "target_position": "0.5%-1.0%"
+    },
+    {
+      "condition": "股价在3.8-5.0元，且收入恢复同比增长、毛利率回到26%以上、扣非净利转正",
+      "action": "观察性加仓",
+      "max_weight": 0.02,
+      "target_position": "1.0%-2.0%"
+    },
+    {
+      "condition": "股价高于7.0元但TTM扣非净利低于5000万元",
+      "action": "不追高或减仓",
+      "max_weight": 0.005,
+      "target_position": "0%-0.5%"
+    },
+    {
+      "condition": "股价高于8.0元且无新大额核电订单或回款改善",
+      "action": "回避",
+      "max_weight": 0.0,
+      "target_position": "0%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "action": "进入重点观察并复核订单、毛利率、回款",
+      "reason": "接近合理价值区间上沿，需要确认经营修复是否兑现",
+      "note": "接近合理区间上沿"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "action": "若经营现金流和应收账款条件满足，可小仓位买入",
+      "reason": "接近1倍PB，具备初步安全边际",
+      "note": "接近1倍PB，具备初步安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "action": "若无盈利修复，降低仓位或维持空仓",
+      "reason": "价格明显高于合理区间，且盈利尚未验证",
+      "note": "风险收益比转差"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "action": "回避追高",
+      "reason": "当前盈利能力难以支撑该估值",
+      "note": "明显高于合理估值区"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、收入恢复、毛利率、扣非净利和回款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及经营现金流、应收账款变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、订单兑现、资产质量和估值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "单季营业收入",
+      "target": "恢复至1.3亿元以上并同比正增长"
+    },
+    {
+      "metric": "通风与空气处理系统设备毛利率",
+      "target": "回到26%-30%"
+    },
+    {
+      "metric": "扣非归母净利润",
+      "target": "连续两个季度转正且单季超过1000万元"
+    },
+    {
+      "metric": "经营现金流",
+      "target": "滚动两个季度累计为正"
+    },
+    {
+      "metric": "应收账款",
+      "target": "低于5.0亿元或应收账款/收入比例下降"
+    },
+    {
+      "metric": "新签核电/轨交订单",
+      "target": "持续披露大额订单且正常履行"
+    }
+  ]
+}

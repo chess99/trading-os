@@ -1,0 +1,113 @@
+{
+  "symbol": "CN:300008",
+  "market": "CN",
+  "ticker": "300008",
+  "name": "天海防务",
+  "company_name": "天海融合防务装备技术股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "船舶行业高景气和海外订单增长带来利润弹性，但公司现金流、担保、杠杆和控股股东业绩补偿诉讼使估值必须打折。当前价格大致处于公允区间上沿，等待4.2-4.8元/股的安全边际更合适。",
+  "quality_rating": "B-",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    4.8,
+    5.8
+  ],
+  "buy_zone": [
+    4.2,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于或等于4.2元，且未出现订单取消、重大亏损合同或控股股东诉讼恶化",
+      "action": "分批买入",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价位于4.2-4.8元，且经营现金流、合同负债和毛利率没有恶化",
+      "action": "小仓试买",
+      "target_position": "1%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价位于4.8-5.8元",
+      "action": "观察或仅保留观察仓",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于7.0元，且2026年利润或现金流没有显著上修",
+      "action": "减仓或卖出",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "currency": "CNY",
+      "reason": "价格进入买入观察区，需要复核订单、毛利率和现金流后再决定仓位",
+      "action": "进入买入观察区，复核订单、毛利率和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "currency": "CNY",
+      "reason": "价格低于安全边际下沿，若基本面未恶化可考虑分批建仓",
+      "action": "若基本面未恶化，可分批建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "currency": "CNY",
+      "reason": "价格超过减仓阈值，若利润和现金流没有上修则收益风险比下降",
+      "action": "若没有利润和现金流上修，减仓或卖出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "预计2026年半年报披露后复核",
+      "reason": "半年报可验证订单交付、毛利率和经营现金流",
+      "action": "复核收入、利润、毛利率和现金流是否支持当前估值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "预计2026年三季报披露后复核",
+      "reason": "三季报可更新全年盈利和回款假设",
+      "action": "更新订单质量、交付周期、现金流和全年盈利假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "预计2026年年报披露后复核",
+      "reason": "年报可完整检验利润质量、担保风险和诉讼进展",
+      "action": "重估合理价值区间、买入区间和仓位上限"
+    }
+  ],
+  "key_tracking_metrics": [
+    "新签订单金额、船型、客户、币种和交付周期",
+    "合同负债、存货、应收账款和经营现金流净额",
+    "船海工程设计建造总承包毛利率",
+    "海外收入占比和前五大客户集中度",
+    "短期借款、担保余额、受限资金",
+    "防务装备业务收入和毛利率",
+    "控股股东业绩补偿诉讼及金海运相关诉讼进展"
+  ]
+}
