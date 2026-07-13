@@ -1,0 +1,152 @@
+{
+  "symbol": "CN:002901",
+  "market": "CN",
+  "ticker": "002901",
+  "name": "大博医疗",
+  "company_name": "大博医疗科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "大博医疗已从骨科集采冲击中修复，2025 年收入和利润恢复明显，现金流和资产负债表质量较好；但 45 元附近估值已反映较多修复预期，安全边际不足，等待 32-38 元区间或业绩继续超预期后再提高仓位。",
+  "quality_rating": "中上",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    38,
+    48
+  ],
+  "buy_zone": [
+    32,
+    38
+  ],
+  "sell_or_reduce_zone": [
+    58,
+    62
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 38 元，且最近两个季度收入仍保持增长、毛利率不低于 68%、经营现金流未明显恶化",
+      "action": "分批建立观察仓",
+      "target_position": "2%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于 32 元，且集采续约价格温和、无重大产品质量或合规风险",
+      "action": "提高至核心观察仓",
+      "target_position": "4%-6%",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价处于 38-48 元，且业绩未显著超预期",
+      "action": "保持观察或小仓跟踪",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于 58 元，且未来两年利润预期没有上修至 8 亿元以上",
+      "action": "不新增并考虑减仓",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "低于保守买入区间上沿，开始具备安全边际",
+      "action": "进入买入区间，复核最新季度收入、毛利率、集采和现金流后分批建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "低于保守买入区间下沿，若基本面稳定则预期收益风险比改善",
+      "action": "若基本面未恶化，评估提高至 4%-6% 仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 58,
+      "reason": "高于估值减仓区间下沿，若盈利未上修则安全边际不足",
+      "action": "估值进入偏贵区，若盈利预期未上修则减仓或停止新增"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "中报或季度报告会验证 2025 年修复后的增长持续性",
+      "condition": "发布 2026 年中报或任一季度报告",
+      "action": "复核收入、净利润、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "集采续约和价格规则是骨科耗材估值的核心变量",
+      "condition": "国家或省级骨科耗材集采续约规则、价格或中标结果变化",
+      "action": "重估收入增长、毛利率和合理估值倍数"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "毛利率跌破阈值可能意味着价格或竞争压力超预期",
+      "condition": "毛利率连续两个季度低于 68%",
+      "action": "下调质量评分和合理价值区间"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "现金流转弱会削弱利润质量和安全边际",
+      "condition": "经营现金流/归母净利润连续两个报告期低于 0.8",
+      "action": "复核应收账款、存货和经销商回款质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "产品质量和合规事件会直接影响医院准入和估值折价",
+      "condition": "发生重大产品质量、召回、合规处罚或渠道反腐事件",
+      "action": "暂停买入并重新评估风险折价"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "回购执行价格体现管理层资本配置纪律",
+      "condition": "公司回购执行价格和金额显著偏离内在价值判断",
+      "action": "复核资本配置评价"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "营业收入增速",
+      "target": "2026-2028 年维持 10%-15% 以上"
+    },
+    {
+      "metric": "归母净利润",
+      "target": "2026 年 6.8-7.4 亿元为基准，低于 6.5 亿元需重估"
+    },
+    {
+      "metric": "毛利率",
+      "target": "维持 68%-72% 以上"
+    },
+    {
+      "metric": "净利率",
+      "target": "维持 20%-25%"
+    },
+    {
+      "metric": "经营现金流/归母净利润",
+      "target": "三年平均不低于 0.9"
+    },
+    {
+      "metric": "应收账款和存货周转",
+      "target": "收入恢复时不出现连续恶化"
+    },
+    {
+      "metric": "集采中标价格与份额",
+      "target": "价格续约温和且核心品类份额不下滑"
+    }
+  ]
+}
