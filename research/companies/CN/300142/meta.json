@@ -4,77 +4,118 @@
   "ticker": "300142",
   "name": "沃森生物",
   "company_name": "云南沃森生物技术股份有限公司",
-  "currency": "CNY",
   "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
   "current_rating": "watch",
+  "current_thesis": "沃森生物具备国内稀缺的疫苗注册、生产、临床和海外准入能力，13价肺炎、双价HPV、20价肺炎、九价HPV和mRNA平台构成存量现金流加管线期权。但2025年收入24.18亿元同比下降14.29%，ROE仅1.91%；2026Q1收入仍同比下降3.98%，归母净利润1.11亿元的大幅增长主要受应收账款坏账准备转回和研发资本化影响，主营强复苏证据不足。当前约13.20元接近基准合理价值上沿，安全边际不足，等待10.5元以下或海外订单、20价肺炎、定增治理落地等硬催化。",
   "quality_rating": "B+",
   "valuation_rating": "B-",
-  "current_thesis": "沃森生物是具备疫苗平台研发、国内外商业化能力的疫苗企业，但收入已连续三年下滑（50亿→24亿）、毛利率从88%降至74.6%、应收账款22亿+周转慢、ROE仅1.9%、2026Q1利润改善主要来自坏账转回而非经营好转。当前12.31元/PB2.73x/TTM PE 69x，已定价了基准情景的大部分预期，安全边际不足。建议观察等待10元以下或定增落地/海外大单等催化出现。",
-  "fair_value_range": [10.0, 14.0],
-  "buy_zone": [8.0, 10.0],
-  "sell_or_reduce_zone": [14.5, 21.0],
-  "strong_attraction_zone": [7.5, 8.5],
-  "do_not_chase_above": 14.5,
+  "fair_value_range": [
+    10.5,
+    13.5
+  ],
+  "buy_zone": [
+    9.0,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    18.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
   "position_plan": [
     {
-      "zone": "14.5元以上",
-      "condition": "超过合理偏低上沿",
+      "condition": "股价高于15.5元，且没有20价肺炎临床、海外大单或定增治理落地的超预期证据",
+      "action": "avoid_or_reduce",
+      "target_weight": 0.0,
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于13.5-15.5元，估值高于基准价值上沿",
       "action": "wait",
       "target_weight": 0.0,
       "max_weight": 0.01
     },
     {
-      "zone": "12.0-14.5元",
-      "condition": "合理偏高，仅事件驱动仓",
-      "action": "wait",
+      "condition": "股价处于10.5-13.5元，半年报收入、现金流和应收账款尚未验证改善",
+      "action": "watch_only",
       "target_weight": 0.005,
-      "max_weight": 0.015
-    },
-    {
-      "zone": "10.0-12.0元",
-      "condition": "合理偏低，可建首笔观察仓",
-      "action": "starter_buy",
-      "target_weight": 0.01,
       "max_weight": 0.02
     },
     {
-      "zone": "8.0-10.0元",
-      "condition": "安全边际较好，分批提高",
-      "action": "add",
-      "target_weight": 0.02,
+      "condition": "股价低于10.5元，且未出现疫苗质量、监管、管线失败或回款恶化等重大负面",
+      "action": "starter_buy",
+      "target_weight": 0.01,
       "max_weight": 0.03
     },
     {
-      "zone": "7.5元以下",
-      "condition": "强吸引区，需核验无重大基本面恶化",
-      "action": "heavy_buy",
-      "target_weight": 0.03,
+      "condition": "股价低于9.0元，且2026H1/H2收入企稳、经营现金流改善、应收账款未继续恶化",
+      "action": "add",
+      "target_weight": 0.025,
       "max_weight": 0.04
     }
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 10.0, "reason": "进入安全买入区，适合建立首笔观察仓"},
-    {"type": "price_below", "price": 8.0, "reason": "进入强吸引区，需复核是否存在质量/监管/管线重大负面"},
-    {"type": "price_above", "price": 14.5, "reason": "超过合理偏低上沿，应停止加仓"}
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入可买区，可建立小仓位观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入较好安全边际区，复核基本面后可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "超过基准估值上沿，若无硬催化应停止加仓或减仓"
+    }
   ],
   "review_triggers": [
-    {"type": "date", "date": "2026-08-29", "reason": "2026中报预披露，复查收入/现金流/应收账款"},
-    {"type": "date", "date": "2026-10-31", "reason": "复查2026三季报，验证收入恢复趋势和经营现金流质量"},
-    {"type": "date", "date": "2027-03-31", "reason": "年度复查：20价肺炎进展、定增落地、海外订单、ROE恢复"}
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告：验证收入是否恢复、海外收入和应收账款是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报和20价肺炎球菌多糖结合疫苗临床进度，这是估值上限的核心变量"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "复核向腾云新沃定增审核注册和新董事会落地情况，控制权变更会影响治理、资金和摊薄假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "年度复核海外EPI、WHO PQ、UNICEF/GAVI采购或本地化生产合作进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2027年一季报：若应收账款继续上升且经营现金流持续为负，视为利润质量和回款风险恶化"
+    }
   ],
-  "key_risks": [
-    "HPV/肺炎疫苗竞争加剧，价格下行超预期",
-    "海外收入增长不及预期，注册/准入/回款周期拉长",
-    "研发资本化后若项目失败带来减值（2026Q1已开始资本化）",
-    "应收账款22亿+周转缓慢，坏账准备变动操控利润",
-    "定增/控制权变化导致摊薄、治理磨合期或战略摇摆",
-    "有息负债快速增加（2026Q1长期借款从1.9亿暴增至9.17亿）",
-    "货币资金从35亿（2025Q1）降至9.7亿（2026Q1），现金流消耗加速",
-    "疫苗安全/质量/监管事件"
-  ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08T22:00:00+08:00"
+  "key_tracking_metrics": [
+    "季度营业收入同比增速",
+    "自主疫苗收入和海外收入占比",
+    "海外收入毛利率和回款周期",
+    "20价肺炎球菌多糖结合疫苗临床进度",
+    "九价HPV三期临床和注册进度",
+    "应收账款余额、账龄和坏账准备变动",
+    "经营活动现金流量净额",
+    "研发投入、研发资本化率和开发支出余额",
+    "定增审核注册进度和新董事会落地情况",
+    "ROE和毛利率恢复情况"
+  ]
 }

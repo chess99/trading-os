@@ -1,0 +1,127 @@
+{
+    "symbol":  "CN:300140",
+    "market":  "CN",
+    "ticker":  "300140",
+    "name":  "节能环境",
+    "company_name":  "中节能环境保护股份有限公司",
+    "status":  "active",
+    "updated_at":  "2026-07-13",
+    "latest_report":  "reports/2026-07-13-initial.md",
+    "report_history":  [
+                           "reports/2026-07-13-initial.md"
+                       ],
+    "rating":  "watch",
+    "current_rating":  "watch",
+    "current_thesis":  "央企固废运营平台，现金流强、资产底盘稳定，但行业成熟、ROE不高，应收账款和合同资产较重；合理价值约4.7-5.6元，需在4.3元以下才有足够安全边际。",
+    "quality_rating":  "中上",
+    "valuation_rating":  "合理偏贵",
+    "fair_value_range":  [
+                             4.7,
+                             5.6
+                         ],
+    "buy_zone":  [
+                     4.0,
+                     4.3
+                 ],
+    "sell_or_reduce_zone":  [
+                                6.2,
+                                999.0
+                            ],
+    "currency":  "CNY",
+    "base_currency":  "CNY",
+    "position_plan":  [
+                          {
+                              "condition":  "价格高于5.0元，且无应收回款明显改善或资产注入催化",
+                              "action":  "仅保留0%-3%观察仓",
+                              "max_weight":  0.03
+                          },
+                          {
+                              "condition":  "价格跌至4.0-4.3元，且最近季度经营现金流为正、应收账款未继续明显恶化",
+                              "action":  "分批建仓至3%-5%",
+                              "max_weight":  0.05
+                          },
+                          {
+                              "condition":  "价格低于4.0元，且固废毛利率、经营现金流、资本开支纪律均未恶化",
+                              "action":  "提高至6%-8%上限",
+                              "max_weight":  0.08
+                          },
+                          {
+                              "condition":  "应收账款加合同资产超过70亿元且经营现金流连续两个季度弱于净利润",
+                              "action":  "无论价格高低，仓位上限降至3%",
+                              "max_weight":  0.03
+                          }
+                      ],
+    "price_triggers":  [
+                           {
+                               "type":  "price_below",
+                               "price":  4.3,
+                               "reason":  "进入买入观察区，复核季度现金流和应收回款后分批建仓",
+                               "action":  "进入买入观察区，复核季度现金流和应收回款后分批建仓"
+                           },
+                           {
+                               "type":  "price_below",
+                               "price":  4,
+                               "reason":  "若基本面未恶化，可提高目标仓位",
+                               "action":  "若基本面未恶化，可提高目标仓位"
+                           },
+                           {
+                               "type":  "price_above",
+                               "price":  6.2,
+                               "reason":  "减仓或停止加仓，等待新增增长证据",
+                               "action":  "减仓或停止加仓，等待新增增长证据"
+                           }
+                       ],
+    "review_triggers":  [
+                            {
+                                "type":  "date",
+                                "date":  "2026-08-31",
+                                "condition":  "披露2026年半年报或三季报",
+                                "reason":  "披露2026年半年报或三季报",
+                                "action":  "review"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-10-31",
+                                "condition":  "应收账款加合同资产连续两个季度显著上升",
+                                "reason":  "应收账款加合同资产连续两个季度显著上升",
+                                "action":  "review"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-12-31",
+                                "condition":  "公告控股股东托管资产注入、重大并购或同业竞争解决方案",
+                                "reason":  "公告控股股东托管资产注入、重大并购或同业竞争解决方案",
+                                "action":  "review"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-07-20",
+                                "condition":  "2026-07-20前后限售股解禁实际安排公告",
+                                "reason":  "2026-07-20前后限售股解禁实际安排公告",
+                                "action":  "review"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-12-31",
+                                "condition":  "垃圾处理费、可再生能源补贴、电价政策发生重大变化",
+                                "reason":  "垃圾处理费、可再生能源补贴、电价政策发生重大变化",
+                                "action":  "review"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-12-31",
+                                "condition":  "发生环保、安全生产或重大诉讼事件",
+                                "reason":  "发生环保、安全生产或重大诉讼事件",
+                                "action":  "review"
+                            }
+                        ],
+    "key_tracking_metrics":  [
+                                 "应收账款和合同资产余额",
+                                 "经营现金流/归母净利润",
+                                 "固废处理量、售电量、供热供汽收入",
+                                 "固废综合处理毛利率",
+                                 "资本开支、并购价格和项目IRR",
+                                 "有息负债、财务费用和现金短债覆盖",
+                                 "分红率和每股现金分红"
+                             ]
+}
