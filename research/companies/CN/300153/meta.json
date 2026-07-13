@@ -1,0 +1,116 @@
+{
+  "symbol": "CN:300153",
+  "market": "CN",
+  "ticker": "300153",
+  "name": "科泰电源",
+  "company_name": "上海科泰电源股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司受益于数据中心、通信和海外电力基础设施备用电源需求，但本质仍是成熟竞争行业中的项目型设备制造商。2025-2026Q1 收入利润增长较快，然而净利率低、应收账款高、客户集中度高，当前约 23.91 元价格已隐含较强利润跃升预期，安全边际不足。",
+  "quality_rating": "中等偏低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    12,
+    18
+  ],
+  "buy_zone": [
+    0,
+    12
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于12 CNY，且最近两个季度经营现金流为正、应收账款增速不高于收入增速",
+      "action": "买入",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价处于12-16 CNY，且订单、毛利率和回款均出现改善证据",
+      "action": "小仓位试错",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于20 CNY但单季归母净利润未稳定超过5000万元",
+      "action": "观察不追",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于28 CNY，且未看到2026-2027年净利润2亿元以上的高置信兑现路径",
+      "action": "减仓或回避",
+      "target_position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12,
+      "currency": "CNY",
+      "reason": "进入保守估值和安全边际较充分区间",
+      "action": "进入可买区，复核订单、毛利率、现金流后考虑建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 16,
+      "currency": "CNY",
+      "reason": "进入中性估值上沿附近，可用小仓位跟踪基本面兑现",
+      "action": "进入跟踪仓区，要求基本面改善证据"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "currency": "CNY",
+      "reason": "需要乐观利润情景充分兑现才能支撑，估值容错率低",
+      "action": "估值进入高风险区，除非利润兑现显著超预期，否则减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报是验证数据中心订单、毛利率和应收账款质量的关键节点",
+      "condition": "披露2026年半年报或三季报",
+      "action": "复核收入、利润、现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可观察全年利润兑现速度与经营现金流匹配度",
+      "condition": "披露2026年三季报",
+      "action": "复核订单兑现、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报用于重新评估公司是否从项目型制造成长为高质量现金流资产",
+      "condition": "披露2026年年报",
+      "action": "重新估值并更新仓位计划"
+    }
+  ],
+  "key_tracking_metrics": [
+    "新签订单和在手订单金额",
+    "数据中心备用电源订单占比",
+    "海外收入占比",
+    "单季毛利率",
+    "归母净利润和扣非归母净利润",
+    "经营活动现金流量净额",
+    "应收账款及合同资产余额",
+    "前五大应收账款及合同资产占比",
+    "存货周转和预收/合同负债",
+    "每股净资产和ROE"
+  ]
+}
