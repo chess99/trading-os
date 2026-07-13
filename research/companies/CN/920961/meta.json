@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920961",
+  "market": "CN",
+  "ticker": "920961",
+  "name": "创远信科",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "存量业务资本回报与自由现金流偏弱，现价已高度计入关联并购及6G卫星业务兑现，缺乏安全边际。",
+  "fair_value_range": [12, 16],
+  "buy_zone": [9, 12],
+  "sell_or_reduce_zone": [19, 27],
+  "position_plan": [
+    {
+      "condition": "股价处于9至12元、并购及标的业绩假设经重新验证且存量业务现金流未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "并购失败、业绩承诺可信度下降、资本化资产减值或合规风险扩大",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、自由现金流与研发资本化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报及重大资产重组注册交割进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12,
+      "reason": "进入有条件研究买入区，须重新验证并购、现金流和合规假设"
+    },
+    {
+      "type": "price_above",
+      "price": 19,
+      "reason": "进入减仓或不应追高区间，估值再次明显透支"
+    }
+  ],
+  "updated_at": "2026-07-14T16:00:00+08:00"
+}

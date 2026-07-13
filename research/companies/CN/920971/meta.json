@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920971",
+  "market": "CN",
+  "ticker": "920971",
+  "name": "天马新材",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司拥有电子陶瓷粉体工艺与认证积累及新产能期权，但核心资本回报和自由现金流尚弱，当前价格已透支高端产品放量与利润率修复。",
+  "fair_value_range": [8, 13],
+  "buy_zone": [5.5, 8],
+  "sell_or_reduce_zone": [18, 28],
+  "position_plan": [
+    {
+      "condition": "股价处于5.5至8元且中报确认毛利率、产能利用率、库存和自由现金流改善，无新增重大质量事件",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价低于6.5元，重新验证长期商业价值未受损且核心自由现金流持续转正",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "ROIC连续两个报告期改善并接近资本成本，且高端产品实现可核验批量收入",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的毛利率、产能利用率、库存与自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8,
+      "reason": "进入基本面复核区，只有核心假设未恶化且现金流改善时才考虑试仓"
+    },
+    {
+      "type": "price_above",
+      "price": 18,
+      "reason": "进入减仓或不应追高区间，价格已显著高于公允价值上沿"
+    }
+  ],
+  "updated_at": "2026-07-14T06:13:49+08:00"
+}
