@@ -3,79 +3,116 @@
   "market": "CN",
   "ticker": "300476",
   "name": "胜宏科技",
-  "company_name": "胜宏科技(惠州)股份有限公司",
-  "currency": "CNY",
+  "company_name": "胜宏科技（惠州）股份有限公司",
   "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
   "current_rating": "watch",
-  "current_thesis": "AI算力PCB景气兑现，2025年营收192.9亿（+79.8%）/净利43.12亿（+273.5%）确认业绩跃迁，毛利率从22.7%升至35.2%。2026Q1延续高增（净利+40%），净利率维持23%+。出口占比77%，海外大客户导入顺利。当前动态PE 53x已定价高增长预期，安全边际不足，等待回调至245元以下建仓。",
+  "current_thesis": "胜宏科技是AI算力PCB景气中兑现度很高的高端PCB龙头，2025年收入192.92亿元、归母净利润43.12亿元，2026Q1收入55.19亿元、归母净利润12.88亿元，经营现金流强。公司具备高多层、高阶HDI、AI算力卡和数据中心交换机板能力，出口占比高，头部客户订单仍在增长。但2026-07-13收盘价273.01元对应约57倍TTM PE，已经反映较高增长预期，安全边际不足，适合观察或已有仓位持有，不宜追高。",
   "quality_rating": "A",
   "valuation_rating": "C",
-  "fair_value_range": [200, 340],
-  "buy_zone": [200, 245],
-  "strong_attraction_zone": [170, 200],
-  "sell_or_reduce_zone": [320, 400],
-  "do_not_chase_above": 320,
+  "fair_value_range": [
+    260,
+    340
+  ],
+  "buy_zone": [
+    200,
+    245
+  ],
+  "sell_or_reduce_zone": [
+    330,
+    400
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
   "position_plan": [
     {
-      "zone": "280-320",
-      "condition": "现价区，2026半年报确认增长趋势",
-      "action": "持有或0.5%观察仓，不新增",
+      "zone": "330元以上",
+      "condition": "股价进入高估区且没有2026-2027年利润进一步上修证据",
+      "action": "不新增，已有仓位逐步降风险",
       "target_weight": 0.005,
-      "max_weight": 0.01
-    },
-    {
-      "zone": "245-280",
-      "condition": "合理偏贵区，等待中报验证",
-      "action": "可小仓建立1%",
-      "target_weight": 0.01,
       "max_weight": 0.015
     },
     {
-      "zone": "200-245",
-      "condition": "安全买入区，基本面未恶化",
-      "action": "逐步买入",
+      "zone": "260-330元",
+      "condition": "股价处于合理到偏贵区，2026H1收入、毛利率和现金流尚未完成新一轮验证",
+      "action": "观察或持有，不追高",
+      "target_weight": 0.01,
+      "max_weight": 0.02
+    },
+    {
+      "zone": "245-260元",
+      "condition": "订单持续、毛利率不低于33%、经营现金流未明显弱于净利润",
+      "action": "小仓试探",
+      "target_weight": 0.015,
+      "max_weight": 0.02
+    },
+    {
+      "zone": "200-245元",
+      "condition": "进入安全边际买入区且AI订单、扩产良率、毛利率未结构性恶化",
+      "action": "分批买入",
       "target_weight": 0.03,
       "max_weight": 0.04
     },
     {
-      "zone": "170-200",
-      "condition": "强吸引区，AI订单未结构性恶化",
+      "zone": "200元以下",
+      "condition": "估值进入强吸引区且未出现客户流失、质量事故或现金流恶化",
       "action": "积极买入",
       "target_weight": 0.04,
       "max_weight": 0.06
-    }
-  ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026半年报，核心验证：营收增速/毛利率/经营现金流/AI收入占比"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
       "price": 245,
-      "reason": "进入安全买入区，可开始建仓"
+      "reason": "进入安全边际买入区，启动分批建仓评估"
     },
     {
       "type": "price_below",
       "price": 200,
-      "reason": "进入强吸引区，加仓至4%-6%"
+      "reason": "进入强吸引区，若基本面未恶化可提高仓位上限"
     },
     {
       "type": "price_above",
-      "price": 320,
-      "reason": "进入明显偏贵区，不追高/减仓"
+      "price": 330,
+      "reason": "进入高估区，需降低新增买入并评估减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 360,
+      "reason": "除非盈利预期明显上修，否则估值风险较高"
     }
   ],
-  "key_risks": [
-    "估值风险：53x动态PE已定价乐观预期，业绩miss有双杀风险",
-    "周期风险：AI资本开支若放缓，PCB需求可能回落",
-    "竞争风险：高端PCB扩产长期毛利率承压",
-    "地缘/汇率风险：出口占77%，贸易限制和人民币升值影响较大"
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报：收入增速、毛利率、归母净利润、经营现金流、在建工程和短期借款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报：AI订单持续性、扩产爬坡、利润率是否维持高位"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报及2027经营指引，重新评估200亿元投资计划的回报率和资产负债压力"
+    }
   ],
-  "updated_at": "2026-07-08T15:30:00+08:00"
+  "key_tracking_metrics": [
+    "2026H1和2026Q3营业收入同比增速是否保持25%以上",
+    "毛利率是否维持33%-36%，若连续两个季度低于30%需重估",
+    "经营现金流净额/归母净利润是否维持0.8倍以上",
+    "在建工程、固定资产、短期借款和资本开支是否与收入增量匹配",
+    "惠州厂房四、十、十一以及泰国、越南、马来西亚产能爬坡和客户审厂进度",
+    "AI高端产品订单能见度、2027-2028长期需求是否继续被财报验证",
+    "沪电股份、深南电路、生益电子等同业毛利率和订单表述"
+  ]
 }
