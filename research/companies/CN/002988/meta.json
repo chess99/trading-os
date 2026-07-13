@@ -1,0 +1,119 @@
+{
+  "symbol": "CN:002988",
+  "market": "CN",
+  "ticker": "002988",
+  "name": "豪美新材",
+  "company_name": "广东豪美新材股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "豪美新材的核心看点是从建筑铝型材向汽车轻量化和工业铝型材升级，收入增长已经验证，但毛利率、净利率、ROE和经营现金流仍偏弱；当前价格接近合理价值上半部，安全边际不足，等待更低价格或利润质量进一步验证。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    16.0,
+    21.5
+  ],
+  "buy_zone": [
+    0,
+    16.5
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    26.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于16.5元，汽车轻量化收入继续高于公司整体增速，季度毛利率不低于10%，且未出现重大客户或现金流恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02,
+      "target_position": "1%-2%"
+    },
+    {
+      "condition": "股价低于15.0元，全年经营现金流改善或转正，归母净利率向2.5%以上提升",
+      "action": "提高至标准小仓",
+      "max_weight": 0.03,
+      "target_position": "2%-3%"
+    },
+    {
+      "condition": "股价高于24.0元，且利润增长主要来自估值扩张而非经营现金流和ROE改善",
+      "action": "减仓或不新增",
+      "max_weight": 0.01,
+      "target_position": "0%-1%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "进入买入区间上沿，估值接近中性情景下沿",
+      "action": "复核是否建立1%-2%观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "接近理想买入价，具备更明确安全边际",
+      "action": "若基本面未恶化，复核是否提高至2%-3%"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "进入减仓区间，除非利润和现金流超预期，否则赔率下降",
+      "action": "复核是否减仓或停止加仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后需要更新收入结构和利润质量判断",
+      "condition": "披露2026年半年报或年报",
+      "action": "复核汽车轻量化收入、毛利率、净利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核募投和经营趋势是否支持当前估值",
+      "condition": "向特定对象发行、募投项目进度或产能投放出现重大变化",
+      "action": "复核扩产回报率、摊薄影响和产能消化风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后检查现金流、应收和存货是否恶化",
+      "condition": "季度经营活动现金流持续为负且应收账款或存货增速显著高于收入增速",
+      "action": "下调质量评级并降低仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年报披露后验证汽车轻量化订单与盈利兑现情况",
+      "condition": "汽车客户订单、项目定点或价格年降发生重大变化",
+      "action": "复核汽车轻量化业务增长假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年报后重估合理价值区间和买卖价格带",
+      "condition": "股价进入15.0元以下或24.0元以上区间",
+      "action": "复核买入或减仓决策"
+    }
+  ],
+  "key_tracking_metrics": [
+    "汽车轻量化铝型材收入及增速",
+    "工业用铝型材收入及毛利率变化",
+    "季度综合毛利率是否稳定在10%以上",
+    "归母净利率是否提升至2.5%-3.0%",
+    "经营活动现金流量净额",
+    "应收账款、应收票据和存货增速相对收入增速",
+    "ROE是否提升至7%-8%以上",
+    "募投项目投产进度、产能利用率和新增订单"
+  ]
+}

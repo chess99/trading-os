@@ -1,0 +1,138 @@
+{
+  "symbol": "CN:002983",
+  "market": "CN",
+  "ticker": "002983",
+  "name": "芯瑞达",
+  "company_name": "安徽芯瑞达科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "芯瑞达财务质量和现金流较好，Mini LED/RGB 显示升级带来中期弹性，但 2025 年收入下滑、2026Q1 利润承压，24 元附近估值已透支增长。等待股价回落到 14 元以下，或等待连续两个季度收入和扣非利润恢复增长后再重新评估。",
+  "quality_rating": "中等偏上",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    15.0,
+    18.5
+  ],
+  "buy_zone": [
+    12.5,
+    14.0
+  ],
+  "sell_or_reduce_zone": [
+    23.0,
+    28.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 14.0 元，且最近两个季度收入未继续恶化、经营现金流为正",
+      "action": "开始分批建仓",
+      "target_position": "2%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于 12.5 元，且显示模组毛利率维持 24% 以上、无大客户流失迹象",
+      "action": "提高到核心观察仓",
+      "target_position": "4%-6%，最高 8%",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "股价高于 23.0 元但没有连续两个季度收入和扣非利润恢复增长",
+      "action": "不追高，已有仓位降低",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "披露 Mini LED/RGB 明确量产订单，且扣非归母净利润 TTM 回到 1.2 亿元以上",
+      "action": "重新评估合理估值上限",
+      "target_position": "视估值调整至 3%-6%",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "currency": "CNY",
+      "action": "进入买入区，复核最新季报和订单情况",
+      "reason": "低于估值中枢下沿并开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "currency": "CNY",
+      "action": "进入强安全边际区，若基本面未破坏可加仓",
+      "reason": "低于多数估值方法的保守区间"
+    },
+    {
+      "type": "price_above",
+      "price": 23.0,
+      "currency": "CNY",
+      "action": "估值偏贵，复核是否有业绩兑现，否则减仓或不买",
+      "reason": "显著高于合理价值区间上沿"
+    },
+    {
+      "type": "price_above",
+      "price": 28.0,
+      "currency": "CNY",
+      "action": "主题定价较高，除非业绩跃迁否则卖出或严格降仓",
+      "reason": "需要很高利润增长才能支撑该估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026 年三季报披露后，复核收入、扣非归母净利润、显示模组毛利率和经营现金流",
+      "reason": "验证 2026Q1 后的收入和利润下滑是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026 年年报披露后，复核全年利润、现金流、分红和大客户集中度",
+      "reason": "验证全年盈利质量和资本配置是否支撑估值"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027 年中报披露后，复核 Mini LED/RGB 放量证据和估值区间",
+      "reason": "验证 Mini LED/RGB 增长假设是否兑现"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "营业收入同比",
+      "target": "连续两个季度转正，最好恢复 10% 以上"
+    },
+    {
+      "metric": "扣非归母净利润 TTM",
+      "target": "回到 1.2 亿元以上并保持增长"
+    },
+    {
+      "metric": "显示模组毛利率",
+      "target": "维持 24% 以上，若升至 27% 以上则说明结构改善"
+    },
+    {
+      "metric": "经营现金流净额/归母净利润",
+      "target": "年度维持 1.0 倍以上"
+    },
+    {
+      "metric": "前五大客户销售占比",
+      "target": "低于 65%，或在高占比下仍能保持收入增长和毛利率稳定"
+    },
+    {
+      "metric": "应收账款和存货",
+      "target": "增速不显著高于收入增速，减值损失不扩大"
+    },
+    {
+      "metric": "Mini LED/RGB 产品进展",
+      "target": "披露明确量产订单、收入占比或毛利率改善证据"
+    }
+  ]
+}
