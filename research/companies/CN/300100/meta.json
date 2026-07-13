@@ -1,0 +1,128 @@
+{
+  "symbol": "CN:300100",
+  "market": "CN",
+  "ticker": "300100",
+  "name": "双林股份",
+  "company_name": "双林股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "传统汽车零部件主业有现金流和精密传动积累，机器人丝杠、角模块、低空电驱提供期权；但2026Q1收入、利润、经营现金流同步下滑，且机器人业务截至2025年底尚无正式定点，23.60元已反映较多预期，等待更低价格或订单兑现。",
+  "quality_rating": "中高",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    18.0,
+    25.0
+  ],
+  "buy_zone": [
+    15.5,
+    18.0
+  ],
+  "sell_or_reduce_zone": [
+    28.0,
+    32.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价在23.60元附近，且尚无机器人正式定点或新业务收入确认",
+      "action": "观察，不新建仓",
+      "target_position": "0%",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌至18元以下，主业未恶化，2026H1扣非净利润降幅收窄",
+      "action": "建立试探仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价跌至15.5元以下，经营现金流恢复，应收账款和存货无异常",
+      "action": "提升至标准仓",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于28元但缺少正式订单和收入兑现",
+      "action": "不追涨，已有仓位降风险",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于32元且估值主要由机器人主题驱动",
+      "action": "卖出或只保留观察仓",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "currency": "CNY",
+      "action": "进入可买区，复核2026H1利润和现金流后考虑试探仓",
+      "reason": "低于合理价值下沿，开始出现安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 15.5,
+      "currency": "CNY",
+      "action": "进入高安全边际区，若基本面未恶化可提升至标准仓",
+      "reason": "相对合理价值中枢折价约30%，风险收益改善"
+    },
+    {
+      "type": "price_above",
+      "price": 28.0,
+      "currency": "CNY",
+      "action": "进入减仓观察区，除非已有正式订单和收入验证",
+      "reason": "高于合理价值上沿，主题估值开始透支"
+    },
+    {
+      "type": "price_above",
+      "price": 32.0,
+      "currency": "CNY",
+      "action": "估值透支区，若仍缺少业绩兑现应卖出或保留极小观察仓",
+      "reason": "需要机器人或角模块收入兑现才能支撑该价格"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "复核2026年半年度报告、机器人正式定点、滚柱丝杠产线投产和经营现金流",
+      "reason": "半年报将验证Q1下滑是否延续，以及新业务是否开始兑现"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "复核2026年三季报、扣非利润恢复情况、传动驱动智能毛利率和客户集中度",
+      "reason": "三季报将决定全年盈利区间和估值倍数是否需要下修"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核2026年报、机器人业务收入确认、角模块交付和全年自由现金流",
+      "reason": "年报可完整验证机器人、角模块和海外产能投入对利润和现金流的影响"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润同比增速",
+    "经营活动现金流净额/归母净利润",
+    "传动驱动智能收入和毛利率",
+    "前五大客户销售占比",
+    "第一大客户销售占比",
+    "机器人滚柱丝杠正式定点数量和订单金额",
+    "机器人丝杠产线利用率、良率、ASP和毛利率",
+    "角模块无人矿卡交付台数、收入确认和回款",
+    "应收账款、应收款项融资和存货周转变化",
+    "研发费用率和管理费用率",
+    "资产负债率和净债务"
+  ]
+}

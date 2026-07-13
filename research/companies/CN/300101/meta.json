@@ -1,0 +1,106 @@
+{
+  "symbol": "CN:300101",
+  "market": "CN",
+  "ticker": "300101",
+  "name": "振芯科技",
+  "company_name": "成都振芯科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备北斗导航、集成电路和特种电子资产属性，但2025年利润大幅下滑、2026Q1亏损且经营现金流为负。2026-07-13收盘价15.11元已提前反映较乐观的利润恢复预期，基础合理价值约8.5-11.5元，当前缺乏安全边际。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [8.5, 11.5],
+  "buy_zone": [0, 8.5],
+  "sell_or_reduce_zone": [13.0, 16.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于13元，且尚未看到连续两个季度收入恢复、扣非利润转正或经营现金流改善",
+      "action": "保持0仓位或仅保留极小跟踪仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格回落至10.5-11.5元，且中报或三季报验证收入同比恢复、亏损收窄或现金流改善",
+      "action": "建立观察仓",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "价格低于8.5元，且基本面未继续恶化、无重大治理或财务风险新增",
+      "action": "建立核心观察仓",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于16元，且利润恢复、订单兑现和现金流改善仍未验证",
+      "action": "减仓或卖出",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "currency": "CNY",
+      "action": "进入观察买入区，需同时复核最新季报",
+      "reason": "价格接近合理价值区间上沿，若业绩改善可开始小仓位观察"
+    },
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "currency": "CNY",
+      "action": "进入安全边际买入区，若基本面未恶化可建仓",
+      "reason": "价格低于基础合理价值区间下沿，具备较明确安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "currency": "CNY",
+      "action": "无业绩验证不加仓，已有仓位考虑降至观察仓",
+      "reason": "价格高于基础合理价值区间，需利润恢复验证支撑"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "currency": "CNY",
+      "action": "若订单、利润和现金流未验证，减仓或卖出",
+      "reason": "价格接近乐观情形上沿，缺乏订单和现金流验证时风险回报不佳"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后复核收入、毛利率、扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后复核收入恢复和现金流改善是否连续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后复核全年利润、现金流、应收账款和存货周转"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "reason": "2027年半年报披露后复核中期增长和估值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度营业收入同比增速",
+    "综合毛利率是否稳定在45%以上",
+    "扣非归母净利润是否季度转正",
+    "经营活动现金流净额",
+    "应收账款和存货周转变化",
+    "北斗导航及集成电路重大订单披露",
+    "治理结构和关联交易透明度"
+  ]
+}
