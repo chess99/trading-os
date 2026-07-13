@@ -3,29 +3,102 @@
   "market": "CN",
   "ticker": "300308",
   "name": "中际旭创",
-  "currency": "CNY",
+  "company_name": "中际旭创股份有限公司",
   "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "全球光模块绝对龙头，AI算力基建核心受益者，2024-2026年处于业绩爆发期，但当前约115x PE已充分反映乐观预期，安全边际不足，建议等待回调至800元以下再考虑建仓",
-  "fair_value_range": [600, 800],
-  "buy_zone": [500, 650],
-  "sell_or_reduce_zone": [1000, 1300],
-  "position_plan": [
-    {"condition": "股价回落至800-1000元区间且基本面未恶化", "max_weight": 0.02},
-    {"condition": "股价回落至650-800元区间", "max_weight": 0.05},
-    {"condition": "股价回落至500-650元区间", "max_weight": 0.08},
-    {"condition": "股价低于500元", "max_weight": 0.10}
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-13-initial.md"
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-20", "reason": "2026年中报发布后复查业绩增速及毛利率趋势"},
-    {"type": "date", "date": "2026-10-25", "reason": "2026年三季报后复查增长趋势和竞争格局变化"}
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "中际旭创是全球高速光模块一线龙头，2025 年光通信收发模块收入占比 97.95%，境外收入占比 90.58%，2026Q1 受 AI 算力基础设施投入拉动实现收入 194.96 亿元、归母净利润 57.35 亿元。但 2026-07-13 收盘价 1108.00 元对应约 1.23 万亿元市值，已接近乐观情景估值，上行需要 1.6T 放量、毛利率稳定和客户资本开支持续超预期共同兑现，当前适合观察，不适合追高。",
+  "quality_rating": "优秀",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    850,
+    1050
+  ],
+  "buy_zone": [
+    650,
+    850
+  ],
+  "sell_or_reduce_zone": [
+    1250,
+    1500
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价回落至 850 元以下，且最近一季收入同比高增、毛利率不低于 42%、经营现金流没有明显背离净利润",
+      "action": "试探建仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价回落至 750 元以下，且 1.6T 放量、客户需求和海外政策均未出现负面变化",
+      "action": "分批加仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价回落至 650 元以下，且下跌主要来自市场估值压缩而非公司份额、毛利率或出口政策恶化",
+      "action": "提高至核心仓位",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "股价高于 1250 元且没有新的业绩上修证据",
+      "action": "不新增，已有仓位考虑降低风险敞口",
+      "max_weight": 0.0
+    }
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 800, "reason": "进入轻仓试探区间"},
-    {"type": "price_below", "price": 650, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 1300, "reason": "进入减仓或泡沫区间"}
+    {
+      "type": "price_below",
+      "price": 850,
+      "reason": "进入可试探建仓区，需要复核毛利率和订单趋势"
+    },
+    {
+      "type": "price_below",
+      "price": 650,
+      "reason": "进入高赔率买入区，但必须确认基本面未破坏"
+    },
+    {
+      "type": "price_above",
+      "price": 1250,
+      "reason": "进入乐观定价区，需减少追高和估值回撤风险"
+    },
+    {
+      "type": "price_above",
+      "price": 1500,
+      "reason": "进入泡沫风险区，除非盈利预测再次显著上修，否则应减仓或回避"
+    }
   ],
-  "updated_at": "2026-07-07T19:10:00+08:00"
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年中报披露后复核收入增速、毛利率、经营现金流、应收账款和 1.6T 进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报披露后复核 AI 光模块景气持续性和同业竞争压力"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "2026 年年报窗口复核全年利润是否支撑当前估值中枢"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入同比和环比增速",
+    "单季毛利率是否维持在 42% 以上",
+    "经营现金流净额 / 归母净利润",
+    "应收账款、预付款项、存货增速是否快于收入增速",
+    "800G 向 1.6T 产品迁移进度",
+    "前五大客户收入占比变化",
+    "境外收入占比及中美贸易/出口限制变化",
+    "新易盛、天孚通信、光迅科技等同业毛利率和订单增速"
+  ]
 }
