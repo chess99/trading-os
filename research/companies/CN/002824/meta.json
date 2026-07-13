@@ -1,0 +1,116 @@
+{
+  "symbol": "CN:002824",
+  "market": "CN",
+  "ticker": "002824",
+  "name": "和胜股份",
+  "company_name": "广东和胜工业铝材股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "新能源汽车铝合金结构件放量带来收入增长，2026年一季度利润修复初步验证；但第一大客户和前五大客户集中度高，2025年收入增长未转化为利润增长，当前约30元以上价格缺少足够安全边际，适合跟踪等待价格或业绩确认。",
+  "quality_rating": "B+",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    24,
+    29
+  ],
+  "buy_zone": [
+    20,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    35,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于24元且核心客户订单、汽车部件收入增速未明显恶化",
+      "action": "建立观察仓",
+      "target_position": "1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于22元且2026年中报验证扣非净利率改善、经营现金流未显著恶化",
+      "action": "提高到小仓位",
+      "target_position": "1.5%-2.0%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "汽车部件收入保持25%以上增长、扣非净利率超过5%、第一大客户占比下降或第二第三客户放量",
+      "action": "验证后加仓",
+      "target_position": "最高3.0%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于35元且利润预测没有上修，或客户集中度/现金流恶化",
+      "action": "减仓或不新增",
+      "target_position": "0%-1.0%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "currency": "CNY",
+      "reason": "进入可买区上沿，开始具备安全边际",
+      "action": "复核订单和中报预期，考虑建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "currency": "CNY",
+      "reason": "相对合理价值下沿折价较充分",
+      "action": "若基本面未恶化，进入可买区"
+    },
+    {
+      "type": "price_above",
+      "price": 35,
+      "currency": "CNY",
+      "reason": "估值超过当前利润兑现能支撑的区间",
+      "action": "除非盈利预测上修，否则降低仓位或停止新增"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露后复核汽车部件收入、净利率、现金流和客户集中度",
+      "reason": "中报能验证2026年利润修复是否持续",
+      "action": "更新财务和估值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露后复核全年盈利预测和估值区间",
+      "reason": "三季报能判断全年收入和净利率兑现程度",
+      "action": "更新评级和仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露后复核利润兑现、产能回报和资本配置",
+      "reason": "年报能完整验证客户结构、现金流和资本开支回报",
+      "action": "重估合理价格和可买价格"
+    }
+  ],
+  "key_tracking_metrics": [
+    "汽车部件收入及同比增速",
+    "电子消费品收入及同比增速",
+    "毛利率",
+    "扣非归母净利率",
+    "经营活动现金流量净额",
+    "第一大客户销售占比",
+    "前五大客户销售占比",
+    "应收账款和存货周转",
+    "资本开支和产能利用率",
+    "股东减持和再融资进展"
+  ]
+}
