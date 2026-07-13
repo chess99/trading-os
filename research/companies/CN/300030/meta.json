@@ -1,0 +1,121 @@
+{
+  "symbol": "CN:300030",
+  "market": "CN",
+  "ticker": "300030",
+  "name": "阳普医疗",
+  "company_name": "阳普医疗科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司已从连续亏损中修复，2025 年和 2026Q1 利润及经营现金流改善，但收入仍在下滑，盈利质量仍需验证；当前约 60 倍以上 TTM PE 对低增长医疗耗材公司不便宜，等待价格回落或收入连续企稳。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.2,
+    5.2
+  ],
+  "buy_zone": [
+    0,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    6.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且收入仍未企稳",
+      "action": "不建仓，仅观察",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至 4.20 元以下且无新增重大合规、减值或控制权风险",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于 3.80 元，且最近两个季度经营现金流为正、应收账款未重新扩张",
+      "action": "分批加至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入同比转正，扣非净利率维持 8% 以上，海外注册或订单有实质进展",
+      "action": "允许把上限提高到中小仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入合理价值区间下沿，安全边际开始出现",
+      "action": "复核半年报或最新季报，准备观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "低于基础买入区上限，价格补偿足以覆盖收入未企稳风险",
+      "action": "若基本面未恶化，可分批买入"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "明显高于合理价值区间，除非基本面超预期否则风险收益不佳",
+      "action": "若无收入和海外注册兑现，卖出或降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年半年报披露",
+      "reason": "半年报是验证收入是否企稳和费用压缩是否可持续的第一个关键节点",
+      "action": "复核收入是否企稳、真空采血系统收入降幅是否收窄"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "任一季度扣非净利率低于 5% 或经营现金流转负",
+      "reason": "利润修复可能来自阶段性坏账转回或费用压缩，需要用三季报验证盈利质量",
+      "action": "复核评级和盈利质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "出现 CE、FDA 或重点海外市场注册证/大额订单公告",
+      "reason": "海外注册和订单是当前估值中主要的增长期权",
+      "action": "上调跟踪优先级并重估海外增长期权"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "出现重大资产减值、商誉减值、应收账款异常增长或股东质押风险变化",
+      "reason": "历史减值和应收质量是公司估值折价的重要来源",
+      "action": "立即复核风险评级"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "集采中标价格或核心产品毛利率显著下滑",
+      "reason": "集采价格和毛利率直接决定真空采血系统盈利底",
+      "action": "复核估值和安全边际"
+    }
+  ],
+  "key_tracking_metrics": [
+    "真空采血系统季度收入同比增速",
+    "海外收入同比增速与海外毛利率",
+    "扣非归母净利润和扣非净利率",
+    "经营活动现金流净额/扣非净利润",
+    "应收账款余额及周转天数",
+    "资产减值和信用减值金额",
+    "CE/FDA/重点国家注册证进展",
+    "集采中标价格和核心产品毛利率"
+  ]
+}
