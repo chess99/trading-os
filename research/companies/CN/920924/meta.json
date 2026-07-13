@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920924",
+  "market": "CN",
+  "ticker": "920924",
+  "name": "广脉科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "高铁信息化订单与准入壁垒具备价值，但现金流、资本回报和算力项目风险尚未改善到足以支撑当前高估值的程度。",
+  "fair_value_range": [7.0, 10.0],
+  "buy_zone": [5.5, 7.0],
+  "sell_or_reduce_zone": [12.0, 15.0],
+  "position_plan": [
+    {
+      "condition": "股价处于5.5至7.0元且高铁订单、毛利率、回款和资本开支未恶化，先建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个报告期自由现金流为正、应收增速低于收入增速且年化ROIC向8%以上改善",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "出现重大合同提前终止、客户信用风险、高铁毛利率跌破30%或有息负债快速上升，不因价格下跌加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-01",
+      "reason": "2026年半年报披露窗口后复查高铁订单转化、应收账款、资本开支和自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入可复核基本面后考虑观察仓的买入区间上沿"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "进入乐观预期定价和减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T09:30:00+08:00"
+}
