@@ -33,7 +33,7 @@ STANDARD_META_KEYS = {
     "price_triggers",
     "updated_at",
 }
-REQUIRED_REPORT_SECTIONS = [
+INITIAL_REQUIRED_REPORT_SECTIONS = [
     "结论版",
     "业务理解",
     "行业与竞争格局",
@@ -49,6 +49,18 @@ REQUIRED_REPORT_SECTIONS = [
     "上一轮判断复盘",
     "来源",
 ]
+FOLLOWUP_REQUIRED_REPORT_SECTIONS = [
+    "上一轮判断复盘",
+    "新信息",
+    "判断变化",
+    "跟踪触发器",
+    "风险",
+    "来源",
+]
+REPORT_SECTION_REQUIREMENTS = {
+    "initial": INITIAL_REQUIRED_REPORT_SECTIONS,
+    "followup": FOLLOWUP_REQUIRED_REPORT_SECTIONS,
+}
 REPORT_TYPE_RE = re.compile(r"^研究类型：(?P<kind>[a-z_]+)$")
 ANALYST_RE = re.compile(r"^(?:- )?(?:分析师|Analyst)\s*[:：]\s*(?P<value>.+)$", re.I)
 
@@ -115,6 +127,7 @@ def audit_research_assets(research_root: str | Path) -> dict[str, Any]:
     extra_meta_keys: Counter[str] = Counter()
     price_like_meta_keys: Counter[str] = Counter()
     strict_issues: list[dict[str, str]] = []
+    strict_warnings: list[dict[str, str]] = []
     validation_errors: list[dict[str, str]] = []
 
     for company_dir in company_dirs:
@@ -139,8 +152,13 @@ def audit_research_assets(research_root: str | Path) -> dict[str, Any]:
             validation_errors.append({"company_dir": str(company_dir), "error": str(exc)})
             continue
 
-        for issue in _strict_company_issues(company_dir, meta):
+        issues, warnings = _strict_company_findings(company_dir, meta)
+        for issue in issues:
             strict_issues.append({"company_dir": str(company_dir), "error": issue})
+        for warning in warnings:
+            strict_warnings.append(
+                {"company_dir": str(company_dir), "error": warning}
+            )
 
     return {
         "schema_version": 1,
@@ -150,6 +168,8 @@ def audit_research_assets(research_root: str | Path) -> dict[str, Any]:
         "price_like_meta_keys": _counter_items(price_like_meta_keys),
         "strict_issue_count": len(strict_issues),
         "strict_issues": strict_issues,
+        "warning_count": len(strict_warnings),
+        "warnings": strict_warnings,
         "validation_errors": validation_errors,
     }
 
@@ -174,27 +194,30 @@ def _company_dirs(companies_root: Path) -> list[Path]:
 
 
 def _require_strict_company_asset(company_dir: Path, meta: dict[str, Any]) -> None:
-    issues = _strict_company_issues(company_dir, meta)
+    issues, _ = _strict_company_findings(company_dir, meta)
     if issues:
         raise AssetValidationError(issues[0])
 
 
-def _strict_company_issues(company_dir: Path, meta: dict[str, Any]) -> list[str]:
+def _strict_company_findings(
+    company_dir: Path, meta: dict[str, Any]
+) -> tuple[list[str], list[str]]:
     issues: list[str] = []
+    warnings: list[str] = []
     extra_keys = sorted(set(meta) - STANDARD_META_KEYS)
     if extra_keys:
-        issues.append(f"extra meta keys are not allowed in strict mode: {extra_keys}")
+        warnings.append(f"extra meta keys are not part of the standard schema: {extra_keys}")
 
     report_path = company_dir / meta["latest_report"]
     try:
         text = report_path.read_text(encoding="utf-8-sig")
     except OSError as exc:
-        return [f"latest report could not be read: {exc}"]
+        return [f"latest report could not be read: {exc}"], warnings
 
     lines = [line.strip() for line in text.splitlines()]
     first_non_empty = next((line for line in lines if line), "")
     if first_non_empty != f"# 公司研究：{meta['name']}（{meta['symbol']}）":
-        issues.append(
+        warnings.append(
             "report title must be '# 公司研究：{name}（MARKET:TICKER）' "
             f"for {meta['symbol']}"
         )
@@ -210,31 +233,36 @@ def _strict_company_issues(company_dir: Path, meta: dict[str, Any]) -> list[str]
             issues.append("report date line must contain a real YYYY-MM-DD date")
 
     report_type_line = _find_prefixed_line(lines[:10], "研究类型：")
-    if report_type_line is None or REPORT_TYPE_RE.match(report_type_line) is None:
+    report_type_match = (
+        REPORT_TYPE_RE.match(report_type_line) if report_type_line is not None else None
+    )
+    research_type = report_type_match.group("kind") if report_type_match else None
+    if research_type is None:
         issues.append("report research type line must be '研究类型：initial|followup|...'")
+    elif research_type not in REPORT_SECTION_REQUIREMENTS:
+        issues.append(f"unsupported report research type: {research_type}")
 
     analyst_line = _find_analyst_line(lines[:20])
     if analyst_line is None:
-        issues.append("report analyst line must be '分析师：具体工具 + 模型'")
+        warnings.append("report analyst line must be '分析师：具体工具 + 模型'")
     else:
         analyst = ANALYST_RE.match(analyst_line)
         analyst_value = analyst.group("value").strip() if analyst else ""
         analyst_problem = _analyst_problem(analyst_value)
         if analyst_problem:
-            issues.append(analyst_problem)
+            warnings.append(analyst_problem)
 
     headings = {
         line.removeprefix("## ").strip()
         for line in lines
         if line.startswith("## ")
     }
-    missing_sections = [
-        section for section in REQUIRED_REPORT_SECTIONS if section not in headings
-    ]
+    required_sections = REPORT_SECTION_REQUIREMENTS.get(research_type, [])
+    missing_sections = [section for section in required_sections if section not in headings]
     if missing_sections:
         issues.append(f"report section missing: {missing_sections[0]}")
 
-    return issues
+    return issues, warnings
 
 
 def _find_prefixed_line(lines: list[str], prefix: str) -> str | None:

@@ -21,6 +21,7 @@ from .research_assets.coverage_store import (
     enqueue_research,
     get_symbol,
     list_screening,
+    reconcile_research_queue,
     set_screening,
     validate_coverage_root,
 )
@@ -120,6 +121,16 @@ def build_parser() -> argparse.ArgumentParser:
     enqueue.add_argument("--status", default="pending")
     enqueue.add_argument("--target-company-dir")
     enqueue.set_defaults(func=cmd_coverage_enqueue)
+
+    reconcile = coverage_sub.add_parser(
+        "reconcile", help="Reconcile queue state with valid company assets"
+    )
+    _add_coverage_root(reconcile)
+    reconcile.add_argument("--research-root", default="research")
+    reconcile_mode = reconcile.add_mutually_exclusive_group(required=True)
+    reconcile_mode.add_argument("--check", action="store_true")
+    reconcile_mode.add_argument("--apply", action="store_true")
+    reconcile.set_defaults(func=cmd_coverage_reconcile)
     return parser
 
 
@@ -220,6 +231,18 @@ def cmd_coverage_enqueue(ns: argparse.Namespace) -> int:
         target_company_dir=ns.target_company_dir,
     )
     print(json.dumps({"ok": True, "path": str(path)}, ensure_ascii=False, indent=2))
+    return 0
+
+
+def cmd_coverage_reconcile(ns: argparse.Namespace) -> int:
+    payload = reconcile_research_queue(
+        ns.root,
+        ns.research_root,
+        apply=bool(ns.apply),
+    )
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+    if ns.check and (payload["change_count"] or payload["blocked_count"]):
+        return 1
     return 0
 
 

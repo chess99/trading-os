@@ -148,8 +148,11 @@ def test_strict_company_asset_accepts_standard_chinese_report(tmp_path: Path):
     assert meta["symbol"] == "CN:600519"
 
 
-def test_strict_company_asset_rejects_untraceable_analyst(tmp_path: Path):
-    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+def test_strict_company_asset_warns_on_untraceable_analyst(tmp_path: Path):
+    from trading_os.research_assets.company import (
+        audit_research_assets,
+        validate_company_dir,
+    )
 
     company_dir = write_strict_company(tmp_path)
     report_path = company_dir / "reports" / "2026-07-06-initial.md"
@@ -161,8 +164,9 @@ def test_strict_company_asset_rejects_untraceable_analyst(tmp_path: Path):
         encoding="utf-8",
     )
 
-    with pytest.raises(AssetValidationError, match="analyst"):
-        validate_company_dir(company_dir, strict=True)
+    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
+    audit = audit_research_assets(tmp_path / "research")
+    assert any("analyst" in item["error"] for item in audit["warnings"])
 
 
 def test_strict_company_asset_rejects_missing_report_type(tmp_path: Path):
@@ -193,8 +197,11 @@ def test_strict_company_asset_rejects_missing_required_section(tmp_path: Path):
         validate_company_dir(company_dir, strict=True)
 
 
-def test_strict_company_asset_rejects_extra_meta_keys(tmp_path: Path):
-    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+def test_strict_company_asset_warns_on_extra_meta_keys(tmp_path: Path):
+    from trading_os.research_assets.company import (
+        audit_research_assets,
+        validate_company_dir,
+    )
 
     company_dir = write_strict_company(tmp_path)
     meta_path = company_dir / "meta.json"
@@ -205,7 +212,79 @@ def test_strict_company_asset_rejects_extra_meta_keys(tmp_path: Path):
         encoding="utf-8",
     )
 
-    with pytest.raises(AssetValidationError, match="extra meta"):
+    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
+    audit = audit_research_assets(tmp_path / "research")
+    assert any("extra meta" in item["error"] for item in audit["warnings"])
+
+
+def test_strict_company_asset_warns_on_nonstandard_title(tmp_path: Path):
+    from trading_os.research_assets.company import (
+        audit_research_assets,
+        validate_company_dir,
+    )
+
+    company_dir = write_strict_company(tmp_path)
+    report_path = company_dir / "reports" / "2026-07-06-initial.md"
+    report_path.write_text(
+        report_path.read_text(encoding="utf-8").replace(
+            "# 公司研究：贵州茅台（CN:600519）",
+            "# 贵州茅台初始研究",
+        ),
+        encoding="utf-8",
+    )
+
+    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
+    audit = audit_research_assets(tmp_path / "research")
+    assert any("report title" in item["error"] for item in audit["warnings"])
+
+
+def _write_followup_company(tmp_path: Path, *, include_new_information: bool) -> Path:
+    company_dir = write_strict_company(tmp_path)
+    report_path = company_dir / "reports" / "2026-08-31-followup.md"
+    sections = [
+        ("上一轮判断复盘", "上一轮维持观察。"),
+        ("判断变化", "估值区间保持不变。"),
+        ("跟踪触发器", "等待三季报。"),
+        ("风险", "需求恢复慢于预期。"),
+        ("来源", "公司半年报。"),
+    ]
+    if include_new_information:
+        sections.insert(1, ("新信息", "半年报收入保持增长。"))
+    body = "".join(f"## {heading}\n\n{text}\n\n" for heading, text in sections)
+    report_path.write_text(
+        "# 公司研究：贵州茅台（CN:600519）\n"
+        "日期：2026-08-31\n"
+        "研究类型：followup\n"
+        "分析师：Codex + GPT-5\n\n"
+        + body,
+        encoding="utf-8",
+    )
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["latest_report"] = "reports/2026-08-31-followup.md"
+    meta["report_history"].append(meta["latest_report"])
+    meta["updated_at"] = "2026-08-31T00:00:00+08:00"
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return company_dir
+
+
+def test_strict_followup_uses_followup_sections(tmp_path: Path):
+    from trading_os.research_assets.company import validate_company_dir
+
+    company_dir = _write_followup_company(tmp_path, include_new_information=True)
+
+    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
+
+
+def test_strict_followup_rejects_missing_followup_section(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = _write_followup_company(tmp_path, include_new_information=False)
+
+    with pytest.raises(AssetValidationError, match="section"):
         validate_company_dir(company_dir, strict=True)
 
 

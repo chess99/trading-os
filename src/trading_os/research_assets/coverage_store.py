@@ -6,6 +6,8 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
+from .company import AssetValidationError, validate_company_dir
+
 DECISIONS = {
     "deep_research",
     "watch_only",
@@ -92,6 +94,83 @@ def coverage_status(root: str | Path) -> dict[str, Any]:
             "by_status": _sorted_counts(item.get("status") for item in queue),
         },
         "runs": {"total": len(runs)},
+    }
+
+
+def reconcile_research_queue(
+    root: str | Path,
+    research_root: str | Path,
+    *,
+    apply: bool = False,
+) -> dict[str, Any]:
+    base = Path(root)
+    research_base = Path(research_root)
+    queue_path = base / RESEARCH_QUEUE_FILE
+    records = read_jsonl(queue_path)
+    reconciled: list[dict[str, Any]] = []
+    changes: list[dict[str, Any]] = []
+    blocked: list[dict[str, str]] = []
+    eligible_statuses = {"pending", "running", "failed"}
+
+    for record in records:
+        updated = dict(record)
+        if record.get("status") not in eligible_statuses:
+            reconciled.append(updated)
+            continue
+
+        company_dir = _resolve_company_dir(record, research_base)
+        if not (company_dir / "meta.json").exists():
+            reconciled.append(updated)
+            continue
+
+        try:
+            meta = validate_company_dir(company_dir)
+            if meta["symbol"] != record.get("symbol"):
+                raise AssetValidationError(
+                    f"company asset symbol {meta['symbol']} does not match queue symbol "
+                    f"{record.get('symbol')}"
+                )
+        except AssetValidationError as exc:
+            blocked.append(
+                {
+                    "symbol": str(record.get("symbol", "")),
+                    "company_dir": str(company_dir),
+                    "error": str(exc),
+                }
+            )
+            reconciled.append(updated)
+            continue
+
+        updated.update(
+            {
+                "status": "completed",
+                "result_path": meta["latest_report"],
+                "failure_reason": None,
+                "next_action": "查看 reports/ 下最新报告。",
+            }
+        )
+        if not updated.get("finished_at"):
+            updated["finished_at"] = meta["updated_at"]
+        changes.append(
+            {
+                "symbol": meta["symbol"],
+                "from_status": record["status"],
+                "to_status": "completed",
+                "result_path": meta["latest_report"],
+            }
+        )
+        reconciled.append(updated)
+
+    if apply and changes:
+        write_jsonl(queue_path, reconciled)
+
+    return {
+        "schema_version": 1,
+        "applied": apply,
+        "change_count": len(changes),
+        "changes": changes,
+        "blocked_count": len(blocked),
+        "blocked": blocked,
     }
 
 
@@ -246,6 +325,17 @@ def _ticker_from_symbol(symbol: str) -> str:
     if not SYMBOL_RE.match(symbol):
         raise CoverageValidationError(f"symbol must match CN:000000: {symbol}")
     return symbol.split(":", 1)[1]
+
+
+def _resolve_company_dir(record: dict[str, Any], research_root: Path) -> Path:
+    target = Path(str(record.get("target_company_dir", "")))
+    if target.is_absolute():
+        return target
+    if target.parts and target.parts[0] == research_root.name:
+        return research_root.parent / target
+    if target.parts and target.parts[0] == "companies":
+        return research_root / target
+    return research_root.parent / target
 
 
 def _sorted_counts(values: Any) -> dict[str, int]:

@@ -45,7 +45,7 @@ def test_cli_company_validate_strict_failure_writes_json_error(
     assert captured.out == ""
     payload = json.loads(captured.err)
     assert payload["ok"] is False
-    assert "report title" in payload["error"]
+    assert "report date" in payload["error"]
 
 
 def test_cli_company_audit_summarizes_report_and_meta_drift(tmp_path: Path, capsys):
@@ -89,6 +89,8 @@ def test_cli_company_audit_summarizes_report_and_meta_drift(tmp_path: Path, caps
     assert payload["extra_meta_keys"][0] == {"key": "current_price", "count": 1}
     assert payload["price_like_meta_keys"][0] == {"key": "current_price", "count": 1}
     assert payload["strict_issue_count"] > 0
+    assert payload["warning_count"] > 0
+    assert any("extra meta" in item["error"] for item in payload["warnings"])
 
 
 def test_cli_help_lists_coverage_command(capsys):
@@ -311,3 +313,107 @@ def test_cli_coverage_enqueue_and_validate(tmp_path: Path, capsys):
     code = main(["coverage", "validate", "--root", str(root)])
     assert code == 0
     assert '"ok": true' in capsys.readouterr().out
+
+
+def _write_reconcile_queue(tmp_path: Path) -> tuple[Path, Path]:
+    from trading_os.research_assets.coverage_store import write_jsonl
+
+    company_dir = write_company(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    write_jsonl(
+        root / "research_queue.jsonl",
+        [
+            {
+                "symbol": "CN:600519",
+                "name": "贵州茅台",
+                "task_type": "initial_research",
+                "priority": 1,
+                "status": "pending",
+                "reason": "进入研究队列。",
+                "target_company_dir": str(company_dir),
+                "assigned_agent": None,
+                "started_at": None,
+                "finished_at": None,
+                "result_path": None,
+                "failure_reason": None,
+                "next_action": "完成初始研究。",
+            }
+        ],
+    )
+    return root, tmp_path / "research"
+
+
+def test_cli_coverage_reconcile_check_reports_drift_without_writing(
+    tmp_path: Path, capsys
+):
+    from trading_os.cli import main
+    from trading_os.research_assets.coverage_store import read_jsonl
+
+    root, research_root = _write_reconcile_queue(tmp_path)
+
+    code = main(
+        [
+            "coverage",
+            "reconcile",
+            "--check",
+            "--root",
+            str(root),
+            "--research-root",
+            str(research_root),
+        ]
+    )
+
+    payload = json.loads(capsys.readouterr().out)
+    assert code == 1
+    assert payload["change_count"] == 1
+    assert payload["applied"] is False
+    assert read_jsonl(root / "research_queue.jsonl")[0]["status"] == "pending"
+
+
+def test_cli_coverage_reconcile_apply_updates_queue(tmp_path: Path, capsys):
+    from trading_os.cli import main
+    from trading_os.research_assets.coverage_store import read_jsonl
+
+    root, research_root = _write_reconcile_queue(tmp_path)
+
+    code = main(
+        [
+            "coverage",
+            "reconcile",
+            "--apply",
+            "--root",
+            str(root),
+            "--research-root",
+            str(research_root),
+        ]
+    )
+
+    payload = json.loads(capsys.readouterr().out)
+    assert code == 0
+    assert payload["change_count"] == 1
+    assert payload["applied"] is True
+    assert read_jsonl(root / "research_queue.jsonl")[0]["status"] == "completed"
+
+
+@pytest.mark.parametrize("modes", [[], ["--check", "--apply"]])
+def test_cli_coverage_reconcile_requires_exactly_one_mode(
+    tmp_path: Path, modes: list[str]
+):
+    from trading_os.cli import main
+
+    root, research_root = _write_reconcile_queue(tmp_path)
+
+    with pytest.raises(SystemExit) as exc:
+        main(
+            [
+                "coverage",
+                "reconcile",
+                *modes,
+                "--root",
+                str(root),
+                "--research-root",
+                str(research_root),
+            ]
+        )
+
+    assert exc.value.code == 2

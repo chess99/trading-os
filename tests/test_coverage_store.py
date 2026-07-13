@@ -168,3 +168,150 @@ def test_set_screening_and_enqueue_write_agent_safe_jsonl(tmp_path: Path):
         "failure_reason": None,
         "next_action": "按 playbooks/company-research.md 写中文初始研究报告。",
     }
+
+
+def test_reconcile_research_queue_finds_valid_completed_asset_without_writing(
+    tmp_path: Path,
+):
+    from tests.test_company_assets import write_company
+    from trading_os.research_assets.coverage_store import (
+        read_jsonl,
+        reconcile_research_queue,
+        write_jsonl,
+    )
+
+    company_dir = write_company(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    queue_path = root / "research_queue.jsonl"
+    original = {
+        "symbol": "CN:600519",
+        "name": "贵州茅台",
+        "task_type": "initial_research",
+        "priority": 1,
+        "status": "pending",
+        "reason": "进入研究队列。",
+        "target_company_dir": str(company_dir),
+        "assigned_agent": None,
+        "started_at": None,
+        "finished_at": None,
+        "result_path": None,
+        "failure_reason": None,
+        "next_action": "完成初始研究。",
+    }
+    write_jsonl(queue_path, [original])
+
+    result = reconcile_research_queue(root, tmp_path / "research")
+
+    assert result["applied"] is False
+    assert result["change_count"] == 1
+    assert result["blocked_count"] == 0
+    assert result["changes"] == [
+        {
+            "symbol": "CN:600519",
+            "from_status": "pending",
+            "to_status": "completed",
+            "result_path": "reports/2026-07-06-initial.md",
+        }
+    ]
+    assert read_jsonl(queue_path) == [original]
+
+
+def test_reconcile_research_queue_applies_allowed_changes_and_is_idempotent(
+    tmp_path: Path,
+):
+    from tests.test_company_assets import write_company
+    from trading_os.research_assets.coverage_store import (
+        read_jsonl,
+        reconcile_research_queue,
+        write_jsonl,
+    )
+
+    company_dir = write_company(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    queue_path = root / "research_queue.jsonl"
+    records = [
+        {
+            "symbol": "CN:600519",
+            "name": "贵州茅台",
+            "task_type": "initial_research",
+            "priority": 1,
+            "status": "failed",
+            "reason": "进入研究队列。",
+            "target_company_dir": str(company_dir),
+            "assigned_agent": "worker",
+            "started_at": "2026-07-05T00:00:00+08:00",
+            "finished_at": "2026-07-05T01:00:00+08:00",
+            "result_path": None,
+            "failure_reason": "timeout",
+            "next_action": "重试。",
+        },
+        {
+            "symbol": "CN:000001",
+            "name": "平安银行",
+            "task_type": "initial_research",
+            "priority": 1,
+            "status": "needs_review",
+            "reason": "需要人工复核。",
+            "target_company_dir": str(company_dir),
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "result_path": None,
+            "failure_reason": None,
+            "next_action": "人工复核。",
+        },
+    ]
+    write_jsonl(queue_path, records)
+
+    applied = reconcile_research_queue(root, tmp_path / "research", apply=True)
+    second = reconcile_research_queue(root, tmp_path / "research")
+    queue = read_jsonl(queue_path)
+
+    assert applied["applied"] is True
+    assert applied["change_count"] == 1
+    assert second["change_count"] == 0
+    assert queue[0]["status"] == "needs_review"
+    assert queue[1]["status"] == "completed"
+    assert queue[1]["result_path"] == "reports/2026-07-06-initial.md"
+    assert queue[1]["failure_reason"] is None
+    assert queue[1]["started_at"] == "2026-07-05T00:00:00+08:00"
+
+
+def test_reconcile_research_queue_reports_invalid_asset_without_completing_it(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import (
+        read_jsonl,
+        reconcile_research_queue,
+        write_jsonl,
+    )
+
+    root = tmp_path / "coverage" / "cn-a"
+    queue_path = root / "research_queue.jsonl"
+    company_dir = tmp_path / "research" / "companies" / "CN" / "600519"
+    company_dir.mkdir(parents=True)
+    (company_dir / "meta.json").write_text("{}\n", encoding="utf-8")
+    record = {
+        "symbol": "CN:600519",
+        "name": "贵州茅台",
+        "task_type": "initial_research",
+        "priority": 1,
+        "status": "pending",
+        "reason": "进入研究队列。",
+        "target_company_dir": str(company_dir),
+        "assigned_agent": None,
+        "started_at": None,
+        "finished_at": None,
+        "result_path": None,
+        "failure_reason": None,
+        "next_action": "完成初始研究。",
+    }
+    write_jsonl(queue_path, [record])
+
+    result = reconcile_research_queue(root, tmp_path / "research", apply=True)
+
+    assert result["change_count"] == 0
+    assert result["blocked_count"] == 1
+    assert result["blocked"][0]["symbol"] == "CN:600519"
+    assert "symbol" in result["blocked"][0]["error"]
+    assert read_jsonl(queue_path) == [record]
