@@ -1,0 +1,122 @@
+{
+  "symbol": "CN:002787",
+  "market": "CN",
+  "ticker": "002787",
+  "name": "华源控股",
+  "company_name": "苏州华源控股股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "主业为成熟包装制造，2025-2026 年利润和现金流修复，但当前股价主要反映半导体/液冷主题溢价；无锡暖芯 2026Q1 并表收入约 1000 万元、占比约 2.38%，财务贡献尚小，24.79 元附近缺乏安全边际。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    10.5,
+    14.5
+  ],
+  "buy_zone": [
+    0,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    18,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于 18 CNY，且半导体业务仍未形成可核验规模收入和利润",
+      "action": "不建立新仓",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至 9.5 CNY 以下，最新一期经营现金流为正，且应收账款未异常扩张",
+      "action": "建立观察仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于 8.0-9.5 CNY，2026 年归母净利润达到 1.6 亿元以上，包装主业毛利率稳定",
+      "action": "提高至标准仓",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "currency": "CNY",
+      "reason": "低于买入区间上限，估值接近主业可解释水平",
+      "action": "复核现金流、应收账款和毛利率，考虑建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "currency": "CNY",
+      "reason": "高于合理价值区间较多，需验证主题溢价兑现度",
+      "action": "若持仓则复核主题溢价兑现度，倾向减仓或回避"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "currency": "CNY",
+      "reason": "接近当前高位主题估值，无财务兑现时安全边际不足",
+      "action": "无半导体实质业绩支撑时不追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报可验证 2026H1 预告兑现、主业毛利率和现金流质量",
+      "condition": "预计已披露 2026 年半年报",
+      "action": "复核收入、毛利率、扣非净利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可验证全年利润节奏和无锡暖芯并表贡献",
+      "condition": "预计已披露 2026 年三季报，并检查无锡暖芯是否披露重大订单、客户、收入、利润或承诺业绩进展",
+      "action": "重新评估半导体业务期权价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "经营现金流持续弱于利润会削弱盈利质量",
+      "condition": "检查经营现金流是否连续两个季度低于归母净利润",
+      "action": "下调财务质量判断"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "应收账款和存货异常扩张会暴露回款与库存风险",
+      "condition": "检查应收账款或存货是否显著快于收入增长",
+      "action": "复核回款和库存风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报可完整复核并购整合、商誉、资本配置和全年盈利质量",
+      "condition": "预计已披露 2026 年年报，并检查减持、质押、再融资、商誉减值或重大并购公告",
+      "action": "复核资本配置和治理风险"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入增速",
+    "归母净利润与扣非归母净利润",
+    "包装主业毛利率和扣非净利率",
+    "经营现金流净额/归母净利润",
+    "应收账款周转天数",
+    "存货周转天数",
+    "无锡暖芯收入、毛利率、净利润、订单和回款",
+    "每股净资产、PE、PB"
+  ]
+}
