@@ -1,0 +1,105 @@
+{
+  "symbol": "CN:300169",
+  "market": "CN",
+  "ticker": "300169",
+  "name": "天晟新材",
+  "company_name": "常州天晟新材料集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "天晟新材当前仍是高杠杆、扣非亏损、信披和诉讼风险较高的困境反转标的。2025年归母净利润转正主要依赖非经常项目，2026Q1主业尚未证明稳定盈利；当前股价约4.50元已显著透支定增、控制权和主业修复预期，缺乏安全边际。",
+  "quality_rating": "低",
+  "valuation_rating": "显著高估",
+  "fair_value_range": [
+    1.0,
+    1.8
+  ],
+  "buy_zone": [
+    0,
+    0.8
+  ],
+  "sell_or_reduce_zone": [
+    2.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于2.5元且扣非利润未连续转正",
+      "action": "不买，保持0仓位",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入1.0-1.8元且定增完成但主业尚未确认扭亏",
+      "action": "仅观察或建立跟踪仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价低于0.8元，定增完成，经营现金流转正且无新增重大风险",
+      "action": "小仓试错",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非盈利且资产负债率降至70%以下",
+      "action": "重新评估是否提高仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.8,
+      "currency": "CNY",
+      "action": "重新评估小仓试错",
+      "reason": "价格低于困境反转安全边际下限"
+    },
+    {
+      "type": "price_above",
+      "price": 2.5,
+      "currency": "CNY",
+      "action": "若基本面未改善则维持不买或减仓",
+      "reason": "价格高于合理价值区间且主业未验证"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "currency": "CNY",
+      "action": "视为显著高估，回避",
+      "reason": "估值明显透支定增和困境反转预期"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、定增和诉讼进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及扣非利润、经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、资产负债率和主业修复质量"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润",
+    "经营现金流净额",
+    "资产负债率",
+    "有息负债余额",
+    "软质发泡材料收入和毛利率",
+    "复合材料收入和毛利率",
+    "境外收入",
+    "定增进展",
+    "重大诉讼和监管进展"
+  ]
+}
