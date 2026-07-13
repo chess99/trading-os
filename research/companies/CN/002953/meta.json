@@ -1,0 +1,106 @@
+{
+  "symbol": "CN:002953",
+  "market": "CN",
+  "ticker": "002953",
+  "name": "日丰股份",
+  "company_name": "广东日丰电缆股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "日丰股份具备线缆认证、客户准入和细分应用扩张能力，2025年经营现金流改善，2026Q1仍保持收入和利润增长；但毛利率低、客户和供应商集中度高，当前约8.50元价格已接近合理价值区间中枢，安全边际不足，适合等待更低价格或ROE与毛利率改善后再买入。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [7.2, 9.0],
+  "buy_zone": [6.5, 7.0],
+  "sell_or_reduce_zone": [10.5, 999.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于7.0元，且最新单季收入仍同比增长10%以上、综合毛利率不低于11%、经营现金流未明显恶化",
+      "action": "建立观察仓",
+      "target_position": "1%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于6.5元，且客户集中度、供应商集中度、应收账款周转没有恶化",
+      "action": "提高到中小仓",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价处于7.0-9.0元且基本面没有超预期改善",
+      "action": "观察为主，不主动加仓",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于10.5元且ROE未稳定超过10%、毛利率未修复至13%左右",
+      "action": "减仓或不买",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "currency": "CNY",
+      "action": "复核最新季报后可试仓",
+      "reason": "进入可买区间上沿，开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "currency": "CNY",
+      "action": "若基本面未恶化，可提高仓位",
+      "reason": "相对合理价值中枢折价较充分，赔率改善"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "currency": "CNY",
+      "action": "若利润率和ROE未上台阶，考虑减仓",
+      "reason": "价格超过当前基本面可支持的合理估值上沿"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "复核2026年半年报：收入、毛利率、经营现金流、应收账款和客户集中度",
+      "reason": "半年报能验证2026年增长质量和营运资金改善是否可持续"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "复核2026年三季报：通信装备组件和新能源电缆增长是否延续",
+      "reason": "三季报能验证通信装备组件和新能源电缆的收入增长是否转化为利润"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核2026年年报：ROE是否超过10%、分红率和资本开支是否合理",
+      "reason": "年报能完整评估ROE、现金流、分红和资本配置质量"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "归母净利润同比增速",
+    "扣非归母净利润同比增速",
+    "综合毛利率",
+    "通信装备组件收入及毛利率",
+    "新能源电缆收入及毛利率",
+    "经营现金流/归母净利润",
+    "应收账款余额及周转天数",
+    "前五大客户收入占比",
+    "第一大供应商采购占比",
+    "ROE",
+    "分红率"
+  ]
+}
