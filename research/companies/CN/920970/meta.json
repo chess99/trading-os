@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920970",
+  "market": "CN",
+  "ticker": "920970",
+  "name": "大禹生物",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "核心添加剂尚未证明持续盈利，公司以举债和重资本方式扩张生猪养殖，现金流、负债和减值风险同步上升，现价已计入激进扭亏预期。",
+  "fair_value_range": [
+    2.0,
+    3.0
+  ],
+  "buy_zone": [
+    1.4,
+    1.8
+  ],
+  "sell_or_reduce_zone": [
+    4.0,
+    5.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价处于1.40-1.80元且核心添加剂未恶化、生猪减值充分、净负债不再上升",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于1.40元且连续两个季度经营现金流转正、核心添加剂毛利率接近30%、净负债下降",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年中报和三季报中的生猪减值、现金流、净负债及核心添加剂毛利率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.8,
+      "reason": "进入有条件的观察性买入区间，仍需验证现金流与基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T03:30:00+08:00"
+}
