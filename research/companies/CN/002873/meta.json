@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:002873",
+  "market": "CN",
+  "ticker": "002873",
+  "name": "新天药业",
+  "company_name": "贵阳新天药业股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司拥有妇科和泌尿系统独家中成药品种、医保覆盖和全国学术推广网络，但2025年利润断崖、2026Q1收入仍下降，销售费用率高、债务和控股股东质押带来折价。当前约7.70元价格已透支明显复苏，合理区间为4.5-6.2元，需等待价格低于4.8元且经营指标改善。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [4.5, 6.2],
+  "buy_zone": [4.2, 4.8],
+  "sell_or_reduce_zone": [7.8, 8.5],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于6.2元且最近两个季度收入或扣非净利未确认修复",
+      "action": "不买，仅跟踪",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入4.8-6.2元且连续两个季度扣非净利同比转正",
+      "action": "观察性建仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于4.8元且收入企稳、销售费用率低于42%",
+      "action": "分批买入",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于4.2元且经营现金流继续覆盖净利润、无质押或再融资风险升级",
+      "action": "加至核心观察仓",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "unit": "CNY/share",
+      "action": "复核收入、扣非净利和销售费用率，若改善则启动小仓买入",
+      "reason": "低于保守买入线后安全边际开始出现"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "unit": "CNY/share",
+      "action": "在无基本面恶化前提下提高仓位上限至2%-3%",
+      "reason": "低于PB和PS保守估值下沿后赔率改善"
+    },
+    {
+      "type": "price_above",
+      "price": 7.8,
+      "unit": "CNY/share",
+      "action": "若没有盈利上修证据则回避或降低仓位",
+      "reason": "高于减仓线时当前利润无法支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报发布后复核收入是否止跌、扣非净利率是否恢复",
+      "reason": "半年报是判断2025利润断崖后是否修复的第一个完整窗口"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "销售费用率连续两个季度低于40%或高于45%时复核估值",
+      "reason": "销售费用率决定高毛利能否转化为股东利润"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "一年内到期非流动负债继续上升或出现再融资公告时复核财务风险",
+      "reason": "短债和续贷压力会影响安全边际"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "控股股东质押比例上升、被动减持或补充质押时立即复核",
+      "reason": "控股股东高质押可能放大股价和治理风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "001、003、xtcb0356等核心研发项目出现获批、延期或失败节点时复核长期增长",
+      "reason": "研发节点决定中长期增长选项是否真实"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度营业收入同比增速",
+    "扣非归母净利润及扣非净利率",
+    "销售费用率",
+    "妇科类和泌尿系统类收入增速",
+    "经营现金流净额和自由现金流",
+    "净有息债务/归母净资产",
+    "控股股东质押股份数量",
+    "核心研发管线临床和注册进展"
+  ]
+}
