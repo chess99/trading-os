@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920857",
+  "market": "CN",
+  "ticker": "920857",
+  "name": "泓禧科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "行业需求复苏但公司收入、毛利率和现金流逆势恶化，当前价格已透支份额与盈利修复预期，缺乏安全边际。",
+  "fair_value_range": [5.5, 8.0],
+  "buy_zone": [4.5, 5.5],
+  "sell_or_reduce_zone": [9.5, 12.0],
+  "position_plan": [
+    {
+      "condition": "股价处于4.5至5.5元且连续两个季度经营现金流转正、微型扬声器毛利率转正",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于4.5元且重新验证商业价值、净资产质量与客户关系均未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于12元或基本面继续恶化",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、经营现金流、客户集中度和境外业务盈利"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入有安全边际的条件性买入观察区间，仍需验证现金流与毛利率"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T04:14:22+08:00"
+}

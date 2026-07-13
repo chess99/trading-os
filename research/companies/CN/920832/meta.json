@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920832",
+  "market": "CN",
+  "ticker": "920832",
+  "name": "齐鲁华信",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "账面资产不贵但主业低回报、订单恶化、客户集中与扩产治理风险尚未消化，当前价缺乏安全边际。",
+  "fair_value_range": [4.2, 5.2],
+  "buy_zone": [3.4, 4.0],
+  "sell_or_reduce_zone": [6.3, 7.2],
+  "position_plan": [
+    {
+      "condition": "股价处于3.40至4.00元且订单、毛利率、库存与内控未继续恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.40元且新产线订单、自由现金流和治理假设复核通过",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的订单、毛利率、库存和自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查新产线完工与三季报经营修复情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入有一定安全边际的买入观察区间，仍需复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 6.3,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T00:00:00+08:00"
+}
