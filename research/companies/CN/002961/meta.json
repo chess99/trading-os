@@ -1,0 +1,129 @@
+{
+  "symbol": "CN:002961",
+  "market": "CN",
+  "ticker": "002961",
+  "name": "瑞达期货",
+  "company_name": "瑞达期货股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "瑞达期货盈利弹性和ROE优于多数上市期货同业，资管、风险管理和境外业务提供增长空间；但行业成交活跃度、商品波动率、利率和H股发行摊薄均会影响利润中枢。2026-07-13约18.98元价格不贵但安全边际不足，17元以下更适合分批买入。",
+  "quality_rating": "中高",
+  "valuation_rating": "合理略低估但安全边际不足",
+  "fair_value_range": [
+    21.0,
+    25.0
+  ],
+  "buy_zone": [
+    13.0,
+    17.0
+  ],
+  "sell_or_reduce_zone": [
+    27.0,
+    35.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于17元，且无重大风控事故、H股发行未明显折价摊薄",
+      "action": "建立约1/3目标仓位",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于15元，且正常化ROE仍有13%以上证据",
+      "action": "加至约2/3目标仓位",
+      "max_weight": 0.035
+    },
+    {
+      "condition": "股价低于13元，且基本面未恶化、行业成交和资管数据未断崖式下滑",
+      "action": "接近目标仓位上限，组合权重不超过5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价进入21-25元合理价值区间",
+      "action": "持有观察，不主动加仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于27元，且没有2026-2027年利润中枢继续上移证据",
+      "action": "逐步减仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 17.0,
+      "unit": "CNY/share",
+      "reason": "进入带安全边际的买入区间",
+      "action": "进入可买区，复核H股发行和最新经营数据"
+    },
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "unit": "CNY/share",
+      "reason": "相对合理价值区间折价更充分",
+      "action": "进入高吸引力区，复核是否可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 27.0,
+      "unit": "CNY/share",
+      "reason": "价格超过估算合理价值上沿并进入减仓区",
+      "action": "进入减仓区，复核估值是否透支"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报披露",
+      "reason": "半年报是验证2026年一季度高景气是否延续的关键节点",
+      "action": "复核资管收入、风险管理利润和ROE"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "condition": "H股发行方案确定发行比例、价格、募集资金用途",
+      "reason": "H股发行可能影响每股收益、每股净资产和ROE",
+      "action": "复核摊薄影响和募资后ROE"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "全国期货市场成交量或成交额连续两个季度同比转负",
+      "reason": "行业成交回落会压低手续费、利息和资管业绩报酬",
+      "action": "复核利润中枢和估值倍数"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "出现风险管理业务重大亏损、信用减值或监管处罚",
+      "reason": "风险管理业务尾部亏损会改变财务质量和护城河判断",
+      "action": "立即复核风险控制和投资结论"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "资管规模或产品业绩明显回撤",
+      "reason": "资管业务是本次成长假设的核心驱动",
+      "action": "复核资管业务护城河和增长假设"
+    }
+  ],
+  "key_tracking_metrics": [
+    "资产管理规模和资管业务收入",
+    "手续费及佣金净收入",
+    "客户保证金规模和利息净收入",
+    "风险管理业务收入、利润、信用减值和敞口",
+    "母公司净资本及净资本/风险资本准备",
+    "加权ROE和归母净利润",
+    "H股发行价格、发行比例和募资后ROE",
+    "全国期货市场成交量、成交额、客户权益和有效客户数"
+  ]
+}
