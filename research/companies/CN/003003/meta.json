@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:003003",
+  "market": "CN",
+  "ticker": "003003",
+  "name": "天元股份",
+  "company_name": "广东天元实业集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是快递电商包装耗材企业，现金流和分红较好，外销和绿色包装存在增量，但行业分散、客户议价强、ROE仅4%-5%左右。2026-07-13收盘价9.95元对应约30倍TTM PE和约1.34倍PB，安全边际不足，暂不买入，等待价格低于6.8元或ROE明确修复。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    7.0,
+    8.8
+  ],
+  "buy_zone": [
+    0,
+    6.8
+  ],
+  "sell_or_reduce_zone": [
+    11.5,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price > 9.0 CNY or fundamentals not yet improving",
+      "action": "不新增仓位，仅跟踪",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "7.5 CNY < price <= 9.0 CNY and latest quarter revenue, gross margin, and operating cash flow are stable",
+      "action": "最多0%-2%观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "6.8 CNY < price <= 7.5 CNY and latest quarter扣非净利润与经营现金流均为正",
+      "action": "可建立2%-3%小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price <= 6.8 CNY and no deterioration in revenue, gross margin, receivables, or inventory",
+      "action": "分批加至4%-5%，若基本面恶化则不加仓",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "currency": "CNY",
+      "note": "进入观察仓评估区，复核最新季度扣非净利和现金流",
+      "reason": "接近估值区间下半部，可开始评估小仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "currency": "CNY",
+      "note": "进入可买区，前提是基本面没有恶化",
+      "reason": "低于合理价值中枢并具备初步安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "currency": "CNY",
+      "note": "高于估值上沿较多，若无ROE改善应减仓或回避",
+      "reason": "明显高于合理价值区间，赔率转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "复核2026年半年报；重点看收入、毛利率、扣非净利率、应收和存货",
+      "reason": "半年报可验证2026Q1恢复是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "复核2026年三季报；若连续两个季度收入同比低于0%则下调评级",
+      "reason": "三季报可观察旺季前订单、外销和现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核2026年年报；重点看ROE是否回到6%以上及外销增长质量",
+      "reason": "年报可完整验证收入恢复、ROE和资本配置"
+    }
+  ],
+  "key_tracking_metrics": [
+    "收入同比增速",
+    "外销收入占比与外销毛利率",
+    "综合毛利率",
+    "扣非净利率",
+    "ROE",
+    "经营现金流/归母净利润",
+    "应收账款周转与存货周转",
+    "前五大客户销售占比",
+    "研发投入占收入比例",
+    "分红率与回购专户股份变化"
+  ]
+}
