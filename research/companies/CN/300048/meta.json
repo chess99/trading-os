@@ -1,0 +1,116 @@
+{
+  "symbol": "CN:300048",
+  "market": "CN",
+  "ticker": "300048",
+  "name": "合康新能",
+  "company_name": "北京合康新能科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司是美的体系内新能源与工控平台，具备高压变频器技术积累和美的渠道赋能，但2025年收入主要由低毛利光伏EPC驱动，扣非利润很薄，2026Q1转亏。当前约4.86元价格已计入较多转型期权，安全边际不足。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    3.0,
+    4.0
+  ],
+  "buy_zone": [
+    2.8,
+    3.2
+  ],
+  "sell_or_reduce_zone": [
+    5.2,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于2.8元且未出现应收账款、合同资产、存货继续失控",
+      "action": "建立1.5%-2.0%观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格处于2.8-3.2元且连续两个季度扣非净利转正、经营现金流改善",
+      "action": "提高至最高3%仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于4.0元但尚未证明扣非利润持续恢复",
+      "action": "不新增仓位，仅观察",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格高于5.2元且利润仍主要来自非经常性损益或低毛利EPC",
+      "action": "减仓或退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "note": "进入可研究建仓区，复核2026H1或最新季度扣非利润、现金流与合同资产",
+      "reason": "价格接近可买区上沿，需要重新评估安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "note": "进入安全边际较好区，若基本面未恶化可建立观察仓",
+      "reason": "市值接近低情景SOTP下沿，可考虑观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 5.2,
+      "note": "估值进入高要求区，若高毛利业务未兑现应考虑减仓",
+      "reason": "价格超过当前基本面可支持区间，需防止转型期权过度定价"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "发布2026年半年度报告或业绩预告",
+      "reason": "验证2026H1扣非利润、现金流和EPC毛利率是否修复"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "condition": "2026年向特定对象发行A股股票获得注册、发行或终止",
+      "reason": "确认美的定增摊薄、资金到位和募投执行节奏"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "单季扣非净利超过2000万元或连续两个季度扣非亏损",
+      "reason": "判断盈利基座是否真正转正"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "应收账款、合同资产、存货合计增速连续两个季度高于收入增速",
+      "reason": "跟踪项目型业务资金占用和减值风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "户储、光伏逆变器或高压变频器获得重大海外/核电订单",
+      "reason": "验证高毛利业务和海外渠道能否成为新增长来源"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润",
+    "经营活动现金流量净额",
+    "新能源及光伏EPC毛利率",
+    "高压变频器收入与毛利率",
+    "户用储能和光伏逆变器收入占比",
+    "海外收入占比",
+    "应收账款加合同资产加存货占收入比例",
+    "定增发行股数、发行价格和募投进度"
+  ]
+}
