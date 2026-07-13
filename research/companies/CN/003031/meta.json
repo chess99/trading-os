@@ -3,119 +3,125 @@
   "market": "CN",
   "ticker": "003031",
   "name": "中瓷电子",
-  "company_name": "中瓷电子",
+  "company_name": "河北中瓷电子科技股份有限公司",
   "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
   "report_history": [
-    "reports/2026-07-08-initial.md"
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-13-initial.md"
   ],
-  "rating": "中性偏谨慎",
-  "current_thesis": "中瓷电子是高可靠电子陶瓷外壳和第三代半导体模块平台型资产，业务质量较高、认证和工艺壁垒较强，但2026-07-08价格已接近乐观情景定价，适合长期跟踪和等待回落，不适合追高。",
+  "rating": "观察",
   "current_rating": "watch",
+  "current_thesis": "中瓷电子是高可靠电子陶瓷、光模块陶瓷外壳/基板、GaN射频器件与SiC功率模块平台。2026Q1增长明显加速，现金流质量较好，但2026-07-13收盘价131.40元已接近合理价值区间上沿，且GaN募投调减说明部分增长叙事需要打折。当前适合观察或极小跟踪仓，等待半年报验证毛利率、库存、订单和雄安太芯整合。",
   "quality_rating": "A-",
-  "valuation_rating": "C",
+  "valuation_rating": "C+",
   "fair_value_range": [
-    102,
-    122
+    112,
+    132
   ],
   "buy_zone": [
-    88,
-    102
+    90,
+    110
   ],
   "sell_or_reduce_zone": [
-    145,
-    160
+    155,
+    175
   ],
-  "base_currency": "CNY",
   "currency": "CNY",
+  "base_currency": "CNY",
   "position_plan": [
     {
-      "stance": "watch_or_tiny_probe",
-      "max_weight": 0.06,
-      "initial_weight": 0.005,
-      "condition": "2026-07-08股价约141.94元且估值接近乐观情景",
-      "action": "当前仅观察或极小试探仓"
+      "stance": "watch_or_tracking_position",
+      "max_weight": 0.005,
+      "condition": "股价处于130元以上且尚未披露2026半年报，估值接近合理区间上沿",
+      "action": "仅保留0-0.5%跟踪仓，不追高"
     },
     {
+      "stance": "hold_or_small_add",
       "price_range": [
-        122,
-        145
+        112,
+        132
       ],
-      "max_weight": 0.01,
-      "condition": "股价处于122-145元且未出现新增基本面超预期证据",
-      "action": "仅保留跟踪仓，不追高"
+      "max_weight": 0.015,
+      "condition": "股价位于112-132元且2026半年报确认收入、利润、现金流继续高质量增长",
+      "action": "已有仓位可持有，新仓只小比例试探"
     },
     {
+      "stance": "buy_in_batches",
       "price_range": [
-        102,
-        122
-      ],
-      "max_weight": 0.025,
-      "condition": "股价回落至102-122元且半年报基本面无恶化",
-      "action": "分批建仓"
-    },
-    {
-      "price_range": [
-        88,
-        102
+        90,
+        110
       ],
       "max_weight": 0.04,
-      "condition": "股价回落至88-102元且收入、毛利率、现金流保持健康",
-      "action": "提高至核心观察仓"
+      "condition": "股价回落至90-110元且毛利率、库存、经营现金流未明显恶化",
+      "action": "分批买入，最高提升至3%-4%"
     },
     {
+      "stance": "high_conviction_if_not_broken",
       "price_range": [
-        68,
-        82
+        75,
+        90
       ],
       "max_weight": 0.06,
-      "condition": "股价回落至68-82元且只是市场错杀而非基本面破坏",
-      "action": "在基本面未恶化时建立核心仓"
+      "condition": "股价回落至75-90元且下跌主要来自市场情绪而非基本面证伪",
+      "action": "建立核心观察仓，最高不超过6%"
+    },
+    {
+      "stance": "reduce_or_do_not_add",
+      "price_range": [
+        155,
+        175
+      ],
+      "max_weight": 0.01,
+      "condition": "股价高于155元且没有新增订单、毛利率或现金流超预期证据",
+      "action": "停止加仓，已有仓位分批降风险"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 102,
-      "reason": "进入合理价值区上沿以下，可复核半年报和订单后考虑分批建仓"
+      "price": 112,
+      "reason": "进入合理价值区间下沿，可结合半年报复核是否小仓买入"
     },
     {
       "type": "price_below",
-      "price": 82,
-      "reason": "进入强吸引买入区，若基本面无恶化应重新评估加仓"
+      "price": 100,
+      "reason": "进入可买区中部，若基本面未恶化可提高仓位"
     },
     {
       "type": "price_above",
-      "price": 145,
-      "reason": "高于不追高价，若缺少新增基本面证据应避免加仓并评估降风险"
+      "price": 155,
+      "reason": "进入不追高区，缺少新增基本面证据时应停止加仓"
     },
     {
       "type": "price_above",
-      "price": 160,
-      "reason": "接近乐观情景上沿，已有仓位需评估分批减仓"
+      "price": 175,
+      "reason": "估值进入情绪驱动区，已有仓位需评估减仓"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、利润率、现金流、应收和存货质量"
+      "reason": "复核2026半年报收入增速、毛利率、库存、经营现金流和客户结构"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "复核2026年三季报以及GaN/SiC业务兑现情况"
+      "reason": "复核2026三季报及GaN/SiC、电子陶瓷扩产、雄安太芯整合进度；期间若披露重大订单、客户验证、募投项目变更或雄安太芯并表贡献，应提前复核"
     }
   ],
   "key_tracking_metrics": [
-    "半年度收入增速",
-    "归母净利润增速",
-    "毛利率",
+    "2026H1营业收入增速",
+    "2026H1归母净利润增速",
+    "综合毛利率和分产品毛利率",
     "经营现金流/净利润",
-    "应收账款周转",
-    "存货周转",
-    "SiC/GaN业务订单和产能利用率",
-    "资本开支与ROIC"
+    "库存增速与库存周转",
+    "前五大客户销售占比",
+    "电子陶瓷扩产产能利用率",
+    "GaN/SiC订单和客户验证进展",
+    "雄安太芯并表收入利润贡献",
+    "研发费用率与资本开支"
   ]
 }
