@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920976",
+  "market": "CN",
+  "ticker": "920976",
+  "name": "视声智能",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "KNX细分技术、海外增长和高资本回报具备质量，但当前价格已计入产业园投产后现金流恢复，需等待更大安全边际。",
+  "fair_value_range": [12.0, 16.5],
+  "buy_zone": [9.5, 11.5],
+  "sell_or_reduce_zone": [19.0, 22.0],
+  "position_plan": [
+    {
+      "condition": "股价处于11.5至12.0元且毛利率不低于52%、海外收入仍增长、应收周转未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于9.5至11.5元且产业园按计划收尾、存货开始消化、TTM扣非利润不低于5500万元",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "基本面恶化时不因价格下跌加仓；若海外收入转负、毛利率低于50%或库存应收持续恶化则退出",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的海外增长、毛利率、存货与经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年报、2027年一季报及产业园投产和自由现金流恢复情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入有安全边际的初始买入区间，须先复核基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 19.0,
+      "reason": "进入减仓或不应追高区间，需验证自由现金流是否达到乐观情景"
+    }
+  ],
+  "updated_at": "2026-07-14T05:04:12+08:00"
+}
