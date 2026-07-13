@@ -1,0 +1,122 @@
+{
+  "symbol": "CN:300166",
+  "market": "CN",
+  "ticker": "300166",
+  "name": "东方国信",
+  "company_name": "北京东方国信科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "传统运营商、金融和工业数据业务有客户基础，但2025年亏损、产品化不足、智算中心重资产扩张和债务上升使安全边际不足。2026-07-13收盘价14.66元显著高于5.0-7.5元的保守合理价值区间，现阶段不买入，只跟踪利润修复、智算现金回报和负债控制。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    5.0,
+    7.5
+  ],
+  "buy_zone": [
+    0.0,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    10.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于4.5元，且最近一期经营现金流没有明显恶化",
+      "action": "建立观察仓",
+      "target_position": "1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.5元，且扣非利润改善、长期借款不再继续上升",
+      "action": "提高到小仓位",
+      "target_position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于7.5元但未验证智算中心现金回报",
+      "action": "不新增仓位",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于10元且利润仍未转正",
+      "action": "减仓或回避",
+      "target_position": "0%",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "currency": "CNY",
+      "reason": "进入保守买入区，具备初始安全边际",
+      "action": "review_for_initial_position"
+    },
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "currency": "CNY",
+      "reason": "价格低于净资产折价情景，若基本面未继续恶化可复核加仓",
+      "action": "review_for_add"
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "currency": "CNY",
+      "reason": "价格显著高于保守合理价值，若利润未兑现需回避或减仓",
+      "action": "review_for_reduce_or_avoid"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报预计披露窗口结束后",
+      "reason": "验证收入修复、扣非利润和经营现金流是否改善",
+      "action": "复核收入、扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报预计披露窗口结束后",
+      "reason": "验证智算中心收入兑现与债务压力",
+      "action": "复核智算中心收入、债务和费用压力"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报预计披露窗口结束后",
+      "reason": "年度数据足以重估合理价值区间",
+      "action": "重做估值和仓位计划"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027年半年报预计披露窗口结束后",
+      "reason": "检查1-3年跟踪指标是否进入正循环",
+      "action": "验证1-3年跟踪指标是否改善"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "电信、金融、工业分行业毛利率",
+    "算力服务和智算中心收入及毛利率",
+    "长期借款和净有息负债",
+    "应收账款、合同资产和存货周转",
+    "商誉、开发支出和无形资产摊销/减值",
+    "实控人及高管持股变化"
+  ]
+}
