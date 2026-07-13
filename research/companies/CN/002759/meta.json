@@ -1,0 +1,131 @@
+{
+  "symbol": "CN:002759",
+  "market": "CN",
+  "ticker": "002759",
+  "name": "天际股份",
+  "company_name": "天际新能源科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司是六氟磷酸锂价格反弹下的高弹性周期股，2026Q1 盈利已验证，但当前约 21 元价格缺少足够安全边际；需等待 14-16 元买入区或现金流、监管调查、产能释放进一步验证。",
+  "quality_rating": "中低",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [
+    16,
+    23
+  ],
+  "buy_zone": [
+    14,
+    16
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    32
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 16 元，六氟磷酸锂电池级价格不低于 9 万元/吨，且证监会立案调查没有新增重大负面进展",
+      "action": "建立 1%-2% 观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 14 元，2026Q2/Q3 经营现金流改善且毛利率维持 25% 以上",
+      "action": "分批提高至 3%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价 20 元以上但尚未高于 28 元，且未出现业绩继续上修",
+      "action": "不新增，已有仓位仅保留跟踪仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于 28 元，六氟磷酸锂价格低于 10 万元/吨或现金流未改善",
+      "action": "减仓或退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16,
+      "currency": "CNY",
+      "reason": "进入安全买入区上沿，估值开始包含周期和治理折价",
+      "action": "进入可买观察区，复核六氟磷酸锂价格和监管进展"
+    },
+    {
+      "type": "price_below",
+      "price": 14,
+      "currency": "CNY",
+      "reason": "低于保守估值下沿，若基本面未恶化具备更强安全边际",
+      "action": "若基本面未恶化，考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 23,
+      "currency": "CNY",
+      "reason": "高于合理价值区间上沿，继续买入的风险收益下降",
+      "action": "高于合理区间上沿，不再加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "currency": "CNY",
+      "reason": "超过乐观区间，除非行业价格和利润继续上修，否则应锁定收益",
+      "action": "触发减仓复核"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "证监会立案调查是当前治理折价的核心来源",
+      "condition": "证监会立案调查结果或处罚决定披露",
+      "action": "重新评估治理折价和潜在索赔风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报可验证 2026Q1 高利润是否转化为现金流",
+      "condition": "2026 年半年报披露",
+      "action": "重点复核经营现金流、毛利率、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "六氟磷酸锂价格直接决定公司正常化利润中枢",
+      "condition": "六氟磷酸锂电池级价格连续一个月低于 8 万元/吨或高于 12 万元/吨",
+      "action": "下修或上修正常化利润假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "二期产能释放决定销量增长和折旧压力",
+      "condition": "1.5 万吨/年二期产能正式投产或产能爬坡低于预期",
+      "action": "复核销量、折旧和产能利用率假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "客户集中和长协定价会影响议价能力与现金回款",
+      "condition": "前五大客户销售占比、长协定价机制或客户名单出现重大变化",
+      "action": "复核客户集中度和议价能力"
+    }
+  ],
+  "key_tracking_metrics": [
+    "六氟磷酸锂电池级市场价格",
+    "六氟磷酸锂销量、产量与产能利用率",
+    "销售毛利率和单吨盈利",
+    "经营活动现金流净额/归母净利润",
+    "应收账款、应收票据和存货周转",
+    "二期 1.5 万吨产能试生产与正式投产进度",
+    "证监会立案调查进展",
+    "商誉减值和常熟新特化工盈利情况"
+  ]
+}

@@ -1,0 +1,114 @@
+{
+  "symbol": "CN:002763",
+  "market": "CN",
+  "ticker": "002763",
+  "name": "汇洁股份",
+  "company_name": "深圳汇洁集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "主业品牌和渠道仍有韧性，2025年表观利润被Understance退出和存货减值压低，2026Q1利润修复明显；但行业成熟、库存周转慢、线上退货率高，6.97元附近安全边际一般，等待5.8-6.3元再建立更有吸引力的仓位。",
+  "quality_rating": "中上",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [6.8, 8.5],
+  "buy_zone": [5.5, 6.3],
+  "sell_or_reduce_zone": [8.8, 9.5],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于6.3元，且最近一期毛利率维持67%以上、库存周转未恶化、Understance无新增重大损失",
+      "action": "建立观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价低于5.8元，且2026年归母净利润年化/滚动趋势不低于1.8亿元",
+      "action": "加仓至核心小仓",
+      "max_weight": 0.1
+    },
+    {
+      "condition": "股价低于5.5元，且基本面未发生品牌、库存或现金流恶化",
+      "action": "提高安全边际仓位",
+      "max_weight": 0.12
+    },
+    {
+      "condition": "股价高于8.8元，或估值超过正常化利润18倍PE且利润未上修",
+      "action": "减仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于9.5元，且2026E归母净利润未上修到2.4亿元以上",
+      "action": "卖出或仅保留跟踪仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.3,
+      "currency": "CNY",
+      "reason": "进入可买区，复核最近一期库存、毛利率和现金流后建立观察仓",
+      "action": "进入可买区，复核最近一期库存、毛利率和现金流后建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "currency": "CNY",
+      "reason": "进入较好买点，若基本面未恶化可加仓",
+      "action": "进入较好买点，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 8.8,
+      "currency": "CNY",
+      "reason": "进入减仓区，停止加仓并降低仓位",
+      "action": "进入减仓区，停止加仓并降低仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "currency": "CNY",
+      "reason": "进入卖出区，除非盈利预测明显上修，否则卖出或仅留跟踪仓",
+      "action": "进入卖出区，除非盈利预测明显上修，否则卖出或仅留跟踪仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "发布2026年半年报后复核收入、利润、库存和渠道质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "发布2026年三季报后复核曼妮芬收入占比和全年利润达成概率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "发布2026年年报后复核线上退货率、抖音利润率和分红可持续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "reason": "发布2027年半年报后复核正常化利润是否稳定在1.8亿元以上"
+    }
+  ],
+  "key_tracking_metrics": [
+    "曼妮芬收入和占主营收入比例",
+    "直营、线上、经销渠道收入增速和毛利率",
+    "抖音收入、退货率和渠道利润率",
+    "购物中心渠道收入和同店店效",
+    "综合毛利率与销售费用率",
+    "存货余额、库存周转天数、库存商品跌价准备",
+    "经营现金流净额与净利润匹配度",
+    "归母净利润是否达到1.8亿元以上的正常化水平",
+    "现金分红金额与自由现金流覆盖倍数",
+    "Understance清理进度和是否新增损失"
+  ]
+}
