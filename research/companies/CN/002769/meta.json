@@ -1,0 +1,125 @@
+{
+  "symbol": "CN:002769",
+  "market": "CN",
+  "ticker": "002769",
+  "name": "普路通",
+  "company_name": "深圳市普路通供应链管理股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "普路通 2025 年扭亏，新能源生态业务毛利率较高，但 2026Q1 利润同比大幅回落，供应链主业护城河弱，客户和供应商集中度高。以 2026-07-13 盘中约 6.29 元估算，市值约 23.5 亿元，显著高于 3.0-4.2 元/股的基本面合理价值区间，当前缺少安全边际。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [3.0, 4.2],
+  "buy_zone": [2.5, 3.0],
+  "sell_or_reduce_zone": [6.0, 7.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于 6.0 元，且没有已落地、可审计的新增利润来源",
+      "action": "不买，不加仓；已有仓位以防守和减仓为主",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格回落到 3.0-4.2 元，且扣非利润连续为正、经营现金流未恶化",
+      "action": "进入研究型观察仓",
+      "target_position": "0.5%-1.5%",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "价格低于 3.0 元，且新能源生态收入和现金回款继续验证，未出现并购高商誉或应收恶化",
+      "action": "分批试仓",
+      "target_position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于 2.5 元，且基本面未出现新的永久性损害",
+      "action": "按净资产折价逻辑提高仓位上限",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "currency": "CNY",
+      "reason": "进入基本面合理价值区间上沿",
+      "action": "重新评估是否进入观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "currency": "CNY",
+      "reason": "进入可买区，接近净资产折价安全边际",
+      "action": "结合最新季报评估小仓位买入"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "currency": "CNY",
+      "reason": "明显高于基本面合理价值区间",
+      "action": "不加仓；若持有则检查是否减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "currency": "CNY",
+      "reason": "估值对转型和并购预期反映过满",
+      "action": "若基本面未显著改善，考虑减仓或清仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "披露 2026 年半年度报告或三季度报告",
+      "reason": "中报是验证 2025 年扭亏是否延续的最近完整窗口",
+      "action": "复核收入结构、扣非利润、现金流和应收质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "condition": "乐其电商并购交易价格、审计评估结果、业绩承诺或终止公告披露",
+      "reason": "并购价格和商誉规模会显著影响估值与安全边际",
+      "action": "重新评估并购对利润中枢、商誉和股份摊薄的影响"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "新能源生态业务收入占比、毛利率或回款出现重大变化",
+      "reason": "新能源生态是公司当前主要利润弹性来源",
+      "action": "更新新能源分部估值和仓位条件"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "应收账款、其他应收款、存货或资产减值出现异常增长",
+      "reason": "供应链业务资产质量恶化会吞噬利润并压低 PB 中枢",
+      "action": "下调质量评级并重新检查安全边际"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "股价跌入 4.2 元以下或涨至 6.0 元以上",
+      "reason": "价格进入买入观察区或高估减仓区时需要更新仓位动作",
+      "action": "按价格触发器复核买入或减仓动作"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润是否连续 4 个季度为正",
+    "新能源生态收入占比和毛利率",
+    "经营现金流净额/归母净利润",
+    "应收账款与其他应收款余额及账龄",
+    "归母 ROE 是否超过 5%",
+    "乐其电商并购对价、商誉规模和股份摊薄比例",
+    "前五大客户和前五大供应商集中度"
+  ]
+}
