@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:002803",
+  "market": "CN",
+  "ticker": "002803",
+  "name": "吉宏股份",
+  "company_name": "厦门吉宏科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "包装业务提供现金流底盘，跨境社交电商贡献主要增长和利润弹性；2026年业绩修复正在发生，但当前A股价格已接近合理价值上沿，需等待更低价格或现金流改善证据。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [18.0, 23.0],
+  "buy_zone": [15.5, 18.0],
+  "sell_or_reduce_zone": [26.0, 35.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于16元且中报/三季报未显示跨境电商失速或现金流恶化",
+      "action": "可建至3%-4%观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价处于16-18元且2026E归母净利润仍可达到3.8亿元以上",
+      "action": "分批买入，单票上限约3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价处于18-23元且缺少现金流改善的新证据",
+      "action": "仅持有或小仓跟踪，不新增",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于26元且2026E利润没有上修至5亿元附近",
+      "action": "减仓或不新增",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "进入估算合理价值下沿，赔率开始改善",
+      "action": "进入可买观察区，复核中报、三季报和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 16.0,
+      "reason": "相对合理价值中枢具备约20%以上安全边际",
+      "action": "若基本面未恶化，可小仓建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 26.0,
+      "reason": "高于合理价值上沿且需要利润中枢显著上修才能支撑",
+      "action": "估值进入减仓区，除非利润中枢和现金流同步上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露",
+      "reason": "中报将验证跨境电商增长、利润率与经营现金流是否同步改善",
+      "action": "复核跨境电商收入增速、毛利率、费用率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露，重点检查是否连续两个季度经营现金流显著低于归母净利润",
+      "reason": "三季报可检验利润修复是否持续，以及现金流弱点是否扩大",
+      "action": "下调质量评级并重估可买价格"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露，复核海外平台政策、税务、汇率或物流变化",
+      "reason": "年报可完整评估2026年利润中枢、现金流转化和资本配置质量",
+      "action": "立即复核利润中枢和风险折价"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027年中报披露，检查2026E/2027E归母净利润中枢是否显著偏离原假设",
+      "reason": "下一年度中报可判断跨境电商增长是否从修复转为可持续增长",
+      "action": "重估合理价值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "跨境电商收入同比增速",
+    "跨境电商毛利率与销售费用率",
+    "经营现金流/归母净利润",
+    "海外收入占比",
+    "包装业务毛利率",
+    "存货和应收账款周转",
+    "2026年全年归母净利润是否达到3.8亿元以上"
+  ]
+}
