@@ -1,0 +1,131 @@
+{
+  "symbol": "CN:300212",
+  "market": "CN",
+  "ticker": "300212",
+  "name": "易华录",
+  "company_name": "北京易华录信息技术股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司处于负净资产、*ST、债务逾期和预重整状态，2025年收入仅4.65亿元且归母净亏损27.17亿元，2026Q1收入继续同比下滑。当前股价对应约61亿元市值，主要定价重整期权而非可验证经营价值；在重整方案、净资产转正和主营现金流恢复前不具备买方安全边际。",
+  "quality_rating": "低",
+  "valuation_rating": "高估/不可估",
+  "fair_value_range": [
+    0.0,
+    3.0
+  ],
+  "buy_zone": [
+    0.0,
+    0.0
+  ],
+  "sell_or_reduce_zone": [
+    5.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "维持负净资产、预重整未转正式重整、无清晰战投方案",
+      "action": "不买",
+      "target_position": 0,
+      "max_weight": 0
+    },
+    {
+      "condition": "正式重整获受理但方案显示存量股东被显著稀释或债务削减不足",
+      "action": "继续观察，不建立普通股票仓位",
+      "target_position": 0,
+      "max_weight": 0
+    },
+    {
+      "condition": "重整完成、归母净资产转正、主营收入连续两个季度同比恢复且经营现金流为正",
+      "action": "重新研究，可考虑观察仓",
+      "target_position": 0.02,
+      "max_weight": 0.02
+    },
+    {
+      "condition": "重整后2027E收入超过10亿元、毛利率恢复到25%以上、财务费用显著下降",
+      "action": "小仓验证",
+      "target_position": 0.03,
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "unit": "CNY/share",
+      "action": "仅触发复核，不自动买入；需同时满足重整和净资产转正条件",
+      "reason": "低于研究给出的期权价值上沿后，才值得重新检查是否存在安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 5.0,
+      "unit": "CNY/share",
+      "action": "若无重整方案落地，维持不买/减仓判断",
+      "reason": "高于5元时，当前价格主要依赖重整预期而非可验证经营价值"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "unit": "CNY/share",
+      "action": "视为重整期权高溢价区，禁止新增仓位",
+      "reason": "接近或高于研究日价格时，市值已明显透支困境反转假设"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "法院正式受理或驳回重整申请",
+      "reason": "预重整能否进入正式重整决定普通股是否仍有期权价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "披露重整投资人、出资金额、债务清偿率、转增股份比例和存量股东稀释比例",
+      "reason": "重整方案决定债务削减幅度和存量股东稀释风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年中报或三季报显示归母净资产转正或继续为负",
+      "reason": "归母净资产转正是解除退市风险的核心指标"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "证监会信披违规立案调查结果落地",
+      "reason": "处罚和潜在索赔会影响重整和权益价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "单季度收入恢复至2亿元以上且毛利率转正",
+      "reason": "主营恢复需要收入规模和正毛利共同验证"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "累计逾期债务、账户冻结或重大诉讼出现新增重大变化",
+      "reason": "新增流动性压力会削弱重整成功率和股东剩余价值"
+    }
+  ],
+  "key_tracking_metrics": [
+    "归母净资产及每股净资产",
+    "重整进展和存量股东稀释比例",
+    "营业收入同比增速",
+    "综合毛利率及解决方案业务毛利率",
+    "经营活动现金流净额",
+    "应收账款和合同资产余额",
+    "财务费用和有息债务规模",
+    "累计逾期债务金额",
+    "数据运营及服务收入占比",
+    "证监会调查、诉讼和账户冻结进展"
+  ]
+}

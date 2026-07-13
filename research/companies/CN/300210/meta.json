@@ -1,0 +1,117 @@
+{
+  "symbol": "CN:300210",
+  "market": "CN",
+  "ticker": "300210",
+  "name": "森远股份",
+  "company_name": "鞍山森远路桥股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "传统路面养护和除雪设备主业有细分积累，但 2025 年仍亏损、2026Q1 收入和利润明显走弱；当前 8.14 元附近市值约 39.4 亿元，显著高于可验证净资产、收入和利润恢复价值。控股股东拟 7.56 元定增补流提供资金和控制权稳定信号，但算力及具身智能第二曲线尚缺经审计收入、毛利和回款验证。",
+  "quality_rating": "低-中",
+  "valuation_rating": "显著高估",
+  "fair_value_range": [
+    2.5,
+    4.0
+  ],
+  "buy_zone": [
+    0.0,
+    2.8
+  ],
+  "sell_or_reduce_zone": [
+    6.0,
+    10.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于 2.80 元，定增正常推进，且无新增重大监管、退市或控股股东被动减持风险",
+      "action": "建立 0.5%-1.0% 试验仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格处于 2.80-4.00 元，且至少一个季度收入恢复、应收账款继续下降",
+      "action": "维持 0%-0.5% 跟踪仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格高于 4.00 元但扣非利润和经营现金流尚未同步转正",
+      "action": "不买入，不加仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格高于 10.00 元且新业务仍缺可审计收入和回款验证",
+      "action": "已有仓位减仓或清仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "unit": "CNY/share",
+      "reason": "价格进入可买区且接近保守估值下沿，安全边际开始出现",
+      "action": "重新评估试验仓买入"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "unit": "CNY/share",
+      "reason": "价格显著高于可验证传统业务价值，必须依赖未验证新业务叙事",
+      "action": "禁止加仓，复核估值和财报兑现度"
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "unit": "CNY/share",
+      "reason": "估值对收入、利润和第二曲线兑现要求过高",
+      "action": "若无业绩兑现则减仓或清仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年中报披露后",
+      "reason": "中报能验证 2026Q1 收入下滑是否只是季节性波动",
+      "action": "复核收入恢复、扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "定增审核进度更新窗口",
+      "reason": "定增是否完成直接影响资金压力、每股净资产和控制权稳定性",
+      "action": "复核每股净资产、资金压力和摊薄影响"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "年末复核新业务披露",
+      "reason": "算力及具身智能服务需要合同、收入、毛利和回款验证",
+      "action": "复核第二曲线价值"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026 年报披露后",
+      "reason": "年报能验证全年扭亏、现金流和资产减值风险",
+      "action": "复核全年收入、利润、现金流和控股股东质押情况"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度营业收入",
+    "扣非归母净利润",
+    "经营活动现金流量净额",
+    "应收账款余额及占收入比例",
+    "存货余额及周转速度",
+    "定增审核和注册进度",
+    "算力及具身智能服务可审计收入、毛利和回款",
+    "控股股东质押股份数量"
+  ]
+}
