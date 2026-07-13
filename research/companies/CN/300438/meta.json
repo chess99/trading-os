@@ -3,102 +3,103 @@
   "market": "CN",
   "ticker": "300438",
   "name": "鹏辉能源",
-  "company_name": "鹏辉能源",
+  "company_name": "广州鹏辉能源科技股份有限公司",
   "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
   "report_history": [
-    "reports/2026-07-08-initial.md"
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-13-initial.md"
   ],
-  "rating": "观察/小仓位试探",
-  "current_thesis": "鹏辉能源处在储能电池需求扩张与行业价格竞争并存的阶段。2025年扭亏、2026年一季度延续改善，经营拐点已有证据，但当前股价接近中性合理价值区间，安全边际不足；适合等待回撤或中报继续验证毛利率、现金流和储能订单质量。",
+  "rating": "观察",
   "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
+  "current_thesis": "鹏辉能源是储能电池景气回升中的二线弹性标的，2025年扭亏、2026Q1收入和利润高增，经营拐点已有财报证据；但当前67.70元股价已处于55-75元合理价值区间中部偏上，仍需2026中报验证毛利率、应收、存货和经营现金流质量，买方不应追高。",
+  "quality_rating": "B",
+  "valuation_rating": "C",
   "fair_value_range": [
-    70,
-    82
+    55,
+    75
   ],
   "buy_zone": [
-    48,
-    60
+    45,
+    55
   ],
   "sell_or_reduce_zone": [
-    88,
-    105
+    85,
+    100
   ],
   "currency": "CNY",
   "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "current_price_near_fair_value_lower_bound",
-      "action": "watch_or_probe_only",
-      "max_weight": 0.04,
-      "initial_weight": 0.01,
-      "current_action": "不追高；若必须建仓，仅0.5%-1.0%观察仓，等待2026年中报验证。",
-      "add_rules": [
-        {
-          "condition": "price_below_60_without_fundamental_deterioration",
-          "target_weight": 0.02
-        },
-        {
-          "condition": "price_below_48_and_margin_cashflow_orders_improve",
-          "target_weight": 0.04
-        }
-      ],
-      "reduce_rules": [
-        {
-          "condition": "price_above_88_without_earnings_upgrade",
-          "target_weight": 0.015
-        },
-        {
-          "condition": "fundamental_stop_loss_triggered",
-          "target_weight": 0
-        }
-      ]
+      "condition": "股价处于65-75元且没有新的业绩上修证据",
+      "action": "观察或仅保留跟踪仓，不追高",
+      "target_weight": 0.0,
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于55元且2026中报显示毛利率、应收账款、存货和经营现金流未恶化",
+      "action": "建立小仓",
+      "target_weight": 0.015,
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于45元且订单质量、海外收入、毛利率和现金流继续改善",
+      "action": "加到标准观察仓",
+      "target_weight": 0.03,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于85元但2026-2027利润预测没有同步上修",
+      "action": "停止买入并复核减仓",
+      "target_weight": 0.0,
+      "max_weight": 0.015
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 60,
-      "reason": "进入安全买入观察区，若毛利率、订单和现金流未恶化，可考虑加至轻仓。"
+      "price": 55,
+      "reason": "进入可买区上沿，若2026中报未证伪毛利率、回款和存货质量，可考虑小仓。"
     },
     {
       "type": "price_below",
-      "price": 48,
-      "reason": "进入强吸引买入区，若基本面继续改善，赔率显著提高。"
+      "price": 45,
+      "reason": "进入较强安全边际区，若储能订单和现金流质量仍在改善，可加到标准观察仓。"
     },
     {
       "type": "price_above",
-      "price": 88,
-      "reason": "超过合理价值上沿且未见业绩上修时，估值透支风险上升，应复核减仓。"
+      "price": 85,
+      "reason": "超过中性合理价值上沿较多，除非利润中枢被上修，否则赔率转弱，应复核减仓。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "预计2026年中报披露窗口后复查收入质量、毛利率、经营现金流、应收存货和储能订单。"
+      "reason": "预计2026年中报披露窗口后，复核收入质量、毛利率、经营现金流、应收账款、存货、海外收入和储能订单。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "预计2026年三季报披露窗口后复查全年利润修复连续性。"
+      "reason": "预计2026年三季报披露窗口后，验证利润修复是否连续以及全年业绩能否支撑当前估值。"
     }
   ],
   "key_tracking_metrics": [
-    "单季营业收入同比和环比",
-    "单季毛利率",
-    "单季净利率",
-    "储能业务收入占比和毛利贡献",
-    "经营现金流净额",
-    "应收账款周转",
-    "存货周转",
-    "资本开支和在建工程",
-    "海外订单和大储订单",
-    "钠离子/固态电池商业化进展",
-    "行业储能电芯价格",
-    "主要竞品扩产和报价变化"
+    "单季度营业收入同比和环比",
+    "单季度毛利率",
+    "单季度净利率",
+    "锂离子电池收入和毛利率",
+    "境外收入占比和境外毛利率",
+    "经营活动现金流量净额",
+    "经营现金流与归母净利润匹配度",
+    "应收账款和应收票据规模",
+    "存货规模和存货周转",
+    "合同负债变化",
+    "资产减值损失和信用减值损失",
+    "资本开支、在建工程和设备预付款",
+    "大储、工商业储能、户储订单质量",
+    "600Ah级大容量电芯、钠离子、固态或半固态电池商业化进展",
+    "储能电芯行业价格和主要竞争对手报价"
   ]
 }
