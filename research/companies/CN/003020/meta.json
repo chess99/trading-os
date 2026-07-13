@@ -1,0 +1,119 @@
+{
+  "symbol": "CN:003020",
+  "market": "CN",
+  "ticker": "003020",
+  "name": "立方制药",
+  "company_name": "合肥立方制药股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司现金流和资产负债表质量较好，2025年利润修复、2026Q1延续温和增长，新增进入2026年版国家基本药物目录的品种可能带来基层放量，但当前股价已反映较多预期。合理价值约16.0-20.0元/股，20元以上不追买，等待业绩兑现或价格回落。",
+  "quality_rating": "中上",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    16.0,
+    20.0
+  ],
+  "buy_zone": [
+    0.0,
+    15.5
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于20.0元，且后续季报未显示收入和扣非利润明显加速",
+      "action": "不买入或仅保留观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价回落至17.0-20.0元，且2026年后续季报显示目录品种开始贡献收入",
+      "action": "可建立小额跟踪仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于15.5元，经营现金流/净利润仍大于1且扣非利润没有恶化",
+      "action": "分批建仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价低于13.5元，且收入、毛利率、现金流均未出现结构性恶化",
+      "action": "提高到中等仓位",
+      "max_weight": 0.07
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.5,
+      "currency": "CNY",
+      "reason": "进入可买区并具备初步安全边际",
+      "action": "进入可买区，复核最新季报后分批建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 13.5,
+      "currency": "CNY",
+      "reason": "进入深度安全边际区",
+      "action": "进入深度安全边际区，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "currency": "CNY",
+      "reason": "股价显著高于合理价值上沿",
+      "action": "估值过热，若业绩未超预期应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报后复核目录品种兑现情况",
+      "condition": "披露2026年半年报或三季报后，复核目录品种是否带来收入和扣非利润加速"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核收入和扣非利润是否加速",
+      "condition": "公司披露新增基药目录品种销售数据、集采/医保价格变化或核心产品重大公告"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "检查经营现金流和利润兑现质量",
+      "condition": "经营现金流/净利润连续两个季度低于0.8"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报后复核客户集中度和营运质量",
+      "condition": "前五大客户集中度、应收账款或存货周转出现明显恶化"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "阶段性检查资本配置和重大公告",
+      "condition": "发生大额并购、产能扩张或资本开支计划"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入同比增速",
+    "扣非归母净利润同比增速",
+    "毛利率",
+    "销售费用率",
+    "经营现金流/净利润",
+    "应收账款周转",
+    "前五大客户收入占比",
+    "新增基药目录品种终端销量和价格"
+  ]
+}

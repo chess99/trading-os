@@ -1,0 +1,114 @@
+{
+  "symbol": "CN:003016",
+  "market": "CN",
+  "ticker": "003016",
+  "name": "欣贺股份",
+  "company_name": "欣贺股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "欣贺股份具备多年高端女装品牌、渠道和净资产基础，但2025年扣非仍亏损、ROE仅0.67%，2026Q1属于低基数修复，当前6.21元/股缺少安全边际；需等待价格低于4.2元或扣非净利率连续改善后再考虑买入。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.5,
+    5.8
+  ],
+  "buy_zone": [
+    0,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于5.8元/股或扣非净利率未连续两个季度超过5%",
+      "action": "不建仓，继续观察",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格低于4.2元/股，且最近一期存货账面价值和2年以上库龄占比继续下降",
+      "action": "建立观察仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于4.2元/股，同时连续两个季度扣非净利率超过5%、经营现金流为正",
+      "action": "小幅加仓",
+      "target_position": "3%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于7.0元/股但盈利质量未同步改善，或库存/退货率恶化",
+      "action": "减仓或不参与",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "currency": "CNY",
+      "reason": "进入估算买入区间并具备基础安全边际",
+      "action": "复核半年报或最新季报，若库存继续下降可试探建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "currency": "CNY",
+      "reason": "低于保守估值中枢，安全边际更充分",
+      "action": "在基本面未恶化前重新估算安全边际和仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "currency": "CNY",
+      "reason": "价格超过减仓区间而盈利质量可能不足以支撑估值",
+      "action": "若扣非净利率未超过5%，维持回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "预计2026年半年报披露窗口",
+      "reason": "半年报可验证2026Q1修复是否延续",
+      "action": "更新收入、扣非净利、库存和现金流判断"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "预计2026年三季报披露窗口",
+      "reason": "三季报可验证扣非净利率和费用率是否连续改善",
+      "action": "复核扣非净利率是否连续改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "预计2026年年度报告披露窗口",
+      "reason": "年报可完整验证库存、门店、现金流和资本配置",
+      "action": "重做全年估值和仓位计划"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润和扣非净利率",
+    "经营活动现金流净额",
+    "存货账面价值、存货周转天数、库龄结构和跌价准备",
+    "自营门店数量、平均店效和同店趋势",
+    "电商收入、天猫退货率和线上毛利率",
+    "销售费用率",
+    "ROE和分红/回购执行情况"
+  ]
+}
