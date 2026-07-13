@@ -1,0 +1,128 @@
+{
+  "symbol": "CN:300222",
+  "market": "CN",
+  "ticker": "300222",
+  "name": "科大智能",
+  "company_name": "科大智能科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "数字能源和智能机器人方向有政策与产业弹性，但2025年净利率低、2026Q1收入下滑且现金流为负，当前约10.7元股价对利润改善预期偏满，等待7.5元以下或利润率/现金流明确改善。",
+  "quality_rating": "中偏低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    7.5,
+    9.5
+  ],
+  "buy_zone": [
+    0,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    13.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格约10.7 CNY且扣非利润率、经营现金流尚未验证",
+      "action": "不建仓",
+      "target_position": "0%",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价回落至8.0-8.5 CNY，且2026中报营业收入未继续恶化、数字能源毛利率稳定",
+      "action": "建立跟踪仓",
+      "target_position": "0.5%-1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于7.5 CNY，且扣非净利润改善、经营现金流改善或转正",
+      "action": "分批买入",
+      "target_position": "1.5%-2.5%",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "股价低于6.5 CNY，且2026全年扣非净利润明显高于1.2亿元、经营现金流为正",
+      "action": "提高到上限仓位",
+      "target_position": "最高3.5%",
+      "max_weight": 0.035
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "currency": "CNY",
+      "action": "复核2026中报和订单情况，决定是否建立跟踪仓",
+      "reason": "价格进入跟踪仓区间，需要确认收入和订单没有继续恶化"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "currency": "CNY",
+      "action": "若基本面未恶化，进入可买区并分批建仓",
+      "reason": "价格低于估值区间下沿，安全边际开始出现"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "currency": "CNY",
+      "action": "若利润率和现金流未同步改善，减仓或不追高",
+      "reason": "价格明显高于合理价值区间，若业绩未兑现则风险收益比恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点确认收入增速、扣非净利润、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年利润兑现概率和现金流改善是否持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，更新估值区间、股权激励兑现和正信电气并购整合效果"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "营业收入增速",
+      "target": "2026/2027年恢复到15%以上"
+    },
+    {
+      "metric": "扣非归母净利润",
+      "target": "2026年突破1.2亿元，2027年向1.8亿元靠近"
+    },
+    {
+      "metric": "销售净利率",
+      "target": "从2%-3%提升到4%-6%"
+    },
+    {
+      "metric": "经营现金流量净额",
+      "target": "连续两个年度为正，且不显著低于净利润"
+    },
+    {
+      "metric": "数字能源业务收入与毛利率",
+      "target": "收入占比稳定且毛利率不因招标价格竞争显著下滑"
+    },
+    {
+      "metric": "智能机器人业务收入与毛利率",
+      "target": "确认增长是否来自高质量订单和标准化产品，而非低毛利集成项目"
+    },
+    {
+      "metric": "并购整合",
+      "target": "跟踪烟台正信电气收入、利润、商誉和回款情况"
+    }
+  ]
+}

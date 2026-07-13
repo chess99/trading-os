@@ -1,0 +1,116 @@
+{
+  "symbol": "CN:300206",
+  "market": "CN",
+  "ticker": "300206",
+  "name": "理邦仪器",
+  "company_name": "深圳市理邦精密仪器股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "理邦仪器是多产品线、海外占比较高、研发投入持续的中型医疗设备公司。2026Q1收入和利润恢复较快，财务结构稳健，但公司护城河中等、竞争对手强、2025年收入仍下滑，当前约11.8元价格只接近合理价值下沿，安全边际不足。等待10.5元以下或连续季度验证增长后再买入。",
+  "quality_rating": "中上",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [
+    12.0,
+    15.5
+  ],
+  "buy_zone": [
+    9.5,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    16.5,
+    20.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于10.5元，且收入仍保持正增长、毛利率不低于55%",
+      "action": "initial_buy",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于9.5元，且海外订单、经营现金流和研发投入未恶化",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格处于12.0元至15.5元之间，且基本面符合预期",
+      "action": "hold_or_watch",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于16.5元，或估值明显高于利润增长速度",
+      "action": "reduce",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "currency": "CNY",
+      "reason": "进入估算买入区间上沿，开始具备安全边际",
+      "action": "进入可买区，复核最近季报后小仓买入"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "currency": "CNY",
+      "reason": "相对合理价值下沿折价约20%，若基本面未恶化则安全边际较明显",
+      "action": "若基本面未恶化，提高至核心观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "currency": "CNY",
+      "reason": "高于估算合理价值上沿，需利润继续上修才能支撑",
+      "action": "进入减仓区，除非利润增速显著上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点确认收入增速、毛利率、海外收入和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1高增长是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估合理价值和仓位上限"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "quarterly_revenue_growth",
+      "target": "2026年后续季度维持正增长，全年争取两位数增长"
+    },
+    {
+      "metric": "gross_margin",
+      "target": "季度毛利率维持55%以上，跌破52%需复核价格竞争风险"
+    },
+    {
+      "metric": "operating_cash_flow_to_net_income",
+      "target": "经营现金流/归母净利润长期大于0.8"
+    },
+    {
+      "metric": "overseas_revenue_growth",
+      "target": "海外收入保持增长，且未出现明显渠道库存压力"
+    },
+    {
+      "metric": "rd_efficiency",
+      "target": "研发费用率保持高位的同时，新品带来收入增量和毛利改善"
+    }
+  ]
+}
