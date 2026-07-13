@@ -1,0 +1,105 @@
+{
+  "symbol": "CN:300208",
+  "market": "CN",
+  "ticker": "300208",
+  "name": "青岛中程",
+  "company_name": "青岛中资中程集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "不买",
+  "current_rating": "avoid",
+  "current_thesis": "公司已由原 A 股 300208 终止上市并转入退市板块，2025 年归母净资产为负、持续亏损、审计意见为带持续经营重大不确定性段落的保留意见；同时存在历史财务造假、行政处罚、重大诉讼和海外资产可收回性问题。少数股权基本面价值接近零，只能作为高风险困境期权观察，不适合作为买入标的。",
+  "quality_rating": "低",
+  "valuation_rating": "高风险/不可按正常估值买入",
+  "fair_value_range": [
+    0.0,
+    0.08
+  ],
+  "buy_zone": [
+    0.0,
+    0.03
+  ],
+  "sell_or_reduce_zone": [
+    0.08,
+    0.2
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于 0.08 元/股，或无法确认退市板实时交易价格和流动性",
+      "action": "不买/回避",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格低于 0.03 元/股，且债务展期、重大诉讼、菲律宾长期应收款回款和印尼资产权属均无新增恶化",
+      "action": "仅允许事件驱动观察仓，不作为基本面买入",
+      "max_weight": 0.0025
+    },
+    {
+      "condition": "归母净资产连续两个报告期转正、经营现金流可持续覆盖利息和管理费用、第三方客户收入占比超过 30%",
+      "action": "重新研究，可考虑从不买上调至观察",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.03,
+      "currency": "CNY",
+      "action": "仅触发复核，不自动买入",
+      "reason": "低于困境期权观察价"
+    },
+    {
+      "type": "price_above",
+      "price": 0.08,
+      "currency": "CNY",
+      "action": "回避或减持",
+      "reason": "高于本次基本面估值上限"
+    },
+    {
+      "type": "price_above",
+      "price": 0.2,
+      "currency": "CNY",
+      "action": "卖出/不参与",
+      "reason": "明显脱离困境资产基本面价值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "预计 2026 年半年报披露后",
+      "reason": "验证净资产是否继续为负及持续经营风险是否缓解",
+      "action": "复核归母净资产、经营现金流、财务费用和审计意见"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "预计 2026 年三季报披露后",
+      "reason": "跟踪退市板阶段的现金流、债务和客户集中风险",
+      "action": "复核收入客户结构、现金余额、债务和重大诉讼进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "预计 2026 年年报披露后",
+      "reason": "重新判断普通股是否仍接近零价值以及是否具备上调至观察的条件",
+      "action": "复核持续经营、审计意见、长期应收款回款和普通股剩余价值"
+    }
+  ],
+  "key_tracking_metrics": [
+    "归母净资产及每股净资产",
+    "经营活动现金流净额及剔除一次性回款后的可持续现金流",
+    "财务费用和管理费用占营业收入比例",
+    "PT.Metal Smeltindo Selaras 以外第三方客户收入占比",
+    "菲律宾光伏长期应收款余额、减值准备和实际回款",
+    "重大诉讼仲裁累计涉案金额及预计负债",
+    "短期借款、应付账款、其他应付款和现金余额",
+    "退市板 400279 的成交价格、成交额和异常波动公告"
+  ]
+}

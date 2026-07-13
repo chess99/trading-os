@@ -1,0 +1,132 @@
+{
+  "symbol": "CN:300200",
+  "market": "CN",
+  "ticker": "300200",
+  "name": "高盟新材",
+  "company_name": "北京高盟新材料股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司在复合聚氨酯胶粘剂、汽车NVH功能材料和电子新能源胶粘剂方向有真实业务基础与产能升级期权，但2025年和2026Q1呈现收入增长、利润下滑、经营现金流为负的组合，当前应等待南通新产能放量、毛利率稳定和现金流修复后再提高仓位。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    6.0,
+    8.5
+  ],
+  "buy_zone": [
+    0,
+    6.5
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于6.5元，且最近两个季度综合毛利率未继续恶化、经营现金流边际改善",
+      "action": "建立1%-2%观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于6.0元，且南通新产能有订单贡献、经营现金流连续两个季度为正",
+      "action": "提高到3%-4%中等仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格处于6.5-8.5元，且利润和现金流尚未明显改善",
+      "action": "只跟踪不追买",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于10.5元，且年化归母净利润未上修至1.6亿元以上",
+      "action": "已有仓位减仓，新增资金不买",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "unit": "CNY/share",
+      "reason": "低于可买价格上限，开始具备初步安全边际",
+      "action": "进入可买观察区，复核现金流和毛利率"
+    },
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "unit": "CNY/share",
+      "reason": "低于合理价值区间下沿，若基本面同步改善则安全边际更充分",
+      "action": "若基本面同步改善，可考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "unit": "CNY/share",
+      "reason": "明显高于合理价值区间，且需要盈利上修才能支撑估值",
+      "action": "若盈利没有上修，减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年中报披露后需要复核收入、毛利率、经营现金流、南通项目进展、客户集中度和治理事项",
+      "condition": "2026年中报披露后",
+      "action": "复核收入、毛利率、经营现金流、南通项目进展、客户集中度和治理事项"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后需要确认经营活动现金流是否连续改善",
+      "condition": "2026年三季报披露后",
+      "action": "复核经营活动现金流是否连续改善，若仍为负且应收账款/存货上升则下调仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后需要重新评估南通产能兑现、全年现金流质量和估值区间",
+      "condition": "2026年年报披露后",
+      "action": "复核南通产能兑现、全年经营现金流/归母净利润、综合毛利率和合理价值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "经营活动现金流净额",
+      "target": "连续两个季度转正，全年经营现金流/归母净利润大于0.8",
+      "source": "季度报告和年度报告"
+    },
+    {
+      "metric": "综合毛利率",
+      "target": "稳定在24%以上",
+      "source": "季度报告和年度报告"
+    },
+    {
+      "metric": "胶粘剂业务毛利率",
+      "target": "保持27%以上",
+      "source": "年度报告分产品数据"
+    },
+    {
+      "metric": "南通电子新能源胶粘剂项目",
+      "target": "完成验收、产能利用率提升并形成可见订单贡献",
+      "source": "公司公告和定期报告"
+    },
+    {
+      "metric": "前五大客户销售占比",
+      "target": "不显著高于40%，且大客户回款稳定",
+      "source": "年度报告"
+    },
+    {
+      "metric": "研发费用率",
+      "target": "维持4%-5%以上并带来新产品收入占比提升",
+      "source": "年度报告"
+    }
+  ]
+}
