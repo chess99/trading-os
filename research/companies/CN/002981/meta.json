@@ -1,0 +1,127 @@
+{
+  "symbol": "CN:002981",
+  "market": "CN",
+  "ticker": "002981",
+  "name": "朝阳科技",
+  "company_name": "广东朝阳电子科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司是电声产品 ODM/OEM 和精密零组件供应商，2025 年收入仍增长但利润下滑，2026Q1 亏损且 2026H1 预告归母净利润同比下降 82.84%-86.65%。海外收入占比高、汇率和客户库存周期对利润影响大，护城河中等偏弱。当前约 21 元股价高于 12-16 元合理价值区间，安全边际不足。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    12,
+    16
+  ],
+  "buy_zone": [
+    0,
+    11
+  ],
+  "sell_or_reduce_zone": [
+    22,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 10 元，且没有重大客户流失、连续亏损扩大或资产减值恶化",
+      "action": "建立观察仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于 10-11 元，且连续两个季度毛利率修复、经营现金流为正、单季归母净利润恢复到 2000 万元以上",
+      "action": "小幅加仓",
+      "target_position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价处于 12-16 元合理价值区间，但利润修复证据不足",
+      "action": "持有或观察，不主动加仓",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于 22 元且无明确盈利拐点",
+      "action": "减仓或回避",
+      "target_position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11,
+      "currency": "CNY",
+      "reason": "进入可买区上沿，需要复核基本面是否同步改善",
+      "action": "重新评估是否进入可买区"
+    },
+    {
+      "type": "price_below",
+      "price": 10,
+      "currency": "CNY",
+      "reason": "价格低于保守可买价，安全边际开始出现",
+      "action": "若基本面未恶化，可考虑 1%-2% 观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 22,
+      "currency": "CNY",
+      "reason": "价格显著高于合理价值区间且主题溢价过高",
+      "action": "估值进入减仓或回避区"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年半年报披露后需要核验业绩预告兑现情况",
+      "condition": "披露 2026 年半年度报告",
+      "action": "核验 H1 业绩预告、毛利率、汇兑损益、存货和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可判断利润和订单是否从 H1 低谷恢复",
+      "condition": "披露 2026 年三季报",
+      "action": "判断 Q3 订单和利润率是否出现真实拐点"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "募投和越南产能决定中期增长兑现能力",
+      "condition": "可转债募投项目、越南生产基地或重大客户订单出现实质进展",
+      "action": "更新增长假设和资本开支回报判断"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "资产减值和现金流恶化会改变财务质量判断",
+      "condition": "单季度资产减值准备超过 2000 万元或经营现金流连续两个季度为负",
+      "action": "下调质量评级并复核资产负债表风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "汇率和原材料价格是 2026 年利润下滑的重要变量",
+      "condition": "人民币兑美元继续明显升值或原材料价格继续上涨",
+      "action": "重新测算毛利率、汇兑损益和净利润敏感性"
+    }
+  ],
+  "key_tracking_metrics": [
+    "综合毛利率是否回到 16%-18%并稳定两个季度以上",
+    "单季度归母净利润是否恢复到 2000 万元以上且扣非同步恢复",
+    "经营活动现金流净额是否连续两个季度为正",
+    "海外收入占比、汇兑损益和人民币汇率敏感度",
+    "越南基地订单利用率和新客户导入进度",
+    "存货周转天数、应收账款周转天数和资产减值计提金额",
+    "前五大客户收入占比和新增项目毛利率"
+  ]
+}
