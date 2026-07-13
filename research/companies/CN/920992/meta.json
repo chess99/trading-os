@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920992",
+  "market": "CN",
+  "ticker": "920992",
+  "name": "中科美菱",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "现金资产厚且海外增长较快，但主业资本回报低、募投转化慢，当前估值已透支较多增长预期，等待8.5元以下的安全边际。",
+  "fair_value_range": [8.5, 10.5],
+  "buy_zone": [7.0, 8.5],
+  "sell_or_reduce_zone": [12.0, 14.0],
+  "position_plan": [
+    {
+      "condition": "股价处于7.0至8.5元且海外增长、毛利率与自由现金流未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于7.0元，复核募投、存货和治理后确认长期商业价值未受损",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "基本面恶化或投资逻辑被证伪，不因价格下跌补仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、海外增长、存货与自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及募投执行进度"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入有安全边际的买入复核区间"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T22:00:00+08:00"
+}
