@@ -1,0 +1,97 @@
+{
+  "symbol": "CN:300497",
+  "market": "CN",
+  "ticker": "300497",
+  "name": "富祥股份",
+  "company_name": "江西富祥药业股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司处于医药中间体向锂电添加剂和合成生物转型后的周期反转期，2026年一季度和半年度预告显示利润弹性显著，但2025年仍亏损、经营现金流刚修复、VC/FEC价格周期属性强。17.08元附近已反映较多反转预期，安全边际不足，等待12.5元以下或后续季度验证现金流和吨利润持续性。",
+  "quality_rating": "中等",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [
+    14.0,
+    18.5
+  ],
+  "buy_zone": [
+    10.5,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    26.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于12.5元且VC/FEC价格、销量未明显恶化",
+      "action": "建立观察转买入小仓",
+      "target_position_pct": 2,
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于10.5元且经营现金流连续两个季度为正",
+      "action": "加仓至中低仓位",
+      "target_position_pct": 4,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "2026年三季报或年报证明新能源材料利润持续、资产负债率下降、经营现金流匹配净利润",
+      "action": "重新评估是否提升仓位上限",
+      "target_position_pct": 5,
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "action": "复核买入",
+      "reason": "进入可买区间，具备初始安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "action": "复核加仓",
+      "reason": "进入首选买入区间，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "action": "复核减仓",
+      "reason": "价格超过合理价值区间上沿，需要确认是否有盈利上修支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中VC/FEC销量、价格、毛利率和经营现金流是否支持半年度业绩预告"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断H1高利润是否延续到H2"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，更新合理价值区间和仓位上限"
+    }
+  ],
+  "key_tracking_metrics": [
+    "VC和FEC月度价格、销量、吨毛利",
+    "经营现金流与归母净利润匹配程度",
+    "新能源材料毛利率和产能利用率",
+    "医药中间体收入增速和毛利率",
+    "资产负债率、短债压力和资本开支",
+    "合成生物蛋白商业订单和客户验证"
+  ]
+}
