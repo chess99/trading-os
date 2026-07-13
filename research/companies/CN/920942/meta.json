@@ -1,0 +1,60 @@
+{
+  "symbol": "CN:920942",
+  "market": "CN",
+  "ticker": "920942",
+  "name": "XD恒立钻",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "技术和央企客户卡位尚可，但应收占用、毛利下滑和自由现金流弱使当前高估值缺乏安全边际。",
+  "fair_value_range": [10.0, 13.0],
+  "buy_zone": [8.0, 10.0],
+  "sell_or_reduce_zone": [15.0, 18.0],
+  "position_plan": [
+    {
+      "condition": "股价在10至13元且订单兑现、应收周转不再恶化，仅建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于8至10元买入区间，且毛利率企稳、自由现金流转正、基本面未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于8元，重新验证客户、坏账和技术假设后赔率进一步改善；不得因下跌机械补仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于15元而盈利和现金流未同步上修，或核心投资逻辑被证伪",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的毛利率、应收回款、订单兑现和自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报及硬质合金成本传导效果"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入有一定安全边际的买入区间，但需先确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 15.0,
+      "reason": "进入减仓或不应追高区间，估值要求乐观情景兑现"
+    }
+  ],
+  "updated_at": "2026-07-14T07:15:00+08:00"
+}
