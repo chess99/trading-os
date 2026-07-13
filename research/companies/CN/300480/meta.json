@@ -1,0 +1,96 @@
+{
+  "symbol": "CN:300480",
+  "market": "CN",
+  "ticker": "300480",
+  "name": "光力科技",
+  "company_name": "光力科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "半导体封测划切设备放量带来真实业务拐点，但2026-07-13约35元附近估值已经显著预支未来增长；在经营现金流、订单持续性和毛利率尚未进一步验证前，不具备足够安全边际。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [21, 27],
+  "buy_zone": [0, 18],
+  "sell_or_reduce_zone": [32, 999],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于18元，且半导体封测装备收入保持高增、综合毛利率稳定、经营活动现金流改善",
+      "action": "建立0.5%-1%观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于16元，且连续两个季度扣非归母净利润增长、经营活动现金流转正或明显收窄",
+      "action": "提高至1%-2%核心跟踪仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于22-32元且基本面未显著超预期",
+      "action": "仅跟踪，不新增仓位",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价高于32元且订单、毛利率、现金流没有同步验证",
+      "action": "已有仓位减仓或不参与",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "unit": "CNY/share",
+      "reason": "进入研究设定的可买观察区，估值开始接近安全边际。",
+      "action": "进入可买观察区，复核订单、毛利率和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 16,
+      "unit": "CNY/share",
+      "reason": "价格低于安全边际下沿，若基本面未恶化则风险收益比改善。",
+      "action": "若基本面未恶化，评估建立或提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "unit": "CNY/share",
+      "reason": "价格进入减仓或回避区，估值可能再次显著预支成长。",
+      "action": "复核估值是否过度预支，已有仓位考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查半导体设备收入、扣非利润、经营现金流、应收账款和存货变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1高增长是否具备持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和扩产进度，重新评估2027年利润中枢和合理估值。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "半导体封测装备收入增速及收入占比",
+    "新签订单、在手订单和合同负债",
+    "综合毛利率和半导体业务毛利率",
+    "经营活动现金流净额",
+    "应收账款周转天数",
+    "存货周转天数",
+    "扣非归母净利润",
+    "航空港二期扩产项目投产进度和产能利用率",
+    "前五大客户集中度"
+  ]
+}
