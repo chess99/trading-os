@@ -1,0 +1,123 @@
+{
+  "symbol": "CN:300468",
+  "market": "CN",
+  "ticker": "300468",
+  "name": "四方精创",
+  "company_name": "深圳四方精创资讯股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是香港金融科技软件开发服务的稀缺标的，境外收入占比高、现金充足、负债很低；但当前股价约19.17元对应约141倍TTM市盈率和约6.16倍市净率，明显透支香港金融基建、Web3、AI及H股递表预期。合理价值约8.0-12.0元，9.0元以下才有较好安全边际。",
+  "quality_rating": "中上",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    8.0,
+    12.0
+  ],
+  "buy_zone": [
+    7.5,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于7.5元，且境外收入未转负、现金及现金等价物仍超过10亿元、无重大客户流失",
+      "action": "深度安全边际买入",
+      "target_position": "2%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价位于7.5-9.0元，且毛利率维持35%以上、经营现金流/净利润不低于0.8",
+      "action": "分批建立基础仓位",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价位于9.0-10.5元，且香港金融基建或监管机构项目收入继续增长、ROE出现明确上行",
+      "action": "仅小仓试错",
+      "target_position": "0.5%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于13.0元，或TTM市盈率仍高于80倍且ROE低于8%",
+      "action": "不新增仓位",
+      "target_position": "0%",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价高于16.0元，且没有连续4-6个季度高增长与ROE改善支撑",
+      "action": "减仓或卖出",
+      "target_position": "0%-0.5%",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "currency": "CNY",
+      "action": "进入可买区，复核最近季报后考虑1%-2%仓位",
+      "reason": "低于合理价值中枢并开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "currency": "CNY",
+      "action": "进入深度安全边际区，若基本面未破坏可提高至2%-4%仓位",
+      "reason": "低于保守估值区间下沿，现金和存量业务提供下行保护"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "currency": "CNY",
+      "action": "停止加仓，复核估值是否重新透支",
+      "reason": "高于合理价值上沿，除非业绩连续兑现否则缺少新买安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "currency": "CNY",
+      "action": "进入减仓或卖出区",
+      "reason": "主题溢价过高，当前利润和ROE难以支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报：境外收入、香港金融基建客户收入、毛利率、经营现金流和应收账款变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：确认Q1收入增长是否延续，以及财务费用和汇率影响"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报：验证H股进展、全年ROE、分红和订单兑现情况"
+    }
+  ],
+  "key_tracking_metrics": [
+    "境外收入增速及占比",
+    "监管机构及金融基建运营商客户收入",
+    "银行客户数量与单客户收入集中度",
+    "毛利率是否维持在38%-42%",
+    "经营现金流净额/归母净利润",
+    "应收账款/营业收入",
+    "研发投入占收入比例及是否继续费用化",
+    "加权ROE是否提升至8%-10%",
+    "H股发行进展、摊薄比例和募集资金用途",
+    "股价相对8.0-12.0元合理价值区间的位置"
+  ]
+}
