@@ -1,0 +1,105 @@
+{
+  "symbol": "CN:300341",
+  "market": "CN",
+  "ticker": "300341",
+  "name": "麦克奥迪",
+  "company_name": "麦克奥迪（厦门）电气股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "智能电气是当前利润和增长核心，智慧光学提供高毛利制造底盘，数智医疗和亦庄控股赋能提供期权；但应收账款偏高、医疗业务亏损、当前估值接近合理区间上沿，需等待更低价格或现金流改善。",
+  "quality_rating": "中上",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [
+    10.0,
+    13.0
+  ],
+  "buy_zone": [
+    0,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价跌至 9.5 元/股以下，且没有新增重大坏账或医疗业务恶化公告",
+      "action": "买入",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价在 9.5-10.5 元/股之间，且 2026 半年报显示智能电气收入增速不低于 20%、经营现金流改善",
+      "action": "小仓试探",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价在 10.5-13.0 元/股之间，且未出现新的资产注入或业绩上修证据",
+      "action": "观察或持有",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于 15.5 元/股且基本面未显著超预期",
+      "action": "减仓或不买",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "action": "进入买入复核",
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "action": "进入小仓复核",
+      "reason": "进入可小仓观察的估值区间"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "action": "进入减仓复核",
+      "reason": "价格高于基准估值上沿且需要确认是否有业绩上修支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 半年报：智能电气增速、医疗亏损、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 三季报：收入增速、毛利率、归母净利润和回款质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报：年度盈利质量、分红、资产负债表和三大业务兑现情况"
+    }
+  ],
+  "key_tracking_metrics": [
+    "智能电气收入增速是否保持 20% 以上",
+    "智能电气毛利率是否维持 33% 以上",
+    "医疗业务亏损是否明显收窄或接近盈亏平衡",
+    "应收账款/营业收入是否下降",
+    "经营现金流/归母净利润是否回到 1.0 倍以上",
+    "智慧光学工业检测和高端科研产品收入占比",
+    "研发投入占收入比例是否维持 5% 以上且资本化为 0",
+    "是否出现经公告确认的资产注入、并购重组或重大产业协同"
+  ]
+}
