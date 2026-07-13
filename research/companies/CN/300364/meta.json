@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:300364",
+  "market": "CN",
+  "ticker": "300364",
+  "name": "中文在线",
+  "company_name": "中文在线集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司拥有数字内容版权库、IP 衍生和海外短剧增长期权，2026Q1 收入高增且亏损收窄；但 2025 年仍大幅亏损，净资产薄，当前价格已透支短剧出海和 AI 降本预期，缺乏足够安全边际。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [11.0, 16.0],
+  "buy_zone": [9.0, 11.0],
+  "sell_or_reduce_zone": [22.0, 26.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于 16 元或基本面尚未证明连续现金流改善",
+      "action": "不买入，保持观察",
+      "max_weight": 0.0,
+      "target_position": "0%"
+    },
+    {
+      "condition": "价格进入 11-16 元且最新季度收入增长超过 25%、亏损继续收窄",
+      "action": "建立观察仓",
+      "max_weight": 0.01,
+      "target_position": "0%-1%"
+    },
+    {
+      "condition": "价格进入 9-11 元且经营现金流未恶化、海外短剧收入继续增长",
+      "action": "小仓试错买入",
+      "max_weight": 0.03,
+      "target_position": "2%-3%"
+    },
+    {
+      "condition": "价格低于 9 元且没有出现监管、现金流或融资风险恶化",
+      "action": "可提高至上限仓位",
+      "max_weight": 0.04,
+      "target_position": "3%-4%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.0,
+      "currency": "CNY",
+      "reason": "进入合理价值上沿以下，需要复核是否具备观察仓价值。",
+      "action": "复核最新季报和现金流，判断是否进入观察仓区间。"
+    },
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "currency": "CNY",
+      "reason": "进入可买区间，需要确认基本面没有恶化。",
+      "action": "若基本面未恶化，重新评估买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "currency": "CNY",
+      "reason": "价格高于减仓区下沿，估值已充分反映乐观预期。",
+      "action": "回避新增仓位，已有仓位考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看收入增速、亏损收窄和经营现金流是否持续。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认海外短剧增长和费用率变化。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新估算合理价值和买入区间。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入增速",
+    "归母净利润及扣非归母净利润",
+    "经营活动现金流净额",
+    "境外收入占比",
+    "IP 与衍生权利收入",
+    "数字阅读产品收入",
+    "销售费用率和投流回收效率",
+    "Crazy Maple Studio/ReelShort 相关权益和收益变化",
+    "H 股上市进展和潜在摊薄比例"
+  ]
+}
