@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:300082",
+  "market": "CN",
+  "ticker": "300082",
+  "name": "奥克股份",
+  "company_name": "辽宁奥克化学股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "奥克股份主业处于低毛利周期底部修复阶段，2025年归母扭亏但扣非仍亏，2026Q1扣非刚微利；新能源材料和电子化学品提供期权价值，但尚未形成可资本化的稳定利润。当前约7.29元价格已略高于5.80-7.20元合理价值区间上沿，适合等待更低价格或连续盈利验证。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    5.8,
+    7.2
+  ],
+  "buy_zone": [
+    0,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于5.20元，且未出现重大财务恶化、监管处罚或核心项目失败",
+      "action": "建立观察仓",
+      "max_weight": 0.01,
+      "target_position": "0.5%-1.0%"
+    },
+    {
+      "condition": "股价位于5.20-6.20元，且扣非归母净利润连续两个季度为正、经营现金流持续改善、毛利率稳定高于6%",
+      "action": "分批加仓",
+      "max_weight": 0.03,
+      "target_position": "最高2.0%-3.0%"
+    },
+    {
+      "condition": "股价高于7.20元但盈利指标未显著改善",
+      "action": "不新增仓位或降低仓位",
+      "max_weight": 0.01,
+      "target_position": "0%-1.0%"
+    },
+    {
+      "condition": "股价高于9.00元且上涨主要由题材驱动、扣非利润仍未形成规模",
+      "action": "减仓或退出",
+      "max_weight": 0.0,
+      "target_position": "0%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "低于5.20元进入可买区，安全边际相对充分。",
+      "action": "进入可买区，复核最新季度扣非利润、现金流和毛利率后考虑建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "高于7.20元超过合理价值区间上沿，需要盈利验证支撑。",
+      "action": "高于合理价值区间上沿，若缺少盈利验证则停止加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "高于9.00元进入减仓区，若缺少业绩支撑则风险收益转差。",
+      "action": "进入减仓区，重点核验估值是否由业绩支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "预计2026年半年报披露窗口，复核收入、毛利率、扣非利润和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "预计2026年三季报披露窗口，判断扣非利润是否连续改善或再次转负。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "预计2026年年报披露窗口，重估新能源材料、电子化学品项目兑现度与资本回报。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度营业收入同比增速",
+    "综合毛利率",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "新能源材料和电子化学品收入占比及毛利率",
+    "在建工程、存货、应收账款和资产减值变化",
+    "归母ROE"
+  ]
+}
