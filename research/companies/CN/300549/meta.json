@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:300549",
+  "market": "CN",
+  "ticker": "300549",
+  "name": "优德精密",
+  "company_name": "优德精密工业（昆山）股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司具备精密模具零部件、自动化设备零部件和医疗/制药零部件制造能力，资产负债表稳健、经营现金流尚可；但2025年和2026Q1扣非利润显著走弱，当前股价隐含过高盈利修复预期，安全边际不足。",
+  "quality_rating": "中低",
+  "valuation_rating": "高估",
+  "fair_value_range": [
+    5.0,
+    7.0
+  ],
+  "buy_zone": [
+    4.2,
+    5.0
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于9.0元，且扣非净利率仍低于3%",
+      "action": "不买；已有持仓则减仓",
+      "max_weight": 0.0,
+      "target_position": "0%"
+    },
+    {
+      "condition": "股价位于5.0-7.0元，且订单和毛利率尚未恢复",
+      "action": "观察，不主动买入",
+      "max_weight": 0.01,
+      "target_position": "0%-1%"
+    },
+    {
+      "condition": "股价低于5.0元，且最近两个季度经营现金流为正、毛利率稳定",
+      "action": "小仓试探",
+      "max_weight": 0.02,
+      "target_position": "1%-2%"
+    },
+    {
+      "condition": "股价低于4.2元，且扣非净利率恢复到5%以上",
+      "action": "提高仓位",
+      "max_weight": 0.05,
+      "target_position": "3%-5%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "currency": "CNY",
+      "reason": "低于估算合理价值区间下沿，且接近小仓观察买入区。",
+      "action": "进入买入复核"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "currency": "CNY",
+      "reason": "低于每股净资产附近并提供更充分安全边际。",
+      "action": "若基本面同步改善，评估提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "currency": "CNY",
+      "reason": "显著高于合理价值区间，若扣非利润未修复则估值风险较高。",
+      "action": "若基本面未明显改善，减仓或不参与"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非利润、医疗/制药零部件收入和自动化设备零部件是否修复。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入、毛利率和经营现金流是否连续改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度营业收入是否重新站上9000万元并连续两个季度同比增长",
+    "扣非净利率是否恢复到5%以上",
+    "经营活动现金流净额是否持续为正",
+    "医疗/制药模具及医疗器械零部件收入占比是否提升到18%-20%",
+    "自动化设备零部件收入是否结束两位数下滑",
+    "前五大客户销售占比是否稳定在25%以内",
+    "研发投入是否转化为高毛利产品收入"
+  ]
+}
