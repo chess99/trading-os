@@ -1,0 +1,114 @@
+{
+  "symbol": "CN:300606",
+  "market": "CN",
+  "ticker": "300606",
+  "name": "金太阳",
+  "company_name": "东莞金太阳研磨股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "金太阳具备涂附磨具主业底盘，以及新型抛光材料、智能磨抛装备、半导体/CMP 抛光材料期权；但 2025 年净利润仅 1991 万元，智能数控装备及精密结构件毛利率仅 1.15%，应收账款存在逾期客户风险。截至 2026-07-13 股价 30.33 元、约 42 亿元市值，估值显著透支，当前不买入，只跟踪基本面兑现。",
+  "quality_rating": "B-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    11,
+    15
+  ],
+  "buy_zone": [
+    0,
+    10
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于或等于 9.5 元，且未出现应收账款恶化、核心客户流失、设备/结构件毛利率继续下滑",
+      "action": "建立初始仓位",
+      "target_position": "1.5%-2.5%",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "股价在 9.5-12 元，且新型抛光材料收入增长、智能装备及结构件毛利率改善至 8% 以上",
+      "action": "小仓观察",
+      "target_position": "0.5%-1.5%",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价在 12-15 元且基本面符合预期",
+      "action": "持有或等待",
+      "target_position": "不新增仓位",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于 18 元但扣非净利润未进入连续高增长区间",
+      "action": "停止买入",
+      "target_position": "仅保留跟踪仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价高于或等于 24 元，或市值超过经验证利润可支撑范围",
+      "action": "减仓或卖出",
+      "target_position": "0%-0.5%",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12,
+      "currency": "CNY",
+      "action": "重新评估是否建立小仓观察",
+      "reason": "进入合理价值区间上沿以下，需要复核基本面和安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "currency": "CNY",
+      "action": "若基本面未恶化，评估初始买入",
+      "reason": "接近保守买入区间，赔率可能转为可接受"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "currency": "CNY",
+      "action": "若已有仓位，评估减仓或卖出",
+      "reason": "高于可承受估值区间，预期透支风险显著上升"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看新型抛光材料收入、智能装备及结构件毛利率、应收账款回款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断全年净利润是否具备超过 4000 万元的可见性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核第一大逾期应收客户最迟回款承诺、2026 年年报和扩产项目回报"
+    }
+  ],
+  "key_tracking_metrics": [
+    "新型抛光材料收入及毛利率",
+    "智能数控装备及精密结构件毛利率",
+    "归母净利润和扣非归母净利润",
+    "经营活动现金流净额",
+    "应收账款余额、账龄和第一大逾期客户回款进度",
+    "前五大客户销售占比",
+    "领航电子/CMP 抛光材料客户验证、批量收入和权益利润贡献",
+    "固定资产周转率和增资扩产项目产能利用率"
+  ]
+}
