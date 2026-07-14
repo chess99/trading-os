@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:002086",
+  "ticker": "002086",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "东方海洋",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "重整后资产负债表已修复，2026Q1亏损收窄且经营现金流转正，但公司仍处于主营恢复和治理信用重建阶段，扣非亏损、累计未弥补亏损和大健康收入波动使当前股价缺少足够安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    1.1,
+    1.6
+  ],
+  "buy_zone": [
+    0.75,
+    1.05
+  ],
+  "sell_or_reduce_zone": [
+    2.2,
+    2.8
+  ],
+  "position_plan": [
+    {
+      "condition": "未连续两个季度实现经营现金流为正且扣非亏损继续收窄前，仅保留观察，不建立主动仓位。",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入0.75-1.05元且未出现新增资金占用、违规担保、审计保留或退市风险，同时经营现金流保持改善。",
+      "action": "starter_position",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "连续两个季度扣非亏损明显收窄或转正，大健康业务恢复增长，且经营现金流连续为正。",
+      "action": "increase_after_validation",
+      "max_weight": 0.015
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.05,
+      "reason": "进入买入观察区，需要复核是否由基本面恶化导致下跌。"
+    },
+    {
+      "type": "price_below",
+      "price": 1,
+      "reason": "跌近或跌破面值风险区，需要重新评估交易所退市风险和流动性风险。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.2,
+      "reason": "超过无业绩验证下的减持区，主题溢价可能高于基本面价值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非亏损、经营现金流、大健康收入和应收存货变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断经营修复是否连续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和审计意见，确认是否具备重新定级条件。"
+    }
+  ],
+  "key_metrics": {
+    "price_date": "2026-07-13",
+    "reference_price": 1.72,
+    "shares_outstanding": 1958946500,
+    "market_cap_cny": 3369389980,
+    "book_value_2026q1_cny": 1268104442.44,
+    "pb_2026q1": 2.66,
+    "revenue_2025_cny": 356087753.07,
+    "net_profit_2025_cny": -152680548.13,
+    "operating_cash_flow_2025_cny": -124916474.05,
+    "revenue_2026q1_cny": 78370112.49,
+    "net_profit_2026q1_cny": -11268796.84,
+    "operating_cash_flow_2026q1_cny": 5971127.26
+  },
+  "risk_flags": [
+    "扣非仍亏损",
+    "累计未弥补亏损超过实收股本三分之一",
+    "大健康业务恢复不确定",
+    "历史资金占用和违规担保导致治理折价",
+    "低价股波动和面值退市风险需跟踪"
+  ]
+}
