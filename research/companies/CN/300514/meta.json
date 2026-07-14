@@ -1,0 +1,97 @@
+{
+  "symbol": "CN:300514",
+  "market": "CN",
+  "ticker": "300514",
+  "name": "友讯达",
+  "company_name": "深圳友讯达科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "友讯达处在智能电网物联网和计量设备更新赛道，长期需求存在，但客户集中、招标节奏和价格压力导致盈利波动大。2025年利润大幅下滑，2026Q1转亏，当前股价约8.90元已经隐含盈利恢复预期；只有在6.5元以下提供足够安全边际，或后续半年报验证收入、毛利率、现金流同步恢复后，才考虑买入。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [7.0, 9.0],
+  "buy_zone": [0.0, 6.5],
+  "sell_or_reduce_zone": [11.5, 999.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于安全边际区间，且2026Q1收入下滑、利润转亏尚未修复",
+      "action": "不建仓",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌至6.5元/股以下，且未出现订单取消、现金流恶化或毛利率继续大幅下滑",
+      "action": "建立观察仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价跌至5.8元/股以下，同时2026H1经营现金流未明显恶化",
+      "action": "提高至小仓位",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度收入同比改善、毛利率回到30%以上、经营现金流/净利润不低于1",
+      "action": "允许在7.2元/股以下加仓",
+      "max_weight": 0.015
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "currency": "CNY",
+      "reason": "进入基础可买区，提供约25%-30%安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "currency": "CNY",
+      "reason": "低于保守PB/恢复盈利估值，可考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "currency": "CNY",
+      "reason": "若盈利恢复尚未验证，股价已进入预支恢复区"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "currency": "CNY",
+      "reason": "超过乐观恢复估值的主要区间，应卖出或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复盘2026年半年报，重点核验收入恢复、毛利率、扣非利润、现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复盘2026年三季报，判断国网中标项目是否转化为收入和利润"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复盘2026年年报，重新评估长期盈利中枢和合理估值倍数"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026H1营业收入同比增速",
+    "单季毛利率是否恢复至30%以上",
+    "扣非归母净利润是否转正并恢复至年化0.6亿元以上",
+    "经营现金流/净利润",
+    "应收账款和存货周转变化",
+    "国网/南网中标金额及收入确认进度",
+    "前五大客户收入占比"
+  ]
+}
