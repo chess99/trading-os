@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920802",
+  "market": "CN",
+  "ticker": "920802",
+  "name": "保丽洁",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "现金充裕且海外与运维业务改善，但护城河偏浅、ROE不高，当前价格已透支较多增长预期，等待更大安全边际。",
+  "fair_value_range": [7.5, 9.0],
+  "buy_zone": [6.4, 7.2],
+  "sell_or_reduce_zone": [10.8, 12.5],
+  "position_plan": [
+    {
+      "condition": "股价处于6.4至7.2元且国内核心业务企稳、AVC无减值迹象、规范化自由现金流未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于6.4元且重新验证长期商业价值未受损、规范化自由现金流仍不低于2500万元",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "基本面恶化、核心假设被证伪或股价进入10.8至12.5元而盈利未上修",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "复核2026年半年报后的海外、运维、现金流和新产能利用率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "进入有安全边际的试探买入区间，需先复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 10.8,
+      "reason": "进入减仓或不应追高区间，除非盈利与现金流显著上修"
+    }
+  ],
+  "updated_at": "2026-07-14T23:26:40+08:00"
+}

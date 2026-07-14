@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920806",
+  "market": "CN",
+  "ticker": "920806",
+  "name": "云星宇",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "国资客户资源和31亿元在手订单提供恢复基础，但低ROE、重应收及预付款驱动的现金流使当前约40倍PE缺乏安全边际。",
+  "fair_value_range": [6.0, 8.0],
+  "buy_zone": [5.0, 6.3],
+  "sell_or_reduce_zone": [9.0, 10.5],
+  "position_plan": [
+    {
+      "condition": "股价处于6.0至6.3元且半年报确认毛利率、回款率和订单转化未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于5.0至6.0元且重新验证长期商业价值未受损；不得仅因下跌加仓",
+      "max_weight": 0.025
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的毛利率、订单转化、经营现金流和应收账款"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.3,
+      "reason": "进入具备一定安全边际的观察买入区间，需先验证基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T18:00:00+08:00"
+}
