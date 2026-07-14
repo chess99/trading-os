@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002652",
+  "ticker": "002652",
+  "name": "扬子新材",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司主业为有机涂层板加工，2026年上半年有减亏迹象，但仍处亏损状态，研发和规模壁垒不足，短债压力与历史治理折价尚未完全消除。以2026-07-14收盘价3.89元估算，PB约8.5倍、PS约5.7倍，明显高于基本面可支撑区间，当前缺乏安全边际。",
+  "fair_value_range": [
+    1.0,
+    1.6
+  ],
+  "buy_zone": [
+    0.8,
+    1.0
+  ],
+  "sell_or_reduce_zone": [
+    2.3,
+    3.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且公司仍为亏损，暂不建仓。",
+      "action": "avoid",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于1.0元且2026半年报或三季报确认扣非亏损显著收窄、毛利率回升至8%以上、历史应收风险继续下降。",
+      "action": "research_buy",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于2.3元且未出现经审计盈利拐点或重大客户订单验证。",
+      "action": "sell_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "进入安全边际买入区间，且可重新评估小仓位研究性配置。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.3,
+      "reason": "明显高于基准合理价值区间，需要继续回避或降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，确认预告兑现、毛利率、扣非净利和现金流改善质量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年能否转正及短债压力是否下降。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新计算盈利中枢和估值区间。"
+    }
+  ]
+}
