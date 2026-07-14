@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:003042",
+  "ticker": "003042",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "中农联合",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "中农联合具备新烟碱类农药全产业链、登记证和研发储备，但 2025 年亏损、2026Q1 盈利很薄且现金流为负，2026H1 预告重新亏损；当前约 1.44x PB 对亏损状态不便宜，安全边际不足，暂不买入。",
+  "fair_value_range": [
+    6.5,
+    9.5
+  ],
+  "buy_zone": [
+    6.5,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    11.0,
+    13.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价进入 6.5-7.5 元且未出现新增安全环保或流动性风险时，建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非盈利、经营现金流为正且农药原药毛利率回到 10% 以上。",
+      "action": "increase_after_confirmation",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "股价高于 11 元但盈利修复未兑现，或 2026H1 后续报告确认亏损扩大。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入估算买入区间上沿，需要复核现金流、毛利率和存货减值后再考虑小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "超过减持/回避区间下沿，若基本面未显著改善则风险收益不佳。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点查看亏损原因、存货减值、汇兑损益和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断原药毛利率和制剂业务是否出现连续改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新评估周期底部资产价值与新产品商业化进展。"
+    }
+  ]
+}
