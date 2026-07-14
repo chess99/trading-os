@@ -1,0 +1,102 @@
+{
+  "symbol": "CN:300605",
+  "market": "CN",
+  "ticker": "300605",
+  "name": "恒锋信息",
+  "company_name": "恒锋信息科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "恒锋信息具备智慧城市项目经验和福建区域基础，但当前收入下滑、持续亏损、低毛利系统集成占比高，应收账款/合同资产/存货占用大，且存在实际控制人之一相关治理不确定性。2026-07-13 收盘价 8.76 元明显高于 3.2-5.0 元/股的基本面合理区间，缺少安全边际。",
+  "quality_rating": "低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    3.2,
+    5.0
+  ],
+  "buy_zone": [
+    3.0,
+    3.5
+  ],
+  "sell_or_reduce_zone": [
+    5.0,
+    6.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于 5.0 元/股，且未出现连续两个季度经营现金流为正、收入止跌和亏损收窄",
+      "target_position": "0%",
+      "action": "不建仓",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价处于 3.5-5.0 元/股，同时连续两个季度经营现金流改善、毛利率稳定在 20% 附近或以上",
+      "target_position": "0.5%-1.0%",
+      "action": "仅观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于 3.5 元/股，且应收账款、合同资产和存货合计下降，亏损明显收窄",
+      "target_position": "1.0%-2.0%",
+      "action": "可建立初始仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 3.0 元/股，同时经营现金流连续为正、收入恢复增长、治理风险落地",
+      "target_position": "最高 3.0%",
+      "action": "提高至上限仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "unit": "CNY/share",
+      "action": "重新评估是否建观察仓",
+      "reason": "进入有安全边际的可买区间"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "unit": "CNY/share",
+      "action": "维持不买或减仓",
+      "reason": "超过基本面合理区间上沿，若无业绩修复则风险收益恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报收入、毛利率、经营现金流、应收账款和合同资产变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否出现收入止跌、亏损收窄和现金流改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报及治理事项进展，重新评估合理价值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "归母净利润及扣非归母净利润",
+    "综合毛利率是否稳定高于 20%",
+    "软件开发、设计服务、维保服务收入占比",
+    "经营活动现金流净额",
+    "应收账款 + 合同资产 + 存货合计规模",
+    "短期借款、一年内到期非流动负债和应付债券余额",
+    "新签订单的毛利率、回款条款和客户质量",
+    "实际控制人之一相关事项后续结论"
+  ]
+}
