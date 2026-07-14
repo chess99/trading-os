@@ -1,0 +1,64 @@
+{
+  "symbol": "CN:002146",
+  "ticker": "002146",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "荣盛发展",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "荣盛发展处于民营房企困境反转阶段，估值低不能抵消持续亏损、现金流为负、债务化解未完成和持续经营重大不确定性；当前价格缺少安全边际，需等待债务重组和经营现金流改善的连续证据。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    0.55,
+    0.95
+  ],
+  "buy_zone": [
+    0.35,
+    0.55
+  ],
+  "sell_or_reduce_zone": [
+    1.2,
+    1.6
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在价格低于0.55元且公司披露债务重组实质性落地、经营现金流连续改善后，才允许建立观察性仓位。",
+      "action": "watch_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若持续经营重大不确定性仍未解除或经营现金流继续为负，不建立正式仓位。",
+      "action": "avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.55,
+      "reason": "价格进入估值下沿并可能提供重新核验债务和现金流改善的观察价值。"
+    },
+    {
+      "type": "price_above",
+      "price": 1.2,
+      "reason": "价格高于基础情景估值上沿但基本面未确认修复时，应降低或回避风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查经营现金流、归母净资产、减值和债务化解进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认销售回款和流动性风险是否边际改善。"
+    }
+  ]
+}
