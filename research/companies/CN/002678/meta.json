@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:002678",
+  "ticker": "002678",
+  "name": "珠江钢琴",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "珠江钢琴具备全球钢琴品牌和国资资产底盘，但传统钢琴需求仍处深度调整，2025 年乐器业务负毛利且 2026H1 仍预亏；当前股价约 1.8-1.9 倍 2026Q1 PB，尚未提供困境资产所需安全边际，适合观察而非买入。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    2.7,
+    3.7
+  ],
+  "buy_zone": [
+    2.4,
+    3.0
+  ],
+  "sell_or_reduce_zone": [
+    5.0,
+    5.5
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价低于 3.0 元且无新增重大减值时允许建立研究仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若 2026 年报确认经营现金流转正且乐器业务毛利率转正，可复核是否提升仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若股价高于 5.0 元但公司仍亏损，应避免买入并考虑退出研究仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "进入困境资产买入观察区，需要复核存货减值、现金流和 2026H1 实际结果"
+    },
+    {
+      "type": "price_above",
+      "price": 5.0,
+      "reason": "接近乐观情景估值上沿，若基本面仍亏损则安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年半年报披露后复核预告兑现、存货和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报披露后复核乐器业务毛利率和亏损收窄质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026 年报披露后重估转型业务规模、现金流和资产减值风险"
+    }
+  ]
+}
