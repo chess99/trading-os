@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:001306",
+  "ticker": "001306",
+  "name": "夏厦精密",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "小模数齿轮制造商向机器人减速机、关节模组和行星滚柱丝杠延伸，产业方向有吸引力，但2025年和2026Q1已经出现增收不增利、毛利率和现金流承压，当前估值更多反映机器人期权而非已验证利润，需等待订单、毛利率和现金流拐点。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    36,
+    48
+  ],
+  "buy_zone": [
+    28,
+    34
+  ],
+  "sell_or_reduce_zone": [
+    62,
+    78
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入28-34元且未出现机器人订单证伪、存货继续大幅减值或债务快速恶化时，可建立观察仓。",
+      "action": "buy_watch_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价处于34-42元，但单季综合毛利率恢复至15%以上、经营现金流转正且减速机及其他业务继续高增长。",
+      "action": "small_add_after_validation",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于62元且机器人订单、毛利率和利润兑现不足。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 34,
+      "reason": "进入安全边际买入区间上沿，需要复核毛利率、订单与现金流是否未恶化。"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入悲观情景估值区间，可重新评估风险收益是否显著改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 62,
+      "reason": "超过当前基本面可支撑区间，若无订单和利润兑现，应考虑回避主题溢价。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点观察汽车齿轮毛利率、减速机及其他收入、存货跌价和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断固定成本压力是否缓解及机器人业务是否进入更明确的订单兑现阶段。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重新评估资本开支、定增稀释和长期盈利中枢。"
+    }
+  ]
+}
