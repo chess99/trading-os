@@ -5,25 +5,68 @@
   "name": "德明利",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "存储模组渠道型公司，在存储芯片周期上行中业绩爆发，但商业模式壁垒低、高杠杆运营、现金流持续为负。2026Q1出现极端异常利润暴增（毛利率从15%跳升至57%）大概率不可持续。当前市值2121亿、PE 304x、PB 65x，已严重泡沫。建议不买，等待周期正常化后的合理价格区间。",
-  "fair_value_range": [40, 150],
-  "buy_zone": [0, 100],
-  "sell_or_reduce_zone": [300, 1000],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "德明利处在存储超级周期的利润弹性核心位置，2026Q1营收75.38亿元、归母净利润33.46亿元，证明其供应链、库存和企业级/嵌入式业务具备强景气放大能力。但公司本质仍是强周期存储模组和方案商，存货高、经营现金流尚未转正，当前719.98元股价已隐含较强的全年高利润持续假设，缺少安全边际，维持观察。",
+  "fair_value_range": [560, 760],
+  "buy_zone": [0, 480],
+  "sell_or_reduce_zone": [850, 1200],
   "position_plan": [
-    {"condition": "股价跌至60-150元区间，且存储价格企稳，经营现金流转正", "max_weight": 0.02},
-    {"condition": "股价跌至60元以下，充分反映悲观预期", "max_weight": 0.04}
+    {
+      "condition": "当前价格高于有安全边际买入区间，且2026Q2现金流和存货周转尚未验证，维持0仓位观察。",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于520元且半年报显示经营现金流明显改善、存货占总资产比例下降，允许进入重点跟踪但不急于建仓。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于480元，同时毛利率仍高于30%、经营现金流转正或接近转正，可试探性建仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于380元且行业价格未转入明确下行周期、公司无大额存货减值，可提高到小中等观察仓。",
+      "max_weight": 0.03
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报发布后复查，验证Q1异常是否延续及毛利率回归情况"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报，确认周期方向"}
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-13-initial.md"
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 100, "reason": "进入可关注的价格区间，开始跟踪"},
-    {"type": "price_below", "price": 60, "reason": "进入强吸引力买入区间，考虑建仓"},
-    {"type": "price_above", "price": 300, "reason": "不应追高区间，持有者考虑减仓"}
+    {
+      "type": "price_below",
+      "price": 520,
+      "reason": "进入重点跟踪区间，需要结合半年报验证经营现金流和存货风险。"
+    },
+    {
+      "type": "price_below",
+      "price": 480,
+      "reason": "进入有安全边际买入区间，可在基本面未恶化时评估1%-2%试探仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 850,
+      "reason": "高于合理价值上沿且缺少新增利润和现金流证据时，赔率恶化。"
+    }
   ],
-  "updated_at": "2026-07-08T05:30:00+08:00"
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证Q2毛利率、经营现金流、存货金额和企业级/嵌入式业务质量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断存储涨价周期是否延续以及库存减值风险是否上升。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报，重估周期高点利润的可持续性和中周期估值。"
+    }
+  ],
+  "updated_at": "2026-07-13"
 }
