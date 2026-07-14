@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:002455",
+  "ticker": "002455",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "百川股份",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "精细化工底盘具备规模和客户基础，新材料产能释放带来修复弹性，但新能源电池仍大幅亏损、财务费用和担保压力较高；当前价格已接近基本情景上沿，安全边际不足，需等待低价或扣非利润与现金流连续改善。",
+  "fair_value_range": [
+    4.8,
+    6.2
+  ],
+  "buy_zone": [
+    0,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值中枢且扣非利润修复尚未确认，仅保留观察仓",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于4.8元，且未出现担保、质押、经营现金流进一步恶化",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非净利润高于3000万元、经营现金流为正且海基新能源亏损显著收窄",
+      "action": "add_on_confirmation",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入安全边际买入复核区"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "若基本面未恶化，赔率明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "超过乐观情景起点，需检查业绩是否兑现，否则减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、海基新能源亏损、新材料毛利率和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断修复是否具备连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和全年现金流，重估长期盈利中枢"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

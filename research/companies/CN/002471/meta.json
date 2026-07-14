@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002471",
+  "ticker": "002471",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "中超控股",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "current_thesis": "低毛利线缆主业仍处亏损/微利边缘，高温合金精铸业务具备期权属性但尚未被利润表验证；当前约3.9倍PB已预支乐观情景，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.2,
+    2.4
+  ],
+  "buy_zone": [
+    0.9,
+    1.5
+  ],
+  "sell_or_reduce_zone": [
+    3.5,
+    5.2
+  ],
+  "position_plan": [
+    {
+      "condition": "2026半年报或三季报显示扣非利润转正、经营现金流转正且担保实际履行余额下降，同时股价低于1.5元",
+      "action": "watch_to_small_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "江苏精铸披露连续批量订单并开始贡献利润，且线缆综合毛利率稳定高于12%",
+      "action": "research_for_re_rating",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于3.5元且公司仍处扣非亏损或经营现金流恶化",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.5,
+      "reason": "进入安全买入观察区，重新核验现金流、担保和精铸订单。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.5,
+      "reason": "超过基准估值上沿，若利润未兑现应维持回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报实际利润、现金流、应收账款和担保余额。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及江苏精铸订单/产能兑现情况。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报，判断定增募投与精铸业务是否产生实质利润贡献。"
+    }
+  ]
+}
