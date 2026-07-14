@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:300638",
+  "market": "CN",
+  "ticker": "300638",
+  "name": "广和通",
+  "company_name": "深圳市广和通无线股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "广和通是全球蜂窝物联网模组头部公司，海外收入和智能模组/解决方案业务提供中期修复空间；但2025年利润下滑、2026Q1利润和经营现金流继续承压，当前A股17.44元对应估值偏贵，需等待价格进入安全边际或经营拐点确认。",
+  "quality_rating": "B",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    11.0,
+    14.5
+  ],
+  "buy_zone": [
+    10.5,
+    12.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    22.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于17元且未披露连续两个季度经营改善",
+      "action": "不买入，仅跟踪",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回到14-16元且毛利率、订单或解决方案收入出现改善信号",
+      "action": "可建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于12元且滚动经营现金流不继续恶化",
+      "action": "建立初始仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于10.5元且经营现金流转正、毛利率企稳",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "unit": "CNY/share",
+      "reason": "进入估算买入区上沿，需要复核利润和现金流是否继续恶化。",
+      "action": "复核是否进入买入区"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "unit": "CNY/share",
+      "reason": "进入更高安全边际区间，若基本面未恶化可评估提高仓位。",
+      "action": "若基本面未恶化，评估加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "unit": "CNY/share",
+      "reason": "价格高于合理价值区间，若利润现金流未改善则风险收益比偏差。",
+      "action": "若利润现金流未改善，维持回避"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "unit": "CNY/share",
+      "reason": "估值明显透支修复预期，需要用年度净利润和现金流兑现支撑。",
+      "action": "除非年度净利润恢复到6亿元以上且现金流改善，否则减仓或不买"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、归母净利润、经营活动现金流、应收和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1利润低点是否修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年利润、现金流和智能模组/解决方案收入质量。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度毛利率是否稳定回到18%-20%以上",
+    "归母净利率是否回到6%-8%",
+    "滚动12个月经营活动现金流是否转正并接近净利润",
+    "智能模组和解决方案收入占比及毛利率",
+    "境外收入增长、汇率和贸易政策影响",
+    "存货、应收账款周转和坏账/跌价准备",
+    "车载、端侧AI、机器人等新业务是否有量产订单和可持续毛利"
+  ]
+}
