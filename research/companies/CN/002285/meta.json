@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:002285",
+  "ticker": "002285",
+  "market": "CN",
+  "name": "世联行",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "房地产交易服务仍在下行，2025与2026Q1扣非仍亏损；低负债、现金及类现金资产和国资控股提供防守，但当前约1.87x PB已透支较多修复预期，需等待价格回落或扣非盈利确认。",
+  "fair_value_range": [
+    1.2,
+    1.6
+  ],
+  "buy_zone": [
+    1.2,
+    1.45
+  ],
+  "sell_or_reduce_zone": [
+    2.4,
+    2.8
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于1.45元，且未出现新增重大减值、治理失稳或现金流恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价接近1.20元，且2026中报显示经营现金流改善、扣非亏损继续收窄",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "连续两个季度扣非接近或转正，大资管毛利率改善且应收账款继续下降",
+      "action": "允许提高配置上限",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.45,
+      "reason": "进入基准估值上沿以下，可重新评估安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "接近保守合理价值下沿，若经营未恶化可考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "高于减持/回避区间下沿，若扣非仍亏损则风险收益不佳"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看扣非亏损、经营现金流、大资管毛利率和应收账款变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入降幅是否收窄及清收诉讼进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断修复是否转化为可持续盈利"
+    }
+  ]
+}
