@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002862",
+  "ticker": "002862",
+  "name": "实丰文化",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "AI玩具转型带来增长期权，2026Q1已扭亏，但2025年大额亏损、TTM利润仍为负，当前13元附近估值已包含较强预期，缺少安全边际，等待半年报验证收入、扣非利润和现金流。",
+  "fair_value_range": [
+    8.5,
+    11.5
+  ],
+  "buy_zone": [
+    7.5,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "现价高于合理价值上沿且AI玩具经营数据未充分披露时，仅观察不建仓",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价进入9.5元以下且2026半年报收入增长、扣非利润为正、经营现金流未明显背离",
+      "action": "research_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度披露并验证AI玩具收入和毛利率改善，且经营现金流同步转正",
+      "action": "increase_after_validation",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入买入观察区间，需要复核半年报现金流和AI玩具披露"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "价格进入乐观情景区间，若无新增业绩验证应减仓或回避追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报收入、扣非利润、经营现金流、存货和AI玩具披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认Q1扭亏是否具备持续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报与年度现金流，重新评估转型兑现度和估值区间"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}
