@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:300062",
+  "ticker": "300062",
+  "name": "中能电气",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "current_thesis": "中能电气主业电网智能化产品在2025年恢复增长，2026Q1实现扭亏，但应收账款高、经营现金流仍为负、低毛利施工和新能源存量业务仍需出清；当前估值已反映中性修复预期，缺少足够安全边际，暂列观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    4.2,
+    5.6
+  ],
+  "buy_zone": [
+    3.6,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    6.2,
+    7.2
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.20元且未出现新增大额坏账、2026中报继续扭亏",
+      "action": "watchlist_or_tracking_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.60元，且经营现金流累计改善、应收账款加合同资产占收入比例下降",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于6.20元但利润和现金流未同步验证",
+      "action": "avoid_chasing_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入合理价值区间下沿，可重新评估小仓位跟踪。"
+    },
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "进入具备安全边际的试仓区间，前提是财务质量未恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "超过基准估值上沿，若利润和现金流未兑现应降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查主业毛利率、应收账款、经营现金流和新能源存量业务出清进度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年扭亏和现金流改善是否具备持续性。"
+    }
+  ]
+}
