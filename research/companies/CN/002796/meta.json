@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:002796",
+  "ticker": "002796",
+  "name": "世嘉科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "主营通信射频、天线和精密箱体仍处修复期，2026H1预亏显示盈利拐点未稳；当前价格已计入较多光通信和并购预期，缺少安全边际，宜观察等待价格回落或利润兑现。",
+  "fair_value_range": [
+    14,
+    22
+  ],
+  "buy_zone": [
+    10,
+    14
+  ],
+  "sell_or_reduce_zone": [
+    32,
+    45
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且2026H1预亏，暂不建仓。",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至14元以下，且后续季度亏损收窄或经营现金流改善。",
+      "action": "pilot_position",
+      "max_weight": 0.5
+    },
+    {
+      "condition": "连续两个季度扣非盈利改善，并购标的贡献可核验收入与利润。",
+      "action": "increase_after_validation",
+      "max_weight": 0.015
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "跌入合理价值区间，需重新核验业务和估值。"
+    },
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入保守买入观察区，若基本面未恶化可评估小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "reason": "价格进一步透支乐观情景，需复核是否存在减持或回避理由。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报实际亏损、现金流、应收账款和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现收入、毛利率和扣非利润改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和并购/定增事项的实际影响。"
+    }
+  ]
+}
