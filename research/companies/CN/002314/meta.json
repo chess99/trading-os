@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:002314",
+  "ticker": "002314",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "南山控股",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "南山控股的核心价值在宝湾物流高标仓网络和REIT/轻资产退出能力，但地产减值、高杠杆和盈利波动仍压制估值；当前价格接近基准价值中枢，缺少足够安全边际，等待物流租金企稳、地产去化和单季盈利修复验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    1.8,
+    2.3
+  ],
+  "buy_zone": [
+    1.5,
+    1.75
+  ],
+  "sell_or_reduce_zone": [
+    2.45,
+    2.8
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入1.50-1.75元且未出现新增重大减值、债务展期失败或物流出租率显著下滑",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "宝湾物流出租率维持92%以上、租金跌幅收窄或企稳，且集团单季归母净利润转正",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价超过2.45元但REIT扩募、地产去化和盈利修复没有同步兑现",
+      "action": "降低或退出仓位",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.75,
+      "reason": "进入安全边际区间，可复核是否建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 2.45,
+      "reason": "超过基准估值上沿，需要复核是否降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查地产减值、物流出租率、债务期限和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认单季盈利、经营现金流和REIT/资产证券化进展"
+    }
+  ]
+}
