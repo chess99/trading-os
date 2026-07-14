@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920906",
+  "market": "CN",
+  "ticker": "920906",
+  "name": "舜宇精工",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "业务具备客户认证与协同开发能力，但扣非盈利和资本回报偏弱，当前价格已透支较多利润修复预期，等待安全边际与基本面验证。",
+  "fair_value_range": [10.0, 13.5],
+  "buy_zone": [8.0, 10.5],
+  "sell_or_reduce_zone": [15.0, 18.0],
+  "position_plan": [
+    {
+      "condition": "股价处于8.0-9.0元且半年报确认扣非盈利、毛利率、AGV及营运资金假设未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价处于9.0-10.5元且经营现金流覆盖资本开支、净债务未显著增加",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "基本面恶化或核心假设被证伪时，不因价格下跌补仓并退出观察仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-05",
+      "reason": "复核2026年半年报的扣非利润、毛利率、AGV盈亏和营运资金"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入可能具备安全边际的买入区间，需先复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 15.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T09:00:00+08:00"
+}
