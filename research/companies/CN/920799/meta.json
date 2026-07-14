@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920799",
+  "market": "CN",
+  "ticker": "920799",
+  "name": "艾融软件",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "银行客户覆盖和信创交付能力真实，但核心利润与自由现金流偏弱、商誉高，当前价格已过度透支AI与信创增长预期。",
+  "fair_value_range": [8, 13],
+  "buy_zone": [6, 9],
+  "sell_or_reduce_zone": [18, 35],
+  "position_plan": [
+    {
+      "condition": "股价处于6至9元且TTM扣非利润、经营现金流和商誉假设均未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于6元且重新验证核心客户、现金流、债务和商誉安全",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于13元或基本面恶化",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报后复查收入质量、毛利率、经营现金流、应收账款和商誉假设"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9,
+      "reason": "进入有安全边际的买入观察区，需先复核基本面而非机械加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 18,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-15T00:00:00+08:00"
+}
