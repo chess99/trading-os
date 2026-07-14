@@ -3,102 +3,108 @@
   "market": "CN",
   "ticker": "001322",
   "name": "箭牌家居",
-  "company_name": "箭牌家居",
+  "company_name": "箭牌家居集团股份有限公司",
   "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
   "report_history": [
-    "reports/2026-07-12-initial.md"
+    "reports/2026-07-12-initial.md",
+    "reports/2026-07-13-initial.md"
   ],
   "rating": "watch",
   "current_rating": "watch",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "fair_to_expensive",
-  "current_thesis": "箭牌家居具备全国卫浴品牌、经销渠道和智能坐便器产品升级基础，但 2025 年盈利和经营现金流仍处低谷，2026Q1 仍亏损；当前价格接近合理价值中枢，适合观察或小仓试错，等待经销零售、毛利率、经营现金流和治理风险改善后再提高仓位。",
+  "quality_rating": "medium",
+  "valuation_rating": "fair",
+  "current_thesis": "箭牌家居具备全国卫浴品牌、经销网络和智能坐便器产品升级基础，但 2025 年盈利显著下滑、2026Q1 仍亏损，地产后周期和现金流修复尚未验证。2026-07-13 股价约处于合理价值中枢附近，适合观察或等待 4.5-5.1 元安全边际区间；若半年报证明收入、毛利率、经营现金流和经销动销同步修复，再考虑提高仓位。",
   "fair_value_range": [
-    5.3,
-    7.2
+    5.2,
+    6.8
   ],
   "buy_zone": [
-    4.6,
-    5.2
+    4.5,
+    5.1
   ],
   "sell_or_reduce_zone": [
-    7.8,
-    9.0
+    7.6,
+    8.8
   ],
   "currency": "CNY",
   "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "current_price_around_6_19_without_half_year_recovery_confirmation",
-      "action": "watch_or_open_observation_position_only",
+      "condition": "price_around_6_05_without_2026H1_recovery_confirmation",
+      "action": "watch_only_or_observation_position",
       "max_weight": 0.01,
-      "reason": "当前价格接近加权合理价值，2025 年利润和现金流仍处低谷，未到重仓买点。"
+      "reason": "当前价格处于合理价值中枢附近，而 2025 年低利润和 2026Q1 亏损说明反转尚未完成验证。"
     },
     {
-      "condition": "price_below_5_20_and_2026H1_cashflow_margin_and_retail_channel_improve",
-      "action": "add_to_small_position",
+      "condition": "price_below_5_10_and_2026H1_gross_margin_cashflow_and_retail_channel_do_not_deteriorate",
+      "action": "open_small_position",
       "max_weight": 0.02,
-      "reason": "跌入买入区间且经营验证出现，可将观察仓提升为小仓位。"
+      "reason": "进入买入区间后，如果毛利率、经营现金流和经销动销没有继续恶化，品牌资产与智能坐便器修复弹性开始具备风险补偿。"
     },
     {
-      "condition": "price_below_4_60_without_fundamental_deterioration",
+      "condition": "price_below_4_50_without_new_governance_or_cashflow_risk",
       "action": "add_countercyclical_position",
       "max_weight": 0.03,
-      "reason": "估值回到更有安全边际的位置，但仍受地产后周期和治理风险约束。"
+      "reason": "低于约 0.9-1.0 倍账面净资产时安全边际改善，可承受地产后周期不确定性。"
     },
     {
-      "condition": "net_margin_above_3_percent_and_operating_cashflow_covers_profit_for_two_half_years",
-      "action": "allow_core_position",
+      "condition": "net_margin_above_3_percent_and_operating_cashflow_covers_net_profit_for_two_consecutive_reporting_periods",
+      "action": "allow_medium_position",
       "max_weight": 0.04,
-      "reason": "只有盈利质量和现金流验证后，品牌渠道资产才值得更高仓位。"
+      "reason": "只有盈利质量和现金流连续验证后，品牌和渠道资产才值得更高仓位。"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 5.2,
-      "reason": "进入初始买入区间，复核半年报经营现金流、毛利率和经销零售增速。"
+      "price": 5.1,
+      "reason": "进入初始买入区间，复核半年报经营现金流、毛利率、经销零售增速和应收存货变化。"
     },
     {
       "type": "price_below",
-      "price": 4.6,
-      "reason": "进入高安全边际区间，若基本面未恶化可考虑加仓。"
+      "price": 4.5,
+      "reason": "进入较高安全边际区间，若没有新增治理或现金流风险，可考虑逆周期加仓。"
     },
     {
       "type": "price_above",
-      "price": 7.8,
-      "reason": "进入减仓观察区，若盈利和现金流没有同步修复则降低仓位。"
+      "price": 7.6,
+      "reason": "进入减仓观察区，若净利率和经营现金流未同步恢复，应降低仓位。"
     },
     {
       "type": "price_above",
-      "price": 9.0,
-      "reason": "进入乐观情景估值上沿附近，除非净利率恢复至 4% 左右，否则应卖出或大幅减仓。"
+      "price": 8.8,
+      "reason": "接近乐观情景估值上沿，除非净利率恢复到 5% 左右且现金流质量充分验证，否则应卖出或大幅减仓。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点验证收入、毛利率、经营现金流、应收账款和合同负债。"
+      "reason": "复核 2026 年半年报，重点验证收入、毛利率、经营现金流、应收账款、存货、合同负债和智能坐便器增长。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q2/Q3 是否恢复盈利和现金流改善。"
+      "reason": "复核 2026 年三季报，确认 Q2/Q3 盈利恢复是否可持续，以及经营现金流是否覆盖利润。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新评估中周期净利率、现金流质量、渠道修复和治理风险。"
     }
   ],
   "key_tracking_metrics": [
     "domestic_dealer_retail_revenue_growth",
-    "smart_toilet_sales_volume_growth_and_revenue_mix",
-    "gross_margin",
+    "smart_toilet_sales_volume_revenue_asp_and_gross_margin",
+    "consolidated_gross_margin",
+    "selling_expense_ratio",
     "operating_cashflow_net",
-    "accounts_receivable",
-    "inventory",
+    "accounts_receivable_and_notes",
+    "inventory_turnover",
     "contract_liabilities",
-    "short_term_borrowings",
-    "dealer_logistics_model_transition",
-    "controlling_shareholder_pledge_and_controller_share_freeze_progress"
+    "controlling_shareholder_pledge_or_freeze_progress",
+    "home_renovation_trade_in_policy_intensity"
   ]
 }
