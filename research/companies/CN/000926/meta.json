@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:000926",
+  "ticker": "000926",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "福星股份",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "区域地产资产负债表修复标的。2025年大额减值后账面风险有所释放，但2026Q1仍亏损，短债压力高于货币资金，买入需要更低价格或销售回款、减值停止和债务展期改善的证据。",
+  "fair_value_range": [
+    1.6,
+    2.4
+  ],
+  "buy_zone": [
+    1.2,
+    1.5
+  ],
+  "sell_or_reduce_zone": [
+    2.6,
+    3.2
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入1.20-1.50元且短债展期未恶化、未出现新增大额减值时，仅建立观察仓",
+      "action": "buy_small",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "2026半年报经营现金流为正、短债下降且无5亿元以上新增减值",
+      "action": "increase_watch_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "再次出现5亿元以上资产减值或一年内到期债务继续上升且现金下降",
+      "action": "exit",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.5,
+      "reason": "进入保守买入区间，可结合短债和减值情况复核是否建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 2.6,
+      "reason": "进入乐观估值区间，若基本面未同步改善应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的销售回款、短债、现金和新增减值情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报的合同负债结转、经营现金流和融资压力"
+    }
+  ]
+}
