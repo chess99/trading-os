@@ -1,0 +1,78 @@
+{
+  "symbol": "CN:002205",
+  "ticker": "002205",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "国统股份",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "国统股份具备PCCP技术资质、国企背景和国家水网需求弹性，但2026H1仍预亏、资产负债率超过90%、经营现金流未形成持续正循环，当前约10元以上价格显著高于3.5-5.8元合理价值区间，缺乏安全边际。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    3.5,
+    5.8
+  ],
+  "buy_zone": [
+    0,
+    3.2
+  ],
+  "sell_or_reduce_zone": [
+    7.5,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "当前不建仓；只有股价低于3.2元且连续两个季度经营现金流为正、扣非亏损明显收窄时再复核。",
+      "max_weight": 0
+    },
+    {
+      "condition": "若资产负债率降至85%以下、在手订单覆盖未来12个月收入且毛利率稳定在25%以上，可重新评估观察仓。",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入初步安全边际区间，需结合现金流、负债率和订单质量复核。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "高于乐观情景估值上沿，在持续亏损和高负债下应回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看亏损、毛利率、经营现金流和资产负债率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认经营修复是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报和审计意见，重新评估持续经营、诉讼和债务风险。"
+    }
+  ],
+  "research_notes": {
+    "decision": "不买",
+    "confidence": "中",
+    "key_risks": [
+      "资产负债率超过90%",
+      "2026H1预亏7000万至8500万元",
+      "诉讼及预计负债不确定",
+      "工程项目回款和收入确认周期长",
+      "当前估值显著高于基本面可支撑区间"
+    ]
+  }
+}
