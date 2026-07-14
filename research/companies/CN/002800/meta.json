@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002800",
+  "market": "CN",
+  "ticker": "002800",
+  "currency": "CNY",
+  "name": "天顺股份",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备新疆/海南航空货运与中亚多式联运主题，但当前盈利质量弱、应收账款高、补贴依赖强，2026-07-14约12.42元对应约3.8倍PB，明显高于基于净资产和恢复盈利估算的安全边际，暂只观察不买。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    4.8,
+    6.8
+  ],
+  "buy_zone": [
+    0.0,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.8元，且连续两个季度经营现金流合计转正、应收账款余额不再扩大、航空补贴现金回款与利润确认基本匹配。",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于4.8元至6.8元且上述现金流和应收改善尚未完全确认。",
+      "action": "继续跟踪，不主动加仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于9.0元且TTM归母净利润仍为负或经营现金流未改善。",
+      "action": "卖出或回避",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入估算公允价值下沿并具备重新评估安全边际的必要。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "若基本面未同步改善，估值重新进入明显高估区，应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，应重点检查应收账款、航空补贴回款、经营现金流和减值计提。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证传统物流业务是否止跌以及短期借款压力是否缓解。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估航空货运业务可持续盈利和资产质量。"
+    }
+  ]
+}
