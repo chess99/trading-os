@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301070",
+  "ticker": "301070",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "开勒股份",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "开勒股份主业为HVLS大型工业节能风扇，细分赛道真实但天花板和壁垒有限；2025年扣非亏损、2026Q1继续亏损，当前约95亿元市值主要反映AI/光通信外延转型期权而非可验证主业盈利，安全边际不足。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    18.0,
+    32.0
+  ],
+  "buy_zone": [
+    0.0,
+    22.0
+  ],
+  "sell_or_reduce_zone": [
+    45.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "现价显著高于可验证主业价值且并购期权未落地，不建立仓位。",
+      "action": "avoid_new_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若股价跌至22元以下，且半年报显示主业收入和扣非利润恢复，可重新评估小仓位观察。",
+      "action": "reassess_for_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若威泰思光电交易完成且经审计利润质量、现金流和客户结构可核验，再重估新业务价值。",
+      "action": "reassess_after_verified_mna",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 25.0,
+      "reason": "进入主业价值和外延期权可重新测算区间。"
+    },
+    {
+      "type": "price_above",
+      "price": 90.0,
+      "reason": "估值进一步脱离当前财务基本面，需要复核是否存在未披露或新核验的重大变化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、扣非利润和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及外延并购进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及主业全年恢复情况。"
+    }
+  ]
+}
