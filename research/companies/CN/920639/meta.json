@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920639",
+  "market": "CN",
+  "ticker": "920639",
+  "name": "晨光电缆",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司有高压电缆技术储备但尚未转化为高资本回报，当前约75倍2025年PE已提前反映显著利润率修复，缺乏安全边际。",
+  "fair_value_range": [3.3, 4.5],
+  "buy_zone": [2.6, 3.2],
+  "sell_or_reduce_zone": [5.2, 6.5],
+  "position_plan": [
+    {
+      "condition": "股价处于2.60-3.20元且毛利率不低于10.5%、应收与存货增速不高于收入、滚动自由现金流为正",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "毛利率低于10%、主要客户回款恶化或ROIC持续低于资本成本且无改善证据",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、经营现金流、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报及在手合同向利润和现金流的转化"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入有安全边际的观察买入区间，但必须重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 5.2,
+      "reason": "进入减仓或不应追高区间，估值已超出基准公允价值"
+    }
+  ],
+  "updated_at": "2026-07-15T22:05:40+08:00"
+}
