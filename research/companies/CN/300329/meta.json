@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300329",
+  "ticker": "300329",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "海伦钢琴",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "传统钢琴主业仍在结构性收缩且持续亏损，控制权变更和智能数码乐器转型提供期权价值，但当前市值已提前反映较高转型预期，缺乏安全边际，需等待价格回落或经营拐点验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    5.0,
+    7.2
+  ],
+  "buy_zone": [
+    0.0,
+    5.5
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    20.0
+  ],
+  "position_plan": [
+    {
+      "condition": "现价高于公允价值上沿且 2026 年收入、毛利率、现金流拐点尚未公告验证",
+      "action": "watch_only",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌破 5.5 元，且半年报未出现财务造假、退市风险或治理恶化信号",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度收入同比恢复增长、亏损明显收窄且智能数码产品订单可核验",
+      "action": "reassess_for_upgrade",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入以净资产折价和转型期权共同支撑的观察买入区"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "在经营拐点未验证前估值缺乏安全边际，应继续回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点检查收入降幅、亏损、现金流和智能数码产品披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认亏损是否收窄及控制权变更后的经营动作"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和审计意见，评估转型是否进入可量化阶段"
+    }
+  ]
+}

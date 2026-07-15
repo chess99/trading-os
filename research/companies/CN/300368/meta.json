@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:300368",
+  "ticker": "300368",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "汇金股份",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "传统金融机具主业收入体量小、持续亏损且净资产安全垫薄，当前市值主要反映重大资产重组预期而非可验证经营价值；在库珀新能源交易对价、盈利质量、稀释和交割确定性披露前，安全边际不足。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    1.2,
+    2.2
+  ],
+  "buy_zone": [
+    0.8,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    3.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "重组预案未披露或标的资产盈利质量、交易对价、稀释比例无法核验时不新建仓位",
+      "action": "avoid",
+      "max_weight": 0
+    },
+    {
+      "condition": "若重组预案披露且标的三年审计盈利与现金流质量良好、对价合理、稀释可控，仅允许事件驱动观察仓",
+      "action": "watch_position",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "价格进入按主业低估值和有限重组期权计算的安全边际区间，可重新核验基本面与重组进展"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "价格明显高于基准公允区间，主要由重组预期驱动，应回避或降低事件风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，确认收入、亏损、经营现金流和归母净资产是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及重大资产重组审核进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估持续经营能力和重组落地后的资产质量"
+    }
+  ]
+}
