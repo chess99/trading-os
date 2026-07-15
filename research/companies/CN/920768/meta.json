@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920768",
+  "market": "CN",
+  "ticker": "920768",
+  "name": "拾比佰",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "盈利修复和出口增长真实，但当前估值已计入较快现金流改善，客户集中与营运资金风险使安全边际不足。",
+  "fair_value_range": [5.7, 7.1],
+  "buy_zone": [4.6, 5.3],
+  "sell_or_reduce_zone": [8.0, 9.0],
+  "position_plan": [
+    {
+      "condition": "股价处于4.60-5.30元且中报确认毛利率、广义应收和滚动自由现金流未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于4.60元，重新验证客户、出口、产线良率和回款后核心假设仍成立",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "客户流失、毛利永久下台阶、连续两个报告期自由现金流为负或出现重大治理问题时，无论价格高低均退出",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的产品与地区毛利、广义应收、自由现金流及芜湖产线利用率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报与全年盈利、现金流假设"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.3,
+      "reason": "进入有安全边际的买入观察区间，需先确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "进入减仓或不应追高区间，除非正常化自由现金流显著上修"
+    }
+  ],
+  "updated_at": "2026-07-15T12:00:00+08:00"
+}
