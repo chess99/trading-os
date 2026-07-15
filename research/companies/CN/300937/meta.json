@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300937",
+  "ticker": "300937",
+  "name": "药易购",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "药易购具备西南院外医药流通基础和高毛利品牌/MAH/C端转型期权，但2025年亏损、审计保留意见、业绩预告失准、应收账款波动及高投流压力使财务可信度和安全边际不足；当前股价已显著高于基准公允价值，暂不买入，仅观察审计问题消除和高毛利业务兑现。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    9.0,
+    13.5
+  ],
+  "buy_zone": [
+    7.5,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "审计保留意见未消除或应收账款回款未验证前，不建立基本面仓位；若因跟踪需要，只允许观察仓。",
+      "action": "watch_only",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价进入7.5-9.5元且审计问题已有明确解决路径、应收账款回款正常、经营现金流未恶化。",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非盈利、经营现金流为正、高毛利品牌/MAH业务收入占比提升且销售费用率下降。",
+      "action": "add_if_validated",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入买入观察区，需复核审计问题、回款与现金流后再决定是否建仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "高于基准估值上沿，若无利润兑现证据应继续回避或降低题材仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查应收账款回款、经营现金流、审计保留意见消除进展和高毛利业务利润贡献。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认C端投流效率、并购标的并表影响及全年盈利修复概率。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及审计意见，决定是否从回避调整为观察或可买。"
+    }
+  ]
+}
