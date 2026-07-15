@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:300900",
+  "ticker": "300900",
+  "name": "广联航空",
+  "company_name": "广联航空工业股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "大型无人机复材结构件连续签单和拟收购天津跃峰提供中期弹性，但公司 2025 年亏损、2026Q1 扣非仍亏、客户集中和并购高溢价风险较高；当前价格接近合理价值上沿，等待扣非利润、现金流和订单连续性验证。",
+  "fair_value_range": [
+    23,
+    29
+  ],
+  "buy_zone": [
+    18,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    37,
+    42
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 22 元，且 2026H1 扣非亏损未扩大、无人机订单或合同负债继续改善",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于 18 元，且扣非利润转正或经营现金流改善得到中报/三季报验证",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于 37 元但扣非利润和经营现金流未同步兑现",
+      "action": "不追高并减持已有仓位",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入买入观察区，若基本面未恶化可重新评估建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入高安全边际区，需结合扣非利润和现金流确认是否提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 37,
+      "reason": "进入乐观情景估值区，若业绩未兑现应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点检查扣非净利润、毛利率、合同负债、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认无人机业务是否持续放量和财务费用是否下降"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报及天津跃峰并购/业绩承诺进展"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}
