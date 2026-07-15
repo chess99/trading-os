@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301128",
+  "ticker": "301128",
+  "name": "强瑞技术",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司受益于头部客户定制化设备、治具、散热器、AI液冷结构件、机器人电机和半导体结构件扩张，但当前市值已充分反映高增长预期，2026Q1变更后利润率偏低，安全边际不足，暂列观察池。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    75,
+    105
+  ],
+  "buy_zone": [
+    55,
+    75
+  ],
+  "sell_or_reduce_zone": [
+    130,
+    160
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且2026Q1变更后利润率未证明改善，不新建仓。",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至75元以下，且2026年中报显示收入同比高增、归母净利率恢复至6.5%以上、经营现金流未明显恶化。",
+      "action": "start_research_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价回落至55-65元，同时AI液冷或半导体结构件订单有明确金额、客户和毛利率验证。",
+      "action": "add_to_core_watch_position",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 75,
+      "reason": "进入合理价值上沿以下，开始复核中报、订单和现金流，评估是否建立观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入具备安全边际的买入区下沿，若基本面未恶化可重新估值。"
+    },
+    {
+      "type": "price_above",
+      "price": 130,
+      "reason": "超过牛市情景中枢，若无利润超预期兑现，应维持不追买或减仓纪律。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点确认收入、归母净利率、经营现金流、客户集中度和AI液冷订单。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年利润能否支撑当前估值。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报及18亿元AI产业研发智造总部项目落地、资本开支和订单兑现。"
+    }
+  ]
+}

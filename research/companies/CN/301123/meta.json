@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:301123",
+  "ticker": "301123",
+  "name": "奕东电子",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "current_thesis": "奕东电子具备 AI 服务器高速连接器、热管理和新能源零组件带来的弹性，但 2025 年仍亏损、2026Q1 盈利验证时间较短，当前约百元股价已经定价乐观情景，安全边际不足，维持观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    42,
+    62
+  ],
+  "buy_zone": [
+    30,
+    45
+  ],
+  "sell_or_reduce_zone": [
+    85,
+    120
+  ],
+  "position_plan": [
+    {
+      "condition": "股价回落至45元以下，且最近两个季度收入增长、扣非净利润和经营现金流同时改善",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价位于45至62元之间，但公司公告或季报验证高速连接器/热管理产品规模放量",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于85元且未出现超预期订单或利润率验证",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入买入观察区，重新核验订单、利润率和现金流后决定是否建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 100,
+      "reason": "接近或超过乐观情景估值，若基本面未同步超预期应回避新增仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查高速连接器、热管理业务进展和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断盈利修复是否连续"
+    }
+  ]
+}
