@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920685",
+  "market": "CN",
+  "ticker": "920685",
+  "name": "新芝生物",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "现金与高毛利提供下行缓冲，但增长停滞、ROE偏低且募投项目尚未证明回报，10.54元缺少安全边际。",
+  "fair_value_range": [9.0, 11.5],
+  "buy_zone": [7.2, 8.4],
+  "sell_or_reduce_zone": [12.5, 14.0],
+  "position_plan": [
+    {
+      "condition": "股价进入7.2-8.4元且扣非利润、合同负债转化和存货质量未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于7.2元但经营假设未经重新验证，或募投、库存、现金流出现恶化",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的扣非利润、库存、合同负债、现金流和募投进度"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.4,
+      "reason": "进入有安全边际的候选买入区间，需先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-15T20:20:00+08:00"
+}
