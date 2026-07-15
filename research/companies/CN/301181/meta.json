@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301181",
+  "ticker": "301181",
+  "name": "标榜股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "汽车尼龙管路及连接件细分供应商，客户体系和现金资产较好，新能源热管理管路有增长线索；但 2026Q1 收入利润下滑、冷却管路毛利承压、客户集中和专利诉讼未决，当前估值安全边际不足，维持观察。",
+  "fair_value_range": [
+    18,
+    24
+  ],
+  "buy_zone": [
+    14,
+    17
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    32
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入 14-17 元且 2026H1 收入/扣非利润未继续恶化，专利诉讼未影响核心产品供货",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "新能源产品收入持续高于 20% 增长、冷却系统管路毛利率修复、经营现金流与利润匹配",
+      "action": "上调为核心小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于 28 元但扣非利润未恢复双位数增长，或专利诉讼导致停产/赔偿/客户切换风险",
+      "action": "减仓或不参与",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 17,
+      "reason": "进入买入区上沿，需要复核半年报和专利诉讼进展后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入深度安全边际区，若基本面未恶化可提高建仓优先级"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "reason": "超过合理区间上方，若无盈利加速应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点跟踪收入、扣非利润、新能源产品收入、冷却管路毛利率和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断 Q1 下滑是否延续以及全年利润中枢"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "跟踪专利诉讼、重庆子公司订单和终止募投后资金使用进展"
+    }
+  ]
+}
