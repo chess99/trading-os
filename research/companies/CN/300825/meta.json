@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:300825",
+  "ticker": "300825",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "阿尔特",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "阿尔特具备独立整车研发、海外ODM和核心零部件产品化的期权价值，但2025年亏损扩大、毛利率偏低、资产减值和客户集中度风险突出；2026Q1利润转正尚不足以确认拐点，当前价格安全边际不足，维持观察。",
+  "fair_value_range": [
+    7.0,
+    9.5
+  ],
+  "buy_zone": [
+    0.0,
+    6.5
+  ],
+  "sell_or_reduce_zone": [
+    12.5,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于6.5元且无新增重大减值、核心客户违约或监管风险时，仅建立观察仓。",
+      "action": "watch_position",
+      "max_weight": 0.5
+    },
+    {
+      "condition": "2026H1直销毛利率回升至12%以上、经营现金流持续为正、核心零部件毛利率转正后，可复评加仓。",
+      "action": "review_for_add",
+      "max_weight": 1.0
+    },
+    {
+      "condition": "价格高于12.5元但海外收入毛利率、核心零部件毛利率和经营现金流未同步改善。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入安全边际较充分的观察买入区，可用小仓位验证转型期资产。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "reason": "超过基准合理价值上沿较多，若业绩未验证应减仓或回避追高。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、核心零部件、境外收入和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1改善是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断转型业务是否进入可持续盈利阶段。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 10.84,
+    "reference_price_date": "2026-07-15",
+    "market_cap_cny_billion": 5.365,
+    "pb_lfq": 2.64,
+    "ps_2025": 5.5,
+    "revenue_2025_cny_billion": 0.975,
+    "net_profit_2025_cny_billion": -0.250,
+    "operating_cash_flow_2025_cny_billion": -0.099,
+    "revenue_2026_q1_cny_billion": 0.250,
+    "net_profit_2026_q1_cny_billion": 0.015
+  },
+  "decision": "观察",
+  "confidence": "中"
+}
