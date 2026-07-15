@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300175",
+  "ticker": "300175",
+  "name": "朗源股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "current_thesis": "朗源股份处于摘帽后的治理修复和收入恢复阶段，但低毛利、连续亏损、历史信披处罚和约5倍PB估值使当前价格缺乏安全边际；只有在价格大幅回落且扣非盈利和经营现金流连续改善后才重新观察。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.2,
+    2.4
+  ],
+  "buy_zone": [
+    1.2,
+    1.8
+  ],
+  "sell_or_reduce_zone": [
+    4.0,
+    5.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于基本面合理价值且公司仍未证明扣非盈利能力，维持零仓位。",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至1.80元以下，且连续两个季度扣非归母净利润和经营活动现金流至少一项为正、毛利率回升至8%以上。",
+      "action": "watchlist_probe_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价跌至1.20元附近，资产负债表未恶化，且证券虚假陈述诉讼未形成重大预计负债。",
+      "action": "re-underwrite_before_buy",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.8,
+      "reason": "进入观察区间，需要复核扣非盈利、经营现金流和毛利率是否同步改善。"
+    },
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "接近资产折价区间，若治理和诉讼风险未扩大，可重新估值。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.0,
+      "reason": "估值明显依赖摘帽和资本运作期权，若无公告级证据支撑应回避或减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、扣非净利润、经营现金流、应收账款和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入增长是否开始转化为持续利润。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和审计意见，重新评估治理折价和长期盈利能力。"
+    }
+  ]
+}

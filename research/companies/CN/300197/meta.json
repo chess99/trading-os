@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:300197",
+  "ticker": "300197",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "节能铁汉",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "央企控股提供信用支撑，生态修复与环保治理长期需求仍在，但公司处于历史项目、回款、减值和债务出清阶段。当前市值显著高于可验证净资产与盈利能力，只有在回款、毛利率和债务结构连续改善后才可能转入可投资状态。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "不买",
+  "confidence": "中",
+  "fair_value_range": [
+    0.7,
+    1.2
+  ],
+  "buy_zone": [
+    0.5,
+    0.8
+  ],
+  "sell_or_reduce_zone": [
+    1.6,
+    2.2
+  ],
+  "position_plan": [
+    {
+      "condition": "未满足回款、毛利率转正和债务续接证据前不建仓",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于0.80元且最近两个季度经营现金流合计为正、毛利率转正、一年内到期债务下降或完成明确续接",
+      "action": "event_driven_probe",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.8,
+      "reason": "进入困境反转观察买区，但仍需同时验证经营现金流、毛利率和债务结构改善"
+    },
+    {
+      "type": "price_above",
+      "price": 1.6,
+      "reason": "若基本面未扭亏且回款未显著改善，估值缺少安全边际，应减持或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、经营现金流、应收及合同资产、债务续接情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认亏损收窄是否持续以及清收清欠是否体现为现金回笼"
+    }
+  ],
+  "key_monitoring_metrics": [
+    "经营现金流净额",
+    "毛利率",
+    "应收账款与合同资产合计",
+    "一年内到期的非流动负债",
+    "财务费用",
+    "PPP项目处置和结算确权进度",
+    "迪拜项目转让和回款进展"
+  ]
+}
