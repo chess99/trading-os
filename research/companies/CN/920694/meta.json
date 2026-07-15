@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920694",
+  "market": "CN",
+  "ticker": "920694",
+  "name": "中裕科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "特种软管认证和海外渠道构成中等壁垒，但客户集中、新项目回报和自由现金流尚待验证，当前价格接近合理价值上沿。",
+  "fair_value_range": [10.5, 13.5],
+  "buy_zone": [8.5, 10.5],
+  "sell_or_reduce_zone": [15.5, 18.0],
+  "position_plan": [
+    {
+      "condition": "股价为9.5至10.5元且核心客户、海外需求和自由现金流未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价为8.5至9.5元，复核API认证、新产品毛利、存货与资本开支后投资逻辑仍成立",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "客户流失、募投项目失败或自由现金流持续恶化，不因价格下跌加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报、自由现金流、新产品毛利和募投产能利用率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入有安全边际的初步买入区间，仍需复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-15T19:25:59+08:00"
+}
