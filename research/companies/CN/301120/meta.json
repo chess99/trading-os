@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301120",
+  "ticker": "301120",
+  "market": "CN",
+  "name": "新特电气",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是国内变频用变压器细分龙头，资产负债表稳健，2025年收入和利润恢复；但2026Q1扣除股权激励摊销后利润仍明显下滑，当前股价对应估值已反映乐观增长，安全边际不足，需观察订单、现金流和利润兑现。",
+  "fair_value_range": [
+    8.5,
+    11.0
+  ],
+  "buy_zone": [
+    0.0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且2026Q1利润质量未验证，维持零仓位观察",
+      "action": "watch_only",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价低于8.5元，且下一期财报显示收入增长、扣非利润改善、经营现金流转正",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非利润和经营现金流同步改善，且订单披露支持储能或数据中心增量",
+      "action": "add_selectively",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入估算合理价值下沿以下，若基本面同步改善可重新评估小仓位买入"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "高于减持/回避区下沿且估值接近乐观情景，需要警惕回撤风险"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非利润、激励费用摊销和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报订单兑现、现金流和应收账款变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断高压变频、储能和数据中心业务是否形成可持续利润"
+    }
+  ]
+}
