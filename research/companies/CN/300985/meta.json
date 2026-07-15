@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:300985",
+  "ticker": "300985",
+  "name": "致远新能",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "致远新能受益于天然气重卡、低温储罐和船用LNG燃料系统景气，但2025年仍亏损、经营现金流为负，车载LNG供气系统毛利承压，石墨化业务拖累明显；当前股价已透支强复苏情景，缺乏安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16,
+    24
+  ],
+  "buy_zone": [
+    0,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    35,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于18元，且最近两个季度经营现金流合计为正，车载LNG供气系统毛利率企稳或低温储罐/船用LNG燃料系统利润放量得到财报验证",
+      "action": "small_initial_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于16元，且归母净利润连续两个季度为正、应收账款周转改善",
+      "action": "add_on_confirmation",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于35元且未看到年化2亿元以上可持续归母净利润能力",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入初始买入观察区，估值开始接近基准内在价值下沿并具备重新评估赔率的必要。"
+    },
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "跌入保守估值区间下沿附近，若基本面未恶化可考虑小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 35,
+      "reason": "超过卖出或回避区，除非利润和现金流显著超预期，否则安全边际不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查低温储罐、船用LNG燃料系统收入和毛利、经营现金流、应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证Q1利润下滑是否扭转以及车载LNG供气系统毛利率是否企稳。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断公司是否从周期收入修复转为可持续盈利和现金流修复。"
+    }
+  ],
+  "key_monitoring_items": [
+    "天然气重卡月度销量和公司车载LNG供气系统销量",
+    "车载LNG供气系统毛利率",
+    "低温储罐和LNG动力船燃料系统收入、订单和毛利贡献",
+    "经营现金流、应收账款和存货周转",
+    "石墨化业务加工费和盈利情况",
+    "控股股东质押比例"
+  ]
+}
