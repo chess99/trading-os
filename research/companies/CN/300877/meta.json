@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300877",
+  "ticker": "300877",
+  "name": "金春股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "资产负债表安全、主业低位修复，但2025年利润主要受非经常性公允价值变动放大，当前估值已高于低ROE非织造布材料企业的合理安全边际，等待低价或扣非利润与现金流持续验证。",
+  "fair_value_range": [
+    17,
+    22
+  ],
+  "buy_zone": [
+    0,
+    16
+  ],
+  "sell_or_reduce_zone": [
+    30,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于16元，且最近一期未出现应收账款继续恶化、经营现金流显著弱于扣非净利润或重大治理风险",
+      "action": "允许建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于16-20元，且连续两个报告期扣非归母净利润和经营现金流同步改善、综合毛利率稳定在12%以上",
+      "action": "可小幅加仓但仍不作为核心持仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于30元且扣非利润未明显抬升，或经营现金流连续两个季度显著为负",
+      "action": "回避新增并考虑减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "进入低于约1.15倍2026Q1每股净资产的安全边际观察区"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "高于减仓区，当前主业扣非利润难以支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非利润、毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认ES纤维产能消化和公允价值变动对利润的影响"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估合理价值区间和持仓上限"
+    }
+  ]
+}
