@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300872",
+  "ticker": "300872",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "天阳科技",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "银行IT底座和金融AI/海外信用卡方向具备跟踪价值，但2025转亏、2026Q1利润下滑，算力云服务合同带来期权也带来资本开支和履约风险；当前价格接近基准公允价值上沿，安全边际不足，等待更低价格或财报验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.5,
+    15.5
+  ],
+  "buy_zone": [
+    10.5,
+    12.0
+  ],
+  "sell_or_reduce_zone": [
+    17.5,
+    20.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入10.5-12.0元且2026H1或2026Q3收入恢复正增长、经营现金流未恶化，可建立观察仓。",
+      "action": "start_small_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "算力云服务完成设备交付与验收、回款明确、主营扣非亏损明显收窄后，可重新评估加仓。",
+      "action": "reassess_add",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于17.5元但基本面未验证，或算力合同出现延期/违约/回款风险，降低或退出仓位。",
+      "action": "reduce_or_exit",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入买入观察区间，需要结合最新财报确认是否有安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入较高安全边际区间，若经营现金流未恶化可优先复核。"
+    },
+    {
+      "type": "price_above",
+      "price": 17.5,
+      "reason": "超过基准估值上沿较多，若基本面未兑现应考虑减仓或不追价。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入增速、扣非利润、经营现金流和算力合同进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认银行IT主业和新业务是否出现持续改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核年度业绩预告或快报，判断全年利润修复与合同履约质量。"
+    }
+  ]
+}
