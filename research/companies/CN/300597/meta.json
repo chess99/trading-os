@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:300597",
+  "ticker": "300597",
+  "name": "吉大通信",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "2025年亏损和经营现金流为负暴露传统通信服务毛利率、费用刚性和营运资本压力；2026年初约4.445亿元含税中选项目提供收入修复线索，但当前约7.02元、约2.0倍PB已经透支较多扭亏预期，需等待利润率、回款和智慧食堂规模化验证。",
+  "fair_value_range": [
+    4.0,
+    5.5
+  ],
+  "buy_zone": [
+    0.0,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    6.5,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于4.2元，且最近一期毛利率环比改善、经营现金流边际改善",
+      "action": "watchlist_probe",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非盈利且经营现金流转正，智慧食堂收入年化超过1亿元",
+      "action": "upgrade_review",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于6.5元但仍亏损或经营现金流为负",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入买入观察区，需要复核半年报利润率和现金流"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "超过合理价值上沿且缺乏安全边际，需减持或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入确认、毛利率、扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及中选项目执行进度"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断是否完成扭亏和新业务规模化"
+    }
+  ],
+  "key_metrics": {
+    "last_price": 7.02,
+    "last_price_date": "2026-07-15",
+    "market_cap_cny": 1913441610.6,
+    "shares_outstanding": 272570030,
+    "book_value_per_share_q1_2026": 3.44,
+    "pb_q1_2026": 2.04
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300599",
+  "ticker": "300599",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "雄塑科技",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "区域型塑料管道企业，主业扣非仍亏且治理有监管扣分；2026Q1归母利润主要受一次性资产处置收益影响，当前约2倍PB缺乏安全边际，需等待扣非盈利和现金流连续修复。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    4.8,
+    6.5
+  ],
+  "buy_zone": [
+    0,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    8,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且扣非盈利未恢复，不建立新仓。",
+      "action": "avoid",
+      "max_weight": 0
+    },
+    {
+      "condition": "若股价跌至4.2元以下，且最近两个季度扣非归母净利润转正、经营现金流同步改善，可重新评估观察仓。",
+      "action": "watchlist_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若连续四个季度扣非盈利为正、治理整改闭环且PB低于1.0倍，可评估小仓位试买。",
+      "action": "starter_position",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入保守买入观察区，需要复核扣非利润、现金流和监管整改状态。"
+    },
+    {
+      "type": "price_above",
+      "price": 8,
+      "reason": "高于乐观情景安全边际，若持有应复核减仓或退出。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证扣非盈利、经营现金流、毛利率和监管整改。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断主业修复是否连续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年扣非利润和现金流质量。"
+    }
+  ]
+}
