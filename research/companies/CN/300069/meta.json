@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:300069",
+  "ticker": "300069",
+  "name": "金利华电",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司具备特高压玻璃绝缘子扩产弹性，2026Q1 主业出现修复，但 2025 年仍亏损，文化业务拖累明显，扩产期有息负债上升。截至 2026-07-14 可核验价格 40.16 元对应约 46.99 亿元市值、约 17.2 倍 PB，显著透支基准情景合理价值，缺乏安全边际。",
+  "fair_value_range": [
+    6.5,
+    12.0
+  ],
+  "buy_zone": [
+    0,
+    8.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格高于 18 元或主业连续盈利尚未验证时不建仓；当前 40.16 元显著高于公允价值区间。",
+      "action": "avoid",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格跌至 8 元以下，且最近两个季度绝缘子业务收入持续增长、文化业务亏损收窄、经营现金流为正。",
+      "action": "research_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格处于 8-12 元且年化归母净利润可验证达到 3000 万元以上，存货和有息负债未继续恶化。",
+      "action": "small_position_only",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入观察买区，需要复核扩产兑现、订单和文化业务止损情况。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "高于牛市情景下限，若盈利未显著兑现应继续回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点验证绝缘子收入、毛利率、存货、有息负债和文化业务亏损。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断 Q1 修复是否具备持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，确认扩产项目投产后的全年盈利能力和现金流质量。"
+    }
+  ],
+  "key_monitoring_metrics": [
+    "单季绝缘子收入",
+    "玻璃绝缘子毛利率",
+    "山西项目投产和产能利用率",
+    "存货余额及跌价准备",
+    "有息负债和财务费用",
+    "文化业务亏损额",
+    "国网南网中标金额及单价"
+  ],
+  "sources": [
+    {
+      "title": "2025年年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225224315.PDF",
+      "publisher": "巨潮资讯网",
+      "date": "2026-04-29"
+    },
+    {
+      "title": "2026年一季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225224323.PDF",
+      "publisher": "巨潮资讯网",
+      "date": "2026-04-29"
+    },
+    {
+      "title": "300069行情",
+      "url": "https://hq.sinajs.cn/list=sz300069",
+      "publisher": "新浪行情",
+      "date": "2026-07-14"
+    },
+    {
+      "title": "300069及可比公司行情",
+      "url": "https://qt.gtimg.cn/q=sz300069,sz002606,sh600312,sh601179,sz000400",
+      "publisher": "腾讯行情",
+      "date": "2026-07-14"
+    }
+  ]
+}
