@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300777",
+  "ticker": "300777",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "中简科技",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "中简科技具备航空航天级高性能碳纤维认证、客户和批产壁垒，但 2026 年上半年业绩预亏暴露订单节奏、客户集中和盈利中枢不确定性；当前价格处于合理价值区间内，缺少足够安全边际，等待半年报和现金流验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    22,
+    30
+  ],
+  "buy_zone": [
+    18,
+    21
+  ],
+  "sell_or_reduce_zone": [
+    35,
+    42
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 18-21 元且半年报显示亏损主要来自交付节奏、经营现金流未恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H2 收入、毛利率、经营现金流同时修复，并出现新增核心订单",
+      "action": "上调至小仓位买入候选",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于 35 元但盈利和现金流未验证",
+      "action": "不追高或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 21,
+      "reason": "进入估值安全边际观察区，需复核半年报亏损原因和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入悲观情景价值下沿，可重新评估是否具备反转收益比"
+    },
+    {
+      "type": "price_above",
+      "price": 35,
+      "reason": "高于基准估值上沿，若没有订单和现金流验证应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报、亏损原因、毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认下半年订单交付是否恢复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报和 2027 年一季报，重估盈利中枢和安全边际"
+    }
+  ]
+}
