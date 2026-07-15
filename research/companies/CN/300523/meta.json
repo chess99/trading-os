@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300523",
+  "ticker": "300523",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "辰安科技",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "辰安科技处在城市生命线和应急管理政策扩张方向上，合肥国投定增可能修复资产负债表并带来场景资源；但公司仍处亏损、应收账款和合同资产占用过高，当前只适合观察，等待定增落地、现金流转正和应收下降验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16.0,
+    22.0
+  ],
+  "buy_zone": [
+    0.0,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    32.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于14.5元且定增注册或发行进度明确，同时最近一期经营现金流未继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "定增资金到账、经营现金流连续两个季度为正，且应收账款加合同资产占收入比例下降至130%以下",
+      "action": "可提高至小仓位持有",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026中报亏损扩大、经营现金流恶化或定增失败",
+      "action": "不加仓并重新评估为avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入具备安全边际的观察买入区，需要同步复核定增和现金流。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "超过当前公允价值上沿，若现金流和应收改善未验证，应降低预期或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看收入、扣非利润、经营现金流、应收账款和合同资产。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及定增资金到账、控制权变更落地情况。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认城市生命线业务增长、毛利率和回款是否兑现。"
+    }
+  ]
+}

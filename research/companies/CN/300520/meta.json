@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300520",
+  "ticker": "300520",
+  "name": "科大国创",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "科大国创具备电信、政企、能源交通数字化和智能BMS场景积累，但2025年及2026Q1仍亏损，AI产品化和BMS盈利修复尚未验证；2026-07-15约24.46元价格已接近乐观情景，缺乏安全边际，暂列观察不买。",
+  "fair_value_range": [
+    14.0,
+    19.0
+  ],
+  "buy_zone": [
+    12.0,
+    15.0
+  ],
+  "sell_or_reduce_zone": [
+    23.0,
+    26.0
+  ],
+  "position_plan": [
+    {
+      "condition": "现价高于合理价值上沿且公司仍亏损，保持0仓位，仅跟踪中报和三季报。",
+      "action": "watch",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌入12-15元且未出现现金流、应收账款或BMS毛利率进一步恶化，可建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "连续两个季度收入、经营现金流和数字化产品毛利率环比改善，且股价仍低于18元，可提高仓位。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "进入买入观察区，需要复核是否有新增财务恶化。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "估值低于基准情景下沿，可重新评估小仓试错。"
+    },
+    {
+      "type": "price_above",
+      "price": 23.0,
+      "reason": "高于合理价值区间且亏损未修复，应回避或降低暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入恢复、BMS毛利率、AI订单和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年扭亏概率和估值区间是否需要调整。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断AI产品化和低效业务出清是否兑现。"
+    }
+  ]
+}
