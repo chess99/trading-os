@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301363",
+  "ticker": "301363",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "美好医疗",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "美好医疗具备医疗器械高端制造/CDMO平台能力，2026Q1收入恢复增长，但客户集中度极高且当前估值已反映较多复苏预期，安全边际不足，暂列观察。",
+  "fair_value_range": [
+    15,
+    20
+  ],
+  "buy_zone": [
+    0,
+    15
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    35
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于15元，且最新半年报显示收入同比增长25%以上、扣非净利率未继续下滑",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于13元，且客户集中度未恶化、经营现金流/净利润大于1",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于24元且2026年净利润预期未上修至3.5亿元以上",
+      "action": "不追买并考虑减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "进入估算合理价值区间下沿并具备初始安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 13,
+      "reason": "若基本面未恶化，绝对估值开始具备较高赔率"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "价格进入乐观情景估值区间，需验证利润是否同步上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-20",
+      "reason": "复核2026年半年报收入增速、扣非净利率、客户集中度和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报新项目放量、汇兑损益和存货跌价情况"
+    }
+  ]
+}
