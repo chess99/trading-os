@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300868",
+  "ticker": "300868",
+  "name": "杰美特",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "杰美特完成控股戴尔蒙德后拥有PCB涂层钻针高增长期权，但原消费电子配件业务仍处修复期，戴尔蒙德公开承诺利润和交易估值不足以支撑当前约百亿元级市值；当前价格显著透支极端乐观情景，缺少安全边际。",
+  "fair_value_range": [
+    18,
+    35
+  ],
+  "buy_zone": [
+    0,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    80
+  ],
+  "position_plan": [
+    {
+      "condition": "当前股价高于55元且戴尔蒙德尚未证明数亿元级利润能力时不新开仓",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至22元以下，且戴尔蒙德2026年承诺利润完成进度清晰、原业务扣非亏损收窄",
+      "action": "research_watchlist_entry",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "戴尔蒙德连续两个报告期并表后利润超预期且客户验证扩散，重新估值后确认安全边际",
+      "action": "consider_small_position",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入估算买入区间，重新核验戴尔蒙德兑现和老业务减亏情况"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "高于可验证基本面合理区间上沿，应以减仓或规避为主"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "进入极端乐观估值区间，需要戴尔蒙德远超承诺利润才能解释"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中戴尔蒙德是否并表及原业务扣非亏损情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报中新业务利润贡献、订单和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报与戴尔蒙德3500万元承诺利润完成情况"
+    }
+  ]
+}
