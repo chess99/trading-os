@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:300554",
+  "ticker": "300554",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "三超新材",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司从光伏金刚线周期下行资产向半导体精密加工工具和新控股股东补流叙事切换，但 2025 年与 2026Q1 仍未证明持续盈利。当前估值已预支较多转型期权，维持观察，等待半导体工具放量、定增资金落地和扣非亏损收窄验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    16,
+    22
+  ],
+  "buy_zone": [
+    0,
+    14
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    35
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在定增完成且 2026 单季扣非亏损明显收窄、股价低于 14 元时建立观察仓",
+      "action": "starter_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "半导体精密工具收入连续两个季度放量且公司扣非接近盈亏平衡",
+      "action": "increase_after_validation",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "定增失败、半导体工具未放量或 2026 年继续大额亏损",
+      "action": "avoid_or_exit",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入安全边际区，且需结合定增完成和亏损收窄重新评估"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "reason": "估值明显预支半导体工具转型期权，若无新增订单和利润验证应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、毛利率、扣非亏损、经营现金流和半导体工具放量情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报和定增落地进度，判断是否仍处观察评级"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核 2026 年年报，确认资产减值、光伏业务止损和半导体工具年度收入质量"
+    }
+  ]
+}

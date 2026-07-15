@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300556",
+  "ticker": "300556",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "丝路视觉",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "current_thesis": "丝路视觉处于2024-2025年亏损后的经营修复观察期，2026Q1收入和扣非利润转正是积极信号，但项目制回款、高负债、诉讼仲裁及盈利持续性仍需验证；当前估值已反映部分修复预期，适合观察而非追高买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    12.0,
+    17.0
+  ],
+  "buy_zone": [
+    0.0,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    20.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于11.5元，且最近一期扣非净利润不重新大幅转负",
+      "action": "建立观察仓",
+      "max_weight": 0.008
+    },
+    {
+      "condition": "2026H1或2026Q3显示收入同比增长超过10%，扣非净利润连续两个季度为正，经营现金流没有显著恶化",
+      "action": "提高至小仓位",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于20元且订单、扣非利润、现金流未同步验证",
+      "action": "减仓或不追涨",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入安全边际买入区间，重新核验扣非利润和经营现金流后可建观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "reason": "超过情景估值基准上沿，需要检查是否已有足够订单和利润兑现，否则减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、应收及合同资产减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断盈利修复是否连续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估长期盈利能力和估值区间"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

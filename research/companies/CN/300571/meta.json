@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:300571",
+  "ticker": "300571",
+  "name": "平治信息",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "current_thesis": "平治信息正从数字阅读和低毛利通信设备业务转向 AI 算力服务，但 2025 年亏损、2026Q1 高负债和高财务费用仍未解除。当前价格接近基准估值上沿，需等待价格安全边际或连续两个季度证明算力业务带来毛利率、现金流和负债率改善。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    24,
+    34
+  ],
+  "buy_zone": [
+    18,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    55
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 24 元，且未出现新增债务恶化、算力合同违约或经营现金流显著转负",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度收入增长、毛利率改善、经营现金流为正且资产负债率下降",
+      "action": "重新评估是否加至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于 45 元但未证明年化归母净利润超过 1.5 亿元且现金流质量良好",
+      "action": "不追高或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入基准估值下沿附近，可重新评估观察仓安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "进入乐观情景估值区间，若基本面未兑现应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报收入、毛利率、经营现金流、资产负债率和算力业务进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断算力转型是否形成连续验证"
+    }
+  ]
+}
