@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920656",
+  "market": "CN",
+  "ticker": "920656",
+  "name": "海昇药业",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "磺胺类细分优势和净现金提供基本面支撑，但产品客户集中、增长含周期因素，14.08元附近已缺少安全边际。",
+  "fair_value_range": [11.5, 14.0],
+  "buy_zone": [9.5, 11.0],
+  "sell_or_reduce_zone": [16.0, 18.0],
+  "position_plan": [
+    {
+      "condition": "股价处于9.50至11.00元且核心产品价格、客户关系和募投项目未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于9.50元并复核确认下跌来自流动性而非投资逻辑受损",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报、核心品种量价、经营现金流及募投产能利用率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、新产品商业化及资本配置"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入有一定安全边际的分批买入区间，需先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "进入减仓或不应追高区间，除非新产品与自由现金流显著超预期"
+    }
+  ],
+  "updated_at": "2026-07-15T00:00:00+08:00"
+}
