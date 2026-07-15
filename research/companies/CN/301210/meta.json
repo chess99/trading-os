@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:301210",
+  "ticker": "301210",
+  "name": "金杨精密",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "圆柱锂电池精密结构件和镍基导体材料供应商，2026Q1收入与利润明显修复，但当前估值已反映较多改善预期，经营现金流、利润率和复合集流体兑现度仍需验证，暂以观察为主。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    22,
+    29
+  ],
+  "buy_zone": [
+    18,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    32,
+    36
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入18-22元且下一期季报显示毛利率稳定、经营现金流未明显恶化时，允许建立观察仓。",
+      "action": "buy_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度归母净利润和经营现金流同步改善，且估值仍低于基准价值区间上沿时，可考虑提高配置。",
+      "action": "add_after_confirmation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价升至32元以上但利润、现金流和复合集流体订单未兑现时，避免新增并考虑减仓。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入基准价值区间下沿附近，需要复核是否具备安全边际和建立观察仓条件。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入悲观情景价值上沿附近，如基本面未恶化，可能出现较强安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "reason": "超过基准价值区间上沿，需要检查估值是否过度透支2026-2027年利润修复。"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "接近牛市情景估值，需要以订单、现金流和复合集流体商业化进展验证，否则应降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、应收账款和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1利润弹性是否可持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和募投项目进度，重新评估合理价值区间。"
+    }
+  ]
+}
