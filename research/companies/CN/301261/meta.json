@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301261",
+  "ticker": "301261",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "恒工精密",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "恒工精密传统连续铸铁与精密机加工业务具备一体化能力，机器人链布局提供上行期权，但当前市值已经反映较高成长预期；在机器人订单、经营性利润和现金流进一步验证前，列入观察而不追高。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    52,
+    66
+  ],
+  "buy_zone": [
+    45,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    78,
+    95
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入45-55元区间，且2026半年报显示扣非利润增长主要来自经营毛利、经营现金流改善、无控股股东重大减持计划",
+      "action": "分两批建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "机器人业务出现公告级别批量订单或单独披露收入毛利，同时传统业务毛利率稳定在24%以上",
+      "action": "可将仓位提高至上限",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于78元且缺少新增订单或经营性利润验证",
+      "action": "不买入，已有仓位减至0",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入买入观察区上沿，需要复核半年报和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入更有安全边际的估值区间，可重新测算仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 78,
+      "reason": "高于减仓观察线，若缺少机器人订单兑现应回避估值扩张风险"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非利润、投资收益占比、经营现金流和机器人业务披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及限售股东减持情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，验证机器人业务从期权到利润贡献的兑现程度"
+    }
+  ]
+}
