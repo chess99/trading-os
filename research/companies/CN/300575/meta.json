@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300575",
+  "ticker": "300575",
+  "name": "中旗股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "中旗股份处在农药原药周期底部修复阶段，2026Q1 已微利但毛利率、财务费用和行业价格仍未充分验证。当前适合观察，等待价格跌入安全边际或盈利连续修复后再扩大仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    5.6,
+    7.2
+  ],
+  "buy_zone": [
+    4.2,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.8,
+    9.2
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于买入带且盈利修复尚未连续验证，仅允许研究跟踪仓。",
+      "action": "watch_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价进入4.2-4.8元且中农立华原药价格指数未继续快速下行，可建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非盈利且原药毛利率恢复到8%以上，可提高为周期修复仓。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入买入观察带上沿，约对应1.18倍2026Q1账面净资产。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "接近悲观情景估值，若基本面未恶化可重新评估加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.8,
+      "reason": "进入减仓区间下沿，若盈利和毛利率没有同步验证则风险回报转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查毛利率、财务费用、经营现金流和存货跌价。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1微利是否延续为真实盈利修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重新评估周期修复斜率和合理估值。"
+    }
+  ]
+}
