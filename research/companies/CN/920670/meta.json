@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920670",
+  "market": "CN",
+  "ticker": "920670",
+  "name": "数字人",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司在数字医学细分领域有技术和现金基础，但项目制波动、历史内控问题与低资本回报无法支撑当前约153倍市盈率，等待5.5元以下并重新验证基本面。",
+  "fair_value_range": [5.5, 7.5],
+  "buy_zone": [4.2, 5.5],
+  "sell_or_reduce_zone": [9.0, 10.5],
+  "position_plan": [
+    {
+      "condition": "股价处于5.0-5.5元且最近一期收入恢复、扣非盈利转正、内控无恶化",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价处于4.2-5.0元，订单兑现和正常化自由现金流假设经复核仍成立",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "基本面、审计意见或订单兑现恶化时，无论价格高低均不加仓并退出",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-15",
+      "reason": "复核2026年半年报、在手订单转化、扣非利润与经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报及内控审计意见、云平台商业化和资本回报"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入有安全边际的初步研究与条件性建仓区间"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "进入减仓或不应追高区间，估值已明显透支基准情景"
+    }
+  ],
+  "updated_at": "2026-07-15T00:00:00+08:00"
+}
