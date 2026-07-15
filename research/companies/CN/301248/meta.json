@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:301248",
+  "ticker": "301248",
+  "name": "杰创智能",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "杰创智能正在从智慧城市和公共安全项目型集成商转向 AI 算力与智算云资产运营商，收入弹性显著抬升，但经营现金流、应收账款、杠杆和算力利用率尚未完成验证；当前价格已较充分反映乐观情景，暂以观察为主。",
+  "rating": {
+    "current_rating": "watch",
+    "as_of": "2026-07-16",
+    "rationale": "业务转型有期权价值，但 2026Q1 亏损、资产负债表扩张快、估值已处于偏乐观区间，安全边际不足。"
+  },
+  "fair_value_range": [
+    42,
+    58
+  ],
+  "buy_zone": [
+    35,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    72,
+    85
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入 35-42 元且至少一个季度经营现金流转正、智算业务毛利率和利用率可核验",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于 35 元且应收账款、债务和智算利用率未恶化",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于 72 元且仍缺少连续现金流与 EBITDA 验证",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入基准估值下沿和买入观察区，需复核最新财报现金流与智算利用率"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "接近乐观情景估值上沿，若无 EBITDA 和现金流兑现应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看智算收入、毛利率、经营现金流和有息负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，验证 AI 算力业务是否持续贡献 EBITDA 和现金流"
+    }
+  ]
+}
