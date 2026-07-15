@@ -1,0 +1,107 @@
+{
+  "market": "CN",
+  "ticker": "301062",
+  "symbol": "CN:301062",
+  "name": "上海艾录",
+  "company_name": "上海艾录包装股份有限公司",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "status": "active",
+  "coverage_status": "active",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "latest_rating": "watch",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "工业软包装基本盘真实，2026年存在低基数修复，但2025年新业务减值和亏损暴露资本配置风险；当前估值已接近乐观修复情景，安全边际不足，仅观察。",
+  "fair_value_range": [
+    2.9,
+    3.7
+  ],
+  "buy_zone": [
+    0,
+    4.0
+  ],
+  "sell_or_reduce_zone": [
+    5.5,
+    999
+  ],
+  "position_plan": [
+    {
+      "action": "watch",
+      "condition": "当前价接近乐观修复情景，仅保留研究观察",
+      "max_weight": 0.01
+    },
+    {
+      "action": "reassess_buy",
+      "condition": "价格低于4元，或连续两个季度扣非净利年化达到0.9-1.2亿元且无新增大额减值",
+      "max_weight": 0.03
+    },
+    {
+      "action": "remove_watch",
+      "condition": "正式半年报低于预告下限、Q3扣非再亏或光伏边框新增大额减值",
+      "max_weight": 0
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "event": "2026年半年报正式披露",
+      "reason": "验证2026H1业绩预告兑现情况",
+      "condition": "归母净利或扣非净利低于业绩预告下限",
+      "action": "下调评级并剔除观察"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "event": "2026Q3报告披露",
+      "reason": "验证二季度修复是否延续",
+      "condition": "扣非净利连续为正且支持0.8亿元以上年化盈利",
+      "action": "重新评估买入区间和最大仓位"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "event": "光伏复合边框进展",
+      "reason": "光伏新业务是2025年减值和亏损的重要来源",
+      "condition": "出现新增大额减值或订单低于预期",
+      "action": "下调估值"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "event": "艾录转债条款变化",
+      "reason": "可转债影响稀释、资本结构和安全边际",
+      "condition": "转股价格下修、余额显著变化或触发赎回/回售",
+      "action": "更新稀释和资本结构假设"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入报告设定的安全边际重新评估区",
+      "action": "reassess_buy"
+    },
+    {
+      "type": "price_above",
+      "price": 5.5,
+      "reason": "接近乐观情景估值下沿，风险收益不佳",
+      "action": "reduce_or_avoid"
+    }
+  ],
+  "max_weight": 0.01,
+  "updated_at": "2026-07-15",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "reports": [
+    {
+      "date": "2026-07-15",
+      "path": "reports/2026-07-15-initial.md",
+      "type": "initial",
+      "rating": "watch",
+      "max_weight": 0.01
+    }
+  ]
+}
