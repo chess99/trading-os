@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:301315",
+  "ticker": "301315",
+  "name": "威士顿",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "current_thesis": "威士顿具备细分行业项目经验、净现金资产负债表和量投科技并购带来的金融科技期权，但2025年收入和扣非利润下滑、2026Q1收入仍降，AI产品和并购协同尚未充分验证；当前估值已反映较多修复预期，缺少安全边际，适合观察等待业绩兑现或价格回落。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    26,
+    34
+  ],
+  "buy_zone": [
+    22,
+    26
+  ],
+  "sell_or_reduce_zone": [
+    42,
+    48
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值中枢且扣非利润仍弱，维持观察，不建仓。",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至26元以下，且2026半年报确认收入恢复、扣非利润改善、量投科技并表不拖累现金流。",
+      "action": "initiate",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026年收入超过2.7亿元、归母净利润超过4000万元、扣非净利润超过2800万元，且经营现金流为正并不低于净利润80%。",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于42元但利润预测未上修，或2026半年报收入继续下降、扣非净利润低于500万元、经营现金流明显恶化。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "进入合理价值下沿，可结合半年报重新评估观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入买入区间下沿，若基本面未恶化可提高研究优先级。"
+    },
+    {
+      "type": "price_above",
+      "price": 42,
+      "reason": "超过卖出/降低区间下沿，若无业绩上修则估值风险上升。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点查看量投科技并表、扣非利润、经营现金流和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入修复节奏和AI/金融业务订单兑现情况。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估估值、分红和中期仓位上限。"
+    }
+  ]
+}
