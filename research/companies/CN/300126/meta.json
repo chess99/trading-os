@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300126",
+  "ticker": "300126",
+  "name": "锐奇股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "锐奇股份是资产负债表较稳健但主业仍未验证拐点的专业电动工具小市值公司。现金及金融资产提供安全垫，但2025年和2026Q1扣非亏损、低毛利率和经营现金流流出说明当前价格不具备足够安全边际，适合观察而非主动买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.2,
+    5.6
+  ],
+  "buy_zone": [
+    4.0,
+    4.6
+  ],
+  "sell_or_reduce_zone": [
+    6.6,
+    7.8
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于4.60元，且最近一季毛利率高于12%、经营现金流明显改善",
+      "action": "small_tracking_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非亏损收窄，TTM收入恢复增长，毛利率稳定在15%以上",
+      "action": "add_on_turnaround_confirmation",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于6.60元但扣非仍亏损或经营现金流继续大额流出",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "进入观察买区，需要复核毛利率、现金流和金融资产安全垫"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "接近悲观情景估值下沿，若基本面未恶化可重新评估安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 6.6,
+      "reason": "超过基准公允价值上沿，若经营拐点未确认应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告，重点检查毛利率、扣非利润、经营现金流和应收存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季度报告，确认经营拐点是否连续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重估正常化盈利能力"
+    }
+  ]
+}
