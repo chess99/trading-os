@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:300890",
+  "ticker": "300890",
+  "name": "翔丰华",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "锂电负极材料小市值周期修复标的，2025-2026Q1 收入和利润恢复，但客户集中、经营现金流为负、应收账款和借款扩张仍未解决。现价大致处于合理价值区间中部偏上，等待 16-20 元安全边际或连续现金流转正后再考虑小仓位。",
+  "fair_value_range": [
+    22,
+    30
+  ],
+  "buy_zone": [
+    16,
+    20
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于 20 元，且 2026H1 毛利率不低于 16%、经营现金流较 2025 年明显改善",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度经营现金流转正，前五客户集中度下降或应收账款周转改善",
+      "action": "小幅加仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于 34 元但 2026E 归母净利润无法上修至 1.5 亿元以上，或借款/应收继续扩张",
+      "action": "减仓或回避",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入买入区间上沿，若基本面未恶化可重新评估观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "进入深度安全边际区，需复核现金流和客户订单后考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "超过基准估值上沿，需要检查利润和现金流是否足以支撑上修"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "reason": "进入乐观情景区，若无硅碳/高端产品放量证据应卖出或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 半年报的收入、毛利率、经营现金流、应收账款和借款变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 三季报，确认利润修复是否持续且现金流是否转正"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报，重新评估合理价值区间和仓位上限"
+    }
+  ],
+  "confidence": "中",
+  "decision": "观察"
+}
