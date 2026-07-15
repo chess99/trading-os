@@ -1,0 +1,93 @@
+{
+  "symbol": "CN:300962",
+  "ticker": "300962",
+  "name": "中金辐照",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "hold",
+  "current_rating": "hold",
+  "current_thesis": "中金辐照是A股稀缺的第三方辐照灭菌与辐照加工服务商，具备许可、质量体系、客户验证和全国网点壁垒，现金流质量好、负债低；但2025年扣非利润下滑、2026Q1利润承压，当前约13.10元估值处于合理区间中段，缺少足够安全边际，先观察等待10.8元以下或扣非增长恢复。",
+  "fair_value_range": [
+    11.5,
+    14.5
+  ],
+  "buy_zone": [
+    9.5,
+    10.8
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    17.0
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于10.8元，且2026年半年报显示扣非归母净利润恢复正增长、经营现金流/净利润大于1.2倍",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于9.5元，且无辐射安全、客户流失或钴源供应重大负面事件",
+      "action": "提高到核心小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于15.5元且扣非利润仍未恢复增长",
+      "action": "不加仓并考虑降低仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.8,
+      "reason": "进入估算买入区上沿，需要复核半年报扣非利润与现金流后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入较有安全边际区域，若基本面无恶化可考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "超过合理价值区间上沿，若没有收入和扣非利润加速，应降低收益率预期"
+    },
+    {
+      "type": "price_above",
+      "price": 17.0,
+      "reason": "进入减持区，需要重新验证乐观情景是否成立"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非归母净利润、毛利率、经营现金流和在建项目爬坡"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认利润恢复趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年全年扣非利润、资本开支、现金流和估值区间"
+    }
+  ],
+  "key_metrics": {
+    "reference_price_cny": 13.1,
+    "reference_price_date": "2026-07-15",
+    "reference_price_confidence": "low",
+    "shares_outstanding": 264001897,
+    "market_cap_cny_billion": 3.46,
+    "ttm_net_profit_cny_million_est": 116.4,
+    "ttm_pe_est": 29.7
+  }
+}
