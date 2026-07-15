@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300639",
+  "market": "CN",
+  "ticker": "300639",
+  "name": "凯普生物",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "凯普生物是HPV分子诊断老牌公司，长期受益于宫颈癌筛查率提升，但HPV集采、税率调整、医学检验服务和医院爬坡导致短期仍处困境反转阶段。当前估值接近净资产折价区间，适合观察，只有在价格跌入明显安全边际且收入止跌、现金流持续为正时才考虑小仓位。",
+  "fair_value_range": [
+    5.0,
+    6.4
+  ],
+  "buy_zone": [
+    4.0,
+    4.6
+  ],
+  "sell_or_reduce_zone": [
+    6.8,
+    8.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.6元，且无新增重大减值或治理负面，2026H1亏损继续收窄",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "2026H1经营现金流为正，收入降幅小于5%或恢复增长，医学检验服务减亏",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026Q3单季接近盈亏平衡或扣非亏损显著收窄，且股价仍不高于合理价值中枢",
+      "action": "最高配置上限",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "跌入买入安全边际区，约对应0.8倍PB以下，需要复核基本面后决定是否建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "reason": "超过合理价值上沿，若利润拐点未被半年报或三季报验证，应减少或避免新增仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入止跌、自产产品毛利率、医学检验服务亏损和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认是否接近单季盈亏平衡及资产减值压力"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估集采后长期盈利中枢和资本配置质量"
+    }
+  ]
+}

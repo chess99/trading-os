@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:300635",
+  "ticker": "300635",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "中达安",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备工程咨询资质、全国项目经验和国资控股后的产业协同可能，但 2025 年亏损扩大、2026 年一季度仍亏损，应收账款高于全年收入且现金流承压。当前价格已计入较多转型预期，缺乏安全边际，等待现金流和扣非利润改善后再评估。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    6.0,
+    8.0
+  ],
+  "buy_zone": [
+    5.0,
+    6.0
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    13.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 6.0 元，且最近一期经营活动现金流转正、扣非亏损同比明显收窄",
+      "action": "可小仓位试错",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 6.0 元但经营现金流仍为负或应收账款继续上升",
+      "action": "仅观察或极小仓位",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于 8.0 元且尚未证明扭亏",
+      "action": "不买入",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入买入观察区，需要结合半年报现金流和扣非利润复核"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "高于减仓/回避区间下沿，若无业绩验证则估值透支"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、扣非利润、经营现金流和应收账款变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否出现经营拐点"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和国资协同、新业务兑现情况"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 11.02,
+    "reference_price_date": "2026-07-15",
+    "reference_price_source": "中财网行情页 2026-07-15 14:26",
+    "fy2025_revenue_cny_bn": 0.519,
+    "fy2025_net_profit_attributable_cny_bn": -0.195,
+    "fy2025_operating_cash_flow_cny_bn": -0.054,
+    "fy2025_debt_to_asset_ratio": 0.7239,
+    "q1_2026_revenue_cny_bn": 0.114,
+    "q1_2026_net_profit_attributable_cny_bn": -0.009
+  },
+  "sources": [
+    {
+      "title": "中达安股份有限公司 2025 年年度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225245336.PDF",
+      "date": "2026-04-29"
+    },
+    {
+      "title": "中达安股份有限公司 2026 年一季度报告",
+      "url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225245346.PDF",
+      "date": "2026-04-29"
+    },
+    {
+      "title": "中达安公司官网",
+      "url": "http://www.sino-daan.com",
+      "date": "2026-07-15"
+    },
+    {
+      "title": "中财网中达安行情页",
+      "url": "https://quote.cfi.cn/quote_300635.html",
+      "date": "2026-07-15"
+    }
+  ]
+}

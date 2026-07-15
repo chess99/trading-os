@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300625",
+  "ticker": "300625",
+  "name": "三雄极光",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "三雄极光具备品牌、渠道和现金资产缓冲，但 2025 年首次年度亏损且 2026Q1 收入继续下滑、扣非亏损扩大；当前价格约 1.3 倍 PB，尚未体现足够安全边际，需等待收入止跌、毛利率恢复和扣非利润改善后再考虑买入。",
+  "fair_value_range": [
+    7.5,
+    9.8
+  ],
+  "buy_zone": [
+    6.2,
+    7.2
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    12.5
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于 7.2 元且 2026 年中报尚未证明收入止跌、扣非亏损显著收窄时，仅观察不建仓。",
+      "action": "watchlist_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌入 6.2-7.2 元，且货币资金与交易性金融资产未明显恶化、经营现金流无异常失控、治理结构无重大负面变化时，可考虑试探仓。",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入止跌、综合毛利率回到 30% 以上且扣非净利润转正后，可重新评估是否提升仓位。",
+      "action": "reassess_for_add",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "进入初步买入区间，需要复核资产负债表、现金流和亏损趋势是否仍可控。"
+    },
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "reason": "跌至低于估算每股净资产较多的位置，需要判断是否为基本面恶化导致的价值陷阱。"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "超过当前合理价值区间上沿，若盈利修复未同步兑现，应考虑不追高或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-30",
+      "reason": "复核 2026 年半年报，重点看收入降幅、扣非亏损、毛利率、经营现金流和现金资产。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断是否出现连续季度修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新评估困境反转是否成立以及估值锚是否可从 PB 转向正常化利润。"
+    }
+  ]
+}
