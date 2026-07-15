@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300689",
+  "ticker": "300689",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "澄天伟业",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "智能卡提供现金流，半导体封装材料开始放量，AI INFRA 液冷散热具备期权价值；但当前市值已提前反映转型成功，2026Q1 仍亏损且液冷批量订单未核验，暂列观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    18,
+    32
+  ],
+  "buy_zone": [
+    0,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌至 22 元以下，且半导体业务仍保持增长、液冷客户验证未恶化",
+      "action": "可建立研究性观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "液冷散热披露可核验大批量订单且单季度收入突破 3000 万元、毛利率为正",
+      "action": "重新估值后决定是否提高仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "2026H1 继续亏损且存货或应收账款异常上升",
+      "action": "移出买入观察区",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "低于基准合理价值下沿附近，若基本面未恶化，可重新评估安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "高于当前基本面可支撑区间，需要液冷订单或盈利兑现，否则应规避"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "reason": "接近高情景估值之上，若无头部客户批量订单和盈利模型验证，不追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点查看液冷收入、半导体增速、费用率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断新业务投入是否开始形成收入和利润闭环"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核定增审核注册进展、募投项目建设节奏和年度业绩预告质量"
+    }
+  ]
+}
