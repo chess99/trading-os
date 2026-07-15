@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:300648",
+  "ticker": "300648",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "星云股份",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "锂电池测试与充检安全细分技术公司，受益于新能源车、储能和充电基础设施扩张，但2025年亏损扩大、客户高度集中、收入确认波动，现价估值已接近乐观情景，安全边际不足，暂列观察。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    24,
+    32
+  ],
+  "buy_zone": [
+    20,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    38,
+    45
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入20-24元买入区，且最近一期收入同比增长、毛利率不低于32%、经营现金流为正",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度收入同比增长、亏损显著收窄或单季经营性盈利，且宁德时代收入占比下降但总收入仍增长",
+      "action": "提高到小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于38元且未出现利润和订单验证，或2026年中报继续亏损扩大",
+      "action": "不加仓并考虑减仓",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入估算买入区上沿，若基本面未恶化可重新评估观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入悲观情景附近，若现金流和净资产安全可评估更高安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 38,
+      "reason": "高于公允区间上沿，仍亏损状态下估值风险上升"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "接近乐观情景估值，若无订单和盈利验证应考虑降低敞口"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入增长、毛利率、亏损收窄、存货和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认订单验收和费用率改善是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断公司是否完成从主题交易到盈利验证的切换"
+    }
+  ],
+  "decision": "不买",
+  "confidence": "中"
+}
