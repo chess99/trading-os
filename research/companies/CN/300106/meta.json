@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:300106",
+  "ticker": "300106",
+  "name": "西部牧业",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "西部牧业处于收入和现金流边际修复期，但2026Q1扣非仍亏，利润对政府补助敏感；当前股价隐含高于多数盈利乳企的PB/PS，缺乏买方安全边际，需等待扣非盈利连续验证或价格显著回落。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    3.0,
+    5.0
+  ],
+  "buy_zone": [
+    0.0,
+    3.5
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    9.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于公允价值且扣非盈利尚未验证，维持空仓观察。",
+      "action": "no_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌至3.5元以下，且连续两个季度扣非归母净利润为正、政府补助占利润比例下降。",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续四个季度扣非盈利、净利率超过2.5%、估值低于1.2倍PS。",
+      "action": "add_only_after_validation",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "reason": "进入保守买入观察区，需同步复核扣非盈利和补助占比。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "高于基准公允价值上沿，若基本面未明显超预期应减仓或回避。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "接近题材亢奋区，当前扣非亏损状态下缺乏长期安全边际。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非利润、乳制品毛利率和政府补助占比。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证经营修复是否连续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估长期盈利能力和公允价值区间。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 9.42,
+    "reference_price_date": "2026-07-15",
+    "reference_market_cap_cny_billion": 1.99,
+    "shares_outstanding_million_estimate": 211.33,
+    "revenue_2025_cny": 924618729.19,
+    "net_profit_2025_cny": -50668836.11,
+    "deducted_net_profit_2025_cny": -83677042.25,
+    "operating_cash_flow_2025_cny": 79167579.58,
+    "book_equity_2025_cny": 371817238.98,
+    "revenue_2026_q1_cny_estimate": 241000000.0,
+    "net_profit_2026_q1_cny": 4957800.0,
+    "deducted_net_profit_2026_q1_cny": -1813800.0
+  },
+  "risks": [
+    "扣非盈利无法持续转正",
+    "乳制品需求疲弱和行业价格战",
+    "政府补助不可持续或确认时点波动",
+    "原奶、饲料、库存和资产减值压力",
+    "小盘题材交易导致估值大幅波动"
+  ]
+}
