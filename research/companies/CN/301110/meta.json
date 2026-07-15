@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301110",
+  "ticker": "301110",
+  "name": "青木科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "青木科技由传统电商代运营向品牌孵化、全域运营和AI效率工具迁移，2025-2026H1利润弹性已被公告数据验证；但当前股价约处合理价值中部，品牌投放、现金流和平台规则仍需验证，宜观察等待更厚安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    31,
+    43
+  ],
+  "buy_zone": [
+    26,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    50,
+    57
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于30元，且2026H1扣非净利润不低于6500万元、经营现金流没有显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于28元，且品牌孵化与管理业务仍保持高增长、销售费用率未失控",
+      "action": "提高到小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于50元但2026E归母净利润中枢未上修到2.3亿元以上",
+      "action": "停止新增并考虑减仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入初始买入区，需要复核半年报扣非利润和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "进入悲观情景估值下沿，若基本面未恶化则赔率改善"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "超过基准合理价值上沿，需要验证是否存在利润中枢上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、扣非利润、分业务增速和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断品牌孵化增长和费用投放是否可持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报与全年现金转换率，重估公允价值区间"
+    }
+  ]
+}
