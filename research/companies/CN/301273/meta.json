@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301273",
+  "ticker": "301273",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "瑞晨环保",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "瑞晨环保处于高耗能行业节能改造和节能装备政策受益方向，但2025年及2026Q1仍亏损、经营现金流连续为负，且重要股东在股价上涨后减持；当前约30.66元价格已接近乐观情景，缺乏买方安全边际，列入观察池而非买入。",
+  "fair_value_range": [
+    18,
+    24
+  ],
+  "buy_zone": [
+    12,
+    16
+  ],
+  "sell_or_reduce_zone": [
+    30,
+    36
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌至16元以下，且最近一期未出现新增重大减值、经营现金流不再大幅恶化",
+      "action": "可建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入增速超过25%、毛利率稳定且经营现金流转正，并披露可核验的新产品或海外订单",
+      "action": "可上调至小仓位配置",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于30元且没有订单、回款和现金流改善证据",
+      "action": "不买入，已有仓位应减仓或回避",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "进入买入观察区上沿，需要复核现金流、减值和订单质量"
+    },
+    {
+      "type": "price_below",
+      "price": 12,
+      "reason": "进入较高安全边际区间，若基本面未恶化可重新评估买入"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "高于基准合理价值，若无重大订单和现金流改善，应维持不买或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看收入增速、亏损收窄、经营现金流、应收和存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认订单验收和回款是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断节能装备政策红利是否真正转化为收入、利润和现金流"
+    }
+  ]
+}
