@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:301387",
+  "ticker": "301387",
+  "name": "光大同创",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "光大同创具备消费电子大客户准入、轻量化新材料和 AI PC 结构性增量机会，但 2026Q1 已出现收入增长而利润和经营现金流转弱，当前 66 元附近估值已隐含牛市情景，安全边际不足，等待价格回落和毛利率/现金流修复后再评估。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    30,
+    45
+  ],
+  "buy_zone": [
+    24,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    58,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于32元，且2026H1或2026Q2单季毛利率企稳、经营现金流转正、存货跌价损失收敛后，才允许建立观察仓。",
+      "action": "watch_to_small_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价位于32至45元之间，但公司仍处于单季亏损或经营现金流为负时，只跟踪不建仓。",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价高于58元且TTM净利润未恢复至1亿元以上，估值透支，避免买入并考虑回避。",
+      "action": "avoid_new_buy",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入买入观察区，需要重新核验毛利率、经营现金流和订单质量。"
+    },
+    {
+      "type": "price_above",
+      "price": 58,
+      "reason": "高于减持/回避区，若盈利未明显恢复则风险收益比恶化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、应收账款、存货跌价和轻量化材料进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，并跟踪首发前限售股解禁后的股东行为。"
+    }
+  ]
+}
