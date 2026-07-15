@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:301019",
+  "ticker": "301019",
+  "name": "宁波色母",
+  "company_name": "宁波色母粒股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "current_thesis": "宁波色母是主业纯度高、现金流稳健、分红积极的色母粒细分龙头，但当前股价已接近合理估值下沿，产能利用率和新产能消化仍需验证，适合观察等待更高安全边际。",
+  "rating": {
+    "current_rating": "hold",
+    "updated_at": "2026-07-15",
+    "rationale": "质量较好但估值不便宜，当前价格附近只适合小仓观察；14.5元以下才具备更好的买入安全边际。"
+  },
+  "current_rating": "hold",
+  "fair_value_range": [
+    16.0,
+    20.0
+  ],
+  "buy_zone": [
+    0.0,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于14.5元，且2026半年报扣非净利润同比继续增长、毛利率不低于36%",
+      "action": "分批建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于12.0元，且产能利用率改善、经营现金流未恶化",
+      "action": "复核后可提高至价值仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于22.0元但无盈利预测上修，或毛利率连续两个季度低于35%",
+      "action": "停止加仓并考虑减仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入安全买入区间，需要复核半年报增长与毛利率。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "可能进入深度价值区间，需要复核基本面是否恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "高于当前估值上沿，若无盈利上修应考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、收入增长、扣非利润、毛利率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报以及滁州/宁波产能释放进度。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红政策、产能利用率和估值假设。"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

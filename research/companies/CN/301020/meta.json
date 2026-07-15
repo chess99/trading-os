@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:301020",
+  "ticker": "301020",
+  "name": "密封科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "密封科技是发动机密封件和密封材料细分龙头型小公司，客户认证、同步研发、净现金资产负债表和国六/新能源增程混动延展构成正面因素；但客户集中、传统内燃机长期压力和当前估值缺乏足够安全边际，暂列观察，等待价格低于15.5元或2026中报进一步验证增长。",
+  "fair_value_range": [
+    16.0,
+    21.0
+  ],
+  "buy_zone": [
+    12.0,
+    15.5
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    28.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格位于合理价值区间中部偏上，未进入买入区，维持观察。",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价低于15.5元，且2026年中报收入同比增长、归母净利润不低于0.55亿元、经营现金流未明显恶化。",
+      "action": "initiate",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于13.0元，且客户集中度、存货跌价和主业订单未出现恶化。",
+      "action": "add",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于24.0元，但年化归母净利润未进入1.3亿元以上台阶。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.5,
+      "reason": "进入买入观察区，需要复核2026中报和现金流后决定是否建立观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估更高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "超过当前基准估值上沿，若利润未明显上台阶应考虑降低关注或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查收入增速、归母净利润、涂胶板修复、经营现金流和存货跌价。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年利润是否有望达到1.0亿至1.15亿元基准区间。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估估值区间、分红和新能源/海外收入披露。"
+    }
+  ],
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "latest_report": "reports/2026-07-15-initial.md"
+}

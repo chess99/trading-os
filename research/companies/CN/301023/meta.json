@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301023",
+  "ticker": "301023",
+  "name": "奕帆传动",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "奕帆传动是高毛利、低杠杆、现金流较好的定制化微特减速电机公司，但2025年与2026Q1利润连续承压，当前约39倍TTM PE已接近合理价值上沿，需等待业绩修复或股价回落后再考虑买入。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    22.0,
+    28.0
+  ],
+  "buy_zone": [
+    18.0,
+    22.0
+  ],
+  "sell_or_reduce_zone": [
+    36.0,
+    42.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于22元且2026半年报扣非利润未继续恶化，可建立研究性观察仓。",
+      "action": "watch_to_probe",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于18元且经营现金流维持接近或高于净利润、北京和利时交易无重大治理风险，可提高配置上限。",
+      "action": "add_if_confirmed",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于36元且未来12个月归母净利润无法上修至9000万元以上，应停止买入并考虑降低暴露。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22.0,
+      "reason": "进入合理价值区间下沿，可结合半年报重新评估买入安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "若基本面未恶化，可能出现足够安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 36.0,
+      "reason": "估值进入乐观预期区，若利润无同步上修需降低预期。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报收入、扣非利润、毛利率、客户集中度和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报及北京和利时股权交易完成和收益确认情况。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，判断利润修复和外延交易是否兑现。"
+    }
+  ]
+}

@@ -5,28 +5,72 @@
   "name": "申菱环境",
   "currency": "CNY",
   "status": "active",
+  "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "国内液冷CDU市场排名第一，受益于AI算力基建和液冷渗透率提升，2025年收入和净利润分别+40%/+88%，数据服务板块新增订单+72%。但PE(TTM)~231x，PS~10.5x，估值极高，安全边际不足。等待回调至60元以下（对应~2025 70x PE）才考虑建立观察仓。",
-  "fair_value_range": [40, 70],
-  "buy_zone": [25, 50],
-  "sell_or_reduce_zone": [90, 120],
+  "current_thesis": "申菱环境具备数据中心液冷先发积累、头部客户交付经验和专业特种空调工程底盘，2025年数据服务收入同比增长51.42%、新增订单同比增长约72%，长期受益AI算力温控升级。但2026-07-15收盘价105.98元对应转增后估算市值约394.7亿元、2025 PE约182倍、TTM PE约207倍，且2026Q1收入同比-1.80%、归母净利润同比-47.71%、经营现金流为负，当前安全边际不足。结论为观察，等待60元以下或半年报验证订单兑现和现金流改善。",
+  "fair_value_range": [55, 75],
+  "buy_zone": [45, 60],
+  "sell_or_reduce_zone": [95, 125],
   "position_plan": [
-    {"condition": "股价低于25元，进入深度低估区间", "max_weight": 0.04},
-    {"condition": "股价25-40元，有安全边际区间，分批买入", "max_weight": 0.03},
-    {"condition": "股价40-60元，合理偏低区间，可建小仓", "max_weight": 0.01},
-    {"condition": "股价60-90元，偏贵区间，仅持有不买入", "max_weight": 0.00},
-    {"condition": "股价>90元，泡沫区间，不追高", "max_weight": 0.00}
+    {
+      "condition": "股价高于95元且没有2026年业绩显著超预期证据时不追高，维持0仓位",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价回落至70元附近，且数据服务订单、毛利率和存货未恶化时，纳入重点观察但不超过观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价回落至55-60元，且2026半年报显示液冷订单开始兑现、经营现金流改善，可建立小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价回落至45-55元，且数据服务毛利率稳定、应收账款和存货风险可控，可提高至核心观察仓",
+      "max_weight": 0.04
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-29", "reason": "2026半年报披露后复查数据服务板块增速和应收账款趋势"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查全年业绩指引和新增订单趋势"}
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 60, "reason": "进入合理偏低区间，可建观察仓"},
-    {"type": "price_below", "price": 40, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 90, "reason": "进入减仓或不应追高区间"}
+    {
+      "type": "price_below",
+      "price": 70,
+      "reason": "进入重点观察区，复核订单兑现、数据服务毛利率和存货变化"
+    },
+    {
+      "type": "price_below",
+      "price": 60,
+      "reason": "进入初步买入区，若半年报或三季报验证基本面可考虑小仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 50,
+      "reason": "进入具备更高安全边际区间，需确认液冷订单和现金流未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 95,
+      "reason": "估值重新接近牛市情景上沿，若缺少业绩超预期证据应回避追高"
+    }
   ],
-  "updated_at": "2026-07-09T06:55:00+08:00"
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报披露后复核数据服务收入、液冷订单转化、毛利率、存货和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026三季报披露后复核全年业绩兑现概率和高估值是否仍可持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年报披露后重估液冷业务规模、海外收入质量、现金流和合理估值区间"
+    }
+  ],
+  "updated_at": "2026-07-15"
 }
