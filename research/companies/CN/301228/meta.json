@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301228",
+  "ticker": "301228",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "实朴检测",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "current_thesis": "公司具备土壤和地下水检测细分资质、项目经验和品牌，但2025年及2026Q1仍处亏损与收入下滑阶段，当前约76亿元市值明显高于可验证盈利能力，安全边际为负，暂不买入，仅观察基本面修复。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    8,
+    16
+  ],
+  "buy_zone": [
+    0,
+    10
+  ],
+  "sell_or_reduce_zone": [
+    25,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价低于10元，且最近两个季度扣非归母净利润转正、经营现金流滚动四季度为正时，允许建立观察仓。",
+      "action": "watchlist_entry",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若股价仍高于25元且扣非利润未转正，不新增仓位；若已有仓位，逐步降至零。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "股价进入估值复核区，需要结合最新财报重新评估是否仍显著高估。"
+    },
+    {
+      "type": "price_below",
+      "price": 10,
+      "reason": "股价进入初步买入区间，但仍需基本面满足扣非转正和现金流改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 25,
+      "reason": "超过乐观情景估值上沿，若基本面未显著改善应维持回避或减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入恢复、扣非净利、毛利率和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断三普项目退坡后新业务是否形成可持续增长。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估长期盈利中枢和资本配置质量。"
+    }
+  ]
+}
