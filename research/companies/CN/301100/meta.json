@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:301100",
+  "ticker": "301100",
+  "name": "风光股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "国内高分子材料抗氧剂企业，长期受益聚烯烃扩产、国产替代和复合助剂升级，但2025年与2026年一季度仍亏损，盈利拐点尚未被财报确认；当前股价已较充分计入修复预期，安全边际不足，维持观察。",
+  "fair_value_range": [
+    12.0,
+    15.0
+  ],
+  "buy_zone": [
+    9.0,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    21.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于11.5元，且无新增安全环保、治理或财务恶化信号，可建立观察仓。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于10.0元，且毛利率改善、经营现金流未继续恶化，可提高至小仓位。",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "连续两个季度扣非归母净利润转正、毛利率回到18%以上且股价仍低于15元，可重新评估买入评级。",
+      "max_weight": 0.08
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入基础买入观察区，需要复核毛利率、现金流与行业价格。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "接近账面价值折价区，可评估安全边际是否足够。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "进入减仓/回避区，若盈利拐点未兑现则估值偏贵。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查毛利率、扣非利润和经营现金流是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认是否出现连续单季盈利修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断收入增长是否转化为正常化利润。"
+    }
+  ]
+}
