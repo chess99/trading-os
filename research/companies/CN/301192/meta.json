@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:301192",
+  "ticker": "301192",
+  "name": "泰祥股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "大众体系汽车动力及传动零部件小市值供应商，2025 年利润和毛利率修复、现金资产较厚，但当前股价已接近合理价值上沿，需等待更低价格或 2026H1 新能源壳体项目放量验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    15.0,
+    19.0
+  ],
+  "buy_zone": [
+    11.0,
+    14.0
+  ],
+  "sell_or_reduce_zone": [
+    23.0,
+    26.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 14 元，且 2026H1 收入同比增长、毛利率不低于 35%、经营现金流未明显恶化时，可建立观察仓。",
+      "action": "initial_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于 12 元，且新能源差速器或减速机壳体项目披露明确放量，同时客户集中度未继续上升时，可提高仓位。",
+      "action": "add_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 23 元但半年报未证明收入增长超过 15% 或毛利率维持 35% 以上时，应减仓或不参与。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "reason": "进入相对估值与绝对估值重叠的买入区，需要复核 2026H1 经营质量后再建仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 23.0,
+      "reason": "接近乐观情景估值，若没有新能源项目和利润超预期支撑，应考虑降低敞口。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看收入增速、毛利率、经营现金流、新能源壳体项目量产进度和客户集中度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认高毛利和增长是否具备全年持续性。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

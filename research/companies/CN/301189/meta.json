@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:301189",
+  "ticker": "301189",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "奥尼电子",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "current_thesis": "奥尼电子处于由传统智能视听硬件向AI推理算力设备扩张的转型期，收入增长强但利润和经营现金流尚未被验证，当前股价已隐含乐观情景，暂不具备安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    31.0,
+    42.0
+  ],
+  "buy_zone": [
+    22.0,
+    28.0
+  ],
+  "sell_or_reduce_zone": [
+    52.0,
+    60.0
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于28元且2026年中报显示经营现金流改善、综合毛利率回到16%以上时，仅可建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度收入增长、归母净利润为正且经营现金流转正后，才允许提高至核心观察仓。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于52元且未验证AI推理算力设备毛利率和现金流改善时，不新增仓位并考虑减持。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 28.0,
+      "reason": "进入买入观察区，若基本面同步改善可重新评估小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 60.0,
+      "reason": "接近乐观情景估值上沿，若没有现金流和毛利率验证则风险收益不佳。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查AI推理算力设备收入、毛利率、经营现金流、短期借款和客户集中度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入增长是否转化为持续利润和现金流。"
+    }
+  ]
+}
