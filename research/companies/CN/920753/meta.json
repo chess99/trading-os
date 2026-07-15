@@ -1,0 +1,55 @@
+{
+  "symbol": "CN:920753",
+  "market": "CN",
+  "ticker": "920753",
+  "name": "天纺标",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "细分资质与现金流尚可，但护城河偏窄、ROE仅处资本成本附近，当前估值已透支福建扩张和长期两位数现金流增长预期。",
+  "fair_value_range": [9.5, 12.0],
+  "buy_zone": [7.8, 9.5],
+  "sell_or_reduce_zone": [13.5, 16.5],
+  "position_plan": [
+    {
+      "condition": "股价9.0-9.5元，最近两个季度收入增速不低于5%且滚动经营现金流/归母净利不低于1",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价8.2-9.0元，食品检测亏损收窄且福建项目未明显超预算",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于8.2元，重新验证长期商业价值未受损且重估公允价值仍不低于10元",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "资质或公信力受损、应收恶化、福建项目回报假设被证伪",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、信用减值转回、毛利率与福建项目进度"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入需重新核验基本面的买入观察区间"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-15T14:03:39+08:00"
+}
