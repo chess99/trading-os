@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300810",
+  "ticker": "300810",
+  "name": "中科海讯",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备水声/声纳/信号处理平台稀缺性，2025收入恢复且2026年2.88亿元项目信息处理类设备订单提供增长锚点；但仍亏损、经营现金流为负、应收账款高、审价和验收周期不透明，当前估值已反映较多修复预期，缺乏足够安全边际。",
+  "fair_value_range": [
+    18.0,
+    25.0
+  ],
+  "buy_zone": [
+    14.0,
+    17.5
+  ],
+  "sell_or_reduce_zone": [
+    32.0,
+    40.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于17.5元，且2.88亿元项目未出现取消或重大延迟，经营回款没有进一步恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于15.0元，且半年报显示收入增长、减值收敛、经营现金流改善",
+      "action": "提高至核心跟踪仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于32.0元但利润和现金流没有同步兑现",
+      "action": "减仓或回避追高",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 17.5,
+      "reason": "进入初步买入区间，需要复核订单进展和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "可能出现较充分安全边际，需要复核是否为基本面恶化导致"
+    },
+    {
+      "type": "price_above",
+      "price": 32.0,
+      "reason": "进入乐观情景估值区间，需要确认业绩兑现是否匹配"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、应收账款、经营现金流和2.88亿元项目执行情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报订单交付、减值损失和回款改善情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认订单是否转化为收入和可持续盈利"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}
