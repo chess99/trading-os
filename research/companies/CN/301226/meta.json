@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:301226",
+  "ticker": "301226",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "祥明智能",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "祥明智能具备微特电机和风机定制化制造能力，2025年经营现金流较好、外销和高毛利产品占比改善，但ROE低、2026Q1扣非亏损，当前约29元附近估值已透支修复预期，暂列观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    14,
+    22
+  ],
+  "buy_zone": [
+    10,
+    14
+  ],
+  "sell_or_reduce_zone": [
+    26,
+    32
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且2026Q1扣非亏损未修复，仅保留观察仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价跌入18元以下且最新季度扣非净利恢复为正，可重新评估试探仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价跌入10-14元买入区且经营现金流未恶化，可建立小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "全年扣非净利超过3500万元、外销和风机连续增长、募投投产后ROE改善可见，再考虑提高仓位",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入重新评估区，需核验扣非利润和外销毛利率是否修复"
+    },
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入估算买入区，若基本面未恶化可考虑小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 26,
+      "reason": "高于合理价值上沿，除非新业务订单可核验，否则应降低或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非净利、外销毛利率和费用率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年利润修复是否成立"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-25",
+      "reason": "跟踪电机风机扩建项目是否按延期后计划达到可使用状态"
+    }
+  ]
+}

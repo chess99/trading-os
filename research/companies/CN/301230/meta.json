@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301230",
+  "ticker": "301230",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "泓博医药",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "泓博医药处于中小型CRO/CDMO修复期，2025年收入、利润和现金流改善，但2026Q1收入仅小幅增长且扣非利润下滑，当前估值已接近乐观情景，安全边际不足，适合观察而非买入。",
+  "fair_value_range": [
+    22.0,
+    28.0
+  ],
+  "buy_zone": [
+    18.0,
+    22.0
+  ],
+  "sell_or_reduce_zone": [
+    34.0,
+    42.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于22元且2026H1收入同比增速不低于15%、扣非净利率改善、经营现金流为正",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于18元且订单、扣非利润、经营现金流连续两个报告期同步改善",
+      "action": "提高到小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于34元且扣非利润未明显改善或非经常性收益占净利润比例仍高",
+      "action": "不买入或减持",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22.0,
+      "reason": "进入合理价值区间下沿，可结合中报扣非利润和现金流重新评估小仓试错"
+    },
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "进入较有安全边际区间，若基本面未恶化可提高研究优先级"
+    },
+    {
+      "type": "price_above",
+      "price": 34.0,
+      "reason": "估值进入乐观情景，需要扣非利润和订单兑现支撑，否则应回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入增速、扣非净利润、经营现金流、应收账款和订单质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断2026Q1扣非下滑是否为一次性波动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估正常化利润、商业化生产放量和合理估值区间"
+    }
+  ]
+}
