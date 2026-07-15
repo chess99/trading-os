@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300983",
+  "ticker": "300983",
+  "name": "尤安设计",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "尤安设计资产负债表稳健、账面现金和类现金资产较厚，但主营建筑设计仍处于房地产后周期下行压力中，2025 年大额亏损、2026Q1 只是亏损收窄和低基数恢复，尚未验证持续盈利拐点。按 2026-07-15 股价 33.64 元和约 2.10 倍 PB，市值已明显高于基准合理价值，安全边际不足。",
+  "fair_value_range": [
+    16,
+    22
+  ],
+  "buy_zone": [
+    14,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    36
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入 14-18 元且最近两个季度收入同比恢复、经营现金流不恶化、应收账款和信用减值没有明显反弹",
+      "action": "watchlist_starter",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "公司连续两个季度实现扣非盈亏平衡或盈利，同时经营现金流转正且货币资金、交易性金融资产、其他流动资产合计保持稳定",
+      "action": "increase_after_confirmation",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于 28 元且公司仍未恢复持续盈利，或应收/减值风险重新上升",
+      "action": "avoid_or_exit",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入基准买入观察区上沿，需要复核订单、现金流和应收质量是否支持资产底逻辑"
+    },
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入有安全边际的深度价值区，需要重新评估是否由 avoid 上调为 watch 或 hold"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "reason": "高于基准合理价值上沿，若盈利拐点未被验证则应继续回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点检查收入恢复、毛利率、应收账款、经营现金流和减值损失"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断 2026Q1 的亏损收窄是否延续为真实拐点"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新评估合理价值区间和评级"
+    }
+  ]
+}
