@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920735",
+  "market": "CN",
+  "ticker": "920735",
+  "name": "德源药业",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "代谢慢病仿制药产品群、高ROE和低负债具备吸引力，但26元附近已接近公允价值中枢，需等待集采、现金转化和创新药节点验证或更大安全边际。",
+  "fair_value_range": [24, 31],
+  "buy_zone": [20, 23],
+  "sell_or_reduce_zone": [34, 39],
+  "position_plan": [
+    {
+      "condition": "股价处于21至23元且TTM收入和扣非利润仍增长8%以上、经营现金流转化未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价处于18至20元且重新验证集采、新基地产能、应收存货和创新药假设均未受损",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "核心产品盈利、销售合规或现金流逻辑被证伪时，不因低价加仓并退出",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-01",
+      "reason": "复核2026年半年报、基本药物目录实施和创新药II期节点"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 23,
+      "reason": "进入有安全边际的初始买入区间，但必须先复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "进入减仓或不应追高区间，除非临床与现金流显著超预期"
+    }
+  ],
+  "updated_at": "2026-07-15T00:00:00+08:00"
+}
