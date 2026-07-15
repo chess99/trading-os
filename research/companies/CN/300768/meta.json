@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:300768",
+  "ticker": "300768",
+  "name": "迪普科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "迪普科技资产负债表强、研发投入高、应用交付及网络产品恢复增长，但传统网络安全产品2025年下滑，2026Q1收入同比下降，当前15.51元对应TTM PE约50.8倍，缺少足够安全边际，适合观察等待价格或基本面确认。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    11.0,
+    14.5
+  ],
+  "buy_zone": [
+    9.0,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    17.0,
+    20.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于11.5元，且最新半年报或三季报显示收入恢复正增长、经营现金流未明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于10.0元，且网络安全产品止跌、应用交付及网络产品保持增长",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于17.0元但收入增速仍低于10%或利润主要来自利息收入、退税和补助",
+      "action": "不追高或降低仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入基础估值区间下沿，开始具备初步安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "接近绝对估值基础情景，若基本面未恶化可提高研究优先级"
+    },
+    {
+      "type": "price_above",
+      "price": 17.0,
+      "reason": "超过基础估值上沿，需要收入和利润加速来支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入恢复、产品结构、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年订单和第四季度收入兑现概率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估估值区间和长期ROE改善情况"
+    }
+  ],
+  "key_metrics": {
+    "price_as_of_2026_07_15": 15.51,
+    "market_cap_cny": 9985788394.89,
+    "ttm_revenue_cny": 1199494040.09,
+    "ttm_net_profit_cny": 196639778.6,
+    "ttm_pe": 50.78,
+    "pb_2026q1": 2.82,
+    "ev_to_ttm_sales": 5.87,
+    "cash_and_trading_assets_per_share_cny": 4.6
+  }
+}
