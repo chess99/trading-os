@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:301001",
+  "ticker": "301001",
+  "market": "CN",
+  "name": "凯淳股份",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "凯淳股份资产负债表较干净，但品牌电商服务主业收入下滑、扣非亏损尚未修复，当前股价显著高于8-13元的基准内在价值区间，缺乏安全边际，适合观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    8.0,
+    13.0
+  ],
+  "buy_zone": [
+    7.0,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于18元且扣非利润尚未稳定转正，维持空仓观察。",
+      "action": "hold_cash",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价进入7-9元，且最近一期扣非净利润转正、经营现金流为正、应收账款周转未恶化。",
+      "action": "start_tracking_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "收入恢复到年化4亿元以上，扣非净利率超过5%，经营现金流连续两个报告期为正。",
+      "action": "increase_after_reassessment",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入买入观察区，需要结合扣非利润和现金流复核是否具备安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "明显高于基准公允价值区间，若无强业绩兑现应降低关注优先级或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "公司预约披露2026年半年报，复核收入、扣非利润、现金流和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后检查全年利润恢复路径和估值假设。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报后重估长期收入质量、客户集中度、减值风险和治理激励。"
+    }
+  ]
+}
