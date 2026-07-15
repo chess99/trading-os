@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:301031",
+  "ticker": "301031",
+  "name": "中熔电气",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "中熔电气是新能源高压熔断器龙头，2025年业绩高增且2026H1预告延续46.91%-68.73%利润增长。当前约95元对应2026E约23-27倍PE，低于105-135元基准公允价值区间，但客户集中、现金流转换和减持压力要求分批买入、控制仓位。",
+  "fair_value_range": [
+    105,
+    135
+  ],
+  "buy_zone": [
+    75,
+    95
+  ],
+  "sell_or_reduce_zone": [
+    150,
+    175
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于95元且2026H1最终业绩不低于预告下限，初始建仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于85元且半年报毛利率不低于40%、经营现金流无明显恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于75元且核心客户份额、毛利率和现金流未出现基本面破坏",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价超过150元且2026E利润中枢未上修至6.5亿元以上，分批降仓",
+      "max_weight": 0.015
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 95,
+      "reason": "进入买入区上沿，可建立初始仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 85,
+      "reason": "安全边际扩大，若半年报质量符合预期可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 150,
+      "reason": "超过基准公允价值上沿，需要验证利润上修和现金流改善，否则减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报收入、毛利率、经营现金流与业绩预告差异"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报订单延续性、客户集中度和现金转换"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、海外收入、新品放量和估值区间"
+    }
+  ],
+  "confidence": "medium",
+  "decision": "买入"
+}
