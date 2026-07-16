@@ -1,0 +1,77 @@
+{
+  "symbol": "CN:600573",
+  "ticker": "600573",
+  "name": "惠泉啤酒",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "区域啤酒小盘股，核心安全边际来自高净现金和低负债，2025-2026Q1盈利修复但收入增长与股东回报尚未充分验证；等待更低价格或旺季经营改善证据。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    9.8,
+    12.2
+  ],
+  "buy_zone": [
+    7.8,
+    8.8
+  ],
+  "sell_or_reduce_zone": [
+    13.5,
+    15.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于8.8元且2026年半年报收入不低于持平、毛利率维持34%以上时建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于7.8元且净现金安全边际未恶化、旺季利润未明显低于预期时提高到小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于13.5元或旺季收入继续下滑且费用率上升时减仓或退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入初始买入区，需要复核半年报和旺季动销后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 7.8,
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "超过基准估值上沿，需要复核增长兑现度并考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入、毛利率、费用率和现金配置"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证啤酒旺季利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红方案，评估现金折价是否收窄"
+    }
+  ]
+}
