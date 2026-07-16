@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:600195",
+  "ticker": "600195",
+  "name": "中牧股份",
+  "company_name": "中牧实业股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "央企动保平台具备兽用生物制品资质、渠道和信用优势，但2025年扣非利润显著下滑、2026Q1仍未验证拐点；当前价格约1.2倍PB、动态PE偏高，安全边际不足，等待低价或扣非利润连续恢复。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    5.2,
+    6.3
+  ],
+  "buy_zone": [
+    0,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.80元，且最新季报未显示经营现金流或资产质量恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H1或2026Q3扣非利润连续改善，毛利率回升，股价位于5.20-5.80元",
+      "action": "小仓位验证盈利拐点",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "归母利润年化恢复至2.5亿元以上且ROE明确回升",
+      "action": "提高至策略上限",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入显著低于账面价值的买入观察区"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "若扣非利润未恢复则估值提前透支，需要减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非利润、毛利率、现金流和应收存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认盈利拐点是否连续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估ROE和分红/资本开支纪律"
+    }
+  ],
+  "key_metrics": {
+    "last_price": 6.62,
+    "last_price_date": "2026-07-16",
+    "market_cap_cny": 6760001481.2,
+    "book_value_per_share_estimate": 5.57,
+    "source_confidence": "medium"
+  }
+}
