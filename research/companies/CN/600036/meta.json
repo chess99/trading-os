@@ -5,26 +5,60 @@
   "name": "招商银行",
   "currency": "CNY",
   "status": "active",
+  "rating": "buy",
   "current_rating": "buy",
-  "current_thesis": "招商银行36.88元约对应0.82倍2026Q1普通股PB，低成本负债和财富管理恢复支撑ROE，但信用卡与消费贷不良上升，适合小仓分批而非重仓押注趋势反转。",
+  "current_thesis": "招商银行在37-38元附近对应约0.7-0.8倍PB，估值已反映ROE下行和零售信用风险，但低成本存款、零售AUM、财富管理恢复、387%以上拨备覆盖率和14%以上核心一级资本仍支撑11%-13%可持续ROE，适合分批买入；主要风险是信用卡、消费贷和净息差继续恶化。",
   "fair_value_range": [42, 52],
   "buy_zone": [34, 39],
   "sell_or_reduce_zone": [55, 62],
   "position_plan": [
-    {"condition": "34-39元建立首仓", "max_weight": 0.02},
-    {"condition": "32-34元且零售资产质量稳定", "max_weight": 0.03},
-    {"condition": "32元以下经复核确认拨备和资产质量仍健康", "max_weight": 0.05}
+    {
+      "condition": "34-39元建立首仓，且净息差、信用卡不良和拨备覆盖率未显著恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "32-34元且零售关注率、信用卡关注率环比稳定或下降",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "32元以下经复核确认核心一级资本充足率高于13.5%且拨备覆盖率高于350%",
+      "max_weight": 0.06
+    }
   ],
-  "latest_report": "reports/2026-07-11-deep-review.md",
-  "report_history": ["reports/2026-07-07-initial.md", "reports/2026-07-11-deep-review.md"],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-11-deep-review.md",
+    "reports/2026-07-16-initial.md"
+  ],
   "review_triggers": [
-    {"type": "date", "date": "2026-08-30", "reason": "复查半年报净息差、存款成本、信用卡不良和拨备覆盖率"},
-    {"type": "date", "date": "2026-10-30", "reason": "复查三季报资产质量和财富管理收入"}
+    {
+      "type": "date",
+      "date": "2026-08-30",
+      "reason": "复查2026年半年报净息差、零售关注率、信用卡不良率、拨备覆盖率和核心一级资本充足率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-30",
+      "reason": "复查2026年三季报财富管理收入、零售AUM、信用卡新生成不良和ROE趋势"
+    }
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 34, "reason": "进入更高安全边际区间，需同步复核零售资产质量"},
-    {"type": "price_below", "price": 32, "reason": "进入强吸引力区间，必须重做信用风险检查"},
-    {"type": "price_above", "price": 55, "reason": "超过当前合理价值上沿，评估减仓"}
+    {
+      "type": "price_below",
+      "price": 34,
+      "reason": "进入更高安全边际区间，若资产质量未恶化可提高仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入强安全边际区间，需重做信用风险和资本充足率检查"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "超过当前估值上沿，若内在价值未上修应评估减仓"
+    }
   ],
-  "updated_at": "2026-07-11T18:00:00+08:00"
+  "updated_at": "2026-07-16"
 }
