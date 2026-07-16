@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:600094",
+  "ticker": "600094",
+  "market": "CN",
+  "name": "大名城",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "低杠杆地产资产提供一定账面安全垫，但主业增长弱、经营现金流承压，6G/低空/算力等科技转型仍缺少可审计利润兑现；当前股价接近中性估值上沿，适合观察等待更低价格或业务验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    3.2,
+    3.9
+  ],
+  "buy_zone": [
+    2.8,
+    3.1
+  ],
+  "sell_or_reduce_zone": [
+    4.3,
+    4.8
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入买入区间，且最新定期报告显示资产负债率继续低于45%、现金短债比不低于1、经营现金流改善或转正",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "科技业务连续两个季度披露可核验收入、正毛利和现金回款，同时地产经营现金流转正",
+      "action": "考虑提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价进入减仓区间但科技业务仍无利润兑现，或出现大额减值、激进跨界资本开支",
+      "action": "减仓或回避",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.1,
+      "reason": "进入估算买入区间上沿，重新核验现金流、负债和项目去化后可考虑小仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "reason": "进入具备更高安全边际的账面资产折价区间。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.3,
+      "reason": "超过中性估值上沿，需要确认是否由可审计利润兑现支撑。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "接近乐观情景上沿，若仍主要由主题交易驱动应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、利润、经营现金流、负债和科技业务披露。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认地产结转和现金流改善是否持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估净资产质量、分红回购和转型业务兑现。"
+    }
+  ]
+}
