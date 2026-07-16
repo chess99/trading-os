@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600851",
+  "ticker": "600851",
+  "name": "海欣股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "海欣股份是医药制造、物业出租、纺织贸易与金融/股权投资混合平台，资产负债表稳健但ROE偏低、利润依赖投资收益；当前价格高于基准价值区间，适合观察等待安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    5.2,
+    6.6
+  ],
+  "buy_zone": [
+    4.6,
+    5.4
+  ],
+  "sell_or_reduce_zone": [
+    8.2,
+    10.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于5.4元且2026半年报经营现金流转正、医药收入未继续大幅下滑",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于4.8元且PB接近或低于1.25倍，且未出现投资资产重大减值",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于8.2元且无资产重估、分红提升或主营盈利中枢上修证据",
+      "action": "不买入或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.4,
+      "reason": "进入买入观察区，需要复核半年报经营现金流和医药板块收入"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "接近悲观情景价值，可评估提高至小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "reason": "高于乐观情景中枢，除非基本面上修否则应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、利润、经营现金流和投资收益"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1经营现金流转负是否修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红政策和资产配置变化"
+    }
+  ]
+}
