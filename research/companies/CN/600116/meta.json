@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600116",
+  "ticker": "600116",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "三峡水利",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "三峡水利具备地方配售电底盘、三峡体系股东背景和综合能源第二曲线，2026年上半年受来水改善、综合能源投产和锰价上行推动利润显著反转；但水文、锰业和投资/处置收益波动较大，当前股价已部分反映反转，需等待半年报验证扣非利润与经营现金流质量。",
+  "fair_value_range": [
+    5.8,
+    7.4
+  ],
+  "buy_zone": [
+    4.8,
+    5.4
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    9.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于5.4元，且2026年半年报扣非归母净利润不低于2.9亿元、经营现金流未明显背离利润",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于5.0元，且配售电量、综合能源项目利润和水电上网电量没有趋势性恶化",
+      "action": "提高至核心观察仓上限",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于8.0元，且2027年可持续利润无法支撑高于7亿元的判断",
+      "action": "不加仓并考虑降低仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.4,
+      "reason": "进入买入区间上沿，若半年报利润质量通过验证可建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "接近悲观情景价值，若基本面未恶化则安全边际明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "超过基准公允价值上沿，需验证综合能源和可持续利润是否足以支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、扣非利润、经营现金流和综合能源项目贡献"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断丰水和锰价收益是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红，重估可持续利润中枢"
+    }
+  ]
+}

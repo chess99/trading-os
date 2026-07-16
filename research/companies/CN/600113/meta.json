@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600113",
+  "ticker": "600113",
+  "name": "浙江东日",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "浙江东日是温州国资控股的区域农副产品批发市场运营商，核心资产稳定、杠杆低、现金储备较厚，但当前股价对应约90倍滚动市盈率和约4.9倍市净率，显著透支未核验的资产注入或主题预期，缺乏基本面安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    7.0,
+    11.0
+  ],
+  "buy_zone": [
+    0.0,
+    7.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于18元且无可量化高质量资产注入，不建仓。",
+      "action": "avoid_new_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌至7元以下，且最近两个季度经营现金流/归母净利润大于0.8、核心农批市场收入未恶化。",
+      "action": "research_watch_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价跌至6元以下，且无重大关联交易损害、无现金流恶化，可作为区域公用事业型资产配置。",
+      "action": "small_position",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入公允价值上沿以下，重新评估基本面和安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入初始买入观察区，可结合现金流和治理情况评估小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "高于基本面可解释区间，持仓应检查减持或卖出纪律。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查核心农批市场收入、配送现金流和预付款项变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认估值区间和是否存在资产注入或外拓项目变化。"
+    }
+  ]
+}
