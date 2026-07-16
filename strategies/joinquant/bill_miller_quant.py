@@ -551,3 +551,104 @@ def score_candidates(features, min_group_size=20):
     return ranked.sort_values(
         ["eligible", "score", "code"], ascending=[False, False, True], na_position="last"
     ).reset_index(drop=True)
+
+
+def select_portfolio(
+    ranked,
+    current_codes,
+    target_count=20,
+    entry_rank=15,
+    hold_rank=40,
+):
+    if ranked is None or len(ranked) == 0 or target_count <= 0:
+        return []
+    eligible = ranked.loc[ranked["eligible"].fillna(False)].copy()
+    if "veto_reasons" in eligible:
+        eligible = eligible.loc[eligible["veto_reasons"].map(len).eq(0)]
+    eligible = eligible.reset_index(drop=True)
+    eligible["rank"] = np.arange(1, len(eligible) + 1)
+    if not current_codes:
+        return list(eligible["code"].head(target_count))
+
+    current = set(current_codes)
+    retained = list(
+        eligible.loc[
+            eligible["code"].isin(current) & eligible["rank"].le(hold_rank), "code"
+        ]
+    )[:target_count]
+    selected = list(retained)
+    for code in eligible.loc[eligible["rank"].le(entry_rank), "code"]:
+        if code not in selected:
+            selected.append(code)
+        if len(selected) >= target_count:
+            break
+    return selected
+
+
+def _single_name_capped_weights(conviction, max_single):
+    weights = pd.Series(0.0, index=conviction.index, dtype=float)
+    active = list(conviction.index)
+    remaining = 1.0
+    while active and remaining > 1e-12:
+        active_conviction = conviction.loc[active]
+        total_conviction = active_conviction.sum()
+        if not np.isfinite(total_conviction) or total_conviction <= 0:
+            break
+        proposed = active_conviction / total_conviction * remaining
+        capped = proposed.loc[proposed > max_single + 1e-12]
+        if capped.empty:
+            weights.loc[active] = proposed
+            break
+        for index in capped.index:
+            weights.loc[index] = max_single
+            remaining -= max_single
+            active.remove(index)
+    return weights
+
+
+def _apply_group_cap(frame, weights, column, group_value, cap):
+    mask = frame[column].eq(group_value)
+    group_total = weights.loc[mask].sum()
+    if group_total > cap and group_total > 0:
+        weights.loc[mask] *= cap / group_total
+
+
+def allocate_weights(
+    selected,
+    max_single=0.08,
+    min_single=0.02,
+    max_industry=0.25,
+    max_financial=0.30,
+    max_growth=0.20,
+):
+    if selected is None or len(selected) == 0:
+        return {}
+    frame = selected.copy().drop_duplicates("code").reset_index(drop=True)
+    scores = pd.to_numeric(frame["score"], errors="coerce")
+    risks = pd.to_numeric(frame["downside_risk"], errors="coerce").clip(lower=0.05)
+    valid = scores.notna() & risks.notna()
+    frame = frame.loc[valid].reset_index(drop=True)
+    if frame.empty:
+        return {}
+    scores = scores.loc[valid].reset_index(drop=True)
+    risks = risks.loc[valid].reset_index(drop=True)
+    conviction = (scores.sub(50.0).clip(lower=1.0) / risks).replace(
+        [np.inf, -np.inf], np.nan
+    )
+    conviction = conviction.fillna(0.0)
+    weights = _single_name_capped_weights(conviction, max_single)
+
+    for industry in frame["industry"].dropna().unique():
+        _apply_group_cap(frame, weights, "industry", industry, max_industry)
+    _apply_group_cap(frame, weights, "model", MODEL_FINANCIAL, max_financial)
+    _apply_group_cap(frame, weights, "model", MODEL_GROWTH, max_growth)
+
+    weights = weights.where(weights >= min_single, 0.0)
+    total = weights.sum()
+    if total > 1.0:
+        weights /= total
+    return {
+        frame.loc[index, "code"]: round(float(weight), 10)
+        for index, weight in weights.items()
+        if weight > 0
+    }

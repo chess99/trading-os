@@ -300,3 +300,95 @@ def test_score_candidates_rewards_expectation_gap_without_making_low_pe_a_hard_f
     assert good_score > weak_score
     assert ranked.loc[ranked["code"] == "GROWTH_GOOD", "eligible"].iloc[0]
     assert ranked["score"].dropna().between(0.0, 100.0).all()
+
+
+def make_ranked_fixture(count):
+    return pd.DataFrame(
+        {
+            "code": [f"S{rank:03d}" for rank in range(1, count + 1)],
+            "score": np.linspace(100.0, 50.0, count),
+            "eligible": [True] * count,
+            "veto_reasons": [[] for _ in range(count)],
+        }
+    )
+
+
+def test_select_portfolio_uses_initial_top_twenty_and_later_rank_buffers():
+    strategy = load_strategy()
+    ranked = make_ranked_fixture(50)
+
+    assert strategy.select_portfolio(ranked, []) == list(ranked["code"].head(20))
+    selected = strategy.select_portfolio(ranked, ["S035", "S045"])
+    assert "S035" in selected
+    assert "S045" not in selected
+    assert len(selected) <= 20
+    new_codes = set(selected) - {"S035", "S045"}
+    assert new_codes <= set(ranked["code"].head(15))
+
+
+def test_allocate_weights_respects_single_industry_and_model_caps():
+    strategy = load_strategy()
+    rows = []
+    for index in range(20):
+        if index < 6:
+            model, industry = strategy.MODEL_FINANCIAL, "银行I"
+        elif index < 10:
+            model, industry = strategy.MODEL_GROWTH, "软件服务"
+        else:
+            model, industry = strategy.MODEL_GENERAL, f"行业{index % 5}"
+        rows.append(
+            {
+                "code": f"S{index:03d}",
+                "score": 80.0,
+                "downside_risk": 0.20 if index == 10 else 0.40,
+                "industry": industry,
+                "model": model,
+            }
+        )
+    selected = pd.DataFrame(rows)
+    weights = strategy.allocate_weights(selected)
+
+    assert weights
+    assert sum(weights.values()) <= 1.0 + 1e-9
+    assert all(0.02 <= weight <= 0.08 for weight in weights.values())
+    assert weights["S010"] > weights["S011"]
+    for _industry, group in selected.groupby("industry"):
+        assert sum(weights.get(code, 0.0) for code in group["code"]) <= 0.25 + 1e-9
+    assert (
+        sum(
+            weights.get(row.code, 0.0)
+            for row in selected.itertuples()
+            if row.model == strategy.MODEL_FINANCIAL
+        )
+        <= 0.30 + 1e-9
+    )
+    assert (
+        sum(
+            weights.get(row.code, 0.0)
+            for row in selected.itertuples()
+            if row.model == strategy.MODEL_GROWTH
+        )
+        <= 0.20 + 1e-9
+    )
+
+
+def test_allocate_weights_keeps_cash_when_concentration_caps_prevent_full_investment():
+    strategy = load_strategy()
+    selected = pd.DataFrame(
+        [
+            {
+                "code": f"S{index}",
+                "score": 90.0,
+                "downside_risk": 0.2,
+                "industry": f"行业{index}",
+                "model": strategy.MODEL_GENERAL,
+            }
+            for index in range(5)
+        ]
+    )
+
+    weights = strategy.allocate_weights(selected)
+
+    assert len(weights) == 5
+    assert all(weight == 0.08 for weight in weights.values())
+    assert round(sum(weights.values()), 8) == 0.40
