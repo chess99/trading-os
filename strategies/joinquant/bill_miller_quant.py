@@ -5,8 +5,6 @@
 本文件保持单文件结构，便于直接复制到聚宽策略编辑器；不依赖 trading_os 包。
 """
 
-from __future__ import annotations
-
 import datetime as dt
 import math
 
@@ -287,7 +285,7 @@ def build_company_features(
 
     ar_gaps = []
     inventory_gaps = []
-    for prior, current in zip(rows[:-1], rows[1:], strict=True):
+    for prior, current in zip(rows[:-1], rows[1:]):  # noqa: B905
         ar_gaps.append(
             _growth_gap(
                 _value(current, "account_receivable"),
@@ -305,8 +303,8 @@ def build_company_features(
             )
         )
     accounting_gap_streak = 0
-    for ar_gap, inventory_gap in zip(
-        reversed(ar_gaps), reversed(inventory_gaps), strict=True
+    for ar_gap, inventory_gap in zip(  # noqa: B905
+        reversed(ar_gaps), reversed(inventory_gaps)
     ):
         if (np.isfinite(ar_gap) and ar_gap > 0.25) or (
             np.isfinite(inventory_gap) and inventory_gap > 0.25
@@ -587,7 +585,7 @@ def score_candidates(features, min_group_size=20):
         if model_frame.empty:
             continue
         if model == MODEL_FINANCIAL:
-            for _, industry_frame in model_frame.groupby("industry", dropna=False):
+            for _, industry_frame in model_frame.groupby("industry"):
                 scored_groups.append(_score_group(industry_frame, model, min_group_size))
         else:
             scored_groups.append(_score_group(model_frame, model, min_group_size))

@@ -21,6 +21,15 @@ def load_strategy():
     return module
 
 
+def test_strategy_source_avoids_joinquant_legacy_runtime_features():
+    source = STRATEGY_PATH.read_text(encoding="utf-8")
+
+    assert "from __future__ import annotations" not in source
+    assert "from **future** import annotations" not in source
+    assert "strict=" not in source
+    assert 'groupby("industry", dropna=' not in source
+
+
 def test_safe_ratios_and_growth_reject_economically_invalid_denominators():
     strategy = load_strategy()
 
