@@ -1,0 +1,64 @@
+{
+  "symbol": "CN:600866",
+  "ticker": "600866",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "星湖科技",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "星湖科技具备全球级生物发酵规模、成本和客户准入优势，但2026年上半年业绩预告显示主要产品价格下滑导致利润大幅收缩；当前价格处于估算公允价值区间内，缺乏足够安全边际，等待中报和价格周期企稳信号。",
+  "fair_value_range": [
+    3.8,
+    5.2
+  ],
+  "buy_zone": [
+    0,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    5.6,
+    7
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.8元，且2026年中报或三季报显示毛利率企稳、经营现金流转正、存货不继续显著上升",
+      "action": "watch_to_small_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "主要产品价格继续下滑，或2026年全年利润中枢低于2亿元且经营现金流持续为负",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入估算买入区，需结合毛利率和现金流确认是否具备安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.6,
+      "reason": "高于基准公允价值上沿，若无产品价格修复证据，应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-20",
+      "reason": "预计接近2026年半年报窗口，核验预告落点、毛利率、存货和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报披露后复核产品价格周期、盈利恢复和资本开支压力。"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}
