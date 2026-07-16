@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:600380",
+  "ticker": "600380",
+  "name": "健康元",
+  "market": "CN",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "健康元现金流和股东回报较强，呼吸创新药与吸入制剂提供向上期权，但2025年及2026Q1收入利润仍承压，现价低于公允区间下沿但安全边际不足，等待更低价格或增长恢复证据。",
+  "currency": "CNY",
+  "current_price": 10.64,
+  "price_as_of": "2026-07-16",
+  "fair_value_range": [
+    11.5,
+    14.2
+  ],
+  "buy_zone": [
+    8.8,
+    9.8
+  ],
+  "sell_or_reduce_zone": [
+    14.5,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于9.8元且未出现药品安全、治理或现金流恶化事件",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于8.8元且2026H1经营现金流仍显著高于归母净利润",
+      "action": "提高至中等仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于14.5元且收入未恢复正增长或创新药放量证据不足",
+      "action": "分批减持",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.8,
+      "reason": "进入初始买入区间，需复核基本面后可建观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入深度安全边际区间，若现金流和治理未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 14.5,
+      "reason": "达到减持区间下沿，若业绩未确认修复应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-26",
+      "reason": "复核2026年半年报，重点跟踪收入增速、归母净利润、经营现金流和玛帕西沙韦商业化进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证全年业绩恢复路径和呼吸创新药销售费用率"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报，重新评估公允价值和股东回报政策"
+    }
+  ],
+  "key_metrics": {
+    "revenue_2025_cny_bn": 15.216,
+    "net_profit_attributable_2025_cny_bn": 1.336,
+    "operating_cash_flow_2025_cny_bn": 3.892,
+    "revenue_2026_q1_cny_bn": 3.721,
+    "net_profit_attributable_2026_q1_cny_bn": 0.415,
+    "operating_cash_flow_2026_q1_cny_bn": 0.915
+  }
+}
