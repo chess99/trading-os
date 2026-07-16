@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600038",
+  "ticker": "600038",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "中直股份",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中直股份是国内稀缺直升机整机平台，重组后资产更完整，政策与军工需求提供长期支撑；但当前 ROE 偏低、现金流波动大、2026Q1 盈利下滑明显，25元附近缺乏足够安全边际，先观察半年报和回款改善。",
+  "fair_value_range": [
+    22,
+    30
+  ],
+  "buy_zone": [
+    18,
+    21
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于21元，且最新定期报告未显示收入、毛利率和经营现金流继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于18元，PB低于0.85倍，且经营现金流明显改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于34元但ROE仍低于5%或TTM PE仍高于35倍",
+      "action": "不追高，已有仓位减持",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 21,
+      "reason": "进入买入区间上沿，需要复核半年报与现金流是否支持建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "接近悲观情景价值，若基本面未恶化可能具备较好安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "超过基准公平价值区间，需要乐观情景兑现才能支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-24",
+      "reason": "Investing.com显示下一财报日为2026年8月24日，需复核半年报收入、利润、毛利率和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报窗口，验证交付节奏是否恢复以及2025年现金流压力是否缓解"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-19",
+      "reason": "重大资产重组部分股份锁定期节点，需关注解禁与股东行为"
+    }
+  ]
+}

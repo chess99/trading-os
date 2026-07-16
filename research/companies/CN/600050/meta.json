@@ -6,62 +6,98 @@
   "company_name": "中国联合网络通信股份有限公司",
   "currency": "CNY",
   "status": "active",
+  "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "中国联通是A股三大电信运营商之一，传统业务增速平庸（收入年增2%-4%），但IDC/云计算/算力网络等数字化业务高增（30%+）构成第二曲线。央企市值管理考核背景下分红率持续提升（当前约55%），股息率约3.5%-4%。但A股相对港股（0762.HK）溢价100%-150%是最大估值压制因素。当前PB~1.0x，合理估值区间5.0-6.5元。核心逻辑为高股息防御+央企估值修复期权，非高增长标的。建议观察等待更好买入机会或港股标的。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏低",
-  "fair_value_range": [5.0, 6.5],
-  "buy_zone": [4.5, 5.0],
-  "strong_attraction_zone": [3.5, 4.5],
-  "sell_or_reduce_zone": [6.5, 7.5],
-  "do_not_chase_above": 6.5,
+  "quality_rating": "B",
+  "valuation_rating": "reasonable_to_cheap",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-16-initial.md"
+  ],
+  "current_thesis": "中国联通是A股三大基础电信运营商中规模最小、估值弹性较高但经营增速偏弱的央企通信资产。投资价值主要来自牌照与网络资产带来的稳定现金流、5G资本开支高峰后自由现金流改善、派息率提升以及算力/云/安全业务的再定价期权。2026Q1归母净利润同比下降18.0%，需要中报验证是否为短期扰动；当前股价约4.26-4.27元接近合理价值下沿但尚未进入足够厚的安全边际区，维持观察。",
+  "fair_value_range": [
+    4.3,
+    5.4
+  ],
+  "buy_zone": [
+    3.8,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    5.6,
+    6.4
+  ],
   "position_plan": [
     {
-      "zone": "4.5-5.0元",
-      "condition": "股价4.5-5.0元且基本面未恶化",
-      "action": "分批建仓",
-      "target_weight": 0.03,
-      "max_weight": 0.06
+      "condition": "股价处于3.8-4.2元且2026中报归母净利润未继续恶化，派息率维持55%以上",
+      "action": "分批买入",
+      "target_weight": 0.02,
+      "max_weight": 0.04
     },
     {
-      "zone": "5.0-5.5元",
-      "condition": "股价5.0-5.5元且分红政策维持",
-      "action": "防御配置",
+      "condition": "股价处于4.2-4.8元且中报尚未验证Q1利润下滑修复",
+      "action": "观察或仅防御性小仓",
       "target_weight": 0.01,
       "max_weight": 0.02
     },
     {
-      "zone": "5.5-6.5元",
-      "condition": "股价5.5-6.5元",
-      "action": "持有/观察，不新买入",
+      "condition": "股价高于5.6元且没有利润修复、派息率上调或算力业务超预期催化",
+      "action": "停止新增并考虑减仓",
       "target_weight": 0.0,
-      "max_weight": 0.01
+      "max_weight": 0.005
     }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "action": "进入分批买入观察区",
+      "reason": "接近0.77倍PB、股息率约4%附近，安全边际开始出现"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "action": "提高买入优先级",
+      "reason": "进入悲观情景估值区间，若基本面未恶化则风险收益比明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 5.6,
+      "action": "停止新增并复核估值",
+      "reason": "超过基准情景上沿，除非利润修复或派息率上调，否则预期收益不足"
+    },
+    {
+      "type": "price_above",
+      "price": 6.4,
+      "action": "考虑减持",
+      "reason": "接近乐观情景估值上沿，分红收益率下降且A/H溢价风险扩大"
+    }
+  ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "2026年半年报发布：验证数字化收入增速是否维持25%+及分红率"
+      "reason": "复核2026年中报，重点确认Q1利润下滑是否修复、算力业务增速和自由现金流"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "2026年三季报：验证利润和现金流趋势"
+      "reason": "复核2026年三季报，检查收入、利润、资本开支和派息预期是否支持估值上调"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报和年度分红方案，确认央企红利逻辑是否延续"
     }
   ],
-  "price_triggers": [
-    {"type": "price_below", "price": 4.5, "action": "考虑分批建仓", "reason": "进入安全边际买入区"},
-    {"type": "price_above", "price": 6.5, "action": "考虑减仓", "reason": "接近不应追高线"}
-  ],
   "key_risks": [
-    "A/H溢价过高（A股比港股溢价100%-150%），溢价收敛将导致A股跑输",
-    "运营商行业增长天花板明显，收入增速长期低于GDP增速",
-    "数字化业务竞争激烈且利润率存不确定性",
-    "算力资本开支可能超预期，压缩自由现金流",
-    "政策性降价/提速降费若重新加码将压缩利润"
-  ],
-  "updated_at": "2026-07-08T16:30:00+08:00"
+    "2026Q1归母净利润同比下降18.0%，若中报不能修复，稳健红利逻辑会被削弱",
+    "通信行业收入低增，2025年全国电信业务收入同比仅增长0.7%",
+    "算力投资占比提升可能重新推高资本开支和折旧，压制自由现金流",
+    "A股相对港股联通存在估值溢价，溢价收敛可能拖累A股表现",
+    "云、AI、安全业务面对中国电信、阿里云、华为云、腾讯云等强竞争，利润率存在不确定性",
+    "央企多目标治理可能导致资本回报率改善慢于预期"
+  ]
 }
