@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:600343",
+  "ticker": "600343",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "航天动力",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司具备航天央企背景和泵、液力变矩器、流体装备等制造基础，但2025年及2026Q1仍亏损、经营现金流为负，2026H1继续预亏；按第三方行情快照测算PB约9.6倍，显著高于连续亏损装备制造企业可支撑估值，缺乏安全边际。",
+  "fair_value_range": [
+    1.6,
+    3.5
+  ],
+  "buy_zone": [
+    0,
+    1.6
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价低于1.6元且最近两个季度经营现金流转正、主营毛利率持续改善时，允许建立观察性小仓位。",
+      "action": "watchlist_only_until_turnaround",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若股价高于4.5元且扣非利润和经营现金流未转正，不新增仓位；已有仓位以退出为主。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.6,
+      "reason": "进入按折价净资产估算的买入观察区，但仍需同时确认现金流和毛利率改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "若仍处亏损且经营现金流未转正，价格超过该水平缺乏安全边际。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报实际亏损、收入结构、毛利率、经营现金流和预告兑现情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认亏损是否继续收窄以及订单和回款是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及2027年一季报，重新评估净资产、减值风险和盈利拐点。"
+    }
+  ]
+}
