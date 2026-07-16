@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:301565",
+  "ticker": "301565",
+  "name": "中仑新材",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是功能性BOPA膜材全球龙头，具备PA6-BOPA一体化、全球客户和新能源膜材扩张期权；但2026-07-16早盘约18.82元已计入较多BOPP与印尼产能成功预期，当前安全边际不足，等待价格回落或高毛利新业务放量验证。",
+  "fair_value_range": [
+    14.0,
+    18.0
+  ],
+  "buy_zone": [
+    12.0,
+    15.0
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    28.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于15元，且最近一期综合毛利率不低于12%、收入保持同比增长",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于12元，且BOPP或新型BOPA季度放量、库存未继续快速累积",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于24元且利润没有同步上修，或BOPP导入持续低于预期",
+      "action": "减仓或回避",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "进入买入观察区，需要复核毛利率、库存和BOPP订单。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入高安全边际区，若基本面未恶化可考虑提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "进入乐观情景估值区，若新业务尚未兑现应降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查毛利率、BOPP收入、印尼产线爬坡和库存。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入恢复是否转化为利润弹性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和产能投放后的全年盈利质量。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 18.82,
+    "reference_price_time": "2026-07-16 09:25-09:26",
+    "currency": "CNY",
+    "shares_outstanding": 400010000,
+    "market_cap_billion": 7.528,
+    "pb": 3.08,
+    "pe_quote_source": 94.37
+  }
+}
