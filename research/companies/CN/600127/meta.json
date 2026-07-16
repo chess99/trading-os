@@ -1,0 +1,101 @@
+{
+  "symbol": "CN:600127",
+  "ticker": "600127",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "金健米业",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "金健米业具备国资粮油平台、区域品牌和休闲食品改善期权，但2025年扣非亏损、2026Q1利润大幅下滑且2026H1预亏，当前约5.46倍PB显著高于同业，安全边际不足，暂不买入，仅在估值回落或扣非利润验证后观察。",
+  "fair_value_range": [
+    2.0,
+    3.2
+  ],
+  "buy_zone": [
+    1.5,
+    2.2
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    6.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于2.20元，且2026年半年报未出现新的现金流或治理恶化信号",
+      "action": "small_watch_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "扣非净利润连续两个季度转正，休闲食品收入和毛利率持续改善，且股价仍低于3.20元",
+      "action": "increase_after_validation",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于4.50元但扣非利润未达到年化5000万元以上",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入观察买入区上沿，需要复核半年报、油脂毛利率和休闲食品盈利持续性。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "高于减仓区下沿且缺乏扣非利润支撑时，风险收益比偏差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、亏损构成、经营现金流、油脂毛利率和税款影响。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认休闲食品扩产前盈利趋势和扣非利润是否修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，评估果冻项目投产后的收入、利润和现金流贡献。"
+    }
+  ],
+  "key_sources": [
+    {
+      "title": "金健米业2025年年度报告",
+      "url": "http://static.cninfo.com.cn/finalpage/2026-04-09/1225085619.PDF",
+      "date": "2026-04-09"
+    },
+    {
+      "title": "金健米业2026年第一季度报告",
+      "url": "http://static.cninfo.com.cn/finalpage/2026-04-30/1225259844.PDF",
+      "date": "2026-04-30"
+    },
+    {
+      "title": "金健米业2026年半年度业绩预减公告",
+      "url": "http://static.cninfo.com.cn/finalpage/2026-07-15/1225424290.PDF",
+      "date": "2026-07-15"
+    }
+  ],
+  "valuation": {
+    "as_of": "2026-07-16",
+    "last_price": 5.71,
+    "market_cap_cny_billion": 3.665,
+    "base_case_value_per_share": [
+      2.0,
+      3.2
+    ],
+    "method": "relative_pb_normalized_earnings_scenario_cross_check"
+  }
+}
