@@ -1,0 +1,87 @@
+{
+  "symbol": "CN:600622",
+  "ticker": "600622",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "光大嘉宝",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "光大嘉宝具备光大集团背景、光大安石不动产资管能力和商业不动产 REITs 期权，但归母权益较薄、2025 至 2026H1 仍持续亏损，当前价格缺少足够安全边际，适合作为困境反转观察标的。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    1.45,
+    1.85
+  ],
+  "buy_zone": [
+    1.1,
+    1.35
+  ],
+  "sell_or_reduce_zone": [
+    2.35,
+    2.8
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌入 1.10-1.35 元且 2026 半年度报告未出现超过预告的大额新增减值、债务滚续正常",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "商业不动产 REITs 申报取得正式受理或更高确定性进展，且扣非亏损连续两个季度收窄",
+      "action": "可提高至事件驱动仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于 2.35 元但未出现 REITs 获批、资产处置回款或扣非扭亏等基本面验证",
+      "action": "不追涨并减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.35,
+      "reason": "进入买入观察区，需要复核半年度报告、归母权益和新增减值。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.35,
+      "reason": "高于减仓区下沿，若无 REITs 或扭亏验证则风险回报转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年度报告与业绩预告差异、归母权益和减值明细。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报中扣非亏损、财务费用和经营现金流趋势。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报、REITs 进展、资管收入和债务滚续情况。"
+    }
+  ],
+  "key_metrics": {
+    "last_price_reference": {
+      "date": "2026-07-16",
+      "price": 2.09,
+      "source": "公开行情，置信度中"
+    },
+    "shares_outstanding_billion": 1.4997,
+    "market_cap_billion_cny": 3.13,
+    "q1_2026_attributable_equity_billion_cny": 1.998,
+    "q1_2026_attributable_pb": 1.57,
+    "h1_2026_net_profit_forecast_billion_cny": -0.256,
+    "h1_2026_deducted_net_profit_forecast_billion_cny": -0.48
+  }
+}
