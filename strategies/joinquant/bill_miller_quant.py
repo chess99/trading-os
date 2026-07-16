@@ -1,3 +1,4 @@
+# ruff: noqa: F403, F405
 """比尔·米勒风格的聚宽纯量化选股策略。
 
 策略把主观价值判断压缩为三类可回测模型：普通企业、金融企业和亏损成长企业。
@@ -6,14 +7,81 @@
 
 from __future__ import annotations
 
+import datetime as dt
 import math
 
 import numpy as np
 import pandas as pd
 
+try:
+    from jqdata import *  # noqa: F403
+except ImportError:
+    pass
+
 MODEL_GENERAL = "general"
 MODEL_FINANCIAL = "financial"
 MODEL_GROWTH = "growth"
+
+BENCHMARK = "000985.XSHG"
+TARGET_COUNT = 20
+ENTRY_RANK = 15
+HOLD_RANK = 40
+MIN_LISTING_DAYS = 500
+MIN_AVERAGE_MONEY = 2e7
+QUERY_BATCH_SIZE = 350
+PRICE_BATCH_SIZE = 400
+
+
+def initialize(context):
+    set_benchmark(BENCHMARK)
+    set_option("use_real_price", True)
+    set_option("avoid_future_data", True)
+    set_slippage(FixedSlippage(0.002))
+    set_order_cost(
+        OrderCost(
+            close_tax=0.001,
+            open_commission=0.0003,
+            close_commission=0.0003,
+            min_commission=5,
+        ),
+        type="stock",
+    )
+    run_monthly(monthly_rebalance, 1, time="10:00")
+
+
+def _chunked(items, size):
+    if size <= 0:
+        raise ValueError("size must be positive")
+    items = list(items)
+    for start in range(0, len(items), size):
+        yield items[start : start + size]
+
+
+def _previous_trade_day(current_date):
+    days = get_trade_days(end_date=current_date, count=2)
+    if len(days) < 2:
+        raise ValueError("at least two trade days are required")
+    value = days[-2]
+    return value.date() if hasattr(value, "date") else value
+
+
+def _normalize_price_frame(raw):
+    if raw is None:
+        return pd.DataFrame(columns=["time", "code", "close", "money"])
+    frame = raw.copy()
+    if not isinstance(frame.index, pd.RangeIndex):
+        frame = frame.reset_index()
+    if "time" not in frame.columns:
+        for candidate in ("index", "level_0", "date"):
+            if candidate in frame.columns:
+                frame = frame.rename(columns={candidate: "time"})
+                break
+    expected = ["time", "code", "close", "money"]
+    for column in expected:
+        if column not in frame.columns:
+            frame[column] = np.nan
+    frame["time"] = pd.to_datetime(frame["time"], errors="coerce")
+    return frame[expected].sort_values(["code", "time"]).reset_index(drop=True)
 
 
 def _finite_number(value):
@@ -652,3 +720,348 @@ def allocate_weights(
         for index, weight in weights.items()
         if weight > 0
     }
+
+
+def _log(level, message, *args):
+    logger = globals().get("log")
+    method = getattr(logger, level, None) if logger is not None else None
+    if method is not None:
+        method(message, *args)
+
+
+def _fetch_universe(observation_date, current_data):
+    securities = get_all_securities(["stock"], date=observation_date)
+    result = []
+    for code, row in securities.iterrows():
+        start_date = row.get("start_date")
+        if hasattr(start_date, "date"):
+            start_date = start_date.date()
+        if not isinstance(start_date, dt.date):
+            continue
+        if (observation_date - start_date).days < MIN_LISTING_DAYS:
+            continue
+        snapshot = current_data.get(code) if hasattr(current_data, "get") else current_data[code]
+        if snapshot is None or getattr(snapshot, "paused", False):
+            continue
+        name = str(getattr(snapshot, "name", row.get("display_name", "")))
+        if getattr(snapshot, "is_st", False) or "ST" in name.upper() or "退" in name:
+            continue
+        result.append(code)
+    return result
+
+
+def _fetch_price_history(codes, observation_date, count):
+    frames = []
+    for batch in _chunked(codes, PRICE_BATCH_SIZE):
+        try:
+            raw = get_price(
+                batch,
+                end_date=observation_date,
+                count=count,
+                frequency="daily",
+                fields=["close", "money"],
+                skip_paused=False,
+                fq="pre",
+                panel=False,
+            )
+            frames.append(_normalize_price_frame(raw))
+        except Exception as exc:
+            _log("warning", "price batch failed: %s", exc)
+    if not frames:
+        return pd.DataFrame(columns=["time", "code", "close", "money"])
+    return pd.concat(frames, ignore_index=True)
+
+
+def _price_statistics(prices):
+    prices = _normalize_price_frame(prices)
+    rows = []
+    for code, group in prices.groupby("code"):
+        group = group.sort_values("time")
+        close = pd.to_numeric(group["close"], errors="coerce").dropna()
+        money = pd.to_numeric(group["money"], errors="coerce").dropna()
+        if close.empty:
+            continue
+        daily_returns = close.pct_change().replace([np.inf, -np.inf], np.nan).dropna()
+        running_peak = close.cummax()
+        drawdowns = close.div(running_peak).sub(1.0)
+        rows.append(
+            {
+                "code": code,
+                "average_money_20d": money.tail(20).mean() if not money.empty else np.nan,
+                "return_12m": safe_divide(close.iloc[-1], close.iloc[0]) - 1.0,
+                "volatility_12m": (
+                    daily_returns.std(ddof=1) * math.sqrt(252)
+                    if len(daily_returns) >= 2
+                    else 0.0
+                ),
+                "max_drawdown_12m": drawdowns.min(),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _fetch_price_stats(codes, observation_date):
+    liquidity_prices = _fetch_price_history(codes, observation_date, 20)
+    liquidity = _price_statistics(liquidity_prices)
+    if liquidity.empty:
+        return liquidity
+    liquid_codes = list(
+        liquidity.loc[
+            liquidity["average_money_20d"].ge(MIN_AVERAGE_MONEY), "code"
+        ]
+    )
+    if not liquid_codes:
+        return liquidity.iloc[0:0]
+    risk_prices = _fetch_price_history(liquid_codes, observation_date, 252)
+    risk = _price_statistics(risk_prices)
+    liquidity_values = liquidity.set_index("code")["average_money_20d"]
+    risk["average_money_20d"] = risk["code"].map(liquidity_values)
+    return risk
+
+
+def _annual_fields():
+    return [
+        balance.cash_equivalents,
+        balance.total_assets,
+        balance.total_liability,
+        balance.total_owner_equities,
+        balance.paidin_capital,
+        balance.account_receivable,
+        balance.inventories,
+        balance.shortterm_loan,
+        balance.longterm_loan,
+        balance.bonds_payable,
+        balance.good_will,
+        cash_flow.net_operate_cash_flow,
+        cash_flow.fix_intan_other_asset_acqui_cash,
+        income.total_operating_revenue,
+        income.operating_profit,
+        income.np_parent_company_owners,
+        indicator.adjusted_profit,
+        indicator.roe,
+        indicator.roa,
+        indicator.gross_profit_margin,
+    ]
+
+
+def _fetch_annual_fundamentals(codes, observation_date):
+    frames = []
+    fields = _annual_fields()
+    for batch in _chunked(codes, QUERY_BATCH_SIZE):
+        try:
+            frame = get_history_fundamentals(
+                batch,
+                fields,
+                watch_date=observation_date,
+                count=3,
+                interval="1y",
+                stat_by_year=True,
+            )
+            if frame is not None and not frame.empty:
+                frames.append(frame)
+        except Exception as exc:
+            _log("warning", "annual fundamentals batch failed: %s", exc)
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+def _fetch_latest_fundamentals(codes, observation_date):
+    frames = []
+    for batch in _chunked(codes, QUERY_BATCH_SIZE):
+        try:
+            request = query(
+                balance.code,
+                cash_flow.net_operate_cash_flow,
+                indicator.gross_profit_margin,
+                indicator.inc_total_revenue_year_on_year,
+            ).filter(balance.code.in_(batch))
+            frame = get_fundamentals(request, date=observation_date)
+            if frame is not None and not frame.empty:
+                frames.append(frame)
+        except Exception as exc:
+            _log("warning", "latest fundamentals batch failed: %s", exc)
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+def _fetch_valuations(codes, observation_date):
+    frames = []
+    for batch in _chunked(codes, QUERY_BATCH_SIZE):
+        try:
+            request = query(
+                valuation.code,
+                valuation.market_cap,
+                valuation.pe_ratio,
+                valuation.pb_ratio,
+                valuation.ps_ratio,
+                valuation.pcf_ratio,
+            ).filter(valuation.code.in_(batch))
+            frame = get_fundamentals(request, date=observation_date)
+            if frame is not None and not frame.empty:
+                frames.append(frame)
+        except Exception as exc:
+            _log("warning", "valuation batch failed: %s", exc)
+    return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()
+
+
+def _fetch_industries(codes, observation_date):
+    result = {}
+    for batch in _chunked(codes, QUERY_BATCH_SIZE):
+        try:
+            payload = get_industry(batch, date=observation_date)
+        except Exception as exc:
+            _log("warning", "industry batch failed: %s", exc)
+            continue
+        for code in batch:
+            company = payload.get(code, {}) if hasattr(payload, "get") else {}
+            result[code] = _industry_info(company)
+    return result
+
+
+def _industry_info(company):
+    company = company if hasattr(company, "get") else {}
+    sw_l1 = company.get("sw_l1", {}) or {}
+    sw_l2 = company.get("sw_l2", {}) or {}
+    jq_l1 = company.get("jq_l1", {}) or {}
+    level_one = sw_l1.get("industry_name") or ""
+    level_two = sw_l2.get("industry_name") or ""
+    jq_name = jq_l1.get("industry_name") or ""
+    financial_words = ("银行", "非银金融", "证券", "保险", "多元金融", "金融")
+    is_financial = any(
+        word in " ".join((level_one, level_two, jq_name)) for word in financial_words
+    )
+    industry_name = level_two if is_financial and level_two else level_one or jq_name
+    return {"industry": industry_name or "未知行业", "is_financial": is_financial}
+
+
+def _rows_by_code(frame):
+    if frame is None or frame.empty or "code" not in frame:
+        return {}
+    return {code: group.copy() for code, group in frame.groupby("code")}
+
+
+def _last_rows_by_code(frame):
+    if frame is None or frame.empty or "code" not in frame:
+        return {}
+    return {
+        code: group.iloc[-1]
+        for code, group in frame.groupby("code", sort=False)
+        if not group.empty
+    }
+
+
+def _build_feature_frame(annual, latest, valuations, prices, industries):
+    annual_by_code = _rows_by_code(annual)
+    latest_by_code = _last_rows_by_code(latest)
+    valuation_by_code = _last_rows_by_code(valuations)
+    price_by_code = _last_rows_by_code(prices)
+    rows = []
+    for code, history in annual_by_code.items():
+        valuation_row = valuation_by_code.get(code)
+        price_row = price_by_code.get(code)
+        industry = industries.get(code)
+        if valuation_row is None or price_row is None or industry is None:
+            continue
+        features = build_company_features(
+            history,
+            valuation_row,
+            price_row,
+            industry=industry["industry"],
+            is_financial=industry["is_financial"],
+            latest_row=latest_by_code.get(code),
+        )
+        if features is not None:
+            rows.append(features)
+    return pd.DataFrame(rows)
+
+
+def _is_buyable(snapshot):
+    if snapshot is None or getattr(snapshot, "paused", False):
+        return False
+    if getattr(snapshot, "is_st", False) or "退" in str(getattr(snapshot, "name", "")):
+        return False
+    price = _finite_number(getattr(snapshot, "last_price", np.nan))
+    high_limit = _finite_number(getattr(snapshot, "high_limit", np.nan))
+    return np.isfinite(price) and np.isfinite(high_limit) and price < high_limit - 1e-8
+
+
+def _is_sellable(snapshot):
+    if snapshot is None or getattr(snapshot, "paused", False):
+        return False
+    price = _finite_number(getattr(snapshot, "last_price", np.nan))
+    low_limit = _finite_number(getattr(snapshot, "low_limit", np.nan))
+    return np.isfinite(price) and np.isfinite(low_limit) and price > low_limit + 1e-8
+
+
+def _execute_targets(context, target_weights, current_data):
+    positions = context.portfolio.positions
+    total_value = context.portfolio.total_value
+    for code in list(positions.keys()):
+        if code in target_weights:
+            continue
+        snapshot = current_data.get(code)
+        if _is_sellable(snapshot):
+            try:
+                order_target_value(code, 0)
+            except Exception as exc:
+                _log("warning", "sell failed for %s: %s", code, exc)
+
+    for code, weight in target_weights.items():
+        snapshot = current_data.get(code)
+        target_value = total_value * weight
+        position = positions.get(code)
+        current_value = _finite_number(getattr(position, "value", 0.0))
+        current_value = current_value if np.isfinite(current_value) else 0.0
+        if target_value > current_value and not _is_buyable(snapshot):
+            continue
+        if target_value < current_value and not _is_sellable(snapshot):
+            continue
+        last_price = _finite_number(getattr(snapshot, "last_price", np.nan))
+        if current_value <= 0 and np.isfinite(last_price) and target_value < last_price * 100:
+            continue
+        try:
+            order_target_value(code, target_value)
+        except Exception as exc:
+            _log("warning", "target order failed for %s: %s", code, exc)
+
+
+def monthly_rebalance(context):
+    try:
+        observation_date = _previous_trade_day(context.current_dt.date())
+        current_data = get_current_data()
+        universe = _fetch_universe(observation_date, current_data)
+        prices = _fetch_price_stats(universe, observation_date)
+        liquid_codes = list(prices.get("code", pd.Series(dtype=str)))
+        if not liquid_codes:
+            _log("warning", "no liquid candidates on %s", observation_date)
+            return
+        annual = _fetch_annual_fundamentals(liquid_codes, observation_date)
+        latest = _fetch_latest_fundamentals(liquid_codes, observation_date)
+        valuations = _fetch_valuations(liquid_codes, observation_date)
+        industries = _fetch_industries(liquid_codes, observation_date)
+        features = _build_feature_frame(annual, latest, valuations, prices, industries)
+        ranked = score_candidates(features)
+        current_codes = list(context.portfolio.positions.keys())
+        selected_codes = select_portfolio(
+            ranked,
+            current_codes,
+            target_count=TARGET_COUNT,
+            entry_rank=ENTRY_RANK,
+            hold_rank=HOLD_RANK,
+        )
+        selected = ranked.loc[ranked["code"].isin(selected_codes)].copy()
+        target_weights = allocate_weights(selected)
+        _execute_targets(context, target_weights, current_data)
+        retained_cash = max(0.0, 1.0 - sum(target_weights.values()))
+        _log(
+            "info",
+            "Miller rebalance %s universe=%d liquid=%d scored=%d eligible=%d selected=%s "
+            "cash=%.2f%%",
+            observation_date,
+            len(universe),
+            len(liquid_codes),
+            len(ranked),
+            int(ranked["eligible"].sum()) if "eligible" in ranked else 0,
+            selected_codes,
+            retained_cash * 100,
+        )
+    except Exception as exc:
+        _log("error", "Miller rebalance aborted without changing targets: %s", exc)

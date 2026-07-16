@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import datetime as dt
 import importlib.util
 import math
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pandas as pd
@@ -392,3 +394,214 @@ def test_allocate_weights_keeps_cash_when_concentration_caps_prevent_full_invest
     assert len(weights) == 5
     assert all(weight == 0.08 for weight in weights.values())
     assert round(sum(weights.values()), 8) == 0.40
+
+
+def test_joinquant_boundary_helpers_are_point_in_time_and_locally_importable():
+    strategy = load_strategy()
+    codes = [f"S{i:04d}" for i in range(1005)]
+    chunks = list(strategy._chunked(codes, 400))
+    assert [len(chunk) for chunk in chunks] == [400, 400, 205]
+    assert [code for chunk in chunks for code in chunk] == codes
+
+    calls = []
+
+    def fake_trade_days(**kwargs):
+        calls.append(kwargs)
+        return np.array([dt.date(2026, 7, 15), dt.date(2026, 7, 16)])
+
+    strategy.get_trade_days = fake_trade_days
+    assert strategy._previous_trade_day(dt.date(2026, 7, 16)) == dt.date(2026, 7, 15)
+    assert calls == [{"end_date": dt.date(2026, 7, 16), "count": 2}]
+
+
+def test_price_normalizer_accepts_joinquant_long_form_and_source_has_no_repo_import():
+    strategy = load_strategy()
+    raw = pd.DataFrame(
+        {
+            "time": pd.to_datetime(["2026-07-14", "2026-07-15"]),
+            "code": ["000001.XSHE", "000001.XSHE"],
+            "close": [10.0, 11.0],
+            "money": [3e7, 4e7],
+        }
+    )
+    normalized = strategy._normalize_price_frame(raw)
+    assert list(normalized.columns) == ["time", "code", "close", "money"]
+    assert normalized.iloc[-1]["close"] == 11.0
+    assert "import trading_os" not in STRATEGY_PATH.read_text(encoding="utf-8")
+
+
+def test_price_normalizer_preserves_an_unnamed_datetime_index():
+    strategy = load_strategy()
+    raw = pd.DataFrame(
+        {
+            "code": ["000001.XSHE", "000001.XSHE"],
+            "close": [10.0, 11.0],
+            "money": [3e7, 4e7],
+        },
+        index=pd.to_datetime(["2026-07-14", "2026-07-15"]),
+    )
+
+    normalized = strategy._normalize_price_frame(raw)
+
+    assert normalized["time"].notna().all()
+    assert normalized.iloc[-1]["time"] == pd.Timestamp("2026-07-15")
+
+
+def test_financial_industry_uses_second_level_peer_group():
+    strategy = load_strategy()
+    company = {
+        "sw_l1": {"industry_name": "非银金融I"},
+        "sw_l2": {"industry_name": "证券II"},
+        "jq_l1": {"industry_name": "金融指数"},
+    }
+
+    info = strategy._industry_info(company)
+
+    assert info == {"industry": "证券II", "is_financial": True}
+
+
+def test_initialize_configures_monthly_point_in_time_strategy(monkeypatch):
+    strategy = load_strategy()
+    calls = []
+    monkeypatch.setattr(
+        strategy,
+        "set_benchmark",
+        lambda value: calls.append(("benchmark", value)),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        strategy,
+        "set_option",
+        lambda name, value: calls.append(("option", name, value)),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        strategy, "FixedSlippage", lambda value: ("slippage", value), raising=False
+    )
+    monkeypatch.setattr(
+        strategy, "set_slippage", lambda value: calls.append(value), raising=False
+    )
+    monkeypatch.setattr(strategy, "OrderCost", lambda **kwargs: kwargs, raising=False)
+    monkeypatch.setattr(
+        strategy,
+        "set_order_cost",
+        lambda value, type: calls.append(("cost", value, type)),
+        raising=False,
+    )
+    monkeypatch.setattr(
+        strategy,
+        "run_monthly",
+        lambda function, day, time: calls.append(("monthly", function.__name__, day, time)),
+        raising=False,
+    )
+
+    strategy.initialize(SimpleNamespace())
+
+    assert ("benchmark", "000985.XSHG") in calls
+    assert ("option", "use_real_price", True) in calls
+    assert ("option", "avoid_future_data", True) in calls
+    assert ("slippage", 0.002) in calls
+    assert ("monthly", "monthly_rebalance", 1, "10:00") in calls
+
+
+def test_price_statistics_calculates_liquidity_return_volatility_and_drawdown():
+    strategy = load_strategy()
+    prices = pd.DataFrame(
+        {
+            "time": pd.to_datetime(["2026-07-13", "2026-07-14", "2026-07-15"]),
+            "code": ["000001.XSHE"] * 3,
+            "close": [10.0, 8.0, 12.0],
+            "money": [2e7, 4e7, 6e7],
+        }
+    )
+
+    stats = strategy._price_statistics(prices)
+
+    row = stats.loc[stats["code"] == "000001.XSHE"].iloc[0]
+    assert row["average_money_20d"] == 4e7
+    assert round(row["return_12m"], 8) == 0.2
+    assert round(row["max_drawdown_12m"], 8) == -0.2
+    assert row["volatility_12m"] > 0
+
+
+def test_tradeability_respects_pauses_and_price_limits():
+    strategy = load_strategy()
+    normal = SimpleNamespace(
+        paused=False,
+        is_st=False,
+        name="测试股份",
+        last_price=10.0,
+        high_limit=11.0,
+        low_limit=9.0,
+    )
+    upper = SimpleNamespace(**{**vars(normal), "last_price": 11.0})
+    lower = SimpleNamespace(**{**vars(normal), "last_price": 9.0})
+    paused = SimpleNamespace(**{**vars(normal), "paused": True})
+
+    assert strategy._is_buyable(normal)
+    assert strategy._is_sellable(normal)
+    assert not strategy._is_buyable(upper)
+    assert not strategy._is_sellable(lower)
+    assert not strategy._is_buyable(paused)
+    assert not strategy._is_sellable(paused)
+
+
+def test_monthly_rebalance_leaves_pipeline_results_to_execution(monkeypatch):
+    strategy = load_strategy()
+    observation_date = dt.date(2026, 7, 15)
+    ranked = pd.DataFrame(
+        [
+            {
+                "code": "000001.XSHE",
+                "score": 80.0,
+                "eligible": True,
+                "veto_reasons": [],
+                "industry": "银行I",
+                "model": strategy.MODEL_FINANCIAL,
+                "downside_risk": 0.2,
+            }
+        ]
+    )
+    monkeypatch.setattr(strategy, "_previous_trade_day", lambda _date: observation_date)
+    monkeypatch.setattr(
+        strategy,
+        "get_current_data",
+        lambda: {"000001.XSHE": object()},
+        raising=False,
+    )
+    monkeypatch.setattr(strategy, "_fetch_universe", lambda *_args: ["000001.XSHE"])
+    monkeypatch.setattr(
+        strategy,
+        "_fetch_price_stats",
+        lambda *_args: pd.DataFrame([{"code": "000001.XSHE", "average_money_20d": 5e7}]),
+    )
+    monkeypatch.setattr(strategy, "_fetch_annual_fundamentals", lambda *_args: pd.DataFrame())
+    monkeypatch.setattr(strategy, "_fetch_latest_fundamentals", lambda *_args: pd.DataFrame())
+    monkeypatch.setattr(strategy, "_fetch_valuations", lambda *_args: pd.DataFrame())
+    monkeypatch.setattr(strategy, "_fetch_industries", lambda *_args: {})
+    monkeypatch.setattr(strategy, "_build_feature_frame", lambda *_args: pd.DataFrame())
+    monkeypatch.setattr(strategy, "score_candidates", lambda *_args, **_kwargs: ranked)
+    monkeypatch.setattr(strategy, "select_portfolio", lambda *_args, **_kwargs: ["000001.XSHE"])
+    monkeypatch.setattr(
+        strategy, "allocate_weights", lambda _frame: {"000001.XSHE": 0.08}
+    )
+    captured = []
+    monkeypatch.setattr(
+        strategy,
+        "_execute_targets",
+        lambda context, targets, current_data: captured.append((context, targets, current_data)),
+    )
+    monkeypatch.setattr(
+        strategy,
+        "log",
+        SimpleNamespace(info=lambda *_args: None, error=lambda *_args: None),
+        raising=False,
+    )
+    context = SimpleNamespace(
+        current_dt=dt.datetime(2026, 7, 16, 10, 0),
+        portfolio=SimpleNamespace(positions={}, total_value=1e6),
+    )
+
+    strategy.monthly_rebalance(context)
+
+    assert captured[0][1] == {"000001.XSHE": 0.08}
