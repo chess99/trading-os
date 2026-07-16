@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920571",
+  "market": "CN",
+  "ticker": "920571",
+  "name": "国航远洋",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "2026年运价上行和新船投产推动利润高弹性，但高杠杆、弱周期资本回报和治理瑕疵尚未改善，8.19元已透支较多乐观预期。",
+  "fair_value_range": [4.8, 6.2],
+  "buy_zone": [3.8, 4.6],
+  "sell_or_reduce_zone": [7.3, 9.0],
+  "position_plan": [
+    {
+      "condition": "股价高于7.30元，或半年报未证明扣非利润与经营现金流同步改善",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价处于4.30至4.60元且净债务不再上升、基本面未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于3.80至4.30元，重新验证长期价值未受损且自由现金流覆盖维护性资本开支",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的扣非利润、经营现金流、资本开支和净债务"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报及BDI、BPI、CBCFI回落后的盈利韧性"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "进入可研究的买入区间，但需先复核净债务与自由现金流，不能机械加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.3,
+      "reason": "进入减仓或不应追高区间，市场对周期持续性的定价偏乐观"
+    }
+  ],
+  "updated_at": "2026-07-16T12:26:09+08:00"
+}
