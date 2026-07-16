@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:301520",
+  "ticker": "301520",
+  "name": "万邦医药",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "万邦医药本体业务 2025-2026Q1 明显承压，收购赛德盛提升创新药临床 CRO 暴露但兑现仍需订单、利润和现金流验证；当前股价已隐含较乐观并购协同与估值扩张，安全边际不足，适合跟踪而非买入。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    28,
+    38
+  ],
+  "buy_zone": [
+    20,
+    28
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 28 元，且 2026H2 赛德盛并表利润、经营现金流与本体业务止跌得到验证",
+      "action": "watch_to_probe",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 24 元，且赛德盛完成业绩承诺、本体扣非利润恢复为正、经营现金流不依赖应收扩张",
+      "action": "build_small_position",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于 45 元且 2027 年可持续归母利润低于 6000 万元的概率仍高",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入基准估值区间下沿，可重新评估赛德盛并表和本体修复证据"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "接近保守估值与现金缓冲支撑区，若基本面未恶化可考虑小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "高于乐观基准估值上沿，若利润兑现不足应回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点检查本体业务是否止跌、赛德盛并表进度和现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，验证并购后收入、利润、应收账款和合同负债变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报和赛德盛 2026 年业绩承诺完成情况"
+    }
+  ]
+}
