@@ -1,0 +1,83 @@
+{
+  "symbol": "CN:600558",
+  "ticker": "600558",
+  "name": "大西洋",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "国内焊接材料老牌龙头，2025-2026Q1 盈利修复、资产负债表稳健，但行业成熟且价格竞争仍强；当前估值接近合理区间，缺少足够安全边际，等待更低价格或高端焊材放量验证。",
+  "fair_value_range": [
+    4.1,
+    5.2
+  ],
+  "buy_zone": [
+    3.6,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    5.6,
+    6.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.8元且无重大财务/治理负面变化，可建立观察仓",
+      "action": "buy_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026年中报或三季报确认净利润年化超过2.2亿元且经营现金流未恶化，可提高权重",
+      "action": "add_on_fundamental_confirmation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于5.6元但盈利预测未同步上修，降低或不新增仓位",
+      "action": "reduce_or_hold_off",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入买入区间，静态估值与股息率提供更好安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 5.6,
+      "reason": "超过合理价值上沿，若无盈利上修则风险收益变差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收账款和高端焊材进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年净利润是否具备上修可能"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红，重估ROE、现金流和长期价值区间"
+    }
+  ],
+  "key_metrics": {
+    "last_price": 4.76,
+    "last_price_date": "2026-07-16",
+    "last_price_source": "Yahoo Finance 600558.SS chart endpoint; 2026-07-17 close unverified",
+    "shares_outstanding": 897604831,
+    "market_cap_billion_cny": 4.27,
+    "pe_2025": 23.45,
+    "pb_2026q1": 1.72
+  }
+}

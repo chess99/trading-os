@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:600551",
+  "ticker": "600551",
+  "name": "时代出版",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "安徽地方出版平台，教材教辅和现金资产提供底部价值，但低毛利贸易业务、坏账/诉讼减值、存货跌价和金融资产波动削弱安全边际。当前估值不贵但不够便宜，等待5.8元以下或2026中报验证贸易风险继续出清。",
+  "fair_value_range": [
+    6.2,
+    7.8
+  ],
+  "buy_zone": [
+    5.2,
+    5.8
+  ],
+  "sell_or_reduce_zone": [
+    8.2,
+    9.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于5.8元，且未出现新增重大坏账、诉讼败诉或监管处罚，先建立观察仓。",
+      "action": "buy_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于5.2元，且2026中报显示贸易收入占比下降、教材教辅毛利率稳定、经营现金流未恶化。",
+      "action": "add_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于8.2元但贸易风险、应收账款和存货跌价没有实质改善。",
+      "action": "reduce_or_hold_cash",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入初始买入区间，估值对贸易和资产质量风险已有较明显折价。"
+    },
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入深度安全边际区间，可在基本面未恶化前提下提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "reason": "超过基准估值上沿，需要重新评估是否有足够基本面改善支撑。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看贸易收入占比、应收账款、存货跌价、教材教辅毛利率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认年内利润和现金流趋势是否支持观察评级。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红方案，重新估算长期合理价值。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 6.87,
+    "reference_price_date": "2026-07-16",
+    "market_cap_cny_billion": 4.66,
+    "shares_outstanding": 678055239,
+    "pe_2025": 11.37,
+    "pb_2026q1": 0.78,
+    "dividend_yield_2025_at_reference_price": 0.044
+  }
+}
