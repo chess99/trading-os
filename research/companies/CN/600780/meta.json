@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600780",
+  "market": "CN",
+  "ticker": "600780",
+  "name": "通宝能源",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "通宝能源是山西地方配网现金流、煤电托底和新能源储备项目的组合，资产负债表稳健、估值不贵，但当前价格安全边际中等，新能源项目和配电业务成长兑现前以观察为主。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    5.8,
+    7.2
+  ],
+  "buy_zone": [
+    4.8,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    8.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于5.2元且2026年发电量、售电量、煤价和经营现金流未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于4.8元且新能源项目推进正常、配电业务毛利率保持稳定",
+      "action": "提高至核心低估值公用事业仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于7.2元但EPS和ROE没有上修证据",
+      "action": "减仓或暂停加仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入基准估值下沿并提供约15%以上安全边际，可重新评估买入"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入熊市情景下沿，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "达到基准估值上沿，除非新能源投产和盈利上修得到验证，否则应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看配电业务售电量、毛利率、火电上网电价和新能源项目进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年盈利中枢和经营现金流是否支持估值上修"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红方案，判断新能源储备项目是否兑现为ROE提升"
+    }
+  ]
+}
