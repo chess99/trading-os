@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600071",
+  "ticker": "600071",
+  "name": "凤凰光学",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司完成锂电/XR等非核心业务收缩后，光学与智能控制器主业可读性提高，2026H1扣非预告仍有改善；但当前市值约43.67亿元、PB约8.57倍，对已经验证的扣非利润而言明显偏贵，需等待价格回落或扣非利润连续验证。",
+  "fair_value_range": [
+    8.8,
+    12.4
+  ],
+  "buy_zone": [
+    0,
+    8.8
+  ],
+  "sell_or_reduce_zone": [
+    15,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.8元，且2026年半年报正式披露扣非归母净利润不低于420万元、光学业务收入继续增长",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026年三季报显示单季扣非净利润超过1000万元，且毛利率同比改善、经营现金流不恶化",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于15元且扣非利润年化仍低于3000万元",
+      "action": "不买或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入合理价值下沿，若主业扣非改善同步确认，可复核小仓位观察买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 15,
+      "reason": "高于当前估值上限，若扣非利润未显著放大，风险收益比恶化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据与业绩预告差异，重点看扣非利润、光学收入、毛利率和汇兑损益。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认单季扣非利润是否持续为正。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新估算正常化利润与合理价值区间。"
+    }
+  ]
+}
