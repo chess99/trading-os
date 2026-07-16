@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:600848",
+  "ticker": "600848",
+  "market": "CN",
+  "name": "上海临港",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "上海临港是上海国资产业园区平台，区位、股东信用和招商运营能力构成底层价值，但园区载体销售波动、经营现金流为负、ROE偏低和会计整改事项压制估值。当前价格接近合理价值带中上部，缺少足够安全边际，适合观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    7.0,
+    8.8
+  ],
+  "buy_zone": [
+    6.2,
+    7.1
+  ],
+  "sell_or_reduce_zone": [
+    9.3,
+    10.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于7.10元，且最新季度经营现金流未进一步恶化，可建立跟踪仓位。",
+      "action": "start_small_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于6.50元，且出租率、租金和销售回款至少两项稳定，可提高仓位。",
+      "action": "add_on_margin_of_safety",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于9.30元且中报或三季报未显示ROE和现金流显著改善，降低或不建立仓位。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.1,
+      "reason": "进入初始买入观察区，PB接近或低于合理价值中枢。"
+    },
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "接近账面价值折价区，若现金流未恶化则安全边际改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.3,
+      "reason": "超过基准合理价值区间上沿，若基本面未超预期应减仓或放弃。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查业绩预告兑现、经营现金流、出租率和有息负债。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否延续及现金流是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估ROE、分红、资产负债率和会计整改进展。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}
