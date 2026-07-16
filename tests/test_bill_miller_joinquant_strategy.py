@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import datetime as dt
 import importlib.util
 import math
@@ -11,6 +12,19 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 STRATEGY_PATH = ROOT / "strategies" / "joinquant" / "bill_miller_quant.py"
+
+
+class LazyCurrentData(dict):
+    """Mimic JoinQuant's mapping where only ``mapping[key]`` materializes data."""
+
+    def __init__(self, snapshots):
+        super().__init__()
+        self.snapshots = snapshots
+
+    def __missing__(self, key):
+        snapshot = self.snapshots[key]
+        self[key] = snapshot
+        return snapshot
 
 
 def load_strategy():
@@ -28,6 +42,19 @@ def test_strategy_source_avoids_joinquant_legacy_runtime_features():
     assert "from **future** import annotations" not in source
     assert "strict=" not in source
     assert 'groupby("industry", dropna=' not in source
+
+
+def test_strategy_qualifies_builtins_shadowed_by_jqdata():
+    tree = ast.parse(STRATEGY_PATH.read_text(encoding="utf-8"))
+    unqualified = [
+        node.func.id
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Call)
+        and isinstance(node.func, ast.Name)
+        and node.func.id in {"all", "any", "sum"}
+    ]
+
+    assert unqualified == []
 
 
 def test_safe_ratios_and_growth_reject_economically_invalid_denominators():
@@ -405,6 +432,27 @@ def test_allocate_weights_keeps_cash_when_concentration_caps_prevent_full_invest
     assert round(sum(weights.values()), 8) == 0.40
 
 
+def test_allocate_weights_does_not_treat_unknown_industry_as_one_sector():
+    strategy = load_strategy()
+    selected = pd.DataFrame(
+        [
+            {
+                "code": f"S{index:03d}",
+                "score": 80.0,
+                "downside_risk": 0.2,
+                "industry": "未知行业",
+                "model": strategy.MODEL_GENERAL,
+            }
+            for index in range(20)
+        ]
+    )
+
+    weights = strategy.allocate_weights(selected)
+
+    assert len(weights) == 20
+    assert round(sum(weights.values()), 8) == 1.0
+
+
 def test_joinquant_boundary_helpers_are_point_in_time_and_locally_importable():
     strategy = load_strategy()
     codes = [f"S{i:04d}" for i in range(1005)]
@@ -506,7 +554,7 @@ def test_initialize_configures_monthly_point_in_time_strategy(monkeypatch):
 
     strategy.initialize(SimpleNamespace())
 
-    assert ("benchmark", "000985.XSHG") in calls
+    assert ("benchmark", "000300.XSHG") in calls
     assert ("option", "use_real_price", True) in calls
     assert ("option", "avoid_future_data", True) in calls
     assert ("slippage", 0.002) in calls
@@ -533,6 +581,34 @@ def test_price_statistics_calculates_liquidity_return_volatility_and_drawdown():
     assert row["volatility_12m"] > 0
 
 
+def test_fetch_universe_materializes_joinquant_lazy_current_data(monkeypatch):
+    strategy = load_strategy()
+    codes = ["000001.XSHE", "000002.XSHE"]
+    securities = pd.DataFrame(
+        {
+            "start_date": [dt.date(1991, 4, 3), dt.date(1991, 1, 29)],
+            "display_name": ["平安银行", "万科A"],
+        },
+        index=codes,
+    )
+    snapshots = {
+        code: SimpleNamespace(paused=False, is_st=False, name=name)
+        for code, name in zip(codes, securities["display_name"], strict=True)
+    }
+    current_data = LazyCurrentData(snapshots)
+    monkeypatch.setattr(
+        strategy,
+        "get_all_securities",
+        lambda *_args, **_kwargs: securities,
+        raising=False,
+    )
+
+    universe = strategy._fetch_universe(dt.date(2026, 7, 15), current_data)
+
+    assert universe == codes
+    assert set(current_data) == set(codes)
+
+
 def test_tradeability_respects_pauses_and_price_limits():
     strategy = load_strategy()
     normal = SimpleNamespace(
@@ -553,6 +629,38 @@ def test_tradeability_respects_pauses_and_price_limits():
     assert not strategy._is_sellable(lower)
     assert not strategy._is_buyable(paused)
     assert not strategy._is_sellable(paused)
+
+
+def test_execute_targets_materializes_joinquant_lazy_current_data(monkeypatch):
+    strategy = load_strategy()
+    code = "000001.XSHE"
+    current_data = LazyCurrentData(
+        {
+            code: SimpleNamespace(
+                paused=False,
+                is_st=False,
+                name="平安银行",
+                last_price=10.0,
+                high_limit=11.0,
+                low_limit=9.0,
+            )
+        }
+    )
+    orders = []
+    monkeypatch.setattr(
+        strategy,
+        "order_target_value",
+        lambda security, value: orders.append((security, value)),
+        raising=False,
+    )
+    context = SimpleNamespace(
+        portfolio=SimpleNamespace(positions={}, total_value=1e6)
+    )
+
+    strategy._execute_targets(context, {code: 0.08}, current_data)
+
+    assert orders == [(code, 80000.0)]
+    assert set(current_data) == {code}
 
 
 def test_monthly_rebalance_leaves_pipeline_results_to_execution(monkeypatch):

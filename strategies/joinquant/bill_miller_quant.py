@@ -5,6 +5,7 @@
 本文件保持单文件结构，便于直接复制到聚宽策略编辑器；不依赖 trading_os 包。
 """
 
+import builtins
 import datetime as dt
 import math
 
@@ -20,7 +21,7 @@ MODEL_GENERAL = "general"
 MODEL_FINANCIAL = "financial"
 MODEL_GROWTH = "growth"
 
-BENCHMARK = "000985.XSHG"
+BENCHMARK = "000300.XSHG"
 TARGET_COUNT = 20
 ENTRY_RANK = 15
 HOLD_RANK = 40
@@ -154,7 +155,7 @@ def _value(row, key):
 def _row_debt(row):
     values = [_value(row, key) for key in ("shortterm_loan", "longterm_loan", "bonds_payable")]
     finite = [value for value in values if np.isfinite(value)]
-    return sum(finite) if finite else np.nan
+    return builtins.sum(finite) if finite else np.nan
 
 
 def _free_cash_flow(row):
@@ -169,7 +170,7 @@ def _positive_ratio(values):
     finite = [value for value in values if np.isfinite(value)]
     if not finite:
         return np.nan
-    return sum(value > 0 for value in finite) / len(finite)
+    return builtins.sum(value > 0 for value in finite) / len(finite)
 
 
 def _growth_gap(latest, previous, latest_revenue, previous_revenue):
@@ -218,7 +219,7 @@ def build_company_features(
     equity = _value(latest, "total_owner_equities")
     debt = _row_debt(latest)
     oldest_debt = _row_debt(oldest)
-    invested_capital = equity + debt - cash if all(
+    invested_capital = equity + debt - cash if builtins.all(
         np.isfinite(value) for value in (equity, debt, cash)
     ) else np.nan
     oldest_capital_parts = (
@@ -228,7 +229,7 @@ def build_company_features(
     )
     oldest_invested_capital = (
         oldest_capital_parts[0] + oldest_capital_parts[1] - oldest_capital_parts[2]
-        if all(np.isfinite(value) for value in oldest_capital_parts)
+        if builtins.all(np.isfinite(value) for value in oldest_capital_parts)
         else np.nan
     )
 
@@ -385,7 +386,7 @@ def build_company_features(
         "return_12m",
         "share_capital_growth",
     )
-    features["feature_coverage"] = sum(
+    features["feature_coverage"] = builtins.sum(
         np.isfinite(_finite_number(features[key])) for key in coverage_keys
     ) / len(coverage_keys)
     return features
@@ -601,7 +602,7 @@ def score_candidates(features, min_group_size=20):
     ranked = pd.concat(scored_groups, axis=0).sort_index()
     component_frame = ranked[list(_COMPONENT_WEIGHTS)]
     valid_components = component_frame.notna().sum(axis=1)
-    ranked["score"] = sum(
+    ranked["score"] = builtins.sum(
         ranked[component] * weight for component, weight in _COMPONENT_WEIGHTS.items()
     )
     ranked["eligible"] = (
@@ -705,6 +706,8 @@ def allocate_weights(
     weights = _single_name_capped_weights(conviction, max_single)
 
     for industry in frame["industry"].dropna().unique():
+        if industry == "未知行业":
+            continue
         _apply_group_cap(frame, weights, "industry", industry, max_industry)
     _apply_group_cap(frame, weights, "model", MODEL_FINANCIAL, max_financial)
     _apply_group_cap(frame, weights, "model", MODEL_GROWTH, max_growth)
@@ -738,7 +741,7 @@ def _fetch_universe(observation_date, current_data):
             continue
         if (observation_date - start_date).days < MIN_LISTING_DAYS:
             continue
-        snapshot = current_data.get(code) if hasattr(current_data, "get") else current_data[code]
+        snapshot = current_data[code]
         if snapshot is None or getattr(snapshot, "paused", False):
             continue
         name = str(getattr(snapshot, "name", row.get("display_name", "")))
@@ -923,7 +926,7 @@ def _industry_info(company):
     level_two = sw_l2.get("industry_name") or ""
     jq_name = jq_l1.get("industry_name") or ""
     financial_words = ("银行", "非银金融", "证券", "保险", "多元金融", "金融")
-    is_financial = any(
+    is_financial = builtins.any(
         word in " ".join((level_one, level_two, jq_name)) for word in financial_words
     )
     industry_name = level_two if is_financial and level_two else level_one or jq_name
@@ -995,7 +998,7 @@ def _execute_targets(context, target_weights, current_data):
     for code in list(positions.keys()):
         if code in target_weights:
             continue
-        snapshot = current_data.get(code)
+        snapshot = current_data[code]
         if _is_sellable(snapshot):
             try:
                 order_target_value(code, 0)
@@ -1003,7 +1006,7 @@ def _execute_targets(context, target_weights, current_data):
                 _log("warning", "sell failed for %s: %s", code, exc)
 
     for code, weight in target_weights.items():
-        snapshot = current_data.get(code)
+        snapshot = current_data[code]
         target_value = total_value * weight
         position = positions.get(code)
         current_value = _finite_number(getattr(position, "value", 0.0))
@@ -1048,7 +1051,7 @@ def monthly_rebalance(context):
         selected = ranked.loc[ranked["code"].isin(selected_codes)].copy()
         target_weights = allocate_weights(selected)
         _execute_targets(context, target_weights, current_data)
-        retained_cash = max(0.0, 1.0 - sum(target_weights.values()))
+        retained_cash = max(0.0, 1.0 - builtins.sum(target_weights.values()))
         _log(
             "info",
             "Miller rebalance %s universe=%d liquid=%d scored=%d eligible=%d selected=%s "
