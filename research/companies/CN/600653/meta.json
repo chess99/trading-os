@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600653",
+  "ticker": "600653",
+  "name": "申华控股",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "申华控股处于亏损收敛和经营修复观察期：2026H1预告显示宝马经销板块扭亏、Q2单季归母盈利，但上半年合并仍预亏，汽车城等存量资产、高负债和受限资产使当前1.65元附近缺乏安全边际。只有在正式半年报验证减亏、财务费用下降兑现且价格低于1.05元时，才考虑小仓位观察。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    1.05,
+    1.35
+  ],
+  "buy_zone": [
+    0.85,
+    1.05
+  ],
+  "sell_or_reduce_zone": [
+    1.8,
+    2.1
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于1.05元且2026半年报确认归母亏损不差于-2000万元、扣非亏损不差于-2800万元，同时宝马经销板块保持扭亏",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "2026年报确认扣非接近盈亏平衡、经营现金流持续为正且资产负债率下降",
+      "action": "可将仓位上限提高",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于1.80元但未披露持续盈利证据，或半年报低于预告下限",
+      "action": "不买入并减持已有观察仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.05,
+      "reason": "进入基准估值下沿附近，可结合半年报验证是否建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 1.8,
+      "reason": "价格进入乐观情景但盈利尚未稳定时，安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报正式数据、宝马经销板块毛利和政府补助确认情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报是否延续Q2改善、财务费用是否下降"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报是否实现扣非接近盈亏平衡和资产负债表改善"
+    }
+  ]
+}
