@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:301616",
+  "ticker": "301616",
+  "name": "浙江华业",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "浙江华业是塑料机械螺杆、机筒等塑化部件供应商，资产负债表稳健、细分工艺壁垒尚可，但2025年利润主要受非经常性因素抬升，扣非增长弱且2026Q1收入和利润回落。当前约36元股价对应扣非盈利估值偏满，暂以观察为主，等待价格回到27元以下或扣非利润连续恢复增长。",
+  "fair_value_range": [
+    27,
+    34
+  ],
+  "buy_zone": [
+    0,
+    27
+  ],
+  "sell_or_reduce_zone": [
+    42,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于30元且2026中报扣非净利润未继续恶化，可建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于27元，或扣非利润连续两个季度恢复增长且经营现金流改善，可提高为正式小仓位。",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于42元且扣非利润没有同步上修，应减仓或回避追高。",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入观察仓价格，接近基准合理价值区间中枢以下。"
+    },
+    {
+      "type": "price_below",
+      "price": 27,
+      "reason": "进入买入区间，按常态化扣非盈利具备初步安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 42,
+      "reason": "高于当前估值上沿，若扣非利润没有上修则风险收益比转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看扣非利润、毛利率、经营现金流和应收存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扣非利润是否连续恢复增长。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认扩产、海外业务与常态化盈利能力。"
+    }
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ]
+}
