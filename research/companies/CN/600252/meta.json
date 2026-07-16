@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600252",
+  "ticker": "600252",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "中恒集团",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "中恒集团具备现金和国资资产底，但核心血栓通业务仍处量价承压和扣非亏损阶段，当前价格已反映较多回购及修复预期，安全边际不足，维持观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    1.55,
+    1.95
+  ],
+  "buy_zone": [
+    0,
+    1.45
+  ],
+  "sell_or_reduce_zone": [
+    2.4,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "未看到扣非利润和经营现金流修复前不建仓，仅跟踪核心品种量价、回购注销和资产减值。",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至1.45元以下且后续季度经营现金流改善、亏损收窄，可试探性建仓。",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "扣非归母净利润转正且血栓通收入恢复增长，再评估提高仓位。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.45,
+      "reason": "进入估算安全边际买区，需要复核资产负债表和经营现金流是否继续恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "超过乐观情景中枢，若没有扣非盈利拐点应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看血栓通量价、经营现金流、减值和回购执行。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认亏损是否收窄及现金流是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断主业修复是否成立并重估安全边际。"
+    }
+  ]
+}
