@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:600664",
+  "ticker": "600664",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "哈药股份",
+  "company_name": "哈药集团股份有限公司",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "医药工业板块修复和品牌OTC再运营方向成立，但2026-07-17股价已较充分反映半年度预增与基药目录催化，安全边际不足，需等待正式半年报验证工业毛利、费用率和经营现金流质量。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    3.4,
+    4.5
+  ],
+  "buy_zone": [
+    3.0,
+    3.4
+  ],
+  "sell_or_reduce_zone": [
+    4.8,
+    5.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于基准合理价值上沿，仅观察不新开仓",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价回落至3.00-3.40元且2026年半年报确认工业板块收入、毛利率和经营现金流同步改善",
+      "action": "initiate",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026年三季报继续验证工业修复且销售费用率未失控",
+      "action": "add_selectively",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.4,
+      "reason": "进入基准买入观察区，需要结合半年报质量评估是否小仓位建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "高于基准合理价值区间，若基本面未超预期应停止加仓或考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证工业板块毛利率、费用率、经营现金流和应收存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断工业修复是否具备连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估稳态盈利能力和估值中枢"
+    }
+  ]
+}
