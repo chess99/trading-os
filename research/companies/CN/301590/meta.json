@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301590",
+  "ticker": "301590",
+  "name": "优优绿能",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "优优绿能是直流充电模块和相关电力电子产品的高研发、小市值专精标的，海外收入占比高且具备超充、储能、V2G 延伸空间；但 2025 年利润大幅下滑、2026Q1 亏损，行业价格战和海外节奏仍未确认拐点，因此当前以观察为主，等待毛利率、订单和回款改善或价格进入安全边际。",
+  "fair_value_range": [
+    80,
+    105
+  ],
+  "buy_zone": [
+    0,
+    80
+  ],
+  "sell_or_reduce_zone": [
+    125,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 80 元，且最近一个季度收入同比转正、直流充电模块毛利率企稳或经营现金流改善三者至少满足一项",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于 65 元，且海外订单恢复、毛利率回升、经营现金流为正三者至少满足两项",
+      "action": "提高到小仓位持有",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 125 元且 2026 年中报仍未显示利润和毛利率修复",
+      "action": "不买入或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 80,
+      "reason": "进入保守公允价值下沿以下，若基本面同步企稳可复核买入。"
+    },
+    {
+      "type": "price_below",
+      "price": 65,
+      "reason": "进入悲观情景价值附近，需要复核是否出现过度定价。"
+    },
+    {
+      "type": "price_above",
+      "price": 125,
+      "reason": "高于基准情景上沿，若盈利未修复则风险收益比转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报收入、毛利率、净利润、经营现金流和海外收入。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否确认盈利修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报和 2027 年经营展望，重新校准估值区间。"
+    }
+  ]
+}

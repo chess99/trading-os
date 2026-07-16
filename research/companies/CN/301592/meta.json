@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:301592",
+  "ticker": "301592",
+  "market": "CN",
+  "name": "六九一二",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "军工训练装备与特种存储具备长期需求和小盘弹性，但2025年收入利润下滑、2026Q1亏损且当前估值显著预支成长，需等待订单恢复和更低安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    55,
+    75
+  ],
+  "buy_zone": [
+    0,
+    60
+  ],
+  "sell_or_reduce_zone": [
+    95,
+    140
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于60元，且2026年中报或三季报显示订单恢复、收入回升、经营现金流未恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于55元，且存储业务出现可核验批产收入、军工训练订单持续改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于95元且没有重大订单或盈利预测上修支撑",
+      "action": "不新增并考虑减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 60,
+      "reason": "进入初步买入观察区，需结合订单、现金流和中报验证"
+    },
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入更有安全边际的建仓区，适合复核是否可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 95,
+      "reason": "高于基准估值上沿较多，若无订单或利润上修应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看订单恢复、收入确认、回款和存储业务进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年业绩兑现概率和估值区间是否需要调整"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估成长兑现和长期持有价值"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}
