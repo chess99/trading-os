@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:600478",
+  "ticker": "600478",
+  "name": "科力远",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "科力远处于储能业务放量与盈利质量验证期，2025-2026Q1收入和利润恢复明显，但毛利率、资产负债率和经营现金流尚不足以支持高确定性买入；当前估值已反映部分储能增长预期，等待更低价格或现金流改善。",
+  "fair_value_range": [
+    3.6,
+    5.0
+  ],
+  "buy_zone": [
+    0.0,
+    3.3
+  ],
+  "sell_or_reduce_zone": [
+    6.2,
+    999.0
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于3.3元且2026年中报显示储能业务毛利率未恶化、经营现金流改善",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个报告期经营现金流为正且资产负债率降至65%以下",
+      "action": "可提升为小仓位核心观察",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于6.2元且利润预测没有上修，或储能系统毛利率明显下行",
+      "action": "不追高并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.3,
+      "reason": "进入具备初步安全边际的观察买入区"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "明显高于基准合理价值区间，需要检查是否已有利润上修，否则减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查储能系统毛利率、经营现金流和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估储能业务质量和估值区间"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}
