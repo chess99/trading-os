@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600120",
+  "ticker": "600120",
+  "name": "浙江东方",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "浙江东方是浙江国资背景的多元金融控股平台，低PB和金融牌照组合提供下行保护，2026H1业绩预告显示利润弹性，但交易性金融资产浮盈和多牌照资产质量使可持续性仍需半年报验证；当前适合观察，等待4.20-4.50元买入区或利润质量确认。",
+  "fair_value_range": [
+    5.1,
+    6.2
+  ],
+  "buy_zone": [
+    4.2,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    6.6,
+    7.2
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.50元，且2026半年报确认扣非利润主要来自保险、期货、融资租赁等经营改善而非一次性公允价值波动",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于4.20元，且未出现融资租赁资产质量恶化、担保逾期或寿险偿付能力压力",
+      "action": "提高至中等低仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于6.60元且ROE中枢未提升至8%以上",
+      "action": "不追高并考虑减仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入买入复核区，需要核验半年报利润质量和资产质量。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "低于保守买入区下沿，若基本面未恶化则安全边际较充分。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.6,
+      "reason": "超过减仓/不追高区下沿，需要确认ROE和可持续利润是否足以支撑估值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报中利润拆分、公允价值变动收益、各金融子公司经营质量和担保情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，观察H1高利润是否延续以及PB/ROE是否重估。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，更新可持续ROE、分红、资产质量和估值区间。"
+    }
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ]
+}
