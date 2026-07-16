@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:600216",
+  "ticker": "600216",
+  "name": "浙江医药",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "浙江医药具备维生素A/E等生命营养品周期弹性、特色原料药和高端制剂基础，以及净现金资产负债表；但2026年维生素价格高位回落、Q1扣非利润下滑，当前价格仅接近合理价值下沿，尚未给出足够安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    13.5,
+    17.5
+  ],
+  "buy_zone": [
+    9.5,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    18.5,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于11.5元，且最近一期扣非净利润未出现断崖式下滑、经营现金流仍为正时建立观察仓。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于10.5元，且维生素A/E价格企稳或医药制造板块利润改善得到季度报告验证时加仓。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于18.5元但扣非利润未上修至年化10亿元以上，降低或不新增仓位。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入初始买入区间，需要复核维生素价格、现金流和Q2/Q3扣非利润。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "安全边际显著改善，可评估是否从观察仓提高到最高3%权重。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.5,
+      "reason": "进入减持观察区，若基本面没有同步上修则赔率下降。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、存货和生命营养品毛利率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断维生素价格回落是否已经传导为全年盈利下修。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报与分红/资本开支，更新归一化利润和估值区间。"
+    }
+  ]
+}
