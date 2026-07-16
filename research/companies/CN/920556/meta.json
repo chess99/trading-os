@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920556",
+  "market": "CN",
+  "ticker": "920556",
+  "name": "雅达股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "资产负债表稳健但增长、ROE和自由现金流偏弱，当前高估值已透支数据中心与微电网增长预期，缺乏安全边际。",
+  "fair_value_range": [3.3, 4.5],
+  "buy_zone": [2.8, 3.3],
+  "sell_or_reduce_zone": [5.3, 6.0],
+  "position_plan": [
+    {
+      "condition": "股价处于2.80-3.30元且应收、存货、扣非利润和经营现金流未恶化，可试仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个报告期确认扣非利润与自由现金流同步改善，且长期商业价值未受损",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于5.30元或增长仍无法转化为利润与现金流",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-15",
+      "reason": "复核2026年半年度报告中的收入质量、应收存货、扣非利润和自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.3,
+      "reason": "进入有安全边际的观察性买入区间，仍需重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 5.3,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-16T12:54:08+08:00"
+}
