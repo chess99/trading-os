@@ -6,6 +6,8 @@
 
 from __future__ import annotations
 
+import math
+
 import numpy as np
 import pandas as pd
 
@@ -59,6 +61,8 @@ def winsorize_series(series, lower=0.05, upper=0.95):
     clean = pd.to_numeric(series, errors="coerce").replace([np.inf, -np.inf], np.nan)
     valid = clean.dropna()
     if valid.empty:
+        return clean
+    if len(valid) < 4:
         return clean
     lower_bound = valid.quantile(lower, interpolation="lower")
     upper_bound = valid.quantile(upper, interpolation="lower")
@@ -319,3 +323,231 @@ def build_company_features(
         np.isfinite(_finite_number(features[key])) for key in coverage_keys
     ) / len(coverage_keys)
     return features
+
+
+def classify_model(row):
+    if bool(row.get("is_financial", False)):
+        return MODEL_FINANCIAL
+    latest_profit = _finite_number(row.get("latest_profit"))
+    latest_fcf = _finite_number(row.get("latest_fcf"))
+    if (
+        np.isfinite(latest_profit)
+        and latest_profit > 0
+        and np.isfinite(latest_fcf)
+        and latest_fcf > 0
+    ):
+        return MODEL_GENERAL
+
+    revenue_cagr = _finite_number(row.get("revenue_cagr"))
+    gross_margin = _finite_number(row.get("gross_margin"))
+    gross_margin_change = _finite_number(row.get("gross_margin_change"))
+    liability_ratio = _finite_number(row.get("liability_ratio"))
+    try:
+        cash_runway = float(row.get("cash_runway_years", np.nan))
+    except (TypeError, ValueError):
+        cash_runway = np.nan
+    if (
+        np.isfinite(revenue_cagr)
+        and revenue_cagr > 0
+        and np.isfinite(gross_margin)
+        and gross_margin > 0
+        and np.isfinite(gross_margin_change)
+        and gross_margin_change >= -10.0
+        and not np.isnan(cash_runway)
+        and cash_runway >= 1.5
+        and np.isfinite(liability_ratio)
+        and liability_ratio < 0.70
+    ):
+        return MODEL_GROWTH
+    return None
+
+
+def risk_veto_reasons(row):
+    reasons = []
+    total_assets = _finite_number(row.get("total_assets"))
+    total_liability = _finite_number(row.get("total_liability"))
+    if (
+        np.isfinite(total_assets)
+        and np.isfinite(total_liability)
+        and total_liability > total_assets
+    ):
+        reasons.append("insolvent")
+
+    if (
+        _finite_number(row.get("cfo_positive_ratio")) == 0
+        and _finite_number(row.get("revenue_cagr")) <= 0
+    ):
+        reasons.append("persistent_negative_cfo")
+    if _finite_number(row.get("deterioration_count")) >= 2:
+        reasons.append("fundamental_deterioration")
+    if _finite_number(row.get("accounting_gap_streak")) >= 2:
+        reasons.append("accounting_gap")
+    if _finite_number(row.get("feature_coverage")) < 0.5:
+        reasons.append("insufficient_data")
+
+    if not bool(row.get("is_financial", False)) and (
+        _finite_number(row.get("latest_profit")) <= 0
+        or _finite_number(row.get("latest_fcf")) <= 0
+    ):
+        try:
+            cash_runway = float(row.get("cash_runway_years", np.nan))
+        except (TypeError, ValueError):
+            cash_runway = np.nan
+        if np.isnan(cash_runway) or cash_runway < 1.5:
+            reasons.append("cash_runway")
+        liability_ratio = _finite_number(row.get("liability_ratio"))
+        if not np.isfinite(liability_ratio) or liability_ratio >= 0.70:
+            reasons.append("growth_leverage")
+    return reasons
+
+
+_MODEL_COMPONENTS = {
+    MODEL_GENERAL: {
+        "expectation_score": (
+            ("fcf_yield", True),
+            ("earnings_yield", True),
+            ("book_yield", True),
+            ("sales_yield", True),
+            ("roe_to_pb", True),
+        ),
+        "quality_score": (
+            ("cash_conversion", True),
+            ("fcf_positive_ratio", True),
+            ("revenue_cagr", True),
+            ("gross_margin", True),
+            ("profit_stability", True),
+        ),
+        "capital_score": (
+            ("roic_proxy", True),
+            ("incremental_return", True),
+            ("roe", True),
+            ("roa", True),
+        ),
+        "accounting_score": (
+            ("adjusted_profit_ratio", True),
+            ("net_debt_ratio", False),
+            ("ar_growth_gap", False),
+            ("inventory_growth_gap", False),
+            ("goodwill_ratio", False),
+        ),
+        "contrarian_score": (("contrarian_signal", True),),
+    },
+    MODEL_FINANCIAL: {
+        "expectation_score": (
+            ("roe_to_pb", True),
+            ("book_yield", True),
+            ("earnings_yield", True),
+        ),
+        "quality_score": (
+            ("profit_stability", True),
+            ("profit_growth", True),
+            ("adjusted_profit_ratio", True),
+        ),
+        "capital_score": (("roe", True), ("roa", True)),
+        "accounting_score": (
+            ("adjusted_profit_ratio", True),
+            ("profit_stability", True),
+        ),
+        "contrarian_score": (("contrarian_signal", True),),
+    },
+    MODEL_GROWTH: {
+        "expectation_score": (
+            ("sales_yield", True),
+            ("revenue_cagr", True),
+            ("cash_burn_improvement", True),
+        ),
+        "quality_score": (
+            ("gross_margin", True),
+            ("gross_margin_change", True),
+            ("revenue_cagr", True),
+        ),
+        "capital_score": (("asset_turnover", True), ("revenue_cagr", True)),
+        "accounting_score": (
+            ("cash_runway_years", True),
+            ("liability_ratio", False),
+            ("share_capital_growth", False),
+        ),
+        "contrarian_score": (("contrarian_signal", True),),
+    },
+}
+
+_COMPONENT_WEIGHTS = {
+    "expectation_score": 0.35,
+    "quality_score": 0.25,
+    "capital_score": 0.15,
+    "accounting_score": 0.15,
+    "contrarian_score": 0.10,
+}
+
+
+def _score_group(frame, model, min_group_size):
+    result = frame.copy()
+    for component, feature_specs in _MODEL_COMPONENTS[model].items():
+        component_parts = []
+        original_valid = pd.DataFrame(index=result.index)
+        for feature, higher_is_better in feature_specs:
+            raw = pd.to_numeric(result.get(feature), errors="coerce").replace(
+                [np.inf, -np.inf], np.nan
+            )
+            original_valid[feature] = raw.notna()
+            if raw.notna().any():
+                raw = raw.fillna(raw.median())
+            component_parts.append(
+                percentile_score(
+                    raw,
+                    higher_is_better=higher_is_better,
+                    min_count=min_group_size,
+                )
+            )
+        scores = pd.concat(component_parts, axis=1).mean(axis=1)
+        enough_inputs = original_valid.sum(axis=1) >= math.ceil(len(feature_specs) / 2)
+        result[component] = scores.where(enough_inputs)
+    return result
+
+
+def score_candidates(features, min_group_size=20):
+    """按公司模型计算五类分数并返回稳定的降序排名。"""
+    if features is None or len(features) == 0:
+        return pd.DataFrame()
+    frame = features.copy().reset_index(drop=True)
+    frame["model"] = frame.apply(classify_model, axis=1)
+    frame["veto_reasons"] = frame.apply(risk_veto_reasons, axis=1)
+
+    scored_groups = []
+    for model in (MODEL_GENERAL, MODEL_FINANCIAL, MODEL_GROWTH):
+        model_frame = frame.loc[frame["model"] == model]
+        if model_frame.empty:
+            continue
+        if model == MODEL_FINANCIAL:
+            for _, industry_frame in model_frame.groupby("industry", dropna=False):
+                scored_groups.append(_score_group(industry_frame, model, min_group_size))
+        else:
+            scored_groups.append(_score_group(model_frame, model, min_group_size))
+
+    unclassified = frame.loc[frame["model"].isna()].copy()
+    for component in _COMPONENT_WEIGHTS:
+        unclassified[component] = np.nan
+    if not unclassified.empty:
+        scored_groups.append(unclassified)
+    if not scored_groups:
+        return frame.iloc[0:0]
+
+    ranked = pd.concat(scored_groups, axis=0).sort_index()
+    component_frame = ranked[list(_COMPONENT_WEIGHTS)]
+    valid_components = component_frame.notna().sum(axis=1)
+    ranked["score"] = sum(
+        ranked[component] * weight for component, weight in _COMPONENT_WEIGHTS.items()
+    )
+    ranked["eligible"] = (
+        ranked["model"].notna()
+        & ranked["veto_reasons"].map(len).eq(0)
+        & valid_components.ge(3)
+        & ranked["score"].notna()
+    )
+    volatility = pd.to_numeric(ranked.get("volatility_12m"), errors="coerce").fillna(0.5)
+    drawdown = pd.to_numeric(ranked.get("max_drawdown_12m"), errors="coerce").abs().fillna(0.5)
+    balance_risk = pd.to_numeric(ranked.get("liability_ratio"), errors="coerce").clip(0, 1)
+    ranked["downside_risk"] = (volatility + drawdown + balance_risk.fillna(0.5)) / 3.0
+    return ranked.sort_values(
+        ["eligible", "score", "code"], ascending=[False, False, True], na_position="last"
+    ).reset_index(drop=True)
