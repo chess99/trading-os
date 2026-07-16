@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600725",
+  "ticker": "600725",
+  "name": "云维股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "现有煤炭贸易主业低毛利且仍亏损，2026H1 虽预告同比减亏但尚未证明可持续盈利；红河发电重大资产重组具备平台转型期权，但交易作价、摊薄、审批和盈利质量未落地，当前市场价格显著高于可核验账面与经营价值，缺乏安全边际。",
+  "fair_value_range": [
+    0.3,
+    0.6
+  ],
+  "buy_zone": [
+    0.25,
+    0.35
+  ],
+  "sell_or_reduce_zone": [
+    1.0,
+    1.5
+  ],
+  "position_plan": [
+    {
+      "condition": "重组报告书未披露或未能证明每股价值增厚，且股价高于1.00元",
+      "action": "不买入；已有仓位以减持或回避为主",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入0.25-0.35元且主业现金流未恶化、重组仍有实质推进",
+      "action": "仅作为高风险事件仓观察，小仓位试探",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "正式重组报告书披露，红河发电审计盈利、交易作价、发行摊薄和业绩承诺均显示每股价值显著增厚",
+      "action": "重新建模后再决定是否提高仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.35,
+      "reason": "进入按现有账面权益和低置信度重组期权估算的买入观察区"
+    },
+    {
+      "type": "price_above",
+      "price": 1.0,
+      "reason": "显著高于可核验主业价值，若无重组条款增厚证据应卖出或减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、经营现金流和重组进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、贸易业务毛利率和应收预付变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核年度业绩预告、重组审批节点和是否需要下调或更新估值"
+    }
+  ]
+}

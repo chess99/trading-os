@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:600727",
+  "ticker": "600727",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "鲁北化工",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "鲁北化工是钛白粉、甲烷氯化物和盐化工多产品周期修复标的，2026H1预告显示盈利明显改善，但护城河中低、利润高度依赖产品价差，适合在足够安全边际下小仓位观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    7.5,
+    9.2
+  ],
+  "buy_zone": [
+    5.8,
+    6.6
+  ],
+  "sell_or_reduce_zone": [
+    9.2,
+    11.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于6.6元且2026半年报确认归母净利润不低于1.7亿元、经营现金流未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于5.8元且钛白粉和甲烷氯化物价差未快速下行",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026三季报利润修复无法延续或主要产品价差连续下行",
+      "action": "不加仓并考虑退出观察仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.6,
+      "reason": "进入买入观察区，若半年报验证利润修复，可建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "提供更厚安全边际，适合在行业价差稳定时提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 9.2,
+      "reason": "达到合理价值区间上沿，若没有利润超预期验证应考虑减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "进入高估或乐观情景兑现区，周期回撤风险显著上升"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报的分产品毛利率、经营现金流和存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认利润修复是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报并重估周期利润中枢"
+    }
+  ]
+}
