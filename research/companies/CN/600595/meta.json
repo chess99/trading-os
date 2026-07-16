@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:600595",
+  "ticker": "600595",
+  "name": "中孚实业",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "中孚实业已形成75万吨权益电解铝、绿色水电铝、再生铝和铝精深加工协同布局，2026H1业绩预告显示盈利中枢显著抬升；当前估值未完全反映顺周期盈利弹性，但需用仓位控制铝价、成本和出口风险。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    7.2,
+    8.8
+  ],
+  "buy_zone": [
+    5.6,
+    6.6
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    10.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格处于买入区间且长江A00铝价维持在21000元/吨以上、2026H1业绩落在预告区间内",
+      "action": "建立基础仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价跌至5.6元附近但铝价未跌破20500元/吨、半年报经营现金流改善",
+      "action": "分批加仓",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价进入9.0元以上且盈利预测未继续上修，或铝价连续四周低于20500元/吨",
+      "action": "减仓至观察仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.6,
+      "reason": "进入深度买入区间，需要复核铝价、氧化铝成本和现金流后评估加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "进入减持区间，需要判断估值是否已充分反映2026年顺周期盈利。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证归母净利润、经营现金流、铝加工销量和成本变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断H2盈利是否较H1明显回落。"
+    }
+  ]
+}
