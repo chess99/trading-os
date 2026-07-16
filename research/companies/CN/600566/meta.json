@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:600566",
+  "ticker": "600566",
+  "name": "济川药业",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "济川药业是高现金、高分红、低负债的中药品牌现金牛，但2025年至2026Q1核心单品仍在下滑；小儿豉翘清热颗粒进入2026版国家基药目录提供真实修复期权，当前价格处于合理价值区间中部，安全边际不足，需观察基药目录实施后的放量和费用率变化。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    24,
+    32
+  ],
+  "buy_zone": [
+    20,
+    23
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    38
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于23元，且最近一期财报显示归母净利润降幅收窄、经营现金流/归母净利润不低于0.8倍",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于21元，且小儿豉翘进入基药目录后的销售未出现价格失控或费用率大幅反弹",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于34元且收入或利润尚未连续两个季度恢复增长",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 23,
+      "reason": "进入初始买入区，需要复核安全边际和最新财报质量"
+    },
+    {
+      "type": "price_below",
+      "price": 21,
+      "reason": "进入深度价值区，需要判断是否为基本面恶化导致的价值陷阱"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "超过合理价值上沿，需要检查是否已有基本面上修证据"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-30",
+      "reason": "复核2026年半年报，重点看小儿豉翘、清热解毒类和儿科类收入及现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，观察基药目录实施后的初步基层放量和费用率变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及2027年一季报，判断利润是否真正触底恢复"
+    }
+  ]
+}
