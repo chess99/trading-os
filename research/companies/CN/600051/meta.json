@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:600051",
+  "ticker": "600051",
+  "market": "CN",
+  "name": "宁波联合",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "宁波联合是低杠杆、低PB的区域资产型公司，热电业务提供稳定底盘，地产和投资性房地产提供账面安全垫；但扣非ROE低、地产去化和资产折价不确定，现价仅适合观察，需等待低于买入区或ROE/现金流修复证据。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    5.6,
+    7.2
+  ],
+  "buy_zone": [
+    4.8,
+    5.4
+  ],
+  "sell_or_reduce_zone": [
+    7.5,
+    8.5
+  ],
+  "position_plan": [
+    {
+      "condition": "观察期不建仓；若股价低于5.4元且未出现重大资产减值、担保恶化或经营现金流转负，可建立小仓位。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若股价低于4.8元且2026中报显示经营现金流为正、热电利润稳定、地产存货未明显恶化，可提高至资产型低估组合仓位。",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若股价高于7.5元但扣非ROE仍低于2.5%且无回购或分红改善，应停止加仓并考虑降低关注权重。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.4,
+      "reason": "进入初始买入区上沿，需要复核地产资产折价、热电利润和现金流。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入更高安全边际区间，可重点评估是否建立最大5%仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "超过基础合理价值上沿，若ROE和资本回报未改善则风险收益比下降。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看扣非利润、经营现金流、热电利润、存货和投资性房地产变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年扣非ROE是否具备修复迹象。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及估值提升计划执行情况，包括分红、回购、资产处置和担保风险。"
+    }
+  ]
+}
