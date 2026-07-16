@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600235",
+  "ticker": "600235",
+  "name": "民丰特纸",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "民丰特纸当前不是高质量成长股，而是低盈利特纸制造资产叠加南湖厂区征收补偿期权。经营利润尚未反转，2026Q1 亏损；但约 10.79 亿元补偿总额对市值和资产负债表影响重大。当前价格位于合理价值区间中部，缺少足够安全边际，建议观察等待更低价格或补偿/盈利确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.8,
+    6.2
+  ],
+  "buy_zone": [
+    0,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    6.8,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 4.5 元，且南湖厂区补偿款未出现落空风险、经营现金流维持为正",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 4.0 元，且剩余补偿款继续兑现、单季度扣非利润转正",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于 6.8 元但扣非利润和经营现金流没有同步改善",
+      "action": "减仓或不追涨",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入保守买入区间，经营资产折价与补偿期权提供更好安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "reason": "超过基准合理价值上沿，若经营未改善则赔率转弱"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看扣非利润、毛利率、现金流和补偿款进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，验证经营是否连续改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和南湖厂区征收补偿全年进展"
+    }
+  ]
+}

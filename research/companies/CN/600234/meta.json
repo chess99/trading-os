@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:600234",
+  "ticker": "600234",
+  "name": "科新发展",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "当前市值约54亿元，对应2025年收入约14倍PS、2026Q1约12倍PB；公司工程主业低毛利且亏损，算力租赁业务仍处验证期，客户集中、回款、折旧和负债风险尚未被财报证明可控。当前缺乏安全边际，维持不买/规避，仅跟踪算力现金流兑现。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    4.5,
+    7.5
+  ],
+  "buy_zone": [
+    3.5,
+    5.5
+  ],
+  "sell_or_reduce_zone": [
+    10.0,
+    12.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前不建仓；只有股价低于5.5元且算力业务连续两个季度形成可审计收入和正经营现金流时，才允许研究型小仓位。",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若股价低于4.5元，同时资产负债率未继续恶化、客户集中风险下降，可复核是否上调为watch并给0.5%以内观察仓。",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入观察买入区间，需要复核算力收入、回款和资产负债率。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "显著高于中性情景估值上沿，若基本面未兑现应继续规避或减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看算力租赁收入、毛利、折旧、现金流和客户集中度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断转型业务是否形成连续经营证据。"
+    }
+  ],
+  "key_metrics": {
+    "last_price": 20.5,
+    "market_cap_cny": 5381679946.5,
+    "shares_outstanding": 262520973,
+    "revenue_2025_cny": 384019400.84,
+    "net_profit_2025_cny": -17178310.63,
+    "revenue_2026_q1_cny": 63891359.15,
+    "net_profit_2026_q1_cny": -1549682.66
+  }
+}
