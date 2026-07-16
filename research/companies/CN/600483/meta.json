@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600483",
+  "market": "CN",
+  "ticker": "600483",
+  "currency": "CNY",
+  "name": "福能股份",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "福建省属综合电力平台，风电、气电、热电联产与参股核电构成稳定现金流；新能源市场化电价和资本开支约束上行弹性，当前价格接近合理区间，等待更高股息率和半年报验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    10.5,
+    12.5
+  ],
+  "buy_zone": [
+    9.0,
+    9.6
+  ],
+  "sell_or_reduce_zone": [
+    13.2,
+    14.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入9.0-9.6元且2026年半年报归母净利润不低于14.5亿元、上网结算电价未出现超预期下行",
+      "action": "建立观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "半年报和三季报确认归母净利润稳定、年度分红能力维持且股价仍低于合理价值中枢",
+      "action": "提高至核心高股息仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于13.2元但盈利预测未上修，或新能源电价下行导致ROE趋势性回落",
+      "action": "减仓或停止买入",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.6,
+      "reason": "进入买入区间上沿，静态股息率接近安全边际要求"
+    },
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入强安全边际区间，可重新评估加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 13.2,
+      "reason": "高于合理价值区间上沿，若盈利未上修应降低预期收益率假设"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报利润质量、上网电价、经营现金流和资本开支"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报以及新能源市场化电价影响"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红方案和长期盈利假设"
+    }
+  ]
+}
