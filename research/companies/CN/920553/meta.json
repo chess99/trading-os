@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920553",
+  "market": "CN",
+  "ticker": "920553",
+  "name": "凯腾精工",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "全国布局和工艺能力真实，但核心ROE与自由现金流偏低，当前价格已透支毛利率和资本回报修复。",
+  "fair_value_range": [3.0, 4.2],
+  "buy_zone": [2.4, 3.0],
+  "sell_or_reduce_zone": [5.0, 6.0],
+  "position_plan": [
+    {
+      "condition": "股价处于2.4-3.0元且毛利率、应收账款和滚动自由现金流未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价仍处买入区间且连续两个报告期验证扣非利润和自由现金流改善",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报的毛利率、应收账款、扣非利润和自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "进入有安全边际的研究买入区间，仍需重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 5.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-16T13:24:42+08:00"
+}
