@@ -5,48 +5,68 @@
   "name": "京能电力",
   "currency": "CNY",
   "status": "active",
+  "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "火电盈利修复已部分定价，维持观察",
+  "current_thesis": "京能电力2025年盈利和现金流显著修复，煤电长协燃料、供热保供和京能集团信用构成底盘；但当前股价已接近合理价值中枢，2026年煤价、电价及不超过50亿元定增摊薄仍需验证，暂列观察。",
   "fair_value_range": [
-    5.5,
-    7.0
+    5.3,
+    6.5
   ],
   "buy_zone": [
-    4.8,
-    5.3
+    4.6,
+    5.0
   ],
   "sell_or_reduce_zone": [
-    7.2,
-    8.2
+    6.8,
+    7.5
   ],
   "position_plan": [
     {
-      "condition": "股价处于买入区间且基本面未恶化",
+      "condition": "股价进入4.6至5.0元买入区间，且2026年半年度扣非净利润、经营现金流、入厂标煤价和平均上网电价未明显恶化",
       "max_weight": 0.03
+    },
+    {
+      "condition": "股价跌破4.6元且定增价格、募投项目回报和煤电价差风险已被充分消化，可作为高股息低估值修复仓提高配置",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于6.8元或定增导致每股价值明显摊薄而盈利预测未上修，仅保留跟踪或降低仓位",
+      "max_weight": 0.01
     }
   ],
-  "latest_report": "reports/2026-07-10-initial.md",
+  "latest_report": "reports/2026-07-17-initial.md",
   "report_history": [
-    "reports/2026-07-10-initial.md"
+    "reports/2026-07-10-initial.md",
+    "reports/2026-07-17-initial.md"
   ],
   "review_triggers": [
     {
       "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看煤价、电价、容量电价、经营现金流"
+      "date": "2026-08-22",
+      "reason": "复核2026年半年报，重点验证归母净利润、扣非净利润、经营现金流、煤价、电价、利用小时和新能源发电量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "复核定增股东会及监管进展、发行价格区间、募投项目收益率和收购十堰热电40%股权的估值合理性。"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 5.3,
-      "reason": "进入有安全边际的买入区间"
+      "price": 5.0,
+      "reason": "进入初步买入观察区，需同步复核煤价、电价和定增摊薄。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "低于保守买入区下沿，若基本面未恶化则安全边际较充分。"
     },
     {
       "type": "price_above",
-      "price": 7.2,
-      "reason": "进入减仓或不应追高区间"
+      "price": 6.8,
+      "reason": "高于合理价值区间上沿附近，若盈利未上修应降低预期收益或减仓。"
     }
   ],
-  "updated_at": "2026-07-10T19:41:00+08:00"
+  "updated_at": "2026-07-17"
 }
