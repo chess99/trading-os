@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:600831",
+  "ticker": "600831",
+  "name": "广电网络",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "传统有线电视和宽带业务承压，政企业务与云网转型尚未证明能覆盖折旧、减值和资金成本；2025年及2026H1预告持续大额亏损，净资产安全边际快速变薄，当前价格缺乏买入赔率。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.0,
+    1.8
+  ],
+  "buy_zone": [
+    0.8,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    2.4,
+    4.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且亏损未见拐点，不建立仓位",
+      "action": "avoid",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格跌至1.20元以下，且连续两个季度经营现金流为正、应收减值下降、净资产未继续快速下降",
+      "action": "watchlist_probe",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入买入观察区，需要重新核验现金流、净资产和减值压力"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "高于估值上沿较多，若已有仓位应减持或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中归母净资产、经营现金流、应收账款和信用减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现收入降幅收窄和现金流改善"
+    }
+  ],
+  "research_notes": {
+    "decision": "不买",
+    "confidence": "中",
+    "valuation_method": "相对估值、资产/现金流绝对估值、情景估值交叉验证"
+  }
+}
