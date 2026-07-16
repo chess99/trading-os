@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:600765",
+  "ticker": "600765",
+  "name": "中航重机",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "航空锻铸与液压环控核心平台，长期产业位置好，但2025年利润与现金流承压、2026Q1利润仍下滑，当前缺少足够安全边际，等待利润率和现金流修复确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.5,
+    15.5
+  ],
+  "buy_zone": [
+    8.8,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    17.5,
+    19.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅作为研究性观察仓，价格在合理价值区间中部且利润拐点未确认时不主动重仓。",
+      "action": "watch_or_tiny_tracking_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于10.5元，且未出现订单、治理或现金流的新增重大负面信息。",
+      "action": "start_position",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "2026年后续定期报告显示收入增长、毛利率修复、经营现金流覆盖净利润，且估值不高于下一年25倍预期市盈率。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.1
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入买入区间上沿，需要复核基本面后考虑建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入深度安全边际区间，若基本面未恶化可提高优先级。"
+    },
+    {
+      "type": "price_above",
+      "price": 17.5,
+      "reason": "超过基准合理价值上沿，需要评估是否由业绩修复支撑，否则减持或放弃买入。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入、毛利率、扣非净利和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润拐点和现金流修复是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重估商用航空、国际转包和高端民品兑现情况。"
+    }
+  ]
+}

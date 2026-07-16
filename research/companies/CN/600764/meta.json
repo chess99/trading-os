@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600764",
+  "ticker": "600764",
+  "name": "中国海防",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "中国海防具备水声电子防务稀缺性和中船集团体系协同，但2025年及2026Q1利润率承压、客户集中且当前估值已反映较强利润修复预期，适合观察等待安全边际或盈利拐点。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    12.5,
+    16.5
+  ],
+  "buy_zone": [
+    10.8,
+    13.2
+  ],
+  "sell_or_reduce_zone": [
+    19.0,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于13.2元且无新增重大负面公告，可建立观察性底仓。",
+      "action": "buy_initial",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026年半年报显示毛利率不低于25%、扣非净利率不低于6%、经营现金流或应收账款周转改善，可加仓。",
+      "action": "add_on_fundamental_confirmation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于19.0元且盈利修复未兑现，或2026H1毛利率低于23%。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.2,
+      "reason": "进入买入区间上沿，需要复核订单、毛利率和现金流后决定是否建立底仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 19.0,
+      "reason": "超过减持/回避区间下沿，若基本面未显著改善则安全边际不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查水声防务收入、毛利率、扣非净利和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估正常化盈利和估值中枢。"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600768",
+  "ticker": "600768",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "宁波富邦",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司已从低毛利铝加工和贸易业务转向以宁波电工合金为核心的电接触材料业务，2026年盈利弹性明显，但利润仍受白银价格、一次性投资收益、营运资金占用和55%控股比例约束；当前更适合观察，等待现金流和半年报验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    12.0,
+    16.0
+  ],
+  "buy_zone": [
+    10.0,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于11.5元且2026年半年报扣非归母净利润不低于4200万元，同时未出现关联方资金占用或重大存货跌价",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于10.0元且2026年下半年经营现金流转正，全年扣非归母净利润有望超过8000万元",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于18.0元但扣非利润和经营现金流未同步验证",
+      "action": "减仓或不新增",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入初始买入观察区，需要结合半年报扣非利润和现金流复核"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入较高安全边际区，若现金流改善可考虑提高小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "超过乐观估值上沿，若基本面未继续验证应减仓或回避追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的扣非归母净利润、投资收益、经营现金流和电接触产品毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断白银价格波动后的利润持续性和营运资金压力"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年扣非利润、现金流和电工合金少数股东权益影响"
+    }
+  ]
+}
