@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:600166",
+  "ticker": "600166",
+  "name": "福田汽车",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "福田汽车处于商用车周期修复与新能源、海外、重卡结构改善共振阶段，2025 年和 2026Q1 已验证盈利修复，但毛利率薄、杠杆高、分红受限，当前价格接近合理区间下沿但安全边际不足，适合观察或小仓位跟踪。",
+  "fair_value_range": [
+    3.2,
+    4.1
+  ],
+  "buy_zone": [
+    2.45,
+    2.8
+  ],
+  "sell_or_reduce_zone": [
+    4.3,
+    4.8
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 2.80 元，且月度产销快报显示累计销量仍同比增长、扣非利润未出现恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于 2.55 元，且 2026 半年报扣非归母净利润同比增长、经营现金流未明显恶化",
+      "action": "加仓至中等观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "海外、新能源和中重卡销量持续增长，扣非净利率进入 2.5% 以上区间且估值仍低于 15 倍 2026E PE",
+      "action": "提高到策略上限",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "reason": "进入买入区上沿，需要复核月度销量、扣非利润和现金流是否未恶化"
+    },
+    {
+      "type": "price_below",
+      "price": 2.45,
+      "reason": "进入深度安全边际区，需要检查是否存在基本面新风险"
+    },
+    {
+      "type": "price_above",
+      "price": 4.3,
+      "reason": "进入减持区下沿，若盈利预测未同步上修，应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点检查扣非利润、海外毛利率、经营现金流和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报及 1-9 月产销快报，判断全年利润兑现概率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报，重新评估分红条件、资本配置和估值区间"
+    }
+  ],
+  "confidence": "中",
+  "decision": "观察",
+  "key_metrics": {
+    "last_price": 3.08,
+    "last_price_date": "2026-07-16",
+    "market_cap_cny_billion": 24.39,
+    "shares_outstanding_billion": 7.9174,
+    "source_note": "行情来自东方财富实时接口，随市场变动；财务和产销数据来自公司公告。"
+  }
+}

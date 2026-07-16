@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600162",
+  "ticker": "600162",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "香江控股",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "存量商业物业、家居卖场网络和大湾区土储提供资产基础，但2025年转亏、2026H1继续预亏，当前约1.44倍PB不便宜，需等待价格回落或经营现金流和去化实质改善。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    1.45,
+    2.05
+  ],
+  "buy_zone": [
+    0,
+    1.45
+  ],
+  "sell_or_reduce_zone": [
+    2.3,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价低于1.45元且半年报未显著低于预告区间、经营现金流未恶化时建立观察仓",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若PB低于0.8倍且存货连续下降、经营现金流转正，可提高到小仓位",
+      "action": "add",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若股价高于2.30元且无利润和现金流改善证据，不参与或减仓",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.45,
+      "reason": "进入基准买入区间，资产折价开始提供安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 2.3,
+      "reason": "高于基准估值上沿，需按交易性溢价和风险提示处理"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式利润、现金流、存货和负债变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报收入确认、去化和经营现金流趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及资产减值、担保、质押变化"
+    }
+  ]
+}
