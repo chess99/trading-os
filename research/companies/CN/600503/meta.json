@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:600503",
+  "ticker": "600503",
+  "name": "华丽家族",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "低杠杆与账面净资产提供一定资产底，但房地产主业进入低毛利存量去化期，2026H1仍预亏；治理和跨界投资折价明显，当前价格缺少足够安全边际，适合观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    1.8,
+    2.3
+  ],
+  "buy_zone": [
+    1.55,
+    1.75
+  ],
+  "sell_or_reduce_zone": [
+    2.6,
+    3.1
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌入1.55-1.75元且半年报未出现新增重大减值、资金占用或治理风险时，仅允许观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度毛利率改善、经营现金流转正且合同负债稳定后，才允许提高为小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于2.60元且无主业利润修复或资产兑现证据时，不新增仓位并考虑降低暴露",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.75,
+      "reason": "进入安全边际观察区，复核半年报、存货减值和现金流后再决定是否建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 2.6,
+      "reason": "超过乐观情景下沿，若无主业利润修复或非地产资产兑现，应降低估值风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、毛利率、存货减值、经营现金流和海和药物相关披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及第三季度房地产业务经营数据，确认亏损是否收敛"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估净资产折价、土储去化和治理折价"
+    }
+  ]
+}
