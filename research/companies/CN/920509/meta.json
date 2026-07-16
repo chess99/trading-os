@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920509",
+  "market": "CN",
+  "ticker": "920509",
+  "name": "同惠电子",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "公司在精密阻抗和功率半导体测试细分领域盈利能力突出、现金充裕，但22.49元已隐含长期约20%以上自由现金流增长，当前缺乏安全边际。",
+  "fair_value_range": [14, 18],
+  "buy_zone": [10, 13],
+  "sell_or_reduce_zone": [22, 28],
+  "position_plan": [
+    {
+      "condition": "股价处于10-13元且半年报收入、毛利率、应收和存货未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于10元，重新验证核心技术、订单和自由现金流未受损后",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于22元且盈利预测未出现可核验上修",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的增长、毛利率、营运资本和新品商业化"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13,
+      "reason": "进入有安全边际的买入复核区间，仍须确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 22,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-17T00:31:19+08:00"
+}
