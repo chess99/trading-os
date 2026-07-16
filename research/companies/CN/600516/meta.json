@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600516",
+  "ticker": "600516",
+  "name": "方大炭素",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "方大炭素资产负债表稳健、低杠杆和现金资产提供下行缓冲，但石墨电极与负极材料仍处产能过剩周期，2025年扣非亏损、2026Q1利润率仍低，现价主要反映资产底而非盈利拐点，等待价格低于安全边际或扣非利润与毛利率确认修复。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    4.4,
+    5.5
+  ],
+  "buy_zone": [
+    3.6,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    6.2,
+    7.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.2元，且无重大资产减值、治理风险或经营现金流恶化",
+      "action": "观察仓试买",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于3.8元，经营现金流转正，石墨电极价格或毛利率出现连续改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于6.2元但扣非利润和毛利率未同步修复",
+      "action": "不追高或降低仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "低于基准买入区上沿，PB接近或低于1倍，安全边际改善"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入更有吸引力的资产折价区，可结合现金流和行业价格复核加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "高于基准公允价值上沿，需要盈利拐点验证，否则赔率下降"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看毛利率、扣非利润、经营现金流和存货应收变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断石墨电极周期与外销收入是否持续改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估长期盈利中枢和资产质量"
+    }
+  ]
+}
