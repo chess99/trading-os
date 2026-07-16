@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:600327",
+  "ticker": "600327",
+  "name": "大东方",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "账面净资产与无锡区域商业资产提供下档支撑，但2025年亏损、2026H1业绩预减和医疗健康板块价格/需求压力尚未解除，当前更适合观察，等待盈利与现金流拐点。",
+  "fair_value_range": [
+    3.2,
+    4.1
+  ],
+  "buy_zone": [
+    2.7,
+    3.1
+  ],
+  "sell_or_reduce_zone": [
+    4.8,
+    5.6
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.10元且半年报未出现新增大额减值、经营现金流没有继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非净利润和经营现金流同步改善，且医疗健康毛利率企稳",
+      "action": "将观察仓提高到小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于4.80元但医疗利润率和现金流未实质修复",
+      "action": "不加仓并考虑减持",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "接近0.95倍以内2026Q1每股净资产，安全边际开始出现"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "进入乐观情景估值下沿，若无医疗业务利润修复则风险收益比转弱"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点确认医疗健康毛利率、减值和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扣非净利润和现金流是否形成拐点"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估正常化盈利和估值区间"
+    }
+  ],
+  "key_metrics": {
+    "reference_price_cny": 3.6,
+    "reference_price_date": "2026-07-16",
+    "estimated_nav_per_share_cny": 3.19,
+    "decision": "观察",
+    "confidence": "中"
+  }
+}
