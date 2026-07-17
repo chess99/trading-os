@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:605033",
+  "market": "CN",
+  "ticker": "605033",
+  "name": "美邦股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "美邦股份是农药制剂为主、原药起步的细分农化公司，杀菌剂和渠道服务具备一定竞争力，2026Q1 收入利润恢复，但 ROE 偏低、行业价格承压且当前约 17.10 元估值高于保守合理区间，适合观察等待安全边际。",
+  "fair_value_range": [
+    13.0,
+    16.0
+  ],
+  "buy_zone": [
+    0.0,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    20.0,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于 12.5 元，且 2026H1/H2 扣非净利润继续增长、应收账款和经营现金流符合农化季节性回款规律",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于 11.0 元，且全年归母净利润预期不低于 6500 万元、经营现金流没有恶化",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于 20.0 元但盈利预测未上修，或应收账款/毛利率/现金流任一核心指标明显恶化",
+      "action": "不新增并减仓至跟踪仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入保守合理价值区间下沿附近，可用中报/年报验证后考虑观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "估值接近悲观情景上沿与净资产保护区，可在现金流正常时提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "reason": "接近乐观情景估值，若利润未同步上修则风险收益比转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否延续 Q1 增长和回款改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报与全年现金流，重新评估合理价值区间"
+    }
+  ]
+}
