@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603987",
+  "market": "CN",
+  "ticker": "603987",
+  "name": "康德莱",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "康德莱是医用穿刺与注输耗材领域的成熟制造资产，2025年盈利和经营现金流质量较好，当前价格对应约13倍2025年PE和约1.2倍PB，已反映低增长预期。2026Q1收入和利润下滑要求控制仓位，但在7.5元以下具备小仓位买入价值。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    8.3,
+    10.2
+  ],
+  "buy_zone": [
+    0,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    13.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于或等于7.5元，且未出现收入连续两个季度明显下滑或经营现金流持续恶化",
+      "action": "initial_buy",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H1收入同比转正、扣非净利率维持9%以上、经营现金流恢复为正",
+      "action": "add",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于10.5元且基本面未上修，或2026H1经营现金流显著弱于净利润",
+      "action": "reduce",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入买入区间，静态PE和PB提供初步安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "若基本面未恶化，绝对估值进入保守情景下沿附近"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "超过基准合理价值上沿，若增长未恢复应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和应收存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1利润下滑是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红政策，重估长期现金流"
+    }
+  ]
+}
