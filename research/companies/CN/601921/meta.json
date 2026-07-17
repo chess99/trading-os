@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:601921",
+  "ticker": "601921",
+  "name": "浙版传媒",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "浙版传媒是浙江省出版发行现金牛资产，教材教辅和省内发行网络构成利润底盘，现金及交易性金融资产充足、分红率高；但2026Q1收入和利润下滑，主业成长不足，当前约7.21元价格只属合理偏低，需等待6.5元以下或业绩修复后再提高仓位。",
+  "fair_value_range": [
+    6.7,
+    8.3
+  ],
+  "buy_zone": [
+    5.8,
+    6.5
+  ],
+  "sell_or_reduce_zone": [
+    8.8,
+    10.0
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于6.5元，且最近一期报告未显示教材教辅、经营现金流或分红政策明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于5.8元，且货币资金加交易性金融资产未大幅缩水、分红率仍维持在60%以上",
+      "action": "提高至中低仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "2026H1或2026Q3扣非归母净利润恢复正增长，且股价仍低于7.2元",
+      "action": "允许小幅加仓",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入基准买入区，可复核分红和现金资产后建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入更高安全边际区，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 8.8,
+      "reason": "超过基准合理价值上沿，需要减仓或等待业绩上修支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非净利润、经营现金流和分红可持续性"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否修复一季度下滑趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、分红方案和现金资产配置效率"
+    }
+  ],
+  "risk_level": "medium",
+  "data_quality": "medium"
+}
