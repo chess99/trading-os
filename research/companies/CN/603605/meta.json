@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603605",
+  "market": "CN",
+  "ticker": "603605",
+  "name": "珀莱雅",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "珀莱雅是A股美妆中经营质量、现金流和股东回报较均衡的头部公司，2025-2026Q1增长承压但品牌矩阵与现金流支撑中长期价值；在55元以下具备较好安全边际，需用2026中报验证收入恢复。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    68,
+    86
+  ],
+  "buy_zone": [
+    0,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    80,
+    110
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于55元且未出现主品牌持续失速、现金流恶化或重大治理风险",
+      "action": "建立或维持核心观察仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于50元，或2026年中报确认收入恢复正增长且销售费用率改善",
+      "action": "提高至目标仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于80元且收入增长未重新加速至双位数",
+      "action": "分批减仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入报告定义的买入区，具备相对估值和现金流安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 50,
+      "reason": "悲观情景估值下沿附近，可复核是否加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "接近减仓区，若增长未重新加速则安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、主品牌增速、销售费用率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报与双11预售表现"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红回购和多品牌增长质量"
+    }
+  ]
+}

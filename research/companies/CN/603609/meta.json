@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603609",
+  "market": "CN",
+  "ticker": "603609",
+  "name": "禾丰股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "禾丰股份具备饲料区域规模和农牧产业链协同基础，当前PB已低于账面净资产，但2026年上半年亏损和资产减值显示猪禽周期仍在侵蚀盈利与现金流。现阶段更适合作为周期修复观察标的，需等价格低于买入区间或半年报确认减值落地、现金流改善后再提高仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    6.7,
+    8.2
+  ],
+  "buy_zone": [
+    5.6,
+    6.2
+  ],
+  "sell_or_reduce_zone": [
+    8.6,
+    9.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于6.2元且2026年半年报减值基本落地、经营现金流未继续恶化时，可建立观察仓。",
+      "action": "initial_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格接近5.6元且饲料吨利、肉禽毛利率或生猪亏损收敛至少一项出现明确改善时，可加仓。",
+      "action": "add_on_margin_of_safety",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于8.6元但年度盈利修复仍缺乏现金流验证时，降低或退出仓位。",
+      "action": "reduce_or_exit",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "reason": "进入报告设定的买入区间上沿，需要复核半年报减值、现金流和饲料吨利。"
+    },
+    {
+      "type": "price_below",
+      "price": 5.6,
+      "reason": "进入更有吸引力的安全边际区间，可评估是否从观察仓提高到小仓位配置。"
+    },
+    {
+      "type": "price_above",
+      "price": 8.6,
+      "reason": "接近卖出或减仓区间，若盈利修复没有现金流验证则风险收益转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式披露后的亏损、资产减值、存货和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认下半年猪禽价格和饲料业务是否带来利润修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断公司是否已走出减值与周期亏损阶段。"
+    }
+  ]
+}
