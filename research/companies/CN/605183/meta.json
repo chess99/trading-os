@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:605183",
+  "market": "CN",
+  "ticker": "605183",
+  "name": "确成股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "确成股份具备全球沉淀法二氧化硅龙头地位、客户认证壁垒、海外产能和轻杠杆资产负债表，但2026Q1利润率被硫磺、均价和汇率压制；现价接近保守公允价值下沿，缺少足够安全边际，等待14.5元以下或二季报确认利润率修复后再买入。",
+  "fair_value_range": [
+    16.0,
+    19.0
+  ],
+  "buy_zone": [
+    0.0,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    20.5,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于14.5元，且最新季度二氧化硅销量不下滑、经营现金流保持为正",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于13.5元，且二季报或三季报显示毛利率环比修复、硫磺成本压力缓和",
+      "action": "加仓至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于20.5元但利润率未明显修复，或新项目投产延迟",
+      "action": "降低或不建立仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入保守买入区，静态估值与公允价值下沿之间开始出现安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 13.5,
+      "reason": "进入更高赔率区，若基本面未证伪可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 20.5,
+      "reason": "超过减持观察区下沿，若利润率和新项目未超预期则安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看二氧化硅毛利率、硫磺成本、泰国二期和微球项目进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1利润率压力是否已经缓解"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和新项目兑现情况，更新绝对估值与仓位上限"
+    }
+  ]
+}
