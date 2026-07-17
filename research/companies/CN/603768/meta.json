@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:603768",
+  "market": "CN",
+  "ticker": "603768",
+  "name": "常青股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "常青股份处于2025年亏损后的早期盈利修复阶段，2026年上半年预盈验证了收入增长和技改降本方向，但ROE、现金流和客户放量仍需半年报及三季报确认；当前价格大体位于合理价值区间内，缺少足够买方安全边际，评级为观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.3,
+    11.5
+  ],
+  "buy_zone": [
+    6.5,
+    7.8
+  ],
+  "sell_or_reduce_zone": [
+    12.5,
+    15.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于7.8元且2026年半年报确认归母净利润落在预告区间、毛利率维持16%以上、经营现金流改善",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若2026年三季报显示盈利年化接近或超过8000万元且应收账款和存货未异常扩张，可提高观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若价格高于12.5元但全年盈利年化仍低于8000万元，维持零仓位或减持已有仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.8,
+      "reason": "进入0.85倍PB附近的安全边际区，可结合半年报质量评估小仓位试错"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "reason": "超过乐观情景下沿，若盈利和现金流未同步验证则风险收益比转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报实际利润、毛利率、经营现金流和应收存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扭亏是否可持续并更新2026全年盈利区间"
+    }
+  ]
+}

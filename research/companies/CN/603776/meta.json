@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603776",
+  "market": "CN",
+  "ticker": "603776",
+  "name": "永安行",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "永安行账面资产厚、负债压力低，但核心经营业务仍亏损，且净资产很大部分来自 Hello Inc. 股权公允价值。当前价格已提前反映 Hello 协同和经营反转，缺乏安全边际，需等待价格回落或连续季度证明毛利率、现金流和应收款回收改善。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.0,
+    16.0
+  ],
+  "buy_zone": [
+    8.0,
+    12.0
+  ],
+  "sell_or_reduce_zone": [
+    20.0,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于12元，且最近一季经营现金流为正、公共自行车和共享出行业务毛利率环比改善",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于10元，且连续两个季度归母净利润减亏、应收账款下降",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于20元但未披露 Hello 协同订单或主业毛利转正证据",
+      "action": "不追高并降低已有仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入初步安全边际区间，可重新评估资产折价保护和Q1减亏延续性"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "价格接近保守资产拆分价值，若现金流改善可考虑小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "reason": "接近乐观情景上沿，若基本面无同步改善则风险收益转弱"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入结构、毛利率、应收账款和Hello股权公允价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1减亏和经营现金流改善是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估长期经营质量和资产折价"
+    }
+  ]
+}
