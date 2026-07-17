@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:603889",
+  "market": "CN",
+  "ticker": "603889",
+  "name": "新澳股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "新澳股份是毛精纺纱线和羊绒纱线细分龙头，2025年和2026Q1利润增速高于收入增速，分红率高且估值约10倍PE；但行业低速、原料和库存周期暴露明显，适合在安全边际内分批持有。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    6.0,
+    7.3
+  ],
+  "buy_zone": [
+    4.8,
+    5.4
+  ],
+  "sell_or_reduce_zone": [
+    8.2,
+    9.2
+  ],
+  "position_plan": [
+    {
+      "condition": "价格不高于5.4元且2026年收入/扣非净利保持双位数增长",
+      "action": "建立初始仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于5.0元且经营现金流/净利润改善至0.8倍以上",
+      "action": "分批加仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格低于4.5元且库存周转未继续恶化、羊绒毛利率稳定",
+      "action": "复核后提高仓位",
+      "max_weight": 0.07
+    },
+    {
+      "condition": "毛精纺库存继续大幅上升或全年经营现金流显著弱于净利润",
+      "action": "停止加仓并下调评级",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "进入更有吸引力的安全边际区间，若现金流改善可加仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "悲观情景价值附近，需要复核库存和订单后决定是否提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "reason": "超过合理价值区间上沿，除非业绩显著超预期应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看羊绒毛利率、库存和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证全年订单和利润兑现节奏"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红，更新长期估值和仓位上限"
+    }
+  ]
+}
