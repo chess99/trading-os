@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300712",
+  "market": "CN",
+  "ticker": "300712",
+  "name": "永福股份",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司处于新型电力系统、风光储和电网升级赛道，具备电力工程咨询设计与总包资质，但2025年利润明显下滑、净利率过低，当前估值已提前反映较强修复预期；需等待价格回落或利润率与现金流连续验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    15.0,
+    20.0
+  ],
+  "buy_zone": [
+    12.0,
+    15.0
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于15元，且2026年中报显示收入恢复增长、归母净利润同比改善、经营现金流未明显恶化",
+      "action": "建立观察性小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于12元，且新签订单、净利率、经营现金流三项同步改善",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于24元但利润率和订单兑现未明显改善",
+      "action": "不买入或降低已有仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "进入基准合理价值下沿，可结合中报订单和利润率重新评估小仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入具备安全边际的深度研究买入区，前提是现金流和订单未恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "接近牛市情景估值下沿，若业绩未兑现则赔率转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的收入、毛利率、归母净利润、经营现金流和合同资产。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润率修复是否持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和全年订单兑现，重新估算正常化利润。"
+    }
+  ]
+}
