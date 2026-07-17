@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:601002",
+  "ticker": "601002",
+  "name": "晋亿实业",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "hold",
+  "current_rating": "hold",
+  "current_thesis": "公司是国内紧固件龙头之一，铁路扣件业务带来2026年盈利弹性，资产负债表稳健；但普通紧固件仍占收入大头、ROE不高，现价接近合理价值下沿但安全边际不足，宜观察或小仓持有。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    4.8,
+    6.2
+  ],
+  "buy_zone": [
+    3.8,
+    4.3
+  ],
+  "sell_or_reduce_zone": [
+    6.2,
+    7.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价回落至4.3元以下，且2026半年报扣非净利润不低于预告下限、铁路扣件毛利率维持在20%左右",
+      "action": "分批建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价处于4.8元至6.2元且没有新增订单或盈利预测上修",
+      "action": "持有或等待，不新增仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于6.2元且2026下半年铁路扣件订单或扣非利润未继续超预期",
+      "action": "减仓或停止新增",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.3,
+      "reason": "进入买入观察区，若半年报验证扣非利润和铁路扣件毛利率，可重新评估建仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "超过合理价值区间上沿，若订单与利润没有上修，应考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报实际收入、扣非净利润、铁路扣件毛利率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，判断上半年高增长是否延续。"
+    }
+  ],
+  "risk_flags": [
+    "railway_project_timing",
+    "raw_material_price",
+    "low_roe",
+    "non_recurring_profit"
+  ]
+}
