@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603229",
+  "market": "CN",
+  "ticker": "603229",
+  "name": "奥翔药业",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "奥翔药业具备规范市场特色API、较强研发团队和制剂出海早期选项，2025年高研发投入压低利润，2026年需要用半年报和三季报验证制剂/API新品是否真正放量；当前价格接近基准价值，安全边际不足，适合观察等待回落或业绩兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    7.5,
+    10.2
+  ],
+  "buy_zone": [
+    6.0,
+    7.0
+  ],
+  "sell_or_reduce_zone": [
+    11.5,
+    13.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于7.0元且半年报未出现订单、现金流或研发转化恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于6.0-6.5元且2026半年报收入、扣非净利和经营现金流均改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于11.5元但制剂收入仍未进入千万级或扣非利润未上台阶",
+      "action": "减仓或不追买",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入安全买入区上沿，可结合半年报回款和利润质量复核是否建观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "进入减仓观察区，若制剂和新API未兑现则估值透支"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报收入、扣非净利、经营现金流和制剂收入进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报利润台阶、应收账款回款和研发费用率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，重新估算制剂出海和API新品商业化价值"
+    }
+  ]
+}
