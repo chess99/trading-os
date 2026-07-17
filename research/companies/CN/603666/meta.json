@@ -1,0 +1,64 @@
+{
+  "symbol": "CN:603666",
+  "market": "CN",
+  "ticker": "603666",
+  "name": "亿嘉和",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "亿嘉和具备电力机器人场景经验和机器人系统集成积累，但2025至2026H1仍处亏损扩大和收入承压阶段。当前价格已反映较多机器人困境反转期权，安全边际不足，适合观察订单、现金流和亏损收窄信号后再评估。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16,
+    22
+  ],
+  "buy_zone": [
+    11.5,
+    15
+  ],
+  "sell_or_reduce_zone": [
+    26,
+    32
+  ],
+  "position_plan": [
+    {
+      "condition": "当前不主动建仓；仅当股价低于15元且未出现现金流、治理或订单进一步恶化时，才重新评估观察仓。",
+      "action": "watch_only",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入11.5-13元，同时2026年后续财报显示收入企稳、经营现金流改善、资产负债表仍保持低杠杆。",
+      "action": "start_tracking_position",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "进入买入观察区，需要重新核验账面资产、订单和亏损收窄情况。"
+    },
+    {
+      "type": "price_above",
+      "price": 26,
+      "reason": "高于估值中枢且若未验证收入和利润拐点，应考虑减仓或继续回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入、亏损、经营现金流、应收账款和订单线索。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入是否企稳及全年亏损趋势。"
+    }
+  ]
+}

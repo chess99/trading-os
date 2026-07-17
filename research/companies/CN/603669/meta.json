@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603669",
+  "market": "CN",
+  "ticker": "603669",
+  "name": "灵康药业",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "公司处于化学制剂和注射剂扭亏修复阶段，2026年上半年预告明显改善，但当前约46.8亿元市值对应年化利润和收入均偏贵，且历史治理折价、集采价格压力和现金流验证不足，安全边际不足，暂不买入。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    2.2,
+    3.4
+  ],
+  "buy_zone": [
+    0,
+    2.2
+  ],
+  "sell_or_reduce_zone": [
+    5,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且2026年半年度正式财报、经营现金流尚未验证，维持0仓位。",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于2.20元且2026半年报、三季报连续确认扣非盈利与经营现金流改善，可仅作为研究性小仓位。",
+      "action": "research_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若未来12个月归母净利润可见超过1亿元且经营现金流为正，再重新评估是否提升至普通小盘医药仓位。",
+      "action": "reassess",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入买入观察区，需同步验证正式财报和现金流。"
+    },
+    {
+      "type": "price_above",
+      "price": 5,
+      "reason": "显著高于基准价值区间，若无盈利和现金流超预期应回避或减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、经营现金流、应收账款和集采品种放量情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扭亏是否具备连续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新估算稳态利润和合理估值。"
+    }
+  ]
+}
