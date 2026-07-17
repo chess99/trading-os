@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:603696",
+  "market": "CN",
+  "ticker": "603696",
+  "name": "安记食品",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "安记食品经营正常且2026Q1利润改善明显，但主业规模小、贸易业务稀释利润率、品牌和渠道护城河有限；当前估值显著高于可验证盈利能力，缺少安全边际，适合观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    5.5,
+    8.5
+  ],
+  "buy_zone": [
+    0,
+    6.5
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于6.5元，且食品制造收入和扣非净利润连续两个季度同比增长、库存增速不高于收入增速",
+      "action": "small_tracking_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格处于6.5至8.5元之间，等待中报或三季报确认主业利润质量",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格高于10.5元且未看到年化利润中枢超过6000万元的证据",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入初步安全边际区间，可重新评估小仓位跟踪价值"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "超过合理价值区间上沿，估值再次透支基本面"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查食品制造收入、毛利率、库存和扣非净利润质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断一季度利润改善是否可持续"
+    }
+  ]
+}
