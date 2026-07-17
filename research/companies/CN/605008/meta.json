@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:605008",
+  "market": "CN",
+  "ticker": "605008",
+  "name": "长鸿高科",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "长鸿高科具备TPES、PBT/PBAT柔性装置、黑色母粒、碳酸钙与丙烯酸项目期权，但2025年转亏、2026年上半年预亏、高杠杆和监管整改降低估值容忍度；当前价格基本反映乐观情景，安全边际不足，等待盈利和现金流拐点或明显回落后再评估。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    7.0,
+    9.5
+  ],
+  "buy_zone": [
+    6.0,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    15.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于7.5元，且2026年下半年经营现金流转正、黑色母粒毛利率转正、无新增监管或债务风险",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于6.0元，且PBT/SEBS主业价差改善、资产负债率开始下降",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于12.0元且亏损延续或财务费用继续上升",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入基准情景估值上沿以下，具备重新评估观察仓的价格条件"
+    },
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "接近悲观情景权益价值区间，可在基本面未继续恶化时评估安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "接近乐观情景估值，若盈利未兑现则风险收益不对称"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式亏损、现金流、负债和项目进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认主业价差、黑色母粒毛利率和经营现金流是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及监管整改结果，重新评估长期盈利中枢和估值"
+    }
+  ]
+}
