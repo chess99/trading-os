@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:603068",
+  "ticker": "603068",
+  "name": "博通集成",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "2026年收入和利润修复拐点明确，但扣非利润质量、毛利率持续性和高客户/供应商集中度仍需验证；当前价格接近合理价值区间上沿，安全边际不足，适合观察而非立即买入。",
+  "fair_value_range": [
+    32,
+    42
+  ],
+  "buy_zone": [
+    26,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    50,
+    60
+  ],
+  "decision": "观察",
+  "confidence": "中",
+  "position_plan": [
+    {
+      "condition": "仅建立观察仓；股价高于32元且扣非利润率未连续改善前不加仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价进入26-32元且2026H1/H2扣非利润、毛利率均兑现改善后，可提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若单季毛利率低于26%或扣非净利润重新转负，清零观察仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入估算合理价值区间下沿，可结合扣非利润质量复核买入条件"
+    },
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "进入较高安全边际区，若基本面未恶化可重新评估买入"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "超过合理价值区间且接近乐观情景，需要利润上修支撑，否则应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据，重点看扣非净利润、毛利率和存货周转"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证收入增长是否继续转化为扣非利润"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估2027年盈利中枢和合理估值区间"
+    }
+  ],
+  "key_monitoring_items": [
+    "2026H1正式收入是否落在6.20-6.40亿元预告区间",
+    "扣非归母净利润率是否从2026H1约2.9%-3.6%继续提升",
+    "单季毛利率能否稳定高于30%",
+    "存货是否继续高于4亿元并出现周转变慢",
+    "前五大客户销售占比是否从2025年的78.18%下降"
+  ]
+}
