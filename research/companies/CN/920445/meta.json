@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920445",
+  "market": "CN",
+  "ticker": "920445",
+  "name": "龙竹科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "传统竹制家居现金流尚可，但宜家客户高度集中、扣非资本回报偏低且新材料仍为负毛利，6.38元已提前定价产业化成功，等待4.1元以下安全边际。",
+  "fair_value_range": [4.3, 5.5],
+  "buy_zone": [3.5, 4.1],
+  "sell_or_reduce_zone": [6.2, 7.5],
+  "position_plan": [
+    {
+      "condition": "股价处于3.5-4.1元且宜家订单、TTM自由现金流和竹基新材料单位经济性未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于4.1-4.5元且半年报收入恢复、TTM自由现金流不低于4000万元并且无高折价定增",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报中的宜家订单、跨境电商费用率、自由现金流和新材料毛利率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.1,
+      "reason": "进入有安全边际的买入区间，但须先复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T23:00:00+08:00"
+}
