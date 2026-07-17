@@ -1,0 +1,72 @@
+{
+  "symbol": "CN:601908",
+  "ticker": "601908",
+  "name": "京运通",
+  "company_name": "北京京运通科技股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "京运通处于光伏硅棒/硅片周期底部，新能源发电资产提供现金流但无法抵消新材料亏损、减值、债务期限结构和诉讼执行压力；当前低PB仅支持观察，需等待价格跌入安全边际且亏损明确收窄后再小仓位试错。",
+  "fair_value_range": [
+    2.1,
+    3.2
+  ],
+  "buy_zone": [
+    0.0,
+    2.1
+  ],
+  "sell_or_reduce_zone": [
+    3.8,
+    5.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前硅片毛利率仍为负且2026H1预亏扩大，不建仓，仅观察。",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价不高于2.10元，且2026H2单季扣非亏损较2026Q1明显收窄、经营现金流继续为正，可建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非转正、净债务下降且硅片毛利率转正，可提高至小仓位配置。",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.1,
+      "reason": "跌入估算买入区间后复核半年报和硅片毛利率，若基本面止血可考虑观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.8,
+      "reason": "若股价高于情景估值上沿而扣非仍未转正，风险收益比恶化，应避免追高或降低观察仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报披露后核验预告兑现、硅片毛利率、应收账款和短债压力。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026三季报披露后复核亏损是否收窄、经营现金流是否持续为正。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年报披露后复核减值、诉讼执行、控股股东质押和净资产变化。"
+    }
+  ]
+}
