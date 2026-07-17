@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600955",
+  "ticker": "600955",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "维远股份",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "维远股份具备苯酚/丙酮-双酚A-聚碳酸酯一体化资产和新材料扩展弹性，但2025年大幅亏损、2026Q1仅小幅扭亏且2026H1预告仍亏损，盈利拐点尚未被连续财报确认；当前应观察而非买入，等待价格低于账面价值足够折价或价差与现金流持续修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.0,
+    15.5
+  ],
+  "buy_zone": [
+    0.0,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    17.5,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价低于9.5元且未出现重大安全环保事故、资产负债表恶化或新增大额减值时，允许研究性建仓。",
+      "action": "small_research_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度扣非归母净利润为正、经营现金流为正，且PC/BPA/苯酚丙酮价差同比或环比确认修复。",
+      "action": "increase_after_confirmation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若股价高于17.5元但年化盈利能力仍未恢复至3亿元以上，或2026年三季报继续亏损。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入具备账面价值折价保护的研究性买入区，需要复核财务和行业价差。"
+    },
+    {
+      "type": "price_above",
+      "price": 17.5,
+      "reason": "进入乐观情景兑现区，若盈利未同步确认则风险收益转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，确认亏损原因、现金流、在建工程转固和新项目爬坡情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q3是否实现扣非盈利与经营现金流改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估周期位置、资产减值风险和合理估值区间。"
+    }
+  ]
+}
