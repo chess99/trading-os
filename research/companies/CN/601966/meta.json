@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:601966",
+  "ticker": "601966",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "玲珑轮胎",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中国轮胎第一梯队公司，全球化产能与整车配套客户具备长期价值；但2026H1汇兑损失显著压低盈利，毛利率和海外产能回报仍需验证，当前列入观察而非立即买入。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    11.5,
+    14.5
+  ],
+  "buy_zone": [
+    8.8,
+    9.8
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "2026半年报确认经营现金流未恶化、汇兑损失可解释且股价低于9.5元",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度核心经营利润修复、毛利率回升且海外基地利用率改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于15.5元但盈利质量未恢复，或汇兑/库存/毛利率继续恶化",
+      "action": "不加仓或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入买入观察区，需要结合半年报核验经营现金流、汇兑损失和毛利率"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "超过当前公允价值上沿，若盈利质量未同步恢复应降低预期收益率"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报披露后复核汇兑损失、现金流、毛利率和海外基地进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026三季报披露后复核盈利修复是否持续"
+    }
+  ],
+  "key_monitoring_indicators": [
+    "单季度毛利率",
+    "经营现金流净额",
+    "汇兑损益",
+    "轮胎销量与库存",
+    "海外基地利用率",
+    "原材料价格"
+  ],
+  "risk_flags": [
+    "汇率波动",
+    "原材料价格上涨",
+    "行业扩产导致价格竞争",
+    "海外贸易壁垒",
+    "重资产扩产回报低于预期"
+  ]
+}
