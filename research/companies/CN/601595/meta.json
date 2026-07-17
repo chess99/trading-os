@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:601595",
+  "ticker": "601595",
+  "name": "上海电影",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备上海国资、头部院线、直营影院和上美影经典/新生国漫IP的组合资源，2025年验证了IP商业化弹性，但2026H1扣非预亏暴露院线周期和固定成本压力；当前估值已透支较多IP期权，等待更低价格或更清晰的持续利润证明。",
+  "fair_value_range": [
+    13.0,
+    16.0
+  ],
+  "buy_zone": [
+    10.5,
+    13.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入10.5-13.0元且2026半年报未显示现金流/应收显著恶化，可建立观察仓。",
+      "action": "start_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "IP商业化收入和利润连续两个报告期增长，且扣非归母利润恢复到年化1.2亿元以上，可提高配置。",
+      "action": "increase",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于18元但扣非利润仍低于年化1亿元，或2026年扣非持续亏损。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "进入估算合理价值下沿及买入观察区，需要复核半年报和IP利润质量。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入较深安全边际区，若基本面未恶化应重新评估买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "高于当前估算合理价值且接近透支IP期权，若无业绩上修应避免追高。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据，重点确认扣非、IP商业化收入利润和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断暑期档、IP文创和影院经营是否修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估盈利中枢和估值区间。"
+    }
+  ]
+}
