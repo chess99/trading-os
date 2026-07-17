@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:600908",
+  "ticker": "600908",
+  "name": "无锡银行",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "无锡银行是扎根无锡和苏南的稳健型区域农商行，资产质量和拨备安全垫优于行业，分红具备吸引力；但净息差低、利润增速只有低个位数，当前更适合等待5.2元以下的安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    6.2,
+    7.4
+  ],
+  "buy_zone": [
+    4.7,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    8.2
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于5.20元，且最近一期不良贷款率不高于0.80%、拨备覆盖率不低于380%",
+      "action": "建立观察性底仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格低于4.80元，且营收和归母净利润仍保持正增长、核心一级资本充足率高于11%",
+      "action": "加仓至标准小仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于4.50元，且资产质量没有恶化、拨备覆盖率仍高于380%",
+      "action": "加仓至本策略上限",
+      "max_weight": 0.015
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入初始买入区间，约0.48倍2026Q1每股净资产"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "安全边际扩大，可在资产质量稳定时加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "接近基准合理价值上沿，需要评估减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "reason": "估值进入乐观区间，若ROE未明显改善应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查净息差、营收增速、不良率、关注类贷款和拨备覆盖率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年盈利和分红假设是否仍成立"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报及分红预案，重估公平价值和买入区间"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}

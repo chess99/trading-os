@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:600927",
+  "ticker": "600927",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "永安期货",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "头部期货公司和A股稀缺标的，2026年行业景气和公司利润显著修复；但长期ROE中枢仍偏低，当前约1.4倍PB已反映较多修复预期，缺少足够安全边际，等待更低价格或ROE持续上台阶。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.0,
+    14.0
+  ],
+  "buy_zone": [
+    10.0,
+    11.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌入10.0-11.0元且未出现风险管理业务重大亏损、监管处罚或行业成交急剧下行",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026年中报和三季报确认年化ROE超过7%且风险管理业务质量良好",
+      "action": "可提高至小仓位持有",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价达到16.0-18.0元但ROE未持续高于7%",
+      "action": "不追高并考虑减持",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入买入观察区，对应约1.2倍PB，安全边际改善"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "进入减持观察区，若ROE未同步抬升则估值偏贵"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、业务结构和风险管理业务质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认ROE和行业景气持续性"
+    }
+  ],
+  "confidence": "中"
+}
