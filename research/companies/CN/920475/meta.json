@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920475",
+  "market": "CN",
+  "ticker": "920475",
+  "name": "三友科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "细分龙头的订单正在恢复，但低毛利、负自由现金流、杠杆上升和跨界投资使当前3倍以上PB缺乏安全边际，仅在6.5元以下且现金流验证后小仓参与。",
+  "fair_value_range": [6.8, 8.5],
+  "buy_zone": [5.5, 6.5],
+  "sell_or_reduce_zone": [10.0, 11.5],
+  "position_plan": [
+    {
+      "condition": "股价处于5.5至6.5元且合同转化、毛利率、应收存货和非主业投资未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于5.5元且最新财报确认正自由现金流、ROE改善并无新增跨界重投入",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "基本面恶化、自由现金流持续为负或有息负债与非主业投资继续扩张",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的订单兑现、毛利率、自由现金流和有息负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及新业务资本投入边界"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入有安全边际的观察性买入区间，仍须重新验证基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-17T13:41:06+08:00"
+}
