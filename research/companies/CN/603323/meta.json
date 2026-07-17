@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603323",
+  "market": "CN",
+  "ticker": "603323",
+  "name": "苏农银行",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "苏农银行是苏州吴江区域农商行，资产质量和拨备厚度优于行业，当前约0.47-0.50倍PB已反映较多息差压力；但净息差偏低、营收增长弱，适合在4.1元以下以小仓位配置股息和估值修复，不适合追高。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    4.6,
+    5.3
+  ],
+  "buy_zone": [
+    3.8,
+    4.1
+  ],
+  "sell_or_reduce_zone": [
+    5.4,
+    6.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格位于3.8-4.1元且最新定期报告不良率不高于0.90%、关注率不高于1.50%、拨备覆盖率不低于330%",
+      "action": "建立或维持基础仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格低于3.8元且资产质量指标未恶化、资本充足率未显著下行",
+      "action": "提高至上限仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于5.4元，或净息差低于1.35%且营收连续两个报告期负增长",
+      "action": "减仓或停止买入",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入悲观情景估值下沿，若资产质量未恶化则安全边际扩大"
+    },
+    {
+      "type": "price_above",
+      "price": 5.4,
+      "reason": "超过基准合理价值上沿，需要ROE、息差或分红率上修才能支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的净息差、关注率、拨备覆盖率、资本充足率和中期分红"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否验证利润增长和资产质量稳定"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红率和下一年度资本约束"
+    }
+  ]
+}
