@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603868",
+  "market": "CN",
+  "ticker": "603868",
+  "name": "飞科电器",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "飞科电器是高毛利、高现金、低负债的中国个护小家电品牌，但2025年和2026Q1收入连续承压，当前约25倍TTM PE已反映较多品牌与现金流优势，缺少足够买入安全边际；等待价格回落或收入恢复验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    25,
+    32
+  ],
+  "buy_zone": [
+    22,
+    25
+  ],
+  "sell_or_reduce_zone": [
+    36,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于25元，且最新定期报告显示收入降幅收窄、扣非净利润和经营现金流保持稳定",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于22元，且核心品类未出现份额或毛利率明显恶化",
+      "action": "提高至中等仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于36元但收入仍未恢复增长",
+      "action": "减仓或不新增",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 25,
+      "reason": "进入公允价值下沿附近，若基本面未恶化可复核买入"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入较有安全边际区间，可复核提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "超过基准估值上沿，若增长未验证需考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、销售费用率、扣非净利和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报收入恢复情况和旺季渠道表现"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、分红、品类结构和估值假设"
+    }
+  ]
+}
