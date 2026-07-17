@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:601156",
+  "ticker": "601156",
+  "market": "CN",
+  "name": "东航物流",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "东航物流是稀缺的航司系航空物流平台，2025年盈利和现金流质量较好，估值处于合理偏低区域；但航空货运周期、跨境电商政策和运价波动仍要求更高安全边际，15元以下更适合分批买入。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    18,
+    23
+  ],
+  "buy_zone": [
+    0,
+    15
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于15元且航空速运毛利率、经营现金流未出现趋势性恶化",
+      "action": "start_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于13元且最新季度归母净利润仍能支持全年25亿元以上盈利中枢",
+      "action": "add_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于24元且未来12个月盈利预测没有同步上修",
+      "action": "reduce_position",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "进入初始买入区间，安全边际相对合理。"
+    },
+    {
+      "type": "price_below",
+      "price": 13,
+      "reason": "若基本面未恶化，可进入更有吸引力的加仓区。"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "高于估值区间上沿，需要降低预期收益率或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点跟踪航空速运毛利率、综合物流解决方案利润率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和跨境电商旺季前运价趋势。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报披露后的盈利中枢、分红和关联交易情况。"
+    }
+  ]
+}
