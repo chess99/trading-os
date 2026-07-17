@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:603880",
+  "market": "CN",
+  "ticker": "603880",
+  "name": "南卫股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "南卫股份收入规模横盘但连续亏损、净资产快速下降，防护用品和丁腈手套业务仍拖累利润；叠加历史资金占用、信披违规、内幕交易处罚和控股股东质押，治理折价显著。当前股价对应约10倍PB，远高于亏损低值耗材企业可接受水平，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.2,
+    2.2
+  ],
+  "buy_zone": [
+    0.8,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    2.5,
+    3.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格明显高于基本面公允价值且治理风险未消除，维持零仓位。",
+      "action": "avoid_new_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若股价跌入1.20元以下，且连续两个季度主营毛利率改善、防护用品毛利率转正、经营现金流为正，可重新研究小仓位观察。",
+      "action": "research_watch_only",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "低于基准公允价值下沿且接近2倍PB，可重新核验是否具备安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.5,
+      "reason": "高于乐观情景上沿，若无真实扭亏和治理改善证据，应继续规避或卖出。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度正式报告，验证业绩预告、毛利率、防护用品亏损和净资产变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季度报告，观察收入、毛利率、经营现金流和控股股东质押变化。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年度报告，判断是否完成扭亏和治理修复。"
+    }
+  ]
+}

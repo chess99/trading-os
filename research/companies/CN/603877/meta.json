@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:603877",
+  "market": "CN",
+  "ticker": "603877",
+  "name": "太平鸟",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "太平鸟处于品牌升级和渠道提质后的早期修复阶段，2026Q1 扣非利润和现金流改善，但 2025 年收入继续下滑、存货周转天数上升且 Q2/Q3 季节性风险尚未验证。当前价格大致处于基础合理价值区间，缺少足够安全边际，需等待 2026 年中报确认收入企稳和库存改善后再考虑小仓位买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.5,
+    15.5
+  ],
+  "buy_zone": [
+    10.0,
+    11.2
+  ],
+  "sell_or_reduce_zone": [
+    16.5,
+    18.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于 11.2 元，且 2026 年中报确认收入不再明显下滑、扣非净利润同比增长、库存周转天数未继续恶化时，允许试探建仓。",
+      "action": "initial_watch_buy",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于 10.0 元，且经营活动现金流连续两个报告期为正、直营同店收入保持正增长、线上毛利率未回落时，允许加仓至观察仓上限。",
+      "action": "add_on_margin_of_safety",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "若 2026H1 收入同比下降超过 5%，或 Q2/Q3 扣非亏损扩大，或存货周转天数继续显著上升，则停止加仓并复核退出。",
+      "action": "hold_or_exit_review",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.2,
+      "reason": "进入买入观察区，较基础公允价值中枢具备初步安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入深度折价区，可结合中报、现金流和库存指标评估加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "reason": "高于基础合理价值上沿，若利润修复未明显超预期应考虑减仓或不追。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-22",
+      "reason": "2026 年半年报预计披露后，复核收入修复、库存周转和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报后，复核 Q2/Q3 淡季是否再次亏损以及全年利润区间。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-20",
+      "reason": "2026 年年报后，重估正常化利润、分红能力和品牌升级兑现程度。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}
