@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:600970",
+  "ticker": "600970",
+  "name": "中材国际",
+  "exchange": "SSE",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "全球水泥工程、运维和装备龙头，2025年盈利稳定且分红率高，2026H1订单同比增长提供收入可见度；短期受汇兑和工程项目波动压制，适合以低估值现金流资产分批买入并用半年报验证。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    9.8,
+    12.5
+  ],
+  "buy_zone": [
+    6.8,
+    7.8
+  ],
+  "sell_or_reduce_zone": [
+    11.8,
+    13.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格位于7.5元附近且未出现重大海外项目回款或汇兑恶化信号，先建立底仓。",
+      "action": "buy_initial",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026年半年报确认订单兑现、扣非利润降幅收窄且经营现金流未显著恶化。",
+      "action": "add",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于11.8元且2026年利润修复不足以支撑10倍以上PE。",
+      "action": "reduce",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入悲观情景估值下沿附近，若订单和现金流未恶化，可复核加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 11.8,
+      "reason": "接近基准情景估值上沿，若利润未同步恢复，应减仓或等待新信息。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的利润、现金流、汇兑损益、订单结构和分红可持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年利润是否回到基准情景。"
+    }
+  ],
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "latest_report": "reports/2026-07-17-initial.md"
+}
