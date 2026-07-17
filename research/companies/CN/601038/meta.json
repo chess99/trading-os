@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:601038",
+  "ticker": "601038",
+  "name": "一拖股份",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "国内大中型拖拉机龙头，受益高端化、优机优补和海外出口，但行业进入更新周期、价格竞争仍强；当前估值基本合理，需等待更好安全边际或盈利上修验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    10.5,
+    13.5
+  ],
+  "buy_zone": [
+    8.5,
+    10.0
+  ],
+  "sell_or_reduce_zone": [
+    15.0,
+    17.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入10元以下且2026年后续季度经营现金流未显著恶化、农业机械毛利率维持约14%以上",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度验证高端拖拉机或海外收入推动归母净利上修，且应收账款周转未恶化",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于15元且盈利预测未同步上修，或应收账款/经销商信用风险扩大",
+      "action": "减仓或不新买",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入买入观察区，需要复核现金流、毛利率和高端产品订单"
+    },
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入深度安全边际区，若基本面未永久恶化可重新评估加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 15.0,
+      "reason": "超过基准估值上沿，需要确认是否有盈利上修支撑，否则减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看海外收入、高端产品占比、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认旺季后盈利和现金流是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报及分红/回购执行，更新估值区间"
+    }
+  ]
+}
