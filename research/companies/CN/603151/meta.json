@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:603151",
+  "ticker": "603151",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "邦基科技",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "区域型猪饲料公司，2025年收入高增长但现金流和利润质量承压，2026年半年度预告接近盈亏平衡；当前估值缺少足够安全边际，等待价格跌至账面价值附近或现金流修复。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    8.5,
+    11.5
+  ],
+  "buy_zone": [
+    7.0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    13.5,
+    15.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.5元，且最近一期未出现新增重大坏账、减值或经营现金流继续恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于7.5元，且最近一期经营活动现金流转正、扣非净利润恢复为正",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于13.5元但2026年利润和现金流未同步修复",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入公允价值下沿以下，接近账面价值保护区，需要复核现金流和坏账风险"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "超过当前估值上沿，若基本面未改善则安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报完整财务报表、应收账款、存货、现金流和养殖业务减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认二季度业绩下滑是否修复"
+    }
+  ]
+}
