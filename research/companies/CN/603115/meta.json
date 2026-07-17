@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603115",
+  "ticker": "603115",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "海星股份",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "海星股份是铝电解电容器电极箔细分龙头，2025年和2026H1显示高端化、AI服务器/新能源需求与新基地产能释放带来的利润弹性；但2026-07-17股价72.95元对应2026E约55-63倍PE，已高于基准合理价值区间，当前适合观察等待安全边际。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    45,
+    65
+  ],
+  "buy_zone": [
+    38,
+    50
+  ],
+  "sell_or_reduce_zone": [
+    80,
+    100
+  ],
+  "position_plan": [
+    {
+      "condition": "价格回落至50元以下且2026半年报确认归母净利润落在预告中枢以上、毛利率不下滑",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格回落至45元以下且AI服务器用高端箔批量交付继续验证、经营现金流改善",
+      "action": "加仓至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于80元且没有新增订单、毛利率或利润上修证据",
+      "action": "不买入或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 50,
+      "reason": "进入买入观察区，需要复核半年报利润质量和高端产品占比"
+    },
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "进入强安全边际区，需要确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "高于基准估值上沿，若无业绩上修应考虑减仓或放弃"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报正式数据、毛利率、现金流和产能爬坡"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报及AI服务器用产品放量进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-11-07",
+      "reason": "复核南通联力减持期结束后的持股变化和交易影响"
+    }
+  ]
+}
