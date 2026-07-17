@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920422",
+  "market": "CN",
+  "ticker": "920422",
+  "name": "润普食品",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "2026年一季度钙盐结构改善尚未证明可持续，低ROE和不稳定自由现金流不足以支撑当前约33倍滚动市盈率。",
+  "fair_value_range": [5.2, 6.8],
+  "buy_zone": [4.2, 5.0],
+  "sell_or_reduce_zone": [7.8, 9.5],
+  "position_plan": [
+    {
+      "condition": "股价处于4.2至5.0元且钙盐毛利率、应收账款和存货未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于4.2元且连续两个报告期毛利率不低于13%、自由现金流为正并排除基本面恶化",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的产品结构、毛利率、营运资本和自由现金流质量"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "进入有安全边际的研究买入区间，仍需确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 7.8,
+      "reason": "进入减仓或不应追高区间，需由盈利和现金流上修才能支撑"
+    }
+  ],
+  "updated_at": "2026-07-17T18:30:00+08:00"
+}
