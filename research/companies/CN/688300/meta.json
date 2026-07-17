@@ -5,16 +5,17 @@
   "name": "联瑞新材",
   "company_name": "联瑞新材",
   "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-09-initial.md"
+    "reports/2026-07-09-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "rating": "watch",
   "current_rating": "watch",
   "quality_rating": "A-",
-  "valuation_rating": "D",
-  "current_thesis": "联瑞新材是电子级功能粉体细分龙头，球形硅微粉、Low α粉体、球形氧化铝和高速基板材料受益于AI服务器、高频高速覆铜板与先进封装需求升级；但2026-07-09股价已显著透支未来增长，当前以观察为主，等待价格回到100元以内或高端产品放量超预期后再考虑买入。",
+  "valuation_rating": "D+",
+  "current_thesis": "联瑞新材是电子级功能粉体细分龙头，球形硅微粉、Low α粉体、球形氧化铝和高速基板材料继续受益于AI服务器、HBM、先进封装与高频高速基板升级；2026-07-17收盘141元虽较上一轮回落28.1%，但公司没有新增业绩验证，现价仍高于95-125元合理区间且转债进入转股期带来潜在摊薄，维持观察，等待100元以内或高端产品放量、利润和现金流同时超预期。",
   "fair_value_range": [
     95,
     125
@@ -37,6 +38,12 @@
       "reason": "估值已显著透支，安全边际不足"
     },
     {
+      "condition": "价格处于125-150元且尚无2026年半年报经营验证",
+      "action": "不新增；已有低成本仓位仅保留0-2%观察仓",
+      "max_weight": 0.02,
+      "reason": "价格已低于减仓区但仍高于合理价值上沿，等待高端产品、利润和现金流验证"
+    },
+    {
       "condition": "价格跌入95元以下且高端球形粉体收入和毛利率趋势未恶化",
       "action": "建立首笔观察仓",
       "max_weight": 0.01,
@@ -56,6 +63,11 @@
     }
   ],
   "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 125,
+      "reason": "进入合理价值区，需要结合半年报和转债转股进展复核，不自动买入"
+    },
     {
       "type": "price_below",
       "price": 100,

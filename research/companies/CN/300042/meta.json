@@ -5,8 +5,8 @@
   "name": "朗科科技",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "存储涨价周期推动2026Q1盈利大幅改善，但存货与借款同步扩张、经营现金流仍为负，专利许可已到期，企业级存储与算力尚未形成重大可审计收入；63.30元已接近乐观情景，当前赔率不合格。",
+  "current_rating": "watch",
+  "current_thesis": "3Q26存储合约价继续上涨支持库存利润，但消费需求、客户端SSD库存和零售NAND晶圆需求转弱限制模组商传价；43.75元已接近28-42元合理区间，但现金流、6.44亿元存货和企业级业务均无新增验证，评级改善为观察而非买入。",
   "fair_value_range": [
     28.0,
     42.0
@@ -21,6 +21,14 @@
   ],
   "position_plan": [
     {
+      "condition": "股价42元以上或半年报尚未验证现金流与库存质量，仅允许必要的跟踪仓。",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价32-42元，且半年报未出现库存减值、现金流有改善迹象。",
+      "max_weight": 0.01
+    },
+    {
       "condition": "股价进入22-32元，且最近季报经营现金流改善、存货周转正常、单季毛利率不低于16%，分三笔建仓。",
       "max_weight": 0.02
     },
@@ -29,13 +37,14 @@
       "max_weight": 0.03
     },
     {
-      "condition": "股价高于52元或单季毛利率跌破16%且经营现金流仍为负，原则上只减不加。",
-      "max_weight": 0.005
+      "condition": "单季毛利率跌破16%且经营现金流仍为负，或存货超过7亿元并继续依赖借款补库。",
+      "max_weight": 0.0
     }
   ],
-  "latest_report": "reports/2026-07-12-initial.md",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-12-initial.md"
+    "reports/2026-07-12-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "review_triggers": [
     {
@@ -57,6 +66,11 @@
   "price_triggers": [
     {
       "type": "price_below",
+      "price": 42.0,
+      "reason": "进入合理价值区间，结合半年报复核是否允许0.01以内小仓。"
+    },
+    {
+      "type": "price_below",
       "price": 32.0,
       "reason": "进入买入区上沿，需重新核验库存成本、现金流和毛利率。"
     },
@@ -67,9 +81,9 @@
     },
     {
       "type": "price_above",
-      "price": 65.0,
-      "reason": "超过减仓区上沿，除非正常化利润和自由现金流显著超预期，否则退出。"
+      "price": 52.0,
+      "reason": "重新进入减仓区，只减不加；企业级收入未验证时不保留正式仓位。"
     }
   ],
-  "updated_at": "2026-07-12T00:00:00+08:00"
+  "updated_at": "2026-07-18T08:00:00+08:00"
 }

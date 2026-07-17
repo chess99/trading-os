@@ -5,8 +5,8 @@
   "name": "京东方A",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "京东方A是全球显示面板龙头，LCD规模、现金流和车载显示份额优势明确，但业务仍高度周期、资本开支重、ROE偏低。2026-07-07收盘价7.58元接近6.20-7.60元合理价值区间上沿，安全边际不足，适合观察或持有，不宜追买。",
+  "current_rating": "buy",
+  "current_thesis": "京东方A的2026年半年度业绩预告确认LCD盈利改善，扣非归母净利润预计30.8-33.1亿元、同比增长35%-45%，但约20亿元非经常性收益放大表观利润，存储涨价也在压制手机等终端需求。2026-07-17收盘价6.07元进入5.20-6.20元买入区，合理价值仍为6.20-7.60元；可以先建2%仓位、当前上限3%，不宜一次性重仓。",
   "fair_value_range": [
     6.2,
     7.6
@@ -21,38 +21,39 @@
   ],
   "position_plan": [
     {
-      "condition": "current_price_near_fair_value",
-      "action": "watch_only",
-      "target_weight": 0.0,
-      "max_weight": 0.01,
-      "notes": "当前价接近合理价值上沿，仅适合0%-1%观察仓。"
-    },
-    {
-      "condition": "price_below_6.2",
+      "condition": "price_between_5.2_and_6.2",
       "action": "start_position",
       "target_weight": 0.02,
       "max_weight": 0.03,
-      "notes": "进入安全边际区，复核行业报价和现金流后分批。"
+      "notes": "当前6.07元已进入买入区，先建2%仓位；半年报验证扣非利润、经营现金流和库存后再决定是否加至3%。"
+    },
+    {
+      "condition": "price_between_6.2_and_7.6",
+      "action": "hold_or_watch",
+      "target_weight": 0.01,
+      "max_weight": 0.02,
+      "notes": "处于合理价值区间，以持有和观察为主，不为非经常性收益追价。"
     },
     {
       "condition": "price_below_4.8",
       "action": "increase_position",
       "target_weight": 0.04,
       "max_weight": 0.05,
-      "notes": "进入强吸引力区，若基本面未破坏可提高仓位，上限5%。"
+      "notes": "进入强吸引力区，只有扣非利润、现金流、库存和OLED项目未破坏时才可提高仓位，绝对上限5%。"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-07-initial.md"
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "2026年半年度报告披露后需要复核盈利质量",
+      "reason": "2026年半年度报告披露后需要复核业绩预告与盈利质量",
       "condition": "2026年半年度报告披露",
-      "action": "复核扣非利润、毛利率、经营现金流和资本开支"
+      "action": "核对扣非利润是否达到30.8-33.1亿元，并复核非经常性损益、毛利率、经营现金流、库存和资本开支"
     },
     {
       "type": "date",
@@ -88,7 +89,7 @@
       "type": "price_below",
       "price": 6.2,
       "reason": "进入安全边际买入区上沿",
-      "message": "进入安全边际买入区上沿，复核行业报价和现金流后考虑第一笔仓位。"
+      "message": "进入安全边际买入区，先建约2%仓位；复核半年报、行业报价和现金流后再考虑加至3%。"
     },
     {
       "type": "price_below",
@@ -103,5 +104,5 @@
       "message": "超过不应追高价，若无盈利质量上修应考虑降风险。"
     }
   ],
-  "updated_at": "2026-07-07T16:30:00+08:00"
+  "updated_at": "2026-07-18T05:25:02+08:00"
 }

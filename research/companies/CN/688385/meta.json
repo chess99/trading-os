@@ -4,14 +4,15 @@
   "ticker": "688385",
   "name": "复旦微电",
   "status": "active",
-  "updated_at": "2026-07-12T18:00:00+08:00",
-  "latest_report": "reports/2026-07-12-followup.md",
+  "updated_at": "2026-07-18T18:00:00+08:00",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
     "reports/2026-07-09-initial.md",
-    "reports/2026-07-12-followup.md"
+    "reports/2026-07-12-followup.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "current_rating": "watch",
-  "current_thesis": "复旦微电是国产FPGA稀缺平台型公司，非挥发存储器和智能电表MCU提供利润稳定器，2026H1扣非利润修复方向由业绩预告支持；但正式半年报尚未验证分部毛利率、现金流、存货和应收质量，且7月9日以来没有新增经营公告支持价值上修。维持watch，等待55元以下并结合正式财报再建立首笔仓位。",
+  "current_thesis": "复旦微电是国产FPGA稀缺平台型公司，7月18日战略新品发布会增强了高端FPGA、FPAI、RFSoC及Agent开发平台的产品路线证据，2026H1扣非利润修复方向也由业绩预告支持；但发布会未披露订单和财务兑现，正式半年报尚未验证分部毛利率、现金流、存货和应收质量。7月17日收盘51.96元已进入45-55元买入观察区，维持watch；当前最多1%观察仓，标准仓等待半年报验证。",
   "fair_value_range": [
     50,
     65
@@ -27,8 +28,14 @@
   "currency": "CNY",
   "position_plan": [
     {
-      "condition": "股价低于55元，且2026H1正式半年报确认扣非净利润、FPGA收入和毛利率改善",
-      "action": "建立观察性首笔仓位",
+      "condition": "股价处于48-55元，但2026H1正式半年报尚未披露",
+      "action": "基准建议等待；高风险账户仅可持有事件前观察仓",
+      "max_weight": 0.01,
+      "reason": "价格已进入合理价值下部，但经营质量验证仍未完成，发布会不能替代财报"
+    },
+    {
+      "condition": "股价处于48-55元，且2026H1正式半年报确认扣非净利润、FPGA收入和毛利率、经营现金流同步改善",
+      "action": "建立验证后的首笔仓位",
       "max_weight": 0.015,
       "reason": "进入合理价值下沿附近，同时经营修复得到正式财报验证"
     },
@@ -39,23 +46,23 @@
       "reason": "国产FPGA稀缺性与安全边际同时具备"
     },
     {
-      "condition": "股价处于55-75元，正式半年报尚未同时确认FPGA增长、毛利率和现金流改善",
+      "condition": "股价处于55-75元，且经营利润预期没有上修",
       "action": "不新增，仅保留低成本观察仓",
       "max_weight": 0.01,
-      "reason": "价格位于合理价值上沿或以上，基本面验证不足"
+      "reason": "价格接近或超过合理价值上沿，安全边际不足"
     },
     {
       "condition": "股价高于75元，或估值主要由一次性公允价值收益驱动",
       "action": "不新增并降至极小观察仓",
       "max_weight": 0.005,
-      "reason": "盘中已触发原减仓线但没有新增经营硬证据，经营利润兑现要求高"
+      "reason": "价格进入减仓区且没有新增经营硬证据，经营利润兑现要求高"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
       "price": 55,
-      "reason": "进入买入观察区，复查2026H1正式财报与FPGA毛利率"
+      "reason": "已进入买入观察区；复查2026H1正式财报、FPGA毛利率与经营现金流后决定是否建立标准仓"
     },
     {
       "type": "price_below",

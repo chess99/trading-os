@@ -5,65 +5,72 @@
   "name": "合盛硅业",
   "company_name": "合盛硅业",
   "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
+  "updated_at": "2026-07-18T08:30:00+08:00",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-10-initial.md"
+    "reports/2026-07-10-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "rating": "watch",
   "current_rating": "watch",
   "quality_rating": "B+",
-  "valuation_rating": "neutral_to_attractive",
-  "current_thesis": "低成本工业硅和有机硅一体化龙头，2025年光伏减值和硅价下行暴露周期与资本开支风险；当前适合观察或小仓等待硅价、扣非利润和现金流共同确认修复。",
+  "valuation_rating": "attractive_with_high_risk",
+  "current_thesis": "合盛硅业仍是低成本工业硅和有机硅一体化龙头。2026H1预计归母净利润3.2亿至3.8亿元，但扣非仍亏0.28亿至0.33亿元，反推Q2扣非仅盈利约0.16亿至0.21亿元；归母利润主要受3.48亿至4.13亿元非经常损益支撑。2026-07-17收盘34.41元、约406.8亿元市值、PB约1.38倍，已进入32-36元左侧买入区，但DMC均价降至12050元/吨、光伏资产风险和控股家族34.51%总股本质押限制胜率，因此仅适合1%观察仓。",
   "currency": "CNY",
   "base_currency": "CNY",
   "fair_value_range": [
-    42,
-    55
+    38,
+    48
   ],
   "buy_zone": [
-    34,
-    39
+    32,
+    36
   ],
   "sell_or_reduce_zone": [
-    60,
-    68
+    55,
+    65
   ],
   "position_plan": [
     {
-      "condition": "股价进入34-39元且工业硅/有机硅价格未继续破位，2026H1扣非亏损明显收窄或转正",
-      "action": "建立观察性首笔仓位",
-      "max_weight": 0.03,
-      "reason": "公司具备低成本一体化优势，但光伏与周期底部仍压制利润确定性"
+      "condition": "股价处于32-36元，正式中报尚未核验经营现金流、应付款优化和光伏减值",
+      "action": "仅建立观察仓",
+      "max_weight": 0.01,
+      "reason": "估值已有左侧安全边际，但H1扣非仍亏且DMC接近暂停加仓线"
     },
     {
-      "condition": "DMC价格稳定在14000元/吨以上、工业硅553华东稳定在9000元/吨以上，连续两个季度经营现金流为正且扣非归母净利润转正",
-      "action": "加至核心周期仓位",
-      "max_weight": 0.06,
-      "reason": "主业价格修复叠加库存出清时利润弹性较大"
-    },
-    {
-      "condition": "股价高于60元但利润修复仍未兑现，或光伏资产继续大额减值",
-      "action": "减仓或停止加仓",
+      "condition": "股价处于32-36元，2026H1经营现金流为正且无新增大额光伏减值",
+      "action": "分批增加左侧仓",
       "max_weight": 0.02,
-      "reason": "估值提前反映周期反转时安全边际不足"
+      "reason": "现金流和资产质量通过中报核验后可适度提高试错仓位"
+    },
+    {
+      "condition": "连续两个季度扣非归母净利润为正，DMC稳定高于14000元/吨且工业硅553华东稳定高于9500元/吨至少两个月",
+      "action": "加至周期仓",
+      "max_weight": 0.04,
+      "reason": "主业价格、利润和现金流共同确认后才提高仓位"
+    },
+    {
+      "condition": "DMC连续一个月低于11500元/吨，或工业硅553华东连续一个月低于8500元/吨，或经营现金流转负并伴随净负债上升，或新增10亿元以上减值",
+      "action": "逻辑失效并退出",
+      "max_weight": 0.0,
+      "reason": "周期底、资产价值或财务安全边际被破坏"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 39,
-      "reason": "进入初始买入区，复核硅价、现金流和减值后可执行首笔仓位"
+      "price": 36,
+      "reason": "进入左侧买入区，仅可执行不超过1%的观察仓并等待中报核验"
     },
     {
       "type": "price_below",
-      "price": 34,
-      "reason": "进入深度安全边际区，若资产负债与现金流未恶化可提高仓位上限"
+      "price": 32,
+      "reason": "进入更深安全边际区，仍须确认现金流、质押和减值未恶化"
     },
     {
       "type": "price_above",
-      "price": 60,
-      "reason": "接近减仓区，需利润兑现或上调周期中枢才能继续持有满仓位"
+      "price": 55,
+      "reason": "进入减仓观察区，若年化扣非利润仍低于15亿元则不追并减仓"
     }
   ],
   "review_triggers": [

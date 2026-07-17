@@ -6,59 +6,62 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "兆易创新是国内稀缺的存储+MCU平台型Fabless芯片设计公司，2026Q1受益于利基DRAM供给紧张和存储行业景气上行，业绩爆发式增长；但当前约4350亿元市值已充分透支存储周期高点和AI乐观预期，即使2026Q1年化净利约58亿对应PE仍达75x。公司质地优良但估值极高，建议等待大幅回调至合理区间（190~300元）后分批建仓。",
-  "fair_value_range": [190, 300],
-  "buy_zone": [180, 240],
-  "sell_or_reduce_zone": [400, 620],
+  "current_thesis": "兆易创新2026H1预告收入约115亿元、归母净利约69亿元、扣非净利约48.5亿元，存储量价齐升与MCU需求增长显著抬高盈利基准，因此合理价值上调至300~390元；但约20.5亿元利润来自证券投资公允价值等非经常性项目，存储周期峰值也不能线性年化。2026-07-17收盘463.15元仍高于合理价值上沿，维持观察，现价不买，等待250~310元并复核半年报后分批建仓。",
+  "fair_value_range": [300, 390],
+  "buy_zone": [250, 310],
+  "sell_or_reduce_zone": [460, 620],
   "position_plan": [
     {
-      "condition": "price_above_400",
-      "price_range": [400, 620],
+      "condition": "price_above_460",
+      "price_range": [460, 620],
       "action": "avoid_or_reduce",
       "target_weight": 0,
       "max_weight": 0.01,
-      "notes": "显著高于合理价值区间，不追高，已有仓位降至观察仓。"
+      "notes": "高于合理价值上沿，不追高；已有仓位降至0~1%观察仓。"
     },
     {
-      "condition": "price_between_240_and_400",
-      "price_range": [240, 400],
+      "condition": "price_between_310_and_460",
+      "price_range": [310, 460],
       "action": "observe",
       "target_weight": 0.01,
       "max_weight": 0.02,
-      "notes": "合理偏低区域，可少量跟踪，不加重仓位。"
+      "notes": "接近或高于合理价值，保持跟踪，不主动加仓。"
     },
     {
-      "condition": "price_between_180_and_240",
-      "price_range": [180, 240],
+      "condition": "price_between_250_and_310",
+      "price_range": [250, 310],
       "action": "accumulate",
       "target_weight": 0.02,
       "max_weight": 0.03,
-      "notes": "进入安全边际区，开始分批建仓；需确认存储景气未明显反转。"
+      "notes": "进入买入区，半年报确认扣非利润、现金流与存储景气后分批建仓。"
     },
     {
-      "condition": "price_below_180",
-      "price_range": [120, 180],
+      "condition": "price_between_180_and_250",
+      "price_range": [180, 250],
       "action": "buy",
       "target_weight": 0.03,
       "max_weight": 0.04,
-      "notes": "强吸引力区，若基本面未破坏可加大仓位。"
+      "notes": "强吸引力区，若存储景气和扣非盈利基准未破坏可提高仓位。"
     },
     {
-      "condition": "price_below_120",
-      "price_range": [0, 120],
+      "condition": "price_below_180",
+      "price_range": [0, 180],
       "action": "strong_buy",
       "target_weight": 0.04,
       "max_weight": 0.05,
-      "notes": "极端低估区间，DCF支撑位，可重仓配置。"
+      "notes": "极端低估区间；仅在基本面未破坏时提高至上限仓位。"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
+  ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证Q1高景气是否持续及毛利率变化。"
+      "reason": "复核2026年半年报，核验预告扣非利润、现金流、存货、毛利率及证券投资收益明细。"
     },
     {
       "type": "date",
@@ -69,19 +72,19 @@
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 240,
-      "reason": "进入安全边际买入观察区，启动基本面复核。"
+      "price": 310,
+      "reason": "进入更新后的买入区上沿，启动半年报与存储景气复核。"
     },
     {
       "type": "price_below",
-      "price": 180,
-      "reason": "进入强吸引力区，若基本面未破坏可提高仓位。"
+      "price": 250,
+      "reason": "进入强吸引力区，若扣非盈利基准和存储景气未破坏可提高仓位。"
     },
     {
       "type": "price_above",
-      "price": 400,
-      "reason": "高于合理价值上沿，避免追高或考虑降仓。"
+      "price": 460,
+      "reason": "明显高于合理价值上沿，避免追高并考虑降至观察仓。"
     }
   ],
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "updated_at": "2026-07-17T19:20:00+08:00"
 }

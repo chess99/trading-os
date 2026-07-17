@@ -5,58 +5,53 @@
   "name": "维信诺",
   "company_name": "维信诺科技股份有限公司",
   "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-12-initial.md"
+    "reports/2026-07-12-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备国内 AMOLED 技术和客户卡位，但仍处重资产亏损消化期；2025 年收入 81.44 亿元、归母净利润 -23.89 亿元，2026Q1 仍亏损 -5.28 亿元。当前 8.08 元、约 112.86 亿元市值已隐含较强扭亏预期，安全边际不足，等待 2026 半年报验证毛利率、现金流和亏损收窄。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵/安全边际不足",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "2026H1 预告收入 38.03-41.03 亿元、归母亏损 14.02-19.70 亿元，隐含 Q2 亏损 8.74-14.42 亿元；产品降价、毛利减少和存货跌价准备增加证伪此前温和减亏基线。2026-07-17 收盘 6.29 元、约 87.9 亿元市值仍高于 4.2-5.5 元合理价值，现价不值得买，等待半年报确认现金流、库存和归母权益。",
+  "quality_rating": "C-",
+  "valuation_rating": "偏贵/盈利预期显著下修",
   "fair_value_range": [
-    5.8,
-    7.2
+    4.2,
+    5.5
   ],
   "buy_zone": [
-    4.8,
-    5.8
+    3.5,
+    4.2
   ],
   "sell_or_reduce_zone": [
-    8.5,
-    10.4
+    6.3,
+    7.2
   ],
   "currency": "CNY",
   "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "price <= 4.8",
-      "action": "强吸引力买入",
-      "position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "4.8 < price <= 5.8",
-      "action": "有安全边际买入",
-      "position": "1%-2%",
+      "condition": "price <= 3.5 且连续两个季度毛利改善、亏损收窄",
+      "action": "分批建立高风险验证仓",
+      "position": "0%-2%",
       "max_weight": 0.02
     },
     {
-      "condition": "5.8 < price <= 7.2",
-      "action": "合理区，仅跟踪仓",
-      "position": "0.5%-1%",
+      "condition": "3.5 < price <= 4.2 且现金流、库存与权益未进一步恶化",
+      "action": "小额验证仓",
+      "position": "0%-1%",
       "max_weight": 0.01
     },
     {
-      "condition": "7.2 < price <= 8.5",
-      "action": "观察，不新增",
-      "position": "0%-0.5%",
-      "max_weight": 0.005
+      "condition": "4.2 < price <= 5.5",
+      "action": "仅观察，等待报表验证",
+      "position": "0%",
+      "max_weight": 0
     },
     {
-      "condition": "price > 8.5",
-      "action": "不追高/视业绩减仓",
+      "condition": "price > 5.5",
+      "action": "不买；已有仓位减持或退出",
       "position": "0%",
       "max_weight": 0
     }
@@ -64,38 +59,38 @@
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 5.8,
+      "price": 4.2,
       "direction": "below",
-      "action": "进入安全边际买入区，复核基本面后可建 1%-2% 仓位",
-      "reason": "低于基准合理价值下沿，开始具备安全边际"
+      "action": "触发基本面复核；仅在现金流、库存与权益未继续恶化时建不超过 1% 验证仓",
+      "reason": "进入下调后的买入区，但价格触发不等于自动买入"
     },
     {
       "type": "price_below",
-      "price": 4.8,
+      "price": 3.5,
       "direction": "below",
-      "action": "进入强吸引力区，若无重大负面变化可加至 2%-3%",
-      "reason": "接近悲观情景估值下沿，赔率明显改善"
+      "action": "若连续两个季度毛利改善、亏损收窄，可分批提高至最多 2%",
+      "reason": "价格保护增强，但公司仍属高风险重资产亏损标的"
     },
     {
       "type": "price_above",
-      "price": 8.5,
+      "price": 6.3,
       "direction": "above",
-      "action": "不追高；若基本面未验证扭亏，回避或减仓",
-      "reason": "接近乐观情景定价，安全边际不足"
+      "action": "不追高；基本面未改善则减持或退出",
+      "reason": "高于新合理价值上沿，仍隐含下半年快速修复预期"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "condition": "2026 半年报披露后复查收入、毛利率、归母净利润和经营现金流",
-      "reason": "验证 2026 上半年扭亏和现金流改善路径"
+      "condition": "2026 半年报披露后核对预告落点、毛利率、存货减值、经营现金流、短债和归母权益",
+      "reason": "验证 Q2 恶化程度及资产负债表安全垫"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "condition": "2026 三季报后复查亏损收窄、现金流和定增进展",
-      "reason": "确认经营修复是否连续，以及资本结构是否改善"
+      "condition": "2026 三季报后复查产品价格、毛利率、单季亏损、现金流和融资进展",
+      "reason": "确认 Q2 是否为低点以及经营修复能否连续"
     },
     {
       "type": "date",
@@ -111,11 +106,12 @@
     }
   ],
   "key_tracking_metrics": [
-    "营业收入增速",
-    "毛利率",
+    "营业收入增速及单季环比",
+    "产品价格和毛利率",
     "归母净利润及单季亏损收窄幅度",
     "经营活动现金流量净额",
     "归母所有者权益",
+    "存货跌价准备与存货周转",
     "现金余额与短期债务压力",
     "主要客户和高端产品导入进展",
     "定增及摊薄进展"

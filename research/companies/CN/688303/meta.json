@@ -6,28 +6,31 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "大全能源低负债、现金垫厚、资产负债表能熬过当前硅料周期，但 2026-07-11 硅料价格 3.27 万元/吨仍低于公司 4Q25 现金成本 3.4 万元/吨约 0.13 万元/吨，行业出清尚未被数据确认，当前 16.95 元、PB 0.95 已经定价一部分熬过去的乐观假设，不是确定性买入位置。维持 watch，等待 12-14 元或硅料价格站上 3.4 万元/吨并连续 4 周且行业库存去化后再小仓位介入。",
-  "fair_value_range": [15, 19],
-  "buy_zone": [12, 14],
-  "sell_or_reduce_zone": [22, 26],
+  "current_thesis": "大全能源低负债与111.7亿元现金储备仍提供周期生存能力，但2026Q1收入仅1.89亿元、归母亏损8.01亿元、经营现金净流出12.45亿元，Q1产4.3万吨仅销0.45万吨并计提6.85亿元存货减值；2026-07-15 N型复投料3.25万元/吨仍低于4Q25现金成本约3.4万元/吨。拟投60亿元AIDC配电项目会消耗穿越周期的现金垫，尚无订单和盈利验证。2026-07-17收盘15.80元、PB约0.89处于13-17元合理区间中上部，维持watch，当前不可买，等待11-13元或硅料与经营现金流共同右侧确认。",
+  "fair_value_range": [13, 17],
+  "buy_zone": [11, 13],
+  "sell_or_reduce_zone": [20, 23],
   "position_plan": [
-    {"condition": "股价处于 12-14 元买入区间且未出现重大资产负债表恶化", "max_weight": 0.01},
-    {"condition": "N 型硅料价格连续 4 周 ≥3.4 万元/吨且行业开工率下降、库存去化被验证", "max_weight": 0.03},
-    {"condition": "股价达 22-26 元但硅料价格仍 ≤4.0 万元/吨，减仓或不追高", "max_weight": 0}
+    {"condition": "当前15.80元且硅料3.25万元/吨、2026Q1经营现金流大额为负", "max_weight": 0.00},
+    {"condition": "股价处于11-13元且半年报未显示现金及理财快速下降或固定资产重大减值", "max_weight": 0.01},
+    {"condition": "N型复投料连续4周不低于3.4万元/吨、行业库存下降且单季经营现金流显著改善", "max_weight": 0.02},
+    {"condition": "N型复投料连续8周不低于4.0万元/吨、单季经营现金流转正且AIDC一期有明确客户订单和投资纪律", "max_weight": 0.03},
+    {"condition": "股价达20-23元但硅料仍低于4.0万元/吨，或任一逻辑失效条件触发", "max_weight": 0.00}
   ],
-  "latest_report": "reports/2026-07-11-initial.md",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
     "reports/2026-07-10-initial.md",
-    "reports/2026-07-11-initial.md"
+    "reports/2026-07-11-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复核 2026 年半年报：核证 2025 归母 -26.99 亿 vs -11.29 亿差异；销量恢复、库存去化、存货跌价准备变化、经营现金流是否仍为正"},
-    {"type": "date", "date": "2026-10-31", "reason": "复核 2026 三季报与硅料价格周期变化、能耗新国标执行细则对大全线影响"}
+    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报：Q2销量和库存、存货及固定资产减值、经营现金流、现金及理财、实际现金成本、AIDC一期审批与承诺支出"},
+    {"type": "date", "date": "2026-10-31", "reason": "复核2026三季报、硅料价格及库存拐点、AIDC客户订单与实际资本开支"}
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 14, "reason": "进入初始买入区间，复核行业价格与资产负债表后试探建仓"},
-    {"type": "price_below", "price": 12, "reason": "进入悲观情景上沿，复核是否存在非周期性风险"},
-    {"type": "price_above", "price": 22, "reason": "进入减仓观察区，若硅料价格仍 ≤4.0 万元/吨应控制仓位不追高"}
+    {"type": "price_below", "price": 13, "reason": "进入下修后的初始买入区间，复核现金流、库存减值和AIDC资本开支后仅允许1%试探仓"},
+    {"type": "price_below", "price": 11, "reason": "进入悲观情景上沿，复核是否发生现金安全垫塌陷或非周期风险"},
+    {"type": "price_above", "price": 20, "reason": "进入减仓观察区，若硅料仍低于4.0万元/吨则减仓或不追高"}
   ],
-  "updated_at": "2026-07-11T00:00:00+08:00"
+  "updated_at": "2026-07-18T00:00:00+08:00"
 }

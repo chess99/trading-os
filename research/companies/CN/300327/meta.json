@@ -5,28 +5,35 @@
   "name": "中颖电子",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "家电MCU与锂电管理具备国产替代和产品升级潜力，去库存后盈利有望修复，但AMOLED持续亏损、价格竞争和定增摊薄尚未被充分验证；28.82元已隐含接近历史高盈利水平的恢复，赔率不足。",
+  "current_rating": "watch",
+  "current_thesis": "家电MCU与锂电管理具备真实业务基础，但MCU收入恢复、毛利率改善和AMOLED减亏尚未验证；23.00元已回到18-23元合理价值上沿，价格风险明显释放但仍未进入15-18元安全边际买入区。存储超级周期主要由AI与存储涨价驱动，不能直接外推为中颖盈利上修。",
   "fair_value_range": [18, 23],
   "buy_zone": [15, 18],
   "sell_or_reduce_zone": [28, 34],
   "position_plan": [
     {
-      "condition": "价格高于23元或基本面验证不足",
-      "max_weight": 0
+      "condition": "价格位于18-23元合理价值区但盈利修复尚未验证",
+      "action": "不买第一笔，已有低成本观察仓不超过1%",
+      "target_weight": 0,
+      "max_weight": 0.01
     },
     {
       "condition": "价格低于18元且存货、毛利率和AMOLED亏损未恶化，完成重新研究后建立观察仓",
+      "action": "建立观察仓",
+      "target_weight": 0.01,
       "max_weight": 0.01
     },
     {
       "condition": "价格进入15-18元且连续两个季度毛利率改善、存货低于5亿元、芯颖科技亏损收窄",
+      "action": "分批提高仓位",
+      "target_weight": 0.02,
       "max_weight": 0.03
     }
   ],
-  "latest_report": "reports/2026-07-12-initial.md",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-12-initial.md"
+    "reports/2026-07-12-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "review_triggers": [
     {
@@ -67,5 +74,7 @@
       "reason": "若无2.5亿元以上年化归母利润趋势则清仓"
     }
   ],
-  "updated_at": "2026-07-12"
+  "updated_at": "2026-07-17T16:30:00+08:00",
+  "analyst": "Codex + GPT-5",
+  "research_type": "followup"
 }

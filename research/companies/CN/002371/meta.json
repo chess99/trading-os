@@ -6,23 +6,26 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "中国半导体设备平台型龙头，品类最全、营收规模最大，深度受益于国产替代加速。但当前PE~105x已充分反映高增长预期，缺乏安全边际。等待市场回调至450元以下再考虑介入。",
-  "fair_value_range": [2500, 4500],
-  "buy_zone": [300, 450],
-  "sell_or_reduce_zone": [800, 1200],
+  "current_thesis": "北方华创仍是国产半导体设备平台龙头，TSMC与ASML最新业绩强化先进逻辑、存储和设备资本开支景气，但2026-07-07旧报告后公司没有新增公告、半年度业绩预告或快报，利润恢复仍待中报验证。2026-07-17收盘价677.00元对应市值4912.92亿元、PE-TTM约75.13倍，高于500-620元合理价值上沿，维持观察与新增0仓位。",
+  "fair_value_range": [500, 620],
+  "buy_zone": [420, 500],
+  "sell_or_reduce_zone": [780, 900],
   "position_plan": [
-    {"condition": "股价低于450元，基本面未恶化", "max_weight": 0.01},
-    {"condition": "股价低于300元，国产替代逻辑不变", "max_weight": 0.03}
+    {"condition": "股价高于620元，且中报尚未验证扣非利润、毛利率和经营现金流同步改善", "action": "不新增仓位；已有跟踪仓位控制集中度", "max_weight": 0.03, "reason": "现价已高于合理价值上沿，仍在提前交易利润快速恢复。"},
+    {"condition": "股价低于500元，且中报确认收入、扣非利润、毛利率和经营现金流同步改善", "action": "建立研究仓", "max_weight": 0.01, "reason": "进入安全边际买入区上沿，但设备验收和盈利杠杆仍需继续验证。"},
+    {"condition": "股价低于450元，且核心新设备验证与下游扩产未延迟", "action": "分批买入", "max_weight": 0.03, "reason": "估值风险显著下降，且公司执行得到基本面确认。"},
+    {"condition": "股价低于420元，且国产替代、客户资本开支和现金流逻辑仍成立", "action": "提高仓位", "max_weight": 0.05, "reason": "进入强吸引力区间，风险回报比明显改善。"}
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
+  "report_history": ["reports/2026-07-07-initial.md", "reports/2026-07-17-memory-cycle-followup.md"],
   "review_triggers": [
     {"type": "date", "date": "2026-08-30", "reason": "2026年中报披露后复查"},
     {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 450, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 900, "reason": "进入泡沫区间，减仓或观察"}
+    {"type": "price_below", "price": 500, "reason": "进入安全边际买入区间，可结合中报验证考虑首仓"},
+    {"type": "price_below", "price": 420, "reason": "进入强吸引力区间，若国产替代与现金流逻辑未坏可提高仓位"},
+    {"type": "price_above", "price": 780, "reason": "进入乐观情景定价区，需重新审视估值透支风险"}
   ],
-  "updated_at": "2026-07-07T22:30:00+08:00"
+  "updated_at": "2026-07-17T16:30:00+08:00"
 }

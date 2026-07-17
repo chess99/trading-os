@@ -4,83 +4,151 @@
   "ticker": "002738",
   "company_name": "中矿资源",
   "name": "中矿资源",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
+  "updated_at": "2026-07-17T21:15:21+08:00",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-08-initial.md"
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
-  "rating": "谨慎增持/观察买入",
-  "current_rating": "watch",
-  "current_thesis": "中矿资源具备海外锂矿和铯铷稀有金属资源优势，但当前股价已反映部分锂价修复预期，适合小仓位跟踪、45元以下再加大买入。",
+  "rating": "谨慎买入",
+  "current_rating": "buy",
+  "conclusion": "2026H1预告验证锂价修复和Tsumeb减亏带来的盈利弹性；46.55元已进入分批买入区，但锂资源供给恢复、进口增长和资本开支要求控制仓位，不能把上半年利润机械年化。",
+  "current_thesis": "中矿资源的Bikita/Tanco资源和高毛利铯铷业务构成价值底座，2026H1预盈10.5-12.5亿元且二季度隐含利润环比改善；后续价值取决于14-17万元/吨锂价中枢下的持续现金利润、Bikita供矿、Tsumeb减亏和扩产回报，适合分批买入而非重仓押注锂价。",
   "quality_rating": "A-",
-  "valuation_rating": "C+",
+  "valuation_rating": "B+/有一定吸引力但需周期折价",
   "status": "active",
   "fair_value_range": [
     48,
-    66
+    62
   ],
+  "fair_value_method": "基于2026-2027年正常化归母净利润18-23亿元的周期中枢PE和铯铷、锂资源、净现金及项目期权SOTP交叉估值，单位为CNY/股。",
   "buy_zone": [
-    38,
-    45
+    42,
+    48
   ],
+  "strong_buy_zone": [
+    35,
+    40
+  ],
+  "buy_zone_reason": "42-48元低于或接近合理价值下沿，H1预告已验证经营修复；35-40元在锂价、现金流和核心矿山未恶化时提供更厚周期安全垫。",
   "sell_or_reduce_zone": [
-    66,
-    70
+    64,
+    72
   ],
+  "sell_or_reduce_reason": "64元以上若全年利润、经营现金流和项目兑现没有同步上修，价格将超过本次合理价值上沿，风险收益转弱。",
   "base_currency": "CNY",
   "currency": "CNY",
   "position_plan": [
     {
+      "zone": "initial",
+      "price_range": [
+        42,
+        48
+      ],
+      "target_weight": 0.02,
       "max_weight": 0.05,
-      "initial_weight": 0.01,
-      "current_price_reference": 56.65,
-      "condition": "当前价处于55-66元合理区间",
-      "action": "当前价处于合理区间中部偏上，仅允许0.5%-1.0%观察仓；45元以下再考虑加仓。"
+      "current_price_reference": 46.55,
+      "condition": "股价位于标准买入区且半年度预告的经营修复逻辑未被正式财报推翻",
+      "action": "可分批建立1%-2%仓位"
+    },
+    {
+      "zone": "buy",
+      "price_range": [
+        40,
+        42
+      ],
+      "target_weight": 0.03,
+      "max_weight": 0.05,
+      "condition": "价格继续回落但锂价未持续跌破12万元/吨，Bikita供矿和经营现金流未恶化",
+      "action": "复核基本面后分批加至2.5%-3%"
+    },
+    {
+      "zone": "strong_buy",
+      "price_range": [
+        35,
+        40
+      ],
+      "target_weight": 0.045,
+      "max_weight": 0.05,
+      "condition": "进入强买区且经营现金流、核心矿山、铯铷业务和锂价中枢未恶化",
+      "action": "若基本面未恶化可提高至3%-5%"
+    },
+    {
+      "zone": "reduce",
+      "price_range": [
+        64,
+        72
+      ],
+      "target_weight": 0.015,
+      "max_weight": 0.05,
+      "condition": "股价高于64元且全年利润或经营现金流没有同步上修",
+      "action": "停止新增并逐步减仓"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 45,
-      "reason": "进入安全边际买入区，需要复核锂价、Bikita供矿和定增摊薄后决定加仓。"
+      "price": 42,
+      "currency": "CNY",
+      "reason": "进入买入区下半部，可复核锂价、半年报现金流和Bikita供矿后加仓。"
     },
     {
       "type": "price_below",
-      "price": 38,
-      "reason": "进入强吸引力区，若基本面未恶化可提高至目标上限仓位。"
+      "price": 40,
+      "currency": "CNY",
+      "reason": "进入强吸引力区间，若基本面未恶化，可提高目标仓位。"
     },
     {
       "type": "price_above",
-      "price": 70,
-      "reason": "超过不应追高区，除非盈利和项目兑现显著超预期，否则应降低或停止新增仓位。"
+      "price": 64,
+      "currency": "CNY",
+      "reason": "超过合理价值上沿，应检查估值是否先于利润、现金流和项目兑现。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复核2026年半年报的锂盐销量、毛利率、现金流和扩产进度。"
+      "reason": "半年报披露后复查锂盐销量、均价、单位成本、分部毛利率、铯铷利润、Tsumeb减亏、经营现金流和资本开支。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高盈利是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2026-07-31",
-      "reason": "若碳酸锂价格、公司定增价格、Bikita/Tanco/Kitumba项目公告或子公司停产检修出现重大变化，立即重估。"
+      "reason": "三季报后确认18-23亿元正常化利润中枢和项目推进节奏。"
     }
   ],
+  "review_plan": "固定复查2026年半年报和三季报；触发式复查条件包括股价低于40元、高于64元、SMM电池级碳酸锂均价连续4周低于12万元/吨，或Bikita/Tanco/Tsumeb/Kitumba及融资方案出现重大变化。",
   "key_tracking_metrics": [
-    "锂盐季度销量",
-    "锂盐单位成本和毛利率",
-    "Bikita锂精矿产量和品位",
-    "铯铷业务收入和毛利率",
-    "经营性现金流净额",
-    "资本开支和定增摊薄比例",
+    "锂盐季度销量、均价、单位成本和毛利率",
+    "Bikita锂精矿产量、品位、运输和自给率",
+    "铯铷业务收入、销量和毛利率",
+    "Tsumeb冶炼厂亏损和现金消耗",
+    "经营性现金流净额与扣非净利润匹配度",
+    "资本开支、定增和股权激励摊薄比例",
     "10万吨硫酸锂项目进度",
     "Kitumba铜矿项目进度",
-    "海外矿权和税制风险"
+    "海外矿权、税制和汇率风险"
+  ],
+  "key_risks": [
+    "碳酸锂价格大幅回落并连续四周低于12万元/吨",
+    "Bikita/Tanco等海外核心资源发生停产、品位下降、矿权或税制风险",
+    "10万吨硫酸锂、Kitumba或Tsumeb转型项目延期或成本超支",
+    "铯铷业务毛利率和销量下降，失去利润稳定器作用",
+    "经营现金流显著低于扣非净利润，存货与应收同步增加",
+    "定增、股权激励和高资本开支带来摊薄及回报率压力"
+  ],
+  "sources": [
+    "sources/2025-annual-report.pdf",
+    "sources/2025-annual-report.full.txt",
+    "sources/2026-equity-incentive-draft.pdf",
+    "https://data.eastmoney.com/notices/detail/002738/AN202607101826874291.html",
+    "https://data.eastmoney.com/notices/detail/002738/AN202607131826933543.html",
+    "https://push2.eastmoney.com/api/qt/stock/get?secid=0.002738&fields=f43,f44,f45,f46,f47,f48,f49,f50,f55,f57,f58,f60,f116,f117,f162,f167,f173,f184,f185,f186,f190,f277,f279,f297",
+    "https://qt.gtimg.cn/q=sz002738",
+    "https://hq.smm.cn/h5/Li2CO3",
+    "https://new-energy.smm.cn/content/14042/103999601",
+    "https://stock.10jqka.com.cn/20260622/c677599416.shtml",
+    "https://baijiahao.baidu.com/s?id=1870427693076638473&wfr=spider&for=pc",
+    "https://baijiahao.baidu.com/s?id=1870926274308192868&wfr=spider&for=pc"
   ]
 }

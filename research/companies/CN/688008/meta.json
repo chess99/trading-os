@@ -6,40 +6,46 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "全球DDR5内存接口芯片龙头，正从内存接口扩展到PCIe Retimer、CXL MXC、CKD、时钟等高速互连产品。2025年营收54.56亿元(+49.94%)、归母净利润22.36亿元(+58.35%)、扣非归母净利润20.22亿元(+61.95%)；2026Q1营收14.61亿元(+19.5%)、归母净利润8.47亿元(+61.3%)，但扣非净利润6.04亿元(+20.1%)且含较大非经常性收益。公司质量优秀、ROE高于资本成本、现金流健康，但2026-07-09 A股收盘285.80元已高于合理价值区间，隐含2026-2028年持续高增长和新品快速放量，当前只观察不追高。",
+  "current_thesis": "全球DDR5内存接口芯片龙头，正向PCIe Retimer、CXL MXC、CKD等高速互连产品扩展。2026H1预计营收33.35亿元(+26.6%)、归母净利润19-21亿元(+63.9%~81.2%)、扣非净利润12.5-14.5亿元(+14.5%~32.9%)，Q2互连类芯片收入同比增长28.2%、环比增长19.5%，基本盘与新品增长得到强化；但韩国检方已就潜在反垄断事项在公司韩国办公室搜查取证，调查结果及客户影响无法预测。2026-07-17收盘183.60元已显著释放估值风险，但尚不足以覆盖韩国区域客户与法律尾部风险，当前维持观察，仅允许0.5%-1%观察仓。",
   "quality_rating": "优秀",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [210, 250],
-  "buy_zone": [165, 205],
-  "sell_or_reduce_zone": [300, 360],
+  "valuation_rating": "合理但事件风险未定价清楚",
+  "fair_value_range": [190, 225],
+  "buy_zone": [150, 175],
+  "sell_or_reduce_zone": [245, 290],
   "position_plan": [
     {
-      "condition": "165-205元且扣非利润、互连类毛利率、新产品收入占比、库存周转均未恶化",
-      "action": "分批建仓",
+      "condition": "175-190元且韩国调查结果未知",
+      "action": "继续观察；确需跟踪仅设观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "150-175元且无正式指控、主要客户合作与出货正常",
+      "action": "小步分批建仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "150元以下且核心假设重验通过",
+      "action": "分批提高仓位",
       "max_weight": 0.03
     },
     {
-      "condition": "145元以下且核心假设重验通过",
-      "action": "提高到强吸引力仓位",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "260元以上",
-      "action": "不新增；已有较高仓位进入风险复核",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "300-360元",
-      "action": "分批减仓或只保留观察仓",
+      "condition": "245-290元",
+      "action": "不新增；已有较高仓位分批降风险",
       "max_weight": 0.01
     }
   ],
-  "latest_report": "reports/2026-07-09-followup.md",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
     "reports/2026-07-07-initial.md",
-    "reports/2026-07-09-followup.md"
+    "reports/2026-07-09-followup.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-17",
+      "reason": "复核韩国反垄断调查、主要客户合作及3-6亿元回购方案进展"
+    },
     {
       "type": "date",
       "date": "2026-08-31",
@@ -54,29 +60,24 @@
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 205,
-      "reason": "进入可买区间上沿，需重验扣非利润、毛利率、新品收入占比和库存"
+      "price": 175,
+      "reason": "进入风险调整后买入区上沿，买入前复核韩国调查、客户合作和出货"
     },
     {
       "type": "price_below",
-      "price": 165,
-      "reason": "进入安全边际较好的买入区，可考虑提高建仓力度"
-    },
-    {
-      "type": "price_below",
-      "price": 145,
-      "reason": "进入强吸引力价格区，核心假设未破时可提高仓位上限"
+      "price": 150,
+      "reason": "进入安全边际较好区间，核心假设重验通过后可提高仓位"
     },
     {
       "type": "price_above",
-      "price": 260,
-      "reason": "进入不应追高区间，停止新增并复核估值风险"
+      "price": 225,
+      "reason": "超过风险调整后合理价值上沿，停止新增并复核调查风险折价"
     },
     {
       "type": "price_above",
-      "price": 300,
-      "reason": "进入减仓区间，已有仓位分批降低风险"
+      "price": 245,
+      "reason": "进入偏贵区间，已有较高仓位分批降低风险"
     }
   ],
-  "updated_at": "2026-07-09T23:59:00+08:00"
+  "updated_at": "2026-07-17T23:59:00+08:00"
 }

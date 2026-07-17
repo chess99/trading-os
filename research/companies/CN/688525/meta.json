@@ -5,83 +5,84 @@
   "name": "佰维存储",
   "company_name": "佰维存储",
   "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-10-initial.md"
+    "reports/2026-07-10-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
-  "rating": "hold",
-  "current_rating": "hold",
+  "rating": "buy",
+  "current_rating": "buy",
   "quality_rating": "high",
-  "valuation_rating": "fair_to_expensive",
-  "current_thesis": "佰维存储是本轮DRAM/NAND上行周期中弹性极强的存储模组与解决方案公司，2026Q1利润爆发已验证景气度，但当前估值已经反映较多乐观预期，必须用存储价格、库存、毛利率和经营现金流持续验证，适合观察或已有仓位持有，不适合高位无保护追买。",
+  "valuation_rating": "attractive_but_cyclical",
+  "current_thesis": "2026H1预告归母净利润70-75亿元、Q2隐含利润环比继续增长，说明存储高景气尚未被证伪；252.86元已进入按周期正常化利润测算的220-280元买入区，可0.5%-1%首买、当前累计不超过2%，但现金流、存货和毛利率尚待正式半年报验证，不能因单日大跌重仓。",
   "fair_value_range": [
-    360,
-    510
+    300,
+    420
   ],
   "buy_zone": [
-    300,
-    360
+    220,
+    280
   ],
   "sell_or_reduce_zone": [
-    560,
-    650
+    430,
+    520
   ],
   "currency": "CNY",
   "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "当前价格处于合理价值区间且缺少新一轮超预期证据",
-      "action": "仅保留观察仓或已有仓位持有，不追高加仓",
-      "max_weight": 0.01,
-      "reason": "2026Q1利润爆发已被市场较充分定价，存储周期反转风险需要等待现金流和库存验证"
+      "condition": "股价处于220-280元买入区，H1业绩预告已发布但正式半年报尚未验证现金流、存货和毛利率",
+      "action": "分批建立小仓，首笔0.5%-1%，当前累计不超过2%",
+      "max_weight": 0.02,
+      "reason": "Q2隐含利润环比继续增长且估值已有安全边际，但利润质量和周期可持续性尚未被完整验证"
     },
     {
-      "condition": "股价回落至300-360元且DRAM/NAND价格仍环比上涨、公司毛利率和现金流未恶化",
-      "action": "分批买入",
+      "condition": "股价低于220元且DRAM/NAND价格未转弱、半年报现金流和库存未恶化",
+      "action": "在复核基本面后加仓",
       "max_weight": 0.03,
-      "reason": "该区间对2026年高景气利润具备较好安全边际，且基本面趋势仍向上"
+      "reason": "价格进入更深安全边际区，但必须排除基本面恶化导致的下跌"
     },
     {
-      "condition": "半年报确认收入、毛利率、经营现金流均超预期且行业价格继续上行",
-      "action": "提高至核心卫星仓位",
-      "max_weight": 0.05,
-      "reason": "若利润质量被现金流验证，可承受更高周期暴露，但仍需控制单一强周期资产权重"
+      "condition": "正式半年报确认预告落地、经营现金流改善、存货周转稳定且毛利率未显著回落",
+      "action": "提高至卫星仓位",
+      "max_weight": 0.04,
+      "reason": "利润质量得到资产负债表和现金流验证后才允许提高周期暴露"
     },
     {
-      "condition": "股价高于560元或行业价格连续转弱",
+      "condition": "股价高于430元，或DRAM/NAND合约价连续两个月环比转负",
       "action": "减仓或降至观察仓",
       "max_weight": 0.01,
-      "reason": "高位股价需要2026-2027年连续高利润支撑，价格转弱时估值和盈利可能双杀"
+      "reason": "估值重新接近高景气充分定价，或行业转弱触发盈利与估值双杀风险"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 360,
-      "reason": "进入买入区上沿，若行业价格和公司库存现金流未恶化，应复核是否分批建仓"
+      "price": 280,
+      "reason": "进入买入区，可在H1业绩预告确认的基础上分批建立0.5%-1%首仓"
     },
     {
       "type": "price_below",
-      "price": 300,
-      "reason": "进入深度安全边际区，需要检查是否由基本面恶化导致下跌"
+      "price": 220,
+      "reason": "进入深度安全边际区，仅在存储价格、现金流和库存未恶化时复核加仓"
     },
     {
       "type": "price_above",
-      "price": 560,
-      "reason": "进入减仓区，除非盈利预测继续显著上修，否则应控制周期高位暴露"
+      "price": 430,
+      "reason": "进入减仓区下沿，除非正式半年报验证利润质量且盈利预测继续上修，否则停止新增并复核减仓"
     },
     {
       "type": "price_above",
-      "price": 650,
-      "reason": "明显高于乐观估值区间，应强制复核仓位和2027年利润可持续性"
+      "price": 520,
+      "reason": "明显高于本轮合理价值区间，应强制复核仓位和2027年周期正常化利润"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-25",
-      "reason": "东方财富公告日历显示2026年半年报预约披露日期，需复核Q2利润、现金流、存货和毛利率"
+      "reason": "半年报预约披露日，核验70-75亿元预告落地、Q2毛利率、经营现金流、存货和跌价准备"
     },
     {
       "type": "date",

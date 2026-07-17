@@ -6,25 +6,26 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "通富微电国内封测第二，深度绑定AMD受益于AI芯片封装需求增长。然而当前PE~87x已充分定价乐观预期，自由现金流持续为负、高杠杆（资产负债率65%）是结构性弱点。应等待估值回归（¥45以下）再考虑建仓。",
-  "fair_value_range": [37, 52],
-  "buy_zone": [36, 45],
-  "sell_or_reduce_zone": [68, 100],
+  "current_thesis": "2026年半年度业绩预告确认AI算力、存储景气和中高端产品已推动通富微电主业加速，H1扣非归母净利润预计7-8亿元；但H1归母净利润16-18亿元中约9-10亿元为非经常性收益，不能简单年化并给予封测主业估值倍数。2026-07-17收盘价68.36元仍高于45-60元合理价值，且定增摊薄、重资产扩产和高杠杆风险未消除，维持观察与0仓位。",
+  "fair_value_range": [45, 60],
+  "buy_zone": [38, 48],
+  "sell_or_reduce_zone": [68, 95],
   "position_plan": [
-    {"condition": "股价回落至¥45-55区间且AMD增长趋势不变", "max_weight": 0.03},
-    {"condition": "股价回落至¥36-45区间且基本面未恶化", "max_weight": 0.05},
-    {"condition": "股价回落至¥30-36区间且基本面未恶化", "max_weight": 0.08}
+    {"condition": "当前价格高于合理价值上沿，且半年报尚未验证投资收益质量、经营现金流和定增摊薄，维持0仓位观察。", "max_weight": 0},
+    {"condition": "股价低于48元，且半年报确认扣非利润、毛利率和经营现金流同步改善，可试探建仓。", "max_weight": 0.02},
+    {"condition": "股价低于42元，资产负债率未突破70%且定增摊薄可控，可提高至中小仓位。", "max_weight": 0.05},
+    {"condition": "股价低于36元，AI/HPC封测需求和主要客户份额未恶化，可提高仓位。", "max_weight": 0.08}
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
+  "report_history": ["reports/2026-07-08-initial.md", "reports/2026-07-17-memory-cycle-followup.md"],
   "review_triggers": [
-    {"type": "date", "date": "2026-08-30", "reason": "2026半年报发布后复查（预计8月底前）"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026三季报发布后复查；复查AMD AI GPU出货进展"}
+    {"type": "date", "date": "2026-08-26", "reason": "复核2026半年报，重点检查投资收益明细、Q2毛利率、经营现金流、资本开支、有息负债和定增摊薄。"},
+    {"type": "date", "date": "2026-10-31", "reason": "复核2026三季报，确认Q2扣非利润高点能否延续，并检查AI/HPC与存储景气传导。"}
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 45, "reason": "进入有安全边际的买入区间（合理偏低）"},
-    {"type": "price_below", "price": 36, "reason": "进入强吸引力买入区间"},
-    {"type": "price_above", "price": 68, "reason": "进入减仓或不应追高区间"}
+    {"type": "price_below", "price": 48, "reason": "进入有安全边际买入区上沿，需结合半年报验证利润质量和现金流。"},
+    {"type": "price_below", "price": 42, "reason": "进入更有吸引力区间，若定增摊薄可控且基本面未恶化可评估3%-5%仓位。"},
+    {"type": "price_above", "price": 68, "reason": "高于合理价值上沿，进入减仓或不应追高区间。"}
   ],
-  "updated_at": "2026-07-08T08:00:00+08:00"
+  "updated_at": "2026-07-17"
 }

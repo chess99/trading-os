@@ -6,7 +6,7 @@
   "currency": "CNY",
   "status": "active",
   "current_rating": "watch",
-  "current_thesis": "八代线蒸发源已完成交付验收，2026年设备放量和回款推动盈利跃升，但当前价格已预支后续高世代线连续订单、材料规模放量及高利润率延续，等待更好的安全边际。",
+  "current_thesis": "八代线蒸发源验收与2026年设备利润跃升已得到验证，但后续高世代线连续订单、OLED材料规模放量及高利润率延续仍未验证。2026年7月17日收盘42.23元已回到合理价值区但仍高于买入区，股价下跌本身不改变内在价值，等待半年报和订单质量确认。",
   "fair_value_range": [
     36,
     45
@@ -21,25 +21,34 @@
   ],
   "position_plan": [
     {
-      "condition": "股价高于40元，设备与材料盈利预期未继续上修",
-      "max_weight": 0
+      "condition": "股价高于40元且半年报尚未确认设备与材料盈利质量",
+      "action": "不新开仓；已有仓位不补仓",
+      "max_weight": 0.0,
+      "reason": "价格仍高于买入区且后续设备订单、材料放量和利润延续性尚未验证"
     },
     {
-      "condition": "股价36至40元且半年报确认设备收入、回款和合同负债质量",
-      "max_weight": 0.015
+      "condition": "股价36至40元且半年报确认设备收入、回款、合同负债和材料业务质量",
+      "action": "建立小额观察仓",
+      "max_weight": 0.015,
+      "reason": "价格接近合理价值下沿且盈利和现金转换获得初步验证"
     },
     {
       "condition": "股价30至36元且设备订单与材料验证逻辑未恶化",
-      "max_weight": 0.03
+      "action": "分批建仓",
+      "max_weight": 0.03,
+      "reason": "进入买入区并具备一定安全边际"
     },
     {
       "condition": "股价低于30元，重新研究后确认内在价值未受损",
-      "max_weight": 0.03
+      "action": "验证后才可达到计划仓位上限，禁止机械补仓",
+      "max_weight": 0.03,
+      "reason": "深度折价不能替代订单、材料验证和现金流复核"
     }
   ],
-  "latest_report": "reports/2026-07-12-initial.md",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-12-initial.md"
+    "reports/2026-07-12-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "review_triggers": [
     {
@@ -80,5 +89,5 @@
       "reason": "超过乐观情景上沿，原则上退出估值仓位"
     }
   ],
-  "updated_at": "2026-07-12"
+  "updated_at": "2026-07-18"
 }

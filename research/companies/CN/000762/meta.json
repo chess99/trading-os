@@ -5,16 +5,17 @@
   "name": "西藏矿业",
   "company_name": "西藏矿业",
   "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
+  "updated_at": "2026-07-17T21:52:34+08:00",
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
   "report_history": [
-    "reports/2026-07-11-initial.md"
+    "reports/2026-07-11-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
   ],
   "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "西藏矿业拥有扎布耶盐湖和罗布莎铬铁矿等稀缺资源，但扎布耶二期仍处投产爬坡和工艺验证阶段，当前估值已部分反映资源价值，需等待碳酸锂价格与二期达产数据共同确认后再提高仓位。",
+  "current_thesis": "扎布耶二期产能释放与锂盐涨价已推动2026年上半年扭亏，Q2归母净利润约0.31亿-0.47亿元、经营改善得到部分确认；但单季利润尚未跨过0.5亿元右侧阈值，产销量、单位成本和毛利率仍待半年报验证。2026-07-17收盘价20.73元接近16-20元买入区，可用不超过1%观察仓跟踪，不宜重仓。",
   "quality_rating": "medium_high",
-  "valuation_rating": "neutral_to_expensive",
+  "valuation_rating": "fair_near_lower_bound",
   "fair_value_range": [
     20,
     28
@@ -31,62 +32,104 @@
   "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "股价低于20元且电池级碳酸锂价格稳定在7万元/吨附近或以上",
-      "action": "建立观察仓",
+      "condition": "股价处于20-28元合理价值区，二期连续产销和毛利尚未验证",
+      "zone": "current",
+      "price_range": [
+        20,
+        28
+      ],
+      "action": "watch",
+      "target_weight": 0,
       "max_weight": 0.01,
-      "reason": "资源禀赋优秀，但扎布耶二期仍需达产验证，先用小仓位跟踪。"
+      "notes": "现价20.73元接近买入区，可选择不买等待；若需要跟踪产业变化，观察仓不超过1%。"
     },
     {
-      "condition": "股价低于18元且未出现项目达产失败、重大环保或现金流恶化",
-      "action": "加至中等观察仓",
+      "condition": "股价跌入18-20元且半年报未出现预告下修、现金流恶化或二期重大问题",
+      "zone": "buy",
+      "price_range": [
+        18,
+        20
+      ],
+      "action": "buy",
+      "target_weight": 0.01,
       "max_weight": 0.02,
-      "reason": "估值折让开始提供安全边际，但周期与执行风险仍高。"
+      "notes": "进入有安全边际买入区，分批建立1%-2%观察仓。"
     },
     {
-      "condition": "连续两个季度碳酸锂产销释放、单季归母净利润超过0.5亿元且碳酸锂价格不低于8万元/吨",
-      "action": "右侧加仓",
+      "condition": "股价跌入16-18元且下跌主要来自周期情绪、二期经营继续改善",
+      "zone": "strong_buy",
+      "price_range": [
+        16,
+        18
+      ],
+      "action": "buy",
+      "target_weight": 0.02,
+      "max_weight": 0.03,
+      "notes": "资源价值折价较充分，可逐步提高至2%-3%。"
+    },
+    {
+      "condition": "连续两个季度碳酸锂产销增长、毛利率转正且单季归母净利润超过0.5亿元",
+      "zone": "right_side_confirmation",
+      "action": "buy",
+      "target_weight": 0.03,
       "max_weight": 0.05,
-      "reason": "扎布耶二期从资源故事转为可折现现金流，估值确定性提高。"
+      "notes": "扎布耶二期由资源故事转为可验证现金流后，允许右侧加仓。"
     },
     {
-      "condition": "碳酸锂价格跌破6万元/吨并持续两个季度，或公司连续两个季度扣非亏损",
-      "action": "退出观察仓",
-      "max_weight": 0,
-      "reason": "核心利润假设失效，项目折旧和财务费用可能压制资产回报。"
+      "condition": "股价高于30元且没有稳定达产和利润中枢上修证据",
+      "zone": "reduce",
+      "price_range": [
+        30,
+        36
+      ],
+      "action": "reduce",
+      "target_weight": 0,
+      "max_weight": 0.01,
+      "notes": "估值开始充分计入锂价和达产乐观预期，逐步减仓或回避追高。"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
       "price": 20,
-      "reason": "进入基准买入区上沿，可考虑1%观察仓。"
+      "reason": "进入有安全边际买入区上沿，复核半年报预告落点和二期产销后可建立1%-2%观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入买入区中部，若基本面未恶化可逐步提高至2%-3%。"
     },
     {
       "type": "price_below",
       "price": 16,
-      "reason": "进入悲观情景价值区，若基本面未恶化可提高赔率。"
+      "reason": "跌入悲观价值区，需先排除项目运行、现金流或锂价结构性恶化。"
     },
     {
       "type": "price_above",
       "price": 30,
-      "reason": "高于基准合理价值区上沿，应复核二期达产和锂价是否足以支持更高估值。"
+      "reason": "高于基准合理价值区，除非二期稳定达产和利润中枢明显上修，否则考虑减仓。"
     },
     {
       "type": "price_above",
       "price": 36,
-      "reason": "进入减持区，除非利润中枢明显上修，否则风险收益转弱。"
+      "reason": "乐观预期较充分兑现，不应追高。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看碳酸锂产销量、毛利率、氯化钾放量和铬铁矿产量。"
+      "reason": "复核2026年半年报预告落点、碳酸锂和氯化钾产销量、分产品毛利率、库存、经营现金流和财务费用。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认一季度改善是否可持续。"
+      "reason": "复核2026年三季报，确认Q2改善是否延续、单季利润是否跨过0.5亿元右侧确认线。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报，验证扎布耶二期全年达产率、单位成本、毛利和资产回报。"
     }
   ],
   "key_tracking_metrics": [
@@ -94,8 +137,9 @@
     "扎布耶二期碳酸锂季度产量",
     "扎布耶二期碳酸锂季度销量",
     "碳酸锂产品毛利率",
-    "氯化钾产量与销量",
-    "铬铁矿产量与销量",
+    "碳酸锂单位成本与回收率",
+    "氯化钾产量、销量与库存",
+    "铬铁矿产量、销量与毛利率",
     "单季扣非归母净利润",
     "经营活动现金流净额",
     "财务费用",
