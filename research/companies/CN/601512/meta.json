@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:601512",
+  "ticker": "601512",
+  "name": "中新集团",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中新集团是苏州工业园区开发运营和中新合作平台，资产质量、股东结构和融资成本优于普通地产公司，但2026Q1显示园区开发运营收入利润波动较大；当前估值处于合理区间，缺少足够安全边际，适合等待低价或利润稳定信号。",
+  "fair_value_range": [
+    7.5,
+    9.3
+  ],
+  "buy_zone": [
+    6.5,
+    7.2
+  ],
+  "sell_or_reduce_zone": [
+    10.2,
+    11.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于7.2元，且最近两个季度经营现金流为正、扣非归母净利润未继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于6.5元，且未出现重大资产减值、治理风险或园区招商恶化",
+      "action": "提高至价值仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于10.2元，且ROE仍低于8%或利润主要依赖开发节奏和投资收益",
+      "action": "减持或不追高",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "进入买入区上沿，需要复核经营现金流和扣非利润趋势"
+    },
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入更高安全边际区间，需要确认无资产减值和治理风险"
+    },
+    {
+      "type": "price_above",
+      "price": 10.2,
+      "reason": "超过基准合理价值上沿，需要评估是否减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看园区开发运营恢复、经营现金流和产业投资收益质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年利润中枢和估值区间是否需要下修"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，确认长期ROE、分红率和资产周转趋势"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}
