@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:603090",
+  "ticker": "603090",
+  "market": "CN",
+  "name": "宏盛股份",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "宏盛股份是铝制板翅式换热器和热管理系统细分供应商，受益于工业热管理升级和数据中心液冷主题，但2026Q1收入增长未转化为利润增长，当前估值已隐含较强乐观预期，安全边际不足，适合观察等待价格或订单兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    30,
+    42
+  ],
+  "buy_zone": [
+    0,
+    34
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价回落至34元以下，且最近两个季度经营活动现金流为正、毛利率未继续恶化时，允许建立观察仓。",
+      "action": "watchlist_probe",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若股价低于30元，且公司披露液冷或高端热管理订单形成可核验批量收入，可提高至小仓位。",
+      "action": "small_position",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "若股价高于55元但未披露新增大额订单或利润率修复，避免买入并考虑从观察池降级。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 34,
+      "reason": "进入基准估值下沿附近，需要复核订单、毛利率和现金流后决定是否建立观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入更有安全边际的买入复评区，若基本面未恶化可考虑小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "超过基准估值上沿，若缺少液冷业务利润兑现，估值风险明显上升。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、汇兑损益、经营现金流和热管理新业务披露。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断2026Q1利润下滑是否为短期扰动。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估液冷业务兑现和估值区间。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

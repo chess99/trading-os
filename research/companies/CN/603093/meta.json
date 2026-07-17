@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603093",
+  "ticker": "603093",
+  "name": "南华期货",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "hold",
+  "current_rating": "hold",
+  "current_thesis": "南华期货是A股稀缺期货公司标的，2026年业绩预告显示高增长，境外业务和A+H平台带来中期弹性；但当前估值已反映部分景气预期，行业周期性和风险管理业务波动要求更高安全边际，暂定观察/持有。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    16.0,
+    20.0
+  ],
+  "buy_zone": [
+    0.0,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于14.5元且2026年下半年净利润未出现同比明显转弱，建立观察仓。",
+      "action": "buy_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于12.0元且无监管处罚、风险管理亏损或境外业务重大合规事件，增加至小仓位。",
+      "action": "add_small_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于22.0元且2026E归母净利润仍低于8亿元，降低或不新增仓位。",
+      "action": "reduce_or_avoid_add",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入估算买入区间，安全边际改善。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "接近熊市情景价值，可复核是否存在错杀机会。"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "高于合理价值上沿，需复核业绩兑现与估值风险。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证净利润、客户权益、境外业务和风险管理业务质量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断高增长是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和分红方案，重估全年盈利中枢与安全边际。"
+    }
+  ]
+}
