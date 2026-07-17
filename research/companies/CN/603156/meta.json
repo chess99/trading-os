@@ -3,79 +3,91 @@
   "market": "CN",
   "ticker": "603156",
   "name": "养元饮品",
-  "company_name": "养元饮品",
+  "company_name": "河北养元智汇饮品股份有限公司",
   "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
   "report_history": [
-    "reports/2026-07-10-initial.md"
+    "reports/2026-07-10-initial.md",
+    "reports/2026-07-17-initial.md"
   ],
   "rating": "watch",
   "current_rating": "watch",
   "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "current_thesis": "养元饮品是现金资产厚、分红意愿强、核桃乳心智仍强的成熟消费品公司，但六个核桃品牌老化、核心核桃乳收入下滑和新品规模化不确定使成长性不足；2026-07-10价格已接近牛市情景上沿，当前只适合观察，等待30元以下安全边际或核桃乳重回可持续增长证据。",
+  "valuation_rating": "fair_to_slightly_expensive",
+  "current_thesis": "养元饮品是现金资产厚、分红意愿强、六个核桃心智仍稳的成熟消费品公司；但核桃乳主业成熟且仍需验证止跌，新品第二曲线尚未形成可见利润贡献。2026-07-17收盘价35.41元已回到合理区间内，但仍缺乏足够安全边际，当前结论为观察，等待31元以下价格或2026Q2-Q3基本面验证。",
   "fair_value_range": [
-    30,
-    36
+    31,
+    38
   ],
   "buy_zone": [
-    24,
-    30
+    25,
+    31
   ],
   "sell_or_reduce_zone": [
-    43,
-    50
+    42,
+    48
   ],
   "currency": "CNY",
   "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "current_price_above_43_without_new_growth_evidence",
-      "action": "keep_watch_position_or_reduce",
+      "condition": "price_between_31_and_38_without_q2_q3_growth_confirmation",
+      "action": "watch_or_hold_small_tracking_position",
       "max_weight": 0.01,
-      "reason": "当前估值接近牛市情景上沿，核桃乳主业仍需证明可持续增长。"
+      "reason": "当前价格位于合理区间中上部，基本面新增证据不足，只适合观察或低成本小仓位跟踪。"
     },
     {
-      "condition": "price_between_24_and_30_and_channel_metrics_stable",
+      "condition": "price_below_31_and_channel_inventory_stable_and_core_revenue_not_declining",
       "action": "accumulate_slowly",
       "max_weight": 0.03,
-      "reason": "进入合理安全边际区间后，现金资产和高分红能提供一定下行保护。"
+      "reason": "价格进入买入区间上沿，若渠道和核桃乳收入未恶化，可用高现金和分红提供下行保护。"
     },
     {
-      "condition": "price_below_26_and_dividend_policy_intact_and_core_revenue_not_declining",
-      "action": "build_core_income_position",
+      "condition": "price_below_28_and_dividend_policy_intact_and_ttm_profit_above_12_billion_cny",
+      "action": "build_income_position",
       "max_weight": 0.05,
-      "reason": "股息率和成熟消费品估值同时具备吸引力，但增长不确定性限制仓位上限。"
+      "reason": "深度安全边际出现，股息率和成熟消费品估值同时具备吸引力，但成长不确定性限制仓位上限。"
+    },
+    {
+      "condition": "price_above_42_without_new_product_scale_or_core_walnut_milk_reacceleration",
+      "action": "reduce_to_tracking_position",
+      "max_weight": 0.01,
+      "reason": "价格进入减仓区间而增长证据不足，成熟主业估值偏贵。"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 30,
-      "reason": "跌入买入区间上沿，重新评估渠道库存、核桃乳动销和分红可持续性。"
+      "price": 31,
+      "reason": "跌入买入区间上沿，复核渠道库存、合同负债、核桃乳动销和分红可持续性。"
     },
     {
       "type": "price_below",
-      "price": 24,
-      "reason": "进入深度价值区间，若基本面未恶化可考虑提高仓位。"
+      "price": 28,
+      "reason": "进入更厚安全边际区间，若基本面未恶化可考虑提高仓位。"
     },
     {
       "type": "price_above",
-      "price": 43,
-      "reason": "高于减仓区下沿，成熟主业估值偏贵，应控制仓位。"
+      "price": 42,
+      "reason": "高于减仓区间下沿，如无主业重新增长或新品规模化证据，应控制仓位。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
+      "date": "2026-08-31",
+      "reason": "中报披露后复核Q1增长是否由春节错位驱动，重点看核桃乳收入、毛利率、合同负债和现金流。"
+    },
+    {
+      "type": "date",
       "date": "2026-10-31",
-      "reason": "三季报后复查Q2-Q3是否验证Q1增长不是单纯春节错位。"
+      "reason": "三季报披露后复核Q2-Q3连续表现，判断主业是否真正止跌以及新品是否形成规模。"
     },
     {
       "type": "date",
       "date": "2027-04-30",
-      "reason": "年报后复查分红、金融资产、核桃乳收入和新品贡献。"
+      "reason": "年报披露后复核分红、金融资产、核桃乳收入和新品贡献。"
     }
   ],
   "key_tracking_metrics": [
@@ -83,7 +95,7 @@
     "核桃乳毛利率",
     "合同负债",
     "经销商数量及净增减",
-    "存货及渠道价格体系",
+    "存货及终端价格体系",
     "无糖低GI及植物奶新品收入",
     "功能性饮料收入和毛利率",
     "货币资金及交易性金融资产",
