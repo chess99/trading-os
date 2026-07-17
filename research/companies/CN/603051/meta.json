@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:603051",
+  "ticker": "603051",
+  "name": "鹿山新材",
+  "company_name": "广州鹿山新材料股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是功能性热熔胶膜、热熔胶粒和光伏封装胶膜供应商，2026年利润进入修复期，但当前约36-37亿元市值已较充分反映2026年0.8-1.0亿元净利润预期；在现金流和毛利率连续验证前，仅适合观察。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    14.0,
+    19.0
+  ],
+  "buy_zone": [
+    10.0,
+    13.0
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于13元，且2026年三季报扣非净利润、经营现金流和光伏胶膜毛利率均改善",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于10元，且半年度预增兑现、现金流没有继续恶化",
+      "action": "提高到小仓位配置上限",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于24元且没有超预期订单、毛利率或现金流改善",
+      "action": "不追高并考虑退出观察仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "进入买入观察区间，需要复核2026年利润修复和经营现金流质量"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入高安全边际区间，若基本面未恶化可重新评估小仓位买入"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "价格接近乐观情景估值，需要检查是否存在减持或回避追高信号"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报实际利润、扣非利润和经营现金流是否匹配预增公告"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，重点观察现金流、胶膜毛利率和股权激励目标完成进度"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认公司是否达到0.8-1.0亿元净利润修复区间"
+    }
+  ]
+}
