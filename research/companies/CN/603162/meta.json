@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:603162",
+  "ticker": "603162",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "海通发展",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "海通发展是A股稀缺的民营干散货船东，2026H1利润弹性强，但当前估值已反映较多周期修复，需等待更低价格或跨周期盈利验证。",
+  "fair_value_range": [
+    8.2,
+    11.2
+  ],
+  "buy_zone": [
+    6.8,
+    7.8
+  ],
+  "sell_or_reduce_zone": [
+    12.5,
+    14.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于7.8元，2026年半年报兑现5.0-5.5亿元归母净利润预告，且资产负债率不高于45%",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价处于8.2-11.2元合理区间，且BDI/国内沿海运价未继续上行",
+      "action": "仅跟踪不加仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于12.5元且缺少2026全年利润超过11亿元、2027景气延续的证据",
+      "action": "不买入并考虑减持已有仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.8,
+      "reason": "进入买入观察区，需要复核半年报兑现度、运价和负债率。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "reason": "进入减持区，若无更强盈利证据则安全边际不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、运力结构、负债率和担保情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报利润持续性、TCE表现和行业运价变化。"
+    }
+  ]
+}
