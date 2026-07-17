@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603686",
+  "market": "CN",
+  "ticker": "603686",
+  "name": "福龙马",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "福龙马具备环卫服务存量合同、环卫装备新能源化和城服机器人期权，但 2025 ROE 仅约4.58%，应收账款和合同资产占收入比例较高，2026Q1 扣非利润未跟随收入增长。当前估值已高于基准合理区间，等待价格回到安全边际或基本面进一步验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    9.0,
+    12.0
+  ],
+  "buy_zone": [
+    8.0,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于9.5元，且最近一期经营现金流/归母净利润大于1，应收账款加合同资产占收入比例继续下降",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于8.5元，且新能源装备收入和服务项目毛利率均未恶化",
+      "action": "提高至标准小仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于14元但扣非净利润增速仍低于收入增速",
+      "action": "不新增并考虑减仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入买入区上沿，需要复核现金流和应收账款趋势"
+    },
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "接近悲观情景估值，可重新评估是否具备足够安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "高于基准估值区间，需检验机器人或新能源装备是否有新增可核验利润贡献"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非净利润、经营现金流和应收账款变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及全年业绩可见度"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红、服务合同和新能源装备表现"
+    }
+  ]
+}
