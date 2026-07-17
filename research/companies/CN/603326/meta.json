@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603326",
+  "market": "CN",
+  "ticker": "603326",
+  "name": "我乐家居",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "我乐家居估值不高且2025年利润和分红表现较好，但2026Q1收入和利润明显下滑，行业仍受地产后周期拖累。当前价格处于合理价值区间中部，缺乏足够安全边际，等待价格回落或2026H1证明经营企稳后再小仓位介入。",
+  "fair_value_range": [
+    5.4,
+    7.2
+  ],
+  "buy_zone": [
+    4.6,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    8.2,
+    9.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于5.2元，且2026H1收入同比跌幅较2026Q1明显收窄，经营现金流未继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于4.6元，且毛利率维持42%以上、现金流改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于8.2元且未看到2026年利润上修至1.9亿元以上的证据",
+      "action": "减仓或回避",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入初始买入区上沿，需要复核2026H1收入和现金流是否企稳"
+    },
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "进入更有安全边际的买入区，可结合中报验证小幅加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "reason": "超过合理价值区间，需要利润上修支撑，否则应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入跌幅、毛利率、经营现金流和渠道数据"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1下滑是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和分红能力，重新校准正常化利润"
+    }
+  ]
+}
