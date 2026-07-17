@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603637",
+  "market": "CN",
+  "ticker": "603637",
+  "name": "镇海股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "镇海股份基本面是小而专的石化工程设计/EPC 公司，资产负债表低杠杆但收入和利润受项目周期影响较大；2026 年控股权公开征集转让提供事件期权，但协议、审批和产业协同尚未完全核验，当前应观察而非追高。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.0,
+    11.0
+  ],
+  "buy_zone": [
+    7.2,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    14.5,
+    16.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入8.5元以下，且2026年半年报经营现金流、应收账款和合同资产未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "控股权转让完成交割且公告可核验的新材料或石化工程协同订单",
+      "action": "提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于14.5元但控制权转让未交割或协同订单未核验",
+      "action": "不追高或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入基本面估值安全边际区，可重新评估小仓观察"
+    },
+    {
+      "type": "price_above",
+      "price": 15.49,
+      "reason": "接近公开征集转让底价，若事件未落地则估值和预期透支风险上升"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非净利、经营现金流和应收合同资产"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及控股权转让交割进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红和新控制人战略执行情况"
+    }
+  ]
+}
