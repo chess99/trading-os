@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:603787",
+  "market": "CN",
+  "ticker": "603787",
+  "name": "新日股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "新日股份是电动两轮车二线品牌，2025年收入修复但扣非盈利和ROE仍弱，2026Q1扣非利润接近归零；资产负债表尚可、有息负债低，但当前估值已隐含经营修复，需等待价格回落或连续两个季度扣非利润验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.5,
+    11.5
+  ],
+  "buy_zone": [
+    6.8,
+    8.0
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    14.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入6.8-8.0元且未出现扣非亏损、经营现金流恶化或治理风险升级",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于6.8元且最近两个季度扣非净利率恢复至1.5%以上、经营现金流为正",
+      "action": "提高到中等仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于12元但扣非盈利未连续改善",
+      "action": "不追高并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入买入观察区，估值折价开始覆盖二线品牌和扣非盈利不稳定风险"
+    },
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入较高安全边际区，若经营未恶化可考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "超过基准估值上沿，需要扣非盈利持续修复支撑，否则应减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "进入乐观情景估值区，若没有收入和净利率双重兑现则风险收益不佳"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入、扣非净利率、经营现金流和库存"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认新国标切换后动销和盈利恢复是否成立"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估正常化利润和估值区间"
+    }
+  ]
+}
