@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:601118",
+  "market": "CN",
+  "ticker": "601118",
+  "name": "海南橡胶",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "海南橡胶具备A股稀缺天然橡胶全产业链和战略资源属性，但2025年与2026年上半年主营扣非仍亏、2026年存在贸易业务商业实质监管事项，当前约2.1倍PB已反映部分资源溢价，安全边际不足，列入观察池等待价格回落或主营拐点验证。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    4.1,
+    5.2
+  ],
+  "buy_zone": [
+    3.3,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    5.8,
+    6.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于3.80元，且无新增重大监管或审计负面事项，可建立观察仓。",
+      "action": "watchlist_entry",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.30元，且2026中报或三季报显示扣非亏损明显收窄、经营现金流未恶化。",
+      "action": "accumulate_small",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2027年前后扣非净利润转正且不是主要由补贴、征地补偿或公允价值变动驱动。",
+      "action": "reassess_for_core_position",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入初始买入区间，需要复核胶价、扣非亏损和监管整改进展。"
+    },
+    {
+      "type": "price_below",
+      "price": 3.3,
+      "reason": "进入较强安全边际区间，若基本面未恶化可评估加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.8,
+      "reason": "超过合理价值上沿且若扣非仍亏，应考虑降低或回避。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "进入乐观情景估值上沿，需要强主营盈利证据支撑，否则卖出或大幅减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报正式数据、扣非亏损、现金流和业绩预告兑现情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认主营是否出现价格、销量、毛利率共振。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和监管整改后的收入成本列报质量。"
+    }
+  ]
+}
