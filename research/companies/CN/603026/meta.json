@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603026",
+  "ticker": "603026",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "石大胜华",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "2026年盈利从行业低谷明显修复，但现价已部分反映上半年景气弹性；在现金流、产能利用率和价格中枢未连续验证前，按周期中枢估值更合适，等待45元以下或基本面继续验证后再考虑买入。",
+  "fair_value_range": [
+    46,
+    58
+  ],
+  "buy_zone": [
+    38,
+    45
+  ],
+  "sell_or_reduce_zone": [
+    75,
+    85
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌至45元以下，且最近一个季度扣非归母净利润不低于1.3亿元、经营现金流未恶化",
+      "action": "start_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价跌至40元以下，且未出现新的资产减值、客户流失或现金流恶化证据",
+      "action": "add_position",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于75元且无法验证9亿元以上可持续年化利润",
+      "action": "reduce_position",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入初始买入区间，需要复核Q3利润、现金流和行业价格。"
+    },
+    {
+      "type": "price_below",
+      "price": 40,
+      "reason": "安全边际扩大，若基本面未恶化可考虑提高至计划上限仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 75,
+      "reason": "价格进入乐观情景区间，若缺少可持续高利润证据应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式披露后的收入结构、毛利率、现金流和产能利用率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q2后盈利是否继续环比回落。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年经营现金流和盈利中枢。"
+    }
+  ]
+}
