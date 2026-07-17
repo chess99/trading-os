@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603091",
+  "ticker": "603091",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "众鑫股份",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "纸浆模塑餐饮具细分龙头，泰国产能投放带来2026年利润修复，但美国、加拿大双反与新增产能消化仍需中报和三季报验证；当前估值接近合理区间下沿，等待更好安全边际。",
+  "fair_value_range": [
+    48,
+    62
+  ],
+  "buy_zone": [
+    36,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    70,
+    80
+  ],
+  "position_plan": [
+    {
+      "condition": "股价回落至36-42元且2026H1正式扣非净利润不低于1.70亿元、经营现金流未明显背离净利润",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026年中报和三季报确认泰国产能稳定承接美国订单，全年归母净利润预期上修至4.2亿元以上",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "双反扩散、泰国订单不及预期或主营毛利率连续两个季度低于30%",
+      "action": "不加仓并退出观察仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入安全买入区上沿，可结合中报质量评估小仓试错"
+    },
+    {
+      "type": "price_below",
+      "price": 36,
+      "reason": "进入安全买入区下沿，若基本面未恶化则赔率改善"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "reason": "超过当前情景估值合理上沿，若无2027年利润继续上台阶证据应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、泰国产能利用率、外销恢复和现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否延续至下半年"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，更新估值中枢、分红、募投与泰国项目兑现情况"
+    }
+  ]
+}
