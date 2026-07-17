@@ -1,0 +1,83 @@
+{
+  "symbol": "CN:603883",
+  "market": "CN",
+  "ticker": "603883",
+  "name": "老百姓",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "全国性连锁药房龙头在行业出清和利润修复阶段具备低估值买入价值，但医保控费、加盟质量和治理事件需要折价处理；12.5元以下具备安全边际，需用2026年中报验证扣非利润与现金流修复。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    14.0,
+    17.0
+  ],
+  "buy_zone": [
+    0.0,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "现价低于或等于12.5元，且未出现医保、治理或财务质量新增重大负面公告",
+      "action": "分三批建立基础仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格低于10.5元，且2026年中报扣非净利润和经营现金流未恶化",
+      "action": "补仓至计划上限",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "2026年中报扣非净利润同比下滑或经营现金流显著弱于净利润",
+      "action": "暂停加仓并复盘，下调至观察",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "若基本面未恶化，价格跌入悲观情景价值附近，可复核是否加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "价格超过本次情景估值上沿附近，若业绩未同步超预期，应考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的收入、扣非净利率、经营现金流、门店效率和减值情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红，重新评估估值区间与仓位上限。"
+    }
+  ],
+  "valuation": {
+    "method": "relative_absolute_scenario_cross_check",
+    "current_price_reference": {
+      "price": 12.27,
+      "date": "2026-07-17",
+      "source": "腾讯行情接口",
+      "confidence": "medium"
+    }
+  }
+}
