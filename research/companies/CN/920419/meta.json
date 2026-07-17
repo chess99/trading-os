@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920419",
+  "market": "CN",
+  "ticker": "920419",
+  "name": "路斯股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "出口OEM基本盘仍增长且柬埔寨基地出现盈利拐点，但利润率和自由现金流尚未修复，9.59元接近合理价值中枢、缺乏安全边际。",
+  "fair_value_range": [8.5, 10.5],
+  "buy_zone": [7.2, 8.0],
+  "sell_or_reduce_zone": [11.5, 13.0],
+  "position_plan": [
+    {
+      "condition": "股价处于7.2-8.0元且毛利率、柬埔寨盈利、应收与存货周转未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于7.2元且复核确认核心客户未流失、长期商业价值未受损、自由现金流改善",
+      "max_weight": 0.025
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的毛利率、柬埔寨盈利、营运资金和自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及柬埔寨二期投产进度"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入有一定安全边际的观察买入区间，需先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流明显上修"
+    }
+  ],
+  "updated_at": "2026-07-18T12:00:00+08:00"
+}
