@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:603355",
+  "market": "CN",
+  "ticker": "603355",
+  "name": "莱克电气",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "莱克电气具备高速电机、精密制造、海外产能和汽车零部件第二曲线，但2025-2026年利润受关税、转产、汇率和高杠杆压制；当前约24元处于合理价值区间内，缺少足够安全边际，需等待价格回落或毛利率、汇兑损益、债务压力改善后再上调为买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    22.0,
+    30.0
+  ],
+  "buy_zone": [
+    18.0,
+    21.5
+  ],
+  "sell_or_reduce_zone": [
+    34.0,
+    38.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于22元且2026H1未出现新的经营恶化时，仅建立研究型观察仓。",
+      "action": "watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于21.5元，且毛利率修复、汇兑损失收敛、单季归母净利润恢复至2亿元以上三项至少满足两项。",
+      "action": "buy",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于34元但正常化归母净利润仍未回到10亿元级别，或资产负债率继续上升。",
+      "action": "reduce",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 21.5,
+      "reason": "进入买入区上沿，若基本面未恶化则具备更好的安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "进入深度安全边际区，可重新评估更高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 34.0,
+      "reason": "超过基准估值上沿，需要核验利润恢复是否足以支撑估值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、汇兑损益、短期借款和海外工厂爬坡。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否连续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及2027年一季报，更新正常化盈利和估值区间。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}
