@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920436",
+  "market": "CN",
+  "ticker": "920436",
+  "name": "大地电气",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "收入扩张和一季度微利尚未转化为自由现金流，当前价格已提前计入埃易泰克整合成功与净利率修复，需等待更低价格和现金流验证。",
+  "fair_value_range": [6.5, 8.5],
+  "buy_zone": [5.2, 6.2],
+  "sell_or_reduce_zone": [9.5, 11.0],
+  "position_plan": [
+    {
+      "condition": "股价处于5.2至6.2元且经营现金流同比改善、资产负债率不再上升、核心客户订单未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于5.2元，重新验证埃易泰克整合、商誉和偿债能力均未恶化，且连续两个报告期现金转换改善",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于9.5元且滚动自由现金流仍未转正",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中的分业务毛利率、埃易泰克亏损、经营现金流和杠杆"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及收入增长向现金流转化的进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "reason": "进入有安全边际的复核区，须确认基本面与融资能力未恶化后才可买入"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "进入减仓或不应追高区间，除非自由现金流和正常化利润显著上修"
+    }
+  ],
+  "updated_at": "2026-07-17T18:28:08+08:00"
+}
