@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:603233",
+  "market": "CN",
+  "ticker": "603233",
+  "name": "大参林",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "大参林是行业出清期具备规模、华南密度、供应链和现金流优势的连锁药房龙头。2025年利润和经营现金流修复，2026Q1收入低增长但利润继续改善，当前约16倍TTM PE处于偏低分位，若2026-2027年利润维持8%-12%增长，21-25元/股具备合理性。主要风险是医保监管、线上价格竞争和加盟合规。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    21,
+    25
+  ],
+  "buy_zone": [
+    0,
+    18.5
+  ],
+  "sell_or_reduce_zone": [
+    25,
+    30
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于18.5元，且最新季报未出现同店销售、毛利率、医保合规或经营现金流的连续恶化",
+      "action": "建立初始仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于16.5元，且TTM归母净利润不低于12亿元、经营现金流没有持续低于净利润",
+      "action": "加仓至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于25元且未来两年利润中枢没有上修到16亿元以上",
+      "action": "停止加仓并分批减仓",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "进入更有安全边际的加仓区，需要复核基本面是否未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 25,
+      "reason": "达到公允价值区间上沿，需要检查是否已有利润上修支撑"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "明显高于当前基本面可支持区间，除非行业和利润中枢显著上修，否则应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的同店销售、毛利率、经营现金流和门店结构"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红、商誉减值和2027年增长指引"
+    }
+  ],
+  "key_metrics": {
+    "last_price_reference": {
+      "date": "2026-07-17",
+      "price": 18.57,
+      "source": "理杏仁页面抓取，跨源行情存在差异，置信度低到中"
+    },
+    "ttm_net_profit_cny_billion": 1.286,
+    "shares_outstanding_billion": 1.139,
+    "pe_ttm_reference": 16.44
+  }
+}
