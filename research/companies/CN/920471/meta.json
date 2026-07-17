@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920471",
+  "market": "CN",
+  "ticker": "920471",
+  "name": "美邦科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "技术路线有差异化且四氢呋喃新产能已盈利，但甲苯氧化仍处周期低谷、资产减值与治理风险未消，当前价格已计入较强复苏预期。",
+  "fair_value_range": [7.5, 9.0],
+  "buy_zone": [6.0, 7.0],
+  "sell_or_reduce_zone": [10.5, 12.5],
+  "position_plan": [
+    {
+      "condition": "股价处于6.0-7.0元且四氢呋喃盈利未恶化、最近两个季度经营现金流为正、综合毛利率不低于14%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "甲苯氧化继续深亏、出现新增大额固定资产减值、治理问题复发或核心假设被证伪",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中毛利率、子公司利润、经营现金流和资产减值"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入有安全边际的买入区间，但仍须重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-17T15:16:08+08:00"
+}
