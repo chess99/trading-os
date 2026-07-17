@@ -1,0 +1,67 @@
+{
+  "symbol": "CN:603318",
+  "market": "CN",
+  "ticker": "603318",
+  "name": "水发燃气",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "水发燃气 2026 年存在低基数修复和增发后资产负债表改善，但当前约 2.5x PB 已显著高于其盈利质量、ROE 和护城河能支撑的水平；在扣非利润、经营现金流和少数股东损益分流未连续验证前，不具备安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    3.2,
+    4.8
+  ],
+  "buy_zone": [
+    0.0,
+    3.2
+  ],
+  "sell_or_reduce_zone": [
+    6.5,
+    9.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于估值上沿且基本面仅为修复预期，不新建仓。",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若股价低于 3.2 元，且半年报证明扣非归母净利润与经营现金流同步改善、少数股东损益分流下降，可重新评估小仓位观察。",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入安全买入观察区，需要重新核验半年报和现金流质量。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "高于估值上沿，若无高质量利润证据应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点查看扣非归母净利润、经营现金流、信用减值、政府补助和少数股东损益。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，验证修复是否延续到收入、利润和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新评估增发后 ROE、资产负债率和估值区间。"
+    }
+  ]
+}
