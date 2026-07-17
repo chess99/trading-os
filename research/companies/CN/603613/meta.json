@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603613",
+  "market": "CN",
+  "ticker": "603613",
+  "name": "国联股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "国联股份在多个垂直产业互联网平台已形成近千亿元自营交易规模，当前估值约按低个位数至十倍左右利润定价，已反映收入确认、现金流和监管问询折价；若后续扣非利润企稳且经营现金流修复，平台属性有望被重估。主要约束是总额法/净额法、预付款和应收账款、交易对手穿透等风险，因此只适合分批、限仓买入。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    20.0,
+    25.0
+  ],
+  "buy_zone": [
+    14.5,
+    17.5
+  ],
+  "sell_or_reduce_zone": [
+    28.0,
+    32.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于17.5元，且无新增监管处罚或审计非标事项",
+      "action": "分批建仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于14.5元，且2026H1经营现金流/归母净利比例明显改善",
+      "action": "加仓至上限",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于24元但现金流未同步改善",
+      "action": "停止加仓并复核估值",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入悲观情景下沿，若基本面未恶化则安全边际扩大"
+    },
+    {
+      "type": "price_above",
+      "price": 28.0,
+      "reason": "进入乐观情景区间，需要评估是否减持兑现估值修复"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的扣非利润、经营现金流、应收账款和预付款项变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认现金流修复是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、审计意见和交易所问询情况"
+    }
+  ]
+}
