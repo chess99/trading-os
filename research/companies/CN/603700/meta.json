@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603700",
+  "market": "CN",
+  "ticker": "603700",
+  "name": "宁水集团",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "宁水集团是水计量与智慧水务老牌厂商，受益于周期换表、重点项目和海外订单，收入已恢复；但2025年利润含较多非经常性收益，扣非ROE和毛利率仍低，当前价格缺少足够安全边际，适合观察等待主业利润率与现金流验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    9.5,
+    12.0
+  ],
+  "buy_zone": [
+    0.0,
+    8.8
+  ],
+  "sell_or_reduce_zone": [
+    13.8,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.8元且最近一期扣非净利率、经营现金流未恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于7.5元且2026H1或后续报告验证扣非利润率修复、经营现金流转正",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于13.8元但扣非利润未年化超过1.2亿元",
+      "action": "减仓或不新增",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入具备约20%以上安全边际的初始买入区间"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "若基本面未恶化，估值进入更有吸引力的加仓区间"
+    },
+    {
+      "type": "price_above",
+      "price": 13.8,
+      "reason": "价格进入乐观情景区间，需要扣非利润兑现支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非利润率、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报订单延续性和全年利润修复概率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，决定是否从观察转为买入或剔除"
+    }
+  ]
+}
