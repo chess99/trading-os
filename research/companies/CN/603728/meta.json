@@ -4,113 +4,119 @@
   "ticker": "603728",
   "name": "鸣志电器",
   "company_name": "鸣志电器",
+  "currency": "CNY",
+  "base_currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
   "report_history": [
-    "reports/2026-07-09-initial.md"
+    "reports/2026-07-09-initial.md",
+    "reports/2026-07-18-initial.md"
   ],
   "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "鸣志电器具备小型精密运动控制、海外渠道和机器人/空心杯业务期权，产业质量值得跟踪；但 2026-07-09 股价已充分反映远期乐观预期，当前缺乏安全边际，适合观察而非追高买入。",
+  "current_thesis": "鸣志电器具备步进系统全球领先、空心杯无齿槽电机和伺服系统高成长、全球渠道和系统级运动控制方案能力等优点，2025-2026Q1收入趋势改善；但当前股价对应TTM利润估值过高，机器人期权尚未充分兑现为利润和现金流，适合观察等待安全边际而非追高买入。",
   "quality_rating": "B+",
   "valuation_rating": "expensive",
   "fair_value_range": [
-    35,
-    48
+    34,
+    45
   ],
   "buy_zone": [
-    28,
+    32,
     38
   ],
   "sell_or_reduce_zone": [
     55,
-    80
+    70
   ],
-  "currency": "CNY",
-  "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "price_above_65",
-      "action": "do_not_add_reduce_to_tracking_position",
+      "condition": "price_above_55_or_profit_not_validated",
+      "action": "watch_only_or_reduce",
       "max_weight": 0.01,
-      "reason": "估值主要依赖远期机器人期权，缺乏安全边际。"
+      "reason": "估值主要依赖远期机器人和伺服期权，当前利润和现金流不足以支撑高估值。"
     },
     {
-      "condition": "price_between_55_and_65",
-      "action": "watch_only",
+      "condition": "price_between_45_and_55",
+      "action": "do_not_add",
       "max_weight": 0.02,
-      "reason": "当前利润基数无法支撑估值，不应追高。"
+      "reason": "价格高于基准内在价值区间，缺乏足够安全边际。"
     },
     {
-      "condition": "price_between_38_and_55",
-      "action": "wait_for_earnings_and_order_validation",
+      "condition": "price_between_38_and_45_and_h1_margin_improves",
+      "action": "small_tracking_position",
       "max_weight": 0.03,
-      "reason": "产业逻辑成立但价格仍未充分反映兑现风险。"
+      "reason": "若中报验证毛利率和收入增长改善，可建立小额观察仓。"
     },
     {
-      "condition": "price_between_28_and_38",
-      "action": "accumulate_in_batches_if_fundamentals_remain_intact",
+      "condition": "price_between_32_and_38_and_fundamentals_intact",
+      "action": "accumulate_in_batches",
       "max_weight": 0.06,
-      "reason": "价格开始覆盖传统业务和部分成长性，具备一定安全边际。"
+      "reason": "进入买入区间，传统运动控制业务和部分成长性开始提供安全边际。"
     },
     {
-      "condition": "price_between_24_and_28",
-      "action": "strong_buy_after_risk_review",
+      "condition": "price_below_32_after_risk_review",
+      "action": "strong_buy_candidate",
       "max_weight": 0.08,
-      "reason": "若基本面未恶化，赔率明显改善。"
+      "reason": "若基本面未破坏，赔率明显改善，可提高配置上限。"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
       "price": 38,
-      "reason": "进入有安全边际的首批买入观察区。"
+      "reason": "进入首批买入观察区，需复核2026H1收入、毛利率和现金流。"
     },
     {
       "type": "price_below",
-      "price": 28,
-      "reason": "进入强吸引力买入区，但需同步复核基本面是否破坏。"
+      "price": 32,
+      "reason": "进入强安全边际区，若机器人和伺服订单未恶化可重点评估加仓。"
     },
     {
       "type": "price_above",
       "price": 55,
-      "reason": "进入不应追高区，已有仓位需复核估值风险。"
+      "reason": "进入估值风险区，若利润未兑现应避免加仓或考虑降低仓位。"
     },
     {
       "type": "price_above",
-      "price": 65,
-      "reason": "进入减仓或仅保留跟踪仓区间。"
+      "price": 70,
+      "reason": "明显依赖乐观情景定价，需重新评估减仓或仅保留观察仓。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复查 2026 年中报，重点验证收入增速、毛利率、机器人/空心杯/伺服业务进展。"
+      "reason": "复查2026年中报，重点验证控制电机及驱动系统收入、毛利率、空心杯和伺服业务增速、经营现金流。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认利润率和订单兑现是否持续。"
+      "reason": "复查2026年三季报，确认利润率修复和存货周转是否持续改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核越南高功率密度无刷无齿槽电机产能是否按计划投产并带来订单兑现。"
     },
     {
       "type": "date",
       "date": "2027-04-30",
-      "reason": "复查 2026 年报，重新评估合理价值区间和仓位上限。"
+      "reason": "复查2026年年报，重估合理价值区间和仓位上限。"
     }
   ],
   "key_tracking_metrics": [
-    "quarterly_revenue_growth",
+    "control_motor_and_drive_revenue_growth",
     "gross_margin",
-    "net_margin",
-    "robotics_related_orders_or_revenue",
-    "coreless_motor_progress",
-    "servo_and_motion_control_revenue",
+    "coreless_slotless_motor_revenue_growth",
+    "robotics_application_revenue_growth",
+    "servo_system_revenue_growth",
     "overseas_revenue_growth",
     "rd_expense_ratio",
     "operating_cash_flow",
-    "inventory_and_accounts_receivable_growth",
-    "top_five_customer_concentration"
+    "inventory_turnover",
+    "goodwill_impairment",
+    "related_party_transactions"
   ]
 }
