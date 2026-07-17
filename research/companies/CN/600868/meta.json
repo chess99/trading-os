@@ -1,0 +1,64 @@
+{
+  "symbol": "CN:600868",
+  "ticker": "600868",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "梅雁吉祥",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "小水电资产提供一定账面底部，但地理信息业务应收账款和扣非亏损仍压制价值；当前股价隐含较高修复预期，需等待回款、扣非盈利和现金流改善后再评估。",
+  "fair_value_range": [
+    1.3,
+    1.8
+  ],
+  "buy_zone": [
+    1.0,
+    1.25
+  ],
+  "sell_or_reduce_zone": [
+    2.4,
+    3.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值且扣非仍亏，维持观察，不建立仓位。",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价进入买入区间且连续两个季度扣非盈利、经营现金流转正、地理信息应收账款明显下降后，可小仓位重新评估。",
+      "action": "research_then_buy",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.25,
+      "reason": "进入买入观察区，需要复核半年报/三季报的现金流、扣非利润和应收账款。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "高于估值上沿且基本面尚未验证，需避免主题溢价回落风险。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、扣非净利润、应收账款账龄和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认水电恢复、BPO贡献和地理信息回款是否具备持续性。"
+    }
+  ]
+}
