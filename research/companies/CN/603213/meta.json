@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:603213",
+  "ticker": "603213",
+  "name": "镇洋发展",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "镇洋发展主业为氯碱和PVC，区域、能效和国资背景有一定价值，但2026年上半年盈利预告显示周期压力显著，当前价格主要由浙江沪杭甬换股吸收合并事件支撑，缺少主业安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    9.0,
+    13.0
+  ],
+  "buy_zone": [
+    0.0,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    13.5,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前股价高于13.5元且2026H1盈利预告未验证主业修复，不新建仓。",
+      "action": "avoid_new_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌破10.5元，且最新季度烧碱、PVC价差与扣非净利环比改善后，才重新评估小仓位观察。",
+      "action": "reassess_watch_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "吸收合并实施细则明确且浙江沪杭甬A股隐含换股价值较镇洋发展股价折价超过15%，可作为事件套利重新评估。",
+      "action": "event_arbitrage_only",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入基准买入观察区，需要结合行业价差和合并进度复核。"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "高于公允价值上沿且缺少主业盈利支撑，应避免新建仓或考虑降低事件仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、经营数据、现金流和PVC项目盈利情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及浙江沪杭甬吸收合并实施进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核年度业绩预告、现金选择权/换股安排及合并后估值锚。"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}
