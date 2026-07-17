@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603100",
+  "ticker": "603100",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "川仪股份",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "川仪股份是流程工业自动化仪表与控制执行部件龙头，资产负债表稳健、现金流质量尚可，国产替代和高端仪表放量提供中长期机会；但2025年至2026H1收入仍未恢复强增长，归母利润承压，当前价格接近合理价值中枢，适合观察并等待15.5元以下的安全边际。",
+  "fair_value_range": [
+    16.0,
+    22.0
+  ],
+  "buy_zone": [
+    13.0,
+    15.5
+  ],
+  "sell_or_reduce_zone": [
+    23.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于15.5元，且最近一期扣非利润未恶化、经营现金流没有明显背离利润",
+      "action": "小仓位试买",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价接近13元，且收入恢复或扣非净利率稳定、应收和存货未显著恶化",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于23元但未出现订单、收入增速、利润率或现金流的新增改善证据",
+      "action": "减仓或不新增买入",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.5,
+      "reason": "进入买入区间上沿，需要复核最新扣非利润、现金流和订单质量"
+    },
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "进入深度安全边际区间，需要评估是否可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 23.0,
+      "reason": "超过基准合理价值上沿，需要确认是否有新增增长证据支撑估值上修"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，重点检查收入是否恢复正增长、扣非净利率和经营现金流是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，更新正常化利润、分红、订单结构和估值区间"
+    }
+  ]
+}
