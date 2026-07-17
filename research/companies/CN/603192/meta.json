@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:603192",
+  "ticker": "603192",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "汇得科技",
+  "company_name": "上海汇得科技股份有限公司",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是聚氨酯树脂及改性体材料平台型企业，资产负债表稳健、产品线完整，但2025-2026年利润率仍低且2026年一季度归母净利润同比下滑，当前价格缺少安全边际；等待低于12.5元或连续两个季度利润率与现金流改善后再评估买入。",
+  "fair_value_range": [
+    13.0,
+    17.0
+  ],
+  "buy_zone": [
+    0.0,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    20.0,
+    28.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于12.5元，且最近一期经营现金流未显著恶化，可建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度毛利率、净利率、经营现金流同步改善，且价格不高于17元。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于20元但未看到归母净利润年化超过1.2亿元的证据。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入买入区间，接近账面价值并提供足够安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "reason": "高于基准合理价值上沿，需要乐观情景兑现，否则应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、现金流、存货和募投项目进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断盈利恢复是否连续。"
+    }
+  ]
+}
