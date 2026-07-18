@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688207",
+  "market": "CN",
+  "ticker": "688207",
+  "name": "格灵深瞳",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "格灵深瞳具备稀缺的计算机视觉与多模态AI场景落地能力，现金储备能支撑继续研发和销售转型，但公司收入规模仍小、持续亏损、毛利率和产品复用尚未被充分验证；当前股价已定价较乐观的商业化改善，适合观察，不适合追高买入。",
+  "fair_value_range": [
+    11.0,
+    15.0
+  ],
+  "buy_zone": [
+    8.5,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    19.0,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于11.5元，且最新半年报或三季报验证收入同比增长、毛利率回到35%以上、经营现金流未恶化",
+      "action": "建立观察性小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "收入连续两个报告期增长、研发投入占收入比例降至100%以下、标准化产品收入或订单可核验",
+      "action": "在估值仍低于公允区间上沿时加仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于19元且基本面未明显超预期，或毛利率低于25%、亏损扩大",
+      "action": "不加仓并考虑减仓或退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入估算买入区间上沿，若基本面同步改善可获得安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "接近悲观情景估值下沿，可重新评估现金资产和技术期权价值"
+    },
+    {
+      "type": "price_above",
+      "price": 19.0,
+      "reason": "高于基准公允价值区间，若无业绩超预期不宜加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "接近乐观情景估值，需考虑减仓并等待业绩兑现"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、研发费用率、现金流和客户结构"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认收入拐点和亏损收窄趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估产品化、现金消耗和估值区间"
+    }
+  ]
+}
