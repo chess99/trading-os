@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688656",
+  "market": "CN",
+  "ticker": "688656",
+  "name": "浩欧博",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "浩欧博是过敏和自身免疫检测细分龙头，菜单、注册证和化学发光平台具备真实产业价值；但2025年与2026Q1盈利显著承压，当前市值已透支中国生物制药协同和化学发光放量预期，需等待业绩修复和估值回落。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    32,
+    48
+  ],
+  "buy_zone": [
+    0,
+    35
+  ],
+  "sell_or_reduce_zone": [
+    75,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于35元，且连续两个季度营业收入同比恢复至10%以上、扣非净利率恢复至8%以上。",
+      "action": "initiate_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "化学发光过敏和自免菜单放量经半年报或年报验证，扣非净利率恢复至12%以上，且股价仍低于48元。",
+      "action": "add_selectively",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于75元，或TTM PE高于80倍且收入、扣非利润未明显修复。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "进入安全边际买入区，隐含市值约22亿元，对应正常化利润更可接受。"
+    },
+    {
+      "type": "price_above",
+      "price": 75,
+      "reason": "若基本面未同步兑现，估值再次明显偏离盈利质量和可比公司估值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非利润、费用率、现金流和化学发光产品进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否验证收入恢复、扣非净利率改善和中国生物制药协同。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报、分红、治理变化、关联交易和2027年增长指引。"
+    }
+  ]
+}
