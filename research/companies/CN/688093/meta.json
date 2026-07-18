@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688093",
+  "market": "CN",
+  "ticker": "688093",
+  "name": "世华科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "世华科技是高毛利、现金流质量较好的功能性材料平台公司，2025年业绩高增长且资产负债表干净；但2026Q1收入和利润同比回落，客户集中度高，当前价格接近基准内在价值，适合观察并等待更厚安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    26,
+    34
+  ],
+  "buy_zone": [
+    22,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    36,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于24元，且2026H1综合毛利率不低于56%、TTM归母净利润不低于3.8亿元",
+      "action": "建立观察仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于22元，且客户集中度没有进一步恶化、经营现金流/归母净利润大于0.9",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于36元且没有2026年利润上修证据",
+      "action": "停止新增买入并评估减持",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入初始买入区，需要复核半年报毛利率与现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "安全边际较充分，可评估提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "进入减持观察区，除非利润预期上修否则赔率下降"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、客户集中度和在建项目进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否恢复增长以及现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和高性能光学胶膜材项目产能兑现情况"
+    }
+  ]
+}
