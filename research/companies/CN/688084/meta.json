@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688084",
+  "market": "CN",
+  "ticker": "688084",
+  "name": "晶品特装",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "晶品特装具备特种机器人和智能感知装备的技术平台属性，现金充裕、负债低，但利润尚未稳定兑现，军品审价和订单节奏导致波动较大；当前价格接近基准公允价值上沿，适合观察，等待35元以下或毛利率/扣非利润明确修复后再提高仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    36,
+    45
+  ],
+  "buy_zone": [
+    28,
+    34
+  ],
+  "sell_or_reduce_zone": [
+    60,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于35元且2026中报收入同比增长超过30%、主营毛利率高于25%，可建立观察仓",
+      "action": "initial_watch_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于28-34元且特种机器人收入继续增长、智能感知毛利率转正、经营现金流未显著恶化",
+      "action": "accumulate_small_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于60元但扣非净利润仍未转正或应收账款占收入超过60%",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "进入基准公允价值下沿以下，结合中报毛利率和现金流重新评估买入"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入较高安全边际区间，若基本面未恶化可考虑提高至小仓"
+    },
+    {
+      "type": "price_above",
+      "price": 60,
+      "reason": "进入牛市情景估值区间，若利润兑现不足应降低关注或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、毛利率、扣非利润、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年激励目标达成概率和下半年交付节奏"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，验证收入增长、利润修复、现金流和审价影响"
+    }
+  ]
+}
