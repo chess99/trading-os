@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688035",
+  "market": "CN",
+  "ticker": "688035",
+  "name": "德邦科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "德邦科技具备高端电子封装材料、先进封装耗材和AI导热界面材料国产替代稀缺性，2025年及2026Q1收入保持高增长；但利润弹性、经营现金流、并购商誉和股东减持仍需验证，当前估值已经反映中等偏乐观预期，适合观察而非追高买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    44,
+    58
+  ],
+  "buy_zone": [
+    0,
+    45
+  ],
+  "sell_or_reduce_zone": [
+    75,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于45元，且最新半年报或三季报显示经营现金流/归母净利润大于0.8、应收账款增速不高于收入增速，可建立观察仓。",
+      "action": "initiate",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于45至65元，收入增速维持25%以上但现金流改善尚未连续验证，仅保留跟踪或很小仓位。",
+      "action": "watch",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "先进封装/AI导热材料收入明确放量、毛利率稳定在27%以上且现金流连续两个季度转正，可提高配置上限。",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于75元且未披露超预期订单或盈利兑现，或经营现金流再次转负、泰吉诺出现减值迹象，应降低仓位。",
+      "action": "reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入安全边际买入区间，需同步复核现金流和应收账款。"
+    },
+    {
+      "type": "price_above",
+      "price": 75,
+      "reason": "估值进入偏贵区间，除非先进封装和AI导热材料订单超预期，否则考虑降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-11",
+      "reason": "公司预计披露2026年中报，重点复核收入拆分、毛利率、现金流、应收账款、泰吉诺并表质量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认经营现金流改善是否连续、先进封装材料是否进入利润兑现阶段。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复盘2026年全年业绩和商誉减值风险，重新评估长期增长与估值中枢。"
+    }
+  ]
+}
