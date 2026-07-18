@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688021",
+  "market": "CN",
+  "ticker": "688021",
+  "name": "奥福环保",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "奥福环保是国内蜂窝陶瓷载体稀缺标的，2025年扭亏且现金流改善，2026Q1延续盈利；但收入和利润仍受商用车、非道路与船机排放后处理周期影响，当前只适合观察，等待价格跌入安全边际或订单/毛利率进一步确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    18.0,
+    25.0
+  ],
+  "buy_zone": [
+    13.0,
+    16.5
+  ],
+  "sell_or_reduce_zone": [
+    30.0,
+    36.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于16.5元，且最近一期毛利率不低于32%、经营现金流未明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于14.5元，且2026年半年度收入和现金流未低于预期",
+      "action": "加仓至逆向仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于18元，且国七/非道路/船机订单证据增强、毛利率连续两个季度高于35%",
+      "action": "提升至最高配置",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "进入买入区上沿，需要复核毛利率、现金流和订单后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入更高安全边际区，可在基本面未恶化时加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 30.0,
+      "reason": "超过中性估值区间，需要利润或订单显著上修，否则考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-22",
+      "reason": "复核2026年半年度报告，重点检查收入、毛利率、经营现金流、存货和应收款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1盈利恢复是否具备持续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，验证中性估值假设"
+    }
+  ]
+}

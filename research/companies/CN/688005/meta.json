@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:688005",
+  "market": "CN",
+  "ticker": "688005",
+  "name": "容百科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": ["reports/2026-07-18-initial.md"],
+  "current_thesis": "容百科技处于2025年盈利低谷后的修复早期，高镍三元、LMFP/LFP、钠电和海外产能提供中期弹性，但当前价格已反映部分复苏预期，且行政处罚与大额框架订单不确定性要求更高安全边际；基准结论为观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [21, 30],
+  "buy_zone": [0, 18],
+  "sell_or_reduce_zone": [32, 42],
+  "position_plan": [
+    {"condition": "股价低于22元且2026H1预告区间兑现、经营现金流未显著恶化", "action": "watchlist_or_probe", "max_weight": 0.02},
+    {"condition": "股价低于18元，且连续两个季度扣非归母净利润为正、单吨盈利改善、宁德/LFP订单以真实采购合同验证", "action": "accumulate", "max_weight": 0.06},
+    {"condition": "股价高于32元但2026全年归母净利润低于4亿元，或经营现金流持续为负", "action": "reduce_or_avoid", "max_weight": 0}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 18, "reason": "跌入具备安全边际的买入区间，需复核2026H2盈利和现金流。"},
+    {"type": "price_above", "price": 32, "reason": "高于基准合理价值区间上沿，应检查利润兑现是否足以支持估值。"}
+  ],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报正式披露数据、现金流、存货、应收和订单兑现。"},
+    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报，确认盈利修复是否连续。"},
+    {"type": "date", "date": "2027-04-30", "reason": "复核2026年年报和2027年一季报，重估LFP/LMFP扩产与海外高镍弹性。"}
+  ],
+  "valuation": {"base_price": 23.98, "base_price_date": "2026-07-17", "base_market_cap_cny_billion": 17.14, "method": "relative_PE_PB_cross_check_plus_absolute_and_scenario_valuation", "confidence": "中"}
+}

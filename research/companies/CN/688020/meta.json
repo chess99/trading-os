@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:688020",
+  "market": "CN",
+  "ticker": "688020",
+  "name": "方邦股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备电磁屏蔽膜、FCCL、可剥离超薄铜箔和电阻薄膜等高端电子材料技术平台，客户认证和国产替代期权有价值；但2025年和2026Q1仍亏损，经营现金流不稳定，2026-07-17市值约117亿元、PB约8.9倍、PS约32.7倍，已显著透支乐观放量情景，当前以观察为主。",
+  "fair_value_range": [
+    40,
+    65
+  ],
+  "buy_zone": [
+    0,
+    45
+  ],
+  "sell_or_reduce_zone": [
+    95,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于45元，且最新季度未出现收入继续恶化、重大减值扩大或核心客户导入失败信号",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于35元，且经营现金流改善或新产品订单有公开可核验证据",
+      "action": "提高至研究仓上限",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度新产品收入合计超过1亿元、综合毛利率改善且经营现金流转正",
+      "action": "重新评估是否上调合理价值和仓位上限",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于95元但未同步披露可剥铜/FCCL/电阻薄膜大额量产订单或利润兑现",
+      "action": "不新增并考虑减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入基准估值安全边际区，可考虑小仓位跟踪。"
+    },
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "接近熊市情景价值区，若基本面未恶化则风险收益改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 95,
+      "reason": "价格进入乐观情景区间，需要订单和利润兑现支撑，否则应减仓或回避。"
+    },
+    {
+      "type": "price_above",
+      "price": 140,
+      "reason": "接近牛市情景上沿，当前证据不足以支撑高仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看新产品收入、毛利率、减值和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1亏损是否改善及订单兑现节奏。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重新评估长期盈利能力和估值区间。"
+    }
+  ]
+}
