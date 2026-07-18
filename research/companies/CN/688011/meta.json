@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688011",
+  "market": "CN",
+  "ticker": "688011",
+  "name": "新光光电",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "新光光电具备真实的军工光电技术积累和订单修复线索，但当前仍是低收入规模、连续亏损、现金流和长账龄应收压力较大的技术期权型公司。2026-07-17 收盘价 55.64 元对应约 55.36 亿元市值、约 5.3 倍 2026Q1 PB 和约 38 倍 TTM PS，已经反映乐观情景，缺乏安全边际。当前不买，等待订单兑现、毛利率和经营现金流改善，或价格回落至 18-25 元区间再评估。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    22,
+    35
+  ],
+  "buy_zone": [
+    18,
+    25
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于公允价值上沿且公司仍未证明稳定盈利能力，不建立新仓。",
+      "action": "no_buy",
+      "max_weight": 0
+    },
+    {
+      "condition": "若股价回落至 18-25 元，且在手订单未出现重大取消、经营现金流没有恶化，可建立观察仓。",
+      "action": "watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若连续两个报告期收入、毛利率、经营现金流同步改善，且 2026 年收入可见度超过 2.5 亿元，可上调至小仓位。",
+      "action": "small_position",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 25,
+      "reason": "进入买入观察区间，估值接近基准情景下限。"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "进入乐观情景估值区间，应要求更强订单和利润兑现。"
+    },
+    {
+      "type": "price_above",
+      "price": 60,
+      "reason": "高于乐观情景上沿附近，风险收益明显转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-27",
+      "reason": "预计 2026 年半年报披露后复核收入、毛利率、亏损收窄和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报后核验在手订单兑现节奏和全年收入可见度。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026 年年报后重估公司是否跨过盈亏平衡点。"
+    }
+  ]
+}
