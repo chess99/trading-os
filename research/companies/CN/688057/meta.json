@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:688057",
+  "market": "CN",
+  "ticker": "688057",
+  "name": "金达莱",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "金达莱拥有较厚现金垫、低负债和 FMBR 技术特色，但 2025 年及 2026Q1 收入利润仍明显下滑，订单释放和回款修复尚未验证；当前应观察，等待股价进入安全边际或经营拐点确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    12.5,
+    15.5
+  ],
+  "buy_zone": [
+    10.5,
+    12.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 12.0 元且最新半年报显示经营现金流为正、应收账款未继续恶化，可建立观察仓。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于 10.5 元，且新增订单或合同负债出现同比改善，可提高至小仓位。",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "若收入连续两个季度继续下滑且经营现金流转负，即使股价进入买入区间也暂停加仓。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入观察买入区上沿，需要复核订单、回款和现金余额。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "接近保守净资产和现金安全边际，可重新评估小仓位买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "进入乐观情景估值区，若无业绩拐点需考虑降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报收入、订单、经营现金流和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否出现经营拐点。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报、分红和现金使用效率。"
+    }
+  ]
+}
