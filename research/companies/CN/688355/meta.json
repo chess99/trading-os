@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688355",
+  "market": "CN",
+  "ticker": "688355",
+  "name": "明志科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "明志科技具备高端制芯装备与铝合金铸件的复合工艺壁垒，2025年利润和现金流修复较好，但2026Q1盈利下滑显示订单和利润率仍有波动；当前价格接近合理价值下沿，安全边际不足，适合观察，等待15元以下或中报验证后再提高仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16.0,
+    21.5
+  ],
+  "buy_zone": [
+    13.5,
+    15.0
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于15.0元，且未出现订单、现金流、治理或毛利率恶化信号",
+      "action": "可建立观察仓至1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "2026年中报或三季报确认收入恢复增长、毛利率稳定、经营现金流改善",
+      "action": "可逐步提高至核心小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于24.0元但盈利预测未上修",
+      "action": "停止加仓并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "进入安全买入区下沿，需要复核订单、现金流和毛利率后决定是否建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "高于当前估值可解释区间，需要盈利上修支撑，否则应考虑减仓或等待"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查订单、分业务毛利率、经营现金流和应收存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1利润下滑是否为一次性波动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估正常化利润、自由现金流和长期估值中枢"
+    }
+  ]
+}
