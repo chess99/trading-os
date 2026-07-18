@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688328",
+  "market": "CN",
+  "ticker": "688328",
+  "name": "深科达",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "公司正在从显示面板模组设备向半导体封测设备和核心零部件驱动切换，2026Q1及2026H1预告验证利润弹性；但当前估值已经反映较多乐观预期，且2026-07-16至2026-10-14处于实控人及大股东减持窗口，安全边际不足，宜观察等待更低价格或更多订单验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    62,
+    82
+  ],
+  "buy_zone": [
+    45,
+    60
+  ],
+  "sell_or_reduce_zone": [
+    100,
+    120
+  ],
+  "position_plan": [
+    {
+      "condition": "现价位于合理价值区间附近且减持窗口未结束，暂不建仓",
+      "action": "watch",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入45-60元且2026H1正式报告不低于预告、半导体设备毛利率未显著回落",
+      "action": "starter_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "2026Q3继续验证半导体设备放量，单季度归母净利润高于3000万元且应收账款不恶化",
+      "action": "add",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 60,
+      "reason": "进入买入区上沿，重新核验H1正式报告、半导体设备毛利率和合同负债后可考虑小仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入高安全边际区，若基本面未恶化可提高至计划上限"
+    },
+    {
+      "type": "price_above",
+      "price": 100,
+      "reason": "超过减仓区下沿，除非有明确新增大客户订单或2027利润上修，否则估值透支"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告正式数据、半导体设备收入占比、毛利率、合同负债和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和大股东减持执行情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，检验全年利润是否达到基准情景"
+    }
+  ]
+}
