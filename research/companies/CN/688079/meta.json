@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688079",
+  "market": "CN",
+  "ticker": "688079",
+  "name": "美迪凯",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "美迪凯具备光学与半导体制程融合的平台弹性，2025年收入恢复高增长且半导体封测、声光学、键合棱镜和MEMS小批量均有进展；但公司仍处亏损期，折旧、利息和产能利用率压力较重，当前16元附近已经反映一部分2027-2028年盈利拐点预期，需等待中报验证或更低价格提供安全边际。",
+  "fair_value_range": [
+    13.5,
+    18.5
+  ],
+  "buy_zone": [
+    10.5,
+    13.0
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    28.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于13.0元，且最新定期报告显示收入环比增长、毛利率高于22%、经营现金流为正三项中至少满足两项",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026Q3或之后单季收入超过2.5亿元且归母净亏损环比明显收窄",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于22.0元但未出现收入或盈利预测上修",
+      "action": "不追高并减仓观察仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "进入买入区上沿，若同时验证毛利率和现金流改善，风险收益比转正"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入悲观情景价值附近，可重新评估深度价值试错"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "超过基准合理价值上沿且接近主题溢价区，若无盈利上修应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、经营现金流、折旧和利息费用"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入放量和亏损收窄是否兑现"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，更新盈利拐点与估值区间"
+    }
+  ]
+}
