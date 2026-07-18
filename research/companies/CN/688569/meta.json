@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:688569",
+  "market": "CN",
+  "ticker": "688569",
+  "name": "铁科轨道",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "铁科轨道是高铁工务工程关键件稀缺标的，订单覆盖度高、资产负债表稳健、特殊调整扣件具备差异化壁垒；但客户和关联交易集中、ROE 下行、项目节奏及少数股东损益导致归母利润可预测性不足，当前价格处于合理区间中部，宜观察并等待更高安全边际或 2026 年利润兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    15.5,
+    19.5
+  ],
+  "buy_zone": [
+    13.0,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    20.5,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 14.5 元，且 2026 年收入兑现、毛利率未跌破 40%、经营现金流未显著恶化",
+      "action": "start_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 13.0 元，且在手订单维持 20 亿元以上、应收账款未继续恶化",
+      "action": "add_position",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "2026 年归母净利润恢复至 2.2 亿元以上且经营现金流接近归母净利，同时估值仍低于 18 倍当年 PE",
+      "action": "upgrade_to_core_watch",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 20.5 元但 ROE 和归母利润未验证修复",
+      "action": "reduce_or_wait",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入初始买入区，按基准估值具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 20.5,
+      "reason": "超过基准合理价值上沿附近，若利润未兑现应降低收益率预期"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "进入乐观情景估值区，需有运维或海外业务第二增长曲线支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看收入兑现、归母净利、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断全年订单交付和利润修复斜率"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核 2026 年年报及新签订单，重新评估合理价值区间"
+    }
+  ]
+}
