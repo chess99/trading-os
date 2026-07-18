@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:920010",
+  "market": "CN",
+  "ticker": "920010",
+  "name": "凯添燃气",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "区域型城市燃气基本盘具备一定稳定性，但2025年收入、毛利率、净利润和经营现金流同步走弱，2026Q1虽有恢复但现金流仍为负；按2026-07-17收盘价7.90元估算估值已接近乐观情景，安全边际不足，适合观察等待价格回落或新业务利润兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.5,
+    5.8
+  ],
+  "buy_zone": [
+    3.8,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.5,
+    9.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.80元，且2026H1毛利率稳定在17%以上、经营活动现金流改善为正或接近转正",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.80元，且净利润没有继续恶化、智算项目资本开支可控",
+      "action": "提高到小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于7.50元且没有可核验的新业务利润贡献",
+      "action": "不新增，已有仓位减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入初步买入观察区，需要复核半年报毛利率和经营现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入有安全边际区间，若基本面未恶化可考虑小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "高于基准合理价值并接近乐观情景，需要避免主题溢价回落"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和智算项目进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报并更新全年盈利假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及分红、资本开支和新业务兑现情况"
+    }
+  ]
+}
