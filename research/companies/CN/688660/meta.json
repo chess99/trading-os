@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688660",
+  "market": "CN",
+  "ticker": "688660",
+  "name": "电气风电",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "观察：公司具备海上风电、上海电气体系和订单修复期权，但2025年亏损扩大、2026Q1仍亏且资产负债率高，当前价格已反映较多扭亏预期，需等待毛利率、现金流和亏损收窄被半年报/三季报验证。",
+  "fair_value_range": [
+    6.2,
+    8.8
+  ],
+  "buy_zone": [
+    5.0,
+    6.2
+  ],
+  "sell_or_reduce_zone": [
+    9.8,
+    12.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于6.2元，且2026H1或2026Q3显示亏损同比收窄、经营现金流改善、订单毛利率未继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非亏损明显收窄或转正，资产负债率下降且经营现金流转正",
+      "action": "提高至困境反转小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于9.8元但盈利和现金流未同步验证",
+      "action": "不加仓或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "reason": "进入买入区间上沿，若同时验证亏损收窄和现金流改善，可考虑小仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "进入悲观情景附近，若无资产负债表恶化，可重新评估安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 9.8,
+      "reason": "超过基准合理价值区间，若基本面未显著改善，应降低预期或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看亏损收窄、毛利率、经营现金流和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断订单交付质量和减亏趋势是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报预告或正式业绩，决定是否从观察转向买入或回避"
+    }
+  ]
+}
