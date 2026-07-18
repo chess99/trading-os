@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920363",
+  "market": "CN",
+  "ticker": "920363",
+  "name": "莱赛激光",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "收入修复尚未转化为高质量利润与自由现金流，11.78元已透支新业务产业化和利润率大幅提升，当前缺乏安全边际。",
+  "fair_value_range": [3.2, 4.5],
+  "buy_zone": [2.6, 3.2],
+  "sell_or_reduce_zone": [6.0, 20.0],
+  "position_plan": [
+    {
+      "condition": "股价处于2.6至3.2元且应收周转未恶化、募投未再次延期、滚动十二个月核心自由现金流转正",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于2.6元且重新验证长期商业价值未受损，允许分批增加但不得机械补仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于6元或客户流失、重大减值、募投再延期、核心新业务证伪",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的利润率、应收账款、经营现金流和募投进度"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-15",
+      "reason": "核验募投项目是否在2026年12月31日前达到预定可使用状态"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入有初步安全边际的买入观察区，但必须先复核现金流和应收质量"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "reason": "超过基准合理价值并进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T17:19:29+08:00"
+}
