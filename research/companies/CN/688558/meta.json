@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688558",
+  "market": "CN",
+  "ticker": "688558",
+  "name": "国盛智科",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "国盛智科是现金流和分红质量较好的中高端数控机床公司，高档数控机床增长和纵向一体化提供中期弹性，但当前价格已接近合理价值区间，安全边际不足，适合观察等待回撤或订单、毛利率继续验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    29,
+    36
+  ],
+  "buy_zone": [
+    22,
+    25.5
+  ],
+  "sell_or_reduce_zone": [
+    40,
+    46
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于25.5元，且高档数控机床收入增速、主营毛利率和全年经营现金流未恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于23元，且经营现金流/归母净利润全年回到0.9倍以上",
+      "action": "分批加仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于40元且未来两年利润预测未上修",
+      "action": "减仓或停止加仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 25.5,
+      "reason": "进入初始买入区间上沿，重新核验订单、毛利率和现金流后可建观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 23,
+      "reason": "进入更有安全边际的加仓区间，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "reason": "超过合理价值区间上方，需要检查利润上修是否足以支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中的订单、毛利率、现金流和高档机床增长"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1现金流转负是否只是季节性波动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重估中期盈利和估值区间"
+    }
+  ]
+}
