@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688302",
+  "market": "CN",
+  "ticker": "688302",
+  "name": "海创药业",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "海创药业已由纯研发型Biotech进入首款产品海纳安商业化放量验证期，2026年医保执行后的收入爬坡决定估值下限；HP515和BCR适应症提供显著向上期权，但当前股价接近基准估值中位数，安全边际不足，维持观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    32,
+    45
+  ],
+  "buy_zone": [
+    25,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入25-32元区间，且海纳安季度收入环比增长、现金消耗未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026年海纳安收入达到或高于2亿元，且HP515进入明确IIb或III期路径",
+      "action": "提高至核心小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于55元但未出现销售、临床或BD超预期",
+      "action": "减仓或不追高",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入买入观察区间，可用更合理EV购买海纳安放量和HP515期权"
+    },
+    {
+      "type": "price_below",
+      "price": 25,
+      "reason": "进入熊市情景价值附近，若基本面未恶化则安全边际明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "进入牛市情景下沿，需要销售或BD超预期支撑，否则应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，验证海纳安医保执行后的收入、销售费用和现金消耗"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年是否能达到公司预测的1.4亿元收入下限"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和HP515/HP518临床进展，重估商业化斜率和管线rNPV"
+    }
+  ]
+}
