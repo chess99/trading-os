@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:920022",
+  "market": "CN",
+  "ticker": "920022",
+  "name": "世昌股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "世昌股份以常压塑料燃油箱现金流为基础，正在向插混/增程高压塑料燃油箱迁移。2025年高压油箱收入同比高增、60万台新能源高压油箱项目已结项，现价约17.7倍TTM PE低于基准公允价值区间下沿；但客户集中、2026Q1下滑、毛利率和现金流承压，适合纪律性分批买入而非重仓追高。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    22,
+    28
+  ],
+  "buy_zone": [
+    16.5,
+    20.5
+  ],
+  "sell_or_reduce_zone": [
+    30,
+    36
+  ],
+  "position_plan": [
+    {
+      "condition": "19.0-20.5元且未出现客户订单或毛利率恶化信号，建立观察仓",
+      "action": "buy_initial",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "17.0-18.5元且2026H1高压油箱放量、毛利率不低于22%",
+      "action": "add",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "15.5-16.5元且下跌主要来自市场流动性而非基本面恶化",
+      "action": "add_deep_value",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "30元以上但盈利预测未上修或高压项目利用率低于预期",
+      "action": "reduce",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.5,
+      "reason": "进入加仓区，需复核2026H1订单、毛利率和现金流是否正常"
+    },
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "进入深度价值区，若基本面未恶化可提高至最高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "进入减仓观察区，除非利润和高压油箱放量同步上修"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "显著高于当前公允价值区间，原则上只保留跟踪仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报：营收、归母净利润、高压油箱收入占比、经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：高压项目爬坡、毛利率、客户集中度变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报：全年利润兑现、分红、60万台高压项目利用率"
+    }
+  ]
+}
