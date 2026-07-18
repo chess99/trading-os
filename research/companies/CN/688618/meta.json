@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688618",
+  "market": "CN",
+  "ticker": "688618",
+  "name": "三旺通信",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "三旺通信是工业互联网通信设备小龙头，工业交换机和工业网关具备较高毛利与行业壁垒，但 2026Q1 收入下滑并转亏，当前价格约处于合理价值区间中上沿，安全边际不足，宜等待价格回落或中报验证恢复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    20.0,
+    26.0
+  ],
+  "buy_zone": [
+    15.0,
+    18.5
+  ],
+  "sell_or_reduce_zone": [
+    30.0,
+    36.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于18.5元，且2026H1毛利率不低于54%、扣非亏损未扩大",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于16.0元，且资产负债率低于25%、经营现金流未显著恶化",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H1收入同比转正且海外或电力/矿山/机器人订单明确恢复",
+      "action": "重新评估估值上沿后再决定是否加仓",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.5,
+      "reason": "进入初始买入区间，具备重新评估小仓位的安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 16.0,
+      "reason": "接近悲观情景价值上沿，若基本面未恶化可考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 30.0,
+      "reason": "超过基准公允价值区间，需要兑现或等待业绩验证"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "预约披露2026年半年报，需核验收入、扣非利润、毛利率、海外收入与营运资本"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报窗口，验证Q1下滑是否只是短期波动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报窗口，复盘全年订单恢复与研发费用转化效率"
+    }
+  ]
+}
