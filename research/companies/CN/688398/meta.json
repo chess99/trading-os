@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688398",
+  "market": "CN",
+  "ticker": "688398",
+  "name": "赛特新材",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "赛特新材是国内真空绝热板龙头之一，长期受益于冰箱能效升级和高端化渗透，但2025年以来盈利被价格竞争、内销结构、折旧、财务费用和汇兑压力显著压缩，2026Q1利润接近盈亏平衡；当前价格接近合理价值上沿，缺少足够安全边际，等待毛利率和净利润修复或价格回落后再考虑小仓位。",
+  "fair_value_range": [
+    16,
+    22
+  ],
+  "buy_zone": [
+    12,
+    15
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    32
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入12-15元且未出现客户流失、募投失控或毛利率继续大幅下滑",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度毛利率回到25%以上且单季归母净利润年化接近或超过1亿元",
+      "action": "提高至小仓位持有",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于28元但利润修复证据不足，或真空玻璃继续扩大亏损",
+      "action": "不买入或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "进入初始买入区间，可在复核毛利率、客户和现金流后考虑观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 12,
+      "reason": "显著低于基准估值下沿，若基本面未继续恶化，安全边际改善"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "reason": "进入乐观情景估值区间，若利润尚未恢复应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报：毛利率、应收账款、财务费用、维爱吉亏损和合肥基地进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：确认利润修复是否持续以及经营现金流是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报：判断正常化盈利中枢和项目爬坡风险"
+    }
+  ]
+}
