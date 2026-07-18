@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:920005",
+  "market": "CN",
+  "ticker": "920005",
+  "name": "鼎佳精密",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "鼎佳精密具备头部消费电子客户认证、功能性产品较好毛利率和充裕现金安全垫，但 2026Q1 出现收入增长而利润与经营现金流下滑，客户集中和应收账款占比高压制安全边际；现价处于公允区间中部，等待更低估值或利润质量修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    22.0,
+    30.0
+  ],
+  "buy_zone": [
+    18.0,
+    21.5
+  ],
+  "sell_or_reduce_zone": [
+    31.0,
+    36.0
+  ],
+  "position_plan": [
+    {
+      "condition": "price_below_22_and_q2_not_worse",
+      "action": "建立观察仓，等待毛利率和经营现金流修复确认",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price_between_18_and_21_5_or_profit_quality_recovers",
+      "action": "分批买入，最高提升至中低仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "two_quarters_profit_or_cashflow_deterioration",
+      "action": "停止加仓并复核估值，必要时退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 21.5,
+      "reason": "进入买入区上沿，若基本面未恶化则安全边际开始出现"
+    },
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "进入悲观情景价值区，可重新评估提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 31.0,
+      "reason": "接近乐观情景估值下沿，若利润未上修应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报利润修复、存货消化和募投进度"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报和全年现金流质量，决定是否上调评级"
+    }
+  ]
+}
