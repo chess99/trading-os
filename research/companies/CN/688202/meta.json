@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:688202",
+  "market": "CN",
+  "ticker": "688202",
+  "name": "美迪西",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "美迪西处在临床前CRO需求回暖、海外订单改善和产能利用率提升带来的业绩修复期，2026Q1已扭亏且毛利率改善，但当前估值已隐含较高复苏斜率，需等待扣非利润和经营现金流连续验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    58,
+    76
+  ],
+  "buy_zone": [
+    45,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    88,
+    105
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于55元且2026年季度扣非净利润保持为正、经营现金流转正或明显改善",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度收入同比增长超过25%、综合毛利率不低于25%、经营现金流为正",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于88元但扣非净利率和现金流未同步改善",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入估算买入区，重新核验订单、现金流和诉讼进展后可考虑建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 88,
+      "reason": "超过减仓观察区下沿，若盈利兑现不足应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告，重点看收入增速、扣非净利润、经营现金流、境外收入和新签订单"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证毛利率修复和订单转化是否可持续"
+    }
+  ]
+}
