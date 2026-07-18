@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:688165",
+  "market": "CN",
+  "ticker": "688165",
+  "name": "埃夫特",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "埃夫特具备国产工业机器人整机稀缺性、国资资源和行业增长期权，但2025年收入下滑、亏损扩大、经营现金流为负，2026Q1扣非仍明显亏损，且盛普股份重大资产重组带来整合、商誉和负债压力；当前估值缺少安全边际，维持观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    9.0,
+    13.0
+  ],
+  "buy_zone": [
+    0.0,
+    10.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    25.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于10元，且最新半年报显示综合毛利率高于15%、扣非亏损继续收窄、经营现金流改善",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于9元，且盛普股份交易完成后未显著恶化资产负债率并能验证订单协同",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于18元但扣非仍亏、毛利率低于15%或并购整合进展低于预期",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入观察买入区，需要复核毛利率、扣非亏损和现金流是否同步改善"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "估值重新进入缺乏安全边际区间，需要复核是否有基本面超预期支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、扣非亏损、现金流和盛普交易进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和并购整合后的盈利兑现情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、全年现金流和盛普股份业绩承诺首年完成质量"
+    }
+  ]
+}
