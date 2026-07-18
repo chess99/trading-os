@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688693",
+  "market": "CN",
+  "ticker": "688693",
+  "name": "锴威特",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "锴威特具备功率半导体国产替代、产品线扩张和 SiC MOSFET 放量弹性，但截至 2025 年仍亏损且经营现金流为负，2026Q1 尚未证明盈利拐点。当前价格已预支较多成长和并购预期，适合观察，等待更低估值或更清晰的订单、毛利率、现金流改善信号。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    45,
+    62
+  ],
+  "buy_zone": [
+    30,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    80,
+    95
+  ],
+  "position_plan": [
+    {
+      "condition": "观察期，未见连续盈利或经营现金流改善前不建仓",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入 30-42 元且收入继续增长、毛利率稳定在 32% 左右、经营现金流亏损收窄",
+      "action": "start_small_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "SiC 或并购资产放量得到公告验证，且公司单季接近盈亏平衡",
+      "action": "increase_after_validation",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入买入观察区，需要复核收入、毛利率和现金流是否同步改善"
+    },
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "若基本面未恶化，安全边际明显改善，可重新评估小仓位买入"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "估值进入乐观情景区间，需要检查 SiC 放量、并购整合和盈利拐点是否兑现"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、毛利率、研发费用率和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否出现盈利拐点或库存应收压力"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和并购事项进展"
+    }
+  ]
+}
