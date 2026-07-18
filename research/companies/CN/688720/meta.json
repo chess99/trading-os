@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688720",
+  "market": "CN",
+  "ticker": "688720",
+  "name": "艾森股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "艾森股份处在国产半导体电子化学品的优质细分赛道，电镀液和光刻胶配套试剂具备客户验证壁垒，2026Q1 已出现利润弹性；但以 2026-07-17 收盘价估算，当前市值已显著透支未来两到三年的高增长兑现，安全边际不足，适合观察等待价格回落或业绩连续验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    42,
+    58
+  ],
+  "buy_zone": [
+    0,
+    38
+  ],
+  "sell_or_reduce_zone": [
+    75,
+    90
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价低于 38 元且 2026 中报收入同比增速不低于 30%、归母净利率不低于 12% 时建立观察仓",
+      "action": "initial_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若 2026 年报确认收入高增长、经营现金流改善且估值回到 45 倍以内的下一年预期市盈率",
+      "action": "add_on_confirmation",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "若股价高于 75 元且没有新增大客户、订单或利润率上修证据",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "进入有安全边际的买入观察区间，需要结合中报增长和现金流复核"
+    },
+    {
+      "type": "price_above",
+      "price": 75,
+      "reason": "高于基础公允价值较多，若缺少新增基本面证据则估值风险上升"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、利润率、经营现金流、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否延续 Q1 利润弹性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报及 2027 年经营指引，重估中期利润中枢"
+    }
+  ]
+}
