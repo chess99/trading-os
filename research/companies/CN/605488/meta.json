@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:605488",
+  "market": "CN",
+  "ticker": "605488",
+  "name": "福莱新材",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "福莱新材主业从广告喷墨材料扩展到标签、电子级功能材料、功能基膜和柔性传感器，具备基膜、胶水、涂布一体化与研发平台优势；但 2026Q1 收入高增而利润下滑，当前约 75 亿元市值已充分交易柔性传感器期权，缺少安全边际，适合观察等待盈利和订单验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    13,
+    18
+  ],
+  "buy_zone": [
+    10,
+    13
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    30
+  ],
+  "position_plan": [
+    {
+      "condition": "股价回落至 10-13 元且毛利率、应收账款、经营现金流未继续恶化时，仅建立观察仓。",
+      "action": "starter_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非净利率超过 4%、经营现金流转正且电子级功能材料或柔性传感器订单可核验时，重新评估加仓。",
+      "action": "reassess_for_add",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 24 元但没有大额可核验订单和利润率修复证据时，不新增仓位。",
+      "action": "avoid_chasing",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13,
+      "reason": "进入基准合理价值区间下沿和买入观察区，需要复核基本面是否未恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "进入减仓/回避区，除非柔性传感器或电子级材料出现可量化订单，否则估值过热。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看毛利率、扣非净利率、应收账款和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报及福新转债 2026-10-10 后赎回/转股策略变化。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报，确认再融资扩产、电子级材料和柔性传感器是否兑现利润贡献。"
+    }
+  ]
+}
