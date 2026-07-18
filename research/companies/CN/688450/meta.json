@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688450",
+  "market": "CN",
+  "ticker": "688450",
+  "name": "光格科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "光格科技具备分布式光纤传感和资产数字化运维技术壁垒，电网与海缆资本开支提供中长期需求，但公司仍处亏损、客户集中且现金流未稳定转正；当前估值相对收入规模偏高，适合观察而非追买。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    23,
+    30
+  ],
+  "buy_zone": [
+    18,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    36,
+    45
+  ],
+  "position_plan": [
+    {
+      "condition": "仅观察；若股价回落至22元以下，且最新定期报告显示收入同比增速不低于20%、经营现金流改善、应收账款未恶化，可建立跟踪仓。",
+      "action": "initial_watch_or_probe",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若连续两个半年度收入增长、销售费用率下降、经营现金流转正或接近转正，并确认电网/海缆订单持续兑现，可提高仓位。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若股价高于36元但未出现年度扭亏和现金流转正证据，或应收账款/收入继续上升，应降低或避免持仓。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入初始买入观察区，估值对亏损和项目制不确定性有一定折价。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入高安全边际区，可结合最新财报重新评估是否加大仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "进入乐观情景估值区，若缺乏扭亏和现金流转正证据，应考虑降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入增长、毛利率、销售费用率、应收账款和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认电网和海缆项目是否持续兑现。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断是否出现年度扭亏、现金流转正和费用率拐点。"
+    }
+  ]
+}
