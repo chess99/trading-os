@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688788",
+  "market": "CN",
+  "ticker": "688788",
+  "name": "科思科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "科思科技处在军工电子信息化、无人智能和自主可控芯片交汇处，技术和客户准入壁垒可能较高，但2025年及2026Q1仍大额亏损、研发投入和营运资金占用过重，当前估值已提前反映较强复苏预期；在订单、回款、毛利率和费用率验证前维持观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    20,
+    28
+  ],
+  "buy_zone": [
+    14,
+    20
+  ],
+  "sell_or_reduce_zone": [
+    40,
+    52
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于20元，且最近两个季度收入同比增长、经营现金流或回款指标改善后，建立研究仓",
+      "action": "initiate_research_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "收入连续两个季度超过1.5亿元、毛利率回到35%以上且经营现金流转正",
+      "action": "increase_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "2026全年亏损扩大、经营现金流继续大幅为负或核心订单不及预期",
+      "action": "exit_watchlist_or_reduce_to_zero",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入基准估值下沿并具备重新评估安全边际的条件"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "reason": "价格接近乐观情景下沿，若盈利和现金流尚未兑现应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、订单、毛利率、研发费用率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现收入连续性和回款改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认研发投入商业化与净资产消耗速度"
+    }
+  ]
+}
