@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920339",
+  "market": "CN",
+  "ticker": "920339",
+  "name": "恒太照明",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "净现金较厚但北美依赖、议价力弱且2026Q1转亏，当前估值透支越南产能与新品修复，应等待显著安全边际。",
+  "fair_value_range": [4.5, 6.5],
+  "buy_zone": [3.6, 4.5],
+  "sell_or_reduce_zone": [8.0, 10.0],
+  "position_plan": [
+    {
+      "condition": "股价处于3.60至4.50元且收入止跌、毛利率稳定、逾期应收未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非盈利恢复、正常化自由现金流改善且核心质量问题未扩散",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "基本面恶化或核心假设被证伪时，无论价格高低均不加仓并退出",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的收入、毛利率、应收逾期与现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及盈利修复是否连续"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入有安全边际的买入研究区间，仍须先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T23:18:38+08:00"
+}
