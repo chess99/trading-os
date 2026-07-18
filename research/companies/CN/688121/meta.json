@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:688121",
+  "market": "CN",
+  "ticker": "688121",
+  "name": "卓然股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "卓然股份所处石化专用设备和工程服务行业具备周期性需求，但公司当前核心矛盾是2025年年报和2026年一季报未披露、审计委员会否决相关议案、存在规范类及重大违法退市风险。账面低PB不能构成安全边际，需等待监管调查结论、补发经审计财报、退市风险解除和现金流质量可核验后再重新进入正常估值框架。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "decision": "不买",
+  "confidence": "high",
+  "fair_value_range": [
+    0.8,
+    2.4
+  ],
+  "buy_zone": [
+    0.0,
+    1.0
+  ],
+  "sell_or_reduce_zone": [
+    3.0,
+    6.0
+  ],
+  "position_plan": [
+    {
+      "condition": "在2025年年度报告、2026年第一季度报告未补发且退市/重大违法风险未解除前，不建立仓位。",
+      "action": "avoid_new_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若补发经审计财报、监管调查结论不触发重大违法退市、退市风险警示解除，且经营现金流和应收/合同资产质量可核验，再重新建模。",
+      "action": "reassess_only",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "进入事件风险深度折价区，需重新评估是否存在足够安全边际，但不自动买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "高于基准合理价值上沿，应优先控制已有风险暴露而非按低PB加仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-07",
+      "reason": "核查被实施退市风险警示后两个月内是否补发2025年年报和2026年一季报，以及是否触及规范类强制退市。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "核查2026年三季报披露状态、监管调查进展、现金流和应收/合同资产变化。"
+    }
+  ]
+}
