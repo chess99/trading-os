@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920368",
+  "market": "CN",
+  "ticker": "920368",
+  "name": "连城数控",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "技术与整线能力仍有价值，但光伏设备周期、隆基系关联客户集中和应收存货占用使现金质量偏弱，27.81元已预付较强修复预期，等待19元以下及基本面确认。",
+  "fair_value_range": [19, 25],
+  "buy_zone": [15, 19],
+  "sell_or_reduce_zone": [30, 36],
+  "position_plan": [
+    {
+      "condition": "股价处于15至19元且应收与存货继续去化、扣非利润改善、核心订单未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于19至25元且至少两个季度经营现金流和非关联客户订单改善",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "基本面恶化、重大客户违约或订单取消，无论价格高低均不加仓并重新评估退出",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-15",
+      "reason": "复查2026年半年报的扣非利润、毛利率、经营现金流、应收存货与订单验收"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 19,
+      "reason": "进入有一定安全边际的研究和分批买入区间，但须先确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "进入减仓或不应追高区间，需重新核对市场隐含的周期修复速度"
+    }
+  ],
+  "updated_at": "2026-07-18T16:03:41+08:00"
+}
