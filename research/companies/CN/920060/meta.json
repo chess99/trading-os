@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:920060",
+  "market": "CN",
+  "ticker": "920060",
+  "name": "万源通",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "万源通是处于产品升级和海外产能建设期的 PCB 公司，2025 年收入增长但毛利率与净利率承压，2026Q1 收入继续增长而利润显著下滑。当前约 29 倍 TTM PE 已反映部分高端化预期，安全边际不足；需等待毛利率、经营现金流、东台和泰国产能订单兑现后再考虑买入。",
+  "fair_value_range": [
+    18,
+    24
+  ],
+  "buy_zone": [
+    15,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    27,
+    32
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于 18 元，且 2026H1 毛利率不低于 19%、经营现金流转正或明显改善",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于 15 元，且高端多层板或光通信订单有明确放量证据",
+      "action": "提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于 27 元但 2026H1 利润和现金流未修复",
+      "action": "不买或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入合理价值下沿，开始具备观察仓安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "进入悲观情景估值区，若基本面未恶化可重新评估买入"
+    },
+    {
+      "type": "price_above",
+      "price": 27,
+      "reason": "超过基准价值区间上沿，需要验证高端化与利润修复是否足以支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报毛利率、经营现金流、短期借款、东台和泰国项目进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报利润修复与高端产品订单兑现"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核 2026 年年报、H 股发行进展和新产能回报"
+    }
+  ]
+}
