@@ -5,29 +5,74 @@
   "name": "西部超导",
   "currency": "CNY",
   "status": "active",
+  "updated_at": "2026-07-18",
+  "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "高质量材料平台（钛合金+超导+高温合金）但2025扣非净利已下滑、2026Q1利润断崖下跌74%、经营现金流转负、子公司拟分拆北交所带来权益稀释不确定，估值PE-TTM 51.7倍仍靠超导稀缺+核聚变期权叙事支撑；当前56.73元接近合理估值上沿，观察或跟踪仓，理想买入40-46元且需2026-08-27半年报验证修复。",
-  "fair_value_range": [43, 55],
-  "buy_zone": [40, 46],
-  "sell_or_reduce_zone": [70, 80],
+  "current_thesis": "西部超导是高端钛合金、超导材料/磁体、高性能高温合金三线平台型材料公司，长期壁垒来自型号认证、工艺数据库、研发团队和客户粘性。2025年收入52.26亿元、归母净利润8.39亿元，但2026Q1归母净利润同比下降74.21%、扣非下降66.92%、经营现金流转负，说明价格、产品结构和回款正在经历压力测试。48.50元附近处于42-58元合理价值区中部，缺少足够安全边际，等待2026H1/Q3验证毛利率、现金流和存货周转修复后再提高仓位。",
+  "fair_value_range": [42, 58],
+  "buy_zone": [35, 42],
+  "sell_or_reduce_zone": [68, 80],
   "position_plan": [
-    {"condition": "股价处于56-60元当前区间且2026H1尚未验证利润率修复", "max_weight": 0.015},
-    {"condition": "股价进入40-46元且2026-08-27半年报显示毛利率与回款修复、应收/存货增速放缓", "max_weight": 0.04},
-    {"condition": "股价35-40元且订单、回款、毛利率未继续恶化", "max_weight": 0.05},
-    {"condition": "2026H1或2026Q3扣非净利继续大幅下滑且应收存货继续扩张", "max_weight": 0.01}
-  ],
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": ["reports/2026-07-10-initial.md", "reports/2026-07-11-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-27", "reason": "复核2026年半年度报告，重点看毛利率、扣非净利、经营现金流、应收/存货"},
-    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报，验证Q1下滑是否阶段性"},
-    {"type": "date", "date": "2027-04-30", "reason": "复核2026年年度报告 + 北交所分拆进展 + 分红落地"}
+    {
+      "condition": "股价在42-58元且2026H1尚未验证利润率和现金流修复时，仅保留观察仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价跌至35-42元且半年报显示扣非净利率、主营毛利率、经营现金流至少两项改善，可分批买入",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于35元且未出现订单流失、存货跌价扩大或客户回款恶化，可提高至深度价值仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "2026H1或Q3扣非净利润继续大幅下滑且应收、存货继续扩张，仓位降至跟踪级",
+      "max_weight": 0.005
+    }
   ],
   "price_triggers": [
-    {"type": "price_below", "price": 46, "reason": "进入初始买入区间上沿，需结合2026半年报验证是否分批建仓"},
-    {"type": "price_below", "price": 40, "reason": "进入更深安全垫，复核订单、毛利率、现金流后可上调仓位"},
-    {"type": "price_above", "price": 70, "reason": "进入减仓观察区，若利润率未强修复则估值风险上升"},
-    {"type": "price_above", "price": 80, "reason": "高于合理价值区间较多，除非超导和高温合金订单超预期，否则降低仓位"}
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入买入区上沿，需要结合2026H1毛利率、扣非净利率和经营现金流验证是否分批建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "进入深度安全边际区，若基本面未继续恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 68,
+      "reason": "进入减仓观察区，若利润率和现金流未同步修复则估值风险上升"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "显著高于当前交叉估值上沿，除非超导和高温合金订单超预期兑现，否则应降低仓位"
+    }
   ],
-  "updated_at": "2026-07-11T05:55:00+08:00"
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-27",
+      "reason": "复核2026年半年报，重点看主营毛利率、扣非净利润、经营现金流、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证Q1利润下滑是否为阶段性扰动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年度报告、聚能磁体北交所进展、分红和高温合金放量质量"
+    }
+  ],
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md",
+    "reports/2026-07-11-initial.md",
+    "reports/2026-07-18-initial.md"
+  ]
 }
