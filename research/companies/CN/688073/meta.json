@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688073",
+  "market": "CN",
+  "ticker": "688073",
+  "name": "毕得医药",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "毕得医药是国内分子砌块和科研试剂的长尾SKU型公司，海外收入占比过半、2025年利润增长和毛利率改善证明业务质量较好，但2025年经营现金流显著弱于净利润，库存周转仍需验证；当前价格接近合理价值区间下沿但安全边际不足，适合观察，等待42元以下或现金流连续修复后再提高仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    46,
+    60
+  ],
+  "buy_zone": [
+    38,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    62,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于42元且2026半年报经营现金流/归母净利润不低于50%，首次建仓",
+      "action": "buy_initial",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "价格低于38元且收入、扣非净利、存货周转未明显恶化，加仓但控制集中度",
+      "action": "add",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于62元且经营现金流未同步改善，或存货增速连续两个报告期高于收入增速",
+      "action": "trim_or_exit",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入买入区上沿，若现金流未恶化则具备初始安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "进入深度安全边际区，市值对应2026E估值约20倍附近"
+    },
+    {
+      "type": "price_above",
+      "price": 62,
+      "reason": "超过基准合理价值区间，若现金流没有同步修复需降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入、扣非净利、经营现金流和存货周转"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断现金流修复是否具备连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重新评估估值中枢与仓位上限"
+    }
+  ]
+}
