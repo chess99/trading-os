@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688598",
+  "market": "CN",
+  "ticker": "688598",
+  "name": "金博股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "金博股份处于从光伏热场材料向交通碳陶制动与锂电热场材料转型的低谷期。2025年和2026Q1仍大幅亏损，资产减值和负毛利尚未完全出清；但交通和锂电业务已经形成收入规模，若毛利率稳定并带动现金流修复，公司具备转型期权。当前股价接近合理价值区间上沿，缺少安全边际，宜观察等待价格或基本面确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    24,
+    32
+  ],
+  "buy_zone": [
+    20,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    40,
+    48
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入20-24元，且最新定期报告未出现新的大额资产减值或现金流恶化",
+      "action": "建立观察性小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "综合毛利率转正、经营现金流明显改善、交通和锂电业务继续增长",
+      "action": "可在重新估值后提高仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于40元但净利润和现金流仍未兑现",
+      "action": "不追高，并考虑降低或清空观察仓位",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入合理价值区间下沿，若资产质量未继续恶化，可重新评估买入赔率"
+    },
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "接近悲观情景价值上沿，安全边际明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "reason": "进入乐观情景估值区间，需要盈利兑现支持，否则转型期权定价偏满"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-27",
+      "reason": "复核2026年半年报，重点看毛利率、经营现金流、资产减值和新业务收入"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断亏损收敛和现金流修复是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估转型兑现程度和资产质量"
+    }
+  ]
+}
