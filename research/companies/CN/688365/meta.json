@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688365",
+  "market": "CN",
+  "ticker": "688365",
+  "name": "光云科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "光云科技是 A 股稀缺电商 SaaS 标的，2025 年至 2026Q1 收入恢复增长、亏损收窄、经营现金流转正，但公司仍未实现扣非盈利，平台依赖和竞争压力较高；当前 2026-07-17 收盘价约 13.50 元对应估值已提前反映较多 AI SaaS 预期，等待盈利质量兑现或价格回落后再评估买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.5,
+    11.5
+  ],
+  "buy_zone": [
+    0,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    16,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 7.5 元，且最近两个季度收入同比增速不低于 15%、经营活动现金流净额为正，可建立观察仓。",
+      "action": "initiate_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于 6 元，且扣非亏损继续收窄、未出现平台政策或客户流失恶化，可提高但仍控制为小仓位。",
+      "action": "add_small",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 16 元且扣非利润未转正或 AI 模块收入未被验证，应避免追高或减持。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入初步安全边际区间，若基本面未恶化可重估买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 16,
+      "reason": "超过乐观估值上沿附近，若盈利拐点未兑现则风险收益不佳。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点检查收入增速、扣非亏损、经营现金流和 AI 产品商业化披露。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认经营拐点是否连续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新评估长期收入增速、利润率和估值中枢。"
+    }
+  ]
+}
