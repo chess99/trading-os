@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688272",
+  "market": "CN",
+  "ticker": "688272",
+  "name": "富吉瑞",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "富吉瑞具备红外热成像定制化、军民两用和国产替代属性，但2025年收入下滑、亏损扩大、经营现金流为负，2026Q1仍未验证订单和利润拐点；当前股价按亏损状态约5倍PB、约10倍PS，缺乏安全边际，适合观察等待收入、毛利率、回款同步修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    12,
+    18
+  ],
+  "buy_zone": [
+    10,
+    14
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    30
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入10-14元且未出现重大违规、退市风险或现金流断裂，同时最新季度收入同比转正或经营现金流明显改善",
+      "action": "建立观察性小仓位",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度收入同比增长、毛利率回到38%以上、经营现金流转正或应收账款明显下降",
+      "action": "可加至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于24元但没有重大订单、现金流和盈利修复证据",
+      "action": "不买入并减仓或退出已有仓位",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入买入观察区，需要复核最新订单、现金流和坏账情况"
+    },
+    {
+      "type": "price_below",
+      "price": 10,
+      "reason": "价格可能反映悲观情景，可在无流动性和治理恶化前提下重新评估深度价值"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "超过基准价值上沿，若没有基本面验证则风险收益恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "接近乐观情景估值，需要重大订单和利润拐点支撑，否则应规避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、现金流、应收账款和存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现连续改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和全年经营现金流是否兑现修复"
+    }
+  ]
+}
