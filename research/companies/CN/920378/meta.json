@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920378",
+  "market": "CN",
+  "ticker": "920378",
+  "name": "泰德股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "汽车精密轴承主业有客户认证和新能源增量，但毛利率、资本回报与自由现金流恶化，7.26元已透支高增长和机器人产业化预期。",
+  "fair_value_range": [3.6, 4.8],
+  "buy_zone": [2.8, 3.5],
+  "sell_or_reduce_zone": [5.5, 6.5],
+  "position_plan": [
+    {
+      "condition": "股价处于3.20至3.50元且最近一期毛利率不再下降、应收增速不高于收入增速",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于2.80至3.20元且连续两个季度经营现金流改善、TTM自由现金流接近转正、净债务不再增加",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "客户流失、毛利率跌破19%、债务继续快速增加或控制权不稳时不因低价补仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、扣非利润、经营现金流和净债务"
+    },
+    {
+      "type": "date",
+      "date": "2027-06-19",
+      "reason": "一致行动协议及表决权委托安排到期前复核控制权稳定性"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "reason": "进入可结合现金流和毛利率复核的买入观察区间"
+    },
+    {
+      "type": "price_above",
+      "price": 5.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T15:11:28+08:00"
+}

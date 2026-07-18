@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920374",
+  "market": "CN",
+  "ticker": "920374",
+  "name": "云里物里",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "资产负债表干净但收入增长以利润率和费用投入为代价，ROE低于资本成本且募投反复延期，14.39元缺乏安全边际。",
+  "fair_value_range": [6.5, 9.0],
+  "buy_zone": [5.0, 6.5],
+  "sell_or_reduce_zone": [11.5, 14.5],
+  "position_plan": [
+    {
+      "condition": "股价进入5.00至6.50元且毛利率止跌、经营现金流改善、募投未再延期",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于5.00元且重新验证核心商业价值、客户与库存假设均未受损",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "基本面恶化或仅因股价下跌而未完成假设复核",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "复查2026年中报后的利润率、现金流、库存与募投执行情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入有安全边际的买入观察区，但仍须重新验证基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T15:14:40+08:00"
+}

@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920375",
+  "market": "CN",
+  "ticker": "920375",
+  "name": "派诺科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "储能和海外推动收入增长，但低毛利扩张、低ROIC、应收占用及治理事件尚未被当前价格充分补偿，等待安全边际。",
+  "fair_value_range": [4.6, 5.8],
+  "buy_zone": [3.6, 4.3],
+  "sell_or_reduce_zone": [6.4, 7.5],
+  "position_plan": [
+    {
+      "condition": "股价处于3.60-4.30元且应收回款、储能毛利和治理事项未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.60元且连续财报证明经营现金流覆盖资本开支、ROIC改善",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "出现重大应收减值、募投再次失控或治理事项外溢至公司经营",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-01",
+      "reason": "复核2026年中报的毛利率、应收回款、存货和自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报及武汉PACK项目资本回报假设"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.3,
+      "reason": "进入有安全边际的基本面复核区，非机械买入"
+    },
+    {
+      "type": "price_above",
+      "price": 6.4,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T18:30:00+08:00"
+}
