@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:605588",
+  "market": "CN",
+  "ticker": "605588",
+  "name": "冠石科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "观察，不买入。冠石科技传统显示材料业务具备客户认证和交付壁垒，但盈利能力不足以支撑当前估值；45-28nm 半导体光掩膜版项目打开上行期权，同时带来大额折旧、融资摊薄和客户认证风险。当前价格已计入较多项目成功预期，安全边际不足，等待价格回落或订单、良率、毛利率被财报验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    28,
+    38
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    50,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 30 元且未出现光掩膜版项目重大负面，或公司披露光掩膜版进入批量供货并连续两个季度收入、毛利率、现金流改善",
+      "action": "建立观察性仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2027 年前后确认光掩膜版业务贡献正毛利和正经营现金流，客户验证由样品或小批量转为持续订单",
+      "action": "加仓至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 55 元但缺少订单、良率和利润率验证，或 2027 年仍无法证明光掩膜版产能利用率且公司继续亏损",
+      "action": "减仓或回避",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入基准公允价值下沿以下，若基本面未恶化则具备重新评估买入的价格安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "价格进入乐观情景区间，需要订单、良率和利润率验证，否则风险收益不佳"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点确认亏损原因、光掩膜版认证进展、折旧和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断光掩膜版产能爬坡是否开始改善利润和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和 2027 年一季报，决定是否仍保留半导体材料期权估值"
+    }
+  ]
+}
