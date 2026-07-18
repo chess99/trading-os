@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:605319",
+  "market": "CN",
+  "ticker": "605319",
+  "name": "无锡振华",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "无锡振华受益于上汽、特斯拉、理想、小米等客户结构优化和廊坊/上海临港产能释放，2025年收入、利润和现金流同步改善；当前约15倍TTM PE低于基准合理价值，但客户集中、整车年降和2026Q1扣非下滑使置信度维持中等。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    24.0,
+    30.0
+  ],
+  "buy_zone": [
+    18.5,
+    21.5
+  ],
+  "sell_or_reduce_zone": [
+    32.0,
+    37.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格处于21.5元以下且未出现客户订单或利润率恶化信号，可建立初始仓位。",
+      "action": "buy_initial",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "2026H1扣非归母净利润恢复正增长、廊坊项目收入兑现清晰且经营现金流保持健康。",
+      "action": "add",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价进入32元以上且盈利预测未同步上修，或连续两个季度利润率下滑。",
+      "action": "reduce",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.5,
+      "reason": "低于安全买入区下沿，若基本面未恶化，隐含较充分安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 32.0,
+      "reason": "高于基准合理价值上沿，除非2026-2027年盈利预测上修，否则风险收益比下降。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非利润、冲压零部件毛利率和廊坊项目收入兑现。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1扣非下滑是否为短期波动。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年订单展望，重新评估合理价值区间。"
+    }
+  ]
+}
