@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:920126",
+  "market": "CN",
+  "ticker": "920126",
+  "name": "永大股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "永大股份是资质和项目经验较强的压力容器细分供应商，2023-2025年净利润稳定在约1.1亿元以上，募投重型化工装备基地带来产能扩张选择权；但客户集中度高、项目验收节奏和现金流波动明显，当前约10元股价接近基准公允价值中枢，安全边际不足，宜观察等待价格折扣或半年报验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.8,
+    11.6
+  ],
+  "buy_zone": [
+    7.2,
+    8.4
+  ],
+  "sell_or_reduce_zone": [
+    12.5,
+    14.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.4元，且2026年半年报扣非净利润不低于预告中枢、经营现金流未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于8.0元，且新签订单、毛利率、回款均保持稳定",
+      "action": "加至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于12.5元但净利润仍停留在1.1-1.3亿元区间，或经营现金流连续弱于净利润",
+      "action": "减持或不参与",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.4,
+      "reason": "进入买入区间上沿，若基本面未恶化可重新评估小仓位买入"
+    },
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "进入深度安全边际区间，需核验订单和现金流后评估加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "reason": "高于基准公允价值区间，若无利润上修应考虑减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "公司预计披露2026年中报，需核验业绩预告兑现、订单、现金流和募投进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复盘收入确认节奏、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-06-15",
+      "reason": "上市满一年接近限售与筹码变化窗口，需评估流动性和估值压力"
+    }
+  ]
+}

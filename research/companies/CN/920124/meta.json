@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:920124",
+  "market": "CN",
+  "ticker": "920124",
+  "name": "南特科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "南特科技是空调压缩机核心精密零部件供应商，客户绑定和精密铸造/加工能力较强；2026-07-17收盘价12.27元已处于基准买入区间，但2025及2026Q1经营现金流为负、客户集中度高、2026Q1利润下滑，适合小仓位买入并等待现金流与订单修复验证。",
+  "fair_value_range": [
+    13.5,
+    16.5
+  ],
+  "buy_zone": [
+    10.8,
+    12.6
+  ],
+  "sell_or_reduce_zone": [
+    17.5,
+    21.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格不高于12.6元且无重大负面公告",
+      "action": "建立初始仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格不高于11.5元且订单份额未下滑",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格不高于10.8元且2026H1经营现金流明显改善",
+      "action": "提高至最高仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于17.5元且盈利预测未上修",
+      "action": "分批降低仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入更有吸引力的加仓区间，需复核订单和现金流是否恶化"
+    },
+    {
+      "type": "price_below",
+      "price": 10.8,
+      "reason": "进入深度安全边际区间，若基本面未变可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 17.5,
+      "reason": "达到减仓区间，若机器人业务未批量兑现则估值性价比下降"
+    },
+    {
+      "type": "price_above",
+      "price": 21.0,
+      "reason": "超过乐观估值下沿，应强制复核并考虑退出大部分仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和客户份额"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报订单恢复、现金流修复和机器人业务进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断扩产兑现、客户集中度和自由现金流质量"
+    }
+  ]
+}
