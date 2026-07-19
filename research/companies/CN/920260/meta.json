@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920260",
+  "market": "CN",
+  "ticker": "920260",
+  "name": "中寰股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "天然气采输控制设备具备窄护城河，但客户集中、2026Q1利润下滑、治理警示函及3亿元扩产削弱安全边际，7.71元不宜追价。",
+  "fair_value_range": [6.0, 7.2],
+  "buy_zone": [4.8, 5.8],
+  "sell_or_reduce_zone": [8.2, 9.5],
+  "position_plan": [
+    {
+      "condition": "股价处于5.3至5.8元且客户订单、回款质量和扩产预算未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于5.3元且重新验证2026年利润不低于3500万元、长期商业价值未受损",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "出现客户回款恶化、基地明显超预算或重复治理违规，不因价格下跌加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报的利润恢复、应收回款和基地投资进度"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、自由现金流、海外订单转化和资本回报"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入有一定安全边际的观察买入区间，仍需先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "reason": "进入减仓或不应追高区间，除非盈利与现金流显著上修"
+    }
+  ],
+  "updated_at": "2026-07-19T14:19:48+08:00"
+}

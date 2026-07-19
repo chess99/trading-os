@@ -1,0 +1,43 @@
+{
+  "symbol": "CN:920261",
+  "market": "CN",
+  "ticker": "920261",
+  "name": "一诺威",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "低毛利高周转主业具备份额和产品线基础，但扩产期自由现金流为负、增量资本回报尚待验证，12.92元缺乏安全边际。",
+  "fair_value_range": [10.0, 12.5],
+  "buy_zone": [8.5, 10.0],
+  "sell_or_reduce_zone": [14.0, 16.0],
+  "position_plan": [
+    {
+      "condition": "股价处于8.5-10.0元且毛利率、项目进度、应收和长期商业价值未恶化，先建不超过1%仓位；经后续财报验证现金流改善后总仓位不超过2%",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报后复核毛利率、经营现金流、应收账款和扩产项目进度"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入有一定安全边际的观察买入区间，须先验证核心假设未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "进入减仓或不应追高区间，除非自由现金流与ROIC已显著超预期"
+    }
+  ],
+  "updated_at": "2026-07-19T14:08:34+08:00"
+}

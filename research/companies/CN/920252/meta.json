@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920252",
+  "market": "CN",
+  "ticker": "920252",
+  "name": "天宏锂电",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "定制化锂电池模组业务低毛利、低资本回报且自由现金流为负，当前约198倍TTM PE已透支储能增长预期，6亿元储能项目还带来显著融资与担保风险。",
+  "fair_value_range": [4.5, 7.0],
+  "buy_zone": [3.2, 4.5],
+  "sell_or_reduce_zone": [9.5, 18.0],
+  "position_plan": [
+    {
+      "condition": "股价处于3.20-4.50元且最近十二个月经营现金流转正、应收和存货周转未恶化、储能项目担保边界可承受",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于3.20元且重新验证核心客户、长期商业价值和黄陵项目风险均未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于9.50元或经营现金流持续为负、核心客户流失、储能项目担保风险实质化",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报现金流、应收存货周转与储能业务进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报及黄陵储能项目融资、并网和担保条款"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入有条件的观察仓买入区间，需先复核现金流和项目风险"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-19T14:15:54+08:00"
+}
