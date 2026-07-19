@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:920161",
+  "market": "CN",
+  "ticker": "920161",
+  "name": "龙辰科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "龙辰科技是国内电容器薄膜细分龙头之一，受益于新能源车、光伏风电、工控和电网设备对薄膜电容器材料的长期需求；但当前股价约处合理价值区间中部，仍需等待半年报验证毛利率、现金流和募投产能爬坡，暂以观察为主。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    21,
+    29
+  ],
+  "buy_zone": [
+    16,
+    20
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入16-20元买入区，且2026年半年报确认收入增长、毛利率未明显恶化、应收账款和存货周转可控",
+      "action": "分批试探建仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个报告期显示高端产品占比提升、募投产能爬坡顺利且自由现金流改善",
+      "action": "考虑提高配置上限",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "毛利率连续两个报告期明显下滑、募投达产不及预期或客户订单下修",
+      "action": "停止加仓并退出观察仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入买入区，需要复核半年报、毛利率和现金流后评估建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "进入减持/重新评估区，若盈利预期未上修则安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、利润、毛利率、应收账款、存货和募投进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报并更新全年盈利中枢和估值区间"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重点检查自由现金流、产能利用率和客户结构"
+    }
+  ]
+}
