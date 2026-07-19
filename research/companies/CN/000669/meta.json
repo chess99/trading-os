@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:000669",
+  "market": "CN",
+  "ticker": "000669",
+  "name": "ST金鸿",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "ST金鸿当前是债务重整和保壳期权标的，主营燃气资产尚未证明可持续扣非盈利，持续经营和债务风险未解除，当前价格缺乏安全边际。",
+  "fair_value_range": [
+    0.8,
+    1.4
+  ],
+  "buy_zone": [
+    0.4,
+    0.8
+  ],
+  "sell_or_reduce_zone": [
+    2.2,
+    3.2
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值且ST、重整、扣非亏损、持续经营不确定性未解除",
+      "action": "不买，已有仓位减仓或仅保留观察",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入0.40-0.80元且重整执行、审计意见恢复标准无保留、扣非连续两个季度转正",
+      "action": "可建立第一笔试错仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于0.40元且无面值退市或破产清算失控迹象",
+      "action": "仅事件驱动小仓位观察",
+      "max_weight": 0.015
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.8,
+      "reason": "进入安全边际观察区，但仍需重整和扣非盈利条件确认"
+    },
+    {
+      "type": "price_above",
+      "price": 3.2,
+      "reason": "高于不应追高区间上沿，重整预期定价过满"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报、重整执行、扣非利润、债务和审计意见整改进展"
+    }
+  ],
+  "notes": [
+    "ST/重整特殊风险复核，当前评级为avoid。",
+    "2026-07-17收盘价3.55元，总市值约24.15亿元；2026-07-19为周日，采用最近交易日行情。",
+    "2025年归母净利润转正但扣非仍亏损，2026年上半年预告扣非仍亏损。",
+    "公司存在持续经营重大不确定性、债务逾期、诉讼、受限资产和重整不确定性。",
+    "在风险未解除前不因低价或ST摘帽预期买入。"
+  ]
+}
