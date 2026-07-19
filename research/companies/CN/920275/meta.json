@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920275",
+  "market": "CN",
+  "ticker": "920275",
+  "name": "驱动力",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "资产负债表稳健但高毛利产品退坡、主营现金回报接近零，6.13元已透支长期高速成长和利润率修复，当前应回避。",
+  "fair_value_range": [1.8, 2.6],
+  "buy_zone": [1.3, 1.7],
+  "sell_or_reduce_zone": [3.2, 6.5],
+  "position_plan": [
+    {
+      "condition": "当前价格或基本面尚未改善",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价处于1.30-1.70元且高毛利产品恢复、剔除投资收益后的营业利润和经营现金流转正，经重新研究确认",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价下跌但高毛利产品继续萎缩、金融资产被侵蚀或主营持续亏损",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的产品结构、毛利率、主营利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及高毛利产品恢复情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.7,
+      "reason": "进入条件性买入区，但必须先验证高毛利产品、主营利润和现金流未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 3.2,
+      "reason": "进入减仓或不应追高区间，估值高于公允价值上沿"
+    }
+  ],
+  "updated_at": "2026-07-19T12:10:53+08:00"
+}

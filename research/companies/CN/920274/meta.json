@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920274",
+  "market": "CN",
+  "ticker": "920274",
+  "name": "宏裕包材",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "利润率正在修复，但客户集中、新材料亏损和低资本回报尚未解决，当前价格已透支乐观预期。",
+  "fair_value_range": [8.0, 11.0],
+  "buy_zone": [6.5, 8.0],
+  "sell_or_reduce_zone": [13.0, 16.0],
+  "position_plan": [
+    {
+      "condition": "股价处于6.5-8.0元且最近两期扣非利润同比为正、综合毛利率不低于12%、新材料亏损收窄",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "安琪酵母采购明显下滑、新材料再次大额减值或经营现金流与利润连续两期背离时，不因价格下跌加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、经营现金流、关联客户与新材料减亏情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入有安全边际的研究性买入区间，仍需先验证基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-19T12:13:36+08:00"
+}
