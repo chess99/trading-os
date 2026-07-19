@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920270",
+  "market": "CN",
+  "ticker": "920270",
+  "name": "天铭科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "细分越野改装件企业具备技术与前装认证积累，但利润率、资本回报和自由现金流仍在下行验证期，当前估值已透支较多修复预期。",
+  "fair_value_range": [8.0, 10.0],
+  "buy_zone": [6.2, 7.4],
+  "sell_or_reduce_zone": [11.5, 13.5],
+  "position_plan": [
+    {
+      "condition": "股价处于6.2至7.4元买入区间，且毛利率、核心客户和滚动自由现金流未继续恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于6.2元，重新验证新工厂资本回报、境外订单和客户份额后核心假设仍成立",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "基本面恶化、投资逻辑被证伪或股价进入11.5至13.5元减仓区间且盈利预期未上调",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报的境内外收入、毛利率、现金流和新工厂产能利用率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报及核心客户、关税和新产品进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.4,
+      "reason": "进入有安全边际的买入区间，需先验证基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "进入减仓或不应追高区间，除非订单、利润率和自由现金流显著上调"
+    }
+  ],
+  "updated_at": "2026-07-14T23:30:00+08:00"
+}

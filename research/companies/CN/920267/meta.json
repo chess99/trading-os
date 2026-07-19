@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920267",
+  "market": "CN",
+  "ticker": "920267",
+  "name": "鑫汇科",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "大客户协同开发和智能控制技术积累不足以抵御价格战，收入与现金流恶化、债务及资本配置风险尚未解除，17.80元已透支远高于历史水平的盈利修复。",
+  "fair_value_range": [7.0, 9.5],
+  "buy_zone": [5.5, 7.0],
+  "sell_or_reduce_zone": [12.0, 17.8],
+  "position_plan": [
+    {
+      "condition": "股价处于5.50-7.00元且收入止跌、毛利率不低于15.5%、剔除解冻资金后经营现金流为正、净债务未上升",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于5.50元，重新验证无主要客户流失、无新增大额减值或诉讼且长期商业价值未受损",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告中的收入、毛利率、自由现金流、新基地产能利用率和净债务"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入可研究的买入区间，但必须重新验证基本面，不能机械加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "进入减仓或不应追高区间，估值超过当前可验证的盈利修复"
+    }
+  ],
+  "updated_at": "2026-07-19T12:50:55+08:00"
+}
