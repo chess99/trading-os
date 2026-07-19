@@ -1,0 +1,75 @@
+﻿{
+    "symbol":  "CN:300081",
+    "market":  "CN",
+    "ticker":  "300081",
+    "name":  "ST恒信",
+    "currency":  "CNY",
+    "status":  "active",
+    "updated_at":  "2026-07-19",
+    "current_rating":  "avoid",
+    "current_thesis":  "ST恒信仍处持续亏损、现金链偏紧和信披违规处罚后的治理折价阶段；当前价格显著高于按净资产折价、收入残值和修复情景交叉验证得到的合理价值，安全边际不足。",
+    "fair_value_range":  [
+                             0.8,
+                             1.4
+                         ],
+    "buy_zone":  [
+                     0.5,
+                     0.9
+                 ],
+    "sell_or_reduce_zone":  [
+                                2.0,
+                                3.2
+                            ],
+    "position_plan":  [
+                          {
+                              "condition":  "当前价格高于2.00元，或ST未撤销且经营现金流未连续转正",
+                              "action":  "avoid，不建仓",
+                              "max_weight":  0
+                          },
+                          {
+                              "condition":  "价格跌入0.50-0.90元，且无新增监管处罚/重大诉讼，2026年中报或三季报显示经营现金流改善",
+                              "action":  "仅列入观察仓，重新研究后再决定",
+                              "max_weight":  0.005
+                          },
+                          {
+                              "condition":  "撤销ST路径明确，连续两个季度经营现金流转正，全年亏损显著收窄",
+                              "action":  "可讨论事件驱动小仓位",
+                              "max_weight":  0.01
+                          }
+                      ],
+    "latest_report":  "reports/2026-07-19-initial.md",
+    "report_history":  [
+                           "reports/2026-07-19-initial.md"
+                       ],
+    "price_triggers":  [
+                           {
+                               "type":  "price_below",
+                               "price":  0.9,
+                               "reason":  "进入研究型买入观察区，但仍需复核ST撤销和现金流改善。"
+                           },
+                           {
+                               "type":  "price_above",
+                               "price":  3.2,
+                               "reason":  "明显高于合理价值区间和减持/回避上沿，确认继续回避。"
+                           }
+                       ],
+    "review_triggers":  [
+                            {
+                                "type":  "date",
+                                "date":  "2026-08-31",
+                                "reason":  "2026年中报披露后复核现金流、债务到期、减值和亏损收窄情况。"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2027-05-15",
+                                "reason":  "行政处罚决定满12个月后，复核公司是否申请并获准撤销其他风险警示。"
+                            }
+                        ],
+    "notes":  [
+                  "当前价格基准为2026-07-17收盘价3.19元，腾讯与新浪行情接口交叉核验。",
+                  "ST原因为2022年年报收入确认相关信息披露违法违规；公司公告称不触及重大违法强制退市。",
+                  "本轮未核验到正式重整、资产注入或保壳方案公告。",
+                  "评级为avoid，不代表做空建议；核心含义是不满足买方建仓的安全边际。"
+              ],
+    "rating":  "avoid"
+}
