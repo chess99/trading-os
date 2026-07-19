@@ -2,60 +2,94 @@
   "symbol": "CN:920273",
   "market": "CN",
   "ticker": "920273",
-  "name": "一致魔芋",
+  "name": "星图测控",
   "currency": "CNY",
   "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "星图测控是航天测控管理和航天数字仿真的稀缺标的，商业航天收入增长快、盈利能力强，但当前价格约46.40元对应约103.79亿元市值和较高远期估值；2026-07-14起军事航天部队采购资格暂停带来合规和订单折价，当前缺乏安全边际，等待28元以下或风险显著澄清。",
+  "rating": "watch",
   "current_rating": "watch",
-  "current_thesis": "公司具备魔芋粉技术与客户壁垒，但原料涨价使利润率和ROIC显著下滑，18.07元已计入较强修复预期，等待8.5至10.5元及毛利率止跌后再评估买入。",
-  "fair_value_range": [11.5, 14.5],
-  "buy_zone": [8.5, 10.5],
-  "sell_or_reduce_zone": [16.5, 19.0],
+  "fair_value_range": [
+    28,
+    36
+  ],
+  "buy_zone": [
+    22,
+    28
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    70
+  ],
   "position_plan": [
     {
-      "condition": "股价处于8.5至10.5元且毛利率止跌、剔除库存释放后的经营现金流仍为正",
+      "condition": "当前价格高于40元且军采资格暂停影响未澄清，不新增仓位",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至28至34元，且中报确认商业航天收入继续增长、现金流未恶化，可建立观察仓",
       "max_weight": 0.02
     },
     {
-      "condition": "股价低于8.5元且重新验证长期商业价值未受损、ROIC修复路径清晰",
+      "condition": "股价低于28元，且军采暂停未扩大、扣非净利和经营现金流改善，可分批买入",
       "max_weight": 0.03
     },
     {
-      "condition": "股价进入16.5至19.0元或核心利润率修复逻辑被证伪",
+      "condition": "股价低于22元，且核心订单和资质未受进一步损害，可作为强吸引力区间",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于55元或估值重新回到远期高倍且基本面未超预期，减仓或不参与",
       "max_weight": 0.01
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "不晚于此日期复查2026年中报、单季毛利率和剔除库存变动后的经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报及原料成本向售价传导情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "检查亲水胶体产业园一期是否按延期计划达到可使用状态"
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 10.5,
-      "reason": "进入有安全边际的买入观察区，但仍须验证毛利率和归一化现金流"
+      "price": 34,
+      "reason": "进入估值复核区，检查军采资格、商业航天订单和现金流后决定是否观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入安全边际买入区，若风险未扩大可开第一笔1%仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入强吸引力区，适合在基本面未破坏时提高至最高5%仓位"
     },
     {
       "type": "price_above",
-      "price": 16.5,
-      "reason": "进入减仓或不应追高区间，价格已超过公允价值上沿"
+      "price": 40,
+      "reason": "不追高区，新增资金停止买入"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "估值进入减仓观察区，除非订单和现金流显著超预期"
     }
   ],
-  "updated_at": "2026-07-19T12:11:53+08:00"
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "复查2026年中报，重点看商业航天收入、特种收入、扣非净利和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报和订单验收节奏，判断全年目标兑现概率"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复查军采资格暂停是否有解除、扩大或处罚期限信息"
+    }
+  ],
+  "notes": "公开资料显示星图测控官方证券代码为920116.BJ，920273公开行情对应一致魔芋；本文件按用户指定字段写CN:920273，但报告正文已标注代码核验差异。当前评级watch，今日不买，第一笔仓位0%。"
 }
