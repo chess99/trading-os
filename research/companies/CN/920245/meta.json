@@ -5,48 +5,77 @@
   "name": "威博液压",
   "currency": "CNY",
   "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "客户与新品方向真实，但低资本回报和利润波动无法支撑当前约54.5倍TTM PE，等待价格回到安全边际且现金回报改善。",
-  "fair_value_range": [6.5, 8.5],
-  "buy_zone": [5.0, 6.5],
-  "sell_or_reduce_zone": [10.5, 12.5],
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "威博液压客户质量较好、海外收入和高端应用有修复线索，但2025年主力动力单元毛利率降至12.34%、扣非ROE仅2.63%，2026-07-17收盘价12.34元对应约53.9倍TTM PE和82.3倍扣非PE，当前缺乏安全边际，等待价格回到7.5元以下或毛利率与扣非净利连续验证后再买。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    7.5,
+    10.5
+  ],
+  "buy_zone": [
+    0,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    11.0,
+    999
+  ],
   "position_plan": [
     {
-      "condition": "股价处于5.0至6.5元且基本面未恶化、应收周转停止恶化",
+      "condition": "股价高于11.0元或基本面未验证时不买",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入7.0-7.5元且毛利率、订单、现金流未恶化",
       "max_weight": 0.015
     },
     {
-      "condition": "连续两个季度收入增长不低于10%、主营毛利率不低于19%且年化ROIC接近或超过10%",
+      "condition": "股价低于6.2元且2026中报或三季报显示毛利率回到16%以上、经营现金流为正",
       "max_weight": 0.03
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、应收存货与经营现金流"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报并判断Q1利润修复是否持续"
+      "condition": "扣非ROE可见回到6%-8%、毛利率稳定17%以上、扣非净利TTM超过2500万元",
+      "max_weight": 0.05
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 6.5,
-      "reason": "进入有安全边际的买入区间上沿，需先复核基本面"
+      "price": 7.5,
+      "reason": "进入安全边际买入区上沿，复核中报、毛利率、订单和回款后可小仓试探"
+    },
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "reason": "进入强吸引力价，若基本面未恶化可提高到2.5%-3.0%仓位"
     },
     {
       "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓或不应追高区间"
+      "price": 11.0,
+      "reason": "高于合理区间且安全边际不足，不追高，已有仓位考虑减持"
     }
   ],
-  "updated_at": "2026-07-19T14:59:15+08:00"
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报毛利率、扣非净利、境外收入、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认Q1利润修复是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报和可转债募投进展，判断ROIC是否改善"
+    }
+  ],
+  "notes": "质量评级B-；估值评级watch；2026-07-17收盘价12.34元，总股本约6907.32万股，总市值约8.52亿元；合理价格区间7.5-10.5元，安全边际买入价7.5元以下，强吸引力价6.2元以下，不追高价11.0元以上；今天决策不买，第一笔仓位0，置信度中等偏低。"
 }
