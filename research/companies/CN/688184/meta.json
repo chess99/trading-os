@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:688184",
+  "market": "CN",
+  "ticker": "688184",
+  "name": "ST帕瓦",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "技术方向尚有价值，但资金占用、立案、保留意见和负自由现金流使当前约1.6倍PB缺乏安全边际。",
+  "fair_value_range": [5.0, 8.0],
+  "buy_zone": [3.5, 5.0],
+  "sell_or_reduce_zone": [9.5, 12.0],
+  "position_plan": [
+    {
+      "condition": "股价处于3.5至5.0元，且调查无重大违法退市结论、占用款出现可验证回收、连续两个季度扣非利润和经营现金流为正",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "任一治理或经营前提未满足，即使股价下跌也不建立或增加仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报、扣非利润、经营现金流和毛利率修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报审计意见、内控意见及资金占用追偿"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "仅在治理与现金流前提同时满足时进入观察性买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-19T12:00:00+08:00"
+}
