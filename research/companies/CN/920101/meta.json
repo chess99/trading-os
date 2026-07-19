@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:920101",
+  "market": "CN",
+  "ticker": "920101",
+  "name": "志高机械",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "志高机械具备高端钻机国产替代、核心部件自制和海外高毛利扩张逻辑，但2026Q1收入利润同比下滑、第一大客户占比高、经营现金流转负，当前估值已接近合理区间，适合观察等待更好安全边际或中报验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    15.0,
+    20.5
+  ],
+  "buy_zone": [
+    12.0,
+    14.0
+  ],
+  "sell_or_reduce_zone": [
+    23.0,
+    26.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入12.0-14.0元且无重大客户回款、担保逾期或治理风险新增披露时，建立观察仓。",
+      "action": "start_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026中报收入恢复正增长、经营现金流转正且应收账款增速低于收入增速时，可提高仓位。",
+      "action": "add_position",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于23.0元且未见利润增速或自由现金流改善支撑时，降低或不新增仓位。",
+      "action": "reduce_or_hold_off",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "reason": "进入买入区间上沿，需要复核最新订单、现金流和应收账款后考虑建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入深度安全边际区间，若基本面未恶化应优先复盘。"
+    },
+    {
+      "type": "price_above",
+      "price": 23.0,
+      "reason": "高于减仓区间下沿，若业绩未同步上修则风险收益比转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查收入修复、经营现金流、应收账款和募投进度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1下滑是否已经扭转。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和全年海外、高端钻机、融资租赁担保风险。"
+    }
+  ]
+}
