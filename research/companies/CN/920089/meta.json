@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:920089",
+  "market": "CN",
+  "ticker": "920089",
+  "name": "禾昌聚合",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "禾昌聚合是北交所改性塑料细分企业，2025年利润高增且估值低于A股可比公司，但经营现金流持续为负、应收票据和应收账款占用高、2026Q1收入下滑，当前价格仅接近合理价值下沿，安全边际不足，宜观察等待更低价格或现金流改善。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    10.0,
+    13.2
+  ],
+  "buy_zone": [
+    8.5,
+    9.2
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入8.5-9.2元且最新季度收入未继续恶化、经营现金流有改善迹象时建立观察仓",
+      "action": "buy_initial",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "后续两个季度收入恢复正增长且经营现金流转正，应收账款和票据占收入比例下降",
+      "action": "add",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于15.5元但现金流未改善，或出现新增大额坏账/客户流失",
+      "action": "reduce_or_exit",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.2,
+      "reason": "进入买入区上沿，需要复核最新订单、回款和股本口径后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入更有安全边际的首仓区，若基本面未恶化可考虑提高执行优先级"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "进入减持区下沿，若现金流质量仍弱，应降低估值回撤风险"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收账款和股本口径"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1下滑是否为短期波动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估长期盈利和现金流转换能力"
+    }
+  ]
+}
