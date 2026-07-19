@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:300020",
+  "market": "CN",
+  "ticker": "300020",
+  "name": "ST银江",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "ST银江当前核心矛盾是持续经营、监管立案、违规担保、短债现金链和资产可回收性，经营规模断崖式下滑且亏损延续；在担保清零、监管结案、审计意见改善和现金流转正前，不具备普通多头投资价值。",
+  "fair_value_range": [
+    0.3,
+    0.8
+  ],
+  "buy_zone": [
+    0.2,
+    0.4
+  ],
+  "sell_or_reduce_zone": [
+    1.2,
+    2.0
+  ],
+  "position_plan": [
+    {
+      "condition": "ST、监管立案、违规担保、持续经营重大不确定性未实质解除",
+      "action": "不买入，组合权重维持 0",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格低于 0.40 元且未新增退市风险，仅作为事件研究样本",
+      "action": "可建立观察仓，严格止损和事件复核",
+      "max_weight": 0.002
+    },
+    {
+      "condition": "违规担保清零、监管结案、审计意见改善、短债展期落地且连续两个季度经营现金流转正",
+      "action": "重新建模后再决定是否升级为可投仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.4,
+      "reason": "进入极端安全边际观察区，但仅限事件研究仓"
+    },
+    {
+      "type": "price_above",
+      "price": 1.2,
+      "reason": "若无治理、债务、担保、审计实质修复，应卖出或回避"
+    },
+    {
+      "type": "price_above",
+      "price": 2.0,
+      "reason": "价格显著高于可验证基本面价值，维持 avoid"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报、债务现金链、担保解除和监管进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报经营现金流、收入恢复和审计风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报审计意见、退市风险和持续经营判断"
+    }
+  ],
+  "notes": [
+    "本轮研究结论为 avoid；当前不适合作为普通多头资产配置。",
+    "估值以 ST 特殊风险、持续经营重大不确定性、短债压力、违规担保、监管立案和资产可回收性折价为核心。",
+    "2026-07-19 未能核验交易所历史收盘明细；基准价格采用新浪财经页面可见报价 3.03 元/股，置信度中等。",
+    "未找到截至 2026-07-19 已落地的司法重整、战投注入或债务重组方案；相关预期按未核验处理。"
+  ]
+}
