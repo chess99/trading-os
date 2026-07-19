@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:920118",
+  "market": "CN",
+  "ticker": "920118",
+  "name": "太湖远大",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "太湖远大是线缆用高分子材料小市值标的，高端线缆材料国产替代和产能扩张提供成长弹性，但2025年利润下滑、毛利率偏低、经营现金流为负，当前价格缺乏足够安全边际，先观察现金流和毛利率修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    14.0,
+    18.5
+  ],
+  "buy_zone": [
+    12.0,
+    15.0
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    26.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入12.0-15.0元且2026年半年报显示毛利率修复、经营现金流改善",
+      "action": "small_initial_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于18.5元但现金流仍为负或毛利率未改善",
+      "action": "wait",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "进入买入区上沿，若基本面未恶化可重新评估小仓位建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入高安全边际区，需要快速复核是否由基本面恶化导致"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "超过基准估值区间，需要复核高端产品放量和现金流兑现是否支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断利润修复是否可持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和全年现金流质量，决定是否上调或下调评级"
+    }
+  ]
+}
