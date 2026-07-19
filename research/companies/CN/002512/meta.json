@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:002512",
+  "market": "CN",
+  "ticker": "002512",
+  "name": "ST达华",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "ST风险、治理折价和高负债尚未出清，2026H1预告扣非仍亏损；当前价格明显高于0.70-1.20元合理价值区间，不具备买入安全边际。",
+  "fair_value_range": [
+    0.7,
+    1.2
+  ],
+  "buy_zone": [
+    0.5,
+    0.8
+  ],
+  "sell_or_reduce_zone": [
+    1.8,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格显著高于可验证合理价值，且扣非利润仍未转正",
+      "action": "不买入；已有仓位以退出或大幅降仓为主",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于0.80元，ST撤销路径清晰，扣非连续转正，经营现金流为正且无新增重大诉讼或担保恶化",
+      "action": "仅允许观察仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "2026-2027年扣非净利稳定达到8000万元以上，经营现金流连续为正，资产负债率降至70%以下，处罚与诉讼影响基本出清",
+      "action": "重新评估小仓位买入",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.8,
+      "reason": "进入可跟踪观察仓价格区，但仍需ST和扣非盈利条件配合"
+    },
+    {
+      "type": "price_above",
+      "price": 1.8,
+      "reason": "高于保守合理价值，建议卖出或降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式财务数据、扣非利润、现金流、诉讼和担保进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-25",
+      "reason": "行政处罚决定满12个月后复核撤销其他风险警示进展"
+    }
+  ],
+  "notes": [
+    "评级为avoid，当前3.54元附近价格明显高于0.70-1.20元合理价值区间。",
+    "ST原因来自2021-2023年年报重大遗漏及2023年年报虚假记载，公司公告称未触及重大违法强制退市。",
+    "2026H1预告归母盈利但扣非仍亏损，主业盈利质量尚未证明。",
+    "重点跟踪ST撤销、扣非转正、经营现金流、资产负债率、担保和诉讼。"
+  ]
+}

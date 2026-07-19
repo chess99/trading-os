@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:002485",
+  "market": "CN",
+  "ticker": "002485",
+  "name": "ST雪发",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司仍处ST风险警示状态，主业持续亏损且控股股东股份高比例质押/冻结，当前价格显著高于困境资产合理价值，维持回避。",
+  "fair_value_range": [
+    1.0,
+    1.8
+  ],
+  "buy_zone": [
+    0.8,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    2.5,
+    6.5
+  ],
+  "position_plan": [
+    {
+      "condition": "现价约5.63元且ST未撤销、2026H1仍预亏",
+      "action": "不买；已有仓位以风险控制为主",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价高于2.50元",
+      "action": "不加仓，反弹减持",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价低于1.20元，且ST撤销路径明确、控股股东股份冻结处置无失控后果",
+      "action": "仅允许事件驱动观察仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "连续两个季度扣非盈利、经营现金流转正、控制权风险落地",
+      "action": "重新研究后再决定是否进入小仓配置",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入理论可买区间，但仍需同时核验ST撤销和控制权风险"
+    },
+    {
+      "type": "price_above",
+      "price": 2.5,
+      "reason": "显著高于困境资产估值上沿，已有仓位应减持或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "公司预约披露2026年半年度报告，核验亏损、现金流和ST风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "跟踪2026年三季报是否出现扣非盈利和经营现金流连续改善"
+    }
+  ],
+  "notes": [
+    "当前评级为avoid，现价无安全边际。",
+    "ST初始实施公告未在本轮取得一手全文，按风险警示未解除处理并列为后续核验事项。",
+    "2025年财务报表和内控审计意见为标准无保留意见，但经营亏损、资产减值、担保诉讼和控制权风险仍需折价。",
+    "估值基于2026-07-19可获得公开资料，行情价格为最近交易日口径，非实时撮合。"
+  ]
+}
