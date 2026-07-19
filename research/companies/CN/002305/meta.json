@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:002305",
+  "market": "CN",
+  "ticker": "002305",
+  "name": "*ST南置",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "*ST南置完成重大资产出售后净资产转正，但2025年盈利主要来自非经常性收益，2026Q1轻资产业务规模仍小，撤销风险警示尚需最终确认；当前1.99元已计入较高摘帽和重组期权，风险收益不对称，结论为avoid/watch。",
+  "fair_value_range": [
+    0.85,
+    1.45
+  ],
+  "buy_zone": [
+    0.75,
+    1.0
+  ],
+  "sell_or_reduce_zone": [
+    1.6,
+    2.2
+  ],
+  "position_plan": [
+    {
+      "condition": "仍为*ST且撤销风险警示未获确认，或股价高于1.60元",
+      "action": "avoid，不买入",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于1.00元且撤销风险警示获批或持续经营风险显著解除",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于0.70元且无新增退市触发、现金链稳定、轻资产业务连续两个季度盈利",
+      "action": "高风险小仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "进入有安全边际观察区，复核撤销风险警示和现金链后再决策"
+    },
+    {
+      "type": "price_below",
+      "price": 0.7,
+      "reason": "进入强吸引力价格区，但仍需确认无新增退市风险"
+    },
+    {
+      "type": "price_above",
+      "price": 1.6,
+      "reason": "高于合理价值上沿附近，不追高或考虑减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、撤销风险警示进展、经营现金流和净资产安全垫"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "复核全年盈利可持续性、资产注入或重整安排、诉讼担保资金占用变化"
+    }
+  ],
+  "notes": [
+    "needs_review/ST特殊风险复核：当前结论为avoid/watch，不因低绝对股价买入。",
+    "2025年利润主要来自重大资产出售，扣非仍亏损，不能代表常态盈利。",
+    "2026Q1重组后收入体量较小，轻资产业务盈利中枢仍需至少两个季度验证。",
+    "撤销退市风险警示进展、持续经营、债务诉讼担保资金占用和资产减值是后续复核核心。"
+  ]
+}

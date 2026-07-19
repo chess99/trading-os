@@ -1,0 +1,73 @@
+{
+  "symbol": "CN:002360",
+  "market": "CN",
+  "ticker": "002360",
+  "name": "ST同德",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "ST同德处于预重整和债务逾期压力下，2025年财报保留意见、内控否定意见、PBAT项目大额减值和持续经营重大不确定性使普通股缺乏安全边际；当前价格主要反映重整期权，暂不值得买入。",
+  "fair_value_range": [
+    1.1,
+    2.4
+  ],
+  "buy_zone": [
+    0.6,
+    1.0
+  ],
+  "sell_or_reduce_zone": [
+    3.0,
+    5.6
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于3.00元或重整方案未披露普通股摊薄与债务清偿安排",
+      "action": "avoid_or_exit",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格进入0.60-1.00元且法院正式受理重整并披露投资人方案，确认无立即退市触发",
+      "action": "speculative_watch_position",
+      "max_weight": 0.0025
+    },
+    {
+      "condition": "重整计划获批且摊薄后权益价值高于市值，PBAT项目减值风险可量化",
+      "action": "increase_only_after_revaluation",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、现金余额、逾期债务、财务费用和PBAT项目减值风险。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-20",
+      "reason": "预重整延长期限届满，复核法院是否正式受理重整及投资人方案。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "进入仅适合事件驱动观察仓的可买区，需要同时满足重整方案可核验。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "高于合理价值上沿且缺少安全边际，应回避或降至零仓位。"
+    }
+  ],
+  "updated_at": "2026-07-19",
+  "notes": [
+    "当前评级为avoid，核心理由是债务逾期、预重整不确定、非标审计意见和内控否定意见叠加。",
+    "2026-07-19为周日，价格采用2026-07-17收盘价5.63元作为最新可核验交易日数据。",
+    "合理价值区间使用PB、EV/收入和重整后正常化盈利三种方法交叉验证。"
+  ]
+}
