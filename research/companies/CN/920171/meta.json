@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:920171",
+  "market": "CN",
+  "ticker": "920171",
+  "name": "志晟信息",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "志晟信息受益于智慧城市、数字政府和区域项目恢复，2025 年收入高增并扭亏，2026Q1 延续增长；但扣非利润仍弱、现金流和回款仍需验证，且 2026-07-17 附近估值显著高于可验证基本面，当前只适合观察，不具备充分安全边际。",
+  "fair_value_range": [
+    5.5,
+    9.0
+  ],
+  "buy_zone": [
+    0.0,
+    6.5
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价低于 6.5 元且最近两个报告期扣非归母净利润转正、经营现金流累计为正、应收账款未明显恶化时试探建仓。",
+      "action": "watch_to_small_buy",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若股价仍高于 12 元且扣非利润或经营现金流没有连续验证，继续观察或减仓回避。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入基准情景下有安全边际的观察买入区，需要同步复核利润和现金流。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "高于当前可验证基本面估值上沿，若业绩未兑现应考虑回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报的收入、扣非归母净利润、经营现金流和应收账款质量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否延续盈利修复并改善现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，确认全年扣非利润、订单质量和回款趋势。"
+    }
+  ]
+}
