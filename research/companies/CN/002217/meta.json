@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:002217",
+  "market": "CN",
+  "ticker": "002217",
+  "name": "ST合力泰",
+  "currency": "CNY",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "ST合力泰处于其他风险警示和历史财报虚假记载处罚后续阶段，主营修复与经营现金流尚未验证，现价约1.52元对应估值明显高于合理价值区间，当前不买。",
+  "fair_value_range": [
+    0.3,
+    0.55
+  ],
+  "buy_zone": [
+    0.2,
+    0.35
+  ],
+  "sell_or_reduce_zone": [
+    0.7,
+    1.52
+  ],
+  "position_plan": [
+    {
+      "condition": "ST风险未解除且处罚、潜在索赔和现金流仍未出清",
+      "action": "不买/回避",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格低于0.35元，且ST解除、处罚和索赔可量化、连续两个季度经营现金流为正",
+      "action": "试探性建仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格低于0.25元，且不存在面值退市压力，电子纸订单和毛利率同步改善",
+      "action": "事件型小仓位",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格高于0.70元或监管、诉讼、现金流任一项恶化",
+      "action": "不加仓并减持已有仓位",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报、ST风险进展、处罚正式决定、潜在索赔和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，确认收入、电子纸毛利率、客户集中度和现金链变化。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1,
+      "reason": "触发面值退市风险复核，不能机械视为低价买点。"
+    },
+    {
+      "type": "price_below",
+      "price": 0.35,
+      "reason": "进入理论买入区，但必须先确认ST、处罚、索赔和现金流风险解除。"
+    },
+    {
+      "type": "price_above",
+      "price": 0.7,
+      "reason": "超过不应追高价格，估值赔率不足。"
+    }
+  ],
+  "updated_at": "2026-07-19",
+  "notes": [
+    "公司名称按队列名称使用ST合力泰。",
+    "当前结论为不买/回避，低价不构成买入理由。",
+    "当前股价使用2026-07-17收盘口径，因2026-07-19为周日无A股交易。",
+    "后续重点跟踪ST风险解除、行政处罚正式决定、投资者索赔、经营现金流和电子纸毛利率。"
+  ]
+}
