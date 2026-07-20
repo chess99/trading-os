@@ -1,0 +1,61 @@
+{
+  "symbol": "CN:920765",
+  "market": "CN",
+  "ticker": "920765",
+  "name": "美之高",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "跨境电商转型带来单季修复但尚未证明可持续自由现金流，当前约2.9倍市净率已反映较强乐观预期，等待价格与基本面同时提供安全边际。",
+  "fair_value_range": [5.0, 7.2],
+  "buy_zone": [4.0, 5.3],
+  "sell_or_reduce_zone": [8.5, 10.5],
+  "position_plan": [
+    {
+      "condition": "股价不高于5.3元，且半年报经营现金流为正、销售费用率回落、存货周转未恶化",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价处于4.0至5.0元且连续两个报告期自由现金流为正、核心客户未流失",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "正常化年度自由现金流超过2500万元且前五客户占比降至75%以下",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的现金流、销售费用率、库存和自有品牌盈利"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报并判断一季度修复是否持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、客户集中度和正常化自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.3,
+      "reason": "进入有安全边际的复核区，需同时确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-15T12:00:00+08:00"
+}

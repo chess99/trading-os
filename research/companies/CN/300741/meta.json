@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300741",
+  "ticker": "300741",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "华宝股份",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "current_thesis": "国内烟用香精龙头之一，现金类资产厚、负债率低，2026Q1 利润修复；但主营恢复尚需连续验证，客户集中与控股股东治理折价要求更高安全边际。当前价格接近合理区间下半段，暂列观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.5,
+    15.5
+  ],
+  "buy_zone": [
+    0,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    16.5,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 10.5 元，且最新季度扣非归母净利同比为正、经营现金流未明显背离净利润",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入同比高于 10%，扣非净利率恢复至 15% 以上，且无新增重大治理风险",
+      "action": "提高至中等仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 16.5 元，或出现重大关联交易/现金低效消耗/主业恢复证伪",
+      "action": "减仓或退出",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入具备现金资产保护和 20% 以上折价的买入复盘区间"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "reason": "超过基准合理价值上沿并压缩安全边际，需要减仓或重新估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复盘 2026 年半年报，确认收入、扣非利润和现金流是否延续修复"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复盘 2026 年三季报，验证主营恢复是否具有连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复盘 2026 年年报和分红方案，重新评估治理折价与现金价值"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

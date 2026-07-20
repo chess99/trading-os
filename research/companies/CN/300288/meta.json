@@ -1,0 +1,93 @@
+{
+  "symbol": "CN:300288",
+  "market": "CN",
+  "ticker": "300288",
+  "name": "朗玛信息",
+  "company_name": "贵阳朗玛信息技术股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司拥有医疗服务、39健康网和39AI医生等资产，但2025年收入和利润大幅下滑，2026Q1转亏；当前价格主要反映AI医疗主题溢价，尚缺少连续订单、收入占比和扣非利润验证。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.5,
+    6.0
+  ],
+  "buy_zone": [
+    0,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    7.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于4.2元，且最近一期扣非亏损未扩大、经营现金流未显著恶化",
+      "action": "可建立观察仓",
+      "max_weight": 0.01,
+      "target_position": "0.5%-1.0%"
+    },
+    {
+      "condition": "股价位于4.2-6.0元，且医疗信息服务收入连续两个季度转正或AI医疗外部收入开始放量",
+      "action": "保留小仓或等待进一步验证",
+      "max_weight": 0.005,
+      "target_position": "0%-0.5%"
+    },
+    {
+      "condition": "股价高于7.5元，但AI医疗收入、扣非利润和经营现金流没有同步验证",
+      "action": "不买入，已有持仓应减仓或清仓",
+      "max_weight": 0,
+      "target_position": "0%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "unit": "CNY/share",
+      "action": "重新评估是否建立观察仓",
+      "reason": "价格进入安全边际区间，可复核资产质量和经营现金流后小仓试错"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "unit": "CNY/share",
+      "action": "若基本面未验证则卖出或降低仓位",
+      "reason": "价格高于合理价值上沿较多，若AI医疗和扣非利润未验证则主题溢价过高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后复核收入、扣非利润、现金流和AI医疗商业化进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后判断是否出现连续经营拐点"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后复核资产质量、减值风险和全年AI医疗收入规模"
+    }
+  ],
+  "key_tracking_metrics": [
+    "医疗信息服务收入增速",
+    "AI医疗收入及外部付费客户数量",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "医疗服务毛利率",
+    "商誉和长期股权投资减值"
+  ]
+}

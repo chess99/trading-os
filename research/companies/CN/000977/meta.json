@@ -1,0 +1,29 @@
+{
+  "symbol": "CN:000977",
+  "market": "CN",
+  "ticker": "000977",
+  "name": "浪潮信息",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "AI服务器龙头，受益算力需求爆发，但毛利率持续压缩、净利率极薄(1.5%)，当前43x PE已充分反映增长预期，安全边际不足，等待回调至合理区间",
+  "fair_value_range": [45000000000, 75000000000],
+  "buy_zone": [3500000000, 4500000000],
+  "sell_or_reduce_zone": [75000000000, 100000000000],
+  "position_plan": [
+    {"condition": "股价进入35-45元安全边际区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价低于35元，强吸引力区间", "max_weight": 0.05},
+    {"condition": "当前价格>65元，不应追高", "max_weight": 0}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年半年报披露后复查毛利率和AI服务器收入趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查现金流和增长趋势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 45, "reason": "进入合理偏低买入区间，可开始研究建仓"},
+    {"type": "price_above", "price": 75, "reason": "进入高估区间，需重新评估"}
+  ],
+  "updated_at": "2026-07-08T03:15:00+08:00"
+}

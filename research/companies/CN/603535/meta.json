@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603535",
+  "market": "CN",
+  "ticker": "603535",
+  "name": "嘉诚国际",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "嘉诚国际拥有南沙高标仓、海南自贸港节点和跨境电商/制造业客户嵌入的资产期权，当前约1.2倍PB不贵；但2025-2026年会计差错、警示函、评级下调和利润下滑使财务可信度与执行风险较高，需等待整改、应收回款和海南项目投产兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    5.8,
+    8.2
+  ],
+  "buy_zone": [
+    4.8,
+    5.4
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    10.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在价格低于5.4元且未新增监管处罚、2026H1经营现金流为正时建立观察仓",
+      "action": "initial_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若整改完成、应收账款继续下降且综合物流收入恢复增长，再考虑提高仓位",
+      "action": "add_on_confirmation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若再次出现重大会计差错、经营现金流转负或海南项目明显延期，退出观察",
+      "action": "exit",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.4,
+      "reason": "进入买入观察区，需要复核监管整改、应收账款和现金流后再决策"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "超过基准估值区间上沿，若无利润兑现应降低或避免仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、应收账款、经营现金流和海南项目进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-11-02",
+      "reason": "复核广东恒尚产业投资减持计划结束后的持股变化和股价影响"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、监管整改效果、评级变化和项目投产兑现"
+    }
+  ]
+}

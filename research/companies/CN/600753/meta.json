@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:600753",
+  "market": "CN",
+  "ticker": "600753",
+  "name": "ST海钦",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司已撤销财务类退市风险警示但仍处ST；2025年扭亏和2026Q1改善尚未转化为稳定自由现金流，H1预告又显示Q2盈利骤降，当前价格显著透支持续反转预期。",
+  "fair_value_range": [
+    2.2,
+    5.8
+  ],
+  "buy_zone": [
+    0,
+    3.2
+  ],
+  "sell_or_reduce_zone": [
+    6.8,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于6.8元，或公司仍处ST且扣非盈利与现金流连续性未经正式财报验证",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价处于2.2元至3.2元且最近两个季度扣非净利润为正、经营现金流未恶化、无新增退市或内控风险",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于2.2元且ST撤销路径清晰、净资产持续修复、现金流质量经正式财报验证",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式值，重点检查Q2单季利润、扣非净利润、经营现金流、存货和应收预付变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认盈利恢复连续性以及其他风险警示撤销路径"
+    },
+    {
+      "type": "date",
+      "date": "2027-05-01",
+      "reason": "行政处罚决定满12个月附近，跟踪是否满足申请撤销其他风险警示的条件"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入具备初步安全边际的观察区，复核基本面后决定是否建立不超过1%的研究仓"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "reason": "进入减仓或不应追高区间，盈利和现金流难以支撑该估值"
+    }
+  ],
+  "updated_at": "2026-07-20T21:59:44+08:00"
+}

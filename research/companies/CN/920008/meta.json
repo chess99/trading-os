@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:920008",
+  "market": "CN",
+  "ticker": "920008",
+  "name": "成电光信",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "成电光信是军工电子信息化小市值公司，网络总线和特种显示产品具备型号嵌入与国产化替代属性，但2025年利润处于低谷、2026Q1尚未兑现修复，当前价格已经反映部分复苏预期，需等待订单、毛利率和现金流验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16,
+    22
+  ],
+  "buy_zone": [
+    12,
+    15
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    35
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入12-15元且未出现订单、回款或治理恶化，可建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于12元且最近一期披露收入增长、利润转正、经营现金流改善，可提高至小仓位上限。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于18元但缺少连续两个季度业绩和现金流验证，维持零仓位或仅保留跟踪仓。",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "进入初始买入区，需要复核订单、毛利率和现金流是否未恶化。"
+    },
+    {
+      "type": "price_below",
+      "price": 12,
+      "reason": "进入深度安全边际区，可结合中报或三季报验证考虑提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "reason": "进入减持区，若利润未恢复到年化4000万元以上则风险收益转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看收入、毛利率、归母净利润、经营现金流和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认修复是否从订单传导到利润和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和新签订单，决定是否从观察上调或下调。"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "symbol": "CN:002613",
+  "market": "CN",
+  "ticker": "002613",
+  "name": "北玻股份",
+  "company_name": "洛阳北方玻璃技术股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "北玻股份具备玻璃深加工设备技术、海外渠道和现金资产垫，但2025年利润明显下滑、2026Q1扣非亏损，当前3.33元已接近乐观恢复情景，缺少安全边际；等待价格回到净资产附近或订单与利润率连续验证。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    2.1,
+    2.7
+  ],
+  "buy_zone": [
+    1.9,
+    2.3
+  ],
+  "sell_or_reduce_zone": [
+    3.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于3.00元且2026Q1扣非利润为负，基本面尚未验证恢复",
+      "action": "观察，不买入",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至2.30元以下，且没有出现应收存货恶化、扣非连续亏损或海外订单下滑",
+      "action": "建立首笔跟踪仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价跌至1.90元以下，现金与交易性金融资产仍稳定，合同负债和订单质量未恶化",
+      "action": "提高到安全边际仓位",
+      "target_position": "3%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "连续两个季度收入恢复、经营现金流转正、扣非净利率超过3%",
+      "action": "可在2.70元以下追加",
+      "target_position": "最高5%",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.7,
+      "currency": "CNY",
+      "reason": "进入估算合理价值区间上沿，值得重新核对基本面",
+      "action": "进入重点复核区，检查订单、现金流和扣非利润"
+    },
+    {
+      "type": "price_below",
+      "price": 2.3,
+      "currency": "CNY",
+      "reason": "低于安全边际买入价，风险收益开始改善",
+      "action": "若基本面未恶化，可考虑1%-2%首笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 1.9,
+      "currency": "CNY",
+      "reason": "接近资产折价悲观情景，提供更厚安全边际",
+      "action": "若资产质量稳定，可考虑3%-4%强吸引力仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "currency": "CNY",
+      "reason": "高于不应追高价，当前业绩无法充分支撑",
+      "action": "不追高，已有仓位降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报披露",
+      "reason": "半年报能验证Q1低谷是否修复",
+      "action": "复查收入、扣非净利润、经营现金流、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "公告达到披露标准的海外设备、真空镀膜或钙钛矿设备重大合同",
+      "reason": "重大订单会改变新设备业务兑现概率",
+      "action": "复查订单兑现概率和估值上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "连续两个季度扣非净利润为负或经营现金流未改善",
+      "reason": "连续盈利和现金流走弱会破坏观察逻辑",
+      "action": "复查并考虑降低评级"
+    },
+    {
+      "type": "date",
+      "date": "2026-07-31",
+      "condition": "股价跌破2.30元或升破3.00元",
+      "reason": "价格进入买入区或风险区时需要重算仓位",
+      "action": "复查价格与仓位关系"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "季度营业收入",
+      "target": "单季收入恢复至4亿元以上",
+      "source": "定期报告"
+    },
+    {
+      "metric": "扣非净利率",
+      "target": "连续两个季度超过3%",
+      "source": "定期报告"
+    },
+    {
+      "metric": "经营活动现金流量净额",
+      "target": "半年或全年转正且高于净利润",
+      "source": "现金流量表"
+    },
+    {
+      "metric": "应收账款加存货占TTM收入比例",
+      "target": "下降至80%以下",
+      "source": "资产负债表"
+    },
+    {
+      "metric": "合同负债",
+      "target": "维持4.5亿元以上并转化为收入",
+      "source": "资产负债表"
+    },
+    {
+      "metric": "出口收入占比",
+      "target": "保持45%以上且毛利率不下滑",
+      "source": "年度报告"
+    }
+  ]
+}

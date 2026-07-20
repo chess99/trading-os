@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:002207",
+  "market": "CN",
+  "ticker": "002207",
+  "name": "*ST准油",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "不买/回避：2025年扣后收入低于3亿元且亏损触发退市风险警示，2026Q1净资产极薄且经营现金流转负，2026H1预告仍亏损；当前约14.36亿元市值主要反映ST保壳/重整期权，缺乏可核验基本面安全边际。",
+  "fair_value_range": [
+    0.8,
+    2.2
+  ],
+  "buy_zone": [
+    0.5,
+    0.9
+  ],
+  "sell_or_reduce_zone": [
+    2.5,
+    5.48
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格约5.48元或高于2.50元，退市风险未解除",
+      "action": "不买；已有仓位降至0",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格进入0.80-2.20元但退市风险仍未解除",
+      "action": "仅观察，不新开仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格0.50-0.90元，撤销退市风险警示且连续两个季度经营现金流改善",
+      "action": "可建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格0.30-0.50元，净资产为正且无新增资金占用、违规担保、重大诉讼",
+      "action": "特殊情景小仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.9,
+      "reason": "进入有安全边际观察区，但仍需先复核退市风险是否解除"
+    },
+    {
+      "type": "price_above",
+      "price": 2.5,
+      "reason": "超过不应追高区间，基本面和资产价值难以支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、净资产、现金流、退市风险和监管问询"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报审计意见、扣后收入、净利润和是否满足撤销风险警示条件"
+    }
+  ],
+  "notes": [
+    "2026-07-19为周日，当前价格采用2026-07-17收盘价5.48元，市值约14.36亿元。",
+    "2025年扣除后营业收入低于3亿元且净利润为负，触发退市风险警示。",
+    "2026Q1归母权益约1171万元，净资产安全垫极薄。",
+    "2026H1业绩预告仍亏损，风险尚未解除。",
+    "结论为avoid；不因低价、ST反弹或壳预期买入。"
+  ]
+}

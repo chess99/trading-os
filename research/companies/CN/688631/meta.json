@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688631",
+  "market": "CN",
+  "ticker": "688631",
+  "name": "莱斯信息",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "莱斯信息是A股稀缺的民航空管、机场信息化、低空飞行服务和城市治理指挥系统标的，技术/资质/央企客户壁垒真实；但2025年收入和利润显著下滑、经营现金流转负、应收账款占比高，当前38.85元处于估值合理区间中部，缺少足够安全边际，需等待低空和空管订单兑现及现金流修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    34,
+    48
+  ],
+  "buy_zone": [
+    0,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    52,
+    80
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于32元，且2026年中报显示民航空管/低空订单未恶化、应收账款和经营现金流边际改善",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于28元，且全年经营现金流转正或应收账款净额/总资产明显下降",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于52元但利润仍停留在2025年低位、经营现金流继续为负或低空订单未兑现",
+      "action": "不追买并考虑减仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入具备初步安全边际的观察买入区"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "若基本面不恶化，赔率显著改善"
+    },
+    {
+      "type": "price_above",
+      "price": 52,
+      "reason": "估值透支低空和空管订单兑现，需要重新评估减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入结构、低空/空管订单、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认四季度项目前置指标和回款情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，验证低空经济商业化和全年现金流修复"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:601375",
+  "ticker": "601375",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "中原证券",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "区域国资券商在 2025-2026 年证券市场回暖中利润弹性显著，但长期 ROE 中枢仍偏低，当前估值已部分反映景气改善，适合等待回到接近账面价值附近再买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    3.4,
+    4.3
+  ],
+  "buy_zone": [
+    3.0,
+    3.4
+  ],
+  "sell_or_reduce_zone": [
+    4.8,
+    5.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 3.0-3.4 元买入区间，且 2026 年盈利预告未下修、未出现重大自营或信用风险事件。",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度 ROE 年化超过 6.5%，同时 PB 不高于 1.2 倍。",
+      "action": "可提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于 4.8 元且 ROE 未证明可持续超过 7%，或行业成交额明显回落。",
+      "action": "减持或不新增",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.4,
+      "reason": "进入买入区间上沿，需要复核行业成交、两融余额和公司最新盈利趋势。"
+    },
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "低于基准情景安全边际，需要确认是否存在未披露的风控或业绩恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "进入乐观情景估值区间，若 ROE 中枢未抬升应考虑降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-26",
+      "reason": "公司预约披露 2026 年半年报后复核业绩预告兑现、ROE、净资本与业务结构。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报披露窗口后评估利润修复是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "年报窗口复核全年 ROE、分红与 2027 年经营基准假设。"
+    }
+  ]
+}

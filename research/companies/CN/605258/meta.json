@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:605258",
+  "market": "CN",
+  "ticker": "605258",
+  "name": "协和电子",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "协和电子是中小批量汽车电子、高频通讯 PCB 供应商，资产负债表稳健、分红积极、客户认证形成一定壁垒；但 2026Q1 利润和现金流明显承压，当前 24.24 元附近缺乏足够安全边际，需等待毛利率修复或价格回落。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    18.0,
+    24.0
+  ],
+  "buy_zone": [
+    15.0,
+    18.0
+  ],
+  "sell_or_reduce_zone": [
+    30.0,
+    36.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于18元且最近一期毛利率不低于16%、经营现金流未恶化时，建立观察仓。",
+      "action": "buy_initial",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于15元且扣非净利恢复同比增长、应收账款和存货未继续恶化时，提高至核心小仓位。",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "毛利率低于16%且扣非净利继续同比下滑，暂停加仓并复核估值。",
+      "action": "hold_or_reduce",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "进入合理价值区间下半部，可结合毛利率和现金流复核是否建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "接近1.1倍PB，若基本面未恶化，安全边际明显改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 30.0,
+      "reason": "若利润修复未兑现，估值重新偏贵，应考虑减持或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点跟踪毛利率、扣非净利、经营现金流、应收账款和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否可持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红政策，更新长期盈利中枢和估值区间。"
+    }
+  ],
+  "valuation": {
+    "as_of": "2026-07-17",
+    "last_close": 24.24,
+    "shares_outstanding": 88000000,
+    "market_cap_cny": 2133120000,
+    "ttm_net_profit_cny": 59889400,
+    "ttm_pe": 35.6,
+    "pb": 1.75,
+    "decision": "观察",
+    "confidence": "中"
+  }
+}

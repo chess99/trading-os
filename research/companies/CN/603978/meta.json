@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603978",
+  "market": "CN",
+  "ticker": "603978",
+  "name": "深圳新星",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "深圳新星处于亏损后修复期，2026H1预盈确认电池铝箔坯料冷精轧占比提升和六氟磷酸锂价格修复正在改善报表，但资产负债率偏高、盈利仍受周期品价格和原材料扰动，18元附近安全边际不足，适合观察而非追买。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    14,
+    20
+  ],
+  "buy_zone": [
+    0,
+    14
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    30
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于14元，且2026H1正式半年报扣非净利润为正、经营现金流未明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于12元，且资产负债率未继续上升、应收账款和票据周转改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度单季扣非净利润超过3000万元且经营现金流为正",
+      "action": "重新评估是否从观察上调至买入",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入基准公允价值下沿以下，开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 12,
+      "reason": "若基本面未恶化，PB接近更有吸引力区间"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "若盈利未同步上修，估值提前透支修复预期"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、毛利率和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证Q2盈利收窄是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和新材料项目商业化进展"
+    }
+  ]
+}

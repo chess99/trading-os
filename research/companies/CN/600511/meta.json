@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600511",
+  "ticker": "600511",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "国药股份",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "国药股份拥有北京区域医院直销、全国麻精药品批发资质和国药体系协同等稀缺优势，现金流和资产负债表稳健；但行业总量增速低、毛利率受集采和医保控费压制，当前价格虽不贵但安全边际不足，适合观察，等待24.5元以下或现金流/利润增速改善后再买入。",
+  "fair_value_range": [
+    29,
+    35
+  ],
+  "buy_zone": [
+    22,
+    24.5
+  ],
+  "sell_or_reduce_zone": [
+    36,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于24.5元且最近一期经营现金流未出现持续性恶化，建立观察仓",
+      "action": "buy_initial",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于22元且应收账款增速不高于收入增速、麻精和北京直销业务保持稳健",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于36元且利润增速低于5%或估值超过合理上沿",
+      "action": "trim",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24.5,
+      "reason": "进入估算买入区上沿，静态PE约9倍且股息率接近3.3%，具备初步安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入深度买入区，若基本面未恶化，可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "接近乐观估值区，若利润增速没有同步提升应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查经营现金流、应收账款和麻精/北京直销增长"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断一季度现金流流出是否已修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和分红方案，更新估值和仓位上限"
+    }
+  ]
+}

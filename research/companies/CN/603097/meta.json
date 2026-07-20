@@ -1,0 +1,83 @@
+{
+  "symbol": "CN:603097",
+  "ticker": "603097",
+  "name": "江苏华辰",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "江苏华辰处在新能源并网、储能和数据中心供配电扩张赛道，但2025年增收不增利、2026年上半年预亏，显示毛利率、交付节奏、可转债利息和现金流仍需验证。当前估值已提前反映恢复预期，安全边际不足，维持观察。",
+  "rating": {
+    "current_rating": "watch",
+    "updated_at": "2026-07-17",
+    "rationale": "行业需求真实，但公司盈利质量和现金流尚未证明反转；当前价格高于保守公允价值区间。"
+  },
+  "fair_value_range": [
+    10.5,
+    13.2
+  ],
+  "buy_zone": [
+    8.5,
+    10.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于10.0元，且最近一期披露的箱式变电站毛利率不低于13%、经营活动现金流转正",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于8.5元，且2026下半年收入确认恢复、应收账款增速低于收入增速",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于16.0元但未披露利润和现金流改善证据",
+      "action": "不追高并减持已有仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入保守买入区间上沿，若经营指标同步改善则安全边际开始出现。"
+    },
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "低于悲观情景上沿，可重新评估逆向配置价值。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "超过乐观情景下沿，若没有海外、数据中心或毛利率改善验证，风险收益不再有吸引力。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入确认、毛利率、经营现金流、应收账款和可转债利息费用。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断订单延迟是否已转化为收入和现金回款。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，验证全年利润、现金流和新能源/海外业务增长质量。"
+    }
+  ]
+}

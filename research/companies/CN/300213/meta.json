@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:300213",
+  "market": "CN",
+  "ticker": "300213",
+  "name": "佳讯飞鸿",
+  "company_name": "北京佳讯飞鸿电气股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司是轨道交通和行业专网智慧指挥调度解决方案供应商，2026Q1收入与订单出现修复，但2025年亏损暴露出项目制收入波动、费用刚性和减值压力。当前5.81元接近合理价值区间上沿，缺少安全边际，等待订单转收入、扣非利润和经营现金流连续验证。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.6,
+    5.8
+  ],
+  "buy_zone": [
+    3.6,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于5.8元，且尚未看到连续两个季度扣非利润为正和经营现金流改善",
+      "action": "仅跟踪，不主动买入",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至4.2元以下，且在手订单仍高于10亿元、未出现新增重大减值或回款恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.33
+    },
+    {
+      "condition": "股价跌至3.6元以下，且订单、毛利率、经营现金流未恶化",
+      "action": "提高至中等仓位",
+      "max_weight": 0.5
+    },
+    {
+      "condition": "连续两个季度收入同比增长、扣非归母净利润为正、经营现金流不弱于利润",
+      "action": "允许提高到标准仓位上限",
+      "max_weight": 1.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "低于合理价值区间下沿并接近1.2倍左右账面净资产",
+      "action": "进入试买区，复核订单、应收、存货和现金流后可建观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "接近账面净资产附近，若基本面未恶化则安全边际明显",
+      "action": "进入强安全边际区，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "显著高于合理价值区间，除非盈利大幅超预期否则风险收益不佳",
+      "action": "进入减仓或不追区，除非盈利和订单显著超预期"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报预计披露后",
+      "reason": "验证2026Q1订单修复是否转化为收入和扣非利润",
+      "action": "复核收入、扣非归母净利润、经营现金流和在手订单转化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报预计披露后",
+      "reason": "验证全年收入恢复节奏和资产周转质量",
+      "action": "复核订单转收入、应收账款、存货和费用率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报预计披露后",
+      "reason": "用完整年度数据重估正常化利润和安全边际",
+      "action": "重估长期收入恢复、正常化利润和估值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "在手订单规模及同比增速",
+    "营业收入同比增速",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "应收账款、存货、合同资产周转",
+    "毛利率",
+    "研发费用率",
+    "轨交、国防、能源等重点行业订单结构"
+  ]
+}

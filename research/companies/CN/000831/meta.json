@@ -1,0 +1,112 @@
+{
+  "symbol": "CN:000831",
+  "market": "CN",
+  "ticker": "000831",
+  "name": "中国稀土",
+  "company_name": "中国稀土集团资源科技股份有限公司",
+  "status": "active",
+  "priority": "P2",
+  "analyst": "codex-subagent-000831",
+  "currency": "CNY",
+  "last_updated": "2026-07-07",
+  "updated_at": "2026-07-07",
+  "latest_report": "reports/2026-07-07-initial.md",
+  "research_type": "initial",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "current_rating": "watch",
+  "quality_rating": "B",
+  "valuation_rating": "expensive",
+  "current_price": 50.74,
+  "price_as_of": "2026-07-07",
+  "market_cap": 53846000000,
+  "fair_value_range": [
+    28,
+    38
+  ],
+  "buy_zone": [
+    24,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    999
+  ],
+  "buy_below": 32,
+  "strong_buy_below": 24,
+  "do_not_chase_above": 45,
+  "max_weight": 0.05,
+  "confidence": "medium_low",
+  "current_thesis": "中国稀土具备集团核心上市平台、中重稀土资源和政策稀缺性，但当前 50.74 元股价已高度预支稀土价格上行与资产整合预期，合理区间约 28-38 元，现阶段应以观察为主。",
+  "position_plan": [
+    {
+      "condition": "price > 45",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "38 <= price <= 45",
+      "action": "watch",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "32 <= price < 38",
+      "action": "wait_for_confirmation",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "24 <= price < 32",
+      "action": "accumulate",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price < 24",
+      "action": "strong_accumulate_if_thesis_intact",
+      "max_weight": 0.05
+    }
+  ],
+  "key_thesis": [
+    "中国稀土集团核心上市平台，具备中重稀土资源和集团整合期权。",
+    "现有利润体量较小，当前估值主要依赖稀土价格上行和资产注入预期。",
+    "低负债和资源稀缺性提供质量底座，但存货与周期波动风险较高。"
+  ],
+  "key_risks": [
+    "稀土价格回落导致盈利和存货减值恶化。",
+    "集团资产整合节奏、估值和同业竞争解决方案不及预期。",
+    "当前估值已明显预支乐观情景，安全边际不足。"
+  ],
+  "next_review_triggers": [
+    "2026Q2报告披露",
+    "稀土开采和冶炼分离总量指标分解披露",
+    "中国稀土集团资产整合或同业竞争解决公告",
+    "镨钕、镝、铽氧化物价格连续大幅波动"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报和Q2利润质量"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "action": "consider_initial_position",
+      "reason": "进入安全边际买入价，估值接近合理区间中枢"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "action": "consider_strong_accumulation_if_thesis_intact",
+      "reason": "进入强吸引力买入价，需复核基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "action": "avoid_or_reduce",
+      "reason": "高于不应追高价，市场已充分计入乐观情景"
+    }
+  ]
+}

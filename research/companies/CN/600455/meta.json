@@ -1,0 +1,72 @@
+{
+  "symbol": "CN:600455",
+  "ticker": "600455",
+  "name": "博通股份",
+  "exchange": "SSE",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "单一民办高教资产现金流稳定，城市学院招生和品牌具备一定质量，但独立学院转设、分类登记和二期建设资本开支带来不确定性；当前估值约31倍PE、4.1倍PB，安全边际不足，等待价格回落或转设落地验证。",
+  "fair_value_range": [
+    13.0,
+    17.0
+  ],
+  "buy_zone": [
+    10.0,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    28.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌至12.5元以下，且未出现转设、招生、财务披露或二期建设负面变化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价跌至10元附近，经营现金流稳定，2026年利润未低于基准预期",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "转设落地且归母净利润稳定超过6000万元、自由现金流恢复为正后再评估上调仓位",
+      "max_weight": 0.08
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入买入观察区，需要复核转设进展、招生和自由现金流"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "超过合理价值上沿较多，若无利润或转设超预期应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、二期建设支出、经营现金流和招生披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-11-15",
+      "reason": "复核2026年三季报及秋季招生、学费、转设事项进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，验证利润可持续性和自由现金流恢复情况"
+    }
+  ]
+}

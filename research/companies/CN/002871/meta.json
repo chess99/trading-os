@@ -1,0 +1,135 @@
+{
+  "symbol": "CN:002871",
+  "market": "CN",
+  "ticker": "002871",
+  "name": "伟隆股份",
+  "company_name": "青岛伟隆阀门股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "小型阀门出口制造商，2025年收入、利润和现金流表现较好，低杠杆、高现金、高分红是优点；但外销占比高、客户集中度不低、2026Q1收入增长但利润下滑，当前18元以上价格相对10.50-13.50元合理价值区间明显偏贵，暂不买入。",
+  "quality_rating": "中等偏上",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    10.5,
+    13.5
+  ],
+  "buy_zone": [
+    9.0,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于10.50元，且最新季度收入未连续下滑、经营现金流/净利润不低于0.8倍",
+      "action": "建立观察仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格处于9.00-10.00元，且海外订单、毛利率和现金流均未恶化",
+      "action": "分批加仓",
+      "target_position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于9.00元，且公司基本面未出现客户流失、毛利率塌陷或治理恶化",
+      "action": "提高到核心小仓位",
+      "target_position": "3%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于18.00元且利润中枢未上修至1.6亿元以上",
+      "action": "不新增或减仓",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "currency": "CNY",
+      "action": "进入可买区，复核最新财报后考虑1%-2%仓位",
+      "reason": "低于合理价值下沿，开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "currency": "CNY",
+      "action": "进入高安全边际区，若基本面未恶化可提高仓位",
+      "reason": "接近PB/分红法支持的保守估值区"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "currency": "CNY",
+      "action": "估值过高，避免新增并考虑降低观察仓",
+      "reason": "价格明显高于合理价值上沿，利润中枢未验证前赔率不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报披露后复核收入、归母净利润、毛利率、经营现金流和海外收入",
+      "reason": "2026Q1收入增长但利润下滑，需要用半年报确认利润质量是否修复"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "单季度归母净利润同比下滑超过20%或毛利率跌破35%",
+      "reason": "盈利能力是估值能否维持的关键变量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "前五大客户销售占比升至45%以上或第一大客户占比超过20%",
+      "reason": "客户集中度上升会放大订单波动和议价风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "经营现金流/归母净利润年度口径低于0.8倍",
+      "reason": "现金流恶化会削弱高分红和低风险假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "高分红政策变化、实控人或管理层减持、重大募投延期或大额关联交易",
+      "reason": "治理和资本配置变化会影响小市值公司的估值折价"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "海外收入增速",
+      "watch": "维持中个位数到低双位数增长；连续两个季度下滑需下修增长假设"
+    },
+    {
+      "metric": "毛利率",
+      "watch": "关注是否守住37%-40%区间，跌破35%触发复核"
+    },
+    {
+      "metric": "经营现金流/归母净利润",
+      "watch": "年度口径维持0.9倍以上为佳，低于0.8倍触发复核"
+    },
+    {
+      "metric": "前五大客户销售占比",
+      "watch": "2025年为36.17%，若升至45%以上风险上升"
+    },
+    {
+      "metric": "归母净利润中枢",
+      "watch": "能否从1.3亿元附近提升至1.6亿元以上，是估值上修关键"
+    }
+  ]
+}

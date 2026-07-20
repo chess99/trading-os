@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:002313",
+  "ticker": "002313",
+  "name": "日海智能",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "困境修复早期标的：2026Q1及H1预告显示扭亏，但归母权益极薄、杠杆较高、现金流质量仍需验证；当前估值已部分反映乐观修复，适合观察而非买入。",
+  "fair_value_range": [
+    5.5,
+    6.8
+  ],
+  "buy_zone": [
+    4.2,
+    5.0
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    10.0
+  ],
+  "position_plan": [
+    {
+      "condition": "2026半年报确认扣非盈利、经营现金流改善且股价低于5.0元",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于4.2元且无新增重大诉讼、债务或退市风险",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于8.5元但全年扣非利润和现金流未兑现",
+      "action": "不追高并减持已有仓位",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "进入初步买入观察区，需要结合半年报现金流和扣非利润复核"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入较有安全边际区间，但仍需排除新增财务风险"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "已接近乐观情景估值，若业绩未兑现应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报，重点检查扣非利润、经营现金流、应收账款和有息负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认扭亏是否持续以及归母权益是否修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，决定是否从观察升级或转为回避"
+    }
+  ]
+}

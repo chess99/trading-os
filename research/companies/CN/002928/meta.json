@@ -1,0 +1,116 @@
+{
+  "symbol": "CN:002928",
+  "market": "CN",
+  "ticker": "002928",
+  "name": "华夏航空",
+  "company_name": "华夏航空股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "支线航空稀缺标的，2025年盈利显著修复、2026Q1继续改善，但高杠杆、航油汇率暴露和地方合作/补贴可持续性限制估值上限。现价约6.13元接近合理区间下沿，但安全边际不足，等待5.20-5.80元买入区或2026H1现金流与扣非利润进一步验证。",
+  "quality_rating": "中等偏弱",
+  "valuation_rating": "合理偏低但安全边际不足",
+  "fair_value_range": [
+    6.6,
+    8.2
+  ],
+  "buy_zone": [
+    5.2,
+    5.8
+  ],
+  "sell_or_reduce_zone": [
+    8.2,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于5.80元，且2026H1扣非归母净利润和经营现金流未恶化",
+      "action": "建立1%-2%观察仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于5.20元，且客座率、飞机利用率、地方合作回款保持正常",
+      "action": "加仓至3%-4%",
+      "target_position": "3%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于8.20元，或油价/汇率/补贴变化导致盈利假设下修",
+      "action": "减仓或暂停买入",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "currency": "CNY",
+      "reason": "进入初步买入区，估值开始提供一定安全边际",
+      "action": "进入可买区，复核2026H1经营现金流和扣非利润后分批建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "currency": "CNY",
+      "reason": "较合理价值下沿折价超过20%，若基本面未恶化则安全边际明显",
+      "action": "若经营指标未恶化，可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "currency": "CNY",
+      "reason": "达到综合估值上沿，高杠杆航空股继续上行的风险补偿不足",
+      "action": "接近合理价值上沿，减仓或停止买入"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报是验证2025修复能否延续的首个关键节点",
+      "condition": "2026年半年报披露",
+      "action": "复核扣非归母净利润、经营现金流、租赁负债和政府补助/地方合作收入占比"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报覆盖暑运旺季和成本变化，更能判断全年利润质量",
+      "condition": "航油价格连续一个季度同比大幅上行或人民币兑美元明显贬值",
+      "action": "复核全年盈利假设和仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "资本开支和融资变化会显著改变高杠杆航空公司的安全边际",
+      "condition": "公司新增大规模飞机引进、再融资、重大债务安排或地方航线合作政策变化",
+      "action": "立即复核资产负债表风险和估值区间"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年度报告可完整核验经营质量、现金流和补贴/地方合作收入",
+      "condition": "客座率、飞机日利用小时或通程航班贡献连续两个季度低于预期",
+      "action": "下调评级或暂停买入"
+    }
+  ],
+  "key_tracking_metrics": [
+    "客座率",
+    "ASK和RPK增速",
+    "飞机日利用小时",
+    "单位客公里收益",
+    "航油成本占营业成本比例",
+    "经营现金流净额",
+    "租赁负债和一年内到期债务",
+    "政府补助及地方合作收入占利润比例",
+    "扣非归母净利润"
+  ]
+}

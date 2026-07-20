@@ -36,6 +36,11 @@ research/companies/{MARKET}/{TICKER}/
 - Write a new report for every new research run.
 - Write company research reports in Chinese unless the user explicitly asks for another language.
 - Update `meta.json` only after the report is complete.
+- After a company asset passes validation, update its matching coverage queue item
+  to `completed` and set `result_path` to `meta.json.latest_report`.
+- At the end of a parallel research batch, run `coverage reconcile --check`.
+  Review any drift before using `coverage reconcile --apply`; reconciliation is a
+  batch safety net, not a replacement for updating the queue in the worker.
 - Run validation and rebuild generated files before committing.
 - Record skipped companies with structured reasons instead of silently dropping them.
   Use `skip_*` sparingly for hard exclusions such as delisting or out-of-scope
@@ -52,4 +57,6 @@ python -m trading_os alerts build
 python -m trading_os alerts check --quotes <quote-snapshot.json>
 python -m trading_os coverage status
 python -m trading_os coverage validate
+python -m trading_os coverage reconcile --check
+python -m trading_os coverage reconcile --apply
 ```

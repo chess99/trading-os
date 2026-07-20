@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:688076",
+  "market": "CN",
+  "ticker": "688076",
+  "name": "ST诺泰",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "多肽业务具备技术和海外客户基础，但高资本开支、无订单产能及严重治理污点使当前价格缺乏安全边际。",
+  "fair_value_range": [21, 27],
+  "buy_zone": [16, 19],
+  "sell_or_reduce_zone": [32, 38],
+  "position_plan": [
+    {
+      "condition": "股价处于16至19元且无新增监管问题、毛利率不低于58%、经营现金流为正",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "治理或核心客户基本面恶化时不因价格下跌补仓",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后复核毛利率、自由现金流、库存及产能订单"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 19,
+      "reason": "进入有安全边际的研究性买入区间，仍须重新验证治理与基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-19T18:42:31+08:00"
+}

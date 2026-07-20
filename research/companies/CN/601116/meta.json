@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:601116",
+  "ticker": "601116",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "三江购物",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "hold",
+  "current_rating": "hold",
+  "current_thesis": "三江购物是宁波区域社区生鲜超市龙头，具备区域门店密度、会员、净现金和自有物业缓冲，但核心扣非利润仍承压，冷链集配中心和门店调改尚未证明可带来持续增长；当前价格接近合理价值中枢，适合观察而非追高买入。",
+  "fair_value_range": [
+    8.8,
+    11.2
+  ],
+  "buy_zone": [
+    0,
+    8
+  ],
+  "sell_or_reduce_zone": [
+    12,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.0元且最近一期扣非净利润未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于7.2元，或同店收入和毛利率连续两个季度改善且冷链项目出现外部客户和盈利证据",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于12.0元且扣非利润改善证据不足",
+      "action": "减持或不新增仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8,
+      "reason": "进入基准估值下沿附近，区域零售资产和净现金提供较好安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "进入悲观情景价值附近，可在扣非利润未恶化时提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 12,
+      "reason": "超过基准合理价值上沿，若无扣非利润和冷链项目兑现，风险收益转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点验证盒马店退出后的收入、毛利率、扣非利润和冷链项目进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，观察同店收入、线上销售、会员数量和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估冷链集配中心投产后的费用和盈利贡献"
+    }
+  ]
+}

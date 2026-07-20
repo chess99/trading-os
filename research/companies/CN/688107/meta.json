@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688107",
+  "market": "CN",
+  "ticker": "688107",
+  "name": "安路科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "安路科技是A股稀缺国产FPGA/FPSoC标的，2026年收入在工业、通信、数据中心和PHOENIX系列带动下出现明确恢复，但公司仍处亏损阶段，存货和现金流压力尚未解除；当前适合观察或小仓试错，需等待半年报毛利率、亏损收窄和存货周转验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    35,
+    46
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    48,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "价格不高于30元，且2026半年报收入不低于4.10亿元、毛利率未明显恶化、存货未继续失控",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格不高于27元，或2026Q3单季收入继续高增且亏损显著收窄",
+      "action": "加至核心跟踪仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于48元但尚未确认盈利拐点，或存货减值再次扩大",
+      "action": "减仓或退出",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入买入区间上沿，可结合半年报质量建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "接近熊市情景估值下沿，若基本面未恶化则安全边际明显"
+    },
+    {
+      "type": "price_above",
+      "price": 48,
+      "reason": "高于基准合理价值上沿，若盈利拐点未确认应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报收入、毛利率、亏损、存货和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认Q3收入延续性和亏损收窄速度"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报和定增落地情况，重估长期盈利模型"
+    }
+  ]
+}

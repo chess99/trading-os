@@ -1,0 +1,119 @@
+{
+  "symbol": "CN:000807",
+  "market": "CN",
+  "ticker": "000807",
+  "name": "云铝股份",
+  "company_name": "云南铝业股份有限公司",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "quality_rating": "A-",
+  "valuation_rating": "fair_to_slightly_undervalued",
+  "current_thesis": "绿电铝稀缺产能叠加低杠杆和高分红潜力，当前价格接近合理偏下但安全边际一般，适合小仓观察、20元以下提高仓位。",
+  "priority": "P2",
+  "analyst": "codex-subagent-000807",
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "last_researched": "2026-07-07",
+  "price_as_of": "2026-07-07",
+  "current_price": 22.39,
+  "market_cap_cny": 77648000000,
+  "fair_value_range": [
+    21.0,
+    27.0
+  ],
+  "reasonable_price_range": [
+    21.0,
+    27.0
+  ],
+  "buy_below": 20.0,
+  "buy_zone": [
+    17.0,
+    20.0
+  ],
+  "strong_buy_below": 17.0,
+  "do_not_chase_above": 27.5,
+  "sell_or_reduce_zone": [
+    27.5,
+    38.0
+  ],
+  "max_weight": 0.05,
+  "first_position_weight": 0.015,
+  "position_plan": [
+    {
+      "price_range": "<17.0",
+      "condition": "股价低于17元且云南电力、铝价价差、分红逻辑未破坏",
+      "action": "strong_buy",
+      "max_weight": 0.05
+    },
+    {
+      "price_range": "17.0-20.0",
+      "condition": "股价17-20元且铝价不低于2万元/吨、氧化铝无异常上行",
+      "action": "buy",
+      "max_weight": 0.04
+    },
+    {
+      "price_range": "20.0-23.0",
+      "condition": "股价20-23元，估值接近合理偏下，仅适合小仓或持有",
+      "action": "starter_or_hold",
+      "max_weight": 0.02
+    },
+    {
+      "price_range": ">27.5",
+      "condition": "股价高于27.5元且缺少铝价中枢继续上修证据",
+      "action": "do_not_chase_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "confidence": "medium_high",
+  "key_monitoring": [
+    "铝价",
+    "氧化铝价格",
+    "云南电力供需",
+    "经营现金流/净利润",
+    "应收账款",
+    "分红率"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报预计披露窗口后",
+      "reason": "2026Q1利润处于高景气，需要用中报验证价差和现金流是否延续",
+      "action": "复核Q2利润和现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报预计披露窗口后",
+      "reason": "三季报可验证全年盈利中枢、应收账款和分红能力假设",
+      "action": "复核全年利润中枢、分红能力和仓位上限"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20.0,
+      "direction": "below",
+      "reason": "对应中性利润约8-9倍PE，安全边际开始出现",
+      "action": "进入安全边际买入区，复核铝价、氧化铝和云南电力后考虑加仓"
+    },
+    {
+      "type": "price_below",
+      "price": 17.0,
+      "direction": "below",
+      "reason": "接近悲观周期利润估值，若基本面未破坏具备强吸引力",
+      "action": "进入强吸引力买入区，若基本面未破坏可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 27.5,
+      "direction": "above",
+      "reason": "超过SOTP和中性估值上沿，继续新增的容错率下降",
+      "action": "进入不应追高区，复核是否需要减仓或停止新增"
+    }
+  ],
+  "updated_at": "2026-07-07"
+}

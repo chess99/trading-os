@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603096",
+  "market": "CN",
+  "ticker": "603096",
+  "currency": "CNY",
+  "name": "新经典",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "新经典拥有较强版权库、编辑能力和低负债资产负债表，但2025年至2026Q1收入利润仍在下滑，当前估值已包含一定修复预期，需等待收入企稳或价格跌入安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.5,
+    16.5
+  ],
+  "buy_zone": [
+    8.0,
+    11.0
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于11元且2026H1收入降幅收窄、经营现金流为正、海外业务亏损未扩大",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于9元且净现金和版权资产质量未恶化、无重大治理风险",
+      "action": "提高至核心小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于18元且TTM归母净利润未恢复至1.1亿元以上",
+      "action": "不买入或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入安全边际买入区间，需要重新评估收入企稳和资产负债表质量"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "超过乐观情景下沿，若利润未明显修复则估值吸引力不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复盘2026年半年报，重点核验国内图书收入、销售费用率和海外业务减亏"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复盘2026年三季报，确认收入利润是否真正企稳"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复盘2026年年报和分红政策，重估长期盈利中枢"
+    }
+  ]
+}

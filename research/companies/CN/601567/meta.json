@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:601567",
+  "ticker": "601567",
+  "name": "三星电气",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "公司处于电网投资和海外智能配用电需求的中长期顺风中，订单积压较厚，但2025年至2026H1利润率和现金流承压，当前更适合观察利润率修复而非追高买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16.0,
+    20.0
+  ],
+  "buy_zone": [
+    11.5,
+    13.5
+  ],
+  "sell_or_reduce_zone": [
+    20.0,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于13.5元且2026半年报未执行订单维持在140亿元以上、经营现金流未明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于11.5元且智能配用电毛利率企稳、海外订单未坍塌",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于20元但2026H1或2026Q3毛利率仍未修复",
+      "action": "降低或不新增仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.5,
+      "reason": "进入初始买入区间，需要复核半年报订单、毛利率和现金流后可建立小仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入深度安全边际区间，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "reason": "接近公允价值上沿，需要确认利润修复是否足以支撑继续持有"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报的毛利率、境外收入、订单和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报是否出现利润率和现金流修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报并重估正常化盈利能力"
+    }
+  ]
+}

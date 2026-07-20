@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:300964",
+  "market": "CN",
+  "ticker": "300964",
+  "currency": "CNY",
+  "name": "本川智能",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "本川智能是小体量、高弹性的定制化PCB公司，2026年收入和利润恢复明显，但当前市值已接近牛市情景兑现价，安全边际不足；等待半年报验证利润质量和经营现金流后再评估买点。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    28,
+    42
+  ],
+  "buy_zone": [
+    20,
+    28
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "当前约61元附近不买入，等待2026半年报确认利润与经营现金流质量。",
+      "action": "watch",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于28元，且2026半年报经营现金流较一季度明显改善、毛利率不恶化。",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于22元，且连续两个报告期扣非净利润增长与经营现金流同步改善。",
+      "action": "add_position",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入合理价值区间下沿，若现金流同步改善可重新评估小仓位买入。"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入有安全边际的买入区，需要复核半年报或三季报质量。"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "reason": "超过牛市情景估值上沿，若没有全年利润上修应回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证收入增速、毛利率、扣非利润和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断上半年高增长是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估全年利润中枢和现金流质量。"
+    }
+  ]
+}

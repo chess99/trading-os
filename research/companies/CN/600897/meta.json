@@ -1,0 +1,83 @@
+{
+  "symbol": "CN:600897",
+  "ticker": "600897",
+  "name": "厦门空港",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是高质量区域机场运营资产，2025年业绩和业务量创高，但2026年底高崎机场关闭、翔安机场运营权未定，静态低估值不足以补偿主业边界重画风险，需等待运营权或关联收购质量进一步明朗。",
+  "fair_value_range": [
+    13.5,
+    17.0
+  ],
+  "buy_zone": [
+    10.5,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    18.5,
+    21.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价进入买入区间，或翔安机场运营权/等价长期委托明确进入上市公司且条款对少数股东公平时建立观察仓。",
+      "action": "initiate_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若2026年半年报现金流修复、旺季客流恢复正增长、兆翔科技收购后订单持续性得到公告或财报核验，可小幅加仓。",
+      "action": "add_selectively",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若股价高于减仓区间且翔安机场运营安排仍未明确，或公告显示核心机场运营权不进入上市公司，应退出或维持零仓位。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入有安全边际的买入区间，可结合翔安机场运营权和月度客流重新评估观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.5,
+      "reason": "估值已反映较乐观情景，若运营权仍未明确则风险收益不佳。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、7月运输生产简报和兆翔科技收购进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季度报告、暑运后客流表现和翔安机场转场安排。"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "复核翔安机场投用前后的运营权、委托管理或资产注入正式安排。"
+    }
+  ],
+  "key_monitoring_metrics": [
+    "月度旅客吞吐量同比",
+    "国际及地区旅客吞吐量",
+    "货邮吞吐量",
+    "经营活动现金流净额",
+    "翔安机场运营权公告",
+    "兆翔科技收购进展与关联收入占比"
+  ],
+  "confidence": "medium"
+}

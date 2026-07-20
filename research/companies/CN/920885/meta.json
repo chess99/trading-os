@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920885",
+  "market": "CN",
+  "ticker": "920885",
+  "name": "XD星辰科",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "军工高毛利与风电放量具备成长性，但客户集中、现金流波动和低资本回报不足以支撑当前约63倍PE，等待价格与基本面同时提供安全边际。",
+  "fair_value_range": [4.8, 7.2],
+  "buy_zone": [3.8, 4.8],
+  "sell_or_reduce_zone": [9.5, 13.5],
+  "position_plan": [
+    {
+      "condition": "股价处于3.8至4.8元且第一大客户份额稳定、经营现金流转正、应收增速不高于收入增速",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个报告期扣非净利率恢复至10%以上、滚动自由现金流转正且新风电客户进入批量供货",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "客户流失、毛利率持续低于30%或应收和存货显著恶化时，无论价格高低均不加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的风电客户、毛利率、应收与经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及新风电客户量产进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入潜在买入区间上沿，须先复核基本面而非机械买入"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T08:25:34+08:00"
+}

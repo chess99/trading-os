@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920491",
+  "market": "CN",
+  "ticker": "920491",
+  "name": "奥迪威",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司具备超声波与压电传感一体化能力且资产负债表稳健，但2026Q1业绩转弱、扩产资本需求高，29.60元已透支乐观预期。",
+  "fair_value_range": [17, 22],
+  "buy_zone": [13, 16],
+  "sell_or_reduce_zone": [27, 33],
+  "position_plan": [
+    {
+      "condition": "股价处于13-16元且收入与毛利率未继续恶化、扩产预算可控",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于13元且重新验证核心客户、长期商业价值和现金流假设未受损",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入、毛利率和经营现金流改善且新基地订单覆盖明确",
+      "max_weight": 0.025
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入恢复、毛利率、现金流及扩产进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "进入有安全边际的买入区间，但必须先复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 27,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-17T12:00:00+08:00"
+}

@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:603095",
+  "ticker": "603095",
+  "name": "越剑智能",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "越剑智能主业高度依赖加弹机与化纤纺织设备周期，2025年和2026Q1收入利润继续下行，2026H1预告仍弱；智能验布机具备期权价值但当前收入贡献很小。当前价格已接近乐观情景，缺少安全边际，维持观察。",
+  "fair_value_range": [7.5, 9.5],
+  "buy_zone": [6.2, 7.5],
+  "sell_or_reduce_zone": [12.0, 15.0],
+  "position_plan": [
+    {
+      "condition": "股价低于7.5元，且2026H1或2026Q3确认收入降幅收窄、加弹机毛利率不低于13%、经营现金流改善",
+      "action": "watch_to_small_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于8.5元，且2026年归母净利润恢复至8000万元以上、经营现金流转正、智能验布机收入进入千万元级并可核验",
+      "action": "add_only_after_recovery_confirmed",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于12元但智能验布机没有实质放量，或2026年归母净利润低于5500万元，或毛利率跌破12%",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入基准安全边际区间，可结合半年报和三季报验证是否具备试仓条件"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "价格接近乐观情景，若缺少智能验布机批量订单和利润兑现，应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-22",
+      "reason": "预计半年报窗口，核验业绩预告落地、毛利率、经营现金流与智能验布机收入"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报披露窗口，判断下游设备周期是否出现订单和现金流拐点"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露窗口，复核全年盈利中枢、分红、金融资产质量和智能装备商业化进展"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "symbol": "CN:002507",
+  "market": "CN",
+  "ticker": "002507",
+  "name": "涪陵榨菜",
+  "company_name": "重庆市涪陵榨菜集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "高现金、低负债、品牌和渠道壁垒清楚的佐餐食品现金牛，但榨菜大单品进入低速成熟期；11.02元附近估值不贵，尚未达到足够安全边际，等待10.80元以下或2026中报验证利润恢复。",
+  "quality_rating": "A-",
+  "valuation_rating": "B",
+  "fair_value_range": [
+    12.0,
+    14.5
+  ],
+  "buy_zone": [
+    9.5,
+    10.8
+  ],
+  "sell_or_reduce_zone": [
+    14.5,
+    18.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "price": "<=9.50",
+      "condition": "股价低于或等于9.50元，且无食品安全事故、渠道库存恶化或毛利率破位。",
+      "action": "强吸引力买入",
+      "position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "price": "9.50-10.80",
+      "condition": "股价位于9.50-10.80元，且2026收入仍保持正增长、扣非净利没有连续两季明显下滑。",
+      "action": "有安全边际买入",
+      "position": "1%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "price": "10.80-12.00",
+      "condition": "股价位于10.80-12.00元，等待2026中报验证收入增长能否转化为扣非利润增长。",
+      "action": "观察/小仓验证",
+      "position": "0%-1%，今日首笔仓位0%",
+      "max_weight": 0.01
+    },
+    {
+      "price": "12.00-14.50",
+      "condition": "股价位于12.00-14.50元，估值基本合理，除非新品和渠道第二曲线被数据验证，否则不加仓。",
+      "action": "持有不加仓",
+      "position": "0%-既有仓位",
+      "max_weight": 0.0
+    },
+    {
+      "price": ">14.50",
+      "condition": "股价高于14.50元，接近基准/乐观估值上沿。",
+      "action": "不追高/减仓",
+      "position": "降至核心仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.8,
+      "direction": "below",
+      "action": "启动1%以内观察仓",
+      "reason": "进入有安全边际买入价"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "direction": "below",
+      "action": "提高至3%-5%仓位上限",
+      "reason": "进入强吸引力买入价"
+    },
+    {
+      "type": "price_above",
+      "price": 14.5,
+      "direction": "above",
+      "action": "不追高，既有仓位可减至核心仓",
+      "reason": "接近基准/乐观估值上沿"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026半年报披露",
+      "focus": "复查收入、扣非净利和毛利率",
+      "reason": "验证Q1增收能否转化为利润增长"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "新品、餐饮、大客户、新渠道收入连续性被验证或证伪",
+      "focus": "判断第二增长曲线是否成立",
+      "reason": "公司合理估值上修需要新品和渠道增量支撑"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "出口收入保持双位数增长或增速明显放缓",
+      "focus": "评估出口是否能向1亿元规模靠近",
+      "reason": "出口占比低但增速较高，是潜在小型增量"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "condition": "披露分红、理财、绿色智能化生产基地项目资本开支或产能利用率变化",
+      "focus": "评估现金使用效率和ROE",
+      "reason": "高现金资产的资本配置决定估值折价程度"
+    },
+    {
+      "type": "date",
+      "date": "2026-07-31",
+      "condition": "股价跌破10.80元或涨破14.50元",
+      "focus": "更新买入或减仓判断",
+      "reason": "价格进入买入区或减仓区需要更新仓位动作"
+    }
+  ],
+  "key_tracking_metrics": [
+    "收入同比增速",
+    "扣非归母净利润同比增速",
+    "榨菜收入增速",
+    "榨菜毛利率",
+    "经销收入占比与渠道库存",
+    "其他产品收入及毛利率",
+    "出口收入",
+    "销售费用率",
+    "ROE",
+    "分红现金支出"
+  ]
+}

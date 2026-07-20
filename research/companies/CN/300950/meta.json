@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:300950",
+  "ticker": "300950",
+  "market": "CN",
+  "name": "德固特",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "current_thesis": "德固特是小而专的高温节能环保装备商，海外高毛利、工艺定制能力和资质认证构成壁垒，但 2026Q1 利润大幅下滑，当前价格缺少足够安全边际，适合观察等待订单与利润恢复验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    14.0,
+    18.0
+  ],
+  "buy_zone": [
+    10.5,
+    12.5
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    25.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 12.5 元，且最新一期合同负债不继续明显下滑、海外毛利率维持在 45% 以上、应收账款未恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026 年中报或三季报显示归母净利润恢复增长，新签订单同比增长超过 10%，海外订单占比保持 45% 以上",
+      "action": "提高至小仓位持有",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于 22 元但 TTM 归母净利润低于 1.0 亿元，或合同负债、毛利率、回款任一项明显恶化",
+      "action": "减仓或退出观察仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入初始买入区间上沿，需要复核订单、毛利率和回款后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "接近具备明显安全边际的估值区间，若基本面未恶化可提高研究优先级"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "超过基准合理价值上沿，若利润没有同步恢复应考虑降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看利润修复、合同负债、海外毛利率和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断 Q1 利润下滑是一次性扰动还是趋势恶化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报及 2027 年一季报，重估长期增长和合理价值区间"
+    }
+  ],
+  "valuation": {
+    "as_of": "2026-07-15",
+    "last_price": 15.72,
+    "market_cap_cny_billion": 2.415,
+    "base_case_fair_value_per_share": [
+      14.0,
+      18.0
+    ],
+    "method_summary": "相对估值、简化 DCF 和情景 PE 交叉验证。"
+  },
+  "confidence": "中"
+}

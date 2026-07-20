@@ -1,0 +1,67 @@
+{
+  "symbol": "CN:000929",
+  "ticker": "000929",
+  "name": "兰州黄河",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "兰州黄河撤销退市风险警示后生存风险下降，但主业仍亏损、现金流未稳、收入恢复高度依赖渠道扩张和费用投放；2026-07-13 股价对应约4.2倍2025年PS和约4.2倍PB，已经隐含较乐观转型预期，缺乏安全边际。",
+  "fair_value_range": [
+    3.8,
+    5.4
+  ],
+  "buy_zone": [
+    3.0,
+    4.0
+  ],
+  "sell_or_reduce_zone": [
+    6.5,
+    7.5
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价低于4.0元且连续两个季度收入增长、亏损收窄、经营现金流改善时，允许建立研究型观察仓。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若股价高于6.5元且未证明经营现金流转正，不建立仓位并回避追高。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入买入研究区，重新评估收入质量和现金流改善是否支持小仓位观察。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "高于乐观估值区间，若基本面未同步兑现应保持回避或减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入结构、销售费用率、现金流和亏损收窄幅度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认转型增长是否具备持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，判断是否形成主业扭亏路径。"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301229",
+  "ticker": "301229",
+  "name": "纽泰格",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是汽车悬架、动力系统及铝制精密零部件小型制造商，受益于汽车轻量化和国产供应链，但2025年增收不增利、2026Q1转亏，募投项目延期，当前需要等待盈利修复或股价回落后再考虑买入。",
+  "fair_value_range": [
+    8.5,
+    11.0
+  ],
+  "buy_zone": [
+    7.5,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    13.5,
+    15.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于9.0元，且未出现新的重大财务恶化，2026年后续季度经营现金流仍为正",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "毛利率、净利率、经营现金流连续两个季度环比改善，高精密铝制零部件项目有明确订单或量产进展",
+      "action": "add_on_confirmation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于13.5元但利润率未改善，或2026年继续亏损且存货/应收恶化",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入基准公允价值下沿附近，风险收益比改善，可复核是否建立观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "超过当前基本面可支持的估值区间，若无利润修复证据应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查亏损是否收窄、毛利率和经营现金流是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年盈利修复能见度和存货/应收风险。"
+    },
+    {
+      "type": "date",
+      "date": "2027-06-30",
+      "reason": "检查高精密汽车铝制零部件生产线延期后的可使用状态和订单爬坡。"
+    }
+  ]
+}

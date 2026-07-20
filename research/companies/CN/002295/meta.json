@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:002295",
+  "ticker": "002295",
+  "name": "精艺股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "低毛利铜加工资产，2026Q1收入增长但利润率和现金流尚未证明修复；当前估值未充分反映2025年亏损、理财逾期、担保余额较高和控股股东质押风险，等待更低价格或连续季度改善。",
+  "fair_value_range": [
+    4.8,
+    6.2
+  ],
+  "buy_zone": [
+    0,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    7.5,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价低于4.5元且最近两个季度扣非利润为正、经营现金流转正、应收账款增速低于收入增速时，允许建立观察仓。",
+      "action": "watchlist_entry",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若股价高于7.5元且主营毛利率仍低于2.5%或经营现金流继续为负，不买入并降低跟踪优先级。",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入估算合理价值下沿，需要复核现金流、应收账款、担保和理财逾期进展。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "显著高于基准估值区间，若基本面未同步改善应维持不买或降低跟踪优先级。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、扣非利润、经营现金流、应收账款和担保余额。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入增长是否转化为现金流和利润质量改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及新会计师审计意见，确认理财逾期、税务事项和担保风险是否收敛。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 8.36,
+    "reference_price_date": "2026-07-14",
+    "shares_outstanding_million": 250.616,
+    "market_cap_cny_billion": 2.095,
+    "pb_2026q1": 1.61,
+    "ps_2025": 0.45,
+    "revenue_2025_cny_billion": 4.653,
+    "net_profit_2025_cny_million": -52.066,
+    "net_profit_2026q1_cny_million": 7.205,
+    "operating_cash_flow_2025_cny_million": -92.295,
+    "operating_cash_flow_2026q1_cny_million": -140.139
+  }
+}

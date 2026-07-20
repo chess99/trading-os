@@ -1,0 +1,72 @@
+{
+  "symbol": "CN:603118",
+  "ticker": "603118",
+  "name": "共进股份",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "网通 ODM 主业已从亏损修复，但毛利率和 ROE 仍低；当前股价已反映数据中心交换机乐观预期，缺少订单、数通毛利率和现金流验证前只适合观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "低",
+  "fair_value_range": [
+    8.5,
+    11.0
+  ],
+  "buy_zone": [
+    0.0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    13.0,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 8.5 元，且 2026 中报未显示收入、毛利率或经营现金流恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "数通业务收入和毛利率连续两个季度改善，经营现金流同步转正",
+      "action": "重新评估是否提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于 13 元且缺少 400G/800G 或数据中心订单兑现证据",
+      "action": "不追高或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入基础估值下沿，可复核中报后考虑观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "高于基础合理价值区间，若无业绩兑现应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点检查数通业务、毛利率、现金流和唐山工控治理变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断主题预期是否转化为利润和现金流"
+    }
+  ]
+}

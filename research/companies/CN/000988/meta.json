@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:000988",
+  "market": "CN",
+  "ticker": "000988",
+  "name": "华工科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "AI光模块驱动高增长，但当前PE~104x已反映较多乐观预期，安全边际不足。等待回调至100元以下分批建仓更合理。",
+  "fair_value_range": [96, 130],
+  "buy_zone": [85, 100],
+  "sell_or_reduce_zone": [130, 160],
+  "position_plan": [
+    {"condition": "股价低于100元，AI光模块需求持续强劲", "max_weight": 0.02},
+    {"condition": "股价低于85元，基本面无恶化", "max_weight": 0.04},
+    {"condition": "股价低于70元，基本面无恶化", "max_weight": 0.07}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年半年报披露后复查——关键看光模块收入增长和毛利率变化"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 100, "reason": "进入可观察的合理偏低区间"},
+    {"type": "price_below", "price": 85, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 130, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T22:00:00+08:00"
+}

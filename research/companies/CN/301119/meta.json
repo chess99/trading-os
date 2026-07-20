@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301119",
+  "market": "CN",
+  "ticker": "301119",
+  "currency": "CNY",
+  "name": "正强股份",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司是汽车十字轴万向节、节叉、十字轴和转向轴细分零部件企业，客户资质、现金流和净现金资产质量较好，节叉与新能源转向相关新品提供增长线索；但当前估值已反映较多成长预期，2026Q1利润下滑显示财务收益与毛利率压力，暂列观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    17,
+    23
+  ],
+  "buy_zone": [
+    14,
+    17
+  ],
+  "sell_or_reduce_zone": [
+    26,
+    30
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入14-17元且最近两个季度收入保持增长、毛利率不低于29%、经营现金流未明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价处于17-23元且没有利润上修证据",
+      "action": "仅跟踪，不新增仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于26元且2026年净利润无法上修至1.35亿元以上",
+      "action": "回避或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 17,
+      "reason": "进入合理价值区间下沿，需要复核基本面后评估是否建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入绝对估值和净现金安全边际更有吸引力的位置"
+    },
+    {
+      "type": "price_above",
+      "price": 26,
+      "reason": "超过基准合理价值区间上沿，需要确认是否有利润上修支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、泰国基地进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润下滑是否收敛以及新品放量证据"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估全年盈利质量和估值区间"
+    }
+  ]
+}

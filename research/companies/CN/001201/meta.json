@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:001201",
+  "ticker": "001201",
+  "name": "东瑞股份",
+  "company_name": "东瑞食品集团股份有限公司",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "industry": "生猪养殖",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司具备供港澳活大猪配额、广东区位和自繁自养一体化优势，但 2026Q1 猪价低迷、减值和杠杆压力仍未解除；当前约 1.0x P/B 反映部分困境，尚未给出足够安全边际，需等待更低价格或猪价/减值拐点。",
+  "current_rating": "watch",
+  "rating": {
+    "current_rating": "watch",
+    "rating_date": "2026-07-13",
+    "rationale": "合理价值约 12.5-15.5 元，当前价格接近价值下沿但安全边际不足；9.5-10.8 元才适合小仓位分批观察。"
+  },
+  "fair_value_range": [
+    12.5,
+    15.5
+  ],
+  "buy_zone": [
+    9.5,
+    10.8
+  ],
+  "sell_or_reduce_zone": [
+    16.5,
+    18.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 9.5-10.8 元且未出现重大疫病、债务恶化或供港澳配额丧失",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "商品猪均价连续三个月高于 12.5 元/公斤且季度资产减值明显下降",
+      "action": "可将观察仓提高至中性小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价进入 16.5 元以上且利润尚未兑现强复苏",
+      "action": "分批减仓或退出",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.8,
+      "reason": "进入买入区上沿，可结合猪价和减值情况评估建立观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入深度安全边际区，若基本面未恶化可提高研究优先级。"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "reason": "进入减仓区下沿，需检验盈利修复是否足以支撑估值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-10",
+      "reason": "复核 2026 年 7 月生猪销售简报及商品猪均价变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点查看减值、现金流、短债和供港澳收入。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认猪价回升是否转化为利润修复。"
+    }
+  ]
+}

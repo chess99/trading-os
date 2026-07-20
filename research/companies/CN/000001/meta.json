@@ -1,0 +1,113 @@
+{
+  "symbol": "CN:000001",
+  "market": "CN",
+  "ticker": "000001",
+  "name": "平安银行",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "平安银行在约0.44x PB、约5.1x PE附近具备估值保护和较高股息率，但零售、信用卡、消费贷及地产链条风险尚未完全出清，净息差和ROE修复仍需季报验证；当前适合观察仓，进入9.8元以下且资产质量未恶化时再提高仓位。",
+  "quality_rating": "B+",
+  "valuation_rating": "undervalued_with_risk",
+  "research_date": "2026-07-07",
+  "analyst": "codex-subagent-000001",
+  "priority": "P2",
+  "fair_value_range": [
+    12.0,
+    14.5
+  ],
+  "buy_zone": [
+    9.8,
+    10.8
+  ],
+  "strong_buy_zone": [
+    8.6,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    15.0,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "zone": "initial_watch",
+      "price_range": [
+        10.8,
+        12.0
+      ],
+      "first_weight": 0.0075,
+      "max_weight": 0.015,
+      "action": "small_watch_position",
+      "condition": "股价在10.8-12.0元之间，作为观察仓等待下一季资产质量和净息差验证。"
+    },
+    {
+      "zone": "buy_zone",
+      "price_range": [
+        9.8,
+        10.8
+      ],
+      "target_weight": 0.02,
+      "max_weight": 0.03,
+      "action": "accumulate_if_quality_holds",
+      "condition": "股价进入9.8-10.8元，且最新不良率不高于1.10%、拨备覆盖率不低于210%、净息差不低于1.75%。"
+    },
+    {
+      "zone": "strong_buy_zone",
+      "price_range": [
+        8.6,
+        9.5
+      ],
+      "target_weight": 0.04,
+      "max_weight": 0.05,
+      "action": "increase_if_no_fundamental_break",
+      "condition": "股价进入8.6-9.5元，且无资产质量、资本充足率或分红能力的实质性破坏。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.8,
+      "action": "review_to_add",
+      "reason": "进入安全边际买入区，需复核最新不良率、拨备覆盖率和净息差。"
+    },
+    {
+      "type": "price_below",
+      "price": 8.6,
+      "action": "review_strong_buy",
+      "reason": "进入强吸引力区，前提是资产质量未恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 15.0,
+      "action": "review_to_reduce",
+      "reason": "超过不应追高价，若ROE和NIM未上修则减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报：净息差、不良率、关注率、拨备覆盖率、非息收入和ROE。",
+      "notes": "复核2026三季报：净息差、不良率、关注率、拨备覆盖率、非息收入和ROE。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、分红和资本充足率。",
+      "notes": "复核2026年报、分红和资本充足率。"
+    }
+  ],
+  "key_monitoring_metrics": [
+    "净息差是否维持在1.75%-1.85%",
+    "不良率是否低于1.15%、关注率是否低于2.0%",
+    "拨备覆盖率是否保持在200%以上",
+    "信用卡与消费贷不良生成率",
+    "手续费及佣金净收入恢复情况",
+    "核心一级资本充足率是否保持9%以上"
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "updated_at": "2026-07-07T20:30:00+08:00"
+}

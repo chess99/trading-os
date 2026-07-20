@@ -1,0 +1,58 @@
+{
+  "symbol": "CN:300903",
+  "market": "CN",
+  "ticker": "300903",
+  "name": "科翔股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "科翔股份处于A股PCB行业尾部，主业PCB制造连续2年亏损毛利率为负，资产负债率超74%应收账款高企，当前股价因主题炒作暴涨至84元/PB 20倍与基本面严重背离。等待主业毛利率转正、现金流持续为正等反转信号出现后再考虑。",
+  "fair_value_range": [4.0, 12.0],
+  "buy_zone": [4.0, 8.5],
+  "sell_or_reduce_zone": [50, 100],
+  "position_plan": [
+    {"condition": "股价跌至12-15元且PCB业务毛利率连续2个季度转正", "max_weight": 0.01},
+    {"condition": "股价跌至8-12元且经营现金流连续2季度为正、资产负债率下降至70%以下", "max_weight": 0.02},
+    {"condition": "股价跌至4-6元且基本面改善拐点出现", "max_weight": 0.03},
+    {"condition": "股价跌至2-3.5元且持续2个季度盈利信号", "max_weight": 0.04}
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "2026年半年报披露，关注亏损是否收窄、毛利率与现金流变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-05",
+      "reason": "定增解禁日，2069万股（发行价13.87元）浮盈约500%，关注减持节奏"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026全年年报，能否扭亏是分水岭"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "股价跌入合理区间上限，结合基本面信号可考虑试探性买入"
+    },
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入有安全边际的买入区间上限，若配合基本面改善可开始建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "极端乐观情景上限，不应追高"
+    }
+  ],
+  "updated_at": "2026-07-09T20:00:00+08:00"
+}

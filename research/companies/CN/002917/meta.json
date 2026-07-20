@@ -1,0 +1,151 @@
+{
+  "symbol": "CN:002917",
+  "market": "CN",
+  "ticker": "002917",
+  "name": "金奥博",
+  "company_name": "深圳市金奥博科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司从民爆智能装备延伸为民爆器材、爆破工程服务和装备软件一体化企业，2025年收入利润高增长且现金流尚可；但2026Q1增速显著放缓，民爆行业安全监管、工程回款和并购整合风险要求更高安全边际。当前可核验价格接近合理价值下沿但尚未进入高胜率买区。",
+  "quality_rating": "中等偏上",
+  "valuation_rating": "合理略偏便宜但安全边际不足",
+  "fair_value_range": [
+    10.5,
+    13.0
+  ],
+  "buy_zone": [
+    8.0,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    14.5,
+    16.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格约10元附近，缺少足够安全边际且2026Q1增速放缓",
+      "action": "仅观察或0-1%跟踪仓",
+      "target_position": "0-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于9.0元，且下一份季报未出现现金流、应收账款或安全生产恶化",
+      "action": "建立小仓",
+      "target_position": "2-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于8.0元，且经营现金流恢复、归母净利润仍为正增长",
+      "action": "提高到上限仓位",
+      "target_position": "4-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于14.5元但利润增速仍低于10%",
+      "action": "逐步减仓",
+      "target_position": "0-2%",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "currency": "CNY",
+      "reason": "低于买入区上沿，开始具备安全边际",
+      "action": "复核最新季报后考虑小仓买入"
+    },
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "currency": "CNY",
+      "reason": "低于买入区下沿，若基本面未破坏则风险收益比改善",
+      "action": "若基本面未破坏，考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 14.5,
+      "currency": "CNY",
+      "reason": "高于合理区间上沿且需要利润加速支撑",
+      "action": "若利润未加速，考虑减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "currency": "CNY",
+      "reason": "显著高于当前合理价值区间",
+      "action": "估值偏贵，除非ROE和增速上修，否则卖出或大幅降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "披露2026年半年报或三季报",
+      "reason": "半年报能验证2026Q1低增速是否只是季节性",
+      "action": "复核增长、现金流和估值区间"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "单季度归母净利润同比增速连续两个季度低于5%",
+      "reason": "利润持续低增速会削弱成长估值基础",
+      "action": "下修成长性假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "经营现金流/归母净利润年度口径低于0.8倍",
+      "reason": "现金流低于利润会降低财务质量评分",
+      "action": "复核财务质量和仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "应收账款和合同资产增速显著快于收入增速",
+      "reason": "工程服务扩张可能带来回款压力",
+      "action": "复核工程回款风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "发生重大安全生产事故、停产、处罚或资质受限",
+      "reason": "民爆行业安全事故会直接影响资质和持续经营",
+      "action": "立即重估并考虑退出"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "智能装备和软件系统收入占比或毛利率明显变化",
+      "reason": "高毛利装备软件业务是估值溢价核心",
+      "action": "重估业务质量和估值倍数"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "员工持股计划考核目标、成本或解锁结果发生重大变化",
+      "reason": "激励计划影响管理层行为和股东回报",
+      "action": "复核管理层激励和资本配置"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "归母净利润同比增速",
+    "扣非归母净利润同比增速",
+    "经营现金流净额/归母净利润",
+    "应收账款及合同资产增速",
+    "民爆器材销售毛利率",
+    "爆破工程服务毛利率",
+    "工业炸药生产装备、软件系统及服务收入占比",
+    "ROE",
+    "重大安全生产事件"
+  ]
+}

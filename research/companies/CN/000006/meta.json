@@ -1,0 +1,105 @@
+{
+  "symbol": "CN:000006",
+  "market": "CN",
+  "ticker": "000006",
+  "name": "深振业Ａ",
+  "company_name": "深振业Ａ",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "深圳国资地产平台具备资产盘活和周期修复弹性，但2025年仍亏损、存货减值与现金流压力未完全出清，当前价格安全边际不足，适合观察而非重仓买入。",
+  "quality_rating": "medium",
+  "valuation_rating": "expensive_for_cycle",
+  "fair_value_range": [
+    4.8,
+    6.2
+  ],
+  "buy_zone": [
+    3.9,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    8.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于4.80元且无新增重大存货减值风险",
+      "action": "建立观察仓",
+      "max_weight": 0.01,
+      "reason": "接近合理价值区间下沿，风险回报开始改善"
+    },
+    {
+      "condition": "价格低于4.20元且经营现金流改善、销售回款未恶化",
+      "action": "小幅加仓",
+      "max_weight": 0.02,
+      "reason": "更接近每股净资产，资产折价保护增强"
+    },
+    {
+      "condition": "价格低于3.90元且净资产质量未恶化、减值压力下降",
+      "action": "提高至策略上限",
+      "max_weight": 0.03,
+      "reason": "低于买入区间下沿且基本面未继续恶化时具备更高安全边际"
+    },
+    {
+      "condition": "价格高于7.20元且盈利、现金流或资产盘活没有公告级验证",
+      "action": "减仓",
+      "max_weight": 0.005,
+      "reason": "估值已经透支深圳国资与资产盘活预期"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入初始买入区间，可评估0.5%-1.0%观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "接近每股净资产附近，若现金流改善可考虑加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "高于减仓区间下沿，若缺少基本面验证应降低仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "高于减仓区间上沿，除非有重大资产重估兑现否则应基本退出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报，重点核验经营现金流、销售回款、存货减值和资产盘活进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，判断Q1盈利改善是否具备持续性"
+    }
+  ],
+  "key_tracking_metrics": [
+    "合同销售金额",
+    "销售回款率",
+    "经营活动现金流净额",
+    "存货余额",
+    "存货跌价准备",
+    "归母净资产",
+    "有息负债",
+    "短期债务占比",
+    "城市更新项目进展",
+    "资产盘活公告",
+    "现金分红预案"
+  ]
+}

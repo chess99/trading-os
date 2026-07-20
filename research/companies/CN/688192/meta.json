@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:688192",
+  "market": "CN",
+  "ticker": "688192",
+  "name": "迪哲医药",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "迪哲医药已拥有舒沃哲和高瑞哲两款商业化产品，且舒沃哲通过阿斯利康全球商业化交易获得外部定价和现金流验证；但2026-07-17收盘价约61.42元已部分反映交易催化，安全边际不足，适合等待交割、适应症和收入验证后的回调机会。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    55,
+    80
+  ],
+  "buy_zone": [
+    45,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    85,
+    100
+  ],
+  "position_plan": [
+    {
+      "condition": "阿斯利康交易完成交割且股价低于55元时建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于48元且舒沃哲一线审批或销售趋势未恶化时提高配置",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于85元且未来12个月经常性收入兑现不足时降至跟踪仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入合理价值下沿附近，可重新评估观察仓买入"
+    },
+    {
+      "type": "price_below",
+      "price": 48,
+      "reason": "进入更明确安全边际区间，若基本面未恶化可考虑加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 85,
+      "reason": "超过基准估值上沿，若收入和royalty未同步兑现应考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报、现金流、销售费用率和舒沃哲/高瑞哲放量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报和阿斯利康交易交割及会计确认进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核医保谈判、适应症审批和2026年全年销售趋势"
+    }
+  ],
+  "notes": [
+    "本次研究只写入首次报告和meta.json，未创建sources或临时抓取文件。",
+    "早期管线估值置信度低，未作为买入主逻辑。"
+  ]
+}

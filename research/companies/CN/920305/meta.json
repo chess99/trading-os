@@ -1,0 +1,48 @@
+{
+  "symbol": "CN:920305",
+  "market": "CN",
+  "ticker": "920305",
+  "name": "*ST云创",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "已确定退市且财务报表不可依赖，普通股价值取决于无法核实的控股股东巨额占款回收，0.93元隐含的回收率与索赔假设过于乐观。",
+  "fair_value_range": [0, 0.1],
+  "buy_zone": [0, 0],
+  "sell_or_reduce_zone": [0.01, 100],
+  "position_plan": [
+    {
+      "condition": "不建立仓位；基本面恶化或价格下跌均不构成补仓理由",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-07-29",
+      "reason": "核实退市整理期预计最后交易日、摘牌及转入退市板块安排"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核行政处罚、募集资金冻结、控股股东占款回收和民事索赔进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0,
+      "reason": "不存在仅由价格触发的买点，必须先验证现金回收和索赔边界"
+    },
+    {
+      "type": "price_above",
+      "price": 0.1,
+      "reason": "高于剩余索取权公允价值上沿，应退出而非追逐退市博弈"
+    }
+  ],
+  "updated_at": "2026-07-14T23:59:00+08:00"
+}

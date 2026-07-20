@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:603922",
+  "market": "CN",
+  "ticker": "603922",
+  "name": "ST金鸿顺",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "主业盈利初步修复，但资金占用、内控否定意见、证监会立案与控制权风险尚未解决，当前2.45倍PB缺乏安全边际。",
+  "fair_value_range": [4.0, 6.0],
+  "buy_zone": [3.0, 4.0],
+  "sell_or_reduce_zone": [7.5, 20.0],
+  "position_plan": [
+    {
+      "condition": "资金占用、证监会立案及内控问题未实质解决",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价处于3至4元且资金占用已清偿、审计意见恢复正常、连续两个报告期自由现金流为正，重新研究通过后",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、资金占用清偿、诉讼及证监会立案进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "仅在治理和审计前置条件同时满足后进入重新研究区间"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "高于风险调整后公允价值，不应追高并应考虑减仓"
+    }
+  ],
+  "updated_at": "2026-07-20T00:00:00+08:00"
+}

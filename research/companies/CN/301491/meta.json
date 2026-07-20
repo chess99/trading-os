@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301491",
+  "ticker": "301491",
+  "name": "汉桑科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "高端音频与创新音频 ODM 细分冠军，客户质量和净现金资产较好，但 2025 年以来增收不增利、Tonies 单一客户集中、关税汇率和毛利率压力尚未解除；当前价格处于合理价值区间，等待 32 元以下安全边际或利润率拐点。",
+  "fair_value_range": [
+    35,
+    45
+  ],
+  "buy_zone": [
+    0,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    50,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 32 元，且最新报告期毛利率不低于 26%、经营现金流未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于 28 元，且 Tonies 订单未出现重大下修，非 Tonies 客户继续增长",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于 50 元且毛利率或现金流未修复",
+      "action": "减持或不参与",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入安全买入区，约对应 18 倍 2025 年利润并具备净资产支撑，需要复核毛利率和订单。"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "显著低于基准合理价值，可在基本面未恶化时提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "高于当前合理价值区上沿，若利润率未修复则风险收益比转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看毛利率、Tonies 占比、经营现金流和募投进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断利润率拐点是否形成。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，更新估值模型和长期跟踪结论。"
+    }
+  ]
+}

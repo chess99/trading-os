@@ -1,0 +1,62 @@
+{
+  "symbol": "CN:300345",
+  "ticker": "300345",
+  "name": "华民股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司处于光伏硅片周期底部且仍深度亏损，2026Q1资产负债率约90.72%、经营现金流为负、存货跌价压力上升；当前股价对应约9.4倍PB和约4.1倍TTM PS，明显高于亏损光伏链可比公司，太空光伏和HJT超薄片期权尚缺少规模订单验证，因此不买。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    1.5,
+    2.6
+  ],
+  "buy_zone": [
+    0.8,
+    1.3
+  ],
+  "sell_or_reduce_zone": [
+    3.5,
+    10.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前不建仓；只有当股价跌入买入观察区且最新中报或三季报显示收入止跌、毛利率连续改善、经营现金流接近转正时，才允许重新评估研究性仓位。",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若股价低于1.30元且2026H1光伏产品毛利率高于3%、经营现金流转正、资产负债率下降至85%以下，可考虑最高0.5%的观察仓。",
+      "max_weight": 0.5
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.3,
+      "reason": "进入保守买入观察区，需要复核基本面是否同步改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.5,
+      "reason": "高于公允价值上沿且缺少盈利验证，维持回避或减持判断。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的收入、毛利率、亏损、现金流、存货跌价和资产负债率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现订单、毛利率和经营现金流拐点。"
+    }
+  ]
+}

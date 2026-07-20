@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:002235",
+  "ticker": "002235",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "安妮股份",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "安妮股份当前是传统纸制品/防伪业务叠加数字版权、算力和控制权变化期权的高弹性标的；2025年增收转亏、2026Q1仍小亏且经营现金流为负，基本面尚不足以支撑高市值，需等待股价回到安全边际区间或新业务订单与现金流被公告验证。",
+  "fair_value_range": [
+    1.8,
+    3.2
+  ],
+  "buy_zone": [
+    0,
+    1.8
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于1.8元，且最近一期报告显示经营现金流改善、扣非亏损明显收窄，控制权变化无重大负面进展",
+      "action": "watchlist_to_probe",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度经营现金流为正，数字版权或数据/算力业务订单经公告核验并开始贡献利润",
+      "action": "increase_after_validation",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于4.5元但未出现可核验利润改善或大额高毛利订单",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.8,
+      "reason": "进入合理价值下沿和买入研究区，需要重新评估安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "明显高于基本面估值区间，若无订单和现金流验证应回避或减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、扣非利润、经营现金流和控制权进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及新业务订单落地情况"
+    }
+  ]
+}

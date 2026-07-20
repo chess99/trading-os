@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:603559",
+  "market": "CN",
+  "ticker": "603559",
+  "name": "中通国脉",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "中通国脉处于风险警示撤销后的困境反转早期，2026H1预告扭亏说明费用管控和回款改善有效，但主业毛利率低、经营现金流尚未验证，当前约7.55元股价已计入过高反转预期，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    2.2,
+    4.2
+  ],
+  "buy_zone": [
+    1.8,
+    2.8
+  ],
+  "sell_or_reduce_zone": [
+    5.5,
+    7.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且现金流未验证，不建仓。",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "若股价低于2.8元，且2026半年报或三季报显示扣非盈利、经营现金流累计转正、毛利率改善至8%以上，可建立观察仓。",
+      "action": "watchlist_probe",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若连续两个季度扣非盈利且经营现金流为正，并且股价仍低于2.8元，可提高至小仓位。",
+      "action": "small_position",
+      "max_weight": 0.015
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "reason": "进入买入研究区间，需要结合半年报现金流和毛利率重新估值。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "高于减持/不参与区间上沿，若无基本面超预期则继续规避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报实际净利润、扣非利润、经营现金流、毛利率和应收账款变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扭亏是否具有连续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年盈利质量和现金流转换。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 7.55,
+    "reference_price_date": "2026-07-17",
+    "market_cap_cny_billion_est": 3.11,
+    "bvps_2026q1_est": 1.95,
+    "pb_2026q1_est": 3.9,
+    "net_profit_2026h1_guidance_cny_million": [
+      8,
+      12
+    ]
+  }
+}

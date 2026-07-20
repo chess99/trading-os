@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:002726",
+  "market": "CN",
+  "ticker": "002726",
+  "name": "ST龙大",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "ST龙大当前是预重整困境资产而非正常食品股，债务、内控、控制权和普通股稀释风险显著；2.08元附近已反映较高重整预期，缺少买方安全边际。",
+  "fair_value_range": [
+    0.8,
+    1.4
+  ],
+  "buy_zone": [
+    0.6,
+    0.9
+  ],
+  "sell_or_reduce_zone": [
+    1.6,
+    2.2
+  ],
+  "position_plan": [
+    {
+      "condition": "法院尚未正式受理重整或重整方案未披露",
+      "action": "不建仓，仅跟踪公告",
+      "max_weight": 0
+    },
+    {
+      "condition": "法院正式受理重整且产业投资人和普通股稀释方案清晰",
+      "action": "仅作为困境重整观察仓参与",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "重整计划获法院裁定批准、债务削减明确、除权后市值低于15亿元且连续两个季度经营现金流为正",
+      "action": "可小幅加仓但仍按高风险事件驱动管理",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "重整失败、破产清算风险上升、内控继续否定或新增资金占用/违规担保",
+      "action": "清仓回避",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.9,
+      "reason": "进入可买价格区间下沿，需同步确认重整进展和股本稀释"
+    },
+    {
+      "type": "price_above",
+      "price": 1.6,
+      "reason": "超过卖出/减仓区间下沿且重整方案未明，风险收益转差"
+    },
+    {
+      "type": "price_above",
+      "price": 2.2,
+      "reason": "重整期权定价过高，应回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核预重整进展、龙大转债代偿债权处置和半年度财务数据"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报现金流、短债压力、内控整改和重整方案是否披露"
+    }
+  ],
+  "notes": [
+    "评级为avoid，当前不建议买入。",
+    "当前估值以困境重整期普通股期权定价为主，不适用正常食品股盈利倍数。",
+    "2026-07-17收盘价2.08元，腾讯行情显示总市值约28.31亿元、PB约4.14倍。",
+    "ST原因包括内控审计否定意见、连续三年扣非前后净利润孰低为负、持续经营重大不确定。",
+    "预重整已启动但正式重整受理、产业投资人、普通股稀释比例均未确定。"
+  ]
+}

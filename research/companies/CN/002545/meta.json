@@ -1,0 +1,145 @@
+{
+  "symbol": "CN:002545",
+  "market": "CN",
+  "ticker": "002545",
+  "name": "东方铁塔",
+  "company_name": "青岛东方铁塔股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "老挝钾盐资源和2026年钾肥景气带来利润弹性，2025年现金流质量优秀；但当前16.53元已处于合理估值区间，按周期中枢利润看安全边际不足，等待13.5元以下再买入。",
+  "quality_rating": "B+",
+  "valuation_rating": "中性略偏低估",
+  "fair_value_range": [
+    15.0,
+    20.5
+  ],
+  "buy_zone": [
+    11.5,
+    13.5
+  ],
+  "sell_or_reduce_zone": [
+    20.5,
+    21.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于11.5元且钾肥价格和老挝产量未恶化",
+      "price_range": "<11.5",
+      "action": "强吸引力买入",
+      "max_weight": 0.07,
+      "position_pct": "5%-7%"
+    },
+    {
+      "condition": "股价在11.5至13.5元之间且基本面未触发逻辑止损",
+      "price_range": "11.5-13.5",
+      "action": "买入",
+      "max_weight": 0.05,
+      "position_pct": "3%-5%"
+    },
+    {
+      "condition": "股价在13.5至15.0元之间且半年报现金流兑现",
+      "price_range": "13.5-15.0",
+      "action": "小仓或等待确认",
+      "max_weight": 0.03,
+      "position_pct": "0%-3%"
+    },
+    {
+      "condition": "股价在15.0至20.5元之间",
+      "price_range": "15.0-20.5",
+      "action": "观察或持有",
+      "max_weight": 0.02,
+      "position_pct": "0%-2%"
+    },
+    {
+      "condition": "股价高于21.0元且没有全年利润上修",
+      "price_range": ">21.0",
+      "action": "不追高或减仓",
+      "max_weight": 0,
+      "position_pct": "0%"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "condition": "股价低于13.5元",
+      "price": 13.5,
+      "direction": "below",
+      "action": "买入",
+      "reason": "低于安全边际买入价"
+    },
+    {
+      "type": "price_below",
+      "condition": "股价低于11.5元",
+      "price": 11.5,
+      "direction": "below",
+      "action": "强吸引力买入",
+      "reason": "低于强吸引力买入价"
+    },
+    {
+      "type": "price_above",
+      "condition": "股价高于20.5元",
+      "price": 20.5,
+      "direction": "above",
+      "action": "复核估值",
+      "reason": "接近合理价值区间上沿"
+    },
+    {
+      "type": "price_above",
+      "condition": "股价高于21.0元",
+      "price": 21.0,
+      "direction": "above",
+      "action": "不追高或减仓",
+      "reason": "高于不应追高价"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后复核Q2利润、经营现金流和全年利润假设",
+      "condition": "2026年半年报披露后复核Q2利润、经营现金流和全年利润假设"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "氯化钾国内和进口价格连续两个月低于2800元/吨",
+      "condition": "氯化钾国内和进口价格连续两个月低于2800元/吨"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "老挝矿山产量、运输、税费、环保或矿权政策发生重大变化",
+      "condition": "老挝矿山产量、运输、税费、环保或矿权政策发生重大变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "股价跌破13.5元或升破21.0元",
+      "condition": "股价跌破13.5元或升破21.0元"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "大股东质押比例或公司资本开支计划明显上升",
+      "condition": "大股东质押比例或公司资本开支计划明显上升"
+    }
+  ],
+  "key_tracking_metrics": [
+    "氯化钾国内/进口均价",
+    "氯化钾产量和销量",
+    "溴化钠销量和价格",
+    "经营现金流/归母净利润",
+    "归母ROE",
+    "老挝项目资本开支和政策风险",
+    "钢结构业务新签订单和毛利率",
+    "分红率和大股东质押"
+  ]
+}

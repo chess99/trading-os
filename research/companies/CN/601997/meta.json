@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:601997",
+  "ticker": "601997",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "贵阳银行",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "贵阳银行是低估值、高股息的贵州区域城商行，当前价格已充分反映区域信用和低增长压力；只要不良率、拨备覆盖率和资本充足率保持稳定，0.30倍左右PB提供足够安全边际，但仓位必须受区域风险约束。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    6.8,
+    8.8
+  ],
+  "buy_zone": [
+    0,
+    5.8
+  ],
+  "sell_or_reduce_zone": [
+    9.2,
+    12
+  ],
+  "position_plan": [
+    {
+      "condition": "现价低于5.8元且最近一期不良率不高于1.7%、拨备覆盖率不低于220%、核心一级资本充足率不低于9.0%",
+      "action": "建立或维持基础仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于4.8元且资产质量指标没有恶化、分红预期维持0.30元/股以上",
+      "action": "分批加仓，但仅作为区域银行价值仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "不良率高于1.8%或拨备覆盖率低于220%或核心一级资本充足率低于9.0%",
+      "action": "暂停加仓并重新评估信用成本和资本压力",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "若资产质量未同步恶化，价格进入悲观情景下沿，可复核是否加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.2,
+      "reason": "价格接近或高于合理估值区间，需要减仓或等待基本面改善验证。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报中的不良率、拨备覆盖率、净息差、资本充足率和分红可持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报收入降幅、利润增速和资产质量变化。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、年度分红和贵州区域信用风险暴露。"
+    }
+  ]
+}

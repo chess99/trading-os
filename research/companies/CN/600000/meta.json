@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:600000",
+  "market": "CN",
+  "ticker": "600000",
+  "name": "浦发银行",
+  "company_name": "上海浦东发展银行股份有限公司",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "浦发银行作为全国性股份行，估值处于股份行分位低位（PB约0.45-0.5x、PE约7x、股息率5-6%），提供较强估值保护，但ROE、资产质量、NIM仍处股份行中后段，且地产、信用卡、城投敞口风险尚未完全出清；适合作为高股息防御+资产质量边际改善的观察对象，等待不良率持续跌破1.4%、ROE回升至9%以上再提高仓位。",
+  "quality_rating": "B-",
+  "valuation_rating": "undervalued_with_risk",
+  "analyst": "Claude Code + glm-5.2",
+  "research_date": "2026-07-08",
+  "priority": "P3",
+  "fair_value_range": [8.5, 10.5],
+  "buy_zone": [8.0, 9.0],
+  "strong_attraction_zone": [7.0, 8.0],
+  "sell_or_reduce_zone": [12.0, 14.0],
+  "do_not_chase_above": 12.0,
+  "position_plan": [
+    {
+      "zone": "initial_watch",
+      "price_range": [10.0, 12.0],
+      "first_weight": 0.015,
+      "max_weight": 0.03,
+      "action": "small_watch_position",
+      "condition": "股价在10.0-12.0元之间，作为观察仓等待半年报资产质量改善验证。"
+    },
+    {
+      "zone": "buy_zone",
+      "price_range": [8.0, 9.0],
+      "target_weight": 0.04,
+      "max_weight": 0.05,
+      "action": "accumulate_if_quality_holds",
+      "condition": "股价进入8.0-9.0元，且最新不良率不高于1.45%、拨备覆盖率不低于180%、NIM不低于1.45%、核心一级资本充足率不低于8.5%。"
+    },
+    {
+      "zone": "strong_attraction_zone",
+      "price_range": [7.0, 8.0],
+      "target_weight": 0.05,
+      "max_weight": 0.06,
+      "action": "increase_if_no_fundamental_break",
+      "condition": "股价进入7.0-8.0元，且无资产质量、资本充足率或分红能力的实质性破坏。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "action": "review_to_add",
+      "reason": "进入安全边际买入区，需复核最新不良率、拨备覆盖率和净息差。"
+    },
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "action": "review_strong_buy",
+      "reason": "进入强吸引力区，前提是资产质量未恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "action": "review_to_reduce",
+      "reason": "超过不应追高价，若ROE和NIM未上修则减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报",
+      "notes": "复核2026半年报：净息差、不良率、关注率、拨备覆盖率、非息收入和ROE。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、分红和资本充足率。",
+      "notes": "复核2026年报、分红和资本充足率。"
+    }
+  ],
+  "key_monitoring_metrics": [
+    "季度净息差是否企稳1.45%以上",
+    "不良贷款率是否持续低于1.45%",
+    "拨备覆盖率是否回升至200%以上",
+    "信用卡不良生成率是否回落",
+    "核心一级资本充足率是否保持8.5%以上",
+    "ROE(TTM)是否回升至9%+",
+    "对公科技金融/绿色金融贷款增速",
+    "房地产、城投敞口占总贷款比例"
+  ],
+  "key_risks": [
+    "房地产敞口风险（地产周期下行第二阶段可能进一步暴露）",
+    "城投敞口隐债置换带来的利率下调与展期",
+    "信用卡与零售风险尚未完全出清",
+    "NIM跌破1.4%进一步压制ROE",
+    "核心一级资本充足率偏低，再融资稀释风险",
+    "大行存款价格战延续，股份行存款成本承压",
+    "操作风险与历史内控教训（成都分行案）",
+    "宏观经济长期下行风险（低利率+低增长+人口下行）"
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "updated_at": "2026-07-08T16:00:00+08:00"
+}

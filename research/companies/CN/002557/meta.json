@@ -1,0 +1,118 @@
+{
+  "symbol": "CN:002557",
+  "market": "CN",
+  "ticker": "002557",
+  "name": "洽洽食品",
+  "company_name": "洽洽食品股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "全国性坚果炒货品牌，葵花子为现金牛、坚果和海外为第二曲线。2025 年利润大幅下滑后 2026Q1 出现低基数修复，但当前 19.80 元缺少足够安全边际，等待 18.50 元以下或中报验证后再买入。",
+  "quality_rating": "B+",
+  "valuation_rating": "B",
+  "fair_value_range": [
+    22.0,
+    27.0
+  ],
+  "buy_zone": [
+    16.5,
+    18.5
+  ],
+  "sell_or_reduce_zone": [
+    27.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "zone": "current",
+      "condition": "当前 19.80 元，安全边际不足",
+      "action": "观察",
+      "max_weight": 0.0
+    },
+    {
+      "zone": "buy",
+      "condition": "价格低于 18.50 元且 2026H1 利润修复仍成立",
+      "action": "建立初始仓位",
+      "max_weight": 0.03
+    },
+    {
+      "zone": "strong_buy",
+      "condition": "价格低于 16.50 元且基本面未恶化",
+      "action": "分批加仓",
+      "max_weight": 0.07
+    },
+    {
+      "zone": "reduce",
+      "condition": "价格高于 27.00 元且利润中枢未上修",
+      "action": "停止新增并复核减仓",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.5,
+      "reason": "低于有安全边际买入价",
+      "action": "进入安全边际买入区，复核 2026H1 经营数据后可建初始仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "低于强吸引力买入价",
+      "action": "进入强吸引力买入区，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 27.0,
+      "reason": "高于基准合理价值区间上沿",
+      "action": "高于基准合理价值上沿，停止新增并复核是否应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报验证 2026 年利润修复质量",
+      "condition": "2026 半年报披露后",
+      "action": "复查葵花子收入、坚果收入、毛利率、销售费用率、存货和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "核心现金牛和第二曲线需要同时验证",
+      "condition": "葵花子收入继续双位数下滑或坚果收入增速跌至低个位数",
+      "action": "立即下修估值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报验证现金流和分红覆盖能力",
+      "condition": "经营现金流连续低于归母净利润或高分红缺少现金流覆盖",
+      "action": "复核资本配置评级"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "年底复查旺季渠道库存、食品安全和原料成本风险",
+      "condition": "出现食品安全、重大渠道压货或原料成本异常上行",
+      "action": "触发逻辑止损复核"
+    }
+  ],
+  "key_tracking_metrics": [
+    "葵花子收入增速",
+    "坚果类收入增速",
+    "综合毛利率",
+    "销售费用率",
+    "经营现金流/归母净利润",
+    "存货金额与周转",
+    "现金分红/归母净利润",
+    "海外收入增速"
+  ]
+}

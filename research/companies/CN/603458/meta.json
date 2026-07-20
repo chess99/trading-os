@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603458",
+  "market": "CN",
+  "ticker": "603458",
+  "name": "勘设股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "勘设股份具备交通工程咨询资质和山区桥隧技术积累，但2024-2026H1盈利连续承压，工程承包亏损、应收账款及合同资产减值风险尚未出清。当前接近破净不足以构成买点，需等待回款、减值和虎峰公司亏损拐点确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    5.2,
+    7.2
+  ],
+  "buy_zone": [
+    0,
+    5.3
+  ],
+  "sell_or_reduce_zone": [
+    8.2,
+    10
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于5.3元，且2026半年报显示应收账款与合同资产合计较2025年末下降、经营现金流为正、虎峰公司亏损收窄",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于4.6元，且信用减值未继续恶化、工程咨询毛利率保持25%以上",
+      "action": "可提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于8.2元但仍未恢复盈利或继续预亏",
+      "action": "不新增，已有仓位减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.3,
+      "reason": "进入基准情景估值下沿附近，若财报同时确认回款和减值改善，可开始观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "接近悲观情景上沿，资产折价补偿更充分，但仍需确认无新增重大减值。"
+    },
+    {
+      "type": "price_above",
+      "price": 8.2,
+      "reason": "高于当前合理价值区间，若盈利拐点未出现，风险收益比恶化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报正式数据，重点检查收入、减值、应收账款、合同资产和虎峰公司亏损。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，判断全年减亏目标是否仍有实现可能。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，更新正常化盈利和PB估值框架。"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:688200",
+  "market": "CN",
+  "ticker": "688200",
+  "name": "华峰测控",
+  "company_name": "华峰测控",
+  "status": "active",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "华峰测控是高质量国产半导体测试设备平台公司，模拟和功率测试基本盘强，STS8300与STS8600决定中长期空间；但当前价格已接近乐观估值上沿，缺少安全边际，适合跟踪等待回撤而非现价追买。",
+  "quality_rating": "A-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    270,
+    360
+  ],
+  "buy_zone": [
+    230,
+    285
+  ],
+  "sell_or_reduce_zone": [
+    430,
+    500
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price_above_or_equal_430",
+      "action": "do_not_buy_reduce_existing",
+      "max_weight": 0.02,
+      "reason": "现价接近乐观估值上沿，STS8600和海外放量尚未充分验证，风险收益不佳"
+    },
+    {
+      "condition": "price_below_285_and_next_report_confirms_growth",
+      "action": "initial_buy",
+      "max_weight": 0.015,
+      "reason": "回到买入区间且收入、扣非利润、现金流质量继续验证后，可建立观察仓"
+    },
+    {
+      "condition": "price_below_230_without_fundamental_deterioration",
+      "action": "add",
+      "max_weight": 0.03,
+      "reason": "悲观情景附近具备较好安全边际，但仍需确认毛利率和客户验证未恶化"
+    },
+    {
+      "condition": "sts8600_repeat_orders_and_overseas_growth_confirmed",
+      "action": "raise_cap_selectively",
+      "max_weight": 0.04,
+      "reason": "高端SoC平台与海外收入若同时兑现，可提升长期估值中枢和仓位上限"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 285,
+      "reason": "进入买入观察区，需复核最新财报、订单和现金流后决定首笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 230,
+      "reason": "进入深度安全边际区，若基本面未破坏可考虑加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 430,
+      "reason": "接近或高于乐观估值区，除非STS8600放量超预期，否则应减仓或不追买"
+    },
+    {
+      "type": "price_above",
+      "price": 500,
+      "reason": "显著高于当前基本面可支撑区间，需强制复核并控制仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报，重点核验收入增速、扣非利润、现金流、STS8300和STS8600进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，判断订单周期、毛利率和研发投入转化效率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年报和全年盈利质量，重估合理价值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入同比增速",
+    "扣非归母净利润同比增速",
+    "综合毛利率和测试系统毛利率",
+    "经营活动现金流净额与净利润匹配度",
+    "应收账款和存货周转变化",
+    "STS8300批量装机和复购进展",
+    "STS8600客户验证、订单和收入确认进展",
+    "境外收入增速与收入占比",
+    "研发费用率和研发人员数量",
+    "长川科技、Advantest、Teradyne竞争动态"
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:002895",
+  "market": "CN",
+  "ticker": "002895",
+  "name": "川恒股份",
+  "company_name": "贵州川恒化工股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "川恒股份具备磷矿资源、一体化磷化工和较强现金分红属性，2025 年收入和利润高增，资源端价值明确；但 2026Q1 利润已受硫磺、硫酸等原料成本扰动，当前 28.18 元接近合理价值下沿但安全边际不足，等待 24-26 元或毛利率修复后再提高仓位。",
+  "quality_rating": "较高",
+  "valuation_rating": "合理偏低但安全边际不足",
+  "fair_value_range": [28, 35],
+  "buy_zone": [22, 26],
+  "sell_or_reduce_zone": [40, 999],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于 28 元且 2026H1 毛利率修复未验证",
+      "action": "不追买，仅允许 0-2% 观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格进入 24-26 元且无重大项目延期、无大额股权融资",
+      "action": "建立 3-5% 基础仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格跌至 22-24 元且扣非净利年化仍有 10 亿元以上、经营现金流不弱于净利润",
+      "action": "加至 5-8% 仓位",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "价格高于 40 元但矿山投产、酸源降本、磷酸铁盈利未兑现",
+      "action": "减仓或停止新增买入",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 26,
+      "currency": "CNY",
+      "reason": "进入初始可买区，开始具备安全边际",
+      "action": "复核中报和项目进度，考虑建基础仓"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "currency": "CNY",
+      "reason": "低于保守买入区下沿，若基本面未恶化则赔率显著改善",
+      "action": "若基本面未恶化，复核加仓至 5-8%"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "currency": "CNY",
+      "reason": "高于当前估值上沿，需确认是否有基本面兑现支撑",
+      "action": "检查是否由基本面兑现支撑，否则减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年半年报披露窗口",
+      "reason": "验证硫资源成本冲击是否已传导到产品价格和毛利率",
+      "action": "复核毛利率、经营现金流、硫资源成本传导"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026 年三季报披露窗口",
+      "reason": "验证全年利润节奏、经营现金流和矿山工程矿进度",
+      "action": "复核矿山价值和产能兑现节奏"
+    },
+    {
+      "type": "date",
+      "date": "2027-06-30",
+      "condition": "硫铁矿制酸装置预计投料后",
+      "reason": "验证自制酸降本是否开始兑现",
+      "action": "复核成本曲线和毛利率中枢"
+    },
+    {
+      "type": "date",
+      "date": "2027-12-31",
+      "condition": "鸡公岭、老寨子目标投产窗口",
+      "reason": "验证矿山产能扩张是否支撑更高内在价值",
+      "action": "立即复核估值和仓位上限"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "归母净利润与扣非归母净利润",
+    "综合毛利率和主要产品毛利率",
+    "经营现金流/归母净利润",
+    "自产自用磷矿石、外销磷矿石数量及价格",
+    "鸡公岭、老寨子矿山建设和工程矿产出进度",
+    "硫磺、硫酸、硫铁矿制酸成本差",
+    "磷酸铁产能利用率和毛利率",
+    "分红、回购、债务和股权融资变化"
+  ]
+}

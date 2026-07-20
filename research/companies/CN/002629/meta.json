@@ -1,0 +1,142 @@
+{
+  "symbol": "CN:002629",
+  "market": "CN",
+  "ticker": "002629",
+  "name": "仁智股份",
+  "company_name": "浙江仁智股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "现有经营规模小、扣非利润薄、经营现金流为负，2026Q1重新亏损；控制权变更提供平台期权，但现价主要反映题材和壳价值，少数股东缺少基本面安全边际。",
+  "quality_rating": "低",
+  "valuation_rating": "显著高估",
+  "fair_value_range": [
+    0.5,
+    1.1
+  ],
+  "buy_zone": [
+    0,
+    0.7
+  ],
+  "sell_or_reduce_zone": [
+    1.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于0.50元，且未出现退市风险、持续经营风险或重大监管风险恶化",
+      "action": "重新研究是否建立观察仓",
+      "target_position_pct": 0.5,
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价位于0.50-0.70元，且控制权事项实质落地或经营现金流改善",
+      "action": "仅允许小仓观察",
+      "target_position_pct": 0.3,
+      "max_weight": 0.003
+    },
+    {
+      "condition": "股价高于0.70元但缺少新资产、新订单和现金流验证",
+      "action": "不买入",
+      "target_position_pct": 0,
+      "max_weight": 0
+    },
+    {
+      "condition": "公告验证高质量资产注入或连续两个季度经营现金流转正，且重新估值后安全边际充足",
+      "action": "重新评估是否上调仓位上限",
+      "target_position_pct": 1,
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.7,
+      "currency": "CNY",
+      "reason": "进入买入观察区间上沿，估值开始接近经营和平台期权的综合合理区间",
+      "action": "进入观察区，重新核验基本面和控制权进展"
+    },
+    {
+      "type": "price_below",
+      "price": 0.5,
+      "currency": "CNY",
+      "reason": "进入合理价值区间下沿，若风险未恶化则具备重新建模价值",
+      "action": "进入可买研究区，重跑三种估值"
+    },
+    {
+      "type": "price_above",
+      "price": 1.5,
+      "currency": "CNY",
+      "reason": "超过合理价值区间上沿，现有经营利润和净资产难以支撑",
+      "action": "估值脱离经营基本面，已有仓位应减仓或退出"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "currency": "CNY",
+      "reason": "价格主要反映控制权和题材期权，少数股东安全边际不足",
+      "action": "题材和控制权预期占主导，不参与新增买入"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "复核2026年中报、控制权变更进度和经营现金流",
+      "reason": "中报能验证2025年盈利改善是否延续，并观察控制权事项是否实质落地",
+      "action": "重估控制权和平台期权价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "复核2026年三季报、董事会和管理层变化",
+      "reason": "三季报能提供更完整的收入、扣非利润和现金流趋势",
+      "action": "复核治理结构和业务方向"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "condition": "复核是否公告资产注入、重大重组、重大订单或利润承诺",
+      "reason": "控制权变更后的资产和业务安排是估值上修的关键证据",
+      "action": "重做盈利预测和估值"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核2026年报和是否连续两个季度经营活动现金流为正",
+      "reason": "年报能验证经营现金流和利润质量是否真正修复",
+      "action": "复核是否从不买上调至观察"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核连续四个季度TTM扣非归母净利润是否超过1500万元",
+      "reason": "扣非利润规模决定现有业务能否支撑更高估值",
+      "action": "重估合理价值区间"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核净资产、重大诉讼、监管问询、退市风险警示或其他重大风险公告",
+      "reason": "低净资产公司对监管、诉讼和减值风险高度敏感",
+      "action": "下修估值并复核风险等级"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "归母净资产",
+    "新能源工程业务收入和毛利率",
+    "应收账款和合同资产回款",
+    "控制权变更过户进度",
+    "重大订单和资产注入公告"
+  ]
+}

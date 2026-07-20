@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920344",
+  "market": "CN",
+  "ticker": "920344",
+  "name": "三元基因",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "独家人干扰素α1b剂型与RSV管线具备期权价值，但低资本回报、重资产负债、高销售费用和当前高估值使赔率不足。",
+  "fair_value_range": [9, 13],
+  "buy_zone": [7, 9],
+  "sell_or_reduce_zone": [16, 22],
+  "position_plan": [
+    {
+      "condition": "股价处于9至13元且连续财报验证喷雾剂增长能转化为经营现金流、净债务未上升",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价处于7至9元且RSV注册、销售费用率、资产减值与偿债能力均未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "基本面恶化或核心假设被证伪，无论价格高低均不加仓并退出",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核喷雾剂动销、销售费用率、自由现金流、净债务和RSV注册进度"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9,
+      "reason": "进入有安全边际的买入区间，但须先重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 16,
+      "reason": "进入减仓或不应追高区间，除非基本面证据支持上调公允价值"
+    }
+  ],
+  "updated_at": "2026-07-18T20:45:00+08:00"
+}

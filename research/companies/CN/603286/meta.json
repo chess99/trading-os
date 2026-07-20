@@ -1,0 +1,67 @@
+{
+  "symbol": "CN:603286",
+  "market": "CN",
+  "ticker": "603286",
+  "name": "日盈电子",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "日盈电子具备汽车零部件客户准入和局部传感器能力，但2025年及2026年上半年仍亏损，传统车用零部件毛利率偏低，电子皮肤/机器人业务尚未形成可验证收入。当前市值约51亿元、PB约6倍，明显高于其正常化盈利能力支撑的价值，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    8,
+    14
+  ],
+  "buy_zone": [
+    0,
+    10
+  ],
+  "sell_or_reduce_zone": [
+    18,
+    25
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值上沿且公司仍亏损，不建立仓位；仅在价格低于10元且2026H1/2026Q3显示毛利率与经营现金流修复后重新评估。",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若未来披露电子皮肤或高毛利传感器产品形成可审计量产订单、连续两个季度经营现金流为正、车用零部件毛利率回升至14%以上，可重新评估小仓位研究仓。",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10,
+      "reason": "进入买入观察区，需要结合最新财报确认毛利率、现金流和订单质量。"
+    },
+    {
+      "type": "price_above",
+      "price": 18,
+      "reason": "高于合理价值上沿，若无实质订单和利润修复，应卖出或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度正式报告，验证亏损区间、毛利率、现金流、存货和短债变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断产能爬坡、折旧摊销压力和经营现金流是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，重新评估正常化利润能力与估值锚。"
+    }
+  ]
+}

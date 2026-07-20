@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:920149",
+  "market": "CN",
+  "ticker": "920149",
+  "name": "旭杰科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "旭杰科技处于PC构件退出和光伏/海外ALC转型期，2025年扣非亏损、高负债和应收账款风险压制估值；光伏运营与澳洲ALC具备修复弹性，但2026Q1扣非仅微利，当前7.60元缺乏安全边际，适合观察而非买入。",
+  "fair_value_range": [
+    5.2,
+    6.8
+  ],
+  "buy_zone": [
+    0,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    9.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于4.8元，且2026中报确认扣非归母净利润转正、经营现金流为正、资产负债率低于78%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格处于5.2-6.8元且仅有收入修复、尚未看到应收账款和负债率改善",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格高于8.0元但没有订单、现金流和负债率同步改善",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入买入观察区，需要结合中报扣非、现金流和资产负债率验证是否可小仓位试探"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "超过基准估值上沿，若基本面未同步兑现应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026中报的扣非盈利、经营现金流、应收账款和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报中光伏运营收入、海外ALC收入和PC退出尾部损失"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报是否完成扭亏及关联交易回款质量"
+    }
+  ]
+}

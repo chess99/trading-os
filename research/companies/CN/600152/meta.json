@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:600152",
+  "ticker": "600152",
+  "name": "维科技术",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "维科技术具备3C消费电池客户基础、小动力修复和钠离子储能期权，但2025年至2026H1仍处亏损和减值压力中；当前约2.7倍TTM PS对亏损中小电池公司缺乏安全边际，适合观察，等待价格回落或盈利修复证据。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    5.2,
+    7.2
+  ],
+  "buy_zone": [
+    4.5,
+    5.6
+  ],
+  "sell_or_reduce_zone": [
+    8.8,
+    10.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于5.6元，且2026半年报未出现超预期新增减值或现金流恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于5.2元，且2026H2毛利率改善、钠电负毛利收敛、经营现金流不再恶化",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于8.8元但公司仍未恢复季度盈利",
+      "action": "不追高或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.6,
+      "reason": "进入买入区上沿，重新评估是否建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入深度安全边际区，若基本面未恶化可复核加仓条件"
+    },
+    {
+      "type": "price_above",
+      "price": 8.8,
+      "reason": "高于合理价值区间，若盈利未修复应避免追高或考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、减值、现金流和钠电业务进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和定增审核进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年亏损是否收窄及钠电订单是否兑现"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 7.81,
+    "reference_price_date": "2026-07-16",
+    "shares_outstanding": 529079375,
+    "market_cap_cny_billion": 4.13,
+    "revenue_2025_cny_billion": 1.4166,
+    "net_profit_2025_cny_million": -96.7,
+    "net_profit_2026h1_guidance_cny_million": -37.8322
+  }
+}

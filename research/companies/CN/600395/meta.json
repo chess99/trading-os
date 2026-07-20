@@ -1,0 +1,77 @@
+{
+  "symbol": "CN:600395",
+  "ticker": "600395",
+  "name": "盘江股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "贵州区域焦煤和煤电一体化平台，2026 年上半年受焦煤价格修复和商品煤结构优化带动扭亏，但债务、利息费用和电力转型资本开支削弱安全边际；当前价格落在合理价值区间中部，适合继续观察而非追买。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.2,
+    5.4
+  ],
+  "buy_zone": [
+    3.8,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    5.6,
+    6.2
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 3.80-4.20 元且主焦煤价格不低于 1700 元/吨，半年报确认经营现金流未恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度归母净利润不低于 8000 万元，且有息负债或短期债务压力下降",
+      "action": "提高至标准仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "主焦煤跌破 1600 元/吨或单季归母净利润低于 3000 万元",
+      "action": "不加仓并复核估值",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入买入观察区，PB 折价足以补偿债务和周期波动风险"
+    },
+    {
+      "type": "price_above",
+      "price": 5.6,
+      "reason": "进入减仓区，若盈利未进入年化 5 亿元以上平台则估值吸引力下降"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-22",
+      "reason": "复核 2026 年半年报正式数据、现金流、短债和吨煤毛利"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断焦煤价格修复是否转化为持续利润"
+    }
+  ],
+  "key_monitoring_indicators": [
+    "主焦煤价格",
+    "商品煤吨煤毛利",
+    "单季归母净利润",
+    "经营现金流净额",
+    "短期借款及一年内到期非流动负债",
+    "新能源发电量与平均上网电价"
+  ]
+}

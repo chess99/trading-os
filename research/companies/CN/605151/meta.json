@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:605151",
+  "market": "CN",
+  "ticker": "605151",
+  "name": "西上海",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "西上海 2026 年出现盈利修复，但 2025 年收入增长仍亏损，说明护城河和利润率仍需验证；以 2026-07-17 的 17.11 元、23.02 亿元市值看，市场已计入较乐观的全年利润恢复，当前安全边际不足，适合观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    10.5,
+    14.5
+  ],
+  "buy_zone": [
+    8.5,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    16.5,
+    19.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 10.5 元，且 2026 半年报确认扣非归母净利润落在预告区间内、经营现金流未明显背离利润",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价位于 10.5-14.5 元且 2026Q3 扣非净利率继续改善，可仅保留观察仓或不超过小仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于 16.5 元且没有全年业绩上修或新项目超预期证据",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入基准公允价值下沿并开始具备安全边际，可结合半年报质量复核"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "reason": "价格接近乐观情景估值，若缺少利润上修证据应减仓或避免新开仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 半年报，确认预盈兑现、分部毛利率、扣非利润和经营现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 三季报，判断盈利修复是否连续以及全年利润是否可能超过 0.6 亿元"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报，重新校准正常化利润、估值区间和仓位上限"
+    }
+  ],
+  "key_metrics": {
+    "last_price_cny": 17.11,
+    "market_cap_cny_billion": 2.302,
+    "quote_date": "2026-07-17",
+    "2025_revenue_cny_million": 1830.3673,
+    "2025_attributable_net_profit_cny_million": -7.3346,
+    "2026q1_revenue_cny_million": 440.6295,
+    "2026q1_attributable_net_profit_cny_million": 19.9049,
+    "2026h1_attributable_net_profit_forecast_cny_million": [
+      28.9,
+      35
+    ],
+    "data_confidence": "medium"
+  }
+}

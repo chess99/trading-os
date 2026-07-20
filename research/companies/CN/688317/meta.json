@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688317",
+  "market": "CN",
+  "ticker": "688317",
+  "name": "之江生物",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "之江生物当前更像现金资产保护下的分子诊断修复期权：2026Q1现金及交易性金融资产约28.26亿元、负债约4.04亿元，市值接近净现金和低于账面净资产；但2025年收入继续下降、2026Q1扣非亏损扩大，业务反转尚未验证。只有在显著低于净现金且现金未持续流失时才适合小仓位观察，等待收入企稳、海外认证转订单和常规临床产品恢复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    15,
+    20
+  ],
+  "buy_zone": [
+    12,
+    14
+  ],
+  "sell_or_reduce_zone": [
+    21,
+    24
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于14元，且最近一期货币资金加交易性金融资产不低于25亿元，经营现金流没有连续两个季度显著为负时，可建立观察仓。",
+      "action": "initial_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若连续两个季度收入同比转正或单季度经营现金流转正，且价格仍低于17元，可在重新核验订单质量后提高仓位。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "若价格高于21元但收入仍未恢复、扣非仍亏损，或现金及交易性金融资产跌破24亿元，应降低或退出。",
+      "action": "reduce_or_exit",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13,
+      "reason": "低于保守净现金折价区间，若现金安全垫仍在，重新评估资产型小仓位买入。"
+    },
+    {
+      "type": "price_above",
+      "price": 21,
+      "reason": "进入乐观情景估值区间，若业务未验证恢复，风险回报转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非亏损、经营现金流和现金及交易性金融资产。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现连续收入企稳或现金流恶化。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年度报告，确认WHO EUL、海外收入、常规临床产品和资本配置结果。"
+    }
+  ]
+}

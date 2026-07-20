@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920425",
+  "market": "CN",
+  "ticker": "920425",
+  "name": "乐创技术",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "AI眼镜拉动点胶控制系统高增，但客户集中、应收激增且自由现金流未同步，20.72元缺乏安全边际，等待现金流验证和更低价格。",
+  "fair_value_range": [14.0, 18.0],
+  "buy_zone": [10.5, 13.0],
+  "sell_or_reduce_zone": [23.0, 27.0],
+  "position_plan": [
+    {
+      "condition": "除权前股价处于10.5-13.0元且应收回款、核心客户订单和毛利率未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "除权前股价低于10.5元，重新验证长期商业价值未受损且经营现金流恢复",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-07-31",
+      "reason": "2025年度权益分派除权后重设价格触发器，避免将机械除权误判为买点"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的应收回款、客户集中度、存货减值和经营现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "除权前口径进入初步买入区间，仍须验证基本面未恶化；除权后需重设"
+    },
+    {
+      "type": "price_above",
+      "price": 23.0,
+      "reason": "除权前口径进入减仓或不应追高区间；除权后需重设"
+    }
+  ],
+  "updated_at": "2026-07-17T19:15:49.5148394+08:00"
+}

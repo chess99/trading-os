@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:603013",
+  "ticker": "603013",
+  "name": "亚普股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "国内燃油系统龙头，2025年燃油箱收入仍占主营收入绝大多数，现金流和分红回购稳健；高压燃油系统、旋转变压器、热管理、电池包壳体和储氢系统提供第二曲线，但新业务利润贡献仍需验证。当前股价处于合理价值区间中部，安全边际不足，适合观察等待更好买点或中报确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [15.0, 18.5],
+  "buy_zone": [12.5, 14.0],
+  "sell_or_reduce_zone": [20.0, 22.0],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于14.0元且2026年中报经营现金流为正、扣非净利润同比不低于持平",
+      "action": "建立观察仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于12.5元且燃油箱毛利率未跌破13%、新业务收入继续增长",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于20.0元但新业务利润贡献仍未清晰披露",
+      "action": "不加仓并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "reason": "进入初始买入观察区，隐含TTM PE约12.7倍，需复核中报现金流和扣非利润。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入安全边际较充分区间，若基本面未恶化可考虑提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "reason": "超过基准估值上沿，若新业务放量证据不足应考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、燃油箱毛利率和新业务收入占比。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1高增长是否可持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和分红回购政策，更新绝对估值。"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:600843",
+  "ticker": "600843",
+  "name": "上工申贝",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司拥有老牌缝制设备品牌、海外高端资产和航空业务期权，但2025年归母亏损、2026H1仍预亏，扣非盈利和经营现金流尚未证明拐点；当前更适合观察，等待扣非亏损收窄和现金流改善，低于安全边际价格再小仓跟踪。",
+  "fair_value_range": [
+    4.8,
+    6.2
+  ],
+  "buy_zone": [
+    0,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    10.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于买入区间且扣非仍亏，不主动买入；若价格低于4.5元且2026中报确认扣非亏损收窄、经营现金流明显改善，可建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若连续两个季度扣非归母净利润转正且经营活动现金流转正，可在重新估值后提高至核心观察仓。",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "若股价高于8.0元但扣非亏损未收窄或通用航空、汽车件继续拖累现金流，应减仓或回避。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入买入区间，价格相对净资产和扭亏不确定性提供安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "若未见扣非转正证据，估值脱离当前盈利质量，应复核并考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告全文，重点看扣非亏损、经营现金流、分部亏损和航空业务投入。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认减亏趋势是否延续以及是否具备2027年扭亏基础。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估公平价值区间和是否从观察转为买入或回避。"
+    }
+  ]
+}

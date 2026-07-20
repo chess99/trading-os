@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300839",
+  "ticker": "300839",
+  "name": "博汇股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "主业在2026Q1明显修复，液冷新业务提供期权，但2025年仍亏损、现金流和盈利连续性尚未验证，当前价格已反映较多反转预期，适合观察等待中报和三季报确认。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    8.8,
+    12.2
+  ],
+  "buy_zone": [
+    7.6,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入7.6-9.0元且2026Q2归母净利润和经营现金流均为正，可建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H2连续两个季度单季归母净利润超过3500万元，经营现金流为正，且液冷业务披露可核验订单和毛利。",
+      "action": "increase_after_validation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于14元但盈利和液冷订单未同步验证，或经营现金流转负。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入安全边际区间，可结合中报现金流和盈利质量重新评估观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "超过当前合理价值上沿，若缺少连续利润和液冷订单验证，应考虑降低或不参与。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，确认Q2盈利、经营现金流、存货和应收账款变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断主业修复是否连续以及液冷业务是否有实质披露。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年全年业绩预告或年报，重新评估估值区间和仓位上限。"
+    }
+  ]
+}

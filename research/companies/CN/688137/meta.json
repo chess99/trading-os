@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:688137",
+  "market": "CN",
+  "ticker": "688137",
+  "name": "近岸蛋白",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "近岸蛋白资产负债表稳健、低负债和高净资产提供下行缓冲，但2025年及2026Q1仍亏损，收入恢复斜率不足以证明平台已重回盈利通道；当前约37-39元价格接近合理价值中枢，缺少足够安全边际，适合观察等待30元以下或经营拐点确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    32,
+    42
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    48,
+    58
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于30元且无重大经营恶化，首次试探仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于26元且资产负债表仍稳健、经营现金流未持续恶化",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "连续两个季度收入同比超过20%且单季亏损收窄至1000万元以内",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入初始买入区间，市值接近净资产并具备平台期权价值"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入深度安全边际区间，需复核现金流和资产质量后考虑加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "若盈利拐点未确认而估值进入乐观区间，应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入增速、亏损收窄和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断是否形成连续两个季度经营拐点"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估长期收入恢复和费用率假设"
+    }
+  ]
+}

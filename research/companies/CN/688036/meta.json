@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:688036",
+  "market": "CN",
+  "ticker": "688036",
+  "name": "传音控股",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "传音控股在非洲、南亚等新兴市场具备真实的渠道、品牌和本地化产品优势，但 2025 年利润大幅下滑和 2026Q1 经营现金流显著为负说明其仍受上游成本、库存周期、汇率和低价位竞争约束。当前价格约位于合理价值区间中部，安全边际不足；等待 45-55 元买入区间或等待自由现金流、毛利率、存货周转连续验证后再上调评级。",
+  "fair_value_range": [
+    58,
+    78
+  ],
+  "buy_zone": [
+    45,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    85,
+    95
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入 45-55 元买入区间且基本面未破坏，可建立初始仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "毛利率企稳、存货周转恢复、经营现金流转正并覆盖资本开支，可加仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "连续两个季度自由现金流和产品结构验证且价格仍低于合理价值中位数，才允许达到最大仓位；跌价不得机械补仓，每次加仓前重验核心假设",
+      "max_weight": 0.06
+    }
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年中报披露后复核收入、毛利率、存货和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报披露后复核存储成本、毛利率和自由现金流修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026 年年报披露后复核正常化盈利、分红、H 股进展和资本配置"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入买入区间上沿，若基本面未破坏，可评估 2% 初始仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "强吸引力买入价，仍需确认库存、毛利率或现金流至少一项改善"
+    },
+    {
+      "type": "price_above",
+      "price": 75,
+      "reason": "接近合理价值上沿，不应追高"
+    },
+    {
+      "type": "price_above",
+      "price": 85,
+      "reason": "进入减仓观察区，除非自由现金流和利润质量显著超预期"
+    }
+  ],
+  "updated_at": "2026-07-09"
+}

@@ -1,0 +1,93 @@
+{
+  "symbol": "CN:300350",
+  "ticker": "300350",
+  "name": "华鹏飞",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "华鹏飞处于综合物流主业修复和TIR跨境运输扩张阶段，收入增长已验证但利润、经营现金流和应收质量尚未验证；当前估值已接近乐观情景，缺少买入安全边际。",
+  "rating": {
+    "current_rating": "avoid",
+    "updated_at": "2026-07-15",
+    "rationale": "当前约4.06元股价对应约2.6倍PB，高于多数盈利物流同业；公司仍亏损且经营现金流为负，暂不买入。"
+  },
+  "fair_value_range": [
+    2.2,
+    3.1
+  ],
+  "buy_zone": [
+    1.8,
+    2.4
+  ],
+  "sell_or_reduce_zone": [
+    3.6,
+    4.3
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于2.4元，且最近一个季度经营现金流改善、应收账款未继续恶化",
+      "action": "允许研究性观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于2.0元，且连续两个季度经营现金流为正或扣非净利持续转正",
+      "action": "可提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于3.6元且基本面仍为亏损或经营现金流净流出",
+      "action": "不建仓或降低已有仓位",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.4,
+      "reason": "进入初步买入观察区，重新核验现金流和应收质量"
+    },
+    {
+      "type": "price_below",
+      "price": 2.0,
+      "reason": "接近深度安全边际区，若经营验证改善可考虑小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 4.3,
+      "reason": "高于乐观情景上沿，若无利润和现金流验证应回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看TIR收入、毛利率、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入增长是否转化为扣非利润和现金流"
+    }
+  ],
+  "key_metrics": {
+    "reference_price": 4.06,
+    "reference_price_date": "2026-07-15",
+    "shares_outstanding": 562012279,
+    "market_cap_estimate_cny": 2281777852.74,
+    "book_value_per_share_2026q1": 1.56,
+    "pb_estimate": 2.6,
+    "revenue_2025_cny": 459765572.01,
+    "net_profit_parent_2025_cny": -36021841.8,
+    "deducted_net_profit_2025_cny": -6999365.44,
+    "operating_cash_flow_2025_cny": -73869796.05,
+    "revenue_2026q1_cny": 162965816.54,
+    "net_profit_parent_2026q1_cny": -6850272.48,
+    "operating_cash_flow_2026q1_cny": -72341461.54
+  },
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

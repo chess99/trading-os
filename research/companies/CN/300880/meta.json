@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300880",
+  "ticker": "300880",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "迦南智能",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司处于电网计量与智能终端设备景气修复链条，2026年国网中标订单提供收入支撑，但当前估值约53倍TTM PE，明显透支基准情景，等待股价回落或业绩/现金流连续超预期。",
+  "fair_value_range": [
+    12,
+    15
+  ],
+  "buy_zone": [
+    0,
+    11
+  ],
+  "sell_or_reduce_zone": [
+    18,
+    22
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "price <= 11 and next report confirms gross margin >= 25% and operating cash flow has not structurally deteriorated",
+      "action": "start_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price <= 9 and net cash remains material and no governance deterioration is disclosed",
+      "action": "add_only_if_thesis_confirmed",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price >= 18 without annualized net profit above 120000000",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11,
+      "reason": "进入基准合理价值折价区，可复核订单、毛利率和现金流后考虑小仓位观察。"
+    },
+    {
+      "type": "price_below",
+      "price": 9,
+      "reason": "进入绝对估值下沿附近，若基本面未恶化则安全边际显著改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 18,
+      "reason": "高于基准估值区间，若业绩未连续超预期应回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的订单确认、毛利率、应收账款、存货和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报以及国网、南网后续招标中标情况。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，验证国网中标订单是否转化为收入和现金流。"
+    }
+  ]
+}

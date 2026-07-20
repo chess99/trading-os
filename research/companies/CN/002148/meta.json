@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002148",
+  "ticker": "002148",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "北纬科技",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司处于从亏损向小幅盈利修复阶段，物联网连接服务、小游戏和产业园资产提供一定期权与资产安全垫，但扣非盈利刚起步、控股股东减持带来治理折价，当前估值相对可见利润和净资产缺乏安全边际，适合观察不适合主动买入。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    2.8,
+    4.0
+  ],
+  "buy_zone": [
+    2.8,
+    3.2
+  ],
+  "sell_or_reduce_zone": [
+    5.8,
+    6.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入2.8-3.2元且2026年扣非净利润维持正数、经营性现金流不恶化时，可建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "2026年报显示扣非净利润超过2000万元、经营性现金流连续两年为正，且控股股东减持压力释放后，可考虑提高仓位。",
+      "action": "add_after_validation",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于5.8元但扣非利润和游戏产品矩阵未验证，或控股股东继续大比例减持时，不新增并考虑减仓。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入保守买入区间，市值更接近资产安全垫和基准经营价值。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.8,
+      "reason": "明显高于基准合理价值区间，主要交易题材期权，风险收益比恶化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非净利润、经营性现金流、分业务毛利率和小游戏收入持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认IoT连接服务毛利率、游戏新品表现和控股股东减持进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断全年扣非利润是否超过2000万元以及经营现金流是否连续为正。"
+    }
+  ]
+}

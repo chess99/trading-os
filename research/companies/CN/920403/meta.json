@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920403",
+  "market": "CN",
+  "ticker": "920403",
+  "name": "康农种业",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "核心品种和资本回报优于多数种企，但单品、库存退货及治理风险高，16.11元已计入较快增长，等待9.5-11.5元安全边际。",
+  "fair_value_range": [12.0, 15.0],
+  "buy_zone": [9.5, 11.5],
+  "sell_or_reduce_zone": [18.0, 20.0],
+  "position_plan": [
+    {
+      "condition": "股价不高于11.5元，且康农玉8009终端动销、预计退货率、存货减值和经营现金流未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价不高于9.5元，重新验证长期商业价值未受损且正常化自由现金流不低于0.5亿元",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "核心品种销售、库存退货或治理出现实质恶化，不因价格下跌加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、核心品种销售、存货退货和自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入有安全边际的初始观察买入区间，仍需复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T05:49:57+08:00"
+}

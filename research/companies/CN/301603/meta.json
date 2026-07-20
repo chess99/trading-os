@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301603",
+  "ticker": "301603",
+  "name": "乔锋智能",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是快速成长的数控机床平台型民营企业，2025-2026Q1增长强劲，受益于立式加工中心规模化、国产替代和新兴制造资本开支；但现金流仍弱于利润，存货与长期应收较高，当前估值已接近合理区间上沿，暂以观察为主。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    110,
+    135
+  ],
+  "buy_zone": [
+    0,
+    100
+  ],
+  "sell_or_reduce_zone": [
+    155,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于100元且最近两个季度经营现金流为正、收入增速不低于25%时，可建立观察仓。",
+      "action": "starter_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于90元且高端机型收入占比提升、经营现金流/净利润超过60%时，可提高配置。",
+      "action": "add_position",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于155元且现金流或高端产品占比没有同步改善时，不追高并考虑降低已有仓位。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 100,
+      "reason": "进入安全边际买入区间，需要复核现金流、订单和估值假设。"
+    },
+    {
+      "type": "price_below",
+      "price": 90,
+      "reason": "进入更有吸引力的配置区间，可评估是否从观察仓提升到中等仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 155,
+      "reason": "高于合理价值上沿较多，若基本面没有同步超预期，需要复核减仓或不买。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看经营现金流、存货、长期应收和高端机型收入占比。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认订单增长是否延续以及全年盈利预测是否需要调整。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估中长期成长、现金转化和合理估值区间。"
+    }
+  ]
+}

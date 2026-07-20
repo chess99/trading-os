@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920856",
+  "market": "CN",
+  "ticker": "920856",
+  "name": "浩淼科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "公司资产负债表稳健但订单波动、低资本回报和资本配置风险明显，当前价格隐含的盈利修复强于可验证证据，等待更深安全边际。",
+  "fair_value_range": [5.8, 7.2],
+  "buy_zone": [4.8, 5.8],
+  "sell_or_reduce_zone": [8.0, 9.5],
+  "position_plan": [
+    {
+      "condition": "股价处于5.2至5.8元且订单、毛利率、应收账款和经营现金流未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于4.8至5.2元，重新验证长期商业价值未受损且最新财报无会计异常",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于8.0元或订单修复逻辑被证伪",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报、订单、合同负债、应收账款和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查三季报及智能消防装备检测和订单转化进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入可研究的安全边际区间，需重新验证核心假设后再建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "高于当前公允价值上沿，进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T15:40:13+08:00"
+}

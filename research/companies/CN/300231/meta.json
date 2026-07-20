@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:300231",
+  "market": "CN",
+  "ticker": "300231",
+  "name": "银信科技",
+  "company_name": "北京银信长远科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "金融 IT 基础设施运维和集成服务商，2025 年收入和现金流恢复，但系统集成占比过半、毛利率低，2026Q1 收入和利润下滑；当前 7.83 元附近估值已计入较多信创和算力预期，安全边际不足。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.5,
+    6.0
+  ],
+  "buy_zone": [
+    0,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于 6.0 元且 TTM 扣非归母净利润未超过 8000 万元",
+      "action": "不建仓",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至 4.8-5.2 元，且 Q2/Q3 收入不再同比下滑、经营现金流为正",
+      "action": "建立观察仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 4.5 元，且可转债兑付后现金安全、TTM 扣非归母净利润不低于 7000 万元",
+      "action": "提高至基础仓位",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "currency": "CNY",
+      "action": "复核是否建立观察仓",
+      "reason": "进入可买区间上沿，需要复核现金流、可转债兑付和利润趋势。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "currency": "CNY",
+      "action": "若基本面未恶化，复核基础仓",
+      "reason": "进入合理价值区间下沿，若基本面未恶化则具备安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "currency": "CNY",
+      "action": "若无利润恢复证据，避免买入或减仓",
+      "reason": "价格显著高于估算合理价值，且当前利润基础无法支撑估值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-07-16",
+      "reason": "复核银信转债到期兑付和摘牌完成情况，以及兑付后现金余额影响。"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看收入、毛利率、扣非利润、经营现金流和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断 2026Q1 利润下滑是短期波动还是全年趋势。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润及同比增速",
+    "IT 基础设施运维服务收入增速和毛利率",
+    "系统集成服务收入占比和毛利率",
+    "算力服务收入、折旧成本和毛利率",
+    "经营活动现金流净额/净利润",
+    "应收账款余额及应收账款/营业收入",
+    "可转债兑付后现金、理财和有息负债余额",
+    "软件开发与销售收入占比",
+    "前五大客户收入占比"
+  ]
+}

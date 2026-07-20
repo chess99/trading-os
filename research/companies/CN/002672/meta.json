@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:002672",
+  "ticker": "002672",
+  "name": "东江环保",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司拥有危废牌照、区域网络和国资股东信用支撑，但 2025 年大额亏损、2026Q1 继续亏损、评级下调和行业价格竞争尚未反转；等待毛利率、现金流和债务压力改善后再考虑小仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    2.1,
+    2.8
+  ],
+  "buy_zone": [
+    0,
+    2
+  ],
+  "sell_or_reduce_zone": [
+    3.2,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 2.00 元，且 2026 半年报未出现额外重大减值或流动性恶化，可建立观察仓。",
+      "action": "watchlist_entry",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于 2.00-2.80 元，且毛利率和经营现金流连续两个季度改善，可小仓跟踪。",
+      "action": "small_tracking_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于 3.20 元而盈利仍未修复，不新增买入并考虑退出观察仓。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2,
+      "reason": "进入困境资产观察买入区，若基本面未继续恶化可重新评估安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.2,
+      "reason": "高于公允区间上沿且接近乐观情景估值，亏损未修复前缺少风险补偿。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-29",
+      "reason": "公司预约披露 2026 年半年报，需核验半年度预告、毛利率、现金流和债务变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报披露窗口，验证亏损收窄是否具备连续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "2026 年年报窗口，重新评估净资产、评级压力和公允价值区间。"
+    }
+  ],
+  "decision": "不买",
+  "confidence": "中"
+}

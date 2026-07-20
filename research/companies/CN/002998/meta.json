@@ -1,0 +1,113 @@
+{
+  "symbol": "CN:002998",
+  "market": "CN",
+  "ticker": "002998",
+  "name": "优彩资源",
+  "company_name": "优彩环保资源科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "2026H1 利润预告显示景气和价差修复，但公司长期仍是低毛利、低 ROE 的化纤周期制造资产；当前价格约在合理区间内，缺少明显安全边际，等待 5.8 元/股以下和现金流改善后再考虑小仓位。",
+  "quality_rating": "中等偏低",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [
+    5.8,
+    7.4
+  ],
+  "buy_zone": [
+    5.2,
+    5.8
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 5.8 元/股，且 2026H1 预告兑现、经营现金流没有继续恶化",
+      "action": "建立 1%-3% 观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于 5.2 元/股，且全年利润中枢可见 1.1-1.3 亿元、经营现金流转正",
+      "action": "提高至 3%-5% 中等偏小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 8.5 元/股，且 ROE 未站上 8% 或现金流未同步改善",
+      "action": "减仓或不参与",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入可观察买入区",
+      "condition": "进入可观察买入区，重新核验半年报和现金流",
+      "action": "review_for_small_position"
+    },
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入较有安全边际区",
+      "condition": "进入较有安全边际区，若基本面未恶化可提高仓位",
+      "action": "review_for_accumulation"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "进入减仓复核区",
+      "condition": "进入减仓区，除非利润中枢和 ROE 明确上修",
+      "action": "review_for_reduce_or_sell"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报验证",
+      "condition": "发布 2026 年半年度报告后复核利润改善来源、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报毛利率复核",
+      "condition": "低熔点纤维毛利率连续两个报告期低于 4.5%"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报现金流复核",
+      "condition": "经营活动现金流净额连续两个报告期为负"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "资产负债表压力复核",
+      "condition": "资产负债率超过 55% 或财务费用显著上升"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "资本配置变化复核",
+      "condition": "新增大额资本开支、可转债转股稀释或分红政策明显变化"
+    }
+  ],
+  "key_tracking_metrics": [
+    "低熔点纤维收入、销量和毛利率",
+    "再生有色涤纶短纤收入和毛利率",
+    "归母净利润与扣非归母净利润",
+    "经营活动现金流净额",
+    "资产负债率和财务费用",
+    "前五大客户销售占比",
+    "现金分红金额与自由现金流覆盖倍数"
+  ]
+}

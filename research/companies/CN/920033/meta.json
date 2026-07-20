@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:920033",
+  "market": "CN",
+  "ticker": "920033",
+  "name": "康普化学",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "康普化学是金属萃取剂细分龙头型公司，资产负债表稳健，2026Q1 订单交付显示低谷修复，但订单连续性和毛利率恢复仍需验证；现价处于估算公允区间中部，适合观察，等待更低价格或连续季度验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    12.5,
+    16.5
+  ],
+  "buy_zone": [
+    0,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    18.5,
+    30
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 11.5 元，且未出现订单取消、毛利率低于 34% 或回款恶化",
+      "action": "建立或加至买入仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "2026Q2/Q3 连续两个季度收入高于 0.90 亿元、扣非净利润高于 1800 万元、经营现金流为正",
+      "action": "验证后提高上限",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价处于 12.5-16.5 元且缺少连续季度验证",
+      "action": "仅保留观察仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入买入区间，正常化利润估值具备较好安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 18.5,
+      "reason": "超过公允区间上沿，若缺少连续业绩验证应减仓或避免追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，确认 Q1 大额订单是否延续、毛利率和回款质量是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断全年正常化利润中枢"
+    }
+  ],
+  "valuation": {
+    "as_of_price_date": "2026-07-17",
+    "last_price": 13.74,
+    "market_cap_cny": 1637118335,
+    "normalized_profit_cny": [
+      85000000,
+      105000000
+    ],
+    "base_case_fair_value_per_share": [
+      12.5,
+      16.5
+    ]
+  },
+  "confidence": "中",
+  "decision": "观察"
+}

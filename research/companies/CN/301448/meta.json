@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301448",
+  "ticker": "301448",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "开创电气",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "开创电气是海外电动工具 ODM/OEM 修复标的，越南基地、锂电产品和线上渠道有恢复弹性，但 2025 年亏损、2026Q1 仍亏、客户集中和关税风险未充分消化；约 40 元股价已接近乐观情景，安全边际不足。",
+  "fair_value_range": [
+    22,
+    30
+  ],
+  "buy_zone": [
+    18,
+    23
+  ],
+  "sell_or_reduce_zone": [
+    36,
+    45
+  ],
+  "position_plan": [
+    {
+      "condition": "不持仓；股价高于 30 元且 2026H1 扣非利润未明确转正前不新开仓。",
+      "action": "wait",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入 18-23 元，且最近一期扣非归母净利润转正、经营现金流为正、越南基地订单恢复有公告或财报验证。",
+      "action": "starter_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个报告期扣非净利率超过 5%，海外收入恢复增长，客户集中度下降或线上/锂电收入占比继续提升。",
+      "action": "add_on_strength",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 23,
+      "reason": "进入买入观察区，需要复核扣非利润、经营现金流和越南产能利用率。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入深度价值区，可在基本面未恶化前提下重新计算赔率。"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "超过卖出/减持区下沿，市场已计入较强修复和新业务期权，应避免追高。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报：营收恢复、扣非利润、越南基地爬坡、线上渠道费用率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报：验证 Q3 旺季订单、第一大客户恢复和全年盈利可见度。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报：判断 2025 年亏损是否为一次性冲击，以及越南/锂电/线上战略是否真正转化为利润。"
+    }
+  ]
+}

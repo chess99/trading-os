@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:300671",
+  "market": "CN",
+  "ticker": "300671",
+  "company_name": "富满微",
+  "name": "富满微",
+  "updated_at": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "observe",
+  "status": "active",
+  "current_thesis": "2026H1业绩预告显示富满微已从连续亏损进入盈利转正阶段，但2026-07-08收盘价93.01元、总市值约205亿元已按强复苏定价；在半年度报告验证毛利率、扣非利润和经营现金流之前，不追高，等待55元以下才具备较好的买方赔率。",
+  "current_rating": "watch",
+  "quality_rating": "B-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    55,
+    70
+  ],
+  "buy_zone": [
+    42,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    80,
+    110
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于80元且没有半年度报告或订单/毛利率超预期证据",
+      "action": "不买或减仓",
+      "max_weight": 0,
+      "reason": "当前估值已处于乐观情景区间，盈利转正不足以支撑追价。"
+    },
+    {
+      "condition": "股价处于55-70元且2026H1预告兑现",
+      "action": "小仓观察",
+      "max_weight": 0.02,
+      "reason": "价格进入合理区间，但公司历史亏损、低毛利和存货减值风险仍要求折扣。"
+    },
+    {
+      "condition": "股价处于42-55元且扣非利润、毛利率、经营现金流没有反转恶化",
+      "action": "分批买入",
+      "max_weight": 0.05,
+      "reason": "价格具备安全边际，可用行业复苏和利润弹性覆盖部分不确定性。"
+    },
+    {
+      "condition": "股价低于42元且未出现财务造假、客户流失或大额减值恶化",
+      "action": "提高至策略上限",
+      "max_weight": 0.06,
+      "reason": "进入强吸引力区，但公司仍是高波动复苏型标的，不适合重仓。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入有安全边际的买入观察区，可复核半年度报告后考虑首笔仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入强吸引力买入区，若基本面未同步恶化，赔率明显改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "进入不应追高区，若无业绩超预期证据应控制或降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年度报告，验证预告兑现、毛利率、扣非净利和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报，判断H1盈利转正是否延续到H2。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年年报，重估全年利润质量和2027年合理估值。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026H1归母净利润是否落在9000万至11000万元预告区间",
+    "2026H1扣非归母净利润是否落在7500万至9500万元预告区间",
+    "营业收入同比增速",
+    "综合毛利率及LED驱动、电源管理、MOSFET分产品毛利率",
+    "存货余额、存货周转和存货跌价准备",
+    "经营活动现金流净额",
+    "应收账款余额及回款质量",
+    "电源管理类芯片收入是否恢复增长",
+    "IPM、无人机、AI相关产品的订单或收入披露",
+    "前五大客户和前五大供应商集中度"
+  ]
+}

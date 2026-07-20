@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:605028",
+  "market": "CN",
+  "ticker": "605028",
+  "name": "世茂能源",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "世茂能源拥有余姚区域垃圾焚烧处置与园区集中供热的局部排他性资产，现金流强、负债低，但利润受证券投资公允价值波动干扰，当前价格已高于保守合理价值区间，需等待价格回落或扣非利润中枢上移后再买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    18.0,
+    22.5
+  ],
+  "buy_zone": [
+    16.0,
+    18.5
+  ],
+  "sell_or_reduce_zone": [
+    25.0,
+    28.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于18.5元且2026年半年报正式扣非净利润不低于5800万元时建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于17.0元且证券投资公允价值损失收敛、经营现金流恢复增长时提高仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于25.0元且没有新增产能或扣非利润中枢上修证据时不加仓并考虑退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.5,
+      "reason": "进入初始买入区，经营性扣非利润对应估值开始具备安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 25.0,
+      "reason": "超过保守合理价值区间上沿，若无基本面上修需复核减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、扣非利润、经营现金流和证券投资损益"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报蒸汽收入、垃圾处置收入和利润表噪音是否收敛"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报、分红方案和股权转让后治理变化"
+    }
+  ]
+}

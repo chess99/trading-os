@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:300358",
+  "market": "CN",
+  "ticker": "300358",
+  "name": "楚天科技",
+  "company_name": "楚天科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "楚天科技是国内制药装备综合解决方案龙头之一，2025年利润修复、海外和后服务增长较好，但收入尚未恢复增长且经营现金流仍弱。2026-07-13价格7.97元处于合理价值区间中部，安全边际不足，等待6.8元以下或现金流/订单进一步验证。",
+  "quality_rating": "中",
+  "valuation_rating": "中性",
+  "fair_value_range": [
+    7.5,
+    9.5
+  ],
+  "buy_zone": [
+    5.4,
+    6.8
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    12.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于6.8元，且最近一期综合毛利率不低于33%、经营现金流没有继续恶化",
+      "action": "建立1%-2%观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于6.0元，且海外收入继续双位数增长、应收账款和存货没有异常扩张",
+      "action": "增至3%-4%仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格低于5.4元，且订单、毛利率、经营现金流至少两项改善",
+      "action": "最高增至6%仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于10.5元，但2026年归母净利润预期未超过4亿元",
+      "action": "降低至观察仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "currency": "CNY",
+      "action": "复核是否建立观察仓",
+      "reason": "价格进入初始买入区间，需要复核毛利率和经营现金流是否支持建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "currency": "CNY",
+      "action": "复核是否提高至3%-4%仓位",
+      "reason": "价格提供较厚安全边际，需要复核海外增长和应收存货质量。"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "currency": "CNY",
+      "action": "若利润和现金流未上修，复核减仓",
+      "reason": "价格高于合理价值区间上沿附近，需要确认盈利是否已足够上修。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "currency": "CNY",
+      "action": "无强验证则退出",
+      "reason": "价格明显高于当前合理价值区间，除非订单和现金流强验证，否则风险收益比下降。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看海外收入、后服务收入、毛利率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断利润修复是否转化为收入增长和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年度报告，重估正常化利润和合理价值区间。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "海外收入增速",
+    "后服务及配件收入占比",
+    "综合毛利率",
+    "经营活动现金流净额",
+    "应收账款和存货增速",
+    "研发投入率",
+    "生物工程和无菌制剂订单"
+  ]
+}

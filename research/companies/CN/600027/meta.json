@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:600027",
+  "market": "CN",
+  "ticker": "600027",
+  "name": "华电国际",
+  "company_name": "华电国际",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "华电国际是煤价下行、容量电价托底和分红支撑下具备赔率的火电龙头，但当前仍需等待更好的买入价和2026中报验证。",
+  "quality_rating": "B+",
+  "valuation_rating": "B",
+  "fair_value_range": [
+    5.6,
+    6.8
+  ],
+  "buy_zone": [
+    4.8,
+    5.3
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    7.8
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "A股价格低于或等于5.30元，且动力煤价格没有重新上行",
+      "action": "建立首笔观察仓",
+      "max_weight": 0.02,
+      "reason": "进入买入区间上沿，估值具备初步安全边际"
+    },
+    {
+      "condition": "A股价格低于或等于4.80元，且2026中报未显示电价和利用小时显著恶化",
+      "action": "加仓至核心观察仓",
+      "max_weight": 0.04,
+      "reason": "接近悲观估值下沿，股息率和均值回归赔率改善"
+    },
+    {
+      "condition": "2026中报确认煤价下降、容量电价稳定、资产负债率下降",
+      "action": "允许提高至满仓上限",
+      "max_weight": 0.05,
+      "reason": "关键经营变量验证后可提高持仓置信度"
+    },
+    {
+      "condition": "A股价格高于或等于7.00元，且盈利预测没有上修",
+      "action": "减仓或暂停买入",
+      "max_weight": 0.02,
+      "reason": "股价进入合理价值上沿以上，风险收益比下降"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.3,
+      "reason": "进入首笔观察仓买入区间"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入加仓区间，需同步复核煤价和电价"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "进入减持观察区间"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的煤价、电价、利用小时、现金流和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和迎峰度夏后的发电量、盈利韧性"
+    }
+  ],
+  "key_tracking_metrics": [
+    "秦皇岛5500大卡动力煤价格",
+    "公司入炉标煤单价",
+    "季度发电量和上网电量",
+    "平均上网电价",
+    "火电利用小时",
+    "容量电价和辅助服务收入",
+    "新能源控股装机和利用率",
+    "资产负债率",
+    "经营现金流",
+    "每股分红和分红率",
+    "A/H股折价"
+  ]
+}

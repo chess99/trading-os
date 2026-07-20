@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:688296",
+  "market": "CN",
+  "ticker": "688296",
+  "name": "和达科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "和达科技是智慧水务纯度较高的科创板标的，受益于供水管网漏损治理、城市生命线和数字水网建设，但2024-2025年连续亏损、2025年经营现金流为负，2026Q1仅微利，反转仍需半年报和现金流验证。当前股价约处于估算合理区间中部，缺乏足够安全边际，适合观察而非主动买入。",
+  "fair_value_range": [
+    11.0,
+    15.5
+  ],
+  "buy_zone": [
+    8.8,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    17.0,
+    19.5
+  ],
+  "position_plan": [
+    {
+      "condition": "仅观察，或在未看到2026H1收入、现金流、应收改善前最多保留研究仓",
+      "action": "watch_or_research_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于10.5元，且2026H1收入恢复、亏损收窄或盈利延续、经营现金流未恶化",
+      "action": "start_small_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于9.0元，且订单、毛利率、经营现金流至少两项改善",
+      "action": "increase_with_margin_of_safety",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于17.0元但TTM盈利和现金流尚未兑现",
+      "action": "reduce_or_do_not_add",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入估算买入区上沿，需要复核2026H1订单、收入和现金流后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "估值进入较高安全边际区，若基本面未继续恶化可重新评估买入"
+    },
+    {
+      "type": "price_above",
+      "price": 17.0,
+      "reason": "进入减仓观察区，若盈利修复未兑现则风险收益转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入恢复、毛利率、应收账款、合同资产和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年盈利修复是否成立"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和现金流，决定是否从观察调整为买入或回避"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中",
+  "key_metrics": {
+    "reference_price_range": [
+      12.25,
+      12.28
+    ],
+    "reference_price_date": "2026-07-17",
+    "shares_outstanding": 107393160,
+    "market_cap_estimate": 1317000000,
+    "revenue_2025": 307371619.58,
+    "net_profit_parent_2025": -47131217.59,
+    "operating_cash_flow_2025": -32997110.73,
+    "revenue_2026_q1": 46713540.42,
+    "net_profit_parent_2026_q1": 765924.5
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920693",
+  "market": "CN",
+  "ticker": "920693",
+  "name": "阿为特",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "液冷和半导体收入高增尚未转化为自由现金流与资本回报，当前估值隐含过高确定性，等待价格进入10-13元或经营杠杆被报表验证。",
+  "fair_value_range": [13, 18],
+  "buy_zone": [10, 13],
+  "sell_or_reduce_zone": [22, 26],
+  "position_plan": [
+    {
+      "condition": "股价处于10-13元且核心客户、新业务订单和长期商业价值未恶化，可建立观察仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "连续两个季度毛利率不低于24%、净利率不低于3%、经营现金流覆盖资本开支，且德国并购未出现减值迹象",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中新业务毛利率、自由现金流、设备投入与德国子公司经营情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13,
+      "reason": "进入有安全边际的研究与小仓位买入区间，仍须重新验证基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 22,
+      "reason": "进入减仓或不应追高区间，估值已明显高于基准公允价值"
+    }
+  ],
+  "updated_at": "2026-07-15T20:00:00+08:00"
+}

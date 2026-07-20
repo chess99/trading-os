@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920599",
+  "market": "CN",
+  "ticker": "920599",
+  "name": "同力股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "细分龙头具备高ROE、低PE和新能源/海外增长潜力，但现金转换、应收及融资销售担保削弱安全边际，等待13.5-15.0元更优赔率。",
+  "fair_value_range": [16.0, 20.0],
+  "buy_zone": [13.5, 15.0],
+  "sell_or_reduce_zone": [21.5, 24.0],
+  "position_plan": [
+    {
+      "condition": "股价低于15元且半年报应收、担保和现金流未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于13.5元且长期商业价值未受损、自由现金流假设仍成立",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "股价低于12元并经重新验证核心假设，禁止因下跌机械补仓",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的海外收入、现金流、应收账款、存货和融资销售担保"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.0,
+      "reason": "进入有安全边际的分批买入区间，但须先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 21.5,
+      "reason": "进入减仓或不应追高区间，需确认盈利和现金流是否同步上修"
+    }
+  ],
+  "updated_at": "2026-07-16T12:00:00+08:00"
+}

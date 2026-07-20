@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600821",
+  "market": "CN",
+  "ticker": "600821",
+  "name": "金开新能",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "金开新能具备国资背景、6GW级新能源电站资产和经营现金流基础，但电价市场化、限电损失、资产减值及联营投资收益下滑已显著压低ROE；当前价格接近乐观情景下沿，安全边际不足，等待电价和利润修复被半年报/三季报验证。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    4.2,
+    5.3
+  ],
+  "buy_zone": [
+    0,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    6.2,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于4.2元，且2026H1正式报告确认扣非为正、平均上网电价和限电损失环比不再恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度归母净利恢复且年化ROE达到5%以上，应收账款周转改善，电价机制影响基本落地",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于6.2元但盈利仍未验证修复，或再次出现重大资产减值/限电恶化",
+      "action": "不加仓或退出观察仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入基准公允价值下沿并提供初步安全边际，可重新核验半年报和电价趋势"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "reason": "股价进入乐观情景区间，若利润修复未兑现则风险收益不佳"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告、扣非利润、应收账款、联营投资收益和限电损失"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认电价市场化压力是否边际稳定"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、资产减值、回购注销执行和2027年项目收益率假设"
+    }
+  ]
+}

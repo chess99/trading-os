@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688677",
+  "market": "CN",
+  "ticker": "688677",
+  "name": "海泰新光",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "海泰新光具备高端医用内窥镜核心部件与精密光学平台能力，2025年收入、利润和现金流恢复较好，但史赛克相关客户集中度高，2026Q1利润弹性受汇率、关税和费用投入压制。当前估值处于合理区间中部，缺少足够安全边际，适合观察而非追高买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    62,
+    86
+  ],
+  "buy_zone": [
+    55,
+    63
+  ],
+  "sell_or_reduce_zone": [
+    95,
+    115
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于63元，且未出现客户订单、毛利率或经营现金流显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于55元，且2026Q2或Q3收入增速不低于15%、毛利率不低于62%",
+      "action": "加仓至中等观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026Q2或Q3归母净利润增速恢复到20%以上，且第一大客户外收入增长得到验证",
+      "action": "提高至目标仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 63,
+      "reason": "进入买入区间上沿，需要复核基本面后考虑首笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入较有安全边际区间，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 95,
+      "reason": "接近减仓区间，若盈利未上修则风险收益转弱"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看利润增速、毛利率、客户集中度和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证全年盈利弹性和国内自主品牌放量情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估中期增长和合理估值区间"
+    }
+  ]
+}

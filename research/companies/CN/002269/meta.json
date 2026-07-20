@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002269",
+  "ticker": "002269",
+  "name": "美邦服饰",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "困境反转仍需验证：品牌有剩余认知，2026Q1 净利润和经营现金流短暂转正，但收入仍同比下降、低净资产高负债、当前估值已明显预支复苏。等待收入、扣非利润、现金流和存货结构连续改善后再考虑小仓位。",
+  "fair_value_range": [
+    0.6,
+    0.9
+  ],
+  "buy_zone": [
+    0.45,
+    0.6
+  ],
+  "sell_or_reduce_zone": [
+    1.2,
+    1.5
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "现价高于安全边际且收入、扣非利润未连续改善时不建仓",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价进入买入区间且最近两个季度收入同比转正、经营现金流为正、存货净额继续下降",
+      "action": "starter_position",
+      "max_weight": 0.5
+    },
+    {
+      "condition": "扣非净利润连续两个季度为正且收入恢复至年化8亿元以上",
+      "action": "increase_after_revalidation",
+      "max_weight": 1
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.6,
+      "reason": "进入保守买入观察区，需要结合最新财报复核现金流和存货"
+    },
+    {
+      "type": "price_above",
+      "price": 1.2,
+      "reason": "高于估值安全边际上沿，若基本面未显著超预期应回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、扣非利润、经营现金流和存货库龄"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否形成连续改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报并重估反转持续性"
+    }
+  ]
+}

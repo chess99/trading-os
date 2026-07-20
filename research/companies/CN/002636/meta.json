@@ -1,0 +1,98 @@
+{
+  "symbol": "CN:002636",
+  "market": "CN",
+  "ticker": "002636",
+  "name": "金安国纪",
+  "company_name": "金安国纪",
+  "updated_at": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "观察/不买",
+  "current_rating": "watch",
+  "current_thesis": "覆铜板周期修复带来利润弹性，但高频高速覆铜板尚未形成收入，当前股价显著高于基于稳态利润的合理区间。",
+  "status": "active",
+  "quality_rating": "B",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    22,
+    34
+  ],
+  "buy_zone": [
+    14,
+    26
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    999
+  ],
+  "base_currency": "CNY",
+  "currency": "CNY",
+  "position_plan": [
+    {
+      "max_weight": 0.05,
+      "condition": "price_above_45",
+      "action": "不追高，已有仓位考虑降至跟踪仓或清仓",
+      "target_weight": 0
+    },
+    {
+      "max_weight": 0.05,
+      "condition": "price_18_to_26",
+      "action": "复核基本面后小仓位建仓",
+      "target_weight": 0.025
+    },
+    {
+      "max_weight": 0.05,
+      "condition": "price_below_18",
+      "action": "若基本面未恶化可分批买入",
+      "target_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 26,
+      "action": "进入有安全边际观察区，复核行业景气和现金流后可小仓位建仓",
+      "reason": "价格低于安全边际买入区上沿"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "action": "进入强吸引力区，若基本面未恶化可分批买入",
+      "reason": "价格进入强吸引力买入区"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "action": "高估区，不追高；已有仓位考虑减仓",
+      "reason": "价格高于不应追高阈值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的毛利率、经营现金流和高速覆铜板进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报景气延续性和应收票据周转"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核公司公告高频高速覆铜板是否通过核心客户认证并形成批量收入，以及是否出现重大定增/扩产/客户变化"
+    }
+  ],
+  "key_tracking_metrics": [
+    "覆铜板季度收入和销量",
+    "覆铜板毛利率",
+    "经营现金流/净利润",
+    "应收账款加应收款项融资周转",
+    "高频高速覆铜板送样、认证、小批量和批量销售进展",
+    "原材料铜、树脂、玻纤布价格变化",
+    "宁国金安产线和安徽金瑞玻纤布扩建进度"
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "symbol": "CN:002531",
+  "market": "CN",
+  "ticker": "002531",
+  "name": "天顺风能",
+  "company_name": "天顺风能（苏州）股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "风电场现金流提供资产底，海工装备与陆上装备整合提供修复期权；但2025年归母亏损、陆上装备毛利率极低、资本开支和负债较重，当前7.56元已接近基准合理价值上沿，安全边际不足。",
+  "quality_rating": "B-",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    6.0,
+    7.5
+  ],
+  "buy_zone": [
+    4.8,
+    5.6
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    8.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "<=4.8",
+      "max_weight": 0.05,
+      "position": "3%-5%",
+      "action": "分批买入，前提是无重大债务、订单或财务质量恶化"
+    },
+    {
+      "condition": "4.8-5.6",
+      "max_weight": 0.03,
+      "position": "2%-3%",
+      "action": "可建首仓，等待半年报或三季报验证"
+    },
+    {
+      "condition": "5.6-6.5",
+      "max_weight": 0.01,
+      "position": "0%-1%",
+      "action": "仅观察性仓位"
+    },
+    {
+      "condition": "6.5-7.5",
+      "max_weight": 0,
+      "position": "0%",
+      "action": "观察，不主动买入"
+    },
+    {
+      "condition": "7.5-8.5",
+      "max_weight": 0,
+      "position": "0%",
+      "action": "不加仓，等待经营兑现"
+    },
+    {
+      "condition": ">8.5",
+      "max_weight": 0,
+      "position": "减仓/不买",
+      "action": "若盈利未明显超预期，降低暴露"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "condition": "<=5.6",
+      "price": 5.6,
+      "currency": "CNY",
+      "reason": "低于安全边际买入价",
+      "action": "复查是否进入安全边际买入区"
+    },
+    {
+      "type": "price_below",
+      "condition": "<=4.8",
+      "price": 4.8,
+      "currency": "CNY",
+      "reason": "低于强吸引力买入价",
+      "action": "复查是否进入强吸引力买入区"
+    },
+    {
+      "type": "price_above",
+      "condition": ">=8.0",
+      "price": 8.0,
+      "currency": "CNY",
+      "reason": "高于不应追高价",
+      "action": "禁止追高，复查乐观情景是否已兑现"
+    },
+    {
+      "type": "price_above",
+      "condition": ">=8.5",
+      "price": 8.5,
+      "currency": "CNY",
+      "reason": "高于减仓观察价",
+      "action": "若盈利未明显超预期，考虑减仓或不买"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026半年报披露",
+      "reason": "验证海工收入、毛利率和订单交付节奏",
+      "action": "复查海工收入、毛利率和订单交付节奏"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026半年报披露",
+      "reason": "验证陆上装备停产整合后的毛利率修复",
+      "action": "复查陆上装备停产整合后的毛利率修复"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026Q3披露",
+      "reason": "验证现金流和资产负债表压力",
+      "action": "复查经营现金流、应收账款、存货、在建工程和有息负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "定增方案落地或撤回",
+      "reason": "评估潜在摊薄和募投回报率",
+      "action": "复查摊薄比例、发行价和募投回报率"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "股价跌至5.6元以下或涨至8.5元以上",
+      "reason": "价格进入买入区或减仓区需要重新评估",
+      "action": "复查估值与仓位"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "海工装备收入与毛利率",
+      "baseline": "2025年收入13.74亿元，毛利率7.87%",
+      "target_or_warning": "毛利率提升到10%以上为正面；低于8%且无改善为负面"
+    },
+    {
+      "metric": "陆上风能装备毛利率",
+      "baseline": "2025年毛利率1.61%",
+      "target_or_warning": "修复到5%以上为正面；持续接近低个位数为负面"
+    },
+    {
+      "metric": "经营现金流",
+      "baseline": "2025年+8.37亿元，2026Q1-2.37亿元",
+      "target_or_warning": "年度为正且不依赖异常压缩营运资本；连续两个报告期为负需降级"
+    },
+    {
+      "metric": "并网容量与售电量",
+      "baseline": "2025年底并网1.7838GW，2025年售电量36.66亿千瓦时",
+      "target_or_warning": "500MW在建项目按2026年中后节奏并网为正面"
+    },
+    {
+      "metric": "有息负债与在建工程",
+      "baseline": "2025年末短期借款24.41亿元、长期借款76.25亿元、在建工程33.91亿元",
+      "target_or_warning": "继续大幅扩张且现金流不匹配为负面"
+    },
+    {
+      "metric": "定增进展",
+      "baseline": "2025年末拟向特定对象发行不超过发行前总股本30%",
+      "target_or_warning": "高摊薄且回报率不清晰为负面"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301633",
+  "ticker": "301633",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "港迪技术",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "current_thesis": "港迪技术具备港口自动化和工业自动化细分场景的工程经验与产品组合，但2025年业绩下滑、2026年一季度亏损，当前约26亿元市值相对基准价值缺少安全边际，适合观察订单、现金流和利润修复后再买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    34,
+    42
+  ],
+  "buy_zone": [
+    0,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于32元且2026年收入未继续恶化、经营现金流没有结构性失控",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于28元且半年报显示利润转正、订单和回款改善",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于55元且未披露足以支撑1.1亿元以上正常化净利润的订单或业绩",
+      "action": "不追高或减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入基准估值下沿并具备初始安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入悲观情景上沿附近，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "高于基准估值区间，需要订单或利润显著上修支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、利润、经营现金流和订单修复情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年盈利和现金流能否恢复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红，更新正常化利润与估值区间"
+    }
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ]
+}

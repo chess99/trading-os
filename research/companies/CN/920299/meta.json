@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920299",
+  "market": "CN",
+  "ticker": "920299",
+  "name": "灿能电力",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "业务轻资本且现金充裕，但当前估值隐含远高于历史的长期增长，等待6.5-8.0元安全边际和中报验证。",
+  "fair_value_range": [8.0, 10.5],
+  "buy_zone": [6.5, 8.0],
+  "sell_or_reduce_zone": [12.0, 15.0],
+  "position_plan": [
+    {
+      "condition": "股价处于6.5-8.0元且TTM收入仍增长、毛利率不低于48%、经营现金流未持续恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于6.5元且复核客户集中、治理产品商业化和现金流后投资逻辑仍成立",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的毛利率、经营现金流、客户集中和治理产品进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入有初步安全边际的买入区间，但仍需验证基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T18:00:00+08:00"
+}

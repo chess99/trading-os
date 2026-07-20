@@ -1,0 +1,53 @@
+{
+  "symbol": "CN:605336",
+  "market": "CN",
+  "ticker": "605336",
+  "name": "*ST帅电",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "净金融资产较厚，但主业快速衰退、退市风险和未经审计验证的重大现金并购使当前价格缺乏安全边际。",
+  "fair_value_range": [6.5, 8.5],
+  "buy_zone": [5.0, 6.5],
+  "sell_or_reduce_zone": [9.0, 11.0],
+  "position_plan": [
+    {
+      "condition": "仅当撤销退市风险警示、2026年审计收入合规、净金融资产未受损且重组标的审计自由现金流支持高于资本成本的回报时，股价仍处于买入观察区",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的扣除后收入、扣非利润、现金流和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "复核重大资产重组预案、草案或终止公告及标的审计数据"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、审计意见及退市风险是否解除"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入理论买入观察区，仅触发重新核验，不自动买入"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "进入减仓或不应追高区间，价格已较多反映保壳和重组预期"
+    }
+  ],
+  "updated_at": "2026-07-20T16:07:33+08:00"
+}

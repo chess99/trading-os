@@ -9,6 +9,14 @@ Use this playbook when a main agent assigns many companies to subagents.
 - Company research reports should be written in Chinese unless the user explicitly asks otherwise.
 - The main agent owns assignment, review, index rebuild, and commits.
 - Failed runs should leave no partial report unless the failure analysis is itself useful.
+- For large A-share batches, prefer `automation/scripts/batch_research.py`. It sends
+  each Claude worker a self-contained prompt from `automation/scripts/_worker_prompt.md`,
+  so the worker does not need to read repository instructions or playbooks.
+- The batch script must run a Claude probe before dispatch unless the operator passes
+  `--skip-claude-probe`. The probe verifies that Claude can both write a file and emit
+  a machine-readable result.
+- If a worker times out after writing a valid company asset, the dispatcher may salvage
+  the result by validating the company directory and marking the queue item completed.
 
 ## Main Agent Steps
 

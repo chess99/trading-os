@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688696",
+  "market": "CN",
+  "ticker": "688696",
+  "name": "极米科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "极米科技具备智能投影品牌、光机研发、算法和海外渠道优势，2025年利润修复但收入增长弱、经营现金流转负，2026Q1利润同比下滑且存货上升。当前估值接近基准价值下沿，但车载和海外第二曲线仍需订单、收入与现金流验证，因此维持观察，等待58元以下安全边际或2026H1经营拐点确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    67,
+    88
+  ],
+  "buy_zone": [
+    50,
+    60
+  ],
+  "sell_or_reduce_zone": [
+    90,
+    110
+  ],
+  "position_plan": [
+    {
+      "condition": "price_below_58_and_no_new_negative_fundamental_event",
+      "action": "start_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H1_revenue_growth_positive_operating_cash_flow_positive_inventory_declines",
+      "action": "increase_after_confirmation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "price_above_90_without_earnings_upgrade_or_Q2_Q3_cash_flow_remains_negative",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 58,
+      "reason": "进入观察建仓区，接近资产和基准估值下沿，若基本面未恶化可建立小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 90,
+      "reason": "超过基础合理价值上沿附近，若盈利预测没有上修则安全边际不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入增速、经营现金流、存货和海外/车载进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年利润修复是否成立。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报和车载项目量产转化，重新评估长期估值中枢。"
+    }
+  ]
+}

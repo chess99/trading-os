@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603023",
+  "ticker": "603023",
+  "market": "CN",
+  "name": "威帝股份",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "原汽车电子主业低盈利且2026年上半年预亏，当前股价主要反映玖星精密并购期权；在交易未完成、标的业绩承诺未验证、并购贷款和商誉风险未落地前，缺乏买入安全边际。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    2.2,
+    3.0
+  ],
+  "buy_zone": [
+    0,
+    2.2
+  ],
+  "sell_or_reduce_zone": [
+    4.0,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "并购未完成且半年报未披露前，不建立正式仓位，仅跟踪公告和价格。",
+      "action": "watch",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至2.20元以下，且2026年半年报未显示亏损继续扩大、重大重组未出现新增实质负面事项。",
+      "action": "research_probe",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "玖星精密交易完成，且连续两个季度证明合并盈利、现金流和负债压力可控。",
+      "action": "increase_watch_position",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入基准安全边际区间，可复核是否建立观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "reason": "超过基准估值上沿且并购仍未验证，应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、毛利率、扣非净利润、经营现金流和重大重组进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报以及玖星精密交易是否完成、并表口径和负债变化。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、业绩承诺首年完成情况、商誉减值和偿债压力。"
+    }
+  ]
+}

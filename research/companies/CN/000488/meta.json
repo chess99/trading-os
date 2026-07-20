@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:000488",
+  "market": "CN",
+  "ticker": "000488",
+  "name": "ST晨鸣",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "ST晨鸣是高杠杆造纸困境资产，2025年亏损73.65亿元、资产负债率约94.45%，2026H1继续预亏后归母权益存在逼近或跌破零的风险；股权价值主要来自债务重组、复产、保壳和摘帽期权，现价缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    0.3,
+    0.8
+  ],
+  "buy_zone": [
+    0.0,
+    0.5
+  ],
+  "sell_or_reduce_zone": [
+    1.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "现价约1.89元，债务逾期、亏损和ST风险未解除",
+      "action": "avoid",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格低于1.00元但无债务重组和净资产修复公告",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格低于0.50元且债务重组实质落地、主业现金流改善、净资产修复路径清楚",
+      "action": "speculative_watch",
+      "max_weight": 0.003
+    },
+    {
+      "condition": "价格低于0.30元且债权人、国资或重整式方案明确保护上市公司存续",
+      "action": "event_driven_only",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1,
+      "reason": "仅复查，不买入"
+    },
+    {
+      "type": "price_below",
+      "price": 0.5,
+      "reason": "若同时有债务重组和净资产修复公告，重新评估0.3%以内观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 2.5,
+      "reason": "基本面未扭转时不参与或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报归母净资产、经营现金流、债务逾期和资产减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报收入恢复、亏损收窄、债务展期和诉讼进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年年报审计意见、内控审计意见、净资产是否为负和退市风险警示状态"
+    }
+  ],
+  "notes": [
+    "2026-07-19初始覆盖。当前结论为avoid：现价约1.89元对应约55.59亿元市值，远高于可验证归母权益所支持的价值；除非债务重组、复产、净资产修复和内控改善被公告验证，否则不建立仓位。",
+    "????????????????????????????????"
+  ]
+}

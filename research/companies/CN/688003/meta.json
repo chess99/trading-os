@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688003",
+  "market": "CN",
+  "ticker": "688003",
+  "name": "天准科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "天准科技具备工业机器视觉平台化能力，2025-2026Q1订单高增，半导体量检测与具身智能控制器带来成长弹性；但当前利润率和现金流仍未充分验证，约75-77元价格已反映较多成长预期，需等待更好安全边际或利润兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    58,
+    78
+  ],
+  "buy_zone": [
+    45,
+    58
+  ],
+  "sell_or_reduce_zone": [
+    90,
+    120
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌至58元以下，且最新定期报告显示新签订单同比增长不低于30%、综合毛利率未继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格处于58-78元，且2026H1归母净利润超过4000万元、经营现金流改善",
+      "action": "小仓位持有并等待继续验证",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于90元且未来两个季度利润率未显著提升",
+      "action": "不追高或降低仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 58,
+      "reason": "进入安全边际上沿，需要复核订单、毛利率和现金流后决定是否买入"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "进入深度价值区，若基本面未恶化可提高买入优先级"
+    },
+    {
+      "type": "price_above",
+      "price": 90,
+      "reason": "超过中性估值区间，需要确认利润兑现是否足以支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、订单、毛利率、净利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，观察订单转收入和Q4季节性兑现基础"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估半导体量检测和具身智能方案的利润贡献"
+    }
+  ]
+}

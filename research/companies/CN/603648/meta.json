@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:603648",
+  "market": "CN",
+  "ticker": "603648",
+  "name": "畅联股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "畅联股份具备国资背景、优质跨国客户、稳健现金流和较高分红，但2025年收入仅低个位数增长、利润下滑、ROE约6.6%，以2026-07-17收盘价9.12元计静态PE约26.8倍，估值已经反映稳定性，当前安全边际不足，等待6.8元以下或基本面增速上修。",
+  "fair_value_range": [
+    6.8,
+    8.6
+  ],
+  "buy_zone": [
+    5.8,
+    6.8
+  ],
+  "sell_or_reduce_zone": [
+    9.5,
+    11.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于6.8元，且最近一期收入和扣非归母净利润保持正增长",
+      "action": "建立观察性小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于5.8元，且毛利率未跌破18.5%、经营现金流仍为正",
+      "action": "提高至价值仓位上限",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于9.5元且盈利预测没有上修",
+      "action": "不追涨并考虑降低已有仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入基准公允价值下沿并具备初步安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入买入区下沿，若基本面未恶化则股息和估值保护更充分"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "超过基准公允价值上沿，若无盈利上修则风险收益比下降"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "接近乐观情景估值，需要卖出或回避高估风险"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、扣非净利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1改善是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红政策和新业务增长兑现情况"
+    }
+  ]
+}

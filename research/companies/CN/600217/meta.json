@@ -1,0 +1,73 @@
+{
+  "symbol": "CN:600217",
+  "market": "CN",
+  "currency": "CNY",
+  "ticker": "600217",
+  "name": "中再资环",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中再资环是废弃电器电子产品拆解处理稀缺标的，政策与补贴修复带来盈利恢复信号，但2025年大额亏损、补贴兑现节奏和经营现金流仍需验证。现价若在3元附近，已接近基准估值上沿，适合观察而非重仓买入。",
+  "fair_value_range": [
+    2.2,
+    3.1
+  ],
+  "buy_zone": [
+    0,
+    2.1
+  ],
+  "sell_or_reduce_zone": [
+    3.6,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价低于2.1元且连续两个季度归母净利润为正、经营现金流改善时试探建仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "若股价在2.1元至3.1元之间但现金流尚未验证，仅保留观察或极小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若股价高于3.6元且2026年全年利润未显著超预期，减仓或不参与",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.1,
+      "reason": "跌入具备安全边际的观察买入区，需要复核现金流和补贴兑现情况"
+    },
+    {
+      "type": "price_above",
+      "price": 3.6,
+      "reason": "高于乐观情景估值下沿，若基本面未超预期应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查利润修复、经营现金流、应收款项和补贴相关披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认盈利修复是否连续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断正常化利润和分红能力"
+    }
+  ],
+  "confidence": "medium",
+  "decision": "观察"
+}

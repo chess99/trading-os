@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920819",
+  "market": "CN",
+  "ticker": "920819",
+  "name": "颖泰生物",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "公司具备规模、登记与客户基础，但中间体、Albaugh和高负债拖累资本回报，当前破净估值接近概率加权公允价值，需等待更深折价或现金流修复兑现。",
+  "fair_value_range": [2.4, 3.2],
+  "buy_zone": [1.8, 2.2],
+  "sell_or_reduce_zone": [3.4, 3.8],
+  "position_plan": [
+    {
+      "condition": "股价处于2.00至2.20元且最近一期毛利率不低于12.5%、经营现金流为正、净有息负债未上升",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于1.80至2.00元，且中间体、山东福尔、Albaugh及银行授信复核未发现基本面恶化",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、经营现金流、净负债和减值风险"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入有安全边际的买入复核区间，需同时确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 3.4,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T22:30:00+08:00"
+}

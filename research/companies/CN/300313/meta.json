@@ -1,0 +1,78 @@
+{
+  "symbol": "CN:300313",
+  "ticker": "300313",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "天山生物",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "天山生物已撤销退市风险警示，控制权和资产负债表修复具备真实边际变化，但主业毛利仍未稳定转正，当前约19亿元市值显著高于可验证盈利和资产基础，适合观察而非买入。",
+  "rating": {
+    "current_rating": "watch",
+    "as_of": "2026-07-15",
+    "decision": "不买"
+  },
+  "current_rating": "watch",
+  "fair_value_range": [
+    2.0,
+    3.2
+  ],
+  "buy_zone": [
+    1.5,
+    2.2
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    8.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于估值区间且主业盈利未被连续季度验证",
+      "action": "保持观察，不建仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于2.2元且中报显示扣非亏损继续收窄、经营现金流不恶化",
+      "action": "可建立跟踪仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "定增落地且连续两个季度主业毛利转正、扣非盈利为正",
+      "action": "重新评估是否提升仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入买入观察区，需要结合中报与月度活畜销售复核安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "高于乐观情景下限但主业盈利尚未验证，应回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、扣非净利、经营现金流、毛利率和定增进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1盈利是否具备持续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及审计意见，确认退市风险是否彻底解除"
+    }
+  ]
+}

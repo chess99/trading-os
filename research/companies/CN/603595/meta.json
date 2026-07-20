@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:603595",
+  "market": "CN",
+  "ticker": "603595",
+  "name": "ST东尼",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "上半年账面扭亏主要来自出售子公司，扣非亏损扩大且治理与短债风险高，28.94元远高于8至12元合理价值。",
+  "fair_value_range": [8, 12],
+  "buy_zone": [5, 7],
+  "sell_or_reduce_zone": [16, 20],
+  "position_plan": [
+    {
+      "condition": "股价处于5至7元且ST解除路径清晰、连续两季扣非利润和自由现金流为正、半导体停止失血",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "基本面恶化、续贷受阻或历史信披风险扩大时，无论价格高低均不持有",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中投资收益、扣非大额亏损、信用减值和新能源出表影响"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报扣非利润、经营现金流、净债务和半导体减值"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7,
+      "reason": "仅触发基本面复核；治理、现金流和扣非利润未改善时仍不买入"
+    },
+    {
+      "type": "price_above",
+      "price": 16,
+      "reason": "超过合理价值上沿并进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-20T18:38:14+08:00"
+}

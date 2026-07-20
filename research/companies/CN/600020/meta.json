@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600020",
+  "ticker": "600020",
+  "name": "中原高速",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "河南省收费公路上市平台，约808公里路产现金流具备韧性，但地产减值、政府统缴欠款信用减值和约70%资产负债率削弱安全边际；当前估值不贵但缺少足够买入折价，等待中报验证和更低价格。",
+  "fair_value_range": [
+    4.4,
+    5.2
+  ],
+  "buy_zone": [
+    3.2,
+    3.6
+  ],
+  "sell_or_reduce_zone": [
+    5.4,
+    6.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.60元，且2026年中报未出现新增大额地产或信用减值，月度通行费收入维持正增长",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于3.20元，且扣非利润和经营现金流确认恢复，政府统缴欠款未继续恶化",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于5.40元但分红率、资产处置或路产注入没有实质改善",
+      "action": "减仓或不追高",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "进入初始买入区，需复核2026中报、月度通行费与信用减值后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "reason": "进入较充分安全边际区，若基本面未恶化可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 5.4,
+      "reason": "超过基准合理价值上沿，若无分红率提升、非主业剥离或优质路产注入，应考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年中报披露后复核扣非利润、经营现金流、应收政府统缴通行费和地产减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后复核全年盈利和现金流趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后复核分红率、资产负债率和非主业风险是否收敛"
+    }
+  ]
+}

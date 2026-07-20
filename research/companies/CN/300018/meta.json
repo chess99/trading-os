@@ -1,0 +1,120 @@
+{
+    "symbol":  "CN:300018",
+    "market":  "CN",
+    "ticker":  "300018",
+    "name":  "中元股份",
+    "company_name":  "武汉中元华电科技股份有限公司",
+    "status":  "active",
+    "updated_at":  "2026-07-13",
+    "latest_report":  "reports/2026-07-13-initial.md",
+    "report_history":  [
+                           "reports/2026-07-13-initial.md"
+                       ],
+    "rating":  "观察",
+    "current_rating":  "watch",
+    "current_thesis":  "中元股份是智能电网二次设备细分领先公司，2025年收入、利润、现金流均明显改善，现金资产厚、负债低；但2026-07-13收盘价12.86元约对应2025年45倍PE和4倍以上PB，且定增补流存在摊薄，当前安全边际不足，等待7.0-7.5元或利润中枢继续上修。",
+    "quality_rating":  "B+",
+    "valuation_rating":  "偏贵",
+    "fair_value_range":  [
+                             8.0,
+                             10.0
+                         ],
+    "buy_zone":  [
+                     0.0,
+                     7.5
+                 ],
+    "sell_or_reduce_zone":  [
+                                12.0,
+                                999.0
+                            ],
+    "currency":  "CNY",
+    "base_currency":  "CNY",
+    "position_plan":  [
+                          {
+                              "condition":  "价格低于7.5元，且最近一期订单、毛利率和经营现金流未恶化",
+                              "action":  "建立0.5%-1.5%观察仓",
+                              "max_weight":  0.015
+                          },
+                          {
+                              "condition":  "价格低于7.0元，且2026年净利润预期仍不低于1.5亿元",
+                              "action":  "提高至1.5%-2.5%核心跟踪仓",
+                              "max_weight":  0.025
+                          },
+                          {
+                              "condition":  "价格高于12.0元，且未来12个月净利润中枢没有上修至1.8亿元以上",
+                              "action":  "不新增，已有仓位逐步降低",
+                              "max_weight":  0
+                          }
+                      ],
+    "price_triggers":  [
+                           {
+                               "type":  "price_below",
+                               "price":  7.5,
+                               "currency":  "CNY",
+                               "action":  "复核订单和现金流，考虑试探建仓",
+                               "reason":  "进入安全边际区间，需要复核基本面后考虑买入"
+                           },
+                           {
+                               "type":  "price_below",
+                               "price":  7.0,
+                               "currency":  "CNY",
+                               "action":  "若基本面未恶化，考虑提高仓位",
+                               "reason":  "进入安全边际区间，需要复核基本面后考虑买入"
+                           },
+                           {
+                               "type":  "price_above",
+                               "price":  12.0,
+                               "currency":  "CNY",
+                               "action":  "复核估值和业绩兑现，倾向减仓或放弃买入",
+                               "reason":  "估值进入偏贵区间，需要复核业绩兑现和仓位风险"
+                           }
+                       ],
+    "review_triggers":  [
+                            {
+                                "type":  "date",
+                                "date":  "2026-08-31",
+                                "condition":  "发布2026年半年报或三季报",
+                                "reason":  "发布2026年半年报或三季报"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-09-30",
+                                "condition":  "向特定对象发行股票获得证监会注册或发行完成",
+                                "reason":  "向特定对象发行股票获得证监会注册或发行完成"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-10-31",
+                                "condition":  "智能电网新签合同增速低于10%或显著高于25%",
+                                "reason":  "智能电网新签合同增速低于10%或显著高于25%"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-12-31",
+                                "condition":  "AI电力业务年度合同额超过5000万元",
+                                "reason":  "AI电力业务年度合同额超过5000万元"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-12-31",
+                                "condition":  "经营现金流连续两个报告期低于净利润50%",
+                                "reason":  "经营现金流连续两个报告期低于净利润50%"
+                            },
+                            {
+                                "type":  "date",
+                                "date":  "2026-12-31",
+                                "condition":  "应收账款一年以上占比继续上升或出现大额坏账",
+                                "reason":  "应收账款一年以上占比继续上升或出现大额坏账"
+                            }
+                        ],
+    "key_tracking_metrics":  [
+                                 "智能电网新签合同额及同比增速",
+                                 "电力故障录波装置收入和毛利率",
+                                 "时间同步装置收入和毛利率",
+                                 "在线监测、信息系统和AI电力合同额",
+                                 "经营现金流/净利润",
+                                 "应收账款账龄结构和周转率",
+                                 "存货金额及跌价准备",
+                                 "定增发行价格、发行数量和募资用途"
+                             ]
+}

@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:300502",
+  "market": "CN",
+  "ticker": "300502",
+  "name": "新易盛",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "AI光模块赛道核心标的，2024-2025年业绩爆发（营收+187%，净利+236%）。当前PE 53倍、市值7000亿，已充分定价乐观预期，安全边际不足。建议等待回调至合理区间（350元以下）再建仓。",
+  "fair_value_range": [280, 420],
+  "buy_zone": [0, 280],
+  "sell_or_reduce_zone": [500, 100000],
+  "position_plan": [
+    {"condition": "股价跌至350元以下，基本面未恶化", "max_weight": 0.02},
+    {"condition": "股价跌至280元以下，基本面未恶化", "max_weight": 0.05},
+    {"condition": "股价跌至200元以下，基本面未恶化", "max_weight": 0.08},
+    {"condition": "持续高于500元或毛利跌破40%", "max_weight": 0}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报披露后复查业绩趋势与毛利率变化"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 350, "reason": "进入关注区间，考虑试探性建仓"},
+    {"type": "price_below", "price": 280, "reason": "进入有安全边际的买入区间，积极建仓"},
+    {"type": "price_above", "price": 500, "reason": "进入减仓或不应追高区间"},
+    {"type": "price_above", "price": 600, "reason": "泡沫区域，如有持仓应大幅减仓"}
+  ],
+  "updated_at": "2026-07-07T23:30:00+08:00"
+}

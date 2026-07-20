@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688681",
+  "market": "CN",
+  "ticker": "688681",
+  "name": "科汇股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "科汇股份具备电力自动化细分技术积累和磁阻电机第二增长曲线，2025年及2026Q1业绩修复明确，但当前约30倍TTM PE已基本反映基准复苏，且磁阻电机毛利率偏低、储能尚未盈利、应收账款占收入较高，需等待更好的安全边际或半年报继续验证。",
+  "fair_value_range": [
+    13.5,
+    17.0
+  ],
+  "buy_zone": [
+    10.5,
+    12.0
+  ],
+  "sell_or_reduce_zone": [
+    20.5,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌至10.5-12.0元，且2026H1扣非净利润同比增长、经营现金流未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "价格处于12.0-15.0元，半年报尚未确认磁阻电机毛利率改善和应收回款改善",
+      "action": "继续观察或仅保留小仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格高于20.5元且利润、毛利率、订单未同步超预期",
+      "action": "减仓或不追高",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入买入区间上沿，需要复核半年报和订单兑现情况"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入具备较强安全边际的估值区间"
+    },
+    {
+      "type": "price_above",
+      "price": 20.5,
+      "reason": "进入减仓区间下沿，需要重新验证乐观情景是否成立"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非利润、毛利率、现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及全年订单兑现趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报与2027年一季报，重估中期盈利中枢"
+    }
+  ]
+}

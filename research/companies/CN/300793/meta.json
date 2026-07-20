@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:300793",
+  "ticker": "300793",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "佳禾智能",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "消费电子声学 ODM 基本盘仍承压，2025 年和 2026Q1 扣非亏损显示盈利尚未修复；AI/AR 眼镜与拜雅并购提供向上期权，但当前证据不足以买入，只适合观察和小仓位研究。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    9.0,
+    12.5
+  ],
+  "buy_zone": [
+    7.5,
+    8.8
+  ],
+  "sell_or_reduce_zone": [
+    14.5,
+    17.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 8.8 元，且未出现新的经营恶化，可建立研究仓。",
+      "action": "initiate_research_position",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价低于 7.5 元，且 2026 中报确认经营现金流为正、毛利率不低于 13.5%。",
+      "action": "increase_research_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "2026H1 扣非继续亏损且毛利率低于 12.5%。",
+      "action": "do_not_add",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入初始研究仓买入区，需要复核经营现金流、应收账款和存货。"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高研究仓上限。"
+    },
+    {
+      "type": "price_above",
+      "price": 14.5,
+      "reason": "超过基准估值上沿，需要确认 AI/AR 眼镜放量、拜雅交割和扣非利润转正，否则应减仓或回避追高。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看毛利率、扣非利润、经营现金流、客户集中度和拜雅交易进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断盈利修复是否具备持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报和拜雅并购整合结果，决定是否从观察上调或下调。"
+    }
+  ],
+  "key_metrics": [
+    {
+      "name": "gross_margin",
+      "watch_level": "2026H1 毛利率是否回到 14% 以上"
+    },
+    {
+      "name": "adjusted_net_profit",
+      "watch_level": "扣非净利润是否转正"
+    },
+    {
+      "name": "top5_customer_ratio",
+      "watch_level": "前五大客户收入占比是否低于 75%"
+    },
+    {
+      "name": "ai_ar_glasses_orders",
+      "watch_level": "AI/AR 眼镜是否披露量产客户、收入规模和毛利率"
+    },
+    {
+      "name": "beyerdynamic_transaction",
+      "watch_level": "拜雅交易是否完成交割以及并表影响"
+    }
+  ]
+}

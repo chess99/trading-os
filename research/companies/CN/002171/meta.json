@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:002171",
+  "market": "CN",
+  "ticker": "002171",
+  "name": "楚江新材",
+  "company_name": "安徽楚江科技新材料股份有限公司",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "国内铜基新材料龙头（精密铜带产能全国第一）+军工碳纤维（天鸟高新）+高端热工装备（顶立科技），但铜加工主业毛利率仅2.6%、净利润率0.6%，经营现金流连续3年恶化（2023+1.78亿→2024-6.57亿→2025-7.83亿），当前PE~45x在低ROE（4.76%）和负现金流基础上严重透支。等待股价回落至PB~1.0x（5-6元区间）或经营现金流持续转正再评估。",
+  "fair_value_range": [
+    5.5,
+    8.5
+  ],
+  "buy_zone": [
+    5.0,
+    6.0
+  ],
+  "sell_or_reduce_zone": [
+    11.0,
+    14.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价小于5元，强吸引力区间",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价5-6元，有安全边际",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价6-9元，合理偏低至合理",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价9元以上，偏贵至泡沫",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入有安全边际的买入区间，需复核经营现金流和铜加工费率"
+    },
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "进入强吸引力区间"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "进入泡沫区域，不应追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看经营现金流是否转正、毛利率变化和军工碳材料放量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断现金流恶化是否延续和顶立科技独立上市进展"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比和铜加工费率",
+    "经营现金流净额（连续负值即风险）",
+    "铜加工/碳纤维复合材料分部毛利率",
+    "顶立科技独立上市进展",
+    "实控人持股质押比例"
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "updated_at": "2026-07-08T10:00:00+08:00"
+}

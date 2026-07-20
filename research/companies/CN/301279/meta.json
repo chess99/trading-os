@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301279",
+  "ticker": "301279",
+  "name": "金道科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "金道科技是叉车传动系统细分供应商，受益于叉车电动化和出口增长，但客户集中、利润弹性不足、经营现金流弱于利润，且当前估值已反映较乐观情景，暂列观察而非买入。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    13.0,
+    16.0
+  ],
+  "buy_zone": [
+    11.0,
+    13.0
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    27.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于13元，且最近两个季度经营现金流/净利润显著改善、第一大客户占比未继续上升",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于11元，且电动化或中大功率产品收入继续增长、毛利率未跌破22%",
+      "action": "提高至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于22元且利润、现金流未进入乐观情景",
+      "action": "不新增并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "进入基准估值上沿附近，可重新评估观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入较有安全边际的买入区间，前提是基本面未恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "超过合理价值区间较多，若基本面未上修应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、经营现金流、客户集中度和电动化产品收入。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入增长是否转化为利润弹性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和可转债募投进展，重估中大功率传动系统产业化价值。"
+    }
+  ]
+}

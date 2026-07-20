@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920943",
+  "market": "CN",
+  "ticker": "920943",
+  "name": "优机股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "定制化与海外客户能力尚不足以抵消自由现金流脆弱、扩产回报待证和2026年一季度转亏，当前价格显著高于多因素公允价值。",
+  "fair_value_range": [8.0, 11.5],
+  "buy_zone": [6.5, 7.5],
+  "sell_or_reduce_zone": [14.0, 18.5],
+  "position_plan": [
+    {
+      "condition": "股价处于6.5至7.5元且收入、毛利率、财务费用和自由现金流未继续恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于6.5元且重新验证长期价值未受损、净有息负债受控并出现自由现金流修复",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露窗口后复核季度亏损、订单转化和自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露窗口后完整重估新产线回报和资本结构"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入初步买入区，但必须先验证基本面和现金流未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T12:00:00+08:00"
+}

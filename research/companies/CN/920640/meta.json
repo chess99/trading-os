@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920640",
+  "market": "CN",
+  "ticker": "920640",
+  "name": "富士达",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "射频互连业务有技术与认证壁垒，但资本回报、回款质量和2026年一季度利润率不足以支撑约65倍2025年PE，当前应回避并等待11元以下的安全边际。",
+  "fair_value_range": [11, 16],
+  "buy_zone": [8, 11],
+  "sell_or_reduce_zone": [20, 30],
+  "position_plan": [
+    {
+      "condition": "股价处于8至11元且核心客户订单、毛利率和回款假设未恶化，分批试仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于8元且至少两个报告期证明经营现金流和应收改善，经重新研究确认长期价值未受损",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于20元或毛利率、核心客户、应收减值等核心假设被证伪",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的毛利率、经营现金流、应收账款和订单质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查三季报是否证明利润增速追上收入并改善现金转化"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11,
+      "reason": "进入需重新核验基本面的有安全边际观察买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 20,
+      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流显著超预期"
+    }
+  ],
+  "updated_at": "2026-07-15T22:07:48+08:00"
+}

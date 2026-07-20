@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600654",
+  "ticker": "600654",
+  "name": "中安科",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中安科是重整后修复型安防安保资产，境外安保运营牌照和客户网络有差异化，但2025年净利润主要由债务重组收益驱动，扣非仍亏；2026Q1扣非转正需要继续验证。当前约4.6倍PB对修复期资产偏贵，等待扣非盈利和经营现金流连续改善后再评估。",
+  "fair_value_range": [
+    0.9,
+    1.6
+  ],
+  "buy_zone": [
+    0.75,
+    1.05
+  ],
+  "sell_or_reduce_zone": [
+    2.1,
+    3.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前估值高于合理价值且扣非盈利尚未连续验证，保持观察仓位。",
+      "action": "watch_only",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格低于1.05元，且连续两个季度扣非归母净利润为正、经营现金流改善、无新增重大诉讼或大额减值。",
+      "action": "initiate_small_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "扣非归母净利润年化达到1.5亿元以上，经营现金流连续四个季度为正，境外安保运营剔除澳洲后仍保持增长。",
+      "action": "increase_after_validation",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.05,
+      "reason": "进入买入观察区，需要结合扣非盈利和现金流验证是否具备安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.1,
+      "reason": "高于乐观情景估值上沿附近，若无持续扣非盈利证据应回避或减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证扣非净利润、经营现金流、澳洲资产出售后同口径收入和毛利率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1改善是否具备持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估正常化盈利能力和治理修复进度。"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}

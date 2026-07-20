@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:000791",
+  "market": "CN",
+  "ticker": "000791",
+  "name": "甘肃能源",
+  "company_name": "甘肃能源",
+  "status": "active",
+  "updated_at": "2026-07-11",
+  "latest_report": "reports/2026-07-11-initial.md",
+  "report_history": [
+    "reports/2026-07-11-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "甘肃能源具备省属电力平台、常乐火电现金流、水电底座和新能源项目储备，适合作为高股息综合电力平台观察；但当前价格接近买入区上沿，甘肃新能源消纳、电价下行和大额资本开支仍需验证，因此评级为 watch，仅在 7.20 元以下小仓位试买。",
+  "quality_rating": "B+",
+  "valuation_rating": "fair_to_slightly_expensive",
+  "fair_value_range": [
+    7.8,
+    9.2
+  ],
+  "buy_zone": [
+    6.4,
+    7.2
+  ],
+  "sell_or_reduce_zone": [
+    9.6,
+    11.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 7.20 and 2026H1 report does not show further deterioration in wind/solar tariff or utilization hours",
+      "action": "open_or_add_small_tracking_position",
+      "max_weight": 0.02,
+      "reason": "估值进入买入区上沿，现金流和分红提供底座，但安全边际仍有限。"
+    },
+    {
+      "condition": "price <= 6.80 and operating cash flow, debt ratio, thermal capacity revenue and project capex remain within expectations",
+      "action": "add_to_core_tracking_position",
+      "max_weight": 0.04,
+      "reason": "前瞻 PE 和股息率更有吸引力，可承担中等新能源项目风险。"
+    },
+    {
+      "condition": "price <= 6.40 and no fundamental stop-loss trigger is present",
+      "action": "add_to_max_position",
+      "max_weight": 0.06,
+      "reason": "价格提供足够安全边际，适合作为高股息综合电力平台配置。"
+    },
+    {
+      "condition": "price >= 9.60 without confirmed earnings upgrade or higher capacity tariff realization",
+      "action": "reduce_position",
+      "max_weight": 0.03,
+      "reason": "估值接近合理区间上沿，新能源电价和资本开支风险尚未解除。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "进入首笔买入区，复核半年报后可试仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "安全边际改善，若基本面未恶化可加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.6,
+      "reason": "接近减仓区，需要确认容量电价或利润中枢是否上修。"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "超出基准合理价值，除非乐观情景兑现，否则应显著降仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-15",
+      "reason": "公司预约披露 2026 年半年报，需复核分电源电价、利用小时、资本开支和债务。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核全年利润中枢、现金流和项目并网进度。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "quarterly_generation_by_source",
+    "on_grid_power_by_source",
+    "average_on_grid_tariff_by_source",
+    "hydro_inflow_and_utilization_hours",
+    "wind_solar_utilization_hours",
+    "gansu_renewable_consumption_and_curtailment",
+    "changle_thermal_capacity_tariff_and_power_tariff",
+    "coal_cost",
+    "capex_progress_for_qingyang_minqin_liangzhou_projects",
+    "asset_liability_ratio",
+    "finance_expense",
+    "operating_cash_flow",
+    "dividend_per_share"
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:601137",
+  "ticker": "601137",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "博威合金",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "高性能铜合金材料主业具备客户认证和产品结构壁垒，但美国光伏资产拖累利润与现金流，需等待资产出售、税收抵免转让和新材料利润修复验证后再提高仓位。",
+  "fair_value_range": [
+    18.0,
+    23.0
+  ],
+  "buy_zone": [
+    13.0,
+    16.0
+  ],
+  "sell_or_reduce_zone": [
+    25.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "美国太阳能电池资产出售完成交割，新能源业务不再显著亏损，且新材料业务单季利润恢复到可年化6亿元以上",
+      "action": "允许建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价跌入15.5元以下，同时2026半年报显示经营现金流改善且资产处置没有重大反复",
+      "action": "可提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "美国资产交易失败或新能源业务继续单季大额亏损",
+      "action": "暂停买入并降至跟踪仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.5,
+      "reason": "进入安全边际观察区，需复核资产出售进展与新材料利润修复"
+    },
+    {
+      "type": "price_above",
+      "price": 25.0,
+      "reason": "超过基准合理价值上沿，若利润修复未兑现应考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中新材料盈利、美国资产处置、现金流和负债变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认新能源业务是否停止拖累"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估主业利润中枢和资产处置完成情况"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:600101",
+  "ticker": "600101",
+  "name": "明星电力",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "明星电力是遂宁市区域电力与供水公用事业平台，供区壁垒和国网体系背书带来稳定性，但2025年ROE仅约6%、分红率和股息率偏低，当前约8元股价已反映稳定性，安全边际不足，等待6.8元以下或盈利质量改善。",
+  "fair_value_range": [
+    7.0,
+    8.8
+  ],
+  "buy_zone": [
+    6.2,
+    6.8
+  ],
+  "sell_or_reduce_zone": [
+    9.2,
+    10.0
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入6.2-6.8元且2026中报扣非利润未继续恶化时建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价接近6.2元且经营现金流/净利润大于1.0、售电量或线损指标改善时加仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于9.2元且2026E EPS仍低于0.38元时不追高并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入买入观察区，开始复核中报和现金流以决定是否建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 9.2,
+      "reason": "超过基准估值上沿，若盈利未同步上修应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非利润、售电量、线损和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和全年盈利修复可见度"
+    }
+  ]
+}

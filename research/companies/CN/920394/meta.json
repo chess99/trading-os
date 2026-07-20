@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920394",
+  "market": "CN",
+  "ticker": "920394",
+  "name": "民士达",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "国产芳纶纸龙头盈利与资本回报优秀，但扩产期自由现金流偏弱，57.57元已过度定价成长和并购协同，当前缺乏安全边际。",
+  "fair_value_range": [33, 42],
+  "buy_zone": [25, 30],
+  "sell_or_reduce_zone": [50, 65],
+  "position_plan": [
+    {
+      "condition": "股价处于25-30元且芳纶纸毛利率、产能利用率和中菱科技业绩承诺均未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于25元，重新验证长期价值未受损、存货应收和自由现金流改善后",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "基本面恶化、并购承诺不达标或自由现金流持续弱于利润，不因价格下跌加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报收入、毛利率、存货应收和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报、中菱科技业绩承诺和扩产后自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入有安全边际的买入前复核区，需确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T12:00:00+08:00"
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688567",
+  "market": "CN",
+  "ticker": "688567",
+  "name": "孚能科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "孚能科技具备软包叠片、SPS、半固态/全固态和海外客户资源，但 2025 与 2026Q1 仍亏损且收入下滑，当前应等待 SPS/广汽/海外定点转化为收入、毛利率和现金流改善后再提高评级。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    7.5,
+    10.5
+  ],
+  "buy_zone": [
+    5.8,
+    6.8
+  ],
+  "sell_or_reduce_zone": [
+    13.0,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅维持跟踪仓，等待 2026H1/2026Q3 验证收入、毛利率和现金流修复",
+      "action": "watch",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于 6.8 元且未出现流动性恶化、重大订单取消或控制权不稳定",
+      "action": "initial_buy",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入企稳或增长、扣非亏损明显收窄、经营现金流转正，且 SPS/广汽或海外客户量产兑现",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于 13 元但财务改善未兑现，或任一季度收入继续大幅下滑且经营现金流恶化",
+      "action": "reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入安全边际买入区间，可重新评估 2% 以内初始仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "进入乐观情景估值区间，若利润和现金流未同步兑现应考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-29",
+      "reason": "公司预约披露 2026 年半年报，验证收入、毛利率、扣非亏损和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报及 SPS/海外客户量产交付进度"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核 2026 年全年业绩和 2027 年广汽项目供货准备情况"
+    }
+  ]
+}

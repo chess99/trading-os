@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920489",
+  "market": "CN",
+  "ticker": "920489",
+  "name": "佳先股份",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "传统助剂低回报、电子材料尚未验证多客户和正自由现金流，当前价格已透支转型成功预期。",
+  "fair_value_range": [5.0, 8.0],
+  "buy_zone": [4.0, 5.5],
+  "sell_or_reduce_zone": [10.0, 12.0],
+  "position_plan": [
+    {
+      "condition": "股价处于买入区间，且连续两个季度经营现金流为正、净债务下降、电子材料客户集中度改善且无新增监管问题",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "自由现金流继续为负、净债务上升、客户验证或回款恶化、发生减值或新增监管处分",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、产能利用率、电子材料客户验证与自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入可能具备安全边际的观察买入区间，仍需重新验证基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "reason": "进入减仓或不应追高区间，除非现金流和电子材料转型已得到验证"
+    }
+  ],
+  "updated_at": "2026-07-17T13:10:00+08:00"
+}

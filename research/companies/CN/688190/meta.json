@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688190",
+  "market": "CN",
+  "ticker": "688190",
+  "name": "云路股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "云路股份是非晶合金薄带龙头，主业护城河和节能应用需求真实，但2025年利润下行、2026Q1增收不增利、印度反倾销及治理扰动要求更高安全边际；当前价格处于合理区间而非显著低估，等待毛利率和现金流修复或价格回落。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    58,
+    82
+  ],
+  "buy_zone": [
+    45,
+    58
+  ],
+  "sell_or_reduce_zone": [
+    90,
+    115
+  ],
+  "position_plan": [
+    {
+      "condition": "price_below_58_and_2026H1_gross_margin_not_worse",
+      "action": "start_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price_below_50_and_operating_cash_flow_to_net_profit_above_0_6",
+      "action": "add_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "india_antidumping_materially_hits_orders_or_gross_margin_below_23_percent",
+      "action": "do_not_add_or_reduce",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 58,
+      "reason": "进入估值中枢下沿并具备初始安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 50,
+      "reason": "若基本面未恶化，进入明显低估区间"
+    },
+    {
+      "type": "price_above",
+      "price": 90,
+      "reason": "若利润仍未恢复增长，估值进入需要减仓的高区间"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报毛利率、现金流、纳米晶和磁性粉末盈利修复情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报与印度反倾销进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报、分红、资本开支和超宽非晶项目进度"
+    }
+  ]
+}

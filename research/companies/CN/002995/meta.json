@@ -1,0 +1,144 @@
+{
+  "symbol": "CN:002995",
+  "market": "CN",
+  "ticker": "002995",
+  "name": "天地在线",
+  "company_name": "北京全时天地在线网络信息股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司主业仍以低毛利互联网营销代理为主，2025年和2026Q1收入继续下滑，2026Q1减亏受联营企业投资收益影响较大，VR/XR与数字文旅业务尚未证明规模化盈利。按2026-07-13新浪行情15.75元测算，估值明显高于基于资产、收入和正常化利润交叉验证得到的6.0-8.5元合理价值区间，缺乏安全边际。",
+  "quality_rating": "低-中",
+  "valuation_rating": "明显高估",
+  "fair_value_range": [
+    6.0,
+    8.5
+  ],
+  "buy_zone": [
+    4.5,
+    5.5
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    13.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于10.5元且未出现连续两个季度扣非归母净利润转正",
+      "action": "不买或减仓",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价处于6.0-8.5元且当季经营现金流为正、毛利率改善",
+      "action": "仅建立跟踪仓",
+      "target_position": "0-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于5.5元且没有新增大额坏账、诈骗损失或资产减值",
+      "action": "小仓试错",
+      "target_position": "2-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于4.5元且主业连续两个季度经营现金流为正、扣非归母净利润转正",
+      "action": "谨慎加仓",
+      "target_position": "3-5%",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "unit": "CNY/share",
+      "reason": "低于买入区上沿，接近资产价值和保守估值锚",
+      "action": "进入可买区，复核坏账、现金流和减值后考虑小仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "unit": "CNY/share",
+      "reason": "低于每股净资产且接近更深安全边际区",
+      "action": "若基本面同步改善，可评估提高到3-5%仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "unit": "CNY/share",
+      "reason": "超过当前合理价值区间上沿且需要盈利拐点支撑",
+      "action": "估值超过基本面支撑，未验证盈利拐点时减仓或回避"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "unit": "CNY/share",
+      "reason": "显著透支VR/XR和数字文旅期权价值",
+      "action": "除非VR/XR业务已规模化盈利，否则卖出或不参与"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "event": "披露2026年半年报或三季报",
+      "reason": "半年报将验证2026Q1减亏是否可持续",
+      "action": "复核收入降幅、扣非利润、经营现金流和毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "event": "扣非归母净利润连续两个季度转正或再次扩大亏损",
+      "reason": "三季报将验证扣非利润是否进入真实拐点",
+      "action": "重新评估是否从不买调整为观察或继续回避"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "event": "经营活动现金流连续两个季度为负",
+      "reason": "现金流恶化会削弱现金缓冲和资产估值锚",
+      "action": "下调质量评级并复核应收、预付和合同负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "event": "全时分享涉嫌合同诈骗事项追回或实控人补偿出现重大进展",
+      "reason": "该事项关系到内控质量、可能损失和实控人承诺兑现",
+      "action": "复核内控风险和可能损失"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "event": "发生新增单项超过1000万元的信用减值、资产减值或诉讼损失",
+      "reason": "新增减值会直接侵蚀净资产和安全边际",
+      "action": "下调净资产锚和可买价格"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "event": "VR/XR或数字文旅项目披露可核验收入、毛利率、回本周期",
+      "reason": "新业务只有证明可复制盈利后才应计入更高估值",
+      "action": "单独评估新业务期权价值"
+    }
+  ],
+  "key_tracking_metrics": [
+    "数字化营销服务收入同比增速",
+    "数智化综合服务收入和毛利率",
+    "综合毛利率是否稳定回到8%-10%以上",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "应收账款余额和账龄结构",
+    "前五大供应商采购占比",
+    "VR/XR项目收入、毛利率、单项目回本周期",
+    "全时分享合同诈骗事项追回及补偿兑现进度",
+    "资产减值和信用减值金额"
+  ]
+}

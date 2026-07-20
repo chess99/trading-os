@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:603528",
+  "market": "CN",
+  "ticker": "603528",
+  "name": "多伦科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "多伦科技具备智慧车管/驾考场景积累和现金资产安全垫，但2025年与2026H1仍处亏损，扣非利润未恢复，新业务尚缺可核验利润贡献；当前估值相对亏损状态缺乏足够安全边际，等待价格回落或经营拐点确认。",
+  "fair_value_range": [
+    3.8,
+    5.2
+  ],
+  "buy_zone": [
+    2.8,
+    3.6
+  ],
+  "sell_or_reduce_zone": [
+    6.5,
+    8.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前扣非仍亏损且价格未进入买入区间，不建仓，仅观察",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入3.6元以下，且最近一期经营现金流为正、扣非亏损明显收窄，可试探建仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度扣非盈利或智慧车管/车检订单恢复被财报验证后，可提高配置",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "进入买入区间上沿，若经营现金流和扣非亏损同步改善，可复核建仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "进入卖出或回避区间，若扣非仍亏损，主题估值过高。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、扣非亏损、银行股公允价值影响和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断智慧车管/车检订单和收入修复是否出现。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估正常化盈利和估值区间。"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300856",
+  "ticker": "300856",
+  "name": "科思股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "科思股份是全球重要防晒剂和个人护理品原料供应商，客户认证、产品线和规模制造构成护城河；但2025年利润大幅下滑，2026Q1仍是收入修复而利润未修复，当前10.92元已处于中性估值区间，需等待价格安全边际或连续季度毛利率修复。",
+  "fair_value_range": [
+    9.0,
+    13.0
+  ],
+  "buy_zone": [
+    7.0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.5元，且未出现重大客户流失、安全环保事故或马来西亚项目失败",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入恢复、综合毛利率高于31%、经营现金流匹配利润，且马来西亚项目投产爬坡顺利",
+      "action": "可提高为核心跟踪仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于15.5元但年化净利润仍低于2.5亿元，或毛利率持续低于29%",
+      "action": "不追高并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入初始买入区间，需要复核基本面是否未继续恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "进入减仓观察区间，需要验证利润修复是否足以支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、毛利率、经营现金流和在建工程转固进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否连续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和马来西亚项目达产情况"
+    }
+  ],
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "latest_report": "reports/2026-07-15-initial.md"
+}

@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:688589",
+  "market": "CN",
+  "ticker": "688589",
+  "name": "力合微",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "力合微是少数聚焦电力线载波通信芯片并进入智能电网供应链的 A 股公司，技术与客户认证壁垒存在；但 2025 年收入和利润大幅下滑、2026Q1 转亏，业务恢复尚未被财报确认。当前价格接近估值区间下沿但安全边际不足，适合观察并等待订单、毛利率和现金流改善信号。",
+  "fair_value_range": [
+    18.0,
+    24.0
+  ],
+  "buy_zone": [
+    13.5,
+    16.0
+  ],
+  "sell_or_reduce_zone": [
+    26.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 16 元，且无新增经营恶化证据，可建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026 年中报或三季报确认收入同比转正、毛利率稳定、亏损收窄或转盈",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "订单恢复、经营现金流改善且估值仍低于 20 元",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16.0,
+      "reason": "进入观察仓买入区，若基本面未继续恶化可重新评估买入"
+    },
+    {
+      "type": "price_below",
+      "price": 13.5,
+      "reason": "进入深度安全边际区，需要复核是否为基本面恶化导致"
+    },
+    {
+      "type": "price_above",
+      "price": 26.0,
+      "reason": "超过当前估值上沿，若财务恢复证据不足应考虑减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报收入、毛利率、现金流和订单恢复情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报是否确认收入转正和亏损收窄"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，判断电网业务与非电力物联网第二曲线是否兑现"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "symbol": "CN:002570",
+  "market": "CN",
+  "ticker": "002570",
+  "name": "贝因美",
+  "company_name": "贝因美股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "贝因美处于困境修复阶段，2025年盈利和经营现金流改善，但2026Q1收入、扣非利润和现金流同比回落；婴配粉行业受出生人口下降拖累，当前4.02元股价已计入较多国资入主和经营改善预期，缺乏安全边际。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    2.4,
+    3.4
+  ],
+  "buy_zone": [
+    2.0,
+    2.5
+  ],
+  "sell_or_reduce_zone": [
+    3.8,
+    4.8
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current price 4.02",
+      "action": "watch",
+      "position": 0,
+      "max_weight": 0
+    },
+    {
+      "condition": "price <= 2.00",
+      "action": "buy",
+      "position": 0.02,
+      "max_weight": 0.06
+    },
+    {
+      "condition": "2.01 <= price <= 2.50",
+      "action": "buy",
+      "position": 0.01,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "price > 3.80",
+      "action": "avoid_chasing",
+      "position": 0,
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.5,
+      "reason": "enter margin-of-safety buy zone if fundamentals remain intact",
+      "action": "review_for_small_buy"
+    },
+    {
+      "type": "price_below",
+      "price": 2,
+      "reason": "enter strong buy zone if no food safety or governance deterioration",
+      "action": "review_for_strong_buy"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "price exceeds optimistic scenario without further proof",
+      "action": "review_for_reduce_or_avoid"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "review 2026 interim report after publication",
+      "action": "review 2026 interim report: revenue growth, recurring net margin, gross margin and operating cash flow"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "review Q3 operating trend and governance progress",
+      "action": "review Q3 report and governance progress after controller change"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "review full-year earnings quality and capital allocation",
+      "action": "review 2026 annual report and capital allocation"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入同比增速",
+    "扣非净利润率",
+    "经营活动现金流净额/归母净利润",
+    "毛利率",
+    "应收账款和存货周转",
+    "合同负债变化",
+    "国资入主及控股股东重整执行进展"
+  ]
+}

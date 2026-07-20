@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300710",
+  "ticker": "300710",
+  "name": "万隆光电",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "原广电网络设备主业收入下滑且持续亏损，现价缺少安全边际；拟收购中控信息若完成可显著改变收入和利润结构，但审核、摊薄、应收账款和业绩承诺兑现仍需验证，当前仅适合观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    12,
+    18
+  ],
+  "buy_zone": [
+    8,
+    12
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    32
+  ],
+  "position_plan": [
+    {
+      "condition": "重组仍处审核阶段且股价高于24元，二级市场估值已反映乐观预期",
+      "action": "不新建核心仓，若已有事件仓则控制风险",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至12元以下，且深交所问询未暴露重大资产质量或合规问题",
+      "action": "可建立观察仓，等待注册和交割确认",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价回落至10元以下，重组完成且中控信息经营现金流/净利润连续两个报告期不低于0.8",
+      "action": "提升至小到中等仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12,
+      "reason": "进入保守公允价值下沿，可重新评估事件驱动仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 8,
+      "reason": "接近悲观情景安全边际，需要复核重组进度和流动性风险"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "高于乐观情景下沿，风险收益比转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、重组问询回复和中控信息最新财务数据"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和重大资产重组审核/注册进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、业绩承诺起始年度兑现情况和现金流质量"
+    }
+  ]
+}

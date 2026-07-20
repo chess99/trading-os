@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300981",
+  "ticker": "300981",
+  "name": "中红医疗",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中红医疗账面净资产和现金理财提供估值安全垫，2026Q1 已从 2025 年亏损转为微利，但扣非仍亏、一次性手套 ASP 和产能利用率修复尚未充分确认。现价约在公允区间内，等待毛利率、扣非利润和海外产能订单验证后再提高仓位。",
+  "fair_value_range": [
+    9.0,
+    12.5
+  ],
+  "buy_zone": [
+    7.5,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 7.5-8.5 元且最新季度扣非亏损继续收窄、经营现金流为正",
+      "action": "试探建仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度扣非净利润转正且毛利率高于 15%",
+      "action": "提高到观察仓上限",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 14 元但扣非利润未稳定转正",
+      "action": "不追高或减仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入安全边际买入区，需要复核资产负债表和手套价格是否继续恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "超过当前乐观情景下沿，若利润未同步改善需考虑减仓或下调预期"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看毛利率、扣非净利润、经营现金流和海外产能进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断手套行业修复是否兑现为连续盈利"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和分红政策，重估正常化盈利与资产安全垫"
+    }
+  ]
+}

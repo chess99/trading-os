@@ -1,0 +1,29 @@
+{
+  "symbol": "CN:300999",
+  "market": "CN",
+  "ticker": "300999",
+  "name": "金龙鱼",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国粮油龙头，品牌渠道护城河深，但低利润率决定低ROE。当前36x PE偏贵，安全边际不足，等待更便宜的价格或利润修复路径更清晰时介入。",
+  "fair_value_range": [550, 700],
+  "buy_zone": [15, 17],
+  "sell_or_reduce_zone": [28, 99],
+  "position_plan": [
+    {"condition": "股价跌至17-20元且利润改善趋势确认", "max_weight": 0.01},
+    {"condition": "股价跌至15-17元", "max_weight": 0.02},
+    {"condition": "股价低于15元", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": ["reports/2026-07-09-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年半年度报告发布——关注Q2利润和利润率趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报发布"}
+  ],
+  "price_triggers": [
+    {"price": 17, "reason": "进入有安全边际的买入区间下限", "type": "price_below"},
+    {"price": 28, "reason": "进入减仓或不应追高区间", "type": "price_above"}
+  ],
+  "updated_at": "2026-07-09T07:00:00+08:00"
+}

@@ -1,0 +1,94 @@
+{
+  "symbol": "CN:603334",
+  "market": "CN",
+  "ticker": "603334",
+  "name": "丰倍生物",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "丰倍生物处在废弃油脂资源综合利用和生物基材料放量期，收入增长强、资产负债表较稳健，但主营毛利率低且原料成本波动大，当前价格接近合理价值低端但安全边际不足，暂以观察为主，等待更低价格或扣非利润与现金流连续验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    29,
+    38
+  ],
+  "buy_zone": [
+    24,
+    28
+  ],
+  "sell_or_reduce_zone": [
+    43,
+    50
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于28元且未出现毛利率下滑、经营现金流恶化或重大贸易政策冲击时，可建立观察仓。",
+      "action": "initial_buy",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H1扣非净利润恢复同比增长、主营毛利率提升至9%以上且经营现金流连续改善，可提高配置。",
+      "action": "add",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "主营毛利率跌破7%或经营现金流再次显著转负，降低或清空仓位。",
+      "action": "reduce_or_exit",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "进入初始买入区间，若基本面未恶化则具备一定安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "低于保守买入区间下沿，需复核是否为基本面风险导致。"
+    },
+    {
+      "type": "price_above",
+      "price": 43,
+      "reason": "进入减持区间，估值已透支基准情景。"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "接近乐观情景上沿，除非利润率和产能释放显著超预期，否则应降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-24",
+      "reason": "公司预约披露2026年半年报，复核收入增长、扣非利润、毛利率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证生物基材料放量是否转化为利润和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2027-05-31",
+      "reason": "跟踪工业级混合油在建产能预计完工进度及投产后的原料保障。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price_cny": 31.16,
+    "reference_price_date": "2026-07-17",
+    "reference_price_note": "来自新浪财经搜索摘要，显示盘中临时停牌，收盘价未核验，置信度中。",
+    "shares_outstanding": 143500000,
+    "market_cap_cny": 4471460000,
+    "pe_2025_net_profit": 31.81,
+    "pe_2026q1_annualized_net_profit": 27.34,
+    "pb_2026q1": 2.57
+  }
+}

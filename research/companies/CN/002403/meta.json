@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:002403",
+  "ticker": "002403",
+  "name": "爱仕达",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "爱仕达具备炊具制造基础和机器人转型期权，但传统业务盈利修复不足、机器人业务尚未证明持续利润贡献，当前约9元以上股价已计入较多乐观预期，安全边际不足，适合观察而非买入。",
+  "fair_value_range": [
+    5.0,
+    7.0
+  ],
+  "buy_zone": [
+    0.0,
+    5.5
+  ],
+  "sell_or_reduce_zone": [
+    8.5,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格高于8.5元且扣非亏损未明显收窄",
+      "action": "不建仓，维持观察",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格回落至5.5元以下，且半年报或三季报显示亏损收窄、经营现金流改善",
+      "action": "可建立跟踪仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "机器人业务连续两个季度收入增长且毛利率改善，同时传统主业恢复正利润",
+      "action": "重新评估是否提高仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入买入观察区，需要复核亏损收窄和现金流改善是否同步发生"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "高于基准合理价值区间，若基本面未兑现应回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，验证亏损区间、债务压力和机器人业务进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扣非亏损、经营现金流和订单质量是否改善"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

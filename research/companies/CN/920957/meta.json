@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920957",
+  "market": "CN",
+  "ticker": "920957",
+  "name": "汉维科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "产品标准化、议价能力与资本回报偏弱，现价隐含的利润率和自由现金流修复远高于已有证据。",
+  "fair_value_range": [3.6, 5.0],
+  "buy_zone": [2.8, 3.6],
+  "sell_or_reduce_zone": [6.0, 8.5],
+  "position_plan": [
+    {
+      "condition": "股价处于买入区间，连续两个季度毛利率不低于11.5%，滚动自由现金流为正且海外子公司亏损显著收窄",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于买入区间且核心假设经重新验证、ROIC持续改善；基本面恶化时不因价格下跌加仓",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的毛利率、自由现金流、产能利用率和海外子公司盈亏"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "进入具备一定安全边际的观察区，仍须重新验证基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "reason": "超过合理价值上沿并进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T06:08:06+08:00"
+}

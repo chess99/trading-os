@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:300059",
+  "market": "CN",
+  "ticker": "300059",
+  "name": "东方财富",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国最大互联网财富管理平台，三重护城河(流量+牌照+成本优势)构建强大壁垒。2025年因A股活跃业绩强劲增长，当前PE(TTM)24.5x，PEG<1，估值处于合理偏低位置。但缺乏足够安全边际，建议观察等待回调后分批建仓。",
+  "fair_value_range": [18.0, 27.0],
+  "buy_zone": [15.0, 18.0],
+  "sell_or_reduce_zone": [28.0, 35.0],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价处于强吸引力区间(16元以下)", "max_weight": 0.05},
+    {"condition": "市场持续活跃且ROE维持15%以上", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-25", "reason": "2026年半年报（预计8月中下旬）"},
+    {"type": "date", "date": "2026-10-25", "reason": "2026年三季报（预计10月中下旬）"},
+    {"type": "date", "date": "2027-03-20", "reason": "2026年年报及分红方案"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 18.0, "reason": "进入有安全边际的买入区间(PE<22x)"},
+    {"type": "price_above", "price": 28.0, "reason": "进入减仓或不应追高区间(PE>28x)"},
+    {"type": "price_below", "price": 16.0, "reason": "进入强吸引力买入区间(PE<18x)"}
+  ],
+  "updated_at": "2026-07-07T15:30:00+08:00"
+}

@@ -11,13 +11,14 @@ def test_company_report_template_contains_required_sections():
     text = (root / "templates" / "company-report.md").read_text(encoding="utf-8")
 
     for heading in [
-        "## 一句话结论",
-        "## 决策",
+        "## 结论版",
         "## 业务理解",
         "## 行业与竞争格局",
         "## 公司质量",
         "## 财务质量",
         "## 估值",
+        "## 市场隐含预期",
+        "## 情景与赔率",
         "## 价格与仓位计划",
         "## 关键假设",
         "## 跟踪触发器",
@@ -26,6 +27,8 @@ def test_company_report_template_contains_required_sections():
         "## 来源",
     ]:
         assert heading in text
+    assert "分析师：agent" not in text
+    assert "具体工具 + 模型" in text
 
 
 def test_playbooks_state_immutable_report_rule():
@@ -38,6 +41,47 @@ def test_playbooks_state_immutable_report_rule():
     assert "Previous Thesis Review" in followup
     assert "Write the report in Chinese" in company
     assert "Write the report in Chinese" in followup
+    assert "actual tool and model" in company
+
+
+def test_research_prompts_include_miller_style_value_discipline():
+    root = Path(__file__).resolve().parents[1]
+    template = (root / "templates" / "company-report.md").read_text(encoding="utf-8")
+    worker = (root / "automation" / "scripts" / "_worker_prompt.md").read_text(
+        encoding="utf-8"
+    )
+    company = (root / "playbooks" / "company-research.md").read_text(encoding="utf-8")
+    followup = (root / "playbooks" / "followup-review.md").read_text(encoding="utf-8")
+    combined = "\n".join([template, worker, company, followup])
+
+    for phrase in [
+        "自由现金流",
+        "市场隐含预期",
+        "资本回报",
+        "永久资本损失",
+        "情景与赔率",
+        "多因素估值中心倾向",
+        "低估值指标",
+    ]:
+        assert phrase in combined
+
+    assert "低估值指标" in worker
+    assert "Miller-Style Value Discipline" in company
+    assert "Miller-Style Follow-up Discipline" in followup
+
+
+def test_batch_worker_validation_uses_strict_company_check():
+    root = Path(__file__).resolve().parents[1]
+    batch = (root / "automation" / "scripts" / "batch_research.py").read_text(
+        encoding="utf-8"
+    )
+    worker = (root / "automation" / "scripts" / "_worker_prompt.md").read_text(
+        encoding="utf-8"
+    )
+
+    assert '"--strict"' in batch
+    assert "# 公司研究：{{COMPANY_NAME}}（{{SYMBOL}}）" in worker
+    assert "python -m trading_os company validate {{COMPANY_DIR}} --strict" in worker
 
 
 def test_meta_schema_is_valid_json_and_has_validator_aligned_constraints():

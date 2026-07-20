@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920346",
+  "market": "CN",
+  "ticker": "920346",
+  "name": "威贸电子",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "现金流和资产负债表稳健，但客户高度集中，15.32元已隐含显著高于历史的自由现金流增长，等待9.5-11.0元且基本面验证后再买。",
+  "fair_value_range": [11.5, 13.5],
+  "buy_zone": [9.5, 11.0],
+  "sell_or_reduce_zone": [15.0, 17.0],
+  "position_plan": [
+    {
+      "condition": "股价处于9.5-11.0元且第一大客户、毛利率、回款和自由现金流未恶化",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "股价低于9.5元并完成基本面复核，确认长期商业价值未受损且悲观情景未成真",
+      "max_weight": 0.035
+    },
+    {
+      "condition": "股价高于15.0元或核心假设被证伪",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的客户集中、毛利率、汇兑损益、现金流和新项目量产情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入有安全边际的买入复核区间，仍需确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 15.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T20:47:21+08:00"
+}

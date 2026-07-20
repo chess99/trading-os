@@ -1,0 +1,106 @@
+{
+  "symbol": "CN:002825",
+  "market": "CN",
+  "ticker": "002825",
+  "name": "纳尔股份",
+  "company_name": "上海纳尔实业股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是以数码喷印材料为基本盘、向汽车保护膜和电子功能膜延伸的功能涂层材料企业。2025年收入增长较快且客户分散、海外收入占比较高，但2026年一季度扣非利润下滑，自由现金流仍受资本开支压制。当前价格大致处于合理区间中部，安全边际不足，等待扣非利润和经营现金流验证。",
+  "quality_rating": "中等",
+  "valuation_rating": "接近合理",
+  "fair_value_range": [
+    7.0,
+    9.0
+  ],
+  "buy_zone": [
+    0,
+    6.8
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于8.0元且扣非利润尚未恢复同比增长",
+      "action": "仅观察或维持0-1%观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于7.2元，且2026年中报扣非利润不再明显下滑、经营现金流为正",
+      "action": "建立试错仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于6.5元，且汽车保护膜/电子功能膜收入占比提升、综合毛利率不恶化",
+      "action": "提高到标准小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于10.5元且TTM扣非利润仍低于1.2亿元或毛利率下滑",
+      "action": "减仓或退出",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "价格接近合理价值区间下沿且可小仓位验证中报改善",
+      "note": "进入小仓位观察区，需同时检查中报扣非利润和现金流。"
+    },
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "低于中性合理价值下沿并具备较明确安全边际",
+      "note": "进入有安全边际的买入区。"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "价格进入乐观情景估值区，需要利润高增长验证",
+      "note": "进入减仓复核区，需确认利润增速是否足以支撑估值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露窗口结束",
+      "reason": "验证2026年一季度扣非利润下滑是否改善",
+      "action": "复核扣非利润、经营现金流、毛利率和汽车保护膜收入增速"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露窗口结束",
+      "reason": "判断全年盈利能否恢复到可支持当前估值的水平",
+      "action": "复核全年盈利能否恢复到1.1亿元以上扣非归母净利润"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露窗口结束",
+      "reason": "年度数据足以重新评估盈利质量、现金流和资本开支回报",
+      "action": "重估合理价值区间、买入区间和仓位上限"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润及同比增速",
+    "经营现金流净额/归母净利润",
+    "综合毛利率和分产品毛利率",
+    "汽车保护膜/改色膜收入及增速",
+    "光学电子功能膜收入、毛利率和客户导入进展",
+    "境外收入占比和汇率敏感性",
+    "存货周转、应收账款周转和资本开支"
+  ]
+}

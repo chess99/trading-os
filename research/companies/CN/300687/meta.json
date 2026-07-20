@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:300687",
+  "market": "CN",
+  "ticker": "300687",
+  "name": "赛意信息",
+  "company_name": "广州赛意信息科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司具备制造业数字化客户基础和 AI 应用落地场景，2026 年利润从 2025 年大额减值后修复，但当前约 30 元以上价格已接近乐观估值，缺乏买方安全边际。",
+  "quality_rating": "B+",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    19,
+    24
+  ],
+  "buy_zone": [
+    16,
+    20
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    36
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于16元且订单、毛利率、经营现金流未恶化",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价16-20元且2026年利润修复持续",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价20-24元，仅在半年报验证AI收入和现金流改善后小仓试错",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价24-28元，估值偏满，只保留跟踪仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于28元且无超预期订单或利润证据",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入有安全边际的买入区间，复核订单和现金流后可建立第一笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "进入强吸引力区间，如基本面未恶化可提高目标仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "reason": "高于合理估值上沿，需要确认AI产品收入和利润率是否超预期，否则避免追高"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "接近乐观情景估值上沿，已有仓位应复核减仓或退出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报：收入、毛利率、净利率、经营现金流、订单和AI收入披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：确认利润修复是否延续以及回款是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报：验证全年正常化利润、减值出清和资本开支回报"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入增速",
+    "归母净利润和归母净利率",
+    "经营现金流净额/归母净利润",
+    "毛利率",
+    "在手订单和新签订单增速",
+    "AI相关收入占比和毛利率",
+    "应收账款及合同资产增速",
+    "大额算力或服务器采购对应的收入与现金流"
+  ]
+}

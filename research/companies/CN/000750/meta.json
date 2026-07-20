@@ -1,0 +1,106 @@
+{
+  "symbol": "CN:000750",
+  "market": "CN",
+  "ticker": "000750",
+  "name": "国海证券",
+  "company_name": "国海证券",
+  "status": "active",
+  "updated_at": "2026-07-11",
+  "latest_report": "reports/2026-07-11-initial.md",
+  "report_history": [
+    "reports/2026-07-11-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "广西国资背景下的区域综合券商，净资本缓冲充足，2025-2026Q1利润修复受权益市场活跃和自营估值改善驱动；但ROE仍偏低、债券回购扩张和诉讼尾部风险需要折价，现价以观察为主，低于0.95倍PB再考虑首笔仓位。",
+  "quality_rating": "B-",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    3.4,
+    4.12
+  ],
+  "buy_zone": [
+    3.05,
+    3.35
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    5.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格进入3.05-3.35元且两市成交额未明显萎缩，公司无新增重大处罚或诉讼损失",
+      "action": "建立首笔观察仓",
+      "max_weight": 0.015,
+      "reason": "低于中性PB估值下沿后具备安全边际，但ROE仍偏低，不宜重仓"
+    },
+    {
+      "condition": "价格低于3.05元且行业成交活跃度、净资本和诉讼预计负债均未恶化",
+      "action": "加仓至战术上限",
+      "max_weight": 0.03,
+      "reason": "接近悲观情景估值上沿，风险收益比改善"
+    },
+    {
+      "condition": "价格高于4.50元且ROE没有持续上行到6%以上",
+      "action": "分批减仓",
+      "max_weight": 0.0,
+      "reason": "估值进入政策beta交易区，基本面回报率不足以支撑更高PB"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.35,
+      "reason": "进入初始买入区，PB安全边际改善"
+    },
+    {
+      "type": "price_below",
+      "price": 3.05,
+      "reason": "进入可加仓区，但需复核行业成交额、净资本和诉讼风险"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "进入减仓区，需验证ROE能否支撑估值扩张"
+    },
+    {
+      "type": "price_above",
+      "price": 5.0,
+      "reason": "接近乐观情景上沿，除非券商强周期确认，否则应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、净资本指标、债券投资规模和诉讼预计负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认ROE改善是否可持续"
+    }
+  ],
+  "key_tracking_metrics": [
+    "两市日均成交额",
+    "券商指数相对沪深300强弱",
+    "季度营业收入",
+    "季度归母净利润",
+    "加权平均ROE",
+    "母公司净资本",
+    "风险覆盖率",
+    "资本杠杆率",
+    "流动性覆盖率",
+    "净稳定资金率",
+    "代理买卖证券款",
+    "融出资金",
+    "交易性金融资产",
+    "其他债权投资",
+    "卖出回购金融资产款",
+    "未决诉讼预计负债",
+    "监管处罚和整改进展",
+    "现金分红比例"
+  ]
+}

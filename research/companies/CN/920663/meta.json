@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920663",
+  "market": "CN",
+  "ticker": "920663",
+  "name": "明阳科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "盈利与分红质量较好，但单一大客户集中、毛利率下行和现金流波动使当前价格缺乏足够安全边际。",
+  "fair_value_range": [11.0, 15.0],
+  "buy_zone": [9.0, 11.0],
+  "sell_or_reduce_zone": [16.0, 19.0],
+  "position_plan": [
+    {
+      "condition": "股价处于9.0至11.0元且华域等核心客户份额、毛利率和回款未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于9.0元且重新验证长期商业价值未受损、自由现金流假设成立",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价达到16.0元以上且盈利与现金流假设未上修",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中的客户集中度、毛利率、应收账款和经营现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入有安全边际的买入复核区间，须先确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "进入减仓或不应追高区间，除非盈利和现金流假设已上修"
+    }
+  ],
+  "updated_at": "2026-07-15T12:00:00+08:00"
+}

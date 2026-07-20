@@ -1,0 +1,142 @@
+{
+  "symbol": "CN:002580",
+  "market": "CN",
+  "ticker": "002580",
+  "name": "圣阳股份",
+  "company_name": "山东圣阳电源股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "数据/算力中心备用电源收入高增，带来利润弹性和估值重估空间；但当前约18.38元股价已接近乐观情景定价，制造业毛利率、锂电新业务亏损、现金流和营运资金占用仍需验证，当前不具备安全边际。",
+  "quality_rating": "B",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    10.5,
+    13.0
+  ],
+  "buy_zone": [
+    7.5,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    14.5,
+    18.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格约18.38元",
+      "price_range": "current_18.38",
+      "action": "observe_no_buy",
+      "position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价小于或等于7.5元且基本面未恶化",
+      "price_range": "<=7.5",
+      "action": "strong_buy_if_thesis_intact",
+      "position": "4%-6%",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价在7.5元至9.5元",
+      "price_range": "7.5-9.5",
+      "action": "buy_in_batches",
+      "position": "2%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价在9.5元至11.5元",
+      "price_range": "9.5-11.5",
+      "action": "small_probe_or_wait",
+      "position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于14.5元",
+      "price_range": ">14.5",
+      "action": "do_not_chase",
+      "position": "0% new position",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入安全边际买入区",
+      "condition": "跌破安全边际买入价，重新检查半年报和现金流后可考虑首笔仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "接近悲观情景估值，赔率显著改善",
+      "condition": "跌至强吸引力买入价，若基本面未恶化可提高目标仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 14.5,
+      "reason": "高于合理价值区间上沿后的追高区",
+      "condition": "高于不应追高价，新仓停止"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "进入乐观预期定价区",
+      "condition": "高估区域，已有仓位应审视减仓纪律"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报是验证数据/算力中心高增是否持续的关键节点",
+      "condition": "2026半年报披露",
+      "action": "复查数据/算力中心收入、毛利率和订单持续性"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可验证经营现金流和应收账款压力是否缓解",
+      "condition": "经营现金流连续两个季度为负或应收账款继续快于收入增长",
+      "action": "重新评估财务质量和仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "锂电新业务亏损是2025年归母净利下滑的重要原因",
+      "condition": "圣阳锂科圆柱锂电池业务亏损扩大或产能释放低于预期",
+      "action": "下修盈利中枢和合理价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "数据/算力中心毛利率决定公司能否享受成长估值",
+      "condition": "数据/算力中心业务毛利率跌破20%",
+      "action": "重新评估成长溢价"
+    },
+    {
+      "type": "date",
+      "date": "2026-07-31",
+      "reason": "价格触发会改变赔率和仓位纪律",
+      "condition": "股价跌破9.5元或升破20元",
+      "action": "重新估值"
+    }
+  ],
+  "key_tracking_metrics": [
+    "数据/算力中心收入增速和占比",
+    "数据/算力中心毛利率",
+    "归母净利润和扣非归母净利润",
+    "经营活动现金流净额",
+    "应收账款周转与存货周转",
+    "圣阳锂科亏损收窄或扭亏进度",
+    "ROE是否提升至10%-12%",
+    "前五大客户和供应商集中度"
+  ]
+}

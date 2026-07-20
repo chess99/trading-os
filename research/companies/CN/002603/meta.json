@@ -1,0 +1,121 @@
+{
+  "symbol": "CN:002603",
+  "market": "CN",
+  "ticker": "002603",
+  "name": "以岭药业",
+  "company_name": "石家庄以岭药业股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是现代中药龙头，心脑血管基本盘稳、呼吸系统业务修复、经营现金流强，6个独家品种进入2026版国家基药目录提供中期催化；但2026-07-10收盘价15.51元对应约18.9倍TTM PE，已经接近合理价值上沿，缺少安全边际，等待12元以下再考虑正式买入。",
+  "quality_rating": "B+ / 中上",
+  "valuation_rating": "C+ / 中性偏贵",
+  "fair_value_range": [
+    12.5,
+    16.5
+  ],
+  "buy_zone": [
+    10.5,
+    12.0
+  ],
+  "sell_or_reduce_zone": [
+    17.5,
+    20.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 10.5",
+      "position": "6%-8%",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "10.5 < price <= 12.0",
+      "position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "12.0 < price <= 14.0",
+      "position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "14.0 < price <= 16.5",
+      "position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price >= 17.5",
+      "position": "不追高；已有仓位视业绩兑现减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "condition": "price <= 12.0",
+      "action": "safe_buy",
+      "reason": "进入有安全边际买入区"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "condition": "price <= 10.5",
+      "action": "strong_buy",
+      "reason": "进入强吸引力买入区"
+    },
+    {
+      "type": "price_above",
+      "price": 17.5,
+      "condition": "price >= 17.5",
+      "action": "do_not_chase",
+      "reason": "高于合理区间上沿，不应追高"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "condition": "price >= 20.0",
+      "action": "reduce_without_fundamental_upgrade",
+      "reason": "若基本面未上修，估值进入减仓区"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露后复核收入、扣非净利、经营现金流和费用率",
+      "reason": "验证2026年修复是否可持续"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露后复核呼吸系统收入连续性和现金流质量",
+      "reason": "验证旺季前后收入和利润是否匹配"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露后复核基药目录放量、新品商业化和分红率",
+      "reason": "评估中期增长假设是否成立"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入增速",
+    "扣非归母净利润",
+    "经营现金流/归母净利润",
+    "心脑血管类产品收入增速",
+    "呼吸系统类产品收入增速",
+    "销售费用率",
+    "研发费用率",
+    "6个基药独家品种收入合计",
+    "新品商业化进度",
+    "分红率"
+  ]
+}

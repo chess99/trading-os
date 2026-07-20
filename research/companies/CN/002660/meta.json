@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002660",
+  "ticker": "002660",
+  "name": "茂硕电源",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "茂硕电源处于亏损后的利润修复观察期，2025年主业毛利率、质量成本和内控问题同时暴露，2026H1仍预计亏损；当前价格相对净资产和可验证盈利均缺乏安全边际，需等待H2扣非转正、质量事件闭环和现金流改善后再重估。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    3.2,
+    4.8
+  ],
+  "buy_zone": [
+    0,
+    3.6
+  ],
+  "sell_or_reduce_zone": [
+    5.5,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且2026H1仍预计亏损，不建立仓位。",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于3.6元，且半年度或三季度报告确认质量事件未新增重大预计负债、SPS毛利率回正、经营现金流改善。",
+      "action": "watchlist_probe",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非净利转正，经营现金流为正，LED与SPS毛利率均修复，再考虑提高上限。",
+      "action": "reassess_for_position",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "进入买入观察区，需要结合半年报或三季报验证质量事件闭环和毛利率修复。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.5,
+      "reason": "高于保守合理价值上沿，若基本面未同步改善，应回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，确认预告兑现、二季度改善质量、预计负债和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断H2是否真正扣非转正。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报和审计意见，确认内控整改、质量事件和全年盈利修复。"
+    }
+  ]
+}

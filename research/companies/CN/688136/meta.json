@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688136",
+  "market": "CN",
+  "ticker": "688136",
+  "name": "科兴制药",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "科兴制药当前约38.8亿元市值已反映2026Q1转亏和2025年非经常性收益占比较高的担忧，但海外商业化仍在兑现，白蛋白紫杉醇在智利、瑞士等市场获批提供出海期权。19-21元适合小仓位买入，后续必须用扣非利润转正和外销收入放量验证。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    23,
+    30
+  ],
+  "buy_zone": [
+    18,
+    21
+  ],
+  "sell_or_reduce_zone": [
+    32,
+    36
+  ],
+  "position_plan": [
+    {
+      "condition": "19-21元区间且无重大负面公告，建立观察仓",
+      "action": "buy_starter",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026Q2或Q3扣非净利润转正且外销收入同比保持35%以上",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于32元且扣非利润未明显上修",
+      "action": "reduce",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入低于3亿元且扣非亏损",
+      "action": "exit",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "低于熊市情景上沿，可重新核验海外订单和现金流后评估加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "reason": "进入减持区间，需要利润兑现或上修才能支持继续持有"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查外销收入、扣非利润、销售费用率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1亏损是否为短期扰动"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核年度业绩预告和海外商业化订单兑现情况"
+    }
+  ]
+}

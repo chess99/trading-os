@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:002853",
+  "ticker": "002853",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "皮阿诺",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "皮阿诺主业仍处于地产后周期下行和扣非亏损阶段，2026Q1收入继续大幅下滑，2026H1预告归母减亏主要依赖非经常性收益；当前股价约4.6-4.8倍PB，显著高于可解释主业价值，除非后续有正式公告验证的新盈利资产或主业拐点，否则不具备安全边际。",
+  "fair_value_range": [
+    4.0,
+    7.0
+  ],
+  "buy_zone": [
+    3.5,
+    5.0
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    12.0
+  ],
+  "position_plan": [
+    {
+      "condition": "现价高于卖出区且扣非亏损未修复",
+      "action": "不建仓",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价低于5.0元且连续两个季度扣非亏损收窄、经营现金流转正",
+      "action": "仅纳入小仓观察",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "经公告核验出现盈利资产注入或主业收入恢复增长",
+      "action": "重新估值后再决定是否提高仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "进入主业估值买入观察区，需要复核现金流和扣非亏损趋势"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "显著高于乐观主业估值，若无正式公告验证的新盈利资产，应卖出或规避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式收入、扣非亏损、资产处置收益和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报收入降幅、毛利率、扣非利润和控制权变更后的资本动作"
+    }
+  ]
+}

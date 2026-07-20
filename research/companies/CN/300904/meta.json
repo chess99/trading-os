@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300904",
+  "ticker": "300904",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "威力传动",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "current_thesis": "风电齿轮箱收入快速放量，但公司仍处亏损、毛利率低、资产负债率高和客户集中阶段；当前价格缺乏安全边际，需等待价格回落或连续季度验证盈利与现金流修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    22,
+    30
+  ],
+  "buy_zone": [
+    18,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    38,
+    45
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价进入18-22元且无新增重大质量、融资或客户流失风险时考虑观察仓",
+      "action": "watchlist_starter",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若连续两个季度毛利率高于15%、经营现金流为正且资产负债率降至75%以下，可提高至小仓位",
+      "action": "small_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若股价高于38元但盈利修复未被财报验证，维持不买或减仓",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入估算安全买入区间上沿，需要复核最新订单、毛利率和融资进展。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入悲观情景估值附近，若基本面未恶化可重新评估风险收益比。"
+    },
+    {
+      "type": "price_above",
+      "price": 38,
+      "reason": "进入乐观情景估值区间，若缺少盈利拐点验证应避免追高或考虑降低敞口。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、资产负债率和前五大客户集中度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证收入放量是否转化为利润修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报与定增/募投进展，重估合理价值区间。"
+    }
+  ]
+}

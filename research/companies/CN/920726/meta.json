@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920726",
+  "market": "CN",
+  "ticker": "920726",
+  "name": "朱老六",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "现金充裕和先款后货提供下行缓冲，但区域与腐乳单品高度集中、长期资本回报偏低，当前价格已过度成长化2026年一季度的成本修复。",
+  "fair_value_range": [7.0, 10.0],
+  "buy_zone": [5.5, 7.0],
+  "sell_or_reduce_zone": [12.0, 16.5],
+  "position_plan": [
+    {
+      "condition": "股价处于5.5至7.0元且中报验证腐乳止跌、酸菜毛利转正、现金流未恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于5.5元，重新验证长期商业价值未受食品安全、渠道去库存或治理问题损害后",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "股价高于12元或核心假设尚未被后续财报验证",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报中的腐乳收入、酸菜毛利率、存货、合同负债和经营现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入有安全边际的买入区间，但需先复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-15T14:50:51+08:00"
+}

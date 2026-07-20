@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:301162",
+  "ticker": "301162",
+  "market": "CN",
+  "name": "国能日新",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "hold",
+  "current_rating": "hold",
+  "current_thesis": "国能日新是新能源功率预测和能源数字化细分龙头，具备场站数据、算法、客户覆盖和类SaaS服务粘性；分布式四可、电力交易、储能EMS和虚拟电厂提供成长弹性。但当前估值约50倍TTM PE，已反映较多预期，且应收账款、资产运营和新业务兑现仍需跟踪，结论为观察。",
+  "fair_value_range": [40, 52],
+  "buy_zone": [0, 33],
+  "sell_or_reduce_zone": [60, 999],
+  "position_plan": [
+    {
+      "condition": "股价低于33元，且2026年半年报显示收入、扣非净利润和经营现金流未同时恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于30元，且功率预测服务收入、续费和电力交易订单继续增长",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于60元，且电力交易、储能EMS、虚拟电厂尚未贡献可验证高质量利润",
+      "action": "减仓或不再加仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 33,
+      "reason": "进入安全买入区，约对应35-38倍2026E PE，风险收益比改善"
+    },
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "若基本面未变坏，估值折价足以补偿新业务和现金流不确定性"
+    },
+    {
+      "type": "price_above",
+      "price": 60,
+      "reason": "超过当前基准估值上沿，除非新业务利润显著兑现，否则安全边际不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入增速、扣非利润、经营现金流、应收账款和功率预测毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断电力交易、储能EMS和新能源电站运营是否持续放量且不拖累现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估成长兑现、估值中枢和安全边际"
+    }
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ]
+}

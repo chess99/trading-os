@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:600187",
+  "market": "CN",
+  "ticker": "600187",
+  "name": "*ST国中",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-20",
+  "latest_report": "reports/2026-07-20-initial.md",
+  "report_history": [
+    "reports/2026-07-20-initial.md"
+  ],
+  "current_thesis": "*ST国中是低负债资产包叠加退市/内控修复期权的高风险标的。2025年扣后收入低于3亿元且亏损，财务审计保留意见、内控审计无法表示意见；2026H1预告净利润转正主要依赖处置收益，扣非仍亏。当前1.48元已进入乐观修复情景，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    0.85,
+    1.25
+  ],
+  "buy_zone": [
+    0.75,
+    1.05
+  ],
+  "sell_or_reduce_zone": [
+    1.35,
+    1.6
+  ],
+  "position_plan": [
+    {
+      "condition": "current_price_above_1.35_or_st_risks_unresolved",
+      "action": "do_not_buy; reduce_existing_position_to_tracking_only",
+      "max_weight": 0.001
+    },
+    {
+      "condition": "price_between_0.75_and_1.05_and_no_new_delisting_deterioration",
+      "action": "event_driven_small_probe_after_2026_interim_report_checks",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "price_below_0.75_and_audit_internal_control_and_delisting_risks_not_worsening",
+      "action": "speculative_asset_discount_position_only",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.05,
+      "reason": "enters conservative buy zone with some asset-discount margin, subject to no worsening delisting risk"
+    },
+    {
+      "type": "price_below",
+      "price": 0.75,
+      "reason": "strong asset-discount zone if risk warning progress is not deteriorating"
+    },
+    {
+      "type": "price_above",
+      "price": 1.35,
+      "reason": "above base fair value and begins pricing optimistic ST-removal scenario"
+    },
+    {
+      "type": "price_above",
+      "price": 1.6,
+      "reason": "exceeds optimistic scenario midpoint; reduce or exit unless audit and delisting risks are resolved"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "review 2026 interim report for deducted revenue, recurring profit, cash flow, and East Ying asset disposal impact"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "review 2026 Q3 report for recurring operations and risk warning remediation progress"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "review 2026 annual report, audit opinion, internal control opinion, and delisting-risk removal status"
+    }
+  ],
+  "notes": [
+    "2026-07-20 close price 1.48 CNY from Sina quote; market cap estimated from 1.613781103 billion shares.",
+    "2025 annual report had reserved audit opinion and disclaimer internal control audit opinion.",
+    "2026H1 forecast net profit positive but deducted net profit remains negative; data unaudited.",
+    "Beijing Huiyuan/Zhuji Wenshenghui underlying financial information remains low confidence and is central to valuation risk."
+  ]
+}

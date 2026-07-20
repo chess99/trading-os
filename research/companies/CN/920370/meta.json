@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920370",
+  "market": "CN",
+  "ticker": "920370",
+  "name": "新安洁",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "主业持续收缩、应收回款和治理风险未解，当前市销率已接近优质同行，价格尚无安全边际。",
+  "fair_value_range": [1.5, 2.1],
+  "buy_zone": [1.1, 1.4],
+  "sell_or_reduce_zone": [2.4, 2.8],
+  "position_plan": [
+    {
+      "condition": "股价处于1.10至1.40元，且董事长事项有明确结论、应收账款净额同比下降至少15%、过去12个月自由现金流转正",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "仅有价格下跌，但治理、回款或新业务单位经济性未改善",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报窗口，复查应收回款、自由现金流及油基岩屑投产数据"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报窗口，验证盈利修复和资本开支纪律"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.4,
+      "reason": "进入条件式买入观察区，仍需重新验证治理、回款和自由现金流"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T16:25:29+08:00"
+}

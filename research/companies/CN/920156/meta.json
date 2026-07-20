@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:920156",
+  "market": "CN",
+  "ticker": "920156",
+  "name": "海昌智能",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "海昌智能是国内汽车线束高性能装备细分龙头之一，受益于新能源车高压线束、高速传输线束和线束厂自动化升级，2026Q1 增长强劲；但当前估值已部分反映成长预期，且关联交易、客户集中、应收存货占用、毛利率下行和 Komax 专利诉讼仍需跟踪，因此维持观察，等待低于买入区或经营现金流改善后再提高仓位。",
+  "fair_value_range": [
+    44,
+    56
+  ],
+  "buy_zone": [
+    32,
+    39
+  ],
+  "sell_or_reduce_zone": [
+    62,
+    72
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 39 元，且未出现毛利率快速下滑、重大诉讼败诉或客户订单恶化信号，可建立观察仓。",
+      "action": "start_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 36 元，2026H1 归母净利润达到 1.20 亿元以上，经营现金流明显改善或转正，非关联客户收入占比提升。",
+      "action": "add_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 62 元但 2026 年盈利预期未上修至 2.8 亿元以上，或毛利率低于 31%、应收存货继续恶化。",
+      "action": "reduce_position",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 39,
+      "reason": "进入买入区上沿，需要复核订单、毛利率和现金流后决定是否建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 36,
+      "reason": "进入具备更高安全边际的加仓区，需要结合 2026H1 业绩兑现情况。"
+    },
+    {
+      "type": "price_above",
+      "price": 62,
+      "reason": "超过卖出或减仓区下沿，若盈利预测没有同步上修，赔率转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看收入、净利润、经营现金流、毛利率、应收账款和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认 Q1 高增长是否具备全年持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和全年现金流转化，重新评估合理估值区间。"
+    }
+  ]
+}

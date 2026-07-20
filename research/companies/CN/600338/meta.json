@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:600338",
+  "ticker": "600338",
+  "name": "西藏珠峰",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "塔中铅锌铜银矿在银价高位下盈利修复，2025年和2026Q1主业表现强；但阿根廷盐湖仍是低置信度期权，治理、境外税负和现金流风险要求折价，当前价格仅有有限安全边际。",
+  "fair_value_range": [
+    11.0,
+    16.0
+  ],
+  "buy_zone": [
+    0.0,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    25.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于10.5元，且2026半年报扣非净利、经营现金流与金属价格没有明显背离",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于9元，主业产量和现金流未恶化，且控股股东/监管风险无新增重大负面",
+      "action": "提高至中等偏低仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于18元但阿根廷盐湖项目没有融资、开工或试车等实质进展",
+      "action": "减仓或停止加仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入基准估值下沿并提供约20%以上安全边际，可结合半年报验证观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "超过基准公允价值上沿，需要锂项目实质落地或利润持续超预期支撑，否则应降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查Q2利润、经营现金流、税金及附加、货币资金和阿根廷项目披露。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断银价回落或税负变化对盈利持续性的影响。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估主业正常化利润和锂项目期权价值。"
+    }
+  ],
+  "key_monitoring_items": [
+    "银价、铅价、锌价、铜价及库存",
+    "塔中矿业产量、品位、单位成本和塔吉克斯坦税负",
+    "经营现金流、货币资金、应付账款、合同负债和关联借款",
+    "SDLA/ARIZARO融资、开工、试车、资源量更新或减值迹象",
+    "控股股东持股冻结、监管整改和治理变化"
+  ]
+}

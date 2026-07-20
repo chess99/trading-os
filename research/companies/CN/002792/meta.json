@@ -1,0 +1,152 @@
+{
+  "symbol": "CN:002792",
+  "market": "CN",
+  "ticker": "002792",
+  "name": "通宇通讯",
+  "company_name": "广东通宇通讯股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "通宇通讯具备通信天线、射频器件和卫星通信技术积累，资产负债表稳健，但2025年扣非亏损、经营现金流为负，当前约31-32元股价对应的市值已大幅透支卫星通信和5G-A主题预期，缺乏基本面安全边际。",
+  "quality_rating": "中",
+  "valuation_rating": "显著高估",
+  "fair_value_range": [
+    13,
+    18
+  ],
+  "buy_zone": [
+    0,
+    15
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于32元，且未披露卫星通信大额可持续订单或扣非利润改善",
+      "max_weight": 0,
+      "target_position": "0%",
+      "action": "不买，仅观察"
+    },
+    {
+      "condition": "股价回落至18-24元，同时卫星通信收入继续高增长且经营现金流改善",
+      "max_weight": 0.02,
+      "target_position": "0%-2%",
+      "action": "只建立观察仓"
+    },
+    {
+      "condition": "股价回落至15元以下，且扣非利润转正、经营现金流没有恶化",
+      "max_weight": 0.03,
+      "target_position": "2%-3%",
+      "action": "可小仓位买入"
+    },
+    {
+      "condition": "股价回落至12元以下，且无重大治理、客户流失或财务质量恶化风险",
+      "max_weight": 0.05,
+      "target_position": "3%-5%",
+      "action": "可提高到价值仓上限"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "unit": "CNY/share",
+      "reason": "进入基准合理价值区间上沿，赔率开始改善但仍需业绩验证",
+      "action": "进入重点跟踪区，复核订单、毛利率和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 15,
+      "unit": "CNY/share",
+      "reason": "低于可买区上沿，开始具备基本面安全边际",
+      "action": "若基本面未恶化，可评估小仓位买入"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "unit": "CNY/share",
+      "reason": "明显高于基准合理价值，主题溢价偏高",
+      "action": "若持有则减仓或停止加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "unit": "CNY/share",
+      "reason": "接近当前高估区，市值已大幅透支远期利润跃迁",
+      "action": "估值显著透支，维持不买"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报是验证扣非利润、经营现金流和卫星通信收入兑现的第一个关键节点",
+      "condition": "披露2026年半年报或三季报",
+      "action": "复核扣非利润、经营现金流和卫星通信收入"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报和潜在订单公告能验证卫星通信与5G-A主题是否形成实际收入",
+      "condition": "公告卫星通信、低空经济、5G-A相关重大合同或中标结果",
+      "action": "上修或下修卫星通信期权价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "募集资金用途变更会影响资本配置质量和资金使用效率",
+      "condition": "募集资金用途变更获得股东会通过并披露具体资金投向",
+      "action": "复核资本配置效率和募投项目质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "毛利率和经营现金流是判断公司是否摆脱低质量增长的核心指标",
+      "condition": "综合毛利率连续两个季度低于20%或经营现金流再次明显转负",
+      "action": "下调质量评级和可买价格"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "海外收入和大客户波动会直接影响传统通信业务稳定性",
+      "condition": "海外收入或前五大客户销售额发生异常波动",
+      "action": "复核客户结构和订单可持续性"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "metric": "卫星通信收入",
+      "target": "年化收入超过2亿元且毛利率保持35%以上",
+      "importance": "决定估值期权能否成立"
+    },
+    {
+      "metric": "扣非归母净利润",
+      "target": "2026年全年转正并超过5000万元",
+      "importance": "验证主业真实盈利能力"
+    },
+    {
+      "metric": "经营活动现金流净额",
+      "target": "全年转正，且不依赖应付账款异常拉长",
+      "importance": "验证利润质量"
+    },
+    {
+      "metric": "综合毛利率",
+      "target": "稳定在23%-25%以上",
+      "importance": "验证产品结构升级和议价能力"
+    },
+    {
+      "metric": "应收账款与存货周转",
+      "target": "不快于收入增速恶化",
+      "importance": "控制硬件制造资产减值和现金流风险"
+    }
+  ]
+}

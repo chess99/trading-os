@@ -1,0 +1,106 @@
+{
+  "symbol": "CN:002973",
+  "market": "CN",
+  "ticker": "002973",
+  "name": "侨银股份",
+  "company_name": "侨银城市管理股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是城市环卫与城市综合管理服务商，需求有刚性、合同期较长，但2025年毛利率和净利润明显下滑，杠杆与回款压力仍需验证。以2026-07-13约10.21元/股价格看，市场已部分定价利润恢复，安全边际不足，等待7.5元以下或毛利率/回款确认改善。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    7.0,
+    9.5
+  ],
+  "buy_zone": [
+    0.0,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于7.5元，且经营现金流为正、毛利率不再下探、应收账款没有明显恶化",
+      "action": "建立观察仓",
+      "target_weight": "0.5%-1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于7.5-9.5元，且2026年中报确认毛利率恢复到18%以上、经营现金流/净利润大于1",
+      "action": "小幅加仓或维持观察仓",
+      "target_weight": "0%-0.5%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价高于12元，且利润率和净债务指标没有超预期改善",
+      "action": "减仓或不买",
+      "target_weight": "0%",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "unit": "CNY/share",
+      "reason": "低于买入区间上沿，具备初始安全边际",
+      "note": "进入安全边际买入观察区"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "unit": "CNY/share",
+      "reason": "高于减仓区间下沿，估值需要更强利润修复支撑",
+      "note": "估值高于基本面确认程度，应复核减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年半年报披露或接近披露完成",
+      "reason": "验证2025年利润率下滑是否企稳",
+      "action": "复核毛利率、经营现金流、应收账款和净债务/EBITDA"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露或接近披露完成",
+      "reason": "验证新签项目、收入和回款趋势",
+      "action": "下修增长假设并复核买入区间"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年年报披露或接近披露完成",
+      "reason": "完整复核年度利润率、杠杆和现金流",
+      "action": "下调质量评级并收紧仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027年半年报披露或接近披露完成",
+      "reason": "复核1-3年跟踪指标是否支持买入区间上移",
+      "action": "重新评估现金流和坏账风险"
+    }
+  ],
+  "key_tracking_metrics": [
+    "毛利率是否稳定在18%以上并向20%修复",
+    "经营现金流/净利润是否持续大于1",
+    "应收账款周转天数与坏账计提变化",
+    "净债务/EBITDA是否从约3.14倍下降至2.5倍以下",
+    "现金短期债务比是否从约0.47提升至0.7以上",
+    "新签合同年化金额与项目毛利率"
+  ]
+}

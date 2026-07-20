@@ -1,0 +1,31 @@
+{
+  "symbol": "CN:002415",
+  "market": "CN",
+  "ticker": "002415",
+  "name": "海康威视",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "全球安防龙头，2025年营收持平但利润强劲修复（+18.5%），2026Q1营收增长11.8%和利润增长36.4%确认拐点向上。创新业务打开第二曲线。当前PE 22倍处于历史中低位，估值合理偏低但缺乏短期催化剂，建议等待回调或中报确认增长趋势后介入。",
+  "fair_value_range": [28, 48],
+  "buy_zone": [25, 35],
+  "sell_or_reduce_zone": [45, 55],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价处于强吸引力买入区间且中报验证增长趋势", "max_weight": 0.05},
+    {"condition": "创新业务（机器人/汽车电子）持续超预期且海外增长稳健", "max_weight": 0.08}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-20", "reason": "2026年中报发布（预计8月），验证营收增速拐点和利润趋势"},
+    {"type": "date", "date": "2026-10-25", "reason": "2026年三季报发布，验证全年增长趋势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 30, "reason": "进入有安全边际的买入区间，建议建仓"},
+    {"type": "price_below", "price": 25, "reason": "进入强吸引力买入区间，建议积极加仓"},
+    {"type": "price_above", "price": 45, "reason": "进入应减仓或不应追高区间"},
+    {"type": "price_above", "price": 50, "reason": "进入泡沫区间，建议卖出"}
+  ],
+  "updated_at": "2026-07-07T17:00:00+08:00"
+}

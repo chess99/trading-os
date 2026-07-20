@@ -1,0 +1,135 @@
+{
+  "symbol": "CN:002451",
+  "market": "CN",
+  "ticker": "002451",
+  "name": "摩恩电气",
+  "company_name": "上海摩恩电气股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "收入处于恢复和改善期，但2025年净利率仅0.86%、2026Q1经营现金流仍为负，现价6.81元对应约30.01亿元市值、PB约3.9倍，已经计入较多利润改善预期。除非未来连续验证毛利率、净利率、回款和负债结构同步改善，否则不具备足够安全边际。",
+  "quality_rating": "C",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    2.8,
+    4.0
+  ],
+  "buy_zone": [
+    2.4,
+    3.0
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    5.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价不高于2.40元",
+      "max_weight": 0.05,
+      "price_range": "<=2.40",
+      "position_pct": "3-5",
+      "action": "强吸引力区，可分批买入但继续跟踪现金流"
+    },
+    {
+      "condition": "股价在2.41元至3.00元",
+      "max_weight": 0.03,
+      "price_range": "2.41-3.00",
+      "position_pct": "1-3",
+      "action": "有安全边际，小仓试错"
+    },
+    {
+      "condition": "股价在3.01元至4.00元",
+      "max_weight": 0.01,
+      "price_range": "3.01-4.00",
+      "position_pct": "0-1",
+      "action": "合理区间，只适合已有跟踪者极小仓观察"
+    },
+    {
+      "condition": "股价在4.01元至4.50元",
+      "max_weight": 0,
+      "price_range": "4.01-4.50",
+      "position_pct": "0",
+      "action": "略贵，不新买"
+    },
+    {
+      "condition": "股价高于4.50元",
+      "max_weight": 0,
+      "price_range": ">4.50",
+      "position_pct": "0",
+      "action": "预期偏满，不追高"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "condition": "price <= 3.00",
+      "price": 3.0,
+      "reason": "进入有安全边际买入价",
+      "action": "进入有安全边际区，复核后可小仓试错"
+    },
+    {
+      "type": "price_below",
+      "condition": "price <= 2.40",
+      "price": 2.4,
+      "reason": "进入强吸引力买入价",
+      "action": "进入强吸引力区，可考虑分批买入"
+    },
+    {
+      "type": "price_above",
+      "condition": "price > 4.50",
+      "price": 4.5,
+      "reason": "高于不应追高价",
+      "action": "不追高"
+    },
+    {
+      "type": "price_above",
+      "condition": "price > 5.00 and fundamentals_not_improved",
+      "price": 5.0,
+      "reason": "价格高于减仓观察线且基本面无改善",
+      "action": "基本面无改善时考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报披露后复核收入、归母净利润、扣非净利润、毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026三季报披露后复核增长质量和负债结构"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年报披露后复核全年现金流、利润率和资本配置"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "reason": "2027半年报披露后判断改善是否具备持续性"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "归母净利润",
+    "扣非归母净利润",
+    "综合毛利率",
+    "净利率",
+    "经营活动现金流量净额",
+    "应收账款",
+    "存货",
+    "短期借款",
+    "应付票据",
+    "前五大客户销售占比",
+    "新能源和特种电缆订单转化"
+  ]
+}

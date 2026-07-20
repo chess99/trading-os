@@ -1,0 +1,94 @@
+{
+  "symbol": "CN:002426",
+  "market": "CN",
+  "ticker": "002426",
+  "name": "胜利精密",
+  "company_name": "苏州胜利精密制造科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "胜利精密具备消费电子结构件、车载显示/镁合金结构件和复合集流体期权，但截至2026Q1仍连续亏损、短债压力高、客户集中、复合集流体未规模商业化。2026-07-10收盘价3.36元对应约114.33亿元市值，已接近乐观情景估值上沿，缺少安全边际。",
+  "quality_rating": "D+",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    1.5,
+    2.2
+  ],
+  "buy_zone": [
+    1.0,
+    1.3
+  ],
+  "sell_or_reduce_zone": [
+    2.8,
+    3.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "<=1.00",
+      "action": "强吸引力买入",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "1.00-1.30",
+      "action": "有安全边际买入",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "1.30-2.20",
+      "action": "观察或极小试错",
+      "max_weight": 0.005
+    },
+    {
+      "condition": ">=2.80",
+      "action": "不追高/减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.3,
+      "reason": "低于安全边际买入价",
+      "condition": "价格低于或等于1.30元",
+      "action": "进入安全边际观察区，需同时确认季度亏损收窄"
+    },
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "低于强吸引力买入价",
+      "condition": "价格低于或等于1.00元",
+      "action": "进入强吸引力观察区，需排除退市和流动性风险"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "高于减仓或不追高区",
+      "condition": "价格高于或等于3.00元",
+      "action": "不追高，若已有仓位则减仓或等待新证据"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报预计披露后需要复核基本面是否改善",
+      "action": "复核2026年半年度报告，重点看扣非亏损、汽车零部件毛利率、经营现金流和短债"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润",
+    "汽车零部件收入增速和毛利率",
+    "经营活动现金流量净额",
+    "货币资金、短期借款和一年内到期非流动负债",
+    "前五大客户销售占比",
+    "复合集流体送样、定点、订单和量产收入",
+    "再融资价格、规模和稀释比例"
+  ]
+}

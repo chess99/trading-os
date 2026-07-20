@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600400",
+  "ticker": "600400",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "红豆股份",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "红豆股份仍处亏损修复和关联资产整合验证期，2025年大幅亏损、2026H1预告继续亏损，且控股股东高比例质押/标记/冻结及信息披露监管记录带来显著治理折价；当前市值对应PB显著高于盈利同业，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.1,
+    1.7
+  ],
+  "buy_zone": [
+    0.7,
+    1.0
+  ],
+  "sell_or_reduce_zone": [
+    2.2,
+    3.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于估算公允价值且公司仍处亏损，维持零仓位观察。",
+      "action": "no_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价低于1.00元且连续两个季度扣非归母净利润改善，同时控股股东质押/冻结风险下降。",
+      "action": "watchlist_probe",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "红豆居家线上业务贡献经半年报或年报核验，扣非利润转正并形成正经营现金流。",
+      "action": "reassess_for_core_position",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "进入买入观察区，但仍需扣非改善和治理风险下降共同确认。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.2,
+      "reason": "高于估算公允价值上沿且基本面未验证，已有仓位应减持或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查红豆居家线上业务、扣非亏损、存货和关联交易。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q2亏损后Q3是否出现经营修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估持续经营盈利能力和治理折价。"
+    }
+  ]
+}

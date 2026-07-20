@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:300483",
+  "market": "CN",
+  "ticker": "300483",
+  "name": "首华燃气",
+  "company_name": "首华燃气科技（上海）股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "首华燃气已转型为以山西石楼西区块天然气/煤层气为核心的资源型公司，2025年收入、归母净利润和经营现金流明显修复，2026年少数股权收购有望增厚归母利润；但资产集中、气价和产量波动、资本开支及关联交易折价仍高，当前约17-19元价格附近安全边际不足，等待13.5元以下或业绩继续兑现。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    14.0,
+    18.5
+  ],
+  "buy_zone": [
+    0,
+    13.5
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于13.5元，且最近一个季度天然气产量、经营现金流和有息负债没有恶化",
+      "action": "建立1%-2%观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于11.5元，且2026年归母净利润年化不低于3亿元",
+      "action": "提高至3%-4%核心跟踪仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格处于13.5-18.5元且业绩正常兑现",
+      "action": "持有或观察，不主动加仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于22元且没有新的储量、产量或盈利上修证据",
+      "action": "减仓至不超过1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13.5,
+      "currency": "CNY",
+      "action": "复核季度产量、现金流和债务后考虑买入",
+      "reason": "低于合理价值区间下沿约3%-4%，接近初始安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "currency": "CNY",
+      "action": "若基本面未恶化，评估提高仓位",
+      "reason": "较合理价值中枢折价约30%，若基本面未恶化则赔率改善"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "currency": "CNY",
+      "action": "检查估值是否已透支，倾向减仓",
+      "reason": "高于合理价值区间上沿，市场已定价较强产量和利润兑现"
+    },
+    {
+      "type": "price_above",
+      "price": 26.0,
+      "currency": "CNY",
+      "action": "默认卖出大部分，只保留事件跟踪仓",
+      "reason": "估值显著透支，除非利润和储量同步上修，否则风险收益不佳"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报的收入、归母净利润、经营现金流、资本开支和债务变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报，重点验证石楼西区块产量、客户集中度、自由现金流和中海沃邦少数股权整合效果"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "reason": "复核2027年半年报，判断增长是否从一次性修复转为可持续现金流"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度天然气产量、销量和平均售价",
+    "单位现金成本、毛利率和净利率",
+    "经营现金流减资本开支后的自由现金流",
+    "中海沃邦少数股权收购进度及少数股东损益变化",
+    "有息负债、财务费用和资产负债率",
+    "前五大客户销售占比和应收账款回款周期",
+    "2026-2027年归母净利润是否稳定超过3.5亿元"
+  ]
+}

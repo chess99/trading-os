@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688325",
+  "market": "CN",
+  "ticker": "688325",
+  "name": "赛微微电",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "赛微微电是电池管理模拟芯片细分优质公司，技术和客户导入壁垒较清晰，2025年收入与利润恢复，但2026Q1利润承压、存货和研发投入上升，且当前估值已反映较高成长预期；在92元以下或利润恢复验证后更有安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    90,
+    125
+  ],
+  "buy_zone": [
+    72,
+    92
+  ],
+  "sell_or_reduce_zone": [
+    150,
+    180
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于买入区间且2026Q1扣非净利同比下滑，暂不主动建仓。",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于92元，且后续季度收入未失速、毛利率维持50%以上、存货未继续异常上升。",
+      "action": "starter_position",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于80元，且扣非净利恢复正增长或有容微整合风险可控。",
+      "action": "add_on_weakness",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 92,
+      "reason": "进入买入区间上沿，需要复核Q2/Q3基本面后考虑观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 80,
+      "reason": "进入更有安全边际区间，若基本面未恶化可提高仓位上限。"
+    },
+    {
+      "type": "price_above",
+      "price": 150,
+      "reason": "估值进入偏乐观区间，若利润未同步上修应减持或避免追高。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非净利、研发费用率、存货和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入增长是否覆盖研发投入和并购影响。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和有容微并表后的商誉、亏损及协同兑现情况。"
+    }
+  ]
+}

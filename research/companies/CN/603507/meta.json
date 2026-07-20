@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:603507",
+  "market": "CN",
+  "ticker": "603507",
+  "name": "振江股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "振江股份处于风电、光伏和紧固件新能源装备制造的景气修复阶段，2026Q1收入、扣非利润和经营现金流改善，2026H1预增提供短期催化。当前除权后约22元附近进入买入区间，但归母利润含外汇锁汇等非经常性收益，必须用半年报扣非利润、现金流和海外产能交付继续验证增长质量。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    24,
+    31
+  ],
+  "buy_zone": [
+    18,
+    23
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    42
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于23元且2026H1业绩预告无下修，建立初始仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H1扣非归母净利润不低于0.85亿元且经营现金流未明显恶化，加仓",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价低于18元且订单、毛利率、应收账款和存货未出现基本面破坏，作为安全边际补仓",
+      "max_weight": 0.08
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入悲观情景估值附近，若基本面未破坏可重新评估补仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "高于基准公允价值区间上沿，若无盈利上修或现金流改善，应考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报实际利润、扣非利润、现金流和应收存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认增长是否延续到下半年。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年订单/产能展望，更新完整估值。"
+    }
+  ]
+}

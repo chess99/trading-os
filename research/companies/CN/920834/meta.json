@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920834",
+  "market": "CN",
+  "ticker": "920834",
+  "name": "三维装备",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "小而专、现金流和资本回报较好，但当前价格隐含的两位数自由现金流增长尚未被2026Q1验证，等待更大安全边际。",
+  "fair_value_range": [7.2, 9.2],
+  "buy_zone": [5.8, 6.8],
+  "sell_or_reduce_zone": [10.5, 12.0],
+  "position_plan": [
+    {
+      "condition": "股价处于5.8至6.8元且中报验证毛利率、订单与现金流未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于5.8元且重新验证核心假设、新基地资本回报合理，不能因下跌机械加仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "毛利率连续两期低于29%、扩产回报恶化或出现治理问题",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的收入、毛利率、合同负债兑现与经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及新基地资本开支进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入有安全边际的买入研究复核区，需先确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T16:45:51+08:00"
+}

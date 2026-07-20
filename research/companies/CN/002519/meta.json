@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:002519",
+  "ticker": "002519",
+  "name": "银河电子",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "银河电子处于低位修复但治理折价未解除的阶段。2026H1预告归母净利润扭亏，但扣非仍亏损；2025年财报保留意见、同智机电禁采36个月、单位行贿判决、受限金融资产冻结和江苏证监局警示函仍构成核心风险。当前价格接近基准估值中上部，缺乏安全边际，需等待价格折价或审计/内控/扣非利润改善证据。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    4.2,
+    5.4
+  ],
+  "buy_zone": [
+    3.4,
+    4.0
+  ],
+  "sell_or_reduce_zone": [
+    6.6,
+    7.8
+  ],
+  "position_plan": [
+    {
+      "condition": "无证据改善且股价高于4.0元时不建仓，仅跟踪2026中报和受限资产进展。",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌入3.4-4.0元，且2026中报显示经营现金流改善、扣非亏损继续收窄，可建立观察仓。",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "保留意见事项解除或受限资金明确解冻，且扣非利润连续两个季度转正，可上调为修复仓。",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入买入观察区，价格开始补偿治理、审计和军品订单不确定性。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.6,
+      "reason": "若保留意见、受限资金和扣非盈利未同步改善，价格高于乐观情景下沿则风险收益恶化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-08",
+      "reason": "公司预计披露2026年中报，复核扣非利润、经营现金流、受限资金和分业务表现。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扭亏是否延续及经营现金流是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和审计意见，确认保留意见事项是否解除。"
+    }
+  ]
+}

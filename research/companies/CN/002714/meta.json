@@ -1,0 +1,96 @@
+{
+  "symbol": "CN:002714",
+  "market": "CN",
+  "ticker": "002714",
+  "name": "牧原股份",
+  "company_name": "牧原股份",
+  "updated_at": "2026-07-08",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "牧原股份是生猪养殖成本龙头和一体化龙头，但2026年猪价下行导致盈利承压，当前股价处于合理区间中部，等待33元以下更有安全边际的位置。",
+  "status": "active",
+  "quality_rating": "A-",
+  "valuation_rating": "neutral_to_slightly_expensive",
+  "fair_value_range": [
+    34,
+    42
+  ],
+  "buy_zone": [
+    28,
+    33
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    48
+  ],
+  "base_currency": "CNY",
+  "currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格处于33-42元合理区间时，仅观察或小仓跟踪；跌入28-33元买入区后再建立主要仓位。",
+      "action": "watch_or_small_position",
+      "max_weight": 0.07,
+      "initial_weight": 0.01,
+      "target_weight_in_buy_zone": 0.05,
+      "notes": "当前价格处于合理区间中部，安全边际不足；33元以下再考虑有意义加仓。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 33,
+      "reason": "跌入有安全边际买入区。",
+      "action": "进入有安全边际买入区，复核猪价、成本和现金流后可建立3%-5%仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "跌入强吸引力买入区。",
+      "action": "进入强吸引力买入区，若基本面未恶化，可分批提升至5%-7%仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "估值进入偏贵区。",
+      "action": "估值进入偏贵区，不追高；若猪价未修复，考虑减仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 48,
+      "reason": "超过不应追高价格。",
+      "action": "超过不应追高价格，除非盈利上修被验证，否则降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-10",
+      "reason": "复核2026年7月销售简报，重点看商品猪销售均价、销量和能繁母猪存栏。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，重点看成本、现金流和资产负债率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-07-31",
+      "reason": "若商品猪销售均价连续两个月低于10元/kg，或资产负债率重新显著上行，立即重估盈利中枢与买入区间。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "月度商品猪销售均价",
+    "月度商品猪销售量",
+    "商品猪销售收入",
+    "生猪养殖完全成本",
+    "能繁母猪存栏",
+    "屠宰肉食业务毛利率和产能利用率",
+    "资产负债率",
+    "经营活动现金流量净额",
+    "分红和回购执行情况"
+  ]
+}

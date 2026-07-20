@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920821",
+  "market": "CN",
+  "ticker": "920821",
+  "name": "则成电子",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "定制化FPC与电子模组具备局部工艺能力，但客户极度集中、资本回报和自由现金流偏弱，当前估值已过度计入AI眼镜、光模块及海外产能成功放量。",
+  "fair_value_range": [7.5, 10.5],
+  "buy_zone": [6.0, 7.5],
+  "sell_or_reduce_zone": [13.0, 16.0],
+  "position_plan": [
+    {
+      "condition": "股价处于6.0至7.5元且滚动收入企稳、毛利率不低于22%、净利润恢复为正",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于6.0元，且FCT客户占比实质下降、滚动自由现金流转正、借款未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "客户流失、毛利率跌破20%、新工厂持续亏损或融资压力上升时不因价格下跌补仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、二季度扭亏情况及武汉和越南新产能订单兑现"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入有安全边际的基本面复核和小仓位买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T20:04:26+08:00"
+}

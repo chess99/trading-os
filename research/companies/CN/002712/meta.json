@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:002712",
+  "ticker": "002712",
+  "name": "思美传媒",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "收入规模恢复但盈利质量、现金流和治理折价仍未充分改善；当前估值不贵但安全边际不足，等待价格低于3.4元或连续季度证明利润率与经营现金流同步修复。",
+  "fair_value_range": [
+    3.8,
+    4.8
+  ],
+  "buy_zone": [
+    0,
+    3.4
+  ],
+  "sell_or_reduce_zone": [
+    5.2,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.4元，且无新增信披处罚、现金流恶化或重大客户流失信号",
+      "action": "可建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格在3.4元至5.2元之间，但净利率、经营现金流、应收账款周转未连续两个季度同步改善",
+      "action": "继续观察，不加仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格高于5.2元，且没有证据显示净利率可稳定接近0.6%以上",
+      "action": "减仓或回避",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.4,
+      "reason": "跌入有安全边际的观察买区，需要复核现金流、应收账款和治理风险后再决定是否小仓位买入"
+    },
+    {
+      "type": "price_above",
+      "price": 5.2,
+      "reason": "超过基准价值区间上沿，需要除非盈利质量显著改善，否则减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非净利润、经营现金流、应收账款和毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入增长是否转化为利润和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新校准估值区间和评级"
+    }
+  ],
+  "price_triggers_note": "行情基准采用2026-07-15附近公开行情约4.2-4.3元，未逐笔核验交易所收盘价，置信度中。"
+}

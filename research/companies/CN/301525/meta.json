@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:301525",
+  "ticker": "301525",
+  "name": "儒竞科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "儒竞科技具备电力电子、电机控制和热管理控制能力，长期受益于暖通变频化、新能源车热管理、工业驱动和数据中心液冷控制需求；但2026Q1收入和利润明显下滑，当前估值已计入较多恢复预期，缺少足够安全边际，适合继续观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    30,
+    42
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    48,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌入30元以下，且2026半年报显示经营现金流未显著恶化、收入降幅收窄",
+      "action": "watchlist_to_probe",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于24-30元，同时暖通基本盘恢复、新能源车热管理或液冷控制出现可量化订单",
+      "action": "build_position_gradually",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于48元且没有收入恢复或新业务放量证据",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入初步安全边际区，需要复核半年报和现金流后评估小仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入悲观情景价值附近，若基本面未继续恶化可重新评估买入"
+    },
+    {
+      "type": "price_above",
+      "price": 48,
+      "reason": "超过当前基础情景合理区间，若无新业务兑现证据则风险收益比恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报，重点看收入恢复、毛利率、现金流和新业务披露"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认Q1利润下滑是否为单季扰动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报和募投项目进展，重新评估正常化利润和估值区间"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

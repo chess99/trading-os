@@ -1,0 +1,151 @@
+{
+  "symbol": "CN:002940",
+  "market": "CN",
+  "ticker": "002940",
+  "name": "昂利康",
+  "company_name": "浙江昂利康制药股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "昂利康经营质量不差，2025 年制剂业务恢复、现金流好、研发资本化率低，且拥有特色中间体、宠物药和创新药期权；但原料药和特色中间体仍承压，ALK-N001 处早期临床，拟定增 11.10 亿元投入创新药研发将带来摊薄。以 2026-07-13 约 26.04 元价格计，估值已明显高于存量业务可支撑水平，缺少安全边际。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [18, 22],
+  "buy_zone": [0, 16],
+  "sell_or_reduce_zone": [28, 32],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于 22 元且无重大临床或业绩超预期",
+      "action": "不买入，仅跟踪",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格进入 18-22 元且 2026 半年报显示扣非利润和制剂毛利率稳定",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格跌至 16 元以下且原料药止跌、经营现金流恢复为正",
+      "action": "小仓买入",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格跌至 15 元以下且定增摊薄已明确、基本面未恶化",
+      "action": "提高至中等观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于 28 元且没有 ALK-N001 关键数据或扣非利润超预期支撑",
+      "action": "减仓或不参与",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "currency": "CNY",
+      "reason": "进入合理价值区间下沿附近，需要复核是否具备安全边际",
+      "action": "重估安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 16,
+      "currency": "CNY",
+      "reason": "低于可买价格上限，若基本面未恶化可小仓买入",
+      "action": "若基本面未恶化，进入小仓买入区"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "currency": "CNY",
+      "reason": "明显高于合理价值区间，需检查是否存在基本面超预期支撑",
+      "action": "检查是否高估并考虑减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "currency": "CNY",
+      "reason": "估值进入高估区，存量业务难以支撑该价格",
+      "action": "无重大超预期则卖出或规避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 半年报披露",
+      "reason": "半年报可验证制剂收入、原料药收入、经营现金流和研发费用结构是否改善",
+      "action": "复盘制剂收入、原料药收入、经营现金流和研发费用结构"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "向特定对象发行股票取得证监会注册或完成发行",
+      "reason": "定增发行价和新增股本会影响每股价值和安全边际",
+      "action": "按发行价和新增股本重算每股价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "ALK-N001 发布 Ib/Ib-II 期关键安全性、有效性或适应症选择数据",
+      "reason": "创新药期权价值取决于临床安全性、有效性和适应症选择信号",
+      "action": "重估创新药期权"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "condition": "特色中间体收入连续两个季度恢复增长或继续下滑超过 20%",
+      "reason": "特色中间体毛利率高但需求波动大，决定科瑞生物估值质量",
+      "action": "复盘科瑞生物估值"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "商誉、存货或应收账款出现明显减值迹象",
+      "reason": "商誉、存货和应收账款减值会直接影响利润质量和资产负债表安全性",
+      "action": "立即复盘"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "name": "扣非归母净利润",
+      "target": "2026 年稳定超过 1.1 亿元，2027 年接近或超过 1.5 亿元"
+    },
+    {
+      "name": "制剂收入与毛利率",
+      "target": "制剂收入继续增长，毛利率维持 45% 以上"
+    },
+    {
+      "name": "原料药收入",
+      "target": "2026 年止跌，alpha 酮酸、头孢、麻醉原料药海外注册推进"
+    },
+    {
+      "name": "特色中间体收入",
+      "target": "科瑞生物相关产品需求恢复，收入不再大幅下滑"
+    },
+    {
+      "name": "经营现金流",
+      "target": "全年经营现金流转正且接近或高于归母净利润"
+    },
+    {
+      "name": "研发费用资本化率",
+      "target": "保持审慎，若显著高于 10% 需复盘利润质量"
+    },
+    {
+      "name": "定增摊薄",
+      "target": "跟踪发行价、发行股数和募集资金使用节奏"
+    },
+    {
+      "name": "ALK-N001 临床进度",
+      "target": "按计划推进 Ib/Ib-II，出现可解释的安全性和有效性信号"
+    }
+  ]
+}

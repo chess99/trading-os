@@ -1,0 +1,73 @@
+{
+  "symbol": "CN:000890",
+  "ticker": "000890",
+  "name": "法尔胜",
+  "company_name": "江苏法尔胜股份有限公司",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-13",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司主业规模小且持续亏损，2026Q1归母净资产仅约1955万元，而2026-07-13市值约28.6亿元，估值主要反映事件和壳资源预期，缺乏可验证经营安全边际。",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "fair_value_range": [
+    1.2,
+    2.2
+  ],
+  "buy_zone": [
+    0.8,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    3.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于3.0元且基本面仍为亏损、低净资产、弱现金流",
+      "action": "不买入，仅跟踪半年报和重组实质进展",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入0.8-1.2元且连续两个季度扣非盈利、经营现金流为正",
+      "action": "重新评估是否建立观察仓",
+      "max_weight": 0.5
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入估算买入观察区，需要复核现金流、订单和治理风险是否同步改善"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "明显高于基本面可解释价值，若持有应考虑减仓或回避交易性波动"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、广泰源亏损和回款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认主业是否出现连续改善或现金消耗扩大"
+    }
+  ],
+  "risk_flags": [
+    "持续亏损",
+    "归母净资产薄",
+    "控股股东质押和冻结",
+    "第二大股东破产清算相关不确定性",
+    "股价受事件预期驱动"
+  ]
+}

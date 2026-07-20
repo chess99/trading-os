@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688529",
+  "market": "CN",
+  "ticker": "688529",
+  "name": "豪森智能",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "观察，不在当前约15元附近买入。公司在汽车智能产线、锂电模组/PACK、驱动电机、固态电池装备上有工程经验和客户壁垒，但2025年毛利率大幅下滑、亏损、经营现金流为负，应收和存货占用高，2026Q1仍未恢复盈利；只有毛利率、现金流和减值压力同步改善后，才具备从观察转为买入的条件。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    9.0,
+    13.0
+  ],
+  "buy_zone": [
+    7.5,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    18.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入7.5-9.0元且最近一期毛利率回到15%以上、经营现金流改善、存货和应收减值未继续扩大",
+      "action": "建立观察性小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价仍高于13.0元且公司尚未恢复单季盈利或现金流转正",
+      "action": "不新增仓位",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价高于16.0元但毛利率、现金流和减值没有同步改善",
+      "action": "减持或回避追高",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入买入观察区，若基本面同步改善可重新评估小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "超过中性价值区间上沿，若盈利质量未恢复应减持或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、现金流、减值和订单质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认利润修复趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，更新估值区间"
+    }
+  ]
+}

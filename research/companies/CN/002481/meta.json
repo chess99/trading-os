@@ -1,0 +1,123 @@
+{
+  "symbol": "CN:002481",
+  "market": "CN",
+  "ticker": "002481",
+  "name": "双塔食品",
+  "company_name": "烟台双塔食品股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "双塔食品具备豌豆蛋白、膳食纤维、粉丝和豌豆淀粉一体化能力，核心蛋白/纤维产品毛利率高且有结构性需求；但2025年收入利润下滑、存货跌价和淀粉负毛利拖累明显，2026Q1仅是修复初段。当前约4.00元/股接近合理价值上沿，安全边际不足。",
+  "quality_rating": "B",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    3.2,
+    4.0
+  ],
+  "buy_zone": [
+    2.4,
+    2.9
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价不高于2.40元且库存、现金流和毛利率未继续恶化",
+      "price_range": "<=2.40",
+      "action": "强吸引力买入",
+      "position": "5%-7%",
+      "max_weight": 0.07
+    },
+    {
+      "condition": "股价在2.41-2.90元且基本面未恶化",
+      "price_range": "2.41-2.90",
+      "action": "有安全边际买入",
+      "position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价在2.91-4.00元",
+      "price_range": "2.91-4.00",
+      "action": "观察或极小仓跟踪",
+      "position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价在4.01-4.50元",
+      "price_range": "4.01-4.50",
+      "action": "不新增",
+      "position": "0%",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价高于4.50元且缺少连续季度业绩验证",
+      "price_range": ">4.50",
+      "action": "不追高，已有仓位考虑减仓",
+      "position": "0%",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.9,
+      "reason": "低于有安全边际买入价",
+      "condition": "基本面未恶化时进入有安全边际买入区"
+    },
+    {
+      "type": "price_below",
+      "price": 2.4,
+      "reason": "低于强吸引力买入价",
+      "condition": "库存、现金流和毛利率未恶化时进入强吸引力买入区"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "高于不应追高价",
+      "condition": "若无连续季度业绩验证则不应追高或考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报能验证2026Q1修复是否延续",
+      "condition": "2026年半年报披露后",
+      "action": "复查收入、毛利率、扣非净利润、经营现金流和存货跌价"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报能验证全年利润和现金流趋势",
+      "condition": "2026年三季报披露后",
+      "action": "复查蛋白/纤维收入与毛利率、淀粉减亏和有息负债"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报能完整评估库存出清、淀粉减亏和ROE修复",
+      "condition": "2026年年度报告披露后",
+      "action": "复查估值区间、仓位上限和是否由观察转为买入"
+    }
+  ],
+  "key_tracking_metrics": [
+    "豌豆蛋白收入增速",
+    "豌豆蛋白毛利率",
+    "膳食纤维收入规模与毛利率",
+    "豌豆淀粉毛利率",
+    "存货跌价损失",
+    "经营现金流净额/净利润",
+    "净利率",
+    "有息负债和货币资金",
+    "境外收入占比与毛利率"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:002865",
+  "market": "CN",
+  "ticker": "002865",
+  "name": "钧达股份",
+  "company_name": "海南钧达新能源科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "钧达股份是具备海外出货优势和 TOPCon 技术弹性的光伏电池资产，但 2025 年和 2026Q1 仍处亏损，经营现金流尚未稳定转正；当前约 50 元股价已较多反映行业修复预期，安全边际不足，适合等待更低价格或现金流拐点确认。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    38,
+    50
+  ],
+  "buy_zone": [
+    30,
+    35
+  ],
+  "sell_or_reduce_zone": [
+    70,
+    90
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价 <=35 CNY/股，且未出现新增重大减值、债务或融资压力",
+      "action": "建立 1%-2% 观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价 <=30 CNY/股，且经营现金流转正、海外出货占比维持 60% 以上",
+      "action": "提高至 3%-5% 核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价 >50 CNY/股但公司仍亏损或经营现金流未稳定转正",
+      "action": "不新增仓位，仅保留跟踪",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价 >=70 CNY/股且扣非利润和经营现金流未连续两个季度改善",
+      "action": "减仓或退出",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 35,
+      "currency": "CNY",
+      "reason": "进入可买区，对应约 2.7 倍 2026Q1 PB，开始具备周期安全边际",
+      "action": "进入可买区，复核最近季度现金流和减值风险"
+    },
+    {
+      "type": "price_below",
+      "price": 30,
+      "currency": "CNY",
+      "reason": "进入强安全边际区，已接近压力情景估值上沿",
+      "action": "进入强安全边际区，若基本面未恶化可考虑提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "currency": "CNY",
+      "reason": "价格明显高于当前合理价值区间，需要盈利和现金流兑现支撑",
+      "action": "进入减仓/不追区，除非扣非利润和经营现金流已确认反转"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "半年报是判断亏损和现金流是否继续修复的第一个关键节点",
+      "condition": "预计 2026 年半年报披露后复核",
+      "action": "更新收入、扣非利润、现金流、海外出货占比和资产减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可验证扣非利润和经营现金流是否形成连续改善",
+      "condition": "预计 2026 年三季报披露后复核",
+      "action": "检查扣非利润和经营现金流是否连续改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报可完整评估海外产能兑现、资产减值和资本配置质量",
+      "condition": "预计 2026 年年报披露后复核",
+      "action": "重估合理价值区间、海外产能兑现和资本配置质量"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度电池出货量和产能利用率",
+    "海外出货占比和海外单瓦溢价",
+    "TOPCon 量产转换效率、良率、银耗和非硅成本",
+    "单瓦毛利、扣非净利率和毛利率",
+    "经营现金流净额、应收账款周转和存货周转",
+    "前五大客户销售占比",
+    "海外产能投产进度和认证进展",
+    "归母净资产、资产减值和资本开支强度"
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:300473",
+  "market": "CN",
+  "ticker": "300473",
+  "name": "德尔股份",
+  "company_name": "阜新德尔汽车部件股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司处于汽车零部件利润修复期，2025 年归母净利润恢复至 1.41 亿元，2026Q1 收入下滑但利润继续增长，说明降本和产品结构改善有效；但净利率、ROE 和主机厂议价压力仍限制估值弹性，25 元附近安全边际不足，20 元以下才适合建立基础仓。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    22,
+    28
+  ],
+  "fair_value_notes": "单位为 CNY/share，采用 PE、P/B-ROE、简化自由现金流三种方法交叉验证。",
+  "buy_zone": [
+    0,
+    20
+  ],
+  "buy_zone_notes": "单位为 CNY/share，需要同时确认无重大客户流失、无大额减值或现金流恶化。",
+  "sell_or_reduce_zone": [
+    35,
+    999
+  ],
+  "sell_or_reduce_zone_notes": "单位为 CNY/share，除非年化归母净利润已进入 2.5 亿元以上且 ROE 持续提升，否则主题溢价过高。",
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价 <=20 元，且无重大客户流失、无大额减值迹象",
+      "action": "建立基础仓",
+      "target_position": "2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价 <=18 元，且最近两个季度经营现金流为正",
+      "action": "加仓",
+      "target_position": "3%-4%",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价 20-24 元，且 2026H1 或 2026Q3 扣非净利润同比增长、毛利率不低于 23%",
+      "action": "建立观察仓",
+      "target_position": "0.5%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价 >=35 元，且利润未进入年化 2.5 亿元以上",
+      "action": "减仓或退出",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "unit": "CNY/share",
+      "action": "复核并考虑建立 2% 基础仓",
+      "reason": "低于合理价值区间下沿约 10%，安全边际开始出现。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "unit": "CNY/share",
+      "action": "在现金流未恶化前提下考虑加仓至 3%-4%",
+      "reason": "接近保守 P/B 和低情景 PE 估值，可用更高仓位承接。"
+    },
+    {
+      "type": "price_above",
+      "price": 35,
+      "unit": "CNY/share",
+      "action": "复核估值和盈利兑现，若无上修证据则减仓",
+      "reason": "价格已明显高于当前三种估值交集，需要利润中枢上修才能支撑。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年半年报披露后复核毛利率、扣非净利润、现金流和新能源零部件收入增速。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报披露后确认利润修复是否连续，并调整 2027 年盈利中枢。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026 年年报披露后复核全年 ROE、自由现金流、客户结构和资本配置质量。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "毛利率是否稳定在 23%以上",
+    "净利率是否从约 3%提升至 4%-5%",
+    "电泵、热管理、轻量化产品收入增速是否高于公司整体收入增速",
+    "经营现金流净额/归母净利润是否连续大于 1",
+    "前五大客户销售占比及新增新能源平台定点",
+    "生物合成业务收入、毛利和现金消耗是否可验证"
+  ]
+}

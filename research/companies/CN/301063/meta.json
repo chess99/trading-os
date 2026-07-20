@@ -1,0 +1,114 @@
+{
+  "market": "CN",
+  "symbol": "CN:301063",
+  "ticker": "301063",
+  "currency": "CNY",
+  "name": "海锅股份",
+  "company_name": "张家港海锅新能源装备股份有限公司",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "max_weight": 0.02,
+  "fair_value_range": [
+    9.6,
+    13.4
+  ],
+  "buy_zone": [
+    7.5,
+    10.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    20.0
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "position_plan": [
+    {
+      "action": "watch",
+      "condition": "等待连续两个季度收入转正、毛利率回升且经营现金流覆盖净利润",
+      "max_weight": 0
+    },
+    {
+      "action": "buy_zone_tracking",
+      "condition": "股价进入 7.5-10.0 元且资产质量未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "action": "reduce_or_avoid",
+      "condition": "股价处于 16.0-20.0 元且盈利未明显修复",
+      "max_weight": 0
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "metric": "revenue_growth",
+      "condition": "连续两个季度收入同比转正",
+      "reason": "连续两个季度收入同比转正"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "metric": "gross_margin",
+      "condition": "综合毛利率回到 16% 以上",
+      "reason": "综合毛利率回到 16% 以上"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "metric": "operating_cash_flow",
+      "condition": "经营现金流连续覆盖归母净利润",
+      "reason": "经营现金流连续覆盖归母净利润"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "metric": "orders",
+      "condition": "油气或风电重大订单公告",
+      "reason": "油气或风电重大订单公告"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "metric": "working_capital",
+      "condition": "应收账款、存货或减值风险明显上升",
+      "reason": "应收账款、存货或减值风险明显上升"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "metric": "governance",
+      "condition": "控股股东大额减持或质押上升",
+      "reason": "控股股东大额减持或质押上升"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入买入跟踪区间上沿，若资产质量未恶化可复盘小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "进入减仓/回避区间下沿，若盈利未修复需复盘估值风险"
+    }
+  ],
+  "last_updated": "2026-07-15",
+  "current_thesis": "高端装备锻件供应商，风电下滑但油气装备有所增长；2025-2026Q1 盈利承压，当前估值已反映较多复苏预期，需等待订单、毛利率和现金流同步修复。",
+  "thesis": "高端装备锻件供应商，风电下滑但油气装备有所增长；2025-2026Q1 盈利承压，当前估值已反映较多复苏预期，需等待订单、毛利率和现金流同步修复。",
+  "key_tracking_metrics": [
+    "季度收入增速",
+    "综合毛利率",
+    "油气装备锻件收入与毛利率",
+    "风电装备锻件收入恢复情况",
+    "经营现金流净额/归母净利润",
+    "应收账款和存货周转",
+    "控股股东减持或质押变化"
+  ],
+  "updated_at": "2026-07-15"
+}

@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:688551",
+  "market": "CN",
+  "ticker": "688551",
+  "name": "科威尔",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "科威尔具备国产测试电源和新能源测试系统的技术壁垒，2025年测试电源与功率半导体测试增长较快，资产负债表安全；但2026年一季度收入和扣非利润明显下滑，当前股价已较充分计入AI服务器电源测试等新业务预期，等待半年报和订单验证后再提高评级。",
+  "fair_value_range": [
+    32,
+    42
+  ],
+  "buy_zone": [
+    26,
+    31
+  ],
+  "sell_or_reduce_zone": [
+    52,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于31元，且2026年半年报或三季报显示收入恢复同比正增长、扣非净利率回到8%以上、经营现金流未持续恶化时小仓试错。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "公司披露AI服务器电源测试或功率半导体测试订单持续转化，单季收入同比增长超过25%、毛利率稳定在45%以上时，可提高但仍控制单票风险。",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若股价高于52元但未出现订单和扣非利润同步上修，或扣非净利率连续两个季度低于5%，降低仓位或退出观察。",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 31,
+      "reason": "进入买入区间，可复核半年报、订单和现金流后决定是否建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "低于保守情景估值下沿，若基本面未恶化，安全边际显著改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 52,
+      "reason": "进入乐观情景估值区间，若缺少新增订单和扣非利润验证，应考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入恢复、扣非净利率、经营现金流、合同负债和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证测试电源和功率半导体测试是否形成连续增长。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估长期收入增速、扣非盈利质量和估值区间。"
+    }
+  ]
+}

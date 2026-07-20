@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:688169",
+  "market": "CN",
+  "ticker": "688169",
+  "name": "石头科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "石头科技是全球智能清洁机器人头部品牌，海外扩张和新品类带来收入天花板上移；但2025年利润率和经营现金流承压，说明增长质量仍需验证。当前约97元价格对应估值不贵但安全边际不足，等待75-90元买入区或经营现金流、利润率修复的确认。",
+  "fair_value_range": [
+    110,
+    135
+  ],
+  "buy_zone": [
+    75,
+    90
+  ],
+  "sell_or_reduce_zone": [
+    150,
+    170
+  ],
+  "position_plan": [
+    {
+      "condition": "price < 75 and thesis intact after review",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "75 <= price <= 90 and cash flow / margin indicators are stable",
+      "max_weight": 0.035
+    },
+    {
+      "condition": "90 < price <= 110 without confirmed cash-flow recovery",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "110 < price <= 135",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price > 150 unless fundamentals materially exceed base case",
+      "max_weight": 0.01
+    }
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报：收入、毛利率、销售费用率、经营现金流、库存和海外增长质量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：确认利润率与现金流是否修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报：验证新品类和海外扩张是否转化为自由现金流。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 90,
+      "reason": "进入买入区，允许小仓分批，但需复核现金流和利润率。"
+    },
+    {
+      "type": "price_below",
+      "price": 75,
+      "reason": "进入强吸引力区，若核心假设未破坏可加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 135,
+      "reason": "高于合理价值上沿，不应追高。"
+    },
+    {
+      "type": "price_above",
+      "price": 150,
+      "reason": "进入减仓区，除非基本面显著超出基准情景。"
+    }
+  ],
+  "updated_at": "2026-07-09"
+}

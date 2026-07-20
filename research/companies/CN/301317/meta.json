@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:301317",
+  "ticker": "301317",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "鑫磊股份",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "current_thesis": "鑫磊股份处于节能空气动力设备赛道，2025年收入和现金流修复，但2026Q1再度亏损，盈利稳定性尚未验证；以2026-07-15收盘价55.78元估算，市值约87.8亿元，对2025年扣非利润约356倍，明显透支已验证基本面，当前只观察不买。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16,
+    24
+  ],
+  "buy_zone": [
+    0,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    38,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "现价附近或估值仍高于正常化利润50倍，且2026H1扣非利润未明确转正",
+      "action": "不建仓，仅跟踪半年报和订单质量",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至18-24元，且2026H1或2026Q3扣非利润转正、经营现金流改善",
+      "action": "允许建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于18元，且收入增长、毛利率稳定、经营现金流改善三项至少满足两项",
+      "action": "分批买入",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "连续两个季度扣非净利率超过8%、经营现金流为正，且估值低于30倍正常化利润",
+      "action": "重新出具报告后再考虑提高仓位",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入合理价值区间上沿，需要复核是否具备小仓观察条件"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入买入区间，需要结合最新利润和现金流重新评估安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 60,
+      "reason": "若无扣非利润跃迁，估值进一步透支基本面，应强化回避或减仓判断"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非利润、毛利率、经营现金流和订单质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1亏损是否为季节性波动"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估正常化利润和估值区间"
+    }
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ]
+}

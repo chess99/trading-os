@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688563",
+  "market": "CN",
+  "ticker": "688563",
+  "name": "航材股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "航材股份是航空发动机、商用飞机和航空航天材料/部件稀缺平台，技术认证和中国航发体系客户壁垒强；但2025年收入利润下滑、2026Q1利润继续承压，当前约40倍2025年归母净利缺少足够安全边际，适合观察等待价格或业绩确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    42,
+    55
+  ],
+  "buy_zone": [
+    34,
+    40
+  ],
+  "sell_or_reduce_zone": [
+    62,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入40元以下且2026H1扣非净利不继续恶化、经营现金流修复",
+      "action": "initiate_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "剩余履约义务维持在24亿元以上、航空成品件毛利率稳定且扣非净利恢复正增长",
+      "action": "add_selectively",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "2026Q2以后扣非净利继续下滑且应收账款或存货周转恶化",
+      "action": "pause_or_reduce",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 40,
+      "reason": "进入买入区间上沿，需复核2026H1利润和现金流后考虑观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "接近保守绝对估值下沿，若基本面未破坏则安全边际较好"
+    },
+    {
+      "type": "price_above",
+      "price": 62,
+      "reason": "超过基准公允价值上沿，若无双位数利润增长确认应减持或避免追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、扣非净利、经营现金流、应收账款和剩余履约义务"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认利润恢复和订单交付改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红、镇江钛合金整合效果和2027年增长假设"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "symbol": "CN:300179",
+  "market": "CN",
+  "ticker": "300179",
+  "name": "四方达",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "国内复合超硬材料龙头，PDC复合片技术壁垒高、油气主业毛利率约59%。但扣非净利润连续三年下滑（2025年仅0.51亿元），经营性现金流转负，毛利率从55%降至41%。当前股价~50.5元、市值~245亿，PE~263x/扣非PE~480x、PB~19x，已极度高估。实控人家族及高管2026年高位减持，20亿定增将显著摊薄。现价仅反映极乐观CVD/钻针情景预期，无安全边际，风险收益比极差。",
+  "fair_value_range": [12, 18],
+  "buy_zone": [10, 14],
+  "sell_or_reduce_zone": [35, 50],
+  "position_plan": [
+    {"condition": "当前约50.5元，泡沫区间", "max_weight": 0},
+    {"condition": "股价处于买入区间(10-14元)且扣非净利润连续2季同比为正、经营性现金流转正", "max_weight": 0.02},
+    {"condition": "股价<10元且基本面未继续恶化", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-10-31", "reason": "复查2026三季报，确认利润修复趋势、定增进展、CVD减亏进度"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 14, "reason": "进入安全买入区间，需重新核验季度经营数据和扣非净利润趋势"},
+    {"type": "price_above", "price": 35, "reason": "进入卖出/减仓区间，风险收益比恶化"}
+  ],
+  "updated_at": "2026-07-08T21:00:00+08:00"
+}

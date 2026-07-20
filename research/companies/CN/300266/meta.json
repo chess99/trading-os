@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:300266",
+  "ticker": "300266",
+  "name": "兴源环境",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "兴源环境处于国资纾困、业务回归装备制造和数智能碳期权并存的修复阶段，但连续亏损、高负债、财务费用和应收回款压力使现价缺乏安全边际；只有经营现金流、扣非利润和资本结构同时改善后才值得重新评估。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    0.8,
+    1.2
+  ],
+  "buy_zone": [
+    0,
+    0.75
+  ],
+  "sell_or_reduce_zone": [
+    1.5,
+    99
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价高于公允价值中枢且公司仍未证明扣非盈利和现金流修复",
+      "action": "不建仓，仅跟踪",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于0.75元，且2026H1经营现金流转正、扣非亏损同比显著收窄",
+      "action": "事件驱动观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非接近盈亏平衡，财务费用持续下降，且控股股东完成实质性债务资本化或长期低息替换",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.75,
+      "reason": "进入估算买入观察区，需要结合现金流和债务修复重新评估"
+    },
+    {
+      "type": "price_above",
+      "price": 1.5,
+      "reason": "超过减持/回避区，若基本面未同步改善则风险收益进一步恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、扣非亏损、经营现金流、财务费用和应收回款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及控股股东资本结构支持进展"
+    }
+  ]
+}

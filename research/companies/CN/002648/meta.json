@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:002648",
+  "market": "CN",
+  "ticker": "002648",
+  "name": "卫星化学",
+  "company_name": "卫星化学",
+  "updated_at": "2026-07-08",
+  "status": "active",
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "轻烃一体化和丙烯酸及酯规模优势支撑成本曲线位置，2026H1业绩预告显示盈利中枢上移，当前估值仍有安全边际，但需跟踪价差、现金流和金融工具损益。",
+  "quality_rating": "A-",
+  "valuation_rating": "attractive",
+  "fair_value_range": [
+    27,
+    32
+  ],
+  "buy_zone": [
+    20,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    38
+  ],
+  "base_currency": "CNY",
+  "currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "20-24元买入第一笔，20元以下且基本面未恶化时加仓，34元以上不追高并复核是否减仓。",
+      "action": "initial_buy_and_scale",
+      "max_weight": 0.06,
+      "initial_weight": 0.02,
+      "add_weight_below": 20,
+      "hold_weight_range": [
+        0.02,
+        0.04
+      ]
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入强吸引力买入区，隐含估值较低。",
+      "action": "review_for_add",
+      "note": "强吸引力买入区，确认主营价差和业绩预告未恶化后加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "进入不应追高区，乐观预期可能已较充分反映。",
+      "action": "review_for_reduce",
+      "note": "进入不应追高区，若价差或盈利预期下修则分批减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报预计已披露，需要核验业绩预告兑现度。",
+      "note": "复查 2026 半年报正式数据、扣非利润和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026三季报预计已披露，需要验证下半年盈利持续性。",
+      "note": "复查 2026 三季报，验证 H2 盈利持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "乙烷、丙烷、丙烯酸及酯、聚乙烯、乙二醇价差连续 4 周显著收窄，或核心装置发生重大安全环保事件。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026H1正式归母净利润和扣非归母净利润",
+    "经营活动现金流净额",
+    "乙烷-乙烯价差",
+    "丙烯酸及酯价差",
+    "聚乙烯和乙二醇价差",
+    "境外收入占比和毛利率",
+    "POE、EAA、α-烯烃、高吸水性树脂等新项目进度",
+    "衍生金融工具公允价值变动和投资收益"
+  ]
+}

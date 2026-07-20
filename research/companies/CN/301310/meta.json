@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301310",
+  "ticker": "301310",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "鑫宏业",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "鑫宏业具备新能源汽车、核电、超充、机器人等特种线缆成长暴露，但当前估值已接近乐观情景，现金流和毛利率尚未证明，维持观察而非买入。",
+  "fair_value_range": [
+    42,
+    55
+  ],
+  "buy_zone": [
+    30,
+    38
+  ],
+  "sell_or_reduce_zone": [
+    68,
+    85
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价回落至38元以下，且2026年半年报显示毛利率修复、经营现金流改善",
+      "action": "可建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价回落至30-34元且核心客户订单、收入增长、现金流未恶化",
+      "action": "可提升至小仓位配置",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于68元但利润率和经营现金流未同步改善",
+      "action": "不新增，已有仓位应减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "进入观察买入区，需要复核半年报毛利率、现金流和订单兑现"
+    },
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入高安全边际区，若基本面未恶化可重新评估配置价值"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "reason": "接近乐观情景估值，若无利润和订单兑现则题材溢价过高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-30",
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和新业务贡献"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及核电、机器人、超充相关订单进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新校准估值与评级"
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920925",
+  "market": "CN",
+  "ticker": "920925",
+  "name": "锦好医疗",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司受益于美国OTC助听器扩容并具备ODM与芯片整合能力，但2026Q1转亏、自由现金流和资本回报偏弱，当前价格已透支品牌化与芯片化预期。",
+  "fair_value_range": [4.8, 6.5],
+  "buy_zone": [3.8, 4.8],
+  "sell_or_reduce_zone": [8.0, 11.0],
+  "position_plan": [
+    {
+      "condition": "股价处于3.8至4.8元且连续两个季度主营收入恢复同比增长、经营现金流转正、核心客户未流失",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度收入下滑且亏损、自由现金流持续为负或核心客户显著流失，无论价格多低",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的收入、利润、经营现金流与客户稳定性"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报并验证业绩修复是否连续"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入有安全边际的候选买入区间，仍需重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T07:25:40+08:00"
+}

@@ -1,0 +1,83 @@
+{
+  "symbol": "CN:601811",
+  "ticker": "601811",
+  "name": "新华文轩",
+  "company_name": "新华文轩出版传媒股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "新华文轩是四川省出版发行与教育服务龙头，教材教辅和区域渠道提供稳定现金流，分红率较高；但图书零售处于存量竞争、教育服务受政策和人口结构影响，当前11.77元股价仅略低于公允价值区间中位，尚未提供足够安全边际，等待10.8元以下或基本面改善后再买入。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    12.0,
+    15.0
+  ],
+  "buy_zone": [
+    9.5,
+    10.8
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于10.8元，且2026收入和扣非归母净利润未出现明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于9.5-10.0元，股息率接近或高于6%，扣非归母净利润仍稳定在14.5亿元以上",
+      "action": "提高至核心低估值分红仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于15.5元且收入仍无增长，或估值超过12倍PE但基本面未改善",
+      "action": "不加仓并考虑减持",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.8,
+      "target_price": 10.8,
+      "reason": "进入初始买入区间上沿，需复核2026收入、扣非利润和分红承诺"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "target_price": 9.5,
+      "reason": "进入有吸引力安全边际区间，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "target_price": 15.5,
+      "reason": "达到减持观察区间，若没有收入或利润改善应降低预期收益"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查教育服务、一般图书、经营现金流和分红可持续性"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年收入是否企稳"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报与分红方案，更新绝对估值和买入区间"
+    }
+  ]
+}

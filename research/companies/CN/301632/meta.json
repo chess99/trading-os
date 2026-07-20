@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:301632",
+  "ticker": "301632",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "广东建科",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "广东建科是具备广东区域资质、客户与省属平台优势的工程检测和技术服务公司，但上市后估值已经较充分反映成长预期；在收入尚未恢复增长、应收与回款仍需验证前，应等待更好的安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    9.5,
+    12.5
+  ],
+  "buy_zone": [
+    0,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    14.5,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于9.5元，且最近两个季度经营现金流/归母净利润不低于80%，专业技术服务毛利率不低于44%，收入降幅收窄",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于8.0元，且无重大坏账、募投或治理负面事件，收入恢复正增长",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于14.5元但收入仍为负增长，或经营现金流显著弱于净利润",
+      "action": "不加仓并考虑降低观察仓",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入估算合理价值下沿附近，可结合现金流和毛利率复核是否具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "若基本面未恶化，悲观情景已较充分计价，值得重新评估买入"
+    },
+    {
+      "type": "price_above",
+      "price": 14.5,
+      "reason": "高于估算合理价值上沿且经营拐点未确认，安全边际不足"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "reason": "接近乐观情景估值，需要有收入、订单或现金流超预期支撑，否则应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现收入拐点和回款改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-07-31",
+      "reason": "检查募投项目延期后的达到预定可使用状态进展和产能利用率"
+    }
+  ]
+}

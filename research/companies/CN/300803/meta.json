@@ -1,0 +1,45 @@
+{
+  "symbol": "CN:300803",
+  "market": "CN",
+  "ticker": "300803",
+  "name": "指南针",
+  "company_name": "北京指南针科技发展股份有限公司",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "A股第二家拥有券商牌照的互联网金融信息服务商（收购麦高证券），软件+证券经纪双轮驱动，对标东方财富微型版。2025年营收21.5亿(+40%)、净利2.28亿(+119%)，毛利率87.4%优异。但PE_TTM极高（>100×）、PB约27×，安全边际薄，2026Q1净利同比-19.8%已现业绩波动信号。暂不追高，等待估值回归至38-55元合理区间再考虑首笔建仓。",
+  "quality_rating": "B+",
+  "valuation_rating": "D",
+  "fair_value_range": [38, 55],
+  "buy_zone": [30, 38],
+  "strong_attraction_zone": [22, 28],
+  "sell_or_reduce_zone": [120, 999],
+  "do_not_chase_above": 80,
+  "position_plan": [
+    {"zone": "80元以上", "condition": "估值严重透支", "action": "不追价，已有则减仓", "target_weight": 0.0, "max_weight": 0.01},
+    {"zone": "55-80元", "condition": "偏贵，安全边际不足", "action": "观察，不建仓", "target_weight": 0.0, "max_weight": 0.0},
+    {"zone": "38-55元", "condition": "合理估值上沿", "action": "首笔观察仓分3次介入", "target_weight": 0.02, "max_weight": 0.02},
+    {"zone": "30-38元", "condition": "接近安全边际", "action": "分批加仓", "target_weight": 0.03, "max_weight": 0.03},
+    {"zone": "22-30元", "condition": "强吸引力", "action": "加仓至中期目标", "target_weight": 0.05, "max_weight": 0.05},
+    {"zone": "22元以下", "condition": "极度低估（系统性恐慌）", "action": "重仓", "target_weight": 0.06, "max_weight": 0.06}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026半年报——检验麦高证券利润贡献与业绩波动"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026三季报跟踪"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 55, "action": "review_and_consider_entry", "reason": "进入合理估值上沿"},
+    {"type": "price_below", "price": 38, "action": "review_and_consider_add", "reason": "进入安全边际区间"},
+    {"type": "price_above", "price": 120, "action": "review_and_consider_reduce", "reason": "显著高估信号"}
+  ],
+  "key_risks": [
+    "A股行情周期性回落致营收利润剧烈波动",
+    "麦高证券整合不及预期、商誉减值风险",
+    "估值极高(PE_TTM>100×,PB~27×)，业绩不达即戴维斯双杀",
+    "券商牌照监管、Level2数据授权变动、投顾合规问题",
+    "东方财富、同花顺等平台竞争蚕食用户"
+  ],
+  "updated_at": "2026-07-08T18:00:00+08:00"
+}

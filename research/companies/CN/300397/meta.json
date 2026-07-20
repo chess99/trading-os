@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:300397",
+  "ticker": "300397",
+  "name": "天和防务",
+  "company_name": "西安天和防务技术股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "天和防务处在低空安全、军工电子和通信电子交叉赛道，2026Q1收入与利润改善，但2025仍大幅亏损，单季改善尚不能证明盈利反转。当前约14元以上价格已接近牛市情景，缺乏安全边际，适合观察而非买入。",
+  "fair_value_range": [
+    8.0,
+    11.0
+  ],
+  "buy_zone": [
+    0.0,
+    8.0
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌至8.0元以下，且2026H1扣非净利润为正、经营现金流为正、应收和存货未异常扩张",
+      "action": "watch_to_trial",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格处于8.0-11.0元且半年报尚未验证订单和现金流",
+      "action": "wait",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格高于14.0元且无重大订单或盈利连续性证据",
+      "action": "do_not_buy_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入有安全边际的观察买入区，可结合半年报验证小仓位试错"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "价格接近牛市情景估值，无新增业绩证据时风险收益比转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、应收账款和存货"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1改善是否具备连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报与再融资进展，更新估值和仓位上限"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920429",
+  "market": "CN",
+  "ticker": "920429",
+  "name": "康比特",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "专业运动营养品牌具备增长空间，但原料涨价、利润率下滑和扩产期负自由现金流尚未被当前价格充分补偿。",
+  "fair_value_range": [7.4, 9.2],
+  "buy_zone": [6.0, 7.0],
+  "sell_or_reduce_zone": [10.5, 12.5],
+  "position_plan": [
+    {
+      "condition": "股价处于6.0-7.0元且毛利率、需求与军需回款未继续恶化，首档建仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价仍在买入区间且连续财报确认毛利率回升、自由现金流改善和二期产能消化，总仓位上限",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入确认、毛利率、现金流及固安二期进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认利润率与自由现金流修复趋势"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入有安全边际的买入区间，但需先复核核心假设而非机械补仓"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "进入减仓或不应追高区间，除非盈利与现金流已超出基准情景"
+    }
+  ],
+  "updated_at": "2026-07-17T18:29:13+08:00"
+}

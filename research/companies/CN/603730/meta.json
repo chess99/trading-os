@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603730",
+  "market": "CN",
+  "ticker": "603730",
+  "name": "岱美股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "岱美股份是全球遮阳板细分龙头，现金流和客户认证壁垒较强，但当前股价已反映较多质量溢价；剔除火灾保险赔款后，需等待扣非利润恢复和更好的买入价格。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.5,
+    11.5
+  ],
+  "buy_zone": [
+    7.0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    13.0,
+    15.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价回落至7.0-8.5元，且最近两个季度扣非净利润年化不低于7.0亿元、经营现金流未明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "扣非净利润年化超过8.5亿元，头枕和顶棚中央控制器收入持续增长，且股价低于9.5元",
+      "action": "小幅加仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于13.0元但无可核验新增成长曲线，或海外毛利率下降超过3个百分点",
+      "action": "减仓或停止买入",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入合理买入区上沿，若基本面未恶化可重新评估建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入较深安全边际区，需重点核验是否为基本面风险导致。"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "接近乐观情景估值，若无新增成长证据应考虑降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，拆分保险赔款与经营性扣非利润。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，观察扣非利润、现金流和海外毛利率。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估正常化盈利和估值区间。"
+    }
+  ]
+}

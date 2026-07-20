@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:603030",
+  "ticker": "603030",
+  "name": "全筑股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "全筑股份处于重整后经营修复期，2026Q1 已小幅盈利且 2026H1 预告大幅减亏，但 2025 年仍大亏、历史减值和未弥补亏损压力较大；当前约 3.45 倍 PB 和约 2.54 倍 PS 已要求持续转正，安全边际不足，适合观察而非买入。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    1.2,
+    1.7
+  ],
+  "buy_zone": [
+    0.9,
+    1.1
+  ],
+  "sell_or_reduce_zone": [
+    2.2,
+    2.8
+  ],
+  "position_plan": [
+    {
+      "condition": "观察池，不主动建仓；若股价进入买入区且 2026H1 正式报告确认扣非亏损小于 600 万元、经营现金流未恶化，可小仓位试错。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若 2026 年全年收入恢复至 12 亿元以上、扣非归母净利润转正且经营现金流为正，可重新评估上限。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若再次出现单年超过 5000 万元资产或信用减值、经营现金流连续两个季度为负且亏损扩大，则不持有。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.1,
+      "reason": "进入保守买入区，且若经营修复未破坏，可重新评估困境反转赔率。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.2,
+      "reason": "进入卖出或降低区，若扣非利润和经营现金流未同步兑现，估值透支。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年度报告正式数据、扣非亏损、毛利率、经营现金流和减值情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认收入增长、毛利率和现金流改善是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，判断困境反转是否真正转化为全年扣非盈利和正经营现金流。"
+    }
+  ]
+}

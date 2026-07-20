@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920493",
+  "market": "CN",
+  "ticker": "920493",
+  "name": "并行科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "算力需求带动收入高速增长，但毛利率下行、高杠杆、负自由现金流与财务内控风险使109元附近赔率明显不足。",
+  "fair_value_range": [52, 70],
+  "buy_zone": [38, 50],
+  "sell_or_reduce_zone": [85, 110],
+  "position_plan": [
+    {
+      "condition": "股价处于38至50元且算力服务毛利率不低于20%、应收与债务未继续恶化",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于38元且重新验证长期商业价值未受损、自由现金流路径改善",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "毛利率持续低于18%、应收坏账失控或再现重大财务内控问题",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报中的毛利率、应收、债务和自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 50,
+      "reason": "进入有安全边际的买入区间上沿，需重新验证基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 85,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-17T12:54:34+08:00"
+}

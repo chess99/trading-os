@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600732",
+  "market": "CN",
+  "ticker": "600732",
+  "currency": "CNY",
+  "name": "爱旭股份",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "爱旭股份具备ABC组件技术和产品差异化，但光伏行业仍处产能过剩、公司2026H1预亏且负债率高，当前估值已反映较多盈利修复预期，适合观察而非追高买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.0,
+    13.0
+  ],
+  "buy_zone": [
+    0.0,
+    8.0
+  ],
+  "sell_or_reduce_zone": [
+    15.0,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8元，且ABC组件毛利率连续两个季度改善、经营现金流为正、负债率不再上升",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026半年报或三季报显示ABC出货和毛利率继续改善，扣非亏损环比明显收窄",
+      "action": "维持或小幅加仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于15元但公司仍亏损，或ABC毛利率、现金流、负债率任一核心指标恶化",
+      "action": "减仓或不参与",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入估算买入区间，可重新评估ABC技术期权的风险回报"
+    },
+    {
+      "type": "price_above",
+      "price": 15.0,
+      "reason": "超过基准情景合理区间，若盈利修复未兑现则需减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、ABC毛利率、现金流和负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认亏损是否继续环比收窄"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年产能改造、订单质量、盈利修复节奏"
+    }
+  ]
+}

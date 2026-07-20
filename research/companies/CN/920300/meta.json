@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920300",
+  "market": "CN",
+  "ticker": "920300",
+  "name": "辰光医疗",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "射频探测器和特种超导磁体具备局部技术价值，但整机战略冲突、连续亏损、高净债务与减值风险尚未解决，当前约9.7倍市销率严重透支反转预期。",
+  "fair_value_range": [3.5, 5.5],
+  "buy_zone": [2.5, 3.5],
+  "sell_or_reduce_zone": [7.0, 9.0],
+  "position_plan": [
+    {
+      "condition": "股价处于2.50至3.50元且收入止跌、核心客户稳定、净债务未上升",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度收入增长、经营现金流改善且净债务下降",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "基本面恶化、核心客户流失或需要高折价股权融资",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、CT/DR订单、射频客户和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报及高温超导线圈项目履约与回款"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "reason": "进入有安全边际的基本面复核区，确认逻辑未恶化后方可试仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "进入减仓或不应追高区间，需显著上修长期现金流才能维持估值"
+    }
+  ],
+  "updated_at": "2026-07-18T18:00:00+08:00"
+}

@@ -1,0 +1,83 @@
+{
+  "symbol": "CN:601229",
+  "market": "CN",
+  "ticker": "601229",
+  "name": "上海银行",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "估值便宜但增速几乎停滞、可转债摊薄落地、新增诉讼信号，下行有限但赔率不充分，需等中报验证后再决定方向。",
+  "fair_value_range": [
+    10.0,
+    11.5
+  ],
+  "buy_zone": [
+    8.4,
+    9.2
+  ],
+  "sell_or_reduce_zone": [
+    11.5,
+    13.2
+  ],
+  "position_plan": [
+    {
+      "condition": "股价<=7.6元且基本面未恶化",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价在7.6至8.4元之间",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价在8.4至9.2元之间",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价在9.2至10.0元之间",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价在10.0至11.5元之间",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价>11.5元",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md",
+    "reports/2026-07-10-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "中报披露日，重点复查净息差、利息净收入、房地产不良率、信用减值损失、规模与利润增速"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-30",
+      "reason": "三季报披露日，验证盈利韧性与风险暴露是否稳定"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.4,
+      "reason": "进入有安全边际的买入区间，可考虑从观察仓提升到分批仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 7.6,
+      "reason": "进入强吸引力带（股息率6.8%+、PB≈0.43x），可考虑加仓但需结合中报验证后决策"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "接近乐观上沿，进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-10T00:00:00+08:00"
+}

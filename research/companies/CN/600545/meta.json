@@ -1,0 +1,62 @@
+{
+  "symbol": "CN:600545",
+  "ticker": "600545",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "卓郎智能",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "卓郎智能具备全球纺织机械品牌、技术和渠道基础，但近年收入下滑、亏损延续、经营现金流偏弱，且历史治理问题需要估值折价。当前市场价格已预支较强复苏，缺乏安全边际，等待价格大幅回落或连续盈利与现金流改善后再评估。",
+  "fair_value_range": [
+    1.2,
+    2.0
+  ],
+  "buy_zone": [
+    0.8,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    2.8,
+    4.5
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价低于1.20元且最新两个季度经营现金流转正、亏损显著收窄或扭亏，并确认无新增资金占用/重大关联风险时，允许建立观察性仓位。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若股价高于2.80元且未出现连续盈利、现金流改善和债务下降的硬证据，维持零仓位。",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入基准合理价值下沿和买入观察区，需要重新核验订单、现金流和治理改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 2.8,
+      "reason": "超过基本面可支撑区间上沿，若无盈利与现金流证据，应维持回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后复核收入、毛利率、订单、现金流、债务和治理事项。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后判断亏损收窄是否延续以及经营现金流是否转正。"
+    }
+  ]
+}

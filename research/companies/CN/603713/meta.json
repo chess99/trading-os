@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603713",
+  "market": "CN",
+  "ticker": "603713",
+  "name": "密尔克卫",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "密尔克卫是A股稀缺的化工供应链一体化平台，受益于危化监管趋严、化工景气修复和新能源/半导体客户增量；但分销业务低毛利、债务扩张和营运资金波动削弱安全边际，当前价格附近更适合观察，等待55-58元以下或现金流与利润质量连续验证后买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    68,
+    86
+  ],
+  "buy_zone": [
+    55,
+    58
+  ],
+  "sell_or_reduce_zone": [
+    88,
+    95
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于58元，且无重大安全事故、利润预警或债务恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于55元，且滚动12个月经营现金流不低于归母净利润的0.7倍",
+      "action": "提升至核心小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于88元，且未来12个月归母净利润预期未上修至8亿元以上",
+      "action": "分批减仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 58,
+      "reason": "进入初始买入区间，估值相对合理价值下沿具备约15%以上折价"
+    },
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "达到更有吸引力的安全边际，可在基本面未恶化时提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 88,
+      "reason": "接近卖出/减持区间，若盈利预期未同步上修则估值透支"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看物流毛利率、分销应收、经营现金流和债务变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认化工景气复苏和新能源/半导体客户增量是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "symbol": "CN:300657",
+  "market": "CN",
+  "ticker": "300657",
+  "name": "弘信电子",
+  "company_name": "厦门弘信电子科技集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司处于 FPC 主业修复与 AI 算力转型验证期，2025 年收入和利润明显改善，但当前市值已反映较强 AI 预期；资产负债率、应收账款和经营现金流仍是主要约束。37 元附近不具备足够安全边际，22 元以下才考虑小仓位。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    22,
+    30
+  ],
+  "buy_zone": [
+    0,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    40,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于 22 CNY，且未出现大客户回款恶化、债务展期压力或 AI 业务订单取消",
+      "action": "建立 2%-3% 观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于 18 CNY，且 2026 年经营现金流转正、资产负债率下降至 75% 以下",
+      "action": "加至约 5% 仓位上限",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格处于 24-30 CNY，且尚未看到智算服务收入占比、现金流和负债率同步改善",
+      "action": "继续观察，不主动加仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于 40 CNY，且基本面没有继续超预期",
+      "action": "减仓或回避新买入",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "currency": "CNY",
+      "reason": "进入基础安全边际区间，可重新评估小仓位买入"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "currency": "CNY",
+      "reason": "若基本面未恶化，赔率明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "currency": "CNY",
+      "reason": "估值进一步透支 AI 转型预期，应复核减仓条件"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点检查 AI 业务毛利率、经营现金流、应收账款和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认智算服务收入占比和财务费用压力是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报，重新评估合理价值区间和是否具备中期买入条件"
+    }
+  ],
+  "key_tracking_metrics": [
+    "智算服务收入占 AI 业务比例",
+    "AI 业务毛利率与回款周期",
+    "经营活动现金流净额",
+    "资产负债率",
+    "财务费用/净利润比例",
+    "FPC 毛利率",
+    "应收账款周转与坏账计提",
+    "定增进度与募投项目投产情况"
+  ]
+}

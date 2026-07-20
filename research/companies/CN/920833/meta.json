@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920833",
+  "market": "CN",
+  "ticker": "920833",
+  "name": "美心翼申",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "客户认证与海外高毛利业务有价值，但客户高度集中、ROIC偏低且2026Q1盈利明显转弱，当前价格已透支复苏与并购预期。",
+  "fair_value_range": [5.0, 6.5],
+  "buy_zone": [4.2, 5.0],
+  "sell_or_reduce_zone": [7.5, 9.0],
+  "position_plan": [
+    {
+      "condition": "股价低于5.00元且收入降幅收窄、经营现金流为正、核心客户关系未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于4.50至5.00元、毛利率回到23%以上且存货周转不再恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于4.20至4.50元、长期自由现金流假设未受损且重大收购未毁值",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的客户提货、毛利率、存货周转和自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-13",
+      "reason": "重大资产重组提示公告满六个月，复核预案、定价、融资及商誉风险"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.0,
+      "reason": "进入有安全边际的买入区间，需先复核核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T17:39:19+08:00"
+}

@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:603990",
+  "market": "CN",
+  "ticker": "603990",
+  "name": "麦迪科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "麦迪科技剥离光伏后重新聚焦医疗信息化，2025年扭亏且现金流改善，但扣非利润和2026年上半年盈利规模仍小，当前股价隐含过高增长与利润率假设，安全边际不足。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    5.0,
+    8.0
+  ],
+  "buy_zone": [
+    4.0,
+    5.5
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前估值显著高于基准公允价值，不建仓，仅跟踪2026年半年报与三季报的扣非利润、经营现金流和医疗信息化订单。",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若股价跌入5.5元以下且连续两个报告期扣非净利润与经营现金流同步改善，可建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若股价跌至4.0元附近且2026-2027年医疗信息化主业收入恢复被验证，可提高至小仓位配置。",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.5,
+      "reason": "进入观察买入区，需要重新核验扣非利润、现金流和订单质量。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估小仓位配置。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "高于基准公允价值较多，除非业绩大幅超预期，否则应继续回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查扣非净利润、经营现金流、应收账款和医疗信息化订单。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年盈利恢复是否具备持续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估主业质量、资本配置和估值中枢。"
+    }
+  ]
+}

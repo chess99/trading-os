@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301033",
+  "ticker": "301033",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "迈普医学",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "迈普医学具备神经外科再生植入材料的注册、临床和渠道壁垒，2025 年增长和现金流质量较好；但 2026Q1 放缓、并购易介医疗的不确定性以及当前估值接近基准价值上沿，使安全边际不足，适合观察等待价格或基本面验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    45,
+    58
+  ],
+  "buy_zone": [
+    35,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    70,
+    80
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于42元且无重大产品质量、集采压价或并购恶化信号时，可建立观察仓。",
+      "action": "initiate",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026年半年报确认收入和扣非净利润恢复20%左右增长，且经营现金流/净利润大于1，可提高仓位。",
+      "action": "add",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于70元但盈利预期未同步上修，或并购导致利润质量下降，应降低仓位。",
+      "action": "reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入买入区上沿，静态估值接近25倍PE并具备初步安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "reason": "进入减仓区，若盈利预期未上修则风险收益比转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、利润、现金流、毛利率和并购进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年增长是否恢复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和易介医疗整合效果。"
+    }
+  ]
+}

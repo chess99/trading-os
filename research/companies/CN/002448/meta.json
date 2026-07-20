@@ -1,0 +1,150 @@
+{
+  "symbol": "CN:002448",
+  "market": "CN",
+  "ticker": "002448",
+  "name": "中原内配",
+  "company_name": "中原内配集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中原内配是发动机摩擦副和商用车零部件细分龙头，2025-2026Q1 利润增长强，制动鼓、大缸径气缸套、电控执行器和泰国基地提供增量；但当前 11.32 元已处合理估值区间，经营现金流弱于利润，应收账款、存货和商誉需要折价，暂不买入。",
+  "quality_rating": "B+",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [
+    10.5,
+    13.0
+  ],
+  "buy_zone": [
+    7.5,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price >= 14.0",
+      "action": "不追高/已持有可降仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "12.0 <= price < 14.0",
+      "action": "仅观察或持有",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "10.5 <= price < 12.0",
+      "action": "等待中报和现金流",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "9.0 <= price < 10.5",
+      "action": "可试探买入",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "7.5 <= price < 9.0",
+      "action": "安全边际较好，可加仓",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "price < 7.5",
+      "action": "强吸引力区，前提是基本面未恶化",
+      "max_weight": 0.12
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "condition": "price <= 9.0",
+      "reason": "进入有安全边际买入区",
+      "action": "进入有安全边际买入区，复查后可试探买入"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "condition": "price <= 7.5",
+      "reason": "进入强吸引力买入区",
+      "action": "进入强吸引力买入区，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "condition": "price >= 14.0",
+      "reason": "高于不应追高价",
+      "action": "不追高，若基本面未超预期则考虑降仓"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "condition": "price >= 13.0",
+      "reason": "高于合理区间上沿",
+      "action": "高于合理区间上沿，复查估值"
+    },
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "condition": "price <= 10.5",
+      "reason": "进入合理区间下沿",
+      "action": "进入合理区间下沿，复查中报和现金流"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年中报披露",
+      "reason": "2026 年中报披露",
+      "action": "复查收入、归母净利、扣非净利和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "经营现金流/归母净利全年低于 60%",
+      "reason": "经营现金流/归母净利全年低于 60%",
+      "action": "复查利润质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "应收账款或存货连续两个季度增速显著高于收入增速",
+      "reason": "应收账款或存货连续两个季度增速显著高于收入增速",
+      "action": "复查营运资本风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "商誉出现大额减值或并购/基金投资继续消耗现金",
+      "reason": "商誉出现大额减值或并购/基金投资继续消耗现金",
+      "action": "复查资本配置"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "股价高于 14 元且没有现金流修复",
+      "reason": "股价高于 14 元且没有现金流修复",
+      "action": "复查减仓"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入增速",
+    "归母净利润与扣非归母净利润",
+    "经营现金流/归母净利润",
+    "应收账款增速与账龄",
+    "存货增速与跌价准备",
+    "制动鼓/盘收入和毛利率",
+    "气缸套收入和大缸径产品进展",
+    "电控执行器海外定点量产进度",
+    "海外收入占比与泰国基地达产进度",
+    "商誉余额和减值测试"
+  ]
+}

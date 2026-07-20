@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:600467",
+  "ticker": "600467",
+  "name": "好当家",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "好当家拥有海参养殖、育苗、加工和品牌资产，账面资产对估值有一定支撑；但2025年收入和利润下滑、2026Q1扣非仍亏损、财务费用高且控股股东质押比例较高，当前价格缺乏明确安全边际，需等待扣非利润和海参价格连续改善。",
+  "fair_value_range": [
+    1.55,
+    2.05
+  ],
+  "buy_zone": [
+    0.0,
+    1.5
+  ],
+  "sell_or_reduce_zone": [
+    2.4,
+    2.8
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于1.50元，且最近一期扣非归母净利润转正",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于1.35元，海参对外销售均价企稳，且财务费用同比下降",
+      "action": "加至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于2.40元且扣非归母净利润仍未连续转正",
+      "action": "不追高或减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.5,
+      "reason": "进入资产折价买入观察区，但仍需扣非利润改善确认"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "超过基准合理价值上沿，若基本面未同步改善应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的扣非利润、海参价格、财务费用和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认收入恢复和主业盈利改善"
+    }
+  ]
+}

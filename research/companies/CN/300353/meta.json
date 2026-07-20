@@ -1,0 +1,102 @@
+{
+  "symbol": "CN:300353",
+  "market": "CN",
+  "ticker": "300353",
+  "name": "东土科技",
+  "company_name": "北京东土科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备工业通信、工业操作系统和智能控制器稀缺性，但2025年扣非利润和经营现金流质量不足，2026Q1收入下滑且扣非亏损扩大；2026-07-13股价19.84元已显著高于9-13元合理价值区间，当前安全边际不足。",
+  "quality_rating": "中",
+  "valuation_rating": "低",
+  "fair_value_range": [
+    9.0,
+    13.0
+  ],
+  "buy_zone": [
+    0.0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    15.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价跌至8.5元以下，且未出现重大减值、债务压力或治理风险恶化",
+      "action": "buy",
+      "target_position": "0.5-1.0单位",
+      "max_weight": 0.1
+    },
+    {
+      "condition": "股价位于8.5-10.5元，且最近季度扣非亏损收窄、经营现金流改善",
+      "action": "watch_buy",
+      "target_position": "0.25-0.5单位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于15元，且操作系统及软件服务收入、智能控制器收入、扣非利润和经营现金流未同步兑现",
+      "action": "reduce_or_avoid",
+      "target_position": "0-0.25单位",
+      "max_weight": 0.025
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "unit": "CNY/share",
+      "action": "review_for_buy",
+      "reason": "进入有安全边际的可买区间。"
+    },
+    {
+      "type": "price_above",
+      "price": 15.0,
+      "unit": "CNY/share",
+      "action": "review_for_reduce",
+      "reason": "价格高于合理价值区间，需要经营兑现支撑。"
+    },
+    {
+      "type": "price_above",
+      "price": 19.84,
+      "unit": "CNY/share",
+      "action": "avoid_new_buy",
+      "reason": "2026-07-13基准价已明显缺乏安全边际。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看操作系统、智能控制器、扣非利润、经营现金流和研发资本化比例。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年收入恢复和现金流改善是否成立。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估估值区间和仓位计划。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "操作系统及软件服务收入增速、毛利率和客户数量",
+    "智能控制器收入增速及半导体装备、机器人、AI服务器等场景订单",
+    "扣非归母净利润是否连续转正",
+    "经营现金流净额及应收账款、合同资产变化",
+    "研发投入资本化比例是否从2025年的57.80%下降",
+    "工业级网络通信产品收入是否恢复增长",
+    "短期借款、长期借款、长期应付款和潜在回购义务变化",
+    "海外收入占比和毛利率"
+  ]
+}

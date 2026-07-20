@@ -1,0 +1,96 @@
+{
+  "symbol": "CN:002860",
+  "market": "CN",
+  "ticker": "002860",
+  "name": "星帅尔",
+  "company_name": "杭州星帅尔电器股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "家电及电机核心零部件业务具备客户认证、定制化和质量体系壁垒，但光伏组件收入占比过半且毛利率低，应收和客户集中度压力较大；2026-07-13 约16.34元价格对应估值偏满，缺乏安全边际。",
+  "quality_rating": "中等偏上",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [10.0, 13.0],
+  "buy_zone": [0, 10.0],
+  "sell_or_reduce_zone": [15.5, 999.0],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格高于15.5元，且没有半年度利润或现金流超预期证据",
+      "action": "不买或降至观察仓",
+      "target_position": "0%-0.5%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格处于13.0-15.5元区间",
+      "action": "等待半年度报告验证，不主动买入",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格处于10.0-13.0元区间，且家电零部件毛利率维持30%以上",
+      "action": "仅建立观察仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于10.0元，且光伏毛利率不继续下滑、应收账款没有恶化",
+      "action": "分批买入",
+      "target_position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于8.8元，且扣非净利润和经营现金流连续改善",
+      "action": "提高到核心观察仓",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "currency": "CNY",
+      "action": "进入可买区，复核半年度或最近季度数据后分批建仓",
+      "reason": "低于合理价值区间下沿，开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "currency": "CNY",
+      "action": "若经营质量未恶化，可提高仓位",
+      "reason": "相对分部估值和PB估值均有较大折价"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "currency": "CNY",
+      "action": "估值偏贵，无业绩超预期时减仓或不参与",
+      "reason": "高于合理价值区间上沿且接近题材溢价区"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-20",
+      "reason": "公司计划披露2026年半年度报告，复核收入、扣非净利润、经营现金流、光伏毛利率和应收账款"
+    }
+  ],
+  "key_tracking_metrics": [
+    "家电及电机零部件收入增速",
+    "家电及电机零部件毛利率",
+    "光伏组件收入占比和毛利率",
+    "应收账款、应收票据及应收款项融资合计占收入比例",
+    "存货余额和存货跌价准备",
+    "前五大客户销售占比和第一大客户销售占比",
+    "经营现金流净额/归母净利润",
+    "扣非归母净利润增速",
+    "回购、注销、再融资和股本变化"
+  ]
+}

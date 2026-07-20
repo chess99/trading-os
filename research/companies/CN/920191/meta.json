@@ -1,0 +1,95 @@
+{
+  "symbol": "CN:920191",
+  "market": "CN",
+  "ticker": "920191",
+  "name": "瑞尔竞达",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "瑞尔竞达是炼铁高炉耐火材料细分龙头，主业盈利质量较好、现金流强，但下游钢铁行业增长有限，历史资本配置和实控人集中带来治理折价；2026-07-17 收盘 8.66 元已接近合理价值中枢，安全边际不足，等待 7.2 元以下再建仓。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.0,
+    10.5
+  ],
+  "buy_zone": [
+    0,
+    7.2
+  ],
+  "sell_or_reduce_zone": [
+    11.5,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "price <= 6.5 and thesis intact",
+      "action": "strong_buy_in_two_tranches",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "6.5 < price <= 7.2 and gross_margin >= 36%",
+      "action": "buy_core_watch_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "7.2 < price <= 8.0 and no negative fundamental surprise",
+      "action": "small_tracking_position_only",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "8.0 < price <= 9.8",
+      "action": "watch_or_hold_no_add",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "price > 11.5 without verified new profit driver",
+      "action": "reduce_or_exit",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.2,
+      "reason": "进入安全边际买入价，较基准合理价值有约15%-30%折价。"
+    },
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "接近悲观情景上沿，若毛利率和订单未恶化，风险收益比明显改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.8,
+      "reason": "接近合理价值区间上半段，主业增速不足以支持无催化追高。"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "超过基准合理价值上沿，除非海外订单或超级石灰利润已验证。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报：收入、扣非净利、毛利率、经营现金流、应收账款周转和境外收入恢复情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：验证Q1后现金流是否修复、募投项目进展和订单质量。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报：重估全年盈利中枢、分红政策、海外收入和超级石灰商业化证据。"
+    }
+  ],
+  "notes": "2026-07-19 初始覆盖。当前价格采用2026-07-17收盘8.66元，总市值约15.36亿元；当前评级watch，今天不买，第一笔仓位0%。关键复查重点是毛利率是否维持36%以上、境外收入能否恢复、经营现金流是否重新覆盖净利润、超级石灰是否出现真实商业订单。置信度中等。"
+}

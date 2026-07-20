@@ -1,0 +1,83 @@
+{
+  "symbol": "CN:301291",
+  "ticker": "301291",
+  "name": "明阳电气",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "明阳电气处在风光大基地、海上风电、储能和电网投资带动的输配电设备赛道，产品组合和新能源项目经验有价值；但2025年利润下滑、经营现金流显著走弱，2026Q1收入和归母净利润大幅下降，当前估值缺少足够安全边际，适合观察等待中报和现金流修复确认。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    30,
+    42
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    48,
+    55
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入24-30元区间，且2026H1收入、毛利率和经营现金流较2026Q1明显修复",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价处于30-42元区间但2026H1尚未披露或现金流未验证",
+      "action": "仅跟踪，不主动加仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于48元且利润或经营现金流没有同步恢复",
+      "action": "不买，已有仓位减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入买入观察区，需要复核订单、毛利率和经营现金流是否同步改善"
+    },
+    {
+      "type": "price_above",
+      "price": 48,
+      "reason": "高于基准估值上沿且接近牛市情景下沿，若基本面未兑现应考虑减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点检查收入恢复、毛利率、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1下滑是否为季节性和交付节奏问题"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估长期盈利中枢和安全边际"
+    }
+  ],
+  "key_monitoring_metrics": [
+    "2026H1营业收入和归母净利润同比变化",
+    "综合毛利率是否恢复至20%左右",
+    "经营现金流量净额/归母净利润是否回到60%以上",
+    "应收账款、合同资产和存货增速是否高于收入增速",
+    "新增订单、重大中标、海上风电和海外项目披露",
+    "关联交易和前五大客户集中度变化"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603279",
+  "market": "CN",
+  "ticker": "603279",
+  "name": "景津装备",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "景津装备是国内压滤机和过滤成套装备龙头，现金流和资产负债表质量较好，但2025年至2026Q1利润仍在下行，当前价格处于合理价值区间内而非深度低估，适合观察等待订单、毛利率和现金流修复或更低买入价。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.0,
+    16.0
+  ],
+  "buy_zone": [
+    10.0,
+    11.0
+  ],
+  "sell_or_reduce_zone": [
+    16.5,
+    19.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入10.0-11.0元且合同负债未连续恶化、经营现金流仍不低于归母净利润的70%",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026半年报或三季报显示收入恢复增长、扣非净利率企稳且经营现金流覆盖净利润",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于16.5元且利润仍同比下滑或合同负债继续下降",
+      "action": "不加仓并考虑降低仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入偏保守买入区间上沿，需复核订单与现金流后考虑建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "接近熊市情景估值，若基本面未恶化则安全边际较厚。"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "reason": "超过基准合理价值上沿，若盈利未恢复则预期收益率下降。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报，重点看收入、扣非净利率、合同负债和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认利润下行是否企稳。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报和分红资本开支，重估盈利中枢与安全边际。"
+    }
+  ]
+}

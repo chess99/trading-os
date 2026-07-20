@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920414",
+  "market": "CN",
+  "ticker": "920414",
+  "name": "欧普泰",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "传统光伏检测需求仍在收缩且新业务尚未规模化，当前价格已透支强复苏与现金流改善，应等待显著安全边际和基本面验证。",
+  "fair_value_range": [3.5, 5.0],
+  "buy_zone": [2.8, 3.5],
+  "sell_or_reduce_zone": [6.5, 8.5],
+  "position_plan": [
+    {
+      "condition": "股价处于2.80-3.50元且连续季度收入止跌、应收与合同资产未恶化、净债务不再上升",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于2.80元且重新验证长期商业价值未受损、自由现金流和资本配置明显改善",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "收入继续两位数下滑、应收减值扩大、微电网转为重资产垫资或新厂长期低利用率",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、毛利率、经营现金流、资本开支、净债务及新业务收入"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年全年扭亏目标、新厂利用率和自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "reason": "进入可能具备安全边际的观察买入区，仍须先验证基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "进入减仓或不应追高区间，价格透支新业务成功"
+    }
+  ],
+  "updated_at": "2026-07-14T23:30:00+08:00"
+}

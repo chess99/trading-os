@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:603668",
+  "market": "CN",
+  "ticker": "603668",
+  "name": "天马科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "天马科技具备A股稀缺的鳗鱼全产业链资产和饲料现金流底盘，但2025-2026年盈利仍受鳗鱼价格低位、库存资金占用、高负债和控股股东减持压制；当前价格已部分反映周期修复预期，宜观察等待更低价格或连续季度经营修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    9.5,
+    13.5
+  ],
+  "buy_zone": [
+    7.5,
+    8.8
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格处于合理区间内但安全边际不足，仅跟踪不主动买入",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入8.8元以下且无新增流动性、质押或重大经营风险，可建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价跌入7.5元以下且半年报或三季报显示库存、短债、经营现金流改善，可提高配置",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入初始买入区，市场给出足够周期和负债折价，需复核流动性风险后考虑观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估提升仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "超过基准估值上沿，若盈利和现金流未同步兑现应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报中的毛利率、存货、短期借款、财务费用和食品业务表现"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断鳗鱼价格、出池结构和现金流是否进入持续修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新校准正常化盈利和估值区间"
+    }
+  ]
+}

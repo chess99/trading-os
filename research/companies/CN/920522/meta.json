@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:920522",
+  "market": "CN",
+  "ticker": "920522",
+  "name": "纳科诺尔",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "辊压设备细分优势和大额订单真实，但毛利率与现金转化恶化，19.98元隐含利润快速修复且缺乏安全边际。",
+  "fair_value_range": [11.5, 15.5],
+  "buy_zone": [8.5, 11.5],
+  "sell_or_reduce_zone": [18, 22],
+  "position_plan": [
+    {
+      "condition": "股价处于8.5-11.5元且大合同未取消、毛利率回升至18%以上、经营现金流为正",
+      "max_weight": 0.025
+    },
+    {
+      "condition": "毛利率持续低于15%、合同取消或应收存货减值显著恶化时不因价格下跌加仓",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、订单验收、经营现金流及存货应收变化"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入有一定安全边际的买入观察区，仍须先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 18,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T23:30:00+08:00"
+}

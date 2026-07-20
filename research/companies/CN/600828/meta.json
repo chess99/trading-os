@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600828",
+  "ticker": "600828",
+  "name": "茂业商业",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "区域百货和商业物业资产具备一定底盘，但2025年亏损、2026H1预告大幅亏损且资产减值仍在释放；当前约0.96倍PB缺少安全边际，等待价格回落和中报确认减值落地。",
+  "fair_value_range": [
+    2.7,
+    3.4
+  ],
+  "buy_zone": [
+    2.3,
+    2.7
+  ],
+  "sell_or_reduce_zone": [
+    4.1,
+    4.8
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于2.70元且2026年中报确认主要亏损来自非现金减值、经营活动现金流仍为正",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于2.30元且控股股东质押未恶化、REITs或资产证券化没有损害上市公司利益",
+      "action": "可加至小仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于4.10元但没有可核验的资产变现或盈利恢复",
+      "action": "不追高并减持已有仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.7,
+      "reason": "进入审慎资产价值折价区，需要复核中报减值和现金流后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 2.3,
+      "reason": "接近悲观情景估值下沿，若基本面未继续恶化可考虑小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 4.1,
+      "reason": "高于当前基准估值上沿，除非资产证券化或盈利恢复被证实，否则应减持或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报最终亏损、商誉/投资性房地产减值和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报收入跌幅、财务费用和现金流是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年度报告、资产减值是否出清以及公募REITs进展"
+    }
+  ]
+}

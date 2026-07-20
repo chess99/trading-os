@@ -1,0 +1,73 @@
+{
+  "symbol": "CN:920066",
+  "market": "CN",
+  "ticker": "920066",
+  "name": "科拜尔",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "科拜尔是家电链条里的小型改性塑料和色母料供应商，客户认证、华东区位、低负债和5万吨募投产能构成正面因素；但2025年利润大幅下滑、毛利率连续走低、2026Q1收入利润继续下降，且客户集中度高。当前约16.75元价格处于合理区间中部，缺乏足够安全边际，等待新增产能放量和毛利率修复验证。",
+  "fair_value_range": [
+    14.5,
+    20.0
+  ],
+  "buy_zone": [
+    12.0,
+    14.0
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入12-14元区间，且最新季度未出现核心客户流失、综合毛利率低于15%或经营现金流继续显著恶化",
+      "action": "small_probe",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H1或2026Q3收入恢复两位数增长、毛利率回升至17%以上、经营现金流改善",
+      "action": "increase_after_validation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于22元且利润修复未验证，或2026H1继续收入利润双降",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "reason": "进入安全边际买入区，需要复核客户、毛利率和现金流是否仍可接受"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "超过当前基准估值上沿，需要已有利润修复证据才可继续持有"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看新增产能、毛利率、前五大客户占比和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证收入增速和利润修复是否形成趋势"
+    }
+  ],
+  "valuation_date": "2026-07-18",
+  "reference_price": 16.75,
+  "decision": "观察",
+  "confidence": "中"
+}

@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:002301",
+  "market": "CN",
+  "ticker": "002301",
+  "name": "齐心集团",
+  "company_name": "齐心集团",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "quality_rating": "medium_low",
+  "valuation_rating": "expensive",
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "current_price": 8.25,
+  "price_as_of": "2026-07-10",
+  "market_cap_cny": 5950000000,
+  "fair_value_range": [
+    4.6,
+    5.8
+  ],
+  "buy_zone": [
+    3.8,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "current price above CNY 7.0 or governance整改尚未充分验证",
+      "action": "do_not_buy_or_reduce_existing_position",
+      "max_weight": 0.005,
+      "reason": "当前估值已高于基准合理价值区间，低ROE、应收账款和监管整改风险没有安全边际"
+    },
+    {
+      "condition": "price between CNY 3.8 and CNY 4.8, operating cash flow turns positive, receivables remain controlled, and整改闭环",
+      "action": "open_watch_position",
+      "max_weight": 0.005,
+      "reason": "跌入买入区后可用小仓位验证MRO和自有品牌改善是否真实"
+    },
+    {
+      "condition": "price below CNY 3.8 with no new governance issue and trailing four-quarter operating cash flow/net profit above 1.0",
+      "action": "accumulate_carefully",
+      "max_weight": 0.02,
+      "reason": "深度折价才足以补偿低毛利集采平台的商业模式和治理折价"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入买入观察区，需要复核回款、毛利率和监管整改"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入深度折价区，可评估是否从观察仓提高到小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "高于减仓区，估值对低ROE和治理风险补偿不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否支持全年利润修复和员工持股计划目标"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、监管整改效果、商誉与内控披露"
+    }
+  ],
+  "key_tracking_metrics": [
+    "B2B revenue growth",
+    "gross margin",
+    "MRO revenue mix",
+    "own-brand revenue mix",
+    "accounts receivable balance and aging",
+    "operating cash flow",
+    "operating cash flow to net income",
+    "bad debt provision",
+    "large customer renewal and share of wallet",
+    "governance整改 progress"
+  ],
+  "current_thesis": "齐心集团是规模较大的B2B办公物资集采和MRO长尾供应链服务商，但低毛利、高应收、强竞争和监管整改使其难以享受高估值；当前价格缺乏安全边际，等待价格回落和整改、回款、毛利率改善被验证。",
+  "thesis_summary": "齐心集团是规模较大的B2B办公物资集采和MRO长尾供应链服务商，但低毛利、高应收、强竞争和监管整改使其难以享受高估值；当前价格缺乏安全边际。",
+  "risk_summary": "主要风险为集采价格竞争、政企客户采购政策变化、应收账款回款、商誉和内控治理瑕疵、SaaS/云视频历史业务收缩。"
+}

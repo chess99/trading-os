@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:605303",
+  "market": "CN",
+  "ticker": "605303",
+  "name": "园林股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "园林股份具备园林施工和城市更新相关业务基础，但当前核心矛盾是工程回款、应收减值和订单质量，2026Q1新签合同极低且2026H1继续预亏，当前股价相对保守净资产和正常化盈利明显高估，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    3.0,
+    5.5
+  ],
+  "buy_zone": [
+    0.0,
+    3.5
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.5元，且经营现金流连续两个季度转正、应收与合同资产合计余额同比下降15%以上后，仅允许研究性试仓。",
+      "action": "watchlist_only_until_cash_collection_turns",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于7元且仍未出现回款和新签订单拐点。",
+      "action": "avoid_new_buy_or_reduce_existing_position",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "reason": "进入保守买入观察区，需同时核验经营现金流和应收账款改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "高于基准公允价值上沿后缺乏安全边际，应避免新增仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、减值、现金流和订单披露。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现经营现金流和回款拐点。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、审计意见、资产减值和控股股东质押变化。"
+    }
+  ]
+}

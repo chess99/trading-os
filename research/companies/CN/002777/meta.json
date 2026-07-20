@@ -1,0 +1,148 @@
+{
+  "symbol": "CN:002777",
+  "market": "CN",
+  "ticker": "002777",
+  "name": "久远银海",
+  "company_name": "四川久远银海软件股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司在医保、数字政务和民生信息化领域有存量客户、现金充裕、无有息短债，运维服务提供一定稳定性；但2025年收入下滑、2026Q1收入和利润继续下滑，当前约11.93元价格对应估值偏高，尚缺少收入恢复和扣非利润改善证据。",
+  "quality_rating": "中等偏上",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    8.0,
+    10.0
+  ],
+  "buy_zone": [
+    6.5,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    14.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于7.5元，合同负债维持4.5亿元以上，经营回款未恶化",
+      "action": "试探性建仓",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于6.5元，且连续两个季度收入同比转正、扣非净利率改善",
+      "action": "提高仓位",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格处于10-12元且基本面未明显改善",
+      "action": "观察不新增",
+      "target_position": "0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格高于12元且2026年中报仍收入或扣非利润下滑",
+      "action": "减仓或不买",
+      "target_position": "0%",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "低于合理价值区间下沿并开始具备安全边际",
+      "description": "进入初始买入观察区"
+    },
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "价格接近保守估值区间，若基本面未恶化可提高仓位",
+      "description": "若基本面未恶化，进入加仓区"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "高于合理价值区间上沿，估值需要业绩复苏支撑",
+      "description": "估值偏高，需复核是否减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 14.0,
+      "reason": "主题估值过强，风险回报比转差",
+      "description": "主题估值过强，除非利润兑现，否则不追"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露",
+      "reason": "中报可验证收入修复和全年订单节奏",
+      "action": "复核医疗医保收入是否恢复正增长"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "合同负债低于4.5亿元或连续两个季度下降",
+      "reason": "合同负债是订单和预收基本盘的前瞻指标",
+      "action": "复核订单和预收质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "经营现金流连续两个季度弱于归母净利润",
+      "reason": "现金流弱化会削弱防守性和估值支撑",
+      "action": "下调财务质量评价"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "开发支出继续大幅上升但收入和毛利率没有改善",
+      "reason": "研发投入若不能转化为收入，后续存在减值风险",
+      "action": "复核研发资本化和减值风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "披露数据要素或AI业务可量化收入、运营分成或重大订单",
+      "reason": "数据要素和AI业务是估值上修的主要期权",
+      "action": "重估增长来源和估值上限"
+    }
+  ],
+  "key_tracking_metrics": [
+    {
+      "name": "医疗医保收入同比",
+      "target": "恢复正增长",
+      "latest": "2025年同比-18.22%"
+    },
+    {
+      "name": "合同负债",
+      "target": "维持4.5亿元以上",
+      "latest": "2026Q1为4.59亿元"
+    },
+    {
+      "name": "经营现金流/归母净利润",
+      "target": "全年大于1.5倍",
+      "latest": "2025年约3.39倍，2026Q1为负"
+    },
+    {
+      "name": "扣非净利率",
+      "target": "提升至7%-8%",
+      "latest": "2025年约5.0%，2026Q1约4.4%"
+    },
+    {
+      "name": "研发费用和开发支出",
+      "target": "投入转化为收入和毛利率改善",
+      "latest": "2025年研发费用2.10亿元，2026Q1开发支出4389万元"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688787",
+  "market": "CN",
+  "ticker": "688787",
+  "name": "海天瑞声",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "海天瑞声是A股稀缺AI训练数据与大模型数据服务标的，2025至2026Q1收入和利润修复明确，但当前市值已显著提前反映AI数据资产重估，需等待利润率连续验证或价格回落后再考虑买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    55,
+    80
+  ],
+  "buy_zone": [
+    40,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    95,
+    130
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌入55元以下，且最近两个季度收入同比增速仍高于25%、扣非净利率改善趋势未破坏",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格位于55至80元，且大模型/评测/多模态订单持续兑现、经营现金流匹配利润",
+      "action": "分批提高至小仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于95元且未来两个季度未出现收入或利润率超预期",
+      "action": "不追高或降低仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 70,
+      "reason": "进入合理估值上沿以下，重新评估订单持续性和利润率改善是否支持买入"
+    },
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入安全买入区间，若基本面未恶化可考虑建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 110,
+      "reason": "价格进入乐观情景估值区间，若基本面没有连续超预期应降低收益风险比预期"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、扣非净利率和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1利润弹性是否持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和新一年订单能见度"
+    }
+  ]
+}

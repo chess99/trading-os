@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:603040",
+  "ticker": "603040",
+  "name": "新坐标",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是高ROE、高现金流、海外收入快速增长的精密冷成形零部件企业，但现有核心产品仍受内燃机长期替代风险影响，且2026Q1利润弹性转弱；2026-07-17盘中约43倍TTM PE已较充分反映成长预期，当前缺少买入安全边际，等待42元以下或新产品收入被验证。",
+  "fair_value_range": [
+    42,
+    52
+  ],
+  "buy_zone": [
+    0,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    62,
+    999
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于42元，且2026半年报收入和扣非净利润同比增速均不低于10%，综合毛利率未明显下滑",
+      "action": "建立观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格低于35元，且海外收入、新产品定点、经营现金流未出现实质恶化",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "价格高于62元，或TTM PE高于45倍且扣非净利润增速低于10%",
+      "action": "不加仓并考虑减仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入基准估值下沿并具备初步安全边际，需复核半年报质量后考虑建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "接近悲观情景价值区间，若基本面未恶化则赔率改善"
+    },
+    {
+      "type": "price_above",
+      "price": 62,
+      "reason": "进入乐观情景估值区间，若新产品收入尚未量化则估值透支"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报：收入、扣非净利润、毛利率、境外收入和其他精密零部件增长"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报及7-10月减持计划实施结果"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、分红、海外业务和新产品收入量化情况"
+    }
+  ]
+}

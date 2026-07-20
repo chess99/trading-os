@@ -1,0 +1,112 @@
+{
+  "symbol": "CN:002748",
+  "market": "CN",
+  "ticker": "002748",
+  "name": "世龙实业",
+  "company_name": "江西世龙实业股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司是氯碱、AC发泡剂和精细化工一体化周期资产，2025年利润修复、2026Q1弹性较好，但当前11.22元价格对应TTM PE约37倍、PB约1.88倍，已提前反映盈利上行预期。合理价值约6.5-8.5元，6.5元以下才有足够安全边际。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    6.5,
+    8.5
+  ],
+  "buy_zone": [
+    0,
+    6.5
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    12
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于6.0元，且无重大安全环保事故、无大额减值、经营现金流未恶化",
+      "action": "建立1%-2%观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价位于6.0-6.5元，且氯碱系列毛利率维持30%以上、经营现金流/净利润年度口径大于1",
+      "action": "仓位上限提高至3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于10.5元，或TTM PE高于30倍且后续季度利润未继续增长",
+      "action": "不加仓，已有仓位降至观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于12.0元，且连续两个季度未能实现单季归母净利4500万元以上",
+      "action": "卖出或大幅减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "reason": "进入估算可买区上沿，安全边际开始出现",
+      "action": "进入可买区，复核最新季报与经营现金流后分批买入"
+    },
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "低于每股净资产附近并接近保守估值区",
+      "action": "进入深度安全边际区，若基本面未破坏可建立观察仓"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "显著高于合理价值区，盈利预期被提前反映",
+      "action": "估值偏高，停止加仓并考虑减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "需要连续利润上台阶才能支撑，否则风险收益比失衡",
+      "action": "除非盈利连续验证上台阶，否则卖出或大幅减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "预计2026年半年报披露后",
+      "reason": "半年报能验证2026Q1利润弹性是否延续",
+      "action": "复核盈利持续性、经营现金流和产品毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "预计2026年三季报披露后",
+      "reason": "三季报能验证全年利润中枢和现金流质量",
+      "action": "复核正常化利润假设和买入价"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "预计2026年年报披露后",
+      "reason": "年报能验证资本开支回报、ROE和分红质量",
+      "action": "复核资本开支回报、ROE和安全边际"
+    }
+  ],
+  "key_tracking_metrics": [
+    "AC系列产品收入、销量与毛利率",
+    "氯碱系列产品毛利率",
+    "新材料助剂收入规模与毛利率",
+    "经营现金流/净利润",
+    "资本开支、在建工程转固与ROE",
+    "产品价格、原料煤盐尿素及电力成本",
+    "安全环保公告和停产检修情况"
+  ]
+}

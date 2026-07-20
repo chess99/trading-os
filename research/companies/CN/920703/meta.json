@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920703",
+  "market": "CN",
+  "ticker": "920703",
+  "name": "广厦环能",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "现金充裕和细分技术降低永久损失风险，但2025年需求下滑及2026Q1毛利率骤降尚未验证触底，9.67元缺乏足够安全边际。",
+  "fair_value_range": [9.0, 11.5],
+  "buy_zone": [7.5, 8.5],
+  "sell_or_reduce_zone": [12.5, 15.0],
+  "position_plan": [
+    {
+      "condition": "股价处于8.0至8.5元且季度毛利率回升至30%以上、订单与回款未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价接近7.5元且正常化自由现金流仍可达6000万元以上、净现金未被低回报投资消耗",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两季毛利率低于25%或核心客户订单、审计与回款出现异常时不因价格下跌加仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的毛利率、订单质量、产能利用率与经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报并判断盈利修复是否可持续"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入有条件试仓区间，需同步验证毛利率、订单和回款未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流明显超预期"
+    }
+  ],
+  "updated_at": "2026-07-15T18:53:04+08:00"
+}

@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:601956",
+  "ticker": "601956",
+  "name": "东贝集团",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "东贝集团具备制冷压缩机规模、客户认证和垂直配套优势，PB接近1.2倍有一定资产保护；但2026H1预亏、压缩机毛利率下滑、汇兑损失和补税事项使盈利修复尚未验证，当前只适合观察，等待更低价格或中报后基本面企稳证据。",
+  "fair_value_range": [
+    4.2,
+    5.2
+  ],
+  "buy_zone": [
+    3.5,
+    3.9
+  ],
+  "sell_or_reduce_zone": [
+    5.7,
+    6.3
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.90元，且2026半年报归母亏损未低于预告下限，同时经营现金流或毛利率出现边际改善",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于3.60元，且2026三季报扣非亏损收窄、经营现金流转正",
+      "action": "提高到小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2027年归母净利润恢复至1.5亿元以上，压缩机毛利率超过8%，且汇兑损失可控",
+      "action": "重新评估是否进入核心观察池",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.9,
+      "reason": "进入初步买入区间，需要结合2026半年报验证亏损是否可控"
+    },
+    {
+      "type": "price_below",
+      "price": 3.6,
+      "reason": "接近悲观PB估值下沿，若经营现金流改善可考虑小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 5.7,
+      "reason": "超过基准公允价值上沿且盈利仍未修复时，风险收益比下降"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查亏损、汇兑损失、补税影响和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断毛利率、压缩机价格和应收存货是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，确认亏损是否结束和分红回购能力"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}

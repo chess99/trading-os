@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:300827",
+  "ticker": "300827",
+  "name": "上能电气",
+  "company_name": "上能电气股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是A股光伏逆变器和储能PCS稀缺标的，海外光储收入高增、PCS排名靠前、定增扩产支撑中期成长；但行业价格竞争、经营现金流波动、应收与汇率风险仍需中报继续验证。当前估值接近合理下沿但安全边际不足，列入观察并等待22元以下或业绩/现金流验证。",
+  "fair_value_range": [26, 34],
+  "buy_zone": [0, 22],
+  "sell_or_reduce_zone": [38, 45],
+  "position_plan": [
+    {
+      "condition": "价格低于22元，且最新定期报告未显示海外收入、毛利率、经营现金流三项同时恶化",
+      "action": "建立或加至观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于19元，且经营现金流/净利润回到0.7倍以上或合同负债继续增长",
+      "action": "加至核心跟踪仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于38元且2026年净利润预期未上修至8亿元以上",
+      "action": "减仓或停止加仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入基准买入区，需要复核中报订单、毛利率和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 19,
+      "reason": "进入更高安全边际区，需要判断是否由基本面恶化导致"
+    },
+    {
+      "type": "price_above",
+      "price": 38,
+      "reason": "超过基准公允价值上沿，需要复核业绩上修是否足以支撑估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看海外收入、储能PCS毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年利润和回款是否达到基准情景"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和募投产能利用率，重估公允价值区间"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

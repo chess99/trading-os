@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688733",
+  "market": "CN",
+  "ticker": "688733",
+  "name": "壹石通",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "壹石通是锂电池用勃姆石龙头，收入和出货正在恢复，但扣非利润与经营现金流尚未确认拐点；当前估值已包含部分利润修复和新材料期权，需等待安全边际或财报验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    21,
+    30
+  ],
+  "buy_zone": [
+    18,
+    21
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    42
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入18-21元且最新定期报告显示毛利率不低于21%、扣非亏损继续收窄",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非归母净利润转正且经营现金流转正",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于34元但扣非利润仍未转正",
+      "action": "减仓或不参与",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 21,
+      "reason": "进入基准买入区上沿，若基本面未恶化可重新评估建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入悲观情景价值下沿附近，若半年报确认修复则安全边际较好"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "reason": "超过基准估值区间，若扣非利润未兑现应考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、毛利率、扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现连续利润修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、新材料项目商业化和员工持股计划兑现情况"
+    }
+  ]
+}

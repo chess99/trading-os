@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688337",
+  "market": "CN",
+  "ticker": "688337",
+  "name": "普源精电",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "普源精电是国内通用电子测量仪器龙头之一，2026Q1和H1预告显示收入增长、产品结构和解决方案业务同步改善。41.49元处于估算买入区上沿，适合分批买入并用半年报正式数据、解决方案持续性和现金流质量验证。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    46,
+    58
+  ],
+  "buy_zone": [
+    34,
+    42
+  ],
+  "sell_or_reduce_zone": [
+    62,
+    72
+  ],
+  "position_plan": [
+    {
+      "condition": "price <= 42 and 2026H1正式报告收入不低于预告中枢约4.89亿元的95%",
+      "action": "建立第一笔仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price <= 45 and 2026H1扣非净利润不低于2400万元且毛利率维持56%以上",
+      "action": "加仓至基准仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "price <= 36 and 未出现订单、毛利率或现金流恶化信号",
+      "action": "逆向加仓但保留复核",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "2026H2收入增速低于20%或扣非净利润重新亏损",
+      "action": "降为观察并减仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 42,
+      "reason": "进入估算买入区上沿，可启动分批建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 36,
+      "reason": "接近悲观情景估值下沿，若基本面未恶化可复核加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 62,
+      "reason": "进入乐观情景估值区，若缺乏新增订单和利润率证据应减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、解决方案收入持续性、现金流和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认H2收入增速和费用率摊薄是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报、H股募资使用、全球渠道增长和股东回报政策。"
+    }
+  ]
+}

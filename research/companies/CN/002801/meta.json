@@ -1,0 +1,118 @@
+{
+  "symbol": "CN:002801",
+  "market": "CN",
+  "ticker": "002801",
+  "name": "微光股份",
+  "company_name": "杭州微光电子股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "观察",
+  "current_rating": "watch",
+  "current_thesis": "公司是制冷电机及风机细分领域质量较好的制造业公司，资产负债表强、分红纪律较好，伺服电机和机器人零部件提供第二曲线；但2025及2026Q1表观利润受金融资产和股票投资收益扰动，扣非利润走弱，当前价格接近合理价值上沿，缺少安全边际。",
+  "quality_rating": "中高",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    23,
+    28
+  ],
+  "buy_zone": [
+    20,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    34,
+    38
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于22元，且最新季度扣非净利润、毛利率和经营现金流没有继续恶化",
+      "action": "建立约1/3目标仓位",
+      "max_weight": 0.33
+    },
+    {
+      "condition": "股价低于20元，且全年经营现金流/扣非净利润接近或高于0.9，金融资产未出现新增重大减值",
+      "action": "加至约1/2目标仓位",
+      "max_weight": 0.5
+    },
+    {
+      "condition": "连续2-3个季度扣非净利润恢复增长，伺服电机收入继续高增，泰国子公司接近盈亏平衡",
+      "action": "允许把合理买入区间上移并评估完整仓位",
+      "max_weight": 1.0
+    },
+    {
+      "condition": "股价高于34元但扣非利润和新业务收入没有验证",
+      "action": "降低仓位或不追高",
+      "max_weight": 0.2
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "currency": "CNY",
+      "action": "复核最新季报后考虑初始买入",
+      "reason": "低于合理价值下沿并接近安全边际买点"
+    },
+    {
+      "type": "price_below",
+      "price": 20,
+      "currency": "CNY",
+      "action": "若基本面未恶化，考虑提高仓位",
+      "reason": "按2025扣非利润约17倍估值，风险收益明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 34,
+      "currency": "CNY",
+      "action": "若缺少扣非利润验证，考虑减仓",
+      "reason": "高于合理价值上沿，可能主要反映主题溢价"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露后",
+      "reason": "更新扣非利润、现金流和新业务放量情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026年三季报披露后，重点检查单季度扣非净利润是否同比继续下降超过25%",
+      "reason": "判断主业是否进入下行周期"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "复核经营现金流是否连续两个季度显著弱于扣非净利润",
+      "reason": "检查利润质量和营运资本压力"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "年内如披露信托理财回收、减值或股票投资重大浮盈浮亏则提前复核",
+      "reason": "重估金融资产折价和利润可持续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026年报披露后复核伺服电机、机器人零部件和泰国工厂收入利润",
+      "reason": "验证第二曲线和海外产能回报"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非净利润及同比增速",
+    "经营现金流/扣非净利润",
+    "制冷电机及风机收入增速和毛利率",
+    "伺服电机收入、销量和毛利贡献",
+    "境外收入增速及泰国子公司盈利情况",
+    "交易性金融资产、其他非流动金融资产和信托理财风险敞口",
+    "年度现金分红比例"
+  ]
+}

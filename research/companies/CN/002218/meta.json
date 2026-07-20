@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:002218",
+  "ticker": "002218",
+  "name": "拓日新能",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司具备自持光伏电站现金流和光伏玻璃/组件/海外应用产品基础，但制造端仍处亏损、2026H1继续预亏，且实际控制人诉讼、董事弃权和关联交易核查带来治理折价；当前价格安全边际不足，等待盈利修复或更低估值。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    2.7,
+    3.3
+  ],
+  "buy_zone": [
+    2.2,
+    2.6
+  ],
+  "sell_or_reduce_zone": [
+    4.2,
+    4.8
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价进入2.20-2.60元且半年报确认经营现金流为正、治理事项无进一步恶化时，允许建立观察仓。",
+      "action": "watchlist_entry",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若光伏玻璃和组件毛利率转正、储能订单与回款可核验、实际控制人诉讼落地且关联交易争议缓和，可提升为小仓位研究持有。",
+      "action": "increase_after_confirmation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "若股价高于4.20元但2026年仍未恢复盈利，或董事/控制权争议继续扩大，应避免买入并减仓。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.6,
+      "reason": "进入基准估值下沿并接近买入观察区，需要复核半年报现金流、毛利率和治理进展。"
+    },
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入悲观情景估值区，若资产质量未恶化可能具备安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.2,
+      "reason": "超过乐观情景下沿，若缺乏盈利拐点和储能订单验证，应提示减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告，重点确认预亏落点、制造端毛利率、电站收益和应收账款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认经营现金流、债务覆盖和储能业务订单进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年度报告，重新评估盈利修复、资产减值和治理事项对估值的影响。"
+    }
+  ]
+}

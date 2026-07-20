@@ -1,0 +1,33 @@
+{
+  "symbol": "CN:600030",
+  "market": "CN",
+  "ticker": "600030",
+  "name": "中信证券",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国综合实力最强的证券公司，2025年净利润301亿元创历史新高，ROE恢复至10.6%。估值处于历史低位（PE 14.5x,PB 1.50x）。券商强周期属性下，当前价格28.45元处于合理区间下限，有一定安全边际但不够极端便宜。建议观察等待更好的买点（<27元）或明确的业绩催化剂。",
+  "fair_value_range": [32, 40],
+  "buy_zone": [24, 28],
+  "sell_or_reduce_zone": [38, 50],
+  "position_plan": [
+    {"condition": "股价 < 24元（市场悲观情景或系统性调整）", "max_weight": 0.05},
+    {"condition": "股价处于24-28元买入区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价处于28-32元观察区", "max_weight": 0.01},
+    {"condition": "股价 > 38元进入估值偏高区间", "max_weight": 0}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-25", "reason": "2026年中报发布后复查"},
+    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报后复查"},
+    {"type": "date", "date": "2027-04-30", "reason": "2026年报发布后全面复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 27, "reason": "进入逐步建仓区间"},
+    {"type": "price_below", "price": 24, "reason": "进入强吸引力买入区间"},
+    {"type": "price_above", "price": 38, "reason": "进入减仓区间"},
+    {"type": "price_above", "price": 40, "reason": "进入不应追高区间"}
+  ],
+  "updated_at": "2026-07-07T18:00:00+08:00"
+}

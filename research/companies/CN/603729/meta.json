@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603729",
+  "market": "CN",
+  "ticker": "603729",
+  "name": "龙韵股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "龙韵股份处于ST、财报保留意见和内控否定意见后的修复期，2026H1预告扭亏但利润规模不足以支撑当前约9.76亿元市值；在内控、审计意见、现金流和业务质量未连续验证前，安全边际不足。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    3.0,
+    5.5
+  ],
+  "buy_zone": [
+    2.5,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    10.6
+  ],
+  "position_plan": [
+    {
+      "condition": "内控审计和财报审计均未恢复标准无保留意见，或价格高于公允价值上沿",
+      "action": "不建仓",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格低于3.8元，且连续两个季度扣非盈利、经营现金流为正、应收和预付款风险下降",
+      "action": "重新研究后小仓位观察",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "2026年年审标准无保留、内控标准无保留，并且GEO或数字营销新业务形成可核验收入",
+      "action": "重新估值后决定是否提高仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入买入观察区，但仍需治理和现金流条件共同满足"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "明显高于基准公允价值上沿，应回避或减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式披露后的收入、毛利率、扣非净利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否延续扭亏和现金流改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报审计意见、内控审计意见和ST状态"
+    }
+  ]
+}

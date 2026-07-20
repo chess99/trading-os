@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:300281",
+  "ticker": "300281",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "金明精机",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "金明精机具备七层、九层、十三层共挤薄膜装备和高阻隔膜技术期权，资产负债表较稳健，但2025年扣非亏损、2026Q1扣非利润仍薄，当前约2.1倍PB已隐含复苏预期；在订单和扣非利润连续验证前只适合观察。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.2,
+    5.8
+  ],
+  "buy_zone": [
+    0,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    9.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.5元，且未出现订单取消、扣非亏损扩大或治理恶化",
+      "action": "可建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非净利润为正，装备收入和合同负债同步改善",
+      "action": "重新评估，若估值仍低于合理价值可提高仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于7.2元且缺少高端装备订单或扣非利润验证",
+      "action": "不追高，已有仓位减持",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入买入区，需要复核订单、库存和扣非利润是否未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "超过无验证情景下的减持区，需要检查是否已有新订单或利润兑现"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查装备毛利率、材料毛利率、合同负债和扣非利润"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认扣非利润是否连续改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，验证七层、九层、十三层共挤装备订单与海外收入兑现"
+    }
+  ]
+}

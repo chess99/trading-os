@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:688219",
+  "market": "CN",
+  "ticker": "688219",
+  "name": "会通股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "会通股份处于国内改性材料头部阵营，2026Q1 扣非利润改善且公司在 10.57-10.80 元区间已启动回购，当前价格接近买入区；核心看点是工程塑料、聚酰胺、复材、循环材料和新能源车/低空/机器人等场景能否推动净利率抬升。因 2025 年增收不增利、新业务仍有亏损，采取小仓位分批买入而非重仓押注。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    12.0,
+    15.5
+  ],
+  "buy_zone": [
+    9.6,
+    10.8
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于或等于 10.8 元，且未出现新的业绩或治理负面公告",
+      "action": "建立初始观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于或等于 9.6 元，且 2026H1 扣非净利润保持同比增长、经营现金流未明显恶化",
+      "action": "分批加仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于 12.5 元但尚未披露 2026H1 业绩验证",
+      "action": "停止追高，仅持有观察",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格进入 15.5 元以上且利润质量未同步上修",
+      "action": "减仓或退出至观察仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.6,
+      "reason": "进入较高安全边际区间，若基本面无恶化可复核加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "达到合理价值区间上沿，需要评估是否减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "进入乐观情景估值区域，除非盈利预测明显上修，否则应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点检查扣非净利润、毛利率、现金流和新业务亏损收窄情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认全年盈利弹性是否成立"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报和回购执行结果，重估长期合理价值"
+    }
+  ]
+}

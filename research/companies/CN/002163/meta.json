@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:002163",
+  "ticker": "002163",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "海南发展",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司处于海南国资平台、建筑幕墙主业、玻璃资产出清和电商运营并购后的转型阶段，但仍亏损、经营现金流未转正，当前估值已提前反映反转预期，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    4.2,
+    5.8
+  ],
+  "buy_zone": [
+    0,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    7,
+    8.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且2026H1仍预计亏损，不建立新仓。",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "若股价跌至3.8元以下，且最新财报未出现新增重大减值或现金流恶化，可重新评估小仓观察。",
+      "action": "watch_for_small_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若2026H2经营现金流转正、扣非亏损显著收窄且网营科技贡献稳定利润，可把评级上调至watch或hold。",
+      "action": "upgrade_review",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "reason": "进入安全边际买入区，需要复核是否有新增减值和现金流恶化。"
+    },
+    {
+      "type": "price_below",
+      "price": 5,
+      "reason": "进入合理价值区间中部，适合结合最新财报重新评估。"
+    },
+    {
+      "type": "price_above",
+      "price": 7,
+      "reason": "高于估值上沿且公司仍未盈利，应提示减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报，重点看亏损区间、扣非亏损、经营现金流和合同资产减值。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认减亏趋势和经营现金流是否持续改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，判断转型后盈利能力、资产减值和网营科技贡献。"
+    }
+  ]
+}

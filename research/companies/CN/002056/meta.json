@@ -1,0 +1,29 @@
+{
+  "symbol": "CN:002056",
+  "market": "CN",
+  "ticker": "002056",
+  "name": "横店东磁",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "光伏业务占收入63%但毛利率仅15.3%拖累整体盈利，磁性材料是利润基石但增长天花板明显。PE 26.5x定价了乐观情景，当前价格安全边际不足，建议观望等待22元以下的机会。",
+  "fair_value_range": [22, 27],
+  "buy_zone": [18, 22],
+  "sell_or_reduce_zone": [32, 100],
+  "position_plan": [
+    {"condition": "股价跌至18元以下，基本面未恶化", "max_weight": 0.05},
+    {"condition": "股价处于18-22元区间，光伏毛利率企稳", "max_weight": 0.03},
+    {"condition": "股价处于22-27元合理区间，可轻仓参与", "max_weight": 0.02}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年中报披露后复查光伏毛利率和锂电业务进展"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查全年指引"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 22, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 32, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T20:00:00+08:00"
+}

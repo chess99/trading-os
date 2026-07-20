@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:688290",
+  "market": "CN",
+  "ticker": "688290",
+  "name": "景业智能",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "景业智能具备核工业和军工特种机器人高壁垒、5.8亿元在手订单提供恢复弹性，但2025年转亏、2026Q1仍亏损，当前约52.5亿元市值已预支较多成长和新业务期权，需等待订单兑现、毛利率修复或价格回落后再买入。",
+  "fair_value_range": [
+    32,
+    45
+  ],
+  "buy_zone": [
+    25,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    60,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于32元，且2026H1或2026Q3显示收入恢复、扣非亏损明显收窄",
+      "action": "建立研究仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于28元，且连续两个季度收入增长、毛利率回升并出现单季扣非转正",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于60元但扣非利润仍未转正，或在手订单低于4亿元",
+      "action": "不买入或减持研究仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入基准估值下沿，可结合财报验证考虑研究仓"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "接近悲观情景上沿，若基本面未恶化则安全边际改善"
+    },
+    {
+      "type": "price_above",
+      "price": 65,
+      "reason": "接近乐观情景估值，若利润未兑现则风险回报恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看订单兑现、毛利率和扣非亏损收窄"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入恢复是否具备连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估订单、现金流和估值区间"
+    }
+  ],
+  "last_price": {
+    "price": 51.38,
+    "date": "2026-07-17",
+    "source": "Sina quote API hq.sinajs.cn/list=sh688290"
+  },
+  "decision": "观察",
+  "confidence": "中"
+}

@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:601988",
+  "market": "CN",
+  "ticker": "601988",
+  "name": "中国银行",
+  "currency": "CNY",
+  "status": "active",
+  "priority": "P1",
+  "analyst": "codex-subagent-601988",
+  "research_type": "initial",
+  "current_rating": "watch",
+  "current_thesis": "中国银行具备国有大行信用、全球网络和跨境金融优势，资产质量与资本充足率稳健，分红可预期；但净息差下行压制ROE，当前5.64元已接近保守合理区间下沿，适合观察仓，5.30元以下才具备更清晰安全边际。",
+  "fair_value_range": [
+    5.6,
+    6.8
+  ],
+  "buy_zone": [
+    4.8,
+    5.3
+  ],
+  "sell_or_reduce_zone": [
+    6.8,
+    7.6
+  ],
+  "position_plan": [
+    {
+      "condition": "5.30元以上",
+      "action": "仅观察仓",
+      "target_weight": 0.02,
+      "max_weight": 0.02
+    },
+    {
+      "condition": "4.80-5.30元",
+      "action": "有安全边际，分批加仓",
+      "target_weight": 0.04,
+      "max_weight": 0.05
+    },
+    {
+      "condition": "4.80元以下且资产质量未恶化",
+      "action": "强吸引力买入区",
+      "target_weight": 0.06,
+      "max_weight": 0.08
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.3,
+      "reason": "进入有安全边际买入区。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "reason": "超过合理价格区间上沿，复核是否减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：净息差、不良率、拨备覆盖率、资本充足率、分红预期。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报与利润分配方案。"
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "updated_at": "2026-07-07T00:00:00+08:00"
+}

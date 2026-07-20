@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:601939",
+  "market": "CN",
+  "ticker": "601939",
+  "name": "建设银行",
+  "currency": "CNY",
+  "status": "active",
+  "priority": "P1",
+  "analyst": "codex-subagent-601939",
+  "research_type": "initial",
+  "current_rating": "watch",
+  "current_thesis": "建设银行是低成本负债、资本充足和资产质量较优的国有大行，适合作为高股息稳健底仓；但2026-07-07收盘价9.92元已接近合理价值中枢，安全边际不足以重仓，等待8.80-9.40元区间更具吸引力。",
+  "rating_updated_at": "2026-07-07T23:30:00+08:00",
+  "fair_value_range": [
+    9.4,
+    10.9
+  ],
+  "buy_zone": [
+    8.8,
+    9.4
+  ],
+  "sell_or_reduce_zone": [
+    10.9,
+    11.2
+  ],
+  "position_plan": [
+    {
+      "condition": "9.40元至10.90元且净息差、不良率、拨备覆盖率无明显恶化",
+      "price_range": [
+        9.4,
+        10.9
+      ],
+      "action": "watch_or_hold",
+      "target_weight": 0.02,
+      "max_weight": 0.02,
+      "notes": "当前价接近合理区间中枢，不追高；已有仓位可持有收息。"
+    },
+    {
+      "condition": "8.80元至9.40元且净息差维持约1.34%以上、不良率不高于1.40%",
+      "price_range": [
+        8.8,
+        9.4
+      ],
+      "action": "buy",
+      "target_weight": 0.04,
+      "max_weight": 0.04,
+      "notes": "进入安全边际买入区，检查净息差和不良率后可建立或加仓。"
+    },
+    {
+      "condition": "8.00元至8.60元且资产质量、资本充足率、分红政策未恶化",
+      "price_range": [
+        8.0,
+        8.6
+      ],
+      "action": "strong_buy",
+      "target_weight": 0.06,
+      "max_weight": 0.06,
+      "notes": "强吸引力区，若基本面未恶化，可加至核心仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报：净息差、资产质量、拨备、资本充足率和分红。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认息差企稳和不良生成趋势。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报及下一年度利润分配方案。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.4,
+      "reason": "低于基准合理区间下沿，安全边际开始出现。",
+      "action": "进入安全边际买入区，检查净息差和不良率后可建立/加仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 8.6,
+      "reason": "接近悲观情景上沿，若基本面未恶化则赔率显著改善。",
+      "action": "强吸引力区，若基本面未恶化，可加至核心仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 10.9,
+      "reason": "达到基准合理价值上沿，继续上行需要盈利或ROE上修。",
+      "action": "接近合理价值上沿，停止加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 11.2,
+      "reason": "高于主估值区间，存在估值回落风险。",
+      "action": "估值偏满，若无盈利上修应考虑减仓。"
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "updated_at": "2026-07-07T23:30:00+08:00"
+}

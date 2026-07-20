@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688710",
+  "market": "CN",
+  "ticker": "688710",
+  "name": "益诺思",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "益诺思是非临床安全性评价 CRO 头部公司，订单恢复和复杂药物评价需求提供基本面修复弹性，但 2026-07-17 股价已高于基准公允价值区间，当前缺少安全边际，适合观察等待半年报验证毛利率、现金流和订单转化。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    45,
+    58
+  ],
+  "buy_zone": [
+    40,
+    48
+  ],
+  "sell_or_reduce_zone": [
+    75,
+    85
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于48元，且2026H1收入、毛利率和经营现金流同步改善",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于42元，且在手订单保持17亿元以上、无重大GLP或合规风险",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于75元但净利率未持续恢复到12%以上",
+      "action": "不加仓并考虑降低风险暴露",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 48,
+      "reason": "进入基准买入观察区，需要复核半年报质量后决定是否建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 75,
+      "reason": "进入乐观情景估值区，若利润率未兑现应降低风险暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、毛利率、订单和现金流兑现情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否验证全年收入和利润恢复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和在手订单，重新估算公允价值区间"
+    }
+  ]
+}

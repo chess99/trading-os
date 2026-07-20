@@ -1,0 +1,97 @@
+{
+  "symbol": "CN:000876",
+  "market": "CN",
+  "ticker": "000876",
+  "name": "新 希 望",
+  "company_name": "新 希 望",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "新希望是饲料现金流底盘叠加生猪周期修复期权的农牧资产，但2026年仍受猪价低迷、生物资产减值和高负债约束；当前适合观察仓，只有在猪价、养殖成本、经营现金流和有息负债同步改善后才具备加仓条件。",
+  "quality_rating": "B-",
+  "valuation_rating": "neutral_to_slightly_cheap",
+  "fair_value_range": [
+    8.0,
+    10.5
+  ],
+  "buy_zone": [
+    5.8,
+    6.6
+  ],
+  "sell_or_reduce_zone": [
+    11.0,
+    13.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价进入5.8-6.6元买入区间，且未出现新的重大疫病、融资或减值风险",
+      "action": "建立观察仓",
+      "max_weight": 0.01,
+      "reason": "价格给出一定周期底部安全边际，但资产负债表和猪价修复仍需验证"
+    },
+    {
+      "condition": "猪价持续高于行业现金成本，公司生猪成本下降，经营现金流转正且有息负债下降",
+      "action": "加仓至核心观察仓",
+      "max_weight": 0.03,
+      "reason": "周期修复与资产负债表修复同时出现，估值可向基准合理价值靠拢"
+    },
+    {
+      "condition": "股价高于11.0元但猪周期和公司成本改善未能支撑乐观情景",
+      "action": "减仓或暂停加仓",
+      "max_weight": 0.01,
+      "reason": "价格已反映较多周期修复预期，风险回报下降"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.6,
+      "reason": "进入买入区间上沿，适合复核是否建立0.5%-1.0%观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入买入区间下沿，若基本面未恶化可提高买入优先级"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "进入减仓观察区，需验证猪价、成本和负债修复是否足以支撑更高估值"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "达到乐观情景中高位，除非强猪周期确认，否则应考虑显著降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查生猪成本、经营现金流、有息负债和生物资产减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和猪价周期位置，决定是否从观察仓升级或退出"
+    }
+  ],
+  "key_tracking_metrics": [
+    "公司月度生猪销售数量、收入和销售均价",
+    "公司生猪完全成本或可推算单位成本",
+    "全国生猪均价、仔猪价格和二元母猪价格",
+    "农业农村部能繁母猪存栏",
+    "饲料销量、吨利和原料成本",
+    "经营现金流、资本开支和自由现金流",
+    "有息负债、资产负债率和财务费用",
+    "生物资产减值和存货跌价准备",
+    "禽产业景气度、鸡苗价格和毛鸡价格"
+  ]
+}

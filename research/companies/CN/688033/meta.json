@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:688033",
+  "market": "CN",
+  "ticker": "688033",
+  "name": "*ST天宜",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "轨交与航空资产尚有产业价值，但无法表示意见、证监会立案、债务逾期及重整稀释使7.00元隐含预期远超可验证经营价值，当前应回避。",
+  "fair_value_range": [1.2, 2.8],
+  "buy_zone": [0, 1.2],
+  "sell_or_reduce_zone": [2.8, 4.0],
+  "position_plan": [
+    {
+      "condition": "预重整未获法院正式受理和批准、证监会立案未结案或审计非标根源未消除时，无论价格如何均不建仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价不高于1.20元，且法院批准重整计划、监管结论可控、最新财务可核验、核心业务经营现金流转正",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报、重整进展、证监会立案与审计整改"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报审计意见、退市风险警示撤销条件和持续经营能力"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "仅在重整获批、监管和审计风险可控且现金流转正时进入特殊情形观察区"
+    },
+    {
+      "type": "price_above",
+      "price": 2.8,
+      "reason": "超过公允价值上沿，应减仓或不应追高"
+    }
+  ],
+  "updated_at": "2026-07-19T19:40:45.6927327+08:00"
+}

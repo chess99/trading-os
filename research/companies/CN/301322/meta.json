@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:301322",
+  "ticker": "301322",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "绿通科技",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "绿通科技处于场地电动车受美国双反冲击后的转型期，2025年通过并表大摩半导体切入半导体设备，但2025扣非利润极低、2026Q1扣非亏损且经营现金流为负；当前市值已经计入较多半导体转型预期，需等待大摩半导体持续订单、利润和现金流验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    28,
+    36
+  ],
+  "buy_zone": [
+    22,
+    26
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    52
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价进入22-26元且2026中报显示扣非亏损收窄、经营现金流改善时建立观察仓",
+      "action": "initial_watch_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若大摩半导体披露可持续订单、半年度利润贡献明确且应收账款未继续恶化，可提高配置",
+      "action": "add_on_confirmation",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "若股价升至45-52元但扣非利润和经营现金流没有同步兑现，降低或避免持仓",
+      "action": "reduce_or_avoid",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "进入买入观察区，市值对净金融资产、场地电动车恢复价值和半导体期权有更好保护"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "接近牛市情景估值下沿，若扣非利润和现金流未兑现应考虑减仓或避免追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、大摩半导体贡献和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流"
+    }
+  ]
+}

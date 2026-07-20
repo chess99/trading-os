@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688068",
+  "market": "CN",
+  "ticker": "688068",
+  "name": "热景生物",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "热景生物的传统 IVD 业务提供现金流修复基础，但当前估值主要反映 SGC001 等创新药与 AI 药物研发期权。按现金、IVD 存量业务和早期管线概率加权估值交叉验证，现价缺乏安全边际，适合观察而非追高买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    55,
+    75
+  ],
+  "buy_zone": [
+    45,
+    60
+  ],
+  "sell_or_reduce_zone": [
+    110,
+    140
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 60 元，2026 年中报显示现金资产仍充足且 IVD 业务继续恢复，SGC001 未出现重大负面临床或注册信号",
+      "action": "可建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于 45 元且基本面未恶化，现金与金融资产仍能覆盖未来两年以上研发投入",
+      "action": "可提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 110 元但未披露强临床数据、授权交易或明确商业化里程碑",
+      "action": "不追高，已有仓位应评估减仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 60,
+      "reason": "进入基础估值区间上沿附近，可重新评估安全边际和小仓位试错价值"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "若基本面未恶化，现金和 IVD 存量业务对市值的覆盖度明显改善"
+    },
+    {
+      "type": "price_above",
+      "price": 130,
+      "reason": "接近牛市情景估值上沿，若缺少临床数据支撑需警惕估值透支"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、亏损、经营现金流和现金消耗速度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报费用率、研发投入强度和 IVD 业务恢复质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报及创新药管线年度进展，重新评估 SOTP 估值"
+    }
+  ]
+}

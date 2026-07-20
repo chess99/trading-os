@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603693",
+  "market": "CN",
+  "ticker": "603693",
+  "name": "江苏新能",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "江苏新能是江苏省属新能源发电平台，资产和现金流质量尚可，但2026年风资源、限电、电价和税收优惠取消共同压低盈利，当前价格位于公允区间内而非明显低估，适合观察并等待10元以下或盈利修复确认后的机会。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    10.0,
+    12.5
+  ],
+  "buy_zone": [
+    8.8,
+    10.0
+  ],
+  "sell_or_reduce_zone": [
+    13.5,
+    15.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于10.0元，且2026年半年报确认经营现金流为正、风电利用小时和限电率未继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于9.0元，且2026年三季报显示单季归母净利润环比修复、分红政策未恶化",
+      "action": "提高至中低仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于13.5元，且2026年盈利仍未修复至年化4.5亿元以上",
+      "action": "不新增并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入基础买入区间，需要复核半年报后决定是否建立观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 8.8,
+      "reason": "进入更有安全边际区域，若现金流和分红未恶化可重新评估加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "高于基础公允价值上沿，若盈利未修复则预期收益率不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、行政处罚影响、限电率和电价。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认二季度低谷后是否出现盈利修复。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红、储能收入和2027年装机计划。"
+    }
+  ]
+}

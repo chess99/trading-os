@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:601022",
+  "ticker": "601022",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "宁波远洋",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "宁波远洋是宁波舟山港体系内的区域型集装箱班轮与支线平台，港口协同、支线网络和绿色船队升级构成中长期优势；但航运周期、2026Q1利润下滑和新船资本开支使当前约8元价格缺乏足够安全边际，适合观察等待更低买点或利润趋势确认。",
+  "fair_value_range": [
+    6.8,
+    8.4
+  ],
+  "buy_zone": [
+    5.8,
+    6.6
+  ],
+  "sell_or_reduce_zone": [
+    9.2,
+    10.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于6.6元，且最近一期经营性现金流保持为正、运输服务毛利率未明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于5.8元，且无重大安全事故、关联交易恶化或资本开支超预算",
+      "action": "提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于9.2元且利润趋势未同步改善",
+      "action": "不追买并考虑减仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.6,
+      "reason": "进入初步买入区间，需要复核运价、毛利率和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入更有安全边际的买入区间，需要复核是否存在基本面恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 9.2,
+      "reason": "超过合理估值上沿，需要复核是否由利润趋势改善支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报、箱量、毛利率、经营性现金流和新船项目进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和运价指数趋势，判断利润下滑是否收敛"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报、分红、资本开支和2027年运力投放压力"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:001696",
+  "market": "CN",
+  "ticker": "001696",
+  "name": "宗申动力",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "通用机械和摩托车发动机龙头企业，2025年业绩爆发（净利+44%，经营现金流12.15亿），正在进行与隆鑫通用的重大资产置换以解决同业竞争、聚焦通用机械主业，航发获CAAC适航认证打开低空经济空间。但2026Q1净利同比-24%，当前估值约30倍PE已偏高，需等待资产置换落地和更低价格才具备安全边际。",
+  "fair_value_range": [10.5, 15],
+  "buy_zone": [10, 12],
+  "sell_or_reduce_zone": [18, 30],
+  "position_plan": [
+    {
+      "condition": "股价低于10元且资产置换推进正常",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价10-12元且基本面未恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价12-15元",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于18元",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026半年报，验证收入增速、毛利率趋势、资产减值规模和资产置换进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查三季报，确认全年盈利区间、航发订单和储能越南产量"
+    },
+    {
+      "type": "date",
+      "date": "2026-06-30",
+      "reason": "资产置换方案公告（审计评估结果和交易价格），评估对中小股东是否公允"
+    },
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "航发独立适航证获批公告，重新评估航发业务价值和PB估值溢价"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 13,
+      "reason": "进入合理区间，允许重新评估是否建观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 10,
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 18,
+      "reason": "进入偏贵区间，已有仓位考虑减仓"
+    }
+  ],
+  "updated_at": "2026-07-08T20:00:00+08:00"
+}

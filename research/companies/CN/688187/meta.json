@@ -1,0 +1,35 @@
+{
+  "symbol": "CN:688187",
+  "market": "CN",
+  "ticker": "688187",
+  "name": "时代电气",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "时代电气是轨交电气装备现金流底座叠加高压大功率 IGBT/SiC 与新能源电控平台化的高质量央企科技制造资产。7/10 收盘 50.92 元、近 9 日累计回撤约 26%，主要由沪深 300 剔除被动减仓与科技板块共振回调驱动，非基本面证伪；2026-07-01 半导体第二轮涨价周期启动、H 股回购注销托底、2026H2 轨交维保节奏回补构成正向催化，估值与赔率边际上修。首笔可建 1.5% 观察仓跟踪，46-50 元为买入区，52-64 元为合理区，2026 半年报披露前不提至基础仓。",
+  "fair_value_range": [52, 64],
+  "buy_zone": [46, 50],
+  "sell_or_reduce_zone": [66, 72],
+  "position_plan": [
+    {"condition": "当前价格进入合理偏下区且组合无持仓，叠加半导体涨价催化用于建立跟踪纪律", "max_weight": 0.015},
+    {"condition": "股价低于48元且最新一期扣非利润恢复正增长、经营现金流改善", "max_weight": 0.03},
+    {"condition": "股价低于46元且轨交订单回补、半导体毛利企稳、现金流均未破坏", "max_weight": 0.05},
+    {"condition": "股价高于66元且2026年利润增速预期仍低于15%且半导体利润率与现金流未同步上修", "max_weight": 0.015}
+  ],
+  "latest_report": "reports/2026-07-11-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md",
+    "reports/2026-07-11-initial.md"
+  ],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-20", "reason": "2026年半年报披露，重点核2026Q2扣非是否回正、经营现金流是否回到≥0.8x归母、新兴装备2026H1毛利率企稳23%以上、应收与存货周转天数同比不再恶化"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报，确认全年利润增速≥8%、营运资本稳定、半导体涨价是否传导到Q3-Q4毛利率"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 48, "reason": "进入买入区上沿，复核扣非利润与经营现金流后可加至基础仓"},
+    {"type": "price_below", "price": 45, "reason": "接近熊市情景价值中枢，若轨交订单与半导体毛利未恶化则赔率较好"},
+    {"type": "price_above", "price": 66, "reason": "进入减仓区，需确认半导体利润率与现金流同步上修才可维持仓位"},
+    {"type": "price_above", "price": 72, "reason": "进入牛市情景定价，若无业绩上修应减仓至观察仓"}
+  ],
+  "updated_at": "2026-07-11T18:30:00+08:00"
+}

@@ -1,0 +1,96 @@
+{
+  "symbol": "CN:002161",
+  "market": "CN",
+  "ticker": "002161",
+  "name": "远望谷",
+  "company_name": "远望谷",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "远望谷具备 RFID/物联网识别垂直场景积累，但 2025 年收入下滑、经营现金流为负、利润受非主业因素扰动，当前 5.28 元价格已隐含较高转型预期；应等待 2.8-3.5 元安全边际或主业收入、现金流、应收回款连续验证后再小仓位介入。",
+  "quality_rating": "medium_low",
+  "valuation_rating": "expensive",
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "fair_value_range": [
+    3.2,
+    4.3
+  ],
+  "buy_zone": [
+    2.8,
+    3.5
+  ],
+  "sell_or_reduce_zone": [
+    5.6,
+    6.8
+  ],
+  "position_plan": [
+    {
+      "condition": "price_below_3.5_and_2026H1_revenue_cashflow_review_passed",
+      "action": "start_tracking_position",
+      "max_weight": 0.01,
+      "reason": "价格进入买入区且半年报验证收入恢复、经营现金流改善后，才有安全边际做首笔观察仓。"
+    },
+    {
+      "condition": "two_consecutive_quarters_positive_operating_cashflow_and_core_revenue_growth_above_15pct",
+      "action": "increase_position_carefully",
+      "max_weight": 0.02,
+      "reason": "只有主业增长、回款和现金流同步改善，才允许从观察仓提升到小仓位。"
+    },
+    {
+      "condition": "price_above_5.6_without_core_profit_cashflow_validation",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0,
+      "reason": "价格超过减仓区但主业利润和现金流没有验证时，赔率不足。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.5,
+      "reason": "进入买入区上沿，复核半年报、现金流和应收账款后可考虑首笔观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "reason": "进入买入区下沿，若基本面未恶化，安全边际明显改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.6,
+      "reason": "进入减仓区下沿，若主业扣非利润和经营现金流未验证，应避免追高。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "reason": "进入乐观情景上沿，除非收入、毛利率和现金流均超预期，否则应卖出或大幅降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查 2026 年半年报，重点核验 Q1 高利润来源、经营现金流、应收账款和主业订单恢复。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查 2026 年三季报，判断收入恢复和现金流改善是否具有连续性。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "quarterly_revenue_growth",
+    "gross_margin",
+    "operating_cash_flow",
+    "accounts_receivable_and_contract_assets",
+    "r_and_d_expense_ratio",
+    "core_rfid_orders",
+    "fair_value_gain_or_loss",
+    "pledge_and_reduction_announcements"
+  ]
+}

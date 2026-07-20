@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:688023",
+  "market": "CN",
+  "ticker": "688023",
+  "name": "安恒信息",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "安恒信息具备数据安全、云安全、安全运营和政企安全服务基础，2025年收入恢复且亏损收窄，但2026Q1仍亏损、现金流承压，当前估值不贵但经营拐点尚未充分验证，适合作为观察标的等待回款、费用率和盈利改善确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    34,
+    48
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    52,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "当前股价处于基础估值区间且2026年盈利、现金流尚未验证，维持观察仓位。",
+      "action": "watch",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至30元以下，且2026H1收入增长、毛利率、经营现金流和应收质量未明显恶化。",
+      "action": "pilot_buy",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H2经营现金流转正、全年亏损继续收窄并确认收入质量改善。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入初步买入区间，需要复核半年报回款、毛利率和费用率后再决定是否试探建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入悲观情景估值下沿，若基本面未恶化，安全边际显著提高。"
+    },
+    {
+      "type": "price_above",
+      "price": 52,
+      "reason": "高于基础情景价值区间，若利润和现金流未兑现，应考虑减持或停止追高。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、费用率、应收和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证下半年订单验收和现金流改善是否兑现。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报，判断公司是否真正进入盈利修复周期。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

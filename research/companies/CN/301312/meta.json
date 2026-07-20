@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301312",
+  "ticker": "301312",
+  "name": "智立方",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "智立方具备从消费电子自动化向半导体中后道设备迁移的真实业务线索，2025年半导体收入约1.05亿元、同比增长48.96%，但2026-07-15公开行情对应约213倍TTM PE，已经透支较多成长预期。当前结论为观察，等待半导体订单、毛利率和利润兑现，或等待价格回到有安全边际区间。",
+  "fair_value_range": [
+    45,
+    65
+  ],
+  "buy_zone": [
+    40,
+    55
+  ],
+  "sell_or_reduce_zone": [
+    90,
+    120
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于55元，且2026年半年报显示收入增长、半导体业务毛利率不低于2025年水平、经营现金流未显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于45元，且半导体客户导入和合同负债仍能支持后续增长",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于90元但未来12个月归母净利润预期不能上修至1.3亿元以上",
+      "action": "不追高并减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 55,
+      "reason": "进入初步买入区，需要结合半年报验证半导体业务毛利率和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "接近绝对估值和基准情景下沿，若基本面未破坏可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 90,
+      "reason": "估值进入过热区，若业绩未同步上修应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "复核2026年半年报，重点看半导体收入占比、毛利率、合同负债、经营现金流和倒装键合设备导入进度"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年净利润是否足以支撑当前估值"
+    }
+  ]
+}

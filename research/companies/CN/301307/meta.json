@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:301307",
+  "ticker": "301307",
+  "name": "美利信",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "美利信处于汽车轻量化和通信结构件赛道，但2025年毛利率约4.15%、归母净利润约-4.58亿元，2026Q1仍亏损，当前约6.43倍PB和约156.92亿元市值已显著透支利润修复预期；在毛利率和扣非净利润未连续改善前不具备买方安全边际。",
+  "fair_value_range": [
+    24,
+    36
+  ],
+  "buy_zone": [
+    18,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    75
+  ],
+  "position_plan": [
+    {
+      "condition": "不建仓；仅在股价进入18-24元且没有新增减值或债务恶化时，允许建立观察仓。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若连续两个季度毛利率高于12%、扣非净利润转正且资产负债率下降，可重新评估至试验仓。",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若股价高于45元而公司仍亏损或毛利率低于8%，不持有或清仓回避。",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入保守买入观察区，需要同步核验毛利率和扣非利润是否改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 45,
+      "reason": "高于乐观修复前的估值上沿，若基本面未兑现应降低或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查毛利率、扣非净利润、资产负债率、存货和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润修复是否连续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和扩产回报，决定是否移出观察池。"
+    }
+  ]
+}

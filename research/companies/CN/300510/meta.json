@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:300510",
+  "ticker": "300510",
+  "name": "金冠股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "智能电网和充换电长期需求仍在，但公司连续亏损、2026Q1收入大幅下滑、商誉和应收风险未出清；当前3.16元附近已接近乐观情景，安全边际不足，只适合观察。",
+  "fair_value_range": [
+    1.8,
+    2.5
+  ],
+  "buy_zone": [
+    1.2,
+    1.7
+  ],
+  "sell_or_reduce_zone": [
+    3.0,
+    4.2
+  ],
+  "position_plan": [
+    {
+      "condition": "价格高于3.00元且扣非利润、经营现金流未连续改善",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格低于1.70元，且最新财报显示应收账款和合同资产未恶化、无新增大额商誉减值",
+      "action": "watch_position_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度扣非盈利转正，经营现金流转正，且毛利率回升得到验证",
+      "action": "reassess_for_core_position",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.7,
+      "reason": "进入观察仓买点，PB折价足以补偿亏损和减值风险"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "价格进入减仓/回避区，需要盈利恢复证据才能支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报收入、毛利率、经营现金流、应收账款和商誉减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报订单兑现、扣非利润和现金流是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报全年盈利修复、减值出清和控股股东质押变化"
+    }
+  ],
+  "key_metrics": {
+    "last_price_date": "2026-07-15",
+    "last_price": 3.16,
+    "market_cap_cny_billion": 2.61,
+    "shares_outstanding": 824690700,
+    "pb_2026q1": 1.36,
+    "ps_ltm": 2.76,
+    "2025_revenue_cny": 1070090792.26,
+    "2025_net_profit_cny": -325701080.25,
+    "2025_operating_cash_flow_cny": 180876373.34,
+    "2026q1_revenue_cny": 143054038.43,
+    "2026q1_net_profit_cny": -30562686.77,
+    "2026q1_operating_cash_flow_cny": -19391250.86,
+    "2026q1_equity_attributable_cny": 1917350925.13
+  },
+  "confidence": "中"
+}

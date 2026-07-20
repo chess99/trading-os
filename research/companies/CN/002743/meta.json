@@ -1,0 +1,67 @@
+{
+  "symbol": "CN:002743",
+  "ticker": "002743",
+  "name": "富煌钢构",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "富煌钢构处于亏损、审计保留事项、债务及票据逾期、控股股东股份冻结叠加的困境阶段；在债务展期、经营现金流和订单质量出现连续可验证修复前，当前价格缺乏安全边际。",
+  "fair_value_range": [
+    1.4,
+    2.2
+  ],
+  "buy_zone": [
+    1.1,
+    1.4
+  ],
+  "sell_or_reduce_zone": [
+    3.0,
+    4.0
+  ],
+  "position_plan": [
+    {
+      "condition": "债务逾期余额未明显下降、经营现金流未连续两个季度转正前，不建立仓位。",
+      "max_weight": 0
+    },
+    {
+      "condition": "若价格进入1.10-1.40元且债务展期或兑付进展被公告验证，可重新评估试探仓。",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.4,
+      "reason": "进入困境估值下沿，需要结合债务修复进展重新评估风险收益比。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "价格显著高于当前合理价值区间，在债务与持续经营问题未解决前应避免追高或考虑减持。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证债务逾期、现金流、减值和订单质量。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，观察经营现金流和持续经营风险是否边际改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和审计意见，判断保留事项及持续经营重大不确定性是否消除。"
+    }
+  ]
+}

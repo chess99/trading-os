@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920870",
+  "market": "CN",
+  "ticker": "920870",
+  "name": "恒进感应",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司技术与资产负债表尚可，但规模小、客户集中、资本回报低且募投效率不足，12.34元已透支多年高增长预期。",
+  "fair_value_range": [6.0, 8.5],
+  "buy_zone": [4.8, 5.8],
+  "sell_or_reduce_zone": [10.5, 12.5],
+  "position_plan": [
+    {
+      "condition": "股价处于4.8-5.8元且半年报、客户结构、毛利率与募投回购假设未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于4.8元且重新核验长期商业价值未受损、赔率进一步改善",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "收入、毛利率、核心客户、现金质量或募投回报任一核心逻辑被证伪",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、客户结构、毛利率、现金流与募投进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-06-30",
+      "reason": "复核制造项目厂房回购过户及整体项目完成情况"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "进入有安全边际的观察买入区间，需先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T10:10:00+08:00"
+}

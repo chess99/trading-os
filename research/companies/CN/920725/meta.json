@@ -1,0 +1,55 @@
+{
+  "symbol": "CN:920725",
+  "market": "CN",
+  "ticker": "920725",
+  "name": "惠丰钻石",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "微粉细分冠军但盈利和自由现金流尚未恢复，散热材料未形成批量收入，当前价格已透支行业复苏与新业务成功预期。",
+  "fair_value_range": [16, 28],
+  "buy_zone": [10, 16],
+  "sell_or_reduce_zone": [35, 50],
+  "position_plan": [
+    {
+      "condition": "股价处于12至16元，传统微粉量价改善、扣非盈利转正且存货未恶化",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价处于10至12元，散热产品出现可核验客户或订单且扩产未显著举债",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于10元，重新验证长期商业价值未受损、存货和资本开支风险可控后",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "基本面恶化、散热项目延期或资本开支失控，不因价格下跌加仓",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报、存货周转、扣非盈利及散热材料订单验证"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 16,
+      "reason": "进入研究性买入观察区，仍需验证基本面且不得机械加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 35,
+      "reason": "进入减仓或不应追高区间，估值明显高于可验证现金流"
+    }
+  ],
+  "updated_at": "2026-07-15T15:35:38+08:00"
+}

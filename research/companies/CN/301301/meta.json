@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:301301",
+  "ticker": "301301",
+  "name": "川宁生物",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "川宁生物具备大规模生物发酵、环保处理和抗生素中间体成本优势，合成生物学提供长期期权；但2025年以来利润下行、2026Q1仍承压，当前股价已反映部分修复预期，安全边际不足，等待2026H1验证传统产品价格修复和新品减亏。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    7.0,
+    9.5
+  ],
+  "buy_zone": [
+    6.0,
+    7.0
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    13.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价高于7.0元且2026H1业绩修复未验证时，仅观察不新建仓。",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌至7.0元以下，且6-APA、头孢类中间体价格企稳，经营现金流未恶化。",
+      "action": "starter_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H1或2026Q3显示毛利率环比回升、合成生物学亏损收窄且股价仍低于9.0元。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入估值买入区，需要复核产品价格、现金流和半年报修复情况。"
+    },
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估仓位上限。"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "高于合理价值区间，若业绩未同步改善应考虑减仓或维持观察。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收存货和合成生物学亏损。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认传统中间体价格修复是否传导到利润。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和分红方案，更新正常化盈利与估值区间。"
+    }
+  ]
+}

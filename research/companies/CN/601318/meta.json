@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:601318",
+  "market": "CN",
+  "ticker": "601318",
+  "name": "中国平安",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国平安是高质量综合金融核心资产，当前估值合理偏低且股息率有吸引力，但低利率、地产和银行风险要求在43-49元区间分批买入而非追高。",
+  "fair_value_range": [
+    52,
+    62
+  ],
+  "buy_zone": [
+    43,
+    49
+  ],
+  "sell_or_reduce_zone": [
+    62,
+    68
+  ],
+  "position_plan": [
+    {
+      "condition": "股价处于买入区间且寿险新业务价值、财险综合成本率、偿付能力和投资资产质量未恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于43元且未出现新增重大资产减值或偿付能力压力",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于62元且基本面没有显著超预期",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年中报，重点验证寿险新业务价值、财险综合成本率、投资收益率、地产敞口和平安银行资产质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-11-15",
+      "reason": "复查2026年三季报和分红/资本充足趋势"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 49,
+      "reason": "进入有安全边际的买入区间上沿"
+    },
+    {
+      "type": "price_below",
+      "price": 43,
+      "reason": "进入强吸引力买入区间，需要复核是否为基本面恶化导致"
+    },
+    {
+      "type": "price_above",
+      "price": 62,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-07T21:26:38+08:00"
+}

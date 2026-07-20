@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920810",
+  "market": "CN",
+  "ticker": "920810",
+  "name": "春光智能",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司尚未证明能稳定产生自由现金流，2026年一季度重新亏损，而当前估值已透支产能扩张、国产替代和海外增长，现价应回避。",
+  "fair_value_range": [2.4, 3.8],
+  "buy_zone": [1.8, 2.5],
+  "sell_or_reduce_zone": [5.0, 8.2],
+  "position_plan": [
+    {
+      "condition": "股价处于2.20至2.50元且滚动经营现金流转正、应收及存货未恶化",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价处于1.80至2.20元且基地利用率、订单和利润率连续两个报告期改善",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "基本面恶化、核心假设被证伪或股价高于5.00元",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、订单、回款、毛利率、自由现金流和基地利用率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及长期资本回报假设"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.5,
+      "reason": "进入可研究的安全边际区，仍须验证现金流、应收存货和产能利用率"
+    },
+    {
+      "type": "price_above",
+      "price": 5.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T21:30:00+08:00"
+}

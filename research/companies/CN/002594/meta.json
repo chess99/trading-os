@@ -1,0 +1,33 @@
+{
+  "symbol": "CN:002594",
+  "market": "CN",
+  "ticker": "002594",
+  "name": "比亚迪",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "全球新能源车龙头，垂直整合护城河深厚。但2025年净利润已下滑19%，利润拐点尚未到来。当前PE 29x估值偏贵，等待价格回调至55元以下的安全边际区间。不满足买入条件，维持观察。",
+  "fair_value_range": [33, 49],
+  "buy_zone": [42, 55],
+  "sell_or_reduce_zone": [80, 116],
+  "position_plan": [
+    {"condition": "股价进入55-70元区间且基本面未恶化", "max_weight": 0.01},
+    {"condition": "股价进入42-55元区间", "max_weight": 0.02},
+    {"condition": "股价<42元", "max_weight": 0.03},
+    {"condition": "净利润连续两季环比企稳回升", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026半年报发布，核验利润趋势是否企稳"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报，验证最新季度利润"},
+    {"type": "date", "date": "2027-03-31", "reason": "2026年年报，全面复盘"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 55, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_below", "price": 42, "reason": "进入强吸引力买入区间"},
+    {"type": "price_above", "price": 80, "reason": "进入减仓或不应追高区间"},
+    {"type": "price_above", "price": 116, "reason": "52周高点，泡沫区间，清仓或大幅减仓"}
+  ],
+  "updated_at": "2026-07-07T15:30:00+08:00"
+}

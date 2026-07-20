@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:603000",
+  "ticker": "603000",
+  "market": "CN",
+  "name": "人民网",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "人民网是稀缺中央党媒互联网平台，现金充裕、内容科技和数据服务具备长期期权，但2025-2026年利润兑现仍弱，当前约15.42元价格对应约80倍2025年利润，安全边际不足；低于8元且增长恢复后再考虑小仓位。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    8.0,
+    11.0
+  ],
+  "buy_zone": [
+    6.5,
+    8.0
+  ],
+  "sell_or_reduce_zone": [
+    14.0,
+    17.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于8.0元，且2026半年报或三季报显示收入恢复同比增长、内容科技或数据服务订单有可核验增长",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于6.5元，现金资产未明显消耗，治理和监管无重大负面事件，且全年利润中枢不低于2亿元",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于14.0元且归母净利润仍低于3亿元，估值再次显著透支AI和数据要素期权",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入基础估值下沿，可结合最新财报复核是否具备安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 17.0,
+      "reason": "显著高于公允价值上限，需回避或降低持仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式披露后的收入、扣非利润、内容科技和数据服务趋势"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年利润能否恢复到2亿元以上"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估AI和数据业务商业化兑现情况"
+    }
+  ]
+}

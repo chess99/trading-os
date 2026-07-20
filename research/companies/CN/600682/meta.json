@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:600682",
+  "market": "CN",
+  "ticker": "600682",
+  "name": "南京新百",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "南京新百账面折价明显，但Dendreon/PROVENGE销售下滑、商誉和无形资产减值、供应链预付款与存货风险削弱净资产质量；当前适合观察，等待海外药品资产止血和现金流改善后再考虑研究型仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.3,
+    6.4
+  ],
+  "buy_zone": [
+    3.8,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    6.8,
+    8.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.2元，且2026年半年报或三季报显示Dendreon无新增大额减值、存货和预付款环比下降",
+      "action": "建立研究型小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于3.8元，经营性现金流为正，且PROVENGE销售下滑收敛",
+      "action": "提高至审慎观察仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "出现新增重大减值、监管处罚升级或控股股东风险外溢",
+      "action": "不买入并退出观察仓位",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "进入买入观察区，需要复核半年报和Dendreon资产质量"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "reason": "高于审慎估值区间上沿，若基本面未改善应考虑减持或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、Dendreon收入利润、存货和预付款变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认海外医药资产是否止血以及经营现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、减值测试和脐血库/养老医疗板块全年表现"
+    }
+  ]
+}

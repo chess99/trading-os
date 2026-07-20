@@ -1,0 +1,77 @@
+{
+  "symbol": "CN:600369",
+  "ticker": "600369",
+  "name": "西南证券",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "西南证券是重庆国资控股的区域券商，2025-2026Q1受益于市场成交、自营和两融修复，但ROE仍低于权益成本，当前约1.05x PB处于合理区间中枢，安全边际不足，等待更低价格或定增后ROE改善验证。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    3.8,
+    4.6
+  ],
+  "buy_zone": [
+    3.3,
+    3.7
+  ],
+  "sell_or_reduce_zone": [
+    5.0,
+    5.4
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入3.30-3.70元且未出现监管、信用或自营重大损失信号",
+      "action": "建立观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "2026年半年度或年度ROE明确提升至6%以上且PB仍低于1.10x",
+      "action": "可把观察仓提高到核心小仓位",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于5.00元且ROE仍低于6%",
+      "action": "减仓或不追高",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.7,
+      "reason": "进入基于0.83x-0.93x PB的买入观察区，安全边际开始出现。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.0,
+      "reason": "进入乐观情景估值区间下沿，若ROE未同步修复应减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、ROE、自营收益占比、两融规模和定增进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、市场成交变化和估值区间是否需要调整。"
+    }
+  ],
+  "key_monitoring_indicators": [
+    "A股成交额与两融余额",
+    "归母净利润和加权ROE",
+    "投资收益及公允价值变动收益占收入比例",
+    "母公司净资本、LCR、NSFR",
+    "60亿元定增审核注册和发行价格",
+    "投行承销金额、并购项目金额、资管毛利率"
+  ]
+}

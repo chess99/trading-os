@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:300686",
+  "market": "CN",
+  "ticker": "300686",
+  "name": "智动力",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "智动力具备消费电子精密件客户基础和新材料/汽车电子题材，但2025年及2026Q1仍亏损，2026Q1毛利率仅约3.7%，当前约12.50元股价隐含较强反转预期。等待毛利率、现金流、订单和治理风险改善后再评估。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    5.5,
+    8.5
+  ],
+  "buy_zone": [
+    0,
+    6.0
+  ],
+  "sell_or_reduce_zone": [
+    11.0,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且公司仍处亏损，不新开仓。",
+      "action": "avoid",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价低于6元，且连续两个季度毛利率改善、经营现金流为正、亏损明显收窄。",
+      "action": "watchlist_only",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "新材料或汽车电子披露可核验量产订单，同时公司恢复扣非盈利。",
+      "action": "re_underwrite",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入买入观察区，需同步复核毛利率、现金流和订单兑现。"
+    },
+    {
+      "type": "price_above",
+      "price": 11.0,
+      "reason": "高于中性估值上沿且基本面未扭亏时安全边际不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、亏损收窄和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及新材料、汽车电子订单进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断是否形成可持续扭亏。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price_cny": 12.5,
+    "reference_price_date": "2026-07-17",
+    "market_cap_cny_billion": 31.9,
+    "revenue_2025_cny_billion": 1.591,
+    "net_profit_2025_cny_billion": -0.134,
+    "revenue_2026_q1_cny_billion": 0.269,
+    "net_profit_2026_q1_cny_billion": -0.052,
+    "gross_margin_2026_q1_estimated": 0.037
+  }
+}

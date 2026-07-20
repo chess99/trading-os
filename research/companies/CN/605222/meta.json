@@ -1,0 +1,97 @@
+{
+  "symbol": "CN:605222",
+  "market": "CN",
+  "ticker": "605222",
+  "name": "起帆电缆",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "起帆电缆是华东区域规模型线缆企业，2025年通过收缩低毛利高风险订单实现利润率修复，受益于电网投资、新能源和高端特种电缆需求；但陆缆竞争激烈、资产负债率和短债占比高、经营现金流转化仍弱，当前价格仅处于合理区间下沿，缺少足够安全边际，适合观察等待现金流和高端业务兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    16,
+    22
+  ],
+  "buy_zone": [
+    12,
+    15
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    28
+  ],
+  "position_plan": [
+    {
+      "condition": "价格进入12-15元且未出现信用恶化、质量事故或经营现金流进一步恶化",
+      "action": "建立观察型底仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H1或2026Q3证明毛利率稳定、经营现金流/净利润高于0.8且资产负债率下降",
+      "action": "可在合理区间下沿提高仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格升至24-28元但海缆/特种电缆订单和现金流未同步兑现",
+      "action": "减仓或退出",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15,
+      "reason": "进入买入区间，需要复核信用、现金流和订单质量后决定是否建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 12,
+      "reason": "低于悲观估值下沿，必须判断是否由基本面恶化驱动"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "进入减仓观察区，若高端业务和现金流未兑现则安全边际不足"
+    },
+    {
+      "type": "price_above",
+      "price": 28,
+      "reason": "超过乐观情景上沿，除非盈利和现金流显著超预期，否则应降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告的毛利率、经营现金流、应收存货和债务结构"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证利润修复是否具有连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，更新长期估值与仓位上限"
+    }
+  ],
+  "key_metrics": {
+    "last_close": {
+      "date": "2026-07-17",
+      "value": 17.7,
+      "source": "英为财情历史行情",
+      "confidence": "medium"
+    },
+    "revenue_2025_cny_billion": 21.583,
+    "net_profit_2025_cny_billion": 0.171,
+    "net_profit_2026q1_cny_billion": 0.095,
+    "book_equity_2026q1_cny_billion": 4.869,
+    "asset_liability_ratio_2025_percent": 66.22
+  }
+}

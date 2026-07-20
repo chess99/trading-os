@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002524",
+  "ticker": "002524",
+  "name": "光正眼科",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "光正眼科是眼科医疗困境修复标的，赛道长期需求明确，但2026Q1收入继续下滑、盈利未稳、短债和租赁负债压力较高。当前价格高于基准合理价值区间，缺乏安全边际，维持观察。",
+  "fair_value_range": [
+    2.4,
+    3.2
+  ],
+  "buy_zone": [
+    2.0,
+    2.6
+  ],
+  "sell_or_reduce_zone": [
+    4.2,
+    5.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于2.60元，且最新定期报告显示收入降幅收窄、经营现金流为正、医疗业务毛利率稳定在30%以上",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度归母净利润转正，医疗收入恢复正增长，短期借款和一年内到期非流动负债合计下降",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "收入继续双位数下滑，经营现金流转负，或出现重大医疗合规、债务、治理风险",
+      "action": "不建仓或清仓回避",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.6,
+      "reason": "进入买入观察区，需要结合最新收入、现金流和负债数据复核安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 4.2,
+      "reason": "高于基准估值上沿且接近乐观情景，需要验证利润修复是否兑现，否则应减仓或不追"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、毛利率、现金流、短债和股权激励条件"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认经营拐点"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和全年盈利修复质量"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

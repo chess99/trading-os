@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600373",
+  "market": "CN",
+  "ticker": "600373",
+  "currency": "CNY",
+  "name": "中文传媒",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "中文传媒是区域出版发行国资平台，教材教辅和地方渠道提供现金流底座，但2025年至2026Q1收入与扣非利润下滑较快，利润质量需优先用扣非和经营现金流验证。当前估值不贵但安全边际不足，等待价格跌入买入区或经营降幅收窄后再建仓。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    7.2,
+    9.0
+  ],
+  "buy_zone": [
+    5.8,
+    6.3
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    10.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于6.3元且2026H1或2026Q3扣非归母净利润同比降幅收窄至20%以内",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于5.8元且经营现金流未显著弱于扣非净利润",
+      "action": "提高至低估值现金流仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于9.0元但扣非利润和现金流未修复",
+      "action": "不新增并考虑降低仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.3,
+      "reason": "进入初步买入区，需要复核扣非利润和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "接近更有吸引力的安全边际区间"
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "reason": "超过合理价值区间下沿，若基本面未修复应减仓或暂停买入"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流和分业务毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认下滑是否收窄"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和分红方案"
+    }
+  ]
+}

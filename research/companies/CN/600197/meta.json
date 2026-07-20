@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600197",
+  "ticker": "600197",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "伊力特",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "新疆区域白酒龙头，疆内品牌和渠道有韧性，但行业调整、疆外扩张不确定性和2025-2026Q1业绩下滑尚未充分出清；当前估值缺乏足够安全边际，等待更低价格或现金流与高档酒企稳证据。",
+  "fair_value_range": [
+    9.0,
+    12.0
+  ],
+  "buy_zone": [
+    7.0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    13.5,
+    16.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.5元，且2026H1经营现金流为正、高档酒毛利率未继续明显恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于7.5元，且疆内收入企稳、疆外收入连续两个季度不再恶化",
+      "action": "提高至标准仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "收入继续双位数下滑且经营现金流再次转负",
+      "action": "暂停加仓或退出观察仓",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入初始买入区间，需要复核2026H1现金流和高档酒毛利率"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "接近更有安全边际的标准仓区间，需要检查疆内收入和疆外修复证据"
+    },
+    {
+      "type": "price_above",
+      "price": 13.5,
+      "reason": "进入减仓观察区间，若无利润恢复和疆外突破证据则估值偏高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看经营现金流、疆内外收入、高档酒毛利率和经销商变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证渠道重构后的收入降幅是否收窄"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，重新评估正常化利润和合理估值区间"
+    }
+  ]
+}

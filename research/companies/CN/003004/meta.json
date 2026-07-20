@@ -1,0 +1,104 @@
+{
+  "symbol": "CN:003004",
+  "market": "CN",
+  "ticker": "003004",
+  "name": "声迅股份",
+  "company_name": "北京声迅电子股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司本体仍是小体量、项目制、应收较重且尚未稳定盈利的智能安防和城市安全运营服务商；2026年完成中科锐择51%控股带来特种光电期权，但当前79.00元股价对应约64.7亿元市值，约17.2倍2025年收入和9.2倍2026Q1归母权益，远高于可验证经营质量所能支持的范围。",
+  "quality_rating": "中低",
+  "valuation_rating": "显著高估",
+  "fair_value_range": [12, 22],
+  "buy_zone": [0, 14],
+  "sell_or_reduce_zone": [30, 999],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于14元，且最近两个季度经营现金流为正、应收账款未继续恶化",
+      "action": "可建立0.5%-1.0%观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于14-22元，且扣非归母净利润连续两个季度转正并能解释中科锐择并表贡献",
+      "action": "可提高到1.0%-2.0%小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于30元，或市值超过可验证归母利润30倍以上且无新增业绩证据",
+      "action": "不新买，已有仓位减仓或退出",
+      "max_weight": 0
+    },
+    {
+      "condition": "应收账款、商誉减值、转债回售或并购整合出现重大负面信号",
+      "action": "暂停买入并重新评估，必要时清仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14,
+      "unit": "CNY/share",
+      "action": "进入可买区，复核现金流和应收后再决定是否建仓",
+      "reason": "接近PS、PB、并购后PE三种方法交集的安全买入区"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "unit": "CNY/share",
+      "action": "进入减仓区，除非并表利润显著超预期",
+      "reason": "已高于当前可验证基本面估值区间"
+    },
+    {
+      "type": "price_above",
+      "price": 79,
+      "unit": "CNY/share",
+      "action": "显著高估区，不买",
+      "reason": "对应约17倍2025年收入和约9倍2026Q1归母权益"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "复核2026年半年报，重点核验中科锐择并表收入、利润、现金流和商誉变化",
+      "reason": "半年报将首次提供较完整的并表和现金流线索"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "复核2026年三季报、声迅转债安排、应收账款和经营现金流",
+      "reason": "三季报可验证全年订单、回款和减亏趋势是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核2026年年报，确认并购整合、业绩兑现、减值和全年现金流",
+      "reason": "年报能系统验证盈利质量、商誉风险和估值假设"
+    },
+    {
+      "type": "date",
+      "date": "2027-07-31",
+      "condition": "复核2027年中期经营进展和估值是否仍偏离基本面",
+      "reason": "需要观察并购第二年是否形成可持续利润"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润及其连续性",
+    "经营活动现金流净额/净利润",
+    "应收账款余额、账龄和回款速度",
+    "城市安全运营服务收入、毛利率和占比",
+    "中科锐择并表收入、净利润、毛利率、订单和回款",
+    "商誉和无形资产减值迹象",
+    "声迅转债未转股余额、转股价格、回售和偿债安排",
+    "轨交、金融、医院、消防平台核心订单中标与验收节奏"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920786",
+  "market": "CN",
+  "ticker": "920786",
+  "name": "骑士乳业",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "重资产农牧乳糖一体化业务处于周期修复早期，但自由现金流、资本回报、杠杆与治理质量不足以支撑当前估值，等待显著安全边际。",
+  "fair_value_range": [4.2, 5.4],
+  "buy_zone": [3.3, 4.0],
+  "sell_or_reduce_zone": [6.3, 7.5],
+  "position_plan": [
+    {
+      "condition": "股价低于4.00元，且最近两期经营现金流为正、净债务未上升、无新增监管处罚",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价处于3.30至3.70元且原奶销量、扣非利润和糖业减亏假设继续成立",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "净债务上升、核心客户流失、资本开支重启或治理再次恶化",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "完成2026年半年报复查，重点核验自由现金流、净债务、原奶业务和糖业减亏"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入有安全边际的观察买入区间，仍须重新验证基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 6.3,
+      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流显著上修"
+    }
+  ],
+  "updated_at": "2026-07-15T02:16:03+08:00"
+}

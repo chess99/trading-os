@@ -1,0 +1,118 @@
+{
+  "symbol": "CN:003037",
+  "market": "CN",
+  "ticker": "003037",
+  "name": "三和管桩",
+  "company_name": "广东三和管桩股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是国内预制混凝土管桩第一梯队企业，基地网络、央国企客户和水利/新能源/海工等新场景有价值；但行业成熟、毛利低、回款和现金流压力重，2025 年利润修复质量一般，当前 5.57 元已接近合理价值上沿，安全边际不足。",
+  "quality_rating": "中低",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.6,
+    5.8
+  ],
+  "buy_zone": [
+    4.0,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    6.5,
+    7.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于 4.5 元且未看到经营现金流和应收改善",
+      "action": "保持 0 仓观察",
+      "max_weight": 0,
+      "target_weight": 0
+    },
+    {
+      "condition": "股价跌破 4.5 元，且最新财报没有显示毛利率跌破 10%或应收账款明显恶化",
+      "action": "可建立观察仓",
+      "max_weight": 0.01,
+      "target_weight": "0.5%-1%"
+    },
+    {
+      "condition": "股价跌破 4.0 元，或连续两个季度经营现金流改善且 2026 年利润目标兑现概率提高",
+      "action": "可加至小仓",
+      "max_weight": 0.02,
+      "target_weight": "1%-2%"
+    },
+    {
+      "condition": "2026 年归母净利润超过 8000 万元且全年经营现金流转正，同时价格仍低于 5.0 元",
+      "action": "可上调至上限仓位",
+      "max_weight": 0.03,
+      "target_weight": "3%以内"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "跌入买入区上沿，开始具备安全边际",
+      "action": "复核中报/三季报后考虑观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "跌入更有赔率的买入区下沿",
+      "action": "若基本面未恶化，评估加仓至 1%-2%"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "超过减仓区下沿，若基本面未同步上修则风险收益转弱",
+      "action": "若利润和现金流没有同步上修，减仓或不参与"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年中报发布后",
+      "reason": "中报能验证收入、毛利率、应收账款和经营现金流是否改善",
+      "action": "复核收入、毛利率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026 年三季报发布后",
+      "reason": "三季报能验证全年 8000 万元净利润目标兑现概率",
+      "action": "验证全年 8000 万元净利润目标兑现概率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026 年报发布后",
+      "reason": "年报能完整验证利润、现金流、分红和资本开支质量",
+      "action": "复核全年利润、经营现金流、分红和资本开支"
+    },
+    {
+      "type": "date",
+      "date": "2027-07-13",
+      "condition": "年度跟踪复核",
+      "reason": "超过一年需要重新评估行业位置、合理价值和仓位计划",
+      "action": "重新评估合理价值和仓位计划"
+    }
+  ],
+  "key_tracking_metrics": [
+    "经营现金流净额",
+    "应收账款/营业收入",
+    "归母净利润及扣非归母净利润",
+    "综合毛利率和桩类产品毛利率",
+    "水利、风电、光伏、大口径桩销量占比",
+    "资产负债率",
+    "资本开支与新产线产能利用率",
+    "分红、再融资和股东回报"
+  ]
+}

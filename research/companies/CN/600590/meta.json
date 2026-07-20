@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:600590",
+  "ticker": "600590",
+  "name": "泰豪科技",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "泰豪科技处于军工装备与智能电力业务修复期，2025年扭亏、2026Q1利润继续改善，但当前股价约8元已基本反映基准修复预期；需要等待半年报、订单和现金流验证后再考虑买入。",
+  "fair_value_range": [
+    6.0,
+    7.8
+  ],
+  "buy_zone": [
+    4.8,
+    6.0
+  ],
+  "sell_or_reduce_zone": [
+    9.5,
+    12.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于基准合理价值上沿，且2026年全年利润弹性尚未验证时，仅保留观察，不建立仓位。",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌至6.0元以下，且2026半年报扣非净利润同比增长、经营现金流不恶化、应收账款周转未明显恶化。",
+      "action": "starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价跌至4.8元以下，且军工装备和智能应急电源订单未出现基本面破坏，可在组合风险预算内提高至小仓位。",
+      "action": "small_position",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入基准估值区间下沿附近，若基本面未恶化，可重新评估观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入安全边际更充足区间，需复核现金流和订单后评估小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "达到乐观情景下沿，若业绩尚未兑现，预期透支风险上升。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、应收账款和分业务毛利率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年股权激励目标和利润修复是否具备可实现性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认军工装备与智能电力业务是否真正进入可持续盈利阶段。"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "tags": [
+    "军工装备",
+    "智能电力",
+    "应急电源",
+    "修复型资产"
+  ]
+}

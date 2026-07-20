@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:300957",
+  "ticker": "300957",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "贝泰妮",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "current_thesis": "贝泰妮是中国皮肤学级护肤龙头，薇诺娜仍具敏感肌心智、医学背书和渠道优势；2025年扣非利润及现金流修复，2026Q1出现收入和利润反弹，但多品牌第二曲线和扣非利润持续性仍需验证，当前适合观察而非激进追高。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    34,
+    45
+  ],
+  "buy_zone": [
+    27,
+    32
+  ],
+  "sell_or_reduce_zone": [
+    52,
+    60
+  ],
+  "decision": "观察",
+  "confidence": "中",
+  "position_plan": [
+    {
+      "condition": "股价低于32元且2026中报确认收入正增长、扣非净利率继续修复时，先建立观察仓。",
+      "action": "initial_buy",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于30元且主品牌线上/OTC份额稳定、销售费用率同比下降、经营现金流为正时，加至核心观察仓。",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于52元但2026年归母净利润上调证据不足或扣非利润修复停滞时，降低或退出仓位。",
+      "action": "reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 32,
+      "reason": "进入买入观察区上沿，若经营修复继续兑现可建立小仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 27,
+      "reason": "低于保守买入区下沿，若基本面未恶化则安全边际显著提高。"
+    },
+    {
+      "type": "price_above",
+      "price": 52,
+      "reason": "超过当前修复情景可解释的估值上沿，需要重新核验利润上调空间。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点验证扣非利润率、销售费用率、现金流和多品牌增长。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及双11前渠道表现，判断全年利润修复是否可持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新估算长期增长、品牌矩阵兑现和公允价值区间。"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301121",
+  "market": "CN",
+  "ticker": "301121",
+  "name": "紫建电子",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "紫建电子处在 AI 硬件、可穿戴和小型消费锂电池增量方向，但 2025 年扣非转负、锂电池毛利率下滑、短债和商誉压力较高；当前价格缺乏安全边际，等待低估值或连续季度盈利修复。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    24,
+    32
+  ],
+  "buy_zone": [
+    20,
+    25
+  ],
+  "sell_or_reduce_zone": [
+    42,
+    50
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于25元，且最近一期未出现商誉减值、经营现金流恶化或主要客户流失",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于20元，且扣非净利润改善、经营现金流为正",
+      "action": "提高至小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于42元但扣非净利率未恢复至4%以上",
+      "action": "不追高并降低已有仓位",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 25,
+      "reason": "进入买入评估区，估值开始覆盖扣非亏损、商誉和短债风险"
+    },
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 42,
+      "reason": "价格进入乐观情景区，若扣非盈利未验证应减仓或避免追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看锂电池毛利率、扣非净利润、宁波启象贡献和短期借款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入增长是否转化为利润和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，检查商誉减值、海外业务和充电控制器业务持续性"
+    }
+  ]
+}

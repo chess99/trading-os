@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920807",
+  "market": "CN",
+  "ticker": "920807",
+  "name": "奔朗新材",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "技术与海外渠道尚可，但核心业务承压、新业务低毛利且资本回报偏低，当前高估值缺乏自由现金流和安全边际支持。",
+  "fair_value_range": [4.8, 6.5],
+  "buy_zone": [4.0, 4.8],
+  "sell_or_reduce_zone": [7.5, 9.0],
+  "position_plan": [
+    {
+      "condition": "股价处于4.0-4.8元且半年报或三季报证明毛利率、应收和自由现金流未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于4.0元，重新验证长期商业价值未受损、减值风险可控且ROIC改善",
+      "max_weight": 0.02
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、出口退税影响、毛利率和自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及募投项目投产和产能利用率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入有安全边际的买入观察区，需先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-14T23:07:02.6701602+08:00"
+}

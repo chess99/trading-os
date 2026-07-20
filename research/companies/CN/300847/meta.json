@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300847",
+  "ticker": "300847",
+  "market": "CN",
+  "name": "中船汉光",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中船汉光具备墨粉和OPC鼓国产化技术积累、国资背景和强现金资产负债表，但2025至2026Q1增长放缓，主业毛利率和ROE不高；2026-07-15现价13.23元接近基准合理价值上沿，缺少深度安全边际，适合观察等待更低价格或安全复印机业务兑现。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    10.5,
+    13.5
+  ],
+  "buy_zone": [
+    9.2,
+    10.8
+  ],
+  "sell_or_reduce_zone": [
+    15.2,
+    16.8
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于10.8元，且最近一期耗材主业毛利率不低于18.0%、经营现金流/净利润不低于0.8倍",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于9.2元，且收入没有连续两个季度同比下滑超过5%、应收账款和存货未明显恶化",
+      "action": "提高到审慎配置仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于15.2元，但信息安全复印机未披露可验证规模订单或利润增速未超过15%",
+      "action": "停止加仓并减仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.8,
+      "reason": "进入基准买入区上沿，需要复核半年报毛利率和现金流后决定是否建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 9.2,
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 15.2,
+      "reason": "超过减仓区下沿，若第二增长曲线未兑现则估值风险上升。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、毛利率、经营现金流、海外收入和安全复印机订单进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否恢复增长，以及存货和应收账款是否继续上升。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红率和信息安全复印机业务规模化情况。"
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:688160",
+  "market": "CN",
+  "ticker": "688160",
+  "name": "步科股份",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "步科股份是机器人运动控制与人机交互核心部件的高纯度标的，2025年机器人业务高增带动收入和利润改善；但2026Q1毛利率下滑、经营现金流转负，且当前股价对应约130倍TTM PE，已经提前反映较高成长预期。维持观察，等待价格回落或利润质量确认。",
+  "fair_value_range": [
+    78,
+    95
+  ],
+  "buy_zone": [
+    60,
+    72
+  ],
+  "sell_or_reduce_zone": [
+    115,
+    135
+  ],
+  "position_plan": [
+    {
+      "condition": "未持有且股价高于72元时，仅跟踪不建仓，等待2026H1毛利率和现金流验证。",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至60-72元且机器人收入继续高增、毛利率不低于33%、经营现金流未继续恶化，可建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H1/H2证明收入增速超过35%、毛利率回到35%以上、经营现金流转正，可提高到核心小仓。",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 72,
+      "reason": "进入买入观察区，需要复核基本面是否未恶化。"
+    },
+    {
+      "type": "price_below",
+      "price": 60,
+      "reason": "进入更有安全边际区间，若基本面稳定可考虑提高仓位上限。"
+    },
+    {
+      "type": "price_above",
+      "price": 115,
+      "reason": "高于合理价值区间上沿，若无利润上修则预期收益不足。"
+    },
+    {
+      "type": "price_above",
+      "price": 135,
+      "reason": "估值显著透支基准情景，应复核是否需要减仓或继续回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-26",
+      "reason": "市场预期的下一财报窗口附近，复核2026H1收入、毛利率、现金流和机器人业务进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，判断全年净利润是否能接近或超过1亿元。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报及2027Q1，更新中期估值和仓位上限。"
+    }
+  ]
+}

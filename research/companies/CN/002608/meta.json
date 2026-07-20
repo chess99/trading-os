@@ -1,0 +1,129 @@
+{
+  "symbol": "CN:002608",
+  "market": "CN",
+  "ticker": "002608",
+  "name": "江苏国信",
+  "company_name": "江苏国信股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "买入",
+  "current_rating": "buy",
+  "current_thesis": "江苏国信是江苏煤电现金流与江苏信托金融股权收益的低估值省属平台。以2026-07-10最近交易日6.83元、258.04亿元市值计，约7.6x TTM PE和0.72x PB，已进入轻仓买入区；但电价、煤价和信托投资收益仍需持续跟踪，当前只适合10%-15%试探性底仓。",
+  "quality_rating": "B+",
+  "valuation_rating": "偏低估",
+  "fair_value_range": [7.4, 8.6],
+  "buy_zone": [5.9, 6.8],
+  "sell_or_reduce_zone": [8.6, 9.2],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "price_range": "current",
+      "condition": "2026-07-10最近交易日收盘价6.83元，分红后等效成本接近6.80元安全边际",
+      "action": "买入",
+      "max_weight": 0.15,
+      "target_position": "10%-15%",
+      "note": "首笔试探性底仓"
+    },
+    {
+      "price_range": "<=5.90",
+      "condition": "股价低于或等于5.90元且基本面未恶化",
+      "action": "强吸引力，逆周期加仓",
+      "max_weight": 1.0,
+      "target_position": "70%-100%"
+    },
+    {
+      "price_range": "5.91-6.40",
+      "condition": "股价位于5.91-6.40元且煤价、电价、现金流未恶化",
+      "action": "明显低估",
+      "max_weight": 0.7,
+      "target_position": "40%-70%"
+    },
+    {
+      "price_range": "6.41-6.80",
+      "condition": "股价位于6.41-6.80元",
+      "action": "有安全边际",
+      "max_weight": 0.4,
+      "target_position": "20%-40%"
+    },
+    {
+      "price_range": "6.81-7.40",
+      "condition": "股价位于6.81-7.40元",
+      "action": "轻仓可买，等待验证",
+      "max_weight": 0.2,
+      "target_position": "0%-20%"
+    },
+    {
+      "price_range": "7.41-8.60",
+      "condition": "股价位于7.41-8.60元",
+      "action": "持有/观察，不新增",
+      "max_weight": 0.2,
+      "target_position": "hold"
+    },
+    {
+      "price_range": ">8.60",
+      "condition": "股价高于8.60元",
+      "action": "不追高；>9.20且基本面无上修时考虑降低仓位",
+      "max_weight": 0.0,
+      "target_position": "reduce_or_avoid"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入安全边际买入价",
+      "condition": "低于或等于该价格，且煤价/电价未恶化",
+      "action": "允许从底仓加至20%-40%"
+    },
+    {
+      "type": "price_below",
+      "price": 5.9,
+      "reason": "进入强吸引力买入价",
+      "condition": "低于或等于该价格，且利润质量未破坏",
+      "action": "进入强吸引力加仓区"
+    },
+    {
+      "type": "price_above",
+      "price": 8.6,
+      "reason": "高于合理价格区间上沿",
+      "condition": "高于该价格",
+      "action": "不追高"
+    },
+    {
+      "type": "price_above",
+      "price": 9.2,
+      "reason": "显著高于合理价格区间且安全边际不足",
+      "condition": "高于该价格且基本面无上修",
+      "action": "考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "中报能验证2026年上半年电价、煤价、新机组贡献和江苏信托利润质量",
+      "action": "2026年中报披露后复查能源板块利润总额、上网电量、平均上网电价、入厂煤价、江苏信托利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报能验证全年盈利兑现、现金流和分红预期",
+      "action": "2026年三季报披露后复查全年盈利兑现、现金流和分红预期"
+    }
+  ],
+  "key_tracking_metrics": [
+    "能源板块利润总额",
+    "江苏燃煤、山西燃煤、燃气机组平均上网电价",
+    "入厂煤价和燃料成本",
+    "上网电量和市场化电量占比",
+    "江苏信托利润总额和受托管理信托资产规模",
+    "经营活动现金流净额/归母净利润",
+    "资产负债率、财务费用和资本开支",
+    "年度现金分红率"
+  ]
+}

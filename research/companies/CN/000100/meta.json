@@ -1,0 +1,63 @@
+{
+  "symbol": "CN:000100",
+  "market": "CN",
+  "ticker": "000100",
+  "name": "TCL科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "2026H1业绩预告显示归母净利润37.0至39.2亿元、扣非归母净利润29.2至31.4亿元，TCL华星盈利显著改善，验证显示周期韧性；但光伏仍处亏损改善阶段，小尺寸OLED短期承压，高杠杆及t9少数股权收购的发股摊薄仍需核验。2026-07-17收盘5.00元位于合理价值下沿但高于买入区，维持观察，不建议新买。",
+  "fair_value_range": [5.0, 6.5],
+  "buy_zone": [4.0, 4.8],
+  "sell_or_reduce_zone": [6.5, 8.0],
+  "position_plan": [
+    {
+      "condition": "股价处于4.8元至6.5元，已有仓位仅观察",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于4.8元且半年报确认现金流、负债和光伏业务未恶化",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于4.0元",
+      "max_weight": 0.05
+    }
+  ],
+  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md",
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-17-memory-cycle-followup.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年中报后复核面板利润率、光伏亏损收窄程度、现金流和负债率变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核全年盈利指引和光伏业务趋势"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入强吸引力买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 6.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-18T12:00:00+08:00"
+}

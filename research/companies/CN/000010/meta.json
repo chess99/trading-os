@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:000010",
+  "market": "CN",
+  "ticker": "000010",
+  "name": "*ST美丽",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "无法表示意见、负自由现金流和庭外重组使权益价值高度脆弱，当前约6.8倍PB已过度计入成功整改与重组预期。",
+  "fair_value_range": [0.2, 0.6],
+  "buy_zone": [0, 0],
+  "sell_or_reduce_zone": [1.0, 1.8],
+  "position_plan": [
+    {
+      "condition": "当前无法表示意见、退市风险警示和庭外重组未解决",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "仅在撤销退市风险警示、审计问题完成可验证整改、连续两个报告期经营现金流转正且股价不高于0.60元后重新评估",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-29",
+      "reason": "复核2026年半年报现金流、应收回收和庭外重组进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年度财务及内部控制审计意见与退市风险"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.6,
+      "reason": "仅触发重新研究；审计和重组条件未改善前不代表进入买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 1.0,
+      "reason": "高于条件概率价值区间，进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-19T15:54:19+08:00"
+}

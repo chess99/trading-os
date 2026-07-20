@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301101",
+  "ticker": "301101",
+  "name": "明月镜片",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "国内镜片品牌龙头，主业现金流好、净现金充足、分红积极，高折/PMC/轻松控等结构升级仍有增长空间；但当前价格约处于合理价值区间内，买入安全边际不足，等待回落或新品放量进一步验证。",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "fair_value_range": [
+    27,
+    34
+  ],
+  "buy_zone": [
+    20,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    38,
+    42
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于24元且半年报未显示收入增速、毛利率或经营现金流明显恶化",
+      "action": "begin_accumulation",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于21元且轻松控/高折产品继续增长、经营现金流恢复正常",
+      "action": "increase_position",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格高于38元且盈利预测没有同步上修",
+      "action": "reduce_or_avoid_chasing",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入买入区上沿，前瞻估值和净现金保护开始具备安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 21,
+      "reason": "进入深度价值区，若基本面未恶化可提高仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 38,
+      "reason": "超过基准合理价值区间较多，若盈利未上修需减持或停止追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入增速、镜片毛利率、轻松控/高折新品进展、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认全年利润节奏和渠道库存风险"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估长期增长率、分红能力和合理价值区间"
+    }
+  ]
+}

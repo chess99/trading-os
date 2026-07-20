@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:300010",
+  "market": "CN",
+  "ticker": "300010",
+  "name": "ST豆神",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "暂不买入。公司处于ST状态，2025年财报保留意见和内控否定意见尚未消除，扣非亏损且经营现金流为负；当前价格约2.04元已透支整改成功和AI教育兑现预期，需等待审计意见、现金流和ST撤销路径确认。",
+  "fair_value_range": [
+    0.7,
+    1.2
+  ],
+  "buy_zone": [
+    0.6,
+    0.9
+  ],
+  "sell_or_reduce_zone": [
+    1.6,
+    2.4
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格约2.04元且仍处ST、2025年内控否定意见和财报保留意见未消除",
+      "action": "不买入，维持0仓位",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格低于0.90元，且2026中报或三季报显示经营现金流改善、内控整改按期推进",
+      "action": "仅允许观察性试探仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格低于0.70元，ST撤销路径清晰，保留意见事项实质消除，连续两个季度经营现金流转正",
+      "action": "可小仓位参与困境反转",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.9,
+      "reason": "进入可观察买入区，但仍需同时满足ST整改和现金流改善条件"
+    },
+    {
+      "type": "price_below",
+      "price": 0.7,
+      "reason": "进入深度安全边际区，若非标事项消除可重新评估小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 1.6,
+      "reason": "高于风险调整合理价值上沿，ST未撤销前不追涨"
+    },
+    {
+      "type": "price_above",
+      "price": 2.4,
+      "reason": "明显透支整改成功和AI教育兑现预期，应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报：收入、扣非利润、经营现金流、货币资金和内控整改进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报及公司承诺的10月末整改完成情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报、审计意见、内部控制审计意见和ST撤销条件"
+    }
+  ],
+  "notes": [
+    "当前结论为avoid：核心不是收入增长，而是审计意见、内控有效性和现金流尚未修复。",
+    "2025年归母净利润为正但扣非归母净利润为负，非经常性损益对利润影响重大。",
+    "2026Q1经营现金流继续大幅流出，现金链需按季度复核。",
+    "重大诉讼、担保、资金占用和监管问询清单本轮未逐项穿透核验，买入前必须补充核查。"
+  ]
+}

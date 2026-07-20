@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:002453",
+  "ticker": "002453",
+  "name": "华软科技",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司精细化工主业仍处亏损和负经营现金流阶段，莱恩光电并购提供工业自动化盈利期权但尚需并表与整合验证；当前约4.40倍P/B已接近乐观情景，缺乏安全边际，维持观察。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    1.6,
+    2.6
+  ],
+  "buy_zone": [
+    0.9,
+    1.4
+  ],
+  "sell_or_reduce_zone": [
+    3.5,
+    4.5
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于1.40元且2026半年报未显示亏损扩大、莱恩光电并表进展正常",
+      "action": "research_tracking_position",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "连续两个季度经营现金流转正且化工主业毛利率转正，同时价格仍低于2.60元",
+      "action": "increase_to_small_position",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "价格高于3.50元但公司仍亏损或莱恩光电贡献未兑现",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.4,
+      "reason": "进入基准情景折价区，可复核是否出现资产价值安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "接近保守资产价值区，需重新评估清算价值和莱恩光电期权。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.5,
+      "reason": "高于基准价值上沿，若业绩未兑现应回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、莱恩光电并表时点和实际亏损区间。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报经营现金流、毛利率和并购整合进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报及莱恩光电全年贡献是否兑现。"
+    }
+  ],
+  "key_metrics": {
+    "last_price": 4.04,
+    "last_price_date": "2026-07-14",
+    "pb_estimate": 4.4,
+    "shares_outstanding": 812367126,
+    "market_cap_cny_billion": 3.282,
+    "revenue_2025_cny_billion": 0.372,
+    "net_profit_2025_cny_billion": -0.258,
+    "h1_2026_guidance_net_profit_cny_billion": [
+      -0.09,
+      -0.065
+    ]
+  },
+  "sources": [
+    "https://static.cninfo.com.cn/finalpage/2026-04-29/1225240928.PDF",
+    "https://static.cninfo.com.cn/finalpage/2026-04-30/1225255638.PDF",
+    "https://static.cninfo.com.cn/finalpage/2026-07-15/1225425333.PDF",
+    "https://static.cninfo.com.cn/finalpage/2026-03-07/1224999980.PDF",
+    "https://static.cninfo.com.cn/finalpage/2026-04-30/1225255640.PDF"
+  ]
+}

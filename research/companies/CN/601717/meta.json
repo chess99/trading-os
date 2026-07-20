@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:601717",
+  "ticker": "601717",
+  "name": "中创智领",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "煤机龙头叠加汽车零部件修复，2025-2026Q1 盈利质量较强、估值处于低位；但煤机周期、汽车零部件复杂度和现金流验证要求较高，当前价格接近合理价值下沿但安全边际不足，等待 12.5-14.5 元或半年报进一步验证。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    16.0,
+    21.0
+  ],
+  "buy_zone": [
+    12.5,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    27.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 12.5-14.5 元且 2026 半年报未显示订单、毛利率或经营现金流恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价进入 11.5-12.5 元且下跌主要来自市场情绪，煤机订单和汽车零部件利润率仍稳定",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 22.0 元且没有 2026-2027 年盈利显著上修证据",
+      "action": "减仓或暂停加仓",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入保守买入区间上沿，若基本面未恶化可开始分批建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 12.5,
+      "reason": "进入更厚安全边际区间，可结合半年报和订单数据提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "超过合理价值区间上沿，需要盈利上修支撑，否则考虑减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 半年报的收入、利润、经营现金流、煤机订单和汽车零部件利润率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 三季报，确认 Q1 高利润增速是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核 2026 年报和可转债募投进展，更新长期价值区间"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

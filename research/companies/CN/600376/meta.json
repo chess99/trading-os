@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:600376",
+  "ticker": "600376",
+  "name": "首开股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "首开股份具备北京国资信用和区域项目底盘，但归母权益快速收缩、销售规模下行、2026H1仍预亏，当前3.40元高于保守交叉估值中枢，缺少安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    2.2,
+    3.0
+  ],
+  "buy_zone": [
+    2.0,
+    2.3
+  ],
+  "sell_or_reduce_zone": [
+    3.4,
+    4.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值中枢且2026H1仍预亏，维持空仓观察。",
+      "action": "avoid_new_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格跌入2.00-2.30元且半年报显示归母权益未低于60亿元、经营现金流为正、月度销售改善。",
+      "action": "research_watch_position_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于2.00元且出现连续两个季度减亏、毛利率修复和销售回款改善。",
+      "action": "reassess_small_position",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.3,
+      "reason": "进入观察区间，需要复核半年报归母权益、现金流和月度销售是否支撑安全边际。"
+    },
+    {
+      "type": "price_below",
+      "price": 2.0,
+      "reason": "低于保守NAV下沿，可重新评估小仓位前提，但必须确认亏损收窄。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.4,
+      "reason": "高于合理估值中枢且接近乐观情景，需要回避或减持。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "reason": "显著依赖政策和情绪重估，基本面安全边际不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026半年报披露后复核归母权益、现金流、毛利率和销售恢复情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026三季报披露后判断减亏是否持续、估值锚是否继续下移。"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "全年销售简报和业绩预告后复核是否仍处于权益侵蚀周期。"
+    }
+  ]
+}

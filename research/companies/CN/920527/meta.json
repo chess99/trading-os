@@ -1,0 +1,43 @@
+{
+  "symbol": "CN:920527",
+  "market": "CN",
+  "ticker": "920527",
+  "name": "夜光明",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "资产负债表稳健且一季报毛利改善，但长期资本回报偏低、现金流脆弱，13.61元已过度定价盈利改善。",
+  "fair_value_range": [8.8, 10.8],
+  "buy_zone": [7.0, 8.5],
+  "sell_or_reduce_zone": [12.5, 14.5],
+  "position_plan": [
+    {
+      "condition": "股价处于7.0至8.5元且毛利率、存货、出口利润和自由现金流核心假设未恶化",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "最晚在2026年三季报后复核毛利率、存货、自由现金流与募投项目回报"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入有一定安全边际的研究买入区间，但须先复核基本面"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "reason": "进入减仓或不应追高区间，需更高且可持续的自由现金流才能支撑"
+    }
+  ],
+  "updated_at": "2026-07-16T15:10:00+08:00"
+}

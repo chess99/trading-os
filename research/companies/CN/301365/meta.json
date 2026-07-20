@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:301365",
+  "ticker": "301365",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "矩阵股份",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "current_thesis": "矩阵股份具备高现金资产、设计品牌和客户资源，2025年收入利润修复且分红积极；但2026Q1转亏暴露项目制业务波动，当前估值已充分反映AI和恢复预期，安全边际不足，适合观察等待更低价格或更强业绩验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [22, 30],
+  "buy_zone": [18, 24],
+  "sell_or_reduce_zone": [36, 42],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入18-24元且最新一期经营现金流转正、订单未出现明显恶化时，可建立观察仓。",
+      "action": "initial_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H1或2026H2收入恢复、归母净利润转正且应收账款未显著恶化，可提高至小仓位。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于36元且未来两期未验证利润修复或AI商业化，应不买入并降低已有暴露。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入估值观察区，需要复核订单、现金流和应收质量。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "接近保守买入区，可结合最新财报评估是否建立小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "高于合理价值区间上沿，若基本面未同步改善需考虑回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、利润、经营现金流、应收账款和订单转化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认Q1亏损是否为项目节奏扰动。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，更新正常化利润和分红可持续性判断。"
+    }
+  ]
+}

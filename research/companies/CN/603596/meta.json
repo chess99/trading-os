@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:603596",
+  "market": "CN",
+  "ticker": "603596",
+  "name": "伯特利",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "伯特利已从机械制动供应商升级为底盘智能电控平台型公司，2025年智能电控收入超过机械制动，EPB/WCBS海外和合资客户定点提升中期成长确定性；当前估值按2025年盈利约15.8倍PE，未充分反映线控制动、海外放量与ROE质量，但2026Q1增长放缓、客户集中和海外毛利率承压使仓位应循序建立。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    30,
+    37
+  ],
+  "buy_zone": [
+    18,
+    24
+  ],
+  "sell_or_reduce_zone": [
+    38,
+    45
+  ],
+  "position_plan": [
+    {
+      "condition": "23元附近且未出现新增质量事故、客户丢单或现金流恶化时建立标准观察仓",
+      "action": "buy_initial",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价跌至20元以下且智能电控收入和毛利率仍稳定时加仓",
+      "action": "add_on_weakness",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "股价高于38元且没有业绩上修或新增重大定点支撑时降低仓位",
+      "action": "trim",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入高安全边际加仓区，需复核基本面是否未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 38,
+      "reason": "超过基准估值上沿，需复核是否有新增订单或盈利上修支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查智能电控增速、海外毛利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1增长放缓是否已修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报，更新长期估值和仓位上限"
+    }
+  ]
+}

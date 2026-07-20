@@ -1,0 +1,86 @@
+{
+  "symbol": "CN:688208",
+  "market": "CN",
+  "ticker": "688208",
+  "name": "道通科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "道通科技具备全球汽车诊断设备龙头、高毛利AI/软件续费和海外智慧充电放量三重属性。以2026-07-17收盘价25.96元测算，估值约为2026E 15-17倍PE，低于基准合理价值区间；但关联方资金占用历史、H股发行不确定性和汇兑波动要求分批买入并严控仓位。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    31,
+    38
+  ],
+  "buy_zone": [
+    23,
+    27
+  ],
+  "sell_or_reduce_zone": [
+    40,
+    45
+  ],
+  "position_plan": [
+    {
+      "condition": "23-27元且未出现新增治理瑕疵，建立初始仓位",
+      "action": "buy_initial",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "2026H1收入增速不低于18%、经营现金流未恶化且回购继续执行",
+      "action": "add",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "跌破22元但主业增长、现金流和治理均未恶化",
+      "action": "opportunistic_add",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "收入低于激励15%门槛节奏、存货应收显著恶化或H股融资明显摊薄",
+      "action": "reduce_or_watch",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 27,
+      "reason": "进入买入区，2026E估值约16倍PE以下，安全边际较好"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "若基本面未恶化，接近悲观情景价值，可逆向加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 40,
+      "reason": "高于基准合理价值区间上沿，需要重新评估增长兑现与估值"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入增速、充电业务毛利率、现金流和治理事项"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否满足全年激励目标节奏"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报、H股发行进展和2027年增长指引"
+    }
+  ],
+  "confidence": "medium",
+  "decision": "买入"
+}

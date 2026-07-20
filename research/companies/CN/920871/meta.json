@@ -1,0 +1,43 @@
+{
+  "symbol": "CN:920871",
+  "market": "CN",
+  "ticker": "920871",
+  "name": "派特尔",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "资产负债表稳健但毛利率和资本回报偏低，当前高估值已透支毛利修复与新业务增长，缺少安全边际。",
+  "fair_value_range": [5.2, 7.0],
+  "buy_zone": [4.2, 5.2],
+  "sell_or_reduce_zone": [8.5, 10.5],
+  "position_plan": [
+    {
+      "condition": "股价处于买入区间、树脂软管毛利率不低于38%、滚动自由现金流未恶化且无新的低回报投资",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-01",
+      "reason": "2026年半年报披露后复查收入、毛利率、现金流和客户回款"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入研究或有条件建仓区间，仍需确认基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "进入减仓或不应追高区间，估值已高于公允价值"
+    }
+  ],
+  "updated_at": "2026-07-14T10:05:47+08:00"
+}

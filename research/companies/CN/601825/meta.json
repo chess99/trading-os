@@ -1,0 +1,111 @@
+{
+  "symbol": "CN:601825",
+  "market": "CN",
+  "ticker": "601825",
+  "name": "沪农商行",
+  "company_name": "沪农商行",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "沪农商行是上海区域资产质量、拨备和资本垫较厚的高股息银行资产，适合在0.55倍PB以下小仓位配置；核心约束是低利率环境下净息差承压，以及房地产和地方平台敞口仍需在半年报中进一步核验。",
+  "quality_rating": "A-",
+  "valuation_rating": "B+",
+  "fair_value_range": [
+    8.2,
+    9.8
+  ],
+  "buy_zone": [
+    6.8,
+    7.5
+  ],
+  "sell_or_reduce_zone": [
+    9.6,
+    10.8
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于或等于7.5元，且最新不良率维持在1.05%以内、拨备覆盖率高于280%",
+      "action": "建立首笔观察仓",
+      "max_weight": 0.015,
+      "reason": "接近0.55倍2026Q1每股净资产，上海区域资产质量、资本充足和分红提供防守价值"
+    },
+    {
+      "condition": "价格低于或等于6.8元，且未出现房地产、地方平台或资本充足率恶化信号",
+      "action": "加仓至核心防守仓",
+      "max_weight": 0.03,
+      "reason": "进入悲观情景估值下沿，股息率和PB安全边际更充分"
+    },
+    {
+      "condition": "价格高于9.6元且净息差、ROE或资产质量没有明显上修",
+      "action": "分批减仓",
+      "max_weight": 0.01,
+      "reason": "估值接近0.70倍2026Q1 PB以上，低增长银行资产的预期收益下降"
+    },
+    {
+      "condition": "不良率连续两个季度高于1.20%或拨备覆盖率低于250%",
+      "action": "降至观察仓或退出",
+      "max_weight": 0.005,
+      "reason": "资产质量假设被破坏，低PB可能转为价值陷阱"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入初始买入区，可建立1.0%-1.5%观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 6.8,
+      "reason": "进入深度价值区，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 9.6,
+      "reason": "进入减仓区，除非息差或资产质量显著上修"
+    },
+    {
+      "type": "price_above",
+      "price": 10.8,
+      "reason": "超过基准估值上沿较多，应主动降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-28",
+      "reason": "公司预计披露2026年半年度报告，需复核净息差、房地产和地方平台敞口"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报窗口，复核不良率、拨备覆盖率、资本充足率和利润趋势"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "年报窗口，复核分红、ROE、贷款结构和估值区间"
+    }
+  ],
+  "key_tracking_metrics": [
+    "不良贷款率",
+    "关注类贷款占比",
+    "拨备覆盖率",
+    "贷款拨备率",
+    "核心一级资本充足率",
+    "净息差",
+    "净利息收入同比增速",
+    "票据贴现占贷款比例",
+    "个人存款占比和储蓄存款付息率",
+    "房地产贷款余额和不良率",
+    "地方平台授信和城投债投资敞口",
+    "分红率和每股现金分红"
+  ]
+}

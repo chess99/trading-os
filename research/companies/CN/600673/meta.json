@@ -1,0 +1,89 @@
+{
+  "buy_zone": [
+    4.5,
+    6.0
+  ],
+  "currency": "CNY",
+  "current_rating": "watch",
+  "current_thesis": "现价（约36.8元/1108亿市值）已无法用电子新材料主业（基准可持续利润约9亿元）解释，主要由2026年算力资产重组预期定价；重组对价、并表ROIC与摊薄未高置信核验前，以观察代替买入，追高任意价位一律回避。",
+  "fair_value_range": [
+    5.5,
+    9.0
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "market": "CN",
+  "name": "东阳光",
+  "position_plan": [
+    {
+      "condition": "股价<=4.5元且电子材料主业未恶化且经营现金流/扣非利润>=1",
+      "max_weight": 0.3
+    },
+    {
+      "condition": "股价4.5-6.0元且经营现金流继续覆盖扣非利润",
+      "max_weight": 0.2
+    },
+    {
+      "condition": "股价6.0-9.0元，进入合理区间中上沿，赔率下降",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价9.0-12.0元，开始透支乐观情景",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价>12.0元，脱离现有主业估值锚",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "price": 9.0,
+      "reason": "进入合理价值区间，重新评估是否小仓跟踪",
+      "type": "price_below"
+    },
+    {
+      "price": 6.0,
+      "reason": "进入有安全边际的买入区间，重新评估建仓可行性",
+      "type": "price_below"
+    },
+    {
+      "price": 4.5,
+      "reason": "接近悲观情景估值，提高仓位上限评估",
+      "type": "price_below"
+    },
+    {
+      "price": 12.0,
+      "reason": "显著高于现有主业合理估值，避免追高或考虑减仓",
+      "type": "price_above"
+    }
+  ],
+  "report_history": [
+    "reports/2026-07-09-initial-v1.md",
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报，重点看电子材料主业盈利、现金流和重组进展",
+      "type": "date"
+    },
+    {
+      "date": "2026-10-31",
+      "reason": "复查2026年三季报与重大资产重组进展（草案/审计/评估/配套融资条款）",
+      "type": "date"
+    },
+    {
+      "date": "2026-12-31",
+      "reason": "年末复核重组条款、质押风险与估值锚是否变化",
+      "type": "date"
+    }
+  ],
+  "sell_or_reduce_zone": [
+    12.0,
+    100.0
+  ],
+  "status": "active",
+  "symbol": "CN:600673",
+  "ticker": "600673",
+  "updated_at": "2026-07-09T21:30:00+08:00"
+}

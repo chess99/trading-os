@@ -1,0 +1,33 @@
+{
+  "symbol": "CN:600988",
+  "market": "CN",
+  "ticker": "600988",
+  "name": "赤峰黄金",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中型国际黄金生产商，具备金价高弹性 + 海外扩张 + 资源增储期权；31元附近可打底仓但不宜重仓，26元以下安全边际更充分，核心跟踪瓦萨成本、塞班/SND与紫金入主资本配置。",
+  "fair_value_range": [34, 45],
+  "buy_zone": [26, 31],
+  "sell_or_reduce_zone": [40, 50],
+  "position_plan": [
+    {"condition": "股价处于首笔试探性建仓区间（31-34元）且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价回落至26元以下、半年报显示成本可控且AISC回落，分两到三笔加仓", "max_weight": 0.05},
+    {"condition": "股价高于40元且无新增超预期资源或产量催化，停止加仓或逢高减仓", "max_weight": 0}
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md",
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报中的产量、AISC、经营现金流与紫金入主进展"},
+    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报，确认全年14.7吨目标与成本走势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 31, "reason": "进入基础建仓区间，重新评估是否执行首笔仓位"},
+    {"type": "price_below", "price": 26, "reason": "进入有安全边际的买入区间，可考虑提高仓位"},
+    {"type": "price_above", "price": 40, "reason": "接近不应追高区间，检查是否需要停止加仓或减仓"}
+  ],
+  "updated_at": "2026-07-09T00:00:00+08:00"
+}

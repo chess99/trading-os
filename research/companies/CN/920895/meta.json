@@ -1,0 +1,43 @@
+{
+  "symbol": "CN:920895",
+  "market": "CN",
+  "ticker": "920895",
+  "name": "花溪科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司净现金充足但打捆机主业仍在周期下行、盈利和自由现金流未修复，当前价格已隐含接近历史峰值的持续复苏，缺乏安全边际。",
+  "fair_value_range": [4.0, 6.0],
+  "buy_zone": [3.0, 4.0],
+  "sell_or_reduce_zone": [8.0, 10.0],
+  "position_plan": [
+    {
+      "condition": "股价处于3.0至4.0元买入区间，行业销量企稳且收入、毛利率与经营现金流同步改善，存货及担保风险未恶化",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报、行业销量、新品商业化及经营现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入潜在买入区间，但必须重新验证行业企稳、现金流和存货风险"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "进入减仓或不应追高区间，估值已预支较强复苏"
+    }
+  ],
+  "updated_at": "2026-07-14T23:30:00+08:00"
+}

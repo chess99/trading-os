@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:002575",
+  "ticker": "002575",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "群兴玩具",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司已从玩具制造转为酒类贸易、网络技术服务/智算租赁和物业资产组合，但2025年与2026Q1仍未证明稳定盈利能力；当前价格显著高于资产净值和基准情景估值，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.3,
+    2.1
+  ],
+  "buy_zone": [
+    0.9,
+    1.2
+  ],
+  "sell_or_reduce_zone": [
+    2.8,
+    3.5
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且智算业务尚未验证正毛利和正现金流",
+      "action": "avoid_new_position",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格跌入0.90-1.20元且无重大治理恶化、资产负债表未明显缩水",
+      "action": "research_watch_position_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个季度网络技术服务毛利率超过10%且经营现金流为正",
+      "action": "re_underwrite_before_any_upgrade",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入资产折价买入观察区，需复核资产质量和治理风险"
+    },
+    {
+      "type": "price_above",
+      "price": 3.5,
+      "reason": "明显高于乐观情景上沿，除非智算盈利已被验证，否则应维持回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报中网络技术服务收入、毛利率、现金流和资产质量"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和司法拍卖/股东结构变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断转型业务是否形成可持续盈利"
+    }
+  ]
+}

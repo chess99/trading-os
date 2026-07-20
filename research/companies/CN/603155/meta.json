@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:603155",
+  "ticker": "603155",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "新亚强",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "新亚强具备有机硅功能性助剂和苯基硅烷细分龙头特征，电子级产品和苯基下游材料提供中期增长可选项，但2026-07-17除权后股价约14.23元对应估值已高于基准价值区间，需等待价格回落或业绩显著验证。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "decision": "观察",
+  "confidence": "中",
+  "fair_value_range": [
+    10.0,
+    13.0
+  ],
+  "buy_zone": [
+    8.5,
+    10.5
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    19.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于10.5元，且2026年半年报显示收入同比增长、扣非净利率回到10%以上、经营现金流/归母净利润不低于0.8",
+      "action": "small_initial_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于8.5元，且功能性助剂均价未跌破3.0万元/吨、电子级或苯基下游产品继续放量",
+      "action": "add_on_margin_of_safety",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于16.0元但半年报未证明利润中枢上移，或公司再次提示热点概念收入占比极低",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.5,
+      "reason": "进入买入观察区，需结合半年报现金流和扣非利润验证"
+    },
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入较有安全边际区间，可重新评估建仓上限"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "接近乐观情景估值起点，若业绩未同步兑现应降低暴露"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看电子级产品、苯基硅烷系列、扣非净利率和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报和主要经营数据，判断价格周期是否企稳"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，决定是否从观察转为可买或回避"
+    }
+  ]
+}

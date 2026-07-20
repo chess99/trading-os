@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:601658",
+  "market": "CN",
+  "ticker": "601658",
+  "name": "邮储银行",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国独一无二的零售+县域银行，个人存款占比~88%是核心竞争力。当前PB 0.60x已反映大部分NIM压缩和ROE下行的悲观预期，安全边际充足。但短期缺乏利润增长催化剂，建议分批建仓。",
+  "fair_value_range": [5.9, 7.5],
+  "buy_zone": [4.8, 5.5],
+  "sell_or_reduce_zone": [7.5, 8.5],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026年中报发布后复查净息差和不良率趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报发布后复查"},
+    {"type": "date", "date": "2027-03-31", "reason": "2026年年报发布后全面复查"},
+    {"type": "date", "date": "2027-04-30", "reason": "2027年一季报及2026年度分红方案复查"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 5.5, "reason": "进入有安全边际的买入区间，可开始分批建仓"},
+    {"type": "price_below", "price": 4.8, "reason": "进入强吸引力买入区间，可加仓至2%"},
+    {"type": "price_above", "price": 7.0, "reason": "接近合理估值上沿，不建议追高"},
+    {"type": "price_above", "price": 8.0, "reason": "估值偏高区域，考虑减仓"},
+    {"type": "price_below", "price": 4.0, "reason": "极端悲观情景，可考虑加仓至3%仓位上限"}
+  ],
+  "updated_at": "2026-07-07T21:30:00+08:00"
+}

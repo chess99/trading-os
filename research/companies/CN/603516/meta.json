@@ -1,0 +1,81 @@
+{
+  "symbol": "CN:603516",
+  "market": "CN",
+  "ticker": "603516",
+  "name": "淳中科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "淳中科技具备专业显控、专业芯片和AI显示控制的产业期权，但截至2026-07-17可核验经营数据仍显示主业承压、扣非亏损、现金流偏弱，2026H1盈利主要来自沐曦股份公允价值变动而非经营放量。当前股价约88元已计入高乐观情景，基础合理价值约28-45元，缺乏安全边际，列入观察但暂不买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    28,
+    45
+  ],
+  "buy_zone": [
+    20,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    70,
+    100
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价跌入30元以下，且最新定期报告显示扣非亏损未扩大、经营现金流没有恶化时，可建立研究型观察仓。",
+      "action": "research_entry",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若连续两个季度扣非净利润转正，且专业芯片或AI新业务形成可量化外部收入，可把上限提高到小仓位。",
+      "action": "add_on_validation",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "若股价高于70元且扣非利润仍为负，不新增；已有仓位应减持或退出。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入基础估值区间下沿附近，可重新评估安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 100,
+      "reason": "进一步脱离基础价值，需复核是否仅由主题交易和非经常损益驱动。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据，重点检查收入、扣非净利润、毛利率、经营现金流和新业务披露。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断扣非亏损是否收窄以及专业芯片/AI业务是否有规模化订单。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年经营利润质量、股权投资影响和下一年度增长指引。"
+    }
+  ],
+  "key_monitoring_indicators": [
+    "扣非归母净利润是否连续转正",
+    "专业芯片和AI新业务收入、订单及外部客户占比",
+    "传统专业视听业务新签合同与毛利率",
+    "经营现金流、应收账款和存货变化",
+    "沐曦股份公允价值、限售退出安排和现金化进度"
+  ]
+}

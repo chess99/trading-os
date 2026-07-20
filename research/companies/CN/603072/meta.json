@@ -1,0 +1,103 @@
+{
+  "symbol": "CN:603072",
+  "ticker": "603072",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "天和磁材",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "天和磁材具备包头稀土区位、头部客户认证、装备自制和产能释放优势，2026H1业绩预告显示利润快速修复；但2026-07-17收盘价31.81元对应约48.55倍TTM PE，已反映较多成长预期，当前安全边际不足，等待24-27元或业绩进一步验证后再买入。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    25.0,
+    30.0
+  ],
+  "buy_zone": [
+    24.0,
+    27.0
+  ],
+  "sell_or_reduce_zone": [
+    38.0,
+    41.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于基准合理价值区间，暂不建仓，仅跟踪半年报和三季报兑现情况。",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价回落至24-27元且2026年半年报确认收入增长、扣非净利率改善、经营现金流不显著恶化。",
+      "action": "starter_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价仍在30元以下，且2026年三季报显示产能释放、外销毛利率稳定、经营现金流转正。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于38元但2026年净利润预期未上修至2.4亿元以上，或半年度正式数据低于预告中枢。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 27.0,
+      "reason": "进入初始买入观察区，需结合半年报利润率和现金流确认。"
+    },
+    {
+      "type": "price_below",
+      "price": 24.0,
+      "reason": "进入具备安全边际的买入区，若基本面未恶化可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 38.0,
+      "reason": "进入乐观情景估值区，应检查是否已有业绩上修支撑，否则考虑减仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 41.0,
+      "reason": "超过乐观情景合理价，若机器人或新产能订单未量化兑现，风险收益比转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式数据、毛利率、扣非净利润、经营现金流与预告差异。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年利润能否达到2亿元以上基准假设。"
+    },
+    {
+      "type": "date",
+      "date": "2027-01-31",
+      "reason": "复核2026年业绩预告或快报、产能达产和新项目资本开支进度。"
+    }
+  ],
+  "valuation": {
+    "as_of": "2026-07-17",
+    "last_price": 31.81,
+    "market_cap_cny_billion": 8.407,
+    "ttm_pe": 48.55,
+    "pb": 3.89,
+    "base_case_2026_net_profit_cny_million": 200.0,
+    "base_case_pe_range": [
+      35.0,
+      40.0
+    ]
+  },
+  "decision": "观察",
+  "confidence": "中"
+}

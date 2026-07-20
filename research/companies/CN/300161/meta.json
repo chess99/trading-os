@@ -1,0 +1,112 @@
+{
+  "symbol": "CN:300161",
+  "market": "CN",
+  "ticker": "300161",
+  "name": "华中数控",
+  "company_name": "武汉华中数控股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是稀缺的国产高档数控系统平台，受益于工业母机自主可控和高端数控系统国产替代；但2025年扣非仍亏、2026Q1亏损扩大，机器人与智能产线拖累尚未解除，现价接近合理价值上沿，缺少足够安全边际。",
+  "quality_rating": "中",
+  "valuation_rating": "中性偏贵",
+  "fair_value_range": [
+    22,
+    27
+  ],
+  "buy_zone": [
+    0,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    32,
+    35
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于20元，且未出现新增制裁、重大减值、再融资或控制权风险",
+      "action": "建立2%-3%观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格处于20-22元，且数控系统与机床收入延续增长、扣非亏损收窄",
+      "action": "建立1%-2%观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格处于22-27元，基本面尚未证明扣非转正",
+      "action": "仅跟踪或维持已有小仓位，不新增",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于32元且扣非利润、现金流、机器人产线业务未同步改善",
+      "action": "减仓或不参与",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "enter_buy_watch_zone",
+      "unit": "CNY/share",
+      "action": "进入可买观察区，复核订单、扣非利润和现金流后决定是否建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "deep_value_observation_entry",
+      "unit": "CNY/share",
+      "action": "若基本面未恶化，可建立2%-3%观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "reason": "valuation_risk_zone",
+      "unit": "CNY/share",
+      "action": "若扣非利润仍未转正，应降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "post_2026_interim_report_review",
+      "condition": "预计2026年中报披露后",
+      "action": "复核数控系统与机床收入增速、毛利率和扣非亏损收窄幅度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "post_2026_third_quarter_report_review",
+      "condition": "预计2026年三季报披露后",
+      "action": "复核扣非利润、经营现金流、应收账款和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "post_2026_annual_report_review",
+      "condition": "预计2026年年报披露后",
+      "action": "重估合理价值区间、可买价格和仓位上限。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "数控系统与机床收入增速和毛利率",
+    "扣非归母净利润及转正时间",
+    "经营活动现金流净额和应收账款周转",
+    "工业机器人与智能产线收入、毛利率和回款",
+    "高端数控系统装机量、五轴系统订单、头部机床厂导入数量",
+    "研发费用率及研发投入商业化成果",
+    "政府补助和非经常性损益占利润比例",
+    "存货、合同资产、商誉和信用减值",
+    "高端数控系统、五轴系统、华中10型相关重大订单或批量装机公告",
+    "控制权、股权质押、重大融资、重大并购或制裁相关事项"
+  ]
+}

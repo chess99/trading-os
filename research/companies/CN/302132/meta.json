@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:302132",
+  "market": "CN",
+  "ticker": "302132",
+  "company_name": "中航成飞",
+  "name": "中航成飞",
+  "updated_at": "2026-07-09",
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "rating": "观察",
+  "status": "active",
+  "current_thesis": "中航成飞是 A 股稀缺军机主机厂资产，长期质量高、战略属性强，但 2026-07-09 附近价格已反映较多乐观预期；合理价值约 50-64 元，45 元以下才开始具备较好安全边际。",
+  "current_rating": "watch",
+  "quality_rating": "A-",
+  "valuation_rating": "C+",
+  "fair_value_range": [
+    50,
+    64
+  ],
+  "buy_zone": [
+    38,
+    45
+  ],
+  "sell_or_reduce_zone": [
+    70,
+    84
+  ],
+  "base_currency": "CNY",
+  "currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 38",
+      "action": "分批积极买入",
+      "max_weight": 0.08,
+      "reason": "强吸引力价格，悲观情景已有较大安全边际。"
+    },
+    {
+      "condition": "38 < price <= 45",
+      "action": "分批买入",
+      "max_weight": 0.05,
+      "reason": "进入安全边际区间，适合建立核心观察仓。"
+    },
+    {
+      "condition": "45 < price <= 50",
+      "action": "小仓位试探",
+      "max_weight": 0.03,
+      "reason": "价格接近合理价值下沿，但仍需业绩和现金流验证。"
+    },
+    {
+      "condition": "50 < price <= 64",
+      "action": "观察或持有",
+      "max_weight": 0.02,
+      "reason": "大致处于合理价值区间，新增资金风险收益比一般。"
+    },
+    {
+      "condition": "price > 70",
+      "action": "减仓或不追高",
+      "max_weight": 0,
+      "reason": "估值需要持续高增长和乐观 PE 同时兑现，安全边际不足。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 45,
+      "reason": "跌入有安全边际的买入区间，重新评估建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 38,
+      "reason": "跌入强吸引力买入区间，若基本面未恶化可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "reason": "进入不应追高区间，需要评估减仓或暂停新增。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查 2026 半年报，重点看收入、利润率、现金流和应收存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查 2026 三季报，确认全年增长和订单交付节奏。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查 2026 年报，验证重组后完整年度利润质量。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "归母净利润同比增速",
+    "归母净利率",
+    "经营活动现金流量净额",
+    "应收账款和合同资产变化",
+    "存货变化",
+    "合同负债变化",
+    "关联交易规模",
+    "同业主机厂 PE 估值中枢"
+  ]
+}

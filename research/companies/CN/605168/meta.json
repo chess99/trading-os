@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:605168",
+  "market": "CN",
+  "ticker": "605168",
+  "name": "三人行",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "三人行主营数字营销在2026Q1出现扣非修复，但应收账款高、经营现金流季节性转负、金融资产公允价值扰动和控股股东质押/一致行动关系变化需要估值折价；只有在29元以下且回款未恶化时才具备小仓位安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    28,
+    36
+  ],
+  "buy_zone": [
+    0,
+    29
+  ],
+  "sell_or_reduce_zone": [
+    46,
+    55
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于29元，且最近一期经营现金流未进一步恶化、应收账款/TTM收入低于55%、扣非净利润保持为正",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于24元，且2026H1或2026Q3显示回款改善、扣非净利润年化不低于2.5亿元",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于46元，且扣非净利润年化未稳定超过3.5亿元或应收账款周转未改善",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 29,
+      "reason": "进入合理价值区间下沿附近，可重新评估小仓位买入安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "若回款同步改善，风险收益比可能显著提升"
+    },
+    {
+      "type": "price_above",
+      "price": 46,
+      "reason": "超过情景估值减持区，除非扣非利润和回款质量同步超预期，否则风险收益比转差"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、应收账款和质押变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认扣非修复和回款改善是否可持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估长期利润中枢、分红能力和估值区间"
+    }
+  ]
+}

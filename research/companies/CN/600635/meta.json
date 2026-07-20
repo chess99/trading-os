@@ -1,0 +1,71 @@
+{
+  "symbol": "CN:600635",
+  "ticker": "600635",
+  "name": "大众公用",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "大众公用具备上海区域公用事业资产底盘，但利润高度受权益法投资收益和金融资产波动影响；当前价格约1.48倍市净率，已经反映较乐观投资收益期权，安全边际不足，适合观察而非主动买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    3.0,
+    3.8
+  ],
+  "buy_zone": [
+    2.5,
+    3.0
+  ],
+  "sell_or_reduce_zone": [
+    4.2,
+    4.8
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于3.0元且2026半年报确认扣非利润、经营现金流和燃气/污水毛利率未恶化时，允许建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价处于3.0-3.8元且仅有估值修复、未见投资收益现金化证据时，维持观察不加仓。",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价高于4.2元且无重大资产退出、分红提升或扣非ROE改善公告时，避免新增仓位。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "接近或低于基准估值下沿和每股净资产，重新评估是否具备买入安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "超过乐观情景估值上沿，除非有高质量现金流或资产退出证据，否则风险收益比恶化。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026半年报的扣非利润、经营现金流、燃气毛差、污水处理毛利率和权益法投资收益。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认投资收益波动是否继续主导利润。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年报，重新评估每股净资产、分红、投资资产质量和估值区间。"
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "symbol": "CN:002035",
+  "market": "CN",
+  "ticker": "002035",
+  "name": "华帝股份",
+  "company_name": "华帝股份",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "华帝股份估值约1倍PB且仍有正经营现金流和分红，但2025收入利润明显下滑、2026Q1收入继续下降且经营现金流转负，当前适合小仓观察，等待中报验证烟灶热需求、费用率和现金流是否修复。",
+  "quality_rating": "medium",
+  "valuation_rating": "mildly_attractive",
+  "fair_value_range": [
+    5.2,
+    6.3
+  ],
+  "buy_zone": [
+    4.0,
+    4.5
+  ],
+  "sell_or_reduce_zone": [
+    6.4,
+    7.2
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_near_4_61_and_no_existing_position",
+      "action": "open_tracking_position_only",
+      "max_weight": 0.02,
+      "reason": "估值约1倍PB但2026Q1收入仍下滑、经营现金流转负，先用小仓验证复苏。"
+    },
+    {
+      "condition": "price_between_4_00_and_4_50_with_2026H1_revenue_decline_narrowing",
+      "action": "add_to_core_watch_position",
+      "max_weight": 0.03,
+      "reason": "进入买入区且经营降幅收窄，可提高仓位但仍等待收入转正。"
+    },
+    {
+      "condition": "price_below_4_00_and_cash_flow_positive",
+      "action": "add_selectively",
+      "max_weight": 0.04,
+      "reason": "价格接近悲观情景上沿以下，若现金流恢复，安全边际明显改善。"
+    },
+    {
+      "condition": "price_above_6_40_without_profit_recovery_to_400m",
+      "action": "reduce_position",
+      "max_weight": 0.01,
+      "reason": "价格进入合理价值上沿以上，如利润中枢未恢复则估值先于基本面兑现。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "进入初始买入区，复查中报收入、费用率和现金流后决定是否补仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "接近悲观估值区，若无基本面恶化可提高安全边际评估。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.4,
+      "reason": "进入减仓观察区，除非利润中枢恢复至4亿元以上，否则风险收益转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026中报，重点看收入是否止跌、销售费用率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026三季报，确认烟灶热需求、现金流和分红预期。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026H1 revenue_growth_yoy",
+    "range_hood_revenue_growth_and_gross_margin",
+    "gas_stove_revenue_growth_and_gross_margin",
+    "water_heater_revenue_growth",
+    "online_channel_revenue_and_gross_margin",
+    "offline_channel_revenue_and_gross_margin",
+    "sales_expense_ratio",
+    "operating_cash_flow",
+    "accounts_receivable_growth",
+    "dividend_payout_ratio",
+    "pledged_shares_of_core_shareholders"
+  ]
+}

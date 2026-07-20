@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:601101",
+  "ticker": "601101",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "昊华能源",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "红墩子煤业放量推动公司从低基数煤炭资产进入利润修复期，但当前股价已部分反映2026H1高增，需等待更好的安全边际或三季报验证现金流。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    10.5,
+    14.0
+  ],
+  "buy_zone": [
+    0.0,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    12.8,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于9.0元，且红墩子煤业产销量、经营现金流未出现恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026年三季报显示全年化归母净利润超过15亿元且经营现金流同步改善，股价仍低于10.5元",
+      "action": "提高至核心跟踪仓",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于12.8元且未披露更高盈利中枢或分红改善证据",
+      "action": "降低仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入基准情景下具备安全边际的买入观察区"
+    },
+    {
+      "type": "price_above",
+      "price": 12.8,
+      "reason": "估值接近乐观情景下沿，需要新增盈利或分红证据支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式披露后的红墩子煤业产销量、成本和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证全年盈利中枢是否达到14-16亿元"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红方案和2027年产能/资本开支计划"
+    }
+  ],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ]
+}

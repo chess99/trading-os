@@ -1,0 +1,51 @@
+{
+  "symbol": "CN:920566",
+  "market": "CN",
+  "ticker": "920566",
+  "name": "梓橦宫",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "现金流和资产负债表稳健，但核心品种集中、销售费用率高、研发资本化及股东减持要求估值折价，10.30元已接近合理价值上沿。",
+  "fair_value_range": [8.5, 10.8],
+  "buy_zone": [7.5, 8.5],
+  "sell_or_reduce_zone": [12.0, 13.5],
+  "position_plan": [
+    {
+      "condition": "股价处于8.5至10.8元且半年报尚未验证主品种量价和现金流",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价处于7.5至8.5元且胞磷胆碱钠片量价、推广合规和研发资产未恶化",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于7.5元，重新验证核心假设未受损且自由现金流赔率改善",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、核心品种量价、销售费用率及自由现金流"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入有安全边际的买入观察区，需先复核基本面未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "进入减仓或不应追高区间，复核新品兑现是否足以支撑估值"
+    }
+  ],
+  "updated_at": "2026-07-16T12:59:14+08:00"
+}

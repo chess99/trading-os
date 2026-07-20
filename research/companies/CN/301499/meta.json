@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:301499",
+  "ticker": "301499",
+  "name": "维科精密",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是客户质量较高的汽车电子精密零部件二级供应商，2025年和2026Q1保持增长，但当前约65倍TTM市盈率、低个位数ROE、客户集中度高和自由现金流压力使安全边际不足，适合观察而非买入。",
+  "fair_value_range": [
+    12.0,
+    16.0
+  ],
+  "buy_zone": [
+    0.0,
+    11.0
+  ],
+  "sell_or_reduce_zone": [
+    22.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅当股价低于11元且未出现客户流失、毛利率恶化或自由现金流持续为负时，允许建立观察仓。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若公司连续两个报告期收入双位数增长、自由现金流转正且ROE修复至8%以上，可把上限提高到核心小仓位。",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "若股价高于22元且新业务利润贡献仍未核验，原则上不新增并考虑降至0。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.0,
+      "reason": "进入有安全边际的初始买入观察区间，需要复核基本面是否保持稳定。"
+    },
+    {
+      "type": "price_above",
+      "price": 22.0,
+      "reason": "估值重新进入高预期区间，如无新业务和ROE改善证据，应降低风险暴露。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、客户集中度、泰国工厂和芯联合作进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认现金流、应收账款和全年盈利趋势。"
+    }
+  ]
+}

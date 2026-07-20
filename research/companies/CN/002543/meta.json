@@ -1,0 +1,141 @@
+{
+  "symbol": "CN:002543",
+  "market": "CN",
+  "ticker": "002543",
+  "name": "万和电气",
+  "company_name": "广东万和新电气股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "万和电气是热水器和厨电成熟型二线龙头，资产负债表较厚、分红积极，但2025年和2026Q1盈利明显承压。当前6.48元接近合理价值下沿但安全边际不足，需等待中报验证收入、毛利率和扣非利润修复，或等待股价进入5.3元以下。",
+  "quality_rating": "B-",
+  "valuation_rating": "中性偏低估但安全边际不足",
+  "fair_value_range": [
+    6.3,
+    8.0
+  ],
+  "buy_zone": [
+    0,
+    5.3
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    8.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于4.6元",
+      "action": "强吸引力买入",
+      "position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价4.6-5.3元",
+      "action": "有安全边际买入",
+      "position": "2%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价5.3-6.3元且基本面修复确认",
+      "action": "仅在基本面修复确认后小仓位",
+      "position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价6.3-8.0元",
+      "action": "观察或持有，不新增",
+      "position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价高于8.0元",
+      "action": "不追高",
+      "position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.3,
+      "reason": "该价格低于基准合理价值下沿约15%，开始具备安全边际",
+      "condition": "股价低于5.3元",
+      "action": "进入有安全边际买入区，允许建立2%-3%观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "该价格接近悲观情景估值下沿，风险收益显著改善",
+      "condition": "股价低于4.6元",
+      "action": "进入强吸引力买入区，允许提高至3%-5%"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "该价格达到基准合理价值上沿，继续上涨需要盈利修复证明",
+      "condition": "股价高于8.0元",
+      "action": "不追高，等待基本面验证"
+    },
+    {
+      "type": "price_above",
+      "price": 8.5,
+      "reason": "若基本面未改善而价格超过合理区间，风险收益转差",
+      "condition": "股价高于8.5元且基本面未改善",
+      "action": "减仓或卖出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "中报是验证2026年盈利修复的第一个关键节点",
+      "condition": "2026年中报披露",
+      "action": "复查收入、毛利率、扣非净利和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "连续收入和毛利率恶化会推翻基准估值假设",
+      "condition": "连续两个季度收入同比下滑且毛利率低于22%",
+      "action": "重新评估盈利中枢和仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "扣非盈利低于2.5亿元意味着当前市值安全边际不足",
+      "condition": "扣非净利润年度化低于2.5亿元且未见费用改善",
+      "action": "下修合理价值区间"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "客户集中是万和电气出口增长质量的核心风险",
+      "condition": "出口客户回款恶化或前五大客户集中度继续上升",
+      "action": "提高客户集中风险折价"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "金融资产波动和分红覆盖能力直接影响资本配置评级",
+      "condition": "金融资产继续造成大额损失或分红无法由经营现金流覆盖",
+      "action": "重新评估资本配置质量"
+    }
+  ],
+  "key_tracking_metrics": [
+    "季度营业收入同比",
+    "综合毛利率",
+    "扣非归母净利润",
+    "经营现金流净额/净利润",
+    "出口收入增速和出口毛利率",
+    "前五大客户销售占比",
+    "分红总额和现金流覆盖倍数",
+    "存货和应收账款周转"
+  ]
+}

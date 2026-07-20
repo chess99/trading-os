@@ -1,0 +1,134 @@
+{
+  "symbol": "CN:300093",
+  "market": "CN",
+  "ticker": "300093",
+  "name": "金刚光伏",
+  "company_name": "甘肃金刚光伏股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司完成重整并摘帽，资产负债表修复，但光伏主营仍深度亏损、客户高度集中、算力业务尚未验证。2026-07-13 收盘价约 21.21 元显著高于 3.0-6.0 元/股的合理价值区间，缺乏安全边际。",
+  "quality_rating": "低",
+  "valuation_rating": "严重高估",
+  "fair_value_range": [
+    3.0,
+    6.0
+  ],
+  "buy_zone": [
+    0,
+    3.0
+  ],
+  "sell_or_reduce_zone": [
+    8.0,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于 12 元且光伏毛利率仍为负或扣非亏损未显著收窄",
+      "action": "0 仓位，不买；若已有仓位，优先减持或退出",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于 4.5 元，且连续两个季度光伏毛利率转正、经营现金流为正",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于 3.0 元，且归母净资产未跌破 15 亿元、退市风险未复燃",
+      "action": "可作为高风险困境反转仓位配置",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "算力业务单季收入超过 5000 万元且毛利率、回款、客户合同均可核验，同时扣非接近盈亏平衡",
+      "action": "重新估值后才考虑提高仓位",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入合理价值上沿后需要结合经营指标重新评估",
+      "action": "重新评估，不自动买入"
+    },
+    {
+      "type": "price_below",
+      "price": 4.5,
+      "reason": "价格接近重整后净资产折价区，若经营改善可小仓试错",
+      "action": "若经营触发器同步满足，可建立观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "价格低于主要安全边际阈值，具备困境反转期权价值",
+      "action": "检查净资产和退市风险后，可考虑高风险仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 8.0,
+      "reason": "超过合理价值区间且主营仍亏时风险收益比恶化",
+      "action": "扣非仍亏时不新增"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "价格显著脱离净资产和收入支撑，需用已兑现利润才能解释",
+      "action": "主营未扭亏时减持或退出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "中报是重整后经营质量的第一个重要检验点",
+      "condition": "2026 中报披露",
+      "action": "复核光伏毛利率、扣非亏损、经营现金流和净资产变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报可验证毛利率和现金流是否持续改善",
+      "condition": "任一季度光伏毛利率转正或经营现金流连续为正",
+      "action": "复核估值和仓位上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "再融资会影响摊薄、现金来源和算力资本开支能力",
+      "condition": "向特定对象发行股票方案获批、失败或核心条款变化",
+      "action": "复核摊薄和资金用途"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "算力业务是当前估值的重要期权，需要合同和回款验证",
+      "condition": "算力业务披露重大合同、验收、回款或资本开支计划",
+      "action": "单独复核算力业务价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "控股股东股份质押冻结状态会影响治理和融资风险",
+      "condition": "控股股东质押、冻结、标记状态发生重大变化",
+      "action": "复核治理风险"
+    }
+  ],
+  "key_tracking_metrics": [
+    "光伏业务毛利率",
+    "扣非归母净利润",
+    "经营活动现金流量净额",
+    "2.8GW 产能利用率和出货量",
+    "第一大客户和前五大客户收入占比",
+    "境外收入占比及主要区域变化",
+    "算力业务收入、毛利率、合同期限和回款",
+    "归母净资产",
+    "控股股东股份质押、冻结、标记比例"
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603665",
+  "market": "CN",
+  "ticker": "603665",
+  "name": "康隆达",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "康隆达的越南手部防护基地正在带动扣非利润修复，2026H1预告显示主业改善，但当前约40亿元市值已隐含较高前瞻估值；锂盐业务、财务费用、股权质押和天成锂业补偿款回收不确定性使安全边际不足，等待18元以下或中报现金流验证后再考虑小仓位。",
+  "fair_value_range": [
+    17,
+    23
+  ],
+  "buy_zone": [
+    14,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    28,
+    35
+  ],
+  "position_plan": [
+    {
+      "condition": "2026中报扣非净利润落在预告区间且经营现金流转正，同时股价低于18元",
+      "action": "small_initial_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于14元且未出现锂盐新增大额减值、补偿款重大坏账或控制权风险",
+      "action": "add_selectively",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于30元且全年归母净利润预期未上修至1.3亿元以上",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入买入观察区，若中报现金流和扣非利润验证，可小仓位试错"
+    },
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "低于绝对估值熊市区间上沿，需复核是否存在基本面恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "超过基准合理价值区间，若盈利预期未同步上调则估值过高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报：扣非利润、经营现金流、越南基地、锂盐减值和补偿款进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：确认H1主业修复是否延续到Q3"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和2027年一季报：更新全年盈利中枢与估值区间"
+    }
+  ]
+}

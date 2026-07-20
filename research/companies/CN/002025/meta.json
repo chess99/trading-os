@@ -1,0 +1,28 @@
+{
+  "symbol": "CN:002025",
+  "market": "CN",
+  "ticker": "002025",
+  "name": "航天电器",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "research_only",
+  "current_thesis": "基本面严重恶化：净利润连续两年下降75%，ROE从12.6%降至2.8%，经营现金流持续为负。当前PB 6.3x与ROE 2.8%严重不匹配，PE-TTM约230倍。曾经是优秀的军工连接器企业，但在降价周期中盈利能力崩溃，当前价格无安全边际。等待毛利率企稳和现金流改善信号。",
+  "fair_value_range": [30, 55],
+  "buy_zone": [25, 35],
+  "sell_or_reduce_zone": [80, 90],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "净利润恢复至5亿以上且毛利率>35%", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报验证毛利率和现金流趋势"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报验证年度利润恢复轨迹"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 35, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 80, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-08T18:00:00+08:00"
+}

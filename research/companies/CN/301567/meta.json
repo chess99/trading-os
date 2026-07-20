@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:301567",
+  "ticker": "301567",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "贝隆精密",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "贝隆精密具备光学精密结构件、模具与自动化工程能力，但2025年由盈转亏、2026Q1仍增收不增利，VCM/IMMT盈利拐点尚未验证。当前股价已接近乐观情景下沿，安全边际不足，适合继续跟踪而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    18,
+    26
+  ],
+  "buy_zone": [
+    14,
+    18
+  ],
+  "sell_or_reduce_zone": [
+    32,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "仅作研究跟踪，盈利拐点未验证且价格高于26元时不建仓",
+      "action": "watch_only",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入18元以下，且最近一期毛利率改善、扣非利润转正或VCM/IMMT亏损明显收窄",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非利润为正，VCM/IMMT达到或接近盈亏平衡，且股价仍低于26元",
+      "action": "increase_position",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入基准情景价值下沿，若基本面同步改善可重新评估买入赔率"
+    },
+    {
+      "type": "price_above",
+      "price": 32,
+      "reason": "超过基准情景价值上沿，若盈利未兑现应减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证毛利率、扣非利润、VCM/IMMT收入和存货跌价"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认新项目量产是否形成利润修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，更新完整年度盈利能力和估值区间"
+    }
+  ]
+}

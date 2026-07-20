@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:300951",
+  "ticker": "300951",
+  "name": "博硕科技",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "精密功能件与智能自动化装备公司，资产负债表稳健但 2025 年增收不增利、2026Q1 转亏，当前股价已隐含较强修复预期；需等待利润率和现金流恢复后再考虑建仓。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    28,
+    36
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    42,
+    50
+  ],
+  "position_plan": [
+    {
+      "condition": "当前 40 元以上且 2026Q1 亏损，暂不建仓",
+      "action": "observe",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于 30 元且 2026 中报归母净利润扭亏、经营现金流为正",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 26 元且利润率连续两个季度修复、无进一步大比例减持压力",
+      "action": "add",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入买入观察区，需要复核中报利润修复和现金流"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入较深安全边际区，需要判断是否为基本面破坏导致"
+    },
+    {
+      "type": "price_above",
+      "price": 42,
+      "reason": "高于当前公允价值上沿，若业绩未同步修复应继续回避或降低评级"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报收入、利润率、经营现金流和应收账款"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-16",
+      "reason": "复核控股股东及 5%以上股东减持计划实施结果"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报费用率、智能自动化装备收入和净利润修复"
+    }
+  ]
+}

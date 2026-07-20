@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:000952",
+  "ticker": "000952",
+  "name": "广济药业",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-13",
+  "status": "active",
+  "current_thesis": "广济药业是维生素B2细分领域老牌供应商，但连续亏损、资产减值、债务压力和核心产品价格低位使当前更适合观察。只有定增落地、原料毛利率修复、经营现金流连续改善后，才具备从观察转为试仓的条件。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [3.2, 4.8],
+  "buy_zone": [2.5, 3.4],
+  "sell_or_reduce_zone": [5.8, 7.2],
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.4元，且定增已取得关键审批进展、经营现金流连续两个季度为正、原料系列毛利率连续改善",
+      "action": "small_tracking_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格处于3.4元至5.2元之间，但盈利仍未恢复或定增尚未落地",
+      "action": "watch_only",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格高于5.8元且未出现年度盈利恢复证据",
+      "action": "avoid_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.4,
+      "reason": "进入初步安全边际区间，可结合定增和现金流修复重新评估。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.8,
+      "reason": "未盈利恢复前已接近乐观情景估值，应复核是否过度定价反转。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点验证收入、毛利率、经营现金流和亏损收窄程度。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报及定增进度，判断是否仍停留在观察评级。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认定增、资产减值、盈利恢复和债务结构变化。"
+    }
+  ],
+  "key_metrics": {
+    "reference_price_date": "2026-07-13",
+    "reference_price": 5.51,
+    "2025_revenue_cny": 623974702.31,
+    "2025_net_profit_cny": -404494390.01,
+    "2025_ocf_cny": 60427978.09,
+    "2026_q1_revenue_cny": 163094175.38,
+    "2026_q1_net_profit_cny": -31643613.3,
+    "2026_q1_ocf_cny": 32773425.98
+  }
+}

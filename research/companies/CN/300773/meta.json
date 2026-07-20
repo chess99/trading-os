@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:300773",
+  "ticker": "300773",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "拉卡拉",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "拉卡拉是A股稀缺第三方支付收单资产，牌照、商户网络、跨境和外卡业务具备跟踪价值；但2025-2026年表观利润主要受投资收益抬升，主业扣非利润仍需连续验证，当前价格缺少足够安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    10.0,
+    12.5
+  ],
+  "buy_zone": [
+    0.0,
+    9.5
+  ],
+  "sell_or_reduce_zone": [
+    15.5,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于9.5元且未出现支付牌照、反洗钱、数据安全等重大监管负面事件时，仅作为观察性小仓位建立。",
+      "action": "initial_watch_buy",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度扣非归母净利润年化超过5.5亿元，且跨境/外卡业务收入和毛利率持续改善时，可提高至核心观察仓。",
+      "action": "add_on_fundamental_confirmation",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于15.5元但扣非利润未同步验证，或新增重大监管处罚时，不买并降低已有敞口。",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "进入基准估值下沿以下，主业扣非利润即使按较保守倍数也开始具备安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 15.5,
+      "reason": "高于基准合理价值区间，若无扣非利润上修，应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点核验扣非利润、跨境/外卡交易规模、毛利率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断主业修复是否连续以及投资收益影响是否消退。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估可持续扣非利润和估值区间。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

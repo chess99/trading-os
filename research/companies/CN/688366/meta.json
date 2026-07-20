@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688366",
+  "market": "CN",
+  "ticker": "688366",
+  "name": "昊海生科",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "昊海生科资产负债表稳健、现金和分红提供底部支撑，但医美玻尿酸和眼科业务仍在下行修复期，当前价格接近合理区间下沿但未提供足够安全边际，需等待扣非利润和经营现金流拐点确认。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    34,
+    44
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    48,
+    55
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于30元且2026H1扣非归母净利润降幅收窄、经营现金流未继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于26元且资产负债表保持稳健、未出现新的大额商誉或无形资产减值",
+      "action": "提高至价值修复仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "价格高于48元但扣非利润和医美/眼科收入未确认修复",
+      "action": "不追高并减仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入初步买入观察区，需要结合2026H1扣非利润和经营现金流确认。"
+    },
+    {
+      "type": "price_below",
+      "price": 26,
+      "reason": "进入更充分安全边际区，可在未发生新增减值的前提下提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 48,
+      "reason": "进入减仓区，除非医美和眼科业务已明确恢复增长。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看医美与眼科收入、扣非利润和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认利润拐点是否连续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和分红/减值情况，更新正常化盈利假设。"
+    }
+  ]
+}

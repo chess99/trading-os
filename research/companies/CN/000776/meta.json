@@ -1,0 +1,111 @@
+{
+  "symbol": "CN:000776",
+  "market": "CN",
+  "ticker": "000776",
+  "name": "广发证券",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "广发证券是头部综合券商，资本实力、资管和财富管理基础较好，2025-2026Q1 盈利修复明显；但长期 ROE 尚未稳定高于权益成本，利润受市场成交、自营投资、投行周期和监管影响较大。2026-07-07 约 22.92 元处于合理偏上区间，缺乏足够安全边际，适合观察等待更低 PB。",
+  "fair_value_range": [
+    18.0,
+    22.0
+  ],
+  "buy_zone": [
+    14.5,
+    16.5
+  ],
+  "sell_or_reduce_zone": [
+    24.5,
+    28.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于 22.0 元",
+      "action": "watch",
+      "target_weight": 0.0,
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于 18.0 元且 PB/ROE 未恶化",
+      "action": "first_buy",
+      "target_weight": 0.02,
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格低于 16.5 元且无重大合规或减值事件",
+      "action": "add",
+      "target_weight": 0.04,
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格低于 14.5 元且基本面未破坏",
+      "action": "strong_buy",
+      "target_weight": 0.06,
+      "max_weight": 0.08
+    }
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026 年半年报窗口，需要复核 ROE、PB、业务结构和资本指标。",
+      "condition": "发布 2026 年半年报或年度报告"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026 年三季报窗口，需要复核盈利恢复是否持续。",
+      "condition": "单季 ROE 或年化 ROE 明显偏离 6.5%-8.0% 基准区间"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "券商合规、减值和业务资格变化会显著影响估值。",
+      "condition": "投行、资管、自营或信用业务出现重大监管处罚或减值"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "成交额和两融余额是券商经纪、信用和风险偏好的核心先行指标。",
+      "condition": "市场日均成交额、两融余额连续两个季度显著变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "PB 进入极端区间时需要重新评估买入或减仓动作。",
+      "condition": "PB 低于 0.85 倍或高于 1.20 倍"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "进入合理估值下沿，开始具备小仓观察价值。",
+      "message": "进入合理区间下沿，可重新核验 PB/ROE 后考虑第一笔观察仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 16.5,
+      "reason": "进入安全边际区，PB 折价可补偿券商周期波动。",
+      "message": "进入安全边际买入区，若基本面未恶化可加到 4%-5%。"
+    },
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入强吸引力区，但需排除合规或信用风险导致的价值陷阱。",
+      "message": "进入强吸引力区，需核验是否存在合规、减值或行业系统性恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.5,
+      "reason": "超过合理区间上沿，若 ROE 未被验证则赔率下降。",
+      "message": "进入不应追高区，若 ROE 改善未验证则减少新增或考虑降风险。"
+    }
+  ],
+  "updated_at": "2026-07-07T00:00:00+08:00"
+}

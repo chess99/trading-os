@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:300477",
+  "market": "CN",
+  "ticker": "300477",
+  "name": "合纵科技",
+  "company_name": "北京合纵科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司处于主营承压、债务逾期、诉讼冻结、审计保留意见和内控否定意见叠加阶段；当前股价主要反映困境重整期权，缺乏可验证盈利和资产安全边际。",
+  "quality_rating": "低",
+  "valuation_rating": "高估",
+  "fair_value_range": [
+    0.4,
+    1.0
+  ],
+  "buy_zone": [
+    0.0,
+    0.7
+  ],
+  "sell_or_reduce_zone": [
+    1.2,
+    999.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前约2.33元/股且债务、诉讼、冻结、审计风险未解除",
+      "action": "不买，目标仓位0%",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价低于0.70元/股，同时新增债务逾期停止扩大、主要账户解除冻结、单季度经营现金流转正",
+      "action": "可进入观察仓，仓位不超过0.5%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价低于0.70元/股，且连续两个季度经营现金流转正、锂电材料毛利率恢复非负、审计意见恢复标准无保留或重大保留事项消除",
+      "action": "可提升至1.0%以内特殊情境仓位",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于1.20元/股但基本面触发项未改善",
+      "action": "不加仓，已有仓位减持或退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.70,
+      "currency": "CNY",
+      "reason": "进入估算困境期权价值区间，但必须同步确认债务和现金流风险改善。",
+      "action": "仅在风险解除信号同步出现时重新评估困境反转小仓位"
+    },
+    {
+      "type": "price_below",
+      "price": 0.40,
+      "currency": "CNY",
+      "reason": "低于保守价值区间下沿，需要重新核验退市、重整和债权优先级。",
+      "action": "重新评估是否存在净壳/重整期权价值，但仍需先确认退市和债务风险"
+    },
+    {
+      "type": "price_above",
+      "price": 1.20,
+      "currency": "CNY",
+      "reason": "高于估算合理价值上沿，除非基本面已实质修复，否则赔率不足。",
+      "action": "若基本面未改善，应维持不买或减持"
+    },
+    {
+      "type": "price_above",
+      "price": 2.00,
+      "currency": "CNY",
+      "reason": "显著高于困境期权合理区间，当前证据无法支持该估值。",
+      "action": "显著高于合理困境期权区间，应回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报：收入、毛利率、经营现金流、归母净资产、债务逾期和账户冻结进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报：是否连续改善、锂电材料毛利率是否转正、现金流是否止血。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和审计意见：保留意见、内控否定意见及持续经营风险是否消除。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "新增债务逾期金额及展期进展",
+    "银行账户冻结金额、诉讼仲裁金额和执行进度",
+    "单季度经营活动现金流量净额",
+    "电池材料业务毛利率",
+    "配电设备和EPC新签订单、收入确认与回款周期",
+    "归母净资产和资产负债率",
+    "审计意见和内部控制审计意见变化"
+  ]
+}

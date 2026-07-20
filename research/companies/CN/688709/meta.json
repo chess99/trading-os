@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688709",
+  "market": "CN",
+  "ticker": "688709",
+  "name": "成都华微",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "成都华微具备特种 FPGA/RF-FPGA、高速 ADC/DAC 和高可靠模拟芯片的稀缺技术与客户壁垒，但 2026Q1 转亏、2025 年经营现金流为负、应收和存货占用偏高，且业绩预告/快报更正削弱短期财务可信度。当前估值已反映较多国产替代期权，安全边际不足，暂列观察。",
+  "fair_value_range": [
+    13.0,
+    18.0
+  ],
+  "buy_zone": [
+    10.0,
+    14.0
+  ],
+  "sell_or_reduce_zone": [
+    25.0,
+    32.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 14 元以下，且最新定期报告未显示应收账款、应收票据或存货继续恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个报告期收入恢复增长、经营现金流转正或显著改善、存货下降",
+      "action": "提高至小仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 25 元且 2026 年盈利与现金流未恢复",
+      "action": "不加仓并降低观察权重",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.0,
+      "reason": "进入买入区间上沿，需要复核最新回款、存货和订单质量"
+    },
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入深度安全边际区间，可重新评估是否建立更高权重"
+    },
+    {
+      "type": "price_above",
+      "price": 25.0,
+      "reason": "超过乐观情景下沿，若基本面未同步验证应考虑回避或降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 半年报收入恢复、经营现金流、应收账款和存货变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 三季报订单兑现、利润修复和现金流改善情况"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报及监管问询后收入确认、回款和存货质量"
+    }
+  ]
+}

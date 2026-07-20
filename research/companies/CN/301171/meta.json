@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:301171",
+  "ticker": "301171",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "易点天下",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "出海智能营销与广告平台业务具备成长弹性，AI和程序化投放有望提升长期利润率；但当前估值已接近基准情景上沿，且证券投资、股份支付、减持与H股融资稀释带来折价，等待更好的安全边际。",
+  "fair_value_range": [
+    22,
+    28
+  ],
+  "buy_zone": [
+    18,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    35,
+    40
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于22元且最近两个季度调整后扣非利润同比为正、经营现金流为正、证券投资损益不再主导利润",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于18元且广告平台业务毛利率稳定、核心客户与现金流未恶化",
+      "action": "提高至策略上限",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于35元但调整后净利率未明显修复至7%以上",
+      "action": "减仓或放弃追高",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入基准估值下沿，可重新评估观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "进入有吸引力安全边际区间，若基本面未恶化可加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 35,
+      "reason": "超过乐观情景下沿，若利润率未兑现应考虑降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-25",
+      "reason": "复核2026年半年报，重点看广告平台毛利率、调整后扣非利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证证券投资损益是否继续扰动利润"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核2026年年报和H股上市进展，重估长期利润率与稀释影响"
+    }
+  ]
+}

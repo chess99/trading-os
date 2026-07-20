@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:301314",
+  "ticker": "301314",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "科瑞思",
+  "updated_at": "2026-07-16",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "科瑞思资产负债表稳健，现金和理财资产充足，在磁环线圈自动化设备细分领域具备工艺和客户积累；但2024-2025年盈利中枢下移，2026年一季度利润端尚未验证拐点，当前约39-40元股价已隐含较强复苏预期，安全边际不足，列入观察。",
+  "fair_value_range": [
+    20,
+    30
+  ],
+  "buy_zone": [
+    0,
+    22
+  ],
+  "sell_or_reduce_zone": [
+    36,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌至22元以下，且最新定期报告显示货币资金和交易性金融资产未明显受损、主营仍保持正经营现金流",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格在22至30元之间，且连续两个季度收入同比增长超过20%、净利率恢复至10%以上",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格高于36元且未出现2026-2027年净利润显著上修证据",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "进入具备安全边际的研究买入区，需复核现金资产和订单恢复情况"
+    },
+    {
+      "type": "price_above",
+      "price": 36,
+      "reason": "估值超过基准合理价值上沿，需要强业绩兑现支撑，否则应回避或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报收入、毛利率、净利率、经营现金流和订单相关科目"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否确认利润拐点和全年盈利中枢"
+    }
+  ],
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:300238",
+  "market": "CN",
+  "ticker": "300238",
+  "name": "冠昊生物",
+  "company_name": "冠昊生物科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司具备再生医学材料、本维莫德乳膏和早期细胞治疗管线的组合看点，但当前利润体量小、现金流波动、治理风险未完全消除，2026-07-13 股价对应估值明显高于已兑现业绩，适合观察而非买入。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    6.0,
+    8.0
+  ],
+  "buy_zone": [
+    0.0,
+    6.5
+  ],
+  "sell_or_reduce_zone": [
+    9.0,
+    10.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 6.5 CNY/share and 2026 interim results confirm Benvitimod growth, stable device margin, and no deterioration in shareholder freeze/auction risk",
+      "action": "start_watch_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price <= 6.0 CNY/share and operating cash flow turns positive with receivables and inventory under control",
+      "action": "add_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "price >= 9.0 CNY/share while net profit and cash flow do not exceed the base case",
+      "action": "hold_or_reduce",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price >= 10.0 CNY/share without a material upgrade in Benvitimod or device growth",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.5,
+      "currency": "CNY",
+      "action": "review_for_initial_position",
+      "reason": "Price enters the upper buy zone and may offer limited margin of safety if interim fundamentals improve."
+    },
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "currency": "CNY",
+      "action": "review_for_add",
+      "reason": "Price enters the preferred buy zone where valuation better matches current earnings and revenue quality."
+    },
+    {
+      "type": "price_above",
+      "price": 9.0,
+      "currency": "CNY",
+      "action": "review_for_reduction",
+      "reason": "Price exceeds base-case fair value without requiring a fundamental upgrade."
+    },
+    {
+      "type": "price_above",
+      "price": 10.0,
+      "currency": "CNY",
+      "action": "avoid_or_reduce",
+      "reason": "Price implies high growth and pipeline optionality that are not yet verified."
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "Review 2026 interim report for Benvitimod revenue, device margin, cash flow, receivables, inventory, and shareholder risk."
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "Review 2026 third-quarter report to confirm whether Q1 cash-flow weakness was temporary and whether growth is sustainable."
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "Review 2026 annual report, dividend policy, and clinical progress of QY-iHEP02 and Benvitimod new indication."
+    }
+  ],
+  "key_tracking_metrics": [
+    "Benvitimod cream revenue growth and sales expense ratio",
+    "Medical device revenue growth and gross margin by major product",
+    "Operating cash flow versus net profit",
+    "Accounts receivable and inventory turnover",
+    "QY-iHEP02 clinical trial initiation and safety progress",
+    "Controlling shareholder and concert-party pledge, freeze, and auction risk",
+    "Dividend or other shareholder return policy"
+  ]
+}

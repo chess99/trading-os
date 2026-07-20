@@ -1,0 +1,135 @@
+{
+  "symbol": "CN:002405",
+  "market": "CN",
+  "ticker": "002405",
+  "name": "四维图新",
+  "company_name": "北京四维图新科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "公司具备汽车智能化数据、车规芯片和智驾资产期权，但2025年扣非亏损14.81亿元、2026Q1仍亏损且经营现金流为负；当前约158亿元市值已接近乐观情景，安全边际不足。",
+  "quality_rating": "B-",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.2,
+    5.5
+  ],
+  "buy_zone": [
+    3.2,
+    3.8
+  ],
+  "sell_or_reduce_zone": [
+    6.0,
+    6.7
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "<=3.2",
+      "position": "1%-2%",
+      "max_weight": 0.02,
+      "action": "强吸引力区间，分批买入并跟踪现金流"
+    },
+    {
+      "condition": "3.2-3.8",
+      "position": "1%",
+      "max_weight": 0.01,
+      "action": "有安全边际，可开观察仓"
+    },
+    {
+      "condition": "3.8-4.2",
+      "position": "0%-1%",
+      "max_weight": 0.01,
+      "action": "仅在业绩改善确认后买"
+    },
+    {
+      "condition": "4.2-5.5",
+      "position": "0%",
+      "max_weight": 0,
+      "action": "合理区间，观察"
+    },
+    {
+      "condition": ">6.0",
+      "position": "0%",
+      "max_weight": 0,
+      "action": "不追高"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "trigger": "股价<=3.8元",
+      "reason": "进入有安全边际买入区间",
+      "action": "复核2026H1/Q3扣非亏损和现金流，满足改善再开1%观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.2,
+      "trigger": "股价<=3.2元",
+      "reason": "进入强吸引力买入区间",
+      "action": "若未出现资产减值或现金流恶化，可评估1%-2%仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "trigger": "股价>=6.0元",
+      "reason": "高于不应追高价",
+      "action": "不追高，已有仓位不加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 6.7,
+      "trigger": "股价>=6.7元且基本面未改善",
+      "reason": "接近或高于乐观情景估值上沿",
+      "action": "已有仓位考虑减仓或退出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "trigger": "2026年半年度报告披露窗口",
+      "reason": "验证收入增长、扣非亏损和毛利率是否进入改善趋势",
+      "action": "复查收入、扣非亏损、现金流、智云毛利率和智芯毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "trigger": "2026年三季度报告披露窗口",
+      "reason": "验证经营现金流和鉴智投资损益是否对估值形成新影响",
+      "action": "复查经营现金流是否改善，以及PhiGent/鉴智权益法损益是否扩大"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "trigger": "2026年年度报告披露窗口",
+      "reason": "验证全年商业模型是否从高投入亏损走向经营杠杆",
+      "action": "复查全年扣非亏损是否收窄、经营现金流是否转正、研发投入率是否下降"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "trigger": "2027年半年度报告披露窗口",
+      "reason": "验证是否接近扣非盈亏平衡并具备上调评级条件",
+      "action": "复查是否接近扣非盈亏平衡，并决定是否上调质量评级"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "智云收入和毛利率",
+    "智芯收入、出货量和毛利率",
+    "研发投入率和研发费用率",
+    "应收账款周转和存货水平",
+    "PhiGent/鉴智车型定点、量产收入和权益法损益",
+    "前五大客户销售占比"
+  ]
+}

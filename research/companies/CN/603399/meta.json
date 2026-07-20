@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603399",
+  "market": "CN",
+  "ticker": "603399",
+  "name": "永杉锂业",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "current_thesis": "永杉锂业处在锂盐周期修复阶段，2026H1 预告显示主营利润显著改善，但公司缺少上游资源壁垒、经营现金流和点价损益波动较大，当前更适合观察，等待价格回到安全边际或现金流验证后再买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    13.0,
+    17.5
+  ],
+  "buy_zone": [
+    9.5,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    20.0,
+    24.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入买入区且碳酸锂价格不破现金成本、存货下降、经营现金流改善三项至少满足两项",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H2 扣非利润延续、经营现金流转正且点价损失显著收敛",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价进入减仓区但未出现上游资源落地或利润中枢上修",
+      "action": "减仓或退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入安全边际买入区，需同步复核锂价、库存和现金流。"
+    },
+    {
+      "type": "price_above",
+      "price": 20.0,
+      "reason": "进入减仓区，若无资源落地或利润中枢上修，风险收益比下降。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "超过乐观情景下沿，需警惕周期情绪透支。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看锂盐毛利率、经营现金流、存货和点价损益。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断利润修复能否延续到下半年。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核 2026 年年报和扩产进度，重新评估中周期利润。"
+    }
+  ]
+}

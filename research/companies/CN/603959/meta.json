@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:603959",
+  "market": "CN",
+  "ticker": "603959",
+  "name": "ST百利",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司已处债务危机和庭外重组阶段，旧股价值高度依赖未知的削债与稀释条款，4.40元显著高于概率加权价值，应回避。",
+  "fair_value_range": [0.3, 1.2],
+  "buy_zone": [0, 0],
+  "sell_or_reduce_zone": [1.5, 6.0],
+  "position_plan": [
+    {
+      "condition": "重整方案未明确、证监会调查未结案或持续经营重大不确定性仍存在",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "法院受理重整、产业投资人与债权削减及转增稀释条款全部明确，且按重整后总股本测算价格不高于保守公允价值的60%",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报、归母净资产、经营现金流、逾期债务及重整进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.0,
+      "reason": "仅触发重整条款与持续经营能力复核，不因价格下跌自动买入"
+    },
+    {
+      "type": "price_above",
+      "price": 1.5,
+      "reason": "超过概率加权公允价值上沿，处于减持或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-20T16:08:33+08:00"
+}

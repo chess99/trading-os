@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:301103",
+  "ticker": "301103",
+  "name": "何氏眼科",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "何氏眼科具备东北区域眼科品牌、医教研体系和低负债资产负债表，但 2025 年利润率显著承压，当前估值需要 2026-2028 年利润修复兑现才能成立；在 11 元附近才有较好安全边际。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    11.0,
+    15.0
+  ],
+  "buy_zone": [
+    9.5,
+    11.5
+  ],
+  "sell_or_reduce_zone": [
+    18.0,
+    22.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入 9.5-11.5 元，且最近一期扣非净利润同比增长、经营现金流不低于净利润的 1.2 倍",
+      "action": "small_tracking_position",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026 年中报或三季报验证收入增速超过 8%，净利率恢复到 5%以上，且无医保/合规重大负面事项",
+      "action": "increase_only_after_validation",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价高于 18 元且利润率未明显超预期，或 2026 年股权激励利润目标达成概率下降",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.5,
+      "reason": "进入基础估值下沿和买入观察区，需要复核中报利润率与现金流后决定是否建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 9.5,
+      "reason": "接近悲观情景价值区，若基本面未恶化，安全边际显著改善。"
+    },
+    {
+      "type": "price_above",
+      "price": 18.0,
+      "reason": "超过基础情景价值上沿，需要利润率超预期或全国化扩张证据支撑，否则应降低仓位。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报收入、扣非净利润、现金流和视光/医院效率，判断股权激励目标达成概率。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报利润率修复是否持续，更新全年盈利预测和估值区间。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报与激励考核达成情况，重新评估是否从观察转为买入或回避。"
+    }
+  ],
+  "valuation": {
+    "currency": "CNY",
+    "as_of": "2026-07-16",
+    "reference_price": 16.11,
+    "reference_market_cap_billion": 2.58,
+    "method_summary": "相对估值、利润资本化和情景估值交叉验证；由于 2025 年净利率处于低位，估值重点看 2026-2028 年利润修复兑现。"
+  },
+  "decision": "观察",
+  "confidence": "中"
+}

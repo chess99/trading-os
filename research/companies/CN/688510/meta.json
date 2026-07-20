@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688510",
+  "market": "CN",
+  "ticker": "688510",
+  "name": "航亚科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "航亚科技具备航空发动机关键零部件资质、客户认证和工艺平台壁垒，长期受益于国内两机和国际新机型批产；但 2025 与 2026Q1 利润下滑，客户集中、应收和汇兑风险较高，2026-07-17 收盘价约 21 元对应约 60 倍 TTM PE，安全边际不足，暂列观察。",
+  "fair_value_range": [
+    13,
+    18
+  ],
+  "buy_zone": [
+    10,
+    14
+  ],
+  "sell_or_reduce_zone": [
+    24,
+    28
+  ],
+  "position_plan": [
+    {
+      "condition": "当前估值未进入安全边际区间且利润恢复尚未验证",
+      "action": "不新建仓位",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价低于 14 元，且最新定期报告未显示客户流失、毛利率失控或经营现金流恶化",
+      "action": "可建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "TTM 归母净利润恢复至 1.4 亿元以上，PE 低于 40 倍，经营现金流覆盖净利润",
+      "action": "可提高至核心观察仓",
+      "max_weight": 0.05
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14,
+      "reason": "进入买入观察区，需复核基本面是否保持稳定"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "超过基准情景估值上沿，若利润未同步恢复应考虑减仓或继续观望"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 半年报收入、扣非利润率、应收账款和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 三季报订单兑现、汇兑损益和信用减值变化"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报中新项目批产、客户集中度和分红持续性"
+    }
+  ]
+}

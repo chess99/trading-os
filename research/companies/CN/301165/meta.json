@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:301165",
+  "market": "CN",
+  "ticker": "301165",
+  "name": "锐捷网络",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "research_only",
+  "current_thesis": "AI/数据中心驱动2025年营收+22.37%高增长，毛利率35.48%尚可；但PE 120x/PB 16.8x为同行5-7倍，严重高估，无安全边际。合理估值中枢约30-35元，当前105.50元不可参与。",
+  "fair_value_range": [25, 55],
+  "buy_zone": [20, 25],
+  "sell_or_reduce_zone": [60, 105],
+  "position_plan": [
+    {"condition": "股价回落至25-35元合理偏低区间且基本面未恶化", "max_weight": 0.015},
+    {"condition": "股价回落至20-25元有安全边际的买入区间且毛利率>30%", "max_weight": 0.03},
+    {"condition": "股价低于20元强吸引力区间", "max_weight": 0.05}
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": ["reports/2026-07-09-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-22", "reason": "2026年半年度报告发布，检查毛利率、前5大客户变化、AIDC订单进展"},
+    {"type": "date", "date": "2026-10-22", "reason": "2026年三季报发布，检查经营现金流是否改善与营收增速趋势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 25, "reason": "进入有安全边际的买入区间20-25元"},
+    {"type": "price_below", "price": 20, "reason": "进入强吸引力买入区间"},
+    {"type": "price_above", "price": 60, "reason": "进入偏高区间，不应追高"}
+  ],
+  "updated_at": "2026-07-09T07:30:00+08:00"
+}

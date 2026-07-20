@@ -1,0 +1,109 @@
+{
+  "symbol": "CN:003028",
+  "market": "CN",
+  "ticker": "003028",
+  "name": "振邦智能",
+  "company_name": "深圳市振邦智能科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "振邦智能具备智能控制器工程能力、新能源业务增长和较厚资产负债表，但2025年及2026Q1扣非盈利明显走弱，约22元附近缺乏足够安全边际。等待13-15元价格区间，或等待连续季度扣非利润率与经营现金流修复后再提高买入价。",
+  "quality_rating": "中等偏上",
+  "valuation_rating": "合理偏贵",
+  "fair_value_range": [17, 22],
+  "buy_zone": [13, 15],
+  "sell_or_reduce_zone": [26, 999],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于15元，且未出现大客户流失、应收恶化或现金流持续转负",
+      "action": "分批试仓",
+      "target_position": "1%-3%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价低于13元，且资产负债表仍保持净现金、扣非利润未继续恶化",
+      "action": "主动买入",
+      "target_position": "3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于17元但连续2个季度收入同比增长、扣非净利率恢复到6%-8%、经营现金流不低于扣非净利润80%",
+      "action": "小仓位跟随验证",
+      "target_position": "0%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价高于26元且扣非利润恢复不及预期",
+      "action": "减仓或不买",
+      "target_position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15,
+      "currency": "CNY",
+      "action": "进入买入观察区",
+      "reason": "低于合理价值下沿约12%，开始接近安全边际要求"
+    },
+    {
+      "type": "price_below",
+      "price": 13,
+      "currency": "CNY",
+      "action": "进入主动建仓区",
+      "reason": "接近每股净资产且较合理价值下沿折价超过20%"
+    },
+    {
+      "type": "price_above",
+      "price": 26,
+      "currency": "CNY",
+      "action": "若基本面未显著改善则减仓或回避",
+      "reason": "高于合理价值上沿约18%，需要扣非利润恢复才能支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "复核2026年半年报：收入增速、扣非净利率、经营现金流和新能源业务毛利率",
+      "reason": "半年报将验证2026Q1扣非利润接近盈亏平衡是否为短期扰动"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "复核2026年三季报：确认扣非净利率是否连续低于3%、经营现金流是否转正",
+      "reason": "三季报可观察利润率修复的持续性和现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "复核2026年年报：评估新能源收入增速、海外产能利用率、折旧压力和客户结构",
+      "reason": "年报可完整评估海外产能、折旧和新能源业务对全年利润的影响"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "复核2027年半年报：根据盈利修复和现金流质量调整合理价值区间",
+      "reason": "中期财报可重新校验合理价值区间和买入价格"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润及扣非净利率",
+    "经营活动现金流量净额/扣非归母净利润",
+    "新能源产品收入及毛利率",
+    "海外产能利用率和折旧费用",
+    "应收账款周转天数",
+    "存货周转天数",
+    "前五大客户收入占比",
+    "汇兑损益"
+  ]
+}

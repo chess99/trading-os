@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:001278",
+  "ticker": "001278",
+  "name": "一彬科技",
+  "market": "CN",
+  "updated_at": "2026-07-13",
+  "status": "active",
+  "current_thesis": "一彬科技处于汽车内外饰与新能源专用件客户结构切换期，新增定点和高单价产品具备修复空间，但2025年及2026Q1仍亏损，负债率和应收存货压力偏高，当前价格缺少安全边际，需等待盈利拐点和现金回款改善。",
+  "rating": "watch",
+  "fair_value_range": [
+    10.5,
+    13.5
+  ],
+  "buy_zone": [
+    8.0,
+    10.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    18.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于10.0元，且2026半年报显示毛利率环比改善、经营现金流转正、归母亏损明显收窄",
+      "action": "建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于9.0元，且应收账款周转未继续恶化、短债压力下降",
+      "action": "小幅加仓但仍保持试错仓位",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "价格高于16.0元且公司仍未实现单季扣非盈利",
+      "action": "不追高并减仓或回避",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 10.0,
+      "reason": "进入基准合理价值下沿并接近买入观察区，需要复核半年报质量。"
+    },
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "reason": "进入悲观情景价值区，若基本面未继续恶化可能出现安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "价格进入乐观情景区间，若盈利未兑现则风险收益比转差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的毛利率、经营现金流、应收账款和亏损收窄情况。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否出现单季扣非盈利和债务压力改善。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断客户结构切换和新能源专用件放量是否真正转化为利润。"
+    }
+  ],
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "currency": "CNY",
+  "current_rating": "watch"
+}

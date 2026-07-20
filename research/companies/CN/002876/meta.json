@@ -1,0 +1,127 @@
+{
+  "symbol": "CN:002876",
+  "market": "CN",
+  "ticker": "002876",
+  "name": "三利谱",
+  "company_name": "深圳市三利谱光电科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "国产偏光片纯度高、收入和产能处在释放期，但毛利率、负债率、营运资本和新线爬坡仍未充分证明；2026-07-13 股价 29.20 元已高于 20-26 元合理区间，等待价格回到 16-20 元或经营质量继续确认。",
+  "quality_rating": "中等偏弱",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    20,
+    26
+  ],
+  "buy_zone": [
+    16,
+    20
+  ],
+  "sell_or_reduce_zone": [
+    30,
+    35
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于20元，且最近一季毛利率不低于17%、扣非净利润同比增长为正",
+      "action": "建立0.5%-1.0%观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于18元，且连续两个季度经营现金流为正、应收账款和存货增速低于收入增速",
+      "action": "加至1.5%-2.0%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "合肥二期转盈、年化扣非净利润达到1.5亿元以上、资产负债率降至55%以下",
+      "action": "最高仓位可提高至3.0%",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于30元且上述经营改善未兑现",
+      "action": "不加仓并降低研究仓或退出",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 20,
+      "reason": "进入合理价值区间下沿并具备初步安全边际。",
+      "action": "进入可买观察区，复核最近季度毛利率、现金流和负债。"
+    },
+    {
+      "type": "price_below",
+      "price": 18,
+      "reason": "接近30%以上安全边际，若基本面稳定可提高仓位。",
+      "action": "若基本面未恶化，评估加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 30,
+      "reason": "价格高于合理价值上沿，需利润兑现支撑。",
+      "action": "复核估值是否过度反映产能爬坡，未兑现则减仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 35,
+      "reason": "估值隐含较高盈利中枢，安全边际不足。",
+      "action": "除非盈利中枢上修，否则退出或仅保留研究仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "发布2026年半年报后",
+      "reason": "半年报能验证Q1改善是否延续。",
+      "action": "复核毛利率、扣非净利润、经营现金流、应收账款和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "发布2026年三季报后",
+      "reason": "三季报能验证新产线爬坡和全年盈利中枢。",
+      "action": "复核合肥二期、莆田OLED或湖北三利谱是否转盈或亏损扩大。"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "年底复核原材料和汇率",
+      "reason": "日元和PVA/TAC成本会直接影响毛利率。",
+      "action": "复核成本压力和毛利率假设。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "condition": "年报前预审客户集中与订单质量",
+      "reason": "客户集中度和账期变化会影响收入质量。",
+      "action": "复核客户集中和收入质量。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "发布2026年年报后",
+      "reason": "年报能完整验证负债、现金流和分红能力。",
+      "action": "降低估值容忍度和最高仓位。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度收入是否稳定超过10亿元",
+    "毛利率是否稳定回到18%-20%",
+    "扣非净利润年化是否达到1.5-2.0亿元",
+    "经营现金流是否连续两个季度为正",
+    "应收账款和存货增速是否低于收入增速",
+    "短期借款和资产负债率是否下降",
+    "OLED、车载、大尺寸TV产品的收入占比和毛利率",
+    "前五大客户集中度和第一大客户占比"
+  ]
+}

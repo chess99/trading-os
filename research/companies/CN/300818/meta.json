@@ -1,0 +1,78 @@
+{
+  "symbol": "CN:300818",
+  "ticker": "300818",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "耐普矿机",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "耐普矿机是具备出海和耗材复购属性的矿山橡胶耐磨备件公司，但 2026H1 利润受汇兑、可转债利息和海外基地折旧摊销拖累，当前估值已反映部分海外扩张预期，需等待更低价格或利润/现金流修复确认。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    16.0,
+    23.0
+  ],
+  "buy_zone": [
+    12.0,
+    14.5
+  ],
+  "sell_or_reduce_zone": [
+    25.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于买入区且 2026H1 预告亏损尚未被后续利润和现金流修复验证，维持观察不建仓。",
+      "action": "watch",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入 12.0-14.5 元且橡胶耐磨备件毛利率、应收账款和经营现金流未恶化。",
+      "action": "starter_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H2 或 2027Q1 同时验证收入增长、毛利率修复、经营现金流改善且汇兑损失收敛。",
+      "action": "add_on_confirmation",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "threshold": 14.5,
+      "reason": "进入估算买入区，需要复核基本面是否仍未恶化并评估小仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 25.0,
+      "threshold": 25.0,
+      "reason": "超过减仓观察区下沿，若 2027 年利润能见度不足 2 亿元，应避免追高或考虑减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点检查汇兑损失、海外基地折旧摊销、毛利率和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认收入恢复是否传导到利润和现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重新评估海外扩张兑现、正常化利润和估值区间。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

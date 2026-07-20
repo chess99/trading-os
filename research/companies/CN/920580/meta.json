@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920580",
+  "market": "CN",
+  "ticker": "920580",
+  "name": "科创新材",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "碳化硅复合材料放量带来真实增长，但自由现金流、资本回报和募投兑现尚不足以支撑约42倍TTM PE，当前只观察不追高。",
+  "fair_value_range": [6.2, 8.0],
+  "buy_zone": [5.2, 6.3],
+  "sell_or_reduce_zone": [9.5, 12.0],
+  "position_plan": [
+    {
+      "condition": "股价低于6.3元且2026年中报显示碳化硅复合材料增长、毛利率与回款均未恶化",
+      "max_weight": 0.0075
+    },
+    {
+      "condition": "股价低于5.8元、经营现金流转正且募投项目未再次延期",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价高于9.5元或核心增长、现金流、项目回报任一假设被证伪",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报的碳化硅复合材料收入、毛利率、经营现金流和营运资本"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "核查年产6000吨碳化硅复合材料募投项目是否按延期后的计划完成"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.3,
+      "reason": "进入具备初步安全边际的买入区间，但仍需确认基本面和现金流未恶化"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "超过公允价值上沿并进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-16T11:39:35.9848883+08:00"
+}

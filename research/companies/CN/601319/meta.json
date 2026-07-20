@@ -1,0 +1,30 @@
+{
+  "symbol": "CN:601319",
+  "market": "CN",
+  "ticker": "601319",
+  "name": "中国人保",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国财险绝对龙头，寿险改革成效显著，当前PE~6.96x/PB~1.02x处于历史低位。综合成本率97.6%+承保利润高增长+分红提升背景下估值有修复空间。但利率下行对投资端的压制和行业竞争是主要风险。",
+  "fair_value_range": [7.0, 9.0],
+  "buy_zone": [6.0, 7.5],
+  "sell_or_reduce_zone": [9.5, 12.0],
+  "position_plan": [
+    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价低于6.0元且各季度综合成本率持续优化", "max_weight": 0.04},
+    {"condition": "股价高于9.5元或综合成本率连续回升至99%", "max_weight": 0.01}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-28", "reason": "2026年中报发布后复查财务数据和投资收益率"},
+    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报发布后检查综合成本率和NBV趋势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 6.0, "reason": "进入强吸引力买入区间（PE<5.7x）"},
+    {"type": "price_below", "price": 7.5, "reason": "进入有安全边际的买入区间"},
+    {"type": "price_above", "price": 9.5, "reason": "进入减仓或不应追高区间"}
+  ],
+  "updated_at": "2026-07-07T17:00:00+08:00"
+}

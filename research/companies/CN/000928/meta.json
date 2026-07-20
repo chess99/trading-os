@@ -1,0 +1,97 @@
+{
+  "symbol": "CN:000928",
+  "market": "CN",
+  "ticker": "000928",
+  "name": "中钢国际",
+  "company_name": "中钢国际",
+  "status": "active",
+  "updated_at": "2026-07-11",
+  "latest_report": "reports/2026-07-11-initial.md",
+  "report_history": [
+    "reports/2026-07-11-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "中钢国际具备央企冶金工程 EPC、海外订单和低碳冶金期权，但 2026Q1 收入利润下滑且经营现金流为负，需等待价格进入买入区并验证回款与订单质量后小仓位参与。",
+  "quality_rating": "B-",
+  "valuation_rating": "B+",
+  "fair_value_range": [
+    6.2,
+    7.4
+  ],
+  "buy_zone": [
+    4.8,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    7.6,
+    8.4
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 5.20 and no material deterioration in receivables, contract assets, or overseas project execution",
+      "action": "start_position",
+      "max_weight": 0.015,
+      "reason": "估值进入买入区，可用小仓位验证央企冶金工程订单和低碳冶金期权。"
+    },
+    {
+      "condition": "price <= 4.80 and 2026 interim report shows improving operating cash flow and stable order backlog",
+      "action": "add_position",
+      "max_weight": 0.03,
+      "reason": "在现金流改善前提下，悲观预期已较充分反映，可提高到中等偏低仓位。"
+    },
+    {
+      "condition": "price >= 7.60 without upward revision to profit, orders, or cash-flow quality",
+      "action": "reduce_position",
+      "max_weight": 0.01,
+      "reason": "价格接近或高于合理价值区间上沿，若基本面未同步改善，风险收益比下降。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入首笔买入区，复核订单、回款和重大项目风险后可小仓位建仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入深度价值区，若现金流未恶化可考虑加仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.6,
+      "reason": "进入减仓观察区，需要确认是否有利润上修或重大优质订单支撑。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报的经营现金流、应收账款、合同资产和订单进展。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断全年收入利润是否继续下台阶。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "new_contract_value",
+    "effective_contract_value",
+    "overseas_order_share",
+    "operating_cash_flow_net",
+    "cash_collection_ratio",
+    "accounts_receivable",
+    "contract_assets",
+    "gross_margin",
+    "net_margin",
+    "asset_liability_ratio",
+    "major_overseas_project_progress",
+    "baowu_synergy_orders",
+    "low_carbon_metallurgy_orders",
+    "dividend_payout_ratio"
+  ]
+}

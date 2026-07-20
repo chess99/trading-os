@@ -1,0 +1,89 @@
+{
+  "symbol": "CN:300408",
+  "market": "CN",
+  "ticker": "300408",
+  "name": "三环集团",
+  "company_name": "三环集团",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "三环集团是高质量先进陶瓷平台，受益于高端MLCC、光通信陶瓷部件、泛半导体陶瓷结构件和国产替代；但2026-07-08 A股价格约130.43元已反映乐观预期，当前赔率不足，等待100元以下再考虑首仓，85元以下更具吸引力。",
+  "fair_value_range": [
+    88.0,
+    108.0
+  ],
+  "buy_zone": [
+    70.0,
+    85.0
+  ],
+  "sell_or_reduce_zone": [
+    150.0,
+    180.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价在100-108元且2026中报仍维持高增长",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价在85-100元MLCC与光通信需求持续兑现",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价在70-85元基本面未破坏且估值合理偏低",
+      "max_weight": 0.06
+    },
+    {
+      "condition": "股价在55-70元市场错杀而核心竞争力未证伪",
+      "max_weight": 0.08
+    },
+    {
+      "condition": "股价高于150元估值过高不追高",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 108.0,
+      "reason": "进入合理价值区间上沿，适合复核首仓条件"
+    },
+    {
+      "type": "price_below",
+      "price": 85.0,
+      "reason": "进入安全买入区，若基本面未破坏可考虑标准建仓"
+    },
+    {
+      "type": "price_above",
+      "price": 150.0,
+      "reason": "超过乐观情景估值中枢，需评估是否减仓或停止加仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查MLCC、通信器件、扣非利润和现金流兑现情况"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断高增长是否具备持续性"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入同比增速",
+    "扣非归母净利润同比增速",
+    "电子元件收入增速与毛利率",
+    "通信器件收入增速与毛利率",
+    "存货增速与存货周转",
+    "经营活动现金流净额/归母净利润",
+    "研发投入金额及收入占比",
+    "H股发行后股本变化与募资投向"
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": [
+    "reports/2026-07-08-initial.md"
+  ],
+  "updated_at": "2026-07-08T10:00:00+08:00"
+}

@@ -1,0 +1,118 @@
+{
+  "symbol": "CN:002183",
+  "market": "CN",
+  "ticker": "002183",
+  "name": "怡亚通",
+  "company_name": "怡亚通",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "低毛利高周转供应链服务商，收入规模大但2025年亏损，财务费用、信用减值、短债和受限资金压力仍未证明反转；当前价格高于保守合理价值区间，维持不买。",
+  "quality_rating": "low",
+  "valuation_rating": "expensive",
+  "fair_value_range": [
+    3.0,
+    3.8
+  ],
+  "buy_zone": [
+    2.4,
+    3.0
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    5.2
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值区间且2025年亏损、2026Q1收入继续同比下降",
+      "action": "维持0仓位，不买入",
+      "max_weight": 0.0,
+      "reason": "低毛利高周转模式下财务费用、信用减值和短债压力仍未证明反转"
+    },
+    {
+      "condition": "股价低于3.00元，且连续两个季度经营现金流为正、信用减值率下降、短期债务未恶化",
+      "action": "可建立观察仓",
+      "max_weight": 0.01,
+      "reason": "价格进入买入区间且现金流质量出现初步改善"
+    },
+    {
+      "condition": "股价低于2.40元，但应收账款、存货、短债或信用减值继续恶化",
+      "action": "暂不机械加仓，仅重新评估",
+      "max_weight": 0.005,
+      "reason": "便宜价格不能抵消资产负债表和回款质量恶化"
+    },
+    {
+      "condition": "公司连续四个季度扣非盈利且经营现金流为正，财务费用同比下降，资产负债率降至78%以下",
+      "action": "上调为小仓位跟踪",
+      "max_weight": 0.02,
+      "reason": "盈利质量和融资压力同时改善后才允许提高仓位上限"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "进入买入观察区间，需复核现金流、信用减值和短债是否同步改善"
+    },
+    {
+      "type": "price_below",
+      "price": 2.4,
+      "reason": "进入深度折价区间，需重新评估资产负债表风险是否可控"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "进入减仓或回避区间，当前基本面难以支撑乐观估值"
+    },
+    {
+      "type": "price_above",
+      "price": 5.2,
+      "reason": "高于乐观情景上沿，除非盈利质量显著超预期，否则风险收益比恶化"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看收入、经营现金流、信用减值、短债和受限资金"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认一季度盈利是否具有持续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，判断供应链服务和新业务是否真正改善ROE"
+    }
+  ],
+  "key_tracking_metrics": [
+    "quarterly_revenue_growth",
+    "gross_margin",
+    "net_profit_attributable_to_parent",
+    "deducted_net_profit_attributable_to_parent",
+    "operating_cash_flow_net",
+    "finance_expense",
+    "interest_expense",
+    "accounts_receivable",
+    "inventory",
+    "short_term_borrowings",
+    "current_portion_of_non_current_liabilities",
+    "cash_and_cash_equivalents",
+    "restricted_cash_gap",
+    "credit_impairment_loss",
+    "asset_impairment_loss",
+    "asset_liability_ratio",
+    "top_five_customer_sales_ratio",
+    "top_five_supplier_purchase_ratio",
+    "related_party_purchase_ratio"
+  ]
+}

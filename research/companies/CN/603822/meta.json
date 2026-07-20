@@ -1,0 +1,61 @@
+{
+  "symbol": "CN:603822",
+  "market": "CN",
+  "ticker": "603822",
+  "name": "ST嘉澳",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "生物航煤放量带来强劲盈利拐点，但高杠杆、少数股东分利、负自由现金流及财务报告处罚使当前63.38元缺乏安全边际。",
+  "fair_value_range": [35, 50],
+  "buy_zone": [25, 35],
+  "sell_or_reduce_zone": [55, 75],
+  "position_plan": [
+    {
+      "condition": "股价30至35元，正式半年报确认扣非利润与经营现金流改善且资产负债率不高于78%",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价25至30元，且无新增监管或会计问题、连云港项目价差稳定、净负债未上升",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "基本面恶化、再现会计差错或价格高于55元而盈利未同步上修",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、经营现金流、应收存货及生物航煤毛利率"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报并判断二季度盈利拐点是否可持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-24",
+      "reason": "行政处罚决定满12个月后复核撤销其他风险警示进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 35,
+      "reason": "进入有条件观察买入区间，需先验证现金流、杠杆和治理假设"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流显著上修"
+    }
+  ],
+  "updated_at": "2026-07-20T18:45:00+08:00"
+}

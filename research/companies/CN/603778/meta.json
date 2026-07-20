@@ -1,0 +1,72 @@
+{
+  "symbol": "CN:603778",
+  "market": "CN",
+  "ticker": "603778",
+  "name": "国晟科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "国晟科技处于光伏制造下行周期与自身资产负债表压力叠加阶段，2025年收入大幅下滑且光伏组件毛利为负，2026Q1继续亏损，2026H1预告仍亏损；当前市值明显高于净资产和可验证盈利基础，只有在价格大幅回落且毛利、现金流、债务和诉讼指标同步改善后才值得重新研究。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    0.4,
+    1.4
+  ],
+  "buy_zone": [
+    0,
+    0.6
+  ],
+  "sell_or_reduce_zone": [
+    2,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格显著高于可验证净资产和亏损状态下的合理估值，且毛利、现金流、债务和诉讼风险未改善",
+      "action": "不买入，维持0仓位",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌入0.60元/股以下，且连续两个季度组件毛利转正、经营现金流转正、短期债务和诉讼事项下降",
+      "action": "重新研究后才允许试探性观察仓",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.6,
+      "reason": "进入资产折价与反转期权观察区，需要重新核验债务、诉讼和毛利改善情况"
+    },
+    {
+      "type": "price_above",
+      "price": 2,
+      "reason": "高于当前基本面可支撑估值上沿，应继续回避或减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，确认亏损、现金流、债务、诉讼和毛利率变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断是否出现收入恢复、毛利转正和经营现金流改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估持续经营能力、资产减值和治理风险"
+    }
+  ],
+  "risk_level": "high",
+  "decision": "不买",
+  "confidence": "中"
+}

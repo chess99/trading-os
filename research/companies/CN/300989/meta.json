@@ -1,0 +1,65 @@
+{
+  "symbol": "CN:300989",
+  "ticker": "300989",
+  "name": "蕾奥规划",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "current_thesis": "蕾奥规划具备城市规划设计专业壁垒和数字化转型期权，但传统主业受地方财政、地产链和项目制交付影响明显，2025年扣非亏损、2026Q1继续转亏。当前约13元/股估值已接近乐观情景，缺乏安全边际，暂列观察而非买入。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [6.0, 8.0],
+  "buy_zone": [5.0, 6.0],
+  "sell_or_reduce_zone": [11.0, 13.0],
+  "position_plan": [
+    {
+      "condition": "当前价格高于合理价值且2026Q1收入和利润继续承压，暂不建仓。",
+      "action": "no_initial_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "股价跌入5.0-6.0元且半年度报告显示收入止跌、经营现金流改善。",
+      "action": "start_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "扣非归母净利润连续两个季度转正，且数字化或运营类业务收入和毛利可核验。",
+      "action": "increase_if_verified",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入初步买入观察区，市值接近净资产并给予数字化期权少量溢价。"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "价格接近乐观情景估值上沿，若基本面未同步改善应回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告，重点检查收入是否止跌、扣非利润和经营现金流是否改善。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认传统规划设计与数字化业务恢复是否具备连续性。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重估长期盈利中枢和数字化转型兑现程度。"
+    }
+  ],
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ]
+}

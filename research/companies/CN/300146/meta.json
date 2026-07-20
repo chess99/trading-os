@@ -1,0 +1,125 @@
+{
+  "symbol": "CN:300146",
+  "market": "CN",
+  "ticker": "300146",
+  "name": "汤臣倍健",
+  "company_name": "汤臣倍健股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "全国性 VDS 品牌和低负债资产负债表有价值，但 2025 年扣非利润仍弱、2026Q1 增收不增利且经营现金流下滑，9.24 元附近处于合理区间中部，安全边际不足。",
+  "quality_rating": "中高",
+  "valuation_rating": "中性",
+  "fair_value_range": [
+    8.5,
+    11.5
+  ],
+  "buy_zone": [
+    7.5,
+    8.0
+  ],
+  "sell_or_reduce_zone": [
+    12.5,
+    13.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 7.5 元，且没有食品安全、重大减值或现金流恶化等硬风险",
+      "action": "可建 3%-5% 仓位",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价位于 7.5-8.0 元，且最新季度主营收入仍为正增长",
+      "action": "可建 2%-3% 观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价位于 8.0-9.5 元，且尚未连续两个季度验证扣非利润和经营现金流恢复",
+      "action": "保持 0%-2% 观察仓，不主动加仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "连续两个季度主营收入同比增长 5%以上、扣非净利率回到 13%以上、经营现金流明显恢复",
+      "action": "可将仓位提高到 3%-5%",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于 12.5 元但基本面未显著改善",
+      "action": "减仓或停止买入",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.0,
+      "currency": "CNY",
+      "reason": "进入初步买入区间，需要复核最新季报和食品安全风险",
+      "action": "复核最新季报和食品安全风险，准备买入观察仓"
+    },
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "currency": "CNY",
+      "reason": "进入深度安全边际区间，需要评估是否提高至核心仓位",
+      "action": "若基本面未恶化，评估提高至核心仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 12.5,
+      "currency": "CNY",
+      "reason": "价格超过减仓区间下沿，需要检查估值是否透支恢复",
+      "action": "检查估值是否透支恢复，未验证则减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查 2026 年中报收入、扣非利润、现金流和渠道结构"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查三季报经营改善是否兑现"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查 2026 年报扣非净利率、分红和经营现金流质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "reason": "复查 2027 年中报收入恢复、线上渠道费用率和库存变化"
+    },
+    {
+      "type": "date",
+      "date": "2028-04-30",
+      "reason": "复查 2027 年报长期增长中枢、ROE 和资本配置表现"
+    },
+    {
+      "type": "date",
+      "date": "2029-04-30",
+      "reason": "复查 2028 年报分品牌增长、现金分红可持续性和估值安全边际"
+    }
+  ],
+  "key_tracking_metrics": [
+    "主营业务收入同比增速",
+    "扣非归母净利润和扣非净利率",
+    "经营现金流净额/扣非归母净利润",
+    "主品牌汤臣倍健收入增速",
+    "Life-Space 收入增速",
+    "健力多收入增速",
+    "线上渠道收入增速和销售费用率",
+    "存货、合同负债和应收账款变化",
+    "分红金额及股息率"
+  ]
+}

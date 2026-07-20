@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:600396",
+  "ticker": "600396",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "华电辽能",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "华电辽能具备辽宁区域热电联产和央企控股的稳定属性，2026年一季度盈利修复明显，但2025年扣非仍亏损、长期ROE和自由现金流仍需验证；当前股价显著高于4.0-6.0元/股的基本面合理价值区间，缺乏安全边际。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    4.0,
+    6.0
+  ],
+  "buy_zone": [
+    3.2,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    7.5,
+    9.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格跌入3.2-4.2元且最近两个季度扣非归母净利润合计为正、经营现金流未恶化时，允许作为高波动修复标的小仓观察。",
+      "action": "watch_or_probe",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于7.5元且未公告可量化增厚EPS的优质资产注入时，已有仓位应分批减仓。",
+      "action": "reduce",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "价格高于12元或估值超过基准合理价值上沿一倍以上时，不新开仓。",
+      "action": "avoid_new_buy",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "reason": "跌入买入观察区，需要复核煤价、电价、扣非利润和现金流后决定是否小仓试错。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.5,
+      "reason": "超过卖出或减仓区间下沿，若无已公告资产注入或盈利上修，应降低敞口。"
+    },
+    {
+      "type": "price_above",
+      "price": 12.0,
+      "reason": "价格明显脱离基准基本面估值，风险收益比极差。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的扣非利润、经营现金流、资本开支、资产负债率和煤价敏感性。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，并验证供热季前电价、煤价和容量电价预期。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，重新评估中周期盈利、分红能力和资产整合进展。"
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:603018",
+  "ticker": "603018",
+  "name": "华设集团",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "华设集团是交通与城市建设工程咨询优质区域龙头，现金流和资质壁垒较好，但2025年利润下滑、ROE偏低，当前约0.8倍PB/15倍PE附近缺少足够安全边际，适合作为观察池等待更低价格或ROE修复。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    4.8,
+    6.0
+  ],
+  "buy_zone": [
+    0,
+    4.6
+  ],
+  "sell_or_reduce_zone": [
+    6.8,
+    999
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌至4.6元以下，且最近一期经营现金流净额未显著弱于归母净利润、未出现大额信用减值",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价跌至4.0元以下，且订单、回款、ROE未继续恶化",
+      "action": "提高至小仓位配置",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于6.8元且利润、ROE、现金流没有同步改善",
+      "action": "减持或不追高",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "进入估算合理价值下沿以下并具备初步安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "若基本面未恶化，提供更高安全边际"
+    },
+    {
+      "type": "price_above",
+      "price": 6.8,
+      "reason": "超过基准估值上沿，需要利润和ROE兑现支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的收入、利润、经营现金流、应收账款和合同资产变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报并验证利润修复是否持续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、分红和ROE是否改善"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "symbol": "CN:002271",
+  "market": "CN",
+  "ticker": "002271",
+  "name": "东方雨虹",
+  "company_name": "东方雨虹",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "东方雨虹仍是建筑防水材料龙头，品牌、规模、渠道和现金流纪律具备中长期价值，但地产链需求、应收账款与合同资产减值、沥青成本高位仍压制确定性；当前价格接近可试仓区间，需等待 2026 半年报验证现金流和资产质量改善。",
+  "quality_rating": "B+",
+  "valuation_rating": "fair_to_cheap",
+  "fair_value_range": [
+    13.5,
+    17.0
+  ],
+  "buy_zone": [
+    9.8,
+    11.2
+  ],
+  "sell_or_reduce_zone": [
+    16.5,
+    18.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 11.2 and no new major impairment warning",
+      "action": "open_or_add_small_position",
+      "max_weight": 0.02,
+      "reason": "股价进入买入区间上沿，龙头价值有安全边际，但仍需控制地产链和应收风险。"
+    },
+    {
+      "condition": "price <= 10.8 and 2026 interim report confirms cash flow recovery and receivables plus contract assets decline",
+      "action": "add_position",
+      "max_weight": 0.03,
+      "reason": "若经营现金流和资产质量同步改善，市场对减值尾部风险的折价可下降。"
+    },
+    {
+      "condition": "price <= 9.8 and industry data is not structurally worse",
+      "action": "add_to_full_watch_cap",
+      "max_weight": 0.05,
+      "reason": "价格接近悲观情景价值，若基本面未破坏，赔率显著改善。"
+    },
+    {
+      "condition": "price >= 16.5 without earnings and cash flow exceeding base case",
+      "action": "reduce_position",
+      "max_weight": 0.02,
+      "reason": "股价接近合理价值上沿，若业绩未超预期，应兑现估值修复收益。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11.2,
+      "reason": "进入买入区间上沿，适合检查中报前是否可试仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 10.8,
+      "reason": "接近加仓观察位，需要结合经营现金流和应收变化判断。"
+    },
+    {
+      "type": "price_above",
+      "price": 16.5,
+      "reason": "接近减仓区间下沿，需要复核利润恢复是否足以支撑估值。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查 2026 半年报，重点看经营现金流、应收账款和合同资产、减值、渠道收入结构。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查 2026 三季报，确认全年利润恢复和现金流质量是否匹配。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026H1 revenue growth and gross margin",
+    "operating_cash_flow_net",
+    "accounts_receivable_plus_contract_assets",
+    "credit_impairment_loss",
+    "asset_impairment_loss",
+    "retail_channel_revenue",
+    "engineering_channel_revenue",
+    "direct_sales_revenue",
+    "overseas_revenue",
+    "bitumen_spot_price",
+    "real_estate_development_investment_yoy",
+    "new_housing_starts_yoy"
+  ]
+}

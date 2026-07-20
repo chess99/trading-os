@@ -1,0 +1,43 @@
+{
+  "symbol": "CN:600515",
+  "market": "CN",
+  "ticker": "600515",
+  "name": "海南机场",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "海南机场具备区域枢纽和海南自贸港政策红利，但估值已进入安全边际，建议在2.0元以下买入观察，待基本面确认后再考虑加仓。",
+  "fair_value_range": [2.0, 3.5],
+  "buy_zone": [2.0, 2.4],
+  "sell_or_reduce_zone": [3.5, 4.0],
+  "position_plan": [
+    {
+      "condition": "股价处于买入区间且基本面未恶化",
+      "max_weight": 0.03
+    }
+  ],
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-30",
+      "reason": "下一次财报或关键假设复查"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.0,
+      "reason": "进入有安全边际的买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 3.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-10T18:39:00+0800"
+}

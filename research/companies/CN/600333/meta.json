@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:600333",
+  "ticker": "600333",
+  "name": "长春燃气",
+  "market": "CN",
+  "exchange": "SSE",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "区域燃气管网和特许经营具备资产底盘，但2025年仍亏损、2026H1继续预亏且负债率偏高；当前约1.75倍PB已反映较多修复预期，等待4元以下或购销价差修复证据。",
+  "fair_value_range": [
+    3.8,
+    4.8
+  ],
+  "buy_zone": [
+    3.2,
+    4.0
+  ],
+  "sell_or_reduce_zone": [
+    5.5,
+    6.2
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.00元，且未出现燃气安全事故、债务流动性恶化或再融资摊薄",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "公司连续两个季度扣非盈利且ROE修复趋势明确，同时购销价差改善被公告或财报验证",
+      "action": "重新评估是否提高仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于5.50元但未看到2026全年盈利修复证据",
+      "action": "不新增并考虑减仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入基准情景估值下沿附近，具备重新评估安全边际的必要"
+    },
+    {
+      "type": "price_above",
+      "price": 5.5,
+      "reason": "接近乐观情景估值，若无盈利修复证据则风险收益不匹配"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报完整披露后的购销价差、现金流和负债结构"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证H2盈利是否修复"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，决定是否调整估值区间和评级"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "symbol": "CN:000681",
+  "market": "CN",
+  "ticker": "000681",
+  "name": "视觉中国",
+  "company_name": "视觉中国",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "quality_rating": "B-",
+  "valuation_rating": "D",
+  "current_thesis": "视觉中国具备版权素材平台、企业合规授权和 AI 内容工具的长期期权，但截至 2026-07-10 当前股价已显著高于主业扣非利润可支撑的价值区间，适合跟踪而不适合新开仓。",
+  "fair_value_range": [
+    9.0,
+    12.0
+  ],
+  "buy_zone": [
+    7.0,
+    9.0
+  ],
+  "sell_or_reduce_zone": [
+    16.0,
+    20.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "2026-07-10 current price remains above 16 CNY without verified acceleration in recurring revenue or扣非利润",
+      "action": "do_not_buy",
+      "max_weight": 0.0,
+      "reason": "当前市值主要反映 AI 和 H 股上市期权，现有扣非利润无法支撑估值"
+    },
+    {
+      "condition": "price enters 7-9 CNY and next report confirms revenue recovery, stable cash flow and no new major regulatory or reputation event",
+      "action": "open_watch_position",
+      "max_weight": 0.01,
+      "reason": "进入买入区后可用小仓位验证版权素材与 AI 合规工具的商业化进展"
+    },
+    {
+      "condition": "price is near 7 CNY and two consecutive quarters show扣非利润 improvement plus measurable AI or subscription revenue contribution",
+      "action": "increase_selectively",
+      "max_weight": 0.03,
+      "reason": "只有在基本面与价格同时改善时才提高仓位上限"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入初步买入区，需要复核半年报、订阅收入和诉讼风险"
+    },
+    {
+      "type": "price_below",
+      "price": 7.0,
+      "reason": "进入深度价值区，可重新评估 2%-3% 仓位上限"
+    },
+    {
+      "type": "price_above",
+      "price": 16.0,
+      "reason": "超过卖出或减仓区下沿，若业绩未兑现应避免追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查 2026 半年报，重点看扣非利润、经营现金流、AI 业务披露和诉讼风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "复查 H 股发行进度、估值摊薄和全年业绩趋势"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "扣非归母净利润",
+    "经营活动现金流量净额",
+    "内容授权业务毛利率",
+    "订阅收入占比",
+    "企业客户数和续约率",
+    "AI 产品收入和客户数",
+    "版权诉讼数量和重大监管处罚",
+    "H 股发行进度和摊薄比例"
+  ]
+}

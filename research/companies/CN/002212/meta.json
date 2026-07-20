@@ -1,0 +1,110 @@
+{
+  "symbol": "CN:002212",
+  "market": "CN",
+  "ticker": "002212",
+  "name": "天融信",
+  "company_name": "天融信",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "天融信是有资产安全边际但经营修复尚未连续验证的网络安全公司；当前适合观察仓，买点应等待5.2元以下或2026H1收入、现金流和扣非利润改善得到确认。",
+  "quality_rating": "medium",
+  "valuation_rating": "neutral_to_slightly_cheap",
+  "fair_value_range": [
+    5.8,
+    7.4
+  ],
+  "buy_zone": [
+    4.6,
+    5.2
+  ],
+  "sell_or_reduce_zone": [
+    7.8,
+    9.5
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "current_price_around_5_8_and_no_new_positive_confirmation",
+      "action": "watch_or_open_tracking_position",
+      "max_weight": 0.02,
+      "reason": "资产负债表有安全边际，但2026Q1收入、利润和现金流尚未证明修复延续。"
+    },
+    {
+      "condition": "price_below_5_2_and_no_deterioration_in_cash_flow_or_orders",
+      "action": "accumulate_carefully",
+      "max_weight": 0.03,
+      "reason": "接近买入区上沿，赔率改善，但仍需等待2026H1验证。"
+    },
+    {
+      "condition": "price_below_4_6_and_2026H1_cash_flow_not_worse_than_expected",
+      "action": "increase_to_full_watch_position",
+      "max_weight": 0.05,
+      "reason": "估值接近0.5倍账面净资产，具备更明显资产安全边际。"
+    },
+    {
+      "condition": "price_above_7_8_without_revenue_and_profit_confirmation",
+      "action": "reduce_or_avoid_chasing",
+      "max_weight": 0.01,
+      "reason": "上行已经提前反映修复预期，若没有中报或三季报兑现，风险收益比下降。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 5.2,
+      "reason": "进入初始买入区，复核2026H1订单、现金流和应收后决定是否加仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 4.6,
+      "reason": "进入深度价值区，若基本面未恶化，可评估提高至5%以内仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.8,
+      "reason": "达到减仓区下沿，若缺少利润和现金流验证，应降低仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.5,
+      "reason": "达到乐观估值上沿，除非智算云和主业修复显著超预期，否则应卖出或大幅降仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年度报告，重点验证收入降幅、扣非亏损、现金流和应收变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026年三季度报告，判断全年订单确认和四季度利润弹性是否可信。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年年度报告，更新长期估值和仓位上限。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "2026H1_revenue_growth",
+    "2026H1_attributable_net_profit",
+    "2026H1_deducted_net_profit",
+    "operating_cash_flow",
+    "accounts_receivable_and_contract_assets",
+    "gross_margin_network_security",
+    "intelligent_compute_cloud_revenue_growth",
+    "r_and_d_expense_ratio",
+    "sales_collection_to_revenue",
+    "government_and_state_owned_enterprise_order_recovery",
+    "share_repurchase_and_incentive_plan_terms"
+  ]
+}

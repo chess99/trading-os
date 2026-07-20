@@ -1,0 +1,66 @@
+{
+  "symbol": "CN:601086",
+  "ticker": "601086",
+  "name": "国芳集团",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "status": "active",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "国芳集团是甘青宁区域百货/购物中心零售商，2025-2026 年利润修复夹杂金融资产处置和公允价值收益，主业扣非利润仍偏薄；当前估值显著高于区域百货正常化现金流和资产价值可支持区间，缺乏安全边际。",
+  "fair_value_range": [
+    2.2,
+    3.2
+  ],
+  "buy_zone": [
+    0,
+    2.0
+  ],
+  "sell_or_reduce_zone": [
+    4.5,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于2.0元，且连续两个季度扣非归母净利润同比增长、经营现金流为正、现金分红率维持50%以上时，仅允许建立观察仓。",
+      "action": "watchlist_only",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于4.5元，或2026年半年报显示利润主要来自金融资产处置/公允价值变动而非主业扣非改善时，维持零仓位。",
+      "action": "avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入审慎公允价值区间下沿，复核资产折价和主业现金流安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.5,
+      "reason": "高于乐观情景估值上沿，提示继续回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点拆分扣非利润、门店调改费用、奥来德相关投资收益和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认调改后同店销售、扣非利润和现金流是否持续改善。"
+    }
+  ],
+  "confidence": "中",
+  "decision": "不买"
+}

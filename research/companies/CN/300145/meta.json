@@ -1,0 +1,124 @@
+{
+  "symbol": "CN:300145",
+  "market": "CN",
+  "ticker": "300145",
+  "name": "中金环境",
+  "company_name": "南方泵业股份有限公司（原中金环境股份有限公司）",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "泵业主业回归后经营质量改善，2025年收入52.75亿元、归母净利润2.36亿元、经营现金流6.40亿元，主业现金质量尚可；但当前价格对应传统制造估值偏贵，液冷业务收入占比仍小且不确定，缺少安全边际。等待4.20元以下或液冷订单/扣非利润兑现后再提高仓位。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    4.4,
+    5.2
+  ],
+  "buy_zone": [
+    3.8,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    6.2,
+    7.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于6.20元，且公司未披露液冷业务规模化收入或订单",
+      "action": "不买，仅观察",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至4.60-5.20元，且2026年收入、毛利率和经营现金流未恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于4.20元，且扣非净利润同比增长、资产负债率继续下降",
+      "action": "分批买入",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价低于3.80元，且无重大诉讼、应收账款或资产减值风险新增恶化",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.07
+    },
+    {
+      "condition": "股价高于7.00元但液冷业务仍无可核验订单和收入占比",
+      "action": "减仓或卖出",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "currency": "CNY",
+      "reason": "进入初始买入区且接近合理估值下沿",
+      "action": "进入可买区，复核扣非利润、经营现金流和资产负债率后分批建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 3.8,
+      "currency": "CNY",
+      "reason": "安全边际充分，传统泵业估值已明显折价",
+      "action": "安全边际充分，若基本面未恶化可提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 6.2,
+      "currency": "CNY",
+      "reason": "高于合理价值区间且液冷业务尚未验证时估值偏贵",
+      "action": "若液冷收入仍未兑现，停止买入并评估减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "currency": "CNY",
+      "reason": "显著透支乐观预期，需要订单和利润验证支撑",
+      "action": "无订单和利润验证时卖出或大幅降低仓位"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "2026年半年报披露后复核经营质量",
+      "condition": "预计披露2026年半年报后",
+      "action": "核验通用设备制造业收入、扣非净利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报披露后复核全年利润兑现进度",
+      "condition": "预计披露2026年三季报后",
+      "action": "复核全年利润兑现、现金流和资产负债率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后重估价值区间",
+      "condition": "预计披露2026年年度报告后",
+      "action": "重新评估合理价值区间、液冷业务进展和分红能力"
+    }
+  ],
+  "key_tracking_metrics": [
+    "通用设备制造业收入增速",
+    "扣非归母净利润增速",
+    "经营现金流净额/归母净利润",
+    "毛利率",
+    "净利率",
+    "资产负债率",
+    "应收账款与合同资产周转",
+    "资产减值准备",
+    "液冷业务订单、收入占比和客户质量",
+    "分红率"
+  ]
+}

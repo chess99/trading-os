@@ -1,0 +1,77 @@
+{
+  "symbol": "CN:300915",
+  "ticker": "300915",
+  "name": "海融科技",
+  "company_name": "上海海融食品科技股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "海融科技具备奶油和烘焙茶饮原料细分优势，2026Q1 已出现收入与利润修复，但 2025 年毛利率和现金流大幅下滑、TTM 仍亏损，当前约 20.15 元价格缺少明确安全边际，等待毛利率回到 30%以上和经营现金流连续改善后再重新评估。",
+  "fair_value_range": [
+    16.0,
+    22.5
+  ],
+  "buy_zone": [
+    12.0,
+    15.5
+  ],
+  "sell_or_reduce_zone": [
+    25.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格约 20.15 元且 TTM 仍亏损，仅允许 0%-1% 观察仓。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于 15.5 元，且最新半年报确认收入增长、毛利率改善、经营现金流为正，可建立初始仓位。",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 12.0 元，资产负债表未恶化且 UHT 产能爬坡正常，可作为深度价值仓位上限。",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 15.5,
+      "reason": "进入初始买入区间，需要复核毛利率、现金流和 UHT 产能进展。"
+    },
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "进入深度安全边际区间，需要检查是否存在基本面永久性恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 25.0,
+      "reason": "超过当前合理价值上沿，若盈利修复未同步确认，应减仓或回避。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报，重点看收入增速、毛利率、直销毛利率、经营现金流和存货。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，确认 Q1 修复是否延续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年年报，重估 UHT 产能释放、全年盈利中枢和分红能力。"
+    }
+  ]
+}

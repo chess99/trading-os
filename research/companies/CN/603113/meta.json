@@ -1,0 +1,93 @@
+{
+  "symbol": "CN:603113",
+  "ticker": "603113",
+  "name": "金能科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "金能科技是低PB重资产周期化工公司，青岛石化链和齐河煤化工循环链具备规模与成本优势，但2026H1预亏显示价差、锁单和短债风险尚未出清；当前适合观察，不适合重仓买入。",
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "fair_value_range": [
+    3.8,
+    5.4
+  ],
+  "buy_zone": [
+    2.8,
+    3.4
+  ],
+  "sell_or_reduce_zone": [
+    5.8,
+    7.0
+  ],
+  "position_plan": [
+    {
+      "condition": "价格低于3.4元且2026半年报确认经营现金流、短债和衍生品敞口未继续恶化",
+      "action": "small_tracking_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格低于2.8元且无流动性危机、主要装置正常运行、H2价差开始修复",
+      "action": "contrarian_add",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "价格高于5.8元但扣非利润和经营现金流未同步修复",
+      "action": "avoid_chasing_or_reduce",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.4,
+      "reason": "进入买入观察区，需要复核半年报现金流、短债和价差后决定是否试探建仓"
+    },
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "reason": "进入深度账面折价区，若无流动性风险可重新评估逆周期仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 5.8,
+      "reason": "超过基准合理区间上沿，若主业利润未修复应降低预期收益率或减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-26",
+      "reason": "复核2026半年报，重点检查亏损构成、经营现金流、短债、套保和锁单敞口"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报，确认H2是否扭亏、PB是否仍具备安全边际"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，重估周期中枢盈利和资产负债表质量"
+    }
+  ],
+  "key_metrics": {
+    "last_price": 4.11,
+    "last_price_date": "2026-07-17",
+    "market_cap_billion_cny": 3.487,
+    "q1_2026_equity_billion_cny": 7.288,
+    "q1_2026_pb": 0.48,
+    "q1_2026_revenue_billion_cny": 3.323,
+    "q1_2026_net_profit_billion_cny": -0.591,
+    "h1_2026_net_profit_forecast_billion_cny": [
+      -0.598,
+      -0.588
+    ],
+    "confidence": "中"
+  }
+}

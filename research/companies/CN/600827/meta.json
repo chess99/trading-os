@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:600827",
+  "ticker": "600827",
+  "name": "百联股份",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-17",
+  "status": "active",
+  "current_thesis": "百联股份具备上海核心商业资产、奥莱和城市更新期权，当前P/B较低提供一定资产保护；但2025及2026H1预告扣非盈利仍弱，联华超市拖累核心ROE，暂以观察为主，等待扣非利润、奥莱扩张和回购兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [7.0, 9.0],
+  "buy_zone": [5.8, 6.6],
+  "sell_or_reduce_zone": [9.8, 11.5],
+  "latest_report": "reports/2026-07-17-initial.md",
+  "report_history": [
+    "reports/2026-07-17-initial.md"
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于6.6元且2026年半年报扣非净利润不低于1.5亿元、联华超市亏损未扩大",
+      "action": "建立观察仓",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "股价低于5.8元且P/B约0.50倍、经营现金流保持为正、回购开始执行",
+      "action": "提高至小仓位",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价高于9.8元但扣非年化净利润低于4亿元或联华超市未明显减亏",
+      "action": "减仓或不新增",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.6,
+      "reason": "进入初始买入区，需要复核半年报扣非利润和经营现金流。"
+    },
+    {
+      "type": "price_below",
+      "price": 5.8,
+      "reason": "接近0.50倍P/B，资产折价安全边际扩大。"
+    },
+    {
+      "type": "price_above",
+      "price": 9.8,
+      "reason": "超出基准估值区间，需要验证扣非利润和奥莱扩张是否足以支撑上修。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、扣非利润、联华超市减亏和土地收储收益确认。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、经营现金流、回购执行和核心项目进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "复核土地收储交地节点、回购进度和2026年年报预期。"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "symbol": "CN:600111",
+  "market": "CN",
+  "ticker": "600111",
+  "name": "北方稀土",
+  "company_name": "中国北方稀土(集团)高科技股份有限公司",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "中国稀土行业绝对龙头，配额占全国50%+，依托白云鄂博资源壁垒。2025年稀土价格深度下跌拖累利润至周期底部，2026年Q2氧化镨钕价格筑底回升迹象显现。价格底部+长期配置价值，但拐点尚未完全确认，分批建仓而非一次性重仓。",
+  "quality_rating": "A-",
+  "valuation_rating": "合理偏低",
+  "fair_value_range": [25, 32],
+  "buy_zone": [22, 25],
+  "strong_attraction_zone": [18, 22],
+  "sell_or_reduce_zone": [32, 35],
+  "do_not_chase_above": 35,
+  "position_plan": [
+    {"zone": "<18元", "condition": "历史级别底部", "action": "重仓买入", "target_weight": 0.06, "max_weight": 0.08},
+    {"zone": "18-22元", "condition": "强吸引力区", "action": "分批加仓", "target_weight": 0.04, "max_weight": 0.06},
+    {"zone": "22-25元", "condition": "安全边际区", "action": "分批建仓", "target_weight": 0.03, "max_weight": 0.05},
+    {"zone": "25-32元", "condition": "合理区间", "action": "持有/小仓位", "target_weight": 0.02, "max_weight": 0.04}
+  ],
+  "latest_report": "reports/2026-07-08-initial.md",
+  "report_history": ["reports/2026-07-08-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-31", "reason": "2026半年报"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 22, "action": "加仓2-3%", "reason": "稀土价格底部确认，估值进入安全边际区"},
+    {"type": "price_below", "price": 18, "action": "加仓2-3%至6-8%", "reason": "历史级别底部，重仓机会"},
+    {"type": "price_above", "price": 32, "action": "减仓1%", "reason": "进入高估区，锁定部分利润"},
+    {"type": "price_above", "price": 35, "action": "减至1-2%", "reason": "严重高估，大幅减仓"}
+  ],
+  "key_risks": [
+    "稀土价格继续下行（供给过剩、海外替代）",
+    "下游需求不及预期（新能源、人形机器人延后）",
+    "出口管制被海外替代反噬，中国稀土出口份额缩减",
+    "包钢精矿关联交易定价机制恶化",
+    "配额政策性收缩超过10%",
+    "环保与尾矿库安全事件",
+    "周期顶底判断错误",
+    "央企整合不确定性（中国稀土集团整合方向）",
+    "存货跌价与现金流恶化"
+  ],
+  "updated_at": "2026-07-08T00:00:00+08:00"
+}

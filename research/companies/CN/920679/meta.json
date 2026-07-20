@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:920679",
+  "market": "CN",
+  "ticker": "920679",
+  "name": "前进科技",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "细分工艺和客户认证壁垒尚可、2026年一季度需求修复，但客户极度集中、ROE与自由现金流偏低，15.20元已透支乐观预期。",
+  "fair_value_range": [9.0, 11.5],
+  "buy_zone": [7.5, 9.0],
+  "sell_or_reduce_zone": [13.0, 16.0],
+  "position_plan": [
+    {
+      "condition": "股价处于7.5至9.0元且半年报验证主要客户需求、毛利率和现金流未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于7.5元，重新验证投资逻辑未受损且ROIC和自由现金流改善",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "客户采购、毛利率或募集资金纪律恶化时，不因价格下跌补仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-09-05",
+      "reason": "2026年半年报后复查需求修复、毛利率、经营现金流和商用业务进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-05-15",
+      "reason": "2026年年报后复查全年自由现金流、资本回报和募集资金使用效率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 9.0,
+      "reason": "进入可研究买入区间，仍需重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 13.0,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-15T20:00:00+08:00"
+}

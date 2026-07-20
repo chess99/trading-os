@@ -1,0 +1,102 @@
+{
+  "symbol": "CN:688519",
+  "market": "CN",
+  "ticker": "688519",
+  "name": "南亚新材",
+  "company_name": "南亚新材",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "quality_rating": "B",
+  "valuation_rating": "D",
+  "current_thesis": "南亚新材处于覆铜板周期修复与高速高频材料国产替代的估值切换期，基本面有改善方向，但当前股价已经提前反映乐观情景，需等待回撤或高端产品放量、毛利率改善、经营现金流改善等财务证据后再建立实质仓位。",
+  "fair_value_range": [
+    150,
+    220
+  ],
+  "buy_zone": [
+    140,
+    190
+  ],
+  "sell_or_reduce_zone": [
+    260,
+    9999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于220元，且最近一期毛利率同比或环比改善",
+      "action": "建立观察仓",
+      "max_weight": 0.015,
+      "reason": "高端材料成长逻辑开始获得财务验证，但估值仍需安全边际"
+    },
+    {
+      "condition": "股价低于190元，且年报、季报或公告验证高端高速材料收入或订单放量",
+      "action": "提高至标准仓",
+      "max_weight": 0.03,
+      "reason": "价格进入买入区间，同时核心成长假设被公开资料验证"
+    },
+    {
+      "condition": "股价低于170元，经营现金流改善且库存未异常上升",
+      "action": "加至上限仓位",
+      "max_weight": 0.04,
+      "reason": "赔率改善，且利润质量未恶化"
+    },
+    {
+      "condition": "股价高于260元且没有利润上修或高端产品放量证据",
+      "action": "减仓或不买",
+      "max_weight": 0.01,
+      "reason": "估值提前反映乐观情景，缺乏买方安全边际"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 220,
+      "reason": "进入可开始跟踪建仓的估值区间"
+    },
+    {
+      "type": "price_below",
+      "price": 190,
+      "reason": "进入核心买入区间，需要复核毛利率和订单证据"
+    },
+    {
+      "type": "price_above",
+      "price": 260,
+      "reason": "超过减仓警戒线，需确认是否已有利润上修支撑"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看毛利率、扣非利润、经营现金流和高端高速材料进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，验证收入增长是否转化为利润和现金流"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季度营业收入",
+    "单季度毛利率",
+    "扣非归母净利润",
+    "经营活动现金流净额",
+    "覆铜板销量和单价",
+    "粘结片销量和单价",
+    "产能利用率",
+    "高速高频材料收入占比",
+    "AI服务器PCB链客户认证或订单进展",
+    "铜箔价格",
+    "电子树脂价格",
+    "玻纤布价格",
+    "募投项目建设和达产进度"
+  ]
+}

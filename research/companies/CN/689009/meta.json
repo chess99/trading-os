@@ -1,0 +1,98 @@
+{
+  "symbol": "CN:689009",
+  "market": "CN",
+  "ticker": "689009",
+  "name": "九号公司",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "九号公司已形成智能短交通与服务机器人双主线，2025年收入、利润和现金流质量显著改善，ROE明显高于资本成本；但2026Q1利润受汇兑、原材料和股份支付冲击大幅下滑，当前约38元价格接近合理价值下沿但安全边际不足，等待30-36元买入区或后续季度利润率修复验证。",
+  "fair_value_range": [
+    40,
+    52
+  ],
+  "buy_zone": [
+    30,
+    36
+  ],
+  "sell_or_reduce_zone": [
+    65,
+    95
+  ],
+  "position_plan": [
+    {
+      "condition": "36-40元",
+      "action": "watch_or_small",
+      "max_weight": 0.02,
+      "note": "仅观察或小仓位，等待利润率修复验证"
+    },
+    {
+      "condition": "30-36元",
+      "action": "buy",
+      "max_weight": 0.02,
+      "note": "进入买入区，可建立2%以内仓位"
+    },
+    {
+      "condition": "28元以下",
+      "action": "strong_buy_if_thesis_intact",
+      "max_weight": 0.05,
+      "note": "强吸引力价格，但必须确认核心假设未破坏"
+    },
+    {
+      "condition": "55元以上",
+      "action": "do_not_chase",
+      "max_weight": 0.05,
+      "note": "超过合理价值上沿，除非基本面同步上修"
+    },
+    {
+      "condition": "65元以上",
+      "action": "reduce_or_revalue",
+      "max_weight": 0.03,
+      "note": "进入减仓或重估区间"
+    }
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "预计2026年半年报披露后，更新收入、毛利率、净利率、服务机器人增长和经营现金流判断。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "三季报后复核Q1利润压力是否修复，以及两轮车和服务机器人全年趋势。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报披露后重估长期收入增速、利润率中枢、资本配置和合理价值区间。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 36,
+      "reason": "进入买入区上沿，需复核Q2/Q3利润率和现金流。"
+    },
+    {
+      "type": "price_below",
+      "price": 28,
+      "reason": "强吸引力价格，但必须确认下跌不是基本面永久恶化。"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "reason": "超过合理价值上沿，除非服务机器人和利润率假设同步上修，否则不追高。"
+    },
+    {
+      "type": "price_above",
+      "price": 65,
+      "reason": "进入减仓或重估区间。"
+    }
+  ],
+  "updated_at": "2026-07-09T00:00:00+08:00"
+}

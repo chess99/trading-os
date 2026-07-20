@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:301355",
+  "ticker": "301355",
+  "name": "南王科技",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-16",
+  "latest_report": "reports/2026-07-16-initial.md",
+  "report_history": [
+    "reports/2026-07-16-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "收入仍在增长，但 2025 年亏损、毛利率下行、募投项目收缩延期和大客户集中度较高，当前价格接近保守公允区间上沿，安全边际不足；需等待毛利率止跌、利润恢复和资本开支纪律验证。",
+  "fair_value_range": [
+    7.2,
+    9.2
+  ],
+  "buy_zone": [
+    6.2,
+    7.4
+  ],
+  "sell_or_reduce_zone": [
+    11.5,
+    13.0
+  ],
+  "position_plan": [
+    {
+      "condition": "仅在股价进入买入区间且 2026 中报显示毛利率止跌、经营现金流为正时建立观察仓",
+      "action": "start_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "若连续两个季度归母净利率恢复至 2% 以上且短期借款下降，可提高为小仓位",
+      "action": "increase_small_position",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "若毛利率继续低于 12% 或募投延期后继续追加低效资本开支，维持零仓位",
+      "action": "avoid_position",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.4,
+      "reason": "进入买入观察区间，需要结合中报验证毛利率和现金流。"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "超过保守公允价值上沿较多，若利润未同步恢复应减持或避免追买。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看毛利率、归母净利、经营现金流、应收账款和短期借款。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报及广东募投项目是否按 2026-09-30 达到预定可使用状态。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报，判断利润恢复是否足以支撑估值上修。"
+    }
+  ],
+  "key_metrics": {
+    "last_price": 9.68,
+    "last_price_date": "2026-07-15",
+    "last_price_source": "新浪行情接口，非交易所官方收盘价，置信度中",
+    "revenue_2025_cny": 1758708113.13,
+    "net_profit_to_parent_2025_cny": -26431500.0,
+    "revenue_2026_q1_cny": 457188552.62,
+    "net_profit_to_parent_2026_q1_cny": 1906525.08,
+    "gross_margin_2025": 0.126,
+    "debt_asset_ratio_2026_q1": 0.414065
+  }
+}

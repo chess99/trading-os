@@ -1,0 +1,41 @@
+{
+  "symbol": "CN:920575",
+  "market": "CN",
+  "ticker": "920575",
+  "name": "*ST康乐",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "公司尚无商业化疫苗收入且已资不抵债，当前股价隐含融资续命、三价获批和商业化成功的较高确定性，安全边际不足。",
+  "fair_value_range": [0.5, 1.2],
+  "buy_zone": [0.2, 0.4],
+  "sell_or_reduce_zone": [1.5, 3.8],
+  "position_plan": [
+    {
+      "condition": "股价进入0.20至0.40元且已完成足额股权融资、主要逾期债务得到解决、三价HPV疫苗审评实质推进，基本面未恶化",
+      "max_weight": 0.005
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": ["reports/2026-07-14-initial.md"],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报的现金、净资产、债务逾期和持续经营风险"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.4,
+      "reason": "仅在融资、债务与审批核心假设均改善时进入条件性买入区间"
+    },
+    {
+      "type": "price_above",
+      "price": 1.5,
+      "reason": "高于风险调整公允价值上沿，进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-19T16:52:59+08:00"
+}

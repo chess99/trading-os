@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:300614",
+  "ticker": "300614",
+  "name": "百川畅银",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "公司是A股稀缺的垃圾填埋气/沼气资源化运营商，但国内填埋气主业收缩、2025年大额减值、2026Q1亏损扩大、应收账款和可转债评级下调共同压低安全边际。当前股价接近乐观情景下沿，需等待价格回落或经营现金流、应收回款、移动储能供热订单质量改善后再考虑小仓位。",
+  "fair_value_range": [
+    5.5,
+    7.5
+  ],
+  "buy_zone": [
+    4.5,
+    6.0
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    13.0
+  ],
+  "position_plan": [
+    {
+      "condition": "股价进入4.5-6.0元且未出现新增重大信用/偿债风险，允许研究性建仓",
+      "action": "buy_small",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026半年报显示收入止跌、经营现金流转正且应收账款较2026Q1下降",
+      "action": "add_after_validation",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于10.5元且没有移动储能供热或海外项目的盈利与回款验证",
+      "action": "reduce_or_avoid",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.0,
+      "reason": "进入基准估值下沿和研究性买入区，需要复核现金流、应收账款和信用评级"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "reason": "超过合理价值区间且接近乐观情景，需要检查是否已有基本面反转证据，否则减仓或回避"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查收入、亏损、经营现金流、应收账款和移动储能供热进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认经营拐点是否出现以及评级/可转债风险是否缓和"
+    }
+  ]
+}

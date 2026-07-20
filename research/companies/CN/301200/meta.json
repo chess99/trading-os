@@ -1,0 +1,70 @@
+{
+  "symbol": "CN:301200",
+  "market": "CN",
+  "ticker": "301200",
+  "name": "大族数控",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "AI驱动的PCB专用设备龙头，2026Q1营收+103.7%/净利润+176.5%高速增长真实，但估值PE-TTM 184x严重透支未来2-3年增长，安全边际缺位，等待估值回归或业绩持续超预期验证。",
+  "fair_value_range": [
+    120,
+    180
+  ],
+  "buy_zone": [
+    100,
+    120
+  ],
+  "sell_or_reduce_zone": [
+    280,
+    350
+  ],
+  "position_plan": [
+    {
+      "condition": "股价处于¥120-180合理估值区间且基本面持续兑现",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "股价处于¥100-120安全边际买入区间且行业β未破",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价低于¥100强吸引力区间且AI产业链延续",
+      "max_weight": 0.08
+    }
+  ],
+  "latest_report": "reports/2026-07-09-initial.md",
+  "report_history": [
+    "reports/2026-07-09-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-25",
+      "reason": "2026年中报披露后复查：营收增速、毛利率、应收账款周转、经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "2026年三季报后验证2026全年业绩兑现与AI β持续性"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 120,
+      "reason": "进入合理估值下沿，启动小幅建仓观察"
+    },
+    {
+      "type": "price_below",
+      "price": 100,
+      "reason": "进入有安全边际的买入区间，加仓"
+    },
+    {
+      "type": "price_above",
+      "price": 280,
+      "reason": "进入减仓/不应追高区间，估值明显泡沫"
+    }
+  ],
+  "updated_at": "2026-07-09T09:30:00+08:00"
+}

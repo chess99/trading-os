@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300846",
+  "ticker": "300846",
+  "market": "CN",
+  "name": "首都在线",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "首都在线是A股AI智算云弹性标的，2026Q1收入恢复增长且亏损收窄，但公司仍未稳定盈利、负债率较高，当前约百亿元市值已提前反映较乐观的智算转型预期。等待智算毛利率、现金流和扭亏路径进一步验证。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    11,
+    15
+  ],
+  "buy_zone": [
+    9,
+    11
+  ],
+  "sell_or_reduce_zone": [
+    20,
+    24
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于11元，且最新两个季度收入同比增长、归母亏损继续收窄、经营现金流未显著恶化",
+      "action": "建立观察性小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "智算云收入连续两个季度高增长，综合毛利率稳定改善，经营现金流转正或接近转正",
+      "action": "可提高至中等仓位",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于20元且公司仍未实现季度盈利，或毛利率、现金流未同步改善",
+      "action": "不新增仓位并考虑降低风险暴露",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 11,
+      "reason": "进入买入观察区，需要复核智算业务增长、毛利率和现金流是否支持安全边际"
+    },
+    {
+      "type": "price_below",
+      "price": 8,
+      "reason": "进入深度价值复核区，如流动性和基本面未恶化，可重新评估更积极仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 24,
+      "reason": "高于乐观情景上沿，若业绩尚未显著兑现，应复核估值泡沫和减仓必要性"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年中报，重点看智算云增长、毛利率、经营现金流和有息负债"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断亏损收窄是否具备连续性"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报和股权激励考核进展，更新长期估值假设"
+    }
+  ]
+}

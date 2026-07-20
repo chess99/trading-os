@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:002175",
+  "market": "CN",
+  "ticker": "002175",
+  "name": "*ST东智",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "不买：2025年扣除后收入低于3亿元且亏损触发财务类退市风险警示，2026Q1仍亏损且经营现金流为负；控制权转让尚未完成过户，当前股价主要交易保壳和控制权期权，基本面安全边际不足。",
+  "fair_value_range": [
+    0.6,
+    1.2
+  ],
+  "buy_zone": [
+    0.45,
+    0.75
+  ],
+  "sell_or_reduce_zone": [
+    1.6,
+    2.9
+  ],
+  "position_plan": [
+    {
+      "condition": "退市风险未撤销或控制权未完成过户",
+      "action": "不买入/不加仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "2026年扣非后收入显著超过3亿元且扣非净利转正，并撤销*ST后重新复核",
+      "action": "观察仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "价格跌入0.45-0.75元且退市风险已有实质解除证据",
+      "action": "试探买入",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.75,
+      "reason": "进入风险调整买入观察区，但需同时复核退市风险解除进度"
+    },
+    {
+      "type": "price_above",
+      "price": 1.6,
+      "reason": "高于风险调整合理区，避免追高或减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-29",
+      "reason": "公司计划披露2026年半年报，复核收入扣除、亏损、现金流与控制权过户"
+    }
+  ],
+  "notes": [
+    "needs_review/ST特殊风险复核；2025年扣除后收入299472346.17元且亏损，已触发财务类退市风险警示。",
+    "2026-07-15控制权转让仍需深交所合规确认和中登过户，尚未完成。",
+    "当前2.52元价格主要反映控制权和保壳期权，基本面安全边际不足；决策为不买。"
+  ]
+}

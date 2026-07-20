@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:601211",
+  "market": "CN",
+  "ticker": "601211",
+  "name": "国泰海通",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "priority": "P1",
+  "analyst": "codex-subagent-601211",
+  "fair_value_range": [
+    19.0,
+    24.0
+  ],
+  "buy_zone": [
+    16.0,
+    18.0
+  ],
+  "sell_or_reduce_zone": [
+    25.5,
+    32.0
+  ],
+  "position_plan": [
+    {
+      "condition": "16.0-18.0元",
+      "action": "安全边际买入，开第一笔仓位",
+      "target_weight": 0.015,
+      "max_weight": 0.025
+    },
+    {
+      "condition": "14.0-15.5元",
+      "action": "强吸引力买入，基本面未恶化时加仓",
+      "target_weight": 0.03,
+      "max_weight": 0.04
+    },
+    {
+      "condition": "25.5元以上",
+      "action": "不追高，除非ROE可持续性显著超预期，否则考虑降低仓位",
+      "target_weight": 0.0,
+      "max_weight": 0.015
+    }
+  ],
+  "thesis": "合并后国泰海通成为一线综合券商，资本、客户、两融、投行和机构交易能力显著增强；但盈利高度受资本市场 beta、自营和跟投收益影响，当前价格已部分反映2026H1高景气预期，等待安全边际。",
+  "current_thesis": "合并后国泰海通成为一线综合券商，资本、客户、两融、投行和机构交易能力显著增强；但盈利高度受资本市场 beta、自营和跟投收益影响，当前价格已部分反映2026H1高景气预期，等待安全边际。",
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": [
+    "reports/2026-07-07-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报正式披露后的利润质量、投资收益来源、风险指标和合并协同。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、市场成交、两融余额、投行业务和ROE趋势。"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 18.0,
+      "reason": "进入安全边际买入区，复核基本面后考虑首笔仓位。"
+    },
+    {
+      "type": "price_below",
+      "price": 15.5,
+      "reason": "进入强吸引力买入区，若风险指标未恶化可提高仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 25.5,
+      "reason": "超过不应追高价，除非ROE可持续性显著超预期，否则考虑降低仓位。"
+    }
+  ],
+  "updated_at": "2026-07-07T00:00:00+08:00"
+}

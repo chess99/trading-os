@@ -1,0 +1,82 @@
+{
+  "symbol": "CN:002055",
+  "market": "CN",
+  "ticker": "002055",
+  "name": "ST得润",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "ST和持续经营重大不确定性尚未解除，债务、诉讼、担保和现金流风险仍主导估值；当前5.80元缺乏安全边际，维持不买。",
+  "fair_value_range": [
+    2.2,
+    3.4
+  ],
+  "buy_zone": [
+    1.5,
+    2.0
+  ],
+  "sell_or_reduce_zone": [
+    4.0,
+    5.2
+  ],
+  "position_plan": [
+    {
+      "condition": "ST、持续经营重大不确定性、诉讼担保和现金流风险未解除",
+      "action": "不买，维持0仓位",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格低于2.00元，且公告确认现金流改善、诉讼担保上限清晰、持续经营风险缓和",
+      "action": "可建立观察仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格低于1.50元，且ST撤销路径明确、经营现金流连续转正",
+      "action": "特殊情形小仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于4.00元且风险仍未解除",
+      "action": "不追高，已有仓位减持或清仓",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.0,
+      "reason": "进入安全边际观察区，需同时复核ST解除和现金流修复"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "reason": "高于不应追高价格，若风险未解除应降低风险敞口"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、诉讼担保进展和现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报、ST解除路径和债务偿还进展"
+    }
+  ],
+  "notes": [
+    "当前评级avoid；今天决策为不买。",
+    "当前价格按2026-07-17最近交易日5.80元估算，2026-07-19为周日。",
+    "2025年报审计意见含持续经营重大不确定性段落。",
+    "2025年末披露已到期未能按期归还大额债务112491.48万元。",
+    "投资者诉讼与对外担保预计负债合计11153.07万元，实际结果仍有不确定性。",
+    "除非ST解除、经营现金流转正、诉讼担保上限清晰且价格低于2.00元，否则不建仓。"
+  ]
+}

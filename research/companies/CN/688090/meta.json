@@ -1,0 +1,91 @@
+{
+  "symbol": "CN:688090",
+  "market": "CN",
+  "ticker": "688090",
+  "name": "瑞松科技",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "瑞松科技具备汽车焊装与智能制造系统集成经验，并在机器视觉、工业软件、高精高速机器人和具身智能相关方向形成期权，但当前可核验利润仍薄、项目制波动明显。2026Q1 改善值得跟踪，然而 2026-07-17 股价约 71.17 元已隐含高确定性平台化成功，较 20-28 元基准合理价值区间明显透支，当前不具备安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    20,
+    28
+  ],
+  "buy_zone": [
+    14,
+    20
+  ],
+  "sell_or_reduce_zone": [
+    45,
+    70
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格显著高于基准合理价值区间，且机器人本体、机器视觉、工业软件的独立收入和利润贡献尚未充分核验，不新建仓。",
+      "action": "avoid_new_position",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "若股价跌入 20 元以下，且最近两个季度收入增长、扣非净利率、经营现金流未恶化，可建立观察仓。",
+      "action": "watch_starter_position",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若连续两个季度收入同比超过 25%、扣非净利率超过 8%、经营现金流同步为正，并披露产品化业务可持续订单，可上调配置上限。",
+      "action": "increase_after_validation",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 22,
+      "reason": "接近基准合理价值区间上沿，需重新评估是否具备观察仓安全边际。"
+    },
+    {
+      "type": "price_above",
+      "price": 80,
+      "reason": "估值进一步脱离可核验盈利能力，需复核主题泡沫和减持/质押风险。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年半年报收入、扣非净利率、经营现金流、合同负债、应收账款和产品化业务披露。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断 Q1 改善是否可持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报，重点检查机器人本体、机器视觉、工业软件是否贡献可持续利润。"
+    }
+  ],
+  "valuation": {
+    "base_case_per_share": [
+      20,
+      28
+    ],
+    "bear_case_per_share": [
+      12,
+      16
+    ],
+    "bull_case_per_share": [
+      45,
+      55
+    ],
+    "reference_price": 71.17,
+    "reference_price_date": "2026-07-17"
+  },
+  "confidence": "medium"
+}

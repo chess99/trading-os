@@ -1,0 +1,75 @@
+{
+  "symbol": "CN:000078",
+  "market": "CN",
+  "ticker": "000078",
+  "name": "ST海王",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "current_thesis": "avoid；ST海王当前核心矛盾是内控否定意见、财报保留意见、高杠杆、应收账款减值和退市风险警示路径未解除。2026-07-17收盘1.95元、总市值约51.31亿元，相对2025年归母权益12.27亿元并不便宜，当前不具备安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [0.70, 1.20],
+  "buy_zone": [0.00, 0.70],
+  "sell_or_reduce_zone": [1.20, 999.00],
+  "position_plan": [
+    {
+      "condition": "price_above_1.20_or_risks_unresolved",
+      "action": "avoid",
+      "max_weight": 0
+    },
+    {
+      "condition": "price_0.70_to_1.20_risks_unresolved",
+      "action": "watch_only",
+      "max_weight": 0
+    },
+    {
+      "condition": "price_0.50_to_0.70_and_audit_remediation_evidence",
+      "action": "speculative_watch",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price_below_0.50_and_clear_restructuring_or_debt_solution",
+      "action": "event_driven_only",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.70,
+      "reason": "重新评估但不自动买入；需同时确认内控整改获审计认可、非标事项实质澄清、无新增资金占用或违规担保"
+    },
+    {
+      "type": "price_below",
+      "price": 0.50,
+      "reason": "仅在重整或债务解决路径明确时评估极小仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 1.20,
+      "reason": "不追高；已持有者若退市风险警示落地、再次非标或新增担保/占款，应降至0仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-26",
+      "reason": "预约披露2026年半年报，核对应收减值、亏损、现金流和ST整改"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "2026年年报和内控审计意见决定是否撤销ST或触发退市风险警示"
+    }
+  ],
+  "notes": [
+    "第一笔仓位0%；质量评级D；估值评级高估/无安全边际；置信度中等偏高。",
+    "核心复查重点为内控整改、非标事项商业实质/资金占用认定、应收账款回款、授信与债务展期、监管问询或诉讼。",
+    "买入区间仅代表价格触发复核，不代表基本面风险未解除时可机械买入。"
+  ]
+}

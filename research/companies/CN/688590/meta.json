@@ -1,0 +1,69 @@
+{
+  "symbol": "CN:688590",
+  "market": "CN",
+  "ticker": "688590",
+  "name": "新致软件",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "新致软件具备金融IT客户基础和AI智能体产品化期权，但2025年亏损、毛利率下行、应收账款与短债压力较重，当前价格已部分反映修复预期；等待毛利率、扣非利润和经营现金流验证后再提高仓位。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    8.5,
+    11.5
+  ],
+  "buy_zone": [
+    0,
+    8.5
+  ],
+  "sell_or_reduce_zone": [
+    14,
+    16.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于8.5元，且最新定期报告未显示应收账款、短期借款或主营毛利率进一步恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "连续两个季度扣非利润转正、经营现金流改善且主营毛利率回到21%以上",
+      "action": "提高到核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "股价高于14元但毛利率、现金流和创新业务盈利未同步改善",
+      "action": "不追高并降低仓位",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 8.5,
+      "reason": "进入估算买入区，若基本面未恶化可重新评估建仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 14,
+      "reason": "价格进入乐观情景区间，需要基本面兑现支撑，否则风险收益转弱。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查毛利率、应收账款、存货、短期借款和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认扣非利润与AI创新业务是否出现可持续改善。"
+    }
+  ]
+}

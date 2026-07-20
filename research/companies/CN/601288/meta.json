@@ -1,0 +1,32 @@
+{
+  "symbol": "CN:601288",
+  "market": "CN",
+  "ticker": "601288",
+  "name": "农业银行",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "ROE稳定10%、不良与拨备改善、股息率4%的国有大行；当前PB 0.76x/PE 7.7x已部分计入红利修复溢价，估值合理偏低，缺乏显著安全边际，观察为主。",
+  "fair_value_range": [5.2, 6.8],
+  "buy_zone": [4.6, 5.5],
+  "sell_or_reduce_zone": [7.2, 8.5],
+  "position_plan": [
+    {"condition": "股价处于合理偏低区间(5.50-6.40)且基本面未恶化", "max_weight": 0.03},
+    {"condition": "股价处于有安全边际的买入区间(4.60-5.50)", "max_weight": 0.05},
+    {"condition": "股价处于强吸引力区间(<=4.60)且基本面未恶化", "max_weight": 0.07},
+    {"condition": "股价处于合理偏高区间(6.40-7.20)", "max_weight": 0.02},
+    {"condition": "基本面恶化(不良率>1.40%或NIM<1.10%或分红率下调)", "max_weight": 0.015}
+  ],
+  "latest_report": "reports/2026-07-07-initial.md",
+  "report_history": ["reports/2026-07-07-initial.md"],
+  "review_triggers": [
+    {"type": "date", "date": "2026-08-30", "reason": "2026半年报披露后核查NIM、不良率、中收、分红方案"},
+    {"type": "date", "date": "2027-04-30", "reason": "2026年报披露后复查ROE、分红率与资产质量趋势"}
+  ],
+  "price_triggers": [
+    {"type": "price_below", "price": 5.5, "reason": "进入有安全边际的买入区间，PB约0.70x，股息率约4.5%"},
+    {"type": "price_below", "price": 4.6, "reason": "进入强吸引力买入区间，PB约0.58x，股息率约5.4%"},
+    {"type": "price_above", "price": 7.2, "reason": "进入合理偏高区间，不应追高，估值透支未来一年盈利"}
+  ],
+  "updated_at": "2026-07-07T13:30:00+08:00"
+}

@@ -1,0 +1,137 @@
+{
+  "symbol": "CN:300032",
+  "market": "CN",
+  "ticker": "300032",
+  "name": "金龙机电",
+  "company_name": "金龙机电股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "2025年表面扭亏但扣非仍亏损，2026Q1收入同比下滑且归母净利转负；当前约3.53元价格对应约4.4倍2026Q1归母净资产，显著高于困境制造公司的合理安全边际。只有价格回到1.50元以下或扣非盈利连续转正后，才值得重新评估小仓位买入。",
+  "quality_rating": "低",
+  "valuation_rating": "贵",
+  "fair_value_range": [
+    1.3,
+    2.1
+  ],
+  "buy_zone": [
+    0,
+    1.5
+  ],
+  "sell_or_reduce_zone": [
+    3,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价高于2.10元且扣非净利润未连续两个季度转正",
+      "action": "不买或减仓",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价跌至1.30-1.50元且经营现金流仍为正、货币资金未明显恶化",
+      "action": "可建立观察仓",
+      "target_position": "0.5%-1.0%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "扣非净利润连续两个季度为正、毛利率稳定在15%以上、经营现金流为正",
+      "action": "可提高至小仓配置",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "年化扣非净利润达到5000万元以上且非一次性收益驱动",
+      "action": "重新估值后决定是否加仓",
+      "target_position": "最高3%",
+      "max_weight": 0.03
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.5,
+      "currency": "CNY",
+      "reason": "低于安全边际买入区上沿",
+      "action": "进入买入区复核"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "currency": "CNY",
+      "reason": "高于合理价值区间且经营修复尚未确认",
+      "action": "估值过热复核，已有仓位考虑减仓"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "currency": "CNY",
+      "reason": "价格显著脱离当前基本面支撑",
+      "action": "强制复核卖出或减仓理由"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "验证扣非盈利是否真正修复",
+      "condition": "任何季度扣非归母净利润超过1500万元且经营现金流为正",
+      "action": "重新评估是否由观察转为小仓买入"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "验证收入增长和毛利率改善是否同步发生",
+      "condition": "任一季度收入同比增长超过20%且毛利率提高超过2个百分点",
+      "action": "复核成长性和估值上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "评估潜在股权摊薄和融资用途影响",
+      "condition": "定增实施、终止或发行方案发生重大变化",
+      "action": "复核摊薄和资金用途"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "客户集中度是收入和议价能力的核心风险",
+      "condition": "前五大客户销售占比或第一大客户订单发生重大变化",
+      "action": "复核客户集中风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "存货减值会直接影响资产质量和利润可靠性",
+      "condition": "存货跌价准备继续显著扩大",
+      "action": "复核资产质量和盈利预测"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "治理事件进展会影响内控风险判断",
+      "condition": "前员工涉嫌职务侵占案件出现判决或重大进展",
+      "action": "复核治理和内控风险"
+    }
+  ],
+  "key_tracking_metrics": [
+    "扣非归母净利润",
+    "综合毛利率及结构件、触控显示模组毛利率",
+    "营业收入同比增速",
+    "经营活动现金流量净额",
+    "前五大客户销售占比",
+    "应收账款周转与账龄",
+    "存货余额及存货跌价准备",
+    "货币资金与有息负债",
+    "研发费用率与研发人员数量",
+    "定增进展及摊薄比例"
+  ]
+}

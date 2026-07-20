@@ -1,0 +1,138 @@
+{
+  "symbol": "CN:002530",
+  "market": "CN",
+  "ticker": "002530",
+  "name": "金财互联",
+  "company_name": "金财互联控股股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-12",
+  "latest_report": "reports/2026-07-12-initial.md",
+  "report_history": [
+    "reports/2026-07-12-initial.md"
+  ],
+  "rating": "不买",
+  "current_rating": "avoid",
+  "current_thesis": "公司已从财税数字化标签切换为热处理、精密零部件和机器人轴承预期驱动的制造业平台。2025年热处理收入占比100%，经营现金流好于净利润，但当前约52.30亿元市值对应约77.7倍TTM市盈率，已显著预支机器人/高端轴承业务兑现。等待价格回到4.2元以下或连续季度证明利润进入1.2亿元以上年化区间。",
+  "quality_rating": "B-",
+  "valuation_rating": "D",
+  "fair_value_range": [
+    3.8,
+    5.2
+  ],
+  "buy_zone": [
+    3.4,
+    4.2
+  ],
+  "sell_or_reduce_zone": [
+    5.5,
+    6.0
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 3.4 CNY",
+      "price": "<=3.4 CNY",
+      "position": "4%-6%",
+      "max_weight": 0.06,
+      "action": "strong_buy"
+    },
+    {
+      "condition": "3.4 CNY < price <= 4.2 CNY",
+      "price": "3.4-4.2 CNY",
+      "position": "2%-3%",
+      "max_weight": 0.03,
+      "action": "buy"
+    },
+    {
+      "condition": "4.2 CNY < price <= 5.2 CNY",
+      "price": "4.2-5.2 CNY",
+      "position": "0%-1%",
+      "max_weight": 0.01,
+      "action": "watch"
+    },
+    {
+      "condition": "price > 5.2 CNY",
+      "price": ">5.2 CNY",
+      "position": "0%",
+      "max_weight": 0.0,
+      "action": "avoid"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.2,
+      "condition": "price <= 4.2 CNY",
+      "reason": "进入有安全边际买入区间",
+      "action": "review_for_buy"
+    },
+    {
+      "type": "price_below",
+      "price": 3.4,
+      "condition": "price <= 3.4 CNY",
+      "reason": "进入强吸引力买入区间",
+      "action": "strong_buy_review"
+    },
+    {
+      "type": "price_above",
+      "price": 5.5,
+      "condition": "price >= 5.5 CNY",
+      "reason": "高于合理价值区间上沿，不应追高",
+      "action": "do_not_chase"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "condition": "price > 6.0 CNY",
+      "reason": "明显依赖乐观情景兑现",
+      "action": "avoid_or_reduce"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026年中报披露",
+      "reason": "中报可验证收入修复、毛利率和现金流是否继续改善",
+      "focus": "复查收入、毛利率、经营现金流和并购资产贡献"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "机器人轴承或高端精密零部件披露可核验收入、订单、客户或产能利用率",
+      "reason": "当前估值主要依赖机器人和高端轴承预期兑现",
+      "focus": "重新评估成长置信度和估值上限"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "连续两个季度经营现金流为负",
+      "reason": "现金流恶化会削弱利润质量和安全边际",
+      "focus": "检查利润质量和仓位风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "TTM归母净利润低于6000万元或扣非利润重新转负",
+      "reason": "盈利能力低于基准估值锚",
+      "focus": "下修质量评级和合理价值"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "condition": "出现商誉减值、高溢价并购或明显稀释性再融资",
+      "reason": "资本配置纪律是当前转型阶段的核心风险",
+      "focus": "复核资本配置纪律"
+    }
+  ],
+  "key_tracking_metrics": [
+    "单季营业收入同比增速",
+    "热处理主业毛利率",
+    "经营现金流净额/归母净利润",
+    "应收账款和存货相对收入增速",
+    "机器人轴承及高端精密零部件订单和收入",
+    "无锡孚尔、三立轴承等并购资产利润贡献",
+    "分红、回购、再融资和商誉减值"
+  ]
+}

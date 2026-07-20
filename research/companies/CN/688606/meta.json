@@ -1,0 +1,74 @@
+{
+  "symbol": "CN:688606",
+  "market": "CN",
+  "ticker": "688606",
+  "name": "奥泰生物",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "奥泰生物是现金资产托底的出口型 POCT 平台公司，当前估值低于净资产且净现金占市值比例高；非新冠业务仍保持盈利，毒品及药物滥用检测和海外注册能力是主要增长点。2026Q1 利润下滑显著，需用限仓和后续财报验证来控制风险。",
+  "rating": "buy",
+  "current_rating": "buy",
+  "fair_value_range": [
+    55,
+    65
+  ],
+  "buy_zone": [
+    40,
+    48
+  ],
+  "sell_or_reduce_zone": [
+    68,
+    75
+  ],
+  "position_plan": [
+    {
+      "condition": "股价位于40-48元且资产负债表未恶化时建立或维持基础仓位",
+      "action": "buy_in_batches",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026H1或2026H2扣非利润恢复、海外收入止跌且毛利率维持约50%时提高仓位",
+      "action": "add",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "扣非利润连续恶化、现金被低回报并购消耗或海外监管风险实质损害订单时降仓",
+      "action": "reduce_or_exit",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 40,
+      "reason": "低于悲观情景每股价值下沿时复核资产负债表和订单后考虑补仓"
+    },
+    {
+      "type": "price_above",
+      "price": 68,
+      "reason": "高于基准估值上沿且利润未同步上修时分批减持"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点检查海外收入、扣非利润、毛利率和现金变化"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断Q1利润下滑是否延续"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报和资本配置，更新估值区间"
+    }
+  ]
+}

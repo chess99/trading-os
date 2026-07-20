@@ -1,0 +1,72 @@
+{
+  "symbol": "CN:300506",
+  "ticker": "300506",
+  "name": "名家汇",
+  "market": "CN",
+  "exchange": "SZSE",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "重整完成和撤销其他风险警示修复了资产负债表，但经营端仍未证明恢复能力；当前约44亿元市值已计入较乐观的植物照明和景观照明复苏预期，安全边际不足。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    2.0,
+    3.4
+  ],
+  "buy_zone": [
+    0.0,
+    2.2
+  ],
+  "sell_or_reduce_zone": [
+    5.5,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前不建仓；仅当股价低于2.2元且2026中报显示收入恢复、毛利率为正、经营现金流明显改善时，允许建立观察仓。",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "若2026H2连续两个季度经营现金流转正且植物照明合同确认收入并回款，再评估是否提高至小仓位。",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "若股价高于5.5元而没有连续盈利和现金流验证，维持零仓位或回避。",
+      "max_weight": 0.0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.2,
+      "reason": "进入保守买区上沿，若经营数据同步改善，可重新评估观察仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 5.5,
+      "reason": "价格接近乐观情景估值上沿，若缺少收入、利润和现金流验证，应回避或减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-30",
+      "reason": "复核2026半年报收入、毛利率、经营现金流、应收账款和合同资产。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026三季报及植物照明框架合同履约、回款、诉讼仲裁进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报，判断重整后经营修复是否成立。"
+    }
+  ]
+}

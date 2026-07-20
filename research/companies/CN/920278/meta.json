@@ -1,0 +1,52 @@
+{
+  "symbol": "CN:920278",
+  "market": "CN",
+  "ticker": "920278",
+  "name": "鹿得医疗",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "海外ODM家用医疗器械业务现金基础尚可，但护城河偏弱、2026Q1主业盈利恶化，当前价格已过度计入新品认证与利润率修复预期。",
+  "fair_value_range": [3.2, 4.0],
+  "buy_zone": [2.4, 3.0],
+  "sell_or_reduce_zone": [4.8, 6.5],
+  "position_plan": [
+    {
+      "condition": "股价处于2.4至3.0元且半年报验证毛利率、主业利润和现金流未继续恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价低于2.4元、核心假设重新验证且产业园无重大超支或延期",
+      "max_weight": 0.015
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报的毛利率、剔除联营收益后的主业利润、经营现金流和新品订单"
+    },
+    {
+      "type": "date",
+      "date": "2027-06-30",
+      "reason": "复查智慧产业园完工、累计投入、转固折旧和产能利用率"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 3.0,
+      "reason": "进入可重新核验基本面与安全边际的买入观察区间"
+    },
+    {
+      "type": "price_above",
+      "price": 4.8,
+      "reason": "进入减仓或不应追高区间，需盈利上修才能支撑估值"
+    }
+  ],
+  "updated_at": "2026-07-19T00:09:59+08:00"
+}

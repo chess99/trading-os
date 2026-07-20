@@ -1,0 +1,113 @@
+{
+  "symbol": "CN:002728",
+  "market": "CN",
+  "ticker": "002728",
+  "name": "特一药业",
+  "company_name": "特一药业集团股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "特一药业具备止咳宝片等 OTC 品牌资产和低基数修复弹性，但 2026Q1 收入与利润同比回落，尚未证明渠道改革和利润恢复可持续。当前约 9 元以上价格隐含较高恢复预期，缺乏安全边际；低于 6.2 元且收入、现金流改善后才适合小仓位分批买入。",
+  "quality_rating": "中",
+  "valuation_rating": "偏贵",
+  "fair_value_range": [
+    6.0,
+    8.0
+  ],
+  "buy_zone": [
+    0,
+    6.2
+  ],
+  "sell_or_reduce_zone": [
+    10.5,
+    999
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "股价低于 6.2 元，且最近两个季度收入不再同比下滑、经营现金流为正",
+      "action": "分批买入",
+      "target_position": "1%-2%",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价在 6.2-7.0 元，且止咳宝片恢复、销售费用率下降得到验证",
+      "action": "建立观察仓",
+      "target_position": "0.5%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价在 7.0-10.5 元，且基本面没有超预期改善",
+      "action": "继续观察，不加仓",
+      "target_position": "0%",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价高于 10.5 元，且 2026 年利润未超过 1.5 亿元",
+      "action": "减仓或不参与",
+      "target_position": "0%",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 6.2,
+      "unit": "CNY/share",
+      "reason": "进入估算买入区间，需要复核基本面是否同步改善",
+      "action": "复核买入条件"
+    },
+    {
+      "type": "price_above",
+      "price": 10.5,
+      "unit": "CNY/share",
+      "reason": "价格高于估值上沿且可能透支恢复预期",
+      "action": "复核减仓或卖出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "condition": "2026 年中报披露后",
+      "reason": "验证 2026Q1 下滑是否只是短期波动",
+      "action": "复核收入增速、净利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "condition": "2026 年三季报披露后",
+      "reason": "判断营销改革和核心品种恢复是否具备连续性",
+      "action": "复核收入恢复和销售费用率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "condition": "2026 年年报披露后",
+      "reason": "用全年数据检验正常化利润和资本回报率",
+      "action": "复核全年利润、现金流和 ROE"
+    },
+    {
+      "type": "date",
+      "date": "2027-08-31",
+      "condition": "2027 年中报披露后",
+      "reason": "观察核心 OTC 品种增长持续性和估值上修条件",
+      "action": "复核核心 OTC 品种增长持续性"
+    }
+  ],
+  "key_tracking_metrics": [
+    "营业收入同比增速",
+    "归母净利润与扣非归母净利润",
+    "经营现金流净额/净利润",
+    "销售费用率",
+    "止咳宝片终端动销或单品收入",
+    "存货周转和应收账款周转",
+    "ROE"
+  ]
+}

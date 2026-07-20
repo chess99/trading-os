@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:688056",
+  "market": "CN",
+  "ticker": "688056",
+  "name": "莱伯泰科",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-18",
+  "latest_report": "reports/2026-07-18-initial.md",
+  "report_history": [
+    "reports/2026-07-18-initial.md"
+  ],
+  "current_thesis": "莱伯泰科具备国产科学仪器和样品前处理细分技术积累，现金资产稳健、研发强度较高，但2026Q1收入利润下滑，半导体相关收入占比低且估值已提前反映乐观预期，当前应观察等待更好的安全边际或订单兑现。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    32,
+    40
+  ],
+  "buy_zone": [
+    24,
+    30
+  ],
+  "sell_or_reduce_zone": [
+    50,
+    60
+  ],
+  "position_plan": [
+    {
+      "condition": "股价跌至30元以下，且最近一期财报收入未继续两位数下滑、经营现金流无显著恶化",
+      "action": "建立观察仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价跌至24-26元，且公司现金资产稳健、研发投入维持、无重大产品或治理风险",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "连续两个季度收入同比转正，且ICP-MS或半导体客户收入出现财报级别验证",
+      "action": "重新评估是否上调评级",
+      "max_weight": 0.06
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 30,
+      "reason": "进入初始买入观察区，估值接近基准情景合理下沿"
+    },
+    {
+      "type": "price_below",
+      "price": 24,
+      "reason": "进入较强安全边际区，可在基本面未恶化前提下提高仓位"
+    },
+    {
+      "type": "price_above",
+      "price": 50,
+      "reason": "估值重新高于基准公允区间，若无订单和利润兑现应减仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，确认收入、利润、现金流、半导体收入和耗材服务占比"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断收入是否恢复增长以及估值是否仍有安全边际"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报，确认全年增长、现金转化和国产替代兑现情况"
+    }
+  ]
+}

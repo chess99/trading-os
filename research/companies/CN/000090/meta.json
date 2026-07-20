@@ -1,0 +1,88 @@
+{
+  "symbol": "CN:000090",
+  "market": "CN",
+  "ticker": "000090",
+  "name": "天健集团",
+  "company_name": "天健集团",
+  "status": "active",
+  "updated_at": "2026-07-10",
+  "latest_report": "reports/2026-07-10-initial.md",
+  "report_history": [
+    "reports/2026-07-10-initial.md"
+  ],
+  "rating": "watch",
+  "current_rating": "watch",
+  "current_thesis": "深圳国资市政施工与综合开发平台具备资产折价修复价值，但2025年ROE、经营现金流和地产存货/合同资产质量尚未证明恢复，适合小仓观察而非重仓买入。",
+  "quality_rating": "medium_low",
+  "valuation_rating": "undervalued_with_risk",
+  "fair_value_range": [
+    3.6,
+    4.4
+  ],
+  "buy_zone": [
+    2.6,
+    3.1
+  ],
+  "sell_or_reduce_zone": [
+    4.6,
+    5.2
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "price <= 3.10 and no new material impairment or liquidity warning",
+      "action": "initiate_tracking_position",
+      "max_weight": 0.015,
+      "reason": "Low P/B and Shenzhen SOE asset base justify a small tracking position, but weak ROE and cash conversion limit sizing."
+    },
+    {
+      "condition": "operating_cash_flow_positive_two_reports and inventory_or_contract_assets_decline",
+      "action": "add_selectively",
+      "max_weight": 0.03,
+      "reason": "Cash recovery and balance-sheet shrinkage would validate the asset discount thesis."
+    },
+    {
+      "condition": "price >= 4.60 without ROE and cash-flow recovery",
+      "action": "reduce_or_exit",
+      "max_weight": 0.005,
+      "reason": "Upside from P/B re-rating would be largely priced while earnings quality remains unproven."
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.8,
+      "reason": "Review for first-position or add opportunity if no new impairment, debt, or cash-flow deterioration appears."
+    },
+    {
+      "type": "price_above",
+      "price": 4.6,
+      "reason": "Review for reduction because price would approach the upper fair-value band without confirmed ROE recovery."
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "Review 2026 interim report for operating cash flow, contract assets, receivables, inventory, and segment margins."
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "Review 2026 third-quarter report and construction operating brief for order quality and cash conversion."
+    }
+  ],
+  "key_tracking_metrics": [
+    "operating_cash_flow_net",
+    "accounts_receivable",
+    "contract_assets",
+    "inventory",
+    "construction_new_contract_value",
+    "construction_gross_margin",
+    "property_unsold_and_unrecognized_area",
+    "interest_bearing_debt_refinancing_cost",
+    "dividend_per_share",
+    "roe"
+  ]
+}

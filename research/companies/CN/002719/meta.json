@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:002719",
+  "market": "CN",
+  "ticker": "002719",
+  "name": "ST麦趣",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-19",
+  "latest_report": "reports/2026-07-19-initial.md",
+  "report_history": [
+    "reports/2026-07-19-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "ST麦趣存在持续经营重大不确定性、现金链紧张、失信被执行和债权人再次拟申请破产清算等风险；当前价格明显高于困境资产可承保价值，评级为avoid。",
+  "fair_value_range": [
+    0.3,
+    1.2
+  ],
+  "buy_zone": [
+    0.0,
+    0.6
+  ],
+  "sell_or_reduce_zone": [
+    1.5,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格约5.68元，破产清算、失信被执行、持续经营重大不确定性均未解除",
+      "action": "回避或清仓，不新建仓位",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格跌破1.20元但司法和债务风险未实质解除",
+      "action": "仅观察，不买入",
+      "max_weight": 0
+    },
+    {
+      "condition": "价格跌破0.60元，法院未受理破产清算，失信记录解除，债务展期落地且经营现金流连续两个季度转正",
+      "action": "可作为困境反转期权小仓试探",
+      "max_weight": 0.25
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入困境资产复核区，但仍需确认司法、失信和债务展期进展"
+    },
+    {
+      "type": "price_below",
+      "price": 0.6,
+      "reason": "进入极小仓位可买区前置价格条件"
+    },
+    {
+      "type": "price_above",
+      "price": 1.5,
+      "reason": "高于困境估值上沿，历史持仓应减仓或退出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报，重点看现金流、净资产、失信和破产清算进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，确认扣非亏损和经营现金流是否改善"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、审计意见和是否具备撤销ST条件"
+    }
+  ],
+  "notes": [
+    "2026-04-29起因连续三年扣非前后孰低净利润为负且2025年审计报告显示持续经营不确定性被实施其他风险警示。",
+    "2026-07-14公告显示债权人拟再次申请公司破产清算，若法院受理可能触发退市风险警示。",
+    "2026Q1归母净资产约1.09亿元，当前价格约5.68元对应PB约9.1倍，缺乏安全边际。",
+    "本轮研究下载的公告原文存放于sources目录，未修改coverage、index、schedule、alerts或其他公司目录。"
+  ]
+}

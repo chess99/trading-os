@@ -1,0 +1,76 @@
+{
+  "symbol": "CN:002598",
+  "ticker": "002598",
+  "name": "山东章鼓",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "current_thesis": "公司具备老牌风机、工业泵和水处理设备基础，但 2026 年 ST、内控否定意见和前期虚假记载使治理折价成为主矛盾；在整改有效性被年度审计确认前，仅适合作为观察标的，需以显著低于基准价值的价格补偿治理与周期风险。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.8,
+    6.2
+  ],
+  "buy_zone": [
+    0,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.2,
+    9
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于 4.8 元，2026H1 经营现金流为正，扣非净利润未明显恶化，且无新增监管处罚或非标审计风险。",
+      "action": "small_watch_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "2026 年报确认财务报告内部控制恢复有效，ST 摘帽路径清晰，收入恢复正增长且经营现金流覆盖净利润。",
+      "action": "increase_after_governance_repair",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "出现新增非标审计意见、资金占用、重大处罚、经营现金流持续弱于净利润或股价高于 7.2 元但治理未修复。",
+      "action": "avoid_or_reduce",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入基准买区下沿，价格开始补偿 ST 与内控治理风险。"
+    },
+    {
+      "type": "price_above",
+      "price": 7.2,
+      "reason": "高于减持区下沿，在治理未被审计确认修复前风险收益比不足。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 半年报收入、扣非利润、经营现金流、应收和存货变化。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 三季报及 ST/内控整改进展。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报、内部控制审计意见和是否具备摘帽条件。"
+    }
+  ],
+  "decision": "观察",
+  "confidence": "中"
+}

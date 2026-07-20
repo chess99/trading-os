@@ -1,0 +1,48 @@
+{
+  "symbol": "CN:603828",
+  "market": "CN",
+  "ticker": "603828",
+  "name": "*ST利达",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "连续两年内控否定、保留意见、立案调查和退市风险尚未解除，主业负自由现金流且现价约5倍PB显著贵于盈利同业，应避免买入。",
+  "fair_value_range": [0.4, 0.9],
+  "buy_zone": [0, 0],
+  "sell_or_reduce_zone": [1.2, 10.0],
+  "position_plan": [
+    {
+      "condition": "退市风险、立案调查和控制权变更均未获得审计及监管层面的实质解决",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年度报告、现金流和应收资产质量"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年度审计及内控意见、退市风险警示撤销条件"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.9,
+      "reason": "进入基本面公允价值区，仅触发重新研究，不构成自动买入"
+    },
+    {
+      "type": "price_above",
+      "price": 1.2,
+      "reason": "显著高于公允价值上沿，应减仓或避免追高"
+    }
+  ],
+  "updated_at": "2026-07-20T00:00:00+08:00"
+}

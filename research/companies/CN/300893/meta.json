@@ -1,0 +1,79 @@
+{
+  "symbol": "CN:300893",
+  "ticker": "300893",
+  "market": "CN",
+  "currency": "CNY",
+  "name": "松原安全",
+  "updated_at": "2026-07-15",
+  "status": "active",
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "松原安全是国内汽车被动安全系统高纯度标的，安全带提供利润基本盘，气囊、方向盘、汽车电子和海外基地提供增长弹性。当前价格约15元对应2026年合理利润中枢约14-15倍PE，已反映部分行业价格战和现金流压力，但尚未充分定价品类扩张。主要约束是经营现金流弱、客户集中度高和扩产节奏风险，因此只适合分批买入而非重仓。",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "fair_value_range": [
+    18.0,
+    24.0
+  ],
+  "buy_zone": [
+    12.0,
+    15.5
+  ],
+  "sell_or_reduce_zone": [
+    24.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "12.0-14.0元且订单、毛利率、经营现金流未恶化",
+      "action": "提高至核心观察仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "14.0-15.5元且2026Q2扣非利润保持双位数增长",
+      "action": "分批买入",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "15.5-18.0元且经营现金流/净利润未改善至40%以上",
+      "action": "仅持有不加仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "24.0元以上且现金流仍明显弱于利润",
+      "action": "减仓锁定收益",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 12.0,
+      "reason": "若基本面未恶化，进入悲观情景估值下沿，安全边际显著提高。"
+    },
+    {
+      "type": "price_above",
+      "price": 24.0,
+      "reason": "进入合理价值上沿，需要现金流和2026业绩兑现支撑，否则应减仓。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入增速、扣非利润、存货和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报是否接近股权激励触发值轨迹。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、全年经营现金流和2027年订单能见度。"
+    }
+  ]
+}

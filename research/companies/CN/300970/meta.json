@@ -1,0 +1,90 @@
+{
+  "symbol": "CN:300970",
+  "ticker": "300970",
+  "name": "华绿生物",
+  "company_name": "江苏华绿生物科技集团股份有限公司",
+  "market": "CN",
+  "currency": "CNY",
+  "updated_at": "2026-07-15",
+  "latest_report": "reports/2026-07-15-initial.md",
+  "report_history": [
+    "reports/2026-07-15-initial.md"
+  ],
+  "status": "active",
+  "rating": "buy",
+  "current_rating": "buy",
+  "current_thesis": "华绿生物处于金针菇价格周期修复和产能利用率改善阶段，2026Q1 已验证利润弹性；低负债、现金充足和鹿茸菇/黄牛肝菌项目提供中期上行期权。当前估值约 12 倍 TTM PE，处于买入区，但食用菌价格周期和新项目执行仍需用后续季度验证。",
+  "fair_value_range": [
+    19.0,
+    25.0
+  ],
+  "buy_zone": [
+    14.5,
+    17.5
+  ],
+  "sell_or_reduce_zone": [
+    25.0,
+    30.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格处于 14.5-17.5 元买入区且未出现价格周期恶化或治理异常",
+      "action": "建立初始仓位",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "股价低于 15.0 元且 2026Q2/Q3 经营现金流和利润未明显恶化",
+      "action": "分批加仓",
+      "max_weight": 0.03
+    },
+    {
+      "condition": "2026H2 证明净利率韧性、鹿茸菇或黄牛肝菌项目按计划推进",
+      "action": "提高到组合上限",
+      "max_weight": 0.04
+    },
+    {
+      "condition": "股价高于 25.0 元但利润和新品商业化未同步兑现",
+      "action": "降低仓位",
+      "max_weight": 0.02
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 14.5,
+      "reason": "进入更高安全边际区，若基本面无恶化可复核加仓。"
+    },
+    {
+      "type": "price_below",
+      "price": 13.0,
+      "reason": "触发强制复核，判断是否为行业价格崩塌或公司项目/治理风险。"
+    },
+    {
+      "type": "price_above",
+      "price": 25.0,
+      "reason": "进入减持观察区，需要利润和新品项目兑现支撑更高估值。"
+    },
+    {
+      "type": "price_above",
+      "price": 30.0,
+      "reason": "若缺乏黄牛肝菌商业化验证，按周期高景气兑现处理。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核 2026 年中报，重点看金针菇价格回落后的净利率、现金流和项目资本开支。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核 2026 年三季报，判断 Q1 高景气是否可持续。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核 2026 年报和鹿茸菇、黄牛肝菌项目推进情况。"
+    }
+  ]
+}

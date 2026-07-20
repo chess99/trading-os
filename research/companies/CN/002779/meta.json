@@ -1,0 +1,135 @@
+{
+  "symbol": "CN:002779",
+  "market": "CN",
+  "ticker": "002779",
+  "name": "中坚科技",
+  "company_name": "浙江中坚科技股份有限公司",
+  "status": "active",
+  "updated_at": "2026-07-13",
+  "latest_report": "reports/2026-07-13-initial.md",
+  "report_history": [
+    "reports/2026-07-13-initial.md"
+  ],
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "current_thesis": "中坚科技有园林机械出口制造底盘和机器人割草机/具身机器人期权，但2025年利润主要受非经常性收益拉动，扣非利润下降且经营现金流为负；当前市场价格已提前反映高成功概率，缺少足够安全边际。",
+  "quality_rating": "中",
+  "valuation_rating": "显著偏贵",
+  "fair_value_range": [
+    18,
+    32
+  ],
+  "buy_zone": [
+    22,
+    28
+  ],
+  "sell_or_reduce_zone": [
+    55,
+    70
+  ],
+  "currency": "CNY",
+  "base_currency": "CNY",
+  "position_plan": [
+    {
+      "condition": "价格低于22元，且公司未出现监管结论恶化、现金流进一步失控或核心客户流失",
+      "action": "可建立3%-5%标准仓",
+      "max_weight": 0.05
+    },
+    {
+      "condition": "价格位于22-28元，且机器人割草机开始出现可核验订单或传统业务现金流改善",
+      "action": "仅建立1%-2%跟踪仓",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "价格高于28元但低于55元，且没有连续两个季度机器人收入与毛利兑现",
+      "action": "不新增，只跟踪",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格高于55元，且缺少机器人规模收入、经营现金流转正或监管风险解除",
+      "action": "减仓至0%-1%",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "价格高于70元，且基本面证据仍停留在概念或小批量阶段",
+      "action": "卖出或不参与",
+      "max_weight": 0
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 28,
+      "unit": "CNY/share",
+      "reason": "进入跟踪买入区间上沿",
+      "action": "进入可研究跟踪仓区间，复核订单、现金流和监管事项。"
+    },
+    {
+      "type": "price_below",
+      "price": 22,
+      "unit": "CNY/share",
+      "reason": "进入具备较好安全边际的买入区",
+      "action": "若基本面无恶化，可考虑建立标准仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 55,
+      "unit": "CNY/share",
+      "reason": "价格高于减仓区下沿且估值依赖机器人兑现",
+      "action": "若缺少机器人收入兑现，减仓或维持空仓。"
+    },
+    {
+      "type": "price_above",
+      "price": 70,
+      "unit": "CNY/share",
+      "reason": "价格明显透支当前可验证基本面",
+      "action": "估值显著透支，卖出或不参与。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "披露2026年半年报或年度报告",
+      "condition": "披露2026年半年报或年度报告",
+      "action": "复核收入、扣非利润和经营现金流。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "披露机器人割草机或智能机器人业务大额订单、渠道销售数据、毛利率或量产进展",
+      "condition": "披露机器人割草机或智能机器人业务大额订单、渠道销售数据、毛利率或量产进展",
+      "action": "重新评估机器人期权价值和仓位上限。"
+    },
+    {
+      "type": "date",
+      "date": "2026-12-31",
+      "reason": "中国证监会立案调查出现结论性公告",
+      "condition": "中国证监会立案调查出现结论性公告",
+      "action": "复核治理风险和估值折价。"
+    },
+    {
+      "type": "date",
+      "date": "2027-03-31",
+      "reason": "H股发行时间表、融资用途或发行价格有实质进展",
+      "condition": "H股发行时间表、融资用途或发行价格有实质进展",
+      "action": "复核资本配置和稀释影响。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "应收账款或存货连续两个季度显著快于收入增长",
+      "condition": "应收账款或存货连续两个季度显著快于收入增长",
+      "action": "下调财务质量评级和合理估值。"
+    }
+  ],
+  "key_tracking_metrics": [
+    "机器人割草机/智能产品收入及订单金额",
+    "扣非归母净利润及扣非净利率",
+    "经营活动现金流净额与现金流/扣非净利润比率",
+    "应收账款和存货周转天数",
+    "海外收入占比、主要客户集中度和汇率影响",
+    "研发费用率及研发投入转化为产品收入的速度",
+    "监管调查结论和H股发行进展"
+  ]
+}

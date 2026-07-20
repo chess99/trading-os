@@ -1,0 +1,43 @@
+{
+  "symbol": "CN:000056",
+  "market": "CN",
+  "ticker": "000056",
+  "name": "*ST皇庭",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "普通股清偿价值为零且现有经营无法覆盖融资成本，在法院受理重整、足额化债及可接受审计意见落地前，当前市值主要是无证据的保壳期权。",
+  "fair_value_range": [0, 0.35],
+  "buy_zone": [0, 0],
+  "sell_or_reduce_zone": [0.35, 5],
+  "position_plan": [
+    {
+      "condition": "未出现具有法律约束力且足以使净资产转正、消除无法表示意见的低稀释重整或化债方案",
+      "max_weight": 0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报、净资产变化、审计风险与化债进展"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.3,
+      "reason": "仅触发困境期权重估，不因价格下跌自动买入"
+    },
+    {
+      "type": "price_above",
+      "price": 0.35,
+      "reason": "高于概率加权合理价值上限，应减持或继续回避"
+    }
+  ],
+  "updated_at": "2026-07-19T15:55:00+08:00"
+}
