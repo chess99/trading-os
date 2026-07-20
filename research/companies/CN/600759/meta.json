@@ -1,0 +1,96 @@
+{
+  "symbol": "CN:600759",
+  "market": "CN",
+  "ticker": "600759",
+  "name": "ST洲际",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-20",
+  "latest_report": "reports/2026-07-20-initial.md",
+  "report_history": [
+    "reports/2026-07-20-initial.md"
+  ],
+  "current_thesis": "公司拥有海外油气产量和较高账面净资产，但2025年审计保留意见、关联方非经营性资金占用、内控缺陷、控股股东股份冻结和ST状态显著削弱估值可信度。2026Q1利润改善但经营现金流大幅背离，需要半年报验证回款。当前价格高于风险折价后的合理区间，回避新买入。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.35,
+    2.05
+  ],
+  "buy_zone": [
+    0.95,
+    1.35
+  ],
+  "sell_or_reduce_zone": [
+    2.2,
+    2.8
+  ],
+  "position_plan": [
+    {
+      "condition": "price_above_2.20_or_audit_internal_control_risk_unresolved",
+      "action": "avoid_new_buying_and_reduce_existing_position_on_strength",
+      "max_weight": 0
+    },
+    {
+      "condition": "price_between_1.35_and_1.70_with_no_new_regulatory_or_cash_occupation_risk",
+      "action": "research_position_only_after_cash_collection_evidence",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "price_below_1.35_and_2026_interim_report_confirms_operating_cash_flow_recovery",
+      "action": "small_initial_position",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "price_below_1.05_with_no_delisting_audit_or_major_litigation_deterioration",
+      "action": "high_risk_deep_value_position",
+      "max_weight": 0.04
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.35,
+      "reason": "进入有安全边际买入区，需同时复核半年报现金流和内控整改"
+    },
+    {
+      "type": "price_below",
+      "price": 1.05,
+      "reason": "进入强吸引力买入区，但仍需确认无新增退市、审计、诉讼和资金占用风险"
+    },
+    {
+      "type": "price_above",
+      "price": 2.2,
+      "reason": "超过风险折价后合理区间上沿，不应追高"
+    },
+    {
+      "type": "price_above",
+      "price": 2.8,
+      "reason": "明显高于乐观情景估值，持仓应减仓或退出"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026半年报：应收账款回款、经营现金流、资金占用和内控整改"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查2026三季报：油价弹性是否转化为持续现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年报、审计意见、内控意见和ST撤销可能性"
+    }
+  ],
+  "notes": [
+    "当前股价2.76元和总市值约114.51亿元取自腾讯行情接口，时间为2026-07-20 16:14:45。",
+    "2025年报披露大华会计师事务所出具保留意见，关联方及关联交易完整性、准确性审计范围受限。",
+    "2025年报重要提示披露存在控股股东及其他关联方非经营性占用资金情况。",
+    "2026Q1归母净利润1.108亿元但经营现金流仅0.094亿元，公司解释为3月外销原油集中形成应收账款，需半年报验证。",
+    "油气储量、海外项目可采价值和关联方完整清单无法由公开资料完全核验，资产估值采用显著折价。"
+  ]
+}
