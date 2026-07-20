@@ -1,0 +1,84 @@
+{
+  "symbol": "CN:300301",
+  "market": "CN",
+  "ticker": "300301",
+  "name": "ST长方",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-20",
+  "latest_report": "reports/2026-07-20-initial.md",
+  "report_history": [
+    "reports/2026-07-20-initial.md"
+  ],
+  "current_thesis": "ST长方当前主要是带债务重组期权的困境标的，连续亏损、净资产极薄、累计逾期债务显著高于净资产并伴随持续经营和诉讼风险；当前价格远高于资产和主营可支持区间，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    0.5,
+    1.1
+  ],
+  "buy_zone": [
+    0.3,
+    0.8
+  ],
+  "sell_or_reduce_zone": [
+    1.2,
+    3.39
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格高于1.20元或债务重组结果不可评估",
+      "action": "不新开仓，已有仓位退出或降至观察仓",
+      "max_weight": 0
+    },
+    {
+      "condition": "股价回落至0.30-0.80元且债务重组有债权人支持、逾期债务不再扩大",
+      "action": "仅允许困境重组策略小仓试错",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价低于0.30元且未进入明确退市执行阶段",
+      "action": "可重新评估清算价值和重组期权后小仓参与",
+      "max_weight": 0.005
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.8,
+      "reason": "进入安全边际观察区，但仍需债务重组进展配合"
+    },
+    {
+      "type": "price_below",
+      "price": 0.3,
+      "reason": "进入强吸引力困境期权区，需确认未触发明确退市路径"
+    },
+    {
+      "type": "price_above",
+      "price": 1.2,
+      "reason": "超过基本面可支持区间，不应追高或加仓"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报、净资产、现金流和收入扣除口径"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查三季报及债务重组、诉讼、ST风险进展"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年年报审计意见、持续经营事项和是否具备撤销风险警示基础"
+    }
+  ],
+  "notes": [
+    "当前股价3.39元为2026-07-20收盘快照，来源为中财网和腾讯行情接口。",
+    "2026-07-15公告显示累计逾期债务约3.15亿元，约为2025年经审计净资产的344.75%。",
+    "重大诉讼、庭外重组和未来审计意见对权益价值影响极大，相关数据置信度低于已披露财务报表。"
+  ]
+}
