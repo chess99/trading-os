@@ -1,0 +1,80 @@
+{
+  "symbol": "CN:603189",
+  "market": "CN",
+  "ticker": "603189",
+  "name": "*ST网达",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-20",
+  "latest_report": "reports/2026-07-20-initial.md",
+  "report_history": [
+    "reports/2026-07-20-initial.md"
+  ],
+  "current_thesis": "公司低负债和账面净资产提供一定缓冲，但2025年扣后收入低于3亿元且扣非亏损已触发退市风险警示，2026H1继续预亏；现价主要交易摘帽预期，缺乏安全边际，当前应观察/回避。",
+  "rating": "watch",
+  "current_rating": "watch",
+  "fair_value_range": [
+    4.8,
+    6.4
+  ],
+  "buy_zone": [
+    4.0,
+    4.8
+  ],
+  "sell_or_reduce_zone": [
+    7.0,
+    8.5
+  ],
+  "position_plan": [
+    {
+      "condition": "股价低于4.8元且2026年半年报或三季报显示扣非亏损明显收窄、扣后收入年化超过3亿元",
+      "action": "可建立第一笔跟踪仓",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "股价3.2-4.0元且无新增重大违法、审计、内控或退市进展风险",
+      "action": "可分批提高至困境反转仓",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "股价高于7.0元且尚未确认撤销退市风险警示条件",
+      "action": "不新增并降至跟踪仓",
+      "max_weight": 0.002
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 4.8,
+      "reason": "进入有安全边际观察区，需同步核验收入和扣非改善"
+    },
+    {
+      "type": "price_below",
+      "price": 4.0,
+      "reason": "进入强吸引力困境反转价格区，但需确认无新增退市/监管风险"
+    },
+    {
+      "type": "price_above",
+      "price": 7.0,
+      "reason": "价格开始透支摘帽预期，建议减仓或不追高"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报收入、扣非亏损、现金流和退市风险"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核2026年三季报，判断全年扣后收入超过3亿元和扣非转正概率"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年年报、审计意见、内控意见及撤销退市风险警示条件"
+    }
+  ],
+  "notes": "低置信度事项包括重大诉讼/仲裁完整性、资金占用/违规担保完整核验、控股股东质押冻结最新状态，以及2026年项目验收和扣后收入能否超过3亿元。"
+}
