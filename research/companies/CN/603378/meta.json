@@ -5,81 +5,61 @@
   "name": "*ST亚士",
   "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-20T00:00:00+08:00",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST亚士当前主要价值来自净资产转正、债务重组和撤销退市风险警示的期权，而不是正常经营利润。2025年归母净资产为负、2025年内控审计否定意见、2026年仍有债务逾期/诉讼/庭外重组和控股股东股份司法拍卖风险，当前约20.74亿元市值对乐观情景定价偏充分。",
-  "rating": "avoid",
   "current_rating": "avoid",
+  "current_thesis": "现价主要交易债务重组和保壳期权，而非可持续自由现金流；在净资产转正、债务实质削减和审计风险解除前应回避。",
   "fair_value_range": [
-    1.6,
-    3.2
+    1.2,
+    2.4
   ],
   "buy_zone": [
-    0.0,
-    2.3
+    0.8,
+    1.3
   ],
   "sell_or_reduce_zone": [
-    4.0,
-    999.0
+    3.0,
+    99.0
   ],
   "position_plan": [
     {
-      "condition": "price > 4.00",
+      "condition": "股价高于1.30元，或净资产修复、债务重组、审计和控制权任一核心假设恶化",
       "max_weight": 0.0
     },
     {
-      "condition": "3.20 < price <= 4.00",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "2.30 < price <= 3.20",
-      "max_weight": 0.0025
-    },
-    {
-      "condition": "1.60 <= price <= 2.30",
+      "condition": "股价处于0.80至1.30元且重组方案可执行、无新增致命退市或清算风险",
       "max_weight": 0.005
     },
     {
-      "condition": "price < 1.60 and no new fatal delisting/legal/control risk",
-      "max_weight": 0.01
+      "condition": "股价低于0.80元且重新核验长期商业价值未受损、赔率确有改善",
+      "max_weight": 0.005
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "reason": "允许评估第一笔0.5%以内研究仓，前提是无新增重大违法、无法披露定报或清算恶化信号。"
-    },
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入强吸引力观察区，可按重整期权重新评估0.5%-1.0%仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "不追高，已有仓位应评估减仓，除非同时披露可执行的净资产修复和债务重组方案。"
-    }
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复查2026年半年报、归母净资产、诉讼债务进展和庭外重组方案。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报经营现金流、债务逾期变化和控股股东司法拍卖结果。"
+      "reason": "复查半年报、债权申报规模、归母净资产、经营现金流与重组方案。"
     },
     {
       "type": "date",
       "date": "2027-04-30",
-      "reason": "复查2026年报审计意见、内控意见、净资产是否转正及是否触发终止上市风险。"
+      "reason": "复查2026年报审计意见、内控整改、净资产是否转正及终止上市风险。"
     }
   ],
-  "notes": "低置信度事项：2026-07-20当前股价和市值来自公开行情页搜索结果，未直接使用交易所行情源；2026年一季报部分细项、诉讼仲裁逐笔金额、客户地区结构和重组条款未完整核验。核心已核验风险包括2025年归母净资产为负、内控审计否定意见、债务逾期/诉讼/庭外重组公告及控股股东股份司法拍卖提示。"
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.3,
+      "reason": "进入研究仓评估区，但必须先重新核验重组、退市和清算风险。"
+    },
+    {
+      "type": "price_above",
+      "price": 3.0,
+      "reason": "进入减仓或不应追高区间，除非可执行方案显著提高每股价值。"
+    }
+  ],
+  "updated_at": "2026-07-20T22:37:49+08:00"
 }
