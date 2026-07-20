@@ -2,136 +2,110 @@
   "symbol": "CN:300205",
   "market": "CN",
   "ticker": "300205",
-  "name": "天喻信息",
-  "company_name": "武汉天喻信息产业股份有限公司",
+  "name": "*ST天喻",
+  "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
+  "updated_at": "2026-07-20",
+  "latest_report": "reports/2026-07-20-initial.md",
   "report_history": [
-    "reports/2026-07-13-initial.md"
+    "reports/2026-07-20-initial.md"
   ],
+  "current_thesis": "*ST天喻仍处于OFAC SDN制裁、退市/其他风险警示申请未获明确同意、年报问询函延期、重大诉讼和治理修复交织阶段；2025年收入同比下降79.70%，2026Q1收入继续同比下降70.09%，当前约4.95元对应约21.3亿元市值和约5.1倍PB，已隐含较强摘帽与经营恢复预期，缺乏安全边际。",
   "rating": "avoid",
   "current_rating": "avoid",
-  "current_thesis": "公司仍处于*ST、OFAC SDN制裁、重大诉讼和治理修复叠加期；2025年收入同比下降79.70%，2026Q1收入继续同比下降70.09%，当前4.48元已定价较高反转概率，安全边际不足。",
-  "quality_rating": "低",
-  "valuation_rating": "偏贵",
   "fair_value_range": [
     2.0,
     3.2
   ],
   "buy_zone": [
-    2.0,
-    2.2
+    1.5,
+    2.0
   ],
   "sell_or_reduce_zone": [
     4.5,
     6.0
   ],
-  "currency": "CNY",
-  "base_currency": "CNY",
   "position_plan": [
     {
-      "condition": "价格高于3.2元且SDN/退市风险未解除",
-      "action": "不买",
-      "target_position_pct": 0,
-      "max_weight": 0
+      "condition": "当前价格高于4.5元，且OFAC SDN、退市风险警示、年报问询函和重大诉讼未全部落地解决",
+      "action": "不买不加仓，已有仓位降至观察仓或清仓",
+      "max_weight": 0.0
     },
     {
-      "condition": "价格低于2.2元且退市风险无新增恶化",
-      "action": "仅可建立事件观察仓",
-      "target_position_pct": 0.5,
+      "condition": "价格回落至2.0-3.2元，但SDN和退市风险警示仍未解决",
+      "action": "只跟踪不买，等待监管和经营现金流证据",
       "max_weight": 0.005
     },
     {
-      "condition": "价格低于2.0元，且现金、诉讼、审计意见稳定",
-      "action": "小仓试错",
-      "target_position_pct": 1.0,
+      "condition": "价格低于2.0元，且未新增重大违法强退、审计非标或诉讼执行恶化",
+      "action": "可建立事件观察仓，第一笔不超过0.5%",
       "max_weight": 0.01
     },
     {
-      "condition": "OFAC SDN正式移除、*ST撤销、单季收入恢复到0.8-1.0亿元以上",
-      "action": "重新估值后再决定是否提高仓位",
-      "target_position_pct": 2.0,
+      "condition": "价格低于1.5元，同时撤销风险警示或SDN移除至少一项取得明确正面进展",
+      "action": "可小额提高困境反转仓位，但仍按高风险资产管理",
+      "max_weight": 0.015
+    },
+    {
+      "condition": "OFAC SDN正式移除、退市及其他风险警示撤销、单季收入恢复到5000万元以上且经营现金流转正",
+      "action": "重新建模，届时再决定是否从avoid上调至watch或hold",
       "max_weight": 0.02
     }
   ],
   "price_triggers": [
     {
       "type": "price_below",
-      "price": 2.2,
-      "currency": "CNY",
-      "action": "进入观察仓复核",
-      "reason": "该价格开始接近受损净资产与事件期权的保守补偿区间。"
+      "price": 2.0,
+      "reason": "低于基准合理价值区间下沿，开始具备受损资产加反转期权的安全边际。"
     },
     {
       "type": "price_below",
-      "price": 2.0,
-      "currency": "CNY",
-      "action": "若基本面未恶化，评估小仓试错",
-      "reason": "低于合理价值区间下沿，安全边际相对改善。"
+      "price": 1.5,
+      "reason": "接近强吸引力买入价，若未新增退市和诉讼恶化，可复核小仓试错。"
     },
     {
       "type": "price_above",
       "price": 4.5,
-      "currency": "CNY",
-      "action": "无硬催化则回避或减仓",
-      "reason": "该价格已显著高于基准合理价值，需要硬催化支撑。"
+      "reason": "价格已进入乐观反转情景定价区间，若无硬催化支撑不应追高。"
+    },
+    {
+      "type": "price_above",
+      "price": 6.0,
+      "reason": "明显高于当前可验证基本面支持范围，应触发减仓或回避。"
     }
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "condition": "OFAC SDN名单状态发生变化",
-      "reason": "SDN是公司客户准入、结算和供应链恢复的首要变量。"
+      "reason": "复查深交所是否同意撤销退市风险警示和其他风险警示，以及年报问询函回复是否出现新增风险。"
     },
     {
       "type": "date",
       "date": "2026-08-31",
-      "condition": "深交所披露是否同意撤销退市风险警示",
-      "reason": "退市风险警示状态直接影响估值折价和交易可参与性。"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "重大诉讼二审或执行结果公告",
-      "reason": "诉讼结果会影响预计负债、受限资产和净资产质量。"
+      "reason": "复查OFAC SDN官方记录是否移除，SDN仍是在客户准入、外汇结算和供应链恢复中的首要变量。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "condition": "单季营业收入恢复到5000万元、8000万元或1亿元台阶",
-      "reason": "收入恢复是验证困境反转是否真实发生的核心经营指标。"
+      "reason": "复查2026年三季报，重点看单季收入是否恢复到3000万/5000万以上和经营现金流是否改善。"
     },
     {
       "type": "date",
       "date": "2026-10-31",
-      "condition": "经营现金流连续两个季度转正",
-      "reason": "现金流转正说明业务不再持续消耗有限现金安全垫。"
+      "reason": "复查受限货币资金、预计负债和重大诉讼执行情况，判断净资产质量是否继续恶化。"
     },
     {
       "type": "date",
-      "date": "2026-10-31",
-      "condition": "受限货币资金显著解除",
-      "reason": "受限资金释放会改善真实流动性和资产可用性。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "实际控制人或控股股东风险处置出现实质变化",
-      "reason": "治理修复是大客户恢复合作和估值折价收敛的前提。"
+      "date": "2027-04-30",
+      "reason": "复查2026年年报审计意见、内控审计意见、扣非收入与净资产是否满足持续上市安全边界。"
     }
   ],
-  "key_tracking_metrics": [
-    "OFAC SDN状态",
-    "退市风险警示状态",
-    "季度营业收入",
-    "季度归母净利润",
-    "季度经营现金流净额",
-    "受限货币资金金额",
-    "重大诉讼预计负债",
-    "前五大客户销售占比",
-    "eSIM/物联网收入",
-    "研发人员数量和研发费用"
+  "notes": [
+    "2026-07-20新浪行情接口显示当前价4.95元，按总股本430,056,000股估算总市值约21.3亿元；部分行情页显示4.94元，属于0.01元级差异。",
+    "2025年报显示收入1.72亿元、归母净利润-6.05亿元、经营现金流-8042.48万元；2026Q1收入1357.06万元、归母净利润-4260.43万元、经营现金流-1.08亿元。",
+    "OFAC官方SDN详情页截至2026-07-17更新仍列示WUHAN TIANYU INFORMATION INDUSTRY CO LTD，Program为RUSSIA-EO14024。",
+    "公司已申请撤销退市及其他风险警示，但截至公开报道和公告进展仍未见深交所明确同意，且年报问询函存在延期回复。",
+    "可比公司估值数据来自多家行情平台，口径和日期不完全一致，仅用于相对比较，置信度低于公司公告数据。"
   ]
 }
