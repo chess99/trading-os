@@ -1,0 +1,48 @@
+{
+  "symbol": "CN:603843",
+  "market": "CN",
+  "ticker": "603843",
+  "name": "*ST正平",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "预重整、债务削减和新业务兑现均未确定，现价对应约174倍2026Q1净资产且半年预亏将进一步侵蚀权益，普通股赔率极差。",
+  "fair_value_range": [0.4, 1.2],
+  "buy_zone": [0, 0],
+  "sell_or_reduce_zone": [1.5, 100],
+  "position_plan": [
+    {
+      "condition": "正式重整、完整债权、老股东稀释和持续正自由现金流均未得到验证前不持仓，价格下跌不构成加仓理由",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复核2026年半年报净资产、减值和经营现金流，并核对重整进展"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复核三季报、年末保壳可行性和正式重整是否受理"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.2,
+      "reason": "进入概率估值上沿以下，仅触发重整条款复核，不机械买入"
+    },
+    {
+      "type": "price_above",
+      "price": 1.5,
+      "reason": "高于风险调整后价值区间，应回避或减仓"
+    }
+  ],
+  "updated_at": "2026-07-20T16:47:19+08:00"
+}
