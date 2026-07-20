@@ -1,0 +1,48 @@
+{
+  "symbol": "CN:603557",
+  "market": "CN",
+  "ticker": "603557",
+  "name": "*ST起步",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "avoid",
+  "current_thesis": "铝加工并表提高了保壳收入概率，但低毛利、持续负自由现金流、保留审计意见和极高市净率使当前价格缺乏安全边际。",
+  "fair_value_range": [0.4, 1.2],
+  "buy_zone": [0, 0],
+  "sell_or_reduce_zone": [1.8, 3.97],
+  "position_plan": [
+    {
+      "condition": "当前评级为avoid，不建仓；价格下跌不构成机械买入或加仓理由",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "核验2026年半年报收入、铝加工毛利率、归母利润和经营现金流"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复核2026年报退市指标、审计意见和应收账款减值依据"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.4,
+      "reason": "仅复核审计、退市、现金流和归母利润假设，不是机械买入触发器"
+    },
+    {
+      "type": "price_above",
+      "price": 1.8,
+      "reason": "高于基准商业价值，应减仓或避免追高"
+    }
+  ],
+  "updated_at": "2026-07-20T19:45:00+08:00"
+}

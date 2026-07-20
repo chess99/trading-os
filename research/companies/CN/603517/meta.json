@@ -1,0 +1,56 @@
+{
+  "symbol": "CN:603517",
+  "market": "CN",
+  "ticker": "603517",
+  "name": "ST绝味",
+  "currency": "CNY",
+  "status": "active",
+  "current_rating": "watch",
+  "current_thesis": "全国品牌与加盟冷链网络仍能产生现金，但收入尚未止跌、资本回报低且治理折价未消，10.42元已接近公允价值上沿。",
+  "fair_value_range": [8.0, 10.5],
+  "buy_zone": [6.5, 7.5],
+  "sell_or_reduce_zone": [11.5, 13.5],
+  "position_plan": [
+    {
+      "condition": "股价处于6.5至7.5元且收入降幅收窄、经营现金流恢复、治理与摘帽路径未恶化",
+      "max_weight": 0.01
+    },
+    {
+      "condition": "连续两个报告期验证收入或同店改善、自由现金流转正且非核心投资拖累收敛",
+      "max_weight": 0.02
+    },
+    {
+      "condition": "基本面或治理假设恶化时不因价格下跌补仓",
+      "max_weight": 0.0
+    }
+  ],
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-21",
+      "reason": "复核2026年半年报收入、门店、利润率、补税现金支付与自由现金流"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-01",
+      "reason": "行政处罚满12个月后复核撤销其他风险警示申请及交易所进度"
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 7.5,
+      "reason": "进入可能具备安全边际的买入区间，需先重新验证核心假设"
+    },
+    {
+      "type": "price_above",
+      "price": 11.5,
+      "reason": "进入减仓或不应追高区间"
+    }
+  ],
+  "updated_at": "2026-07-20T00:00:00+08:00"
+}

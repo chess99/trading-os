@@ -1,0 +1,85 @@
+{
+  "symbol": "CN:603378",
+  "market": "CN",
+  "ticker": "603378",
+  "name": "*ST亚士",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-20T00:00:00+08:00",
+  "latest_report": "reports/2026-07-20-initial.md",
+  "report_history": [
+    "reports/2026-07-20-initial.md"
+  ],
+  "current_thesis": "*ST亚士当前主要价值来自净资产转正、债务重组和撤销退市风险警示的期权，而不是正常经营利润。2025年归母净资产为负、2025年内控审计否定意见、2026年仍有债务逾期/诉讼/庭外重组和控股股东股份司法拍卖风险，当前约20.74亿元市值对乐观情景定价偏充分。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.6,
+    3.2
+  ],
+  "buy_zone": [
+    0.0,
+    2.3
+  ],
+  "sell_or_reduce_zone": [
+    4.0,
+    999.0
+  ],
+  "position_plan": [
+    {
+      "condition": "price > 4.00",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "3.20 < price <= 4.00",
+      "max_weight": 0.0
+    },
+    {
+      "condition": "2.30 < price <= 3.20",
+      "max_weight": 0.0025
+    },
+    {
+      "condition": "1.60 <= price <= 2.30",
+      "max_weight": 0.005
+    },
+    {
+      "condition": "price < 1.60 and no new fatal delisting/legal/control risk",
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 2.3,
+      "reason": "允许评估第一笔0.5%以内研究仓，前提是无新增重大违法、无法披露定报或清算恶化信号。"
+    },
+    {
+      "type": "price_below",
+      "price": 1.6,
+      "reason": "进入强吸引力观察区，可按重整期权重新评估0.5%-1.0%仓位。"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "reason": "不追高，已有仓位应评估减仓，除非同时披露可执行的净资产修复和债务重组方案。"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "reason": "复查2026年半年报、归母净资产、诉讼债务进展和庭外重组方案。"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "reason": "复查三季报经营现金流、债务逾期变化和控股股东司法拍卖结果。"
+    },
+    {
+      "type": "date",
+      "date": "2027-04-30",
+      "reason": "复查2026年报审计意见、内控意见、净资产是否转正及是否触发终止上市风险。"
+    }
+  ],
+  "notes": "低置信度事项：2026-07-20当前股价和市值来自公开行情页搜索结果，未直接使用交易所行情源；2026年一季报部分细项、诉讼仲裁逐笔金额、客户地区结构和重组条款未完整核验。核心已核验风险包括2025年归母净资产为负、内控审计否定意见、债务逾期/诉讼/庭外重组公告及控股股东股份司法拍卖提示。"
+}

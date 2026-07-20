@@ -1,0 +1,77 @@
+{
+  "symbol": "CN:603398",
+  "market": "CN",
+  "ticker": "603398",
+  "name": "*ST沐邦",
+  "currency": "CNY",
+  "status": "active",
+  "updated_at": "2026-07-20",
+  "latest_report": "reports/2026-07-20-initial.md",
+  "report_history": [
+    "reports/2026-07-20-initial.md"
+  ],
+  "current_thesis": "公司处于ST困境状态，2025年大额亏损、2026Q1资产负债率接近100%、2026H1预亏且全资孙公司进入预重整，历史内控和信息披露信用受损。当前约44.10亿元市值显著高于困境资产基准价值，缺乏安全边际。",
+  "rating": "avoid",
+  "current_rating": "avoid",
+  "fair_value_range": [
+    1.5,
+    3.0
+  ],
+  "buy_zone": [
+    0.0,
+    1.5
+  ],
+  "sell_or_reduce_zone": [
+    4.0,
+    99.0
+  ],
+  "position_plan": [
+    {
+      "condition": "当前价格10.17元且重整/退市风险未消除",
+      "action": "不买入，不参与反弹或摘帽/重整主题追涨",
+      "target_position_pct": 0,
+      "max_weight": 0
+    },
+    {
+      "condition": "价格低于1.50元且重整方案、债务削减和退市风险改善可核验",
+      "action": "重新评估是否具备困境小仓位安全边际",
+      "target_position_pct": 1,
+      "max_weight": 0.01
+    }
+  ],
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 1.5,
+      "action": "重新评估是否具备困境小仓位安全边际",
+      "reason": "低于合理区间下沿后才可能补偿重整和退市风险"
+    },
+    {
+      "type": "price_below",
+      "price": 0.8,
+      "action": "仅在重整方案和退市风险可核验改善时考虑观察性试仓",
+      "reason": "该价格接近悲观困境期权区间，仍需基本面事件确认"
+    },
+    {
+      "type": "price_above",
+      "price": 4.0,
+      "action": "不追高，维持回避",
+      "reason": "高于困境资产乐观估值上沿后风险补偿明显不足"
+    }
+  ],
+  "review_triggers": [
+    {
+      "type": "date",
+      "date": "2026-08-31",
+      "action": "复核2026半年报、净资产、预重整和诉讼仲裁进展",
+      "reason": "半年报将验证净资产是否转负、持续经营和退市风险是否升级"
+    },
+    {
+      "type": "date",
+      "date": "2026-10-31",
+      "action": "复核2026三季报现金流、债务到期和风险警示状态",
+      "reason": "三季报将验证经营现金流、债务展期和ST风险解除进度"
+    }
+  ],
+  "notes": "2026-07-20收盘价10.17元，总市值约44.10亿元。报告中部分公告正文因交易所PDF反爬未完整抽取，诉讼金额、审计强调事项措辞、控股股东最新质押冻结等列为低置信度事项。"
+}
