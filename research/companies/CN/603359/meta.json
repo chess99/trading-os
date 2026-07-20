@@ -5,73 +5,57 @@
   "name": "*ST东珠",
   "currency": "CNY",
   "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "公司已触发财务类退市风险警示并叠加其他风险警示，2025年收入低于3亿元且大额亏损，内控审计否定、持续经营存在不确定性、诉讼仲裁和回款压力突出；当前价值主要来自困境资产折价和保壳期权，缺乏普通买方安全边际。",
-  "rating": "avoid",
   "current_rating": "avoid",
+  "current_thesis": "退市、审计与内控风险尚未解除，当前价格主要计入保壳期权而非可持续自由现金流，缺少安全边际。",
   "fair_value_range": [
-    0.9,
-    1.6
+    0.8,
+    1.5
   ],
   "buy_zone": [
-    0.9,
-    1.2
+    0.6,
+    0.9
   ],
   "sell_or_reduce_zone": [
     1.8,
-    2.6
+    2.8
   ],
   "position_plan": [
     {
-      "condition": "base_case_or_price_above_1.20",
-      "max_weight": 0
-    },
-    {
-      "condition": "price_between_0.90_and_1.20_with_verified_recovery_signals",
+      "condition": "股价处于0.60至0.90元且退市概率显著下降、重大回款或审计整改已由一手公告验证",
       "max_weight": 0.005
     },
     {
-      "condition": "price_below_0.90_with_no_incremental_delisting_or_litigation_deterioration",
-      "max_weight": 0.01
+      "condition": "基本面恶化、审计问题扩大或仅因价格下跌而未出现改善证据",
+      "max_weight": 0
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入观察仓评估，必须同时复核退市和回款改善证据"
-    },
-    {
-      "type": "price_below",
-      "price": 0.9,
-      "reason": "仅在风险未继续恶化时考虑困境资产小仓试错"
-    },
-    {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "不追高，已有仓位减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 2.0,
-      "reason": "视为保壳期权溢价偏高，降至0仓或极低仓位"
-    }
+  "latest_report": "reports/2026-07-14-initial.md",
+  "report_history": [
+    "reports/2026-07-14-initial.md"
   ],
   "review_triggers": [
     {
       "type": "date",
       "date": "2026-08-31",
-      "reason": "复核2026半年报、收入规模、亏损、现金流、诉讼和问询回复"
+      "reason": "复核2026年半年报、收入进度、回款、现金流和新增减值"
     },
     {
       "type": "date",
       "date": "2027-04-30",
-      "reason": "复核2026年报审计意见、内控意见和是否解除/延续退市风险"
+      "reason": "复核2026年年报退市指标、审计意见和内控意见"
     }
   ],
-  "notes": "2026-07-20收盘价2.06元、市值约9.19亿元；公司质量D，估值评级为高风险且无安全边际。低置信度事项包括2026-07-20晚间披露但公告日为2026-07-21的年报问询回复未完整纳入、潜在重整/保壳安排未核验、可比公司量化估值未逐一抓取。"
+  "price_triggers": [
+    {
+      "type": "price_below",
+      "price": 0.9,
+      "reason": "进入困境资产观察区，但必须先验证退市概率、回款和审计整改，禁止机械补仓"
+    },
+    {
+      "type": "price_above",
+      "price": 1.8,
+      "reason": "进入减仓或不应追高区间，保壳期权溢价偏高"
+    }
+  ],
+  "updated_at": "2026-07-20T22:05:39+08:00"
 }
