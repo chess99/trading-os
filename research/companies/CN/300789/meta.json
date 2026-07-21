@@ -1,83 +1,105 @@
 {
-  "symbol": "CN:300789",
-  "ticker": "300789",
-  "name": "唐源电气",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "轨交智能检测监测细分龙头之一，长期受益于铁路和城轨智能运维升级，但2025年业绩和现金流下滑、非核心钒钛业务拖累，当前估值已反映部分修复预期，需等待价格安全边际或经营拐点确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13.0,
-    17.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    24.0
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于12.5元，且2026年中报显示主业收入恢复、扣非利润未继续恶化，可建立观察仓。",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格接近10.5元，且经营活动现金流转正、钒钛新材料业务止亏或明显收缩，可提高配置。",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格高于20元但扣非净利润和现金流未验证修复，不新增仓位并考虑减仓。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入初步买入区，需要复核中报订单、毛利率和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入深度安全边际区，需要评估是否提升至3%以内仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过基准估值上沿，需要检查盈利修复是否足以支撑乐观估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非净利润、经营现金流、订单和钒钛业务减值情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认一季度修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估利润中枢和估值区间。"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "as_of": "2026-07-15",
-    "reference_price": 16.19,
-    "base_case_fair_value": 15.0,
-    "confidence": "medium"
+    "market": "CN",
+    "name": "唐源电气",
+    "security_status": "active",
+    "symbol": "CN:300789",
+    "ticker": "300789"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "6bd1ab0716981a82860d11e4d893e3ca6d227eb08aebe4db3a3646e42627f91d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非净利润、经营现金流、订单和钒钛业务减值情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认一季度修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估利润中枢和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入初步买入区，需要复核中报订单、毛利率和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入深度安全边际区，需要评估是否提升至3%以内仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过基准估值上沿，需要检查盈利修复是否足以支撑乐观估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

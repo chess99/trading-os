@@ -1,85 +1,105 @@
 {
-  "symbol": "CN:688682",
-  "market": "CN",
-  "ticker": "688682",
-  "name": "霍莱沃",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "霍莱沃具备电磁CAE、校准测量和相控阵工程闭环的稀缺性，2026Q1利润与回款边际修复，但2025年亏损和电磁测量系统毛利率下滑说明项目制波动仍大；当前价格约处于合理价值中部，缺少深度安全边际，等待价格低于买入区或中报验证毛利率与现金流修复。",
-  "fair_value_range": [
-    24,
-    34
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    39,
-    46
-  ],
-  "position_plan": [
-    {
-      "condition": "价格跌入20-23元且未出现毛利率、回款、核心人员继续恶化信号时，建立观察仓。",
-      "action": "buy_watch_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "2026H1或2026H2确认收入增长、综合毛利率回到28%以上、经营现金流转正后，再考虑加仓。",
-      "action": "add_after_validation",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格高于39元但CAE收入占比、毛利率和现金流未兑现时，避免追高或降低暴露。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入初始买入区，若基本面未恶化可重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入较有吸引力的安全边际区，需结合最新中报或季报验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 39,
-      "reason": "超过减持/降低暴露区间下沿，若业绩未同步兑现需控制估值回撤风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、毛利率、CAE收入占比、应收与经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否持续以及项目交付是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估中长期收入质量、研发转化和估值区间。"
-    }
-  ],
-  "last_price": {
-    "price": 28.99,
-    "date": "2026-07-17",
-    "source": "雪球/证券之星行情摘要"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "霍莱沃",
+    "security_status": "active",
+    "symbol": "CN:688682",
+    "ticker": "688682"
   },
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bffc852a60c82535315b1bf3c8f7d81149bd68e3c8b5e77bf033d5942e08b767"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、毛利率、CAE收入占比、应收与经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否持续以及项目交付是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估中长期收入质量、研发转化和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入初始买入区，若基本面未恶化可重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入较有吸引力的安全边际区，需结合最新中报或季报验证。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 39.0
+      },
+      "reason": "超过减持/降低暴露区间下沿，若业绩未同步兑现需控制估值回撤风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

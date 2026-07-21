@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:001872",
-  "market": "CN",
-  "ticker": "001872",
-  "name": "招商港口",
-  "company_name": "招商港口",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "招商港口是招商局集团旗下港口投资运营平台，当前约0.8倍PB和约3.8%股息率提供防守价值；核心收益来自港口现金流、参股优质港口资产、稳定分红和PB折价修复。主要约束是扣非利润增速一般、费率弹性有限和参股资产利润波动，因此适合小仓分批买入而非高仓位追涨。",
-  "quality_rating": "high",
-  "valuation_rating": "reasonable_to_cheap",
-  "fair_value_range": [
-    22.5,
-    26.5
-  ],
-  "buy_zone": [
-    18.5,
-    20.5
-  ],
-  "sell_or_reduce_zone": [
-    27.5,
-    30.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "招商港口",
+    "security_status": "active",
+    "symbol": "CN:001872",
+    "ticker": "001872"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "4492c4f1d94d48130bbe9fcc0ab0d3b22ba30333e71f15a07757020fe7f3afb9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于20.5元，且月度吞吐量、扣非利润和经营现金流未出现恶化",
-      "action": "建立或维持首笔仓位",
-      "max_weight": 0.02,
-      "reason": "当前估值约0.8倍PB，分红收益率有支撑，适合先以防守仓参与"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非利润、经营现金流、投资收益和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于19.0元，且2026年中报扣非利润不低于预期",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "进入更有安全边际的PB折价区，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及旺季吞吐量趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非利润恢复中个位数增长、分红率维持或提升、吞吐量持续跑赢行业",
-      "action": "提高为核心防守仓",
-      "max_weight": 0.06,
-      "reason": "基本面验证后可享受股息和估值修复双重收益"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
+      "reason": "进入初始买入区，可建立2%以内仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于27.5元但盈利和分红没有同步上修",
-      "action": "减仓",
-      "max_weight": 0.02,
-      "reason": "估值接近或超过合理PB上沿，低增长港口资产的性价比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入高安全边际加仓区，可复核基本面后提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.5
+      },
+      "reason": "进入减仓区，除非扣非利润或分红预期上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过乐观估值区，应明显降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.5,
-      "reason": "进入初始买入区，可建立2%以内仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "reason": "进入高安全边际加仓区，可复核基本面后提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 27.5,
-      "reason": "进入减仓区，除非扣非利润或分红预期上修"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "超过乐观估值区，应明显降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非利润、经营现金流、投资收益和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及旺季吞吐量趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度集装箱吞吐量同比增速",
-    "月度散杂货吞吐量同比增速",
-    "深圳西部港区箱量和费率变化",
-    "扣非归母净利润同比增速",
-    "经营现金流净额/归母净利润",
-    "投资收益和参股港口分红",
-    "每股分红和派息率",
-    "PB估值相对历史和可比港口公司的位置"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

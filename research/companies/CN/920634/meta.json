@@ -1,57 +1,96 @@
 {
-  "symbol": "CN:920634",
-  "market": "CN",
-  "ticker": "920634",
-  "name": "新威凌",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "锌粉头部地位尚未转化为高资本回报和稳定自由现金流，片状粉及铝粉仍待验证，而当前高估值已透支多项乐观假设。",
-  "fair_value_range": [8.0, 11.5],
-  "buy_zone": [6.5, 8.5],
-  "sell_or_reduce_zone": [13.0, 18.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新威凌",
+    "security_status": "active",
+    "symbol": "CN:920634",
+    "ticker": "920634"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "03ec1903733dfe6e99e060c6fcfc7db77f364b8de5b85831b54631c8a47785ae"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于6.50-8.50元、主业毛利率止跌、滚动四季度经营现金流改善且南通和铝粉项目未明显恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、滚动四季度现金流及应收存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于13元或经营现金流持续弱于净利润，不新增仓位并将已有仓位降至观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、南通基地建设和铝粉项目资金回报",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初步观察区，需重新验证现金流、毛利率和项目资本回报后才可试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "深度价值区也不能机械加仓，先排除基本面永久恶化和融资稀释",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入减仓或不应追高区间，除非自由现金流和新业务已显著超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、滚动四季度现金流及应收存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、南通基地建设和铝粉项目资金回报"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初步观察区，需重新验证现金流、毛利率和项目资本回报后才可试仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "深度价值区也不能机械加仓，先排除基本面永久恶化和融资稀释"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入减仓或不应追高区间，除非自由现金流和新业务已显著超预期"
-    }
-  ],
-  "updated_at": "2026-07-16T00:36:31+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

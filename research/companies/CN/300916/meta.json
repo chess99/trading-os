@@ -1,90 +1,105 @@
 {
-  "symbol": "CN:300916",
-  "ticker": "300916",
-  "name": "朗特智能",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "朗特智能已从智能控制器向储能智能产品、海外产能和新业务延伸，但2026Q1利润大幅下滑显示毛利率、汇率、客户集中和基地爬坡压力尚未消化；现价接近估值区间上沿，缺乏安全边际，等待半年度利润和现金流修复验证。",
-  "fair_value_range": [
-    16.0,
-    22.0
-  ],
-  "buy_zone": [
-    13.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗特智能",
+    "security_status": "active",
+    "symbol": "CN:300916",
+    "ticker": "300916"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "19209885f54e9e744e1a0017993a81cd9a54f403b3c650eadc66be75d9321981"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于买入区间且2026Q1利润失速尚未修复，仅观察不建核心仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、归母净利润、经营现金流、储能毛利率和客户集中度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15.5元，且2026半年度经营现金流转正、归母净利润恢复至2500万元以上。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认利润修复是否连续、泰国基地费用率是否下降。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于13元，且储能毛利率未继续恶化、第一大客户订单未出现重大流失。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新估算正常化盈利与长期估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利润恢复至2500万元以上，储能毛利率改善且泰国基地费用率下降。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入初始买入观察区，需同步核验半年报利润与现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "相对基准估值具备较大安全边际，可评估小仓位配置。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过当前情景估值上沿，若利润未兑现应降低仓位或继续观察。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入初始买入观察区，需同步核验半年报利润与现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "相对基准估值具备较大安全边际，可评估小仓位配置。"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过当前情景估值上沿，若利润未兑现应降低仓位或继续观察。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、归母净利润、经营现金流、储能毛利率和客户集中度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认利润修复是否连续、泰国基地费用率是否下降。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新估算正常化盈利与长期估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026半年度归母净利润是否恢复至2500万元以上",
-    "储能产品毛利率是否稳定在12%以上并逐步改善",
-    "经营活动现金流是否重新转正",
-    "第一大客户销售占比是否下降或订单是否稳定",
-    "泰国基地费用率和产能利用率",
-    "财务负责人补选及财报质量"
-  ],
-  "confidence": "中",
-  "decision": "观察"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,135 +1,134 @@
 {
-  "symbol": "CN:002518",
-  "market": "CN",
-  "ticker": "002518",
-  "name": "科士达",
-  "company_name": "深圳科士达科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "科士达是数据中心电力基础设施与新能源光储充双主业公司，2025年和2026Q1收入、利润、现金流均恢复增长，但2026-07-10收盘价40.99元已反映较多AIDC、储能和液冷预期；在液冷收入仍低、海外储能波动和减值核销仍需跟踪的情况下，缺少安全边际，等待31元以下或业绩继续上修。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    32,
-    38
-  ],
-  "buy_zone": [
-    26,
-    31
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    52
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科士达",
+    "security_status": "active",
+    "symbol": "CN:002518",
+    "ticker": "002518"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9f76322a83a2be12d2b86346a026df7796a79430c4872dfe94f418f918ab667e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在36元以上",
-      "action": "观察，不新增",
-      "position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格在31-36元",
-      "action": "小试或继续观察",
-      "position": "0%-10%",
-      "max_weight": 0.1
-    },
-    {
-      "condition": "价格在26-31元",
-      "action": "有安全边际买入",
-      "position": "15%-30%",
-      "max_weight": 0.3
-    },
-    {
-      "condition": "价格在26元以下",
-      "action": "强吸引力买入",
-      "position": "30%-60%",
-      "max_weight": 0.6
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "condition": "price <= 36",
-      "reason": "接近合理价值区间下半部",
-      "action": "重新评估半年报前景，可小试0%-10%目标仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 31,
-      "condition": "price <= 31",
-      "reason": "进入有安全边际买入区",
-      "action": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 26,
-      "condition": "price <= 26",
-      "reason": "进入强吸引力买入区",
-      "action": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 43,
-      "condition": "price >= 43",
-      "reason": "价格超过不应追高区间",
-      "action": "不追高，不新增仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "condition": "price >= 48 and fundamentals_not_upgraded",
-      "reason": "估值接近乐观情景且缺少业绩上修确认",
-      "action": "分批降低风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证数据中心和新能源恢复是否延续",
-      "action": "复查数据中心和新能源收入增速、毛利率、订单质量"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026三季报披露或公司披露重大订单",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证AIDC、液冷和海外储能是否形成实质业绩上修",
-      "action": "若AIDC大订单、液冷收入占比显著提升或海外储能订单超预期，提前复查估值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "验证全年利润质量和资产质量",
-      "action": "若经营现金流连续两个季度弱于净利润，或应收、存货减值继续扩大，提前下调评级"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-05-31",
-      "condition": "年度权益分派和股东持股更新",
+      "active": true,
+      "condition": {
+        "date": "2027-05-31"
+      },
       "reason": "验证分红和控股股东行为是否继续支持长期持有",
-      "action": "复查分红、控股股东或实际控制人减持、治理和资本配置信号"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "接近合理价值区间下半部",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 31.0
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 43.0
+      },
+      "reason": "价格超过不应追高区间",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "估值接近乐观情景且缺少业绩上修确认",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "数据中心业务收入增速",
-    "新能源光储充业务收入增速",
-    "归母净利率和扣非净利率",
-    "经营现金流净额/归母净利润",
-    "应收账款、存货和减值准备",
-    "液冷相关收入占比",
-    "海外储能订单和汇率影响",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

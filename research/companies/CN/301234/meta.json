@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301234",
-  "ticker": "301234",
-  "name": "五洲医疗",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "五洲医疗是低毛利、强竞争、外销占比极高的一次性无菌输注类耗材ODM/集成供应商；资产负债表稳且现金理财较厚，但主营盈利连续承压。2026年7月跨界收购旋智电子仍处筹划期，方案未披露前不计入正向估值。当前停牌前34元价格主要反映重组预期，明显高于可核验主营价值，维持观察。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    12,
-    19
-  ],
-  "buy_zone": [
-    10,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "五洲医疗",
+    "security_status": "active",
+    "symbol": "CN:301234",
+    "ticker": "301234"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e7113c0a5006094140455ad9e6a0132d37da07ecbb4051fd64947edef94714e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "重组方案未披露或仍无法核验旋智电子盈利质量，且股价高于22元",
-      "action": "不建仓，仅跟踪公告",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-07-22"
+      },
+      "reason": "停牌公告预计最晚披露重组方案或复牌安排，需要重估旋智电子交易影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于14元，且最近一期扣非净利润同比改善、经营现金流转正",
-      "action": "可建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非净利润、毛利率和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重组预案显示标的盈利真实、估值合理、股份稀释有限，同时主营毛利率连续两个季度改善",
-      "action": "复核后可提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及跨界并购进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入基于主营与账面资产的买入观察区间，需复核扣非利润和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "股价进入事件溢价区，若重组方案未充分证明价值，应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入基于主营与账面资产的买入观察区间，需复核扣非利润和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "股价进入事件溢价区，若重组方案未充分证明价值，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-22",
-      "reason": "停牌公告预计最晚披露重组方案或复牌安排，需要重估旋智电子交易影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非净利润、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及跨界并购进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

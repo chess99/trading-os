@@ -1,105 +1,110 @@
 {
-  "symbol": "CN:688368",
-  "market": "CN",
-  "ticker": "688368",
-  "name": "晶丰明源",
-  "company_name": "晶丰明源",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "晶丰明源正从LED照明驱动芯片龙头向电源管理和混合信号平台迁移，2025年转盈、2026Q1受高性能计算电源芯片放量与易冲科技并表带动继续修复；但以2026-07-17收盘价128元和约286.7亿元市值看，市场已提前反映较乐观的2026-2028年增长，当前安全边际不足，适合观察而非追买。",
-  "quality_rating": "B+",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    95,
-    140
-  ],
-  "buy_zone": [
-    70,
-    95
-  ],
-  "sell_or_reduce_zone": [
-    170,
-    230
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晶丰明源",
+    "security_status": "active",
+    "symbol": "CN:688368",
+    "ticker": "688368"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e1ed819c0a27dd07fcdc422d3135e457fa7dd3bf029999418bdc380c4e265d9c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "6e1e9e5bed46b2478c31e522d8ae392769ac85e15eadc0a8eb8e6172f2286ea3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于95元且2026H1业绩尚未披露或扣非净利率、经营现金流未连续验证",
-      "action": "仅保留研究跟踪，不主动买入",
-      "max_weight": 0.0,
-      "reason": "当前估值已经反映较多高性能计算电源和易冲科技整合预期，缺少足够安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查易冲科技并表、高性能计算电源芯片收入、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至70-95元，且最新财报显示综合毛利率不低于38%、经营现金流未显著恶化、易冲科技并表未拖累扣非利润",
-      "action": "建立小额观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入基准估值下沿附近，同时基本面修复仍在"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证扣非净利润率、研发费用率下降和应收存货周转",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于70元，且高性能计算电源芯片收入继续增长、易冲科技业绩承诺兑现、扣非净利润和经营现金流同步改善",
-      "action": "分批提高仓位",
-      "max_weight": 0.03,
-      "reason": "悲观估值附近出现基本面未破坏的错杀机会"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及易冲科技业绩承诺兑现情况，决定是否上修合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于170元但2026E归母净利润仍低于2.5亿元或毛利率、现金流低于预期",
-      "action": "减仓或回避",
-      "max_weight": 0.0,
-      "reason": "股价进入乐观情景区间，风险收益比转差"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入合理价值区间下沿，结合最新财报复核是否可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入悲观情景附近，若基本面未破坏可复核加仓机会",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 170.0
+      },
+      "reason": "进入减仓或回避区间，需要显著上修利润预期才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入合理价值区间下沿，结合最新财报复核是否可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入悲观情景附近，若基本面未破坏可复核加仓机会"
-    },
-    {
-      "type": "price_above",
-      "price": 170,
-      "reason": "进入减仓或回避区间，需要显著上修利润预期才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查易冲科技并表、高性能计算电源芯片收入、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证扣非净利润率、研发费用率下降和应收存货周转"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及易冲科技业绩承诺兑现情况，决定是否上修合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "综合毛利率",
-    "高性能计算电源芯片收入、毛利率和客户验证进展",
-    "电机控制驱动芯片收入占比和毛利率",
-    "易冲科技充电芯片业务净利润和其他电源管理芯片收入",
-    "研发费用率",
-    "经营活动现金流净额",
-    "存货余额、应收账款余额和周转天数",
-    "商誉及并购整合相关披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

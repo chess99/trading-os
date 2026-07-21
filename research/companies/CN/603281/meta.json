@@ -1,83 +1,105 @@
 {
-  "symbol": "CN:603281",
-  "market": "CN",
-  "ticker": "603281",
-  "name": "江瀚新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "江瀚新材是功能性硅烷龙头，具备宽产品谱系、产业链一体化和强净现金资产负债表。2025年行业低谷仍保持较好现金流，2026Q1收入和利润同比转正；若功能性硅烷价格修复延续，2026年盈利有望回到6亿至7亿元区间。当前估值接近合理价值下沿，可分批买入但需控制周期风险。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    21.0,
-    27.0
-  ],
-  "buy_zone": [
-    0.0,
-    19.0
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    38.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江瀚新材",
+    "security_status": "active",
+    "symbol": "CN:603281",
+    "ticker": "603281"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "22bfaab518aa5bf4cb69c57e349a7afffd01de976a2ba77d8bb5c11719570155"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于19元且功能性硅烷均价未继续恶化，建立或加至基础仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证利润修复、毛利率和在建工程进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报确认利润修复且毛利率环比改善，加至核心仓位",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断价格修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于30元或行业价格再次下行，停止加仓并评估减仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估正常化盈利和分红回购能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入估值和安全边际更舒服的分批买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "接近悲观情景含现金估值，可重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "进入减仓观察区，需确认高端产品和价格周期能否支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "reason": "进入估值和安全边际更舒服的分批买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "接近悲观情景含现金估值，可重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "进入减仓观察区，需确认高端产品和价格周期能否支撑更高估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证利润修复、毛利率和在建工程进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断价格修复是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估正常化盈利和分红回购能力"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 20.39,
-    "reference_price_date": "2026-07-17",
-    "reference_market_cap_cny_billion": 104.1,
-    "estimated_post_bonus_share_count_million": 518.636833,
-    "confidence_note": "行情源和半年度预增信息未能全部用交易所原文核验，关键财务数据以年报和一季度公告为准。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:920062",
-  "market": "CN",
-  "ticker": "920062",
-  "name": "科润智控",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "科润智控处于输配电设备景气赛道，海外业务和智能化产能有修复弹性，但2025年毛利率、扣非利润和ROE显著承压，按2026Q1 TTM盈利估值偏贵；当前应观察，等待毛利率、扣非净利率、经营现金流和债务结构连续改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.8,
-    9.2
-  ],
-  "buy_zone": [
-    5.2,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科润智控",
+    "security_status": "active",
+    "symbol": "CN:920062",
+    "ticker": "920062"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "940255ad80be84d17a9aeb823af8dfc920782639596d3b2e971ecd7fc9c9b4d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于6.2元且2026H1毛利率未继续恶化、扣非净利润同比改善时建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、扣非净利率、经营现金流、短债和海外收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价接近5.2元且经营现金流TTM为正、短债未继续扩张时提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度毛利率不低于14%、扣非净利率不低于2.5%、海外收入继续高增且股价不高于7元时转入买入候选",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新完整估值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入安全边际买入区上沿，需要复核2026H1毛利率、扣非净利润和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入深度安全边际区，需要判断是否为基本面恶化导致的价值陷阱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超出基准公允价值区间，若利润修复未兑现应考虑降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "接近乐观情景上沿，低利润状态下估值可能透支",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入安全边际买入区上沿，需要复核2026H1毛利率、扣非净利润和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入深度安全边际区，需要判断是否为基本面恶化导致的价值陷阱"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "超出基准公允价值区间，若利润修复未兑现应考虑降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "接近乐观情景上沿，低利润状态下估值可能透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、扣非净利率、经营现金流、短债和海外收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新完整估值和仓位上限"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

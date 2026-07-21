@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300902",
-  "ticker": "300902",
-  "name": "国安达",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国安达具备储能消防、电力电网消防和特殊场景应急救援技术积累，受益于储能安全监管强化和低空应急场景扩展；但2025年仍微亏、2026Q1收入和利润明显下滑，当前股价已透支修复和低空科技期权，适合观察不适合买入。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    9.5,
-    12.5
-  ],
-  "buy_zone": [
-    7.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国安达",
+    "security_status": "active",
+    "symbol": "CN:300902",
+    "ticker": "300902"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1ab05b062d6496b243b1b24b19935bc26432abb74b93c81c5598da1a244ed872"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.5元，且2026H1经营现金流没有继续恶化，储能业务毛利率未低于2025年水平",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、储能毛利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于7.5-8.5元，且储能收入继续增长、扣非亏损明显收窄",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认业绩修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润为正，储能消防毛利率回到30%以上，低空应急订单可量化",
-      "action": "重新估值后再决定是否提高仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和科卫泰/低空科技协同落地情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入初步买入区，需要复核半年报经营现金流和储能毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入深度安全边际区，需要评估是否存在基本面恶化导致的价值陷阱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "高于基准公允价值且接近牛市情景下沿，若业绩未转正应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入初步买入区，需要复核半年报经营现金流和储能毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入深度安全边际区，需要评估是否存在基本面恶化导致的价值陷阱"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "高于基准公允价值且接近牛市情景下沿，若业绩未转正应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、储能毛利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认业绩修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和科卫泰/低空科技协同落地情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

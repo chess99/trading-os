@@ -1,93 +1,125 @@
 {
-  "symbol": "CN:688777",
-  "market": "CN",
-  "ticker": "688777",
-  "name": "中控技术",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "公司是国内流程工业 DCS/SIS 龙头，工业 AI/TPT/UCS/AOP 具备真实产业入口和数据基础；但 2025 年收入、利润和 ROE 明显下滑，2026Q1 仍承压。2026-07-09 约 113 元价格对应约 897 亿元市值，已经提前定价工业 AI 高速放量和利润率恢复，安全边际不足。等待 60-75 元或工业 AI 收入、扣非利润、现金流连续验证后再考虑买入。",
-  "fair_value_range": [
-    70,
-    90
-  ],
-  "buy_zone": [
-    60,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    105,
-    130
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中控技术",
+    "security_status": "active",
+    "symbol": "CN:688777",
+    "ticker": "688777"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "14fdebab460176c061bb651b7d6fbeefea11e2e0789a3fb88d197fe64dc35377"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "100 元以上不建新仓，已有仓位控制为观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 中报披露后复核工业 AI 收入、扣非利润率、经营现金流和营运资本占用",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "75-90 元重点跟踪但不急于重仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 三季报后复核收入恢复、工业 AI 放量和回款质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "60-75 元且订单、回款、毛利率未恶化，可建 1%-2% 仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报后复核 DCS/SIS 份额、海外收入、工业软件占比和 ROE 是否回到资本成本以上",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "55-60 元且 2026 年收入恢复和工业 AI 商业化被验证，可加至 3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入买入观察区，需复核订单、毛利率、现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "55 元以下且核心假设重验通过后，最高 4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入买入区下沿，可考虑提高仓位但必须重验基本面",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "强吸引力价格，仅在核心假设未破坏时适用",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 105.0
+      },
+      "reason": "估值进入减仓区，除非工业 AI 与利润率已连续超预期",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 100.0
+      },
+      "reason": "不应追高",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 中报披露后复核工业 AI 收入、扣非利润率、经营现金流和营运资本占用"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 三季报后复核收入恢复、工业 AI 放量和回款质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报后复核 DCS/SIS 份额、海外收入、工业软件占比和 ROE 是否回到资本成本以上"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入买入观察区，需复核订单、毛利率、现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入买入区下沿，可考虑提高仓位但必须重验基本面"
-    },
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "强吸引力价格，仅在核心假设未破坏时适用"
-    },
-    {
-      "type": "price_above",
-      "price": 105,
-      "reason": "估值进入减仓区，除非工业 AI 与利润率已连续超预期"
-    },
-    {
-      "type": "price_above",
-      "price": 100,
-      "reason": "不应追高"
-    }
-  ],
-  "updated_at": "2026-07-09"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

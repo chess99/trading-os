@@ -1,130 +1,133 @@
 {
-  "symbol": "CN:300171",
-  "market": "CN",
-  "ticker": "300171",
-  "name": "东富龙",
-  "company_name": "东富龙科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国内制药装备头部公司，长期受益国产替代、生物工艺装备、耗材后市场和国际化；但 2025 年 ROE 仅 2.55%，国内收入下滑、工程业务低毛利、生物工艺毛利率承压，当前约 11.8 元接近合理区间中部，缺少明显安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    10.5,
-    14.0
-  ],
-  "buy_zone": [
-    0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东富龙",
+    "security_status": "active",
+    "symbol": "CN:300171",
+    "ticker": "300171"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "674750646e0ab25581576557bf0359f43875da8ac4b5111a2409440ec1ab09ef"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 9.5 元，且海外收入、合同负债、经营现金流没有明显恶化",
-      "action": "建立 2% 观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报披露后复核收入、毛利率、合同负债和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 8.5 元，且生物工艺毛利率企稳、经营现金流为正",
-      "action": "加到 4% 左右",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "国际收入增速连续两个季度明显低于公司整体增速",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于 10.5-14.0 元合理区间内",
-      "action": "只观察或持有已有小仓，等待订单和利润率确认",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "生物工艺装备及耗材毛利率未能从 2025 年 24.99% 修复",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于 15.5 元，但 ROE 仍低于 5% 或扣非利润未明显恢复",
-      "action": "减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "存货或合同履约成本继续出现大额减值",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "价格高于 18 元，且没有持续订单高增和毛利修复证据",
-      "action": "卖出或大幅降仓",
-      "max_weight": 0.001
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "经营现金流连续两个报告期为负或明显依赖新增预收款",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入可买价格区间，具备初始安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "价格低于保守买入区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "价格高于合理区间，需确认盈利修复是否匹配估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "估值进入偏高区间，缺少基本面强验证时安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
-      "action": "复核后建立小仓",
-      "reason": "进入可买价格区间，具备初始安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "action": "复核基本面后加仓",
-      "reason": "价格低于保守买入区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "currency": "CNY",
-      "action": "若盈利率未恢复则减仓",
-      "reason": "价格高于合理区间，需确认盈利修复是否匹配估值"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "currency": "CNY",
-      "action": "除非订单、毛利和现金流同时验证，否则卖出或大幅降仓",
-      "reason": "估值进入偏高区间，缺少基本面强验证时安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露后复核收入、毛利率、合同负债和经营现金流",
-      "reason": "2026 年半年报披露后复核收入、毛利率、合同负债和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "国际收入增速连续两个季度明显低于公司整体增速",
-      "reason": "国际收入增速连续两个季度明显低于公司整体增速"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "生物工艺装备及耗材毛利率未能从 2025 年 24.99% 修复",
-      "reason": "生物工艺装备及耗材毛利率未能从 2025 年 24.99% 修复"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "存货或合同履约成本继续出现大额减值",
-      "reason": "存货或合同履约成本继续出现大额减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营现金流连续两个报告期为负或明显依赖新增预收款",
-      "reason": "经营现金流连续两个报告期为负或明显依赖新增预收款"
-    }
-  ],
-  "key_tracking_metrics": [
-    "国际收入占比和增速",
-    "生物工艺装备及耗材收入增速和毛利率",
-    "综合毛利率和扣非净利率",
-    "合同负债、存货、应收账款周转变化",
-    "经营现金流和自由现金流",
-    "售后服务与配件收入占比",
-    "资产减值损失金额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

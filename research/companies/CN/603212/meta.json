@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603212",
-  "ticker": "603212",
-  "name": "赛伍技术",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "赛伍技术处于光伏材料周期修复早期，2026H1预告显示亏损大幅收窄且Q2转正，但2025年光伏材料负毛利和当前约1.9倍PB意味着安全边际不足；等待半年报和三季报验证毛利率、SET放量与经营现金流。",
-  "fair_value_range": [
-    8.8,
-    12.5
-  ],
-  "buy_zone": [
-    8.0,
-    8.6
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赛伍技术",
+    "security_status": "active",
+    "symbol": "CN:603212",
+    "ticker": "603212"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "ba3aa695df3188d026e8b4f755a0208d196219311ffcb53f0efb875db7cee44b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026年半年报确认Q2归母和扣非转正，光伏材料毛利率继续为正，股价进入8.0-8.6元区间",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、Q2毛利率、经营现金流和SET收入占比。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年三季报显示SET收入占比继续提升且经营现金流转正",
-      "action": "可将观察仓提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.5元但未披露超预期盈利或现金流改善",
-      "action": "不追高或降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估平台化材料业务的持续盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.6
+      },
+      "reason": "进入安全边际买入区，需同步复核半年报或三季报是否验证盈利修复。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "超过基准估值上沿，若无SET放量和现金流改善，收益风险比下降。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.6,
-      "reason": "进入安全边际买入区，需同步复核半年报或三季报是否验证盈利修复。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "超过基准估值上沿，若无SET放量和现金流改善，收益风险比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、Q2毛利率、经营现金流和SET收入占比。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估平台化材料业务的持续盈利能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

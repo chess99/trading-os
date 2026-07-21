@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:300240",
-  "market": "CN",
-  "ticker": "300240",
-  "name": "飞力达",
-  "company_name": "江苏飞力达国际物流股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "飞力达是制造业供应链物流和国际货代公司，2025年现金流修复、归母扭亏，但扣非仍亏、2026年一季度再度亏损，当前价格已预支利润修复，安全边际不足。需要等待扣非利润连续转正、应收账款继续下降和毛利率稳定后再考虑买入。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.8,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    6.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "飞力达",
+    "security_status": "active",
+    "symbol": "CN:300240",
+    "ticker": "300240"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ac028f991bf3ac2efdef0a2366d15bab896dc2abb588d36756a239f205f4ac14"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.6元，且最近一期扣非亏损未扩大、经营现金流为正",
-      "max_weight": 0.01,
-      "action": "可试探0.5%-1.0%观察仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.2元，且应收账款较上期继续下降、毛利率稳定在7%以上",
-      "max_weight": 0.02,
-      "action": "可提高至1.5%-2.0%仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润连续两个季度转正，且经营现金流同步为正",
-      "max_weight": 0.03,
-      "action": "重新评估是否提升至3%以内核心观察仓"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化盈利和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.8元但年化归母净利润低于6000万元",
-      "max_weight": 0.0,
-      "action": "不追高，已有仓位应减仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入初始可买区，需要复核扣非利润和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入较强安全边际区，需要复核是否存在基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "价格超过当前基本面可支撑区间，需要复核减仓或不追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "currency": "CNY",
-      "reason": "进入初始可买区，需要复核扣非利润和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "currency": "CNY",
-      "reason": "进入较强安全边际区，需要复核是否存在基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "currency": "CNY",
-      "reason": "价格超过当前基本面可支撑区间，需要复核减仓或不追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化盈利和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润是否连续两个季度转正",
-    "毛利率是否稳定在7%以上并向8%修复",
-    "应收账款余额及应收账款/收入是否继续下降",
-    "经营活动现金流净额是否持续为正",
-    "财务费用和汇兑损益是否继续侵蚀利润",
-    "东南亚、美国、越南、泰国等海外布局的收入与利润贡献",
-    "综合物流服务占比及高毛利客户项目爬坡情况",
-    "新仓和长期资产投入的利用率与回报率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,86 @@
 {
-  "symbol": "CN:300616",
-  "ticker": "300616",
-  "name": "尚品宅配",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "尚品宅配具备柔性制造、设计软件、O2O和品牌渠道积累，2025年估值已低至约0.74倍PB和0.62倍PS，但收入下滑、归母亏损扩大、经营现金流转负，反转证据不足。当前应观察，不宜在盈利和现金流未恢复前给予高仓位。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    5.5,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "尚品宅配",
+    "security_status": "active",
+    "symbol": "CN:300616",
+    "ticker": "300616"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3db4f31870429755818d2f16619794315723b9d2c00d45cdfb42fb8c87a4b652"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察；在2026年中报确认经营现金流改善、合同负债企稳且股价低于7元时，允许研究性试仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：收入、毛利率、合同负债、经营现金流和有息负债变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个报告期经营现金流为正、毛利率回到31%以上、亏损显著收窄，可把观察仓位上限提高。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：确认亏损是否收窄、现金流是否持续修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于13元但仍未恢复盈利或现金流仍为负，应不买或降低仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入估算买入区，需要复核中报现金流、合同负债和毛利率是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "超过当前乐观情景下沿，若盈利未恢复则安全边际不足，应复核是否减仓或继续回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入估算买入区，需要复核中报现金流、合同负债和毛利率是否同步改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "超过当前乐观情景下沿，若盈利未恢复则安全边际不足，应复核是否减仓或继续回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：收入、毛利率、合同负债、经营现金流和有息负债变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：确认亏损是否收窄、现金流是否持续修复。"
-    }
-  ],
-  "key_metrics": {
-    "last_price_cny": 9.85,
-    "last_price_time": "2026-07-15 14:22",
-    "revenue_2025_cny": 3552371646.13,
-    "net_profit_attributable_2025_cny": -248408250.85,
-    "operating_cash_flow_2025_cny": -262616608.89,
-    "equity_attributable_2025_cny": 2976737406.68
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

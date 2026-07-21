@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920720",
-  "market": "CN",
-  "ticker": "920720",
-  "name": "吉冈精密",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "经营增长与回款改善真实，但自由现金流和资本回报尚不足以支撑约46倍滚动市盈率，等待4.80元以下并重新验证海外扩产回报。",
-  "fair_value_range": [4.8, 6.5],
-  "buy_zone": [3.8, 4.8],
-  "sell_or_reduce_zone": [8.0, 10.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "吉冈精密",
+    "security_status": "active",
+    "symbol": "CN:920720",
+    "ticker": "920720"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "c1d9dc230428a27395cd104547992c56e23e19d6d5e7c1b525f11c68791aab65"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于3.80-4.80元，且汽车件毛利率稳定、净有息负债不再上升、海外扩产未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、自由现金流、净债务与海外产能利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.80-6.50元且基本面未恶化，仅允许跟踪仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入有安全边际的买入区间，但需先验证核心假设未受损",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "基本面恶化或仅因价格下跌但核心假设未重新验证",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "进入减仓或不应追高区间，估值已反映偏乐观预期",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、自由现金流、净债务与海外产能利用率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入有安全边际的买入区间，但需先验证核心假设未受损"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "进入减仓或不应追高区间，估值已反映偏乐观预期"
-    }
-  ],
-  "updated_at": "2026-07-15T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

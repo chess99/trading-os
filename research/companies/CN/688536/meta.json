@@ -1,92 +1,101 @@
 {
-  "symbol": "CN:688536",
-  "market": "CN",
-  "ticker": "688536",
-  "name": "思瑞浦",
-  "company_name": "思瑞浦",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "思瑞浦是国产高性能模拟信号链与电源管理平台型公司，2025年和2026Q1确认从库存周期后段恢复；2026年限制性股票计划给出的收入目标与原预测大体一致，但尚未形成新的已实现业绩证据。2026年7月17日收盘价242.08元已进入240-285元买入区，允许1%以内试探仓，待半年报验证收入、毛利率和经营现金流后再考虑提高至3%。",
-  "quality_rating": "A-",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    300,
-    380
-  ],
-  "buy_zone": [
-    240,
-    285
-  ],
-  "sell_or_reduce_zone": [
-    420,
-    480
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "思瑞浦",
+    "security_status": "active",
+    "symbol": "CN:688536",
+    "ticker": "688536"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "1840b30e2aaad2f172f8f8c1f2e657d30f4c7585d7507cc2208330a98c202172"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "bb12f11047e8253c11e858cde803db147669faa62b623328ce59e659439e49b3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于240-285元且2026H1尚未披露",
-      "action": "只建立0.5%-1.0%试探仓，不一次性买满",
-      "max_weight": 0.01,
-      "reason": "价格已进入买入区，但半年报尚未验证收入、毛利率与经营现金流"
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "按预约披露日复查2026年半年报，重点验证收入、毛利率、现金流和创芯微协同",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1收入约14.5-15.5亿元、毛利率46%-49%且经营现金流健康",
-      "action": "逐步加至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "价格进入安全边际区，同时基本面复苏得到半年报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报，判断复苏是否从补库存转为持续终端需求",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于420元且2026E利润无法上修至5亿元以上",
-      "action": "减仓或不追高",
-      "max_weight": 0.005,
-      "reason": "风险收益比转弱，估值对业绩兑现容错率过低"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 285.0
+      },
+      "reason": "进入初始买入区，复查半年报和毛利率后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 240.0
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 420.0
+      },
+      "reason": "超过合理价值上沿，需要检查是否有盈利预测上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 285,
-      "reason": "进入初始买入区，复查半年报和毛利率后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 240,
-      "reason": "进入高安全边际区，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 420,
-      "reason": "超过合理价值上沿，需要检查是否有盈利预测上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "按预约披露日复查2026年半年报，重点验证收入、毛利率、现金流和创芯微协同"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报，判断复苏是否从补库存转为持续终端需求"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比与环比增速",
-    "综合毛利率及信号链/电源管理分部毛利率",
-    "归母净利润与扣非归母净利润",
-    "经营活动现金流净额",
-    "研发费用绝对值与研发费用率",
-    "存货、应收账款及存货跌价准备",
-    "汽车、工业、AI服务器、光模块、基站、新能源、电网客户导入进展",
-    "创芯微电池保护、AC/DC、模拟开关等产品协同进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

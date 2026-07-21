@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:300195",
-  "market": "CN",
-  "ticker": "300195",
-  "name": "长荣股份",
-  "company_name": "天津长荣科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长荣股份具备印刷包装后道装备技术和客户积累，但 2025 年扣非亏损、2026Q1 重新转亏，债务和非核心资产占用降低估值质量。2026-07-13 收盘价 4.96 元接近可验证价值上沿，缺少安全边际；等待价格低于 3.8 元或扣非利润、现金流、订单连续改善。",
-  "quality_rating": "中低",
-  "valuation_rating": "缺少安全边际",
-  "fair_value_range": [
-    3.8,
-    4.8
-  ],
-  "buy_zone": [
-    3.6,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长荣股份",
+    "security_status": "active",
+    "symbol": "CN:300195",
+    "ticker": "300195"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4a06fab61237699e668e0f23ecfca7286f2be88089108a7e7fcd4190e0bc4bd4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 4.8 元且未确认业绩拐点",
-      "max_weight": 0.0,
-      "action": "保持 0% 仓位，仅观察"
-    },
-    {
-      "condition": "价格低于 3.8 元且 2026H1/2026Q3 经营现金流未继续恶化",
-      "max_weight": 0.01,
-      "action": "可建立 0.5%-1.0% 试探仓位"
-    },
-    {
-      "condition": "连续两个季度扣非归母净利润转正、经营现金流转正且订单或合同负债改善",
-      "max_weight": 0.03,
-      "action": "可提高至 2%-3% 组合仓位上限"
-    },
-    {
-      "condition": "融资租赁减值扩大、债务压力上升或主业继续亏损",
-      "max_weight": 0.0,
-      "action": "不买；已有仓位降至 0%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "currency": "CNY",
-      "reason": "接近 0.60 倍保守 PB，对当前低 ROE 和债务压力有初步补偿",
-      "action": "进入试探买入复核"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "currency": "CNY",
-      "reason": "较合理价值下沿进一步折价，安全边际更充分",
-      "action": "若基本面未恶化，可提高观察优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "currency": "CNY",
-      "reason": "若盈利质量未改善，估值高于当前可验证价值区间",
-      "action": "若无盈利质量改善，减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计披露 2026 年半年报后复核",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证 2026Q1 亏损是否延续，以及订单、现金流和债务是否改善",
-      "action": "复核收入、扣非净利润、经营现金流、合同负债、债务和融资租赁资产质量"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计披露 2026 年三季报后复核",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可判断是否形成连续两个季度经营改善",
-      "action": "判断是否形成连续两个季度改善，并复核价格区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计披露 2026 年年度报告后复核",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可全面验证主业盈利、融资租赁资产质量和资本配置变化",
-      "action": "全面重估主业盈利能力、资产负债表安全边际和资本配置"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "接近 0.60 倍保守 PB，对当前低 ROE 和债务压力有初步补偿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "较合理价值下沿进一步折价，安全边际更充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "若盈利质量未改善，估值高于当前可验证价值区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "综合毛利率和专用设备制造业毛利率",
-    "合同负债和在手订单变化",
-    "有息负债与货币资金差额",
-    "融资租赁资产质量和减值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

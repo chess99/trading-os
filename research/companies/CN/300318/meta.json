@@ -1,91 +1,86 @@
 {
-  "symbol": "CN:300318",
-  "ticker": "300318",
-  "name": "博晖创新",
-  "company_name": "北京博晖创新生物技术集团股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "current_thesis": "血制品牌照、浆站和新品管线具备困境反转期权，但 2025 年及 2026Q1 仍亏损、经营现金流为负、关联借款上升，当前估值缺少足够安全边际，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.6,
-    5.1
-  ],
-  "buy_zone": [
-    0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    8.5
-  ],
-  "position_plan": [
-    {
-      "condition": "股价跌至 3.2 元以下，且无新增重大治理、质量或流动性风险，仅建立观察仓。",
-      "action": "watchlist_or_tiny_position",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "连续两个季度经营现金流转正，血制品毛利率修复，并确认凝血因子 VIII 或云南基地产品贡献实质收入。",
-      "action": "reassess_for_add",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于 6.2 元但基本面未兑现扭亏和现金流改善。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入具备安全边际的观察买入区间，需复核现金流和治理风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "超过当前基本面可支撑的减仓/高估区间，除非血制品兑现明显超预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入增速、亏损收窄、血制品毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认血制品新品、云南基地、浆站审批和关联借款变化。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 4.86,
-    "reference_price_date": "2026-07-15",
-    "reference_price_source": "Investing.com third-party quote, confidence medium",
-    "shares_outstanding": 816900495,
-    "market_cap_estimate_cny": 3970136405.7,
-    "pb_2026q1_estimate": 3.1,
-    "2025_revenue_cny": 824575486.93,
-    "2025_net_profit_parent_cny": -91923205.51,
-    "2025_operating_cash_flow_cny": -135166912.27,
-    "2026q1_revenue_cny": 189861229.3,
-    "2026q1_net_profit_parent_cny": -7285203.57,
-    "2026q1_operating_cash_flow_cny": -38196533.1
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博晖创新",
+    "security_status": "active",
+    "symbol": "CN:300318",
+    "ticker": "300318"
   },
-  "tags": [
-    "血液制品",
-    "体外诊断",
-    "疫苗",
-    "困境反转",
-    "观察"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "df5bfe6b3b8b22af98ec584f7bd5455e82d01207d740c08a8f5216d10898bc0b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入增速、亏损收窄、血制品毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认血制品新品、云南基地、浆站审批和关联借款变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入具备安全边际的观察买入区间，需复核现金流和治理风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "超过当前基本面可支撑的减仓/高估区间，除非血制品兑现明显超预期。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

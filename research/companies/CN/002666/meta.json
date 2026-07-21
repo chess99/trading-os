@@ -1,110 +1,105 @@
 {
-  "symbol": "CN:002666",
-  "market": "CN",
-  "ticker": "002666",
-  "name": "德联集团",
-  "company_name": "广东德联集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "德联集团具备主机厂客户准入、汽车精细化学品综合供应能力和账面净资产支撑，但 2025 年收入增长未转化为利润增长，ROE 与毛利率偏低。当前更适合作为低 PB 修复观察标的，买入需要价格低于 3.1 元或 2026 年扣非净利、毛利率、经营现金流连续验证改善。",
-  "quality_rating": "中",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    0,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德联集团",
+    "security_status": "active",
+    "symbol": "CN:002666",
+    "ticker": "002666"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "29f3e40d7e1aaf75a3758558080b8bbc06b54ea06a79efe3adc40e05334ff98f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 3.1 元，且无重大客户流失、应收账款恶化或新增大额减值",
-      "max_weight": 0.02,
-      "action": "建立 1%-2% 观察仓"
-    },
-    {
-      "condition": "股价低于 2.7 元，且 2026 年扣非净利润和经营现金流未恶化",
-      "max_weight": 0.04,
-      "action": "提高至 3%-4% 仓位"
-    },
-    {
-      "condition": "股价处于 3.8-4.2 元，且未看到连续两个季度毛利率和扣非净利改善",
-      "max_weight": 0.02,
-      "action": "仅观察或持有，不主动加仓"
-    },
-    {
-      "condition": "股价高于 4.8 元，且扣非净利润年化未稳定超过 1.5 亿元",
-      "max_weight": 0,
-      "action": "减仓或退出"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "currency": "CNY",
-      "reason": "进入约 0.69 倍 2026Q1 PB 的安全边际区间",
-      "action": "进入可买区，复核最新季度毛利率、扣非净利和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 2.7,
-      "currency": "CNY",
-      "reason": "价格进一步低于资产价值，若基本面稳定可提高预期收益率",
-      "action": "若基本面未恶化，可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "currency": "CNY",
-      "reason": "超过当前合理价值上沿，除非盈利质量显著改善否则安全边际不足",
-      "action": "若盈利质量未同步改善，减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证 Q1 利润修复是否延续到中报",
-      "action": "复核汽车精细化学品毛利率、扣非净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "确认扣非净利、毛利率和经营现金流是否连续改善",
-      "action": "确认利润修复是否连续，并复核买入区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度数据可验证资本配置、资产减值和全年盈利质量",
-      "action": "复核全年扣非净利润、分红回购政策和资产减值风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入约 0.69 倍 2026Q1 PB 的安全边际区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.7
+      },
+      "reason": "价格进一步低于资产价值，若基本面稳定可提高预期收益率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "超过当前合理价值上沿，除非盈利质量显著改善否则安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "汽车精细化学品收入增速",
-    "汽车精细化学品毛利率是否回到 15% 以上",
-    "扣非净利润是否年化超过 1.0 亿元并向 1.5 亿元靠近",
-    "经营现金流净额/净利润",
-    "应收账款和存货周转",
-    "新能源客户收入占比或新能源车型项目数量",
-    "汽车销售与维修业务毛利率和资本占用",
-    "分红、回购注销和资本开支纪律"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

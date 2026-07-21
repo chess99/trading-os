@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:603381",
-  "market": "CN",
-  "ticker": "603381",
-  "name": "永臻股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "永臻股份是光伏铝边框龙头之一，越南基地和扁挤压新业务提供反转弹性，但2025年主业由盈转亏、经营现金流大额流出、短债压力高。当前约1倍PB只适合观察，需等待2026中报验证海外利润和现金流改善，或价格进入10.5-12.5元安全区。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13.5,
-    18.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    22.0
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于12.5元，且越南基地毛利率维持9%以上、短期借款未继续明显上升",
-      "action": "建立观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于10.5元，且2026中报扣非净利转正、经营现金流较2025年明显收窄",
-      "action": "提高到小仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于20元但年化归母净利未恢复到2.5亿元以上",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入初始买入区，需要复核越南毛利率、短债和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过牛市情景下沿，需要利润兑现支撑，否则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看越南满产利润、国内加工费、经营现金流和短债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估周期位置和估值区间"
-    }
-  ],
-  "valuation": {
-    "as_of_price": 14.72,
-    "price_date": "2026-07-17",
-    "price_note": "盘中行情，未核验收盘价",
-    "base_case": "合理价值13.5-18.5元，当前接近1倍PB，安全边际不足",
-    "bear_case": "国内加工费继续低迷、海外溢价收窄，合理价值9.9-12.7元",
-    "bull_case": "越南高毛利持续、国内修复、新业务兑现，合理价值19.0-21.8元"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永臻股份",
+    "security_status": "active",
+    "symbol": "CN:603381",
+    "ticker": "603381"
   },
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "93f4af2b16388df16e17521ba7b4104129fa4ce2fd09dc077dbd2621bce1c72c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看越南满产利润、国内加工费、经营现金流和短债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估周期位置和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入初始买入区，需要复核越南毛利率、短债和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过牛市情景下沿，需要利润兑现支撑，否则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

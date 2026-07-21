@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688186",
-  "market": "CN",
-  "ticker": "688186",
-  "name": "广大特材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "广大特材处于风电大型化、高端能源装备国产化和特钢材料升级的交叉赛道，具备材料到零部件的一体化制造能力；但2026Q1盈利大幅下滑、经营现金流持续为负、负债和营运资本占用较高，当前更适合观察，等待订单、毛利率和现金流确认后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16.5,
-    21.5
-  ],
-  "buy_zone": [
-    11.5,
-    13.2
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广大特材",
+    "security_status": "active",
+    "symbol": "CN:688186",
+    "ticker": "688186"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bdbf2be3ea9877d529bad4c2ec0d4a5510a5ccd2b686b7a1941cee7942a5b378"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至买入区间且无新增治理、债务或订单恶化风险时，建立观察仓。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查风电机械部件收入、毛利率、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3确认风电机械部件收入恢复、毛利率高于16%、经营现金流明显改善后，加至核心观察仓。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认订单释放是否延续以及全年盈利中枢。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入减持区间但ROE和现金流未同步改善，降低或退出仓位。",
-      "action": "reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，判断产能爬坡后的ROE与现金转换能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.2
+      },
+      "reason": "进入估算买入区间，具备相对净资产和基准情景估值的安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过当前基准公允价值上沿，若盈利质量未确认应复核并考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.2,
-      "reason": "进入估算买入区间，具备相对净资产和基准情景估值的安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过当前基准公允价值上沿，若盈利质量未确认应复核并考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查风电机械部件收入、毛利率、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认订单释放是否延续以及全年盈利中枢。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，判断产能爬坡后的ROE与现金转换能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

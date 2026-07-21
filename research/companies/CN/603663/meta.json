@@ -1,119 +1,125 @@
 {
-  "symbol": "CN:603663",
-  "market": "CN",
-  "ticker": "603663",
-  "name": "三祥新材",
-  "company_name": "三祥新材",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "B",
-  "valuation_rating": "extremely_expensive",
-  "current_thesis": "三祥新材主业锆系列材料经营改善、核级海绵锆具备增量选择权，但2026-07-09股价已显著透支锆涨价、核级材料和固态电池概念，当前应回避新买入，等待价格回到安全边际区或业绩显著上修。",
-  "fair_value_range": [
-    14,
-    24
-  ],
-  "buy_zone": [
-    10,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    80
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三祥新材",
+    "security_status": "active",
+    "symbol": "CN:603663",
+    "ticker": "603663"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "c7a259d5a328abb4b5688f26b12932f201449c7d5536e3fa8711d95880a7d3a1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 10 and fundamentals intact",
-      "action": "accumulate",
-      "max_weight": 0.05,
-      "reason": "进入强安全边际区，接近悲观情景估值。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看锆系列毛利率、现金流和海绵锆进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price > 10 and price <= 16",
-      "action": "build_standard_position_slowly",
-      "max_weight": 0.03,
-      "reason": "具备安全边际，但仍需验证锆价、海绵锆订单和毛利率。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，确认Q1高增长是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price > 16 and price <= 24",
-      "action": "watch_or_small_tracking_position",
-      "max_weight": 0.015,
-      "reason": "接近合理价值区，等待业绩上修证据。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，验证全年利润体量和新材料业务兑现度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price > 24 and price < 30",
-      "action": "watch_only",
-      "max_weight": 0.005,
-      "reason": "估值吸引力不足，只适合跟踪。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "回到合理价值上沿以下，重新评估业绩兑现与仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price >= 30",
-      "action": "avoid_new_buying_or_reduce",
-      "max_weight": 0,
-      "reason": "主题溢价显著高于基本面确定性。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际买入区。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入强吸引力区，可考虑提高仓位上限。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过不应追高区，避免新增买入。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "概念溢价过高，应复核减仓或仅留观察仓。",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "回到合理价值上沿以下，重新评估业绩兑现与仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入安全边际买入区。"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入强吸引力区，可考虑提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过不应追高区，避免新增买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "概念溢价过高，应复核减仓或仅留观察仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看锆系列毛利率、现金流和海绵锆进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，确认Q1高增长是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，验证全年利润体量和新材料业务兑现度。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "锆系列产品毛利率",
-    "锆系列产品销量和库存",
-    "锆英砂采购价格与供应稳定性",
-    "核级海绵锆收入和产能利用率",
-    "法马通等核心客户协议执行情况",
-    "固态电池材料客户认证、订单和收入",
-    "经营活动现金流净额/归母净利润",
-    "前五大客户和供应商集中度",
-    "研发费用率和关键专利/工艺进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605333",
-  "market": "CN",
-  "ticker": "605333",
-  "name": "沪光股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "沪光股份是国内稀缺的整车线束一级供应商，受益于新能源高压线束和智能化高速线束需求，但2026H1业绩预告显示售价下行、铜等原材料上涨和研发/海外投入显著压缩利润率；当前价格接近中性恢复估值上沿，缺少安全边际，需等待价格回落或利润率修复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12,
-    16
-  ],
-  "buy_zone": [
-    9,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    20,
-    24
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沪光股份",
+    "security_status": "active",
+    "symbol": "CN:605333",
+    "ticker": "605333"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "79fc853c5dd59b3111946be930ae4f8b37f8ea446ec0a99adeb1d0c5d72429d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入9-12元，且2026H1正式中报未出现经营现金流恶化或应收/存货异常扩张",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "复核2026年中报正式数据，重点看毛利率、扣非净利率、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q3或2026Q4扣非净利率环比修复，单季归母净利润超过1.2亿元且经营现金流同步改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润率是否见底修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H2利润继续下修、扣非净利率低于2%或经营现金流显著弱于净利润",
-      "action": "不买入或退出观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估降价周期、原材料影响和海外/新业务投入回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入合理价值下沿附近，可结合中报现金流和利润率评估安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入深度安全边际区，若基本面未进一步恶化可重新测算买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "若利润率尚未修复而股价上涨至乐观情景区，应考虑降低预期或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入合理价值下沿附近，可结合中报现金流和利润率评估安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 9,
-      "reason": "进入深度安全边际区，若基本面未进一步恶化可重新测算买入"
-    },
-    {
-      "type": "price_above",
-      "price": 20,
-      "reason": "若利润率尚未修复而股价上涨至乐观情景区，应考虑降低预期或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "复核2026年中报正式数据，重点看毛利率、扣非净利率、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润率是否见底修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估降价周期、原材料影响和海外/新业务投入回报"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

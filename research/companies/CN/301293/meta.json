@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301293",
-  "ticker": "301293",
-  "name": "三博脑科",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三博脑科具备稀缺的神经专科医院资产和医教研平台，但2025至2026Q1增收不增利，新院区爬坡、医保回款和资本开支仍在验证期；当前估值已接近乐观情景，安全边际不足，暂列观察。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三博脑科",
+    "security_status": "active",
+    "symbol": "CN:301293",
+    "ticker": "301293"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "01908f336bf0f0a3ab3ebf9b1f723232fab1d3f05e3804f464c4c77385ddb001"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于28元，且2026H1或2026Q3扣非净利率恢复至5%以上、经营现金流净额为正，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看利润率、经营现金流、医保应收款和新院区爬坡。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于24元，且北京、昆明、西安新院区床位使用率和手术量连续两个季度改善，可提高至小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润下滑是否为阶段性压力。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若归母净利润连续两个季度低于1500万元，或医保回款恶化导致经营现金流显著转负，则不持仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与2027Q1，重新校准中期盈利能力和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入基准估值区间下沿，可复核是否具备初始安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可重新评估买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "接近或超过乐观情景估值，若利润率未恢复应避免追高或考虑减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入基准估值区间下沿，可复核是否具备初始安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入深度安全边际区间，若基本面未恶化可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "接近或超过乐观情景估值，若利润率未恢复应避免追高或考虑减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看利润率、经营现金流、医保应收款和新院区爬坡。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润下滑是否为阶段性压力。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与2027Q1，重新校准中期盈利能力和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

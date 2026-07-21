@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:300765",
-  "market": "CN",
-  "ticker": "300765",
-  "name": "石药创新",
-  "company_name": "石药创新",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "observe",
-  "current_thesis": "石药创新已由传统咖啡因/功能食品资产转向石药系创新药平台，阿斯利康合作验证了核心管线外部价值，但2026-07-08股价已处于基准合理区间中上部，适合观察而非追高。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "status": "active",
-  "fair_value_range": [
-    29,
-    38
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "石药创新",
+    "security_status": "active",
+    "symbol": "CN:300765",
+    "ticker": "300765"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "2287ed2c0021bc33d740cda0db543287ae4ba467e75ed8058aec3fd7013858b8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_22",
-      "action": "分批买入",
-      "max_weight": 0.08,
-      "reason": "低于悲观到基准估值中枢，临床失败和利润波动折价较充分。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报中阿斯利康合作现金流、收入确认、研发费用和亏损幅度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_22_to_28",
-      "action": "买入或加仓",
-      "max_weight": 0.05,
-      "reason": "进入有安全边际买入区，但创新药管线仍需临床和BD兑现。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、核心管线进展和估值区间是否需要调整。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_29_to_38",
-      "action": "观察或小仓跟踪",
-      "max_weight": 0.01,
-      "reason": "处于基准合理价值区间，赔率一般。"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、BD兑现、管线临床数据和资本配置。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_above_42",
-      "action": "减仓或不追高",
-      "max_weight": 0.02,
-      "reason": "价格需要乐观临床和海外授权假设支撑，若无新增证据则风险收益转差。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入有安全边际的买入观察区。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入强吸引力买入区，适合重新评估较高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "进入不应追高和减仓观察区，需要新增临床或BD证据支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入有安全边际的买入观察区。"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入强吸引力买入区，适合重新评估较高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "进入不应追高和减仓观察区，需要新增临床或BD证据支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报中阿斯利康合作现金流、收入确认、研发费用和亏损幅度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、核心管线进展和估值区间是否需要调整。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、BD兑现、管线临床数据和资本配置。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "阿斯利康合作选择权行使、里程碑触发、现金流和收入确认",
-    "DP303c、SYS6010、SYS6002等核心ADC/双抗管线临床数据",
-    "已上市生物药销售收入、医保价格和毛利率",
-    "研发费用率、经营现金流和货币资金",
-    "传统功能食品/咖啡因业务收入、毛利率和出口需求",
-    "是否继续发生大额关联资产收购及其估值公允性"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

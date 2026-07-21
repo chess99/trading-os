@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600078",
-  "ticker": "600078",
-  "name": "澄星股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "澄星股份的利润正在随黄磷、磷酸价格和销量修复，但 2025 年扣非仍亏、资产负债表仍在修复，当前股价已部分反映 2026H1 高增预期，需等待更便宜价格或半年报兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    6.5,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "澄星股份",
+    "security_status": "active",
+    "symbol": "CN:600078",
+    "ticker": "600078"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1deafd5b7d3f91a90f7322a742f5d555cec3a067c292dcf0b17c10732c3b7cd0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 7.5 元，且 2026 半年度正式报告确认扣非利润和经营现金流质量不弱于预告趋势",
-      "action": "可建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据、经营现金流和钦州工厂承接进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于 8.0-10.5 元合理区间，但未见三季报继续兑现",
-      "action": "仅跟踪不加仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 H1 高增是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 12.5 元且没有新增利润上修或项目投产确认",
-      "action": "回避追高或降低关注",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入买入区间上沿，需要复核半年报利润质量和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "进入减仓/回避追高区间，除非利润和项目进度显著超预期",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入买入区间上沿，需要复核半年报利润质量和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "进入减仓/回避追高区间，除非利润和项目进度显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据、经营现金流和钦州工厂承接进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 H1 高增是否延续"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

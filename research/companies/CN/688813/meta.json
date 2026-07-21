@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688813",
-  "market": "CN",
-  "ticker": "688813",
-  "name": "泰金新能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "泰金新能是国产高端铜箔电解成套装备与钛电极龙头，技术、客户和国产替代逻辑较强，但截至2026-07-17收盘价128.10元对应估值显著高于合理价值区间，当前以观察为主，等待价格回落或订单利润超预期兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    42,
-    58
-  ],
-  "buy_zone": [
-    30,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    90,
-    130
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰金新能",
+    "security_status": "active",
+    "symbol": "CN:688813",
+    "ticker": "688813"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "87164d13103634069614c36cdc7818d3873d661b6b6e5ff7c14799f1449bca71"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于45元，且2026中报显示经营现金流为正、发出商品和应收账款未异常扩张",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、现金流、合同负债和发出商品。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于35元，且核心订单、客户回款、毛利率没有恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和下半年验收节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于90元且未来两个季度没有订单和利润显著超预期",
-      "action": "不参与或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认上市后首年盈利预测兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入初步买入区间，需要复核中报现金流和订单验收。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入更有安全边际区间，若基本面未恶化可提高研究仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "显著高于中性估值，需要警惕估值回撤。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入初步买入区间，需要复核中报现金流和订单验收。"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入更有安全边际区间，若基本面未恶化可提高研究仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "显著高于中性估值，需要警惕估值回撤。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、现金流、合同负债和发出商品。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和下半年验收节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认上市后首年盈利预测兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600480",
-  "ticker": "600480",
-  "name": "凌云股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "央企汽车零部件平台具备安全结构件、管路系统和海外跟随客户的稳健基本盘，估值处于合理偏低区间，但2026Q1利润下滑显示行业年降和投入压力仍大，传感器、液冷等第二曲线尚未形成可估值利润，当前以观察为主，等待更高安全边际或半年报验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    6.5,
-    7.8
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凌云股份",
+    "security_status": "active",
+    "symbol": "CN:600480",
+    "ticker": "600480"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6eec64aacb031fc457abf94eaafe205076604089ae4a90e9ed0103e3ed9d17fc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.8元，且2026半年报未出现毛利率坍塌、经营现金流显著弱于净利润或核心客户流失",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收账款和新业务收入披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.0元，且汽车零部件毛利率稳定、应收账款周转未恶化、新业务投入可控",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润是否仍能达到7.8亿元左右的基准假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.5元，且2026E归母净利润仍低于8.5亿元或新业务订单未实质放量",
-      "action": "减仓或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红，更新长期估值与仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "进入估算买入区上沿，若基本面未恶化，安全边际开始具备吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "接近悲观情景估值区间，可重新评估是否加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "超过合理价值区间上沿，若缺乏新业务利润证据，应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "进入估算买入区上沿，若基本面未恶化，安全边际开始具备吸引力"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "接近悲观情景估值区间，可重新评估是否加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "超过合理价值区间上沿，若缺乏新业务利润证据，应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收账款和新业务收入披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润是否仍能达到7.8亿元左右的基准假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红，更新长期估值与仓位上限"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

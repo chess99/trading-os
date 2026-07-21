@@ -1,114 +1,115 @@
 {
-  "symbol": "CN:001230",
-  "market": "CN",
-  "ticker": "001230",
-  "name": "劲旅环境",
-  "company_name": "劲旅环境",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "劲旅环境具备环卫服务合同储备和装备协同价值，但2025年经营现金流明显低于利润、应收账款占收入比例较高，当前股价大致处于合理价值区间中部，适合观察或小仓跟踪，等待14-16元买入区或现金流改善验证后再提高仓位。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    16,
-    21
-  ],
-  "buy_zone": [
-    14,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    22,
-    27
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "劲旅环境",
+    "security_status": "active",
+    "symbol": "CN:001230",
+    "ticker": "001230"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "6548e8368147e3fcb4c2a109053ed12a0bf3134eab423c18a19c3c168f10ef8b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于16-21元合理价值区间中部，且2026年现金流尚未验证",
-      "action": "不追买；无仓位者仅保留观察或建立0.5%-1.0%观察仓",
-      "max_weight": 0.01,
-      "reason": "2025年经营现金流净额显著低于归母净利润，应收账款占收入比例较高，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证应收账款、经营现金流和新签合同质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入14-16元，且未出现应收账款恶化或重大坏账迹象",
-      "action": "建立首笔仓位",
-      "max_weight": 0.02,
-      "reason": "价格进入买入区间，已反映部分地方财政和现金流风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年现金流修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于14.5元，且中报或三季报显示经营现金流改善",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "估值具备安全边际，同时利润质量改善得到验证"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，更新完整估值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026年经营现金流净额/归母净利润恢复到70%以上，且新签合同质量较好",
-      "action": "在不高于18元时允许提高仓位",
-      "max_weight": 0.05,
-      "reason": "现金流折价下降，服务合同储备的估值可信度提高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入初始买入区间，需要复核中报、应收账款和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于22元且没有利润、订单、现金流同步超预期",
-      "action": "分批减仓",
-      "max_weight": 0.02,
-      "reason": "估值进入偏贵区，地方财政支付和应收账款风险不足以支持高仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入较有安全边际区间，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过合理价值区间上沿，需要确认是否有订单、利润或现金流超预期支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "接近乐观情景估值，若基本面未显著超预期应减仓或退出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入初始买入区间，需要复核中报、应收账款和现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入较有安全边际区间，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "超过合理价值区间上沿，需要确认是否有订单、利润或现金流超预期支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "reason": "接近乐观情景估值，若基本面未显著超预期应减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证应收账款、经营现金流和新签合同质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年现金流修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，更新完整估值和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流净额/归母净利润",
-    "应收账款余额和一年以上应收账款占比",
-    "应收账款坏账准备和信用减值损失",
-    "新签环卫服务合同年化额、合同期限和付款主体财政层级",
-    "环卫服务毛利率和装备业务毛利率",
-    "装备业务订单、收入确认节奏和新能源/智能化装备占比",
-    "货币资金、交易性金融资产、有息负债和受限资金",
-    "地方财政压力较大区域项目占比",
-    "分红、资本开支和管理层激励兑现情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

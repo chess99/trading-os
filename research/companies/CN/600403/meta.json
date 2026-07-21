@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:600403",
-  "ticker": "600403",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "大有能源",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "大有能源处于产销量修复但仍亏损的困境反转阶段，2026H1煤炭业务毛利转正是积极边际变化，但归母仍预亏且当前估值高于可验证资产和现金流，安全边际不足，暂不买入。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.0,
-    3.0
-  ],
-  "buy_zone": [
-    1.5,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.5,
-    5.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大有能源",
+    "security_status": "active",
+    "symbol": "CN:600403",
+    "ticker": "600403"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "8198cf7628339fe989993ccc2934b0e1e05ba348c6726666b68dae311cacc58d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不建仓；仅当股价跌入2.0元以下且后续季度经营现金流转正、煤炭业务毛利率连续改善时重新评估",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认亏损收窄、煤炭业务毛利率和经营现金流变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若出现经公告核验的优质煤炭资产注入或债务成本显著下降，且归母净利润转正，可重新评估观察仓",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入估算买入观察区，需要复核净资产折价和盈利修复进度"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断产销量修复是否转化为归母净利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "高于基准合理价值上沿，需要警惕预期交易透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认亏损收窄、煤炭业务毛利率和经营现金流变化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入估算买入观察区，需要复核净资产折价和盈利修复进度",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断产销量修复是否转化为归母净利润"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "高于基准合理价值上沿，需要警惕预期交易透支",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

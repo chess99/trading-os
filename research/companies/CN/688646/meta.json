@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688646",
-  "market": "CN",
-  "ticker": "688646",
-  "name": "逸飞激光",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备圆柱全极耳电池装备、PACK、智慧物流及半导体AMHS等订单弹性，2025年末在手订单和2026Q1合同负债显示需求恢复；但公司仍处ST状态，2025年亏损、2026Q1收入下滑且项目制验收和减值风险较高，当前66元附近缺乏足够安全边际，适合观察等待摘帽和订单转收入验证。",
-  "fair_value_range": [
-    52,
-    76
-  ],
-  "buy_zone": [
-    0,
-    52
-  ],
-  "sell_or_reduce_zone": [
-    88,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "逸飞激光",
+    "security_status": "active",
+    "symbol": "CN:688646",
+    "ticker": "688646"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "83aab77498473c59c624b2eda6d7e91b6c1eaba4f3d53a1e28b7388bb96cb70c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "ST撤销且2026H1收入恢复、经营现金流继续为正后，股价低于52元可建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流、合同负债和ST撤销进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若订单转化、毛利率和回款连续两个季度验证，再评估是否提高仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单转化、减值和全年盈利可见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若ST撤销失败、再现重大会计差错或出现大额减值，不持仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和新聚力业绩承诺完成情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 52.0
+      },
+      "reason": "进入估算买入区，需要结合摘帽和半年报验证是否具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 88.0
+      },
+      "reason": "显著高于基准价值区间，若盈利未兑现应减仓或避免追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 52,
-      "reason": "进入估算买入区，需要结合摘帽和半年报验证是否具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 88,
-      "reason": "显著高于基准价值区间，若盈利未兑现应减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、现金流、合同负债和ST撤销进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单转化、减值和全年盈利可见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和新聚力业绩承诺完成情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

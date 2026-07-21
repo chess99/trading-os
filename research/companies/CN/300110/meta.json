@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:300110",
-  "ticker": "300110",
-  "name": "华仁药业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "current_thesis": "主业仍有修复线索，腹膜透析液、非PVC软袋和治疗制剂具备需求韧性，但2024-2025年信用与商誉减值显著削弱资产质量，当前可核验参考价对应估值已充分反映反转预期，需等待连续扣非利润和现金流改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.4,
-    2.0
-  ],
-  "buy_zone": [
-    1.1,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.2
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于1.5元，且最近两个季度扣非净利润合计超过4500万元、经营现金流/净利润大于0.8、无新增大额减值",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于1.2元，且2026年扣非利润年化不低于8000万元、应收和商誉风险未继续恶化",
-      "action": "可提高到小仓位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价高于2.6元但未看到连续利润和现金流修复",
-      "action": "不追高，已有仓位减持或退出",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入基准情景内在价值下沿附近，若基本面未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入保守估值区间，可能提供足够风险补偿"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "reason": "接近减持观察区间，估值已要求强反转兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款和减值风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估资产减值是否彻底出清及长期盈利中枢"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 2.59,
-    "reference_price_date": "2026-06-18",
-    "reference_price_confidence": "low",
-    "shares_outstanding_million": 1182.21,
-    "reference_market_cap_billion": 3.06,
-    "2025_revenue_billion": 1.321,
-    "2025_net_profit_billion": -0.463,
-    "2025_normalized_net_profit_billion": 0.062,
-    "2025_operating_cash_flow_billion": 0.39,
-    "2026_q1_revenue_billion": 0.31,
-    "2026_q1_deducted_net_profit_billion": 0.0165,
-    "2026_q1_equity_billion": 0.854
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华仁药业",
+    "security_status": "active",
+    "symbol": "CN:300110",
+    "ticker": "300110"
   },
-  "risk_flags": [
-    "历史信用减值和商誉减值风险",
-    "集采和医保控费导致价格下行",
-    "经营现金流波动",
-    "控制权及国资整合兑现不确定",
-    "基础输液和腹透赛道竞争激烈"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "470ae75fe73bcdc2ec7afddc2067267e76c05ebd1e0e3c204e3ad2c79423123c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款和减值风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估资产减值是否彻底出清及长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入基准情景内在价值下沿附近，若基本面未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入保守估值区间，可能提供足够风险补偿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "接近减持观察区间，估值已要求强反转兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

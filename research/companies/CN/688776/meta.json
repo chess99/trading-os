@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688776",
-  "market": "CN",
-  "ticker": "688776",
-  "name": "国光电气",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "国光电气具备军工微波器件、电真空与核工业装备稀缺资质，但2025年至2026Q1收入、毛利率、利润和现金流均处低谷；当前价格已部分反映恢复预期，需等待订单、毛利率和回款改善或价格跌入安全边际区。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    42,
-    62
-  ],
-  "buy_zone": [
-    34,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    68,
-    80
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国光电气",
+    "security_status": "active",
+    "symbol": "CN:688776",
+    "ticker": "688776"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f31fdd9435109142d8c02386738fd0e94ca7ce02df3fee8f34be10e492d520ff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌至40元以下且无新增监管或重大减值风险，建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报显示收入、毛利率、经营现金流至少两项明显改善，可提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现订单和盈利修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重大合同落地且应收账款下降、毛利率回到25%以上，再考虑核心仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、问询风险和长期估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入初始买入区上沿，风险收益改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "接近悲观情景价值，具备更明确安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "超过基准合理价值上沿，若利润未兑现需减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入初始买入区上沿，风险收益改善"
-    },
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "接近悲观情景价值，具备更明确安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 68,
-      "reason": "超过基准合理价值上沿，若利润未兑现需减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现订单和盈利修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、问询风险和长期估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,232 +1,87 @@
 {
-  "symbol": "CN:002142",
-  "name": "宁波银行",
-  "market": "CN",
-  "ticker": "002142",
-  "company_name": "宁波银行",
-  "currency": "CNY",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "research_date": "2026-07-08",
-  "updated_at": "2026-07-08T00:00:00+08:00",
-  "status": "active",
-  "conclusion": "高质量城商行，资产质量、ROE、息差韧性明显优于行业；当前价格处于合理区间中段，可小仓建立跟踪，主要买点等待28元以下。",
-  "decision": "WATCH_SMALL_BUY",
-  "current_rating": "watch",
-  "current_thesis": "宁波银行凭借长三角区域深耕、低不良、高拨备、较高净息差和较强ROE，属于A股银行中质量较高的城商行；但行业处于低息差周期，当前31元附近已在合理区间中段，适合小仓跟踪，主要赔率来自28元以下的估值回落。",
-  "quality_rating": "A",
-  "valuation_rating": "B+",
-  "current_price": {
-    "price": 31.18,
+  "identity": {
     "currency": "CNY",
-    "as_of": "2026-07-08",
-    "source": "Investing.com"
+    "market": "CN",
+    "name": "宁波银行",
+    "security_status": "active",
+    "symbol": "CN:002142",
+    "ticker": "002142"
   },
-  "market_cap": {
-    "value_cny_bn_range": [202.8, 204.8],
-    "as_of": "2026-07-08",
-    "sources": ["Google Finance", "Investing.com"],
-    "note": "实时行情源口径不同，使用约2030-2050亿元区间。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "16edab2b424de4101eb0e700ebd8551d960b1d99e86811d398bf5250fd4d83c1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "fair_value_range": [29.0, 35.5],
-  "buy_zone": [25.5, 28.0],
-  "sell_or_reduce_zone": [35.5, 41.0],
-  "buy_below": 28.0,
-  "strong_buy_below": 25.5,
-  "do_not_chase_above": 35.5,
-  "position_curve": [
-    {
-      "price_range": "<25.5",
-      "judgment": "强吸引力",
-      "action": "分批买入，允许逆势加仓",
-      "suggested_position": "4%-6%"
-    },
-    {
-      "price_range": "25.5-28.0",
-      "judgment": "有安全边际",
-      "action": "主要买入区",
-      "suggested_position": "2%-4%"
-    },
-    {
-      "price_range": "28.0-31.5",
-      "judgment": "合理偏低到合理中段",
-      "action": "小仓建立跟踪",
-      "suggested_position": "0.5%-2%"
-    },
-    {
-      "price_range": "31.5-35.5",
-      "judgment": "合理偏上",
-      "action": "持有或等待，不主动加仓",
-      "suggested_position": "0%-1%"
-    },
-    {
-      "price_range": ">35.5",
-      "judgment": "赔率转弱",
-      "action": "不追高，高仓位可减仓",
-      "suggested_position": "0%"
-    }
-  ],
-  "position_plan": [
-    {
-      "price_range": "<25.5",
-      "condition": "股价低于25.5元且基本面未触发逻辑止损",
-      "action": "分批买入，允许逆势加仓",
-      "target_position": "4%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "price_range": "25.5-28.0",
-      "condition": "股价处于25.5-28.0元且净息差、不良率、资本充足率保持稳定",
-      "action": "主要买入区",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "price_range": "28.0-31.5",
-      "condition": "股价处于28.0-31.5元",
-      "action": "小仓建立跟踪",
-      "target_position": "0.5%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "price_range": "31.5-35.5",
-      "condition": "股价处于31.5-35.5元",
-      "action": "持有或等待，不主动加仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "price_range": ">35.5",
-      "condition": "股价高于35.5元",
-      "action": "不追高，高仓位可减仓",
-      "target_position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "first_position": "当前31.18元附近可买0.5%-1.0%组合权益仓位作为第一笔，后续主要等待28元以下。",
-  "review_plan": {
-    "next_review": "2026年半年报后",
-    "focus": [
-      "净息差是否稳定在1.70%附近",
-      "对公贷款高增长后的不良率和关注类贷款变化",
-      "手续费及佣金净收入高增长是否延续",
-      "核心一级资本充足率是否继续下行"
-    ]
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "review_triggers": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "date",
-      "condition": "2026年半年报披露后",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026年上半年息差、资产质量和资本消耗趋势",
-      "action": "复核净息差、资产质量、手续费收入和资本充足率"
-    }
-  ],
-  "tracking_indicators": [
-    {
-      "name": "净息差",
-      "current": "2026Q1 1.73%",
-      "watch": "低于1.60%需下调估值，低于1.55%触发逻辑止损观察"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "name": "不良贷款率",
-      "current": "2026Q1 0.76%",
-      "watch": "连续两个季度高于1.0%触发降仓复核"
-    },
-    {
-      "name": "拨备覆盖率",
-      "current": "2026Q1 369.39%",
-      "watch": "低于330%需谨慎，低于280%触发逻辑止损观察"
-    },
-    {
-      "name": "核心一级资本充足率",
-      "current": "2026Q1 9.25%",
-      "watch": "持续低于9.0%警惕资本约束，低于8.5%触发降仓复核"
-    },
-    {
-      "name": "年化ROE",
-      "current": "2026Q1 14.38%",
-      "watch": "低于11%且无改善路径需重估质量评级"
-    },
-    {
-      "name": "存款成本",
-      "current": "2025年平均存款付息率1.61%",
-      "watch": "负债成本无法继续下降时，关注息差压力"
-    },
-    {
-      "name": "手续费及佣金净收入",
-      "current": "2025年同比+30.72%",
-      "watch": "确认是否为持续能力而非资本市场周期弹性"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
       "reason": "进入安全边际买入区",
-      "note": "进入安全边际买入区，复核基本面后加至2%-4%仓位。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 25.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.5
+      },
       "reason": "进入强吸引力买入区",
-      "note": "进入强吸引力区，若基本面未恶化可加至4%-6%仓位。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 35.5,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.5
+      },
       "reason": "超过合理价格区间上沿",
-      "note": "不追高；若仓位已高，复核是否降至1%-2%。"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_risks": [
-    "行业净息差继续下行导致ROE下台阶",
-    "浙江、江苏区域中小企业信用风险暴露",
-    "零售信贷、消费金融和个体经营贷款不良上行",
-    "快速扩表消耗核心一级资本并带来再融资压力",
-    "手续费及佣金收入受资本市场波动影响",
-    "城商行区域集中和地方经济周期带来的估值折价"
-  ],
-  "logic_stop_conditions": [
-    "不良贷款率连续两个季度高于1.0%",
-    "拨备覆盖率跌破280%且非主动风险出清导致",
-    "净息差跌破1.55%且负债成本改善无法对冲",
-    "年化ROE低于11%并缺乏可信改善路径",
-    "核心一级资本充足率低于8.5%",
-    "高增长伴随不良生成率明显抬升"
-  ],
-  "sources": [
-    {
-      "title": "宁波银行股份有限公司2025年年度报告",
-      "url": "https://www.nbcb.com.cn/about_nbcb/information_diclosure/periodic_report/202604/W020260427623779586889.pdf",
-      "date": "2026-04"
-    },
-    {
-      "title": "宁波银行股份有限公司2026年第一季度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225189427.PDF",
-      "date": "2026-04-25"
-    },
-    {
-      "title": "宁波银行股份有限公司2026年第一季度第三支柱报告",
-      "url": "https://www.nbcb.com.cn/about_nbcb/investor_relations/regulatory_capital/zbczlbg/202604/W020260427586665347075.pdf",
-      "date": "2026-04"
-    },
-    {
-      "title": "Investing.com 宁波银行行情页",
-      "url": "https://cn.investing.com/equities/bank-of-ningbo-a",
-      "date": "2026-07-08"
-    },
-    {
-      "title": "Google Finance 宁波银行行情页",
-      "url": "https://www.google.com/finance/quote/002142:SHE?hl=zh",
-      "date": "2026-07-08"
-    },
-    {
-      "title": "国家金融监督管理总局2026年一季度银行业保险业主要监管指标数据情况",
-      "url": "https://www.nfra.gov.cn/cn/view/pages/ItemDetail.html?docId=1258013&itemId=915",
-      "date": "2026-05"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

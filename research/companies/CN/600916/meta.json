@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:600916",
-  "ticker": "600916",
-  "market": "CN",
-  "name": "中国黄金",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中国黄金具备央企品牌、全国渠道和投资金条场景优势，但黄金产品低毛利、存货现金流和加盟渠道收缩使利润弹性弱于金价弹性；当前价格高于基准公允价值，等待利润率和经营现金流连续修复或更低价格。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.0,
-    6.5
-  ],
-  "buy_zone": [
-    4.2,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国黄金",
+    "security_status": "active",
+    "symbol": "CN:600916",
+    "ticker": "600916"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "edf00605e0ba732b020bd3589d13c6b1008c24a94cfeb7b220a881983aae8d1f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.0元且2026H1或2026Q3扣非利润同比改善、经营现金流转正或明显改善",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、存货和渠道变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.2元且门店收缩放缓、服务费和电商收入占比提升，未出现重大治理或库存风险",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润率修复是否具有持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.2元且利润率或现金流未连续验证修复",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红能力，更新正常化利润与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入初始买入观察区，需要复核利润率、现金流和金价环境",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入深度安全边际区，需要评估是否可建立中等观察仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "高于基准公允价值上沿，若基本面未兑现应降低关注或回避追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入初始买入观察区，需要复核利润率、现金流和金价环境"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入深度安全边际区，需要评估是否可建立中等观察仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "高于基准公允价值上沿，若基本面未兑现应降低关注或回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、存货和渠道变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润率修复是否具有持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红能力，更新正常化利润与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

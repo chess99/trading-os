@@ -1,77 +1,96 @@
 {
-  "symbol": "CN:300394",
-  "market": "CN",
-  "ticker": "300394",
-  "name": "天孚通信",
-  "company_name": "天孚通信",
-  "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "watchlist",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "current_thesis": "天孚通信是AI光通信上游高质量光器件平台型龙头，2025年和2026Q1仍处高景气增长期，但2026-07-08股价约245.68元、市值约2679.94亿元，估值已透支较多乐观预期；当前不追高，等待安全边际或盈利预测被一手业绩继续验证。",
-  "fair_value_range": [
-    165,
-    220
-  ],
-  "buy_zone": [
-    125,
-    165
-  ],
-  "sell_or_reduce_zone": [
-    260,
-    300
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天孚通信",
+    "security_status": "active",
+    "symbol": "CN:300394",
+    "ticker": "300394"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "551fca12e508cb0b49948dd9267e46d12ea3d77a86a2da1add2848193101094b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价245.68元附近估值偏贵，等待125-165元安全买入区或基本面显著上修。",
-      "max_weight": 0.07,
-      "current_price_action": "245.68元附近不追高，最多0.5%-1.0%观察仓；125-165元可分批建仓，95-125元且基本面未恶化时可提高至目标仓位上限。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 165,
-      "reason": "进入安全买入区上沿，若订单、毛利率和现金流未恶化，可启动首笔仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看收入增速、毛利率、净利率、现金流与存货应收。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 125,
-      "reason": "进入强吸引买入区，若基本面未证伪，可提高仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和AI光模块订单延续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 260,
-      "reason": "进入减仓观察区，若盈利预测没有同步上修，应控制仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看收入增速、毛利率、净利率、现金流与存货应收。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 165.0
+      },
+      "reason": "进入安全买入区上沿，若订单、毛利率和现金流未恶化，可启动首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和AI光模块订单延续性。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 125.0
+      },
+      "reason": "进入强吸引买入区，若基本面未证伪，可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 260.0
+      },
+      "reason": "进入减仓观察区，若盈利预测没有同步上修，应控制仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "800G/1.6T相关产品订单和交付节奏",
-    "单季毛利率、净利率和扣非净利率",
-    "经营现金流与归母净利润匹配程度",
-    "存货和应收账款增速",
-    "海外产能投放进度和利用率",
-    "前五大客户集中度变化",
-    "主要光模块客户资本开支和订单指引"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

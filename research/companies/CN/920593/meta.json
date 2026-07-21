@@ -1,52 +1,86 @@
 {
-  "symbol": "CN:920593",
-  "market": "CN",
-  "ticker": "920593",
-  "name": "鼎智科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "产品和海外渠道有价值，但资本回报与自由现金流尚未证明，31.30元已过度定价机器人、并购协同和利润率修复。",
-  "fair_value_range": [9, 15],
-  "buy_zone": [7, 10],
-  "sell_or_reduce_zone": [20, 25],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鼎智科技",
+    "security_status": "active",
+    "symbol": "CN:920593",
+    "ticker": "920593"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "5c38fdf9a07859b72f7e9b44efd7fc45c03952c566fab54b0126db376acf0f5c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于8至10元且有机收入、毛利率和赛仑特承诺未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的有机增长、毛利率、自由现金流与赛仑特整合",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8元且重新验证自由现金流转正、商誉无减值、长期商业价值未受损",
-      "max_weight": 0.015
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的有机增长、毛利率、自由现金流与赛仑特整合"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核赛仑特2026年业绩承诺、商誉减值测试和全年资本回报",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核赛仑特2026年业绩承诺、商誉减值测试和全年资本回报"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入可重新验证基本面与安全边际的观察买入区间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入可重新验证基本面与安全边际的观察买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 20,
-      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流大幅上修"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流大幅上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-16T10:50:50+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

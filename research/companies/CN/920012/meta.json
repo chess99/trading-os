@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:920012",
-  "market": "CN",
-  "ticker": "920012",
-  "name": "创达新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "创达新材是高毛利、小体量的半导体封装材料供应商，已进入国内头部封测与电子客户供应链；当前约38倍TTM PE处于买入区上沿，若2026年利润增长和扩产验证兑现，合理价值仍高于现价。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    56,
-    70
-  ],
-  "buy_zone": [
-    42,
-    50
-  ],
-  "sell_or_reduce_zone": [
-    72,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创达新材",
+    "security_status": "active",
+    "symbol": "CN:920012",
+    "ticker": "920012"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bd5c5d868987e6c1fb9aedc459bb779f18cad33f670ce7faec3b0ce461a8806e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "49元以下可建立首笔仓位，前提是未出现客户流失、毛利率显著下滑或经营现金流恶化。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、利润、毛利率、现金流和先进封装项目进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "45元以下且半年度收入、利润、现金流趋势未恶化，可增持。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年利润兑现概率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "42元以下且基本面无负面变化，可加至最高配置。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、客户结构、产能建设和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "72元以上若没有业绩上修或先进封装材料放量证据，降低仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入更有安全边际的买入区，需要复核基本面后考虑加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "进入减仓区，需要确认估值是否已透支2026年增长。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "明显高于基准公允价值区间，除非盈利预测上修，否则应大幅降仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入更有安全边际的买入区，需要复核基本面后考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "进入减仓区，需要确认估值是否已透支2026年增长。"
-    },
-    {
-      "type": "price_above",
-      "price": 85,
-      "reason": "明显高于基准公允价值区间，除非盈利预测上修，否则应大幅降仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、利润、毛利率、现金流和先进封装项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年利润兑现概率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、客户结构、产能建设和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,85 +1,119 @@
 {
-  "symbol": "CN:688595",
-  "market": "CN",
-  "ticker": "688595",
-  "name": "芯海科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "EC已明确向联想等品牌批量供货，edge BMC和高精度ADC也进入量产，但单品收入与毛利仍未披露；公司继续亏损、经营现金流为负，并新增1亿元闲置IPO募资临时补流，28.30元已接近合理价值下沿，仍等待23-28元安全边际与半年报毛利、库存、现金流验证。",
-  "fair_value_range": [
-    28.0,
-    35.0
-  ],
-  "buy_zone": [
-    23.0,
-    28.0
-  ],
-  "sell_or_reduce_zone": [
-    42.0,
-    50.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "芯海科技",
+    "security_status": "active",
+    "symbol": "CN:688595",
+    "ticker": "688595"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "b5173181c80c529230ecbd2af74877c98592de50ca21bff0aace684a6e90d828"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "3666379b25b5bf67d5c6b9a8044ab575eb4ae9611b2f6dbd0f1572850b96ab62"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于35元且公司仍亏损、经营现金流为负",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报的收入增速、毛利率、经营现金流、存货及分产品增长。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入23-28元，且毛利率不低于30%、存货增速不高于收入增速",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报的涨价传导、计算外围芯片放量和单季盈亏平衡进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于23元且无客户流失、重大减值或流动性恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报是否完成收入增长30%的激励目标，以及现金转换和完全摊薄股本。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正或接近盈亏平衡，且EC或BMS规模出货获得验证",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-06-30"
+      },
+      "reason": "核验延期后的汽车MCU募投项目、ASIL-D产品认证和客户导入。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入复核区，确认毛利率、库存和经营现金流未恶化后才建立小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入深度价值复核区，区分估值错杀与产品、库存或流动性恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "进入减仓区；若盈利或大客户量产未同步上修，应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报的收入增速、毛利率、经营现金流、存货及分产品增长。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报的涨价传导、计算外围芯片放量和单季盈亏平衡进度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报是否完成收入增长30%的激励目标，以及现金转换和完全摊薄股本。"
-    },
-    {
-      "type": "date",
-      "date": "2027-06-30",
-      "reason": "核验延期后的汽车MCU募投项目、ASIL-D产品认证和客户导入。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28.0,
-      "reason": "进入买入复核区，确认毛利率、库存和经营现金流未恶化后才建立小仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 23.0,
-      "reason": "进入深度价值复核区，区分估值错杀与产品、库存或流动性恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 42.0,
-      "reason": "进入减仓区；若盈利或大客户量产未同步上修，应降低仓位。"
-    }
-  ],
-  "updated_at": "2026-07-18T05:13:54+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

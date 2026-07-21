@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:002054",
-  "market": "CN",
-  "ticker": "002054",
-  "name": "德美化工",
-  "company_name": "德美化工",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "德美化工具备纺织/皮革精细化学品底盘和石油精细化学品利润弹性，但当前价格已接近合理价值区间上沿，需等待更好买点或2026H1现金流验证后再加仓。",
-  "quality_rating": "medium",
-  "valuation_rating": "slightly_expensive",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德美化工",
+    "security_status": "active",
+    "symbol": "CN:002054",
+    "ticker": "002054"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "29b26873f07e0602c623bf34db0ff4b8e7ad7cc5d4043fb358cd020e9447f381"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 5.8 and no new environmental, safety, governance, or cash-flow deterioration signals",
-      "action": "open_research_position",
-      "max_weight": 0.01,
-      "reason": "Price enters the preferred buy zone while the 2026H1 earnings upgrade remains possible."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review after the 2026 interim report to verify guidance, cash flow, product margins, and balance-sheet quality.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1 net profit is within 95-100 million CNY guidance and operating cash flow turns positive",
-      "action": "increase_position_gradually",
-      "max_weight": 0.025,
-      "reason": "Earnings improvement would be supported by cash conversion rather than only product spread expansion."
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review after the 2026 third-quarter report to test whether petrochemical spread improvement is sustainable.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price >= 8.2 or 2026H1 cash flow remains weak despite profit growth",
-      "action": "reduce_or_avoid_new_buying",
-      "max_weight": 0.005,
-      "reason": "Risk-reward becomes unattractive if valuation moves above the fair range or profit quality weakens."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "Preferred first-buy zone based on 2026E normalized earnings and margin of safety.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "High-margin-of-safety zone if fundamentals remain intact.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "Reduce or avoid chasing unless 2026H1 and Q3 prove sustainable cash-backed earnings.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "Preferred first-buy zone based on 2026E normalized earnings and margin of safety."
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "High-margin-of-safety zone if fundamentals remain intact."
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "Reduce or avoid chasing unless 2026H1 and Q3 prove sustainable cash-backed earnings."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review after the 2026 interim report to verify guidance, cash flow, product margins, and balance-sheet quality."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review after the 2026 third-quarter report to test whether petrochemical spread improvement is sustainable."
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1 net profit versus 95-100 million CNY guidance",
-    "Operating cash flow versus net profit",
-    "Accounts receivable and notes growth",
-    "Petrochemical revenue and gross margin",
-    "Textile chemicals revenue growth and gross margin",
-    "Leather chemicals revenue growth and gross margin",
-    "R&D expense ratio and new product commercialization",
-    "Environmental or safety penalties",
-    "Guarantees, entrusted loans, and long-term equity investment impairment"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

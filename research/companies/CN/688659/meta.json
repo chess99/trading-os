@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688659",
-  "market": "CN",
-  "ticker": "688659",
-  "name": "元琛科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "元琛科技主业为工业烟气治理滤袋和SCR脱硝催化剂，政策需求与订单修复提供中期机会，但2025年仍亏损、2026Q1扣非净利和现金流很薄，当前约2.6倍PB没有足够安全边际；维持观察，等待价格低于6元且扣非利润/现金流连续改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.2,
-    7.2
-  ],
-  "buy_zone": [
-    5.0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "元琛科技",
+    "security_status": "active",
+    "symbol": "CN:688659",
+    "ticker": "688659"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "34e0bcfdd35b3e71e520ad3f6a28d43e8c935bb2e70d5b959294b64ca81bdd87"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于公允价值上沿且扣非盈利未验证，不建立正式仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非净利率、经营现金流和应收账款变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入5.0-6.0元，且连续两个季度扣非净利率超过3%、经营现金流滚动改善，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入修复是否转化为ROE和现金流改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价低于5.0元，且资产负债率下降、催化剂毛利率维持30%以上、应收周转改善，可提高到小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和股权激励/回购落地情况，重估长期盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区，需要复核2026年最新季度扣非利润和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入悲观情景附近，若基本面未恶化可能出现安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "接近乐观情景下沿，若ROE和扣非利润未兑现应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区，需要复核2026年最新季度扣非利润和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入悲观情景附近，若基本面未恶化可能出现安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "接近乐观情景下沿，若ROE和扣非利润未兑现应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利率、经营现金流和应收账款变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入修复是否转化为ROE和现金流改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和股权激励/回购落地情况，重估长期盈利能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

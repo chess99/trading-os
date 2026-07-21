@@ -10,7 +10,7 @@ Price alerts are review triggers, not trade instructions.
 
 1. Read the triggered alert.
 2. Read the company's `meta.json`.
-3. Read the previous `latest_report`.
+3. Read the report referenced by `meta.json.reports.latest`.
 4. Verify the current price from a reliable market source.
 5. Check whether the business thesis changed since the prior report.
 6. Write a new price-trigger review report when the trigger is material.

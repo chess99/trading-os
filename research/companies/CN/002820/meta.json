@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:002820",
-  "ticker": "002820",
-  "name": "桂发祥",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "老字号品牌和低负债资产负债表提供下限，但2025年亏损、2026H1预告继续亏损，说明线下特产礼品渠道和电商费效仍在承压；当前价格接近乐观修复情景，暂不具备深度买方安全边际。",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    5.2,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "桂发祥",
+    "security_status": "active",
+    "symbol": "CN:002820",
+    "ticker": "002820"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "90aeb3b57210163e1f733e9781b896a355c94e75aeb325754e5fab0de8157977"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026H2未看到直营同店止跌、电商费用率改善和扣非亏损收窄前，仅观察，不建主动仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看收入、毛利率、销售费用率、电商费效和扣非亏损。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.8元，且半年度或三季度显示扣非亏损收窄、经营现金流保持为正，可建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认旺季后线下直营和电商增速是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.2元，且单季收入同比转正、销售费用率下降、全年净利润恢复到3000万元以上的可见度提高。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估计正常化盈利和价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入合理价值区间下沿，可重新评估观察仓安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "接近悲观情景上沿，若基本面未继续恶化，可评估更高安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "接近乐观情景估值，若基本面仍亏损或微利，应减持或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入合理价值区间下沿，可重新评估观察仓安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "接近悲观情景上沿，若基本面未继续恶化，可评估更高安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "接近乐观情景估值，若基本面仍亏损或微利，应减持或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看收入、毛利率、销售费用率、电商费效和扣非亏损。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认旺季后线下直营和电商增速是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估计正常化盈利和价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

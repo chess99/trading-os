@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:300459",
-  "market": "CN",
-  "ticker": "300459",
-  "name": "汤姆猫",
-  "company_name": "浙江金科汤姆猫文化产业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汤姆猫拥有全球知名休闲移动IP和高毛利广告/内购商业模式，但成熟产品进入生命周期后期，2025年收入下滑且大额亏损，2026Q1利润修复主要来自费用下降而非收入恢复。AI硬件和Agent业务具备期权价值，但尚未形成可验证规模收入。当前约3.55元股价隐含较高AI/IP重估预期，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    1.7,
-    2.4
-  ],
-  "buy_zone": [
-    1.6,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    3.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汤姆猫",
+    "security_status": "active",
+    "symbol": "CN:300459",
+    "ticker": "300459"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d5290cbe9cb7271abe1ba318def13b513b841194083a78914e30aa1768fd076d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于3.00元且收入未恢复增长",
-      "max_weight": 0,
-      "target_position_pct": 0,
-      "action": "不新开仓，仅跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "公司预约披露2026年半年报，需核验收入是否止跌、经营现金流是否稳定、AI硬件是否形成规模收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在2.00-2.40元且2026半年报显示主营收入止跌、经营现金流为正",
-      "max_weight": 0.015,
-      "target_position_pct": 1.5,
-      "action": "建立小仓观察"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年利润中枢、广告业务趋势和费用下降是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在1.60-2.00元且无新增大额减值、资产负债率未继续恶化",
-      "max_weight": 0.03,
-      "target_position_pct": 3,
-      "action": "进入基准买入区"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报后重新评估AI+IP+Agent商业化结果、资产减值压力和长期合理估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.60元且广告业务止跌、AI或新游戏至少有一项形成可验证收入",
-      "max_weight": 0.05,
-      "target_position_pct": 5,
-      "action": "提高到上限仓位"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
       "reason": "进入估值买入区上沿，需要复核是否只是估值回落而非基本面恶化。",
-      "action": "复核半年报和现金流，若基本面未恶化可小仓买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 1.6,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
       "reason": "进入强安全边际区，需要确认经营现金流、负债率和减值风险没有继续恶化。",
-      "action": "检查是否为基本面下修，若不是可考虑提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 3.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
       "reason": "股价高于现有合理价值区间，若缺少收入恢复和AI商业化证据，风险收益不对称。",
-      "action": "若缺少收入和AI业务验证，进入减仓或不买区"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "公司预约披露2026年半年报，需核验收入是否止跌、经营现金流是否稳定、AI硬件是否形成规模收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年利润中枢、广告业务趋势和费用下降是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报后重新评估AI+IP+Agent商业化结果、资产减值压力和长期合理估值。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "经营活动现金流净额",
-    "归母净利润和扣非归母净利润",
-    "DAU/MAU、新增下载量、广告eCPM和IAP收入",
-    "AI硬件发货量、确认收入、毛利率、退货率和订阅收入",
-    "资产负债率、短期债务和股权质押比例",
-    "商誉及其他资产减值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

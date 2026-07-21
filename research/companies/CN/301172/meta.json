@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:301172",
-  "ticker": "301172",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "君逸数码",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "智慧城市项目制主业在2026Q1出现明显修复，控股光宏精密带来精密光学第二曲线期权；但当前股价已反映较多光通信和扩产预期，订单、利润和现金流仍需验证，暂列观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    26
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "君逸数码",
+    "security_status": "active",
+    "symbol": "CN:301172",
+    "ticker": "301172"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "fd698f889bbe5682f462f4e6617252d1fcb7b8eb469602629421215a1e4a9768"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于18元，且最近一期经营现金流未显著弱于净利润、智慧城市主业无重大坏账迹象",
-      "action": "可建立观察性仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看利润持续性、经营现金流、应收账款和光宏精密并表贡献",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "光宏精密披露可核验大客户订单或单季并表利润持续贡献，同时公司整体TTM经营现金流覆盖净利润",
-      "action": "可提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及光宏精密扩产、订单、客户认证进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于35元但缺少订单、利润和现金流兑现",
-      "action": "不追高，已有仓位应减持",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估智慧城市主业质量和第二曲线兑现程度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基础情景估值下沿并具备初步安全边际，需复核半年报现金流和应收质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "进入乐观情景估值区，若无光宏精密订单和利润兑现则风险收益不佳",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入基础情景估值下沿并具备初步安全边际，需复核半年报现金流和应收质量"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "进入乐观情景估值区，若无光宏精密订单和利润兑现则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看利润持续性、经营现金流、应收账款和光宏精密并表贡献"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及光宏精密扩产、订单、客户认证进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估智慧城市主业质量和第二曲线兑现程度"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "经营现金流净额/归母净利润",
-    "应收账款及合同资产账龄和减值",
-    "智慧城市新签订单和验收节奏",
-    "光宏精密收入、净利润、毛利率、产能利用率和客户认证",
-    "毛利率、期间费用率和扣非净利润增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

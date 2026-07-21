@@ -1,100 +1,87 @@
 {
-  "symbol": "CN:002533",
-  "market": "CN",
-  "ticker": "002533",
-  "name": "金杯电工",
-  "company_name": "金杯电工股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是区域电线电缆龙头叠加扁电磁线成长平台，2025年收入203.21亿元、归母净利润6.00亿元，ROE约14%，分红承诺较清晰；但2026Q1收入高增未转化为利润，经营现金流大幅流出且存货、短借上升，当前10.53元接近基准合理价值下沿，缺少足够安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏合理",
-  "fair_value_range": [
-    10.0,
-    12.8
-  ],
-  "buy_zone": [
-    7.6,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金杯电工",
+    "security_status": "active",
+    "symbol": "CN:002533",
+    "ticker": "002533"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9289995f5f03c00c4dd1624ace0d159b6471dca1316c1cc74a4f592365936f8f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<=7.6元",
-      "action": "强吸引力买入",
-      "target_position": "4%-6%",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报后复查收入、归母净利润、扣非净利润、经营现金流、存货、短期借款、电磁线毛利率和海外订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "7.6-8.8元",
-      "action": "分批买入",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "8.8-10.0元",
-      "action": "小仓或观察",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "10.0-12.8元",
-      "action": "观察，等待业绩确认",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": ">12.8元",
-      "action": "不新增；超过14元且基本面未上修则减仓",
-      "target_position": "0%新增",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
       "reason": "进入有安全边际买入区",
-      "action": "进入有安全边际买入区，允许分批建仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.6,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
       "reason": "进入强吸引力买入区",
-      "action": "进入强吸引力买入区，提高目标仓位上限"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
       "reason": "价格超过不应追高区",
-      "action": "不追高；若基本面未上修则考虑减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026半年报后复查收入、归母净利润、扣非净利润、经营现金流、存货、短期借款、电磁线毛利率和海外订单"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电磁线收入、销量和毛利率",
-    "清洁能源、智能电网、智能装备收入增速及占比",
-    "海外收入占比和海外业务利润质量",
-    "经营现金流净额/归母净利润",
-    "应收账款、应收票据、应收款项融资、存货、短期借款",
-    "铜价波动、套保损益和存货跌价准备",
-    "现金分红率和回购执行情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

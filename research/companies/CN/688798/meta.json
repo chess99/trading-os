@@ -1,76 +1,110 @@
 {
-  "symbol": "CN:688798",
-  "market": "CN",
-  "ticker": "688798",
-  "name": "艾为电子",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "艾为电子在音频功放与触觉反馈具备细分市场和量产优势，汽车、工业及端侧AI配套芯片提供第二增长曲线；2026-07-17收盘61.60元虽已回到54-66元合理价值区间，但尚无安全边际。存储器价格暴涨对公司不是直接利润红利，反而可能通过手机BOM与客户压价加剧2026Q1已出现的毛利率、库存和扣非利润压力，等待54元以下或中报确认核心盈利修复。",
-  "fair_value_range": [
-    54.0,
-    66.0
-  ],
-  "buy_zone": [
-    45.0,
-    54.0
-  ],
-  "sell_or_reduce_zone": [
-    78.0,
-    90.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "艾为电子",
+    "security_status": "active",
+    "symbol": "CN:688798",
+    "ticker": "688798"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "2a73abb157cae4aaecfa23a2af2a2fbc31ff76e47857077562f9baf18fe6de07"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "4b3eb7e8c89f7e7a2c27aa2f953bbea35e3148c9c8666e4d5cdf512b7f663c36"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于54元或2026H1毛利率低于33%时不新开常规仓，只保留不超过0.5%的观察仓。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入、毛利率、扣非利润、三类产品量价、存货应收、汽车工业占比和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入48-54元，且毛利率不低于33%、存货增速低于收入增速、汽车与工业仍保持较快增长时分批建立仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报毛利率修复、扣非利润、研发投入、可转债利息和资本开支。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于48元，且客户、毛利率、库存和可转债募投均未发生逻辑破坏时，重新研究后提高仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报中汽车、工业、端侧AI的量化收入贡献及募投回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 54.0
+      },
+      "reason": "进入合理价值下沿，复核毛利率、库存与汽车工业增长后考虑观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入具备约20%基准安全边际的区域，需完成基本面重估后才可加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 78.0
+      },
+      "reason": "进入乐观估值区，若收入、毛利率和扣非利润未同步上修则减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入、毛利率、扣非利润、三类产品量价、存货应收、汽车工业占比和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报毛利率修复、扣非利润、研发投入、可转债利息和资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报中汽车、工业、端侧AI的量化收入贡献及募投回报。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 54.0,
-      "reason": "进入合理价值下沿，复核毛利率、库存与汽车工业增长后考虑观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 48.0,
-      "reason": "进入具备约20%基准安全边际的区域，需完成基本面重估后才可加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 78.0,
-      "reason": "进入乐观估值区，若收入、毛利率和扣非利润未同步上修则减仓。"
-    }
-  ],
-  "updated_at": "2026-07-18T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920378",
-  "market": "CN",
-  "ticker": "920378",
-  "name": "泰德股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "汽车精密轴承主业有客户认证和新能源增量，但毛利率、资本回报与自由现金流恶化，7.26元已透支高增长和机器人产业化预期。",
-  "fair_value_range": [3.6, 4.8],
-  "buy_zone": [2.8, 3.5],
-  "sell_or_reduce_zone": [5.5, 6.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰德股份",
+    "security_status": "active",
+    "symbol": "CN:920378",
+    "ticker": "920378"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "90e6832e97ad4e54055bba5347433addc2b94c9e31a6c545699d906f9640db80"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于3.20至3.50元且最近一期毛利率不再下降、应收增速不高于收入增速",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、扣非利润、经营现金流和净债务",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于2.80至3.20元且连续两个季度经营现金流改善、TTM自由现金流接近转正、净债务不再增加",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-06-19"
+      },
+      "reason": "一致行动协议及表决权委托安排到期前复核控制权稳定性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "客户流失、毛利率跌破19%、债务继续快速增加或控制权不稳时不因低价补仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入可结合现金流和毛利率复核的买入观察区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、扣非利润、经营现金流和净债务"
-    },
-    {
-      "type": "date",
-      "date": "2027-06-19",
-      "reason": "一致行动协议及表决权委托安排到期前复核控制权稳定性"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入可结合现金流和毛利率复核的买入观察区间"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-18T15:11:28+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

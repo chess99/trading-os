@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300861",
-  "ticker": "300861",
-  "name": "美畅股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是金刚石线龙头，钨丝金刚线切换和废钨回收闭环带来2026年盈利修复，但当前18.63元附近已反映较多修复预期，且废钨利润对钨价和回收价差敏感；等待12-15元安全边际或主业毛利率进一步修复。",
-  "fair_value_range": [
-    15,
-    22
-  ],
-  "buy_zone": [
-    12,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美畅股份",
+    "security_status": "active",
+    "symbol": "CN:300861",
+    "ticker": "300861"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "2734ab12de31bed25dcb3836c06d8916d396e71e925bf7043a78a6e725c92225"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入12-15元且2026H2废钨回收毛利未快速坍塌、经营现金流转正或明显修复",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报正式数据，重点检查Q2利润、废钨回收毛利率、经营现金流、预付款项和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元且资产负债表维持低负债、金刚线主业毛利率不再恶化",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H2环比趋势和金刚线主业毛利率是否修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元但2026H2利润环比未改善或废钨回收毛利率明显下滑",
-      "action": "减仓或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估废钨回收利润可持续性和龙腾半导体投资价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入观察区，需要复核钨价、废钨回收毛利和经营现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过公允价值上沿，需要确认是否有主业毛利率修复支撑，否则考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入买入观察区，需要复核钨价、废钨回收毛利和经营现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "超过公允价值上沿，需要确认是否有主业毛利率修复支撑，否则考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报正式数据，重点检查Q2利润、废钨回收毛利率、经营现金流、预付款项和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H2环比趋势和金刚线主业毛利率是否修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估废钨回收利润可持续性和龙腾半导体投资价值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

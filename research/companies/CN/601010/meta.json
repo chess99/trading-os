@@ -1,96 +1,115 @@
 {
-  "symbol": "CN:601010",
-  "market": "CN",
-  "ticker": "601010",
-  "name": "ST文峰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "区域零售资产有折价修复价值，但2025年财报保留意见、内控否定意见、2026年7月证监会立案和投资者诉讼使报表可信度与治理折价成为主导变量。当前1.40元处于保守合理区间中上部，适合观察，不适合作为普通价值仓主动买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.0,
-    1.6
-  ],
-  "buy_zone": [
-    0.85,
-    1.05
-  ],
-  "sell_or_reduce_zone": [
-    1.6,
-    2.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST文峰",
+    "security_status": "active",
+    "symbol": "CN:601010",
+    "ticker": "601010"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "031b6f782ecadd801fc1b3be8a1ee296da112e83cfefe6f8ccc936bdd88d51b9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 0.85 and no new delisting, cash drain, qualified-opinion escalation, or major penalty event",
-      "action": "allow very small event-driven starter position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review 2026 interim report, operating cash flow, cash and financial assets, investigation updates, and internal-control remediation.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "0.85 < price <= 1.05 and interim report shows positive operating cash flow plus visible internal-control remediation",
-      "action": "research position only; do not average up",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review 2026 third-quarter report and whether revenue decline, litigation reserves, and balance-sheet quality have improved.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "1.05 < price <= 1.60 before CSRC investigation result and audit remediation are clear",
-      "action": "watch or hold tiny legacy exposure; no new ordinary value position",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "Review 2026 annual report, audit opinion, internal-control opinion, and ST-removal possibility.",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price > 1.60 without ST removal, clean audit progress, or clear penalty resolution",
-      "action": "reduce or avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "Enters conservative buy zone if no new governance or delisting risk has emerged.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.85
+      },
+      "reason": "Strong asset-discount zone, still capped by ST and investigation risks.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.6
+      },
+      "reason": "Above conservative fair-value range before risk remediation is proven.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.0
+      },
+      "reason": "Requires ST removal and clean governance progress; otherwise reduce or avoid.",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "Enters conservative buy zone if no new governance or delisting risk has emerged."
-    },
-    {
-      "type": "price_below",
-      "price": 0.85,
-      "reason": "Strong asset-discount zone, still capped by ST and investigation risks."
-    },
-    {
-      "type": "price_above",
-      "price": 1.6,
-      "reason": "Above conservative fair-value range before risk remediation is proven."
-    },
-    {
-      "type": "price_above",
-      "price": 2.0,
-      "reason": "Requires ST removal and clean governance progress; otherwise reduce or avoid."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review 2026 interim report, operating cash flow, cash and financial assets, investigation updates, and internal-control remediation."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review 2026 third-quarter report and whether revenue decline, litigation reserves, and balance-sheet quality have improved."
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "Review 2026 annual report, audit opinion, internal-control opinion, and ST-removal possibility."
-    }
-  ],
-  "notes": [
-    "Current price was 1.40 CNY at 2026-07-20 15:34:59 from Sina quote interface; market cap estimated with 1.848 billion shares.",
-    "2025 annual report had a reserved audit opinion and negative internal-control audit opinion.",
-    "Company and controlling shareholder received CSRC investigation notices on 2026-07-17 for suspected information disclosure violations.",
-    "Fair-value range is intentionally conservative because governance and reporting reliability dominate asset valuation.",
-    "Comparable-company valuation data is a 2026-07-20 public-data approximation and should be rechecked before trading."
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

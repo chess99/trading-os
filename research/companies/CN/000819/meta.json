@@ -1,99 +1,105 @@
 {
-  "symbol": "CN:000819",
-  "market": "CN",
-  "ticker": "000819",
-  "currency": "CNY",
-  "name": "岳阳兴长",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "岳阳兴长具备中石化体系资源、传统能源化工资产底盘，以及 mPP、特种酚类、碳材料和环保催化材料等新材料期权；但 2025 年亏损、2026Q1 扣非仍亏，当前估值已包含一定转型预期，需等待扣非利润、经营现金流和惠州立拓/mPP 商业化数据兑现。",
-  "fair_value_range": [
-    9.5,
-    13.0
-  ],
-  "buy_zone": [
-    7.5,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "岳阳兴长",
+    "security_status": "active",
+    "symbol": "CN:000819",
+    "ticker": "000819"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "15d1c26463f2e46ef7d9fff14d730f38125ad898a052b8c40dc7de728d7fac6b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 8.8 元，且 2026 半年报确认扣非利润转正、经营现金流为正，允许建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报正式数据、扣非利润、经营现金流、惠州立拓和 mPP 进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 7.5 元，且传统化工价差未恶化、惠州立拓亏损继续收窄，可提高至小到中等仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报是否延续扭亏趋势，并更新全年盈利假设。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "mPP 或新材料业务披露稳定订单与可持续毛利，且连续两个季度扣非利润和经营现金流均为正，再评估是否上调仓位。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，判断新材料期权是否已经转化为可持续利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入初始买入区间上沿，需要复核半年报现金流和扣非利润。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入深度安全边际区间，需要复核是否由基本面恶化导致。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "高于减持区间下沿，若盈利未上修则估值可能透支。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入初始买入区间上沿，需要复核半年报现金流和扣非利润。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入深度安全边际区间，需要复核是否由基本面恶化导致。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "高于减持区间下沿，若盈利未上修则估值可能透支。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报正式数据、扣非利润、经营现金流、惠州立拓和 mPP 进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报是否延续扭亏趋势，并更新全年盈利假设。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，判断新材料期权是否已经转化为可持续利润。"
-    }
-  ],
-  "key_metrics": [
-    {
-      "name": "2026H1归母净利润预告",
-      "value": "1200-1600万元",
-      "as_of": "2026-07-11"
-    },
-    {
-      "name": "2026Q1营业收入",
-      "value": "10.87亿元",
-      "as_of": "2026-04-28"
-    },
-    {
-      "name": "2026Q1归母净利润",
-      "value": "280.05万元",
-      "as_of": "2026-04-28"
-    },
-    {
-      "name": "2025归母净利润",
-      "value": "-5207.53万元",
-      "as_of": "2026-04-21"
-    }
-  ],
-  "valuation_notes": "基准估值采用 PB、正常化盈利和分部加总三种方法交叉验证。当前更适合观察，等待扣非利润、经营现金流和 mPP/惠州立拓商业化数据兑现后再提高评级。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

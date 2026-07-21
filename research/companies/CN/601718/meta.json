@@ -1,96 +1,115 @@
 {
-  "symbol": "CN:601718",
-  "market": "CN",
-  "ticker": "601718",
-  "name": "ST际华",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "困境资产观察标的：央企背景、现金与净资产提供底部支撑，但2025年审计保留意见、内控强调事项、行政处罚事先告知书导致ST，且2026H1继续大额预亏。当前价格处于保守合理区间，尚无足够安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.45,
-    1.95
-  ],
-  "buy_zone": [
-    1.15,
-    1.35
-  ],
-  "sell_or_reduce_zone": [
-    2.05,
-    2.35
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST际华",
+    "security_status": "active",
+    "symbol": "CN:601718",
+    "ticker": "601718"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "355f9eb87e83a253a220e9a1b4d7eefef47c3a42f13b763703ccddd4e201f3bb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于1.35元且处罚正式决定、半年报、审计意见修复路径未确认",
-      "action": "不买入普通仓位，仅允许观察或极小跟踪仓",
-      "max_weight": 0.0025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、回购进展、重点客户订单和资质受限情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至1.16-1.35元且未新增退市、诉讼或现金流恶化风险",
-      "action": "分批建立试错仓，等待事件修复",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报、经营现金流、扣非亏损收窄情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至1.15元以下且行政处罚正式落地、未触发重大违法强制退市风险",
-      "action": "可提高至困境反转仓位，但继续以审计意见和经营现金流为硬约束",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报审计意见、内控审计意见和ST解除路径",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于2.05元且订单、扣非利润、审计意见没有实质改善",
-      "action": "不追高，已有仓位逐步降低",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.35
+      },
+      "reason": "进入有安全边际买入区，可重新评估第一笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.15
+      },
+      "reason": "进入强吸引力区，但必须同时确认无新增退市和重大追溯调整风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.05
+      },
+      "reason": "超过合理区间上沿，若基本面未改善应避免追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.35
+      },
+      "reason": "接近乐观资产折价估值，除非ST解除和盈利恢复同时兑现，否则风险收益恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.35,
-      "reason": "进入有安全边际买入区，可重新评估第一笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 1.15,
-      "reason": "进入强吸引力区，但必须同时确认无新增退市和重大追溯调整风险"
-    },
-    {
-      "type": "price_above",
-      "price": 2.05,
-      "reason": "超过合理区间上沿，若基本面未改善应避免追高或考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 2.35,
-      "reason": "接近乐观资产折价估值，除非ST解除和盈利恢复同时兑现，否则风险收益恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、回购进展、重点客户订单和资质受限情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报、经营现金流、扣非亏损收窄情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报审计意见、内控审计意见和ST解除路径"
-    }
-  ],
-  "notes": [
-    "2026-07-20腾讯行情显示收盘/最新价1.71元，总市值约74.57亿元，PB约0.62。",
-    "公司2026-04-30公告称行政处罚事先告知书认定2018-2021年年报存在虚假记载，未触及重大违法强制退市但触及其他风险警示。",
-    "2025年度财务报表审计意见为保留意见，内部控制审计为带强调事项段无保留意见。",
-    "2026年半年度业绩预告预计归母净利润-2.96亿元至-2.76亿元，扣非归母净利润-3.35亿元至-3.15亿元。",
-    "低置信度事项包括最终处罚决定、追溯调整影响、涉诉往来款回收率、重点客户订单恢复节奏和资产可变现折价。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

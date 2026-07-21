@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300850",
-  "ticker": "300850",
-  "name": "新强联",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "新强联具备大型风电轴承和回转支承稀缺产能，2025年盈利显著恢复且估值不贵；但2026Q1收入下滑、经营现金流仍偏弱、客户集中和定增摊薄需要中报验证，当前以观察为主。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    25,
-    34
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新强联",
+    "security_status": "active",
+    "symbol": "CN:300850",
+    "ticker": "300850"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "6eefb3440172045e4bea15a38bb9c4b9578d98241ff6c0a7d66589dfc5760407"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入18-22元且2026Q2或Q3显示收入恢复、毛利率稳定、经营现金流改善至少两项成立",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入恢复、毛利率、经营现金流、应收和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于18元且订单、毛利率、现金流未出现结构性恶化",
-      "action": "可提高至核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认2025年盈利中枢是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于38元且没有订单或盈利上修支撑",
-      "action": "减仓或放弃追高",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和定增落地后的股本摊薄、募投项目进度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入估值有安全边际的观察买入区，需同步复核现金流和订单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "跌入悲观情景价值附近，若基本面未恶化可重新评估加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入乐观情景估值区，若无盈利上修或现金流验证应考虑降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入估值有安全边际的观察买入区，需同步复核现金流和订单。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "跌入悲观情景价值附近，若基本面未恶化可重新评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "进入乐观情景估值区，若无盈利上修或现金流验证应考虑降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入恢复、毛利率、经营现金流、应收和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认2025年盈利中枢是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和定增落地后的股本摊薄、募投项目进度。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

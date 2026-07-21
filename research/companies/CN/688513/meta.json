@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688513",
-  "market": "CN",
-  "ticker": "688513",
-  "name": "苑东生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "苑东生物具备麻醉镇痛特色壁垒、原料制剂一体化现金流和创新药转型期权，2025年在集采压力下利润与现金流仍有韧性；但当前估值已反映部分管线预期，缺少足够安全边际，适合等待价格回落或临床/海外里程碑验证后再提高仓位。",
-  "fair_value_range": [
-    50,
-    65
-  ],
-  "buy_zone": [
-    42,
-    48
-  ],
-  "sell_or_reduce_zone": [
-    72,
-    80
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苑东生物",
+    "security_status": "active",
+    "symbol": "CN:688513",
+    "ticker": "688513"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b28b6a9026772f67673704c718a6f5b2586e82f380c695b43923b2f587f91f2b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格位于公允区间中部且创新管线尚未充分验证，仅保留观察仓或空仓等待。",
-      "action": "watch_or_probe",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入恢复、扣非利润、经营现金流和研发费用。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于48元，且2026H1收入同比恢复、扣非归母净利润未继续恶化。",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和第十一批集采执行后的量价影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于42元，且集采、现金流、研发管线三项核心假设未被破坏。",
-      "action": "add_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新DCF、管线进展和股权激励完成情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入初始买入区，需要复核2026H1经营质量后考虑建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入主业DCF支持区，若基本面未破坏则安全边际显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "估值进入乐观情景区，需要创新药或海外商业化兑现支撑，否则应减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入初始买入区，需要复核2026H1经营质量后考虑建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入主业DCF支持区，若基本面未破坏则安全边际显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "估值进入乐观情景区，需要创新药或海外商业化兑现支撑，否则应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入恢复、扣非利润、经营现金流和研发费用。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和第十一批集采执行后的量价影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新DCF、管线进展和股权激励完成情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

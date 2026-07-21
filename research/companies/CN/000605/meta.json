@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:000605",
-  "market": "CN",
-  "ticker": "000605",
-  "name": "渤海股份",
-  "company_name": "渤海股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "渤海股份具备天津区域水务和供热公用事业属性，但2025年ROE仅0.40%、资产负债率66.99%、经营现金流同比大幅下降，当前约0.92倍PB缺乏安全边际；在政府回款、应收账款、合同资产和债务压力未明显改善前，不建议买入。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    3.2,
-    4.3
-  ],
-  "buy_zone": [
-    2.8,
-    3.4
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "渤海股份",
+    "security_status": "active",
+    "symbol": "CN:000605",
+    "ticker": "000605"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "68e274f51f193474775f3de775a427f32b7f2c96b580d045672cd0ccb55fa0df"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于5.20元且未看到现金流和回款趋势改善",
-      "action": "不买入，维持观察",
-      "max_weight": 0,
-      "reason": "2025年ROE仅0.40%，当前约0.92倍PB缺乏安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看经营现金流、应收账款、合同资产、债务和分业务毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入2.80-3.40元，且最近两个季度经营现金流为正、应收账款和合同资产未继续扩张",
-      "action": "可建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入低回报公用事业资产折价区间，且现金回款验证初步改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认Q1增长是否延续以及供热季前债务和现金储备",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.80元，资产负债率降至62%以下，供热和环境治理毛利率修复",
-      "action": "可加至小仓位",
-      "max_weight": 0.02,
-      "reason": "资产折价足够且经营质量改善，但公司仍为低ROE、高区域集中度资产"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入买入区间上沿，需要复核回款和现金流后决定是否建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度折价区，需要复核是否存在基本面恶化或非经营性风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "高于减持/回避区间下沿，估值已接近乐观情景",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入买入区间上沿，需要复核回款和现金流后决定是否建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度折价区，需要复核是否存在基本面恶化或非经营性风险"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "高于减持/回避区间下沿，估值已接近乐观情景"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看经营现金流、应收账款、合同资产、债务和分业务毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认Q1增长是否延续以及供热季前债务和现金储备"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流净额",
-    "应收账款和合同资产合计",
-    "资产负债率",
-    "短期借款",
-    "长期借款",
-    "财务费用",
-    "供热业务收入和毛利率",
-    "环境治理业务收入和毛利率",
-    "政府补助到账金额",
-    "前五大客户销售和回款",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

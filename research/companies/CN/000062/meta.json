@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000062",
-  "market": "CN",
-  "ticker": "000062",
-  "name": "深圳华强",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "sell",
-  "current_thesis": "深圳华强受益于AI数据中心、存储需求和半导体国产替代，2025年和2026Q1收入利润均明显修复；但公司本质仍是低毛利、高周转、强营运资金占用的电子元器件分销平台，2025年及2026Q1经营现金流为负，应收账款、预付款项和供应商集中度构成主要约束。当前32.32元股价对应约4.9倍PB和高位PE，已较充分反映题材预期，基础公允价值区间为20-26元。",
-  "fair_value_range": [
-    20.0,
-    26.0
-  ],
-  "buy_zone": [
-    0.0,
-    20.0
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    34.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深圳华强",
+    "security_status": "active",
+    "symbol": "CN:000062",
+    "ticker": "000062"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "95073a43825f85355c17523a524b174325a11ff4f6c5917a1ff141a52b01c261"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_20",
-      "zone": "20元以下",
-      "action": "分批建仓",
-      "max_weight": 0.03,
-      "target_weight_pct": "2-3",
-      "notes": "仅在应收、预付款项和存货没有继续恶化时执行。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增长、扣非净利、经营现金流、应收账款、预付款项和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_20_and_26",
-      "zone": "20-26元",
-      "action": "小仓观察",
-      "max_weight": 0.02,
-      "target_weight_pct": "0-2",
-      "notes": "等待经营现金流和半年度订单质量验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认AI/存储/国产替代增长是否延续且现金流是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_26_and_30",
-      "zone": "26-30元",
-      "action": "观望",
-      "max_weight": 0.01,
-      "target_weight_pct": "0-1",
-      "notes": "不主动新增仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入基础买入区，重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_30",
-      "zone": "30元以上",
-      "action": "减持或不追",
-      "max_weight": 0.0,
-      "target_weight_pct": "0",
-      "notes": "当前题材预期已较充分反映。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入牛市情景估值区，已有仓位应减持或退出。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "若基本面未改善但跌破该位，不自动补仓，等待现金流拐点或更高安全边际。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增长、扣非净利、经营现金流、应收账款、预付款项和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认AI/存储/国产替代增长是否延续且现金流是否改善。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "currency": "CNY",
-      "reason": "进入基础买入区，重新评估建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 34.0,
-      "currency": "CNY",
-      "reason": "进入牛市情景估值区，已有仓位应减持或退出。"
-    },
-    {
-      "type": "price_below",
-      "price": 24.0,
-      "currency": "CNY",
-      "reason": "若基本面未改善但跌破该位，不自动补仓，等待现金流拐点或更高安全边际。"
-    }
-  ],
-  "updated_at": "2026-07-07T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

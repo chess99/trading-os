@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920837",
-  "market": "CN",
-  "ticker": "920837",
-  "name": "华原股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "现金转化和资本回报尚可，但玉柴体系贡献约一半收入，当前价格接近公允价值，需等待更高安全边际。",
-  "fair_value_range": [8.6, 10.5],
-  "buy_zone": [7.2, 8.1],
-  "sell_or_reduce_zone": [11.5, 12.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华原股份",
+    "security_status": "active",
+    "symbol": "CN:920837",
+    "ticker": "920837"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "c8a0e25cc3d28a752fd0a4a23ad8edeabf6a60207276e1cdbe63773930b5d35f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于7.2至8.1元且半年报确认关联客户订单、毛利率和现金流未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的关联销售、应收存货、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.2元，复核后2026年归母净利润预期不低于0.8亿元且应收和存货风险可控",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.1
+      },
+      "reason": "进入有一定安全边际的观察仓买入区间，仍须复核基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "关联客户需求显著下滑或利润率、现金流逻辑被证伪",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "进入减仓或不应追高区间，需重新评估激励目标兑现概率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的关联销售、应收存货、毛利率和经营现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.1,
-      "reason": "进入有一定安全边际的观察仓买入区间，仍须复核基本面"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "进入减仓或不应追高区间，需重新评估激励目标兑现概率"
-    }
-  ],
-  "updated_at": "2026-07-14T17:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

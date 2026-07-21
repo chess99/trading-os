@@ -1,122 +1,124 @@
 {
-  "symbol": "CN:002696",
-  "market": "CN",
-  "ticker": "002696",
-  "name": "百洋股份",
-  "company_name": "百洋产业投资集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "百洋股份具备罗非鱼加工、饲料、远洋捕捞和国资控股资源，但当前利润率低、经营现金流为负、存货和有息负债压力较大。以 2026-07-10 可核价格 5.38 元测算，估值已经透支盈利修复，只有在 3.4 元以下且现金流/存货改善被验证后才具备买方赔率。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.8,
-    4.8
-  ],
-  "buy_zone": [
-    3.4,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    6.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百洋股份",
+    "security_status": "active",
+    "symbol": "CN:002696",
+    "ticker": "002696"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "bac915bd188516658a66ea37971e7fcc764727c0ed2937530f446a5d414985bb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 3.4 元，且最近一期经营现金流不继续恶化",
-      "action": "建立观察仓",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报将验证 2026Q1 亏损是否只是季节性，以及战略性备货是否开始转化为现金",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于 3.4-3.8 元，且毛利率、存货周转和经营现金流同步改善",
-      "action": "小仓试错",
-      "target_position": "1.0%-2.0%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季度通常更能观察水产加工和饲料旺季表现，是判断反转质量的关键窗口",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 4.2 元，且连续两个季度归母净利润为正、经营现金流为正",
-      "action": "加至核心观察仓",
-      "target_position": "2.0%-3.0%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报可完整确认库存跌价、有息负债、现金分红和全年盈利质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于 5.5 元但盈利质量未改善",
-      "action": "不追买并降低已有仓位",
-      "target_position": "0%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
+      "reason": "若两个半年度周期后仍不能转正现金流，应继续维持不买或下调评级",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "价格低于约 0.85 倍 PB，开始提供资产折价和反转失败保护",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "价格接近合理价值下沿，但仍需要现金流和存货改善确认",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "价格接近乐观情境估值，若盈利质量未改善则赔率不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "价格超过当前可验证价值上沿，需要强反转证据支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "action": "进入可买区，复核现金流和存货后允许建仓",
-      "reason": "价格低于约 0.85 倍 PB，开始提供资产折价和反转失败保护"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "action": "进入观察买入区，等待季度数据确认",
-      "reason": "价格接近合理价值下沿，但仍需要现金流和存货改善确认"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "action": "若基本面未改善则减仓或不追买",
-      "reason": "价格接近乐观情境估值，若盈利质量未改善则赔率不足"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "action": "若仍低 ROE 或负现金流则卖出",
-      "reason": "价格超过当前可验证价值上沿，需要强反转证据支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核 2026 年半年报，重点检查经营现金流、存货、毛利率和归母净利润",
-      "reason": "半年报将验证 2026Q1 亏损是否只是季节性，以及战略性备货是否开始转化为现金"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核 2026 年三季报，确认旺季利润和现金流是否修复",
-      "reason": "三季度通常更能观察水产加工和饲料旺季表现，是判断反转质量的关键窗口"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核 2026 年年报，检查存货消化、资产减值、财务费用和分红",
-      "reason": "年报可完整确认库存跌价、有息负债、现金分红和全年盈利质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "复核 2027 年半年报，判断是否具备从观察转为买入的盈利质量",
-      "reason": "若两个半年度周期后仍不能转正现金流，应继续维持不买或下调评级"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "存货余额、存货周转天数和存货跌价准备",
-    "食品加工、饲料、饲料原料分部毛利率",
-    "财务费用和有息负债规模",
-    "出口收入占比及美国、欧盟订单变化",
-    "罗非鱼原料价格和库存吨数",
-    "前五大客户销售占比",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

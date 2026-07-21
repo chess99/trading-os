@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:000526",
-  "market": "CN",
-  "ticker": "000526",
-  "name": "学大教育",
-  "company_name": "学大教育",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "学大教育在双减后已验证盈利和预收款现金流修复，2025年收入32.27亿元、归母净利1.95亿元、经营现金流7.39亿元，2026Q1扣非净利和合同负债继续增长；当前估值处于可小仓买入区间，但仓位受K12合规边界、获客成本和职业教育转型不确定性约束。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "attractive",
-  "fair_value_range": [
-    30,
-    38
-  ],
-  "buy_zone": [
-    22,
-    27.5
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "学大教育",
+    "security_status": "active",
+    "symbol": "CN:000526",
+    "ticker": "000526"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "caef8fcd3857872c0903f3099cacc7f1b57827c4a1523b9426ea04a51a77c2db"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于22-27.5元买入区间且未出现重大监管处罚",
-      "action": "建立首笔观察型实仓",
-      "max_weight": 0.015,
-      "reason": "2025年和2026Q1盈利及经营现金流修复明确，但政策风险仍高"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非净利、合同负债、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌破24元且合同负债、扣非净利、合规状态未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.025,
-      "reason": "估值安全边际提高，可用更低价格买入预收款现金流"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及暑期招生后合同负债变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报收入增速不低于10%、扣非净利增速不低于20%、合同负债同比增长",
-      "action": "确认基本面后提高至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "中报能验证Q1高增长不是单季季节性扰动"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、职业教育贡献、商誉减值和回购注销进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "全年扣非净利超过2.5亿元、经营现金流持续显著高于净利且无政策负面事件",
-      "action": "上调至单票上限",
-      "max_weight": 0.05,
-      "reason": "增长质量和合规边界被进一步验证后可承受更高仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入更有吸引力的加仓区，需复核是否为基本面下跌",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "触发逻辑止损复核，若同时伴随监管或经营恶化则降仓或退出",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "进入减持区下沿，需复核估值是否透支乐观情景",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "超过基准合理区间，除非利润显著上修否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入更有吸引力的加仓区，需复核是否为基本面下跌"
-    },
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "触发逻辑止损复核，若同时伴随监管或经营恶化则降仓或退出"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "进入减持区下沿，需复核估值是否透支乐观情景"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "超过基准合理区间，除非利润显著上修否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非净利、合同负债、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及暑期招生后合同负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、职业教育贡献、商誉减值和回购注销进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "合同负债",
-    "经营活动现金流量净额",
-    "扣非归母净利润",
-    "教育培训服务费收入增速",
-    "教育培训服务毛利率",
-    "销售费用率",
-    "学习中心数量",
-    "专职教师人数",
-    "全日制培训基地数量",
-    "监管处罚或合规整改事项",
-    "商誉减值",
-    "股份回购与注销进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

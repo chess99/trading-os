@@ -1,127 +1,114 @@
 {
-  "symbol": "CN:002421",
-  "market": "CN",
-  "ticker": "002421",
-  "name": "达实智能",
-  "company_name": "深圳达实智能股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "2025年大幅亏损和经营现金流为负暴露项目制业务质量问题，2026Q1收入修复但盈利和现金流尚未确认拐点；当前约3.15元、66.80亿元市值已定价AIoT转型预期，安全边际不足，等待2.30元以下或基本面连续两个季度验证。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.4,
-    3.0
-  ],
-  "buy_zone": [
-    1.8,
-    2.3
-  ],
-  "sell_or_reduce_zone": [
-    3.3,
-    3.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "达实智能",
+    "security_status": "active",
+    "symbol": "CN:002421",
+    "ticker": "002421"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4bf5ce5dcd4a47d68b30c9c17d837c0f6e7ad8f85bde75cc203906163fbc9684"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<=1.80",
-      "action": "强吸引力区，确认无重大风险后分批买入",
-      "position": "6%-8%",
-      "max_weight": 0.08
-    },
-    {
-      "condition": "1.81-2.30",
-      "action": "有安全边际，分批试买",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "2.31-2.80",
-      "action": "仅在连续两个季度基本面修复后小仓验证",
-      "position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "2.81-3.30",
-      "action": "等待，不新增",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": ">3.30",
-      "action": "不追高；已有仓位按兑现度减仓",
-      "position": "0%或减仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "condition": "<=2.30",
-      "action": "若2026H1或2026Q3显示收入、毛利率、经营现金流同步改善，可开1%-2%观察仓",
-      "reason": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "condition": "<=1.80",
-      "action": "若未出现退市、重大诉讼、流动性恶化风险，可提升至6%-8%",
-      "reason": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 3.3,
-      "condition": ">3.30",
-      "action": "不追高；高于3.80元且基本面无验证时减仓或回避",
-      "reason": "超过合理估值上沿且安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026半年报是判断收入修复、利润质量和现金流拐点的关键节点",
-      "condition": "2026半年报发布",
-      "action": "复查收入、毛利率、扣非净利率、经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报和订单披露可验证AIoT产品化是否从主题进入收入兑现",
-      "condition": "AIoT/AI Agent/产品及技术服务订单或收入出现亿元级突破",
-      "action": "复查估值上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "项目制公司需要持续检查应收、合同资产和减值风险",
-      "condition": "出现大额资产减值、应收或合同资产异常增长、控股股东质押减持变化",
-      "action": "立即复查"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度报告可确认经营现金流是否真正连续转正",
-      "condition": "经营活动现金流连续两个季度转正",
-      "action": "复查质量评级"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.3
+      },
+      "reason": "超过合理估值上沿且安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "综合毛利率",
-    "扣非净利率",
-    "经营活动现金流净额",
-    "应收账款加合同资产占收入比例",
-    "AIoT和产品及技术服务收入占比",
-    "有息负债和利息费用",
-    "新签订单质量和回款周期"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

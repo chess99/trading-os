@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:300583",
-  "ticker": "300583",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "赛托生物",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2026Q1 收入、毛利率和扣非利润出现修复，但 TTM 仍亏损，历史扩产资产、减值和诉讼风险尚未完全出清；当前估值处于基准合理区间中部，安全边际不足，等待中报确认。",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    8.5,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赛托生物",
+    "security_status": "active",
+    "symbol": "CN:300583",
+    "ticker": "300583"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3e8bae9598b1c219469b90972acd996070c05770fe8a612e484237d164a8d56e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 10 元，且 2026 年中报毛利率不低于 18%、扣非归母净利润为正、经营现金流为正",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报的毛利率、扣非净利润、经营现金流和存货跌价",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利、毛利率稳定在 20% 左右、诉讼无重大不利进展",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，验证 Q1 修复是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "毛利率低于 16%、扣非继续亏损或经营现金流转负",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，评估制剂平台、境外收入和资产减值是否兑现或恶化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入安全买入区间，需复核中报盈利和现金流修复质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "超过基准估值上沿，需要确认是否已有盈利预测上修，否则应卖出或降低关注",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入安全买入区间，需复核中报盈利和现金流修复质量"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "超过基准估值上沿，需要确认是否已有盈利预测上修，否则应卖出或降低关注"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报的毛利率、扣非净利润、经营现金流和存货跌价"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，验证 Q1 修复是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，评估制剂平台、境外收入和资产减值是否兑现或恶化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

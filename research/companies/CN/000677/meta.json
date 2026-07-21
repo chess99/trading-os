@@ -1,76 +1,77 @@
 {
-  "symbol": "CN:000677",
-  "market": "CN",
-  "ticker": "000677",
-  "name": "ST海龙",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "ST特殊风险未解除，2025年审计保留意见和内控否定意见叠加博莱特股权执行风险，当前1.80元缺乏安全边际，维持avoid。",
-  "fair_value_range": [
-    0.5,
-    0.85
-  ],
-  "buy_zone": [
-    0.3,
-    0.5
-  ],
-  "sell_or_reduce_zone": [
-    0.9,
-    1.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST海龙",
+    "security_status": "active",
+    "symbol": "CN:000677",
+    "ticker": "000677"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "1fd523df93c1ab8d4db618b8bde641832849ebbd3d916e925db2a202b80d293a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "ST未撤销、博莱特执行风险未解除、内控否定事项未消除",
-      "action": "不买入；已有持仓以退出或降风险为主",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复核ST月度进展、执行款安排、博莱特控制权及2026年半年报现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌破0.50元但关键风险仍未解除",
-      "action": "只触发复核，不自动买入",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.5
+      },
+      "reason": "跌入风险调整后的复核区，但需先确认ST、执行款和控制权风险是否解除",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "执行款解决、博莱特控制权保住、内控整改有公告或会计师证据且价格低于0.50元",
-      "action": "可考虑第一笔观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "ST撤销、内控审计转为标准、经营现金流连续两个季度为正且价格低于0.70元",
-      "action": "可提升至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 0.9
+      },
+      "reason": "高于风险调整合理区间上沿，应避免追高或考虑减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.5,
-      "reason": "跌入风险调整后的复核区，但需先确认ST、执行款和控制权风险是否解除"
-    },
-    {
-      "type": "price_above",
-      "price": 0.9,
-      "reason": "高于风险调整合理区间上沿，应避免追高或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复核ST月度进展、执行款安排、博莱特控制权及2026年半年报现金流"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价1.80元，总市值15.55亿元，腾讯行情快照。",
-    "2025年度财务报表为保留意见，内部控制审计为否定意见，公司自2026-05-06起被实施其他风险警示。",
-    "董事兰大培无法保证2025年年度报告及2026年一季度报告真实、准确、完整。",
-    "国恒公司案件进入执行阶段，若资金安排失败，博莱特股权存在司法强制执行风险；博莱特是核心经营主体与主要收入利润来源。",
-    "当前评级为avoid；低价只触发复核，不构成自动买入条件。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

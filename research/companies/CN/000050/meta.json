@@ -1,103 +1,111 @@
 {
-  "symbol": "CN:000050",
-  "market": "CN",
-  "ticker": "000050",
-  "name": "深天马Ａ",
-  "company_name": "深天马Ａ",
-  "status": "active",
-  "updated_at": "2026-07-18T12:00:00+08:00",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2026H1预告归母亏损7.2至7.5亿元、扣非亏损8.7至9.0亿元，柔性AMOLED手机需求下滑、价格下降及联营公司投资损失打断此前修复节奏；车载和专业显示占营收超55%且保持稳健，仍提供资产底盘。2026-07-17收盘6.19元估值低，但中报现金流、减值和损失持续性未明，不建议新买，仅保留极小跟踪仓。",
-  "quality_rating": "medium",
-  "valuation_rating": "cheap_but_unconfirmed",
-  "fair_value_range": [
-    6.5,
-    8.2
-  ],
-  "buy_zone": [
-    5.4,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深天马Ａ",
+    "security_status": "active",
+    "symbol": "CN:000050",
+    "ticker": "000050"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "7cbc047cac8a45d08b47563ef42778be7e3451baf3582f7f585b3a8bd7e7a067"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "01766555770183d13e13f263c69831c8d6a9be22f26821823985973c5af3b175"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价6.19元且2026年中报尚未披露",
-      "action": "未持有者不买，已有仓位仅保留跟踪仓",
-      "max_weight": 0.005,
-      "reason": "半年度业绩预告显示Q2亏损骤增，现金流、减值和投资损失构成尚未核验"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点拆分Q2亏损、投资损失、资产减值、经营现金流和车载专业显示毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格位于5.4至6.0元且中报确认经营现金流仍为正、资产负债表未显著恶化",
-      "action": "可建立小额研究仓",
-      "max_weight": 0.01,
-      "reason": "进入调整后的买入区，但盈利恢复仍缺乏验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断行业修复和产能利用率是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.4元且Q3证明AMOLED和投资损失环比收窄、车载专业显示稳定",
-      "action": "分批提高至高风险周期仓",
-      "max_weight": 0.02,
-      "reason": "具备较强资产折价且基本面出现止跌证据"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入调整后买入区上沿，仅触发中报现金流和资产负债表复核，不自动买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于8.2元但扣非利润和自由现金流未明显改善",
-      "action": "减仓",
-      "max_weight": 0,
-      "reason": "超过调整后合理价值上沿，缺乏盈利兑现支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入强资产折价区，需Q3证明AMOLED和投资损失环比收窄后再提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "达到调整后合理价值上沿，若利润未兑现应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "进入乐观情景上沿，除非ROE和现金流显著改善否则卖出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入调整后买入区上沿，仅触发中报现金流和资产负债表复核，不自动买入"
-    },
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入强资产折价区，需Q3证明AMOLED和投资损失环比收窄后再提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "达到调整后合理价值上沿，若利润未兑现应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入乐观情景上沿，除非ROE和现金流显著改善否则卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点拆分Q2亏损、投资损失、资产减值、经营现金流和车载专业显示毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断行业修复和产能利用率是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "柔性AMOLED产线稼动率和良率",
-    "LTPS及车载显示订单和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "折旧摊销占营业收入比例",
-    "资产负债率和有息负债",
-    "前五大客户销售占比",
-    "行业面板价格和库存周期"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

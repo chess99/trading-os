@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601156",
-  "ticker": "601156",
-  "market": "CN",
-  "name": "东航物流",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "东航物流是稀缺的航司系航空物流平台，2025年盈利和现金流质量较好，估值处于合理偏低区域；但航空货运周期、跨境电商政策和运价波动仍要求更高安全边际，15元以下更适合分批买入。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    18,
-    23
-  ],
-  "buy_zone": [
-    0,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东航物流",
+    "security_status": "active",
+    "symbol": "CN:601156",
+    "ticker": "601156"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "62d1739b04040d54c6b91d670173095808ccb926428555d0fe35b94ba6abf5c8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15元且航空速运毛利率、经营现金流未出现趋势性恶化",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点跟踪航空速运毛利率、综合物流解决方案利润率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13元且最新季度归母净利润仍能支持全年25亿元以上盈利中枢",
-      "action": "add_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和跨境电商旺季前运价趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元且未来12个月盈利预测没有同步上修",
-      "action": "reduce_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报披露后的盈利中枢、分红和关联交易情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入初始买入区间，安全边际相对合理。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "若基本面未恶化，可进入更有吸引力的加仓区。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于估值区间上沿，需要降低预期收益率或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入初始买入区间，安全边际相对合理。"
-    },
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "若基本面未恶化，可进入更有吸引力的加仓区。"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "高于估值区间上沿，需要降低预期收益率或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点跟踪航空速运毛利率、综合物流解决方案利润率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和跨境电商旺季前运价趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报披露后的盈利中枢、分红和关联交易情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300851",
-  "ticker": "300851",
-  "market": "CN",
-  "name": "交大思诺",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "交大思诺是轨道交通列控关键设备细分供应商，具备安全认证、标准参与、客户验证和高毛利优势；但2025年经营现金流显著弱于利润，ROE仍低，2026-07-15约22.40元现价高于审慎公允价值区间上沿，适合观察而非追高。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16,
-    20
-  ],
-  "buy_zone": [
-    0,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    23,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "交大思诺",
+    "security_status": "active",
+    "symbol": "CN:300851",
+    "ticker": "300851"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "eaf2dedfa3b43a5e1969a752ead5ebe5cb4dbb715e820f8cbc9b21df862dc868"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15元，且最近一期经营现金流转正或应收账款未继续恶化，可建立观察仓。",
-      "action": "buy_watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看经营现金流、应收账款、毛利率和订单验收节奏。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于16-20元公允价值区间，但经营现金流仍为负。",
-      "action": "hold_or_wait",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认淡季改善是否延续以及全年业绩可见度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于23元且没有订单、现金流或利润超预期证据。",
-      "action": "avoid_add_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期盈利质量、分红和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入审慎买入区，需要复核现金流和应收账款后考虑小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "高于当前公允价值区间上沿，若基本面未超预期应降低收益率预期。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入审慎买入区，需要复核现金流和应收账款后考虑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 23,
-      "reason": "高于当前公允价值区间上沿，若基本面未超预期应降低收益率预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看经营现金流、应收账款、毛利率和订单验收节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认淡季改善是否延续以及全年业绩可见度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期盈利质量、分红和估值区间。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

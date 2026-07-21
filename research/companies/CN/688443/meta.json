@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688443",
-  "market": "CN",
-  "ticker": "688443",
-  "name": "智翔金泰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "智翔金泰已从纯研发型Biotech进入早期商业化阶段，金立希纳入医保、金速希获批、GR1802多适应症申报和GR1803两次授权构成中期弹性；但当前约87亿元市值已计入部分管线兑现，产品销售尚不足以覆盖研发销售投入，需等待2026H1/Q3商业化数据验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    34
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "智翔金泰",
+    "security_status": "active",
+    "symbol": "CN:688443",
+    "ticker": "688443"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9294903a69ac6891a52b933882ced467271609e968e7f32c451c92dc08d8e17f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入18-22元且未出现核心管线负面审评信息时，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点跟踪产品销售、现金流、研发费用和GR1803授权收入确认。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3显示金立希医保后产品销售连续高增长，且GR1802审评进展正常时，可提高至小仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断医保后金立希放量和金速希首个完整季度销售。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于36元但产品销售与里程碑未同步超预期时，不加仓并逐步降低敞口。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核医保谈判、GR1802/GR1803审评节点及全年业绩预告。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入买入观察区，需要复核金立希医保后放量和GR1802审评状态。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "高于减仓区下沿，需要检查估值是否已脱离商业化兑现进度。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入买入观察区，需要复核金立希医保后放量和GR1802审评状态。"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "高于减仓区下沿，需要检查估值是否已脱离商业化兑现进度。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点跟踪产品销售、现金流、研发费用和GR1803授权收入确认。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断医保后金立希放量和金速希首个完整季度销售。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核医保谈判、GR1802/GR1803审评节点及全年业绩预告。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

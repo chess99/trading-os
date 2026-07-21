@@ -1,98 +1,124 @@
 {
-  "symbol": "CN:002812",
-  "market": "CN",
-  "ticker": "002812",
-  "name": "恩捷股份",
-  "company_name": "恩捷股份",
-  "updated_at": "2026-07-08",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "观察 / 小仓位试探",
-  "current_rating": "watch",
-  "current_thesis": "全球湿法隔膜龙头处于周期修复早期，2026Q1盈利弹性已验证，但隔膜价格、海外合规事件和资本开支风险仍高，当前仅适合小仓位跟踪，50元以下才具备较好安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    58,
-    75
-  ],
-  "buy_zone": [
-    42,
-    50
-  ],
-  "sell_or_reduce_zone": [
-    78,
-    90
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恩捷股份",
+    "security_status": "active",
+    "symbol": "CN:002812",
+    "ticker": "002812"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "8ba442ea841fa1630ad22b9b01973ad99c083f97b160c740629b3b048c444d88"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价处于58-75元合理区间且海外事件未明朗",
-      "action": "仅建立0.5%-1.0%观察仓，等待2026Q2和匈牙利事件复核",
-      "max_weight": 0.06,
-      "initial_weight": 0.01,
-      "current_price_reference": 60.95,
-      "strategy": "当前仅适合0.5%-1.0%观察仓；50元以下再考虑提高至2%-4%，42元以下才具备强吸引力。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的隔膜毛利率、经营现金流、应收账款和海外收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
+      "reason": "公司披露匈牙利工厂停产、罚款、整改完成、客户交付影响或其他海外重大事项。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "隔膜价格出现新一轮下调、主要客户长协执行价格变化或行业新增产能显著超预期。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入安全边际买入区，需复核Q2毛利率和海外事件后分批加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化可提高至核心观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 78.0
+      },
+      "reason": "脱离合理价格区间上沿，若盈利未同步上修应停止买入并考虑降仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "较充分定价乐观情景，除非海外高毛利和单平利润明显超预期，否则应减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入安全边际买入区，需复核Q2毛利率和海外事件后分批加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入强吸引力区，若基本面未恶化可提高至核心观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 78,
-      "reason": "脱离合理价格区间上沿，若盈利未同步上修应停止买入并考虑降仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "较充分定价乐观情景，除非海外高毛利和单平利润明显超预期，否则应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的隔膜毛利率、经营现金流、应收账款和海外收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2026-07-31",
-      "reason": "公司披露匈牙利工厂停产、罚款、整改完成、客户交付影响或其他海外重大事项。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "隔膜价格出现新一轮下调、主要客户长协执行价格变化或行业新增产能显著超预期。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "隔膜出货量",
-    "单平净利",
-    "隔膜毛利率",
-    "海外收入占比",
-    "境外业务毛利率",
-    "经营性现金流净额",
-    "资本开支",
-    "存货周转",
-    "应收账款周转",
-    "匈牙利工厂事件进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

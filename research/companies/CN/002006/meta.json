@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:002006",
-  "market": "CN",
-  "ticker": "002006",
-  "name": "精工科技",
-  "company_name": "精工科技",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "精工科技的核心价值来自碳纤维全链装备国产替代和重大订单兑现，但当前价格已反映部分景气预期，需等待 10.5-12.5 元买入区间或订单、回款、毛利率继续验证后再提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive_watch",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    13.5,
-    18.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    19.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "精工科技",
+    "security_status": "active",
+    "symbol": "CN:002006",
+    "ticker": "002006"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "a63a6feaf0a97e425bc2c66487fdee1ba16d39b87d9bf867ae0fa78e05cf8c13"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入 10.5-12.5 元且碳纤维装备订单履约、毛利率和回款未恶化",
-      "action": "建立首笔买入仓位",
-      "max_weight": 0.015,
-      "reason": "该价格提供周期装备和回款风险折价，风险收益比开始合理"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看碳纤维装备收入、毛利率、应收账款和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在 13.5-18.0 元且基本面正常兑现",
-      "action": "已有仓位持有，新资金仅保留研究仓",
-      "max_weight": 0.01,
-      "reason": "当前价格大致处于合理价值区间，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年订单兑现和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 19.0 元但未出现新增大单、回款改善或复材端盈利",
-      "action": "逐步减仓",
-      "max_weight": 0.03,
-      "reason": "估值已提前反映较多碳纤维装备景气预期"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估合理价值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度碳纤维装备毛利率低于 35%或经营现金流明显弱于利润",
-      "action": "降低或清空仓位",
-      "max_weight": 0.0,
-      "reason": "核心投资逻辑被订单质量和利润质量破坏"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入首笔买入观察区，需要复核订单、毛利率和应收账款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入高安全边际区，若基本面未破坏可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "超过合理价值上沿附近，需要检查是否已有新增基本面证据支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "估值进入偏乐观区域，若仅由题材推动应考虑减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入首笔买入观察区，需要复核订单、毛利率和应收账款"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入高安全边际区，若基本面未破坏可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "超过合理价值上沿附近，需要检查是否已有新增基本面证据支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "估值进入偏乐观区域，若仅由题材推动应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看碳纤维装备收入、毛利率、应收账款和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年订单兑现和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估合理价值区间和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "碳纤维装备收入及同比增速",
-    "碳纤维装备毛利率是否维持在 40%附近",
-    "湖北裕创、吉林国兴、东华能源等重大合同履约和回款",
-    "应收账款余额及占收入比例",
-    "合同负债和预收款变化",
-    "经营活动现金流量净额",
-    "高性能碳纤维原丝生产线商业化订单",
-    "复材和材料端收入、亏损及资本开支",
-    "控股股东股份质押比例",
-    "京亿纤业和沙特 GIM 合同是否收到预付款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

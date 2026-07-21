@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301101",
-  "ticker": "301101",
-  "name": "明月镜片",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国内镜片品牌龙头，主业现金流好、净现金充足、分红积极，高折/PMC/轻松控等结构升级仍有增长空间；但当前价格约处于合理价值区间内，买入安全边际不足，等待回落或新品放量进一步验证。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    27,
-    34
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "明月镜片",
+    "security_status": "active",
+    "symbol": "CN:301101",
+    "ticker": "301101"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "16a05c83125012730f5d81e489f21e29aa27f83e9a4f30ebcd66eda5e906ccc0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于24元且半年报未显示收入增速、毛利率或经营现金流明显恶化",
-      "action": "begin_accumulation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、镜片毛利率、轻松控/高折新品进展、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于21元且轻松控/高折产品继续增长、经营现金流恢复正常",
-      "action": "increase_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润节奏和渠道库存风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于38元且盈利预测没有同步上修",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期增长率、分红能力和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区上沿，前瞻估值和净现金保护开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入深度价值区，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "超过基准合理价值区间较多，若盈利未上修需减持或停止追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入区上沿，前瞻估值和净现金保护开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入深度价值区，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "超过基准合理价值区间较多，若盈利未上修需减持或停止追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、镜片毛利率、轻松控/高折新品进展、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润节奏和渠道库存风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期增长率、分红能力和合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

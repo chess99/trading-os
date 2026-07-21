@@ -1,42 +1,87 @@
 {
-  "symbol": "CN:601058",
-  "market": "CN",
-  "ticker": "601058",
-  "name": "赛轮轮胎",
-  "company_name": "赛轮集团股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "赛轮轮胎是具备全球化制造网络、产品升级能力和较强现金流兑现能力的高质量轮胎公司,但2026-07股价大致落在合理价值区间中部,尚未提供足够安全边际,现阶段以观察和等待更优买点为主。",
-  "quality_rating": "A-",
-  "valuation_rating": "neutral",
-  "fair_value_range": [11.0, 14.0],
-  "buy_zone": [9.5, 11.0],
-  "strong_attraction_zone": [7.5, 9.5],
-  "sell_or_reduce_zone": [16.0, 999.0],
-  "do_not_chase_above": 15.0,
-  "position_plan": [
-    {"zone": "14-15元", "condition": "合理偏贵", "action": "观察", "target_weight": 0.01, "max_weight": 0.02},
-    {"zone": "11-14元", "condition": "合理区间", "action": "小仓试探", "target_weight": 0.03, "max_weight": 0.04},
-    {"zone": "9.5-11元", "condition": "买入区", "action": "分批买入", "target_weight": 0.05, "max_weight": 0.06},
-    {"zone": "7.5-9.5元", "condition": "强吸引力区", "action": "建仓至6%", "target_weight": 0.06, "max_weight": 0.06}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赛轮轮胎",
+    "security_status": "active",
+    "symbol": "CN:601058",
+    "ticker": "601058"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "bdcf5796ad22bf0907c5c0103f8264efaf1764274c8906e19861b83b11dfac0b"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial-v0.md",
+        "sha256": "3d76cde1a84122f29869b78f6ba73cedc46d2b0d9c5c1f4a43c6b141f13e949c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "3d76cde1a84122f29869b78f6ba73cedc46d2b0d9c5c1f4a43c6b141f13e949c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露,关注海外产能爬坡与毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "不追高/减仓评估",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026半年报披露,关注海外产能爬坡与毛利率"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 11, "reason": "进入买入区"},
-    {"type": "price_above", "price": 15, "reason": "不追高/减仓评估"}
-  ],
-  "key_risks": [
-    "美国关税与贸易摩擦影响海外销售",
-    "天然胶与炭黑等原料价格波动",
-    "海外产能爬坡不及预期",
-    "国内乘用车轮胎价格战",
-    "海运费波动影响出口利润",
-    "汇率波动"
-  ],
-  "updated_at": "2026-07-08T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

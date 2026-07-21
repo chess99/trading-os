@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:002659",
-  "ticker": "002659",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "凯文教育",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "凯文教育处于教育服务修复和AI/职业教育再验证阶段，2025年收入增长且亏损收窄，2026Q1延续改善，但扣非利润和经营现金流尚未转正；当前估值接近合理区间上半部，缺乏足够安全边际，适合观察而非买入。",
-  "fair_value_range": [
-    3.1,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯文教育",
+    "security_status": "active",
+    "symbol": "CN:002659",
+    "ticker": "002659"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "ec3765efef548d31f1c05f7205694ea26ea57f29d021f35e6ce9e5bb5020c13b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，不建仓；等待扣非经营利润连续改善、经营现金流转正或股价跌入买入区间。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看教育服务收入、毛利率、扣非利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌至3.2元以下且无新的政策、现金流或治理恶化信号，可建立跟踪仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损收窄是否持续以及AI/职业教育订单是否有更多披露。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扣非利润转正且AI/职业教育外部订单可核验，可上调至小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估扭亏路径、资产质量和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入买入观察区，PB接近或低于0.9倍，资产安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度安全边际区，需要复核经营现金流和政策风险后决定是否提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "估值进入乐观情景下沿，若扣非利润未转正则需要减仓或继续观望。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入买入观察区，PB接近或低于0.9倍，资产安全边际改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度安全边际区，需要复核经营现金流和政策风险后决定是否提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "估值进入乐观情景下沿，若扣非利润未转正则需要减仓或继续观望。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看教育服务收入、毛利率、扣非利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损收窄是否持续以及AI/职业教育订单是否有更多披露。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估扭亏路径、资产质量和合理估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

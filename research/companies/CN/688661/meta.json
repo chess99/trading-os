@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:688661",
-  "market": "CN",
-  "ticker": "688661",
-  "name": "和林微纳",
-  "company_name": "和林微纳",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "和林微纳具备半导体测试探针国产替代和MEMS精微屏蔽罩放量潜力，但当前价格已反映乐观预期，需等待回撤或2026H1业绩验证后再提高仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    105,
-    135
-  ],
-  "buy_zone": [
-    80,
-    105
-  ],
-  "sell_or_reduce_zone": [
-    155,
-    190
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "和林微纳",
+    "security_status": "active",
+    "symbol": "CN:688661",
+    "ticker": "688661"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "8476c88bdb7839ef9f093d264ffc7cc5d31796bfa6b51d7dd306e52abe8ec535"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间上沿，且2026Q1亏损尚未被后续季度修复",
-      "action": "仅保留观察仓或暂不买入",
-      "max_weight": 0.01,
-      "reason": "当前估值已隐含乐观探针放量，新增仓位安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查探针业务放量、毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至105元以下，且半导体测试探针收入和毛利率未恶化",
-      "action": "建立首笔仓位",
-      "max_weight": 0.02,
-      "reason": "价格进入合理价值区间下沿，风险收益开始均衡"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1亏损是否已经修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至80-90元且2026H1利润恢复、经营现金流为正",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "基本面验证与估值安全边际同时出现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 105.0
+      },
+      "reason": "进入合理价值区间下沿，可重新评估首笔买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "2026年探针收入持续高增且传统精密结构件毛利率明显修复",
-      "action": "提高单票上限但不追高",
-      "max_weight": 0.05,
-      "reason": "成长确定性提升，但客户集中和估值波动仍需控制仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "若基本面未恶化，进入高赔率买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 155.0
+      },
+      "reason": "进入减仓观察区，除非后续业绩连续超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 190.0
+      },
+      "reason": "估值进入极乐观区，需要显著降低仓位或等待业绩兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 105,
-      "reason": "进入合理价值区间下沿，可重新评估首笔买入"
-    },
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "若基本面未恶化，进入高赔率买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 155,
-      "reason": "进入减仓观察区，除非后续业绩连续超预期"
-    },
-    {
-      "type": "price_above",
-      "price": 190,
-      "reason": "估值进入极乐观区，需要显著降低仓位或等待业绩兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查探针业务放量、毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1亏损是否已经修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "半导体芯片测试探针季度收入",
-    "半导体芯片测试探针毛利率",
-    "精密结构件毛利率",
-    "前五大客户收入占比",
-    "海外收入占比",
-    "经营活动现金流净额",
-    "应收账款周转率",
-    "存货余额与跌价准备",
-    "募投项目投产进度",
-    "高端探针和MEMS探针卡新品量产进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

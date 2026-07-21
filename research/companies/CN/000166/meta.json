@@ -1,35 +1,110 @@
 {
-  "symbol": "CN:000166",
-  "market": "CN",
-  "ticker": "000166",
-  "name": "申万宏源",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "申万宏源是综合性头部券商，2025年净利润95亿创历史新高（ROE 8.76%），但强周期属性下正常化利润约60-70亿/ROE约5-7%。当前PB≈1.02x处于净资产附近，估值基本合理，缺乏显著安全边际。建议等待PB<0.9x（<4.0元）再考虑建仓。",
-  "fair_value_range": [4.0, 5.2],
-  "buy_zone": [3.5, 4.0],
-  "sell_or_reduce_zone": [5.2, 5.5],
-  "position_plan": [
-    {"condition": "股价<3.5元（PB<0.78x），市场恐慌或极端低估", "max_weight": 0.04},
-    {"condition": "股价3.5-4.0元（PB 0.78-0.9x），具备安全边际", "max_weight": 0.03},
-    {"condition": "股价4.0-5.2元（合理区间），持有或观望", "max_weight": 0.01},
-    {"condition": "股价>5.2元（偏贵），减仓", "max_weight": 0.0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "申万宏源",
+    "security_status": "active",
+    "symbol": "CN:000166",
+    "ticker": "000166"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "12ff06cd0b1e91e4eda5a30106c6a4c59c14dc09f8e9743c64114477db4a7ea3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "e4c9e60f328ec4531a57f3aa1f061bf8fc4e3b493e4f5aeb80a0e08c926dbcc8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复核2026年中报利润及ROE趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、A股成交额趋势和全年盈利预测修正",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红方案和正常化ROE评估",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入有安全边际的买入区间（PB<0.9x）",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入强吸引力买入区间（PB<0.78x），可积极建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "进入偏贵区间，应评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-30", "reason": "复核2026年中报利润及ROE趋势"},
-    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报、A股成交额趋势和全年盈利预测修正"},
-    {"type": "date", "date": "2027-03-31", "reason": "复核2026年年报、分红方案和正常化ROE评估"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 4.0, "reason": "进入有安全边际的买入区间（PB<0.9x）"},
-    {"type": "price_below", "price": 3.5, "reason": "进入强吸引力买入区间（PB<0.78x），可积极建仓"},
-    {"type": "price_above", "price": 5.2, "reason": "进入偏贵区间，应评估减仓"}
-  ],
-  "updated_at": "2026-07-08T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

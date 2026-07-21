@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688079",
-  "market": "CN",
-  "ticker": "688079",
-  "name": "美迪凯",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "美迪凯具备光学与半导体制程融合的平台弹性，2025年收入恢复高增长且半导体封测、声光学、键合棱镜和MEMS小批量均有进展；但公司仍处亏损期，折旧、利息和产能利用率压力较重，当前16元附近已经反映一部分2027-2028年盈利拐点预期，需等待中报验证或更低价格提供安全边际。",
-  "fair_value_range": [
-    13.5,
-    18.5
-  ],
-  "buy_zone": [
-    10.5,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美迪凯",
+    "security_status": "active",
+    "symbol": "CN:688079",
+    "ticker": "688079"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5813f3758b515465c00e5e61ab3a3e2664d1abe3747e77c2f52113249b6bb6c4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于13.0元，且最新定期报告显示收入环比增长、毛利率高于22%、经营现金流为正三项中至少满足两项",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流、折旧和利息费用",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q3或之后单季收入超过2.5亿元且归母净亏损环比明显收窄",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入放量和亏损收窄是否兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22.0元但未出现收入或盈利预测上修",
-      "action": "不追高并减仓观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，更新盈利拐点与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入区上沿，若同时验证毛利率和现金流改善，风险收益比转正",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入悲观情景价值附近，可重新评估深度价值试错",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过基准合理价值上沿且接近主题溢价区，若无盈利上修应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入买入区上沿，若同时验证毛利率和现金流改善，风险收益比转正"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入悲观情景价值附近，可重新评估深度价值试错"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过基准合理价值上沿且接近主题溢价区，若无盈利上修应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流、折旧和利息费用"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入放量和亏损收窄是否兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，更新盈利拐点与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

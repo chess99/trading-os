@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603201",
-  "ticker": "603201",
-  "name": "常润股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分汽车工具和配套零部件龙头，泰国基地、海外渠道和跨境电商提供韧性，但2026Q1利润受汇兑拖累，达峰收购仍处框架协议阶段，当前价格已接近合理价值上沿，缺少足够安全边际。",
-  "fair_value_range": [
-    14.0,
-    18.5
-  ],
-  "buy_zone": [
-    10.8,
-    12.8
-  ],
-  "sell_or_reduce_zone": [
-    20.5,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "常润股份",
+    "security_status": "active",
+    "symbol": "CN:603201",
+    "ticker": "603201"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "e8838fc7fb83f0a32ae9f873880ea3e49428be20a48f9ecb0da62cca3702ec76"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未持仓；股价低于或等于12.8元，且2026H1扣非净利润恢复同比增长、经营现金流正常、达峰交易价格不高于经审计净利润约6倍时试探。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、汇兑损益、经营现金流和泰国产能贡献。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于或等于11.0元，且综合毛利率维持在23%左右、经营现金流TTM超过2.5亿元、并购无明显商誉风险时增持。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和达峰收购进展，重新校准估值与仓位上限。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于20.5元且达峰利润未兑现或主业盈利未上修时暂停加仓并考虑降低敞口。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核全年业绩预告、订单和并购整合进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.8
+      },
+      "reason": "进入初步安全边际区，需复核半年报利润与现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "接近悲观情景上沿，若基本面未恶化可重新评估买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.5
+      },
+      "reason": "超过基础估值上沿，若没有并购利润和主业上修支撑则风险收益转弱。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.8,
-      "reason": "进入初步安全边际区，需复核半年报利润与现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "接近悲观情景上沿，若基本面未恶化可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "超过基础估值上沿，若没有并购利润和主业上修支撑则风险收益转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、汇兑损益、经营现金流和泰国产能贡献。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和达峰收购进展，重新校准估值与仓位上限。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核全年业绩预告、订单和并购整合进展。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

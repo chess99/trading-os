@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688701",
-  "market": "CN",
-  "ticker": "688701",
-  "name": "卓锦股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "卓锦股份具备环保修复赛道和项目技术经验，但2025年收入大幅下滑、深度亏损、2026Q1现金流承压，且存在退市风险警示和治理事件折价；现价约6.64元已明显高于保守交叉估值区间，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    2.2,
-    4.0
-  ],
-  "buy_zone": [
-    0.8,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "卓锦股份",
+    "security_status": "active",
+    "symbol": "CN:688701",
+    "ticker": "688701"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f53732f7950a3d12d8ab77cad75bb7e7040ce42bce91b00ad5b1298a22ea059e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.0元，且退市风险警示解除路径明确、经营现金流转正、应收账款和合同资产未继续恶化",
-      "action": "建立观察性试探仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、现金流、应收账款和退市风险警示进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.2元，且上市地位、持续经营和治理风险没有进一步恶化",
-      "action": "重新评估困境反转仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和全年退市风险解除概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于6.0元但未披露重大订单、现金流改善或退市风险解除证据",
-      "action": "不新增并考虑降低已有暴露",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、审计意见及是否满足持续上市要求",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入保守买入观察区，需同步核验退市风险和现金流改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "高于保守估值区间上沿，若无基本面改善应降低暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入保守买入观察区，需同步核验退市风险和现金流改善"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "高于保守估值区间上沿，若无基本面改善应降低暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、现金流、应收账款和退市风险警示进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和全年退市风险解除概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、审计意见及是否满足持续上市要求"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

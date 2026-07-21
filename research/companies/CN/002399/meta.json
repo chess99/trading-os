@@ -1,143 +1,133 @@
 {
-  "symbol": "CN:002399",
-  "market": "CN",
-  "ticker": "002399",
-  "name": "海普瑞",
-  "company_name": "深圳市海普瑞药业集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海普瑞具备全球肝素制剂、API一体化和CDMO平台价值，2025年制剂收入增长且现金流强，但2026Q1扣非利润明显下滑，API仍处低价周期，海外收入和金融资产波动带来不确定性。2026-07-10股价9.54元大致处于合理价值带内，缺少安全边际，等待7.5元以下或基本面确认。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    6.5,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海普瑞",
+    "security_status": "active",
+    "symbol": "CN:002399",
+    "ticker": "002399"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "bc70bf89a1a16c83b81407f1117a12c8bef8d61bf468c3b573802b6fd3261e35"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价≤6.5元",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价6.5-7.5元",
-      "action": "有安全边际买入",
-      "position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价7.5-8.5元",
-      "action": "小仓试错",
-      "position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价8.5-11.5元",
-      "action": "观察",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价>12.0元",
-      "action": "不追高/减仓",
-      "position": "0%",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价低于7.5元",
-      "price": 7.5,
-      "reason": "较合理价值下沿有约10%以上折价，开始具备安全边际",
-      "action": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价低于6.5元",
-      "price": 6.5,
-      "reason": "接近悲观情景估值下沿，赔率明显改善",
-      "action": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价高于11.5元",
-      "price": 11.5,
-      "reason": "超过基准合理价值上沿，需要新增业绩证据支撑",
-      "action": "接近合理价值上沿，复查是否有新增基本面证据"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价高于12.0元",
-      "price": 12.0,
-      "reason": "进入乐观情景估值区间，风险收益转弱",
-      "action": "不追高或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证制剂增长和Q1扣非下滑是否修复",
-      "action": "复查制剂收入、销量、毛利率和扣非利润"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "API毛利率低于10%或库存上升",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "API周期恶化会压低公司估值中枢",
-      "action": "复查API周期是否继续恶化"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "经营现金流连续两个季度为负",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "现金流转弱会削弱财务质量评级",
-      "action": "复查利润质量和偿债风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "短期借款继续大幅上升或商誉/金融资产出现重大减值",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "资产负债表和金融资产波动是核心风险",
-      "action": "复查资产负债表安全性"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "海外质量、监管、关税或内控事件发生",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "海外收入占比高，监管和内控事件会改变投资结论",
-      "action": "立即复查投资结论"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "较合理价值下沿有约10%以上折价，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "接近悲观情景估值下沿，赔率明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "超过基准合理价值上沿，需要新增业绩证据支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入乐观情景估值区间，风险收益转弱",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "制剂收入增速",
-    "制剂毛利率",
-    "依诺肝素钠制剂销量",
-    "API收入和毛利率",
-    "CDMO收入和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "短期借款",
-    "商誉和金融资产公允价值变动",
-    "海外市场准入和招标中标情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688657",
-  "market": "CN",
-  "ticker": "688657",
-  "name": "浩辰软件",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "浩辰软件具备国产CAD替代、高毛利软件模型和充裕现金三重支撑，但当前价格仅处于合理价值区间下沿，尚缺乏足够安全边际；需跟踪2026年收入加速、SaaS/海外/3D CAD商业化与扣非利润率改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    31,
-    41
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    43,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浩辰软件",
+    "security_status": "active",
+    "symbol": "CN:688657",
+    "ticker": "688657"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "891a83b94c47f830612c7a67331680aae05889ef82b835d0f73b69bc14143cc6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在24-28元区间且2026年中报未显示收入或现金流恶化时建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非利润、现金流、SaaS和海外业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度收入增速高于20%、扣非净利率改善且SaaS/海外继续高增，可加至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否延续收入加速与利润率改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于43元且基本面没有上修，停止加仓并考虑降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和全年经营现金流，重估长期价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入区间上沿，安全边际开始具备吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "接近悲观情景估值，可重新评估是否提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 43.0
+      },
+      "reason": "超过基准公允价值区间上沿，若业绩未同步上修应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入买入区间上沿，安全边际开始具备吸引力"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "接近悲观情景估值，可重新评估是否提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 43,
-      "reason": "超过基准公允价值区间上沿，若业绩未同步上修应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非利润、现金流、SaaS和海外业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否延续收入加速与利润率改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和全年经营现金流，重估长期价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

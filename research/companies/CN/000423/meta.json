@@ -1,100 +1,96 @@
 {
-  "symbol": "CN:000423",
-  "market": "CN",
-  "ticker": "000423",
-  "name": "东阿阿胶",
-  "company_name": "东阿阿胶",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "东阿阿胶是高品牌壁垒、高现金流、高分红的中药滋补品资产，当前估值处于合理偏便宜区间；但 2026Q1 利润下滑要求用中报验证渠道库存、收入恢复和营销效率，因此适合首笔小仓买入、等待基本面确认后再加仓。",
-  "quality_rating": "high",
-  "valuation_rating": "reasonable",
-  "fair_value_range": [
-    52,
-    62
-  ],
-  "buy_zone": [
-    42,
-    48
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    72
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东阿阿胶",
+    "security_status": "active",
+    "symbol": "CN:000423",
+    "ticker": "000423"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "1daa1abeaf523e8ccd831a2f163a423fd3577f96927e9398594c9e9d174acc9f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_between_42_and_48_and_no_channel_inventory_warning",
-      "action": "initial_buy",
-      "max_weight": 0.02,
-      "reason": "当前价格位于买入区上沿，估值合理但 2026Q1 利润下滑仍需中报验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查收入恢复、毛利率、销售费用率、经营现金流和渠道库存。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_43_and_cash_flow_inventory_metrics_remain_healthy",
-      "action": "add",
-      "max_weight": 0.04,
-      "reason": "价格接近悲观情景上沿，若经营质量未恶化，安全边际改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年利润是否低于基准估值假设。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026_interim_report_confirms_revenue_recovery_margin_stability_and_operating_cash_flow",
-      "action": "increase_cap",
-      "max_weight": 0.06,
-      "reason": "中报验证收入、利润率和现金流后，可把资产从观察型买入提升为核心小仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "触及更有安全边际的加仓观察位，需同步复核渠道库存和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_65_without_earnings_upgrade",
-      "action": "reduce_or_stop_adding",
-      "max_weight": 0.04,
-      "reason": "估值进入乐观区间，需要更强增长兑现才能支撑。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入减持观察区，若盈利预测未上修则风险收益转弱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "超过乐观估值中枢，应考虑显著降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "触及更有安全边际的加仓观察位，需同步复核渠道库存和现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "进入减持观察区，若盈利预测未上修则风险收益转弱。"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "超过乐观估值中枢，应考虑显著降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查收入恢复、毛利率、销售费用率、经营现金流和渠道库存。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年利润是否低于基准估值假设。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "毛利率",
-    "销售费用率",
-    "经营现金流/净利润",
-    "存货周转与渠道库存",
-    "阿胶块终端价格和折扣",
-    "复方阿胶浆动销",
-    "驴皮等原料成本",
-    "分红率和回购注销进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

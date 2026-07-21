@@ -1,90 +1,96 @@
 {
-  "symbol": "CN:601006",
-  "market": "CN",
-  "ticker": "601006",
-  "name": "大秦铁路",
-  "company_name": "大秦铁路",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "大秦铁路是低增长、高分红、强监管的煤炭铁路通道资产。当前股价位于合理区间中部，等待更高股息率、大秦线运量修复传导至利润率、以及铁路清算和成本端更清晰后再提高仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    4.4,
-    5.3
-  ],
-  "buy_zone": [
-    4.0,
-    4.35
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大秦铁路",
+    "security_status": "active",
+    "symbol": "CN:601006",
+    "ticker": "601006"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "329238c60c3cb35430edde705321f73e2f5df980ed1fc732da2c7427becd1197"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.35元，且最新月度大秦线累计货运量同比仍为正",
-      "action": "建立或增加至1.0%-1.5%观察仓",
-      "max_weight": 0.015,
-      "reason": "估值进入买入区上沿，且核心运量没有恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看大秦线运量修复是否传导到毛利率、现金流和分红预期",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.10元，且最近12个月现金分红测算股息率接近或高于5.4%",
-      "action": "增加至2.5%-4.0%核心红利仓",
-      "max_weight": 0.04,
-      "reason": "价格提供足够股息率补偿煤炭需求和清算机制不确定性"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报和旺季煤运数据，确认盈利中枢是否恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.60元且半年报未显示毛利率和归母净利明显修复",
-      "action": "减仓至0.5%-1.0%或继续观察",
-      "max_weight": 0.01,
-      "reason": "估值超过基准合理区间但基本面未兑现改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.35
+      },
+      "reason": "进入买入区上沿，适合结合月度运量和分红预期评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "股息率和安全边际明显改善，可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "进入减仓区，需要利润修复支撑，否则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.35,
-      "reason": "进入买入区上沿，适合结合月度运量和分红预期评估首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "股息率和安全边际明显改善，可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "进入减仓区，需要利润修复支撑，否则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看大秦线运量修复是否传导到毛利率、现金流和分红预期"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报和旺季煤运数据，确认盈利中枢是否恢复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "大秦线月度货运量及累计同比",
-    "煤炭发送量和非煤货物发送量",
-    "铁路清算运价、货运服务费和两端物流辅助成本",
-    "毛利率、净利率和归母净利润同比",
-    "经营现金流、资本开支和自由现金流",
-    "每股现金分红、分红率和新的股东回报规划",
-    "控股股东及国铁体系关联交易、资产收购或清算规则变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,105 +1,114 @@
 {
-  "symbol": "CN:000547",
-  "market": "CN",
-  "ticker": "000547",
-  "name": "航天发展",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "航天发展具备央企军工信息化和十五五订单反转期权，但2025年仍亏损13.09亿元、主营毛利率为负、资产减值较大；2026Q1收入改善但仍亏损。当前16.66元、约266亿元市值已反映较乐观反转预期，等待蓝军装备毛利转正、通信与指控持续增长、现金流和减值风险进一步验证。",
-  "fair_value_range": [8.0, 12.0],
-  "buy_zone": [6.0, 8.0],
-  "sell_or_reduce_zone": [13.0, 18.8],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "航天发展",
+    "security_status": "active",
+    "symbol": "CN:000547",
+    "ticker": "000547"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "a91c832ce87aa6e6a1865aacc469d80c48d33b337c57d193821eca23874904dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "current",
-      "condition": "股价高于13.00元且缺乏订单、毛利率、现金流验证",
-      "price_range": [13.0, 18.8],
-      "action": "不追高；缺乏订单、毛利率、现金流验证时已有仓位考虑降低。",
-      "target_weight": 0.0,
-      "max_weight": 0.01
-    },
-    {
-      "zone": "watch",
-      "condition": "股价位于8.00-12.00元合理区间",
-      "price_range": [8.0, 12.0],
-      "action": "进入合理区间，继续观察季度数据，不主动加仓。",
-      "target_weight": 0.0,
-      "max_weight": 0.02
-    },
-    {
-      "zone": "buy",
-      "condition": "股价跌入6.00-8.00元且蓝军装备、通信与指控毛利率改善得到季度数据验证",
-      "price_range": [6.0, 8.0],
-      "action": "若蓝军装备、通信与指控毛利率改善得到季度数据验证，可试探。",
-      "target_weight": 0.01,
-      "max_weight": 0.02
-    },
-    {
-      "zone": "strong_buy",
-      "condition": "股价跌入4.00-6.00元且现金流仍可控、无重大新增减值或退市风险",
-      "price_range": [4.0, 6.0],
-      "action": "若现金流仍可控、无重大新增减值或退市风险，可提高仓位。",
-      "target_weight": 0.03,
-      "max_weight": 0.05
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报可以验证收入结构、毛利率、减值和现金流是否继续改善。",
-      "action": "复核收入结构、毛利率、减值和现金流。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "出现重大军工订单、资产处置、重组、诉讼、减值或退市风险提示公告",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "此类事件会改变盈利修复节奏、资产质量或持续经营风险。",
-      "action": "重新评估盈利修复节奏和估值区间。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "蓝军装备及相关产品毛利率连续两个季度转正",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "蓝军装备是核心反转变量，毛利转正意味着主业质量改善。",
-      "action": "上调公司质量评级并复核买入区间。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营现金流连续两个季度为正且应收账款、存货占收入比例下降",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "现金流和营运资本改善可以降低亏损公司资产负债表风险。",
-      "action": "复核仓位上限是否可从5%提高。"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 8.0,
-      "direction": "below",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
       "reason": "低于买入区间上沿后开始具备安全边际，但仍需季度验证。",
-      "action": "进入买入观察区，结合最近季度验证是否开1%-2%仓位。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 6.0,
-      "direction": "below",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
       "reason": "低于强吸引力区间上沿后，赔率改善，适合复核是否提高仓位。",
-      "action": "进入强赔率区，若基本面未继续恶化可考虑加至3%-5%。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 13.0,
-      "direction": "above",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
       "reason": "高于合理价格区间上沿，当前亏损和负毛利状态下缺乏安全边际。",
-      "action": "超过合理区间上沿，缺乏业绩验证时不追高并考虑减仓。"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07T23:59:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

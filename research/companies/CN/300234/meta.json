@@ -1,79 +1,95 @@
 {
-  "symbol": "CN:300234",
-  "ticker": "300234",
-  "name": "开尔新材",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "开尔新材具备功能性搪瓷材料细分项目履历和稳健资产负债表，但2025年收入大幅下滑、扣非亏损，当前约10元股价隐含过高修复预期，缺少安全边际，暂不买入，仅观察订单、扣非利润和回款修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    4.2,
-    5.8
-  ],
-  "buy_zone": [
-    3.8,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "开尔新材",
+    "security_status": "active",
+    "symbol": "CN:300234",
+    "ticker": "300234"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d9a1b1b57004976992154a870b018acf1068b8461ac5c7f195fa7952c57f3bd5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于合理价值区间且2026H1扣非利润、订单和回款尚未验证修复",
-      "action": "不主动建仓，仅跟踪",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-15"
+      },
+      "reason": "公司预约披露2026年半年报，复核收入、扣非利润、订单和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入3.8-4.5元且2026H1或2026Q3收入恢复、扣非归母净利润转正、经营现金流未恶化",
-      "action": "可小仓位试探",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认全年利润修复趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、税务事项最终影响和员工持股计划展期后的治理效果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入买入观察区，需要复核订单、扣非利润和回款是否同步改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "显著高于基准合理价值，若基本面未同步修复应继续回避或降低暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入买入观察区，需要复核订单、扣非利润和回款是否同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "显著高于基准合理价值，若基本面未同步修复应继续回避或降低暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-15",
-      "reason": "公司预约披露2026年半年报，复核收入、扣非利润、订单和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认全年利润修复趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、税务事项最终影响和员工持股计划展期后的治理效果"
-    }
-  ],
-  "key_metrics": {
-    "shares_outstanding": 503171090,
-    "book_value_per_share_2025": 2.24,
-    "revenue_2025": 294132843.76,
-    "net_profit_attributable_2025": -9022507.66,
-    "deducted_net_profit_2025": -16774521.63,
-    "operating_cash_flow_2025": 109202798.12
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

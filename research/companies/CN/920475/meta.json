@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920475",
-  "market": "CN",
-  "ticker": "920475",
-  "name": "三友科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "细分龙头的订单正在恢复，但低毛利、负自由现金流、杠杆上升和跨界投资使当前3倍以上PB缺乏安全边际，仅在6.5元以下且现金流验证后小仓参与。",
-  "fair_value_range": [6.8, 8.5],
-  "buy_zone": [5.5, 6.5],
-  "sell_or_reduce_zone": [10.0, 11.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三友科技",
+    "security_status": "active",
+    "symbol": "CN:920475",
+    "ticker": "920475"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "103653fba5d467d5efda8a87f17b7a6c8848c1ae6a3efbd885fef69b3b6768ea"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于5.5至6.5元且合同转化、毛利率、应收存货和非主业投资未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的订单兑现、毛利率、自由现金流和有息负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.5元且最新财报确认正自由现金流、ROE改善并无新增跨界重投入",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及新业务资本投入边界",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "基本面恶化、自由现金流持续为负或有息负债与非主业投资继续扩张",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入有安全边际的观察性买入区间，仍须重新验证基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的订单兑现、毛利率、自由现金流和有息负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及新业务资本投入边界"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入有安全边际的观察性买入区间，仍须重新验证基本面"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-17T13:41:06+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,103 +1,95 @@
 {
-  "symbol": "CN:300401",
-  "market": "CN",
-  "ticker": "300401",
-  "name": "花园生物",
-  "company_name": "浙江花园生物医药股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "花园生物具备维生素D3全产业链和胆固醇工艺壁垒，2025年利润与现金流质量较好，但2026Q1利润显著下滑、募投项目延期，当前15.25元附近缺少足够安全边际。低于12.5元或利润恢复后回到13.5元以下再考虑买入。",
-  "quality_rating": "中高",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    13.0,
-    16.5
-  ],
-  "buy_zone": [
-    0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "花园生物",
+    "security_status": "active",
+    "symbol": "CN:300401",
+    "ticker": "300401"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "66150c41fdba7494c7286ecb48173607c31bddc939d37e6930462a56ccc6194a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12.5元，且维生素D3价格未持续下行、募投项目无重大失败",
-      "action": "buy",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看扣非净利润、维生素D3毛利率、海外收入和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在12.5-13.5元，且连续两个季度扣非净利润同比或环比改善",
-      "action": "add",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1下滑是否只是短期周期波动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在13.5-16.5元，且未出现利润恢复证据",
-      "action": "watch_or_hold",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和募投项目进度，重算正常利润和合理估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于20元，且2026年利润仍低于3亿元年化",
-      "action": "reduce",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入估算买入区，且相对合理价值区间具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过减仓观察区，需要确认利润恢复是否支撑估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "currency": "CNY",
-      "action": "review_for_buy",
-      "reason": "进入估算买入区，且相对合理价值区间具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "currency": "CNY",
-      "action": "review_for_reduce",
-      "reason": "超过减仓观察区，需要确认利润恢复是否支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看扣非净利润、维生素D3毛利率、海外收入和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1下滑是否只是短期周期波动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和募投项目进度，重算正常利润和合理估值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "维生素D3系列收入增速",
-    "维生素D3系列毛利率",
-    "25-羟基维生素D3放量进度",
-    "国外收入占比",
-    "前五大客户收入占比",
-    "扣非归母净利润",
-    "经营现金流净额/归母净利润",
-    "募投项目投产日期和产能利用率",
-    "资产负债率",
-    "货币资金余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

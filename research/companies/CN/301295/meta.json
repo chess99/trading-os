@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301295",
-  "market": "CN",
-  "ticker": "301295",
-  "name": "美硕科技",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "美硕科技是小型继电器和流体电磁阀供应商，客户质量较好且2026Q1利润修复明显，但客户集中、毛利率低、材料成本敏感、现金流波动较大；按2026-07-15附近股价测算估值已接近乐观情景，上行需要连续季度验证利润中枢上移，当前安全边际不足。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美硕科技",
+    "security_status": "active",
+    "symbol": "CN:301295",
+    "ticker": "301295"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "56769a3b87d93f57366be6bc9bd5d24f99015f1f0eb38b7704d9e36bd0e08415"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约38元附近估值高于基准价值区间，未验证2026Q1利润率可持续前不新建仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看毛利率、经营现金流、应收账款和新业务收入披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18元以下，且连续两个季度毛利率不低于18%、经营现金流/净利润改善至0.7倍以上，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润修复是否具有持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于14元，且汽车、新能源或流体电磁阀业务披露可验证放量，全年净利润中枢上移至6000万元以上，可提高至小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新全年利润中枢和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入合理价值区间上沿以下，若基本面未恶化可重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入有安全边际的买入区间，需要结合季度毛利率和现金流复核。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "接近乐观情景估值上沿，若利润中枢未被连续季度验证应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入合理价值区间上沿以下，若基本面未恶化可重新评估观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入有安全边际的买入区间，需要结合季度毛利率和现金流复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "接近乐观情景估值上沿，若利润中枢未被连续季度验证应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看毛利率、经营现金流、应收账款和新业务收入披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润修复是否具有持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新全年利润中枢和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

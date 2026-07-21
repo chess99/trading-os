@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600797",
-  "market": "CN",
-  "ticker": "600797",
-  "currency": "CNY",
-  "name": "浙大网新",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "浙大网新具备浙江区域数字化服务、智慧云服务和浙大系生态资源，但截至2026-07-17仍处在收入恢复而利润未修复阶段，2026H1预亏说明扣非盈利和投资资产波动尚未改善；当前估值缺乏买入级安全边际，适合观察等待利润和现金流拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    4.2,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙大网新",
+    "security_status": "active",
+    "symbol": "CN:600797",
+    "ticker": "600797"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "221eb570252110abfb7553665127e0775fc7a6eec1605cd8b87d345cae217de9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.8元且最近一期扣非亏损明显收窄、经营现金流边际改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露后的亏损构成、金融资产公允价值变动和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.2元且扣非接近盈亏平衡或经营现金流转正",
-      "action": "提高至小仓位上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报扣非亏损收窄、毛利率和回款改善情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于7.2元但扣非净利润仍未转正",
-      "action": "不追高并减持已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认是否出现全年经营拐点和估值重估依据",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入基准合理价值区间下沿，若利润和现金流同步改善可重新评估买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "接近悲观情景价值上沿，资产端安全边际增强",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "高于乐观情景起点，若扣非未转正则估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入基准合理价值区间下沿，若利润和现金流同步改善可重新评估买入"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "接近悲观情景价值上沿，资产端安全边际增强"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "高于乐观情景起点，若扣非未转正则估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露后的亏损构成、金融资产公允价值变动和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报扣非亏损收窄、毛利率和回款改善情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认是否出现全年经营拐点和估值重估依据"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

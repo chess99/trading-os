@@ -1,93 +1,105 @@
 {
-  "symbol": "CN:603435",
-  "market": "CN",
-  "ticker": "603435",
-  "name": "嘉德利",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "嘉德利是国内高端 BOPP 电工膜龙头，客户和技术壁垒较强，财务质量好，但 2026-07-17 股价约 45.50 元对应估值显著透支，需等待 18 元以下或业绩显著超预期后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    26
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉德利",
+    "security_status": "active",
+    "symbol": "CN:603435",
+    "ticker": "603435"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3f952d26546162c9845929d73032e2466a3b3094463e734a66eb5af7dd59aaaf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至 18 元以下，且 2026 半年报收入增长、毛利率和经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报收入、毛利率、扣非净利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 14-16 元，且主要客户订单稳定、厦门基地爬坡顺利",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报及新产线爬坡对利润率的影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 35 元且未披露可量化复合集流体大订单或全年净利显著超 3.2 亿元",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报、募投项目进展、客户集中度和复合集流体收入证据",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入合理价值下沿，若基本面未恶化可重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入有安全边际的深度价值区，需要复核产能爬坡和毛利率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "超过乐观情景折现价值，需要确认是否由实质订单和利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入合理价值下沿，若基本面未恶化可重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入有安全边际的深度价值区，需要复核产能爬坡和毛利率"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "超过乐观情景折现价值，需要确认是否由实质订单和利润上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报收入、毛利率、扣非净利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报及新产线爬坡对利润率的影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报、募投项目进展、客户集中度和复合集流体收入证据"
-    }
-  ],
-  "key_risks": [
-    "当前估值显著高于基准合理区间",
-    "聚丙烯树脂供应商集中且车载超薄膜替代验证周期长",
-    "同行扩产可能导致 BOPP 电工膜价格和毛利率回落",
-    "前五大客户收入占比超过五成",
-    "复合集流体商业化进度存在不确定性"
-  ],
-  "watch_items": [
-    "2026 半年报收入增速和扣非净利率",
-    "BOPP 电工膜毛利率是否维持 45% 以上",
-    "厦门基地和第七、第八号线爬坡进度",
-    "法拉电子、TDK、鹰峰电子等核心客户订单稳定性",
-    "复合集流体基膜是否出现批量订单或收入占比披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

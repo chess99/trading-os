@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:300416",
-  "market": "CN",
-  "ticker": "300416",
-  "name": "苏试试验",
-  "company_name": "苏试试验集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "苏试试验具备环境与可靠性试验设备、试验服务、集成电路验证与分析检测的组合能力，长期受益于高端制造可靠性要求提升。但 2025 年和 2026Q1 收入与利润仍承压，当前约 18.5 元附近估值已反映较多恢复预期，安全边际不足，等待 15 元以下或连续两个季度基本面恢复后再提高仓位。",
-  "quality_rating": "中高",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    15.5,
-    20.0
-  ],
-  "buy_zone": [
-    13.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    30.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏试试验",
+    "security_status": "active",
+    "symbol": "CN:300416",
+    "ticker": "300416"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "06f239e333b3749dd9f1282551c8f683336afe87b18fcb3bc9c3bfb2ed316acc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 18 元且 2026 年收入、利润仍未恢复双位数增长",
-      "action": "仅观察或保留 0%-1% 跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看收入恢复、毛利率、集成电路业务和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入 15.5 元以下，且无重大应收、商誉、订单质量恶化信号",
-      "action": "建立 2%-3% 初始仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认需求恢复是否连续以及经营杠杆是否恢复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入 14 元以下，同时后续季度收入增速转正、试验服务毛利率稳定在 48% 以上",
-      "action": "加至 4%-5% 仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，验证资本开支回报、ROE、现金流和长期估值假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价超过 23 元，且未来 12 个月利润增长仍低于 15%",
-      "action": "降低至跟踪仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入初始买入观察区，需复核最新季度收入、利润和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "若基本面未恶化，安全边际明显改善，可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "若利润增速仍低于 15%，估值偏贵，应减仓或等待业绩确认。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "currency": "CNY",
-      "reason": "进入初始买入观察区，需复核最新季度收入、利润和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "currency": "CNY",
-      "reason": "若基本面未恶化，安全边际明显改善，可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "currency": "CNY",
-      "reason": "若利润增速仍低于 15%，估值偏贵，应减仓或等待业绩确认。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看收入恢复、毛利率、集成电路业务和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认需求恢复是否连续以及经营杠杆是否恢复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，验证资本开支回报、ROE、现金流和长期估值假设。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度收入增速是否回到 10% 以上并持续至少 2 个季度",
-    "归母净利润增速是否高于收入增速",
-    "试验服务毛利率是否稳定在 48%-50% 以上",
-    "集成电路验证与分析检测收入是否继续保持 30% 以上增长且毛利率维持 50% 以上",
-    "经营现金流/归母净利润是否长期大于 1",
-    "资本开支/经营现金流是否下降到可持续水平",
-    "应收账款周转、合同负债、在建工程转固和固定资产利用率",
-    "有息负债、租赁负债和财务费用趋势"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,30 +1,106 @@
 {
-  "symbol": "CN:600660",
-  "market": "CN",
-  "ticker": "600660",
-  "name": "福耀玻璃",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "buy",
-  "current_thesis": "福耀玻璃是全球汽车玻璃龙头，2026Q1报表利润主要受汇兑扰动，剔除汇兑后税前利润增长9.63%；50.79元可买首仓，但现金流恢复前不加满。",
-  "fair_value_range": [56, 68],
-  "buy_zone": [46, 53],
-  "sell_or_reduce_zone": [68, 78],
-  "position_plan": [
-    {"condition": "50-53元建立首仓", "max_weight": 0.02},
-    {"condition": "46-50元且现金流未进一步恶化", "max_weight": 0.04},
-    {"condition": "45元以下且复核主业和海外回报未受损", "max_weight": 0.06}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福耀玻璃",
+    "security_status": "active",
+    "symbol": "CN:600660",
+    "ticker": "600660"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "bb9b04159300a7819907577b9bc0f5529c155806c6a1b7f68c0688851cd40dc0"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-deep-review.md",
+        "sha256": "6c4e3610d6f9a5da10ad98c5948065d0c64f171c82f29dfab4d87e293b99d52e"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-chatgpt.md",
+        "sha256": "ac5e212c06acaefce05b5c6d0442aa9f46698d629a9351809afdcad5aa02e6c2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查半年报汇兑前利润、经营现金流、资本开支和海外利润率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报并确认现金转换恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 46.0
+      },
+      "reason": "进入更高安全边际区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入强吸引力区间，需复核海外资本回报",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "超过当前合理价值上沿，评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-11-deep-review.md",
-  "report_history": ["reports/2026-07-09-initial.md", "reports/2026-07-11-deep-review.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复查半年报汇兑前利润、经营现金流、资本开支和海外利润率"},
-    {"type": "date", "date": "2026-10-31", "reason": "复查三季报并确认现金转换恢复"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 46, "reason": "进入更高安全边际区间"},
-    {"type": "price_below", "price": 45, "reason": "进入强吸引力区间，需复核海外资本回报"},
-    {"type": "price_above", "price": 68, "reason": "超过当前合理价值上沿，评估减仓"}
-  ],
-  "updated_at": "2026-07-11T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

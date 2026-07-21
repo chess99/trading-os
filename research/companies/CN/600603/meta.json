@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:600603",
-  "ticker": "600603",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "广汇物流",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "广汇物流的核心价值来自红淖铁路这一疆煤外运通道资产，低市净率提供一定资产保护；但2026H1预告亏损显示运量、价格和国铁衔接仍有显著不确定性，需等待2026H2过货量与盈利恢复验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    5.6
-  ],
-  "buy_zone": [
-    3.8,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    7.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广汇物流",
+    "security_status": "active",
+    "symbol": "CN:600603",
+    "ticker": "600603"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "aad55cc2556e76839537c8fc0a8610dbe78c3833b31d6f211f32f73a77372cb8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.2元且未出现新增监管、债务或运量恶化信号时，仅建立观察仓",
-      "action": "initial_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、运量口径、债务结构和监管整改进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.8元且2026Q3显示红淖铁路运量、收入和经营现金流环比恢复",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H2恢复是否兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026Q3继续亏损或红淖铁路年化过货量低于2500万吨且无清晰恢复路径",
-      "action": "do_not_add_or_exit",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和红淖铁路全年过货量，重新估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入低PB观察买入区间，需要复核运量和治理风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入安全边际较高区间，但仅在基本面未继续恶化时考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "接近乐观情景估值下沿，若缺乏运量兑现应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入低PB观察买入区间，需要复核运量和治理风险"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入安全边际较高区间，但仅在基本面未继续恶化时考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "接近乐观情景估值下沿，若缺乏运量兑现应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、运量口径、债务结构和监管整改进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H2恢复是否兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和红淖铁路全年过货量，重新估值"
-    }
-  ],
-  "key_metrics": {
-    "2025_revenue_cny_billion": 2.604,
-    "2025_net_profit_attributable_cny_billion": 0.368,
-    "2025_rednao_railway_volume_million_tons": 29.7182,
-    "2026_h1_profit_warning_low_cny_billion": -0.17,
-    "2026_h1_profit_warning_high_cny_billion": -0.125
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,94 +1,110 @@
 {
-  "symbol": "CN:002109",
-  "market": "CN",
-  "ticker": "002109",
-  "name": "ST兴化",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low",
-  "valuation_rating": "overvalued",
-  "current_thesis": "ST兴化当前核心矛盾是煤化工主业仍亏损、2025年度内部控制被出具否定意见并已被实施其他风险警示、且证监会立案调查尚未落地。当前约2.49元对应约0.81倍2026Q1归母PB，未充分补偿ST、内控、监管和盈利不确定性，今天决策为不买/观察；只有价格跌入1.60元以下且现金流、毛利率和监管整改同步改善，才可考虑1%以内观察仓。",
-  "fair_value_range": [
-    1.4,
-    2.1
-  ],
-  "buy_zone": [
-    1.2,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    2.2,
-    3.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST兴化",
+    "security_status": "active",
+    "symbol": "CN:002109",
+    "ticker": "002109"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "73e5c679cf8852607d44bea07128f18923740993e939be2c25185d582df0471e"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "86123aea702afe8bdd45f4d1264b0d6f77422e2e7e2e85d174436fa5d34d959d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于2.20元且ST、内控否定意见、证监会立案调查均未解除",
-      "action": "不买；已有仓位降至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年度报告披露后复核分产品毛利率、现金流、债务、亏损收窄幅度和ST整改",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至1.60元以下，且2026年半年度报告确认经营现金流为正、亏损继续收窄、未新增重大监管处罚",
-      "action": "可建立第一笔观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核是否出现单季扣非转正、经营现金流持续为正和监管风险变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至1.20元以下，证监会立案未导致重大处罚，且产品毛利率连续改善",
-      "action": "高风险折价仓，分批验证",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报和内控审计意见披露后复核ST是否可撤销或是否存在退市风险升级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "ST撤销、内部控制审计转为标准无保留、单季扣非转正且经营现金流连续为正",
-      "action": "上调至watch或hold后再评估加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "进入有安全边际买入价上沿，需复核半年度报告、现金流、毛利率和监管进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入强吸引力买入区，但仍需确认不是监管或现金链恶化导致的价值陷阱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "超过合理价格区间上沿，在ST和立案未解除前不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "进入有安全边际买入价上沿，需复核半年度报告、现金流、毛利率和监管进展"
-    },
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入强吸引力买入区，但仍需确认不是监管或现金链恶化导致的价值陷阱"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "超过合理价格区间上沿，在ST和立案未解除前不应追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年度报告披露后复核分产品毛利率、现金流、债务、亏损收窄幅度和ST整改"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核是否出现单季扣非转正、经营现金流持续为正和监管风险变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报和内控审计意见披露后复核ST是否可撤销或是否存在退市风险升级"
-    }
-  ],
-  "notes": [
-    "今天决策为不买/观察，当前价格约2.49元没有安全边际。",
-    "ST原因是2025年度财务报告内部控制被出具否定意见。",
-    "公司于2026-04-29收到证监会立案告知书，涉嫌信息披露违法违规，调查结果未落地。",
-    "2026年半年度业绩预告仍亏损2500万至3500万元，只能说明减亏，不能证明盈利拐点。",
-    "若内控审计再次否定或无法表示，应触发逻辑止损并维持avoid。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

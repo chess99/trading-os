@@ -1,101 +1,115 @@
 {
-  "symbol": "CN:300695",
-  "market": "CN",
-  "ticker": "300695",
-  "name": "兆丰股份",
-  "company_name": "浙江兆丰机电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是轮毂轴承单元细分制造商，海外售后业务毛利高、资产负债表厚；但2025年表观利润主要受基金公允价值抬升，2026Q1又被基金公允价值拖累，扣非主业盈利连续承压。当前约51.45元股价已经给机器人/高端精密部件转型较高溢价，在客户订单和利润未验证前不追买，等待38元以下再考虑第一笔仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    35,
-    45
-  ],
-  "buy_zone": [
-    30,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    65
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兆丰股份",
+    "security_status": "active",
+    "symbol": "CN:300695",
+    "ticker": "300695"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "259efe196391f0a53ab9bc0e2b80b325be71b0c87f83a52c6f72da86eb9998e2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于30元，且扣非净利未继续恶化、资本开支没有失控",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报扣非净利、经营现金流、库存和在建工程",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于30-38元，主业毛利率不低于25%，经营现金流恢复为正",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报主业盈利是否修复及机器人项目进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于38-45元，仅在新业务出现客户验证或订单时保留跟踪仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复查2026年报，重估正常化扣非利润和资本配置质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于45元且缺少新业务利润验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入有安全边际的初始买入观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入强吸引力买入区，可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "高于不应追高区，需确认是否有订单或利润兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入乐观情景上沿，若新业务未兑现应减仓或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入有安全边际的初始买入观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入强吸引力买入区，可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "高于不应追高区，需确认是否有订单或利润兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "进入乐观情景上沿，若新业务未兑现应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报扣非净利、经营现金流、库存和在建工程"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报主业盈利是否修复及机器人项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复查2026年报，重估正常化扣非利润和资本配置质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "轮毂轴承单元毛利率",
-    "境外收入及境外毛利率",
-    "库存增速与收入增速差",
-    "应收账款和信用减值损失",
-    "在建工程和设备预付款",
-    "具身智能/行星滚柱丝杠客户验证、订单、收入和毛利",
-    "基金公允价值变动损益",
-    "资本开支和可转债/融资摊薄进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:000713",
-  "market": "CN",
-  "ticker": "000713",
-  "name": "国投丰乐",
-  "company_name": "国投丰乐",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国投丰乐具备央企种业平台整合和生物育种商业化期权，但当前盈利质量、ROE和农化资产回报仍偏弱；在种子业务利润占比提升、农化拖累下降、渠道退货改善前，维持观察评级。",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    4.8,
-    6.4
-  ],
-  "buy_zone": [
-    4.2,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    8.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国投丰乐",
+    "security_status": "active",
+    "symbol": "CN:000713",
+    "ticker": "000713"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "c161da134d4b6434eb1025a20bf1333da268d48cd3cb98a6d7293652d1babeb2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.20-4.80元且无新增基本面恶化公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间，PB接近低位，适合验证国投整合和种业改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点看种子毛利率、销售退回、农化利润和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报显示种子毛利率维持30%以上、销售退回下降、农化不再拖累",
-      "action": "加仓至研究仓",
-      "max_weight": 0.03,
-      "reason": "核心逻辑从主题预期转为经营兑现，可提高组合权重。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和秋季种业销售、库存信号。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.80元但全年归母净利润预期仍低于1亿元",
-      "action": "减仓或暂停加仓",
-      "max_weight": 0.005,
-      "reason": "主题估值超过当前盈利支撑，安全边际不足。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，验证国投整合、利润修复和分红能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入买入区间上沿，重新评估是否建立观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入深度价值区，若基本面未恶化可提高研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "进入减仓区间，检查盈利兑现是否足以支撑估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入买入区间上沿，重新评估是否建立观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入深度价值区，若基本面未恶化可提高研究优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "进入减仓区间，检查盈利兑现是否足以支撑估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点看种子毛利率、销售退回、农化利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和秋季种业销售、库存信号。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，验证国投整合、利润修复和分红能力。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "种子业务收入增速",
-    "种子业务毛利率",
-    "玉米种子销量和价格",
-    "水稻重点品种销量",
-    "销售退回金额",
-    "存货余额和跌价准备",
-    "经营活动现金流净额",
-    "农化业务净利润",
-    "香料业务净利润",
-    "国投种业资源整合公告",
-    "转基因或抗除草剂品种商业化进展",
-    "控股股东持股和限售安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

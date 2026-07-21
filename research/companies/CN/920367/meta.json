@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920367",
-  "market": "CN",
-  "ticker": "920367",
-  "name": "新赣江",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "原料药壁垒下降且募投回报未验证，ROE和自由现金流不足以支撑百倍估值，当前应回避并等待5至6.5元的安全边际。",
-  "fair_value_range": [6.5, 10.0],
-  "buy_zone": [5.0, 6.5],
-  "sell_or_reduce_zone": [10.0, 13.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新赣江",
+    "security_status": "active",
+    "symbol": "CN:920367",
+    "ticker": "920367"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "ae16191c24b4b1992d9c73fc376cfc91380fd9d373fb39482243502f9eb3d0c1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于5至6.5元且收入、扣非利润、经营现金流同步改善，在建工程投产未再延期",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的制剂增速、扣非利润、经营现金流、研发资本化和在建工程进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5元，重新验证原料药未继续恶化、制剂形成第二增长品种、研发资本化谨慎后",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-02-10"
+      },
+      "reason": "核验中成药制剂保健品一期和新增口服固体制剂片剂车间是否按延期节点达到可使用状态",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "基本面恶化、自由现金流持续为负或研发与客户回款风险上升，无论价格高低",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入需结合基本面复核的买入区间上沿，不因价格下跌机械加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的制剂增速、扣非利润、经营现金流、研发资本化和在建工程进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-02-10",
-      "reason": "核验中成药制剂保健品一期和新增口服固体制剂片剂车间是否按延期节点达到可使用状态"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入需结合基本面复核的买入区间上沿，不因价格下跌机械加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-18T17:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

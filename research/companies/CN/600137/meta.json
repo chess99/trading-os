@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600137",
-  "ticker": "600137",
-  "name": "浪莎股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "浪莎股份账上现金厚、负债轻，2025年利润和现金流恢复，但主业规模小、渠道控制力有限、护城河不深；当前股价接近乐观情景估值，安全边际不足，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浪莎股份",
+    "security_status": "active",
+    "symbol": "CN:600137",
+    "ticker": "600137"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "8a038b8aa7e630d923c05fa0ba91a65981f8284ea02a517f9542f54fd41e1ddb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.5元且最新定期报告显示归母净利润未继续恶化，可建立观察仓。",
-      "action": "start_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查营收、利润、线上渠道、库存和现金使用。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "线上收入连续两个报告期高增长、全年归母净利润预期上修至4000万元以上且股价仍低于合理价值上沿。",
-      "action": "increase_position_selectively",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢是否上修或恶化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于16.5元且没有利润上修或现金回报改善。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，确认现金资产是否有效回报股东。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入基准估值下沿并具备重新评估安全边际的条件。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过基准合理价值区间，接近乐观情景，需要减仓或维持回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入基准估值下沿并具备重新评估安全边际的条件。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过基准合理价值区间，接近乐观情景，需要减仓或维持回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查营收、利润、线上渠道、库存和现金使用。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢是否上修或恶化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，确认现金资产是否有效回报股东。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

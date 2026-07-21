@@ -1,127 +1,114 @@
 {
-  "symbol": "CN:002761",
-  "market": "CN",
-  "ticker": "002761",
-  "name": "浙江建投",
-  "company_name": "浙江省建设投资集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "浙江省属建筑龙头，订单和区域重大工程入口真实，2026Q1利润修复有弹性；但2025年ROE低、净利率极薄、应收账款和合同资产占用重，信用减值和诉讼仍压制估值。当前6.94元缺少安全边际，等待4.8元以下或半年报证明利润率、回款和减值同步改善。",
-  "quality_rating": "中低",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江建投",
+    "security_status": "active",
+    "symbol": "CN:002761",
+    "ticker": "002761"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0abdf90f0db8370310391fa9a745162c0298d6d0fee6ec7003e985038cbb4a2d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于6.2元，且未见ROE、经营现金流和信用减值持续改善",
-      "action": "不买，仅跟踪",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价进入4.8-5.2元，且2026半年报确认扣非利润继续修复、经营现金流未异常恶化",
-      "action": "试探买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于4.8元，且应收账款加合同资产占收入比例没有继续恶化",
-      "action": "建立基础仓",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价低于4.3元，且没有新增重大坏账或诉讼失控",
-      "action": "提高到组合上限",
-      "target_position": "不超过5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于7.5元，但利润率、回款和资产减值未同步改善",
-      "action": "减仓或放弃追高",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "currency": "CNY",
-      "reason": "进入保守可买区并接近安全边际",
-      "action": "进入可买观察区，复核半年报、现金流和减值后决定是否开仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "currency": "CNY",
-      "reason": "低于保守估值下沿且提供更高安全边际",
-      "action": "若基本面未恶化，可考虑提高到基础仓以上"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "currency": "CNY",
-      "reason": "超过当前基本面可支撑区间，需利润率和现金流改善验证",
-      "action": "若没有连续季度利润率和现金流改善，考虑减仓或不追"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026Q1利润修复是否延续",
-      "action": "复核扣非归母净利润、建筑施工毛利率、经营现金流、信用减值和重大诉讼进展"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证利润、回款和订单是否连续改善",
-      "action": "复核利润修复是否连续、应收账款加合同资产是否恶化、新签合同额是否匹配收入节奏"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "验证资产注入后的全年ROE和现金回报",
-      "action": "复核全年经营现金流、资产负债率、有息负债成本、分红和资产注入后的ROE改善"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "2027年中期前复盘",
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
       "reason": "验证海外项目、城市更新和重大诉讼是否改变中期判断",
-      "action": "复核海外项目、城市更新订单和重大诉讼/减值是否改变投资结论"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入保守可买区并接近安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "低于保守估值下沿且提供更高安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "超过当前基本面可支撑区间，需利润率和现金流改善验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款加合同资产余额及其占营业收入比例",
-    "信用减值损失",
-    "建筑施工业务毛利率",
-    "新签合同额及城市更新、海外订单质量",
-    "资产负债率和有息负债融资成本",
-    "重大诉讼和恒大相关项目回款/减值进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,97 +1,95 @@
 {
-  "symbol": "CN:300464",
-  "market": "CN",
-  "ticker": "300464",
-  "name": "星徽股份",
-  "company_name": "广东星徽精密制造股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "经营从历史亏损和跨境电商冲击中修复，2025年扣非归母净利润和经营现金流转正，但资产负债率高、受限资产和股东质押冻结压力大，约6元以上参考价缺乏安全边际。只有跌入买入区或连续两个季度验证扣非利润、经营现金流和去杠杆同步改善后，才考虑小仓位。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    0,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "星徽股份",
+    "security_status": "active",
+    "symbol": "CN:300464",
+    "ticker": "300464"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "fb569669c9b299890ea3cc555bef370b2fdcd50bf64c58a479dd2404c82e0e20"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于5.40 CNY，或2026半年报前基本面未进一步验证",
-      "action": "不建仓",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看扣非归母净利润、经营现金流、资产负债率、受限货币资金和跨境电商毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.20 CNY，且最近一期扣非归母净利润为正、经营现金流为正、无新增重大诉讼冻结",
-      "action": "建立观察仓",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认五金增长和跨境电商修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年连续两个季度扣非利润、经营现金流和资产负债率同步改善，且股价不高于4.80 CNY",
-      "action": "提高到小仓位",
-      "target_position": "1.5%-2.0%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新计算正常化盈利和去杠杆后的合理价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026年扣非归母净利润年化达到5,000万-7,000万元，资产负债率降至80%以下，且股价仍在合理价值区间内",
-      "action": "上调至中低仓位",
-      "target_position": "2.0%-3.0%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入安全边际买入区，复核半年报和诉讼冻结情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "价格超过当前基本面可支撑区间，若盈利未上修应卖出或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入安全边际买入区，复核半年报和诉讼冻结情况"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "价格超过当前基本面可支撑区间，若盈利未上修应卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看扣非归母净利润、经营现金流、资产负债率、受限货币资金和跨境电商毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认五金增长和跨境电商修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新计算正常化盈利和去杠杆后的合理价值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "自由现金流",
-    "资产负债率",
-    "受限货币资金和诉讼冻结金额",
-    "滑轨和铰链毛利率",
-    "跨境电商收入、毛利率和库存周转",
-    "第一大股东及一致行动人质押冻结比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

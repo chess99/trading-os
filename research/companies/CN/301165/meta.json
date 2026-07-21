@@ -1,30 +1,96 @@
 {
-  "symbol": "CN:301165",
-  "market": "CN",
-  "ticker": "301165",
-  "name": "锐捷网络",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "research_only",
-  "current_thesis": "AI/数据中心驱动2025年营收+22.37%高增长，毛利率35.48%尚可；但PE 120x/PB 16.8x为同行5-7倍，严重高估，无安全边际。合理估值中枢约30-35元，当前105.50元不可参与。",
-  "fair_value_range": [25, 55],
-  "buy_zone": [20, 25],
-  "sell_or_reduce_zone": [60, 105],
-  "position_plan": [
-    {"condition": "股价回落至25-35元合理偏低区间且基本面未恶化", "max_weight": 0.015},
-    {"condition": "股价回落至20-25元有安全边际的买入区间且毛利率>30%", "max_weight": 0.03},
-    {"condition": "股价低于20元强吸引力区间", "max_weight": 0.05}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "锐捷网络",
+    "security_status": "active",
+    "symbol": "CN:301165",
+    "ticker": "301165"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "9d621134ab065dbcd09c4b204b20ad6b199d6e5541e2a290c9c387c03f684fd9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "2026年半年度报告发布，检查毛利率、前5大客户变化、AIDC订单进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-22"
+      },
+      "reason": "2026年三季报发布，检查经营现金流是否改善与营收增速趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入有安全边际的买入区间20-25元",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入强吸引力买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "进入偏高区间，不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-22", "reason": "2026年半年度报告发布，检查毛利率、前5大客户变化、AIDC订单进展"},
-    {"type": "date", "date": "2026-10-22", "reason": "2026年三季报发布，检查经营现金流是否改善与营收增速趋势"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 25, "reason": "进入有安全边际的买入区间20-25元"},
-    {"type": "price_below", "price": 20, "reason": "进入强吸引力买入区间"},
-    {"type": "price_above", "price": 60, "reason": "进入偏高区间，不应追高"}
-  ],
-  "updated_at": "2026-07-09T07:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

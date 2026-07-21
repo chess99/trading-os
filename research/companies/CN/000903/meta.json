@@ -1,79 +1,86 @@
 {
-  "symbol": "CN:000903",
-  "market": "CN",
-  "ticker": "000903",
-  "name": "ST云动",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "ST云动持续亏损、净资产快速缩水、2025年审计报告带持续经营重大不确定性段落，且股票已因行政处罚事先告知书和连续亏损/持续经营事项被叠加实施其他风险警示。2026H1预告仍亏损1.5-1.8亿元，当前1.67元对应约5.25倍2026Q1归母净资产，缺乏安全边际，今日决策为不买。",
-  "fair_value_range": [
-    0.3,
-    0.7
-  ],
-  "buy_zone": [
-    0.2,
-    0.4
-  ],
-  "sell_or_reduce_zone": [
-    1.0,
-    1.7
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST云动",
+    "security_status": "active",
+    "symbol": "CN:000903",
+    "ticker": "000903"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "008626f6c95d4044cdc82250e5719992458e24db2aca1d7319b84d57cb5fff70"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "ST风险和持续经营重大不确定性未解除，或价格高于1.00元",
-      "action": "avoid，不买或卖出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年度报告、净资产、受限资金、债务续作和ST/退市风险变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入0.20-0.40元，但尚未撤销ST",
-      "action": "watch，仅进入研究池，不建立仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报经营现金流、亏损趋势、诉讼仲裁和风险警示状态。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "撤销ST、审计意见回归标准无保留、债务续作稳定且连续两个季度经营现金流为正",
-      "action": "可试探首笔困境反转仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.4
+      },
+      "reason": "进入安全边际观察区，但仍需确认ST和持续经营风险缓释。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格低于0.30元且净资产未继续大幅缩水、无新增资金占用/违规担保/退市风险",
-      "action": "小仓跟踪，不超过困境资产上限",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.0
+      },
+      "reason": "高于困境资产合理价格上沿，缺乏风险补偿。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年度报告、净资产、受限资金、债务续作和ST/退市风险变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报经营现金流、亏损趋势、诉讼仲裁和风险警示状态。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.4,
-      "reason": "进入安全边际观察区，但仍需确认ST和持续经营风险缓释。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.0,
-      "reason": "高于困境资产合理价格上沿，缺乏风险补偿。"
-    }
-  ],
-  "updated_at": "2026-07-19",
-  "notes": [
-    "2026-07-17新浪行情收盘价1.67元，按总股本1,934,844,410股推算市值约32.31亿元。",
-    "2025年审计报告为带持续经营重大不确定性段落的无保留意见，内控审计为标准无保留。",
-    "2026H1业绩预告归母净利润亏损1.5-1.8亿元，亏损同比扩大。",
-    "当前结论为avoid，不因低价股属性买入；只有ST风险实质解除且经营现金流改善后才重新评估。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

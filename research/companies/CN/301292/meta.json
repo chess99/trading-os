@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:301292",
-  "ticker": "301292",
-  "name": "海科新源",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "海科新源是锂电池电解液溶剂龙头之一，2026Q1 利润反转已经验证，但产品仍偏周期化工品，经营现金流、负债结构和控股股东股份冻结风险尚未解除。当前价格接近合理价值上沿，缺少深度买方安全边际，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    42,
-    58
-  ],
-  "buy_zone": [
-    32,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    78,
-    100
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海科新源",
+    "security_status": "active",
+    "symbol": "CN:301292",
+    "ticker": "301292"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9fd9cb991c439f4ec221bede65fe62d88a2653bbb8355ea9c9e2dd1fcb4f6bba"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 32-40 元，且 2026Q2/Q3 扣非净利润连续保持盈利、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看净利润、经营现金流、负债率和碳酸酯毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "经营现金流转正、资产负债率下降且海外/高毛利产品占比提升得到半年报验证",
-      "action": "提高到小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断 Q1 高盈利是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 78 元且缺少新增盈利或现金流证据",
-      "action": "不追高或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入安全买入区间，若基本面未恶化则重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 78.0
+      },
+      "reason": "乐观情景被提前定价，需检查是否存在过度交易",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入安全买入区间，若基本面未恶化则重新评估建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 78,
-      "reason": "乐观情景被提前定价，需检查是否存在过度交易"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看净利润、经营现金流、负债率和碳酸酯毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断 Q1 高盈利是否可持续"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

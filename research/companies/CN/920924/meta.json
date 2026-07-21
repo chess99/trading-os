@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920924",
-  "market": "CN",
-  "ticker": "920924",
-  "name": "广脉科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "高铁信息化订单与准入壁垒具备价值，但现金流、资本回报和算力项目风险尚未改善到足以支撑当前高估值的程度。",
-  "fair_value_range": [7.0, 10.0],
-  "buy_zone": [5.5, 7.0],
-  "sell_or_reduce_zone": [12.0, 15.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广脉科技",
+    "security_status": "active",
+    "symbol": "CN:920924",
+    "ticker": "920924"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "4277135bc3b43c87052b39e84bc887a4ba8ff41efe6f949a87f4f04b9d5dfba6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于5.5至7.0元且高铁订单、毛利率、回款和资本开支未恶化，先建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-09-01"
+      },
+      "reason": "2026年半年报披露窗口后复查高铁订单转化、应收账款、资本开支和自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期自由现金流为正、应收增速低于收入增速且年化ROIC向8%以上改善",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入可复核基本面后考虑观察仓的买入区间上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "出现重大合同提前终止、客户信用风险、高铁毛利率跌破30%或有息负债快速上升，不因价格下跌加仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入乐观预期定价和减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-01",
-      "reason": "2026年半年报披露窗口后复查高铁订单转化、应收账款、资本开支和自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入可复核基本面后考虑观察仓的买入区间上沿"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入乐观预期定价和减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-14T09:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

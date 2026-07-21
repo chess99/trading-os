@@ -1,88 +1,86 @@
 {
-  "symbol": "CN:000007",
-  "market": "CN",
-  "ticker": "000007",
-  "name": "全新好",
-  "company_name": "全新好",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "全新好当前更像小市值壳资源和重组预期交易标的，而不是由稳定主业现金流支撑的基本面资产；在经营现金流、扣非利润、治理和诉讼风险未持续改善前不建议买入。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    1.2,
-    2.2
-  ],
-  "buy_zone": [
-    0.8,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    3.5,
-    5.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "全新好",
+    "security_status": "active",
+    "symbol": "CN:000007",
+    "ticker": "000007"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "9023a8917998b40f923751e0b49858df598c07598cf2e2a386d6c26c5842f082"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格显著高于基本面合理价值区间，且经营现金流和扣非利润尚未证明持续改善",
-      "action": "不买入，首笔仓位为0%",
-      "max_weight": 0,
-      "reason": "当前市值主要反映壳资源和小市值交易预期，而非可验证主业现金流"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点核验扣非利润、经营现金流、诉讼和资产负债表质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入0.80-1.20元区间，且2026年中报显示经营现金流转正、扣非亏损明显收窄、无新增重大治理或诉讼风险",
-      "action": "仅允许研究性试仓",
-      "max_weight": 0.25,
-      "reason": "只有在价格和基本面同时满足时，才有小仓验证价值修复的必要"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报及是否出现重大重组或监管问询",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "出现正式重大资产重组预案，且标的资产审计报告显示可持续盈利和现金流",
-      "action": "重新估值后再决定是否提高仓位",
-      "max_weight": 0.5,
-      "reason": "重组预期必须转化为可验证资产和监管流程，不能仅凭传闻加仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入基本面合理价值区间上沿以下，触发重新核验资产、现金流和治理风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "高于乐观情景上沿但若无重组资产数据支撑，应复核泡沫和减仓风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入基本面合理价值区间上沿以下，触发重新核验资产、现金流和治理风险"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "高于乐观情景上沿但若无重组资产数据支撑，应复核泡沫和减仓风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点核验扣非利润、经营现金流、诉讼和资产负债表质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报及是否出现重大重组或监管问询"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流量净额",
-    "扣非归母净利润",
-    "营业收入及毛利率",
-    "物业和商业运营出租率及租金水平",
-    "非经常性损益占净利润比例",
-    "重大诉讼仲裁和执行事项",
-    "资金占用、违规担保和关联交易",
-    "交易所问询函和监管函",
-    "控制权、董事会和管理层变化",
-    "重大资产重组预案及审核进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:600980",
-  "ticker": "600980",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "北矿科技",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北矿科技具备央企科研平台、矿冶装备细分技术优势和磁性材料长期期权，2025-2026Q1 主业保持增长；但当前约17元附近价格已反映较多稳健成长预期，经营现金流、存货应收占用和磁材毛利率仍需验证，缺少足够安全边际，暂列观察。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    15.5,
-    20.0
-  ],
-  "buy_zone": [
-    12.5,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    26.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价高于14.5元或2026H1扣非净利润增速低于15%，不建仓，仅跟踪。",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价跌至14.5元以下，且2026H1扣非净利润增速不低于15%、经营现金流未明显恶化，可建立观察仓。",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价跌至13.0元以下，且矿冶装备收入继续增长、磁性材料毛利率开始修复，可提高仓位。",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入买入观察区，若基本面验证通过可建观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入较有吸引力安全边际区，需复核订单、现金流和毛利率。"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "价格超过乐观前的减仓线，若盈利预测未上修则风险收益转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、矿冶装备毛利率、经营现金流、存货和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润中枢与海外收入恢复情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估合理价值区间和仓位上限。"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 1307072720.01,
-    "net_profit_attributable_2025_cny": 124559512.38,
-    "deducted_net_profit_2025_cny": 110076723.54,
-    "operating_cash_flow_2025_cny": 111312571.64,
-    "revenue_2026_q1_cny": 259438969.06,
-    "net_profit_attributable_2026_q1_cny": 22948032.14,
-    "shares_2025_end": 189263526
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北矿科技",
+    "security_status": "active",
+    "symbol": "CN:600980",
+    "ticker": "600980"
   },
-  "decision": "观察",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4bdb1a75e420e4ffece4ec63eb6dc44069e787826b4c1d430ad3e24b43142dee"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、矿冶装备毛利率、经营现金流、存货和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润中枢与海外收入恢复情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估合理价值区间和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入买入观察区，若基本面验证通过可建观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入较有吸引力安全边际区，需复核订单、现金流和毛利率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "价格超过乐观前的减仓线，若盈利预测未上修则风险收益转弱。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

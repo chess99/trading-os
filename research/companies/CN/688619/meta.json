@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:688619",
-  "market": "CN",
-  "ticker": "688619",
-  "name": "罗普特",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "罗普特具备AI+公共安全、社会治理、工业巡检和机器人等题材弹性，但截至2026Q1仍是收入体量小、毛利率低、连续亏损且历史应收/减值包袱重的项目型公司。现价对应约15倍TTM市销率和约3.6倍市净率，已显著透支产品化成功预期；在连续证明收入增长、毛利率修复、经营现金流为正和减值受控前，不具备买方安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.5,
-    7.0
-  ],
-  "buy_zone": [
-    3.0,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    99.0
-  ],
-  "position_plan": [
-    {
-      "condition": "不建仓；仅当股价低于4.0元且最新两个季度收入增长、毛利率修复、经营现金流持续为正时，允许建立研究观察仓。",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "若后续报告显示AI产品化收入可复制、信用减值显著下降且年度亏损收窄到5000万元以内，可重新评估是否上调至watch并允许小仓位。",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入初步安全边际区间，需要复核净资产、现金流和最新订单质量。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "高于当前基本面可支撑估值，若无连续业绩改善应继续回避或减持观察仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入恢复、毛利率、经营现金流、信用减值和AI产品订单。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1改善是否延续以及全年亏损收窄路径。"
-    }
-  ],
-  "last_price_reference": {
-    "date": "2026-07-17",
-    "price": 12.73,
-    "source": "新浪财经/富途行情页，未与交易所逐笔行情文件交叉核验"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "罗普特",
+    "security_status": "active",
+    "symbol": "CN:688619",
+    "ticker": "688619"
   },
-  "decision": "不买",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "03047fccc1e25e142bfa63b0341fad914f1b697335bad9d3c115c4980c0d32f4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入恢复、毛利率、经营现金流、信用减值和AI产品订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1改善是否延续以及全年亏损收窄路径。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入初步安全边际区间，需要复核净资产、现金流和最新订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "高于当前基本面可支撑估值，若无连续业绩改善应继续回避或减持观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

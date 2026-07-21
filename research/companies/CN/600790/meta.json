@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600790",
-  "ticker": "600790",
-  "name": "轻纺城",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "轻纺城具备柯桥专业市场资产、国资背景和账面净资产折价保护，但2026年利润预增主要来自华能商城征收补偿，扣非主业仍受租金下降、折旧摊销和融资费用拖累。当前适合观察小仓，等待半年报确认扣非利润和经营现金流修复。",
-  "fair_value_range": [
-    3.4,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    4.3,
-    5.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "轻纺城",
+    "security_status": "active",
+    "symbol": "CN:600790",
+    "ticker": "600790"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "9bd93cf6e5b594c7e9458b19a564a16bafab6af1273d86bdde0c745d11cd229b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.00元，且2026年半年报扣非归母净利润不低于预告中位数3375万元、经营现金流较一季度改善",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "公司预约2026年8月25日披露半年报后，复核扣非利润、经营现金流、出租率和负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.40元，且2026年三季报显示扣非利润年化超过1亿元、财务费用不再继续上升",
-      "action": "提高到小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核主业扣非利润年化、财务费用和新增项目转固影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于4.30元但扣非利润未恢复，或新增项目出租率低于预期",
-      "action": "减仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后复核分红、资产负债率、REITs进展和数字贸易港/智谷项目回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入安全买入区间，需要复核半年报扣非利润和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.3
+      },
+      "reason": "超过保守公允价值上沿，需要检查是否仅由一次性拆迁收益驱动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入安全买入区间，需要复核半年报扣非利润和经营现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 4.3,
-      "reason": "超过保守公允价值上沿，需要检查是否仅由一次性拆迁收益驱动"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "公司预约2026年8月25日披露半年报后，复核扣非利润、经营现金流、出租率和负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核主业扣非利润年化、财务费用和新增项目转固影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报后复核分红、资产负债率、REITs进展和数字贸易港/智谷项目回报"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

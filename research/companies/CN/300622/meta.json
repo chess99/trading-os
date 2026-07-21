@@ -1,99 +1,105 @@
 {
-  "symbol": "CN:300622",
-  "market": "CN",
-  "ticker": "300622",
-  "name": "博士眼镜",
-  "company_name": "博士眼镜连锁股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是专业服务型眼镜零售连锁，2025年收入和利润恢复较好，现金流质量较强，线上/O2O和门店扩张提供增长来源；但2026-07-13收盘价13.30元已接近合理价值上沿，按扣非口径安全边际不足，需等待10.5元以下或经营显著超预期再买入。",
-  "quality_rating": "中高",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    11.0,
-    13.5
-  ],
-  "buy_zone": [
-    0.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博士眼镜",
+    "security_status": "active",
+    "symbol": "CN:300622",
+    "ticker": "300622"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4944f671fa12753e322fd52c305456a4cea57db16bb84c8acdc8046dffd80227"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于10.5元，且最近四个季度扣非归母净利润不低于1.30亿元、光学眼镜及验配服务毛利率未明显低于67%",
-      "action": "建立0.5-1.0单位观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、扣非利润、存货和新店扩张效率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于或等于9.0元，且新开门店没有出现集中关闭、存货周转和经营现金流未恶化",
-      "action": "提高至1.5单位以内",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润是否能支撑当前估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.0元，且2026或2027年扣非利润没有上修到2亿元以上",
-      "action": "减仓或卖出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证可转债募投门店扩张和智能眼镜专柜的真实贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "低于保守合理价值下沿并接近22倍左右前瞻归母PE",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "低于DCF和分红回报交叉验证的强安全边际区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "估值隐含较高增长，若扣非利润未上修则风险收益不划算",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
-      "action": "进入可买区，复核最近财报后考虑建仓",
-      "reason": "低于保守合理价值下沿并接近22倍左右前瞻归母PE"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "currency": "CNY",
-      "action": "进入强安全边际区，若基本面未恶化可加仓",
-      "reason": "低于DCF和分红回报交叉验证的强安全边际区"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "currency": "CNY",
-      "action": "进入减仓区，除非扣非利润和同店增长显著超预期",
-      "reason": "估值隐含较高增长，若扣非利润未上修则风险收益不划算"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、扣非利润、存货和新店扩张效率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润是否能支撑当前估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证可转债募投门店扩张和智能眼镜专柜的真实贡献"
-    }
-  ],
-  "key_tracking_metrics": [
-    "直营门店数、加盟门店数、新开店数量、关闭数量和成熟店同店收入",
-    "华南、华东以外区域收入占比和毛利率",
-    "线上GMV、线上收入、本地生活团购券交易额和到店核销质量",
-    "光学眼镜及验配服务毛利率是否稳定在67%-70%",
-    "销售费用率、管理费用率和获客成本变化",
-    "智能眼镜专柜数量、销售额、毛利率和库存周转",
-    "存货周转、跌价准备、经营现金流与扣非净利润匹配度",
-    "管理层减持、可转债转股和资本开支回报"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

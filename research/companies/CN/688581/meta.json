@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:688581",
-  "market": "CN",
-  "ticker": "688581",
-  "name": "安杰思",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "安杰思是高现金覆盖的消化内镜诊疗耗材平台，2025年受国内集采、招标和海外关税扰动导致业绩承压，但2026Q1收入恢复增长、现金流质量良好；当前市值中约六成由近似净现金支撑，经营资产隐含估值偏低，只要海外渠道、ERCP/闭合类产品和泰国产能逐步兑现，股价有望回到58-76元的合理区间。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    58,
-    76
-  ],
-  "buy_zone": [
-    50,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    82,
-    95
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安杰思",
+    "security_status": "active",
+    "symbol": "CN:688581",
+    "ticker": "688581"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b515993729363a997f8947b7571a47e1d1e15bc5dd9766a3ce5b38d52ba82a76"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于50-55元买入区且未出现现金或经营恶化证据",
-      "action": "建立初始仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看海外收入占比、ERCP/闭合类增速、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于50元，且2026H1收入、毛利率、现金流未低于预警阈值",
-      "action": "分批加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断国内集采压力是否趋稳以及费用投入是否被收入增长吸收。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3确认海外收入恢复双位数增长、ERCP/闭合类继续放量、经营现金流/净利润大于0.9",
-      "action": "提高目标仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估泰国产能、海外渠道和资本配置质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于82元且未来12个月利润预测未明显上修",
-      "action": "逐步减仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入更有吸引力的买入区，需复核是否为市场波动而非基本面恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "接近悲观情景价值，需重点复核现金完整性、集采冲击和海外订单。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 82.0
+      },
+      "reason": "进入减持区，若无业绩上修或海外加速证据，安全边际明显下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入更有吸引力的买入区，需复核是否为市场波动而非基本面恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "接近悲观情景价值，需重点复核现金完整性、集采冲击和海外订单。"
-    },
-    {
-      "type": "price_above",
-      "price": 82,
-      "reason": "进入减持区，若无业绩上修或海外加速证据，安全边际明显下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看海外收入占比、ERCP/闭合类增速、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断国内集采压力是否趋稳以及费用投入是否被收入增长吸收。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估泰国产能、海外渠道和资本配置质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

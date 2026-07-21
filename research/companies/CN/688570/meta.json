@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688570",
-  "market": "CN",
-  "ticker": "688570",
-  "name": "天玛智控",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "煤矿无人化智能开采控制系统稀缺龙头，SAC/SAM/SAP一体化平台、央企产业背景和服务网络构成护城河；但2025年和2026Q1利润大幅下滑，煤炭客户资本开支与价格竞争仍未确认拐点，当前适合观察，等待12.5元以下安全边际或订单/毛利率修复后再小仓位买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13.5,
-    17.5
-  ],
-  "buy_zone": [
-    0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    19,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天玛智控",
+    "security_status": "active",
+    "symbol": "CN:688570",
+    "ticker": "688570"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "abf0488bcb51e83195c2d4d4ed4f21fdef17345938f92b89b4671a4381375d49"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12.5元且无重大经营恶化，允许建立观察仓",
-      "action": "buy_initial",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查订单、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H2订单同比转正、综合毛利率稳定在35%以上且经营现金流改善",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润是否触底修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于19元且TTM净利润未恢复至1.8亿元以上",
-      "action": "reduce_or_avoid_new_buy",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及新年度订单指引，重估长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入保守买入区，PB约1.25倍且相对净资产具备更好安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "超过基准估值上沿，若利润未修复则风险收益比转弱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入保守买入区，PB约1.25倍且相对净资产具备更好安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 19,
-      "reason": "超过基准估值上沿，若利润未修复则风险收益比转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查订单、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润是否触底修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及新年度订单指引，重估长期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

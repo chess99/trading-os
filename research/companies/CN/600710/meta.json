@@ -1,93 +1,95 @@
 {
-  "symbol": "CN:600710",
-  "ticker": "600710",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "苏美达",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "苏美达是央企控股的供应链与产业链综合运营商，2026H1收入和利润延续增长，船舶订单覆盖至2030年、股息率约4%提供支撑；但供应链低毛利和经营现金流波动要求更高安全边际，当前以观察和小仓试错为宜。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.8,
-    13.2
-  ],
-  "buy_zone": [
-    8.8,
-    9.8
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.0
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于9.8元且2026半年报确认经营现金流改善或未继续恶化",
-      "action": "start_or_add",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于8.8元且船舶订单、分红和供应链信用风险无重大恶化",
-      "action": "add_after_review",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于14.5元且未来12个月利润预测未上修到16亿元以上",
-      "action": "reduce_after_review",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入买入区中部，复核半年报现金流和船舶订单后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "接近乐观估值下沿，如盈利未同步上修需复核减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "预约披露2026年半年报，核验业绩快报、现金流、蓝科高新并表和船舶订单"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年利润兑现和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报后复核分红、ROE和2027年估值基准"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 10.23,
-    "reference_price_date": "2026-07-15",
-    "reference_price_note": "来自搜狐转载证券之星收盘价报道；2026-07-17实时价未核验",
-    "market_cap_cny_bn": 13.368,
-    "shares_outstanding_bn": 1.306749434,
-    "net_profit_2025_cny_bn": 1.3556241,
-    "eps_2025": 1.04,
-    "dividend_2025": 0.415,
-    "estimated_net_profit_2026_cny_bn": [
-      1.44,
-      1.52
-    ],
-    "estimated_eps_2026": [
-      1.1,
-      1.16
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏美达",
+    "security_status": "active",
+    "symbol": "CN:600710",
+    "ticker": "600710"
   },
-  "confidence": "medium"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "8478be70e883a9e3093059a62a6006ddaefd30e4141a5669e15b0b02d7e850b3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "预约披露2026年半年报，核验业绩快报、现金流、蓝科高新并表和船舶订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年利润兑现和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后复核分红、ROE和2027年估值基准",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入买入区中部，复核半年报现金流和船舶订单后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "接近乐观估值下沿，如盈利未同步上修需复核减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,85 +1,96 @@
 {
-  "symbol": "CN:300594",
-  "market": "CN",
-  "ticker": "300594",
-  "name": "ST朗进",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST朗进拥有真实轨交车辆空调资产和温控技术延展，但2025年内控否定意见、控股股东资金占用历史、行政处罚、控股股东股份质押冻结及持续亏损使可投性显著受限。当前约13.43元价格已交易乐观扭亏和摘帽预期，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    6.5,
-    9.5
-  ],
-  "buy_zone": [
-    0,
-    6
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST朗进",
+    "security_status": "active",
+    "symbol": "CN:300594",
+    "ticker": "300594"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "1d4ea1697642223d2d526d77ac983263d4c6041a745c1d090a4209aa758370dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于10.5元且ST、内控、行政处罚事项未全部闭环",
-      "action": "不买；已有仓位减至观察仓或清仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证收入、利润、经营现金流、其他应收款和ST整改进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在6.0元至9.5元之间但治理和现金流证据不足",
-      "action": "继续跟踪，不因低于当前价而买入",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认全年扭亏概率、现金流和控股股东股份风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于或等于6.0元，且无新增资金占用、违规担保、重大诉讼，最新一期经营现金流不再恶化",
-      "action": "允许建立第一笔试探仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入有安全边际买入价，重新评估是否满足治理和现金流改善条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格低于或等于5.0元，ST解除路径清晰，内控整改有效，经营现金流转正",
-      "action": "可提高至研究仓，但仍禁止重仓",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入强吸引力买入价，但必须确认无新增退市或内控风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于合理区间，若无摘帽和盈利兑现证据应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6,
-      "reason": "进入有安全边际买入价，重新评估是否满足治理和现金流改善条件"
-    },
-    {
-      "type": "price_below",
-      "price": 5,
-      "reason": "进入强吸引力买入价，但必须确认无新增退市或内控风险"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "高于合理区间，若无摘帽和盈利兑现证据应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证收入、利润、经营现金流、其他应收款和ST整改进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认全年扭亏概率、现金流和控股股东股份风险"
-    }
-  ],
-  "notes": [
-    "当前评级为avoid，原因是估值高于经ST和治理风险折扣后的合理区间。",
-    "2025年年报和2026年一季报数据来自公司公告，置信度高。",
-    "2026-07-20股价为公开行情页抓取口径，盘中或收盘价需交易前复核。",
-    "行政处罚后的投资者索赔金额未核验，不纳入精确估值。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:603108",
-  "ticker": "603108",
-  "name": "润达医疗",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "润达医疗仍处于IVD集采、检验套餐优化和医院回款压力后的修复期；2025年巨亏、2026H1预亏使PE失效，当前约1.2倍PB已接近基准公允上沿，只有在应收账款和信用减值明显改善、工业和信息化业务占比提升后才具备升级条件。",
-  "fair_value_range": [
-    7.2,
-    10.0
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.8,
-    13.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "润达医疗",
+    "security_status": "active",
+    "symbol": "CN:603108",
+    "ticker": "603108"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "45c336e09875360d5ff968e36000097f56357d2529d49d66c210d88722a37a97"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于买入区且2026H1仍预亏，等待半年报验证现金流和信用减值。",
-      "action": "不新建仓位，保持观察。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、现金流和应收账款变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.2元，且2026半年报确认经营现金流同比改善、应收账款和信用减值未继续恶化。",
-      "action": "可建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入降幅、亏损收窄和信用减值趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入降幅收窄、归母净利润转正，工业和信息化收入占比提升。",
-      "action": "可提升至小仓位配置。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入基准买入观察区，需要复核半年报现金流、应收账款和信用减值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "超过基准公允价值上沿且仍处亏损周期时，应复核是否为题材性上涨。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入基准买入观察区，需要复核半年报现金流、应收账款和信用减值。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "超过基准公允价值上沿且仍处亏损周期时，应复核是否为题材性上涨。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、现金流和应收账款变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入降幅、亏损收窄和信用减值趋势。"
-    }
-  ],
-  "sources": [
-    "https://www.sse.com.cn/assortment/stock/list/info/announcement/index.shtml?productId=603108",
-    "https://stockmc.xueqiu.com/202604/603108_20260429_ILMW.pdf",
-    "https://stockmc.xueqiu.com/202604/603108_20260429_UK4J.pdf",
-    "https://www.cfi.net.cn/p20260715002629.html",
-    "https://quote.cfi.cn/quote.aspx?contenttype=outline&jzrq=&stockid=20163"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

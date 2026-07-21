@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:002209",
-  "market": "CN",
-  "ticker": "002209",
-  "name": "达意隆",
-  "company_name": "达意隆",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司2025年订单、海外收入和现金流明显改善，但2026Q1收入、毛利率和扣非利润同步承压；当前价格处于合理价值区间中部，安全边际不足，适合观察等待价格或中报验证。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.2,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "达意隆",
+    "security_status": "active",
+    "symbol": "CN:002209",
+    "ticker": "002209"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "834fc50fb1944d763a067b806fd8576365f254e8b4db78cb4e7ed4d9aee626cd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约10.17元且2026Q1收入、毛利率和扣非利润承压",
-      "action": "暂不买入，保持观察",
-      "max_weight": 0.0,
-      "reason": "当前价格处于合理价值区间中部，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报中的合同负债、存货、应收账款、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至8.50元以下且未出现订单取消、毛利率继续下行或应收坏账扩大的新证据",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区上沿，可用小仓位验证订单兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认订单兑现和盈利质量是否恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至7.20元以下，且2026中报显示合同负债仍高、收入恢复、经营现金流为正",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "安全边际扩大且基本面关键矛盾得到阶段性验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入买入区上沿，复核订单、毛利率和回款后可考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度毛利率低于25%或应收账款加合同资产超过收入35%且信用减值扩大",
-      "action": "不加仓并退出已建仓位",
-      "max_weight": 0.0,
-      "reason": "项目制设备公司的盈利质量和回款风险恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入减仓区下沿，需用2026收入和利润兑现重新证明估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "超过乐观估值区间，若无利润上修应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入买入区上沿，复核订单、毛利率和回款后可考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入减仓区下沿，需用2026收入和利润兑现重新证明估值"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "超过乐观估值区间，若无利润上修应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报中的合同负债、存货、应收账款、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认订单兑现和盈利质量是否恢复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "合同负债",
-    "存货",
-    "应收账款",
-    "合同资产",
-    "经营活动现金流量净额",
-    "综合毛利率",
-    "境外收入占比",
-    "信用减值损失",
-    "资产减值损失",
-    "研发投入占营业收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

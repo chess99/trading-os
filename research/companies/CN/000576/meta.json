@@ -1,87 +1,86 @@
 {
-  "symbol": "CN:000576",
-  "market": "CN",
-  "ticker": "000576",
-  "name": "甘化科工",
-  "company_name": "甘化科工",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "research_only",
-  "current_rating": "research_only",
-  "current_thesis": "军工电源、高性能特种合金材料和光电成像系统构成新的科工业务平台，但2025年扣非利润很薄、2026Q1收入增长未转化为利润和现金流，当前仅适合研究观察，等待订单、毛利率和回款兑现。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive_on_current_earnings",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    5.2,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "甘化科工",
+    "security_status": "active",
+    "symbol": "CN:000576",
+    "ticker": "000576"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "1cf371dfa1f8d4b14160b7220fdacf5bbf3bbe7ddb879d3b02e4d602b722933b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.00元且2026H1未出现订单、毛利率或现金流恶化",
-      "action": "建立观察性首笔仓位",
-      "max_weight": 0.01,
-      "reason": "当前利润质量尚未验证，仅适合小仓位等待军工业务兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点核验收入、毛利率、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "披露重大军工订单、定型批产或高毛利电源业务恢复增长",
-      "action": "将研究观察仓提高到上限",
-      "max_weight": 0.02,
-      "reason": "需要订单和利润证据确认军工预期不是单纯主题交易"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断军工订单兑现与现金流修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.50元且无新增订单、毛利率修复或现金流改善",
-      "action": "不追高并降低已有仓位",
-      "max_weight": 0.0,
-      "reason": "估值对军工预期过于敏感，当前扣非利润无法支撑高估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区间，需复核半年报和订单证据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "进入减仓或不追高区间，需确认是否有基本面催化支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区间，需复核半年报和订单证据"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "进入减仓或不追高区间，需确认是否有基本面催化支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点核验收入、毛利率、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断军工订单兑现与现金流修复是否持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "高性能特种合金材料收入增速和毛利率",
-    "电源及相关产品收入增速和毛利率",
-    "光电成像系统完整年度收入贡献",
-    "研发项目定型、批产和订单公告",
-    "前五大客户销售占比",
-    "前五大供应商采购占比",
-    "经营活动现金流净额",
-    "应收账款和存货周转",
-    "控股股东减持和质押变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

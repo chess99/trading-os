@@ -1,87 +1,95 @@
 {
-  "symbol": "CN:002513",
-  "ticker": "002513",
-  "name": "蓝丰生化",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "困境反转观察标的：公司已形成光伏+农化双主业，但持续亏损、高负债、光伏价格周期和经营现金流压力使当前价格缺乏买入安全边际。只有在毛利率、经营现金流和资产负债率连续改善后才考虑小仓位。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝丰生化",
+    "security_status": "active",
+    "symbol": "CN:002513",
+    "ticker": "002513"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "16c4d0fc2964e674ad14889276884b82fb49b6c631da16e2fac2ee4159abfec9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.20元，且2026H1或后续季度显示毛利率改善、经营现金流转正、资产负债率下降",
-      "action": "watchlist_probe",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、分部毛利率、经营现金流和减值情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.20-4.20元但公司仍亏损且经营现金流未转正",
-      "action": "no_new_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.20元且基本面未同步改善",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及全年资产负债表修复情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入基准公允价值下沿附近，可重新评估困境反转小仓位条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过减仓区间下沿且安全边际不足，应复核估值与基本面兑现度",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入基准公允价值下沿附近，可重新评估困境反转小仓位条件"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过减仓区间下沿且安全边际不足，应复核估值与基本面兑现度"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、分部毛利率、经营现金流和减值情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现连续改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及全年资产负债表修复情况"
-    }
-  ],
-  "key_metrics": {
-    "last_price_reference": {
-      "date": "2026-07-14",
-      "price": 4.79,
-      "source": "Investing.com"
-    },
-    "market_cap_reference_cny_billion": 1.8,
-    "revenue_2025_cny_billion": 2.342,
-    "net_profit_2025_cny_billion": -0.191,
-    "revenue_2026_q1_cny_billion": 0.652,
-    "net_profit_2026_q1_cny_billion": -0.0148417,
-    "asset_liability_ratio_2026_q1": 0.9143
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

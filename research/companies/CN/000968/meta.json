@@ -1,109 +1,106 @@
 {
-  "symbol": "CN:000968",
-  "market": "CN",
-  "ticker": "000968",
-  "name": "蓝焰控股",
-  "company_name": "蓝焰控股",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_high",
-  "valuation_rating": "neutral_to_cheap",
-  "fair_value_range": [
-    6.0,
-    7.5
-  ],
-  "buy_zone": [
-    5.2,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝焰控股",
+    "security_status": "active",
+    "symbol": "CN:000968",
+    "ticker": "000968"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "fa2ce1113789559a43f8d364300190b89bc47ba2db3c05236e3828f997e21697"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.80元且无新增经营恶化公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "低于基准合理价值下沿并保留气价和补贴不确定性折价"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的销量、气价、补贴和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报显示煤层气销量同比增长、经营现金流/归母净利润大于1.2且气价稳定",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.02,
-      "reason": "量价现金流同步验证后可提高胜率"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报确认全年盈利修复概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年归母净利润重回4.5亿元以上且分红率提升",
-      "action": "提高到上限仓位",
-      "max_weight": 0.03,
-      "reason": "盈利修复和股东回报改善共同支持估值重估"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入首笔观察仓买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于8.50元但产量和气价未兑现",
-      "action": "减仓",
-      "max_weight": 0.005,
-      "reason": "估值进入乐观区间而基本面证据不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入更具安全边际的买入区下沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "进入减仓观察区，需要产量和气价兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入乐观情景上沿，除非盈利大幅上修否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入首笔观察仓买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入更具安全边际的买入区下沿"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "进入减仓观察区，需要产量和气价兑现支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入乐观情景上沿，除非盈利大幅上修否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的销量、气价、补贴和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报确认全年盈利修复概率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "煤层气销售量",
-    "山西LNG出厂价及公司销售均价",
-    "归母净利润和扣非归母净利润",
-    "经营现金流净额/归母净利润",
-    "政府补助到账和计入损益金额",
-    "毛利率和单位开采成本",
-    "应收账款和关联方回款",
-    "新区块与气井产能建设进度",
-    "分红率和国企市值管理措施"
-  ],
-  "thesis": "蓝焰控股具备山西煤层气资源、煤矿瓦斯治理和国资平台稀缺性，但2025年至2026Q1盈利下行尚未扭转，当前适合观察并等待销量、气价和现金流验证。",
-  "current_thesis": "蓝焰控股具备山西煤层气资源、煤矿瓦斯治理和国资平台稀缺性，但2025年至2026Q1盈利下行尚未扭转，当前适合观察并等待销量、气价和现金流验证。",
-  "current_price": 6.25,
-  "current_price_date": "2026-07-10",
-  "market_cap": 6047000000,
-  "market_cap_date": "2026-07-10",
-  "confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

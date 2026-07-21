@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:920790",
-  "market": "CN",
-  "ticker": "920790",
-  "name": "联迪信息",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "对日软件服务与电力客户经验有一定价值，但低ROE、项目验收和汇率风险无法支撑当前约6.4倍PB，现价显著高于合理价值。",
-  "fair_value_range": [5.0, 8.0],
-  "buy_zone": [4.0, 5.5],
-  "sell_or_reduce_zone": [10.0, 14.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联迪信息",
+    "security_status": "active",
+    "symbol": "CN:920790",
+    "ticker": "920790"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "36fb775e29b9f00b90e1bf02c480e8721eff43945a1a9252b107c23e12a5c16b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.0-5.5元且客户未流失、存货正常验收、正常化自由现金流不低于1500万元",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报后复查内外销、汇兑损益、存货验收与现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "基本面恶化、出现重大项目审减或日本客户流失时，无论价格高低均不加仓",
-      "max_weight": 0.0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报后复查内外销、汇兑损益、存货验收与现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入有条件的买入观察区，仍须重新验证核心假设"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入有条件的买入观察区，仍须重新验证核心假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "超过合理价值上沿并进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过合理价值上沿并进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15T01:23:17+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

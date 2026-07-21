@@ -1,55 +1,77 @@
 {
-  "symbol": "CN:920725",
-  "market": "CN",
-  "ticker": "920725",
-  "name": "惠丰钻石",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "微粉细分冠军但盈利和自由现金流尚未恢复，散热材料未形成批量收入，当前价格已透支行业复苏与新业务成功预期。",
-  "fair_value_range": [16, 28],
-  "buy_zone": [10, 16],
-  "sell_or_reduce_zone": [35, 50],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠丰钻石",
+    "security_status": "active",
+    "symbol": "CN:920725",
+    "ticker": "920725"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "bdf48cbf8dba4c79119f1727526f96f4eaaea9ac5361df5d22a71dcbda8d3dd3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于12至16元，传统微粉量价改善、扣非盈利转正且存货未恶化",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、存货周转、扣非盈利及散热材料订单验证",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于10至12元，散热产品出现可核验客户或订单且扩产未显著举债",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入研究性买入观察区，仍需验证基本面且不得机械加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于10元，重新验证长期商业价值未受损、存货和资本开支风险可控后",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "基本面恶化、散热项目延期或资本开支失控，不因价格下跌加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "进入减仓或不应追高区间，估值明显高于可验证现金流",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、存货周转、扣非盈利及散热材料订单验证"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入研究性买入观察区，仍需验证基本面且不得机械加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "进入减仓或不应追高区间，估值明显高于可验证现金流"
-    }
-  ],
-  "updated_at": "2026-07-15T15:35:38+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

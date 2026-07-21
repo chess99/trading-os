@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300949",
-  "ticker": "300949",
-  "name": "奥雅股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处在传统景观设计业务出清和文旅亲子、数字科技转型验证期。2025年收入恢复但亏损扩大，2026Q1减亏但收入仍下滑，尚未证明可持续盈利拐点；当前市值已隐含较高转型预期，适合观察而非买入。",
-  "fair_value_range": [
-    14,
-    18
-  ],
-  "buy_zone": [
-    10,
-    13
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥雅股份",
+    "security_status": "active",
+    "symbol": "CN:300949",
+    "ticker": "300949"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "cf459ff6f7ac507f50cbbe25478a31073f2ec49bfd19e8e271c1a54e78b32b3f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约20元附近且未看到2026半年报验证收入企稳、亏损继续收窄和经营现金流改善",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、扣非净利润、经营现金流、订单和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至13元以下，且2026半年报显示收入企稳、扣非亏损继续收窄、经营现金流未恶化",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否延续减亏和现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至10元以下，且无重大治理、减值或流动性风险，同时订单与回款出现连续改善",
-      "action": "add_selectively",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断文旅亲子和数字科技转型是否产生可持续利润贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入初步买入观察区，需要结合半年报验证基本面是否企稳",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入深度安全边际区，但必须排除减值、现金流和治理风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "在利润拐点未验证前估值进入乐观情景区，应考虑卖出或降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入初步买入观察区，需要结合半年报验证基本面是否企稳"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入深度安全边际区，但必须排除减值、现金流和治理风险"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "在利润拐点未验证前估值进入乐观情景区，应考虑卖出或降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、扣非净利润、经营现金流、订单和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否延续减亏和现金流改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断文旅亲子和数字科技转型是否产生可持续利润贡献"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,112 +1,115 @@
 {
-  "symbol": "CN:000683",
-  "market": "CN",
-  "ticker": "000683",
-  "name": "博源化工",
-  "company_name": "博源化工",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "博源化工拥有稀缺天然碱资源和低成本扩张能力，长期质量较好；但2026年纯碱行业仍处供强需弱阶段，当前适合观察仓，等待价格、库存和阿拉善二期爬坡兑现后再提高仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    6.0,
-    7.5
-  ],
-  "buy_zone": [
-    4.6,
-    5.1
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博源化工",
+    "security_status": "active",
+    "symbol": "CN:000683",
+    "ticker": "000683"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ef9dbcb7e84405b1bd2d37f3ee6a2b512741a9e2aca5dfd153a6580b68a1576b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约5.50元且纯碱行业仍供强需弱",
-      "action": "仅建立观察仓",
-      "max_weight": 0.01,
-      "reason": "资源和成本优势明确，但周期右侧信号不足，先用小仓位跟踪。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看阿拉善二期爬坡、扣非净利、经营现金流和资本开支。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入4.6-5.1元且公司季度扣非利润和经营现金流未恶化",
-      "action": "分两笔买入",
-      "max_weight": 0.03,
-      "reason": "价格接近低周期资源资产买入区，安全边际改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及纯碱旺季价格表现，决定是否从watch上调或下调。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "纯碱现货站稳1200元/吨以上、库存下降且阿拉善二期爬坡兑现",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "价格和产量同时改善，盈利弹性可验证。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证二期全年贡献、分红能力和负债压力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价达到7.8-9.0元但行业价格未右侧反转",
-      "action": "减持或暂停加仓",
-      "max_weight": 0.02,
-      "reason": "估值先于基本面修复，风险回报下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.1
+      },
+      "reason": "进入初始买入区上沿，复核纯碱价格、库存和公司现金流后可建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "进入减持区下沿，若行业仍供强需弱应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "超出基准合理价值区，除非纯碱价格和盈利显著上修，否则应减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.1,
-      "reason": "进入初始买入区上沿，复核纯碱价格、库存和公司现金流后可建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "进入减持区下沿，若行业仍供强需弱应降低仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "超出基准合理价值区，除非纯碱价格和盈利显著上修，否则应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看阿拉善二期爬坡、扣非净利、经营现金流和资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及纯碱旺季价格表现，决定是否从watch上调或下调。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证二期全年贡献、分红能力和负债压力。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "纯碱现货价格",
-    "纯碱期货主力价格与基差",
-    "纯碱厂家库存和社会库存",
-    "轻碱与重碱价差",
-    "浮法玻璃日熔量和光伏玻璃开工率",
-    "阿拉善二期产量、负荷和吨成本",
-    "小苏打新增产能建设进度",
-    "单季度扣非归母净利润",
-    "经营活动现金流量净额",
-    "资本开支",
-    "合同负债和存货",
-    "控股股东质押比例",
-    "中盐化工天然碱项目进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

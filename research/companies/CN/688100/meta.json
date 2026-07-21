@@ -1,92 +1,95 @@
 {
-  "symbol": "CN:688100",
-  "market": "CN",
-  "ticker": "688100",
-  "name": "威胜信息",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "威胜信息是能源物联网细分龙头，2025年和2026Q1显示高ROE、稳健净利率、近40亿元在手合同、海外收入占比提升与持续分红回购。按2026-07-17约27.91元股价、约20倍TTM PE估算，30元以下具备安全边际；核心验证点是2026半年报收入恢复、经营现金流改善和海外订单延续。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    34,
-    42
-  ],
-  "buy_zone": [
-    0,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "position_plan": [
-    {
-      "condition": "27-30元且基本面无新增恶化，先建立观察仓",
-      "action": "buy_initial",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "2026半年报收入恢复增长、海外收入占比保持20%以上且经营现金流改善",
-      "action": "add",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价跌至24-26元且订单、现金流、毛利率未恶化",
-      "action": "add_on_margin_of_safety",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "2026半年报收入继续下滑且经营现金流明显弱于利润",
-      "action": "reduce_to_watch",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "若基本面未恶化，低于26元进入高赔率加仓复核区。"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "若盈利预测未同步上修，高于45元进入估值透支和减仓复核区。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-18",
-      "reason": "预计2026半年报披露后复核收入、现金流、海外占比和在手订单。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026三季报披露后复核全年利润兑现和订单交付节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "2026年报窗口复核海外业务、AI相关产品收入和分红回购执行情况。"
-    }
-  ],
-  "valuation": {
-    "as_of": "2026-07-17",
-    "reference_price": 27.91,
-    "reference_market_cap_cny_bn": 13.72,
-    "ttm_pe_estimate": 20.3,
-    "methods": [
-      "relative_pe",
-      "dcf",
-      "scenario_analysis"
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "威胜信息",
+    "security_status": "active",
+    "symbol": "CN:688100",
+    "ticker": "688100"
   },
-  "confidence": "medium",
-  "decision": "买入"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "7038f34e72c806bb8eaf26e5de60e03da8283376ce34149086921c81c5447272"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-18"
+      },
+      "reason": "预计2026半年报披露后复核收入、现金流、海外占比和在手订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报披露后复核全年利润兑现和订单交付节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "2026年报窗口复核海外业务、AI相关产品收入和分红回购执行情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "若基本面未恶化，低于26元进入高赔率加仓复核区。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "若盈利预测未同步上修，高于45元进入估值透支和减仓复核区。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

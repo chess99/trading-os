@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:688029",
-  "market": "CN",
-  "ticker": "688029",
-  "name": "南微医学",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "南微医学是国产消化内镜诊疗耗材龙头，国内成熟品类受集采和价格竞争压制，但海外本地化渠道、ERCP/EUS/EBUS高附加值耗材和一次性可视化平台正在形成第二曲线。以2026-07-17收盘价74.49元测算，估值已反映较多压力，若海外收入保持20%以上增长且毛利率稳定，当前具备买入价值。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    86,
-    102
-  ],
-  "buy_zone": [
-    70,
-    78
-  ],
-  "sell_or_reduce_zone": [
-    112,
-    128
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南微医学",
+    "security_status": "active",
+    "symbol": "CN:688029",
+    "ticker": "688029"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bbe911fb1e4ac9ff7db9d73ddd382330924cbae2e7b834ae1175a6bf17bd4f61"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于70-78元买入区间且未出现外销毛利率明显恶化，建立初始仓位。",
-      "action": "buy_initial",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查外销收入增速、外销毛利率、ERCP/EUS/EBUS增长和汇兑损益。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌破70元但2026H1外销收入仍保持20%以上增长、扣非利润未因经营因素恶化。",
-      "action": "add_on_weakness",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1汇兑扰动后扣非利润是否恢复增长。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1确认外销毛利率稳定、ERCP/EUS/EBUS继续高增，且价格仍低于78元。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估全球化战略、可视化产品线盈利质量和股东回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格进入112-128元区间且盈利预测没有同步上修，逐步减仓。",
-      "action": "reduce",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入更高安全边际区间，可在基本面未恶化时加仓复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 112.0
+      },
+      "reason": "进入减仓观察区间，需要盈利上修才能维持赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 128.0
+      },
+      "reason": "超过乐观估值上沿，除非海外利润质量显著超预期，否则应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入更高安全边际区间，可在基本面未恶化时加仓复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 112,
-      "reason": "进入减仓观察区间，需要盈利上修才能维持赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 128,
-      "reason": "超过乐观估值上沿，除非海外利润质量显著超预期，否则应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查外销收入增速、外销毛利率、ERCP/EUS/EBUS增长和汇兑损益。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1汇兑扰动后扣非利润是否恢复增长。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估全球化战略、可视化产品线盈利质量和股东回报。"
-    }
-  ],
-  "decision": "买入",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

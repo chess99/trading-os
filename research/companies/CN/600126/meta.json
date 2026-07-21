@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600126",
-  "ticker": "600126",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "杭钢股份",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "杭钢股份是钢铁周期底部资产叠加数据中心/算力期权的混合标的。钢铁主业仍决定利润下限，数字业务尚未证明足以重塑盈利结构；在扣非利润仍弱、当前估值接近1倍PB的情况下，安全边际不足，维持观察。",
-  "fair_value_range": [
-    4.6,
-    5.8
-  ],
-  "buy_zone": [
-    3.8,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    7.2
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杭钢股份",
+    "security_status": "active",
+    "symbol": "CN:600126",
+    "ticker": "600126"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1cd5c418832b8f8e351f8646b237cc329b1f81ecc8fde656301d17fbce754859"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.60元且2026年中报扣非亏损未扩大时，可建立观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复核扣非利润、数字产业收入和现金流质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "数字产业收入和毛利率披露改善，且扣非净利润连续两个季度转正后，可提高配置上限。",
-      "action": "increase_after_confirmation",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核钢铁主业修复与数字业务兑现节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.80元但扣非利润仍未转正，或数字业务资本开支明显超出现金流承受能力时，退出观察仓。",
-      "action": "reduce_or_exit",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入基准估值下沿，具备重新评估买入安全边际的条件。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "接近乐观情景估值，若扣非利润和数字业务未同步兑现，应评估减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入基准估值下沿，具备重新评估买入安全边际的条件。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "接近乐观情景估值，若扣非利润和数字业务未同步兑现，应评估减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后复核扣非利润、数字产业收入和现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核钢铁主业修复与数字业务兑现节奏。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

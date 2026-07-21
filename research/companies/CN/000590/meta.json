@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000590",
-  "market": "CN",
-  "ticker": "000590",
-  "name": "古汉医药",
-  "company_name": "古汉医药",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "古汉医药拥有老字号品牌、核心中成药品种和控制权变更后的渠道修复想象力，但2025年和2026Q1仍处亏损，商誉已全额减值，当前约19.6亿元市值已提前反映扭亏预期，因此暂不买入，仅在价格回落且收入增长、费用率下降、扣非亏损继续收窄后再评估小仓位。",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    4.5,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "古汉医药",
+    "security_status": "active",
+    "symbol": "CN:000590",
+    "ticker": "000590"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "1b2a61590d99c68bff370156a3638bda62121c82a67fc7d93901daf45a8f6cb8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_above_fair_value_and_company_still_loss_making",
-      "action": "do_not_buy",
-      "max_weight": 0,
-      "reason": "2026-07-10 price 8.19 CNY implies about 19.6bn CNY market cap while 2025 and 2026Q1 earnings remain negative."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review after the 2026 interim report for revenue growth, loss reduction, channel progress, cash flow and asset impairment.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_in_buy_zone_and_next_quarter_revenue_growth_above_10pct_with_deducted_loss_narrowing",
-      "action": "initiate_small_tracking_position",
-      "max_weight": 0.005,
-      "reason": "Only a small tracking position is justified before recurring profitability is proven."
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review after the 2026 third-quarter report for evidence of recurring profitability and expense control.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "two_consecutive_quarters_deducted_profit_positive_and_operating_cash_flow_positive",
-      "action": "increase_cautiously",
-      "max_weight": 0.02,
-      "reason": "Sustained turnaround would validate the brand and channel repair thesis, but governance and concentration risks remain."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "Enter detailed buy review only if price falls into the upper end of the buy zone.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "At this level the risk-reward may become attractive if financial improvement continues.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "Reduce or avoid exposure if valuation expands without confirmed profitability.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "Enter detailed buy review only if price falls into the upper end of the buy zone."
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "At this level the risk-reward may become attractive if financial improvement continues."
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "Reduce or avoid exposure if valuation expands without confirmed profitability."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review after the 2026 interim report for revenue growth, loss reduction, channel progress, cash flow and asset impairment."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review after the 2026 third-quarter report for evidence of recurring profitability and expense control."
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly_revenue_growth",
-    "deducted_net_profit",
-    "operating_cash_flow",
-    "sales_expense_ratio",
-    "management_expense_ratio",
-    "provincial_vs_out_of_province_revenue_and_gross_margin",
-    "core_product_sell_through",
-    "controller_pledge_ratio",
-    "asset_impairment",
-    "inventory_turnover"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

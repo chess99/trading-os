@@ -1,85 +1,110 @@
 {
-  "symbol": "CN:920263",
-  "market": "CN",
-  "ticker": "920263",
-  "name": "中航泰达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "中航泰达是钢铁/焦化烟气治理运营资产与包钢节能权益法投资的组合，资产端有一定支撑，但2025年亏损、2026Q1继续亏损，主业毛利和投资收益均未确认修复；2026-07-17收盘价6.86元约为1.8x PB，已接近乐观情景，当前缺乏安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.6,
-    5.8
-  ],
-  "buy_zone": [
-    3.8,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中航泰达",
+    "security_status": "active",
+    "symbol": "CN:920263",
+    "ticker": "920263"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "92b4ba55492eb281524c2215dfd770dae0836233cd5f0722c401183719c6729c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "7faabc9e129df960bbd087d1a0fee20b1d4d3a53b86675f4b3bb929c44d06756"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前6.86元附近不买，等待2026H1验证盈利、现金流和包钢节能投资收益是否修复",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：归母净利润、经营现金流、运营项目毛利率、包钢节能投资收益",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.4元且无新增信披治理风险、2026H1未继续恶化，可建立第一笔观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：亏损是否收窄以及现金流是否恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.8元且运营项目毛利率、经营现金流、权益法投资收益至少两项改善，可分批加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：治理整改、主业续约、资产减值和全年扭亏情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.4元且基本面未破坏，可作为深度折价仓位上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入安全边际买入价，需要同步复核2026H1财报和治理整改",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于6.2元或核心修复逻辑被证伪，应减仓或保持零仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "接近1.0x 2026Q1 BVPS，若基本面未继续恶化则风险补偿明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "高于合理区间上沿，盈利修复预期已较充分",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入安全边际买入价，需要同步复核2026H1财报和治理整改"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "接近1.0x 2026Q1 BVPS，若基本面未继续恶化则风险补偿明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "高于合理区间上沿，盈利修复预期已较充分"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：归母净利润、经营现金流、运营项目毛利率、包钢节能投资收益"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：亏损是否收窄以及现金流是否恢复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：治理整改、主业续约、资产减值和全年扭亏情况"
-    }
-  ],
-  "notes": "2026-07-17腾讯行情：收盘价6.86元，总市值9.69亿元，PB 1.80x，PE TTM -25.59x；今天决策为不买、观察，第一笔仓位为0%。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

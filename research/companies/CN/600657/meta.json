@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600657",
-  "ticker": "600657",
-  "name": "信达地产",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "信达地产具备中国信达体系资源和低PB净资产折价，但2026H1预告继续大额亏损，资产减值和去化压力尚未出清；当前价格接近保守合理价值中枢，需等待更高安全边际或经营现金流改善。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    2.1,
-    2.8
-  ],
-  "buy_zone": [
-    1.7,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.4,
-    4.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信达地产",
+    "security_status": "active",
+    "symbol": "CN:600657",
+    "ticker": "600657"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "39f69f086ef2f16483714c7a6479607f4f13a2aaedc9c523feee004db0cdc90d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入买入区间且2026半年报显示经营现金流改善、减值压力收窄时建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报、资产减值、经营现金流和销售回款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于1.70元且未出现新增重大减值或流动性风险，可提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报及季度经营简报，判断亏损是否收窄",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026H2继续大额亏损或经营现金流恶化，维持零持仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，更新调整净资产和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入保守买入区间，需要结合半年报现金流和减值情况复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.4
+      },
+      "reason": "高于减仓区间下限，若无经营拐点则风险收益比下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入保守买入区间，需要结合半年报现金流和减值情况复核"
-    },
-    {
-      "type": "price_above",
-      "price": 3.4,
-      "reason": "高于减仓区间下限，若无经营拐点则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报、资产减值、经营现金流和销售回款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报及季度经营简报，判断亏损是否收窄"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，更新调整净资产和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

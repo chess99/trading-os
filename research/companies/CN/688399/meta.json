@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:688399",
-  "market": "CN",
-  "ticker": "688399",
-  "name": "硕世生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "硕世生物现金和理财资产充足、负债率低，传染病检测和妇幼健康产品线仍有修复期权；但2025年扣非亏损扩大、2026Q1收入仍同比下降且扣非未转正，当前31.50元价格已接近基准价值上沿，安全边际不足，宜观察等待更低价格或连续经营拐点。",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "硕世生物",
+    "security_status": "active",
+    "symbol": "CN:688399",
+    "ticker": "688399"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "cc1a93afd8e8772fcf3cf27b96d5a5279388d4c0346ef79012898676da680581"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元，且现金和理财资产未明显流失、2026H1收入降幅收窄至个位数以内",
-      "action": "允许建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流和资产负债表",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期主营收入同比转正、扣非归母净利润转正、经营现金流为正",
-      "action": "可上调至小仓位核心观察",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否形成连续经营改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于36元但扣非利润和现金流未兑现拐点",
-      "action": "不新增，已有仓位减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和2027年一季报，判断主业修复是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "跌入净资产附近的安全边际区，重新评估买入价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入深度折价区，若资产负债表未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "高于基准估值区间且基本面尚未证明拐点，应复核是否减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "跌入净资产附近的安全边际区，重新评估买入价值"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入深度折价区，若资产负债表未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "高于基准估值区间且基本面尚未证明拐点，应复核是否减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流和资产负债表"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否形成连续经营改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和2027年一季报，判断主业修复是否兑现"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "主营收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "诊断试剂毛利率",
-    "HPV和呼吸道产品中标价格及检测量",
-    "货币资金与交易性金融资产规模",
-    "研发投入占营业收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

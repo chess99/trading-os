@@ -1,98 +1,95 @@
 {
-  "symbol": "CN:600097",
-  "ticker": "600097",
-  "name": "开创国际",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "开创国际拥有远洋金枪鱼船队、南极磷虾项目和 ALBO 海外罐头品牌，资产有稀缺性且 PB 低于 1 倍；但 ROE 偏低、2026H1 预亏、盈利受渔场和燃油影响大，当前只适合研究观察，等待价格进入更深折价或基本面修复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.8,
-    8.8
-  ],
-  "buy_zone": [
-    5.8,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "position_plan": [
-    {
-      "condition": "价格进入 5.8-6.6 元区间，且 2026 半年度正式报告未显著差于业绩预告，同时捕捞量、燃油成本或 ALBO 利润至少一项出现改善证据",
-      "action": "可建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于 9.5 元但 2026H2 盈利修复尚未被定期报告验证",
-      "action": "不追高，已有仓位应降低暴露",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "低于基准买入区上沿，PB 折价接近 0.7 倍，值得重新核验安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "接近 1 倍 PB，若盈利修复未确认则估值吸引力下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年度报告、亏损原因、捕捞量、燃油成本和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断下半年盈利是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估正常化利润中枢和资产减值风险"
-    }
-  ],
-  "key_metrics": {
+  "identity": {
     "currency": "CNY",
-    "shares_outstanding": 240936559,
-    "revenue_2025": 2336503042.69,
-    "net_profit_attributable_2025": 73894019.42,
-    "deducted_net_profit_2025": 69249173.69,
-    "operating_cash_flow_2025": 167990623.18,
-    "equity_attributable_2025": 2319151944.42,
-    "book_value_per_share_2025": 9.63,
-    "h1_2026_profit_warning_low": -32280000,
-    "h1_2026_profit_warning_high": -26410000
+    "market": "CN",
+    "name": "开创国际",
+    "security_status": "active",
+    "symbol": "CN:600097",
+    "ticker": "600097"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1bee294b0f35ff62db62e63e797981d0c22a810a0b035e9e7a441c08d143d7d7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "开创国际2025年年度报告",
-      "url": "https://www.skmic.sh.cn/upfiles/pdf/202603311455213034.pdf",
-      "date": "2026-03-28"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年度报告、亏损原因、捕捞量、燃油成本和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "开创国际2026年半年度业绩预告",
-      "url": "https://paper.cnstock.com/html/2026-07/14/content_2243647.htm",
-      "date": "2026-07-14"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断下半年盈利是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "开创国际2026年第一季度报告（公司官网公告列表）",
-      "url": "https://www.skmic.sh.cn/cn/investorYear/2026.html",
-      "date": "2026-04-29"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估正常化利润中枢和资产减值风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "低于基准买入区上沿，PB 折价接近 0.7 倍，值得重新核验安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "接近 1 倍 PB，若盈利修复未确认则估值吸引力下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

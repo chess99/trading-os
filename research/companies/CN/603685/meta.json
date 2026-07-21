@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603685",
-  "market": "CN",
-  "ticker": "603685",
-  "name": "晨丰科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "晨丰科技已从LED照明结构件公司转向照明与新能源双主业，但2025年扣非仍亏损、2026Q1盈利规模尚小，储能项目资本开支和治理透明度仍需验证；当前价格更接近牛市情景，安全边际不足，暂不买入，仅在显著回落或新能源现金回报被连续验证后重新评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    13,
-    18
-  ],
-  "buy_zone": [
-    0,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晨丰科技",
+    "security_status": "active",
+    "symbol": "CN:603685",
+    "ticker": "603685"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9f3a3c13f92fada412653434dc014c1a68970f70832e2984db2c0e099701d5d6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于14元，且最近一个季度扣非净利润转正、无新增监管问询或重大关联交易风险",
-      "action": "可建立观察性仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、新能源毛利率、经营现金流和资产负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度新能源业务经营现金流为正，储能项目收益参数清晰且资产负债率低于55%",
-      "action": "可提高到小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1扭亏是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元但2027年利润中枢未被验证到1亿元以上",
-      "action": "不新增并考虑减持或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核储能项目资金来源、建设进度、并网与收益合同披露",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入可研究买入区，估值接近基准公允价值下沿并具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入减持或回避区，除非新能源利润和储能回报已显著兑现",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入可研究买入区，估值接近基准公允价值下沿并具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "进入减持或回避区，除非新能源利润和储能回报已显著兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、新能源毛利率、经营现金流和资产负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1扭亏是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核储能项目资金来源、建设进度、并网与收益合同披露"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

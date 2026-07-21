@@ -1,122 +1,142 @@
 {
-  "symbol": "CN:300130",
-  "market": "CN",
-  "ticker": "300130",
-  "name": "新国都",
-  "company_name": "深圳市新国都股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "新国都是国内收单现金流、海外支付终端增长和跨境支付期权的组合。公司牌照、商户网络、海外认证和现金资产提供一定质量底座，但2025年扣非利润下降、收单毛利率承压，2026Q1出现增收不增利，当前价格缺少足够安全边际，宜观察等待低价或利润率修复确认。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    14.0,
-    17.5
-  ],
-  "buy_zone": [
-    0.0,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    21.0,
-    24.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新国都",
+    "security_status": "active",
+    "symbol": "CN:300130",
+    "ticker": "300130"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9a830b0f6d6726d297d30d7c8836d07b15cf0b2cae5293c805e336fbab4d08a3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在18元附近且未出现新的利润中枢证据",
-      "action": "仅保留0-1%观察仓，重点跟踪季度数据",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "发布2026年半年报或三季报",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至13.5元以下，且国内收单流水、海外硬件毛利率、经营现金流未同步恶化",
-      "action": "建立1-2%初始仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "国内收单及增值服务毛利率连续两个季度低于28%",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至12元以下，且收单毛利率企稳、海外电子支付设备收入继续双位数增长、全年经营现金流/归母净利润大于0.8",
-      "action": "加至3-4%中等仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "海外电子支付设备收入增速低于10%或毛利率明显跌破38%",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于21元且跨境支付或海外硬件没有提供新的可持续利润证据",
-      "action": "降至观察仓或退出",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "跨境支付交易金额季度环比停止增长或出现重大合规事件",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 13.5,
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "经营活动现金流连续两个季度显著弱于净利润",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "H股发行、再融资或重大股权摊薄方案落地",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
       "reason": "进入买入观察区，复核最近一季毛利率和经营现金流",
-      "action": "进入买入观察区，复核最近一季毛利率和经营现金流"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 12.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
       "reason": "若基本面未恶化，可考虑加仓",
-      "action": "若基本面未恶化，可考虑加仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 21.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
       "reason": "估值进入减仓区，除非利润中枢上移已被验证",
-      "action": "估值进入减仓区，除非利润中枢上移已被验证"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 24.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
       "reason": "按高估处理，优先锁定收益",
-      "action": "按高估处理，优先锁定收益"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "发布2026年半年报或三季报"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "国内收单及增值服务毛利率连续两个季度低于28%"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "海外电子支付设备收入增速低于10%或毛利率明显跌破38%"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "跨境支付交易金额季度环比停止增长或出现重大合规事件"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "经营活动现金流连续两个季度显著弱于净利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "H股发行、再融资或重大股权摊薄方案落地"
-    }
-  ],
-  "key_tracking_metrics": [
-    "国内收单交易流水",
-    "收单及增值服务收入和毛利率",
-    "电子支付设备收入、境外收入和毛利率",
-    "跨境支付PayKKa交易金额、收入和毛利",
-    "经营活动现金流净额/归母净利润",
-    "财务费用和汇兑损益",
-    "货币资金、交易性金融资产和受限资金变化",
-    "股本变化和分红金额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920436",
-  "market": "CN",
-  "ticker": "920436",
-  "name": "大地电气",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "收入扩张和一季度微利尚未转化为自由现金流，当前价格已提前计入埃易泰克整合成功与净利率修复，需等待更低价格和现金流验证。",
-  "fair_value_range": [6.5, 8.5],
-  "buy_zone": [5.2, 6.2],
-  "sell_or_reduce_zone": [9.5, 11.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大地电气",
+    "security_status": "active",
+    "symbol": "CN:920436",
+    "ticker": "920436"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "2476605a77396db25d54c9ba827b982815f0eece8f96d52dc8e1c8132f5bc6e8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于5.2至6.2元且经营现金流同比改善、资产负债率不再上升、核心客户订单未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的分业务毛利率、埃易泰克亏损、经营现金流和杠杆",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.2元，重新验证埃易泰克整合、商誉和偿债能力均未恶化，且连续两个报告期现金转换改善",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及收入增长向现金流转化的进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.5元且滚动自由现金流仍未转正",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入有安全边际的复核区，须确认基本面与融资能力未恶化后才可买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "进入减仓或不应追高区间，除非自由现金流和正常化利润显著上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的分业务毛利率、埃易泰克亏损、经营现金流和杠杆"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及收入增长向现金流转化的进展"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入有安全边际的复核区，须确认基本面与融资能力未恶化后才可买入"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入减仓或不应追高区间，除非自由现金流和正常化利润显著上修"
-    }
-  ],
-  "updated_at": "2026-07-17T18:28:08+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

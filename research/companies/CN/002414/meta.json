@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:002414",
-  "market": "CN",
-  "ticker": "002414",
-  "name": "高德红外",
-  "company_name": "高德红外",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "高德红外已从2024年周期低谷修复，2025年和2026Q1的高收入增速、高毛利率和利润弹性验证军品订单恢复；但当前股价已部分反映2026年业绩修复，需等待回撤或2026H1现金流、应收账款和订单连续性进一步确认后再买入。",
-  "quality_rating": "A-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    11.5,
-    14.5
-  ],
-  "buy_zone": [
-    9.8,
-    11.8
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "高德红外",
+    "security_status": "active",
+    "symbol": "CN:002414",
+    "ticker": "002414"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "81f23f6f5b7e5f96e8c4c8dfc06bb777b66b49b0f214d7d2c8732d2b5d7bdb8b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至10.80元以下，且未出现军品订单、毛利率或回款恶化信号",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.03,
-      "reason": "估值进入买入区下半段，能部分覆盖军工订单周期和现金流波动"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年度报告，重点验证Q2毛利率、现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1正式报告确认高毛利交付延续、经营现金流改善且应收账款未异常扩张",
-      "action": "加仓至标准仓位",
-      "max_weight": 0.06,
-      "reason": "利润修复从单季验证升级为半年度验证，质量评级可维持A-"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断军品订单恢复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "披露重大军品订单或民品大客户放量，同时毛利率维持55%以上",
-      "action": "提高至策略上限仓位",
-      "max_weight": 0.08,
-      "reason": "订单连续性和第二曲线同时增强，但军工周期属性决定仓位仍需封顶"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.8
+      },
+      "reason": "进入买入区上沿，复核2026H1订单、毛利率和现金流后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入16.50元以上且无盈利上修或订单新增证据",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.03,
-      "reason": "估值已透支2026年修复预期，风险收益下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入更有安全边际的首笔买入区，若基本面未恶化可建立2%-3%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "进入减仓区下沿，若无盈利预测上修或新增重大订单，应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "超过乐观估值区间，需强制复核并优先兑现收益",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.8,
-      "reason": "进入买入区上沿，复核2026H1订单、毛利率和现金流后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入更有安全边际的首笔买入区，若基本面未恶化可建立2%-3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "进入减仓区下沿，若无盈利预测上修或新增重大订单，应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "超过乐观估值区间，需强制复核并优先兑现收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年度报告，重点验证Q2毛利率、现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断军品订单恢复是否连续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入和同比增速",
-    "归母净利润和扣非净利润",
-    "综合毛利率是否维持55%以上",
-    "经营现金流净额/归母净利润",
-    "应收账款和合同资产变化",
-    "存货周转和跌价准备",
-    "合同负债或预收款变化",
-    "重大军品订单和中标公告",
-    "民品红外、车载红外和工业测温放量证据",
-    "睿创微纳等可比公司的估值和毛利率变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

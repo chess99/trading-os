@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603322",
-  "market": "CN",
-  "ticker": "603322",
-  "name": "超讯科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "超讯科技正从通信技术服务转向智算、算力集成和算力服务，收入弹性真实存在，但高应收、高负债、诉讼、控股股东质押冻结和业绩预告信披处分显著降低可给估值倍数。只有在经营现金流转正、单一客户应收按计划回款、智算毛利率可持续后，才具备小仓位买入条件。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "超讯科技",
+    "security_status": "active",
+    "symbol": "CN:603322",
+    "ticker": "603322"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "e285d66fd22ce41e6b8964a6ba62c15bdeefa85c54aa685a6ed83b1343c172b6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于18元，且2026H1或2026Q3经营现金流改善、巨门系等大额应收回款按计划推进",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的经营现金流、应收回款、智算毛利率和诉讼进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于16元，且应收账款、合同资产、其他应收合计较2026Q1下降，智算毛利率稳定高于12%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润是否可持续并更新估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于32元但现金流和应收改善未被财报验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重点验证全年现金流、坏账计提和审计意见",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入合理价值下沿，可在回款和现金流改善同时出现时重新评估小仓位建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入深度安全边际区，但仍需确认诉讼和应收风险没有继续恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于基准合理价值，若没有现金流验证，应降低或避免风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入合理价值下沿，可在回款和现金流改善同时出现时重新评估小仓位建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入深度安全边际区，但仍需确认诉讼和应收风险没有继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "高于基准合理价值，若没有现金流验证，应降低或避免风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的经营现金流、应收回款、智算毛利率和诉讼进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润是否可持续并更新估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重点验证全年现金流、坏账计提和审计意见"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

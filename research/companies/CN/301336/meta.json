@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:301336",
-  "ticker": "301336",
-  "name": "趣睡科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "趣睡科技资产负债表干净、现金储备厚、智能睡眠产品占比提升，但收入规模小、2026Q1收入同比大幅下滑且对小米渠道依赖高；当前价格接近乐观情景下沿，缺乏安全边际，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "趣睡科技",
+    "security_status": "active",
+    "symbol": "CN:301336",
+    "ticker": "301336"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "5b6bf85b5ab1546b7bdc8fd5e0bb28f2bc11e0bc0cd25d42eb1997a3508568b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元，且最新中报/季报显示收入降幅明显收窄、经营现金流转正",
-      "action": "watchlist_probe",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入恢复、智能化产品占比、经营现金流和小米渠道占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元，现金及理财余额未显著下降，智能化产品占比继续提升且小米渠道占比下降",
-      "action": "small_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及双十一前渠道备货/库存变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于38元但收入未恢复增长，或小米集团收入占比继续高于55%",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认智能睡眠转型是否带来收入与现金流改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入合理价值下沿，可结合最新财报复核是否具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近现金资产折价保护区，若主营未继续恶化可重新评估小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "接近乐观情景下沿，若基本面未同步改善应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入合理价值下沿，可结合最新财报复核是否具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "接近现金资产折价保护区，若主营未继续恶化可重新评估小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "接近乐观情景下沿，若基本面未同步改善应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入恢复、智能化产品占比、经营现金流和小米渠道占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及双十一前渠道备货/库存变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认智能睡眠转型是否带来收入与现金流改善"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

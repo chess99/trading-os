@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:300448",
-  "market": "CN",
-  "ticker": "300448",
-  "name": "浩云科技",
-  "company_name": "浩云科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司现金和理财资产较厚、负债低，但主营收入连续下滑、扣非盈利能力弱，且2025年项目集成服务收入确认调整触发监管警示；2026-07-13收盘价5.16元相对2.20-3.20元合理区间缺乏安全边际。",
-  "quality_rating": "低",
-  "valuation_rating": "贵",
-  "fair_value_range": [
-    2.2,
-    3.2
-  ],
-  "buy_zone": [
-    0,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浩云科技",
+    "security_status": "active",
+    "symbol": "CN:300448",
+    "ticker": "300448"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d398856821c3b9485c1384af1034659f73a9a456af18eafc9649b51a1c136d08"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于3.20元，或监管整改、收入止跌、回款改善三项条件未同时满足",
-      "action": "不建仓",
-      "target_position_pct": 0,
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流和应收账款变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入2.50-3.00元且2026年半年报收入降幅收窄、经营现金流为正",
-      "action": "仅观察仓",
-      "target_position_pct": 1,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认收入止跌和回款改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.20元且连续两个季度扣非利润或经营现金流改善，应收账款余额下降",
-      "action": "试探买入",
-      "target_position_pct": 2,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、监管整改结果、资产减值和智慧能源订单兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入观察区，复核半年报和回款质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入可买区，但仍需基本面改善确认",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "进入减仓/回避区，估值显著高于基本面支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "currency": "CNY",
-      "reason": "进入观察区，复核半年报和回款质量"
-    },
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "currency": "CNY",
-      "reason": "进入可买区，但仍需基本面改善确认"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "currency": "CNY",
-      "reason": "进入减仓/回避区，估值显著高于基本面支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流和应收账款变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认收入止跌和回款改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、监管整改结果、资产减值和智慧能源订单兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "低代码平台和物联网平台建设及解决方案收入",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款账面余额及坏账准备",
-    "合同资产余额及减值准备",
-    "前五名客户应收账款和合同资产集中度",
-    "销售费用、管理费用、研发费用占收入比例",
-    "智慧能源业务订单和收入",
-    "监管整改进展和控股股东质押比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,95 +1,95 @@
 {
-  "symbol": "CN:300386",
-  "market": "CN",
-  "ticker": "300386",
-  "name": "飞天诚信",
-  "company_name": "飞天诚信科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司资产负债表稳健、低负债且有较多金融资产，但 2025 年收入下降并亏损，2026 年一季度收入同比继续大幅下滑，经营现金流为负。2026-07-13 收盘价 9.43 元/股隐含明显经营修复预期，缺乏安全边际。合理价值区间估计为 5.2-6.8 元/股，5.0 元/股以下才具备观察仓价值。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.2,
-    6.8
-  ],
-  "buy_zone": [
-    0,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "飞天诚信",
+    "security_status": "active",
+    "symbol": "CN:300386",
+    "ticker": "300386"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "80a584751aba257e272c5b351614c6747cf0759fa17b11a3739e497723e0314c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 5.0 元/股，且最近一期货币资金、其他流动资产、其他债权投资合计没有明显流失，收入降幅收窄",
-      "action": "可建立 1%-2% 观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入、毛利率、经营现金流和金融资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在 5.0-6.0 元/股之间，且连续两个季度收入同比转正、综合毛利率不低于 38%、经营现金流改善",
-      "action": "可建立不超过 1% 的小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否出现收入同比转正和亏损收窄",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 8.0 元/股，且尚未出现收入、利润、经营现金流共同改善",
-      "action": "不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断研发投入是否转化为订单和利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于 9.0 元/股，且没有可验证的新订单或盈利拐点",
-      "action": "已有仓位考虑减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入安全边际观察区，复核资产质量和收入趋势",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "明显高于当前合理价值区间，除非基本面已改善，否则应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入安全边际观察区，复核资产质量和收入趋势"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "明显高于当前合理价值区间，除非基本面已改善，否则应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入、毛利率、经营现金流和金融资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否出现收入同比转正和亏损收窄"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断研发投入是否转化为订单和利润"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季营业收入同比增速",
-    "智能终端、USB Key、芯片分产品收入和毛利率",
-    "综合毛利率是否回到 38% 以上",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "研发费用率及研发费用资本化情况",
-    "货币资金、其他流动资产、其他债权投资合计余额",
-    "境外收入增速和境外毛利率",
-    "前五大客户销售占比",
-    "数字人民币、商用密码、云安全相关订单的可验证收入贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

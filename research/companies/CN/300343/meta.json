@@ -1,102 +1,105 @@
 {
-  "symbol": "CN:300343",
-  "market": "CN",
-  "ticker": "300343",
-  "name": "联创股份",
-  "company_name": "山东联创产业发展集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备HFCs配额、HFO替代和PVDF高端化带来的周期修复期权，但当前约5.71元价格已预支较乐观的2027年利润兑现；历史治理折价、低利润率和客户认证不确定性要求更高安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.0,
-    4.2
-  ],
-  "buy_zone": [
-    0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联创股份",
+    "security_status": "active",
+    "symbol": "CN:300343",
+    "ticker": "300343"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "a88b81f985d6855d1890b92bd7c8d444748d5912a6e9ace6903aa0b8b9aa3d1c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于4.2元或基本面未验证",
-      "action": "不新增，保持观察",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看含氟新材料毛利率、HFO/PVDF订单、经营现金流和资产负债率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.2元，且扣非净利和经营现金流连续改善",
-      "action": "建立0.5%-1.0%跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入高增长是否转化为扣非净利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.6元，HFO海外订单或PVDF高端应用放量得到公告或财报验证，且无新增监管风险",
-      "action": "提高到2%-3%上限仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，决定是否保留观察池或重估合理价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.0元且未来12个月归母净利低于1.5亿元年化水平",
-      "action": "减持或不参与",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入可买区上沿，需要核验扣非净利、现金流和HFO/PVDF订单是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "价格提供更高安全边际，可在基本面验证通过后评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "超过减持区下沿，若利润年化水平未显著提高则估值过热。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "unit": "CNY/share",
-      "action": "复核买入条件",
-      "reason": "进入可买区上沿，需要核验扣非净利、现金流和HFO/PVDF订单是否同步改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "unit": "CNY/share",
-      "action": "复核是否提高至上限仓位",
-      "reason": "价格提供更高安全边际，可在基本面验证通过后评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "unit": "CNY/share",
-      "action": "复核估值过热和减持条件",
-      "reason": "超过减持区下沿，若利润年化水平未显著提高则估值过热。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看含氟新材料毛利率、HFO/PVDF订单、经营现金流和资产负债率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入高增长是否转化为扣非净利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，决定是否保留观察池或重估合理价值。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "HFO-1234yf/HFO-1234ze销量、单吨毛利和海外客户认证进展",
-    "PVDF产能利用率、高端应用收入占比和技改后2.2万吨产能释放节奏",
-    "含氟新材料板块毛利率是否高于2025年约17.1%",
-    "扣非归母净利润和经营现金流是否同步改善",
-    "资产负债率是否保持在30%以下",
-    "是否出现新的监管、诉讼、索赔或会计调整"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

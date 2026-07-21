@@ -1,136 +1,124 @@
 {
-  "symbol": "CN:002416",
-  "market": "CN",
-  "ticker": "002416",
-  "name": "爱施德",
-  "company_name": "深圳市爱施德股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司是手机与数码消费电子分销龙头，但商业模式低毛利、高周转、受品牌方和平台约束；2025年利润下滑，2026年补缴税款及滞纳金3.08亿元将计入当期损益。按2026-07-10收盘价8.86元测算，估值高于5.20-7.00元合理区间，缺少安全边际。",
-  "quality_rating": "B",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.2,
-    7.0
-  ],
-  "buy_zone": [
-    4.4,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱施德",
+    "security_status": "active",
+    "symbol": "CN:002416",
+    "ticker": "002416"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "246e4dc0d09b896b805839fcad249ce26b6b45e78d7ef2230c3dea8e176ba133"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格8.86元",
-      "max_weight": 0,
-      "action": "不买，首笔仓位0%"
-    },
-    {
-      "condition": "股价<=4.40元",
-      "max_weight": 0.05,
-      "action": "强吸引力，可建3%-5%，首笔1.5%-2%"
-    },
-    {
-      "condition": "股价4.40-5.20元",
-      "max_weight": 0.03,
-      "action": "有安全边际，可建2%-3%"
-    },
-    {
-      "condition": "股价5.20-7.00元",
-      "max_weight": 0.01,
-      "action": "合理区间，仅0%-1%跟踪仓"
-    },
-    {
-      "condition": "股价>7.20元",
-      "max_weight": 0,
-      "action": "不追高"
-    },
-    {
-      "condition": "股价>8.50元",
-      "max_weight": 0,
-      "action": "显著偏贵，不买；已有仓位等待兑现或减仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "condition": "股价跌破5.20元",
-      "reason": "进入有安全边际买入区，需要复核基本面是否同步恶化",
-      "action": "复核半年报和补税影响，若基本面未恶化可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "condition": "股价跌破4.40元",
-      "reason": "进入强吸引力买入区，赔率可能改善",
-      "action": "若扣非利润、现金流和品牌合作稳定，可提升至强吸引力观察"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "condition": "股价高于7.20元",
-      "reason": "超过合理估值上沿附近，安全边际不足",
-      "action": "不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "condition": "股价高于8.50元且业绩未显著上修",
-      "reason": "显著高于合理区间，估值与渠道商基本面不匹配",
-      "action": "维持不买或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "补缴税款将影响2026年利润，需要确认现金流和经营韧性",
-      "action": "复核补缴税款对利润和现金流的影响"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "补税后需要看扣非利润和营运资金是否恢复正常",
-      "action": "复核扣非利润、经营现金流、应收和存货变化"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "全年数据能验证一次性事项、分红和ROE的真实水平",
-      "action": "复核补税事项最终影响、分红可持续性和ROE"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "下一轮年度中期复查",
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
       "reason": "跟踪渠道主业、海外业务和潜在资产证券化进展",
-      "action": "复核品牌合作、海外业务利润率和优友互联进展"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入有安全边际买入区，需要复核基本面是否同步恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入强吸引力买入区，赔率可能改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过合理估值上沿附近，安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "显著高于合理区间，估值与渠道商基本面不匹配",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "净利率",
-    "经营现金流/净利润",
-    "存货周转率及跌价准备",
-    "应收账款周转和账龄",
-    "现金分红率",
-    "海外业务收入和利润率",
-    "税务及合规事项",
-    "控股股东股份质押比例",
-    "优友互联业务和资本化进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

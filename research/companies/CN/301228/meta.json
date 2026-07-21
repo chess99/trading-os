@@ -1,74 +1,105 @@
 {
-  "symbol": "CN:301228",
-  "ticker": "301228",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "实朴检测",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "公司具备土壤和地下水检测细分资质、项目经验和品牌，但2025年及2026Q1仍处亏损与收入下滑阶段，当前约76亿元市值明显高于可验证盈利能力，安全边际为负，暂不买入，仅观察基本面修复。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    8,
-    16
-  ],
-  "buy_zone": [
-    0,
-    10
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "实朴检测",
+    "security_status": "active",
+    "symbol": "CN:301228",
+    "ticker": "301228"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "43c1911473bedefd2ad35662af701960d3409a074cf10f759bbd174513b913cb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价低于10元，且最近两个季度扣非归母净利润转正、经营现金流滚动四季度为正时，允许建立观察仓。",
-      "action": "watchlist_entry",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入恢复、扣非净利、毛利率和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价仍高于25元且扣非利润未转正，不新增仓位；若已有仓位，逐步降至零。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断三普项目退坡后新业务是否形成可持续增长。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期盈利中枢和资本配置质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "股价进入估值复核区，需要结合最新财报重新评估是否仍显著高估。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "股价进入初步买入区间，但仍需基本面满足扣非转正和现金流改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过乐观情景估值上沿，若基本面未显著改善应维持回避或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "股价进入估值复核区，需要结合最新财报重新评估是否仍显著高估。"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "股价进入初步买入区间，但仍需基本面满足扣非转正和现金流改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "超过乐观情景估值上沿，若基本面未显著改善应维持回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入恢复、扣非净利、毛利率和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断三普项目退坡后新业务是否形成可持续增长。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期盈利中枢和资本配置质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

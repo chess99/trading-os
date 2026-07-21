@@ -1,110 +1,125 @@
 {
-  "symbol": "CN:920206",
-  "market": "CN",
-  "ticker": "920206",
-  "name": "彩客科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "Niche fine-chemical intermediate producer with strong DATA/DMSS/DMAS/DMS profitability, high ROE, good cash conversion, clean balance sheet and aligned IPO capacity projects. The offset is material: 2026H1 profit warning, concentrated customers, export tariff exposure, related-party procurement and short listed history. At 35.71 CNY the shares are near or above base-case fair value; wait for below 30 CNY or verified Q3 recovery.",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    29.0,
-    34.0
-  ],
-  "buy_zone": [
-    28.0,
-    30.0
-  ],
-  "sell_or_reduce_zone": [
-    2.0,
-    36.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "彩客科技",
+    "security_status": "active",
+    "symbol": "CN:920206",
+    "ticker": "920206"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "808d2a99245e9552effbe52743f69d89b952e763d5d0c69e98db02097f084ddf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "do_not_buy",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "?? 2026 ????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "watch_or_small_position_after_q3_recovery",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "?? 2026 ????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "starter_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "?? 2026 ???",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "buy_in_batches_if_thesis_intact",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "review_for_first_2pct_position",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "strongly_attractive_if_no_permanent_impairment",
-      "max_weight": 0.1
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "review_for_buy_zone",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "review_for_strong_buy_if_thesis_intact",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "do_not_chase_or_reduce_unverified_position",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "require_optimistic_scenario_evidence_or_reduce",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "action": "review_for_first_2pct_position",
-      "reason": "review_for_first_2pct_position"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "action": "review_for_buy_zone",
-      "reason": "review_for_buy_zone"
-    },
-    {
-      "type": "price_below",
-      "price": 23,
-      "action": "review_for_strong_buy_if_thesis_intact",
-      "reason": "review_for_strong_buy_if_thesis_intact"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "action": "do_not_chase_or_reduce_unverified_position",
-      "reason": "do_not_chase_or_reduce_unverified_position"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "action": "require_optimistic_scenario_evidence_or_reduce",
-      "reason": "require_optimistic_scenario_evidence_or_reduce"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "review_2026_interim_report_vs_forecast",
-      "reason": "?? 2026 ????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "review_q3_revenue_profit_cash_flow_and_customer_recovery",
-      "reason": "?? 2026 ????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "action": "review_2026_annual_report_and_capacity_project_progress",
-      "reason": "?? 2026 ???"
-    }
-  ],
-  "notes": [
-    "Current decision on 2026-07-19: watch. Current quote used: 35.71 CNY on 2026-07-17 15:34 Beijing time from Xueqiu, market cap 2.555bn CNY; quote source is not exchange-direct, confidence medium-high. Fair value 29-34, safety-margin buy below 28, strong buy below 23, no chase above 36. Logical stop: exit/reduce if 2026 recurring net profit falls below 125m CNY, DMSS/DATA margin breaks materially, top customers decline for two quarters without replacement, major safety/environmental penalty, or related-party fund occupation risk appears."
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

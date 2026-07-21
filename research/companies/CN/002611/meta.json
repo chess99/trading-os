@@ -1,110 +1,114 @@
 {
-  "symbol": "CN:002611",
-  "market": "CN",
-  "ticker": "002611",
-  "name": "东方精工",
-  "company_name": "广东东方精工科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "出售 Fosber 相关瓦楞纸板生产线资产后，公司变为现金充裕的水上动力、包装装备和机器人制造平台。百胜动力有国产替代和大马力放量潜力，但 2026 年表观利润主要来自一次性处置收益，持续经营扣非利润仍需验证；17.31 元已接近乐观情景，不具备安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    11.0,
-    13.5
-  ],
-  "buy_zone": [
-    9.5,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东方精工",
+    "security_status": "active",
+    "symbol": "CN:002611",
+    "ticker": "002611"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f6f67bf48777b3ed3a1e9e97f6d8931715e9996c95c3c94da5cfd2a4c2610e79"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 9.5 元，且出售款到账和百胜动力经营未恶化",
-      "action": "可建 5%-8% 观察仓",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报将首次系统呈现出售资产后的现金和利润口径",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于 9.5-11.0 元，且 2026 半年报确认现金和扣非利润无重大负面偏差",
-      "action": "可建 3%-5% 首笔仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报能验证剥离 Fosber 后的持续经营盈利能力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于 11.0-13.5 元，且百胜动力继续高增长",
-      "action": "最多 1%-3% 跟踪仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报能验证百胜动力新品放量和毛利率表现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 15.5 元或持续经营利润低于预期",
-      "action": "不新增；已有仓位考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "复核资本配置是否偏离水上动力主线",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "低于基准估值下沿，开始补偿出售后口径重塑风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "接近悲观估值区间，安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "价格进入乐观情景区，继续上涨依赖高兑现度",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "condition": "进入有安全边际买入区，复核半年报和现金用途后考虑首笔仓位",
-      "reason": "低于基准估值下沿，开始补偿出售后口径重塑风险"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "condition": "进入强吸引力区，若基本面未恶化可提高仓位",
-      "reason": "接近悲观估值区间，安全边际较充分"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "condition": "超过不应追高价，禁止新增并复核减仓",
-      "reason": "价格进入乐观情景区，继续上涨依赖高兑现度"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 半年报披露后复核出售款到账、税费、现金余额和资金用途",
-      "reason": "半年报将首次系统呈现出售资产后的现金和利润口径"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 三季报披露后复核剥离 Fosber 后的持续经营收入、毛利率和扣非净利润",
-      "reason": "三季报能验证剥离 Fosber 后的持续经营盈利能力"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "百胜动力大马力舷外机、柴油舷外机、电动舷外机或顶流机订单/交付出现重大变化",
-      "reason": "年报能验证百胜动力新品放量和毛利率表现"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "公司公告重大并购、金融投资扩大、机器人业务大额资本开支或订单取消",
-      "reason": "复核资本配置是否偏离水上动力主线"
-    }
-  ],
-  "key_tracking_metrics": [
-    "当前股价与总市值",
-    "扣非归母净利润及 H2 年化水平",
-    "百胜动力收入增速、净利润和毛利率",
-    "300 马力汽油舷外机交付量及售后质量",
-    "出售 Fosber 资产回款、税费和现金用途",
-    "货币资金、交易性金融资产和其他非流动金融资产规模",
-    "东方元启在手订单、确认收入和毛利率",
-    "包装印刷设备及数码印刷设备订单和海外收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

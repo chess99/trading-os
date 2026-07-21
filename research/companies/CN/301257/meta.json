@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301257",
-  "ticker": "301257",
-  "name": "普蕊斯",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "普蕊斯是A股稀缺的独立SMO公司，受益于创新药临床试验外包和临床现场执行专业化，但业务人力密集、收入增速阶段性放缓，当前约53.50元价格接近44-56元合理价值区间上沿，缺乏新开仓安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    44,
-    56
-  ],
-  "buy_zone": [
-    36,
-    43
-  ],
-  "sell_or_reduce_zone": [
-    64,
-    72
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "普蕊斯",
+    "security_status": "active",
+    "symbol": "CN:301257",
+    "ticker": "301257"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "535bfb7293ce27c71f5a147ab0bf85cfc2412241f8cbbd42351aa95597b7ef57"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于43元，且2026半年报收入增速不低于8%、扣非净利润未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入增速、扣非利润率、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于36元，且经营现金流、应收账款和毛利率未出现明显恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q1利润修复是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于64元但收入增速未恢复至15%以上",
-      "action": "不追买并考虑减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、订单与人员扩张质量，并重估合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入基准情景估值下沿附近，若基本面稳定则具备初始安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入熊市情景估值区间，需复核半年报和现金流后评估加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 64.0
+      },
+      "reason": "超过合理价值区间上沿，若业绩未明显超预期，应降低预期收益率或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "进入基准情景估值下沿附近，若基本面稳定则具备初始安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入熊市情景估值区间，需复核半年报和现金流后评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 64,
-      "reason": "超过合理价值区间上沿，若业绩未明显超预期，应降低预期收益率或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入增速、扣非利润率、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认Q1利润修复是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、订单与人员扩张质量，并重估合理价值区间。"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

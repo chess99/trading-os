@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:000882",
-  "ticker": "000882",
-  "name": "华联股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备社区商业资产底、北京区域网络和REITs资产变现催化，但2025年和2026Q1连续亏损，DT新店、影院和投资性房地产减值仍压制利润，现价处于公允区间内，安全边际不足，暂以观察为主。",
-  "fair_value_range": [
-    1.25,
-    1.65
-  ],
-  "buy_zone": [
-    0.95,
-    1.15
-  ],
-  "sell_or_reduce_zone": [
-    1.75,
-    2.1
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华联股份",
+    "security_status": "active",
+    "symbol": "CN:000882",
+    "ticker": "000882"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2454288aa302d963901d5791fdc192c8eb1ef1a99769238e4ceb0bdb1d8a40ac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于1.15元，且未出现新增重大减值、控股股东被动减持或经营现金流显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看购物中心收入、DT亏损、REITs损益和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.05元，回购持续执行且REITs对价回款落地",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和回购执行结果",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于1.75元但扣非利润和同店租金未见修复",
-      "action": "减仓或不追高",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认资产减值、盈利修复和REITs交易最终影响",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.15
+      },
+      "reason": "进入买入观察区，需复核减值、质押和现金流风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入深度安全边际区，若回购和REITs回款兑现可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.75
+      },
+      "reason": "高于基准公允价值上沿，若经营未修复应考虑减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.15,
-      "reason": "进入买入观察区，需复核减值、质押和现金流风险"
-    },
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "进入深度安全边际区，若回购和REITs回款兑现可考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 1.75,
-      "reason": "高于基准公允价值上沿，若经营未修复应考虑减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看购物中心收入、DT亏损、REITs损益和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和回购执行结果"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认资产减值、盈利修复和REITs交易最终影响"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

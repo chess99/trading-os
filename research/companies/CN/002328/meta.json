@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:002328",
-  "market": "CN",
-  "ticker": "002328",
-  "name": "新朋股份",
-  "company_name": "新朋股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汽车零部件和金属制造主业仍承压，2026H1利润高增长主要来自投资收益和公允价值变动，当前更适合作为投资资产变现和制造业务拐点的观察标的；需等待扣非利润、经营现金流、客户结构和液冷/海外业务订单验证后再提高仓位。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    6.0,
-    7.2
-  ],
-  "buy_zone": [
-    5.0,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新朋股份",
+    "security_status": "active",
+    "symbol": "CN:002328",
+    "ticker": "002328"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "108bd528de87f0678cf9d5e8743ef44b152841f16185d927971a683e3c599917"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格在7.0元以上且扣非利润仍同比下滑",
-      "action": "仅保留观察仓或不买入",
-      "max_weight": 0.005,
-      "reason": "2026H1利润增长主要来自投资收益和公允价值变动，制造主业尚未验证拐点。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、非经常性损益构成、经营现金流、应收账款、存货和客户集中度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至5.8元以下且2026中报经营现金流为正",
-      "action": "建立首笔小仓位",
-      "max_weight": 0.015,
-      "reason": "价格进入安全边际区间后，可用小仓位跟踪投资资产变现和汽车主业修复。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断投资收益回落后制造主业利润是否恢复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "液冷或海外业务披露可验证订单，且汽车零部件毛利率稳定在10%以上",
-      "action": "在买入区内加仓",
-      "max_weight": 0.03,
-      "reason": "需要新业务收入和主业毛利率共同验证，才足以提升组合权重。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新正常化盈利、分红能力、液冷业务商业化和泰国基地进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.2元且上涨主要由非经常性收益驱动",
-      "action": "减仓或不追买",
-      "max_weight": 0.0,
-      "reason": "投资收益波动性高，不能按持续经营利润给予高倍数估值。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入初始买入区，复核中报扣非利润、经营现金流和客户订单后可考虑首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入深度安全边际区，若无客户流失、减值或现金流恶化，可评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超过基准合理价值上沿，若缺乏扣非利润和液冷订单验证，应减仓或停止追买。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "进入乐观估值区，需要强验证才能持有，否则风险收益比恶化。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入初始买入区，复核中报扣非利润、经营现金流和客户订单后可考虑首笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入深度安全边际区，若无客户流失、减值或现金流恶化，可评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超过基准合理价值上沿，若缺乏扣非利润和液冷订单验证，应减仓或停止追买。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入乐观估值区，需要强验证才能持有，否则风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、非经常性损益构成、经营现金流、应收账款、存货和客户集中度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断投资收益回落后制造主业利润是否恢复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新正常化盈利、分红能力、液冷业务商业化和泰国基地进展。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润及同比变化",
-    "经营活动现金流量净额",
-    "汽车零部件收入和毛利率",
-    "上汽大众销售占比",
-    "新能源汽车覆盖件和开卷业务产销量及产能利用率",
-    "液冷CDU、液冷机柜、纯水机订单和收入",
-    "泰国基地二期建设进度和外销收入",
-    "其他非流动金融资产、公允价值变动收益和投资收益现金回流",
-    "应收账款和存货周转",
-    "前五大客户和前五大供应商集中度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

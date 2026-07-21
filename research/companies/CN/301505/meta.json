@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:301505",
-  "market": "CN",
-  "ticker": "301505",
-  "currency": "CNY",
-  "name": "苏州规划",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "苏州规划具备苏州本地规划设计经验和较厚现金资产安全垫，但主业仍处行业修复期，ROE 低于资本成本；当前股价已反映修复和并购期权，等待 10.5 元以下或并购质量被验证后再考虑配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.5,
-    12.5
-  ],
-  "buy_zone": [
-    8.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏州规划",
+    "security_status": "active",
+    "symbol": "CN:301505",
+    "ticker": "301505"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "a2dddb98d7f9e75a44cd1aba36f292bf63358a616c2661be33bb675f9811b925"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于 10.5 元且最近一期扣非净利润、经营现金流未继续恶化时建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入、扣非净利润、现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于 9.0 元且 2026 年收入恢复正增长、经营现金流为正，可提高至小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及重大资产重组进度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若重大资产重组完成且标的盈利质量、估值和商誉风险经核验，重新估值后再决定是否提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报和行业修复是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入基准买入观察区，安全边际开始具备吸引力。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "接近悲观情景价值，可重新评估是否建立小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "超过基准合理价值上沿较多，不宜新增并应评估减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "接近乐观并购情景估值，若并购未实质兑现则风险收益比恶化。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入基准买入观察区，安全边际开始具备吸引力。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "接近悲观情景价值，可重新评估是否建立小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "超过基准合理价值上沿较多，不宜新增并应评估减持。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "接近乐观并购情景估值，若并购未实质兑现则风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入、扣非净利润、现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及重大资产重组进度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报和行业修复是否兑现。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600123",
-  "ticker": "600123",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "兰花科创",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "兰花科创是无烟煤资源和煤化工一体化公司，账面资产折价明显但盈利修复尚未充分确认；2026H1预增显示煤价和尿素价格改善，仍需中报和后续现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.8,
-    8.0
-  ],
-  "buy_zone": [
-    5.4,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兰花科创",
+    "security_status": "active",
+    "symbol": "CN:600123",
+    "ticker": "600123"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "c16c93534bd54d993675f2ad241cb7d18b269d3c3df154f5dd07bf1f17b66285"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于5.8元且2026中报扣非归母净利润不低于8500万元，经营现金流继续为正",
-      "action": "试探性建仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报实际利润、扣非利润、经营现金流和煤炭吨毛利",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.4元且煤炭季度吨煤毛利稳定在180元以上",
-      "action": "提高至观察仓上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，确认煤价和尿素价格改善是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于8.5元但三季度盈利或现金流未继续改善",
-      "action": "减仓或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核年报、分红恢复可能性及芦河煤业/煤化工升级项目进度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入初步买入区间，约0.57倍2026Q1 PB，安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入强安全边际区间，可在盈利未恶化前提高观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "接近减仓区间，若盈利未进一步上修则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入初步买入区间，约0.57倍2026Q1 PB，安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入强安全边际区间，可在盈利未恶化前提高观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "接近减仓区间，若盈利未进一步上修则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报实际利润、扣非利润、经营现金流和煤炭吨毛利"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，确认煤价和尿素价格改善是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核年报、分红恢复可能性及芦河煤业/煤化工升级项目进度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

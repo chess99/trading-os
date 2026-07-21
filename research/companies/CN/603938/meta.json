@@ -1,107 +1,115 @@
 {
-  "symbol": "CN:603938",
-  "market": "CN",
-  "ticker": "603938",
-  "name": "三孚股份",
-  "company_name": "三孚股份",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "B",
-  "valuation_rating": "expensive",
-  "current_thesis": "公司具备硅基循环经济和电子级材料升级选项，但2026-07-09股价已显著透支三氯氢硅周期修复、电子级硅烷/高纯四氯化硅放量和新材料估值重估预期，当前不宜追高，等待价格回落或半年报验证。",
-  "fair_value_range": [
-    18,
-    32
-  ],
-  "buy_zone": [
-    12,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三孚股份",
+    "security_status": "active",
+    "symbol": "CN:603938",
+    "ticker": "603938"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "cd8b36ef6665d986b8c4d785015b0cb0d4956933eda2f5689586658e62bbcac8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_45",
-      "action": "不新增，已有仓位降至观察仓或继续减仓",
-      "max_weight": 0.01,
-      "reason": "当前市值显著透支电子材料和周期修复预期"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的电子材料收入、毛利、现金流和在建工程转固",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_22_and_32_with_verified_growth",
-      "action": "仅在电子材料收入和利润兑现后小仓观察",
-      "max_weight": 0.03,
-      "reason": "接近合理估值区间但安全边际有限"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认单季盈利改善是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_16_and_22_and_fundamentals_stable",
-      "action": "分批试探买入",
-      "max_weight": 0.04,
-      "reason": "开始具备周期底部资产和电子材料选项价值的组合收益比"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估中周期盈利和资本开支回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_between_12_and_16_and_no_quality_break",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.06,
-      "reason": "估值进入强吸引力区，但仍需按周期股控制仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入有安全边际买入区，复核电子材料放量、三氯氢硅价格和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "高于合理区间上沿，需要检查是否存在题材透支并考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "接近或超过当前高估值区，风险收益比明显不佳",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入有安全边际买入区，复核电子材料放量、三氯氢硅价格和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入强吸引力买入区，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "高于合理区间上沿，需要检查是否存在题材透支并考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "接近或超过当前高估值区，风险收益比明显不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的电子材料收入、毛利、现金流和在建工程转固"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认单季盈利改善是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估中周期盈利和资本开支回报"
-    }
-  ],
-  "key_tracking_metrics": [
-    "三氯氢硅季度销量、均价和毛利率",
-    "电子级硅烷和高纯四氯化硅实际销量、客户认证与利润贡献",
-    "光伏硅料价格、开工率和新增产能出清进度",
-    "氢氧化钾、硫酸钾和硅烷偶联剂价差",
-    "单季归母净利润是否稳定超过0.8-1.0亿元",
-    "经营性现金流与资本开支覆盖关系",
-    "在建工程转固、折旧增长和产能利用率",
-    "安全环保处罚、停产检修和重大事故"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

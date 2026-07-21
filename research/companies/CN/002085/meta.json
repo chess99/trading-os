@@ -1,107 +1,106 @@
 {
-  "symbol": "CN:002085",
-  "market": "CN",
-  "ticker": "002085",
-  "name": "万丰奥威",
-  "company_name": "万丰奥威",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "万丰奥威是以汽车铝合金轮毂和轻量化零部件为现金流底盘、叠加通航飞机制造和低空经济选项权的制造公司。当前价格已反映部分主题溢价，适合观察而非追高，只有在 9.30 元以下且毛利率、现金流和飞机业务订单兑现未恶化时才考虑小仓位买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    10.0,
-    12.5
-  ],
-  "buy_zone": [
-    8.2,
-    9.3
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万丰奥威",
+    "security_status": "active",
+    "symbol": "CN:002085",
+    "ticker": "002085"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fadbb02e3caf6ee72eb4e16f44d10c5a491f163d55750a8eb74669ba10b360cf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_9_30_and_no_fundamental_deterioration",
-      "action": "start_small_position",
-      "max_weight": 0.015,
-      "reason": "进入买入区间上沿后，传统制造现金流提供一定安全边际，低空经济选项权可用小仓位观察。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，重点验证收入、扣非利润、毛利率、现金流和飞机业务披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_8_20_with_stable_margin_and_cash_flow",
-      "action": "add_to_tracking_position",
-      "max_weight": 0.03,
-      "reason": "若汽车业务毛利率和经营现金流未恶化，估值折价足以覆盖主题退潮风险。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，判断全年利润趋势和低空经济主题是否兑现为订单。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "verified_aircraft_orders_and_delivery_growth_with_earnings_recovery",
-      "action": "increase_only_after_evidence",
-      "max_weight": 0.05,
-      "reason": "只有飞机业务订单、交付和利润兑现后，低空经济选项权才可转化为更高仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.3
+      },
+      "reason": "触及买入区间上沿，可复核基本面后考虑首笔 1.0%-1.5% 小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_14_50_without_new_aircraft_fundamental_evidence",
-      "action": "reduce_or_avoid_adding",
-      "max_weight": 0.0,
-      "reason": "股价进入乐观情景区间但缺少订单和利润证据时，主题估值回撤风险上升。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入更有安全边际区域，若毛利率和现金流稳定，可考虑加至 2.5%-3.0%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "进入减仓区间，若飞机业务订单和利润没有同步验证，应降低主题暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "估值接近乐观情景上沿，需要强基本面证据支撑，否则风险收益比转差。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.3,
-      "reason": "触及买入区间上沿，可复核基本面后考虑首笔 1.0%-1.5% 小仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入更有安全边际区域，若毛利率和现金流稳定，可考虑加至 2.5%-3.0%。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "进入减仓区间，若飞机业务订单和利润没有同步验证，应降低主题暴露。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "估值接近乐观情景上沿，需要强基本面证据支撑，否则风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，重点验证收入、扣非利润、毛利率、现金流和飞机业务披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，判断全年利润趋势和低空经济主题是否兑现为订单。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly_revenue_growth",
-    "deducted_net_profit_growth",
-    "auto_lightweighting_gross_margin",
-    "aviation_revenue_and_gross_margin",
-    "aircraft_orders_deliveries_and_backlog",
-    "operating_cash_flow_to_net_income",
-    "A00_aluminum_price",
-    "LME_aluminum_price",
-    "USD_CNY_exchange_rate",
-    "overseas_revenue_share",
-    "customer_concentration",
-    "wanfeng_aircraft_capital_increase_progress",
-    "dacro_disposal_completion"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

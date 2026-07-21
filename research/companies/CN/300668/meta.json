@@ -1,94 +1,105 @@
 {
-  "symbol": "CN:300668",
-  "market": "CN",
-  "ticker": "300668",
-  "name": "杰恩股份",
-  "company_name": "深圳市杰恩创意设计股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司已从室内设计转向非免疫规划疫苗市场商务及服务支持，方向有一定行业空间，但转型后盈利和现金流尚未稳定验证；2026Q1 收入同比下滑、毛利率降至 11.23%、归母净利润亏损。2026-07-13 收盘价 47.22 元对应约 56.84 亿元市值，估值显著透支，当前不具安全边际。",
-  "quality_rating": "C+",
-  "valuation_rating": "极贵",
-  "fair_value_range": [
-    7.0,
-    12.5
-  ],
-  "buy_zone": [
-    0.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杰恩股份",
+    "security_status": "active",
+    "symbol": "CN:300668",
+    "ticker": "300668"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1ccd44af7972d927ecc466ef28f5f0b3187d12047ea9f9f9d917f643e920f5fc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 15.0 元，基本面未证明高成长和高利润率",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年中报，重点验证设计业务剥离后的收入、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于 7.0-12.5 元，且中报验证收入恢复、应收下降、经营现金流转正",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认市场商务及服务支持业务是否恢复增长",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 7.0 元，且毛利率回到 20% 以上、连续季度经营现金流为正",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查 2026 年报和控股股东业绩承诺完成情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于 4.5 元，且应收账款风险未继续恶化、核心客户合作稳定",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入合理估值区间，开始复核中报和现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入安全边际买入区，但仍需经营现金流和毛利率确认",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "估值重新脱离当前可验证盈利能力，应保持零仓位或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入合理估值区间，开始复核中报和现金流质量"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入安全边际买入区，但仍需经营现金流和毛利率确认"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "估值重新脱离当前可验证盈利能力，应保持零仓位或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年中报，重点验证设计业务剥离后的收入、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认市场商务及服务支持业务是否恢复增长"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查 2026 年报和控股股东业绩承诺完成情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    "市场商务及服务支持业务收入增速",
-    "市场商务及服务支持业务毛利率",
-    "应收账款余额及应收账款/营业收入比例",
-    "经营活动现金流净额",
-    "前五大客户收入占比",
-    "核心疫苗产品合作或区域授权变化",
-    "设计业务剥离后管理费用率",
-    "控股股东业绩承诺及补偿执行情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

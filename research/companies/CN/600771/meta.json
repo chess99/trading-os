@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600771",
-  "ticker": "600771",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "广誉远",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "广誉远具备老字号中药品牌、龟龄集/定坤丹等稀缺品种和经营修复弹性，但历史财务造假、渠道质量仍需持续验证，当前估值已透支较多修复预期，适合观察而非追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10,
-    14
-  ],
-  "buy_zone": [
-    8,
-    10
-  ],
-  "sell_or_reduce_zone": [
-    18,
-    22
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广誉远",
+    "security_status": "active",
+    "symbol": "CN:600771",
+    "ticker": "600771"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a27fb0e2bb0fda902a5431fc67fb5d7fbd4c052d2a3c5d2e6567d2682282339c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入8-10元且连续两个季度经营现金流不低于净利润、销售费用率继续下降、应收账款未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "复核2026年半年报，重点检查收入增长、销售费用率、应收账款、经营现金流和半夏泻心汤颗粒进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年归母净利润中枢被验证可达1.6亿元以上，且无新增信披或渠道合规风险",
-      "action": "可提高至小仓位跟踪",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润中枢能否超过1.3亿元",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元但利润中枢未上修至2.5亿元以上",
-      "action": "不追高，已有仓位减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及审计意见，判断治理折价是否可以下调",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入合理价值下沿并接近安全边际区间，需要重新评估是否可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入较高安全边际区间，若基本面未恶化可重点复核买入条件",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过基准情景合理价值上沿，若利润未显著上修应考虑减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入合理价值下沿并接近安全边际区间，需要重新评估是否可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入较高安全边际区间，若基本面未恶化可重点复核买入条件"
-    },
-    {
-      "type": "price_above",
-      "price": 18,
-      "reason": "超过基准情景合理价值上沿，若利润未显著上修应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "复核2026年半年报，重点检查收入增长、销售费用率、应收账款、经营现金流和半夏泻心汤颗粒进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润中枢能否超过1.3亿元"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及审计意见，判断治理折价是否可以下调"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

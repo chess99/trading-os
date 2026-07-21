@@ -1,108 +1,96 @@
 {
-  "symbol": "CN:601336",
-  "market": "CN",
-  "ticker": "601336",
-  "name": "新华保险",
-  "company_name": "新华保险",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "新华保险处于负债端修复与估值折价并存阶段，2025年和2026Q1新业务价值高增长、个险与银保期交改善清晰，当前约0.69倍P/EV仍有修复空间；主要约束来自低利率环境下的再投资压力与权益市场波动，因此适合分批建仓而非一次性重仓。",
-  "quality_rating": "A- / 良好偏优",
-  "valuation_rating": "偏低",
-  "fair_value_range": [
-    60,
-    72
-  ],
-  "buy_zone": [
-    55,
-    64
-  ],
-  "sell_or_reduce_zone": [
-    72,
-    88
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新华保险",
+    "security_status": "active",
+    "symbol": "CN:601336",
+    "ticker": "601336"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "a6348667522c8ecb5d0f29b349db054c7ae289d28490fa7ce0ba67887f659ba8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于52元",
-      "action": "积极加仓",
-      "max_weight": 0.35,
-      "reason": "对应约0.56倍P/EV，安全边际充分，适合提升核心仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报的新业务价值、内含价值、投资收益率与偿付能力变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在52至58元之间",
-      "action": "分批建仓",
-      "max_weight": 0.25,
-      "reason": "进入较有吸引力区间，赔率明显优于当前价。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认负债端修复与投资端波动是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在58至64元之间",
-      "action": "首笔仓或小幅加仓",
-      "max_weight": 0.15,
-      "reason": "估值仍低于合理价值，但不是最优买点。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入更明确的安全边际区间，适合从观察仓提升到标准仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价在64至72元之间",
-      "action": "观察为主",
-      "max_weight": 0.1,
-      "reason": "已接近合理价值中枢，继续加仓的赔率一般。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 52.0
+      },
+      "reason": "进入强吸引力买点，可考虑提升到较高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价大于72元",
-      "action": "不追高或逢高减仓",
-      "max_weight": 0.05,
-      "reason": "估值开始预支修复，收益风险比下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "股价高于合理区间上沿，不宜追高，应检查减仓纪律。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入更明确的安全边际区间，适合从观察仓提升到标准仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 52,
-      "reason": "进入强吸引力买点，可考虑提升到较高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "股价高于合理区间上沿，不宜追高，应检查减仓纪律。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报的新业务价值、内含价值、投资收益率与偿付能力变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认负债端修复与投资端波动是否延续。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新业务价值（NBV）同比增速",
-    "长期险首年期交保费同比增速",
-    "十年期及以上期交保费占比",
-    "个险月均合格率与绩优率",
-    "个险月均人均综合产能",
-    "银保长期险首年期交保费增速",
-    "13个月和25个月继续率",
-    "退保率",
-    "净投资收益率",
-    "总投资收益率与综合投资收益率",
-    "核心偿付能力充足率",
-    "综合偿付能力充足率",
-    "年度分红率与资本消耗"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

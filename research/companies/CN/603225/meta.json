@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:603225",
-  "market": "CN",
-  "ticker": "603225",
-  "name": "新凤鸣",
-  "company_name": "新凤鸣",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新凤鸣是涤纶长丝和PTA一体化龙头，2025年利润和现金流修复、2026年上半年预告继续高增，但行业仍是强周期、低净利率、资本开支密集模型；当前适合等待价格回撤和中报现金流确认后分批建仓。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    18.0,
-    22.0
-  ],
-  "buy_zone": [
-    13.0,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新凤鸣",
+    "security_status": "active",
+    "symbol": "CN:603225",
+    "ticker": "603225"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c3aabfa9e58acb36c958356e921f32e8889c56918077c969e90ee19242f7c404"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于17.0元，涤纶长丝库存未恶化，PTA-PX价差和长丝加工差未同步走弱",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "周期利润上行已验证，但价格需要安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报利润、经营现金流、存货、资本开支和管理层展望",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15.0元，2026年半年报确认经营现金流修复且资本开支可控",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "估值进入买入区间且现金流质量得到确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断上半年高景气是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24.0元且缺少价差、库存或现金流超预期支撑",
-      "action": "停止加仓并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "周期股进入乐观估值区后风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入首笔观察仓买入区间，需要同步检查库存和价差",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入更有吸引力的买入区间，若中报现金流确认可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入减仓观察区，除非利润和价差显著超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "进入首笔观察仓买入区间，需要同步检查库存和价差"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入更有吸引力的买入区间，若中报现金流确认可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入减仓观察区，除非利润和价差显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报利润、经营现金流、存货、资本开支和管理层展望"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断上半年高景气是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "涤纶长丝POY/FDY/DTY价格和加工差",
-    "涤纶长丝库存天数",
-    "江浙织机开工率",
-    "PTA-PX价差",
-    "PX-石脑油价差",
-    "PTA社会库存和开工率",
-    "布伦特原油价格",
-    "经营活动现金流量净额",
-    "资本开支和在建工程",
-    "有息负债和资产负债率",
-    "2026年中报归母净利润和扣非归母净利润"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,104 +1,105 @@
 {
-  "symbol": "CN:300697",
-  "market": "CN",
-  "ticker": "300697",
-  "name": "电工合金",
-  "company_name": "江阴电工合金股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是铜加工中质量较好的细分制造商，铁路接触网、铜制零部件和新能源汽车高压连接件提供高于普通铜加工的利润率与成长弹性；但2026-07-13收盘价13.11元已接近基准合理价值，TTM PE约30.6倍，现金流和可转债扩产仍需验证，暂不具备足够安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵但未泡沫",
-  "fair_value_range": [
-    10.8,
-    14.2
-  ],
-  "buy_zone": [
-    0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电工合金",
+    "security_status": "active",
+    "symbol": "CN:300697",
+    "ticker": "300697"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "173c39bd962f4e807c8f5833a97f1ce0d282cb734a1070e8bd952915eb930f00"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于12.0元且2026半年报尚未验证利润与现金流同步改善",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看Q2利润、经营现金流、应收账款、存货和产品毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于10.5-12.0元且2026Q2利润继续增长、经营现金流改善",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认全年利润中枢是否能达到2.2亿元以上",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于10.5元且基本面无恶化",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报及可转债募投项目进度，重新评估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.8元且铁路/新能源汽车业务订单未恶化",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入有安全边际的买入区间，需复核订单和现金流后分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于15.5元且没有2026E净利润上修至2.8亿元以上的证据",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入强吸引力区间，若基本面未恶化可提高目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "超过不应追高价格，除非盈利预测显著上修，否则停止新增并考虑降风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入有安全边际的买入区间，需复核订单和现金流后分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入强吸引力区间，若基本面未恶化可提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "超过不应追高价格，除非盈利预测显著上修，否则停止新增并考虑降风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看Q2利润、经营现金流、应收账款、存货和产品毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认全年利润中枢是否能达到2.2亿元以上"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报及可转债募投项目进度，重新评估合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "归母净利润增速",
-    "扣非归母净利润",
-    "毛利率",
-    "铜制零部件收入和毛利率",
-    "铁路接触线与铁路承力索收入",
-    "新能源汽车高压连接件收入和毛利率",
-    "境外收入占比和毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款",
-    "存货",
-    "资产负债率",
-    "短期借款",
-    "可转债募投项目进度和产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

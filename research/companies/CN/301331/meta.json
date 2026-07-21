@@ -1,98 +1,115 @@
 {
-  "symbol": "CN:301331",
-  "ticker": "301331",
-  "name": "恩威医药",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "恩威医药具备洁尔阴品牌心智、全国渠道和电商大健康增长选项，但核心妇科药品仍下滑、2026Q1业绩转弱，当前估值已接近或高于中性复苏情景，适合观察等待更低价格或业绩确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16,
-    21
-  ],
-  "buy_zone": [
-    13,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    23,
-    26
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恩威医药",
+    "security_status": "active",
+    "symbol": "CN:301331",
+    "ticker": "301331"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b9fd26396c1be05dc86c32b3ab1e073dca5fb6d6018ef20c9d753b4823f6d38e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值中枢且2026Q1收入利润下滑，保持观察，不建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看妇科类收入、电商增长、销售费用率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入13-15元且核心妇科产品未加速下滑、经营现金流未恶化，可试探建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润趋势和现金流质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3验证收入恢复增长、净利率回升且经营现金流转强，可提高至跟踪仓上限。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值、分红和股东质押风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入初始买入区间，需要复核妇科类收入、电商费用率和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入高安全边际区间，若无新增治理或经营恶化，可重新评估买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "超过合理价值区间上沿，若业绩未同步确认，应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "进入乐观情景定价，除非电商和大健康增长被连续报表验证，否则风险收益不佳。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入初始买入区间，需要复核妇科类收入、电商费用率和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入高安全边际区间，若无新增治理或经营恶化，可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 23,
-      "reason": "超过合理价值区间上沿，若业绩未同步确认，应回避或减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "进入乐观情景定价，除非电商和大健康增长被连续报表验证，否则风险收益不佳。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看妇科类收入、电商增长、销售费用率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润趋势和现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值、分红和股东质押风险。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": {
-      "value": 21.92,
-      "date": "2026-07-15",
-      "source": "新浪行情接口"
-    },
-    "market_cap_cny_billion": {
-      "value": 2.255,
-      "date": "2026-07-15",
-      "source": "按新浪收盘价和2026Q1股本测算"
-    },
-    "pe_2025": {
-      "value": 43.4,
-      "date": "2026-07-15",
-      "source": "按2025年归母净利润和市值测算"
-    }
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

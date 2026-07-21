@@ -1,89 +1,120 @@
 {
-  "symbol": "CN:300042",
-  "market": "CN",
-  "ticker": "300042",
-  "name": "朗科科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "3Q26存储合约价继续上涨支持库存利润，但消费需求、客户端SSD库存和零售NAND晶圆需求转弱限制模组商传价；43.75元已接近28-42元合理区间，但现金流、6.44亿元存货和企业级业务均无新增验证，评级改善为观察而非买入。",
-  "fair_value_range": [
-    28.0,
-    42.0
-  ],
-  "buy_zone": [
-    22.0,
-    32.0
-  ],
-  "sell_or_reduce_zone": [
-    52.0,
-    65.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗科科技",
+    "security_status": "active",
+    "symbol": "CN:300042",
+    "ticker": "300042"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "1c07b7e082438a87673910bd82bad0741674eba87d2ad12f92faf8d25e611104"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "59cf2ee6a244b473060e73cdf8b8fb3626c3a474be32697d92450d5f550dbae0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价42元以上或半年报尚未验证现金流与库存质量，仅允许必要的跟踪仓。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-08"
+      },
+      "reason": "复核2026半年报的单季毛利率、经营现金流、存货、跌价准备、借款与合同负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价32-42元，且半年报未出现库存减值、现金流有改善迹象。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认存储景气延续性、库存现金化和服务器/算力收入进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入22-32元，且最近季报经营现金流改善、存货周转正常、单季毛利率不低于16%，分三笔建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、自由现金流、存货减值及第二曲线是否形成规模收入。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，确认下跌并非库存减值、治理恶化或行业结构性衰退导致，且企业级产品或现金流至少一项获得验证。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入合理价值区间，结合半年报复核是否允许0.01以内小仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "单季毛利率跌破16%且经营现金流仍为负，或存货超过7亿元并继续依赖借款补库。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入区上沿，需重新核验库存成本、现金流和毛利率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入深度价值复核区，确认不存在基本面证伪后才可提高仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "重新进入减仓区，只减不加；企业级收入未验证时不保留正式仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-08",
-      "reason": "复核2026半年报的单季毛利率、经营现金流、存货、跌价准备、借款与合同负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认存储景气延续性、库存现金化和服务器/算力收入进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、自由现金流、存货减值及第二曲线是否形成规模收入。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42.0,
-      "reason": "进入合理价值区间，结合半年报复核是否允许0.01以内小仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 32.0,
-      "reason": "进入买入区上沿，需重新核验库存成本、现金流和毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 22.0,
-      "reason": "进入深度价值复核区，确认不存在基本面证伪后才可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 52.0,
-      "reason": "重新进入减仓区，只减不加；企业级收入未验证时不保留正式仓位。"
-    }
-  ],
-  "updated_at": "2026-07-18T08:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

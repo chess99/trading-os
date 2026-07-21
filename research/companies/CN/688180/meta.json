@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:688180",
-  "market": "CN",
-  "ticker": "688180",
-  "name": "君实生物",
-  "company_name": "君实生物",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "君实生物已进入PD-1商业化改善和亏损收窄阶段，但国内PD-1竞争、医保价格、研发费用和现金消耗仍限制安全边际；当前适合观察，等待2026半年报验证收入质量、现金流改善和管线进展后再决定是否买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    28,
-    38
-  ],
-  "buy_zone": [
-    22,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "君实生物",
+    "security_status": "active",
+    "symbol": "CN:688180",
+    "ticker": "688180"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "420ad0faa48eb75b439f5a0c642966bf1db31d65a5221d6865c1433309a4b1d0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入26元以下，且2026半年报显示收入增长、净亏损继续收窄、现金余额未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "商业化改善已有迹象，但亏损和融资风险仍需折价"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，确认收入增长、亏损收窄、现金消耗和研发费用纪律",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入22元以下，且核心管线和PD-1商业化未出现重大负面变化",
-      "action": "加仓至小仓位",
-      "max_weight": 0.02,
-      "reason": "价格进入悲观情景上沿附近，安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核医保谈判、适应症进展、海外商业化收入和全年融资风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营性亏损继续收窄，且现金可覆盖至少18个月经营和研发消耗",
-      "action": "提高至策略仓位上限",
-      "max_weight": 0.03,
-      "reason": "自我造血路径更清晰后可提高组合容忍度"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入高安全边际买入区间，需复核基本面是否未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入减仓观察区间，估值开始计入较乐观的管线和海外兑现预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "进入强制复核区间，若无超预期业绩或管线读出应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入高安全边际买入区间，需复核基本面是否未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "进入减仓观察区间，估值开始计入较乐观的管线和海外兑现预期"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "进入强制复核区间，若无超预期业绩或管线读出应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，确认收入增长、亏损收窄、现金消耗和研发费用纪律"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核医保谈判、适应症进展、海外商业化收入和全年融资风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "特瑞普利单抗季度销售额及同比增速",
-    "药品销售收入与授权收入拆分",
-    "研发费用绝对额及研发费用率",
-    "销售费用率",
-    "经营活动现金流净额",
-    "现金及现金等价物余额",
-    "新增适应症获批和医保覆盖情况",
-    "海外销售、里程碑款和合作收入确认",
-    "核心管线临床读出和CDE/NMPA审评状态",
-    "股权融资或其他摊薄性融资动作"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

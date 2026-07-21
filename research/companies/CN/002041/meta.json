@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:002041",
-  "market": "CN",
-  "ticker": "002041",
-  "name": "登海种业",
-  "company_name": "登海种业",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "登海种业是玉米种子高纯度资产，2026Q1显示低谷修复迹象，但2025年扣非利润仍薄、行业库存和价格压力未完全出清，8.20元附近已部分反映转基因商业化期权，适合跟踪等待5.8元以下或更强经营证据。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "登海种业",
+    "security_status": "active",
+    "symbol": "CN:002041",
+    "ticker": "002041"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "5728faa5638206623cd0217f4a5ffed1e7e4b67e4dcdbbf16a739bbc1b06ba08"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.8元且2026中报显示收入增长、扣非利润为正、存货和应收账款未明显恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区上沿且经营改善得到中报确认，允许小仓跟踪反转"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证收入、扣非利润、毛利率、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元且行业库存去化明确、公司毛利率稳定在30%以上",
-      "action": "提高至逆向配置仓",
-      "max_weight": 0.02,
-      "reason": "估值接近悲观情景下沿，资产负债表压力较小，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和秋季制种、渠道库存情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "转基因玉米品种在核心区域放量并带来收入、毛利率、现金流同步改善",
-      "action": "上调仓位上限",
-      "max_weight": 0.03,
-      "reason": "商业化期权由叙事转为利润证据，可接受更高组合权重"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，重新评估全年盈利质量和转基因商业化进度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.2元但未出现新增利润证据或渠道库存改善证据",
-      "action": "减仓或不追高",
-      "max_weight": 0.005,
-      "reason": "价格进入乐观情景区间，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入初始买入区，需要复核中报和渠道库存后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入悲观情景下沿，需要评估是否具备逆向配置价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "进入减仓观察区，若无转基因放量和利润兑现证据应控制仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "接近乐观估值上沿，应重新核验盈利假设并考虑退出研究性仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入初始买入区，需要复核中报和渠道库存后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入悲观情景下沿，需要评估是否具备逆向配置价值"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "进入减仓观察区，若无转基因放量和利润兑现证据应控制仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "接近乐观估值上沿，应重新核验盈利假设并考虑退出研究性仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证收入、扣非利润、毛利率、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和秋季制种、渠道库存情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，重新评估全年盈利质量和转基因商业化进度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "玉米种子收入增速",
-    "玉米种子销量与平均售价",
-    "玉米种子毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "存货余额和跌价准备",
-    "应收账款增速",
-    "合同负债或预收款变化",
-    "转基因玉米品种审定数量和推广区域",
-    "经销商库存与渠道回款",
-    "商品玉米价格",
-    "制种面积和制种天气"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

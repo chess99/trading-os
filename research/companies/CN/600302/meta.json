@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:600302",
-  "market": "CN",
-  "ticker": "600302",
-  "name": "ST标准",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "2025年财报保留意见和内控否定意见、标准海菱收入确认凭证缺失及清算、2026H1继续预亏，使公司仍处于困境状态；当前股价约4.0倍2026Q1每股净资产，主要反映摘帽/重组/壳资源预期而非主业现金流，基本面安全边际不足。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.2,
-    2.0
-  ],
-  "buy_zone": [
-    0.8,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.8,
-    3.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST标准",
+    "security_status": "active",
+    "symbol": "CN:600302",
+    "ticker": "600302"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "88f245a6e9be4656a3f2ae17f52b5560d3ab133e66c28f9fc5090f5e56af5898"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于0.80元且未新增退市风险、重大处罚或债务逾期",
-      "action": "仅可建立困境观察仓位",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、H1预亏落地、现金流、应收账款和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于0.80至1.20元且2026半年报显示亏损收敛、经营现金流改善",
-      "action": "小仓试错并等待内控整改证据",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核标准海菱清算注销是否按公司承诺完成",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于2.80元且基本面未出现审计意见恢复、现金流转正、持续盈利证据",
-      "action": "不新增并减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见和内部控制审计意见，决定是否仍维持avoid",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入有安全边际买入观察区，但仍需复核内控整改和半年报现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入强吸引力困境资产折价区，可重新评估极小仓试错",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "高于乐观基本面估值上沿，应回避追高或降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入有安全边际买入观察区，但仍需复核内控整改和半年报现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入强吸引力困境资产折价区，可重新评估极小仓试错"
-    },
-    {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "高于乐观基本面估值上沿，应回避追高或降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、H1预亏落地、现金流、应收账款和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核标准海菱清算注销是否按公司承诺完成"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见和内部控制审计意见，决定是否仍维持avoid"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情显示收盘价5.67元，总股本3.4601亿股，市值约19.62亿元。",
-    "2025年财报为保留意见，内控审计为否定意见，其他风险警示自2026-05-06实施。",
-    "2026H1业绩预告归母净利润预计亏损3300万元至4900万元，数据未经审计。",
-    "合理价值区间未计入未公告的重组、资产注入或壳资源溢价；如控制权交易有确定文件需重估。",
-    "低置信度项：海外竞争对手估值和市场对重组预期的定价未能一手量化。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

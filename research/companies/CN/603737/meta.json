@@ -1,85 +1,115 @@
 {
-  "symbol": "CN:603737",
-  "market": "CN",
-  "ticker": "603737",
-  "name": "三棵树",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "三棵树是建筑涂料龙头，2025年现金流和扣非利润修复，经销与旧改渠道降低地产大B暴露；当前估值相对基准价值有一定折价，但高负债、应收账款和2026Q1利润质量仍要求小仓位、分批买入。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    27,
-    34
-  ],
-  "buy_zone": [
-    18,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三棵树",
+    "security_status": "active",
+    "symbol": "CN:603737",
+    "ticker": "603737"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "db8fa21a453a2e822b21b2d43918b61b329f0722c953ad658b766b8df112a3d4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "22元附近或以下，且最近一期经营现金流和扣非利润未恶化，建立底仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款和渠道结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "20元以下，扣非利润连续改善且应收账款未重新扩张，加仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "18元以下，资产负债率下降或经营现金流显著强于利润，提升到上限",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估值并检查股东质押和资产负债率变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "36元以上且盈利预测未上修，逐步减仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入更有吸引力的加仓区，但需同步确认现金流和应收账款没有恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入深度安全边际区，若基本面未破坏可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "接近或超过基准估值上沿，需要重新评估预期收益率并减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "接近乐观情景估值，除非盈利显著上修，否则应明显降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入更有吸引力的加仓区，但需同步确认现金流和应收账款没有恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入深度安全边际区，若基本面未破坏可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "接近或超过基准估值上沿，需要重新评估预期收益率并减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "接近乐观情景估值，除非盈利显著上修，否则应明显降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款和渠道结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估值并检查股东质押和资产负债率变化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

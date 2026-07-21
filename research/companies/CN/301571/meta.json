@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301571",
-  "ticker": "301571",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "国科天成",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国科天成是 A 股稀缺的红外上游器件平台，制冷锑化物/II 类超晶格、非制冷探测器和红外镜头构成差异化增长点；但扩产期短期借款、应收、预付和存货占用较高，当前价格缺少足够安全边际，需等待更低价格或现金流兑现。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    55,
-    75
-  ],
-  "buy_zone": [
-    42,
-    50
-  ],
-  "sell_or_reduce_zone": [
-    85,
-    95
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国科天成",
+    "security_status": "active",
+    "symbol": "CN:301571",
+    "ticker": "301571"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "f4ef19839d69d761cf7ac982cd9a36e968404a74bd5e1421a99159c9305ed0ce"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 50 元且未出现短期借款、应收账款、存货或订单负面公告",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年度报告，重点看现金流、短期借款、应收账款、预付款、存货和非制冷产线投产情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于 50-55 元且 2026 半年度或三季度经营现金流转正、上海非制冷产线投产确认",
-      "action": "小幅加仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认收入增长是否伴随经营现金流改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "短期借款继续上升且应收账款、预付款、存货合计增速持续高于收入增速",
-      "action": "降仓或不建仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核成都 II 类超晶格量产线是否按 2026 年底前投产，以及是否出现新增订单或延期风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入第一买入观察区，需复核最新公告和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入具备较强安全边际区间，可评估积极买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "进入减持区间，除非 2026-2027 业绩和现金流显著超预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入第一买入观察区，需复核最新公告和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入具备较强安全边际区间，可评估积极买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 85,
-      "reason": "进入减持区间，除非 2026-2027 业绩和现金流显著超预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年度报告，重点看现金流、短期借款、应收账款、预付款、存货和非制冷产线投产情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认收入增长是否伴随经营现金流改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核成都 II 类超晶格量产线是否按 2026 年底前投产，以及是否出现新增订单或延期风险。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

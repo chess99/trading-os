@@ -1,132 +1,114 @@
 {
-  "symbol": "CN:002537",
-  "market": "CN",
-  "ticker": "002537",
-  "name": "海联金汇",
-  "company_name": "海联金汇科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汽车零部件客户和细分产品有一定基础，移动信息服务提供利润补充，支付牌照处置存在期权价值；但公司毛利率低、2026Q1收入下滑、支付交易仍未交割，当前5.35元接近合理区间上沿，缺乏安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    4.4,
-    5.3
-  ],
-  "buy_zone": [
-    3.4,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海联金汇",
+    "security_status": "active",
+    "symbol": "CN:002537",
+    "ticker": "002537"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fb2678da328d43ef2aa5231bd2f8e0980ca7de12b281beaa847e8a4da26d5852"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于或等于3.40元，且无新增重大经营或监管风险",
-      "price": "<=3.40",
-      "action": "分批买入",
-      "position": "5%-8%",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证2026Q1收入下滑是否延续的关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于3.40-4.00元，且扣非利润、经营现金流、应收账款质量未恶化",
-      "price": "3.40-4.00",
-      "action": "试探买入",
-      "position": "2%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "支付业务处置是估值期权和资产结构优化的核心变量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于4.00-5.30元，估值接近合理区间",
-      "price": "4.00-5.30",
-      "action": "观察",
-      "position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "监管处罚、诉讼和客户流失会直接改变质量评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格处于5.30-6.00元，缺乏新增安全边际",
-      "price": "5.30-6.00",
-      "action": "不加仓",
-      "position": "0%新增",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "潜在处置回款的使用方式决定股东价值能否兑现",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "价格高于或等于6.00元，估值透支基准情景",
-      "price": ">=6.00",
-      "action": "回避或减仓",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "低于每股净资产附近，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "约0.8倍2026Q1每股净资产，悲观情景已有较多反映",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "市值超过基准情景上沿，需要乐观情景兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "condition": "跌入有安全边际买入价，且扣非利润、经营现金流、应收账款质量未恶化",
-      "action": "复核后可建2%-3%试探仓",
-      "reason": "低于每股净资产附近，开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "condition": "跌入强吸引力买入价，且无新增重大监管或经营风险",
-      "action": "可分批提高至5%-8%",
-      "reason": "约0.8倍2026Q1每股净资产，悲观情景已有较多反映"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "condition": "估值进入不应追高区",
-      "action": "不追买，已有仓位复核减仓",
-      "reason": "市值超过基准情景上沿，需要乐观情景兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年报披露",
-      "focus": "复核汽车零部件收入、毛利率、扣非归母净利润和经营现金流",
-      "reason": "半年报是验证2026Q1收入下滑是否延续的关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "联动商务100%股权转让进展变化",
-      "focus": "监管批准、交割、终止或交易条款重大变化",
-      "reason": "支付业务处置是估值期权和资产结构优化的核心变量"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "新增重大负面事件",
-      "focus": "行政处罚、重大诉讼、应收账款坏账或客户流失",
-      "reason": "监管处罚、诉讼和客户流失会直接改变质量评级"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "资本配置计划变化",
-      "focus": "大额对外投资、参股基金、并购或回购股份用途变化",
-      "reason": "潜在处置回款的使用方式决定股东价值能否兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "汽车零部件收入增速",
-    "汽车零部件毛利率",
-    "扣非归母净利润",
-    "经营现金流净额/净利润",
-    "应收账款前五名金额与账龄",
-    "资产负债率和有息负债",
-    "联动商务股权转让审批与交割进展",
-    "回购股份注销或股权激励摊销影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

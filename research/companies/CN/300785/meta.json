@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:300785",
-  "ticker": "300785",
-  "name": "值得买",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "值得买拥有稀缺消费内容社区、商品数据库和交易反馈数据，AI购物管家、值数、海纳MCP/ACP使其具备从传统导购向AI消费决策基础设施升级的期权价值；但以2026-07-15约34.80元股价看，静态估值已隐含较多AI商业化预期，安全边际不足，需等待回调或中报验证。",
-  "fair_value_range": [
-    30,
-    38
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "值得买",
+    "security_status": "active",
+    "symbol": "CN:300785",
+    "ticker": "300785"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "ee9011b5c6ec48bbcb683333a6b510a6ec651f38426af5366c528559f9c37325"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至24-28元且2026H1未出现MAU、GMV、经营现金流同时恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查AI相关收入、毛利率、经营现金流、MAU和GMV。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1披露AI相关收入年化超过1.5亿元、综合毛利率继续改善且经营现金流不显著弱于净利润",
-      "action": "允许在30-35元小仓试错",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q3增长和费用率改善是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "AI相关收入超过2亿元年化且海纳MCP/ACP出现明确外部付费客户，同时主站MAU稳定",
-      "action": "复核后考虑提高仓位上限",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估AI消费决策平台商业化和长期估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入区上沿，若基本面未恶化可复核建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入较有安全边际区间，需要快速复核AI收入和现金流是否恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "超过基准估值区间较多，若缺乏新增业绩验证应考虑减仓或规避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "接近乐观情景估值中枢，需要强制复核AI商业化证据和风险收益比。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入买入区上沿，若基本面未恶化可复核建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入较有安全边际区间，需要快速复核AI收入和现金流是否恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "超过基准估值区间较多，若缺乏新增业绩验证应考虑减仓或规避。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "接近乐观情景估值中枢，需要强制复核AI商业化证据和风险收益比。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查AI相关收入、毛利率、经营现金流、MAU和GMV。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q3增长和费用率改善是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估AI消费决策平台商业化和长期估值。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

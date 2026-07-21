@@ -45,7 +45,6 @@ def _research_claims() -> dict[str, object]:
             "fair_value_range": [31.5, 38.0],
             "buy_zone": [24.0, 27.0],
             "reduce_zone": [40.0, 45.0],
-            "position_plan": [{"condition": "price <= 27", "max_weight": 0.05}],
             "conclusion": "估值进入安全边际后可以买入。",
         },
     }

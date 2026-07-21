@@ -1,85 +1,86 @@
 {
-  "symbol": "CN:000014",
-  "market": "CN",
-  "ticker": "000014",
-  "name": "沙河股份",
-  "company_name": "沙河股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "沙河股份具备深圳国资小市值地产平台和资产重估/重组期权，但主营项目去化、存货减值、扣非盈利和现金流尚未支撑当前估值，当前以跟踪为主，等待价格回到6.50元以下或基本面改善后再考虑小仓位。",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    5.5,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沙河股份",
+    "security_status": "active",
+    "symbol": "CN:000014",
+    "ticker": "000014"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c105f398335f1559ea5f954dbc4639af515d191dec3f171251f52e4f969c1ff7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且无新增重组或盈利改善公告",
-      "action": "不买入，仅保留研究跟踪",
-      "max_weight": 0,
-      "reason": "当前估值主要反映深圳国资平台和资产重估期权，经营利润与现金流尚未支撑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点确认晶华电子并表、存货减值、现金流和项目去化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.50元且2026中报未出现新增存货减值或现金流恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近净资产锚，资产底和国资平台期权的赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和地产政策对深圳、长沙项目销售的影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "晶华电子并表后资产质量稳定且核心项目去化改善",
-      "action": "将仓位上限提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "基本面开始验证资产整合和项目现金回收，但仍不适合作为核心仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入买入观察区，需要复核中报资产质量和项目去化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "高于基本面合理区间，若无明确资产注入或盈利改善应减仓或避免追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入买入观察区，需要复核中报资产质量和项目去化"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "高于基本面合理区间，若无明确资产注入或盈利改善应减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点确认晶华电子并表、存货减值、现金流和项目去化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和地产政策对深圳、长沙项目销售的影响"
-    }
-  ],
-  "key_tracking_metrics": [
-    "存货余额和存货跌价准备",
-    "深圳和长沙核心项目销售面积、销售金额、去化率",
-    "经营活动现金流净额",
-    "货币资金和有息负债",
-    "晶华电子并表后的收入、利润、现金流和资产减值",
-    "控股股东及深圳国资体系资产注入或重组公告",
-    "股价对应市净率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

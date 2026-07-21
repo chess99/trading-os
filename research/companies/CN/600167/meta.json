@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600167",
-  "ticker": "600167",
-  "name": "联美控股",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "联美控股具备区域清洁供热现金流、厚资产负债表和分红回购支撑，但2026Q1盈利下滑、传媒业务拖累且现价缺少足够安全边际，适合等待低估或半年报验证后再配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    6.8
-  ],
-  "buy_zone": [
-    4.6,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联美控股",
+    "security_status": "active",
+    "symbol": "CN:600167",
+    "ticker": "600167"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1f7d0cb63de4a675e675f1549ed4052825d0c8224e29904c56d1e6407d14333f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.20元，且2026半年报显示清洁能源主业经营现金流和热费回款未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点查看清洁能源利润率、经营现金流、兆讯传媒修复和回购执行。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.60元，回购正常执行，分红政策未下修，控股股东无异常减持或质押风险",
-      "action": "提高至防守仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报及供暖季前合同负债、燃煤库存和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.20元但2026盈利未恢复增长，或传媒业务继续大幅拖累",
-      "action": "减持或停止加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、分红方案和下一供暖季收入确认质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入基准估值下沿，股息率和回购支撑改善，适合重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入较强安全边际区间，可结合半年报和回购执行考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "接近乐观估值下沿，若基本面未同步改善应降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入基准估值下沿，股息率和回购支撑改善，适合重新评估买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入较强安全边际区间，可结合半年报和回购执行考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "接近乐观估值下沿，若基本面未同步改善应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点查看清洁能源利润率、经营现金流、兆讯传媒修复和回购执行。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报及供暖季前合同负债、燃煤库存和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、分红方案和下一供暖季收入确认质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

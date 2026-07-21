@@ -1,70 +1,86 @@
 {
-  "symbol": "CN:600595",
-  "ticker": "600595",
-  "name": "中孚实业",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "中孚实业已形成75万吨权益电解铝、绿色水电铝、再生铝和铝精深加工协同布局，2026H1业绩预告显示盈利中枢显著抬升；当前估值未完全反映顺周期盈利弹性，但需用仓位控制铝价、成本和出口风险。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    7.2,
-    8.8
-  ],
-  "buy_zone": [
-    5.6,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中孚实业",
+    "security_status": "active",
+    "symbol": "CN:600595",
+    "ticker": "600595"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "37cbe019dc7c299765851f109cb2bb52f2e23415fbf643e538d0cd8bda9d6ede"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于买入区间且长江A00铝价维持在21000元/吨以上、2026H1业绩落在预告区间内",
-      "action": "建立基础仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证归母净利润、经营现金流、铝加工销量和成本变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至5.6元附近但铝价未跌破20500元/吨、半年报经营现金流改善",
-      "action": "分批加仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H2盈利是否较H1明显回落。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入9.0元以上且盈利预测未继续上修，或铝价连续四周低于20500元/吨",
-      "action": "减仓至观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入深度买入区间，需要复核铝价、氧化铝成本和现金流后评估加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "进入减持区间，需要判断估值是否已充分反映2026年顺周期盈利。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入深度买入区间，需要复核铝价、氧化铝成本和现金流后评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "进入减持区间，需要判断估值是否已充分反映2026年顺周期盈利。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证归母净利润、经营现金流、铝加工销量和成本变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H2盈利是否较H1明显回落。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

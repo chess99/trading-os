@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002197",
-  "ticker": "002197",
-  "name": "证通电子",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "证通电子处于摘帽后经营修复观察期，2026H1 预计扭亏但利润规模仍小，资产负债率较高且历史亏损/内控折价未完全消除；当前价格接近估值上沿，需等待半年报和现金流验证。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    3.8,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    7.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "证通电子",
+    "security_status": "active",
+    "symbol": "CN:002197",
+    "ticker": "002197"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "451599f1bebb9325c6d8818ba24daa6546318c4249d2790f048dc0f2deba0d1e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026H1 正式报确认扭亏、扣非为正、经营现金流未明显恶化，且股价进入 3.8-4.5 元区间",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据、分部毛利率、现金流和资产负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q3 继续盈利、IDC/云计算毛利率改善且资产负债率下降至 68% 以下",
-      "action": "可上调至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，验证扭亏是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 6.5 元但利润、现金流、负债率未显著超预期",
-      "action": "不追买并减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报与内控审计意见，确认摘帽后治理和盈利质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入观察买入区上沿，重新核验半年报、现金流和债务压力后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "超过乐观情景估值下沿，若基本面未超预期应降低评级或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入观察买入区上沿，重新核验半年报、现金流和债务压力后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "超过乐观情景估值下沿，若基本面未超预期应降低评级或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据、分部毛利率、现金流和资产负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，验证扭亏是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报与内控审计意见，确认摘帽后治理和盈利质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

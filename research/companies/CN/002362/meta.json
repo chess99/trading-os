@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:002362",
-  "ticker": "002362",
-  "name": "汉王科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "汉王科技具备手写/OCR/笔智能交互/行业AI方案等真实技术资产，但截至2026-07-15仍处亏损状态，费用率高、商业化分散，当前价格已反映较多AI和扭亏预期，安全边际不足，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    20
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汉王科技",
+    "security_status": "active",
+    "symbol": "CN:002362",
+    "ticker": "002362"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1fd7d73705a81bb6bb5977e17aa9773748f92b4012aaeef55d56e60a11b0b0f8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约14.5元附近且未见连续扣非盈利，不建仓，仅跟踪2026H1/Q3费用率和亏损收窄情况。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、毛利率、销售费用率、扣非亏损、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8元，且最新季度销售费用率下降、扣非亏损同比明显收窄，可研究性建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证费用纪律和亏损收窄是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利且经营现金流转正，同时毛利率维持40%以上，可上调为小仓位成长股。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与2027年一季报，判断AI终端和数字绘画增长是否转化为利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入保守买入区，重新评估费用率、订单质量和现金流后决定是否试错。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "高于基准合理价值上沿，若无明确扭亏证据，应降低预期或回避追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入保守买入区，重新评估费用率、订单质量和现金流后决定是否试错。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "高于基准合理价值上沿，若无明确扭亏证据，应降低预期或回避追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、毛利率、销售费用率、扣非亏损、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证费用纪律和亏损收窄是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与2027年一季报，判断AI终端和数字绘画增长是否转化为利润。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

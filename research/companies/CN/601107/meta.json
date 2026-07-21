@@ -1,98 +1,115 @@
 {
-  "symbol": "CN:601107",
-  "ticker": "601107",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "四川成渝",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "四川成渝是四川省属高速公路现金流资产，当前估值接近保守股息与资产价值下沿，适合按防守型高股息资产小仓位分批买入；核心风险是成雅扩容、荆宜并表和潜在定增带来的资本开支、债务与摊薄。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    5.4,
-    6.4
-  ],
-  "buy_zone": [
-    4.8,
-    5.3
-  ],
-  "sell_or_reduce_zone": [
-    6.6,
-    7.2
-  ],
-  "position_plan": [
-    {
-      "condition": "A股价格低于5.20元，且年度分红预期不低于0.28元/股、定增方案未明显摊薄每股价值",
-      "action": "建立或维持基础仓位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "A股价格低于4.80元，且通行费、经营现金流和分红能力未恶化",
-      "action": "加仓至防守型上限",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "A股价格高于6.60元，且没有可核验的EPS或DPS上修",
-      "action": "逐步降低仓位",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入基础买入区间，股息率和资产价值安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度安全边际区间，若基本面未变可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.6,
-      "reason": "超过合理价值区间上沿附近，防守型收益率吸引力下降"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "乐观情景估值基本兑现，应卖出或显著降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、荆宜并表贡献、分红与债务变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和通行费恢复趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报、现金分红、成雅扩容资本开支和定增进展"
-    }
-  ],
-  "key_metrics": {
-    "base_price_date": "2026-07-16",
-    "base_price_cny": 5.35,
-    "base_price_note": "2026-07-17精确收盘价未核验；采用公开行情页2026-07-16可见约5.35元作为估值基准",
-    "normalized_eps_cny": [
-      0.52,
-      0.56
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "四川成渝",
+    "security_status": "active",
+    "symbol": "CN:601107",
+    "ticker": "601107"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "48d5e266a6c871c001d9a4461f6d817cb22fcec9e9b7c00c35bf1fbd400963b2"
+      }
     ],
-    "sustainable_dividend_per_share_cny": [
-      0.3,
-      0.34
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、荆宜并表贡献、分红与债务变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和通行费恢复趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报、现金分红、成雅扩容资本开支和定增进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入基础买入区间，股息率和资产价值安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度安全边际区间，若基本面未变可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.6
+      },
+      "reason": "超过合理价值区间上沿附近，防守型收益率吸引力下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "乐观情景估值基本兑现，应卖出或显著降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
     ],
-    "max_weight": 0.04
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

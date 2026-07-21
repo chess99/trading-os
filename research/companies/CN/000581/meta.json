@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:000581",
-  "market": "CN",
-  "ticker": "000581",
-  "name": "威孚高科",
-  "company_name": "威孚高科",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "威孚高科是柴油节能减排基本盘、博世系投资收益和高分红共同支撑的低估值资产，但2025年扣非利润和四季度亏损暴露盈利质量压力，当前价格适合持有或小仓观察，等待16元以下和2026H1现金流/扣非利润验证后再加仓。",
-  "quality_rating": 3.5,
-  "valuation_rating": 3.0,
-  "fair_value_range": [
-    18.0,
-    22.5
-  ],
-  "buy_zone": [
-    14.8,
-    16.2
-  ],
-  "sell_or_reduce_zone": [
-    22.5,
-    25.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "威孚高科",
+    "security_status": "active",
+    "symbol": "CN:000581",
+    "ticker": "000581"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "7af6d8e8a05577fb2f2b9f85fd3470e02a729bc1af297a7730f56ee8f0f14f2c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前17-18元区间且仅完成初始研究",
-      "action": "仅允许观察仓或继续持有，不追高",
-      "max_weight": 0.015,
-      "reason": "股息率有保护，但2025年扣非利润和四季度亏损尚未充分解释"
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "Investing.com显示下一财报日约为2026-08-26，需复核2026中报",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "除权后或市场回调至16.2元以下，且2026H1扣非利润和经营现金流继续改善",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "价格进入买入区间，同时基本面验证从高分红资产转为可持续现金流资产"
+      "active": true,
+      "condition": {
+        "date": "2026-07-15"
+      },
+      "reason": "2025年度权益分派除权除息日，复核除息后真实买入区间和股息率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于22.5元但投资收益和智能电动盈利未同步改善",
-      "action": "逐步减仓",
-      "max_weight": 0.015,
-      "reason": "估值进入合理区间上沿，安全边际下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.2
+      },
+      "reason": "进入初始买入区间上沿，复核除息、2026H1扣非利润和现金流后可考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.2
+      },
+      "reason": "跌破价格止损观察位，需要判断是否为基本面恶化而非市场波动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.5
+      },
+      "reason": "达到合理价值区间上沿，若没有盈利上修应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "进入乐观情景估值区间，需以投资收益和新业务盈利验证支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.2,
-      "reason": "进入初始买入区间上沿，复核除息、2026H1扣非利润和现金流后可考虑加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14.2,
-      "reason": "跌破价格止损观察位，需要判断是否为基本面恶化而非市场波动"
-    },
-    {
-      "type": "price_above",
-      "price": 22.5,
-      "reason": "达到合理价值区间上沿，若没有盈利上修应减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "进入乐观情景估值区间，需以投资收益和新业务盈利验证支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "Investing.com显示下一财报日约为2026-08-26，需复核2026中报"
-    },
-    {
-      "type": "date",
-      "date": "2026-07-15",
-      "reason": "2025年度权益分派除权除息日，复核除息后真实买入区间和股息率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入和扣非归母净利润同比增速",
-    "经营活动现金流净额及其与净利润匹配度",
-    "燃油喷射系统收入、销量和毛利率",
-    "尾气后处理系统收入、毛利率和贵金属价格影响",
-    "进气系统收入增速及混动/新能源客户贡献",
-    "智能电动板块收入、订单、毛利率和盈利状态",
-    "绿色氢能收入及海外子公司亏损情况",
-    "博世动力总成、中联电子、威孚环保投资收益",
-    "年度分红率、现金余额、资本开支和并购支出",
-    "潍柴动力、中国重汽、一汽解放等商用车链景气指标"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

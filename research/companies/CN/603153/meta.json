@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:603153",
-  "ticker": "603153",
-  "name": "上海建科",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "上海建科是上海国资背景的工程咨询、检验检测认证、低碳和特种工程技术服务平台，现金流与资产负债表较稳健，但固定资产投资下行和应收回款压力限制估值弹性；当前价格大致位于合理价值区间，等待更厚安全边际或城市更新/检测认证业务放量验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.5,
-    15.5
-  ],
-  "buy_zone": [
-    10.0,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    19.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海建科",
+    "security_status": "active",
+    "symbol": "CN:603153",
+    "ticker": "603153"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3ec3d2f0fbe367c07a10427d0a82204a336518e352b28c7ba258fb8e673d14e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.0-11.5元且2026H1/2026Q3回款未恶化、扣非利润未明显下滑",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.0元且经营现金流全年仍接近或高于归母净利润",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年订单、回款趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.5元且未来12个月利润中枢未上修至4亿元以上",
-      "action": "卖出或降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、商誉和城市更新/低碳业务落地情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入买入区上沿，若基本面未恶化可建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "悲观情景估值附近，若现金流质量稳定则安全边际较厚",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "超过合理价值区间，除非订单和扣非利润显著上修，否则应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入买入区上沿，若基本面未恶化可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "悲观情景估值附近，若现金流质量稳定则安全边际较厚"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "超过合理价值区间，除非订单和扣非利润显著上修，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年订单、回款趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、商誉和城市更新/低碳业务落地情况"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

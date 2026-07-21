@@ -1,109 +1,96 @@
 {
-  "symbol": "CN:002821",
-  "name": "凯莱英",
-  "market": "CN",
-  "ticker": "002821",
-  "company_name": "凯莱英",
-  "status": "active",
-  "updated_at": "2026-07-08",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "凯莱英具备小分子商业化交付、全球客户基础和新兴CDMO业务扩张潜力，2025年和2026年一季度经营恢复明确；但2026-07-08股价149.49元已接近合理价值区间上半部，适合小仓跟踪，等待110-125元更好买点。",
-  "quality_rating": "A-",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    125,
-    155
-  ],
-  "buy_zone": [
-    95,
-    110
-  ],
-  "sell_or_reduce_zone": [
-    165,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯莱英",
+    "security_status": "active",
+    "symbol": "CN:002821",
+    "ticker": "002821"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "fe6fc61afb429b71fae8692590422555d5386cd8f018e1564b1e08d14f7ed4ef"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "149.49元附近处于合理区间偏上，仅适合作为跟踪仓；110元以下进入安全边际买入区。",
-      "max_weight": 0.08,
-      "starter_weight": 0.01,
-      "current_price_action": "不追高；149.49元附近如需建仓仅作为1%以内跟踪仓，110-125元再考虑加至2%-4%，110元以下进入安全边际区间。",
-      "price_bands": [
-        {
-          "price_below": 95,
-          "target_weight": 0.08,
-          "action": "强吸引力买入"
-        },
-        {
-          "price_low": 95,
-          "price_high": 110,
-          "target_weight": 0.06,
-          "action": "分批加仓"
-        },
-        {
-          "price_low": 110,
-          "price_high": 125,
-          "target_weight": 0.04,
-          "action": "观察性买入"
-        },
-        {
-          "price_low": 125,
-          "price_high": 155,
-          "target_weight": 0.02,
-          "action": "小仓或持有"
-        },
-        {
-          "price_above": 165,
-          "target_weight": 0.0,
-          "action": "不新增，除非订单和利润率连续超预期"
-        }
-      ]
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 125,
-      "reason": "进入合理区间下半部，可复核半年报后建立或增加观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "公司预计披露2026年中报，需复核收入、经调整利润、订单、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 110,
-      "reason": "达到安全边际买入价，可考虑将仓位提升至4%-6%。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认新兴业务高增长能否持续转化为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 165,
-      "reason": "超过不应追高价格，若缺乏订单和利润率上修证据，应停止新增并评估减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "公司预计披露2026年中报，需复核收入、经调整利润、订单、毛利率和经营现金流。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 125.0
+      },
+      "reason": "进入合理区间下半部，可复核半年报后建立或增加观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认新兴业务高增长能否持续转化为利润和现金流。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 110.0
+      },
+      "reason": "达到安全边际买入价，可考虑将仓位提升至4%-6%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 165.0
+      },
+      "reason": "超过不应追高价格，若缺乏订单和利润率上修证据，应停止新增并评估减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "在手订单金额及同比增速",
-    "小分子CDMO收入增速和毛利率",
-    "新兴业务收入增速和毛利率",
-    "经调整归母净利润增速",
-    "经营活动现金流净额与净利润匹配度",
-    "海外收入和美欧客户收入增速",
-    "汇兑损益对净利润的影响",
-    "资本开支、产能利用率和ROIC"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

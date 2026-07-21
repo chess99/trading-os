@@ -1,125 +1,115 @@
 {
-  "symbol": "CN:003029",
-  "market": "CN",
-  "ticker": "003029",
-  "name": "吉大正元",
-  "company_name": "长春吉大正元信息技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备商用密码、身份认证、电子认证和政企网络安全的政策相关性与资质壁垒，但2025年收入仅约4.07亿元且继续亏损，2026Q1亏损虽收窄但收入增长仍低。当前约16元股价隐含约30亿元市值，估值主要依赖困境反转预期，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "吉大正元",
+    "security_status": "active",
+    "symbol": "CN:003029",
+    "ticker": "003029"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "f4e073b504dd8cc550351a1306e6ef64a2ddbf1f4cfb0fb2e369edb0529d209e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于14元，且公司仍亏损或经营现金流未转正",
-      "action": "不买或减仓",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价在10-12元，且中报或季报显示收入恢复、费用率下降、经营现金流明显改善",
-      "action": "观察性建仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于8.5元，且无退市、重大诉讼、核心客户流失或融资摊薄等恶化",
-      "action": "小仓买入",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于7元，且连续两个季度收入、订单和经营现金流同时改善",
-      "action": "提高至中等仓位",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "unit": "CNY/share",
-      "action": "进入买入复核",
-      "reason": "达到安全边际要求。",
-      "rationale": "达到安全边际要求。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "unit": "CNY/share",
-      "action": "若基本面改善则加仓复核",
-      "reason": "价格进入高赔率区，但仍需确认经营未恶化。",
-      "rationale": "价格进入高赔率区，但仍需确认经营未恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "unit": "CNY/share",
-      "action": "减仓或不参与",
-      "reason": "若经营拐点未被验证，估值重新偏贵。",
-      "rationale": "若经营拐点未被验证，估值重新偏贵。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "unit": "CNY/share",
-      "action": "退出或仅保留观察仓",
-      "reason": "在未盈利状态下过度反映政策和反转预期。",
-      "rationale": "在未盈利状态下过度反映政策和反转预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证2026年修复能否从亏损收窄扩展到收入和现金流改善的第一关键节点。",
-      "condition": "预计2026年半年报披露窗口",
-      "action": "复核收入、利润、现金流和费用率是否进入修复趋势"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可判断经营改善是否连续，而不是单季度扰动。",
-      "condition": "预计2026年三季报披露窗口",
-      "action": "复核经营拐点是否连续两个季度成立"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整检验订单验收、回款、费用率和全年盈利修复质量。",
-      "condition": "预计2026年年报披露窗口",
-      "action": "重新评估是否仍为不买或可转入观察/买入"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "达到安全边际要求。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "价格进入高赔率区，但仍需确认经营未恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "若经营拐点未被验证，估值重新偏贵。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "在未盈利状态下过度反映政策和反转预期。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款及合同资产周转",
-    "毛利率和三费率",
-    "密码及网络安全收入增速",
-    "可信应用收入增速",
-    "新签订单和验收周期"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

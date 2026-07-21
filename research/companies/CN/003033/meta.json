@@ -1,112 +1,123 @@
 {
-  "symbol": "CN:003033",
-  "market": "CN",
-  "ticker": "003033",
-  "name": "征和工业",
-  "company_name": "青岛征和工业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是国内链传动细分龙头，车辆链和农机链地位强、客户分散、现金流质量较好，机器人链式灵巧手提供第二增长曲线期权；但最近可核验价格70.21元已对应约37倍TTM PE和约4倍PB，明显提前交易机器人业务，当前不具备足够安全边际。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [40, 50],
-  "buy_zone": [35, 42],
-  "sell_or_reduce_zone": [65, 90],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "征和工业",
+    "security_status": "active",
+    "symbol": "CN:003033",
+    "ticker": "003033"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c71f5b7e2ce402cb906b953a9d61803f65df92e9f4e921dca406cd5f1feea867"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于35元，且主业收入维持低个位数以上增长、扣非净利润未恶化、经营现金流不显著弱于净利润",
-      "action": "可建立3%-4%基础仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价位于35-42元，且2026H1扣非归母净利润同比增长、海外收入保持增长",
-      "action": "可建立1%-2%观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价位于42-55元，机器人业务尚未披露可量化批量订单和收入",
-      "action": "仅跟踪，不主动买入",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价高于65元，且机器人业务未形成可核验规模收入或高毛利订单",
-      "action": "不买；已有持仓应降低仓位",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "低于42元进入初步可买区，风险收益比开始改善",
-      "action": "进入可买区，复核半年报和经营现金流后考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "低于35元相对40-50元合理价值区间具备更充分安全边际",
-      "action": "进入强安全边际区，若基本面未破坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "高于65元意味着估值主要依赖机器人期权兑现，主业难以支撑",
-      "action": "估值进入偏高区，除非机器人业务兑现，否则减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026年主业增长和利润质量",
-      "action": "复核主业增长、扣非净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "机器人链式灵巧手披露订单金额、收入确认、毛利率或核心客户",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "机器人业务是当前高估值的核心期权，需要实质订单和收入验证",
-      "action": "重新评估机器人期权价值和估值上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "定增项目取得证监会注册、发行完成或募投项目投产",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "定增和募投会影响摊薄、资本开支与未来ROE",
-      "action": "评估摊薄、资本开支和ROE变化"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "海外收入增速低于5%或主要客户订单明显下滑",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "海外收入是公司主业增量和利润韧性的重要来源",
-      "action": "下修主业增长假设"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "经营现金流连续两个报告期显著低于净利润",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "现金流转弱会削弱制造业公司盈利质量和安全边际",
-      "action": "检查应收、库存和盈利质量"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "低于42元进入初步可买区，风险收益比开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "低于35元相对40-50元合理价值区间具备更充分安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "高于65元意味着估值主要依赖机器人期权兑现，主业难以支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润增速",
-    "经营现金流净额/归母净利润",
-    "车辆链系统收入及毛利率",
-    "农业机械链系统收入及毛利率",
-    "海外收入及占比",
-    "机器人业务订单金额、收入确认和毛利率",
-    "研发投入占营业收入比例",
-    "资产负债率和资本开支"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

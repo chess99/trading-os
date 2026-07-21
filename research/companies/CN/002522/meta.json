@@ -1,142 +1,133 @@
 {
-  "symbol": "CN:002522",
-  "market": "CN",
-  "ticker": "002522",
-  "name": "浙江众成",
-  "company_name": "浙江众成包装材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "POF热收缩膜主业具备国内龙头地位和出口利润贡献，但热塑性弹性体业务毛利接近零、少数股东亏损仍拖累合并质量；2026-07-10收盘价5.20元对应约47.10亿元市值，已接近乐观情景估值上沿，缺乏安全边际。",
-  "quality_rating": "B",
-  "valuation_rating": "贵",
-  "fair_value_range": [
-    2.7,
-    3.5
-  ],
-  "buy_zone": [
-    0,
-    2.5
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江众成",
+    "security_status": "active",
+    "symbol": "CN:002522",
+    "ticker": "002522"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "46c991a00bf1f16eb9db678f749273c0413c954cd9d26a79356d6c7d1e6354b9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current",
-      "action": "观察，首笔仓位0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "<=2.0 CNY",
-      "action": "可建5%-7%，同时持续跟踪众立现金消耗",
-      "max_weight": 0.07
-    },
-    {
-      "condition": "2.0-2.5 CNY",
-      "action": "首笔2%-3%，POF毛利稳定后加至4%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "2.5-3.5 CNY",
-      "action": "观察或小仓0%-2%，必须有经营改善证据",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "3.5-4.2 CNY",
-      "action": "不新增，等待业绩验证",
-      "max_weight": 0
-    },
-    {
-      "condition": ">4.2 CNY",
-      "action": "不买；已有仓位可减仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "condition": "<=2.5 CNY",
-      "reason": "低于安全边际买入价，开始具备首笔仓位吸引力",
-      "action": "重新评估首笔2%-3%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "condition": "<=2.0 CNY",
-      "reason": "接近悲观情景估值下沿，安全边际充分",
-      "action": "若未出现财务恶化，评估强吸引力买入"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "condition": ">=4.2 CNY",
-      "reason": "进入乐观情景估值区间，需经营兑现支撑",
-      "action": "无众立扭亏证据时不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "condition": ">=5.0 CNY",
-      "reason": "显著高于基准合理价值，且接近乐观情景上沿",
-      "action": "ROE仍低于6%时减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证POF毛利率和众立亏损收窄的第一份关键报表",
-      "action": "复查POF毛利率和海外收入毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "需要确认三季度经营现金流和热塑性弹性体业务趋势",
-      "action": "复查众立合成材料亏损是否收窄"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整验证ROE、减值、分红和资本配置",
-      "action": "复查经营现金流、ROE和资产减值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "trigger": "2027年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "观察短债、担保和新材料业务是否继续消耗现金",
-      "action": "复查短债、担保和资本配置"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "trigger": "2027年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "两年维度判断公司是否走出低ROE状态",
-      "action": "复查三年经营趋势和估值中枢"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "低于安全边际买入价，开始具备首笔仓位吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "接近悲观情景估值下沿，安全边际充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "进入乐观情景估值区间，需经营兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "显著高于基准合理价值，且接近乐观情景上沿",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "POF膜收入增速与毛利率",
-    "海外收入占比与海外毛利率",
-    "热塑性弹性体收入、毛利率和净利润",
-    "归母ROE",
-    "经营现金流/归母净利润",
-    "存货与应收账款周转",
-    "短期借款和一年内到期非流动负债",
-    "前五大供应商采购占比",
-    "现金分红率和对子公司担保余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

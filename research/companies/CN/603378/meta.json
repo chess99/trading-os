@@ -1,65 +1,91 @@
 {
-  "symbol": "CN:603378",
-  "market": "CN",
-  "ticker": "603378",
-  "name": "*ST亚士",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "现价主要交易债务重组和保壳期权，而非可持续自由现金流；在净资产转正、债务实质削减和审计风险解除前应回避。",
-  "fair_value_range": [
-    1.2,
-    2.4
-  ],
-  "buy_zone": [
-    0.8,
-    1.3
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST亚士",
+    "security_status": "active",
+    "symbol": "CN:603378",
+    "ticker": "603378"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "22ce2b9a25dc203a28c861784d659f0204390e0c9b0669d23db412ee3980fa08"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "195d4eb7763bf6e0be9c7bf29a614e3789a52128288d5a00a7ad494c247ca94b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于1.30元，或净资产修复、债务重组、审计和控制权任一核心假设恶化",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查半年报、债权申报规模、归母净资产、经营现金流与重组方案。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于0.80至1.30元且重组方案可执行、无新增致命退市或清算风险",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报审计意见、内控整改、净资产是否转正及终止上市风险。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于0.80元且重新核验长期商业价值未受损、赔率确有改善",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.3
+      },
+      "reason": "进入研究仓评估区，但必须先重新核验重组、退市和清算风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "进入减仓或不应追高区间，除非可执行方案显著提高每股价值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查半年报、债权申报规模、归母净资产、经营现金流与重组方案。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报审计意见、内控整改、净资产是否转正及终止上市风险。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.3,
-      "reason": "进入研究仓评估区，但必须先重新核验重组、退市和清算风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "进入减仓或不应追高区间，除非可执行方案显著提高每股价值。"
-    }
-  ],
-  "updated_at": "2026-07-20T22:37:49+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

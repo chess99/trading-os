@@ -1,38 +1,119 @@
 {
-  "symbol": "CN:601169",
-  "market": "CN",
-  "ticker": "601169",
-  "name": "北京银行",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "北京银行在0.39x PB与5.4%股息下有区域估值与同业折价三成的修复空间,但2025Q4单季净利由正转负叠加分红除权在即(7-10除权息)、2026同比增速或含低基数幻觉,先等8-21半年报验证净息差企稳与零售转正再决定是否转buy,当前仅5%-8%试探仓。",
-  "fair_value_range": [5.6, 6.8],
-  "buy_zone": [4.5, 5.2],
-  "sell_or_reduce_zone": [6.3, 7.5],
-  "position_plan": [
-    {"condition": "股价小于等于4.2元(除权前口径)", "action": "积极加仓", "max_weight": 0.12, "reason": "PB<0.32,市场过度悲观已到极致,可建核心仓"},
-    {"condition": "股价4.2-4.8元", "action": "分批买入", "max_weight": 0.10, "reason": "低于保守合理价值下沿,赔率与股息率均有吸引力"},
-    {"condition": "股价4.8-5.2元(当前价附近)", "action": "试探建仓", "max_weight": 0.06, "reason": "安全边际一般,先轻仓等半年报"},
-    {"condition": "股价5.2-5.8元", "action": "持有不追", "max_weight": 0.04, "reason": "进入价值兑现下半段,赔率下降"},
-    {"condition": "股价5.8-6.3元", "action": "持有不追", "max_weight": 0.02, "reason": "接近合理价值中枢"},
-    {"condition": "股价高于6.3元", "action": "不追高/逢高减仓", "max_weight": 0.0, "reason": "需更强ROE修复才支撑"}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北京银行",
+    "security_status": "active",
+    "symbol": "CN:601169",
+    "ticker": "601169"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial-v1.md",
+        "sha256": "10b4151fdff0e20124e3f4015dd308dd968773b7d7ae7c94325fb69989891ab6"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "cdf95eee022bad05bb9084c14b393bab259ab9cb428956c53d92056c4dbc9d2f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-07-10"
+      },
+      "reason": "除权除息发放日,关注除权后填权意愿",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-21"
+      },
+      "reason": "2026半年报预约披露日,核验净息差、Q4异常是否一次性、零售贷款、信用成本、核心一级资本",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报,验证修复延续性",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报与下一轮分红方案,核验Q4是否再异常",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "除权前口径:进入更具安全边际的加仓区,复核假设后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "极低PB,需复核是否有未发现的实质性恶化,不机械加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "除权前口径:接近不应追高区,需复核基本面超预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial-v1.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-09-initial-v1.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-07-10", "reason": "除权除息发放日,关注除权后填权意愿"},
-    {"type": "date", "date": "2026-08-21", "reason": "2026半年报预约披露日,核验净息差、Q4异常是否一次性、零售贷款、信用成本、核心一级资本"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026三季报,验证修复延续性"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年报与下一轮分红方案,核验Q4是否再异常"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 4.5, "reason": "除权前口径:进入更具安全边际的加仓区,复核假设后考虑加仓"},
-    {"type": "price_below", "price": 4.0, "reason": "极低PB,需复核是否有未发现的实质性恶化,不机械加仓"},
-    {"type": "price_above", "price": 6.3, "reason": "除权前口径:接近不应追高区,需复核基本面超预期"}
-  ],
-  "updated_at": "2026-07-09T16:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

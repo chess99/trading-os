@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:601083",
-  "ticker": "601083",
-  "name": "锦江航运",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "锦江航运是上海港体系内优质区域集装箱航运公司，2025年盈利、现金流和分红表现突出，资产负债表安全；但2026Q1利润已同比回落，当前公开行情接近基准内在价值低端，缺少足够安全边际，等待8.8-10.0元买入区或中报验证后再提高仓位。",
-  "fair_value_range": [
-    10.8,
-    13.2
-  ],
-  "buy_zone": [
-    8.8,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "锦江航运",
+    "security_status": "active",
+    "symbol": "CN:601083",
+    "ticker": "601083"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "58ad4bbfe553ed4a91a331c93dca6d7aa0b959b61d5944205849cc4859c314b2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察或小仓跟踪；若价格进入10.0元以下且CCFI日本/东南亚航线未趋势性恶化，可建立不超过1%观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "预计披露2026年中报，复核利润率、承运箱量、经营现金流和新船资本开支。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若价格进入8.8-9.5元，且2026中报经营现金流仍覆盖分红和新船资本开支，可增至核心仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及旺季后区域航线运价。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格低于8.8元且非基本面永久恶化，同时运输服务毛利率维持25%以上，可提高至最高配置上限。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报、分红政策与新造船交付节奏。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "若价格高于13.5元且没有盈利预测上修或分红率上调，降低至观察仓或退出。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入买入观察区，需要复核近洋运价和中报利润质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "进入减仓区，若无盈利上修则收益风险比下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入买入观察区，需要复核近洋运价和中报利润质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入高安全边际区，若基本面未恶化可评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "进入减仓区，若无盈利上修则收益风险比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "预计披露2026年中报，复核利润率、承运箱量、经营现金流和新船资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及旺季后区域航线运价。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报、分红政策与新造船交付节奏。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

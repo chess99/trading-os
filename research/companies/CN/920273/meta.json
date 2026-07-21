@@ -1,95 +1,130 @@
 {
-  "symbol": "CN:920273",
-  "market": "CN",
-  "ticker": "920273",
-  "name": "星图测控",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "星图测控是航天测控管理和航天数字仿真的稀缺标的，商业航天收入增长快、盈利能力强，但当前价格约46.40元对应约103.79亿元市值和较高远期估值；2026-07-14起军事航天部队采购资格暂停带来合规和订单折价，当前缺乏安全边际，等待28元以下或风险显著澄清。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "星图测控",
+    "security_status": "active",
+    "symbol": "CN:920273",
+    "ticker": "920273"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "fa4cfc21ba98f3860459e20ff4de2ba0c81d6ec28cc8107e5f190ad264c9b27a"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "c05b6ab2a5d693c1b3e0e7fb9b44487ed3bc134c17d7db6942c3cae761f8e887"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于40元且军采资格暂停影响未澄清，不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复查2026年中报，重点看商业航天收入、特种收入、扣非净利和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至28至34元，且中报确认商业航天收入继续增长、现金流未恶化，可建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和订单验收节奏，判断全年目标兑现概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，且军采暂停未扩大、扣非净利和经营现金流改善，可分批买入",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复查军采资格暂停是否有解除、扩大或处罚期限信息",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，且核心订单和资质未受进一步损害，可作为强吸引力区间",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入估值复核区，检查军采资格、商业航天订单和现金流后决定是否观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于55元或估值重新回到远期高倍且基本面未超预期，减仓或不参与",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入安全边际买入区，若风险未扩大可开第一笔1%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入强吸引力区，适合在基本面未破坏时提高至最高5%仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "不追高区，新增资金停止买入",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "估值进入减仓观察区，除非订单和现金流显著超预期",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入估值复核区，检查军采资格、商业航天订单和现金流后决定是否观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入安全边际买入区，若风险未扩大可开第一笔1%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入强吸引力区，适合在基本面未破坏时提高至最高5%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "不追高区，新增资金停止买入"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "估值进入减仓观察区，除非订单和现金流显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复查2026年中报，重点看商业航天收入、特种收入、扣非净利和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和订单验收节奏，判断全年目标兑现概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复查军采资格暂停是否有解除、扩大或处罚期限信息"
-    }
-  ],
-  "notes": "公开资料显示星图测控官方证券代码为920116.BJ，920273公开行情对应一致魔芋；本文件按用户指定字段写CN:920273，但报告正文已标注代码核验差异。当前评级watch，今日不买，第一笔仓位0%。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

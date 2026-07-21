@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:688278",
-  "market": "CN",
-  "ticker": "688278",
-  "name": "特宝生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "派格宾在慢乙肝临床治愈场景具备先发心智、适应症与专科推广壁垒，2025年盈利能力已验证；益佩生提供第二增长曲线。当前约23倍TTM PE已反映2026Q1利润扰动但未充分反映中期增长，适合分批买入并跟踪费用率和新品放量。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    68,
-    85
-  ],
-  "buy_zone": [
-    45,
-    58
-  ],
-  "sell_or_reduce_zone": [
-    82,
-    95
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "特宝生物",
+    "security_status": "active",
+    "symbol": "CN:688278",
+    "ticker": "688278"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "aec797d161d0a39f4acafffdb0b565d0c8896968d35c8b6e01424ddf8d823ac1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "57元附近且未出现核心品种价格、疗效或监管恶化，建立基础仓",
-      "action": "buy_initial",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看派格宾增速、益佩生放量、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "52元以下且2026H1/Q3收入继续增长、费用率未失控、经营现金流未明显恶化",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润扰动是否已修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "确认益佩生放量并且派格宾维持双位数增长后，组合最大持仓上限",
-      "action": "hold_or_add",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和新一年度经营指引，重估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "82元以上且未来12个月利润增长不能支撑25倍以上估值",
-      "action": "reduce",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 52.0
+      },
+      "reason": "进入加仓区，但需复核利润率、现金流和核心品种经营变化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "跌入悲观情景估值下沿，若基本面未变则安全边际显著提高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 82.0
+      },
+      "reason": "接近基准估值上沿，需要评估收益风险比并考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "进入乐观情景估值，需要新的高增长证据支撑继续持有",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 52,
-      "reason": "进入加仓区，但需复核利润率、现金流和核心品种经营变化"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "跌入悲观情景估值下沿，若基本面未变则安全边际显著提高"
-    },
-    {
-      "type": "price_above",
-      "price": 82,
-      "reason": "接近基准估值上沿，需要评估收益风险比并考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "进入乐观情景估值，需要新的高增长证据支撑继续持有"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看派格宾增速、益佩生放量、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润扰动是否已修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和新一年度经营指引，重估合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

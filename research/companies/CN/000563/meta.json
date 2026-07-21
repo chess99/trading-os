@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:000563",
-  "market": "CN",
-  "ticker": "000563",
-  "name": "陕国投Ａ",
-  "company_name": "陕国投Ａ",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "陕国投A具备信托牌照、陕西国资背景、净资本充足和稳定分红优势，但2026Q1收入利润承压，传统非标业务退坡与固有投资收益波动仍需观察；当前价格处于合理区间低位，等待2.65元以下再小仓位试买。",
-  "quality_rating": "B",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    2.8,
-    3.4
-  ],
-  "buy_zone": [
-    2.45,
-    2.7
-  ],
-  "sell_or_reduce_zone": [
-    3.45,
-    3.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "陕国投Ａ",
+    "security_status": "active",
+    "symbol": "CN:000563",
+    "ticker": "000563"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b90724759ad830989eee758d4da496ca47d69d2087eb7e1c7bc424e12f99bf55"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 2.65 and 2026 interim results do not show further asset quality deterioration",
-      "action": "initiate small position",
-      "max_weight": 0.01,
-      "reason": "Price enters buy zone with PB below about 0.72x 2025 book value and dividend yield above 3%."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review 2026 interim report for fee income, investment income, net capital, and asset exposure changes.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 2.45 and net capital ratio remains above 180%",
-      "action": "add cautiously",
-      "max_weight": 0.03,
-      "reason": "Deeper discount compensates for trust industry transition and 2026Q1 earnings pressure."
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "Review 2026 annual report and dividend policy.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price >= 3.45 without ROE recovery above 8%",
-      "action": "reduce or keep only tracking position",
-      "max_weight": 0.01,
-      "reason": "Valuation approaches upper fair value while earnings momentum remains insufficient."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.65
+      },
+      "reason": "First-entry zone for a small starter position.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.45
+      },
+      "reason": "Deep value zone if net capital and asset quality remain stable.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.45
+      },
+      "reason": "Review for reduction near the upper fair value range.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.65,
-      "reason": "First-entry zone for a small starter position."
-    },
-    {
-      "type": "price_below",
-      "price": 2.45,
-      "reason": "Deep value zone if net capital and asset quality remain stable."
-    },
-    {
-      "type": "price_above",
-      "price": 3.45,
-      "reason": "Review for reduction near the upper fair value range."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review 2026 interim report for fee income, investment income, net capital, and asset exposure changes."
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "Review 2026 annual report and dividend policy."
-    }
-  ],
-  "key_tracking_metrics": [
-    "trust_assets_total",
-    "active_management_trust_assets",
-    "fee_and_commission_net_income",
-    "investment_income",
-    "fair_value_change_income",
-    "net_capital",
-    "net_capital_to_risk_capital",
-    "infrastructure_exposure",
-    "real_estate_exposure",
-    "dividend_payout_ratio",
-    "roe"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

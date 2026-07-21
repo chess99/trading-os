@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:600610",
-  "ticker": "600610",
-  "name": "中毅达",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中毅达拥有国内靠前的季戊四醇产能和一定联产工艺优势，2025年以来盈利修复有基本面支撑；但公司高负债、商誉高于净资产、历史治理折价和产品周期性都要求较大安全边际，当前价格显著高于保守公允价值。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.5,
-    3.0
-  ],
-  "buy_zone": [
-    0.9,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    6.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中毅达",
+    "security_status": "active",
+    "symbol": "CN:600610",
+    "ticker": "600610"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "734f5db8063524739fd11c7046e47a8eefb1fd0468ce15d75ecb3dc62be796aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价跌入买入区且最近两个季度经营现金流为正、季戊四醇和三羟甲基丙烷价差维持健康时，允许试探性建仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点查看经营现金流、负债重分类和商誉风险。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若价格高于4.5元或半年报显示净利润修复不可持续，则不建立新仓。",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入保守买入观察区，需要结合最新价差、负债和现金流复核。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证季戊四醇景气与三羟甲基丙烷修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "显著高于估值上沿，应维持回避或减持判断。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点查看经营现金流、负债重分类和商誉风险。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入保守买入观察区，需要结合最新价差、负债和现金流复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证季戊四醇景气与三羟甲基丙烷修复是否持续。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "显著高于估值上沿，应维持回避或减持判断。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

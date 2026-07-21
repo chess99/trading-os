@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:603048",
-  "ticker": "603048",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "浙江黎明",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "浙江黎明是汽车精密零部件细分一级供应商，客户和工艺资产真实，2026 年利润有修复迹象；但发动机件长期结构压力、新兴事业部放量不确定和当前高估值使安全边际不足，适合观察而非追买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江黎明",
+    "security_status": "active",
+    "symbol": "CN:603048",
+    "ticker": "603048"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f97341561cfe8d180e7c18d6949751364318feced1061cf359e3c0b54ab87568"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未跌入买入区或未看到 2026H1 扣非净利与经营现金流同步修复前，不建仓。",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非净利、毛利率、资产减值和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 9.5 元且 2026H1 扣非归母净利润不低于 3000 万元，允许试探仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认全年利润修复是否具备持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026 年扣非归母净利润超过 7000 万元且经营现金流净额超过 9000 万元，可提高仓位上限。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报和分红，重估新兴事业部量产兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入初步买入区，若基本面未恶化可重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入深度安全边际区，需要复核是否为基本面恶化导致。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "估值接近乐观情景，若业绩未超预期应避免追高或考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "高于合理价值上沿较多，必须由新业务放量和利润跃升支撑。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入初步买入区，若基本面未恶化可重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入深度安全边际区，需要复核是否为基本面恶化导致。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "估值接近乐观情景，若业绩未超预期应避免追高或考虑减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "高于合理价值上沿较多，必须由新业务放量和利润跃升支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非净利、毛利率、资产减值和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认全年利润修复是否具备持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报和分红，重估新兴事业部量产兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

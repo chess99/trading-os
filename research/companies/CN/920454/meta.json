@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920454",
-  "market": "CN",
-  "ticker": "920454",
-  "name": "同心传动",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "资产负债表稳健但护城河窄、客户与应收集中，当前约42倍TTM PE已透支增长，需等待显著安全边际。",
-  "fair_value_range": [5.8, 7.2],
-  "buy_zone": [4.3, 5.3],
-  "sell_or_reduce_zone": [8.5, 30.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同心传动",
+    "security_status": "active",
+    "symbol": "CN:920454",
+    "ticker": "920454"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "667e2fbe16b8d31b667dcd8b2d3c1d1600c86324c586e01de3556d8073f80343"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.8至5.3元且收入恢复增长、毛利率不低于28%、应收周转未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入恢复、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.3至4.8元且重新验证客户稳定、自由现金流为正、无高风险资本运作",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度经营趋势与核心假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.5元或基本面假设被证伪",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.3
+      },
+      "reason": "进入有安全边际的观察买入区间，需先复核基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过合理价值上沿并进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入恢复、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度经营趋势与核心假设"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.3,
-      "reason": "进入有安全边际的观察买入区间，需先复核基本面"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过合理价值上沿并进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-17T16:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

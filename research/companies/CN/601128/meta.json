@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601128",
-  "ticker": "601128",
-  "name": "常熟银行",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "常熟银行具备高于行业的净息差、低不良和可复制的小微/县域金融能力，2026Q1 仍保持两位数利润增长；当前估值约0.67倍PB、约5倍PE，处于合理偏低位置，适合在净息差和资产质量未破坏前分批配置。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    6.8,
-    8.5
-  ],
-  "buy_zone": [
-    5.8,
-    6.3
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    9.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "常熟银行",
+    "security_status": "active",
+    "symbol": "CN:601128",
+    "ticker": "601128"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "617e28a1adc95894c3b502e83e7d76d8921f3ae40891f9262826d516ac0fe357"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.3元，且最近一期净息差高于2.40%、不良率低于0.85%、核心一级资本充足率高于11.0%",
-      "action": "分批建立基础仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查净息差、资产质量、拨备覆盖率和核心一级资本充足率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.8元，且半年报或季报未显示净息差、资产质量和资本充足率同时恶化",
-      "action": "提高至目标仓位上限",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润增速和小微信贷质量是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.8元，或净息差低于2.35%、不良率高于0.90%、核心一级资本充足率低于10.8%任一发生",
-      "action": "停止加仓并评估减仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，更新长期ROE与资本补充假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入悲观情景估值下沿附近，如基本面未破坏则安全边际显著扩大",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "进入建议买入区间，可建立基础仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "接近乐观情景起点，需检查是否有足够基本面上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入悲观情景估值下沿附近，如基本面未破坏则安全边际显著扩大"
-    },
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "进入建议买入区间，可建立基础仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "接近乐观情景起点，需检查是否有足够基本面上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查净息差、资产质量、拨备覆盖率和核心一级资本充足率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润增速和小微信贷质量是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，更新长期ROE与资本补充假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

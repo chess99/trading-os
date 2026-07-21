@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688026",
-  "market": "CN",
-  "ticker": "688026",
-  "name": "洁特生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "洁特生物是生命科学上游耗材恢复型小市值资产，国内自有品牌放量、现金流和低杠杆提供下行保护；当前估值已反映2026Q1亏损和海外/产能压力，若2026H1收入与毛利率修复，可获得从低PB到正常化利润估值的重定价。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    18.0,
-    23.0
-  ],
-  "buy_zone": [
-    0.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    23.5,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "洁特生物",
+    "security_status": "active",
+    "symbol": "CN:688026",
+    "ticker": "688026"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e64d47ac925173927cf001ed2f9711fe222478b310b465b74b87b5df64cdb4b7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "12.0至14.5元之间分批建立初始仓位，前提是未出现重大订单流失、毛利率继续恶化或控股股东质押等新增风险。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "预计披露下一份财报，重点核验2026H1收入、毛利率、现金流和产能爬坡。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1收入恢复、毛利率回到38%以上且经营现金流为正后加仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年收入修复和新产线折旧压力。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026H1收入低于2.3亿元且毛利率低于35%，停止加仓并降级为观察。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报披露后更新正常化利润、可转债偿付和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "接近悲观情景和约1.3倍PB估值，若基本面未恶化，可复核加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.5
+      },
+      "reason": "进入减持区，需要用利润兑现而非估值修复支撑继续持有。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "接近悲观情景和约1.3倍PB估值，若基本面未恶化，可复核加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 23.5,
-      "reason": "进入减持区，需要用利润兑现而非估值修复支撑继续持有。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "预计披露下一份财报，重点核验2026H1收入、毛利率、现金流和产能爬坡。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年收入修复和新产线折旧压力。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报披露后更新正常化利润、可转债偿付和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

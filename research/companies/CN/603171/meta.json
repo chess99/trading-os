@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:603171",
-  "ticker": "603171",
-  "name": "税友股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "税友股份是税务数字化和企业财税服务垂直软件公司，受益于智慧税务、数电票、涉税服务监管和 AI 财税助手产品化，但当前估值已显著透支利润修复和 AI 商业化预期，需要等待价格回落或基本面验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    18,
-    26
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    80
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "税友股份",
+    "security_status": "active",
+    "symbol": "CN:603171",
+    "ticker": "603171"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "082ad1650acbf49b895a0cd6b5b6594bd4ffd8a00e60a8806fa9ac5ff07abf49"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基础情景公允价值上沿且盈利拐点尚未验证，保持观察不建仓。",
-      "action": "watch",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查企业财税收入、扣非净利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且最近两个季度收入增速不低于10%、经营现金流未恶化。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润修复是否足以支撑估值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "AI财税产品形成可验证的付费客户增长、扣非净利率回升至8%以上且估值低于40倍下一年利润。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基础情景买入区，需要复核最新季度收入、现金流和AI产品商业化进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "高于减仓区下沿，若利润没有上修则估值赔率不足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入基础情景买入区，需要复核最新季度收入、现金流和AI产品商业化进展。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "高于减仓区下沿，若利润没有上修则估值赔率不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查企业财税收入、扣非净利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润修复是否足以支撑估值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

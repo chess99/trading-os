@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920679",
-  "market": "CN",
-  "ticker": "920679",
-  "name": "前进科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "细分工艺和客户认证壁垒尚可、2026年一季度需求修复，但客户极度集中、ROE与自由现金流偏低，15.20元已透支乐观预期。",
-  "fair_value_range": [9.0, 11.5],
-  "buy_zone": [7.5, 9.0],
-  "sell_or_reduce_zone": [13.0, 16.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "前进科技",
+    "security_status": "active",
+    "symbol": "CN:920679",
+    "ticker": "920679"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "4a10af7e11bb63443a972673403e7a7f1784525ded94a33b60dcb19e4be802af"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于7.5至9.0元且半年报验证主要客户需求、毛利率和现金流未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-09-05"
+      },
+      "reason": "2026年半年报后复查需求修复、毛利率、经营现金流和商用业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.5元，重新验证投资逻辑未受损且ROIC和自由现金流改善",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-05-15"
+      },
+      "reason": "2026年年报后复查全年自由现金流、资本回报和募集资金使用效率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "客户采购、毛利率或募集资金纪律恶化时，不因价格下跌补仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入可研究买入区间，仍需重新验证核心假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-05",
-      "reason": "2026年半年报后复查需求修复、毛利率、经营现金流和商用业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-05-15",
-      "reason": "2026年年报后复查全年自由现金流、资本回报和募集资金使用效率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入可研究买入区间，仍需重新验证核心假设"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-15T20:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

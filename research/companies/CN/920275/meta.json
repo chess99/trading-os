@@ -1,86 +1,120 @@
 {
-  "symbol": "CN:920275",
-  "market": "CN",
-  "ticker": "920275",
-  "name": "创远信科",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "公开行情核验显示创远信科实际代码为920961.BJ，920275.BJ对应驱动力；本资产键按用户指定保留。按创远信科基本面看，公司具备无线通信、5G/6G、北斗导航、卫星互联网和低空经济测试技术储备，但2025年收入同比下降12.13%、扣非归母净利润-2889.60万元，2026Q1收入继续同比下降28.82%、扣非亏损扩大。现价21.02元对应约30.03亿元市值、约14.7倍2025年PS和约4.0倍PB，已经透支主业修复和微宇天导重组预期，当前不值得买。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    7.0,
-    10.0
-  ],
-  "buy_zone": [
-    5.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    21.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创远信科",
+    "security_status": "active",
+    "symbol": "CN:920275",
+    "ticker": "920275"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "b2a87d7ca25c774f7142dd514bf931de6fbef4f725700d066bc13895ddf36aca"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "4a919e401435e95fd27d92c52082a36b3e6fb7fa251f195508f3c5be9cc73094"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价高于12.0元或重大资产重组尚未明确通过且利润质量未改善",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、研发资本化率、现金流和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回到7.0-10.0元且收入降幅收窄、扣非亏损收窄、研发资本化率下降",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及微宇天导重大资产重组审核/注册进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回到5.0-6.5元且主业订单企稳、经营现金流未恶化、重组条款无明显利益输送",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认主业是否止跌和研发投入是否转化为订单",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.0元且未发生技术、治理或资产质量永久性损伤",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入合理价值区间，复核收入、扣非利润和重组进展后决定是否继续观察",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入安全边际买入区，若基本面未继续恶化可考虑0.5%-1.0%第一笔",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入强吸引力区，但需确认下跌不是由基本面永久性证伪引发",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于合理估值上沿，不追高并维持零仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入合理价值区间，复核收入、扣非利润和重组进展后决定是否继续观察"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入安全边际买入区，若基本面未继续恶化可考虑0.5%-1.0%第一笔"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入强吸引力区，但需确认下跌不是由基本面永久性证伪引发"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于合理估值上沿，不追高并维持零仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、研发资本化率、现金流和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及微宇天导重大资产重组审核/注册进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认主业是否止跌和研发投入是否转化为订单"
-    }
-  ],
-  "notes": "关键核验警示：Sina行情接口2026-07-17显示bj920961为创远信科、bj920275为驱动力；本meta按用户要求写symbol=CN:920275、ticker=920275、name=创远信科。交易前必须人工复核证券代码，避免买错标的。当前决策为不买，第一笔仓位0%，置信度0.62。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

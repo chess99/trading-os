@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:603439",
-  "market": "CN",
-  "ticker": "603439",
-  "name": "三力制药",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三力制药拥有开喉剑喷雾剂系列这一真实独家中成药资产，但2025年盈利断崖、2026H1预告继续下滑，说明压力已从一次性商誉减值扩展到需求、渠道和费用效率。当前10.95元价格对应的市值仍要求利润较快恢复到2亿元以上，安全边际不足，需等待收入恢复、销售费用率下降、应收回款改善后再评估买入。",
-  "fair_value_range": [
-    7.0,
-    9.5
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    14.0
-  ],
-  "position_plan": [
-    {
-      "condition": "2026年半年报或三季报显示收入恢复正增长、销售费用率环比下降且经营现金流不弱于净利润，同时股价进入6.2-7.2元区间",
-      "action": "可建立观察性小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "收入继续下滑、应收账款继续上升或商誉新增重大减值",
-      "action": "不买入，已有仓位降至零或仅保留跟踪仓",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价高于11.5元但未出现利润恢复到年化2亿元以上的证据",
-      "action": "不追涨，已有仓位减持",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入初步买入观察区，需要同步复核半年报或三季报经营质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入更高安全边际区，但仅在基本面未继续恶化时考虑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "价格高于当前基准公允价值上沿，若缺乏利润恢复证据应降低风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "公司预约披露2026年半年报，需核验H1收入、费用率、应收账款、现金流和商誉风险。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口，判断Q2弱势是否延续以及OTC自营团队效率是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报窗口，复盘2026全年盈利中枢、定增进展、债务结构和商誉减值。"
-    }
-  ],
-  "price_reference": {
-    "date": "2026-07-17",
-    "close": 10.95,
-    "market_cap_cny_billion": 44.78,
-    "source": "雪球 SH603439 行情，2026-07-17 15:00 北京时间"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三力制药",
+    "security_status": "active",
+    "symbol": "CN:603439",
+    "ticker": "603439"
   },
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "1b512254c582aee78b2877b3c631582cea63e28dafc88e829789b9b490756635"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "公司预约披露2026年半年报，需核验H1收入、费用率、应收账款、现金流和商誉风险。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口，判断Q2弱势是否延续以及OTC自营团队效率是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报窗口，复盘2026全年盈利中枢、定增进展、债务结构和商誉减值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入初步买入观察区，需要同步复核半年报或三季报经营质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入更高安全边际区，但仅在基本面未继续恶化时考虑小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "价格高于当前基准公允价值上沿，若缺乏利润恢复证据应降低风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

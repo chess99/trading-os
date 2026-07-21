@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:688135",
-  "market": "CN",
-  "ticker": "688135",
-  "name": "利扬芯片",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "利扬芯片主业处于从亏损向微利修复的早期阶段，2025收入创高且2026Q1扭亏，但重资产折旧、资本开支和客户不可核验使确定性不足；当前25.68元处于基准价值区间中部，缺少安全边际，等待20元以下或连续季度扣非盈利验证。",
-  "fair_value_range": [
-    22.0,
-    30.0
-  ],
-  "buy_zone": [
-    16.0,
-    20.0
-  ],
-  "sell_or_reduce_zone": [
-    36.0,
-    42.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利扬芯片",
+    "security_status": "active",
+    "symbol": "CN:688135",
+    "ticker": "688135"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b5124538d05c0202bdf64e0db9ffdf25869980e888bdb692c0bfe6a75be76544"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于20元，且最近季度收入同比增速保持20%以上、经营现金流为正时，可建立研究观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、扣非净利、主营毛利率和资本开支。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于18元，且连续两个季度扣非净利润为正、主营毛利率维持28%以上时，可提高仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认连续盈利和经营现金流质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于15元且未出现客户流失、进口设备受限或自由现金流恶化时，才考虑逆向加仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估重资产折旧压力、自由现金流和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入初始买入区间，估值对利润修复失败有较好折价。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入深度安全边际区间，需复核基本面是否恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入乐观情景估值下沿，若利润未规模化释放应降低仓位或停止买入。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过基准估值明显区间，除非出现可核验大客户订单和自由现金流改善，否则应卖出或回避。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入初始买入区间，估值对利润修复失败有较好折价。"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入深度安全边际区间，需复核基本面是否恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 36.0,
-      "reason": "进入乐观情景估值下沿，若利润未规模化释放应降低仓位或停止买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 42.0,
-      "reason": "超过基准估值明显区间，除非出现可核验大客户订单和自由现金流改善，否则应卖出或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、扣非净利、主营毛利率和资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认连续盈利和经营现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估重资产折旧压力、自由现金流和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

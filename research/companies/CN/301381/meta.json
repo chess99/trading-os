@@ -1,97 +1,115 @@
 {
-  "symbol": "CN:301381",
-  "ticker": "301381",
-  "name": "赛维时代",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "赛维时代具备跨境电商品牌矩阵、供应链和平台运营能力，收入仍在增长，但 2025 年和 2026Q1 呈现增收不增利，当前股价接近合理价值区间，安全边际不足，先观察等待利润率修复或更低价格。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    19.0,
-    24.0
-  ],
-  "buy_zone": [
-    15.0,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    26.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赛维时代",
+    "security_status": "active",
+    "symbol": "CN:301381",
+    "ticker": "301381"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9e7417ff433b1f34a9b283308c08653cebc1175e216243c03c3893c06ddd003c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 17.5 元且 2026 年中报尚未确认利润率修复时，仅保留观察或很小跟踪仓。",
-      "action": "watch",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看利润率、存货、经营现金流和平台结构。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入 15.0-17.5 元，且收入继续增长、经营现金流为正、存货和销售费用率未恶化。",
-      "action": "initial_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认收入增长是否转化为利润增长。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026 年中报或三季报确认净利率修复至 2.6% 以上、库存周转改善且平台风险未扩大。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报及下一年度经营指引，重估长期净利率和估值中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 26.0 元但利润修复未兑现，或估值超过 30 倍前瞻 PE。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入买入观察区，需要复核利润率、库存和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入具备较高安全边际的价格区间，可在基本面未恶化时评估加大仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "高于合理价值区间上沿，需要检验是否已有利润超预期支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "接近乐观情景估值，若无盈利显著上修应降低仓位或停止买入。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入买入观察区，需要复核利润率、库存和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入具备较高安全边际的价格区间，可在基本面未恶化时评估加大仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "高于合理价值区间上沿，需要检验是否已有利润超预期支撑。"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "接近乐观情景估值，若无盈利显著上修应降低仓位或停止买入。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看利润率、存货、经营现金流和平台结构。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认收入增长是否转化为利润增长。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报及下一年度经营指引，重估长期净利率和估值中枢。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "tags": [
-    "跨境电商",
-    "品牌出海",
-    "服饰配饰",
-    "创业板"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

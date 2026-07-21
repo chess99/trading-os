@@ -1,95 +1,106 @@
 {
-  "symbol": "CN:000949",
-  "market": "CN",
-  "ticker": "000949",
-  "name": "新乡化纤",
-  "company_name": "新乡化纤",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新乡化纤处于氨纶和生物质纤维素长丝周期修复阶段，2026年上半年业绩预告显示利润弹性已出现，但氨纶供给扩张和原料价差仍是核心不确定性；适合在5.0元以下小仓试错，半年报确认现金流和毛利改善后再提高仓位。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "neutral_to_cheap",
-  "fair_value_range": [
-    5.6,
-    7.2
-  ],
-  "buy_zone": [
-    4.3,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新乡化纤",
+    "security_status": "active",
+    "symbol": "CN:000949",
+    "ticker": "000949"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "4c781525106ddb5685e14d69967513f2956f7f6e7bffaa4aa530d93a0bf18f47"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.0元且氨纶价差继续改善或半年报确认业绩预告兑现",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "周期底部修复已出现，但化纤价格和扩产风险仍高"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报利润、毛利率、现金流和扩产进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于4.3-4.6元且扣非利润、经营现金流、长丝毛利率均保持改善",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.06,
-      "reason": "接近净资产锚且盈利修复得到财报验证，赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和氨纶价差持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.8元但氨纶价差未继续扩大",
-      "action": "停止加仓并分批减仓",
-      "max_weight": 0.03,
-      "reason": "价格进入合理价值上沿，周期反转预期已有较多兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "接近悲观情景交易底部，需要复核行业是否恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "进入减仓区间，需防止周期预期透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "超过乐观情景中枢附近，除非景气继续上修否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "接近悲观情景交易底部，需要复核行业是否恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "进入减仓区间，需防止周期预期透支"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "超过乐观情景中枢附近，除非景气继续上修否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报利润、毛利率、现金流和扩产进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和氨纶价差持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "氨纶40D/20D主流报价与库存天数",
-    "PTMEG、纯MDI价格及氨纶价差",
-    "生物质纤维素长丝价格、出口订单和浆粕价格",
-    "季度毛利率、扣非净利润、经营现金流",
-    "新增氨纶10万吨和长丝2万吨项目进度",
-    "应收账款、存货、资本开支和有息负债",
-    "控股股东质押比例和定增进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

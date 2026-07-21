@@ -1,97 +1,115 @@
 {
-  "symbol": "CN:603505",
-  "market": "CN",
-  "ticker": "603505",
-  "name": "金石资源",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "金石资源是A股稀缺萤石资源龙头，资源和低品位伴生萤石选化一体技术具备长期价值，但2026年矿山与金鄂博氟化工停产整改降低短期利润和现金流可见度；当前价格低于基准价值但安全边际不足，宜观察复产、产量和现金流确认后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    18.0,
-    24.0
-  ],
-  "buy_zone": [
-    12.5,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金石资源",
+    "security_status": "active",
+    "symbol": "CN:603505",
+    "ticker": "603505"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "96b9cb66a2ae96d7aa2f506a958d8a8dbfc8bec661b36f4eba7d32a37eee0037"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入12.5-14.5元且金鄂博氟化工披露复产或明确复产时间，同时浙江矿山复核无新增重大事故",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看停产影响、金鄂博复产进度、单一萤石产量和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "金鄂博月度AHF产量恢复至约2万吨且连续两个季度经营现金流/归母净利润大于0.8",
-      "action": "可提高至核心小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认复产后利润率和经营现金流恢复程度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "停产超过一个季度、发生新增重大安全事故或2026年全年经营现金流显著弱于净利润",
-      "action": "不加仓并重新评估价值下沿",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新计算规范化利润和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入安全买入区间上沿，可结合复产进度评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入高安全边际区间，若无永久性监管或安全损害，应重点复盘。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入合理价值区间上沿，若业绩未同步上修应考虑降低预期收益。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "超过减持区间上沿，若无牛市情景证据则估值偏贵。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入安全买入区间上沿，可结合复产进度评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入高安全边际区间，若无永久性监管或安全损害，应重点复盘。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入合理价值区间上沿，若业绩未同步上修应考虑降低预期收益。"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "超过减持区间上沿，若无牛市情景证据则估值偏贵。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看停产影响、金鄂博复产进度、单一萤石产量和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认复产后利润率和经营现金流恢复程度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新计算规范化利润和估值区间。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 16.08,
-    "last_price_date": "2026-07-17",
-    "market_cap_cny_billion": 13.534,
-    "shares_outstanding": 841668813,
-    "revenue_2025_cny_billion": 3.8875,
-    "net_profit_2025_cny_billion": 0.3258,
-    "operating_cash_flow_2025_cny_billion": 0.1344,
-    "revenue_2026_q1_cny_billion": 0.92,
-    "net_profit_2026_q1_cny_billion": 0.0613
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

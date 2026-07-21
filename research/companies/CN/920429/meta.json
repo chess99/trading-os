@@ -1,52 +1,86 @@
 {
-  "symbol": "CN:920429",
-  "market": "CN",
-  "ticker": "920429",
-  "name": "康比特",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "专业运动营养品牌具备增长空间，但原料涨价、利润率下滑和扩产期负自由现金流尚未被当前价格充分补偿。",
-  "fair_value_range": [7.4, 9.2],
-  "buy_zone": [6.0, 7.0],
-  "sell_or_reduce_zone": [10.5, 12.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康比特",
+    "security_status": "active",
+    "symbol": "CN:920429",
+    "ticker": "920429"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "1ddbcca3a9b2182e10dee719f440de6df6a15b4c7f8b8d6c51aafb5966a04e99"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于6.0-7.0元且毛利率、需求与军需回款未继续恶化，首档建仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入确认、毛利率、现金流及固安二期进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价仍在买入区间且连续财报确认毛利率回升、自由现金流改善和二期产能消化，总仓位上限",
-      "max_weight": 0.02
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入确认、毛利率、现金流及固安二期进展"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认利润率与自由现金流修复趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认利润率与自由现金流修复趋势"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入有安全边际的买入区间，但需先复核核心假设而非机械补仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入有安全边际的买入区间，但需先复核核心假设而非机械补仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓或不应追高区间，除非盈利与现金流已超出基准情景"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利与现金流已超出基准情景",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-17T18:29:13+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

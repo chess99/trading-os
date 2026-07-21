@@ -1,112 +1,130 @@
 {
-  "symbol": "CN:002980",
-  "market": "CN",
-  "ticker": "002980",
-  "name": "华盛昌",
-  "company_name": "深圳市华盛昌科技实业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买/观察",
-  "current_rating": "avoid",
-  "current_thesis": "华盛昌传统仪器仪表主业具备制造、海外客户和多SKU工程能力，但2025年及2026Q1利润和现金流承压；收购伽蓝特后切入光通信测试设备，2026年1-5月伽蓝特净利润约4925万元，第二增长曲线已有初步兑现迹象。问题在于2026-07-13股价86.79元仍显著高于42-58元合理价值区间，当前买入需要乐观情景持续兑现，安全边际不足。",
-  "quality_rating": "B",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    42,
-    58
-  ],
-  "buy_zone": [
-    30,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    95
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华盛昌",
+    "security_status": "active",
+    "symbol": "CN:002980",
+    "ticker": "002980"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "bb9d552fd0cf536a387492367019160314d6298afc0d818de96f6f5c7479a209"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e43d9cc0d78c33d313f554bd8726e389f017a599bd3b0f71245d16fa30085ac5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "max_weight": 0.06,
-      "target_weight": 0.0,
-      "condition": "价格高于75元且缺少新的合并报表验证时，不买入，只允许保留0%-0.5%观察仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看伽蓝特并表、订单、回款、经营现金流和主业毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "max_weight": 0.06,
-      "target_weight": 0.01,
-      "condition": "价格回落至58元以下，且2026H1或Q3显示伽蓝特收入、利润、订单和回款至少一项继续改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断光通信测试设备高增长是否延续到合并报表",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "max_weight": 0.06,
-      "target_weight": 0.03,
-      "condition": "价格回落至30-40元，传统主业毛利率未继续恶化，合并经营现金流转正或明显改善"
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "年底复核伽蓝特重大订单、新品批量供货、客户集中度、应收异常或业绩承诺风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "max_weight": 0.06,
-      "target_weight": 0.06,
-      "condition": "价格回落至24-30元，且伽蓝特未出现订单断层、客户流失、毛利率大幅下滑或应收失控"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入合理价值上沿以下，重新核验伽蓝特并表质量和光通信测试订单持续性",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入可买价格区，若现金流和毛利率未恶化，可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入强吸引买入区，需排除基本面永久性恶化后提高仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "高于合理价值且接近乐观情景定价，应停止加仓并降低风险敞口",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "进入主题交易泡沫区，除非连续业绩超预期，否则应减仓或回避",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入合理价值上沿以下，重新核验伽蓝特并表质量和光通信测试订单持续性"
-    },
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入可买价格区，若现金流和毛利率未恶化，可考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入强吸引买入区，需排除基本面永久性恶化后提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "高于合理价值且接近乐观情景定价，应停止加仓并降低风险敞口"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "进入主题交易泡沫区，除非连续业绩超预期，否则应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看伽蓝特并表、订单、回款、经营现金流和主业毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断光通信测试设备高增长是否延续到合并报表"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "年底复核伽蓝特重大订单、新品批量供货、客户集中度、应收异常或业绩承诺风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "合并营业收入",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "伽蓝特单季度收入和净利润",
-    "伽蓝特在手订单、交付周期和回款",
-    "光通信测试设备毛利率和客户集中度",
-    "传统主业毛利率和越南基地爬坡情况",
-    "存货、应收账款、预付款和合同负债",
-    "汇兑损益和外汇套保效果",
-    "控股股东及伽蓝特团队持股、锁定和减持安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

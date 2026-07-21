@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:600985",
-  "market": "CN",
-  "ticker": "600985",
-  "name": "淮北矿业",
-  "company_name": "淮北矿业",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安徽省属炼焦煤和煤化工一体化平台，资源和区位具备防守价值，但2025-2026年盈利仍受煤价和煤化工价差下行压制；当前更适合等待12.0-13.2元买区和中报盈利拐点验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    12.5,
-    17.0
-  ],
-  "buy_zone": [
-    12.0,
-    13.2
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    20.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "淮北矿业",
+    "security_status": "active",
+    "symbol": "CN:600985",
+    "ticker": "600985"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e504e372bb44c50fbbab2ca67e1251601a5b0f31840189d22f61b36e9cbc5284"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入12.0-13.2元且煤价未继续快速下行",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "当前股息率和低谷盈利不足以支持重仓，买区内可用小仓验证周期底部"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、煤炭分部毛利、资本开支和分红能力",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报确认归母净利润和经营现金流环比改善，且安全生产无重大负面事件",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "盈利拐点和现金流改善同时出现时，周期中枢估值更有支撑"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和旺季煤价变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价升至18.0元以上但焦煤价格、焦化价差或分红预期没有同步上修",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.015,
-      "reason": "估值进入基准情景上沿后安全边际下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.2
+      },
+      "reason": "进入初始买入区，复核煤价和安全生产后可小仓试买",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入更有吸引力的高安全边际区，若基本面无恶化可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入减仓观察区，需要煤价和盈利上修支撑，否则估值偏高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.2,
-      "reason": "进入初始买入区，复核煤价和安全生产后可小仓试买"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入更有吸引力的高安全边际区，若基本面无恶化可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入减仓观察区，需要煤价和盈利上修支撑，否则估值偏高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、煤炭分部毛利、资本开支和分红能力"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和旺季煤价变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "商品煤销量",
-    "吨煤售价",
-    "吨煤成本",
-    "炼焦煤价格指数",
-    "动力煤价格指数",
-    "焦炭和甲醇价差",
-    "经营现金流净额",
-    "资本开支",
-    "资产负债率",
-    "分红方案",
-    "安全生产事故和停产公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

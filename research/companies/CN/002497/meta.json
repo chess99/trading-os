@@ -1,224 +1,120 @@
 {
-  "symbol": "CN:002497",
-  "market": "CN",
-  "ticker": "002497",
-  "name": "雅化集团",
-  "company_name": "雅化集团",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "2026H1预告验证锂盐量价与降本带来的利润弹性，民爆矿服继续提供底盘；17.14元已回到第一笔观察仓区，但经营现金流、应收库存和海外资源发运仍需正式半年报验证，适合小仓等待而非重仓押注锂价。",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "updated_at": "2026-07-17T21:42:14+08:00",
-  "conclusion": "2026H1归母净利润预告11-13亿元且异常波动公告确认经营正常；2026-07-17收盘17.14元已进入16-18元观察仓区，但相对18-23元合理价值下沿折价仍薄、现金流尚未验证，维持观察评级，可先建1%观察仓。",
-  "rating": {
-    "quality": "B+",
-    "valuation": "合理偏低（观察仓区）",
-    "action": "有条件建立1%观察仓"
-  },
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏低（观察仓区）",
-  "fair_value": {
+  "identity": {
     "currency": "CNY",
-    "low": 18.0,
-    "high": 23.0,
-    "method": "18-22亿元周期正常化利润PE、分部估值与PB交叉校验，并对现金流和锂价回落折价"
+    "market": "CN",
+    "name": "雅化集团",
+    "security_status": "active",
+    "symbol": "CN:002497",
+    "ticker": "002497"
   },
-  "fair_value_range": [
-    18.0,
-    23.0
-  ],
-  "reasonable_price_range": "18.0-23.0 CNY",
-  "buy_zone": [
-    13.5,
-    16.0
-  ],
-  "buy_zone_detail": {
-    "currency": "CNY",
-    "safety_margin_below": 16.0,
-    "strong_buy_below": 13.5,
-    "first_position_below": 18.0,
-    "reason": "13.5-16元为正式买入区，16-18元仅适合第一笔观察仓；锂盐利润强周期，需用低于合理价值下沿的价格补偿锂价、现金流和海外资源风险。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "a7dac368bfee78173b282d584950af9daf1c732ab7e07479c1821c3695515896"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "fc5c3acdfd0e2042d3e34d7c2dcef8962709bceca0b140003df188d47d653b75"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [
-    24.5,
-    28.0
-  ],
-  "sell_or_reduce_zone_detail": {
-    "currency": "CNY",
-    "avoid_chasing_above": 24.5,
-    "reduce_above": 28.0,
-    "reason": "24.5 元以上已接近或超过本次中性估值上沿，若没有业绩继续上修，不宜用高景气利润追价。"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_13.5",
-      "price_range": "13.5 元以下",
-      "action": "强吸引力区，可分批买入",
-      "target_weight": 0.04,
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报后复核收入、毛利率、经营现金流、应收账款和 Kamativi 发运。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_13.5_to_16.0",
-      "price_range": "13.5-16.0 元",
-      "action": "安全边际区，可建立核心观察仓",
-      "target_weight": 0.03,
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后验证 Q2 高利润是否延续，以及旺季锂盐价格是否支撑全年利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_16.0_to_18.0",
-      "price_range": "16.0-18.0 元",
-      "action": "第一笔观察仓",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后重估周期正常化利润、分红和资本开支。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_18.0_to_23.0",
-      "price_range": "18.0-23.0 元",
-      "action": "合理区间，持有观察，不主动追买",
-      "target_weight": 0.0,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入第一笔观察仓区域，复核锂盐价格、产销和现金流后可小仓位建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_24.5",
-      "price_range": "24.5 元以上",
-      "action": "停止加仓，28 元以上复核减仓",
-      "target_weight": 0.0,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际区，若半年度/三季度现金流未恶化，可分批加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.5
+      },
+      "reason": "超过合理区间上沿附近，停止追买，等待业绩继续验证。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "估值可能透支锂盐上行周期，需要复核是否减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "position_plan_summary": {
-    "max_weight": 0.05,
-    "initial_weight": 0.01,
-    "current_action": "2026-07-17收盘17.14元，可开1%观察仓；半年报前不超过2%，现金流和吨利润验证后再考虑提高到3%-4%。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
   },
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "currency": "CNY",
-      "reason": "进入第一笔观察仓区域，复核锂盐价格、产销和现金流后可小仓位建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "currency": "CNY",
-      "reason": "进入安全边际区，若半年度/三季度现金流未恶化，可分批加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.5,
-      "currency": "CNY",
-      "reason": "超过合理区间上沿附近，停止追买，等待业绩继续验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "currency": "CNY",
-      "reason": "估值可能透支锂盐上行周期，需要复核是否减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "半年报后复核收入、毛利率、经营现金流、应收账款和 Kamativi 发运。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后验证 Q2 高利润是否延续，以及旺季锂盐价格是否支撑全年利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报后重估周期正常化利润、分红和资本开支。"
-    }
-  ],
-  "review_plan": "半年报、三季报、年报三个节点复核锂盐量价、资源自给率、民爆矿服订单、经营现金流和资本开支；股价低于16元或高于24.5元、SMM电碳指数连续四周低于13万元/吨或重新站稳16万元/吨时提前复核。",
-  "key_risks": [
-    "锂盐价格回落，2026H1 高利润不可持续。",
-    "Kamativi、李家沟或外购长协在政策、运输、品位、成本上不及预期。",
-    "应收账款和库存上升导致经营现金流继续为负。",
-    "期货套保、公允价值和汇兑波动影响利润。",
-    "民爆安全生产、许可监管和项目事故风险。",
-    "高景气期扩产导致下一轮下行期资产减值。",
-    "下游客户集中度高，订单节奏和认证变化影响产能利用率。"
-  ],
-  "sources": [
-    {
-      "name": "雅化集团：2025年年度报告",
-      "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12201868&stockid=002497",
-      "date": "2026-04-27"
-    },
-    {
-      "name": "雅化集团：2026年一季度报告",
-      "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12201888&stockid=002497",
-      "date": "2026-04-27"
-    },
-    {
-      "name": "雅化集团：2026年半年度业绩预告",
-      "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12433104&stockid=002497",
-      "date": "2026-07-07"
-    },
-    {
-      "name": "巨潮资讯：2025年年度报告摘要 PDF",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225181780.PDF",
-      "date": "2026-04-27"
-    },
-    {
-      "name": "新浪行情接口 sz002497",
-      "url": "https://hq.sinajs.cn/list=sz002497",
-      "date": "2026-07-08"
-    },
-    {
-      "name": "腾讯行情接口 sz002497",
-      "url": "https://qt.gtimg.cn/q=sz002497",
-      "date": "2026-07-08"
-    },
-    {
-      "name": "证券时报：雅化集团上半年净利预增超7倍",
-      "url": "https://www.stcn.com/article/detail/4000940.html",
-      "date": "2026-07-07"
-    },
-    {
-      "name": "雅化集团：股票交易异常波动公告",
-      "url": "https://data.eastmoney.com/notices/detail/002497/AN202607101826877777.html",
-      "date": "2026-07-11"
-    },
-    {
-      "name": "雅化集团：投资者关系活动记录表",
-      "url": "https://data.eastmoney.com/notices/detail/002497/AN202607081826817509.html",
-      "date": "2026-07-08"
-    },
-    {
-      "name": "东方财富行情接口 002497",
-      "url": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.002497&fields=f43,f44,f45,f46,f47,f48,f55,f57,f58,f60,f86,f116,f117,f162,f167,f173,f184,f185,f186,f187,f188,f190,f297",
-      "date": "2026-07-17"
-    },
-    {
-      "name": "腾讯行情接口 sz002497",
-      "url": "https://qt.gtimg.cn/q=sz002497",
-      "date": "2026-07-17"
-    },
-    {
-      "name": "SMM碳酸锂行情页",
-      "url": "https://hq.smm.cn/h5/Li2CO3",
-      "date": "2026-07-17"
-    },
-    {
-      "name": "SMM：2026H1碳酸锂市场深度复盘与H2展望",
-      "url": "https://news.smm.cn/news/103999601",
-      "date": "2026-07-10"
-    },
-    {
-      "name": "SMM：7.13-7.16碳酸锂市场周度综述",
-      "url": "https://news.smm.cn/news/104008894",
-      "date": "2026-07-16"
-    }
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ]
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

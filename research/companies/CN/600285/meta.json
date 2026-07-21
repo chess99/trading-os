@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600285",
-  "ticker": "600285",
-  "name": "羚锐制药",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "羚锐制药是高ROE、高现金流的中药外用贴膏剂/OTC品牌公司，核心贴膏剂业务质量较高，银谷制药提供呼吸鼻喷剂第二曲线；但2026-07-16股价约23.05元已接近合理价值区间下沿，初始买入需要等待20元以下的更厚安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    23,
-    29
-  ],
-  "buy_zone": [
-    18,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "羚锐制药",
+    "security_status": "active",
+    "symbol": "CN:600285",
+    "ticker": "600285"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "80a30df7570465ba0bcef22a6f0484a8b1a57f9afca01e60c464696604147cd6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入18-20元且2026H1或2026Q3收入、归母净利润仍保持双位数增长，经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、银谷制药并表贡献、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入16-18元且下跌主要来自市场估值收缩而非主业或银谷制药整合恶化",
-      "action": "提高至核心观察仓上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润中枢和基药目录落地迹象",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价升至32元以上但业绩增速仍只有中低双位数，或销售费用率明显上升",
-      "action": "停止加仓并评估减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证银谷制药协同、分红和下一年度估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入初始买入区间，需要复核基本面是否未受损",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入高安全边际区间，若财务质量维持可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过合理价值区间上沿，需依赖乐观情景兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入初始买入区间，需要复核基本面是否未受损"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入高安全边际区间，若财务质量维持可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过合理价值区间上沿，需依赖乐观情景兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、银谷制药并表贡献、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润中枢和基药目录落地迹象"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证银谷制药协同、分红和下一年度估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

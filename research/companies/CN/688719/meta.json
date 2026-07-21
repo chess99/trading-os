@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688719",
-  "market": "CN",
-  "ticker": "688719",
-  "name": "爱科赛博",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "爱科赛博具备电力电子平台、精密测试电源、特种电源和电能质量控制设备的技术与客户壁垒，但 2025 年由盈转亏、毛利率承压、应收和存货偏重，并有收入确认内控瑕疵。当前估值已反映半导体电源、AIDC、核聚变等增量预期，需等待盈利和现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    42,
-    52
-  ],
-  "buy_zone": [
-    32,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱科赛博",
+    "security_status": "active",
+    "symbol": "CN:688719",
+    "ticker": "688719"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d5f11e52b90448cb83aa070f24f0c3e602376e53dc025ca23fb8b3aad1d02ae3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，等待 2026H1 收入增长、毛利率修复和经营现金流改善同时验证。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、毛利率、现金流、应收账款和存货变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入 32-40 元且无新增内控/回款负面事项，可建立小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及售后系统上线后的收入确认整改落地情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期验证盈利修复、经营现金流转正，并有半导体/AIDC/核聚变方向实质订单，可提高仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，验证盈利修复、订单放量和内控整改是否经完整年度检验。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入买入区间上沿，安全边际开始改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入深度价值区间，可重新评估中等仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "超过基准公允价值上沿较多，除非基本面超预期否则应降低追高意愿。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入买入区间上沿，安全边际开始改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入深度价值区间，可重新评估中等仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "超过基准公允价值上沿较多，除非基本面超预期否则应降低追高意愿。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、毛利率、现金流、应收账款和存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及售后系统上线后的收入确认整改落地情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，验证盈利修复、订单放量和内控整改是否经完整年度检验。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

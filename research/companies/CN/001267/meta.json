@@ -1,28 +1,86 @@
 {
-  "symbol": "CN:001267",
-  "market": "CN",
-  "ticker": "001267",
-  "name": "汇绿生态",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "公司从园林工程转型光通信，2025年通过收购武汉钧恒实现营收暴增168%，但当前PE超400倍、PB超21倍已极端透支乐观预期。园林业务负增长且现金流差，光通信业务尚在整合初期规模偏小，当前估值缺乏安全边际。",
-  "fair_value_range": [3, 10],
-  "buy_zone": [8, 12],
-  "sell_or_reduce_zone": [25, 40],
-  "position_plan": [
-    {"condition": "股价低于12元且光通信业务增速保持50%以上、经营现金流转正", "max_weight": 0.01},
-    {"condition": "股价低于8元且基本面未恶化", "max_weight": 0.02}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汇绿生态",
+    "security_status": "active",
+    "symbol": "CN:001267",
+    "ticker": "001267"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "13aafd370b6c7b5da15d65964f4b185ddf6ad76d63c2b07ff7d21ad3a0111a3f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "2026年半年报披露后复查光通信业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复查",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入有安全边际的买入区间，需重新验证基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "进入减仓或不应追高区间（如已有仓位）",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-30", "reason": "2026年半年报披露后复查光通信业务进展"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 12, "reason": "进入有安全边际的买入区间，需重新验证基本面"},
-    {"type": "price_above", "price": 25, "reason": "进入减仓或不应追高区间（如已有仓位）"}
-  ],
-  "updated_at": "2026-07-08T22:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

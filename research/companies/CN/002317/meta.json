@@ -1,157 +1,125 @@
 {
-  "symbol": "CN:002317",
-  "market": "CN",
-  "ticker": "002317",
-  "name": "众生药业",
-  "company_name": "众生药业",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "众生药业具备中成药现金流底盘和昂拉地韦、RAY1225、ZSP1601 等创新药期权，但 2026-07-08 股价约 26.28 元、总市值约 223.36 亿元，已较充分反映管线乐观预期，当前不追高，等待 18 元以下或关键商业化兑现后复评。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    18,
-    23
-  ],
-  "buy_zone": [
-    13,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众生药业",
+    "security_status": "active",
+    "symbol": "CN:002317",
+    "ticker": "002317"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "1b2c0e0d23b53dc6a5e2b35a747ffdae9c664647e13c2b83cf0302a2d595141a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price < 13 and no material negative clinical, approval, or commercialization update",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报收入、利润、现金流、费用率和管线进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "13 <= price <= 16 and core TCM revenue and cash flow remain stable",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报及昂拉地韦商业化节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "16 < price < 18 and at least one pipeline milestone is confirmed",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复查医保目录、流感季销售和RAY1225/ZSP1601关键节点",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price >= 26 without new approval or sales evidence",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入合理价值下沿附近，可复核是否建立1%-2%跟踪仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际买入区，可结合管线和现金流加至3%-4%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化可考虑最高5%仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "超过不追高价，若无审批或销售兑现应避免加仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "估值高度依赖乐观管线情景，应评估减仓或止盈",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "watch": [
-    "昂拉地韦片成人适应症季度销售放量、医保执行价格和终端覆盖",
-    "昂拉地韦颗粒及青少年适应症审评进度、获批时间和医保准入",
-    "RAY1225 III期读数、齐鲁制药合作里程碑及收入确认",
-    "ZSP1601关键性III期启动、试验设计和资金压力",
-    "中成药核心品种收入增速、毛利率、销售费用率和经营现金流"
-  ],
-  "tracking_indicators": [
-    "2026H1营业收入、归母净利润、扣非归母净利润、经营现金流",
-    "中成药收入占比和毛利率是否维持稳定",
-    "销售费用率是否较2025年约34.5%下降",
-    "研发投入是否保持在收入10%左右且管线节点推进",
-    "前五大客户集中度是否继续高于50%"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入合理价值下沿附近，可复核是否建立1%-2%跟踪仓"
-    },
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入安全边际买入区，可结合管线和现金流加至3%-4%"
-    },
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入强吸引力区，若基本面未恶化可考虑最高5%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "超过不追高价，若无审批或销售兑现应避免加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "估值高度依赖乐观管线情景，应评估减仓或止盈"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报收入、利润、现金流、费用率和管线进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报及昂拉地韦商业化节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复查医保目录、流感季销售和RAY1225/ZSP1601关键节点"
-    }
-  ],
-  "review_plan": "半年报后优先复核传统业务收入和经营现金流；任何昂拉地韦审批结果、RAY1225 III期读数或ZSP1601 III期启动公告均触发提前复查。",
-  "key_risks": [
-    "昂拉地韦颗粒或青少年适应症审评、现场核查、审批结果不确定",
-    "昂拉地韦上市后销售放量、医保价格、流感季强弱和竞品竞争不确定",
-    "RAY1225和ZSP1601仍有临床失败、进度延后或商业化不及预期风险",
-    "中成药和化学药受集采、医保控费及渠道竞争影响",
-    "前五大客户销售占比高，客户或渠道变化可能放大收入波动",
-    "当前估值高于多数传统中药和品牌药同行，管线预期落空会带来估值回撤"
-  ],
-  "sources": [
-    {
-      "title": "东方财富行情接口-众生药业002317",
-      "url": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.002317&fields=f57,f58,f43,f86,f116,f117,f162,f167,f168",
-      "date": "2026-07-08"
-    },
-    {
-      "title": "众生药业2025年年度报告",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202604281821689610_1.pdf",
-      "date": "2026-04-29"
-    },
-    {
-      "title": "众生药业2026年一季度报告",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202604281821689581_1.pdf",
-      "date": "2026-04-29"
-    },
-    {
-      "title": "昂拉地韦项目两项III期临床试验获得顶线分析数据结果公告",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202602081819824852_1.pdf",
-      "date": "2026-02-09"
-    },
-    {
-      "title": "昂拉地韦颗粒新药上市申请获得受理公告",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202605131822277195_1.pdf",
-      "date": "2026-05-14"
-    },
-    {
-      "title": "昂拉地韦颗粒纳入优先审评品种名单公告",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202606021823160204_1.pdf",
-      "date": "2026-06-03"
-    },
-    {
-      "title": "ZSP1601片IIb期临床试验初步结果公告",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202605071822037188_1.pdf",
-      "date": "2026-05-08"
-    },
-    {
-      "title": "2026年5月15日投资者关系活动记录表",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202605151822349334_1.pdf",
-      "date": "2026-05-15"
-    }
-  ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08T11:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,70 +1,86 @@
 {
-  "symbol": "CN:300052",
-  "ticker": "300052",
-  "name": "中青宝",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "中青宝处于云计算/IDC、游戏、文旅三线转型期，但2025年收入同比下降19.16%、归母净利润亏损5507.62万元，2026Q1收入继续同比下降35.75%且仍亏损。当前约12元股价对应约31亿元市值、约18.9倍TTM收入和约9.1倍2026Q1归母净资产，显著透支尚未兑现的智算与游戏拐点，缺乏安全边际。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    3.2,
-    5.0
-  ],
-  "buy_zone": [
-    0.0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中青宝",
+    "security_status": "active",
+    "symbol": "CN:300052",
+    "ticker": "300052"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1baed2eeebbf0f2ba6f8dba4f29549848519332db2d865eea75645c260e677d4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.5元，且连续两个季度经营现金流为正、云计算收入恢复同比增长、诉讼预计负债未继续扩大时，才允许研究性小仓位试错。",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、云计算毛利率、经营现金流、货币资金和诉讼负债变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.5元且公司仍处于亏损或收入下滑状态时，不建仓；已有仓位应减持或退出。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入保守资产价值和低倍收入估值交叉验证后的可重新研究区。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入止跌、经营现金流转正和智算合同落地。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "明显高于基准公允价值上沿，在亏损和收入下滑未逆转前应降低或避免暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、云计算毛利率、经营现金流、货币资金和诉讼负债变化。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入保守资产价值和低倍收入估值交叉验证后的可重新研究区。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入止跌、经营现金流转正和智算合同落地。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "明显高于基准公允价值上沿，在亏损和收入下滑未逆转前应降低或避免暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "tags": [
-    "A股",
-    "游戏",
-    "IDC",
-    "云计算",
-    "亏损公司",
-    "治理风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

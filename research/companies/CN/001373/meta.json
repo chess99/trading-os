@@ -1,67 +1,95 @@
 {
-  "symbol": "CN:001373",
-  "ticker": "001373",
-  "name": "翔腾新材",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "current_thesis": "翔腾新材是显示薄膜器件后段加工与配套供应商，资产负债表较轻但盈利能力和现金流尚未证明反转；2025年及2026Q1连续亏损，毛利率个位数，当前约2倍PB缺乏安全边际，需等待毛利率、经营现金流和南京翔辉项目爬坡验证。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    10,
-    14
-  ],
-  "buy_zone": [
-    8,
-    11
-  ],
-  "sell_or_reduce_zone": [
-    18,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "翔腾新材",
+    "security_status": "active",
+    "symbol": "CN:001373",
+    "ticker": "001373"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ca284e14041607e799fb9966072c5a1a1ed67f257346af82fffa2d2ccf549b56"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入8-11元且连续两个季度经营现金流为正、单季度毛利率回到12%以上、偏光片毛利率由负转正或明显收窄时，允许研究性小仓位试错。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、偏光片业务、南京翔辉项目和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价仍高于18元或公司仍处于亏损且经营现金流为负，不建立新仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入恢复是否转化为净利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理PB、项目投产收益和长期ROE中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入安全买入区间上沿，需复核毛利率、现金流和项目爬坡是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于当前合理价值区间且未见盈利修复时估值偏贵，应避免或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11,
-      "reason": "进入安全买入区间上沿，需复核毛利率、现金流和项目爬坡是否同步改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 18,
-      "reason": "高于当前合理价值区间且未见盈利修复时估值偏贵，应避免或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报，重点检查毛利率、偏光片业务、南京翔辉项目和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入恢复是否转化为净利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理PB、项目投产收益和长期ROE中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:603755",
-  "market": "CN",
-  "ticker": "603755",
-  "name": "日辰股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "日辰股份是小市值B端复合调味品定制平台，2025年收入和利润恢复增长、经营现金流质量较好，当前估值约26倍TTM PE，处于合理偏低区间。主要买点是餐饮连锁化与食品工业客户定制需求带来的中期成长，以及较高分红提供估值底；主要约束是2026Q1增收不增利、艾贝棒冷冻面团整合和客户集中风险。因此只适合轻仓买入，并以后续毛利率和利润兑现作为加仓条件。",
-  "fair_value_range": [
-    25,
-    31
-  ],
-  "buy_zone": [
-    19,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    33,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "日辰股份",
+    "security_status": "active",
+    "symbol": "CN:603755",
+    "ticker": "603755"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e81ee88d7275efdf7be3eb14d3ce16bb0f5df0ed317d9411e35ac99c66d98bb1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于19-23元且2026H1收入增速不低于15%、经营现金流未明显弱于利润",
-      "action": "分批建立基础仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入增速、毛利率、经营现金流和艾贝棒并表效果",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌破20元且毛利率未继续恶化、无食品安全或客户流失信号",
-      "action": "提高到目标仓位上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润弹性是否恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1净利润增速低于5%或毛利率继续下滑",
-      "action": "暂停加仓并降至观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红，重估长期利润中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价超过33元且2026年净利润预期未上修至1.10亿元以上",
-      "action": "减仓或等待估值消化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入较高安全边际区域，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 33.0
+      },
+      "reason": "超过基准估值上沿，需要业绩上修才能支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入乐观情景估值区间，应优先兑现收益或大幅降仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入较高安全边际区域，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 33,
-      "reason": "超过基准估值上沿，需要业绩上修才能支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "进入乐观情景估值区间，应优先兑现收益或大幅降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入增速、毛利率、经营现金流和艾贝棒并表效果"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润弹性是否恢复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红，重估长期利润中枢"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-17",
-    "last_price": 22.39,
-    "market_cap_cny_billion": 2.208,
-    "ttm_pe": 26.05,
-    "pb": 2.91,
-    "revenue_2025_cny_million": 468.3,
-    "net_profit_2025_cny_million": 84.21,
-    "revenue_q1_2026_cny_million": 125.37,
-    "net_profit_q1_2026_cny_million": 18.23
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

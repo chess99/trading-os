@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:600706",
-  "ticker": "600706",
-  "name": "曲江文旅",
-  "company_name": "西安曲江文化旅游股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "曲江文旅具备西安曲江核心文旅资源与降本修复弹性，但2025年扣非大幅亏损、2026H1预告扭亏主要受回款冲回减值影响，主业扣非仍亏；在应收回款和扣非盈利未连续验证前，只适合观察，不适合追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    6.2
-  ],
-  "buy_zone": [
-    0,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "曲江文旅",
+    "security_status": "active",
+    "symbol": "CN:600706",
+    "ticker": "600706"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "1160d18fbaf004a08d0774c0537e34ce27ce7a29c6ec25835a8283c7c0af64da"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.50元，且未出现新增监管处罚、控股股东风险或应收款恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点看扣非亏损、经营现金流、应收账款和长期应收款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026半年报确认经营现金流改善、应收款下降且扣非亏损继续收窄",
-      "action": "可将仓位提升至小仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断成本压降和回款改善是否具有连续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.50元但扣非仍未转正或回款不可持续",
-      "action": "减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化盈利、治理折价和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入具备安全边际的观察买入区，需同步复核应收回款和扣非亏损趋势。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "股价超过基准合理价值上沿，若没有扣非盈利拐点，应降低风险暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入具备安全边际的观察买入区，需同步复核应收回款和扣非亏损趋势。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "股价超过基准合理价值上沿，若没有扣非盈利拐点，应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点看扣非亏损、经营现金流、应收账款和长期应收款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断成本压降和回款改善是否具有连续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化盈利、治理折价和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

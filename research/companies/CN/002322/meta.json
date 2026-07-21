@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:002322",
-  "market": "CN",
-  "ticker": "002322",
-  "name": "理工能科",
-  "company_name": "理工能科",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "理工能科具备高毛利电力软件和电力在线监测业务基础，估值处于合理偏低区间，但2026Q1仍未确认增长拐点，且商誉占净资产比例高，当前以观察仓和等待半年报验证为主。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    10.0,
-    12.5
-  ],
-  "buy_zone": [
-    8.2,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "理工能科",
+    "security_status": "active",
+    "symbol": "CN:002322",
+    "ticker": "002322"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "e256f175fb277d529c5cf668cdb7a67dae143c7c3ec01c43db63c759320bb227"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 9.2 and 2026H1 revenue decline narrows or turns positive",
-      "action": "open_initial_position",
-      "max_weight": 0.01,
-      "reason": "进入买入区上沿且需要半年报验证收入、订单和回款改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-13"
+      },
+      "reason": "公司预约披露2026年半年报，重点验证收入、现金流、环保订单和商誉风险。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 8.2 and no new goodwill impairment warning",
-      "action": "add_position",
-      "max_weight": 0.03,
-      "reason": "进入较高安全边际区，但商誉风险未释放前仓位仍需受限。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复查全年收入季节性、Q4订单能见度和经营现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price >= 13.5 and earnings forecast is not upgraded",
-      "action": "reduce_position",
-      "max_weight": 0.01,
-      "reason": "价格接近基准估值上沿，若利润没有上修，风险收益比下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入首笔观察仓买入区，复查半年报和订单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入深度买入区，若基本面未恶化可考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "进入减仓观察区，需要业绩上修才能继续持有。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "接近乐观情景估值，应主动降低仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入首笔观察仓买入区，复查半年报和订单。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入深度买入区，若基本面未恶化可考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "进入减仓观察区，需要业绩上修才能继续持有。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "接近乐观情景估值，应主动降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-13",
-      "reason": "公司预约披露2026年半年报，重点验证收入、现金流、环保订单和商誉风险。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复查全年收入季节性、Q4订单能见度和经营现金流。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1 revenue growth",
-    "software_and_information_revenue_growth",
-    "software_and_information_gross_margin",
-    "power_online_monitoring_revenue_growth",
-    "environmental_monitoring_orders_backlog",
-    "operating_cash_flow_to_net_income_ttm",
-    "accounts_receivable_plus_contract_assets_to_revenue",
-    "goodwill_balance_and_impairment",
-    "rd_expense_ratio",
-    "controlling_shareholder_pledge_ratio"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

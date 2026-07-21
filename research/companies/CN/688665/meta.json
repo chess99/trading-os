@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:688665",
-  "market": "CN",
-  "ticker": "688665",
-  "name": "四方光电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "四方光电是国内气体传感器与气体分析仪器优质平台型公司，长期受益于工业安全、汽车电子、空气品质和高端分析仪器国产替代；但2025年和2026Q1收入增速偏低，当前价格大致处于合理价值区间，安全边际不足，适合观察并等待38元以下或增长重新加速后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    42,
-    52
-  ],
-  "buy_zone": [
-    33,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "四方光电",
+    "security_status": "active",
+    "symbol": "CN:688665",
+    "ticker": "688665"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "88fafc19dfdd013a9cad68ee64ba91417a654b8cc13c58b33c52b490f294727e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于38元且2026H1或最近一期扣非净利润仍保持同比正增长",
-      "action": "建立2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点检查收入增速、扣非净利率、现金流和分业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于33元且收入增速未继续恶化、经营现金流没有明显失真",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年增长是否恢复到可支撑当前估值的水平",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增速高于15%且扣非净利率稳定",
-      "action": "允许在公允价值区间内小幅加仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期成长、竞争格局和公允价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于60元且收入仍为个位数增长",
-      "action": "减仓至1%以下或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入买入区，隐含估值开始具备中等安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 33.0
+      },
+      "reason": "进入厚安全边际区，可在基本面未恶化前提下提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "超过基准公允价值上沿较多，若无增长加速证据应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入买入区，隐含估值开始具备中等安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 33,
-      "reason": "进入厚安全边际区，可在基本面未恶化前提下提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "超过基准公允价值上沿较多，若无增长加速证据应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点检查收入增速、扣非净利率、现金流和分业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年增长是否恢复到可支撑当前估值的水平"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期成长、竞争格局和公允价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

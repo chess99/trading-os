@@ -1,112 +1,95 @@
 {
-  "symbol": "CN:600666",
-  "ticker": "600666",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "奥瑞德",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "奥瑞德算力综合服务收入占比快速提升，2026H1 预告显示毛利率和扣非亏损收窄，但公司扣非盈利尚未持续验证，蓝宝石业务仍拖累，当前估值已预支转型期权，宜观察不买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.6,
-    2.4
-  ],
-  "buy_zone": [
-    0.9,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    3.8
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于1.50元，且2026半年报确认算力毛利率不低于18%、无新增重大回款或关联担保风险",
-      "action": "research_position",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "连续两个季度扣非归母净利润为正且经营现金流同步转正，算力毛利率稳定在20%以上",
-      "action": "increase_after_validation",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于3.20元且后续季报未证明扣非盈利持续化",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入研究性买入区间，重新核验半年报、算力毛利率和应收账款。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "超过基准公允价值上沿较多，若扣非盈利未持续化应降低参与度。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点核验算力毛利率、扣非净利和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q2经营改善是否延续到Q3。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估算力业务持续性和估值区间。"
-    }
-  ],
-  "key_metrics": {
-    "2025_revenue_cny": 465123411.91,
-    "2025_net_profit_attributable_cny": 141392796.19,
-    "2025_deducted_net_profit_cny": -153278168.31,
-    "2025_operating_cash_flow_cny": 34649401.17,
-    "2026_q1_revenue_cny": 120703271.09,
-    "2026_q1_net_profit_attributable_cny": -9693897.72,
-    "2026_h1_guidance_net_profit_cny": [
-      -7000000,
-      -3500000
-    ],
-    "2026_h1_guidance_deducted_net_profit_cny": [
-      -8500000,
-      -5000000
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥瑞德",
+    "security_status": "active",
+    "symbol": "CN:600666",
+    "ticker": "600666"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "79d949eb6b2b4b760bf4fb7afb7e6a95e909966e60ade3cc5d3369e020d9380d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "奥瑞德光电股份有限公司2025年年度报告",
-      "date": "2026-04-16",
-      "url": "https://stockmc.xueqiu.com/202604/600666_20260416_IGQF.pdf"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点核验算力毛利率、扣非净利和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "奥瑞德光电股份有限公司2026年第一季度报告",
-      "date": "2026-04-29",
-      "url": "https://stockmc.xueqiu.com/202604/600666_20260429_XN0F.pdf"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q2经营改善是否延续到Q3。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "奥瑞德光电股份有限公司2026年半年度业绩预亏公告",
-      "date": "2026-07-14",
-      "url": "https://paper.cnstock.com/html/2026-07/15/content_2244605.htm"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估算力业务持续性和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "title": "关于上海证券交易所对公司2025年年度报告的信息披露监管问询函的回复公告",
-      "date": "2026-07-11",
-      "url": "https://paper.cnstock.com/html/2026-07/11/content_2242909.htm"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入研究性买入区间，重新核验半年报、算力毛利率和应收账款。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "超过基准公允价值上沿较多，若扣非盈利未持续化应降低参与度。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

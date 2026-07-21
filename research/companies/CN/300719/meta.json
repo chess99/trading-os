@@ -1,111 +1,86 @@
 {
-  "symbol": "CN:300719",
-  "name": "安达维尔",
-  "market": "CN",
-  "ticker": "300719",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安达维尔具备航空机载设备、维修、智能设备与工业软件的复合能力，上飞4.97亿元框架合同带来国产大飞机配套期权，但2025年亏损、2026Q1继续亏损且应收压力较高，当前更适合等待订单转收入和现金流验证后再提高仓位。",
-  "decision": "观察",
-  "confidence": "中",
-  "last_price": {
-    "date": "2026-07-13",
-    "price": 10.7,
+  "identity": {
     "currency": "CNY",
-    "source": "证券之星/搜狐行情快报"
+    "market": "CN",
+    "name": "安达维尔",
+    "security_status": "active",
+    "symbol": "CN:300719",
+    "ticker": "300719"
   },
-  "fair_value_range": [
-    9.0,
-    13.5
-  ],
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    99.0
-  ],
-  "price_ranges": {
-    "buy": [
-      8.5,
-      9.5
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "82a25330222c724b20c43cdebfe08cd078dce708f3d9535d1e32f8966b769954"
+      }
     ],
-    "fair_value": [
-      9.0,
-      13.5
-    ],
-    "optimistic": [
-      13.5,
-      16.0
-    ],
-    "risk": [
-      7.0,
-      8.5
-    ]
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "position_plan": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在上飞框架合同转化为明确采购订单、2026年中报或三季报显示机载设备收入恢复且经营现金流未恶化时建立或提高仓位；若仅有主题催化而利润和现金流未改善，保持观察。",
-      "max_weight": 0.02,
-      "action": "观察"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入安全买入区间，若无订单取消、应收恶化或毛利率进一步下滑，可用小仓位验证国产大飞机配套兑现。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证收入、利润率、现金流和核心业务进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "价格进入乐观兑现区间上沿，若公司仍亏损或上飞订单未确认收入，应降低预期收益率并控制仓位。"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny_m": 679.6287,
-    "net_profit_2025_cny_m": -5.6978,
-    "operating_cash_flow_2025_cny_m": 56.5594,
-    "revenue_2026q1_cny_m": 97.1113,
-    "net_profit_2026q1_cny_m": -13.7347,
-    "market_cap_2026_07_13_cny_b": 2.738
-  },
-  "watch_items": [
-    "上飞4.97亿元框架合同的订单拆分、交付节奏和收入确认",
-    "2026年机载设备研制收入增速及毛利率修复",
-    "航空维修收入增速与民航飞行小时增长的匹配度",
-    "经营现金流、应收账款周转和坏账计提",
-    "天津园区投用后的固定成本、财务费用和产能利用率"
-  ],
-  "company_name": "北京安达维尔科技股份有限公司",
-  "quality_rating": "普通偏好",
-  "valuation_rating": "合理偏高",
-  "key_tracking_metrics": [
-    "上飞框架合同转订单和收入节奏",
-    "机载设备收入增速与毛利率",
-    "航空维修收入恢复",
-    "经营现金流和应收账款周转",
-    "2026H1/Q3亏损收窄或转正情况"
-  ],
-  "base_currency": "CNY",
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证收入、利润率、现金流和核心业务进展。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年经营趋势是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年经营趋势是否成立。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入安全买入区间，若无订单取消、应收恶化或毛利率进一步下滑，可用小仓位验证国产大飞机配套兑现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "价格进入乐观兑现区间上沿，若公司仍亏损或上飞订单未确认收入，应降低预期收益率并控制仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

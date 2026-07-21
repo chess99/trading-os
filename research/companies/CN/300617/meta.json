@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:300617",
-  "market": "CN",
-  "ticker": "300617",
-  "name": "安靠智电",
-  "company_name": "江苏安靠智电股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备高压电缆连接件、GIL 和智慧模块化变电站技术壁垒，2026Q1 北美变压器出口带来新增增长线索，但 2025 年扣非利润低、项目波动和应收账款压力较大。2026-07-13 股价 44.16 元已提前计入较乐观的利润修复，不具备足够安全边际，等待 28-32 元或订单与现金流进一步验证。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    32,
-    40
-  ],
-  "buy_zone": [
-    28,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    50,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安靠智电",
+    "security_status": "active",
+    "symbol": "CN:300617",
+    "ticker": "300617"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "eea88e459673e11cb29e2ce5c28e68f6508c075a9907bebb570806f8701b1efe"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 32 元，且最近一期扣非利润、GIL 毛利率和经营现金流没有恶化",
-      "action": "建立 2%-3% 观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点看北美变压器收入、GIL 订单、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 28 元，且北美变压器订单连续、应收账款周转未继续恶化",
-      "action": "加至 5%-8% 上限仓位",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认收入修复是否延续以及应收账款是否受控",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 50 元但 2026 年归母净利润预期仍低于 2.5 亿元",
-      "action": "不新增买入，并将已有仓位降至观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，验证海外出海、GIL 和模块化变电站是否兑现为全年利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入合理价值下沿，可重新评估小仓试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入安全边际区，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "估值进入乐观兑现区，需要检查利润和订单是否同步上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "currency": "CNY",
-      "reason": "进入合理价值下沿，可重新评估小仓试错"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "currency": "CNY",
-      "reason": "进入安全边际区，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "currency": "CNY",
-      "reason": "估值进入乐观兑现区，需要检查利润和订单是否同步上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点看北美变压器收入、GIL 订单、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认收入修复是否延续以及应收账款是否受控"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，验证海外出海、GIL 和模块化变电站是否兑现为全年利润"
-    }
-  ],
-  "key_tracking_metrics": [
-    "北美和欧洲变压器新增订单、在手订单、交付收入和毛利率",
-    "GIL 产品及系统服务收入、销量米数、毛利率和新增项目",
-    "智慧模块化变电站收入恢复情况和毛利率",
-    "扣非归母净利润及扣非净利率",
-    "经营活动现金流净额与净利润的匹配度",
-    "应收账款余额、账龄结构和周转天数",
-    "实控人减持、分红、回购和股权激励等资本配置动作"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

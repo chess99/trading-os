@@ -1,104 +1,113 @@
 {
-  "market": "CN",
-  "ticker": "301066",
-  "symbol": "CN:301066",
-  "name": "万事利",
-  "company_name": "杭州万事利丝绸文化股份有限公司",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万事利",
+    "security_status": "active",
+    "symbol": "CN:301066",
+    "ticker": "301066"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "b1b2276a06dd63a5123c9df9afdc8091871b3b473aed1f58256db2ff2eb07c03"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "action": "watch",
-      "condition": "市值回落至15亿元以内，或连续两个季度收入双位数增长且经营现金流跟上利润",
-      "trigger": "当前估值缺乏安全边际；等待市值回落至15亿元以内或连续两个季度验证盈利质量",
-      "max_weight": 0.005,
-      "target_weight": 0.005,
-      "notes": "研究票，不作为核心持仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复核收入、利润和经营现金流质量",
-      "notes": "复核收入、利润和经营现金流质量"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "免水洗纺织印染一体机年化收入超过4000万元或增长失速",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证第二曲线是否成立",
-      "notes": "验证第二曲线是否成立"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "股价进入6.4元以下买入观察区或超过10元减持区",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "复核安全边际",
-      "notes": "复核安全边际"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "存货周转、应收账款周转显著恶化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "检查库存和回款风险",
-      "notes": "检查库存和回款风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "公司发生重大资本开支、并购或跨区域投资",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "检查资本配置风险",
-      "notes": "检查资本配置风险"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.4,
-      "direction": "below",
-      "action": "review_buy",
-      "reason": "进入报告定义的安全边际观察区"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 10,
-      "direction": "above",
-      "action": "review_reduce",
-      "reason": "超过报告定义的减持/不加仓区"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "进入报告定义的安全边际观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过报告定义的减持/不加仓区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "last_researched": "2026-07-15",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "丝绸文化消费品牌与数码印花工艺具备差异化，但2025年ROE仅3.62%、利润规模偏小，当前估值基本隐含乐观情景；等待2026年盈利质量和一体机业务规模化验证。",
-  "conviction": "low",
-  "max_weight": 0.005,
-  "fair_value_range": [
-    5.5,
-    7.7
-  ],
-  "buy_zone": [
-    0,
-    6.4
-  ],
-  "sell_or_reduce_zone": [
-    10,
-    999
-  ],
-  "currency": "CNY",
-  "tags": [
-    "A股",
-    "纺织服饰",
-    "丝绸",
-    "文化消费",
-    "数码印花",
-    "观察池"
-  ],
-  "summary": "丝绸文化消费品牌与数码印花工艺标的，2025年收入7.16亿元、归母净利润3335.80万元、ROE 3.62%。2026Q1收入和利润改善，但当前估值基本隐含乐观情景，暂不具备安全边际。",
-  "updated_at": "2026-07-15"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

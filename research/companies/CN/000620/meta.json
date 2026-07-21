@@ -1,109 +1,133 @@
 {
-  "symbol": "CN:000620",
-  "market": "CN",
-  "ticker": "000620",
-  "name": "盈新发展",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "盈新发展是重整后地产/文旅资产与长兴半导体并表形成的高波动转型标的。长兴半导体改善利润结构，但旧业务仍亏损，存在地产存货减值、诉讼担保、重整留债逾期和跨界整合风险。2026-07-07 股价 3.33 元对应约 195.5 亿元市值，已经明显透支半导体乐观情景，当前不具备安全边际。",
-  "fair_value_range": [
-    1.6,
-    2.3
-  ],
-  "buy_zone": [
-    1.3,
-    1.6
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盈新发展",
+    "security_status": "active",
+    "symbol": "CN:000620",
+    "ticker": "000620"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "91d9a37907e3eb46d37333ac74e758efb4812b5e64ed8b57391fae34d7f13785"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿",
-      "action": "不买，仅观察",
-      "weight": 0,
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半导体并表质量是当前估值的核心变量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "1.30-1.60 元且长兴半导体利润、现金流和旧债风险改善得到验证",
-      "action": "试仓",
-      "weight": 0.005,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证 2026Q1 高利润是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "低于 1.30 元且无新增重大风险",
-      "action": "提高至最大观察仓",
-      "weight": 0.015,
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "该交易影响旧地产风险出清和一次性利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "旧资产尾部风险可能侵蚀安全边际",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "文旅毛利率决定旧主业是否具备继续经营价值",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "接近有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.3
+      },
+      "reason": "跌入强吸引力价格区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "估值超过基准合理区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "价格透支乐观情景",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "长兴半导体披露 2026 半年报或专项审计数据",
-      "reason": "半导体并表质量是当前估值的核心变量"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "长兴半导体收入、毛利率、净利润或经营现金流较 2026Q1 明显回落",
-      "reason": "验证 2026Q1 高利润是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "西宁置业 100% 股权转让完成或终止",
-      "reason": "该交易影响旧地产风险出清和一次性利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "新增重大诉讼、担保、债务逾期、税务强制执行或受限资金事项",
-      "reason": "旧资产尾部风险可能侵蚀安全边际"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "文旅综合业务毛利率连续两个报告期转正或继续恶化",
-      "reason": "文旅毛利率决定旧主业是否具备继续经营价值"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "direction": "below",
-      "note": "进入合理价格下沿，复核长兴半导体和旧债风险后决定是否试仓",
-      "reason": "接近有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 1.3,
-      "direction": "below",
-      "note": "进入强安全边际观察区，若基本面未恶化可考虑 1.0%-1.5% 上限",
-      "reason": "跌入强吸引力价格区间"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "direction": "above",
-      "note": "超过合理价值上沿，风险收益转差",
-      "reason": "估值超过基准合理区间"
-    },
-    {
-      "type": "price_above",
-      "price": 3,
-      "direction": "above",
-      "note": "基本面买入性价比不足，仅适合事件交易",
-      "reason": "价格透支乐观情景"
-    }
-  ],
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

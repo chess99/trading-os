@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:920021",
-  "market": "CN",
-  "ticker": "920021",
-  "name": "流金科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "流金科技具备广电客户关系、超高清解转码/监播系统和微波器件可选项，但2025年扣非仍亏损、2026Q1现金流波动大且董秘兼财务负责人失联离任带来治理折价；当前估值已高于基准公允区间中枢，适合观察，等待价格回落或扣非盈利与治理修复后再小仓位参与。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    6.8
-  ],
-  "buy_zone": [
-    4.3,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "流金科技",
+    "security_status": "active",
+    "symbol": "CN:920021",
+    "ticker": "920021"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "45e39f0b6850b3a6f707ae86d615e0f47c2c8b38d3d7d32a6a7d727d80d4c030"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.2元，且无新增治理、问询或应收账款恶化信息，可建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、扣非盈利、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.3元，且2026H1扣非归母净利润转正、应收账款较2026Q1下降，可提高配置",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及董秘、财务负责人补位情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.5元但扣非盈利和治理补位未验证，不新增仓位并考虑退出观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断转型业务是否形成可持续利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入基准公允价值下沿以下，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入保守买入区，若基本面未恶化可复核加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "估值反映明显主题溢价，需复核是否存在基本面兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入基准公允价值下沿以下，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入保守买入区，若基本面未恶化可复核加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "估值反映明显主题溢价，需复核是否存在基本面兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、扣非盈利、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及董秘、财务负责人补位情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断转型业务是否形成可持续利润"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

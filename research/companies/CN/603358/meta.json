@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603358",
-  "market": "CN",
-  "ticker": "603358",
-  "name": "华达科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "华达科技具备真实的汽车车身件和新能源零部件业务基础，江苏恒义提供新能源增长点，但2025年扣非利润大幅下滑、2026H1预告亏损、压铸爬坡和燃油车毛利下滑仍在压制资本回报。以2026-07-17收盘价34.07元计，估值显著高于可核验盈利能力，当前没有安全边际，仅适合观察。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    8,
-    13
-  ],
-  "buy_zone": [
-    5,
-    8
-  ],
-  "sell_or_reduce_zone": [
-    16,
-    34
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华达科技",
+    "security_status": "active",
+    "symbol": "CN:603358",
+    "ticker": "603358"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "a07eba5d823ebb09f74e7596189240acee8ecb8ea2a70bb0c070963362482b9a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且2026H1预告亏损，维持空仓或仅保留研究观察仓。",
-      "action": "avoid_new_buy",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告正式数据，重点看扣非亏损、压铸爬坡和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于8元，且连续两个季度扣非利润转正、经营现金流改善、新能源零部件毛利率稳定在11%以上，可重新评估小仓位。",
-      "action": "research_watch_entry",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认单季扣非利润、毛利率和经营现金流是否修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于16元但扣非利润和现金流未验证，已有仓位应降至观察仓或清仓。",
-      "action": "reduce_or_exit",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估江苏恒义、新能源零部件和压铸业务全年盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入估算买入区，需要结合利润和现金流验证重新评估。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过估算合理价值上沿且缺乏安全边际，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入估算买入区，需要结合利润和现金流验证重新评估。"
-    },
-    {
-      "type": "price_above",
-      "price": 16,
-      "reason": "超过估算合理价值上沿且缺乏安全边际，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告正式数据，重点看扣非亏损、压铸爬坡和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认单季扣非利润、毛利率和经营现金流是否修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估江苏恒义、新能源零部件和压铸业务全年盈利能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

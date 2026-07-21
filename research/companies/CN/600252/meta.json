@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600252",
-  "ticker": "600252",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "中恒集团",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中恒集团具备现金和国资资产底，但核心血栓通业务仍处量价承压和扣非亏损阶段，当前价格已反映较多回购及修复预期，安全边际不足，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.55,
-    1.95
-  ],
-  "buy_zone": [
-    0,
-    1.45
-  ],
-  "sell_or_reduce_zone": [
-    2.4,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中恒集团",
+    "security_status": "active",
+    "symbol": "CN:600252",
+    "ticker": "600252"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "bcf0d18a2f55d74cff91596d42c17c6fc2acee0eca2477b65144597bbbbeeaa5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未看到扣非利润和经营现金流修复前不建仓，仅跟踪核心品种量价、回购注销和资产减值。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看血栓通量价、经营现金流、减值和回购执行。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至1.45元以下且后续季度经营现金流改善、亏损收窄，可试探性建仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损是否收窄及现金流是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润转正且血栓通收入恢复增长，再评估提高仓位。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断主业修复是否成立并重估安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.45
+      },
+      "reason": "进入估算安全边际买区，需要复核资产负债表和经营现金流是否继续恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.4
+      },
+      "reason": "超过乐观情景中枢，若没有扣非盈利拐点应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.45,
-      "reason": "进入估算安全边际买区，需要复核资产负债表和经营现金流是否继续恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.4,
-      "reason": "超过乐观情景中枢，若没有扣非盈利拐点应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看血栓通量价、经营现金流、减值和回购执行。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损是否收窄及现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断主业修复是否成立并重估安全边际。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

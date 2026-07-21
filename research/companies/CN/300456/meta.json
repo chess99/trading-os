@@ -1,143 +1,120 @@
 {
-  "symbol": "CN:300456",
-  "market": "CN",
-  "ticker": "300456",
-  "name": "赛微电子",
-  "company_name": "北京赛微电子股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "赛微电子是A股稀缺的MEMS纯代工平台资产，赛莱克斯北京8英寸产线、瑞典Silex 45.24%参股权益和展诚科技IC设计服务构成长期看点；但2025年利润主要来自瑞典Silex控制权出售的一次性收益，2026Q1出表后收入、扣非利润和现金流承压。2026-07-13收盘36.79元仍接近乐观情景估值下沿，当前更适合观察，等待北京线利用率、量产品类和经营现金流验证，或价格回落到23元以下再分批配置。",
-  "quality_rating": "B",
-  "valuation_rating": "C-",
-  "fair_value_range": [
-    24,
-    31
-  ],
-  "buy_zone": [
-    18,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    45
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赛微电子",
+    "security_status": "active",
+    "symbol": "CN:300456",
+    "ticker": "300456"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "330ea6229da766dfba4714083c9ea4b4297c02538c9188f012dd8890122a7f9a"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "377196d0d131a03a22db4837ffd2657f55760c6657f21393d6ca66df056c32ab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "action": "watch",
-      "condition": "price_above_35_or_no_operating_cashflow_improvement",
-      "price_zone": [
-        35,
-        45
-      ],
-      "target_weight": 0,
-      "max_weight": 0.015,
-      "notes": "当前估值已隐含北京MEMS产线较顺利爬坡，缺少收入和现金流验证时只保留观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点确认收入、扣非利润、经营现金流、北京MEMS线利用率和赛莱克斯北京股权变更。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "action": "starter",
-      "condition": "price_between_28_and_35_and_2026H1_revenue_cashflow_show_improvement",
-      "price_zone": [
-        28,
-        35
-      ],
-      "target_weight": 0.01,
-      "max_weight": 0.02,
-      "notes": "只有半年报显示收入、扣非亏损、经营现金流改善时才允许试探。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断经营改善是否连续，决定是否维持观察或下调评级。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "action": "buy",
-      "condition": "price_between_23_and_28_with_no_fundamental_deterioration",
-      "price_zone": [
-        23,
-        28
-      ],
-      "target_weight": 0.02,
-      "max_weight": 0.03,
-      "notes": "进入合理价值下沿附近，可轻仓分批，但仍需跟踪产线利用率。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新评估正常化收入、盈利能力、瑞典Silex参股权益和长期估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "action": "strong_buy",
-      "condition": "price_between_18_and_23_and_beijing_mems_utilization_above_40_percent",
-      "price_zone": [
-        18,
-        23
-      ],
-      "target_weight": 0.04,
-      "max_weight": 0.05,
-      "notes": "安全买入区；若北京线利用率、量产品类和现金流同步改善，可提高到5%。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入合理价值下沿附近，重新评估轻仓试探。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "action": "max_weight",
-      "condition": "price_below_18_and_core_thesis_intact",
-      "price_zone": [
-        0,
-        18
-      ],
-      "target_weight": 0.05,
-      "max_weight": 0.06,
-      "notes": "极端回落才允许接近上限，但必须确认无重大治理、税务或现金流恶化。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入安全买入区，若基本面未恶化可分批配置。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "进入乐观估值区，若缺少收入、现金流和利用率验证应减仓或不追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "显著高于基准合理价值，需按乐观情景兑现程度决定卖出或降仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入合理价值下沿附近，重新评估轻仓试探。"
-    },
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入安全买入区，若基本面未恶化可分批配置。"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "进入乐观估值区，若缺少收入、现金流和利用率验证应减仓或不追高。"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "显著高于基准合理价值，需按乐观情景兑现程度决定卖出或降仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点确认收入、扣非利润、经营现金流、北京MEMS线利用率和赛莱克斯北京股权变更。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断经营改善是否连续，决定是否维持观察或下调评级。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新评估正常化收入、盈利能力、瑞典Silex参股权益和长期估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "赛莱克斯北京8英寸MEMS产线利用率",
-    "赛莱克斯北京8英寸MEMS产线良率",
-    "MEMS纯代工收入",
-    "MEMS纯代工毛利率",
-    "MEMS-OCS、微振镜、BAW、IMU、硅麦克风等新品类量产进度",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "研发费用率",
-    "赛莱克斯北京95%持股后的少数股东权益与现金消耗",
-    "瑞典Silex 45.24%参股权益的分红、估值、融资或退出事件",
-    "展诚科技收入、净利润和订单贡献",
-    "高新技术企业资格取消后的税务最终影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

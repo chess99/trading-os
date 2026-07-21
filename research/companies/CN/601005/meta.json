@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601005",
-  "ticker": "601005",
-  "market": "CN",
-  "name": "重庆钢铁",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "重庆钢铁是宝武体系下的西南区域钢铁资产，具备区位、码头物流和合规产能价值，但主营热卷和中厚板仍高度周期化，2025年和2026H1仍亏损。定增补流改善短期安全垫，当前破净具备观察价值，但需等待连续盈利、吨钢毛利修复和经营现金流转正后再考虑小仓位逆周期买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.15,
-    1.55
-  ],
-  "buy_zone": [
-    0.95,
-    1.05
-  ],
-  "sell_or_reduce_zone": [
-    1.7,
-    1.9
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "重庆钢铁",
+    "security_status": "active",
+    "symbol": "CN:601005",
+    "ticker": "601005"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c7869b03016e828879cbaed44a28b04c6c24c862c906ce509e09447cfea88ca0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入0.95-1.05元且2026Q3单季归母净利润为正、经营现金流转正、无新增大额资产减值时，仅建立观察仓。",
-      "action": "initiate_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认业绩预告、Q2盈利、现金流和定增后资产负债表。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利润为正且吨钢毛利继续修复、负债和财务费用下降得到验证。",
-      "action": "increase_selectively",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断是否出现连续经营改善和现金流转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于1.70元但公司仍未验证持续盈利，或2026全年亏损超过5亿元且经营现金流为负。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，评估全年亏损、资产减值、财务费用和宝武协同效果。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入买入观察区，但需同时确认经营现金流和单季利润改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.95
+      },
+      "reason": "低于约0.65倍修正PB，若无新增减值和现金流恶化，可重新评估安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.7
+      },
+      "reason": "超过牛市情景下沿，若盈利未连续验证，应降低预期收益率并考虑回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "进入买入观察区，但需同时确认经营现金流和单季利润改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 0.95,
-      "reason": "低于约0.65倍修正PB，若无新增减值和现金流恶化，可重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.7,
-      "reason": "超过牛市情景下沿，若盈利未连续验证，应降低预期收益率并考虑回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认业绩预告、Q2盈利、现金流和定增后资产负债表。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断是否出现连续经营改善和现金流转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，评估全年亏损、资产减值、财务费用和宝武协同效果。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600081",
-  "ticker": "600081",
-  "name": "东风科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "东风科技处于2026年利润修复期，但集团关联客户集中、归母利润质量和现金流仍需半年报验证；当前估值接近基准公允区间上沿，安全边际不足，暂列观察。",
-  "fair_value_range": [
-    8.0,
-    9.6
-  ],
-  "buy_zone": [
-    6.8,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    10.8,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东风科技",
+    "security_status": "active",
+    "symbol": "CN:600081",
+    "ticker": "600081"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "02dec1fec0af2275ef41791022a52fdeb184bdb8204088c3f0e5366488ad18cd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.5元且半年报未出现经营现金流、应收票据或关联交易恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露后的扣非利润、经营现金流和应收票据",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报确认扣非利润和经营现金流同步改善，且价格不高于8.5元",
-      "action": "可增至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否延续至下半年",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于10.8元但未披露新增高质量订单或全年归母利润上修证据",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入安全买入区上沿，重新核验半年报与现金流后评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "超过基准公允价值上沿，若缺少利润上修证据则安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入安全买入区上沿，重新核验半年报与现金流后评估观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "超过基准公允价值上沿，若缺少利润上修证据则安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露后的扣非利润、经营现金流和应收票据"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否延续至下半年"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

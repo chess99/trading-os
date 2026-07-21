@@ -1,80 +1,86 @@
 {
-  "symbol": "CN:688758",
-  "market": "CN",
-  "ticker": "688758",
-  "name": "赛分科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "赛分科技是国产色谱填料和色谱柱中基本面质量较高的标的，工业纯化业务高增长、毛利率高、客户验证粘性强，但2026-07-17收盘价23.56元已对应约70.8倍TTM PE，估值提前反映较多成长预期；18元以下具备较好安全边际，当前以观察为主。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    17,
-    23
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    35
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赛分科技",
+    "security_status": "active",
+    "symbol": "CN:688758",
+    "ticker": "688758"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d1e039895c350b088db511d0b51398248f16770061aba14d2b1c12b002c5826c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于18元且2026半年报显示工业纯化收入继续高于30%增长、综合毛利率不低于68%、经营现金流未连续恶化",
-      "action": "begin_build",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘2026年半年报，重点核验工业纯化收入、毛利率、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在18至23元之间且半年报或三季报验证新增商业化项目和海外收入继续增长",
-      "action": "watch_or_research_position",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘2026年三季报，确认商业化项目、海外收入和全年盈利预测是否需要调整。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于25元且2026E归母净利润预测未上修至2亿元以上",
-      "action": "do_not_add_or_reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入买入区间，若基本面未恶化，风险收益比明显改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "估值超过中性合理区间，需确认盈利预测是否上修，否则不追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入买入区间，若基本面未恶化，风险收益比明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "估值超过中性合理区间，需确认盈利预测是否上修，否则不追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘2026年半年报，重点核验工业纯化收入、毛利率、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘2026年三季报，确认商业化项目、海外收入和全年盈利预测是否需要调整。"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-17",
-    "last_price": 23.56,
-    "market_cap_cny_billion": 9.812,
-    "ttm_eps_estimate": 0.3328,
-    "ttm_pe_estimate": 70.8,
-    "2025_revenue_cny": 402932552.43,
-    "2025_net_profit_attributable_cny": 126536969.64,
-    "2026_q1_revenue_cny": 113672797.32,
-    "2026_q1_net_profit_attributable_cny": 35488485.96
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

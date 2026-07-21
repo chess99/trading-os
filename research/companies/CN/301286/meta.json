@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301286",
-  "ticker": "301286",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "侨源股份",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "西南区域工业气体空分资产质量较好，2025年盈利修复、现金流稳健，但当前约80倍PE已显著透支扩产和特气兑现预期，缺乏安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    0,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "侨源股份",
+    "security_status": "active",
+    "symbol": "CN:301286",
+    "ticker": "301286"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e25416a6792189463027338199964620ec830723a56ae36d1d252250c8a09042"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于26元且2026年利润中枢未下修，建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和金堂/德阳项目进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于22元且经营现金流/归母净利润持续大于0.9，可加至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润趋势和新增产能爬坡情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于42元且未见特气或管道客户超预期兑现，不新增并考虑减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分产品毛利率和特气业务兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入初始买入区，需要复核半年报和项目投产进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入更有安全边际区间，可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "高于乐观情景附近，需警惕估值回撤",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入初始买入区，需要复核半年报和项目投产进展"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入更有安全边际区间，可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "高于乐观情景附近，需警惕估值回撤"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流和金堂/德阳项目进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润趋势和新增产能爬坡情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分产品毛利率和特气业务兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

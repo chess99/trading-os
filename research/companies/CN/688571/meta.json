@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:688571",
-  "market": "CN",
-  "ticker": "688571",
-  "name": "杭华股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "杭华股份具备绿色油墨龙头、净现金资产负债表和较强现金分红基础，功能材料与显示光刻胶色浆提供中长期弹性；但2025年利润下滑、毛利率承压，浙江迪克仍处培育亏损期，2026Q1尚未证明归母利润拐点。当前价格处于公允区间中部，适合观察等待更好的安全边际或基本面验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.2,
-    8.6
-  ],
-  "buy_zone": [
-    5.2,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    11.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杭华股份",
+    "security_status": "active",
+    "symbol": "CN:688571",
+    "ticker": "688571"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "ea3bc77ca6b129186e4f30b8419ce806ffb01d007a225cfcc90625b00843feec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前7.50元附近仅观察或小仓验证，等待2026H1扣非利润和毛利率确认修复",
-      "action": "watch_or_probe",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、主营毛利率、浙江迪克亏损及客户验证进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至6.2元以下且主营毛利率、经营现金流、浙江迪克亏损未继续恶化",
-      "action": "accumulate",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1扣非改善是否持续以及经营现金流质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至5.2元以下且2026扣非利润仍可维持1.1亿元以上、经营现金流覆盖利润",
-      "action": "add_on_margin_of_safety",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和分红政策，重新评估ROE、资本开支回报与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价升至9.2元以上但光刻胶色浆订单、功能材料增长或利润拐点未兑现",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入基准估值下沿，可结合半年报验证是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入具备现金流和净现金保护的安全边际区间，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "超过公允区间上沿，需要光刻胶色浆和功能材料兑现增长，否则估值风险上升",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入基准估值下沿，可结合半年报验证是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入具备现金流和净现金保护的安全边际区间，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "超过公允区间上沿，需要光刻胶色浆和功能材料兑现增长，否则估值风险上升"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、主营毛利率、浙江迪克亏损及客户验证进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1扣非改善是否持续以及经营现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和分红政策，重新评估ROE、资本开支回报与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

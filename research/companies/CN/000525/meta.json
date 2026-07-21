@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:000525",
-  "market": "CN",
-  "ticker": "000525",
-  "name": "红太阳",
-  "company_name": "红太阳",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "红太阳具备吡啶碱和农药产业链困境反转弹性，但2026年仍需先验证债务重组执行、经营现金流转正、治理与环保安全风险下降；在现价附近风险补偿不足，暂列入观察。",
-  "quality_rating": "low",
-  "valuation_rating": "neutral_to_expensive_for_risk",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.5,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "红太阳",
+    "security_status": "active",
+    "symbol": "CN:000525",
+    "ticker": "000525"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ece86be5801ae3ec229a55c60ae6aaa9212fd0b568cf00e9ce4abae2f9891126"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.10元，且无新增重大债务违约、环保安全事故或退市风险公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "困境反转仍需验证，只能在价格提供足够折价时用小仓位跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报利润质量、经营现金流、债务重组付款和诉讼担保进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报确认盈利质量，经营现金流转正，债务重组现金支付按期推进",
-      "action": "加至小仓",
-      "max_weight": 0.025,
-      "reason": "利润表改善开始传导到现金流和偿债能力，反转置信度提高"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否延续盈利和现金流修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流为正，资产负债率下降，审计和内控意见无恶化",
-      "action": "加至中性仓",
-      "max_weight": 0.04,
-      "reason": "困境反转从事件驱动转向基本面修复"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入观察买入区，可结合公告和现金流验证建立小仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "出现债务重组违约、重大环保安全事故、资金占用新增或审计意见恶化",
-      "action": "清仓或回避",
-      "max_weight": 0,
-      "reason": "核心投资假设被破坏，普通股权益可能重新受到流动性和治理风险压制"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "进入悲观情景低位，若无新增风险可重新评估风险补偿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "接近乐观情景交易区，若现金流和债务未同步改善应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "超过当前困境反转可支持的估值上沿，应卖出或大幅降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "进入观察买入区，可结合公告和现金流验证建立小仓"
-    },
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "reason": "进入悲观情景低位，若无新增风险可重新评估风险补偿"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "接近乐观情景交易区，若现金流和债务未同步改善应减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "超过当前困境反转可支持的估值上沿，应卖出或大幅降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报利润质量、经营现金流、债务重组付款和诉讼担保进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否延续盈利和现金流修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年半年报归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "货币资金对短期借款和一年内到期债务的覆盖",
-    "债务重组现金偿付进度",
-    "资产负债率和有息负债规模",
-    "吡啶碱、百草枯、敌草快等核心产品价格",
-    "主要装置开工率和毛利率",
-    "重大诉讼、担保、资产冻结和资金占用公告",
-    "环保安全处罚和停产整改事项",
-    "审计意见、内控意见和董事会异议情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

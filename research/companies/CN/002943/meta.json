@@ -1,119 +1,114 @@
 {
-  "symbol": "CN:002943",
-  "market": "CN",
-  "ticker": "002943",
-  "name": "宇晶股份",
-  "company_name": "湖南宇晶机器股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "设备业务有技术资产和半导体/海外订单期权，但2025年扣非亏损、2026Q1继续亏损、2026H1预告亏损0.65-0.85亿元；当前约39.69元、约105.91亿元市值对应约12倍PB，显著高于可验证价值。",
-  "quality_rating": "中低",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    12,
-    18
-  ],
-  "buy_zone": [
-    0,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宇晶股份",
+    "security_status": "active",
+    "symbol": "CN:002943",
+    "ticker": "002943"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "7a1387b6041c98f2ee6fba23019d14bc8b33bf0dfd56131da7c11a2f24017703"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于25元且2026H1亏损未明显收窄",
-      "action": "不建仓；已有仓位应减仓或退出",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证2026H1预亏和设备收入递延的关键节点。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在12-18元且设备毛利率维持30%以上、合同负债转收入顺利",
-      "action": "仅观察或建立小型研究仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报可观察设备订单是否开始确认收入并修复利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于12元且2026H2设备收入确认改善、存货和应收未恶化",
-      "action": "重新评估买入，分批小仓",
-      "target_position": "0%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026全年结果决定当前不买结论是否需要调整。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "未来连续两个季度归母净利润年化超过2.5亿元且半导体设备订单被验证",
-      "action": "上修估值并重新制定仓位",
-      "target_position": "视估值重新评估",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
+      "reason": "中期复核用于确认周期修复和治理信号是否兑现。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "18元接近三种估值方法交叉后的合理价值上沿。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "12元以下才接近有安全边际的买入区。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "25元以上需要远高于历史峰值的利润能力支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "currency": "CNY",
-      "action": "进入观察区，复核2026H1实际亏损和订单确认。",
-      "reason": "18元接近三种估值方法交叉后的合理价值上沿。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "currency": "CNY",
-      "action": "进入可买区，若基本面未继续恶化，可考虑小仓。",
-      "reason": "12元以下才接近有安全边际的买入区。"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "currency": "CNY",
-      "action": "高估区，避免追高；已有仓位考虑减仓。",
-      "reason": "25元以上需要远高于历史峰值的利润能力支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后，核验亏损是否落在0.65-0.85亿元区间以及设备收入递延原因",
-      "reason": "半年报是验证2026H1预亏和设备收入递延的关键节点。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后，核验合同负债是否转收入、设备毛利率是否维持30%以上",
-      "reason": "三季报可观察设备订单是否开始确认收入并修复利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露后，复核存货跌价、应收回款、半导体设备订单和全年盈利能力",
-      "reason": "2026全年结果决定当前不买结论是否需要调整。"
-    },
-    {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "2027年中期节点复核光伏链修复、海外订单交付和实控人增持计划执行结果",
-      "reason": "中期复核用于确认周期修复和治理信号是否兑现。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1归母净利润和扣非净利润",
-    "高精密数控切磨抛设备收入和毛利率",
-    "合同负债余额及收入确认进度",
-    "存货余额和存货跌价准备",
-    "应收账款余额及回款",
-    "前五大客户收入占比",
-    "境外收入占比",
-    "半导体设备订单、收入和客户验证",
-    "金刚石线及硅片切片加工业务是否止亏",
-    "经营活动现金流净额与净利润匹配度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

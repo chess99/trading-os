@@ -1,110 +1,115 @@
 {
-  "symbol": "CN:300181",
-  "market": "CN",
-  "ticker": "300181",
-  "name": "佐力药业",
-  "company_name": "浙江佐力药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是药用真菌中药优质标的，乌灵系列具备独家品种、秘密技术、医保基药和循证证据优势，2025年收入和利润仍双位数增长；但2026Q1乌灵系列收入同比仅增长2.00%，当前约14元股价已有一定质量溢价，适合小仓跟踪，等待12.5元以下安全边际或乌灵重新加速。",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    15.0,
-    18.0
-  ],
-  "buy_zone": [
-    0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佐力药业",
+    "security_status": "active",
+    "symbol": "CN:300181",
+    "ticker": "300181"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "f7132782db88d0886a67a6a7ce0b232f9d25998fd8ce25a55c579b4cc2717999"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于12.5元且乌灵系列季度增速低于10%",
-      "action": "仅保留0%-2%观察仓，不追买",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，重点检查乌灵系列增速、经营现金流和销售费用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至12.5元以下且乌灵系列未连续两个季度低于5%增长",
-      "action": "分批建立2%-3%仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值、分红和第二增长曲线",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至11.0元以下且经营现金流/归母净利润年度口径不低于70%",
-      "action": "提高至4%-6%中仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "复核2027年中报，检查乌灵院外渠道和百令/配方颗粒接力情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于18.5元且未来12个月利润增速预期低于15%",
-      "action": "逐步减仓至观察仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
       "reason": "进入12倍左右2026E PE的安全边际区",
-      "action": "进入分批买入区，复核乌灵增速和现金流后建仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 11.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
       "reason": "进入坏情景估值仍有保护的高安全边际区",
-      "action": "进入高安全边际区，若基本面未恶化可提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 18.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
       "reason": "超过合理价值上沿，除非业绩重新加速否则风险收益转弱",
-      "action": "进入减仓观察区，除非乌灵恢复15%以上增长"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 22.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
       "reason": "估值对中速增长业务过高，安全边际明显不足",
-      "action": "估值偏高，若无业绩上修应明显减仓"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，重点检查乌灵系列增速、经营现金流和销售费用率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值、分红和第二增长曲线"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "reason": "复核2027年中报，检查乌灵院外渠道和百令/配方颗粒接力情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    "乌灵系列季度收入增速",
-    "百令系列收入增速和收入占比",
-    "中药配方颗粒收入增速、毛利率和备案进度",
-    "经营现金流/归母净利润",
-    "销售费用率",
-    "应收账款周转和前五大客户收入占比",
-    "多微资产组收入、利润、现金流和商誉减值风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

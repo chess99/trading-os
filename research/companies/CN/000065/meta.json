@@ -1,110 +1,115 @@
 {
-  "symbol": "CN:000065",
-  "market": "CN",
-  "ticker": "000065",
-  "name": "北方国际",
-  "company_name": "北方国际",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北方国际具备兵器工业集团背景、海外工程与投建营项目能力，估值处于合理偏低区间；但2025年和2026Q1收入利润下滑，应收账款和重大项目回款压力仍需验证，当前适合观察仓而非重仓买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    8.6,
-    10.6
-  ],
-  "buy_zone": [
-    7.4,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    10.8,
-    12.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北方国际",
+    "security_status": "active",
+    "symbol": "CN:000065",
+    "ticker": "000065"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "fb6d56c7542a02ea277fd30789cc69349d282e5efae1d00a4338f886215f227c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约8.88元且未进入买入区间，仅用于跟踪研究",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_weight": 0.01,
-      "reason": "估值不贵但2026Q1收入利润仍下滑，应收账款压力未解除"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、利润、经营现金流、应收账款和重大项目进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入7.4-8.2元且经营现金流保持为正，应收账款未继续显著恶化",
-      "action": "分批加至2.5%-3.0%",
-      "max_weight": 0.03,
-      "reason": "该区间相对基准合理价值具备安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报工程收入是否止跌、财务费用和汇兑损益是否缓和",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "孟加拉电站商业运营稳定、蒙古重载公路回款改善、新签订单质量提升",
-      "action": "最高提高至4.0%-5.0%",
-      "max_weight": 0.05,
-      "reason": "投建营资产利润稳定性改善后可提高估值中枢"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报及2027一季报，判断投建营项目是否形成稳定利润贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转弱或重大项目新增坏账/回款事故",
-      "action": "降至0%-1.0%",
-      "max_weight": 0.01,
-      "reason": "核心逻辑从运营资产修复转为资产质量折价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入纪律买入区间上沿，复核现金流与应收后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
+      "reason": "低于买入区间下沿，若基本面未恶化则风险收益明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "接近减仓区间，若无订单和利润上修应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.2
+      },
+      "reason": "超过基准估值上沿较多，需兑现或等待乐观情景验证",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入纪律买入区间上沿，复核现金流与应收后可加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.4,
-      "reason": "低于买入区间下沿，若基本面未恶化则风险收益明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "接近减仓区间，若无订单和利润上修应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.2,
-      "reason": "超过基准估值上沿较多，需兑现或等待乐观情景验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、利润、经营现金流、应收账款和重大项目进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报工程收入是否止跌、财务费用和汇兑损益是否缓和"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报及2027一季报，判断投建营项目是否形成稳定利润贡献"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入及工程建设与服务收入增速",
-    "归母净利润与扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款、合同资产、长期应收款合计余额",
-    "孟加拉博杜阿卡利电站商业运营和回款进度",
-    "蒙古重载公路回款情况",
-    "蒙古TT矿和焦煤供应链销量、毛利率",
-    "新签合同金额、生效比例和业主质量",
-    "财务费用、汇兑损益和套期保值效果",
-    "无追索权保理实际发生额、成本和对现金流的影响",
-    "波黑科曼耶山125MW光伏项目建设及并网进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

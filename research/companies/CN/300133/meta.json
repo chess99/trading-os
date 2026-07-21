@@ -1,116 +1,123 @@
 {
-  "symbol": "CN:300133",
-  "market": "CN",
-  "ticker": "300133",
-  "name": "华策影视",
-  "company_name": "浙江华策影视股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "头部剧集制作能力和海外发行能力有价值，但 2025 年扣非利润低、2026 年算力采购扩张重、当前价格已包含较多 AI/算力第二曲线预期；等待跌入 5.2 元以下或算力现金回款与扣非利润同步验证。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    4.6,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华策影视",
+    "security_status": "active",
+    "symbol": "CN:300133",
+    "ticker": "300133"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "f4cdf8a94f974d07c0abc058d83599fb03da4c5f56dd06fdffb56bd82593e676"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价 <= 5.2 元，且最新半年报未出现新增大额存货/商誉减值，经营现金流没有显著恶化",
-      "action": "建立 1%-3% 观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报披露后复核扣非利润、经营现金流、应收账款、存货和合同负债转收入情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价 <= 4.6 元，且扣非归母净利润恢复、算力订单交付和回款均有财报证据",
-      "action": "提高至 4%-5% 上限仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "算力服务器采购合同有重大交付、融资、客户变更或回款异常公告时立即复核",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价 >= 8.5 元，但算力收入、扣非利润和经营现金流未同步兑现",
-      "action": "降低仓位或保持空仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "单季度经营现金流连续为负且预付款项/存货继续快速上升时复核",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "发生新增大额存货跌价、商誉减值或影视项目撤档/播出不及预期时复核",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-10-31"
+      },
+      "reason": "股价跌破 5.2 元或升破 8.5 元时复核估值和仓位",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入可买观察区，复核最新财报和订单回款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入安全边际区，若基本面未恶化可分批买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "进入减仓复核区，检查估值是否脱离财报验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "action": "进入可买观察区，复核最新财报和订单回款",
-      "reason": "进入可买观察区，复核最新财报和订单回款"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "action": "进入安全边际区，若基本面未恶化可分批买入",
-      "reason": "进入安全边际区，若基本面未恶化可分批买入"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "action": "进入减仓复核区，检查估值是否脱离财报验证",
-      "reason": "进入减仓复核区，检查估值是否脱离财报验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露后复核扣非利润、经营现金流、应收账款、存货和合同负债转收入情况",
-      "action": "复核",
-      "reason": "2026 年半年报披露后复核扣非利润、经营现金流、应收账款、存货和合同负债转收入情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "算力服务器采购合同有重大交付、融资、客户变更或回款异常公告时立即复核",
-      "action": "复核",
-      "reason": "算力服务器采购合同有重大交付、融资、客户变更或回款异常公告时立即复核"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "单季度经营现金流连续为负且预付款项/存货继续快速上升时复核",
-      "action": "复核",
-      "reason": "单季度经营现金流连续为负且预付款项/存货继续快速上升时复核"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "发生新增大额存货跌价、商誉减值或影视项目撤档/播出不及预期时复核",
-      "action": "复核",
-      "reason": "发生新增大额存货跌价、商誉减值或影视项目撤档/播出不及预期时复核"
-    },
-    {
-      "type": "date",
-      "date": "2027-10-31",
-      "condition": "股价跌破 5.2 元或升破 8.5 元时复核估值和仓位",
-      "action": "复核",
-      "reason": "股价跌破 5.2 元或升破 8.5 元时复核估值和仓位"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "算力业务收入与毛利率",
-    "合同负债转收入节奏",
-    "应收账款余额与周转",
-    "存货余额及跌价准备",
-    "海外收入占比与毛利率",
-    "头部剧项目上线、播放和收入确认情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

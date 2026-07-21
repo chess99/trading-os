@@ -1,129 +1,110 @@
 {
-  "symbol": "CN:001311",
-  "market": "CN",
-  "ticker": "001311",
-  "name": "多利科技",
-  "company_name": "滁州多利汽车科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "多利科技具备新能源车身结构件、一体化压铸和头部客户定点的成长线索，但2025年及2026Q1收入增长未转化为利润增长，核心产品毛利率和现金流仍需验证；当前价格缺乏足够安全边际，维持观察。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    13.5,
-    17.0
-  ],
-  "buy_zone": [
-    11.5,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    20.5,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "多利科技",
+    "security_status": "active",
+    "symbol": "CN:001311",
+    "ticker": "001311"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "3229335e77ec1777fbabb78a711ed2bd4c8ccada589d7dddbf93cec43d0e105d"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e9bae29da37d511a1ca188b6ad5bbba22cd41a350b0cabe360a82c33e902454a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于13.5元，且2026中报尚未验证毛利率企稳",
-      "action": "不新开仓，保持观察",
-      "max_weight": 0,
-      "reason": "当前估值已隐含利润率修复，但2025年和2026Q1归母净利润仍同比下滑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证综合毛利率、冲压和一体化压铸毛利率、归母净利润同比和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入13.5元以下，且2026中报综合毛利率不低于14%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入合理价值下沿以下，同时基本面没有继续破坏"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认收入增长是否重新转化为利润增长",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入11.5元以下，且一体化压铸产能利用率提升、归母净利润同比止跌",
-      "action": "提高至小核心观察仓",
-      "max_weight": 0.03,
-      "reason": "安全边际较充分，且增长重新转化为利润的证据增强"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，评估常州、金华、临港、西班牙项目对盈利和现金流的贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于20.5元但综合毛利率低于14%、归母净利润仍同比下滑",
-      "action": "回避或减仓",
-      "max_weight": 0,
-      "reason": "估值超出当前盈利兑现能力，风险回报转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入买入观察区，需要复核中报毛利率、现金流和客户集中度",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入保守安全边际区，可重新评估是否提高至2%-3%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.5
+      },
+      "reason": "超过减仓区下沿，若利润率未修复则估值风险较高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入买入观察区，需要复核中报毛利率、现金流和客户集中度"
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入保守安全边际区，可重新评估是否提高至2%-3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "超过减仓区下沿，若利润率未修复则估值风险较高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证综合毛利率、冲压和一体化压铸毛利率、归母净利润同比和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认收入增长是否重新转化为利润增长"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，评估常州、金华、临港、西班牙项目对盈利和现金流的贡献"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率",
-    "冲压和一体化压铸零部件毛利率",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "经营活动现金流量净额",
-    "购建固定资产、无形资产和其他长期资产支付的现金",
-    "应收账款和存货增速相对收入增速",
-    "前五大客户销售占比",
-    "新能源客户收入占比",
-    "一体化压铸良率和产能利用率",
-    "钢材、铝材、铝锭价格变化",
-    "控股股东及高管减持和质押变化"
-  ],
-  "sources": [
-    {
-      "title": "多利科技2025年年度报告",
-      "date": "2026-04-23",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-23/1225144765.PDF"
-    },
-    {
-      "title": "多利科技2026年一季度报告",
-      "date": "2026-04-30",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225253800.PDF"
-    },
-    {
-      "title": "多利科技2025年年度权益分派实施公告",
-      "date": "2026-05-19",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-05-19/1225312817.PDF"
-    },
-    {
-      "title": "多利科技股票交易异常波动公告",
-      "date": "2026-07-08",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-07-08/1225413688.PDF"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

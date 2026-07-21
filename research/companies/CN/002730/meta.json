@@ -1,122 +1,133 @@
 {
-  "symbol": "CN:002730",
-  "market": "CN",
-  "ticker": "002730",
-  "name": "电光科技",
-  "company_name": "电光防爆科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "煤矿防爆电器与智能矿山主业具备政策支撑，算力服务提供增长期权；但2025年收入和扣非利润下滑，2026Q1收入仍下滑，应收账款较高，现价约对应百亿市值和百倍以上利润倍数，已过度预支算力转型成功。",
-  "quality_rating": "中",
-  "valuation_rating": "低",
-  "fair_value_range": [
-    7.0,
-    11.0
-  ],
-  "buy_zone": [
-    0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电光科技",
+    "security_status": "active",
+    "symbol": "CN:002730",
+    "ticker": "002730"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8e43f60fd8f6ffa3b0695fd485f738cd225c1c643a77e354418a3e72ad0869eb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于15元或估值仍高于可验证利润支撑",
-      "action": "不买",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "更新收入、利润、现金流和应收账款趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至7元以下，且经营现金流/归母净利润连续改善，应收账款不继续扩张",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "评估数据中心项目摊薄、资本开支和回报率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于6元，智能化装备收入保持增长，算力服务披露可核验长期客户合同且利用率达预期",
-      "action": "加至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "判断算力业务是否从期权转为可验证利润来源",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于合理价值且ROE提升至8%以上、经营现金流持续覆盖净利润",
-      "action": "复核是否提高上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "识别回款和资产质量恶化风险",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核治理和资本配置风险",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入估算合理价值区间下沿并具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "低于基准估值且可覆盖主业波动风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "明显高于合理价值区间，需要利润跃迁才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "价格隐含算力转型高度成功，安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "action": "重新评估买入",
-      "reason": "进入估算合理价值区间下沿并具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "action": "若基本面验证则考虑加仓",
-      "reason": "低于基准估值且可覆盖主业波动风险"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "action": "复核估值并避免追高",
-      "reason": "明显高于合理价值区间，需要利润跃迁才能支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "action": "视为题材化高风险区",
-      "reason": "价格隐含算力转型高度成功，安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报",
-      "reason": "更新收入、利润、现金流和应收账款趋势"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "定增方案获得股东会、深交所或证监会关键进展",
-      "reason": "评估数据中心项目摊薄、资本开支和回报率"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "披露数据中心项目客户合同、投产节奏、利用率或单MW投资回报",
-      "reason": "判断算力业务是否从期权转为可验证利润来源"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "应收账款超过8亿元或经营现金流连续两个季度弱于净利润",
-      "reason": "识别回款和资产质量恶化风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "控股股东、实际控制人出现减持、质押或重大关联交易",
-      "reason": "复核治理和资本配置风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "智能化装备及系统收入增速和毛利率",
-    "矿用防爆开关收入增速和毛利率",
-    "算力服务收入、毛利率、净利率、客户合同期限和利用率",
-    "经营现金流净额/归母净利润",
-    "应收账款余额和周转天数",
-    "存货余额和跌价准备",
-    "ROE和有息负债",
-    "定增发行价、摊薄比例和募投项目回收期"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

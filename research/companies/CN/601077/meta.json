@@ -1,115 +1,106 @@
 {
-  "symbol": "CN:601077",
-  "market": "CN",
-  "ticker": "601077",
-  "name": "渝农商行",
-  "company_name": "渝农商行",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "渝农商行具备重庆本土龙头、低成本存款、较高拨备覆盖率和稳定分红优势，当前约0.5倍PB的估值已反映较多地方债务、地产链和农商行折价风险；适合以高股息低估值银行股定位分批买入，但仓位上限需受资产质量、净息差和资本充足率约束。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "cheap",
-  "fair_value_range": [
-    7.6,
-    8.8
-  ],
-  "buy_zone": [
-    6.2,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    8.6,
-    9.4
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "渝农商行",
+    "security_status": "active",
+    "symbol": "CN:601077",
+    "ticker": "601077"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "5b690b2441de5d7942b7b3e892a5b721da4b962861534f83b0dd0a7603708753"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于6.80元，且无新增资产质量负面公告",
-      "action": "建立首笔仓位",
-      "max_weight": 0.03,
-      "reason": "低于约0.54倍2026Q1 PB，股息率具备安全垫"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报的净息差、不良率、拨备覆盖率、资本充足率和分红安排",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.20元，且2026H1不良率不高于1.10%、拨备覆盖率高于330%",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.06,
-      "reason": "悲观情景下行空间有限，资产质量仍验证良好"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认息差改善和资产质量是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1净息差不低于1.60%、核心一级资本充足率稳定在12%左右且估值仍低于0.60倍PB",
-      "action": "加仓至计划上限",
-      "max_weight": 0.08,
-      "reason": "息差、资本和资产质量同时确认，可承受更高银行股敞口"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入首笔买入区，需核验当日公告和行情",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于8.60元但基本面未明显超预期",
-      "action": "停止买入并逐步减仓",
-      "max_weight": 0.04,
-      "reason": "估值接近基准合理区间上沿，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入加仓区，若资产质量指标未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.6
+      },
+      "reason": "接近减仓区，需重新评估PB、ROE和息差是否支持更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.4
+      },
+      "reason": "高于基准估值上沿，除非基本面显著上修，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入首笔买入区，需核验当日公告和行情"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入加仓区，若资产质量指标未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.6,
-      "reason": "接近减仓区，需重新评估PB、ROE和息差是否支持更高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 9.4,
-      "reason": "高于基准估值上沿，除非基本面显著上修，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报的净息差、不良率、拨备覆盖率、资本充足率和分红安排"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认息差改善和资产质量是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "净息差",
-    "贷款收益率",
-    "存款付息率",
-    "客户贷款余额",
-    "客户存款余额",
-    "不良贷款率",
-    "不良贷款余额",
-    "关注类贷款占比",
-    "逾期贷款占比",
-    "拨备覆盖率",
-    "拨贷比",
-    "核心一级资本充足率",
-    "一级资本充足率",
-    "资本充足率",
-    "ROE",
-    "ROA",
-    "成本收入比",
-    "涉农贷款余额",
-    "涉房和地方平台相关敞口",
-    "每股现金分红",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

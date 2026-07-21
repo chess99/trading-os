@@ -1,129 +1,115 @@
 {
-  "symbol": "CN:002491",
-  "market": "CN",
-  "ticker": "002491",
-  "name": "通鼎互联",
-  "company_name": "通鼎互联",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "current_rating": "avoid",
-  "current_thesis": "光电线缆周期修复和安全业务改善提供业绩弹性，但当前估值显著高于盈利、净资产和现金流可解释范围，应等待深度回落和财报验证。",
-  "conclusion": "通鼎互联具备光电线缆周期修复和安全业务改善弹性，但当前股价显著脱离盈利、净资产和现金流基础；2026-07-08 不买入、不追高。",
-  "rating": {
-    "company_quality": "C+",
-    "valuation": "E",
-    "overall": "回避/等待深度回落"
-  },
-  "fair_value": {
+  "identity": {
     "currency": "CNY",
-    "range": "4.0-6.0",
-    "method": "净资产法、归一化利润法、EV/Sales交叉验证"
+    "market": "CN",
+    "name": "通鼎互联",
+    "security_status": "active",
+    "symbol": "CN:002491",
+    "ticker": "002491"
   },
-  "fair_value_range": [
-    4.0,
-    6.0
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "buy_zone_detail": {
-    "currency": "CNY",
-    "safe_margin": "3.2-4.0",
-    "strong_buy": "2.5-3.2"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "a2f78b8b35127ea96d0136c2f9f48c940d6f44d6ed512afba62ab8e4062ab14e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [
-    8.0,
-    12.0
-  ],
-  "sell_or_reduce_zone_detail": {
-    "currency": "CNY",
-    "reduce": "8.0-12.0",
-    "avoid_or_exit": "12.0以上"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "max_weight": 0.05,
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "current",
-      "condition": "当前22.61元",
-      "action": "不建仓",
-      "target_weight": 0.0,
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、光纤光缆毛利率、经营现金流、应收账款和存货变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "safe_margin",
-      "condition": "跌至3.2-4.0元且扣非利润、经营现金流、应收存货改善",
-      "action": "小仓位试错",
-      "target_weight": 0.01,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1扣非改善是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "strong_buy",
-      "condition": "跌至2.5-3.2元且基本面未恶化",
-      "action": "分批加至上限",
-      "target_weight": 0.03,
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认安全业务和光电线缆周期修复的全年质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入安全边际买入区，且估值开始接近净资产和归一化利润可解释范围。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入强吸引力区，可在基本面未恶化时提高观察优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "超过合理价区间上沿较多，不应新增基本面仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "明显进入题材定价区，应减仓或回避。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入安全边际买入区，且估值开始接近净资产和归一化利润可解释范围。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入强吸引力区，可在基本面未恶化时提高观察优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "超过合理价区间上沿较多，不应新增基本面仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "明显进入题材定价区，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、光纤光缆毛利率、经营现金流、应收账款和存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1扣非改善是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认安全业务和光电线缆周期修复的全年质量。"
-    }
-  ],
-  "review_plan": "按半年报、三季报和年报复查；重点看扣非利润与经营现金流匹配度、应收账款和存货占收入比例、短期借款规模、光纤光缆价格和毛利率、异常波动公告后的题材澄清。",
-  "key_risks": [
-    "光纤价格回落或供需反转",
-    "市场将公司误当作光模块/光芯片核心标的",
-    "短期借款高导致财务压力",
-    "应收账款、存货、长期资产和商誉继续减值",
-    "客户集中和招投标节奏波动",
-    "云创数据退市/违法风险及百卓网络业绩补偿回收风险",
-    "铜等原材料价格和套期保值损益扰动"
-  ],
-  "sources": [
-    "sources/2025-annual-report.pdf",
-    "sources/2026-q1-report.pdf",
-    "sources/2026-06-18-abnormal-trading-announcement.pdf",
-    "sources/2026-07-08-sina-quote.txt",
-    "sources/source-index.md"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08T15:35:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

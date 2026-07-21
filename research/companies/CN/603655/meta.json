@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603655",
-  "market": "CN",
-  "ticker": "603655",
-  "name": "朗博科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "朗博科技是汽车橡胶密封件细分优质小公司，2025年受益新能源客户、O型圈和轴封增长及毛利率修复，资产负债表极低杠杆；但2026Q1收入和利润同比下滑，当前26.46元对应约64.5倍TTM PE，显著高于可比公司与DCF可支撑区间，安全边际不足，等待估值回落或利润兑现。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    11,
-    16
-  ],
-  "buy_zone": [
-    0,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    22,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗博科技",
+    "security_status": "active",
+    "symbol": "CN:603655",
+    "ticker": "603655"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "72534751463ab260fb03ca2701e0965cb8d5442723cd7053ebe67e381329c38d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于22元且未看到利润年化接近7000万元的订单证据",
-      "action": "不建仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、O型圈/轴封增长、应收账款和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至16元以下，且2026H1收入恢复同比增长、综合毛利率不低于38%、经营现金流正常",
-      "action": "观察性建仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1下滑是否为短期扰动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至12元以下，且应收账款和库存未明显恶化、核心客户订单保持增长",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及分红，重估DCF和相对估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入可研究建仓区，需要复核2026H1订单、毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入安全边际较充分区间，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "明显高于当前基本面合理价值区间，应维持回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入可研究建仓区，需要复核2026H1订单、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入安全边际较充分区间，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "明显高于当前基本面合理价值区间，应维持回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、O型圈/轴封增长、应收账款和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1下滑是否为短期扰动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及分红，重估DCF和相对估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

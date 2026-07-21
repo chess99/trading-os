@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600959",
-  "ticker": "600959",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "江苏有线",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "江苏有线具备江苏省域广电网络、政企客户和公共文化服务资产底，但传统收视业务下行、低ROE和扣非盈利尚未稳定修复，使其更适合作为低PB资产型观察标的；只有在价格低于净资产折价下沿且扣非利润/自由现金流持续改善时才具备安全边际。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    2.6,
-    3.4
-  ],
-  "buy_zone": [
-    2.25,
-    2.55
-  ],
-  "sell_or_reduce_zone": [
-    3.4,
-    4.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江苏有线",
+    "security_status": "active",
+    "symbol": "CN:600959",
+    "ticker": "600959"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "75a3fed247c484f2abcece9e6c6911fe2deb4fcce0c22e033dcc8f411e942708"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.55元，且2026年中报扣非归母净利润为正、经营现金流无异常恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的扣非利润、经营现金流、资本开支和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.25元，且归母净资产未明显缩水、应收账款和资本开支风险可控",
-      "action": "提高至价值仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否延续扣非盈利修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.40元但扣非ROE和自由现金流未出现持续改善",
-      "action": "降低或不新增仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红/资本开支计划",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.55
+      },
+      "reason": "进入初始买入观察区，需要复核半年报扣非利润和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.25
+      },
+      "reason": "进入深度安全边际区，需要确认资产负债表没有新增减值或回款风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.4
+      },
+      "reason": "接近公允价值上沿，若扣非ROE未修复应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.55,
-      "reason": "进入初始买入观察区，需要复核半年报扣非利润和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 2.25,
-      "reason": "进入深度安全边际区，需要确认资产负债表没有新增减值或回款风险"
-    },
-    {
-      "type": "price_above",
-      "price": 3.4,
-      "reason": "接近公允价值上沿，若扣非ROE未修复应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的扣非利润、经营现金流、资本开支和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否延续扣非盈利修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红/资本开支计划"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

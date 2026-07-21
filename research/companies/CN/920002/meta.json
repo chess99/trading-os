@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920002",
-  "market": "CN",
-  "ticker": "920002",
-  "name": "万达轴承",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "万达轴承是叉车专用轴承细分龙头，客户质量、盈利能力和资产负债表较好，工业机器人客户拓展提供期权；但按2026-07-17收盘价约52.41元测算，估值已反映较乐观成长预期，当前安全边际不足，等待32元以下或机器人业务可量化超预期后再评估买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "buy_zone": [
-    24,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    50,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万达轴承",
+    "security_status": "active",
+    "symbol": "CN:920002",
+    "ticker": "920002"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "47f6e626b1b26ece17c622fd3953e89ee0a51a48c65dd2cee759d6856c32480d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于32元且最新半年报扣非净利润同比不为负、综合毛利率维持30%以上",
-      "action": "watchlist_entry",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看扣非利润、经营现金流、应收存货和机器人业务披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于24-28元且经营现金流恢复为正、机器人或高价值量新业务订单有可验证披露",
-      "action": "accumulate",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，确认全年利润节奏和现金流修复情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于50元且无机器人业务收入和利润超预期证据",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告，更新中长期盈利和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入合理价值区间下沿，可重新评估小仓位观察。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "接近熊市情景估值，若基本面未恶化则具备安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "高于合理价值上沿，除非机器人业务显著超预期，否则估值风险偏高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入合理价值区间下沿，可重新评估小仓位观察。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "接近熊市情景估值，若基本面未恶化则具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "reason": "高于合理价值上沿，除非机器人业务显著超预期，否则估值风险偏高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看扣非利润、经营现金流、应收存货和机器人业务披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，确认全年利润节奏和现金流修复情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告，更新中长期盈利和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

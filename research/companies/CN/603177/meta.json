@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603177",
-  "ticker": "603177",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "德创环保",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司具备烟气治理与脱硝催化剂细分技术和海外订单基础，但2025年转亏、2026H1预亏、汇率和项目排期扰动较大，当前价格高于保守合理价值区间，适合观察不适合买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.5,
-    8.0
-  ],
-  "buy_zone": [
-    0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德创环保",
+    "security_status": "active",
+    "symbol": "CN:603177",
+    "ticker": "603177"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "707aa4ad0acf973e4051f43f738803077dbba7a4cd992fc39414b2b21983cd47"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.0元，且2026中报经营现金流为正、毛利率止跌、汇兑损失未继续扩大",
-      "action": "建立观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、毛利率、汇兑损失和订单转化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026三季报扣非利润转正且在手订单继续保持10亿元以上",
-      "action": "可提高至小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现扣非利润修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但盈利修复未验证",
-      "action": "不追高并减持已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、商誉减值、控股股东质押和钠电商业化进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入安全边际观察区，需复核中报现金流和毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "显著高于当前合理价值上沿，若无盈利修复证据应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入安全边际观察区，需复核中报现金流和毛利率"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "显著高于当前合理价值上沿，若无盈利修复证据应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、毛利率、汇兑损失和订单转化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现扣非利润修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、商誉减值、控股股东质押和钠电商业化进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

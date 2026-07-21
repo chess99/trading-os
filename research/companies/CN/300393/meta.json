@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:300393",
-  "ticker": "300393",
-  "name": "中来股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中来股份具备背板龙头资产和TOPCon/组件技术期权，但2025至2026Q1仍深度亏损，短债、应收和预计负债压力显著；当前约3.7x PB缺乏安全边际，仅适合作为困境反转观察标的。",
-  "fair_value_range": [
-    3.2,
-    4.6
-  ],
-  "buy_zone": [
-    2.6,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中来股份",
+    "security_status": "active",
+    "symbol": "CN:300393",
+    "ticker": "300393"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "593c6a1e8b1822a168ba6e03e8c5d3daa6d450fdc887e33662fd96f80ce3c2fe"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.2元，且经营现金流改善、应收回款下降或TOPCon/组件毛利率修复中至少两项得到公告验证",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的亏损收窄、经营现金流、应收账款和预计负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "TOPCon/组件毛利率转正，经营现金流连续两个季度为正，短期借款加一年内到期非流动负债明显下降",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入困境PB与基准情景估值下沿，值得复核是否具备小仓位安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及光伏主链价格是否确认行业拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "高于本次公允价值上沿，在亏损和资产负债表压力未解除前风险收益比偏差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的亏损收窄、经营现金流、应收账款和预计负债变化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入困境PB与基准情景估值下沿，值得复核是否具备小仓位安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及光伏主链价格是否确认行业拐点"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "高于本次公允价值上沿，在亏损和资产负债表压力未解除前风险收益比偏差",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

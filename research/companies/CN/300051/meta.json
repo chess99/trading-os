@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:300051",
-  "ticker": "300051",
-  "name": "琏升科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "琏升科技是亏损期 HJT 光伏制造转型标的，核心资产有外部增资估值锚，但收入收缩、归母权益薄、行业供给出清未完成，当前约 29 亿元市值已经隐含乐观爬坡预期，缺乏买入安全边际，适合观察而非建仓。",
-  "fair_value_range": [
-    4.8,
-    6.3
-  ],
-  "buy_zone": [
-    3.8,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "琏升科技",
+    "security_status": "active",
+    "symbol": "CN:300051",
+    "ticker": "300051"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "72a29af83ef70151a9a0f373fe04b95991fd1b2c82ab401d72a7e2b68f317f48"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于 5.00 元且 2026H1/H2 显示 HJT 出货放量、毛利率改善、经营现金流收窄时建立研究仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入、毛利率、经营现金流和 HJT 出货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若定增落地且连续两个季度扣非亏损收窄、收入恢复同比增长，可上调至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及行业价格修复情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于 8.50 元但收入、毛利率和现金流未验证，不新增仓位并考虑退出观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断转型是否进入可持续盈利轨道",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入基准估值下沿并开始具备研究仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "接近乐观情景估值区间，需要收入和毛利率兑现，否则风险收益比恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入基准估值下沿并开始具备研究仓安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "接近乐观情景估值区间，需要收入和毛利率兑现，否则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入、毛利率、经营现金流和 HJT 出货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及行业价格修复情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断转型是否进入可持续盈利轨道"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

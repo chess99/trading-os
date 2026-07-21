@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:301518",
-  "ticker": "301518",
-  "name": "长华化学",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "长华化学是聚醚多元醇细分厂商，现有业务毛利率偏低但连云港38万吨二氧化碳聚醚及高性能多元醇项目提供产能和产品结构升级期权。当前估值已部分反映成长预期，需等待项目爬坡、毛利率和现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    22.0,
-    28.0
-  ],
-  "buy_zone": [
-    16.0,
-    20.0
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    38.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长华化学",
+    "security_status": "active",
+    "symbol": "CN:301518",
+    "ticker": "301518"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "61c0a7bf790f3fffbb4410cd3532fcfa7fb0f3d18641fdaa0d6b18deaa50f18e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于20元，且连云港项目无重大安全/质量事故，主营毛利率未跌破6%",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看连云港项目爬坡、毛利率、经营现金流和负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度确认新增产能带动收入、毛利率和经营现金流改善",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断新增产能是否开始贡献利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于32元但归母净利润仍未进入1.5亿元以上年化区间",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新估算稳态盈利与公允价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入合理价值下沿以下，可复核是否具备观察仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过当前基准估值上沿，需要验证利润兑现是否支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入合理价值下沿以下，可复核是否具备观察仓安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "reason": "超过当前基准估值上沿，需要验证利润兑现是否支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看连云港项目爬坡、毛利率、经营现金流和负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断新增产能是否开始贡献利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新估算稳态盈利与公允价值"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 2755040032.3,
-    "net_profit_2025_cny": 97218075.98,
-    "operating_cash_flow_2025_cny": 130303109.39,
-    "revenue_2026q1_cny": 671310979.96,
-    "net_profit_2026q1_cny": 12619397.13,
-    "main_business_gross_margin_2025": 0.0739,
-    "pop_revenue_share_2025": 0.6545,
-    "total_design_capacity_after_project_tonnes": 820000
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

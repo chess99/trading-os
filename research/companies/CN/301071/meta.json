@@ -1,33 +1,125 @@
 {
-  "symbol": "CN:301071",
-  "market": "CN",
-  "ticker": "301071",
-  "name": "力量钻石",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "A股培育钻石HPHT龙头，2025年完成出清式周期低谷后2026Q1毛利率V型反弹至41.1%，但股价已从30元涨至78-87元，提前透支反转预期。当前估值PE_TTM>150x，需等待H1/2026报表确认毛利率持续性后才能确定反转质量。建议观察、等待回调至38-50元合理区间下方。",
-  "fair_value_range": [38, 50],
-  "buy_zone": [25, 38],
-  "sell_or_reduce_zone": [70, 90],
-  "position_plan": [
-    {"condition": "股价跌至38-50元区间 + 2026H1报表确认毛利率持续35%+", "max_weight": 0.015},
-    {"condition": "股价跌至25-38元区间", "max_weight": 0.03},
-    {"condition": "股价跌至15-25元区间且基本面仍健康", "max_weight": 0.05}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "力量钻石",
+    "security_status": "active",
+    "symbol": "CN:301071",
+    "ticker": "301071"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "c96d7c1779ab21eb02debdeee2dd432be20364e698fb304efc85dd198e7c261e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "2026年中报披露后复查毛利率持续性",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "2026年三季报后复查行业景气延续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报+2027一季报后完整验证反转质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入合理价区间上沿，可加Earliest在watchlist关注",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入合理价中枢以下，考虑第一笔建仓（需毛利率同步验证）",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "进入泡沫区，若不持有则不追",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "进入不应追高/减仓触发区间（若已有头寸）",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-30", "reason": "2026年中报披露后复查毛利率持续性"},
-    {"type": "date", "date": "2026-10-30", "reason": "2026年三季报后复查行业景气延续性"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年报+2027一季报后完整验证反转质量"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 50, "reason": "进入合理价区间上沿，可加Earliest在watchlist关注"},
-    {"type": "price_below", "price": 38, "reason": "进入合理价中枢以下，考虑第一笔建仓（需毛利率同步验证）"},
-    {"type": "price_below", "price": 25, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 90, "reason": "进入泡沫区，若不持有则不追"},
-    {"type": "price_above", "price": 70, "reason": "进入不应追高/减仓触发区间（若已有头寸）"}
-  ],
-  "updated_at": "2026-07-09T15:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

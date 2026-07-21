@@ -1,139 +1,142 @@
 {
-  "symbol": "CN:300065",
-  "market": "CN",
-  "ticker": "300065",
-  "name": "海兰信",
-  "company_name": "北京海兰信数据科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海兰信处在智能航海、海洋观探测和海底数据中心等有政策与产业催化的方向，但当前利润基数低、项目收入波动大、客户集中度高，2026Q1 已出现大项目确认节奏导致的同比大幅下滑。以 2026-07-13 约 25.64 元价格看，估值已显著透支 UDC、重组和订单兑现预期，暂不买入，等待 7 元以下安全边际或连续季度业绩验证。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    7.0,
-    10.5
-  ],
-  "buy_zone": [
-    0.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海兰信",
+    "security_status": "active",
+    "symbol": "CN:300065",
+    "ticker": "300065"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3580721b7afe2c4d8f0f827dafd10001abed3542e9f7d5ba94f90bb30df08622"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 7.0 元，且无重组失败、重大订单取消或现金流恶化等新增负面事件",
-      "action": "建立 2%-4% 观察仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价处于 7.0-8.5 元，且连续两个季度扣非利润转正、经营现金流改善、海洋观探测毛利率回升",
-      "action": "建立 0%-2% 试错仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "重组完成并表后，滚动 12 个月归母净利润超过 2 亿元、经营现金流/净利润大于 1、UDC 出现可复制商业订单",
-      "action": "可把总仓位提高至 5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于 14 元但利润和现金流未兑现，或股价高于 18 元且缺少年化 3 亿元利润可见度",
-      "action": "减仓或不参与",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "进入合理价值区间上沿，估值风险开始下降",
-      "action": "进入重点观察区，复核订单、毛利率和重组进展"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "currency": "CNY",
-      "reason": "低于合理价值下沿并具备约 30% 安全边际",
-      "action": "触发可买区复核，若基本面未恶化可分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "currency": "CNY",
-      "reason": "高于合理价值区间且对利润兑现要求显著提高",
-      "action": "触发估值过高复核，若利润未兑现则减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "currency": "CNY",
-      "reason": "价格明显透支 UDC、重组和订单兑现的乐观假设",
-      "action": "强减仓区，除非年化 3 亿元以上利润可见度显著提高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露 2026 年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是检验 2026Q1 低基数波动是否延续的关键节点",
-      "action": "复核扣非利润、经营现金流、毛利率和订单确认节奏"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "海兰寰宇重组获得深交所审核通过或中国证监会注册结果披露",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "重组会影响利润预测、股本摊薄和资产质量判断",
-      "action": "重估并表利润、摊薄和现金对价影响"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "披露单项 1 亿元以上海洋观测、UDC 或智能船舶重大合同",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "重大合同是验证增长来源和收入持续性的核心证据",
-      "action": "核验合同客户、毛利率、交付周期和回款条款"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "UDC 项目披露客户合同、利用率、收入、折旧和运维成本等可量化经营指标",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "UDC 需要从技术示范转化为可量化利润才可提高估值",
-      "action": "重估 UDC 是否可从期权转为主业利润来源"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-01-31",
-      "condition": "连续两个季度经营现金流为负或应收账款/存货异常增加",
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
       "reason": "项目型业务若回款恶化会显著降低财务质量",
-      "action": "下调质量评级和可买价格"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "第一大客户占比继续超过 40% 或重大客户验收/回款出现异常",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "客户集中度过高会放大单一项目波动和估值折价",
-      "action": "复核客户集中风险和收入可持续性"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入合理价值区间上沿，估值风险开始下降",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "低于合理价值下沿并具备约 30% 安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "高于合理价值区间且对利润兑现要求显著提高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "价格明显透支 UDC、重组和订单兑现的乐观假设",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "滚动 12 个月营业收入及订单确认节奏",
-    "滚动 12 个月归母净利润和扣非归母净利润",
-    "经营活动现金流净额/净利润",
-    "海洋观探测装备与系统收入、毛利率和回款",
-    "智能船舶与智能航行系统收入和毛利率",
-    "前五大客户和第一大客户收入占比",
-    "UDC 投运项目数量、客户合同、利用率、PUE、单项目收入利润",
-    "海兰寰宇重组审批进度、并表利润、现金对价支付和股份摊薄",
-    "归母净资产、ROE、资产负债率和现金余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

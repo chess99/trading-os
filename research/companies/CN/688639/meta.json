@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688639",
-  "market": "CN",
-  "ticker": "688639",
-  "name": "华恒生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "华恒生物具备发酵法/酶法平台、丙氨酸和缬氨酸等产品工程化放大能力及优质客户资源，但2025-2026Q1呈现增收不增利、价格和费用压力加大，同时2026-06实控人被刑拘并辞任带来显著治理折价；当前股价位于合理价值区间内，缺乏安全边际，等待治理事件澄清和毛利率、现金流改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    21.0
-  ],
-  "buy_zone": [
-    0.0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    35.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华恒生物",
+    "security_status": "active",
+    "symbol": "CN:688639",
+    "ticker": "688639"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9698c61b7dff99880d82cbd07c5b09ce1a8e590cf66c91dc7036845cce9b9f38"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "治理事件未澄清且2026H1毛利率或经营现金流未改善",
-      "action": "不建仓，仅跟踪",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、存货和债务",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12.5元且无新增负面治理公告",
-      "action": "可建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "实控人事项确认不涉公司且连续两个季度毛利率、经营现金流改善",
-      "action": "可提高至小仓位核心观察",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核实控人刑事拘留事项和控制权、管理层稳定性进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "低于保守买入区，治理折价和周期下行已部分反映，可重新评估赔率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过当前合理价值区间上沿且治理风险未完全解除，需减仓或避免追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "低于保守买入区，治理折价和周期下行已部分反映，可重新评估赔率"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过当前合理价值区间上沿且治理风险未完全解除，需减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、存货和债务"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核实控人刑事拘留事项和控制权、管理层稳定性进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

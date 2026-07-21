@@ -1,31 +1,96 @@
 {
-  "symbol": "CN:600941",
-  "market": "CN",
-  "ticker": "600941",
-  "name": "中国移动",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中国电信行业绝对龙头，高股息防御属性突出，但核心业务增长停滞。数字化转型（云+AI）提供增量空间但体量尚小。当前PE 13.9x、股息率~5.5%，估值合理偏低，适合作为底仓配置。等待回调至更安全边际介入。",
-  "fair_value_range": [80, 100],
-  "buy_zone": [70, 88],
-  "sell_or_reduce_zone": [100, 110],
-  "position_plan": [
-    {"condition": "股价<70元(显著低估)", "max_weight": 0.05},
-    {"condition": "股价70-80元(低估)", "max_weight": 0.03},
-    {"condition": "股价80-88元(合理偏低)", "max_weight": 0.02},
-    {"condition": "股价88-100元(合理)", "max_weight": 0.01}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国移动",
+    "security_status": "active",
+    "symbol": "CN:600941",
+    "ticker": "600941"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "59984a82e9254127c1cbc8019697964879d7c74f33978de0717caeae3936edcf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "2026年半年报披露（预计8月），更新FY2026H1数据，重新评估增长趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-28"
+      },
+      "reason": "2026年三季报披露（预计10月），跟踪ARPU、云增速和FCF恢复情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入有安全边际的买入区间（PE<12.6x，股息率>6%）",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 100.0
+      },
+      "reason": "进入减仓区间（PE>15.7x，股息率<4.8%）",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "强吸引力买入区间（PE<11x，股息率>7%）",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-20", "reason": "2026年半年报披露（预计8月），更新FY2026H1数据，重新评估增长趋势"},
-    {"type": "date", "date": "2026-10-28", "reason": "2026年三季报披露（预计10月），跟踪ARPU、云增速和FCF恢复情况"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 80, "reason": "进入有安全边际的买入区间（PE<12.6x，股息率>6%）"},
-    {"type": "price_above", "price": 100, "reason": "进入减仓区间（PE>15.7x，股息率<4.8%）"},
-    {"type": "price_below", "price": 70, "reason": "强吸引力买入区间（PE<11x，股息率>7%）"}
-  ],
-  "updated_at": "2026-07-07T18:15:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

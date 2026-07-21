@@ -1,110 +1,105 @@
 {
-  "symbol": "CN:002949",
-  "market": "CN",
-  "ticker": "002949",
-  "name": "华阳国际",
-  "company_name": "深圳市华阳国际工程设计股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华阳国际具备华南建筑设计品牌、装配式建筑和BIM/AI技术积累，现金流历史较好；但地产和建筑设计行业仍处下行后的存量竞争阶段，2026Q1收入同比下降且扣非利润为负。10元附近估值已反映部分修复预期，安全边际不足，等待7.5-8.0元以下或扣非利润连续改善后再提高仓位。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    8.0,
-    11.0
-  ],
-  "buy_zone": [
-    0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华阳国际",
+    "security_status": "active",
+    "symbol": "CN:002949",
+    "ticker": "002949"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "7b2fe68096e02f1e32392f883cd061fc51d86373a14c7a1543b2e8a7401497b9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于7.5元，且未出现应收账款/合同资产大额减值或核心设计收入继续恶化",
-      "action": "分批买入",
-      "target_position": "1.5%-2.5%",
-      "max_weight": 0.025
-    },
-    {
-      "condition": "股价处于7.5-8.0元，且最近季度扣非利润转正或经营现金流明显改善",
-      "action": "小仓试错",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价处于8.0-11.0元，但收入和扣非利润尚未确认恢复",
-      "action": "观察或仅保留跟踪仓",
-      "target_position": "0%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价高于13元且扣非利润未恢复到年化0.8亿元以上",
-      "action": "减仓或不持有",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "低于合理价值下沿，接近账面净资产",
-      "action": "进入可小仓跟踪区，复核最新季报和回款质量"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "提供更充分安全边际，适合周期底部试错",
-      "action": "进入主要买入区，若基本面无新增恶化可分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "估值明显高于当前基本面可支撑区间",
-      "action": "估值进入减仓区，复核扣非利润是否支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计已披露2026年半年报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证收入降幅、扣非利润和现金流是否改善",
-      "action": "更新收入、扣非利润、现金流和应收质量判断"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计已披露2026年三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可判断主业修复是否具有连续性",
-      "action": "复核建筑设计收入是否企稳、扣非利润是否转正"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计已披露2026年年报",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整评估正常化盈利、分红和资产质量",
-      "action": "重估正常化盈利、分红和合理价值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "低于合理价值下沿，接近账面净资产",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "提供更充分安全边际，适合周期底部试错",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "估值明显高于当前基本面可支撑区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "建筑设计收入同比增速和毛利率",
-    "扣非归母净利润及扣非净利率",
-    "经营现金流净额/净利润",
-    "应收账款+合同资产占收入比例",
-    "合同负债和新签合同额",
-    "BIM/AI相关产品的人均产值或商业化收入",
-    "现金分红率和资本开支强度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:688727",
-  "market": "CN",
-  "ticker": "688727",
-  "name": "恒坤新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "恒坤新材是稀缺的12英寸晶圆制造关键材料国产替代标的，自产光刻材料和前驱体材料具备客户验证壁垒和中长期成长空间；但截至2026-07-17估值约219倍TTM PE，已经较充分反映乐观预期，需等待自产放量、毛利率止跌和更好买点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    34,
-    46
-  ],
-  "buy_zone": [
-    28,
-    35
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒坤新材",
+    "security_status": "active",
+    "symbol": "CN:688727",
+    "ticker": "688727"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "22b3a46a81f857bba4c89a85c1683cd18c8fd3811e3d1ea68b503d97920a87c3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价接近合理价值上沿，仅保留观察，不追高买入",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看自产收入、前驱体放量、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至35元以下，且半年报未出现客户流失、毛利率继续大幅下滑或经营现金流持续恶化",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增长是否恢复以及折旧摊销压力是否缓解",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至28-32元且2026H1扣非净利润同比增长超过20%、综合毛利率止跌",
-      "action": "add_to_core_watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期盈利中枢和合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入初步安全边际区间，需复核半年报和毛利率后考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "超过基准估值上沿较多，若盈利预期未上修应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入初步安全边际区间，需复核半年报和毛利率后考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入深度安全边际区间，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "超过基准估值上沿较多，若盈利预期未上修应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看自产收入、前驱体放量、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增长是否恢复以及折旧摊销压力是否缓解"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期盈利中枢和合理估值区间"
-    }
-  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "as_of": "2026-07-17",
-    "reference_price": 46.5,
-    "shares_outstanding": 449319600,
-    "market_cap_estimate": 20893361400,
-    "ttm_net_profit_estimate": 95135172.79,
-    "ttm_pe_estimate": 219.62,
-    "confidence": "medium"
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

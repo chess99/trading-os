@@ -1,66 +1,105 @@
 {
-  "symbol": "CN:600436",
-  "market": "CN",
-  "ticker": "600436",
-  "name": "片仔癀",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "片仔癀护城河真实但提价叙事被证伪、2025营收净利双降且经营现金流崩塌、原料缓解尚未传导至毛利；当前价110.31元市值665.5亿已基本定价温和修复情景但对下行补偿不足，watch等待2026中报现金流与毛利止跌信号再介入。",
-  "fair_value_range": [90, 140],
-  "buy_zone": [85, 105],
-  "sell_or_reduce_zone": [150, 175],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "片仔癀",
+    "security_status": "active",
+    "symbol": "CN:600436",
+    "ticker": "600436"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e841c514cbb9a5086606d9f6c183f89696427d5f832be2f3823ec9edc0edc335"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于85-105元买入区间，且2026中报确认肝病用药毛利率止跌、经营现金流/净利>70%、治理与分红方案维持，组合首仓不超过1.5%。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复核2026半年报：肝病用药毛利率环比、经营现金流绝对值与净利现金含量、化妆品同比、电商价格倒挂程度，决定是否由watch转买入评估。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入75-85元且上述基本面条件成立同时股息率回升至3%以上，可加仓至单一标的组合权重上限3%。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-11-01"
+      },
+      "reason": "复核2026三季报：毛利率修复斜率、ROE是否回升至16%以上、存货是否出现跌价减值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回升至150元以上且基本面未持续改善，分批减仓至0.5%。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报与年度分红方案：原料端成本变化、年度经营现金流修复确认。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 105.0
+      },
+      "reason": "进入买入区间评估，需同步复核现金流与毛利止跌信号。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "进入有显著安全边际区，但须重新复盘基本面是否进一步恶化，防止陷阱式补仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "进入不追高/减仓区间，若2026中报后基本面未持续改善则启动减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核2026半年报：肝病用药毛利率环比、经营现金流绝对值与净利现金含量、化妆品同比、电商价格倒挂程度，决定是否由watch转买入评估。"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-01",
-      "reason": "复核2026三季报：毛利率修复斜率、ROE是否回升至16%以上、存货是否出现跌价减值。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报与年度分红方案：原料端成本变化、年度经营现金流修复确认。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 105,
-      "reason": "进入买入区间评估，需同步复核现金流与毛利止跌信号。"
-    },
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "进入有显著安全边际区，但须重新复盘基本面是否进一步恶化，防止陷阱式补仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 150,
-      "reason": "进入不追高/减仓区间，若2026中报后基本面未持续改善则启动减仓。"
-    }
-  ],
-  "updated_at": "2026-07-10T20:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

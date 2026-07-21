@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:002492",
-  "ticker": "002492",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "恒基达鑫",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "恒基达鑫拥有稀缺危化仓储与码头资产，主业仍有现金流，但2025年以来商业保理信用减值和2026H1预亏显示风险尚未出清。当前估值未给足治理折价和坏账尾部风险，维持观察。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    4.2,
-    5.2
-  ],
-  "buy_zone": [
-    3.6,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒基达鑫",
+    "security_status": "active",
+    "symbol": "CN:002492",
+    "ticker": "002492"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1ea493b88dd5eeba17e242230a1a4c4f8af487bca7acc3717cd9c3d3e5fd2432"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "半年报披露后商业保理逾期余额和新增计提没有继续扩散，且股价低于4.2元",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复核2026年半年报，重点检查商业保理逾期、计提、回收和主业毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "保理回收兑现、扣非利润恢复、武汉二期投产爬坡三项至少满足两项",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，确认保理风险是否封顶、武汉二期是否开始贡献",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.2元但基本面没有同步改善",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断公司是否恢复正常盈利与自由现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入基准买入观察区，需要复核半年报保理风险与主业毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "接近0.9倍净资产的深度安全边际区，适合重新评估小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "估值进入减仓/回避区，若信用风险未出清则风险收益不对称",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入基准买入观察区，需要复核半年报保理风险与主业毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "接近0.9倍净资产的深度安全边际区，适合重新评估小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "估值进入减仓/回避区，若信用风险未出清则风险收益不对称"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核2026年半年报，重点检查商业保理逾期、计提、回收和主业毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，确认保理风险是否封顶、武汉二期是否开始贡献"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断公司是否恢复正常盈利与自由现金流"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

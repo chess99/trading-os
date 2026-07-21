@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600512",
-  "ticker": "600512",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "腾达建设",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "腾达建设是低P/B、低ROE、订单驱动修复型市政施工公司。账面净资产和低有息负债提供一定安全垫，但2025年利润和2026Q1收入下滑显示盈利质量仍弱，当前更适合观察，等待更低价格或订单、现金流、ROE连续改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.75,
-    2.45
-  ],
-  "buy_zone": [
-    1.45,
-    1.65
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.1
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "腾达建设",
+    "security_status": "active",
+    "symbol": "CN:600512",
+    "ticker": "600512"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "024e5d754e3c393145b6cbf116168643baabb46d910c49013eb45e752da7fb36"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入1.45-1.65元且未出现应收款、合同资产或现金流显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入、毛利率、经营现金流、应收款和合同资产。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期经营现金流转正、ROE回到3%以上且新签订单质量改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及订单公告，验证ROE和现金流是否持续修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.60元但ROE、现金流和订单质量未同步改善",
-      "action": "不追高或降低仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估资产折价、订单兑现和长期合理价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.65
+      },
+      "reason": "进入保守买入观察区，隐含P/B约0.43倍，安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "高于基准合理价值上沿，若基本面未改善应复核估值和减仓纪律。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.65,
-      "reason": "进入保守买入观察区，隐含P/B约0.43倍，安全边际改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "reason": "高于基准合理价值上沿，若基本面未改善应复核估值和减仓纪律。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入、毛利率、经营现金流、应收款和合同资产。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及订单公告，验证ROE和现金流是否持续修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估资产折价、订单兑现和长期合理价值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

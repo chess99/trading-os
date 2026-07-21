@@ -1,98 +1,123 @@
 {
-  "symbol": "CN:000519",
-  "market": "CN",
-  "ticker": "000519",
-  "name": "中兵红箭",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中兵红箭具备特种装备交付恢复、中南钻石超硬材料龙头和功能性金刚石远期期权，但2026-07-07收盘价20.44元对应约284.6亿元市值、约2.74倍PB和约126倍TTM PE，已经反映较多乐观预期。等待特种装备毛利率、扣非利润、超硬材料价格和金刚石散热订单进一步验证。",
-  "fair_value_range": [13.0, 17.5],
-  "buy_zone": [10.5, 13.0],
-  "sell_or_reduce_zone": [20.0, 27.3],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中兵红箭",
+    "security_status": "active",
+    "symbol": "CN:000519",
+    "ticker": "000519"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "601cc401fa6589c2c8e317093d64a90a78333005c022354b86228022c3f81bd4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至10.5-13.0元且基本面未破坏",
-      "zone": [10.5, 13.0],
-      "action": "buy",
-      "max_weight": 0.04,
-      "note": "有安全边际买入区间，需同时复核特种装备毛利率、扣非利润和经营现金流"
-    },
-    {
-      "condition": "股价处于13.0-17.5元合理价值区间",
-      "zone": [13.0, 17.5],
-      "action": "hold_or_watch",
-      "max_weight": 0.03,
-      "note": "接近合理价值，赔率一般"
-    },
-    {
-      "condition": "股价高于20.0元且缺乏利润加速验证",
-      "zone": [20.0, 27.3],
-      "action": "reduce",
-      "max_weight": 0.01,
-      "note": "高于20元不追高，已有仓位评估降低"
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报可验证2026年收入计划、毛利率和现金流质量",
-      "condition": "2026年中报披露后",
-      "action": "复核收入、特种装备毛利率、扣非利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报和重大公告可验证功能性金刚石商业化进度",
-      "condition": "三季报或重大公告披露后",
-      "action": "检查金刚石散热片、半导体衬底或光学窗口是否有明确客户、订单金额、量产节奏"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整验证超硬材料收入和毛利率趋势",
-      "condition": "2026年报披露后",
-      "action": "复核超硬材料毛利率是否跌破25%或收入连续下滑"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证特种装备交付恢复假设是否兑现",
-      "condition": "2026年报披露后",
-      "action": "复核特种装备交付是否导致全年收入明显低于95亿元经营计划"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证客户集中、应收款和合同资产风险",
-      "condition": "2026年报披露后",
-      "action": "复核前五大客户集中度、应收款或合同资产是否显著上升"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 13.0,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
       "reason": "进入有安全边际买入区间上沿",
-      "note": "进入有安全边际买入区间上沿，需同时复核基本面"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 10.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
       "reason": "进入强吸引力区间",
-      "note": "若基本面未破坏，进入强吸引力区间"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 20.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
       "reason": "价格高于不应追高阈值",
-      "note": "高于该价格不追高，已有仓位评估降低"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07T23:59:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

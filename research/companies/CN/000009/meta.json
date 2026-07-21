@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000009",
-  "market": "CN",
-  "ticker": "000009",
-  "name": "中国宝安",
-  "company_name": "中国宝安",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "current_thesis": "中国宝安的核心投资逻辑是以折价买入贝特瑞和马应龙等上市/准上市资产，但母公司扣非利润、财务费用、非核心资产和治理复杂度限制仓位，应等待5.5-6.2元买入区间及贝特瑞盈利企稳信号。",
-  "fair_value_range": [
-    6.8,
-    8.4
-  ],
-  "buy_zone": [
-    5.5,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国宝安",
+    "security_status": "active",
+    "symbol": "CN:000009",
+    "ticker": "000009"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "4921cc4d45e7af2ede3150eae16f0efc29db73c041cf80272318950a080b4fb5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入5.5-6.2元且贝特瑞负极毛利率未继续显著下滑",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "表观SOTP折价具备安全边际，但母公司扣非利润和财务费用仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认贝特瑞负极盈利、中国宝安扣非和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.5元且2026年半年报显示扣非改善或资产处置兑现",
-      "action": "加仓至小仓上限",
-      "max_weight": 0.03,
-      "reason": "折价极端化且基本面未恶化时，资产折价修复赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及资产处置、分红或资本配置变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于9.5元且无贝特瑞盈利上修、分红提升或资产处置事件",
-      "action": "减仓或退出",
-      "max_weight": 0.005,
-      "reason": "折价修复空间收窄，利润表估值支撑不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入初始买入区间，需要复核贝特瑞毛利率和中国宝安扣非趋势",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入深度折价区间，若基本面未恶化可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "进入减持区间，若无新增价值释放事件应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入初始买入区间，需要复核贝特瑞毛利率和中国宝安扣非趋势"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入深度折价区间，若基本面未恶化可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "进入减持区间，若无新增价值释放事件应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认贝特瑞负极盈利、中国宝安扣非和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及资产处置、分红或资本配置变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "贝特瑞负极材料销量",
-    "贝特瑞负极材料毛利率",
-    "贝特瑞单吨净利",
-    "贝特瑞海外产能利用率",
-    "中国宝安扣非归母净利润",
-    "中国宝安经营活动现金流量净额",
-    "中国宝安财务费用",
-    "中国宝安受限资产规模",
-    "马应龙归母净利润与分红",
-    "低效资产处置回款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

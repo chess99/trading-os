@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:920132",
-  "market": "CN",
-  "ticker": "920132",
-  "name": "泰鹏智能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "泰鹏智能具备庭院帐篷细分制造经验、海外大客户准入和泰国产能布局，但当前估值约50x TTM PE，已经提前反映利润修复；在2026Q1收入增长未带动利润、经营现金流明显走弱前，买方应保持观察，等待半年报验证泰国产能、其他品类和回款质量。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    6.8
-  ],
-  "buy_zone": [
-    4.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰鹏智能",
+    "security_status": "active",
+    "symbol": "CN:920132",
+    "ticker": "920132"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "6acbffc6183cea9cdee82c391eabe63b3b58e025dc83235cd1217205e7dd67e9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.5-5.5元且2026半年报显示扣非净利率改善、经营现金流转正、应收账款未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、毛利率、扣非净利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "泰国子公司连续两个报告期盈利且前五大客户占比下降至55%以下",
-      "action": "在估值不高于25x前瞻PE时加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报及泰国子公司爬坡情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.5元且未出现利润和现金流同步改善证据",
-      "action": "不追买并降低关注优先级",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入买入区上沿，若基本面验证可重新评估小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "接近乐观情景估值下沿，缺乏新增证据时风险收益转差",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入买入区上沿，若基本面验证可重新评估小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "接近乐观情景估值下沿，缺乏新增证据时风险收益转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、毛利率、扣非净利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报及泰国子公司爬坡情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

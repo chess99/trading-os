@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920571",
-  "market": "CN",
-  "ticker": "920571",
-  "name": "国航远洋",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "2026年运价上行和新船投产推动利润高弹性，但高杠杆、弱周期资本回报和治理瑕疵尚未改善，8.19元已透支较多乐观预期。",
-  "fair_value_range": [4.8, 6.2],
-  "buy_zone": [3.8, 4.6],
-  "sell_or_reduce_zone": [7.3, 9.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国航远洋",
+    "security_status": "active",
+    "symbol": "CN:920571",
+    "ticker": "920571"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "90d4997aa153a75d4b15037efbba98a372ecae92343f42042fa905df555eb36c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于7.30元，或半年报未证明扣非利润与经营现金流同步改善",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非利润、经营现金流、资本开支和净债务",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.30至4.60元且净债务不再上升、基本面未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报及BDI、BPI、CBCFI回落后的盈利韧性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.80至4.30元，重新验证长期价值未受损且自由现金流覆盖维护性资本开支",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入可研究的买入区间，但需先复核净债务与自由现金流，不能机械加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.3
+      },
+      "reason": "进入减仓或不应追高区间，市场对周期持续性的定价偏乐观",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非利润、经营现金流、资本开支和净债务"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报及BDI、BPI、CBCFI回落后的盈利韧性"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入可研究的买入区间，但需先复核净债务与自由现金流，不能机械加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.3,
-      "reason": "进入减仓或不应追高区间，市场对周期持续性的定价偏乐观"
-    }
-  ],
-  "updated_at": "2026-07-16T12:26:09+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

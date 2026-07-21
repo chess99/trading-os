@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:002032",
-  "market": "CN",
-  "ticker": "002032",
-  "name": "苏 泊 尔",
-  "company_name": "苏 泊 尔",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "high",
-  "valuation_rating": "fair",
-  "current_thesis": "苏泊尔是高ROE、高现金流、高分红的厨房炊具和小家电龙头，受益于品牌渠道和SEB集团协同，但成长性偏低且外销客户集中；当前估值接近合理中枢，适合观察或等待36-39元买入区间。",
-  "fair_value_range": [
-    40,
-    48
-  ],
-  "buy_zone": [
-    34,
-    39
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    58
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏 泊 尔",
+    "security_status": "active",
+    "symbol": "CN:002032",
+    "ticker": "002032"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "d3f6319ee99c1c96c9d78cb3be4f5981ffb9c87b31bd105d7e3ccd07a0b6fdd2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026-07-09收盘价42.82元附近且无新增基本面信息",
-      "action": "仅允许观察仓或等待",
-      "max_weight": 0.02,
-      "reason": "质量高但成长低，当前估值接近合理中枢，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非净利、外销订单、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至36-39元且毛利率、经营现金流、分红预期未恶化",
-      "action": "分两到三笔建立基础仓",
-      "max_weight": 0.04,
-      "reason": "进入买入区间上沿，股息率和估值安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年分红能力和利润趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至32-34元且扣非净利没有连续两个季度显著下滑",
-      "action": "提高至核心红利消费制造仓位",
-      "max_weight": 0.06,
-      "reason": "接近熊市情景价值区间，若基本面未破坏，赔率明显改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 39.0
+      },
+      "reason": "进入初步买入区间，复核毛利率、现金流和SEB订单后可建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价升至52-58元或PE重回20倍附近但利润仍低个位数增长",
-      "action": "逐步减仓",
-      "max_weight": 0.01,
-      "reason": "估值进入乐观区间，低成长资产的风险回报转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "接近熊市情景下沿，若基本面稳定可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "进入减仓区间，若利润增长没有同步上修应兑现部分收益",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 39,
-      "reason": "进入初步买入区间，复核毛利率、现金流和SEB订单后可建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "接近熊市情景下沿，若基本面稳定可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "进入减仓区间，若利润增长没有同步上修应兑现部分收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非净利、外销订单、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年分红能力和利润趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比",
-    "扣非归母净利润同比",
-    "销售毛利率",
-    "销售费用率",
-    "经营现金流/归母净利润",
-    "外贸主营收入同比",
-    "SEB关联销售额及占比",
-    "每股现金分红",
-    "存货周转天数",
-    "应收账款周转天数"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603139",
-  "ticker": "603139",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "康惠制药",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于传统中成药主业下行、资产负债表修复和数字科技业务导入的转型期。2026H1预计归母扭亏主要来自非经常性资产处置收益，扣非仍亏；当前约39元股价和约7倍PB显著高于基于可验证盈利能力的公允价值，缺乏安全边际。",
-  "fair_value_range": [
-    8,
-    14
-  ],
-  "buy_zone": [
-    0,
-    8
-  ],
-  "sell_or_reduce_zone": [
-    20,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康惠制药",
+    "security_status": "active",
+    "symbol": "CN:603139",
+    "ticker": "603139"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4a8ad6fd0d366dd4574fd4175e675809102e7911b65b997bfd15feeaffc5df05"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8元，且最近两个季度扣非亏损连续收窄、经营现金流转正、无新增重大担保或高溢价非主业收购",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点看扣非净利润、经营现金流、非经常性收益和子公司盈利质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润为正，数字科技业务收入和回款可验证，医药主业收入止跌",
-      "action": "可将观察仓上限提高，但仍需等待全年审计验证",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断主营医药是否止跌、新业务盈利是否持续、担保和仲裁风险是否收敛",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于20元且扣非盈利未被正式报表验证",
-      "action": "不买入，已有仓位应卖出或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和审计意见，确认全年扣非盈利、减值、现金流和资本配置质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入基础公允价值下沿和观察买入区，需要重新核验扣非亏损、现金流和风险出清进度",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "在扣非盈利未验证前估值明显偏贵，应卖出或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入基础公允价值下沿和观察买入区，需要重新核验扣非亏损、现金流和风险出清进度"
-    },
-    {
-      "type": "price_above",
-      "price": 20,
-      "reason": "在扣非盈利未验证前估值明显偏贵，应卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点看扣非净利润、经营现金流、非经常性收益和子公司盈利质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断主营医药是否止跌、新业务盈利是否持续、担保和仲裁风险是否收敛"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和审计意见，确认全年扣非盈利、减值、现金流和资本配置质量"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

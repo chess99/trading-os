@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:600829",
-  "ticker": "600829",
-  "name": "人民同泰",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "黑龙江区域医药商业和零售资产，业务真实但成长性偏弱；2025年收入和利润下滑、2026Q1收入继续承压，近期股价异动后估值已明显高于低增长医药流通资产应有安全边际，暂不买入，仅保留观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    6.4
-  ],
-  "buy_zone": [
-    4.3,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "人民同泰",
+    "security_status": "active",
+    "symbol": "CN:600829",
+    "ticker": "600829"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2a72a141efbeab0ff3315b055ff19d99956a407f5d6e1f6cf0e51b205120468c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至5.2元以下，且后续季报显示收入降幅收窄、扣非净利率稳定、经营现金流未恶化",
-      "action": "可建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入趋势、扣非利润率、经营现金流、应收账款和存货周转",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.2元且没有ROE修复、分红恢复或利润持续增长证据",
-      "action": "不追涨，已有仓位减仓或回避",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入合理价值下沿并接近买入观察区，可复核现金流和收入趋势"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年盈利基准和估值区间是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "高于当前基本面支持的安全边际上限，需警惕情绪交易和估值回落"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入趋势、扣非利润率、经营现金流、应收账款和存货周转"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入合理价值下沿并接近买入观察区，可复核现金流和收入趋势",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年盈利基准和估值区间是否需要调整"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "高于当前基本面支持的安全边际上限，需警惕情绪交易和估值回落",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

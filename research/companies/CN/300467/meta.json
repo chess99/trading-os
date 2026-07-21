@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:300467",
-  "market": "CN",
-  "ticker": "300467",
-  "name": "迅游科技",
-  "company_name": "四川迅游网络科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "迅游科技主业是真实的游戏网络加速服务，现金资产较厚、负债低，但收入已进入成熟下行阶段，扣非利润和经营现金流都很薄。2026-07-13 收盘价 32.98 元对应约 67.02 亿元市值、约 262 倍 2025 归母 PE 和约 23.4 倍 PS，显著高于可验证基本面。除非价格回落到 7 元以下且收入与扣非利润改善，否则不适合买入。",
-  "quality_rating": "中低",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    6.0,
-    10.0
-  ],
-  "buy_zone": [
-    0.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    1000.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迅游科技",
+    "security_status": "active",
+    "symbol": "CN:300467",
+    "ticker": "300467"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ca64e64441066c3b50cca2624d187a18538b145feab7b3848e113ad4bf3f829c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 15 元，或仍接近 2026-07-13 的 32.98 元高估区间",
-      "action": "不买；已有仓位以减仓或退出为主",
-      "target_weight": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入、扣非利润、经营现金流和 B2B 毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落到 8-10 元，但未看到收入恢复增长和扣非利润改善",
-      "action": "继续观察，不主动建仓",
-      "target_weight": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认高管调整后的经营趋势是否稳定",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回落到 6-8 元，且最近两个季度收入不再下滑、经营现金流为正",
-      "action": "可建立小型观察仓",
-      "target_weight": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，评估成都迅游星驰是否贡献真实订单或收入",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于 6 元，且扣非利润年化不低于 2500 万元、经营现金流质量改善",
-      "action": "可提高到谨慎核心仓",
-      "target_weight": "2%-3%，上限 5%",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
       "reason": "进入合理价值区间上沿附近，需要复核基本面是否仍支持 6-10 元估值",
-      "action": "进入观察区，复核最新财报和新业务进展"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
       "reason": "进入带安全边际的可买区间，但仍需确认收入和现金流未恶化",
-      "action": "进入可买区，若基本面未恶化可评估小仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 15.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
       "reason": "显著高于合理价值区间，缺乏基本面安全边际",
-      "action": "估值偏高，已有仓位减仓或退出"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入、扣非利润、经营现金流和 B2B 毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认高管调整后的经营趋势是否稳定"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，评估成都迅游星驰是否贡献真实订单或收入"
-    }
-  ],
-  "key_tracking_metrics": [
-    "互联网加速服务收入同比增速",
-    "B2C（含 B2B2C）收入和 B2B 收入增速",
-    "互联网加速服务毛利率和 B2B 毛利率",
-    "扣非归母净利润及其同比增速",
-    "经营活动现金流净额与扣非净利润的匹配度",
-    "合同负债余额",
-    "销售费用率和研发费用率",
-    "成都迅游星驰的产品、订单、客户和收入披露",
-    "股东质押/冻结、仲裁和治理事项进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

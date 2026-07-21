@@ -1,118 +1,114 @@
 {
-  "symbol": "CN:002627",
-  "market": "CN",
-  "ticker": "002627",
-  "name": "三峡旅游",
-  "company_name": "湖北三峡旅游集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备两坝一峡和长江三峡游轮资源卡位，2025年利润受补税和九凤谷减值压低，2026年省际度假游轮可能带来新增长曲线；但2026Q1仍增收不增利，2026-07-10收盘价5.71元已处于估算合理价值区间中部，安全边际不足。",
-  "quality_rating": "中",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    5.0,
-    6.5
-  ],
-  "buy_zone": [
-    4.3,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    7.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三峡旅游",
+    "security_status": "active",
+    "symbol": "CN:002627",
+    "ticker": "002627"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f030967d61cf2b41a38a2d4eedc17000d4b97f563f04e6fa93b72f02bfe7dadd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.3元，且省际游轮上座率、经营现金流、费用率未显著恶化",
-      "max_weight": 0.08,
-      "action": "可建6%-8%目标仓位"
-    },
-    {
-      "condition": "股价在4.3元至4.8元之间，且2026年中报确认收入增长开始转化为利润",
-      "max_weight": 0.05,
-      "action": "可建3%-5%观察仓"
-    },
-    {
-      "condition": "股价在4.8元至6.5元之间，但尚未看到省际游轮利润贡献",
-      "max_weight": 0.03,
-      "action": "持有或等待，不主动加仓"
-    },
-    {
-      "condition": "股价高于7.0元，且2026E归母净利润可见度仍低于1.5亿元",
-      "max_weight": 0.0,
-      "action": "减仓或不参与追高"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "currency": "CNY",
-      "reason": "低于合理价值下沿附近，开始具备初步安全边际",
-      "action": "进入可买区，复核中报和新船运营数据后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "currency": "CNY",
-      "reason": "相对资产底和合理价值区间折价更明显，若基本面未恶化可提高仓位",
-      "action": "进入深度价值区，若基本面未恶化可提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "currency": "CNY",
-      "reason": "高于合理价值上沿，除非利润显著上修，否则估值吸引力下降",
-      "action": "进入减仓观察区，除非利润上修到1.8亿元以上"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证省际度假游轮收入转利润的第一个正式财报节点",
-      "condition": "2026年半年度报告披露窗口结束",
-      "action": "复核省际度假游轮收入、毛利率、管理费用率、经营现金流、九凤谷股权出售进展"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察暑期旺季和第二艘省际游轮投运后的经营效果",
-      "condition": "2026年三季报披露窗口结束",
-      "action": "复核长江行·极光号投运后上座率、航次、票价和利润贡献，判断第二艘省际游轮是否验证增长曲线"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-01-31",
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
       "reason": "全年节假日文旅数据和公司经营线索基本明确",
-      "condition": "2026年全年经营数据和文旅行业节假日数据基本可观察",
-      "action": "评估2026年全年收入、利润、现金流和行业花费增速是否支持估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整验证利润修复、ROE改善和资本开支影响",
-      "condition": "2026年年报披露窗口结束",
-      "action": "完整复核省际游轮盈利模型、ROE改善、回购注销后的每股指标和下一年度持仓计划"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "低于合理价值下沿附近，开始具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "相对资产底和合理价值区间折价更明显，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "高于合理价值上沿，除非利润显著上修，否则估值吸引力下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "游船产品接待游客数及同比增速",
-    "两坝一峡接待人数及高端产品占比",
-    "省际度假游轮上座率、发船艘次、单船收入和毛利率",
-    "旅行社业务收入增速与毛利率",
-    "管理费用率",
-    "经营活动现金流净额",
-    "归母净利润和扣非归母净利润",
-    "每股净资产和ROE",
-    "回购注销后总股本变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

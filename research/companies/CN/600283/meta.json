@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:600283",
-  "ticker": "600283",
-  "name": "钱江水利",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "钱江水利是浙江区域水务运营平台，业务稳定、分红有支撑，但2026Q1利润下滑且当前估值已反映稳定性溢价，缺少足够安全边际；等待价格回落或中报验证利润修复。",
-  "fair_value_range": [
-    6.8,
-    8.2
-  ],
-  "buy_zone": [
-    5.5,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "钱江水利",
+    "security_status": "active",
+    "symbol": "CN:600283",
+    "ticker": "600283"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1a00b43590a89dfbf213c8c8da950216938593d8bce705cd13e1c96d70bd8d32"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于安全边际区间，仅保留观察，不主动买入。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看归母净利润、扣非净利润、经营现金流和毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至6.3元以下，且2026中报收入增长、扣非净利润未继续恶化，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润下滑是否已修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至5.8元以下，且经营现金流修复、分红政策保持每股0.25元或更高，可作为红利公用事业仓位配置。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重估长期股息率与合理价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.8元且利润未超预期，降低或不持有。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "接近买入区间上沿，股息率和PB安全边际改善，需复核中报利润与现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入更有吸引力的红利资产配置区间，可评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "高于乐观情景估值上沿，若利润没有明显超预期，应考虑减仓或放弃。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "接近买入区间上沿，股息率和PB安全边际改善，需复核中报利润与现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入更有吸引力的红利资产配置区间，可评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "高于乐观情景估值上沿，若利润没有明显超预期，应考虑减仓或放弃。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看归母净利润、扣非净利润、经营现金流和毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润下滑是否已修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重估长期股息率与合理价值。"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

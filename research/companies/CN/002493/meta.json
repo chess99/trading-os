@@ -1,111 +1,106 @@
 {
-  "symbol": "CN:002493",
-  "market": "CN",
-  "ticker": "002493",
-  "name": "荣盛石化",
-  "company_name": "荣盛石化",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "conclusion": "荣盛石化是炼化一体化与化纤链条龙头，2026 年一季度盈利修复明显，但高杠杆和行业供给压力仍限制估值；当前约 11.16 元处于合理区间中部，不追高，只在 9.5 元以下分批建立观察仓。",
-  "current_thesis": "周期修复期的炼化一体化龙头，核心胜负手是价差修复能否转化为连续归母利润、自由现金流和降债。",
-  "rating": "观察",
-  "current_rating": "watch",
-  "company_quality_rating": "B+",
-  "valuation_rating": "中性偏合理",
-  "fair_value_range": [
-    10.0,
-    12.5
-  ],
-  "fair_value_reason": "归母盈利正常化 PE、PB/ROE 与 EV/EBITDA 三种方法交叉验证后的周期中性区间。",
-  "reasonable_price": {
+  "identity": {
     "currency": "CNY",
-    "low": 10.0,
-    "high": 12.5
+    "market": "CN",
+    "name": "荣盛石化",
+    "security_status": "active",
+    "symbol": "CN:002493",
+    "ticker": "002493"
   },
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "buy_zone_details": {
-    "currency": "CNY",
-    "watch_below": 10.0,
-    "buy_below": 9.5,
-    "strong_buy_below": 8.5,
-    "reason": "需要对高债务、周期价差波动和少数股东权益口径留下安全边际。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "7075f03e58804a702e849e07a30c9eb5c3f2a53965cb8d77860ba8e6fe0343d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [
-    13.2,
-    14.5
-  ],
-  "sell_or_reduce_zone_details": {
-    "currency": "CNY",
-    "do_not_chase_above": 13.2,
-    "reduce_above": 14.5,
-    "reason": "若基本面没有同步上修，13.2 元以上赔率下降，14.5 元以上周期预期偏满。"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 9.5 元且炼化/PTA/聚酯价差未明显恶化时，开始小仓位；股价低于 8.5 元且基本面未破坏时再加仓。",
-      "max_weight": 0.04,
-      "initial_weight": 0.01,
-      "add_weight_below": 9.5,
-      "strong_add_weight_below": 8.5,
-      "notes": "第一笔仓位不超过组合 1%；8.5 元以下且利润修复未破坏时可提高至 2%-3%，确认降债和现金流改善后最高 4%。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，确认盈利修复、现金流和债务变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断修复是否跨季度延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入安全边际买入区，复核价差、债务和半年报后可建立第一笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入强吸引力区间，若基本面未恶化，可考虑加仓至 2%-3%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.2
+      },
+      "reason": "超过不追高价，若业绩没有同步上修，应停止新增。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "进入减仓复核区，若只是估值扩张而非盈利上修，应降低仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入安全边际买入区，复核价差、债务和半年报后可建立第一笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入强吸引力区间，若基本面未恶化，可考虑加仓至 2%-3%。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.2,
-      "reason": "超过不追高价，若业绩没有同步上修，应停止新增。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "进入减仓复核区，若只是估值扩张而非盈利上修，应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，确认盈利修复、现金流和债务变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断修复是否跨季度延续。"
-    }
-  ],
-  "review_plan": "跟踪单季归母净利润、经营现金流、净有息债务、炼化/PX/PTA/聚酯价差、资本开支和员工持股计划执行。价格触发 9.5 元以下或 13.2 元以上时提前复核。",
-  "key_risks": [
-    "原油价格剧烈波动导致库存损益和价差错配",
-    "炼化、PTA、聚酯新增产能释放超预期",
-    "高债务带来的利息、再融资和信用风险",
-    "浙石化少数股东权益占比较高，归母弹性低于总资产弹性",
-    "税费、出口、环保、安全生产等政策变化",
-    "需求恢复弱于预期"
-  ],
-  "sources": [
-    "https://static.cninfo.com.cn/finalpage/2026-04-28/1225215329.PDF",
-    "https://static.cninfo.com.cn/finalpage/2026-04-28/1225215299.PDF",
-    "https://cn.investing.com/equities/rongsheng-petro-chemical",
-    "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12229348&stockid=002493",
-    "https://www.cnrspc.com"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

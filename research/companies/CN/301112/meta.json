@@ -1,85 +1,105 @@
 {
-  "symbol": "CN:301112",
-  "ticker": "301112",
-  "name": "信邦智能",
-  "company_name": "广州信邦智能装备股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "信邦智能基础业务是汽车及高端制造自动化装备集成，现金充足但盈利恢复尚未证实；2025年表观亏损、2026Q1扣非接近盈亏平衡，当前股价更多反映英迪芯微并购可选性。并购尚需深交所审核和证监会注册，基础业务估值缺乏安全边际，维持观察。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    18,
-    25
-  ],
-  "buy_zone": [
-    12,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信邦智能",
+    "security_status": "active",
+    "symbol": "CN:301112",
+    "ticker": "301112"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "0ed3d0af2c5e855886e2ff5602aa36f20d8f9d3d7fef2314c628f1d892494c69"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌破18元，且未出现新增重大减值、并购重大恶化或控股股东质押风险扩散，仅建立研究仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证合同负债和存货是否转化为收入、扣非利润是否恢复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌破15元，且2026中报显示合同负债顺利转收入、扣非归母净利润转正、经营现金流未恶化，可提高观察仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及英迪芯微并购审核进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "英迪芯微并购获批并披露可核验业绩承诺和摊薄比例后，重做估值；重估前不因并购预期加仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2026年业绩预告、全年订单验收节奏和资产减值风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基础业务公平价值下沿以下，开始复核是否有安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入基础业务悲观至基准情景交界，若经营未恶化可考虑研究仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过基础业务合理估值上沿，需要并购确定性和标的业绩支撑，否则降低关注优先级。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入基础业务公平价值下沿以下，开始复核是否有安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入基础业务悲观至基准情景交界，若经营未恶化可考虑研究仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过基础业务合理估值上沿，需要并购确定性和标的业绩支撑，否则降低关注优先级。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证合同负债和存货是否转化为收入、扣非利润是否恢复。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及英迪芯微并购审核进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2026年业绩预告、全年订单验收节奏和资产减值风险。"
-    }
-  ],
-  "key_risks": [
-    "英迪芯微并购审核注册失败、延期、摊薄或业绩不达预期",
-    "项目制终验法导致收入和利润波动",
-    "客户集中及汽车行业资本开支下行",
-    "存货、预付款、合同资产继续减值",
-    "汇率波动影响日本业务和合并报表",
-    "控股股东质押冻结及内控强调事项"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

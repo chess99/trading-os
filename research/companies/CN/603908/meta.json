@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603908",
-  "market": "CN",
-  "ticker": "603908",
-  "name": "牧高笛",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "牧高笛具备帐篷品类认知和 OEM/ODM 制造经验，但 2025 年亏损、2026Q1 收入仍下滑且存货占用较高，当前价格已隐含部分复苏预期。只有在价格进入买入区并验证库存出清、收入止跌和经营现金流改善后，才具备较好赔率。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "牧高笛",
+    "security_status": "active",
+    "symbol": "CN:603908",
+    "ticker": "603908"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c589ffe652d3223a327bda7ee0bdc1afc412721026a326c8c06fcb31db72a911"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 9.5-12.0 元买入区，且 2026 年中报验证收入降幅收窄、存货下降、经营现金流改善后小仓试错",
-      "action": "initial_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看收入降幅、库存、跌价准备和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度自主品牌收入同比转正，毛利率稳定，经营现金流转正且存货周转改善",
-      "action": "add_on_confirmation",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认品牌业务是否持续修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026 年收入继续双位数下滑，或存货跌价准备继续高企，或经营现金流持续为负",
-      "action": "do_not_add_or_exit",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估正常化盈利和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入基准估值下沿和买入观察区，若基本面同步改善可重新评估小仓买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "价格进入乐观情景区间，需要收入和利润率明显兑现，否则风险收益比恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入基准估值下沿和买入观察区，若基本面同步改善可重新评估小仓买入"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "价格进入乐观情景区间，需要收入和利润率明显兑现，否则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看收入降幅、库存、跌价准备和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认品牌业务是否持续修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估正常化盈利和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

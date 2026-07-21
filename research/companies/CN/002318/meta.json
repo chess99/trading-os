@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:002318",
-  "market": "CN",
-  "ticker": "002318",
-  "name": "久立特材",
-  "company_name": "久立特材",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "久立特材是工业用不锈钢管和高端合金管材细分龙头，客户资质、海外项目、核电/油气高端管材和现金流质量较强；但2026Q1扣非利润下滑明显，需等待核心利润、合同负债和毛利率修复后再提高仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    20.0,
-    24.0
-  ],
-  "buy_zone": [
-    16.5,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    25.5,
-    29.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "久立特材",
+    "security_status": "active",
+    "symbol": "CN:002318",
+    "ticker": "002318"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "0e9553a1b1b2f03ab02b92edc503902758b063f5165d90ba76e317957271e819"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在18.0-18.8元且实盘前复核无重大负面公告",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "当前估值接近合理区间下沿，但2026Q1扣非利润质量仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、境外订单、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入16.5-18.0元且2026H1扣非利润降幅收窄、经营现金流修复",
-      "action": "加至小仓",
-      "max_weight": 0.03,
-      "reason": "进入买入区间后安全边际改善，需以核心经营修复确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1扣非下滑是否已修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格进入15.0-16.5元且订单、毛利率、现金流未破坏",
-      "action": "加至中等仓位",
-      "max_weight": 0.06,
-      "reason": "高质量细分龙头出现较大折价，但仍保留项目型制造的波动余地"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基础买入区间，复核Q2/H1扣非利润和现金流后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于25.5元或扣非利润继续恶化且合同负债下降",
-      "action": "减仓或暂停买入",
-      "max_weight": 0.02,
-      "reason": "估值进入乐观区间或核心经营指标与价格背离"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "进入强买入观察区，若订单和毛利率未恶化则风险收益更优",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.8
+      },
+      "reason": "触发逻辑止损复核，需判断市场是否在定价基本面破坏",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.5
+      },
+      "reason": "达到减持区间下沿，除非高端订单和扣非利润显著超预期，否则降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入基础买入区间，复核Q2/H1扣非利润和现金流后可加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "进入强买入观察区，若订单和毛利率未恶化则风险收益更优"
-    },
-    {
-      "type": "price_below",
-      "price": 14.8,
-      "reason": "触发逻辑止损复核，需判断市场是否在定价基本面破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 25.5,
-      "reason": "达到减持区间下沿，除非高端订单和扣非利润显著超预期，否则降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、境外订单、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1扣非下滑是否已修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1扣非归母净利润同比变化",
-    "综合毛利率及无缝管、焊接管、复合管毛利率",
-    "合同负债余额和新增重大海外订单",
-    "境外收入占比及回款情况",
-    "经营现金流净额与净利润匹配度",
-    "镍、铬等主要原材料价格波动和传导情况",
-    "核电及油气高性能管材项目进度",
-    "分红、回购和资本开支纪律"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,83 +1,115 @@
 {
-  "symbol": "CN:603235",
-  "market": "CN",
-  "ticker": "603235",
-  "name": "天新药业",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "天新药业是全球 B 族维生素重要供应商，B1/B6/叶酸/生物素具备份额和认证优势，资产负债表稳健、现金流较好；但维生素价格周期和新产能压力使盈利波动大，2026Q1 已显示主业价格下行压力，当前估值接近合理区间上沿，宜观察等待安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    20,
-    24
-  ],
-  "buy_zone": [
-    18,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天新药业",
+    "security_status": "active",
+    "symbol": "CN:603235",
+    "ticker": "603235"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "49009e696cd69d72758ddf8b74a3b4f61d343ca7c902b299041311803d871b3e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入18-20元且B1/B6价格企稳、无新增治理或安全环保负面时，建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看B族维生素收入、毛利率、外销与汇兑损益。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元且2026Q2或Q3扣非净利降幅收窄、经营现金流保持健康时，提高至核心小仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断价格周期和精细化工品增长是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于28元且没有明确产品涨价或新品利润兑现时，降低或不新增仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新评估中周期盈利和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入买入观察区，需要复核维生素价格、Q2/Q3毛利率和治理事项。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入较强安全边际区，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "超过基准估值上沿，需要验证是否有行业涨价或新品超预期支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "接近乐观情景估值，若无业绩上修应考虑减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入买入观察区，需要复核维生素价格、Q2/Q3毛利率和治理事项。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入较强安全边际区，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "超过基准估值上沿，需要验证是否有行业涨价或新品超预期支撑。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "接近乐观情景估值，若无业绩上修应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看B族维生素收入、毛利率、外销与汇兑损益。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断价格周期和精细化工品增长是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新评估中周期盈利和估值区间。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

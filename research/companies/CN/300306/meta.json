@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:300306",
-  "market": "CN",
-  "ticker": "300306",
-  "name": "远方信息",
-  "company_name": "杭州远方光电信息股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "远方信息具备细分检测设备和校准服务技术地位、现金理财充足、负债很低，但2025年和2026Q1收入及扣非利润仍在下滑；当前价格大致处于合理价值带，需等待收入止跌和新业务放量后再提高仓位。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    8.5,
-    10.5
-  ],
-  "buy_zone": [
-    6.5,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "远方信息",
+    "security_status": "active",
+    "symbol": "CN:300306",
+    "ticker": "300306"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d18f648be038d2b7b218d724385ad23443bf92e5f6f27c9fc638c889843a4568"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.2元，且最近一期收入降幅收窄、经营现金流未显著恶化",
-      "max_weight": 0.4,
-      "action": "建立20%-40%目标仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入是否止跌、检测服务和汽车/显示/医疗检测是否放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元，且扣非利润TTM不低于5000万元、现金理财类资产仍保持8亿元以上",
-      "max_weight": 0.7,
-      "action": "提高至50%-70%目标仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认扣非利润、经营现金流和存货变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于8.5-10.5元，且没有收入加速或利润上修证据",
-      "max_weight": 0.1,
-      "action": "观察为主，不主动加仓"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期利润中枢、分红能力和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.5元，且扣非利润未进入持续增长",
-      "max_weight": 0.0,
-      "action": "减仓或不参与"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入可买区，重新核验收入、扣非利润和现金理财。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "估值超过当前基本面支撑，需检查是否有利润上修，否则考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入可买区，重新核验收入、扣非利润和现金理财。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入强安全边际区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "估值超过当前基本面支撑，需检查是否有利润上修，否则考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入是否止跌、检测服务和汽车/显示/医疗检测是否放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认扣非利润、经营现金流和存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期利润中枢、分红能力和估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润及TTM扣非利润",
-    "智能检测信息服务收入增速",
-    "智能检测信息系统收入是否止跌",
-    "汽车、显示、医疗器械检测相关订单和客户进展",
-    "研发投入占营业收入比例及研发费用资本化率",
-    "经营活动现金流量净额",
-    "存货余额和周转变化",
-    "现金、交易性金融资产和一年内到期非流动资产合计",
-    "分红率和远方长益减持进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

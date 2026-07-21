@@ -1,90 +1,86 @@
 {
-  "symbol": "CN:002157",
-  "market": "CN",
-  "ticker": "002157",
-  "name": "正邦科技",
-  "company_name": "正邦科技",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "正邦科技已完成司法重整，资产负债表和出栏量从危机状态修复，但2026Q1仍亏损、成本线和现金流尚未连续验证；当前约2.93元价格已反映较多恢复预期，适合观察而非立即买入。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    2.1,
-    2.7
-  ],
-  "buy_zone": [
-    1.6,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.3,
-    4.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "正邦科技",
+    "security_status": "active",
+    "symbol": "CN:002157",
+    "ticker": "002157"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "526992a542f79e47eee34af5969c08c65ecbdd77b3c729fff65b1607c75ade2a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值中枢且2026Q1仍亏损",
-      "action": "暂不买入，维持观察池",
-      "max_weight": 0,
-      "reason": "重整和产能恢复已经被市场部分定价，尚缺连续现金流和成本线验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看经营现金流、成本线、负债和关联交易",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入1.60-2.00元且最近两个季度经营现金流合计转正",
-      "action": "建立0.5%-1.0%首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格回到安全边际区间且经营修复得到初步验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和7-9月销售简报，确认产能恢复是否带来利润改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "成本接近行业中位、年化出栏持续恢复且治理风险未恶化",
-      "action": "将仓位上限提高至3%",
-      "max_weight": 0.03,
-      "reason": "从困境修复交易升级为可持续经营恢复交易"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入买入观察区，复核现金流、成本和月度出栏后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.3
+      },
+      "reason": "进入减仓或回避区，若缺少成本和盈利验证则风险收益比恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入买入观察区，复核现金流、成本和月度出栏后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 3.3,
-      "reason": "进入减仓或回避区，若缺少成本和盈利验证则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看经营现金流、成本线、负债和关联交易"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和7-9月销售简报，确认产能恢复是否带来利润改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度生猪销量",
-    "月度销售收入",
-    "商品猪销售均价",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营现金流量净额",
-    "完全养殖成本",
-    "资产负债率",
-    "有息债务",
-    "关联交易金额",
-    "能繁母猪存栏",
-    "玉米和豆粕价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

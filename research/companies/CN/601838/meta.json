@@ -1,108 +1,106 @@
 {
-  "symbol": "CN:601838",
-  "market": "CN",
-  "ticker": "601838",
-  "name": "成都银行",
-  "company_name": "成都银行",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "成都银行是高ROE、低不良、高拨备的优质城商行，受益于成都和四川区域经济及本地政企客户基础，但净息差下行、地方债务和地产链条风险仍需折价；当前价约19元安全边际一般，适合观察仓，16.5-18.0元更适合分批买入。",
-  "quality_rating": "high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    19.5,
-    23.0
-  ],
-  "buy_zone": [
-    16.5,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    23.5,
-    25.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "成都银行",
+    "security_status": "active",
+    "symbol": "CN:601838",
+    "ticker": "601838"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "832c08d7ebe50dd00a7c4e348f3e26ae6ba54bd6a69c96b268fdccdbac9370a5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价约19.00元且未跌入买入区，但资产质量指标维持优秀",
-      "action": "可建立观察仓",
-      "max_weight": 0.02,
-      "reason": "估值不贵但安全边际一般，适合先跟踪净息差、资本和区域风险"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的净息差、资产质量、资本充足和区域风险披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入16.5-18.0元，且不良率低于0.75%、拨备覆盖率高于400%、核心一级资本充足率不低于8.2%",
-      "action": "分批加仓",
-      "max_weight": 0.06,
-      "reason": "价格接近或低于基准价值下沿，风险收益更有吸引力"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润增速、拨备覆盖率和核心一级资本趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报确认净息差企稳、资产质量未恶化、利润维持中个位数以上增长",
-      "action": "提高至核心观察持仓上限",
-      "max_weight": 0.08,
-      "reason": "基本面韧性得到验证，但区域银行仍需控制单一敞口"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入买入区上沿，复核资产质量后可分批买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价达到23.5-25.5元或不良率、拨备、资本触发负面复查线",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.03,
-      "reason": "估值进入偏贵区或基本面保护垫下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "进入更高安全边际区间，可考虑提高目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.5
+      },
+      "reason": "进入减仓区下沿，风险收益开始转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.5
+      },
+      "reason": "估值显著高于基准合理区间，应严格复核是否有超预期基本面",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入买入区上沿，复核资产质量后可分批买入"
-    },
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "进入更高安全边际区间，可考虑提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 23.5,
-      "reason": "进入减仓区下沿，风险收益开始转弱"
-    },
-    {
-      "type": "price_above",
-      "price": 25.5,
-      "reason": "估值显著高于基准合理区间，应严格复核是否有超预期基本面"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的净息差、资产质量、资本充足和区域风险披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润增速、拨备覆盖率和核心一级资本趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "净息差",
-    "贷款收益率",
-    "存款成本率",
-    "贷款增速",
-    "存款增速",
-    "不良贷款率",
-    "关注类贷款率",
-    "逾期贷款率",
-    "拨备覆盖率",
-    "拨贷比",
-    "信用减值损失",
-    "核心一级资本充足率",
-    "成都和四川财政收入",
-    "房地产与地方平台相关敞口"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

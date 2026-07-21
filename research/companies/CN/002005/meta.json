@@ -1,76 +1,77 @@
 {
-  "symbol": "CN:002005",
-  "market": "CN",
-  "ticker": "002005",
-  "name": "ST德豪",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "摘帽改善交易状态但未修复主营造血能力，2025年盈利主要依赖资产处置和债务重组，2026H1预告仍亏；当前市值和PB显著高于资产和现金流可支撑水平，因此不买、仅在大幅低于合理价值且现金流改善后观察。",
-  "fair_value_range": [
-    0.75,
-    1.35
-  ],
-  "buy_zone": [
-    0.55,
-    0.75
-  ],
-  "sell_or_reduce_zone": [
-    1.45,
-    2.32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST德豪",
+    "security_status": "active",
+    "symbol": "CN:002005",
+    "ticker": "002005"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "c6484ef1c5f3c334d63ed11c07a882e2815872366a96c84c848d2143b12f1794"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格2.32元，扣非仍亏且经营现金流未修复",
-      "action": "不买，已有仓位减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、经营现金流、扣非亏损、应收回款和受限资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入0.75-1.35元且半年报无新增风险",
-      "action": "仅观察，不主动买入",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.75
+      },
+      "reason": "进入安全边际观察区，需复核现金流和扣非亏损",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格跌入0.55-0.75元且经营现金流转正、扣非亏损明显收窄",
-      "action": "可试探第一笔",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格跌入0.40-0.55元且无重新ST、无新增重大诉讼或非标审计",
-      "action": "困境资产仓分批买入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.45
+      },
+      "reason": "高于合理价值上沿，若基本面未转正应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.75,
-      "reason": "进入安全边际观察区，需复核现金流和扣非亏损"
-    },
-    {
-      "type": "price_above",
-      "price": 1.45,
-      "reason": "高于合理价值上沿，若基本面未转正应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、经营现金流、扣非亏损、应收回款和受限资产变化"
-    }
-  ],
-  "notes": [
-    "2026-07-14起公司股票简称由ST德豪变更为德豪润达，但本资产按任务要求使用ST德豪。",
-    "2025年归母净利润转正主要依赖资产处置和债务重组，扣非归母净利润仍为-1.18亿元。",
-    "2026年半年度业绩预告显示归母净利润预计-490万元至-260万元，扣非净利润预计-2390万元至-1560万元。",
-    "当前2.32元对应总市值约40.66亿元、PB约12.23倍，显著高于基本面可支撑水平。",
-    "核心结论为不买；若已有仓位，基本面未转正前不加仓。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

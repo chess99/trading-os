@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:002186",
-  "market": "CN",
-  "ticker": "002186",
-  "name": "全聚德",
-  "company_name": "全聚德",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "current_thesis": "全聚德具备老字号品牌、北京文旅消费和食品加工延展价值，但2025年利润显著回落、2026Q1收入仍下滑，当前8.59元价格已接近牛市情景，暂不买入，等待4.8-5.8元且经营改善被验证后小仓位观察。",
-  "fair_value_range": [
-    4.5,
-    6.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "全聚德",
+    "security_status": "active",
+    "symbol": "CN:002186",
+    "ticker": "002186"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4ee3c2b6935f25f76aeda1c7486c857b64973c05159c9ad39e390d1ad73c63c6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.8元，且最新半年报或季报显示餐饮收入恢复正增长、餐饮毛利率改善、商品销售继续增长",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格回到合理区间上沿以内且经营改善出现初步证据"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年度报告，验证收入、毛利率和食品加工业务趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.0元，且连续两个报告期验证收入或毛利率改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.025,
-      "reason": "安全边际改善，品牌修复期权具备更好的赔率"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断Q1利润改善是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.8元，且年化归母净利润未上修至5000万元以上",
-      "action": "不追涨或减仓",
-      "max_weight": 0,
-      "reason": "当前估值接近牛市情景，基本面支撑不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入买入区间上沿，复核经营改善后可考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入具备更高安全边际的试错区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "进入减仓区间，若利润没有同步上修则风险收益比转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入买入区间上沿，复核经营改善后可考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入具备更高安全边际的试错区间"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "进入减仓区间，若利润没有同步上修则风险收益比转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年度报告，验证收入、毛利率和食品加工业务趋势"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断Q1利润改善是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比",
-    "餐饮收入同比",
-    "餐饮毛利率",
-    "商品销售收入同比",
-    "商品销售毛利率",
-    "经营活动现金流量净额",
-    "门店数量和关店开店情况",
-    "翻台率或可替代客流指标",
-    "点评评分和排队时长",
-    "租赁负债和人工成本压力",
-    "分红政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

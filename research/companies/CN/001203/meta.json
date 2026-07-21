@@ -1,105 +1,106 @@
 {
-  "symbol": "CN:001203",
-  "market": "CN",
-  "ticker": "001203",
-  "name": "大中矿业",
-  "company_name": "大中矿业",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "大中矿业具备铁矿采选与球团现金流底盘，锂矿和新能源材料项目提供上行期权；但2026-07-10附近股价已显著反映锂矿顺利兑现预期，当前更适合跟踪等待价格或项目进度验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    36
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大中矿业",
+    "security_status": "active",
+    "symbol": "CN:001203",
+    "ticker": "001203"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c544c71d7581079d77ed198a3ca0223d69cfe09d0db0662e6f36eda801a9a19a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于18元，铁矿主业利润未明显恶化，且鸡脚山锂矿项目公告进度正常",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "价格进入安全边际区间，可用小仓位获得铁矿现金流和锂矿期权敞口"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的铁矿盈利、现金流、资本开支和锂矿项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于18至24元，2026年中报验证经营现金流和锂矿建设进度",
-      "action": "分批增持",
-      "max_weight": 0.03,
-      "reason": "中性估值区间内只在基本面继续兑现时提高仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报及锂矿建设节点，更新全年盈利和估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元且无锂矿进度或盈利能力超预期公告",
-      "action": "不追高或逐步减仓",
-      "max_weight": 0,
-      "reason": "价格已接近牛市情景定价，风险收益比不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入中性合理价值区间下沿，需要复核是否具备首笔仓位条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "锂矿按期投产且碳酸锂价格稳定高于项目完全成本两个季度以上",
-      "action": "重新评估上调仓位上限",
-      "max_weight": 0.05,
-      "reason": "锂矿从期权转为现金流资产后可提高组合权重"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入深度价值区间，需要复核铁矿主业是否出现永久性恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "进入减仓或不追价区间，需要核查锂矿预期是否已充分反映",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "超过当前牛市情景中枢，需要重新评估估值泡沫和兑现风险",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入中性合理价值区间下沿，需要复核是否具备首笔仓位条件"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入深度价值区间，需要复核铁矿主业是否出现永久性恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "进入减仓或不追价区间，需要核查锂矿预期是否已充分反映"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "超过当前牛市情景中枢，需要重新评估估值泡沫和兑现风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的铁矿盈利、现金流、资本开支和锂矿项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报及锂矿建设节点，更新全年盈利和估值假设"
-    }
-  ],
-  "key_tracking_metrics": [
-    "62%品位铁矿石指数",
-    "国产铁精粉价格",
-    "球团价差和销量",
-    "铁精粉单吨现金成本",
-    "经营现金流净额",
-    "资本开支和在建工程",
-    "资产负债率",
-    "鸡脚山锂矿采选工程进度",
-    "碳酸锂项目投产进度",
-    "电池级碳酸锂现货价格",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

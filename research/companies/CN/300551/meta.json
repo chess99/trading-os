@@ -1,72 +1,95 @@
 {
-  "symbol": "CN:300551",
-  "ticker": "300551",
-  "name": "古鳌科技",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "古鳌科技当前更像困境资产和事件交易标的：2025年与2026Q1收入下滑、持续亏损且经营现金流为负，新存科技股权处置可能改善资产负债表但尚未证明主业恢复。当前约9.89元股价对应高PB，显著高于保守公允价值，安全边际不足。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    2.3,
-    4.2
-  ],
-  "buy_zone": [
-    0.8,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "古鳌科技",
+    "security_status": "active",
+    "symbol": "CN:300551",
+    "ticker": "300551"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "57581d7eea377d1f7776445bda12a05df9f136b6d2dbe961df275816802c84d6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "新存科技股权转让现金全部到账并经半年报确认，传统业务单季收入恢复至5000万元以上，且经营现金流连续两个季度为正后，才允许建立观察仓。",
-      "max_weight": 1.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认新存科技股权处置款、投资收益、现金余额和少数股东损益。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价进入买入区但主业与现金流拐点仍未验证，仅允许继续跟踪，不建立实盘仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入恢复、经营现金流和费用收缩是否兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于7元且半年报未确认净资产和经营现金流实质改善，应回避或退出。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估主业持续经营价值、资产减值和治理风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入资产折价观察区，需要重新核验现金、负债、或有事项和新存科技处置款到账情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "显著高于保守公允价值区间，若没有持续盈利拐点，应视为减仓或回避价格。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入资产折价观察区，需要重新核验现金、负债、或有事项和新存科技处置款到账情况。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "reason": "显著高于保守公允价值区间，若没有持续盈利拐点，应视为减仓或回避价格。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认新存科技股权处置款、投资收益、现金余额和少数股东损益。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入恢复、经营现金流和费用收缩是否兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估主业持续经营价值、资产减值和治理风险。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

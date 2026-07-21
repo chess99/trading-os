@@ -1,100 +1,115 @@
 {
-  "symbol": "CN:300683",
-  "market": "CN",
-  "ticker": "300683",
-  "name": "海特生物",
-  "company_name": "武汉海特生物制药股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海特生物是老品种现金流、埃普奈明放量、CRO修复和管线期权叠加的困境反转标的；2025年亏损受商誉、长期股权投资和存货减值放大，但2026Q1尚未证明经营现金流和盈利能力修复。25元附近已计入较多乐观预期，18元以下且经营数据改善才有安全边际。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    17,
-    22
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    30
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海特生物",
+    "security_status": "active",
+    "symbol": "CN:300683",
+    "ticker": "300683"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e81369f12849b4b9b2f1ad4e651f3e3008ba9e0ed85a07351e38fa082741f9c7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15元，且最近一期经营现金流转正或亏损显著收窄",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入结构、埃普奈明销售、CRO止跌和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价15-18元，且埃普奈明季度收入继续增长、CRO收入止跌",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损是否持续收窄",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价18-22元，仅保留观察或事件驱动小仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和H股发行进展，重新评估SOTP和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元且无超预期经营改善",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入有安全边际买入区，需同步复核经营现金流和埃普奈明放量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可分批加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于合理区间上沿，不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "进入减持或回避区，除非经营数据显著超预期",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入有安全边际买入区，需同步复核经营现金流和埃普奈明放量"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入强吸引力买入区，若基本面未恶化可分批加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "高于合理区间上沿，不应追高"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "进入减持或回避区，除非经营数据显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入结构、埃普奈明销售、CRO止跌和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损是否持续收窄"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和H股发行进展，重新评估SOTP和安全边际"
-    }
-  ],
-  "key_tracking_metrics": [
-    "埃普奈明季度收入和同比增速",
-    "技术服务收入及天津汉康订单恢复情况",
-    "经营活动现金流净额",
-    "扣非归母净利润",
-    "货币资金、交易性金融资产和其他流动资产合计余额",
-    "商誉、合同资产、存货和长期股权投资减值",
-    "重组人神经生长因子滴眼液Ib期临床进展",
-    "埃普奈明新适应症IND或临床进展",
-    "H股发行进度和发行估值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

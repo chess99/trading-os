@@ -1,81 +1,110 @@
 {
-  "symbol": "CN:920262",
-  "market": "CN",
-  "ticker": "920262",
-  "name": "太湖雪",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "太湖雪是丝绸家纺细分品牌，2025年和2026Q1收入利润继续增长，直播电商、跨境电商、母婴品类和线下体验店提供结构性增量；但当前12.95元约对应10.74亿元市值和约26-28倍利润，已接近合理价值上沿，库存占总资产超过40%、未来工厂资本开支和渠道费用率使安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    12.5
-  ],
-  "buy_zone": [
-    8.0,
-    9.8
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "太湖雪",
+    "security_status": "active",
+    "symbol": "CN:920262",
+    "ticker": "920262"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "4c2ca8ee85566e6c01a1fa26aa15742537a819ef628e7c60d502e8856547cf88"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "d1d7b254d3fe29522a68a699ff0d53b4df1b336c4b0188aa0ace36a5586ed2e9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价12.95元附近或高于合理价值上沿，安全边际不足",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看直播电商、跨境电商、存货、减值和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.80元且最近一期收入仍增长、毛利率不低于40%、存货未继续恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年增长和未来工厂资本开支压力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.00元且直播电商、跨境电商和经营现金流逻辑未破坏",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期净利率、自由现金流和合理估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026半年报或三季报证明收入增速15%以上、经营现金流/净利润高于1.0、存货占比下降",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入安全边际买入区，启动第一笔1.0%-1.5%仓位复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入强吸引力区，若基本面未恶化可提高至3%以内",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "进入不追高区，若已有仓位且增长未超预期应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入安全边际买入区，启动第一笔1.0%-1.5%仓位复核"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入强吸引力区，若基本面未恶化可提高至3%以内"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "进入不追高区，若已有仓位且增长未超预期应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看直播电商、跨境电商、存货、减值和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年增长和未来工厂资本开支压力"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期净利率、自由现金流和合理估值"
-    }
-  ],
-  "notes": "质量评级B-，估值评级C/偏贵；2026-07-17收盘价12.95元，总股本82,937,022股，对应总市值约10.74亿元。合理价值区间10.5-12.5元，安全边际买入价9.80元以下，强吸引力价8.00元以下，不追高价13.50元以上。今天决策是不买、列入跟踪，第一笔仓位0%。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

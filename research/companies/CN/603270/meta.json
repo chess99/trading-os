@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603270",
-  "market": "CN",
-  "ticker": "603270",
-  "name": "金帝股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "金帝股份具备轴承保持架客户认证、工艺复合能力和新能源精密零部件放量带来的中高质量成长属性，但2026-07-17股价已处在估算合理价值区间中部，经营现金流为负、可转债募投消化和新业务兑现仍需验证，因此当前以观察为主，等待价格回落或现金流改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    31
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金帝股份",
+    "security_status": "active",
+    "symbol": "CN:603270",
+    "ticker": "603270"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4816a17309e6142bdd690edfeb97eca9b2db19c1dbefc859f0064f9fa5a8af71"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至22元以下，且最新定期报告显示经营现金流改善或应收存货占收入比例未继续恶化",
-      "action": "分批建立观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查经营现金流、应收存货和新能源定转子收入质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18元以下，且新能源定转子和风电保持架订单未出现明显下修",
-      "action": "提高至核心小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润增长和可转债募投项目进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于34元且2026E净利润无法上修至2亿元以上",
-      "action": "减仓或不追高",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，重估长期盈利中枢和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入基准买入观察区，重新核验现金流和订单后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "估值进入减仓区，需要业绩显著上修才能支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入基准买入观察区，重新核验现金流和订单后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "估值进入减仓区，需要业绩显著上修才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查经营现金流、应收存货和新能源定转子收入质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润增长和可转债募投项目进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，重估长期盈利中枢和合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

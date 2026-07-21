@@ -1,140 +1,105 @@
 {
-  "symbol": "CN:003026",
-  "market": "CN",
-  "ticker": "003026",
-  "name": "中晶科技",
-  "company_name": "浙江中晶科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中晶科技是国产半导体硅材料里有一定工艺积累的小而专公司，2025 年与 2026Q1 经营修复明显，但客户集中、规模偏小、现金流仍需验证；2026-07-13 收盘价 36.10 元对应估值过高，等待价格回到 15 元以下或业绩显著超预期后再考虑买入。",
-  "quality_rating": "中",
-  "valuation_rating": "低",
-  "fair_value_range": [
-    16,
-    24
-  ],
-  "buy_zone": [
-    0,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中晶科技",
+    "security_status": "active",
+    "symbol": "CN:003026",
+    "ticker": "003026"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "85f35cd14649c13a8a3fcf2bf31b469765bf2b4aa831c1cdb2a75c40699fe23a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 30 元且未出现订单、扣非净利润和现金流同步超预期证据",
-      "action": "不买或减仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价位于 24-30 元，等待 2026 半年报验证收入增速、毛利率和经营现金流",
-      "action": "观察",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价位于 16-24 元，且季度收入同比增长、扣非净利润连续为正",
-      "action": "谨慎分批",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价低于 15 元，且客户、现金流和存货没有重大恶化",
-      "action": "买入观察仓",
-      "target_position": "4%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "股价低于 12 元，且半导体材料业务毛利率稳定、经营现金流改善",
-      "action": "提高仓位",
-      "target_position": "6%-8%",
-      "max_weight": 0.08
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "currency": "CNY",
-      "reason": "低于合理价值区间下沿并具备初步安全边际",
-      "action": "进入可买区，复核最新季报后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "currency": "CNY",
-      "reason": "显著低于保守估值，若基本面未恶化则赔率改善",
-      "action": "进入深度价值区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "currency": "CNY",
-      "reason": "高于合理价值区间上沿，当前盈利能力难以支撑估值",
-      "action": "高估区，已有仓位应减仓或仅保留跟踪仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证 2026 年收入恢复、毛利率和经营现金流的第一个完整窗口",
-      "condition": "2026 年半年报披露后",
-      "action": "复核收入增速、毛利率、扣非净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证全年业绩趋势、客户需求和新产品放量持续性",
-      "condition": "2026 年三季报披露后",
-      "action": "复核扣非净利润、现金流、客户集中度和 8 英寸抛光片进展"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整复核股权激励目标、现金流质量、客户结构和并购整合效果",
-      "condition": "2026 年年报披露后",
-      "action": "完整复核估值区间、股权激励目标兑现和仓位计划"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "低于合理价值区间下沿并具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "显著低于保守估值，若基本面未恶化则赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于合理价值区间上沿，当前盈利能力难以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    {
-      "metric": "季度营业收入同比增速",
-      "target": "连续两个季度高于 20%"
-    },
-    {
-      "metric": "扣非归母净利润",
-      "target": "单季高于 1500 万元且同比增长"
-    },
-    {
-      "metric": "综合毛利率",
-      "target": "维持在 38%-42%，低于 35% 需复核"
-    },
-    {
-      "metric": "经营现金流净额/净利润",
-      "target": "年度高于 0.8"
-    },
-    {
-      "metric": "前五大客户销售占比",
-      "target": "低于 55% 或第一大客户占比下降"
-    },
-    {
-      "metric": "陶瓷业务毛利率",
-      "target": "从 18.96% 向 25% 以上改善"
-    },
-    {
-      "metric": "8 英寸抛光片进展",
-      "target": "披露量产、客户认证或收入贡献"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

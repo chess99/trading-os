@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:002184",
-  "market": "CN",
-  "ticker": "002184",
-  "name": "海得控制",
-  "company_name": "海得控制",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "current_thesis": "海得控制处于亏损修复和业务结构调整阶段，工业自动化基本盘与工业信息化国产替代方向值得跟踪，但2026Q1收入同比下滑、扣非利润很薄且经营现金流大额流出，当前9.34元价格高于保守公允价值区间，维持watch并等待价格或连续财报验证。",
-  "fair_value_range": [
-    6.8,
-    8.6
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海得控制",
+    "security_status": "active",
+    "symbol": "CN:002184",
+    "ticker": "002184"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9cf33e516a9203500f92929f4915d911fd05a17dc91819b2765a11024e9a99f6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_above_fair_value_without_cashflow_confirmation",
-      "action": "no_buy_or_tracker_only",
-      "max_weight": 0.005,
-      "reason": "2026-07-10收盘价9.34元高于基准公允价值区间，2026Q1扣非利润很薄且经营现金流为-2.30亿元。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证收入恢复、扣非利润、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_6_8_and_no_new_impairment",
-      "action": "open_initial_position",
-      "max_weight": 0.01,
-      "reason": "进入保守买入区上沿，同时需要确认应收、存货和储能项目没有新增重大风险。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认扭亏是否连续、工业信息化毛利率和新能源减亏是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_below_5_8_and_interim_report_confirms_turnaround",
-      "action": "add_position",
-      "max_weight": 0.02,
-      "reason": "价格给出更高安全边际，且若中报扣非转正、现金流改善，可提高反转配置权重。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入首笔买入观察区，需要复核最新财报和减值风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "two_consecutive_quarters_positive_core_profit_and_cashflow_recovery",
-      "action": "raise_max_weight_after_review",
-      "max_weight": 0.025,
-      "reason": "只有连续验证工业信息化放量、系统集成毛利率稳定和项目回款改善后，才允许提高总仓位上限。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入积极买入区，若基本面未恶化可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "高于当前基准公允价值，若无业绩验证应维持回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入首笔买入观察区，需要复核最新财报和减值风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入积极买入区，若基本面未恶化可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "高于当前基准公允价值，若无业绩验证应维持回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证收入恢复、扣非利润、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认扭亏是否连续、工业信息化毛利率和新能源减亏是否持续。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "工业信息化收入同比增速和毛利率",
-    "工业电气自动化收入增速和毛利率",
-    "新能源业务收入、毛利率、风电变流器及PCS出货量",
-    "经营活动现金流量净额",
-    "应收账款、应收款项融资、合同资产和存货周转",
-    "信用减值损失和资产减值损失",
-    "扣非归母净利润",
-    "浙江海得智慧能源出表后的权益法损益和相关风险披露",
-    "前五大供应商采购集中度和施耐德相关采购占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

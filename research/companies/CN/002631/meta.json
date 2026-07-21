@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002631",
-  "ticker": "002631",
-  "name": "德尔未来",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "传统家居主业仍受地产后周期需求收缩和工程回款风险压制，2026H1虽亏损收窄但收入预计继续下滑约27%，当前约3.4倍PB、约69亿元市值明显透支盈利修复，缺乏安全边际。",
-  "fair_value_range": [
-    2.6,
-    4.2
-  ],
-  "buy_zone": [
-    2.2,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德尔未来",
+    "security_status": "active",
+    "symbol": "CN:002631",
+    "ticker": "002631"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "eceaa06ef2caa24ab8cd1e4c4b6412460de11f0606f1ad4d2439ba40f6bdd545"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且扣非仍亏损，不建立仓位。",
-      "action": "avoid_new_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、收入降幅、扣非亏损和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入3.0元以下，且最近一个季度经营现金流转正、扣非亏损明显收窄。",
-      "action": "watchlist_probe",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入趋势、毛利率和减值变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比转正且扣非接近盈亏平衡后，重新估值再决定是否提高仓位。",
-      "action": "reunderwrite",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及年度扭亏进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入买入观察区，需要复核经营现金流和扣非亏损改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "超过估值上沿较多，如已有仓位应减仓或退出。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入买入观察区，需要复核经营现金流和扣非亏损改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "超过估值上沿较多，如已有仓位应减仓或退出。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、收入降幅、扣非亏损和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入趋势、毛利率和减值变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及年度扭亏进展。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

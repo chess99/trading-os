@@ -1,114 +1,115 @@
 {
-  "symbol": "CN:002729",
-  "market": "CN",
-  "ticker": "002729",
-  "name": "好利科技",
-  "company_name": "好利来（中国）电子科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是国内电路保护元器件第一梯队厂商，2025年收入、利润和经营现金流改善，电力熔断器受益于光伏、储能、风电、新能源汽车等场景；但以2026-07-10收盘价14.19元计，约54倍2025年归母PE、70倍扣非PE，估值已提前计入成长和控制权变更预期，安全边际不足。等待价格回落至8元附近，或扣非利润上台阶后再评估买入。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    9.0,
-    11.5
-  ],
-  "buy_zone": [
-    7.5,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "好利科技",
+    "security_status": "active",
+    "symbol": "CN:002729",
+    "ticker": "002729"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4c2a0e05aad6eb4f8269c71521188bf553f9a93b48a1d1d8d1f33590466b1cad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于14元且未披露超预期订单或利润上修",
-      "max_weight": 0.01,
-      "action": "不新建仓；已有仓位控制在组合1%以内"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "中报是验证2026年增长质量和现金流持续性的第一个关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入9.0-11.5元且2026年中报收入和扣非利润保持双位数增长、经营现金流未恶化",
-      "max_weight": 0.02,
-      "action": "允许1%-2%观察仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-29"
+      },
+      "reason": "减持窗口结束且控制权变更应有更多实质进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至7.5-8.5元且客户集中度、应收账款、存货和毛利率未出现两项以上恶化",
-      "max_weight": 0.04,
-      "action": "分批提高至3%-4%上限"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报用于确认扣非利润台阶、客户集中度和电力熔断器毛利率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于15元且扣非利润未出现明确上修",
-      "max_weight": 0.01,
-      "action": "不加仓；已有仓位逐步降至观察仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
       "reason": "进入可买区上沿，估值开始接近风险收益均衡",
-      "action": "复核基本面，若无恶化可启动第一档买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.5,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
       "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
-      "action": "复核控制权过户、客户和现金流，若通过可加至标准仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 15.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
       "reason": "进入减仓观察区，估值需要利润上修支撑",
-      "action": "检查是否有利润上修；无上修则减仓或继续观望"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 18.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
       "reason": "接近或超过控制权交易价格，二级市场安全边际不足",
-      "action": "除非利润接近1亿元并具备持续性，否则视为高估区"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后复核电力熔断器收入、毛利率、扣非利润和经营现金流",
-      "reason": "中报是验证2026年增长质量和现金流持续性的第一个关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-29",
-      "condition": "复核孙剑波减持计划实施结果和控制权变更过户进展",
-      "reason": "减持窗口结束且控制权变更应有更多实质进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露后复核扣非利润是否达到买入假设",
-      "reason": "年报用于确认扣非利润台阶、客户集中度和电力熔断器毛利率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电力熔断器收入增速和毛利率",
-    "扣非归母净利润及其同比增速",
-    "经营活动现金流净额/净利润",
-    "应收账款、应收款项融资和存货周转",
-    "前五大客户和第一大客户收入占比",
-    "研发投入占收入比例及新增专利/认证",
-    "控制权变更审批、过户和董事会改组进展",
-    "股东减持计划实施进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

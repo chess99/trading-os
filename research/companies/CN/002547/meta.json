@@ -1,70 +1,86 @@
 {
-  "symbol": "CN:002547",
-  "market": "CN",
-  "ticker": "002547",
-  "name": "*ST春兴",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "负净资产、连续亏损、持续经营重大不确定性、诉讼担保和控股股东股份冻结并存，当前普通股更像保壳期权而非可投资经营资产；未见正式重整或足额净资产修复前不买入。",
-  "fair_value_range": [
-    0.0,
-    0.8
-  ],
-  "buy_zone": [
-    0.0,
-    0.5
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    3.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST春兴",
+    "security_status": "active",
+    "symbol": "CN:002547",
+    "ticker": "002547"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "49541e36bc53177189a083582a4c728421fd3597b333ce27f54a2234a9b53da2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026年末经审计归母净资产仍可能为负、未见正式重整或净资产修复方案",
-      "action": "不买入，已有持仓退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报净资产、亏损、现金流和诉讼担保进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至0.50元以下且公告确认债务豁免、增资或资产处置足以覆盖净资产缺口",
-      "action": "仅重新研究，不自动买入",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.5,
-      "reason": "跌入事件驱动重新研究区，但仍需净资产修复证据"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计后净资产是否转正及退市风险是否解除",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "高于困境期权估值上沿，应卖出或降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报净资产、亏损、现金流和诉讼担保进展"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.5
+      },
+      "reason": "跌入事件驱动重新研究区，但仍需净资产修复证据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计后净资产是否转正及退市风险是否解除"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "高于困境期权估值上沿，应卖出或降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "notes": [
-    "评级为avoid，核心原因是负净资产、连续亏损、持续经营重大不确定性和退市风险并存。",
-    "当前价格按2026-07-17新浪行情收盘2.24元记录，2026-07-19为周日无盘中交易。",
-    "未核验到正式重整、预重整受理、债务豁免或重大资产注入公告。",
-    "buy_zone仅表示极端价格下重新研究区，不代表可执行买入建议。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

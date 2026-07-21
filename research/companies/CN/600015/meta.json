@@ -1,113 +1,115 @@
 {
-  "symbol": "CN:600015",
-  "market": "CN",
-  "ticker": "600015",
-  "name": "华夏银行",
-  "company_name": "华夏银行",
-  "updated_at": "2026-07-09",
-  "status": "active",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察/低吸型配置",
-  "current_thesis": "华夏银行是低PB、高股息但基本面质量中等偏弱的股份行资产；当前估值已经便宜，但拨备覆盖率、核心一级资本充足率和个人贷款不良趋势限制重仓价值。适合在安全边际足够时作为高股息低估值组合的小仓位配置，而不是银行股核心仓。",
-  "current_rating": "watch",
-  "quality_rating": "B",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    6.6,
-    7.4
-  ],
-  "buy_zone": [
-    5.8,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    8.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华夏银行",
+    "security_status": "active",
+    "symbol": "CN:600015",
+    "ticker": "600015"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "b13be436801fe6a2ce6d4bd7e73594dfafbb938347befbfa94ae62387677fb23"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 5.80 and no deterioration in asset quality",
-      "action": "strong_buy_in_batches",
-      "max_weight": 0.05,
-      "reason": "PB约0.29倍且股息率约7.2%，对拨备偏薄和资本约束已有较充分折价。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点确认净息差、拨备覆盖率、核心一级资本充足率和个人贷款不良率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "5.80 < price <= 6.20",
-      "action": "buy_or_add",
-      "max_weight": 0.03,
-      "reason": "进入有安全边际买入区，股息率接近6.8%，适合高股息低估值配置。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认全年分红能力和资产质量趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "6.20 < price <= 6.60",
-      "action": "small_initial_position",
-      "max_weight": 0.02,
-      "reason": "估值仍偏低但安全边际减少，需等待半年报验证净息差和拨备。"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复查2026年年报，重新评估长期ROE、分红和合理PB中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "6.60 < price <= 7.40",
-      "action": "hold_or_watch",
-      "max_weight": 0.02,
-      "reason": "处于合理价值区间，基本面瑕疵不支持继续提高仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入有安全边际买入区，可启动首笔或加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price > 7.80",
-      "action": "do_not_chase_or_reduce",
-      "max_weight": 0.01,
-      "reason": "价格超过不应追高区，除非拨备覆盖率、核心一级资本和ROE同步改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入强吸引力区，若资产质量未恶化可分批提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "进入不应追高区，新增仓位风险收益比下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "进入卖出或降低仓位区，除非基本面已有明确上修。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入有安全边际买入区，可启动首笔或加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入强吸引力区，若资产质量未恶化可分批提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "进入不应追高区，新增仓位风险收益比下降。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "进入卖出或降低仓位区，除非基本面已有明确上修。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点确认净息差、拨备覆盖率、核心一级资本充足率和个人贷款不良率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认全年分红能力和资产质量趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复查2026年年报，重新评估长期ROE、分红和合理PB中枢。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "净息差是否稳定在1.60%以上",
-    "不良贷款率是否维持在1.55%附近或下降",
-    "拨备覆盖率是否回升到155%-160%以上",
-    "核心一级资本充足率是否稳定在9.0%以上",
-    "个人贷款不良率是否停止上行",
-    "京津冀和粤港澳大湾区不良率变化",
-    "每股股息是否维持不低于0.42元",
-    "公允价值变动收益占收入比例是否回落到正常波动"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

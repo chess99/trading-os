@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:000652",
-  "market": "CN",
-  "ticker": "000652",
-  "name": "泰达股份",
-  "company_name": "泰达股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "泰达股份是天津国资背景下的环保主业再聚焦标的，当前估值相对净资产不贵，但应收账款、存货、区域开发尾部风险和关联交易治理折价仍高；只有在泰达能源出表后现金流改善、环保板块利润稳定、资产盘活回款得到半年报验证时，才具备从观察仓提升为买入仓位的条件。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "fair_to_cheap",
-  "fair_value_range": [
-    3.8,
-    4.5
-  ],
-  "buy_zone": [
-    2.8,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰达股份",
+    "security_status": "active",
+    "symbol": "CN:000652",
+    "ticker": "000652"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e1e4743c69c730f9628211ca94773606040d61fa02f49ed93fed3546d52ec1ec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约3.37元且尚未看到2026半年报现金流改善",
-      "action": "仅建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值不贵但多元控股折价、应收账款、存货和治理风险仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点验证泰达能源出表、环保利润、经营现金流和区域开发回款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入2.80-3.10元且无新增债务或关联交易负面事件",
-      "action": "分批买入",
-      "max_weight": 0.03,
-      "reason": "该价格区间相对归母净资产和环保主业价值具备更充分安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报和资产处置进展，确认是否需要调整评级和仓位上限",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026半年报确认经营现金流改善、环保主业利润稳定、区域开发回款下降风险",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "主业再聚焦若被财务数据验证，可降低控股折价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入初始买入区间，复核无新增基本面恶化后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度安全边际区，若现金流和债务未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "接近减仓区，若环保利润和现金流未同步改善则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "进入初始买入区间，复核无新增基本面恶化后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度安全边际区，若现金流和债务未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "reason": "接近减仓区，若环保利润和现金流未同步改善则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点验证泰达能源出表、环保利润、经营现金流和区域开发回款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报和资产处置进展，确认是否需要调整评级和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "环保板块收入和净利润",
-    "生活垃圾处理量和上网电量",
-    "经营活动现金流量净额",
-    "应收账款余额和回款进度",
-    "存货余额及减值",
-    "有息负债余额和融资成本",
-    "泰达能源出表后的毛利率和费用率",
-    "关联交易和资产出售收款进度",
-    "北方信托和渤海证券等参股资产分红或退出进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

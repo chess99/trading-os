@@ -1,75 +1,86 @@
 {
-  "symbol": "CN:300087",
-  "market": "CN",
-  "ticker": "300087",
-  "name": "ST荃银",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "ST荃银具备水稻种业资产和中种集团股东资源，但2024年年报虚假记载触发ST后，治理信任、索赔、摘帽和现金流风险仍未出清；当前4.97元已接近风险折价后合理价值上沿，等待3.5元以下且中报验证现金流和扣非改善后再评估小仓位。",
-  "fair_value_range": [
-    3.6,
-    4.8
-  ],
-  "buy_zone": [
-    2.8,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST荃银",
+    "security_status": "active",
+    "symbol": "CN:300087",
+    "ticker": "300087"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "082d8530f7669c3e4aca55264452963cafff69db2147791150b29d795cb41351"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "ST状态未解除、行政处罚后投资者索赔影响未充分披露、半年度经营现金流仍为负",
-      "action": "仅跟踪，不新开仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、ST整改进展、投资者索赔披露和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入2.8-3.5元且2026年中报显示种子主业收入恢复、经营现金流改善、无新增重大诉讼或监管处罚",
-      "action": "试探性小仓位，等待摘帽路径清晰后再加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、销售季预收/库存变化及摘帽条件",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "摘帽申请进展明确、2026年扣非净利恢复为正且应收/存货风险继续下降",
-      "action": "可提高至观察仓，仍按周期股和治理折价管理",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入安全边际区间，重新核验ST解除、索赔和现金流后评估是否试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "超过风险折价后的合理估值上沿，若基本面未显著改善应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入安全边际区间，重新核验ST解除、索赔和现金流后评估是否试仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "超过风险折价后的合理估值上沿，若基本面未显著改善应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、ST整改进展、投资者索赔披露和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、销售季预收/库存变化及摘帽条件"
-    }
-  ],
-  "notes": [
-    "截至2026-07-19，最近可得行情为2026-07-17收盘4.97元，总市值约47.08亿元，估值结论以该价格为基准。",
-    "ST原因是2024年年报财务指标存在虚假记载，触发创业板其他风险警示；公司公告称不触及重大违法强制退市情形，但仍需跟踪摘帽、索赔和监管尾部风险。",
-    "核心经营资产是杂交水稻、玉米、小麦等种业；订单粮食等低毛利业务拖累报表质量。",
-    "本轮研究结论为观察，不建议在当前价格主动买入。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

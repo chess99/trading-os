@@ -1,103 +1,106 @@
 {
-  "symbol": "CN:000795",
-  "market": "CN",
-  "ticker": "000795",
-  "name": "英洛华",
-  "company_name": "英洛华",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "英洛华具备稀土永磁材料、机电智造和横店集团背景带来的复合制造弹性，但当前估值已反映部分稀土永磁和机器人主题预期；只有在存货跌价压力下降、磁材扩产和高端客户订单得到财报验证后，才适合从观察仓升级为更高仓位。",
-  "quality_rating": "B",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英洛华",
+    "security_status": "active",
+    "symbol": "CN:000795",
+    "ticker": "000795"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "8ae2337b3adeb83063b8dc91c1511354baaa57fe8bc5d1b65fc1d1247737a339"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.20元，且2026Q2存货跌价损失没有继续扩大",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "估值进入合理区间下沿，且核心库存风险未恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计半年报披露后复核分业务毛利率、存货跌价、经营现金流和扩产进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.50元，且2026H1扣非利润和经营现金流未显著恶化",
-      "action": "提高到小仓位",
-      "max_weight": 0.04,
-      "reason": "安全边际改善，适合为磁材和机电需求弹性付少量期权价格"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年盈利趋势和稀土价格传导效果",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1扣非净利润同比增长25%以上，经营现金流改善，存货占收入比例下降",
-      "action": "上调仓位上限",
-      "max_weight": 0.05,
-      "reason": "增长质量得到财报验证，可从主题观察转为基本面配置"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入初始买入区，可复核Q2存货和毛利率后建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于10.50元且没有盈利预测上修或订单验证",
-      "action": "不新增并逐步减仓",
-      "max_weight": 0.01,
-      "reason": "主题估值高于基准价值，缺少安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入更有安全边际区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于基准估值上沿，需要盈利上修支持，否则应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "接近乐观情景估值，除非机器人或高端磁材订单兑现，否则风险收益转差",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入初始买入区，可复核Q2存货和毛利率后建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入更有安全边际区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "高于基准估值上沿，需要盈利上修支持，否则应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "接近乐观情景估值，除非机器人或高端磁材订单兑现，否则风险收益转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计半年报披露后复核分业务毛利率、存货跌价、经营现金流和扩产进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年盈利趋势和稀土价格传导效果"
-    }
-  ],
-  "key_tracking_metrics": [
-    "磁材业务收入和毛利率",
-    "机电智造收入和毛利率",
-    "存货余额、存货周转和存货跌价损失",
-    "氧化镨钕、金属钕、镝铁、铽价格",
-    "5000吨烧结钕铁硼扩产进度和产能利用率",
-    "新能源车、机器人、工业电机客户订单验证",
-    "经营现金流净额与归母净利润匹配度",
-    "短期借款和应收账款变化",
-    "控股股东质押和关联交易变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

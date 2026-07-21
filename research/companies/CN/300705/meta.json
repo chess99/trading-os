@@ -1,97 +1,105 @@
 {
-  "symbol": "CN:300705",
-  "market": "CN",
-  "ticker": "300705",
-  "name": "九典制药",
-  "company_name": "湖南九典制药股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司具备经皮给药贴膏剂平台能力和新品矩阵潜力，但洛索洛芬钠凝胶贴膏全国集采后盈利中枢重估，2026Q1 收入和利润已显著下滑。10.50 元附近估值处于合理区间内，缺少安全边际，需等待 2026 中报验证集采后量价、费用率和新品准入放量。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    9.5,
-    12.0
-  ],
-  "buy_zone": [
-    7.5,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "九典制药",
+    "security_status": "active",
+    "symbol": "CN:300705",
+    "ticker": "300705"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ee9d8ebec03bd93eec156c5c8743accf9a7e6ccc6b74c481e2c1f03c56af70d2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 12.5 元且 2026 年盈利恢复未被验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查集采后洛索洛芬钠凝胶贴膏收入、毛利率、销售费用率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于 10.5-12.5 元，等待中报和三季报验证集采后盈利韧性",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断新品贴膏准入和放量是否形成第二曲线",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于 9.0-10.5 元，且销售费用率未继续恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估集采后正常化盈利中枢和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价位于 8.0-9.0 元，且贴膏新品准入和院外放量逻辑未破坏",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入有安全边际的买入区，可开始小仓位建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于 8.0 元，且经营现金流和新品进度没有进一步恶化",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入强吸引力买入区，在基本面未继续恶化时可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "超过合理估值上沿且盈利恢复证据不足，应避免追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入有安全边际的买入区，可开始小仓位建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入强吸引力买入区，在基本面未继续恶化时可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "超过合理估值上沿且盈利恢复证据不足，应避免追高或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查集采后洛索洛芬钠凝胶贴膏收入、毛利率、销售费用率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断新品贴膏准入和放量是否形成第二曲线"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估集采后正常化盈利中枢和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "洛索洛芬钠凝胶贴膏集采后销量、收入和毛利率",
-    "酮洛芬凝胶贴膏、氟比洛芬凝胶贴膏的获批、准入、院外铺货和销售收入",
-    "销售费用率及其与收入增速的匹配程度",
-    "经营活动现金流净额与归母净利润的匹配程度",
-    "存货、应收账款和在建工程变化",
-    "贴膏剂产品矩阵的注册和研发节点",
-    "院外渠道价格体系和复购表现"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

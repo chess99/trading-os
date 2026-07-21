@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688103",
-  "market": "CN",
-  "ticker": "688103",
-  "name": "国力电子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "国力电子具备电真空多品类平台、半导体设备国产替代和大科学装置高壁垒期权，但当前股价已充分交易主题预期，2026Q1 收入增长未转化为利润增长，需等待利润率修复或价格回到安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    55,
-    72
-  ],
-  "buy_zone": [
-    45,
-    58
-  ],
-  "sell_or_reduce_zone": [
-    90,
-    110
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国力电子",
+    "security_status": "active",
+    "symbol": "CN:688103",
+    "ticker": "688103"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c310b9c160782a919d7be59311111c6d612672314f79abdc9c197304147dc068"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 58 元且未出现客户流失、连续亏损或现金流恶化，建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非净利率、半导体订单、现金流和营运资本。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 50 元且扣非净利率恢复至 5% 以上、半导体客户批量供货继续验证，可提高仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认收入增长是否重新转化为利润增长。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 90 元且半导体收入和净利率未同步超预期，只保留跟踪仓。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报及 2027 年一季报，评估扩产项目和估值中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入初步买入区间，重新检查利润率和订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入更有安全边际的建仓区间，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "接近乐观情景估值，若缺少业绩兑现应减仓或维持观察。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入初步买入区间，重新检查利润率和订单质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入更有安全边际的建仓区间，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "接近乐观情景估值，若缺少业绩兑现应减仓或维持观察。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非净利率、半导体订单、现金流和营运资本。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认收入增长是否重新转化为利润增长。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报及 2027 年一季报，评估扩产项目和估值中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

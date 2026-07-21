@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:600649",
-  "ticker": "600649",
-  "name": "城投控股",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "上海国资地产与租赁资产平台，账面净资产折价明显，但2026H1预亏、低ROE和开发结转波动尚未消除，当前更适合观察，等待交付、现金流和租赁经营数据验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    5.1
-  ],
-  "buy_zone": [
-    2.9,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "城投控股",
+    "security_status": "active",
+    "symbol": "CN:600649",
+    "ticker": "600649"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0173c5bef631f3ce4d6a942bc125566fb9764c51ffbd445837998e9a3c8f1745"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.20元且半年报未出现超预告亏损、重大减值或债务恶化",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、合同负债、现金流和资产减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.20元至4.20元且销售、交付、租赁现金流连续两个季度改善",
-      "action": "维持观察或小幅增持至上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报交付结转、租赁现金流和全年盈利能见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.20元但ROE和现金流未明显改善",
-      "action": "不追涨并减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红政策、净资产质量和新一年项目计划",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入买入观察区，P/B低于约0.38倍且相对基准NAV折价较充分",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过基准合理价值上沿，若基本面未同步改善应降低风险敞口",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入买入观察区，P/B低于约0.38倍且相对基准NAV折价较充分"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过基准合理价值上沿，若基本面未同步改善应降低风险敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、合同负债、现金流和资产减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报交付结转、租赁现金流和全年盈利能见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红政策、净资产质量和新一年项目计划"
-    }
-  ],
-  "key_risks": [
-    "上海新房销售或价格低于预期",
-    "项目交付节奏继续拖累收入和利润",
-    "存货、投资性房地产或金融资产出现减值或公允价值损失",
-    "高杠杆和利息费用压制ROE",
-    "股东回报不足导致估值折价长期存在"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

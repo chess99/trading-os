@@ -1,147 +1,105 @@
 {
-  "ticker": "002647",
-  "symbol": "CN:002647",
-  "market": "CN",
-  "exchange": "SZSE",
-  "name": "仁东控股",
-  "company_name": "仁东控股股份有限公司",
-  "currency": "CNY",
-  "industry": "非银行支付/金融科技",
-  "status": "active",
-  "coverage_status": "initial",
-  "decision": "不买",
-  "current_rating": "avoid",
-  "confidence": "中",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "latest_report_date": "2026-07-12",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "updated_at": "2026-07-12",
-  "analyst": "independent_buy_side_worker",
-  "thesis": "重整完成和扣非盈利转正证明公司已脱离生存危机，但核心资产合利宝仍面临牌照续展、合规与行业竞争压力；当前约132亿元市值远高于正常化利润和净资产可支撑水平，缺乏安全边际。",
-  "current_thesis": "重整完成和扣非盈利转正证明公司已脱离生存危机，但核心资产合利宝仍面临牌照续展、合规与行业竞争压力；当前约132亿元市值远高于正常化利润和净资产可支撑水平，缺乏安全边际。",
-  "business_summary": "公司核心价值来自合利宝第三方支付业务，覆盖收单、网络支付、预付卡和跨境支付等场景；商业保理和供应链管理为辅助业务。",
-  "quality_score": 3,
-  "growth_score": 4,
-  "valuation_score": 1,
-  "risk_score": 8,
-  "last_price": {
-    "date": "2026-07-10",
-    "price": 11.65,
-    "source": "公开行情索引"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "仁东控股",
+    "security_status": "active",
+    "symbol": "CN:002647",
+    "ticker": "002647"
   },
-  "market_cap": {
-    "date": "2026-07-10",
-    "value": 13168048004.05,
-    "unit": "CNY"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "a5800c79c5879dba35e8e366bfd7a784be1217a70b442d357eb67a2e40cfdcb7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "shares_outstanding": 1130291657,
-  "financials": {
-    "fy2025": {
-      "revenue": 3596000000,
-      "net_profit_attributable": 855000000,
-      "deducted_net_profit_attributable": 42650000
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "中报是验证重整后经营质量的第一个完整窗口",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
-    "q1_2026": {
-      "revenue": 470000000,
-      "net_profit_attributable": 21640000,
-      "deducted_net_profit_attributable": 21640000,
-      "equity_attributable": 669000000
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证正常化盈利能力是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报可验证反转是否从事件收益转为经营收益",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "估值开始接近可复核区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "价格低于潜在小仓位观察线",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "上涨后基本面安全边际更弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
   },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "earnings_multiple_fair_value_per_share": "0.80-3.32",
-    "book_and_replacement_fair_value_per_share": "0.59-2.65",
-    "dcf_asset_group_fair_value_per_share": "0.71-3.10",
-    "base_case_fair_value_per_share": "1.50-3.00",
-    "safety_margin": "不足"
-  },
-  "fair_value_range": [
-    1.5,
-    3.0
-  ],
-  "buy_zone": [
-    0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    999.0
-  ],
-  "position_plan": [
-    {
-      "action": "avoid_new_position",
-      "condition": "股价高于5.00元且扣非利润未证明年化超过2亿元时，不建立新仓。",
-      "target_weight": 0,
-      "max_weight": 0
-    },
-    {
-      "action": "watchlist",
-      "condition": "支付牌照续展明确完成、连续两个季度扣非净利润超过2000万元且经营性现金流为正。",
-      "target_weight": 0,
-      "max_weight": 0
-    },
-    {
-      "action": "starter_position",
-      "condition": "在牌照风险解除且市值低于40亿元或股价低于3.50元时，才考虑小仓位试探。",
-      "target_weight": 0.01,
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "note": "进入估值复核区，但仍需牌照和扣非利润验证。",
-      "reason": "估值开始接近可复核区间"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "note": "若基本面未恶化且牌照续展完成，可重新评估小仓位买入。",
-      "reason": "价格低于潜在小仓位观察线"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "note": "估值进一步脱离基本面，若持有应复核减仓或止盈纪律。",
-      "reason": "上涨后基本面安全边际更弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后复核扣非利润、经营性现金流和牌照续展状态。",
-      "reason": "中报是验证重整后经营质量的第一个完整窗口"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后复核扣非利润连续性和收入质量。",
-      "reason": "验证正常化盈利能力是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露后复核全年扣非利润、监管处罚和或有负债变化。",
-      "reason": "年报可验证反转是否从事件收益转为经营收益"
-    }
-  ],
-  "key_monitoring_items": [
-    "合利宝支付业务许可证续展进展",
-    "单季度扣非归母净利润和经营性现金流匹配度",
-    "行政处罚、监管问询、诉讼和预计负债变化",
-    "支付业务收入、毛利率和跨境支付占比",
-    "重整后治理结构和管理层稳定性"
-  ],
-  "sources": [
-    "仁东控股2025年年度报告",
-    "仁东控股2026年第一季度报告",
-    "仁东控股关于撤销退市风险警示暨停牌的公告",
-    "仁东控股关于重整计划执行完毕的公告",
-    "仁东控股关于深圳证券交易所2025年年报问询函回复公告",
-    "中国人民银行非银行支付机构重大事项变更许可信息公示"
-  ]
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

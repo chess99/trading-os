@@ -1,101 +1,106 @@
 {
-  "symbol": "CN:688167",
-  "market": "CN",
-  "ticker": "688167",
-  "name": "炬光科技",
-  "company_name": "炬光科技",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "avoid",
-  "current_thesis": "技术平台质量较好，微纳光学、半导体激光器、汽车光学、泛半导体和医疗健康具备长期成长选择权；但截至2026-07-09，股价已显著提前兑现光通信/CPO和平台化成长预期，公司仍未稳定盈利，光通信收入占比仍低，当前仅适合观察，不适合追高买入。",
-  "quality_rating": "B",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    80,
-    125
-  ],
-  "buy_zone": [
-    60,
-    90
-  ],
-  "sell_or_reduce_zone": [
-    150,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "炬光科技",
+    "security_status": "active",
+    "symbol": "CN:688167",
+    "ticker": "688167"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "171b33b97c58ae1005ec2f70f622180e0cc5401e48d0ee617771abdadb68d53b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于95元，且下一期财报显示毛利率维持35%以上、经营现金流为正、亏损显著收窄",
-      "action": "首次试仓",
-      "max_weight": 0.005,
-      "reason": "技术平台质量较好，但当前盈利和光通信放量尚未充分验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复查2026年半年报，验证收入、毛利率、现金流、亏损收窄和光通信占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于75元，且光通信、泛半导体或汽车客户订单出现可核验放量，单季扣非接近盈亏平衡",
-      "action": "提高观察仓",
-      "max_weight": 0.015,
-      "reason": "赔率进入可接受区间，同时基本面拐点更清晰"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认盈利拐点和订单兑现情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于150元且仍未实现连续盈利，或光通信收入占比仍低于12%",
-      "action": "不买或减仓",
-      "max_weight": 0,
-      "reason": "估值已提前兑现中长期成长，缺少盈利安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入首次试仓观察区，需要结合最新财报确认毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入更有安全边际的买入区，可复核订单和盈利拐点",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "若盈利尚未兑现，估值进入减仓或回避区",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 250.0
+      },
+      "reason": "主题估值显著高于基准价值，需要重新审视泡沫风险",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入首次试仓观察区，需要结合最新财报确认毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入更有安全边际的买入区，可复核订单和盈利拐点"
-    },
-    {
-      "type": "price_above",
-      "price": 150,
-      "reason": "若盈利尚未兑现，估值进入减仓或回避区"
-    },
-    {
-      "type": "price_above",
-      "price": 250,
-      "reason": "主题估值显著高于基准价值，需要重新审视泡沫风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复查2026年半年报，验证收入、毛利率、现金流、亏损收窄和光通信占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认盈利拐点和订单兑现情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "毛利率",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "研发费用率",
-    "光通信相关收入占比",
-    "AH公司技术许可里程碑收款与特许权使用费",
-    "汽车激光雷达/投影照明量产项目进展",
-    "泛半导体制程订单与收入确认",
-    "医疗美容新品出货",
-    "应收账款和存货周转",
-    "实控人及重要股东减持"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

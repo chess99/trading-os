@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688685",
-  "market": "CN",
-  "ticker": "688685",
-  "name": "迈信林",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "迈信林具备航空航天精密制造资质和工艺壁垒，但2025年航空主业下滑、2026Q1利润大幅回落，算力业务仍处资产投入和商业模式验证阶段；当前股价隐含过高利润恢复预期，安全边际不足，宜观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10,
-    16
-  ],
-  "buy_zone": [
-    7,
-    10
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迈信林",
+    "security_status": "active",
+    "symbol": "CN:688685",
+    "ticker": "688685"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "dc3f776310202bc86bb15cfbe5e34b64003ae596db0d504f3e6cd164f17c91f8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10元，且连续两个季度扣非净利润环比改善、航空航天零部件收入恢复增长、算力业务经营现金流为正",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看航空航天收入、算力毛利率、折旧和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7元，且资产负债率未继续上升、无重大合同违约或治理风险",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润恢复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于25元且利润恢复未被财报验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估算力业务ROIC和资产负债表压力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入初步安全边际区，需要复核航空主业订单和算力业务现金回报",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入深度价值复核区，若基本面未恶化可考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "估值重新明显高于基准价值，应复核是否存在被证实的新利润曲线",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入初步安全边际区，需要复核航空主业订单和算力业务现金回报"
-    },
-    {
-      "type": "price_below",
-      "price": 7,
-      "reason": "进入深度价值复核区，若基本面未恶化可考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "估值重新明显高于基准价值，应复核是否存在被证实的新利润曲线"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看航空航天收入、算力毛利率、折旧和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润恢复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估算力业务ROIC和资产负债表压力"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

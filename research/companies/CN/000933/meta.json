@@ -1,162 +1,123 @@
 {
-  "symbol": "CN:000933",
-  "market": "CN",
-  "ticker": "000933",
-  "name": "神火股份",
-  "company_name": "河南神火煤电股份有限公司",
-  "status": "active",
-  "priority": "P2",
-  "current_rating": "buy",
-  "current_thesis": "电解铝满产与铝价高位带来 2026 年利润弹性，煤炭和分红提供托底；但氧化铝外购、电价和煤矿减值使其仍是高质量周期股，适合 21 元以下分批买入而非追高。",
-  "rating_updated": "2026-07-07",
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "last_researched": "2026-07-07",
-  "analyst": "codex-subagent-000933",
-  "currency": "CNY",
-  "price": 21.78,
-  "price_as_of": "2026-07-07",
-  "market_cap_cny": 48983115710.22,
-  "fair_value_range": [
-    24.0,
-    30.0
-  ],
-  "buy_zone": [
-    18.0,
-    21.0
-  ],
-  "buy_below": 21.0,
-  "strong_buy_below": 18.0,
-  "do_not_chase_above": 30.0,
-  "sell_or_reduce_zone": [
-    30.0,
-    35.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "神火股份",
+    "security_status": "active",
+    "symbol": "CN:000933",
+    "ticker": "000933"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "1b976423d3d6ce7419aeba486bad3fe1d2a16ea81c02bf0a39fbed21cecb1b21"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": [
-        21.0,
-        24.0
-      ],
-      "action": "buy_initial",
-      "condition": "股价 21.0-24.0 元且电解铝价差仍处中高位",
-      "max_weight": 0.02,
-      "target_weight": 0.02,
-      "note": "建立观察仓，等待 2026 中报验证"
-    },
-    {
-      "price_range": [
-        18.0,
-        21.0
-      ],
-      "action": "add",
-      "condition": "股价 18.0-21.0 元且铝价、氧化铝、单季利润未破坏",
-      "max_weight": 0.04,
-      "target_weight": 0.04,
-      "note": "安全边际区间，若铝价和单季利润未破坏可加仓"
-    },
-    {
-      "price_range": [
-        0.0,
-        18.0
-      ],
-      "action": "strong_add",
-      "condition": "股价低于 18.0 元且基本面未触发逻辑止损",
-      "max_weight": 0.06,
-      "target_weight": 0.06,
-      "note": "强吸引力区间，最高不超过 6%"
-    },
-    {
-      "price_range": [
-        30.0,
-        35.0
-      ],
-      "action": "reduce",
-      "condition": "股价高于 30.0 元且利润兑现不足以支撑乐观情景",
-      "max_weight": 0.02,
-      "target_weight": 0.02,
-      "note": "不追高，除非 80 亿元以上利润具备高置信度"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 中报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报能验证一季度高利润是否可持续",
-      "action": "复核归母净利润、扣非净利润和经营现金流是否支持 65-75 亿元中性利润假设"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "A00 铝价连续跌破 20500 元/吨",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "铝价是利润弹性的核心变量",
-      "action": "下调利润中枢并复核仓位"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "氧化铝价格快速反弹并压缩电解铝吨利润",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "公司氧化铝基本外购，原料反弹会直接压缩价差",
-      "action": "复核电解铝价差和买入区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "云南电价或限产政策出现重大不利变化",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "云南电力成本和产能利用率决定云南神火利润",
-      "action": "复核云南神火盈利假设"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "公司宣布大额资本开支、并购或产业基金实缴",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "资本配置变化会影响分红回购和周期高点现金流质量",
-      "action": "复核资本配置和分红回购假设"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "metric": "A00铝价",
-      "operator": "<",
-      "value": 20500,
-      "price": 20500,
-      "unit": "CNY/ton",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20500.0
+      },
       "reason": "铝价跌破该水平会破坏中性利润假设",
-      "action": "复核利润中枢和仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "metric": "神火股份股价",
-      "operator": "<=",
-      "value": 18.0,
-      "price": 18.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
       "reason": "进入强吸引力买入区",
-      "action": "若基本面未触发止损，评估加仓至最高 6%"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "metric": "神火股份股价",
-      "operator": ">=",
-      "value": 30.0,
-      "price": 30.0,
-      "unit": "CNY/share",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
       "reason": "进入不应追高区",
-      "action": "除非乐观利润高置信度兑现，否则减仓或停止买入"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "max_weight": 0.06,
-  "confidence": "medium",
-  "tags": [
-    "电解铝",
-    "煤炭",
-    "铝箔",
-    "周期",
-    "高分红"
-  ],
-  "updated_at": "2026-07-07"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

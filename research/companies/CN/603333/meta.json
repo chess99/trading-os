@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603333",
-  "market": "CN",
-  "ticker": "603333",
-  "name": "福华尚纬",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "公司处于治理修复和收入恢复阶段，福华化学入主带来电子化学品期权，但当前扣非利润、现金流和新产线达产仍未充分验证；合理价值约5.4-7.0元，现价高于基准上沿，适合观察而非追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.4,
-    7.0
-  ],
-  "buy_zone": [
-    0,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福华尚纬",
+    "security_status": "active",
+    "symbol": "CN:603333",
+    "ticker": "603333"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4cc9c402850b6c4e9f34ec66fe771335c0a42b6af233e502ff435eff36d952d5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于5.2元且2026半年报确认收入恢复、扣非利润转正、经营现金流边际改善时建立观察仓。",
-      "action": "initial_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、扣非利润、经营现金流和应收账款变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若中氟泰华电子化学品项目达产、通过核心客户认证且连续两个季度扣非净利率改善，可重新评估加仓。",
-      "action": "reassess_add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入修复是否延续及电子化学品项目进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于8.5元但扣非利润和电子化学品达产证据不足，降低或不建立仓位。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、定增进度和中氟泰华投产达产情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入基准估值下沿附近，若基本面验证改善则具备初始安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于基准合理价值区间且接近乐观情景，需要扣非利润和新业务达产证据支撑。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入基准估值下沿附近，若基本面验证改善则具备初始安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "高于基准合理价值区间且接近乐观情景，需要扣非利润和新业务达产证据支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、扣非利润、经营现金流和应收账款变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入修复是否延续及电子化学品项目进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、定增进度和中氟泰华投产达产情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

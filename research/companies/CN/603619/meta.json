@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603619",
-  "market": "CN",
-  "ticker": "603619",
-  "name": "中曼石油",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中曼石油具备稀缺的民营上游油气资源弹性，温宿和哈萨克斯坦项目构成中期价值基础；但2026H1利润预减暴露销量、费用和海外执行扰动，当前价格接近合理区间下沿但安全边际不足，适合观察或小仓跟踪，等待现金流与销量修复确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18.5,
-    25.5
-  ],
-  "buy_zone": [
-    14.0,
-    16.5
-  ],
-  "sell_or_reduce_zone": [
-    26.0,
-    31.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中曼石油",
+    "security_status": "active",
+    "symbol": "CN:603619",
+    "ticker": "603619"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a441ee895d2ad6c5e2d1ce0f8eb015634b904484eb2e0a55bab82445827e28e3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在温宿销量恢复、库存下降且经营现金流转正前维持观察仓",
-      "action": "watch_or_starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露值、现金流、存货、应收账款和项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入14.0-16.5元且2026H2经营现金流改善、哈萨克斯坦产量稳定",
-      "action": "accumulate",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H2销量、温宿费用和海外项目是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于26元但利润与现金流未同步修复，或油价跌破60美元/桶",
-      "action": "reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估正常化利润与储量转产节奏",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "进入买入区间上沿，若现金流和销量同步改善可考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "达到更充分安全边际，可重新评估中周期资源价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "进入减仓区间，除非业绩恢复超预期否则风险收益下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "进入买入区间上沿，若现金流和销量同步改善可考虑加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "达到更充分安全边际，可重新评估中周期资源价值"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "进入减仓区间，除非业绩恢复超预期否则风险收益下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露值、现金流、存货、应收账款和项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H2销量、温宿费用和海外项目是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估正常化利润与储量转产节奏"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,33 +1,106 @@
 {
-  "symbol": "CN:600839",
-  "market": "CN",
-  "ticker": "600839",
-  "name": "四川长虹",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "四川长虹是家电、压缩机和ICT综合服务的国资综合平台，但2025年扣非利润弱、2026Q1盈利下滑，华鲲振宇和AI服务器题材对上市公司直接业绩贡献尚未核验；当前价格已反映较多题材溢价，适合观察而非追买。",
-  "fair_value_range": [5.4, 6.6],
-  "buy_zone": [4.8, 5.6],
-  "sell_or_reduce_zone": [7.8, 9.0],
-  "position_plan": [
-    {"condition": "股价低于5.60元且应收/存货/扣非未恶化", "max_weight": 0.01},
-    {"condition": "股价低于5.10元且扣非归母利润、经营现金流和ICT利润率同步改善", "max_weight": 0.025},
-    {"condition": "AI服务器或智算业务进入上市公司合并报表并形成可核验利润", "max_weight": 0.04}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "四川长虹",
+    "security_status": "active",
+    "symbol": "CN:600839",
+    "ticker": "600839"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "bb0db4ac3c6b338b39a19e4ee83ceeab520064ebf9d57808008fbd76d1ad5976"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复核扣非利润、现金流、应收存货和ICT业务质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核利润修复持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入有安全边际的买入区间，需复核财务质量后考虑首笔",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度安全边际区，需复核财务质量后考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "进入减仓或不应追高区间，检查是否仅由AI/国资题材推动",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "明显高于基准估值，除非有并表级别新信息否则应回避或减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年中报披露后复核扣非利润、现金流、应收存货和ICT业务质量"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复核利润修复持续性"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 5.6, "reason": "进入有安全边际的买入区间，需复核财务质量后考虑首笔"},
-    {"type": "price_below", "price": 4.8, "reason": "进入深度安全边际区，需复核财务质量后考虑加仓"},
-    {"type": "price_above", "price": 7.8, "reason": "进入减仓或不应追高区间，检查是否仅由AI/国资题材推动"},
-    {"type": "price_above", "price": 9.0, "reason": "明显高于基准估值，除非有并表级别新信息否则应回避或减仓"}
-  ],
-  "updated_at": "2026-07-10T21:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,114 +1,120 @@
 {
-  "symbol": "CN:001298",
-  "market": "CN",
-  "ticker": "001298",
-  "name": "好上好",
-  "company_name": "深圳市好上好信息科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    16.0,
-    20.5
-  ],
-  "buy_zone": [
-    12.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "好上好",
+    "security_status": "active",
+    "symbol": "CN:001298",
+    "ticker": "001298"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "5dc98aceac42e16595973556b15bdc2a3bde2b16f970df66b1ef5ebf4b1753bb"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "31083e17439769686ce86729c18c29ca3a555ea85a657baadbc97114c6456c9d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至12.0-15.5元，且2026H1正式财报确认利润兑现、经营现金流较Q1明显改善、存货和应收未继续恶化",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02,
-      "reason": "进入具备安全边际的买入区间后，用小仓位验证低毛利高周转模式的利润质量"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点确认业绩预告兑现、毛利率、经营现金流、存货和应收质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1和2026Q3连续验证收入增长、毛利率维持在5%以上、经营现金流转正或显著修复",
-      "action": "在合理估值内逐步提高到核心观察仓",
-      "max_weight": 0.04,
-      "reason": "只有现金流与利润同步改善后，分销商的高增长才值得提高组合权重"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断高增长是否延续以及营运资金压力是否缓解",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于23.0元，且经营现金流仍为负或存货和应收继续显著扩张",
-      "action": "不加仓，已有仓位降低至观察仓或退出",
-      "max_weight": 0.01,
-      "reason": "价格进入乐观情景区间但经营质量未验证，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告，重新评估全年利润质量、库存跌价和融资成本",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于28.0元，且没有超预期订单、毛利率和现金流支撑",
-      "action": "卖出或回避",
-      "max_weight": 0.0,
-      "reason": "估值透支乐观情景，风险收益比不佳"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入买入区间上沿，复核半年报现金流和存货后可考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入保守买入区间下沿，若基本面未恶化则安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "进入减仓区间下沿，需确认现金流是否足以支撑乐观估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "超过乐观情景估值上沿，若无超预期业绩应卖出或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入买入区间上沿，复核半年报现金流和存货后可考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入保守买入区间下沿，若基本面未恶化则安全边际较充分"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "进入减仓区间下沿，需确认现金流是否足以支撑乐观估值"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "超过乐观情景估值上沿，若无超预期业绩应卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点确认业绩预告兑现、毛利率、经营现金流、存货和应收质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断高增长是否延续以及营运资金压力是否缓解"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告，重新评估全年利润质量、库存跌价和融资成本"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "毛利率和净利率",
-    "经营活动现金流净额",
-    "存货余额、周转天数和跌价准备",
-    "应收账款、应收票据和信用减值损失",
-    "短期借款、利息费用和资产负债率",
-    "前五大客户和供应商集中度",
-    "汽车电子、机器人、AI终端、通讯及数据中心收入进展",
-    "股权激励考核兑现和向特定对象发行进展"
-  ],
-  "thesis": "好上好是低毛利高周转电子元器件分销商，2026H1预告显示行业景气和产品结构改善带来明显盈利弹性，但经营现金流、存货、应收和短借压力尚未通过完整财报验证。当前价格接近合理价值区间上沿，适合观察而非追高。",
-  "current_thesis": "好上好是低毛利高周转电子元器件分销商，2026H1预告显示行业景气和产品结构改善带来明显盈利弹性，但经营现金流、存货、应收和短借压力尚未通过完整财报验证。当前价格接近合理价值区间上沿，适合观察而非追高。",
-  "last_price": 19.99,
-  "last_price_date": "2026-07-13",
-  "market_cap_cny": 8650000000,
-  "confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

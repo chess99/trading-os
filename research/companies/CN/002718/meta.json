@@ -1,114 +1,124 @@
 {
-  "symbol": "CN:002718",
-  "market": "CN",
-  "ticker": "002718",
-  "name": "友邦吊顶",
-  "company_name": "浙江友邦集成吊顶股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司是集成吊顶老牌企业，具备品牌、渠道和专利积累，但2025年收入同比下降20.24%，2026Q1收入继续同比下降19.66%，盈利仅低位扭亏且经营现金流仍弱。2026年控制权变更带来事件预期，但以2026-07-10收盘价104.03元估算，市值约134.66亿元，对应TTM PE约1212倍、PB约14.6倍，显著脱离主营基本面；除非出现可验证的高质量资产注入或主营强拐点，否则不具备买入安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "极贵",
-  "fair_value_range": [8, 15],
-  "buy_zone": [0, 8],
-  "sell_or_reduce_zone": [20, 999],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "友邦吊顶",
+    "security_status": "active",
+    "symbol": "CN:002718",
+    "ticker": "002718"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2bf800a00ad54eea6aff1b7b3c51069479e66d469d507dfb6a9c4813a653c6d3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于20元，且未披露可量化、高质量资产注入或主营强拐点",
-      "action": "维持0仓位；若已持有则逐步减仓",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价回到8-12元，且单季度收入降幅收窄至10%以内、经营现金流转正",
-      "action": "建立观察仓",
-      "target_position": "0.5%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价低于8元，TTM经营现金流转正，综合毛利率稳定在27%以上，经销及终端收入恢复正增长",
-      "action": "可提升至标准小仓位",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "currency": "CNY",
-      "reason": "进入观察区上沿，需确认经营指标是否足以支持小仓位。",
-      "action": "重新检查经营指标，判断是否可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8,
-      "currency": "CNY",
-      "reason": "低于保守买入区上限，可能开始具备安全边际。",
-      "action": "若现金流和毛利率未恶化，重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 20,
-      "currency": "CNY",
-      "reason": "超过基本面公允价值上沿较多，缺少主营支撑。",
-      "action": "维持不买；若持仓则评估减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "currency": "CNY",
-      "reason": "超过要约收购价格附近，事件预期占主导且回撤风险大。",
-      "action": "除非资产注入已正式落地且估值可解释，否则强烈减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核2026年半年报；重点检查收入、利润、现金流、渠道结构以及是否披露新实控人资本运作",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026年收入下滑是否收窄，并观察控制权变更后的资本配置。",
-      "action": "更新收入、利润、现金流和渠道结构判断"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核2026年三季报；若单季度收入恢复正增长或经营现金流连续改善，重新评估质量评级",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能确认经营现金流改善是否具有连续性。",
-      "action": "重新评估质量评级和可买价格"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核2026年年报；重点检查全年经营现金流、工程渠道毛利率、分红政策和新实控人资本配置",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整验证盈利质量、渠道毛利率和分红/回购等资本配置。",
-      "action": "更新完整估值和仓位计划"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "复核房地产竣工、旧改和家装政策数据；若行业需求明显改善，重新评估收入恢复假设",
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
       "reason": "房地产竣工和旧改数据是公司需求恢复的重要外部变量。",
-      "action": "复核行业需求假设"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入观察区上沿，需确认经营指标是否足以支持小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "低于保守买入区上限，可能开始具备安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过基本面公允价值上沿较多，缺少主营支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过要约收购价格附近，事件预期占主导且回撤风险大。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "经销商及终端客户收入增速",
-    "工程渠道收入、毛利率和回款质量",
-    "综合毛利率和功能模块毛利率",
-    "经营活动现金流量净额及TTM经营现金流",
-    "研发费用率和新品贡献",
-    "货币资金、交易性金融资产、短期借款和应付票据",
-    "新实控人持股、表决权安排和资本运作公告",
-    "房地产竣工面积、住宅竣工面积和旧改/家装政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

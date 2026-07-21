@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:001234",
-  "market": "CN",
-  "ticker": "001234",
-  "name": "泰慕士",
-  "company_name": "泰慕士",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "泰慕士具备针织服装ODM制造能力和一定大客户基础，但2025年利润、经营现金流和产能利用率承压，2026Q1收入恢复未转化为利润增长；当前约54倍TTM PE已接近乐观修复定价，需等待价格回落或基本面进一步验证。",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰慕士",
+    "security_status": "active",
+    "symbol": "CN:001234",
+    "ticker": "001234"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "c242599335a0fd7c73dafbe8c452d4f4a7564395ee7608444f92d21cf3e8667a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且2026Q1收入增长未转化为利润增长",
-      "action": "不买入，仅保留观察池",
-      "max_weight": 0,
-      "reason": "估值约54倍TTM PE，客户集中和现金流压力尚未被修复验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入、毛利率、扣非净利、现金流和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入10-13元且中报或三季报显示毛利率、扣非净利、经营现金流至少两项改善",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "价格提供安全边际，同时基本面出现可验证修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认订单修复是否持续转化为利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利增长、经营现金流转正、第一大客户占比不继续上升",
-      "action": "评估加仓",
-      "max_weight": 0.03,
-      "reason": "订单修复转化为利润和现金流后，制造业周期弹性才具备可投性"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入观察区上沿，需要结合最新财报复核是否具备首笔仓位条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入深度价值区，若无基本面硬伤应重新评估赔率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于估值中枢，若利润未修复应继续回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "接近乐观情景估值上沿，需要强制复核是否存在过度定价",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入买入观察区上沿，需要结合最新财报复核是否具备首笔仓位条件"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入深度价值区，若无基本面硬伤应重新评估赔率"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "高于估值中枢，若利润未修复应继续回避或减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "接近乐观情景估值上沿，需要强制复核是否存在过度定价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入、毛利率、扣非净利、现金流和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认订单修复是否持续转化为利润"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "综合毛利率",
-    "外销收入占比",
-    "前五大客户销售占比",
-    "第一大客户销售占比",
-    "针织面料产能利用率",
-    "针织服装产能利用率",
-    "经营活动现金流净额",
-    "存货周转率",
-    "应收账款周转率",
-    "棉纱和棉花价格",
-    "人民币兑美元汇率",
-    "国内服装鞋帽针纺织品零售增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

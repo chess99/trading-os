@@ -1,74 +1,96 @@
 {
-  "symbol": "CN:920166",
-  "market": "CN",
-  "ticker": "920166",
-  "name": "海圣医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "海圣医疗是麻醉、监护和手术护理耗材小平台，2025年利润和现金流质量较好，上市后资产负债表改善；但集采、经销收入核查、单价下行和北交所流动性要求估值折价。当前19.80元约17.4倍2025年PE，接近合理价值下沿但安全边际不足，等待15.5-17.5元或2026H1高质量增长确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    19.0,
-    24.0
-  ],
-  "buy_zone": [
-    15.5,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海圣医疗",
+    "security_status": "active",
+    "symbol": "CN:920166",
+    "ticker": "920166"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "4689a52535eec09a12bdff34bd57452a661b8efccc28ebf678143d37af71867b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入15.5-17.5元区间，且2026H1收入增速不低于8%、经营现金流未明显转弱",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、扣非净利、毛利率、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于15.5元且未发现集采、经销回款或治理恶化",
-      "action": "加至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认上市后首个完整年度的增长质量和募投进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于25元且2026E归母净利润不能上修至1.1亿元以上",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入买入区间上沿，约较合理价值中枢有20%左右折价，值得复核半年报后建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入悲观情景价值附近，需检查是否为基本面恶化还是流动性杀估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过基准合理价值区间上沿，若没有利润上修或新增长证据，风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入买入区间上沿，约较合理价值中枢有20%左右折价，值得复核半年报后建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入悲观情景价值附近，需检查是否为基本面恶化还是流动性杀估值"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过基准合理价值区间上沿，若没有利润上修或新增长证据，风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、扣非净利、毛利率、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认上市后首个完整年度的增长质量和募投进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

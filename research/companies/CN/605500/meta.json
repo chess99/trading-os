@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605500",
-  "market": "CN",
-  "ticker": "605500",
-  "name": "森林包装",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "森林包装具备浙南区域客户、废纸回收、热电联产和原纸到纸包装一体化优势，但2025-2026年白板纸新增产能仍处爬坡亏损期，行业价格修复尚未充分转化为利润。当前股价约1倍PB，已反映部分周期修复预期，安全边际不足，等待5.2元以下或白板纸连续改善后再考虑买入。",
-  "fair_value_range": [
-    5.2,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "森林包装",
+    "security_status": "active",
+    "symbol": "CN:605500",
+    "ticker": "605500"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "86d18fb335dfeefc3af0a9c370cba9c7f09a70429497e8871696bd2c4e3fa1f5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.2元，且未出现白板纸项目亏损扩大、经营现金流恶化或重大治理风险",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度正式报告，确认白板纸亏损收窄、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.5元，PB约0.7倍，且最新财报显示资产负债表稳定、经营现金流为正",
-      "action": "提高至周期修复仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断行业涨价是否传导到公司利润表",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "白板纸项目连续两个季度接近盈亏平衡，原纸毛利率恢复至5%以上，且股价仍低于6.5元",
-      "action": "重新评估是否上调至buy",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估新增产能回报率和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入估算买入区间，安全边际开始覆盖白板纸爬坡不确定性",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "接近悲观情景价值，若资产负债表未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "超过当前公允价值上沿，除非盈利拐点已被正式财报验证，否则应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入估算买入区间，安全边际开始覆盖白板纸爬坡不确定性"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "接近悲观情景价值，若资产负债表未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "超过当前公允价值上沿，除非盈利拐点已被正式财报验证，否则应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度正式报告，确认白板纸亏损收窄、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断行业涨价是否传导到公司利润表"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估新增产能回报率和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

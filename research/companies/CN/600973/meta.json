@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:600973",
-  "ticker": "600973",
-  "name": "宝胜股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "宝胜股份是中航工业旗下线缆平台，2026H1盈利显著修复，但业务仍以低毛利、重营运资金占用的线缆制造为主，资产负债率高、现金流需验证；当前估值已反映部分修复，更适合观察，等待更低价格或连续两个季度扣非利润与现金流兑现。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    3.8,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝胜股份",
+    "security_status": "active",
+    "symbol": "CN:600973",
+    "ticker": "600973"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "e124de0c599e49e7436d6213f242a261983bf235757b5061884cbed79ea0ae21"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.40元，且2026年半年报确认扣非净利润接近或超过1亿元、经营现金流未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证归母净利润、扣非净利润、经营现金流和资产负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.80元，且资产负债率开始下降、全年归母净利润达到2.2亿元以上的概率较高",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H1盈利修复是否延续至下半年",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于6.50元，但看不到2027年3.5亿元以上利润和经营现金流改善证据",
-      "action": "不追高或逐步减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，确认全年利润、现金流、分红能力和高端业务占比",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入初始买入区间上沿，需复核半年报利润质量和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入具备更高安全边际的买入区间，若基本面未恶化可考虑加至小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "超过基准公允价值上沿较多，若高端业务和降杠杆未兑现需减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入初始买入区间上沿，需复核半年报利润质量和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入具备更高安全边际的买入区间，若基本面未恶化可考虑加至小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "超过基准公允价值上沿较多，若高端业务和降杠杆未兑现需减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证归母净利润、扣非净利润、经营现金流和资产负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H1盈利修复是否延续至下半年"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，确认全年利润、现金流、分红能力和高端业务占比"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "扣非净利率是否稳定超过0.6%并向0.8%-1.0%靠拢",
-    "经营活动现金流是否全年为正",
-    "资产负债率是否从2026Q1约82.6%下降",
-    "应收账款和合同资产增速是否低于收入增速",
-    "装备线缆、航空航天、人工智能线缆和海外订单披露金额及毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:000823",
-  "market": "CN",
-  "ticker": "000823",
-  "name": "超声电子",
-  "company_name": "超声电子",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "超声电子当前是PCB与覆铜板周期修复观察标的，买入前需要中报验证收入、毛利率、应收存货和现金流同步改善；若价格进入8.80-10.20元且基本面兑现，可建立小仓位观察仓。",
-  "quality_rating": "B",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    10.8,
-    13.8
-  ],
-  "buy_zone": [
-    8.8,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "超声电子",
+    "security_status": "active",
+    "symbol": "CN:000823",
+    "ticker": "000823"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "756aebfc07ce1cc31f096203212af41dd75b42685e5b466c4dbd581f37a82fd7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入8.80-10.20元且2026年中报验证收入增长、毛利率改善、应收和存货未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区且基本面开始验证周期修复"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，补齐分产品毛利率、应收、存货、现金流和最新股本",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入7.20-8.20元且基本面未恶化",
-      "action": "提高至价值仓",
-      "max_weight": 0.035,
-      "reason": "安全边际扩大，允许承担周期波动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认周期复苏是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价达到14.50-16.50元但盈利弹性未兑现",
-      "action": "减仓或不追买",
-      "max_weight": 0.005,
-      "reason": "估值先行透支，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入首笔观察仓买入区，需同步复核中报或最新季度经营质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入深度价值观察区，若基本面未坏可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "接近减持区，若利润和毛利率未兑现需控制仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入首笔观察仓买入区，需同步复核中报或最新季度经营质量"
-    },
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入深度价值观察区，若基本面未坏可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "接近减持区，若利润和毛利率未兑现需控制仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，补齐分产品毛利率、应收、存货、现金流和最新股本"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认周期复苏是否连续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "PCB分产品收入和毛利率",
-    "覆铜板收入、毛利率及铜价/树脂成本传导",
-    "液晶显示器件收入和盈利拖累程度",
-    "汽车电子、通信、消费电子订单变化",
-    "产能利用率或固定资产周转率",
-    "应收账款、存货相对收入增速",
-    "经营活动现金流净额与净利润匹配度",
-    "可转债转股后的最新总股本和每股收益摊薄"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

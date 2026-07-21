@@ -1,32 +1,86 @@
 {
-  "symbol": "CN:300870",
-  "market": "CN",
-  "ticker": "300870",
-  "name": "欧陆通",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "开关电源转型期公司，数据中心电源已成第一大业务（45%，2025年+38%，高功率服务器电源+66.5%），客户含Google/浪潮/富士康/AMD等头部。但适配器毛利率仅15.7%、负债率55%、2026Q1已亏损，当前PE-ttm极高（>150x）、PB超11x、PS超9x严重脱离基本面。长期AI服务器电源国产替代+海外突破逻辑清晰，但短期价格缺乏安全边际，需等待更好价格或2026H1业绩兑现验证。",
-  "fair_value_range": [120, 180],
-  "buy_zone": [60, 100],
-  "sell_or_reduce_zone": [220, 400],
-  "position_plan": [
-    {"condition": "股价低于60元（极度低估，3倍以下PS）", "max_weight": 0.05},
-    {"condition": "股价60-80元（低估区间，分批建仓）", "max_weight": 0.04},
-    {"condition": "股价80-100元（偏低，轻仓试探）", "max_weight": 0.03},
-    {"condition": "股价100-180元（合理偏高，持有/观察）", "max_weight": 0.02},
-    {"condition": "股价180-220元（偏贵，不买/持有者减仓）", "max_weight": 0.0},
-    {"condition": "股价>220元（高估，不追高）", "max_weight": 0.0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欧陆通",
+    "security_status": "active",
+    "symbol": "CN:300870",
+    "ticker": "300870"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "8458b5e3039a80b4409dd9419f0a598a155e240ab49448e9254297bc4f259389"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "2026半年报披露后复查亏损状况、毛利率趋势和数据中心电源增速",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报后验证海外客户订单落地与全年净利润预期",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入有安全边际的买入区间，开始关注",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-26", "reason": "2026半年报披露后复查亏损状况、毛利率趋势和数据中心电源增速"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026三季报后验证海外客户订单落地与全年净利润预期"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 100, "reason": "进入有安全边际的买入区间，开始关注"},
-    {"type": "price_above", "price": 220, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-09T04:20:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

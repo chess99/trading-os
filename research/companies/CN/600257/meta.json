@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600257",
-  "ticker": "600257",
-  "name": "大湖股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "大湖股份的投资命题是医疗康养板块带动困境反转，但2025年扣非仍亏、2026年一季度仍亏，当前约5.01元价格已高于基准合理价值中枢，缺少安全边际；等待半年报验证东方华康利润持续性、控股股东质押风险缓和和股价回落。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    3.6,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    6.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大湖股份",
+    "security_status": "active",
+    "symbol": "CN:600257",
+    "ticker": "600257"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "463284faa6e884197d12c6216d0b6dd041b5d123b8c7038d8aad6d6b41ef0af8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入3.20-3.60元且2026年半年报确认扣非净利润落在预告区间内，允许建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核预告兑现、医疗分部利润、少数股东损益和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.20元且2026年三季报继续证明医疗板块利润可持续、经营现金流为正，可加至小仓位上限。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后验证医疗康养改善是否持续以及全年利润中枢。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若半年报扣非净利润低于预告下限或控股股东质押风险恶化，不新增仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后重估长期盈利能力、分部估值和治理折价。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入买入观察区间，重新核验半年报与三季报利润质量后评估小仓位试错。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "高于乐观情景下沿，若无新增盈利证据，应考虑降低预期或放弃追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入买入观察区间，重新核验半年报与三季报利润质量后评估小仓位试错。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "高于乐观情景下沿，若无新增盈利证据，应考虑降低预期或放弃追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核预告兑现、医疗分部利润、少数股东损益和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后验证医疗康养改善是否持续以及全年利润中枢。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报披露后重估长期盈利能力、分部估值和治理折价。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

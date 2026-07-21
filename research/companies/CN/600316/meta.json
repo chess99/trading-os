@@ -1,77 +1,95 @@
 {
-  "symbol": "CN:600316",
-  "ticker": "600316",
-  "name": "洪都航空",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "洪都航空具备航空主机厂资质、教练机型号积累和军贸期权，但当前盈利质量极薄，2025年归母净利仅约0.40亿元、2026Q1毛利率仍低，约190亿元市值已预支较多利润率修复。等待16-22元合理价值带内的安全边际，或等待教练机/训练系统订单和毛利率拐点被财报验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [16, 22],
-  "buy_zone": [0, 16],
-  "sell_or_reduce_zone": [30, 36],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "洪都航空",
+    "security_status": "active",
+    "symbol": "CN:600316",
+    "ticker": "600316"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "51d44e2ef0b9e9fc114a5280a0ecaaad5e6001821569c4abc3a987a860872cb5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元且未出现毛利率继续恶化、重大回款风险或军贸订单取消迹象时，可建立研究型底仓。",
-      "action": "start_tracking_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查教练机收入占比、其他航空产品毛利率、经营现金流和应收票据/账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于16-22元且最近一期财报显示教练机收入占比提升、综合毛利率改善、经营现金流不再明显恶化时，可逐步加仓。",
-      "action": "accumulate_selectively",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入高增长是否转化为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元但未同步出现可核验的大额订单、毛利率拐点和现金流改善时，应避免新增并考虑降低风险敞口。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与2027年一季报，重新评估估值区间和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入基准估值下沿和研究型买区，需要复核最新订单、毛利率和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "接近乐观情景估值区，若无利润率拐点和大额订单支撑，风险收益比转弱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入基准估值下沿和研究型买区，需要复核最新订单、毛利率和现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "接近乐观情景估值区，若无利润率拐点和大额订单支撑，风险收益比转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查教练机收入占比、其他航空产品毛利率、经营现金流和应收票据/账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入高增长是否转化为利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与2027年一季报，重新评估估值区间和仓位上限。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price_cny": 26.48,
-    "reference_price_date": "2026-07-16",
-    "shares_outstanding": 717114512,
-    "market_cap_cny_estimate": 18989000000,
-    "book_value_cny_2026q1": 5392051386.18,
-    "revenue_cny_2025": 7449126774.96,
-    "net_profit_cny_2025": 39759841.3,
-    "revenue_cny_2026q1": 884274602.29,
-    "net_profit_cny_2026q1": 5783308.64
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

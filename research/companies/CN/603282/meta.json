@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603282",
-  "market": "CN",
-  "ticker": "603282",
-  "name": "亚光股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "亚光股份是制药装备与节能环保过程装备细分公司，长期受益于制药合规升级、节能环保和国产替代；2025 年收入增长且经营现金流改善，但利润略降、毛利率承压，2026Q1 因项目验收减少出现亏损和经营现金流净流出，当前价格缺乏足够安全边际，需等待利润率和现金流修复确认后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.0,
-    15.0
-  ],
-  "buy_zone": [
-    9.0,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亚光股份",
+    "security_status": "active",
+    "symbol": "CN:603282",
+    "ticker": "603282"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "89dac2d9b2ddaf52485748c21ee9c0cdd48e83c694c2751723a279ad406b9bdd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于12元且2026年中报未继续恶化，可建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看毛利率、扣非利润、经营现金流、应收和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入9-11元区间，且经营现金流转正、扣非利润恢复增长，可提高为标准小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于15元但利润和现金流尚未修复，不新增仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及并购整合影响，重估合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入初始买入区间，需要复核中报利润率、现金流和订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过乐观情景估值下沿，如利润未兑现应减仓或回避追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入初始买入区间，需要复核中报利润率、现金流和订单质量。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过乐观情景估值下沿，如利润未兑现应减仓或回避追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看毛利率、扣非利润、经营现金流、应收和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及并购整合影响，重估合理价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

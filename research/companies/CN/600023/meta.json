@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:600023",
-  "market": "CN",
-  "ticker": "600023",
-  "name": "浙能电力",
-  "company_name": "浙能电力",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "浙能电力是浙江省煤电保供平台叠加核电权益资产，当前价格接近合理区间下沿但安全边际一般，适合红利防守观察仓，等待2026半年报验证电价、煤价和参控股收益。",
-  "quality_rating": "high",
-  "valuation_rating": "fair_to_slightly_cheap",
-  "fair_value_range": [
-    5.4,
-    6.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    6.4,
-    6.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙能电力",
+    "security_status": "active",
+    "symbol": "CN:600023",
+    "ticker": "600023"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c46667b80ac5ac20bb0d1d592c045c1d04775c5809bd30ac28faaf986245b5d4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约5.31元且未披露2026半年报前",
-      "action": "仅允许观察仓或首笔试探",
-      "max_weight": 0.01,
-      "reason": "当前价格接近合理区间下沿但安全边际一般，需确认电价下降、煤价传导和参控股收益"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点验证电价、煤价、联营收益、现金流和中期分红",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.05元且煤价未明显反弹、季度扣非净利未继续恶化",
-      "action": "逐步加至配置仓",
-      "max_weight": 0.02,
-      "reason": "静态股息率和PB安全边际改善，适合红利防守配置"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，确认全年盈利和分红可持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.75元且分红预期仍不低于每股0.30元",
-      "action": "提高至核心红利仓",
-      "max_weight": 0.04,
-      "reason": "股息率和资产折价足以补偿火电电价与煤价波动风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.05
+      },
+      "reason": "进入更有吸引力的红利配置区，复核煤价、电价和半年报趋势后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于6.40元或半年报显示扣非净利同比继续下滑超过15%",
-      "action": "停止加仓并评估减仓",
-      "max_weight": 0.02,
-      "reason": "价格进入估值上沿或盈利验证失败，预期收益不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.75
+      },
+      "reason": "若基本面未恶化，股息率和PB折价提供较高安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.4
+      },
+      "reason": "接近估值上沿，需降低收益预期并评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "超过合理价值区间上沿，除非煤价、电价和核电权益收益同时超预期，否则应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.05,
-      "reason": "进入更有吸引力的红利配置区，复核煤价、电价和半年报趋势后可加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.75,
-      "reason": "若基本面未恶化，股息率和PB折价提供较高安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 6.4,
-      "reason": "接近估值上沿，需降低收益预期并评估减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "超过合理价值区间上沿，除非煤价、电价和核电权益收益同时超预期，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点验证电价、煤价、联营收益、现金流和中期分红"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，确认全年盈利和分红可持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "浙江月度全社会用电量和最高负荷",
-    "公司季度发电量、上网电量、煤电利用小时",
-    "浙江煤电市场化交易电价",
-    "秦皇岛、曹妃甸、长协动力煤价格",
-    "公司火电单位燃料成本和火电毛利率",
-    "长期股权投资收益和核电参股项目进度",
-    "中来股份减值、预计负债和光伏制造亏损敞口",
-    "经营活动现金流净额、资本开支、自由现金流",
-    "每股分红、现金分红率和中期分红执行情况",
-    "短期借款、一年内到期非流动负债和财务费用"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

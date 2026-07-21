@@ -1,47 +1,82 @@
 {
-  "symbol": "CN:603429",
-  "market": "CN",
-  "ticker": "603429",
-  "name": "*ST集友",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "主营收入与毛利率坍塌且2026年亏损扩大，现价已过度计入尚无财务数据和定价的重组成功预期，退市与治理风险不值得承担。",
-  "fair_value_range": [2.2, 3.2],
-  "buy_zone": [1.8, 2.3],
-  "sell_or_reduce_zone": [4.5, 8.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST集友",
+    "security_status": "active",
+    "symbol": "CN:603429",
+    "ticker": "603429"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "f448d74bdf6040e32409be156ef179279da58326b0532e732de3521bde826353"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "4449909b745ed2cafcee57e0853e0d58e15a16feec713a5531ae1c78805fcebc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "正式收购方案未披露、退市核心风险未解除或股价高于3.2元",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、重组正式方案及退市指标进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入1.8至2.3元且退市风险显著下降、主营现金流止跌、重组公允性得到验证",
-      "max_weight": 0.01
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、重组正式方案及退市指标进展"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "reason": "进入资产价值附近，但仅在退市与交易风险均显著下降后研究试仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
+      "reason": "进入资产价值附近，但仅在退市与交易风险均显著下降后研究试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "高于不含重组的公允价值上限，应减仓或避免追高"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "高于不含重组的公允价值上限，应减仓或避免追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-20T20:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:688261",
-  "market": "CN",
-  "ticker": "688261",
-  "name": "东微半导",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "东微半导具备高压超级结 MOSFET、TGBT/IGBT 与 SiC MOSFET 的平台化功率器件能力，资产负债表稳健，长期受益于国产替代、新能源和高效率电源需求；但 2025 年和 2026Q1 扣非盈利仍弱，当前股价已反映部分利润修复预期，因此先纳入观察，等待 55 元以下价格或扣非利润、毛利率明确拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    58,
-    78
-  ],
-  "buy_zone": [
-    45,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    85,
-    105
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东微半导",
+    "security_status": "active",
+    "symbol": "CN:688261",
+    "ticker": "688261"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "8ec47b1ac47c9b9af48a50215c9102e20f41df53b61d8e8e54c70e0c232e5c13"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于55元，且最新季度收入同比为正、扣非亏损收窄或转正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、毛利率、库存和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于45-50元，且资产负债表稳健、经营现金流未恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证利润修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年扣非利润连续两个季度转正且毛利率环比改善",
-      "action": "允许按业绩兑现情况追加",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和可转债募投进展，重估中期盈利能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于85元且未证明1.5亿元以上年化归母净利润能力",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入初始买入区间，需要复核半年报或最新季度扣非利润质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "接近悲观情景估值下沿，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "高于基准公允价值上沿，需要确认利润修复是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 105.0
+      },
+      "reason": "进入乐观情景区间，若TGBT/SiC放量未兑现应考虑退出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入初始买入区间，需要复核半年报或最新季度扣非利润质量"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "接近悲观情景估值下沿，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 85,
-      "reason": "高于基准公允价值上沿，需要确认利润修复是否足以支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 105,
-      "reason": "进入乐观情景区间，若TGBT/SiC放量未兑现应考虑退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、毛利率、库存和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证利润修复是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和可转债募投进展，重估中期盈利能力"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,225 +1,97 @@
 {
-  "symbol": "CN:002245",
-  "market": "CN",
-  "ticker": "002245",
-  "company_name": "蔚蓝锂芯",
-  "name": "蔚蓝锂芯",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "latest_report_date": "2026-07-08",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08",
-  "current_rating": "watch",
-  "current_thesis": "蔚蓝锂芯的锂电池业务增长较快，圆柱小动力、BBU和机器人等新场景提供弹性，LED和金属物流提供利润补充；但当前估值已处于偏贵区间，买入应等待更充分安全边际或新场景订单兑现。",
-  "research_conclusion": "公司质量中上，锂电池圆柱小动力和BBU/机器人等新场景提供成长弹性，但2026-07-08盘中约20元、约340.84亿元市值已经计入较多乐观预期；当前不宜追高，等待14元以下更有安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "current_price": {
-    "price": 19.96,
+  "identity": {
     "currency": "CNY",
-    "market_cap_cny_billion": 340.84,
-    "pe_ttm": 43.52,
-    "pb": 4.42,
-    "as_of": "2026-07-08 10:14:45 +08:00",
-    "source": "腾讯行情快照，sources/peer-quotes-2026-07-08-tencent.txt"
+    "market": "CN",
+    "name": "蔚蓝锂芯",
+    "security_status": "active",
+    "symbol": "CN:002245",
+    "ticker": "002245"
   },
-  "fair_value_range": [
-    15.0,
-    18.5
-  ],
-  "fair_value_detail": {
-    "low": 15.0,
-    "high": 18.5,
-    "currency": "CNY",
-    "method": "相对估值、粗略DCF、情景估值交叉验证"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "5485fc2b5c57ea40fa7fd9beb49cc8a9b29600c06c7a7be223e76ff5a228dd6c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "buy_price": {
-    "price_below": 14.0,
-    "currency": "CNY",
-    "rationale": "进入有安全边际区域，可建立核心观察仓"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "buy_zone": [
-    12.0,
-    14.0
-  ],
-  "strong_buy_price": {
-    "price_below": 12.0,
-    "currency": "CNY",
-    "rationale": "悲观预期反映较充分，风险收益显著改善"
-  },
-  "do_not_chase_price": {
-    "price_above": 18.5,
-    "currency": "CNY",
-    "rationale": "高于基准合理区间，需要新场景订单和利润率继续验证"
-  },
-  "sell_or_reduce_zone": [
-    22.0,
-    999.0
-  ],
-  "position_curve": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": "<12",
-      "judgment": "强吸引力",
-      "action": "分批买入",
-      "suggested_position": "6%-8%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查半年报中锂电池增速、毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "price_range": "12-14",
-      "judgment": "有安全边际",
-      "action": "建立核心观察仓",
-      "suggested_position": "3%-5%"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "低于安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "price_range": "14-18.5",
-      "judgment": "接近合理",
-      "action": "跟踪或等待回撤",
-      "suggested_position": "0%-3%"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "price_range": "18.5-22",
-      "judgment": "偏贵",
-      "action": "不追高",
-      "suggested_position": "0%-2%"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "高于基准合理价格上沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "price_range": ">22",
-      "judgment": "高预期区",
-      "action": "减仓或回避",
-      "suggested_position": "0%-1%"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入高预期估值区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "position_plan": [
-    {
-      "condition": "price_below_12",
-      "price_range": "<12",
-      "action": "strong_buy",
-      "suggested_position": "6%-8%",
-      "max_weight": 0.08
-    },
-    {
-      "condition": "price_between_12_and_14",
-      "price_range": "12-14",
-      "action": "buy",
-      "suggested_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "price_between_14_and_18_5",
-      "price_range": "14-18.5",
-      "action": "watch",
-      "suggested_position": "0%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "price_between_18_5_and_22",
-      "price_range": "18.5-22",
-      "action": "hold_or_avoid_add",
-      "suggested_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "price_above_22",
-      "price_range": ">22",
-      "action": "reduce_or_avoid",
-      "suggested_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "tracking_indicators": [
-    "锂电池收入增速是否接近或超过2026年40%目标",
-    "锂电池毛利率是否维持在20%以上",
-    "BBU、AI机器人、eVTOL等新场景是否出现批量订单或收入贡献",
-    "马来西亚天鹏产能利用率和客户认证进展",
-    "存货、应收账款、应收票据与收入增速是否匹配",
-    "经营现金流净额与净利润匹配度",
-    "LED车载和Mini/Micro LED产品结构改善情况"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "currency": "CNY",
-      "action": "进入有安全边际买入区，复核最新财报后可建3%-5%仓位",
-      "reason": "低于安全边际买入价"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "currency": "CNY",
-      "action": "进入强吸引力区，若基本面未恶化可分批提高至6%-8%",
-      "reason": "低于强吸引力买入价"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "currency": "CNY",
-      "action": "高于基准合理区间，不追高，已有仓位控制加仓",
-      "reason": "高于基准合理价格上沿"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "currency": "CNY",
-      "action": "进入高预期区，除非订单和利润率超预期，否则考虑减仓",
-      "reason": "进入高预期估值区"
-    }
-  ],
-  "review_plan": {
-    "next_review": "2026-08-31",
-    "review_reason": "复查2026年半年报、锂电池增速、毛利率、存货应收和新场景订单兑现",
-    "cadence": "半年报、三季报、年报披露后复查；若触发价格区间或重大订单公告则临时复查"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
   },
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露",
-      "reason": "复查半年报中锂电池增速、毛利率和现金流"
-    }
-  ],
-  "key_risks": [
-    "BBU、AI机器人、eVTOL等新场景兑现不及预期",
-    "锂电池价格竞争加剧导致毛利率下滑",
-    "原材料价格和供应链波动",
-    "存货、应收账款、应收票据扩张快于收入",
-    "海外贸易政策、汇率和马来西亚产能爬坡风险",
-    "LED行业周期和产品高端化不及预期",
-    "当前估值对增长敏感，业绩低于预期时回撤风险较大"
-  ],
-  "logic_stop_loss": [
-    "连续两个季度锂电池收入增速低于15%且无合理订单延迟解释",
-    "锂电池毛利率跌破17%且不是一次性因素",
-    "经营现金流连续两个季度显著低于净利润，同时存货和应收快速上升",
-    "马来西亚产能认证或投产明显低于计划",
-    "BBU、机器人、eVTOL叙事持续一年没有订单或收入证据",
-    "出现重大内控、信用、担保、资金占用或财务真实性风险"
-  ],
-  "sources": [
-    {
-      "title": "蔚蓝锂芯2025年年度报告",
-      "date": "2026-04-14",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-14/1225099269.PDF",
-      "local_path": "sources/2025-annual-report.pdf",
-      "type": "annual_report"
-    },
-    {
-      "title": "蔚蓝锂芯2026年第一季度报告",
-      "date": "2026-04-25",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-25/e48526c1-f5ae-46fe-9383-14965c399d3a.PDF",
-      "local_path": "sources/2026-q1-report.pdf",
-      "type": "quarterly_report"
-    },
-    {
-      "title": "腾讯行情快照：002245及同行估值",
-      "date": "2026-07-08",
-      "url": "https://qt.gtimg.cn/q=sz002245,sz300014,sz300438,sz001283,sh600703,sz300708",
-      "local_path": "sources/peer-quotes-2026-07-08-tencent.txt",
-      "type": "market_quote"
-    }
-  ],
-  "confidence": "中等偏高"
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

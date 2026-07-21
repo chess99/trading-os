@@ -1,30 +1,96 @@
 {
-  "symbol": "CN:001399",
-  "market": "CN",
-  "ticker": "001399",
-  "name": "惠科股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "惠科股份是国内第三大LCD面板厂商，2025年营收409亿、净利38亿。但刚于2026年6月上市，当前股价34.78元对应PE 67x、PB 9x，估值远超同业（京东方PE 35x/PB 1.2x、TCL科技PE 30x/PB 1.5x）。面板行业强周期+公司63%高负债率+仅5.9%流通盘，当前价格严重脱离基本面。不参与，待充分回调或周期底部再评估。",
-  "fair_value_range": [6, 15],
-  "buy_zone": [6, 12],
-  "sell_or_reduce_zone": [25, 40],
-  "position_plan": [
-    {"condition": "股价回调至10-12元且基本面未恶化", "max_weight": 0.005},
-    {"condition": "股价8-10元且行业供需格局改善", "max_weight": 0.015},
-    {"condition": "股价6-8元或行业进入亏损期", "max_weight": 0.03}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠科股份",
+    "security_status": "active",
+    "symbol": "CN:001399",
+    "ticker": "001399"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "ea7e15037b9da1c06bbca28164a17259b1342af3e351469ecbd158ac7df6d968"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "2026年半年报发布后复查",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复查，评估行业周期方向",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入可开始关注的买入区间上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-30", "reason": "2026年半年报发布后复查"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查，评估行业周期方向"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 12, "reason": "进入可开始关注的买入区间上沿"},
-    {"type": "price_below", "price": 8, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 25, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-08T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

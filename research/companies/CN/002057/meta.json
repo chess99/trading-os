@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:002057",
-  "market": "CN",
-  "ticker": "002057",
-  "name": "中钢天源",
-  "company_name": "中钢天源",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "央企体系内的磁性材料、检验检测和矿山装备组合资产，检测业务和现金流提供底盘，磁性材料修复提供弹性；但当前股价已接近合理价值区间上沿，需要等待2026年半年报验证毛利率、订单和经营现金流后再提高仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中钢天源",
+    "security_status": "active",
+    "symbol": "CN:002057",
+    "ticker": "002057"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "ec1ee635485f943cac58a911157b583eed7960021e013cf9892ffa4766c6c262"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格位于合理价值区间上沿附近，且缺少2026年半年报验证",
-      "action": "仅观察或建立跟踪仓",
-      "max_weight": 0.005,
-      "reason": "主题预期已部分计入，等待磁性材料毛利率和检测业务恢复确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的磁性材料毛利率、检测业务增速和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入7.2元以下且公司基本面未恶化",
-      "action": "分批买入",
-      "max_weight": 0.015,
-      "reason": "进入基准估值折价区，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报盈利修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入6.2元附近，同时订单、毛利率和经营现金流均保持稳定",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.03,
-      "reason": "悲观预期较充分，央企资源和检测业务底盘提供安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入买入区上沿，复核是否可建立1.5%以内仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价升至11.5元以上但盈利预测未上修",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.005,
-      "reason": "估值进入乐观区，主题溢价高于已验证利润"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "进入减持区，需确认是否有业绩或订单上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入买入区上沿，复核是否可建立1.5%以内仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入强安全边际区，若基本面未恶化可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "进入减持区，需确认是否有业绩或订单上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的磁性材料毛利率、检测业务增速和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报盈利修复是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "磁性材料收入和毛利率",
-    "检验检测收入、毛利率和应收账款周转",
-    "经营活动现金流净额与归母净利润比值",
-    "研发费用率和新产品进展",
-    "募投项目投产和产能利用率",
-    "矿山装备订单和毛利率",
-    "现金分红率",
-    "中国宝武和中钢集团协同订单兑现情况",
-    "稀土永磁、永磁铁氧体和软磁需求景气"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

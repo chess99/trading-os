@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:002930",
-  "ticker": "002930",
-  "name": "宏川智慧",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "石化码头储罐和危化品仓储资产具备区位、资质和供给壁垒，但2025年盈利大幅承压且杠杆较高；2026年收入和出租率出现修复迹象，不过利润修复尚未充分验证，当前更适合观察而非追买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.0,
-    9.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏川智慧",
+    "security_status": "active",
+    "symbol": "CN:002930",
+    "ticker": "002930"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "a7feb2e12abbb4822e79389e44b4bcf189d4b47edd6daa42eea9ef44583674e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.8元，且未出现新增重大安全事故、债务违约或继续大额减值，建立观察仓。",
-      "action": "initiate_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查出租率、毛利率、经营现金流和短债安排。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.8元，且2026年经营现金流年化保持7亿元以上、短债再融资安排清晰。",
-      "action": "increase_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业利润修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但出租率、毛利率和扣非利润未连续两个季度改善。",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化盈利、减值和资产负债表质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入买入观察区，若基本面未恶化则安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入深度安全边际区，可在现金流和债务可控前提下提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过基准估值上沿，需要盈利修复和降杠杆验证，否则应减持或避免追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入买入观察区，若基本面未恶化则安全边际改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入深度安全边际区，可在现金流和债务可控前提下提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过基准估值上沿，需要盈利修复和降杠杆验证，否则应减持或避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查出租率、毛利率、经营现金流和短债安排。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业利润修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化盈利、减值和资产负债表质量。"
-    }
-  ],
-  "key_monitoring_items": [
-    "仓储出租率和仓储收费单价",
-    "码头储罐综合服务毛利率",
-    "经营活动现金流净额",
-    "一年内到期非流动负债和可转债安排",
-    "商誉、固定资产和无形资产减值",
-    "REITs或资产证券化进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

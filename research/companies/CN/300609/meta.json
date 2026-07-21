@@ -1,60 +1,95 @@
 {
-  "symbol": "CN:300609",
-  "ticker": "300609",
-  "name": "汇纳科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "汇纳科技具备线下商业空间数据、AI视觉和数据运营场景积累，但2025年及2026Q1仍亏损，2026Q1收入增长主要由毛利率较低的软硬件一体化方案带动，当前可见市值对2025年收入约10倍以上PS，已透支较乐观的AI数据资产预期；需等待高毛利软件/数据服务占比提升、经营现金流转正和持续扭亏验证。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [9.0, 14.0],
-  "buy_zone": [0.0, 10.0],
-  "sell_or_reduce_zone": [22.0, 30.0],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汇纳科技",
+    "security_status": "active",
+    "symbol": "CN:300609",
+    "ticker": "300609"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "279e8575847d0fdac526044d323ee55215d637db6021e50a1bb12bee3f50b0c2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于10元且最新财报显示毛利率回升、亏损收窄、经营现金流改善后，仅允许研究性小仓位试探。",
-      "action": "watchlist_only_until_verified",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入质量、毛利率、亏损收窄和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格高于22元且仍未证明高毛利软件/数据服务规模化和年度扭亏。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认软硬件一体化收入占比和高毛利数据服务进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断公司是否完成收入质量改善和扭亏路径验证。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入基准买入观察区，若同时出现毛利率回升和现金流改善，可重新评估研究性仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "显著高于基准合理价值区间，若基本面未同步验证，风险收益不对称。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入基准买入观察区，若同时出现毛利率回升和现金流改善，可重新评估研究性仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "显著高于基准合理价值区间，若基本面未同步验证，风险收益不对称。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入质量、毛利率、亏损收窄和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认软硬件一体化收入占比和高毛利数据服务进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断公司是否完成收入质量改善和扭亏路径验证。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

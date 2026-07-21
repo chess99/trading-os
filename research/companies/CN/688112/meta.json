@@ -1,85 +1,105 @@
 {
-  "symbol": "CN:688112",
-  "market": "CN",
-  "ticker": "688112",
-  "name": "鼎阳科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "鼎阳科技具备高毛利、持续研发投入、海外渠道和国产替代逻辑，收入端在2025-2026Q1已重新加速；但当前股价对应约63倍TTM PE，已接近合理价值区间上沿，利润弹性仍需2026H1和Q3验证，适合观察并等待更高安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "confidence": "medium",
-  "fair_value_range": [
-    46,
-    58
-  ],
-  "buy_zone": [
-    38,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鼎阳科技",
+    "security_status": "active",
+    "symbol": "CN:688112",
+    "ticker": "688112"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2491015b74eae8ed541ef62639fe3bc751a80ca72af2ed44675a167cf81759da"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理价值区间偏上，维持观察，不主动建重仓。",
-      "action": "watch",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "预计2026年中报窗口，复核收入增速、利润弹性、毛利率、费用率和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于45元，且2026H1收入增速、毛利率和现金流未恶化。",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核全年增长确定性及估值区间是否需要调整。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于38-42元，同时利润率改善得到2026H1或2026Q3验证。",
-      "action": "add_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报后复盘高端产品、海外渠道和利润率改善是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于65元且未来12个月利润预期未明显上修。",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入初始买入观察区，需要复核2026H1业绩、毛利率和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入较高安全边际区，若基本面未恶化可评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "超过减持或不追区间下沿，若利润预期未上修则估值风险上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入初始买入观察区，需要复核2026H1业绩、毛利率和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入较高安全边际区，若基本面未恶化可评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "超过减持或不追区间下沿，若利润预期未上修则估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "预计2026年中报窗口，复核收入增速、利润弹性、毛利率、费用率和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核全年增长确定性及估值区间是否需要调整。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报后复盘高端产品、海外渠道和利润率改善是否兑现。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

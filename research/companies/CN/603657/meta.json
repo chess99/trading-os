@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603657",
-  "market": "CN",
-  "ticker": "603657",
-  "name": "春光科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "春光科技处于清洁电器供应链中游，软管及配件业务仍有一定客户认证和工艺积累，但整机及海外扩张正在显著拖累利润。2025 年和 2026Q1 已连续亏损，2026H1 预计继续亏损，当前 20 元以上股价对应约 3 倍以上 PB，尚未提供足够安全边际。应等待整机海外毛利率、经营现金流和净利润拐点兑现后再评估小仓位参与。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    17.0
-  ],
-  "buy_zone": [
-    10.0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "春光科技",
+    "security_status": "active",
+    "symbol": "CN:603657",
+    "ticker": "603657"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d87c27a80c6a0774e1af164c29fea6c9e63b26c90fd50c95fe6ef80e33de3a8f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价低于 12.5 元且最近两个季度经营活动现金流为正时，允许建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查境外收入毛利率、整机毛利率、资产减值和 CGH 子公司亏损。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若整机业务毛利率恢复至 8% 以上且单季归母净利润转正，可提高至小仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认单季亏损是否收窄以及经营现金流是否转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若 2026Q3 仍亏损且股价高于 20 元，不新增仓位并考虑退出观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断海外整机扩张是否形成可持续盈利能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入估算买入区间，可结合毛利率和现金流改善重新评估。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "在盈利尚未恢复前估值缺乏安全边际，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入估算买入区间，可结合毛利率和现金流改善重新评估。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "在盈利尚未恢复前估值缺乏安全边际，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查境外收入毛利率、整机毛利率、资产减值和 CGH 子公司亏损。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认单季亏损是否收窄以及经营现金流是否转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断海外整机扩张是否形成可持续盈利能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

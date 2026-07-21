@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603626",
-  "market": "CN",
-  "ticker": "603626",
-  "name": "科森科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "科森科技短期表观利润主要受出售科森医疗的一次性投资收益驱动，2026H1扣非仍预计亏损，主营盈利拐点尚未确认；消费电子精密结构件、折叠屏和AI终端硬件存在修复弹性，但当前估值相对扣非盈利质量缺乏安全边际，适合观察而非主动买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.5,
-    9.0
-  ],
-  "buy_zone": [
-    5.5,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科森科技",
+    "security_status": "active",
+    "symbol": "CN:603626",
+    "ticker": "603626"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "642610fb5761a9fd09cec8df5220f380223bc51115f5249702453dabd8e97dbf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.0元且未出现新增大额减值、流动性风险或重大订单恶化时，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点核验扣非亏损、经营现金流、科森医疗处置收益和回款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正、经营现金流同步为正且毛利率回升至13%以上后，可重新评估提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主营是否连续改善以及新业务订单是否兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.0元但扣非利润仍未转正，或上涨主要由无法核验的主题驱动时，不新增仓位并考虑退出观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化盈利、减值风险和资本开支节奏。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入基准估值下沿附近，若基本面未恶化，可重新评估安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于乐观估值下沿且扣非盈利未验证时，估值风险显著上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入基准估值下沿附近，若基本面未恶化，可重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于乐观估值下沿且扣非盈利未验证时，估值风险显著上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点核验扣非亏损、经营现金流、科森医疗处置收益和回款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主营是否连续改善以及新业务订单是否兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化盈利、减值风险和资本开支节奏。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

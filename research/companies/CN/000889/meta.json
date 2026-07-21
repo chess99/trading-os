@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:000889",
-  "ticker": "000889",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "中嘉博创",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "通信网络维护贡献绝大部分收入但毛利率低，应收账款和商誉相对净资产过高；信息智能传输业务仍在收缩。当前市值隐含强反转和题材溢价，基本面安全边际不足。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.4,
-    0.9
-  ],
-  "buy_zone": [
-    0.4,
-    0.7
-  ],
-  "sell_or_reduce_zone": [
-    1.5,
-    2.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中嘉博创",
+    "security_status": "active",
+    "symbol": "CN:000889",
+    "ticker": "000889"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b4b890526bede690451d5100ff064f15d6f10c903da1ff387161db87aee4ed51"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不买入；仅在股价低于0.70元且连续两个季度经营现金流转正、应收账款下降后，才允许重新评估观察仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看经营现金流、应收账款、毛利率和续标情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扣非盈利且通信网络维护毛利率恢复到10%以上，可重新研究，届时最高仓位仍不超过组合的1%。",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "进入估算买入观察区，需要结合现金流和应收账款重新评估。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认是否出现连续盈利和现金流改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "显著高于基本面公允价值上沿，若持有应减仓或卖出。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看经营现金流、应收账款、毛利率和续标情况。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "进入估算买入观察区，需要结合现金流和应收账款重新评估。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认是否出现连续盈利和现金流改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "显著高于基本面公允价值上沿，若持有应减仓或卖出。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

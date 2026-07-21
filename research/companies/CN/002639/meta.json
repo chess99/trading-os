@@ -1,138 +1,96 @@
 {
-  "ticker": "002639",
-  "symbol": "CN:002639",
-  "market": "CN",
-  "name": "雪人集团",
-  "company_name": "福建雪人集团股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "industry": "制冷设备与压缩机",
-  "status": "active",
-  "research_status": "active",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "latest_report_date": "2026-07-12",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "last_updated": "2026-07-12",
-  "updated_at": "2026-07-12",
-  "decision": "观察",
-  "current_rating": "watch",
-  "confidence": "中",
-  "summary": "制冷压缩机和工业冷链装备公司，叠加数据中心温控与氢能期权；2025年收入恢复、利润很薄，2026Q1收入高增但扣非仍亏且现金流大幅流出，当前估值偏乐观，暂列观察。",
-  "current_thesis": "公司具备制冷压缩机和工业冷链装备基础，并拥有温控与氢能期权，但当前利润率、扣非盈利和经营现金流尚未支撑高估值，需等待更好的价格或更强兑现。",
-  "fair_value_range": [
-    6.0,
-    8.5
-  ],
-  "buy_zone": [
-    6.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    18.0
-  ],
-  "thesis": [
-    "冷链、工业制冷、天然工质制冷和数据中心温控具备长期需求，公司有真实制造和工程交付能力。",
-    "压缩机核心部件与系统集成经验可能带来中高端项目机会，但目前尚未在ROE、扣非净利率和现金流中充分验证。",
-    "氢能和液冷更适合作为估值期权，不能替代主业利润兑现。"
-  ],
-  "risk_labels": [
-    "高估值",
-    "扣非盈利弱",
-    "经营现金流为负",
-    "项目型回款风险",
-    "新业务兑现不确定"
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 2525000000,
-    "net_profit_2025_cny": 36570000,
-    "deducted_net_profit_2025_cny": 5000000,
-    "operating_cash_flow_2025_cny": -79000000,
-    "revenue_2026_q1_cny": 677000000,
-    "net_profit_2026_q1_cny": 14300000,
-    "deducted_net_profit_2026_q1_cny": -1900000,
-    "operating_cash_flow_2026_q1_cny": -215000000,
-    "last_reference_price_cny": 12.59,
-    "last_reference_price_date": "2026-07-10"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "雪人集团",
+    "security_status": "active",
+    "symbol": "CN:002639",
+    "ticker": "002639"
   },
-  "valuation": {
-    "fair_value_range": [
-      6.0,
-      8.5
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "b185a7e66541029aaae76710f2fe47b4b70dc97aa057c4d5e6df88ff47d650ec"
+      }
     ],
-    "base_case_fair_value_cny": "6.0-8.5",
-    "bear_case_fair_value_cny": "3.0-5.0",
-    "bull_case_fair_value_cny": "10.0-14.0",
-    "method": "利润中枢法、市销率法、情景DCF/期权法"
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "position_plan": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌破8.0元，且最近季度扣非利润为正或经营现金流明显改善",
-      "action": "建立观察仓",
-      "target_weight": "0.5%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价跌破6.0元，且没有重大财务恶化、应收账款和存货受控",
-      "action": "深度复核后考虑加至基础仓",
-      "target_weight": "1.5%-2.5%",
-      "max_weight": 0.025
-    },
-    {
-      "condition": "股价高于14.0元，且没有新增大额高毛利订单或利润兑现",
-      "action": "不追高；若已有仓位则减仓",
-      "target_weight": "0%-0.5%",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入中性估值上沿以下，若基本面未恶化可评估观察仓",
-      "note": "进入观察仓评估区，需同步复核最近季度扣非利润和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入安全边际较高区域，风险收益比可能改善",
-      "note": "进入安全边际较高区域，若基本面未恶化可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "股价超过乐观情景区间下沿，需要强业绩兑现支撑",
-      "note": "估值进入乐观兑现区，若缺乏订单和利润验证应避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年度报告预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证高收入增长是否转化为扣非利润和现金流改善",
-      "action": "复核收入、扣非净利润、经营现金流和应收存货变化"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季度报告预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "判断全年业绩兑现节奏和估值假设是否仍成立",
-      "action": "复核全年兑现节奏和估值区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入中性估值上沿以下，若基本面未恶化可评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入安全边际较高区域，风险收益比可能改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "股价超过乐观情景区间下沿，需要强业绩兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "watch_items": [
-    "单季度扣非归母净利润是否连续为正",
-    "经营现金流是否从大幅流出转为改善",
-    "毛利率是否稳定或提升",
-    "应收账款和存货增速是否低于收入增速",
-    "数据中心温控、氢能和天然工质制冷订单是否披露明确利润贡献"
-  ],
-  "sources": [
-    "https://static.cninfo.com.cn/finalpage/2026-04-28/1225212504.PDF",
-    "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-28/90c09425-6a14-4ea8-95b9-8a736682160a.PDF",
-    "https://www.snowkey.com/"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

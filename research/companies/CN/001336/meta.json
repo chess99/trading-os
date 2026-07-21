@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:001336",
-  "market": "CN",
-  "ticker": "001336",
-  "name": "楚环科技",
-  "company_name": "楚环科技",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "楚环科技是废气恶臭治理细分领域项目制环保装备公司，2025年核心设备收入占比93.03%，具备项目经验和工艺组合能力；但应收账款和合同资产体量高、信用减值对利润影响大，当前约39倍TTM PE缺乏安全边际，适合观察而非追高。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    15.0,
-    19.0
-  ],
-  "buy_zone": [
-    12.0,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    26.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "楚环科技",
+    "security_status": "active",
+    "symbol": "CN:001336",
+    "ticker": "001336"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "460e307d64835367a8ca1a15f0a90e9a70a43c2f9ef1e38fe23224fe5e79204a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且未见回款改善证据",
-      "action": "不买入，仅观察",
-      "max_weight": 0.0,
-      "reason": "2026-07-10收盘价21.95元对应约39倍TTM PE，项目制和应收账款风险未给足安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看应收账款、合同资产、经营现金流和核心设备毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入15元以下，且最新季报显示经营现金流为正、应收账款加合同资产占TTM收入低于80%",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入合理区间下沿，同时回款质量未恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1项目验收高增长是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入12元附近，且收入增长、毛利率和坏账计提均未证伪",
-      "action": "提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "具备细分龙头折价机会，但项目制业务仍不适合重仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入合理价值区间下沿，可复核是否满足首笔观察仓条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于23元且无订单、回款或运维占比超预期证据",
-      "action": "不加仓或减仓",
-      "max_weight": 0.0,
-      "reason": "估值进入减仓观察区，风险收益比转差"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度折价区，可复核是否提高至2%以内小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "进入减仓观察区，需检查订单和回款是否足以支撑高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "明显高于当前合理价值估计，除非基本面显著超预期，否则应降低风险",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入合理价值区间下沿，可复核是否满足首笔观察仓条件"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入深度折价区，可复核是否提高至2%以内小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "进入减仓观察区，需检查订单和回款是否足以支撑高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "明显高于当前合理价值估计，除非基本面显著超预期，否则应降低风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看应收账款、合同资产、经营现金流和核心设备毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1项目验收高增长是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "应收账款加合同资产占TTM收入比例",
-    "经营活动现金流净额与归母净利润比值",
-    "信用减值损失占利润总额比例",
-    "废气恶臭治理设备收入增速和毛利率",
-    "合同负债和存货变化",
-    "工业客户订单占比",
-    "设备维修及运维服务收入占比",
-    "前五大客户集中度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

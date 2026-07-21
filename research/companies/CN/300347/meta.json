@@ -1,107 +1,111 @@
 {
-  "symbol": "CN:300347",
-  "market": "CN",
-  "ticker": "300347",
-  "name": "泰格医药",
-  "company_name": "泰格医药",
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "current_thesis": "中国临床CRO龙头，行业经历2021-2024深度出清后需求初步恢复(2026Q1收入+15.2%)，但毛利率连续四个季度下行至26.6%，2025年扣非仅3.55亿元，主业盈利质量需修复。当前43元约371亿市值处于合理偏低区下沿，已隐含一定复苏预期但未给足安全边际。等待2026中报验证毛利率企稳和扣非增速回升，方宜加仓。",
-  "fair_value_range": [42, 52],
-  "buy_zone": [36, 40],
-  "sell_or_reduce_zone": [60, 70],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰格医药",
+    "security_status": "active",
+    "symbol": "CN:300347",
+    "ticker": "300347"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "1b750147bd1b982008e35ca91f1de27b1dc9cd47d6be1e0a1a9686cff8d03dd8"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "9b18b21ccb377d46f6913682ce18cc16d585cd27468533f408495659669f8436"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "43元附近(当前)且尚未披露2026年半年报",
-      "max_weight": 0.01,
-      "target_weight": 0.0075,
-      "action": "建立首笔观察仓0.5%-0.75%",
-      "notes": "当前价格合理偏低，但未见中报前不激进加仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证毛利率是否企稳、扣非增速是否延续、经营现金流覆盖利润的质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "回落至38-40元且无新的基本面恶化",
-      "max_weight": 0.02,
-      "target_weight": 0.02,
-      "action": "加至基础仓2%",
-      "notes": "进入安全边际区"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证临床CRO需求恢复是否传导到利润率，观察海外业务和员工效率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "跌至34-36元且扣非利润、经营现金流正常",
-      "max_weight": 0.04,
-      "target_weight": 0.035,
-      "action": "加至核心仓",
-      "notes": "强吸引力买入区，但需毛利率不再继续下台阶"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入安全边际买入区，若扣非利润和经营现金流未恶化，可加至基础仓2%",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "中报/三季报验证毛利率企稳、扣非增长",
-      "max_weight": 0.03,
-      "target_weight": 0.03,
-      "action": "即便在45-48元也可加至基础仓",
-      "notes": "盈利拐点确认后的价格弹性空间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入强吸引力买入区，若毛利率未继续失控且现金流正常，可加至核心仓3.5%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "55-60元以上且主业未同步上修",
-      "max_weight": 0.01,
-      "target_weight": 0.0075,
-      "action": "停止加仓并逐渐降仓",
-      "notes": "不追高，估值先行过快"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "高于不追高价，若没有毛利率和扣非回升的实质验证，应停止加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入减仓/重新评估区，估值可能透支中性复苏情景",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-09-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证毛利率是否企稳、扣非增速是否延续、经营现金流覆盖利润的质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证临床CRO需求恢复是否传导到利润率，观察海外业务和员工效率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入安全边际买入区，若扣非利润和经营现金流未恶化，可加至基础仓2%"
-    },
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入强吸引力买入区，若毛利率未继续失控且现金流正常，可加至核心仓3.5%"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "高于不追高价，若没有毛利率和扣非回升的实质验证，应停止加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "进入减仓/重新评估区，估值可能透支中性复苏情景"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "临床试验技术服务收入及毛利率",
-    "临床试验相关服务及实验室服务收入及毛利率",
-    "扣非归母净利润及增速",
-    "经营活动现金流量净额及对扣非利润的覆盖率",
-    "应收账款、合同资产、合同负债变化",
-    "员工人数、人均收入、人均毛利",
-    "海外收入占比及海外团队费用率",
-    "新签订单/在手订单（若披露）",
-    "投资收益和公允价值变动对归母利润的影响",
-    "中国创新药IND数、CDE临床试验注册数、NMPA 1类新药获批数"
-  ],
-  "updated_at": "2026-07-09T15:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

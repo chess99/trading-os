@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:002136",
-  "ticker": "002136",
-  "name": "安 纳 达",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安 纳 达具备万华电池入主后的治理和产业协同改善期权，钛白粉与磷酸铁均有周期修复弹性；但2025年亏损、2026Q1盈利绝对额仍低，当前价格已部分反映乐观修复预期，安全边际不足，维持观察。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    7.8,
-    10.2
-  ],
-  "buy_zone": [
-    6.2,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安 纳 达",
+    "security_status": "active",
+    "symbol": "CN:002136",
+    "ticker": "002136"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "936633320f4adc63c254e78af1fba0b9b7cfa80b7e036a90e72a0207e7f45993"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入6.2-7.5元且2026年后续季度证明归母净利润连续修复、经营现金流改善时建立试探仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看单季利润、经营现金流、磷酸铁业务是否扭亏。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价高于10.2元但利润和现金流尚未兑现，不新增仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026年中报确认磷酸铁扭亏、钛白粉价差改善且单季归母净利润高于1500万元，可将上限提高至观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及万华协同兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入初始买入区间上沿，需要复核钛白粉价差、磷酸铁盈利和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "股价进入减仓区间，若无利润兑现则风险收益比转差。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入初始买入区间上沿，需要复核钛白粉价差、磷酸铁盈利和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "股价进入减仓区间，若无利润兑现则风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看单季利润、经营现金流、磷酸铁业务是否扭亏。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及万华协同兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

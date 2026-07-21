@@ -1,104 +1,96 @@
 {
-  "symbol": "CN:002216",
-  "market": "CN",
-  "ticker": "002216",
-  "name": "三全食品",
-  "company_name": "三全食品",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三全食品是速冻面米老牌龙头，品牌、渠道、冷链和分红能力较稳，但2025年收入低增长、扣非利润下滑，2026Q1改善仍需中报验证；当前12.21元接近合理价值中位，暂列观察，等待10.2元以下或基本面进一步确认后买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    11.0,
-    13.5
-  ],
-  "buy_zone": [
-    8.8,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    17.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "last_price": 12.21,
-  "last_price_date": "2026-07-10",
-  "market_cap_cny_billion": 10.74,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三全食品",
+    "security_status": "active",
+    "symbol": "CN:002216",
+    "ticker": "002216"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "345e2e6026564cef35b2a834d916d3e398c54c4c978cac6a76ef6a2276829595"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 10.2 and latest quarterly revenue growth is non-negative and no food-safety event",
-      "action": "open_initial_position",
-      "max_weight": 0.01,
-      "reason": "进入买入区间上沿，赔率开始改善，但仍需验证扣非利润恢复。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入、扣非利润、餐饮渠道和经销商变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 9.2 and trailing non-GAAP profit remains above CNY 400 million",
-      "action": "add_position",
-      "max_weight": 0.025,
-      "reason": "接近悲观情景上沿，品牌和分红提供较好安全垫。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报和旺季备货，确认Q1改善是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price <= 8.8 and fundamentals remain stable",
-      "action": "add_to_max_position",
-      "max_weight": 0.04,
-      "reason": "低于保守估值下沿，可作为防御型食品仓位配置。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入首次观察买入区间，需要复核中报和渠道数据。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price >= 15.0 or non-GAAP PE exceeds 28x without revenue acceleration",
-      "action": "reduce_position",
-      "max_weight": 0.01,
-      "reason": "估值进入乐观区间，若增长未兑现则风险收益不佳。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入深度价值区间，如基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "接近减仓区间，需要确认增长是否足以支撑高估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入首次观察买入区间，需要复核中报和渠道数据。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入深度价值区间，如基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "接近减仓区间，需要确认增长是否足以支撑高估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入、扣非利润、餐饮渠道和经销商变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报和旺季备货，确认Q1改善是否延续。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "季度扣非归母净利润同比增速",
-    "扣非净利率",
-    "速冻面米制品收入增速与毛利率",
-    "速冻调制食品收入增速与库存变化",
-    "经销商数量与单商收入",
-    "直营电商收入与毛利率",
-    "餐饮市场收入增速",
-    "经营活动现金流量净额",
-    "存货和应收账款周转",
-    "原材料价格：猪肉、面粉、油脂、包装材料",
-    "分红率和资本开支"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

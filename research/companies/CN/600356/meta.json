@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600356",
-  "ticker": "600356",
-  "market": "CN",
-  "name": "恒丰纸业",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "烟草工业用特种纸龙头，2025年利润修复、2026Q1继续高增，并购锦丰纸业补充产能与区域布局；但当前股价仅有中等安全边际，需等待2026中报验证扣非利润、现金流和锦丰协同。",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.0,
-    7.6
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒丰纸业",
+    "security_status": "active",
+    "symbol": "CN:600356",
+    "ticker": "600356"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "83adef33be363215ee70a7975f1e013fc2f71d13b85b46bc82745a70100dc56c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026年中报确认归母净利润约1.90亿元以上、扣非利润和经营现金流同步改善，且股价不高于8.0元",
-      "action": "建立观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、锦丰纸业并表表现和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至7.0-7.6元且烟草用纸订单、毛利率和锦丰整合无恶化",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润率延续性和订单节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.0元且没有2026年利润中枢上修至3.6亿元以上的证据",
-      "action": "减仓或不追高",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、并购协同和下一年度盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入安全边际买入复核区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "若基本面未恶化，进入深度价值复核区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过基准估值上沿，需要复核是否减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入安全边际买入复核区间"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "若基本面未恶化，进入深度价值复核区间"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过基准估值上沿，需要复核是否减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、锦丰纸业并表表现和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润率延续性和订单节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、并购协同和下一年度盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

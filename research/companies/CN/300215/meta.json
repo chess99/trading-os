@@ -1,88 +1,95 @@
 {
-  "symbol": "CN:300215",
-  "market": "CN",
-  "ticker": "300215",
-  "name": "电科院",
-  "company_name": "苏州电器科学研究院股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "电科院具备高压电器检测平台、资质和重资产壁垒，但2025年收入下滑、扣非亏损，2026Q1仅低位扭亏。2026-07-13收盘价5.89元对应约2.22倍PB和154倍TTM PE，价格已较充分反映资产稀缺性，缺乏足够安全边际；等待3.20元以下或扣非利润连续恢复后再评估买入。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [3.2, 4.4],
-  "buy_zone": [0, 3.2],
-  "sell_or_reduce_zone": [5.6, 999],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电科院",
+    "security_status": "active",
+    "symbol": "CN:300215",
+    "ticker": "300215"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6d6516218ea75e1bf5e1019ef408e16f97d64bb240eb594153eabbd6364f6468"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.20元，且最近两个季度扣非归母净利润为正、收入同比增长",
-      "action": "可建立1%观察仓",
-      "max_weight": 0.01,
-      "max_position": "1%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入增速、扣非净利润、毛利率、合同负债和资本开支。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.20-4.40元且2026中报显示高压检测恢复增长、低压检测下滑收窄",
-      "action": "维持观察仓，不追高；等待利润率继续验证",
-      "max_weight": 0.015,
-      "max_position": "1.5%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，并检查控股股东减持计划是否完成或新增。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.60元且扣非净利率仍低于5%或控股股东继续减持",
-      "action": "不新买；已有仓位减至0-0.5%",
-      "max_weight": 0.005,
-      "max_position": "0.5%"
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：高压检测、储能检测、低空装备检测等新业务是否形成收入贡献；若扣非归母净利润再次转负，下调估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 3.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
       "reason": "进入约1.2倍PB的安全边际区，值得重新核验买入条件。",
-      "action": "进入可买区，复核最新季度收入、扣非利润和经营现金流。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 5.6,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
       "reason": "高于合理价值上沿，若利润未兑现则风险收益不佳。",
-      "action": "估值进入减仓/回避区，除非扣非利润和新业务收入已明显兑现。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入增速、扣非净利润、毛利率、合同负债和资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，并检查控股股东减持计划是否完成或新增。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：高压检测、储能检测、低空装备检测等新业务是否形成收入贡献；若扣非归母净利润再次转负，下调估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "高压电器检测收入增速",
-    "低压电器检测收入降幅",
-    "扣非归母净利润和扣非净利率",
-    "专业技术服务毛利率",
-    "经营活动现金流净额",
-    "资本开支和固定资产维护支出",
-    "合同负债余额",
-    "控股股东减持进展",
-    "储能、充电桩、低空装备、特高压防爆等新检测业务订单或收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

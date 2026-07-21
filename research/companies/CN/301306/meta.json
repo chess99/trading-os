@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:301306",
-  "ticker": "301306",
-  "name": "西测测试",
-  "company_name": "西安西测测试技术股份有限公司",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "航空航天电子装备检测与高可靠电子装联稀缺标的，资质和客户准入具备壁垒，但2025至2026Q1收入下滑且亏损仍大，当前市场价格提前计入商业航天和军工修复预期，需等待电子装联毛利率转正、收入恢复和应收改善后再考虑买入。",
-  "fair_value_range": [
-    55,
-    85
-  ],
-  "buy_zone": [
-    60,
-    70
-  ],
-  "sell_or_reduce_zone": [
-    120,
-    150
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "西测测试",
+    "security_status": "active",
+    "symbol": "CN:301306",
+    "ticker": "301306"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b0a8cc6d7443397a8d9670f69b000cdcf279176dbf42220fd0cfe14a10625317"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于70元，且最近两个季度收入同比转正、电子装联毛利率接近或高于0、经营现金流改善三项中至少满足两项",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复核2026年半年报收入、电子装联毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于65元，且电子装联毛利率转正、应收账款不再高于年化收入100%、单季收入回到1亿元附近",
-      "action": "提高到小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现单季收入和利润拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于120元且2026H1未出现收入和现金流拐点",
-      "action": "不买入或减弱跟踪优先级",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及商业航天、民机适航相关收入是否可量化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入研究买区上沿，需要复核最新季报、订单和电子装联毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入安全边际较充分区间，若基本面未恶化可考虑观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
+      "reason": "价格超过基准合理价值上沿较多，需检查是否已有可验证业绩拐点支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入研究买区上沿，需要复核最新季报、订单和电子装联毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入安全边际较充分区间，若基本面未恶化可考虑观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 120,
-      "reason": "价格超过基准合理价值上沿较多，需检查是否已有可验证业绩拐点支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复核2026年半年报收入、电子装联毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现单季收入和利润拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及商业航天、民机适航相关收入是否可量化"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "单季营业收入是否恢复至0.9亿至1.1亿元以上",
-    "电子装联业务毛利率是否由负转正",
-    "应收账款是否低于年化收入100%",
-    "经营活动现金流是否持续转正",
-    "商业航天和民机适航收入是否被公司量化披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

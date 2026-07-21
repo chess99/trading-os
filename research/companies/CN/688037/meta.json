@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:688037",
-  "market": "CN",
-  "ticker": "688037",
-  "name": "芯源微",
-  "company_name": "芯源微",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "芯源微是前道涂胶显影、清洗和先进封装湿法设备国产替代稀缺标的，北方华创控股后具备客户、研发和供应链协同期权；但截至2026-07-09股价和市值已显著透支中长期乐观预期，2025年扣非亏损、2026Q1现金流和存货压力仍需验证，因此当前只列入重点跟踪，不追高买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    160,
-    240
-  ],
-  "buy_zone": [
-    120,
-    160
-  ],
-  "sell_or_reduce_zone": [
-    300,
-    459.88
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "芯源微",
+    "security_status": "active",
+    "symbol": "CN:688037",
+    "ticker": "688037"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "674656e1ffad2af957e1d545fd5519be851f2c1ebfdb3156a4920120e3decd7a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于160元，且2026年收入、毛利率、扣非净利和经营现金流至少两项改善",
-      "action": "分批建立研究仓",
-      "max_weight": 0.02,
-      "reason": "价格进入安全边际区域，同时基本面出现初步兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、毛利率、扣非净利、经营现金流、存货和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于120元，且前道Track或高端化学清洗出现重复订单证据",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "估值回到强吸引力区间，国产替代期权的赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证订单交付、客户复购和北方华创协同进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于300元，或估值继续高于可验证利润承载能力",
-      "action": "不新增，已有仓位视基本面兑现程度减仓",
-      "max_weight": 0,
-      "reason": "价格已经显著透支2027-2028年乐观预期"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 160.0
+      },
+      "reason": "进入安全边际买入区，复核半年报、订单和现金流后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 120.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 300.0
+      },
+      "reason": "超过不应追高价，估值对未来兑现要求过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 160,
-      "reason": "进入安全边际买入区，复核半年报、订单和现金流后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 120,
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 300,
-      "reason": "超过不应追高价，估值对未来兑现要求过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、毛利率、扣非净利、经营现金流、存货和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证订单交付、客户复购和北方华创协同进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "前道涂胶显影设备验证转批量订单数量",
-    "前道化学清洗设备签单金额和收入确认",
-    "先进封装2.5D、HBM、Chiplet相关订单",
-    "季度营业收入增速",
-    "季度毛利率",
-    "扣非归母净利润和扣非净利率",
-    "经营活动现金流净额",
-    "存货余额和存货周转",
-    "合同负债余额及向收入转化情况",
-    "北方华创协同带来的客户、研发、供应链具体证据"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

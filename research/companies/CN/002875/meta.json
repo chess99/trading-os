@@ -1,69 +1,95 @@
 {
-  "symbol": "CN:002875",
-  "ticker": "002875",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "安奈儿",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安奈儿处于低基数经营修复早期，2026Q1盈利但2026H1预告仍亏损，当前约4.4倍PB和约4.8倍TTM PS已反映较强修复预期；安全边际不足，暂不买入，仅跟踪库存、扣非利润和现金流改善。",
-  "fair_value_range": [
-    6.0,
-    8.5
-  ],
-  "buy_zone": [
-    5.5,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安奈儿",
+    "security_status": "active",
+    "symbol": "CN:002875",
+    "ticker": "002875"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "4109355b16cc33ad6face6a08908b7308fec22a91ff366a91be3f9dadbf379c6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026H1正式报告亏损不超过预告上限、2026Q3单季扣非盈利且存货周转继续改善，同时股价低于7.0元",
-      "action": "watchlist_to_tracking_position",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告正式数据，重点看收入增速、扣非亏损、库存周转和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.0元且公司仍仅实现减亏、未证明持续盈利",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1盈利是否可持续及全年减亏目标质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及股权激励减亏目标兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入估算买入区间，可在库存和扣非利润改善得到确认后评估小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基准合理价值上沿且隐含较强修复预期，除非盈利持续兑现否则不具备安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入估算买入区间，可在库存和扣非利润改善得到确认后评估小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于基准合理价值上沿且隐含较强修复预期，除非盈利持续兑现否则不具备安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告正式数据，重点看收入增速、扣非亏损、库存周转和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1盈利是否可持续及全年减亏目标质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及股权激励减亏目标兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

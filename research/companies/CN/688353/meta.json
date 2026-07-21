@@ -1,114 +1,115 @@
 {
-  "symbol": "CN:688353",
-  "market": "CN",
-  "ticker": "688353",
-  "name": "华盛锂电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华盛锂电是全球锂电池电解液添加剂龙头，VC/FEC 技术、客户验证和产能基础具备真实壁垒，2026Q1 已体现涨价与销量弹性；但 2025 年主营扣非仍亏、经营现金流为负，当前股价已计入较乐观的周期修复和扩产预期，缺少安全边际，等待价格回落或中报验证现金流与扣非利润持续性。",
-  "fair_value_range": [
-    65,
-    85
-  ],
-  "buy_zone": [
-    45,
-    62
-  ],
-  "sell_or_reduce_zone": [
-    105,
-    125
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格高于合理价值中枢且现金流尚未验证，保持零仓位观察",
-      "action": "watch",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价低于 62 元且 2026 年半年报扣非利润未明显低于预期",
-      "action": "start_position",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价处于 45-55 元且经营现金流改善、VC/FEC 毛利率维持健康",
-      "action": "add_position",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于 105 元但缺少新增订单、现金流或新产品放量验证",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 62,
-      "reason": "进入初始买入观察区，需要复核半年报扣非利润和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入较有安全边际区间，可在基本面未恶化时提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 105,
-      "reason": "股价进入偏乐观定价区，需要检查是否已有订单和现金流支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 125,
-      "reason": "接近乐观情景估值，若无 2027 年利润中枢验证应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "公司预约披露 2026 年半年报，重点复核扣非利润、经营现金流、应收账款和项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断 Q1 高盈利是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报、H 股发行进展和扩产项目实际贡献"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-17",
-    "last_price": 88.5,
-    "market_cap_cny_billion": 14.116,
-    "shares_outstanding_billion": 0.1595,
-    "2025_revenue_cny_billion": 0.8695,
-    "2025_net_profit_parent_cny_million": 13.2566,
-    "2025_deducted_net_profit_cny_million": -54.5943,
-    "2025_operating_cash_flow_cny_million": -257,
-    "2026_q1_revenue_cny_million": 327.0094,
-    "2026_q1_net_profit_parent_cny_million": 97.017,
-    "2026_q1_deducted_net_profit_cny_million": 116
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华盛锂电",
+    "security_status": "active",
+    "symbol": "CN:688353",
+    "ticker": "688353"
   },
-  "source_urls": [
-    "https://paper.cnstock.com/html/2026-03/31/content_2193901.htm",
-    "https://vip.stock.finance.sina.com.cn/corp/go.php/vCB_AllBulletin/stockid/688353.phtml",
-    "https://paper.cnstock.com/html/2026-04/16/content_2200420.htm",
-    "https://www1.hkexnews.hk/app/sehk/2026/108444/documents/sehk26041601922_c.pdf",
-    "https://pdf.dfcfw.com/pdf/H22_AN202604131821154657_1.pdf",
-    "https://www.9fzt.com/detail/sh_688353_9_d8a2300cb2c657419de99ad8c5c387da.html",
-    "https://xueqiu.com/S/SH688353",
-    "https://www.futunn.com/hk/stock/688353-SH",
-    "https://cn.investing.com/equities/jiangsu-hsc-new-energy-materials-historical-data"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d1fed387df3167e74e20518c87aaa81a7782d816b2d9fc2974416fa3796180e8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "公司预约披露 2026 年半年报，重点复核扣非利润、经营现金流、应收账款和项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断 Q1 高盈利是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报、H 股发行进展和扩产项目实际贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 62.0
+      },
+      "reason": "进入初始买入观察区，需要复核半年报扣非利润和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入较有安全边际区间，可在基本面未恶化时提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 105.0
+      },
+      "reason": "股价进入偏乐观定价区，需要检查是否已有订单和现金流支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 125.0
+      },
+      "reason": "接近乐观情景估值，若无 2027 年利润中枢验证应减仓或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    }
   ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

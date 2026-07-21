@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:603163",
-  "ticker": "603163",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "圣晖集成",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "圣晖集成具备洁净室工程经验、半导体与精密制造客户基础、东南亚属地化服务网络，2025年收入和利润高增长且现金流修复；但工程属性导致毛利率薄、订单与回款波动大，2026Q2在手订单同比仅小幅增长，2026-07-17收盘价仍显著高于合理价值区间，安全边际不足。",
-  "fair_value_range": [
-    36,
-    50
-  ],
-  "buy_zone": [
-    28,
-    36
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "圣晖集成",
+    "security_status": "active",
+    "symbol": "CN:603163",
+    "ticker": "603163"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c8606873ae0a4f805b08b4b1413a3e915a9264e7b738497607aa78e5ce1304fb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于36元，且下一期定期报告显示在手订单未同比下滑、经营现金流/净利润不低于0.7、主营毛利率不低于9%",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查订单转收入、毛利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于36至50元，且新增重大合同持续兑现、毛利率稳定在10%以上",
-      "action": "维持或小幅加仓至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润是否能达到1.75至1.95亿元基准假设。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于70元，或TTM PE高于35倍且订单增速低于10%",
-      "action": "不买入并减持交易性仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及分红，更新长期盈利中枢和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入合理价值下沿和买入研究区间，需要复核订单、毛利率和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入明显安全边际区间，若基本面未恶化可提高研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "高于估值上沿较多，除非订单和利润显著超预期，否则应回避或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入合理价值下沿和买入研究区间，需要复核订单、毛利率和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入明显安全边际区间，若基本面未恶化可提高研究优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "高于估值上沿较多，除非订单和利润显著超预期，否则应回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查订单转收入、毛利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润是否能达到1.75至1.95亿元基准假设。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及分红，更新长期盈利中枢和估值区间。"
-    }
-  ],
-  "key_metrics": {
-    "last_close_price": 82.02,
-    "last_close_date": "2026-07-17",
-    "estimated_ttm_pe": 49.92,
-    "estimated_pb": 7.26,
-    "revenue_2025_cny": 2988504733.21,
-    "net_profit_2025_cny": 154546143.11,
-    "operating_cash_flow_2025_cny": 144165160.53,
-    "q1_2026_revenue_cny": 540921807.1,
-    "q1_2026_net_profit_cny": 38695596.46,
-    "backlog_2026_06_30_cny_ex_tax": 2930000000
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

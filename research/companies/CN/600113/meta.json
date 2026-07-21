@@ -1,74 +1,96 @@
 {
-  "symbol": "CN:600113",
-  "ticker": "600113",
-  "name": "浙江东日",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "浙江东日是温州国资控股的区域农副产品批发市场运营商，核心资产稳定、杠杆低、现金储备较厚，但当前股价对应约90倍滚动市盈率和约4.9倍市净率，显著透支未核验的资产注入或主题预期，缺乏基本面安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    7.0,
-    11.0
-  ],
-  "buy_zone": [
-    0.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江东日",
+    "security_status": "active",
+    "symbol": "CN:600113",
+    "ticker": "600113"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "08d38d64a6bea49c2377e99d1151d7605df1dd9535e6099f5bafca7fd702ae0c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于18元且无可量化高质量资产注入，不建仓。",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查核心农批市场收入、配送现金流和预付款项变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至7元以下，且最近两个季度经营现金流/归母净利润大于0.8、核心农批市场收入未恶化。",
-      "action": "research_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认估值区间和是否存在资产注入或外拓项目变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至6元以下，且无重大关联交易损害、无现金流恶化，可作为区域公用事业型资产配置。",
-      "action": "small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入公允价值上沿以下，重新评估基本面和安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入初始买入观察区，可结合现金流和治理情况评估小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "高于基本面可解释区间，持仓应检查减持或卖出纪律。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入公允价值上沿以下，重新评估基本面和安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入初始买入观察区，可结合现金流和治理情况评估小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "高于基本面可解释区间，持仓应检查减持或卖出纪律。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查核心农批市场收入、配送现金流和预付款项变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认估值区间和是否存在资产注入或外拓项目变化。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

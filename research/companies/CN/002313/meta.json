@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:002313",
-  "ticker": "002313",
-  "name": "日海智能",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "困境修复早期标的：2026Q1及H1预告显示扭亏，但归母权益极薄、杠杆较高、现金流质量仍需验证；当前估值已部分反映乐观修复，适合观察而非买入。",
-  "fair_value_range": [
-    5.5,
-    6.8
-  ],
-  "buy_zone": [
-    4.2,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "日海智能",
+    "security_status": "active",
+    "symbol": "CN:002313",
+    "ticker": "002313"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c65983faa457b9a8d7c8942726c7ac06ee244ea372c0d14943c2f4e8fb0f436a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026半年报确认扣非盈利、经营现金流改善且股价低于5.0元",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查扣非利润、经营现金流、应收账款和有息负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.2元且无新增重大诉讼、债务或退市风险",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认扭亏是否持续以及归母权益是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.5元但全年扣非利润和现金流未兑现",
-      "action": "不追高并减持已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，决定是否从观察升级或转为回避",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入初步买入观察区，需要结合半年报现金流和扣非利润复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入较有安全边际区间，但仍需排除新增财务风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "已接近乐观情景估值，若业绩未兑现应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入初步买入观察区，需要结合半年报现金流和扣非利润复核"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入较有安全边际区间，但仍需排除新增财务风险"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "已接近乐观情景估值，若业绩未兑现应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查扣非利润、经营现金流、应收账款和有息负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认扭亏是否持续以及归母权益是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，决定是否从观察升级或转为回避"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:920082",
-  "market": "CN",
-  "ticker": "920082",
-  "name": "方正阀门",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "方正阀门具备工业阀门认证、客户准入和定制化交付壁垒，海外业务毛利率高于境内，存在高端油气和石化项目放量机会；但2025年扣非利润下滑、2026Q1利润受毛利和汇兑拖累大幅下降，当前估值接近合理价值上沿，需等待半年报验证或价格回落后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.4,
-    8.2
-  ],
-  "buy_zone": [
-    0,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "方正阀门",
+    "security_status": "active",
+    "symbol": "CN:920082",
+    "ticker": "920082"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "e988d7f1f37e520c885874473fcfb8d0a5a2304c3f9c53b004bd9f3784796380"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于6.2元且2026H1扣非利润恢复正增长、综合毛利率不低于25%",
-      "action": "建立观察仓至1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看扣非利润、毛利率、海外收入和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于6.2元且海外收入增长、经营现金流/净利润大于0.8、应收账款周转改善",
-      "action": "加仓但总仓位不超过4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，确认Q1利润下滑是否为阶段性扰动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于10.5元且没有明确订单或利润上修证据",
-      "action": "不加仓并减仓至0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告及分红、订单和关联交易执行情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入买入区，需同步复核半年报毛利率、扣非利润和现金流是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过乐观估值下沿，若基本面未上修应考虑减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入买入区，需同步复核半年报毛利率、扣非利润和现金流是否未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过乐观估值下沿，若基本面未上修应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看扣非利润、毛利率、海外收入和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，确认Q1利润下滑是否为阶段性扰动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告及分红、订单和关联交易执行情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

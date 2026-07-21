@@ -1,81 +1,110 @@
 {
-  "symbol": "CN:920245",
-  "market": "CN",
-  "ticker": "920245",
-  "name": "威博液压",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "威博液压客户质量较好、海外收入和高端应用有修复线索，但2025年主力动力单元毛利率降至12.34%、扣非ROE仅2.63%，2026-07-17收盘价12.34元对应约53.9倍TTM PE和82.3倍扣非PE，当前缺乏安全边际，等待价格回到7.5元以下或毛利率与扣非净利连续验证后再买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "威博液压",
+    "security_status": "active",
+    "symbol": "CN:920245",
+    "ticker": "920245"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "00bcb744a5465a2ad2212bfb03ba06424df65925a9783fc6f9a8d2df820bda9e"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "4bb5b29cc631c10ce7b6bb9c93f5f5a0f0420f86ed02e0f65c2d418efc90b717"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于11.0元或基本面未验证时不买",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报毛利率、扣非净利、境外收入、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入7.0-7.5元且毛利率、订单、现金流未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q1利润修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.2元且2026中报或三季报显示毛利率回到16%以上、经营现金流为正",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和可转债募投进展，判断ROIC是否改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "扣非ROE可见回到6%-8%、毛利率稳定17%以上、扣非净利TTM超过2500万元",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入安全边际买入区上沿，复核中报、毛利率、订单和回款后可小仓试探",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入强吸引力价，若基本面未恶化可提高到2.5%-3.0%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "高于合理区间且安全边际不足，不追高，已有仓位考虑减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入安全边际买入区上沿，复核中报、毛利率、订单和回款后可小仓试探"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入强吸引力价，若基本面未恶化可提高到2.5%-3.0%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "高于合理区间且安全边际不足，不追高，已有仓位考虑减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报毛利率、扣非净利、境外收入、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认Q1利润修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和可转债募投进展，判断ROIC是否改善"
-    }
-  ],
-  "notes": "质量评级B-；估值评级watch；2026-07-17收盘价12.34元，总股本约6907.32万股，总市值约8.52亿元；合理价格区间7.5-10.5元，安全边际买入价7.5元以下，强吸引力价6.2元以下，不追高价11.0元以上；今天决策不买，第一笔仓位0，置信度中等偏低。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

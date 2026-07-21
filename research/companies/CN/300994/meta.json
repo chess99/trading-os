@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300994",
-  "ticker": "300994",
-  "name": "久祺股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "出口导向型自行车及配件公司，2025年收入和利润修复、现金流改善，OBM和E-BIKE提供中期弹性；但2026Q1收入增长而利润大幅下滑，汇率、销售费用和新产能爬坡压力尚未消化，当前价格处于合理区间中部，缺少足够安全边际。",
-  "fair_value_range": [
-    9.5,
-    12.0
-  ],
-  "buy_zone": [
-    7.5,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "久祺股份",
+    "security_status": "active",
+    "symbol": "CN:300994",
+    "ticker": "300994"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "290d5e6a79781c3edecb9920625b9687446d0ae6d5da2eada255360bfc8359b0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在未验证利润率修复前保留观察仓",
-      "action": "watch_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看OBM占比、毛利率、销售费用率、汇兑损益和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.5元且无重大负面基本面变化",
-      "action": "start_or_add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润下滑是否已修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利率恢复至4.5%以上且销售费用率回落",
-      "action": "upgrade_review",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和现金分红能力，更新中期估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入买入区间上沿，需要复核汇率、订单和利润率是否未继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "进入减仓区间下沿，若TTM归母净利润仍低于1.4亿元则估值透支",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入买入区间上沿，需要复核汇率、订单和利润率是否未继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "进入减仓区间下沿，若TTM归母净利润仍低于1.4亿元则估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看OBM占比、毛利率、销售费用率、汇兑损益和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润下滑是否已修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和现金分红能力，更新中期估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

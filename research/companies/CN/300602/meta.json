@@ -1,114 +1,110 @@
 {
-  "symbol": "CN:300602",
-  "market": "CN",
-  "ticker": "300602",
-  "name": "飞荣达",
-  "company_name": "深圳市飞荣达科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "飞荣达是国内电磁屏蔽、热管理和轻量化功能件平台型公司，AI服务器液冷、数据中心散热、新能源车/储能热管理和具身智能提供成长弹性；但以2026-07-13约40.37元股价和约236.75亿元市值计，市场已部分预支2026年业绩与AI散热订单兑现，当前更适合观察或小仓位跟踪，等待35元以下安全边际。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    35,
-    45
-  ],
-  "buy_zone": [
-    28,
-    35
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "飞荣达",
+    "security_status": "active",
+    "symbol": "CN:300602",
+    "ticker": "300602"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "ce1502ed9f74e9a49c5b436a88635814263ddb581ee276f377f721b7119d4a53"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2d6d29405971beb37f1d6fd6591c49b2208153771d00cbec00a7f69850ad13d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "28元以下",
-      "condition": "股价低于28元，且热管理毛利率未继续恶化、经营现金流没有连续低于净利润、AI服务器散热订单仍在兑现",
-      "action": "买入或提高仓位",
-      "target_weight": 0.05,
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看AI服务器散热收入、热管理毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "28-35元",
-      "condition": "股价处于28-35元，且2026年半年报或三季报显示收入增长、利润增长和现金流质量未背离",
-      "action": "分批买入",
-      "target_weight": 0.03,
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证H1高增后订单和利润是否持续兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "35-45元",
-      "condition": "股价处于35-45元，估值处于合理区间但安全边际不足",
-      "action": "观察或仅保留跟踪仓",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估AI液冷、储能液冷、新能源车和具身智能业务的利润贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "45-52元",
-      "condition": "股价处于45-52元，需要AI服务器液冷、新能源车和储能热管理持续兑现才能支撑估值",
-      "action": "持有不加仓",
-      "target_weight": 0.0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入可买区上沿，需要复核最新订单、毛利率、应收账款和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "zone": "52元以上",
-      "condition": "股价高于52元，且没有看到订单、毛利率和现金流同步超预期",
-      "action": "不追高并考虑降低仓位",
-      "target_weight": 0.0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入强安全边际区，如果基本面未破坏，可考虑提高目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "进入估值明显预支区，需要评估是否减仓或停止加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入可买区上沿，需要复核最新订单、毛利率、应收账款和现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入强安全边际区，如果基本面未破坏，可考虑提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "进入估值明显预支区，需要评估是否减仓或停止加仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看AI服务器散热收入、热管理毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证H1高增后订单和利润是否持续兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估AI液冷、储能液冷、新能源车和具身智能业务的利润贡献"
-    }
-  ],
-  "key_tracking_metrics": [
-    "热管理材料及器件收入增速和毛利率",
-    "服务器/数据中心散热产品批量交付进展",
-    "液冷冷板、CDU、3D VC、风扇等产品客户数量和订单持续性",
-    "经营活动现金流净额与归母净利润的比值",
-    "应收账款净额、应收账款占总资产比例和周转率",
-    "前五大客户销售占比",
-    "新能源车和储能液冷项目毛利率",
-    "具身智能相关产品从打样测试到小批量或批量收入的进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

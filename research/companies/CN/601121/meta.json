@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601121",
-  "ticker": "601121",
-  "name": "宝地矿业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "观察：宝地矿业正从区域铁精粉公司升级为新疆/青海资源整合平台，2026H1受哈西亚图金多金属矿粉和葱岭并表驱动利润显著上修；但当前股价已反映部分改善，凯宏12.5亿元并购、葱岭临停、铁精粉毛利波动和新增贷款压力仍需半年报与后续公告验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.0,
-    7.8
-  ],
-  "buy_zone": [
-    4.8,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝地矿业",
+    "security_status": "active",
+    "symbol": "CN:601121",
+    "ticker": "601121"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "99f1a7deb2680a0d8ec810b0e7b3551c277e8162633299f0f5af4ce88a1d1495"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理价值区间中段，等待2026半年报、葱岭复产与凯宏工商变更/融资细节落地",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、经营现金流、金多金属矿粉毛利率与葱岭复产进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至5.6元以下，且半年报扣非净利润不低于1.73亿元、经营现金流恢复为正",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、凯宏交易并表和融资成本",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至4.8元以下，且葱岭复产明确、凯宏交易未显著恶化资产负债表",
-      "action": "add_on_weakness",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、全年分红、备战铁矿和凯宏整合进度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入小仓位试错区，需要复核半年报利润和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "接近保守NAV下沿，可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "若无利润继续上修或凯宏资源价值验证，估值进入减持/回避区",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入小仓位试错区，需要复核半年报利润和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "接近保守NAV下沿，可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "若无利润继续上修或凯宏资源价值验证，估值进入减持/回避区"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、经营现金流、金多金属矿粉毛利率与葱岭复产进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、凯宏交易并表和融资成本"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、全年分红、备战铁矿和凯宏整合进度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

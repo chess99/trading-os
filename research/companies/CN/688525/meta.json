@@ -1,110 +1,111 @@
 {
-  "symbol": "CN:688525",
-  "market": "CN",
-  "ticker": "688525",
-  "name": "佰维存储",
-  "company_name": "佰维存储",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "quality_rating": "high",
-  "valuation_rating": "attractive_but_cyclical",
-  "current_thesis": "2026H1预告归母净利润70-75亿元、Q2隐含利润环比继续增长，说明存储高景气尚未被证伪；252.86元已进入按周期正常化利润测算的220-280元买入区，可0.5%-1%首买、当前累计不超过2%，但现金流、存货和毛利率尚待正式半年报验证，不能因单日大跌重仓。",
-  "fair_value_range": [
-    300,
-    420
-  ],
-  "buy_zone": [
-    220,
-    280
-  ],
-  "sell_or_reduce_zone": [
-    430,
-    520
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佰维存储",
+    "security_status": "active",
+    "symbol": "CN:688525",
+    "ticker": "688525"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "0225529676d8edad17f1f5fcd2b47466fe0e9dfa5181d7ba36177933e4c49ac5"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "671743dfc3a8103aef7cabd0c6ada2a41a87250eca1294a55f663799b076f42d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于220-280元买入区，H1业绩预告已发布但正式半年报尚未验证现金流、存货和毛利率",
-      "action": "分批建立小仓，首笔0.5%-1%，当前累计不超过2%",
-      "max_weight": 0.02,
-      "reason": "Q2隐含利润环比继续增长且估值已有安全边际，但利润质量和周期可持续性尚未被完整验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "半年报预约披露日，核验70-75亿元预告落地、Q2毛利率、经营现金流、存货和跌价准备",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于220元且DRAM/NAND价格未转弱、半年报现金流和库存未恶化",
-      "action": "在复核基本面后加仓",
-      "max_weight": 0.03,
-      "reason": "价格进入更深安全边际区，但必须排除基本面恶化导致的下跌"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露期后复核存储价格高景气是否延续至下半年",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "正式半年报确认预告落地、经营现金流改善、存货周转稳定且毛利率未显著回落",
-      "action": "提高至卫星仓位",
-      "max_weight": 0.04,
-      "reason": "利润质量得到资产负债表和现金流验证后才允许提高周期暴露"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 280.0
+      },
+      "reason": "进入买入区，可在H1业绩预告确认的基础上分批建立0.5%-1%首仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于430元，或DRAM/NAND合约价连续两个月环比转负",
-      "action": "减仓或降至观察仓",
-      "max_weight": 0.01,
-      "reason": "估值重新接近高景气充分定价，或行业转弱触发盈利与估值双杀风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 220.0
+      },
+      "reason": "进入深度安全边际区，仅在存储价格、现金流和库存未恶化时复核加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 430.0
+      },
+      "reason": "进入减仓区下沿，除非正式半年报验证利润质量且盈利预测继续上修，否则停止新增并复核减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 520.0
+      },
+      "reason": "明显高于本轮合理价值区间，应强制复核仓位和2027年周期正常化利润",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 280,
-      "reason": "进入买入区，可在H1业绩预告确认的基础上分批建立0.5%-1%首仓"
-    },
-    {
-      "type": "price_below",
-      "price": 220,
-      "reason": "进入深度安全边际区，仅在存储价格、现金流和库存未恶化时复核加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 430,
-      "reason": "进入减仓区下沿，除非正式半年报验证利润质量且盈利预测继续上修，否则停止新增并复核减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 520,
-      "reason": "明显高于本轮合理价值区间，应强制复核仓位和2027年周期正常化利润"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "半年报预约披露日，核验70-75亿元预告落地、Q2毛利率、经营现金流、存货和跌价准备"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露期后复核存储价格高景气是否延续至下半年"
-    }
-  ],
-  "key_tracking_metrics": [
-    "DRAM合约价和现货价月度环比",
-    "NAND Flash合约价和现货价月度环比",
-    "季度营业收入",
-    "季度归母净利润",
-    "季度综合毛利率",
-    "经营性现金流量净额",
-    "存货金额和存货周转天数",
-    "存货跌价准备",
-    "嵌入式存储收入和毛利率",
-    "PC存储和SSD收入",
-    "企业级存储收入",
-    "AI端侧存储收入",
-    "车载存储客户认证和收入",
-    "重大采购合同执行进度",
-    "江波龙和德明利同季毛利率及库存变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

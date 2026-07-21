@@ -1,104 +1,115 @@
 {
-  "symbol": "CN:002539",
-  "market": "CN",
-  "ticker": "002539",
-  "name": "云图控股",
-  "company_name": "成都云图控股股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "复合肥主业稳健，磷、氮、盐化工一体化进入兑现期；但当前10.21元接近基准合理价值，资产负债率和资本开支偏高，安全边际不足，等待8.8元以下或Q2/Q3项目兑现后再评估。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性略贵",
-  "fair_value_range": [
-    9.5,
-    12.0
-  ],
-  "buy_zone": [
-    7.5,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "云图控股",
+    "security_status": "active",
+    "symbol": "CN:002539",
+    "ticker": "002539"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "cfb5afc39fd993dcd340ee1cdec0eb99ec0849a631a745b6d7c691af5dca6d60"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current price 10.21",
-      "action": "观察，不买入",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：经营现金流、合成氨项目爬坡、磷复肥毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 8.8",
-      "action": "复核基本面后建首仓或加仓",
-      "position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：Q1现金流是否修复、净有息债务是否下降",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price <= 7.5",
-      "action": "若基本面未破坏，提高到强吸引力仓位",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：项目利润兑现、ROE、资本开支和分红",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 8.8,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
       "reason": "低于合理区间约10%-25%，TTM PE降至约12倍以内，安全边际开始出现",
-      "action": "进入有安全边际买入区，复核经营无恶化后可建首仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 7.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
       "reason": "接近悲观情景价值，若基本面未破坏赔率显著改善",
-      "action": "进入强吸引力区，若基本面未破坏可提高至3%-5%仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 12.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
       "reason": "超过基准合理区间上沿，安全边际不足",
-      "action": "不追高，仅观察或持有极小跟踪仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
       "reason": "接近透支乐观项目兑现，除非盈利上修否则风险收益不佳",
-      "action": "考虑减仓或放弃新增"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：经营现金流、合成氨项目爬坡、磷复肥毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：Q1现金流是否修复、净有息债务是否下降"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：项目利润兑现、ROE、资本开支和分红"
-    }
-  ],
-  "key_tracking_metrics": [
-    "磷复肥销量、均价、吨毛利和毛利率",
-    "合成氨项目开工率和单位成本改善",
-    "经营现金流/归母净利润",
-    "净有息债务和资产负债率",
-    "在建工程转固节奏和新增产能利润贡献",
-    "境外收入增速及毛利率",
-    "黄磷、纯碱、磷酸铁价格和库存"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

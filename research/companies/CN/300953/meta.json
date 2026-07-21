@@ -1,1 +1,86 @@
-{"symbol":"CN:300953","market":"CN","ticker":"300953","name":"震裕科技","company_name":"宁波震裕科技股份有限公司","currency":"CNY","status":"active","current_rating":"watch","current_thesis":"新能源车驱动电机铁芯+锂电结构件细分龙头，受益新能源车与潜在人形机器人电机需求；但属重资产、低毛利、客户集中型加工企业，自由现金流薄、议价能力弱，估值非便宜。需等待安全边际与情绪冰点。","quality_rating":"medium","valuation_rating":"fair","fair_value_range":[25,55],"buy_zone":[25,40],"strong_attraction_zone":[0,25],"sell_or_reduce_zone":[55,70],"do_not_chase_above":70,"position_plan":[{"zone":"<25","condition":"悲观情景+情绪冰点，毛利率企稳","action":"分批建仓","target_weight":0.05,"max_weight":0.06},{"zone":"25-40","condition":"合理偏低+季报验证毛利率不破12%","action":"小幅加仓","target_weight":0.03,"max_weight":0.04},{"zone":"40-55","condition":"合理估值","action":"持有不加仓","target_weight":0.02,"max_weight":0.02},{"zone":"55-70","condition":"偏贵","action":"分批减仓","target_weight":0.01,"max_weight":0.02},{"zone":">70","condition":"高估/题材透支","action":"清仓","target_weight":0,"max_weight":0}],"latest_report":"reports/2026-07-08-initial.md","report_history":["reports/2026-07-08-initial.md"],"review_triggers":[{"type":"date","date":"2026-08-31","reason":"2026半年报披露，验证毛利率与客户结构变化"},{"type":"date","date":"2027-04-30","reason":"2026年报披露，验证全年净利与现金流"}],"price_triggers":[{"type":"price_below","price":25,"reason":"破强吸引区间下限，复盘加仓条件"},{"type":"price_above","price":70,"reason":"破不追高线，复核止盈"}],"key_risks":["客户集中：前五大客户占比>60%","原材料风险：铝、硅钢片价格波动直接挤压毛利","客户年降与价格战传导","扩产杠杆：高capex+周期下行现金流压力","技术替代：扁线电机/轮毂电机结构变化","人形机器人预期落空","解禁与减持压力","信息披露滞后、研报覆盖少"],"updated_at":"2026-07-08T00:00:00+08:00"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "震裕科技",
+    "security_status": "active",
+    "symbol": "CN:300953",
+    "ticker": "300953"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "8d96e234a9d0fcaaaf6d5c53e0d6b5d3f3f8fc25a177afb1c17c7bb44a80f03c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露，验证毛利率与客户结构变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露，验证全年净利与现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "破强吸引区间下限，复盘加仓条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "破不追高线，复核止盈",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

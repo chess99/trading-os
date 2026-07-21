@@ -1,108 +1,115 @@
 {
-  "symbol": "CN:000885",
-  "market": "CN",
-  "ticker": "000885",
-  "name": "城发环境",
-  "company_name": "城发环境",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "城发环境具备环保运营和高速公路双重现金流属性，2025年经营现金流显著改善且估值偏低；但补贴和政府应收、重资产负债、特许经营期限仍需2026半年报继续验证，因此当前为偏积极观察而非满仓买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "undervalued_to_fair",
-  "fair_value_range": [
-    14.0,
-    17.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    19.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "城发环境",
+    "security_status": "active",
+    "symbol": "CN:000885",
+    "ticker": "000885"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "4df48cea4b331a61ce62945185f173d01515550b1faf87e4322d32914a96d3c4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约12.27元附近，尚未复核2026半年报现金流和应收改善",
-      "action": "仅建立研究型首笔仓位",
-      "max_weight": 0.015,
-      "reason": "估值便宜但应收补贴和重资产风险仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报经营现金流、应收账款、合同资产和分红信号",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入10.5-11.2元且经营现金流继续覆盖归母净利润",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "安全边际扩大且现金流修复得到延续"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报利润延续性、财务费用和高速通行费表现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于10.0元且2026半年报显示应收周转改善、无大额低回报资本开支",
-      "action": "提高至最高配置",
-      "max_weight": 0.05,
-      "reason": "PB和PE均提供较大折价，且核心风险被数据缓释"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、资本开支、应收账龄、特许经营期限和年度分红方案",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于16.5元但分红率、补贴回款和现金流未同步改善",
-      "action": "减仓或停止新增",
-      "max_weight": 0.02,
-      "reason": "估值进入合理区间上沿，风险补偿下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.2
+      },
+      "reason": "进入首个有吸引力买入区间，复核现金流和应收后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入深度折价区，若基本面未恶化可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "达到合理价值区间上沿，需要评估减仓和分红兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "超过当前基本面可支持的估值区间，除非现金流和分红显著超预期",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.2,
-      "reason": "进入首个有吸引力买入区间，复核现金流和应收后可加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入深度折价区，若基本面未恶化可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "达到合理价值区间上沿，需要评估减仓和分红兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "超过当前基本面可支持的估值区间，除非现金流和分红显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报经营现金流、应收账款、合同资产和分红信号"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报利润延续性、财务费用和高速通行费表现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、资本开支、应收账龄、特许经营期限和年度分红方案"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流净额/归母净利润",
-    "应收账款、合同资产、长期应收款合计及账龄",
-    "垃圾焚烧入厂量、发电量、上网电量、吨垃圾发电量",
-    "垃圾处置费、可再生能源补贴和政府付费回款",
-    "高速公路车流量和通行费收入",
-    "资产负债率、有息负债、财务费用率和平均融资成本",
-    "年度资本开支和维护性资本开支",
-    "分红率、每股股息和自由现金流覆盖倍数",
-    "关联交易、担保余额和控股股东资产整合安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

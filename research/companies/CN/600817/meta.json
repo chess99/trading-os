@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:600817",
-  "ticker": "600817",
-  "name": "宇通重工",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "宇通重工是新能源环卫设备和矿用装备细分领先公司，剥离服务业务后主业更聚焦，资产负债表净现金和分红提供下方缓冲；但当前价格按扣非利润和现金流质量看安全边际不足，需要等待8.8元以下或2026年半年报确认主业双位数增长与现金流改善。",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    8.0,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宇通重工",
+    "security_status": "active",
+    "symbol": "CN:600817",
+    "ticker": "600817"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b8faed700585e0b197878b28d872520010bda848dcb602e24401ef9d0465cb5a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.8元，且2026年半年报显示剔除并表影响后的制造主业收入和扣非利润仍保持正增长",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查主业收入、扣非利润、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.0元，经营现金流回到利润附近，且矿用装备或新能源环卫设备订单继续增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认矿用装备和新能源环卫设备订单趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于14.5元但2026年利润预期未上修，或扣非利润/现金流低于预期",
-      "action": "不追高或降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入初始买入区间，按基准利润估值具备一定安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入深度安全边际区间，可结合半年报和现金流提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "接近乐观估值区间，若利润预期未同步上修应考虑降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入初始买入区间，按基准利润估值具备一定安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入深度安全边际区间，可结合半年报和现金流提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "接近乐观估值区间，若利润预期未同步上修应考虑降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查主业收入、扣非利润、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认矿用装备和新能源环卫设备订单趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重估合理价值区间"
-    }
-  ],
-  "key_metrics": {
-    "reference_price_cny": 10.08,
-    "reference_price_date": "2026-07-17",
-    "reference_price_confidence": "中低",
-    "shares_outstanding_million": 533.304346,
-    "fair_value_method": "relative_pe_pb_dcf_scenario_cross_check"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

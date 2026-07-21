@@ -1,109 +1,106 @@
 {
-  "symbol": "CN:688372",
-  "market": "CN",
-  "ticker": "688372",
-  "name": "伟测科技",
-  "company_name": "伟测科技",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "伟测科技是A股稀缺的独立第三方IC测试龙头，2025-2026Q1受益于AI算力、智驾和高端芯片测试需求，收入和利润加速；但2026-07-09收盘价188.88元已显著反映乐观预期，且扩产带来折旧、负债和产能利用率风险，因此当前以观察仓和回撤买入为主。",
-  "quality_rating": "buy",
-  "valuation_rating": "watch",
-  "fair_value_range": [
-    145,
-    175
-  ],
-  "buy_zone": [
-    115,
-    145
-  ],
-  "sell_or_reduce_zone": [
-    190,
-    230
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "伟测科技",
+    "security_status": "active",
+    "symbol": "CN:688372",
+    "ticker": "688372"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "4cf3f626619c384a65c5bc7a1817140235810a208d29420eb3e07f720c4e53df"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026-07-09 price near 188.88 CNY and no new quarterly confirmation beyond 2026Q1",
-      "action": "only allow a tracking position",
-      "max_weight": 0.01,
-      "reason": "The business quality is strong, but current price already discounts optimistic high-end IC testing growth."
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "Review 2026 interim report for growth durability, gross margin, depreciation burden and cash conversion.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price falls into 130-145 CNY while revenue growth, gross margin and operating cash flow remain healthy",
-      "action": "accumulate gradually",
-      "max_weight": 0.02,
-      "reason": "Risk-reward improves if fundamentals remain intact and valuation returns to the base-case fair value zone."
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review 2026 third-quarter report and reassess 2026-2027 earnings assumptions.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price falls into 115-125 CNY without deterioration in customer demand, utilization or equipment supply",
-      "action": "increase to full research position",
-      "max_weight": 0.03,
-      "reason": "This zone offers better margin of safety for a cyclical, capital-intensive semiconductor testing company."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 145.0
+      },
+      "reason": "Enter the upper end of the preferred buy zone; review 2026 quarterly revenue, gross margin and operating cash flow before adding.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price rises above 190 CNY without new evidence of stronger 2026-2027 earnings power",
-      "action": "do not add and consider reducing any tactical position",
-      "max_weight": 0.005,
-      "reason": "Upside becomes dependent on optimistic scenario assumptions."
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 125.0
+      },
+      "reason": "Potential high-conviction entry if high-end testing demand and utilization remain intact.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 190.0
+      },
+      "reason": "Price reaches reduce/watch zone; avoid chasing unless new order or margin evidence raises fair value.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 230.0
+      },
+      "reason": "Optimistic scenario largely priced in; reassess position size and valuation assumptions.",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 145,
-      "reason": "Enter the upper end of the preferred buy zone; review 2026 quarterly revenue, gross margin and operating cash flow before adding."
-    },
-    {
-      "type": "price_below",
-      "price": 125,
-      "reason": "Potential high-conviction entry if high-end testing demand and utilization remain intact."
-    },
-    {
-      "type": "price_above",
-      "price": 190,
-      "reason": "Price reaches reduce/watch zone; avoid chasing unless new order or margin evidence raises fair value."
-    },
-    {
-      "type": "price_above",
-      "price": 230,
-      "reason": "Optimistic scenario largely priced in; reassess position size and valuation assumptions."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "Review 2026 interim report for growth durability, gross margin, depreciation burden and cash conversion."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review 2026 third-quarter report and reassess 2026-2027 earnings assumptions."
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly revenue growth",
-    "parent net profit growth",
-    "deducted parent net profit growth",
-    "wafer testing revenue and gross margin",
-    "final testing revenue and gross margin",
-    "testing depreciation and lease cost ratio",
-    "fixed assets",
-    "construction in progress",
-    "asset-liability ratio",
-    "operating cash flow to net profit",
-    "accounts receivable turnover days",
-    "top five customer concentration",
-    "AI/HPC/AD high-end testing demand commentary",
-    "Nanjing Wuxi Shanghai Chengdu capacity project progress",
-    "imported testing equipment supply risk"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

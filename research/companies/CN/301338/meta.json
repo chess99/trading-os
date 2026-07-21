@@ -1,31 +1,86 @@
 {
-  "symbol": "CN:301338",
-  "market": "CN",
-  "ticker": "301338",
-  "name": "凯格精机",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "国产SMT锡膏印刷设备龙头，2025年报业绩爆发（营收+34.9%，归母净利+164.8%），毛利率从32%修复至41%，经营现金流转正；半导体先进封装设备是第二曲线。当前价格127.8元，2026E PE 34-36x、2027E PE 22-23x，仍属合理。等待回调至110元以下或中报验证半导体订单兑现后分批买入。",
-  "fair_value_range": [110, 160],
-  "buy_zone": [85, 110],
-  "sell_or_reduce_zone": [170, 250],
-  "position_plan": [
-    {"condition": "股价处于115-125元区间且有中报验证", "max_weight": 0.02},
-    {"condition": "股价跌破110元或中报超预期，买点出现", "max_weight": 0.03},
-    {"condition": "股价低于100元，深度安全边际加仓", "max_weight": 0.04},
-    {"condition": "股价170-185元，开始减仓1/3", "max_weight": 0.01},
-    {"condition": "股价>200元，仅保留底仓", "max_weight": 0.005}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯格精机",
+    "security_status": "active",
+    "symbol": "CN:301338",
+    "ticker": "301338"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "eac3e3cbf810c78de29e9758f5a9489fcd4affdf1d84a33f3d7fa8ecbdcf26a0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-23"
+      },
+      "reason": "2026半年度报告披露后复查营收增速(+50%?)、毛利率(40%+)、半导体设备订单与现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "2026三季报后复查全年业绩预期与半导体产品落地情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 110.0
+      },
+      "reason": "进入有安全边际买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 170.0
+      },
+      "reason": "进入减仓不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-23", "reason": "2026半年度报告披露后复查营收增速(+50%?)、毛利率(40%+)、半导体设备订单与现金流"},
-    {"type": "date", "date": "2026-10-30", "reason": "2026三季报后复查全年业绩预期与半导体产品落地情况"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 110, "reason": "进入有安全边际买入区间"},
-    {"type": "price_above", "price": 170, "reason": "进入减仓不应追高区间"}
-  ],
-  "updated_at": "2026-07-09T09:45:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

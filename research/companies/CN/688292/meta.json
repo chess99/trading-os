@@ -1,91 +1,115 @@
 {
-  "symbol": "CN:688292",
-  "market": "CN",
-  "ticker": "688292",
-  "name": "浩瀚深度",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "浩瀚深度具备运营商大网 DPI、网络可视化与信息安全防护技术积累，但 2025 年转亏、2026Q1 亏损扩大，当前估值已反映一部分恢复预期，缺少足够安全边际；等待价格回落或连续季度证明收入、现金流和扣非利润修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    18.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浩瀚深度",
+    "security_status": "active",
+    "symbol": "CN:688292",
+    "ticker": "688292"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "82caaf716297156217475eabc51507bb58c48c6c62d5ed4273c5c726b34d4fe9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 12.5 元且未出现客户份额丢失、商誉减值或现金流继续恶化等重大负面变化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报收入、毛利率、扣非亏损、经营现金流和云边云并表质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 10.5 元，且最近一期报告显示收入恢复、经营现金流改善、扣非亏损收窄",
-      "action": "提高到小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报是否出现收入与现金流拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非利润转正且经营现金流为正，信息安全防护收入保持增长",
-      "action": "重新评估是否转为买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，确认运营商集采兑现和全年利润恢复情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 22 元但扣非利润仍未转正",
-      "action": "不追高并降低已有暴露",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入初始买入区上沿，需要复核 2026 半年报和订单兑现情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入具备较高安全边际的深度复核区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "接近乐观情景估值下沿，若利润未兑现应降仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "进入卖出或回避追高区，需要盈利兑现支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入初始买入区上沿，需要复核 2026 半年报和订单兑现情况"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入具备较高安全边际的深度复核区"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "接近乐观情景估值下沿，若利润未兑现应降仓"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "进入卖出或回避追高区，需要盈利兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报收入、毛利率、扣非亏损、经营现金流和云边云并表质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报是否出现收入与现金流拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，确认运营商集采兑现和全年利润恢复情况"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

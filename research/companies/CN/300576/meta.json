@@ -1,110 +1,115 @@
 {
-  "symbol": "CN:300576",
-  "market": "CN",
-  "ticker": "300576",
-  "name": "容大感光",
-  "company_name": "深圳市容大感光科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "PCB光刻胶细分龙头，AI PCB和国产替代提供高端干膜、IC载板阻焊材料、显示/半导体光刻胶的成长选择权；但2026-07-13价格36.24元已对应约132倍TTM PE，珠海产能仍处爬坡和折旧消化期，当前不具备足够安全边际。",
-  "quality_rating": "中上",
-  "valuation_rating": "高估",
-  "fair_value_range": [
-    18.0,
-    24.0
-  ],
-  "buy_zone": [
-    0.0,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    38.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "容大感光",
+    "security_status": "active",
+    "symbol": "CN:300576",
+    "ticker": "300576"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6814623a378fdeedcc3a35ccb884f4b2f555f45c6f54b3d645dbafe52bc2ea12"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌至18元以下且PCB光刻胶毛利率未明显下滑、经营现金流未恶化",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看珠海容大亏损、干膜收入、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至15元以下且珠海容大亏损收窄、单季度扣非归母净利润恢复到3500万元以上",
-      "action": "加仓至3%-5%核心跟踪仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q3是否出现收入放量和费用率下降。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于24元但高端干膜、IC载板阻焊材料尚未贡献可验证利润",
-      "action": "只保留观察仓，不新增买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断珠海二期试生产和高端产品导入是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于32元且TTM归母净利润仍低于1.6亿元",
-      "action": "减仓或放弃买入",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
       "reason": "价格进入合理价值下沿并具备约25%安全边际",
-      "action": "复核基本面，准备小仓位买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 15.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
       "reason": "价格进入深度安全边际区域，若基本面未恶化可提高仓位",
-      "action": "若基本面未破坏，评估加仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 32.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
       "reason": "价格显著高于合理价值区间，且需要利润兑现支撑",
-      "action": "若未出现利润兑现，减仓或维持空仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 38.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
       "reason": "价格接近或超过乐观情景估值，泡沫风险上升",
-      "action": "重新审视泡沫风险和卖出纪律"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看珠海容大亏损、干膜收入、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q3是否出现收入放量和费用率下降。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断珠海二期试生产和高端产品导入是否兑现。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度扣非归母净利润是否稳定高于3500万元",
-    "珠海容大是否从2025年亏损4925万元转向盈亏平衡",
-    "感光干膜收入占比是否提升至15%以上且毛利率不低于PCB液态光刻胶",
-    "显示用光刻胶及半导体光刻胶收入是否突破8000万元至1亿元",
-    "IC载板阻焊干膜和FCBGA载板液态阻焊油墨是否进入中批或大批量供货",
-    "年度经营现金流净额是否不低于归母净利润80%",
-    "ROE是否恢复到10%-12%以上"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

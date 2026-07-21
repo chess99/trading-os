@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:000159",
-  "market": "CN",
-  "ticker": "000159",
-  "name": "国际实业",
-  "company_name": "国际实业",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "国际实业当前以低毛利油品贸易为收入主体，2025年和2026Q1经营现金流均为负，应收账款扩张，当前价格已包含新疆能源、仓储项目和小市值重组预期溢价；在现金流、油品毛利率和定增项目收益未验证前，仅适合研究跟踪，不建议主动买入。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    3.6,
-    5.0
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国际实业",
+    "security_status": "active",
+    "symbol": "CN:000159",
+    "ticker": "000159"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "f857c20aa52ecfa9b6a644c3cd464ebc0db60b9fe536eb381e489f01c0a30800"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.00元，且最近一个季度经营现金流转正或应收账款余额下降",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区上沿，同时需要现金流或回款质量改善来验证低毛利贸易扩张不是透支资产负债表"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的经营现金流、应收账款、油品毛利率和定增项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.50元，且没有退市风险警示、重大债务逾期、控制权风险升级或主业恶化信号",
-      "action": "提高至小仓位跟踪",
-      "max_weight": 0.02,
-      "reason": "价格相对2026Q1每股净资产出现明显折价，可用小仓位获取资产修复和项目期权"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入增长是否转化为扣非利润和现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.20元，且利润、经营现金流和应收账款没有同步改善",
-      "action": "减持或回避",
-      "max_weight": 0.0,
-      "reason": "估值进入题材溢价区，低毛利油品贸易和项目预期不足以支撑继续加仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入买入观察区，复核经营现金流、应收账款和油品毛利率后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "相对每股净资产折价扩大，若风险未恶化可评估加至最高2%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "进入减持/回避区，若没有基本面兑现则主题溢价过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入买入观察区，复核经营现金流、应收账款和油品毛利率后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "相对每股净资产折价扩大，若风险未恶化可评估加至最高2%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "进入减持/回避区，若没有基本面兑现则主题溢价过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的经营现金流、应收账款、油品毛利率和定增项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入增长是否转化为扣非利润和现金流改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "油品业务收入及毛利率",
-    "经营活动现金流量净额",
-    "应收账款余额、账龄和坏账准备",
-    "短期借款和一年内到期非流动负债",
-    "货币资金对短期债务覆盖倍数",
-    "定增审核及募投项目进展",
-    "中大杆塔订单、毛利率和回款",
-    "控股股东质押、减持、冻结和控制权变化",
-    "重大资产处置、资产注入、重组或监管问询公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

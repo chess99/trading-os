@@ -1,58 +1,86 @@
 {
-  "symbol": "CN:600192",
-  "ticker": "600192",
-  "name": "长城电工",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "长城电工处于电力装备行业需求仍有支撑但传统中低压设备竞争激烈的位置，公司连续亏损、毛利率低、净资产被消耗，当前价格隐含显著反转或重组预期，缺少基本面安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.2,
-    2.2
-  ],
-  "buy_zone": [
-    0.8,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    4.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长城电工",
+    "security_status": "active",
+    "symbol": "CN:600192",
+    "ticker": "600192"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "83e71ce302647de4068772c3947a3609e5e46968f3e7561f124a6420e11d6998"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不主动建仓；只有在半年报确认毛利率回到12%以上、经营现金流改善且股价进入买入区间时，才允许重新评估小仓试探。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "股价接近资产折价估值区间，可复核是否存在净资产继续恶化或真实经营改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报计划披露后复核收入、毛利率、现金流、净资产和亏损扩大情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "股价显著高于基本面估值区间，需要复核是否由未公告重组预期或纯交易情绪驱动。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报计划披露后复核收入、毛利率、现金流、净资产和亏损扩大情况。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核经营趋势是否继续恶化或出现订单质量改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核经营趋势是否继续恶化或出现订单质量改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "股价接近资产折价估值区间，可复核是否存在净资产继续恶化或真实经营改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "股价显著高于基本面估值区间，需要复核是否由未公告重组预期或纯交易情绪驱动。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

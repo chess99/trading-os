@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301551",
-  "ticker": "301551",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "无线传媒",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "河北省 IPTV 集成播控与新媒体运营平台，牌照、区域入口和现金流质量较强，但收入增长已进入平台期；当前价格附近安全边际不足，适合等待更高股息率或增值业务验证后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    14.0,
-    16.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "无线传媒",
+    "security_status": "active",
+    "symbol": "CN:301551",
+    "ticker": "301551"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "964f9c087dbc3288e154559c3434c2f45d9452e4727e7c9de90e44d635fffaa5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元且最近一期收入/利润未出现持续恶化，先建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、利润、经营现金流和现金资产结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于14元且经营现金流/归母净利润维持在0.8以上、分红政策稳定",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及增值业务增长迹象",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元且增值业务没有可量化增长，不新增仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红政策和长期增长假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入合理价值区间下沿，开始具备观察仓性价比",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "现金流和股息率安全边际明显改善，可复核买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入乐观情景估值，若基本面未改善应减少新买入或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入合理价值区间下沿，开始具备观察仓性价比"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "现金流和股息率安全边际明显改善，可复核买入"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入乐观情景估值，若基本面未改善应减少新买入或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、利润、经营现金流和现金资产结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及增值业务增长迹象"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红政策和长期增长假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

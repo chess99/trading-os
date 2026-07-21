@@ -1,108 +1,101 @@
 {
-  "symbol": "CN:601600",
-  "market": "CN",
-  "ticker": "601600",
-  "name": "中国铝业",
-  "company_name": "中国铝业股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中国铝业是具备铝土矿、氧化铝、原铝和能源配套的一体化央企平台，公司质量较高，但2026-07-06股价8.48元已基本反映中高景气与资源扩张预期，更适合观察，等待6.4至7.2元区间再提高仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    7.4,
-    9.2
-  ],
-  "buy_zone": [
-    6.4,
-    7.2
-  ],
-  "strong_attraction_zone": [
-    5.8,
-    6.3
-  ],
-  "sell_or_reduce_zone": [
-    9.8,
-    12.0
-  ],
-  "do_not_chase_above": 9.8,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国铝业",
+    "security_status": "active",
+    "symbol": "CN:601600",
+    "ticker": "601600"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "036c761e9f7de784a15bf69524b11af493d63203c23a812ab53dc30284878c6f"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "4bf425546a8b373d0659eedca1d6872090417433dea660fed7228a0209c99991"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": ">9.8",
-      "condition": "股价高于9.8元且基本面无新增超预期",
-      "action": "avoid_chasing_or_reduce",
-      "target_weight": 0.0,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报：复核吨盈利、现金流和分红兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "9.2-9.8",
-      "condition": "股价高于合理区间上沿",
-      "action": "hold_or_reduce",
-      "target_weight": 0.02,
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报与景气拐点是否出现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "7.4-9.2",
-      "condition": "股价处于合理区间",
-      "action": "watch_or_probe",
-      "target_weight": 0.02,
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入安全边际买入带，重新评估加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "zone": "6.4-7.2",
-      "condition": "股价回到安全边际买入带且景气未明显恶化",
-      "action": "accumulate",
-      "target_weight": 0.08,
-      "max_weight": 0.15
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "进入强吸引力买入带，前提是基本面未破坏",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "zone": "5.8-6.3",
-      "condition": "股价进入强吸引力买入带且逻辑止损条件未触发",
-      "action": "buy_aggressively",
-      "target_weight": 0.15,
-      "max_weight": 0.25
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.8
+      },
+      "reason": "超过合理估值上沿较多，不宜追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026半年报：复核吨盈利、现金流和分红兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报与景气拐点是否出现"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入安全边际买入带，重新评估加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "进入强吸引力买入带，前提是基本面未破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 9.8,
-      "reason": "超过合理估值上沿较多，不宜追高"
-    }
-  ],
-  "key_risks": [
-    "铝价与氧化铝价同步下行压制利润弹性",
-    "海外铝土矿项目地缘政治与减值风险",
-    "电解铝产能约束政策松动",
-    "周期顶部资本开支偏高导致回报递减",
-    "央企关联交易与治理透明度风险"
-  ],
-  "updated_at": "2026-07-08T23:59:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

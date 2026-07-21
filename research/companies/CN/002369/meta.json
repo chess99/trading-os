@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:002369",
-  "ticker": "002369",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "卓翼科技",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于网络通讯终端和消费电子 ODM/EMS 困境反转早期，2025 年与 2026Q1 仍持续亏损，客户集中、负债率高、净资产薄、诉讼和冻结资金风险仍需消化；当前市值已隐含较强反转预期，安全边际不足。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    1.2,
-    2.2
-  ],
-  "buy_zone": [
-    0.8,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    5.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "卓翼科技",
+    "security_status": "active",
+    "symbol": "CN:002369",
+    "ticker": "002369"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "dab2b86c4787e255d044cc467fe3fc89615e8f0100305cb16d8fbda8ad08aacb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基础公允价值且公司仍亏损，不建仓。",
-      "action": "avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "公司预约披露 2026 年半年度报告，复核业绩预告兑现、跨境电商增长质量、毛利率和费用率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入 0.80-1.20 元且 2026Q3 扣非亏损继续收窄、毛利率保持 10%以上、经营现金流转正，可作为观察仓。",
-      "action": "watch_position",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入买入观察区，需要复核毛利率、经营现金流、诉讼和冻结资金变化。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断经营现金流、扣非亏损和净资产是否继续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "若基本面仍未盈利而股价高于减持区，风险收益显著恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "公司预约披露 2026 年半年度报告，复核业绩预告兑现、跨境电商增长质量、毛利率和费用率。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入买入观察区，需要复核毛利率、经营现金流、诉讼和冻结资金变化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断经营现金流、扣非亏损和净资产是否继续改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "若基本面仍未盈利而股价高于减持区，风险收益显著恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,124 +1,124 @@
 {
-  "symbol": "CN:300154",
-  "market": "CN",
-  "ticker": "300154",
-  "name": "瑞凌股份",
-  "company_name": "深圳市瑞凌实业集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "瑞凌股份现金和金融资产较厚，主业仍有正现金流，但焊接设备主业处于成熟低增长阶段，2025年收入下滑且利润质量受金融资产收益扰动；2026-07-13附近8.63元价格对应约44倍TTM归母PE和约2.16倍PB，风险收益不对称。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.8,
-    6.0
-  ],
-  "buy_zone": [
-    0,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瑞凌股份",
+    "security_status": "active",
+    "symbol": "CN:300154",
+    "ticker": "300154"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5554bf4cf662b0004a378b51caa8bb5f06951e2f5e55752a450e5e19bfbfa0aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于8.0元或TTM扣非PE高于50倍",
-      "action": "不买或降低已有暴露",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格位于6.0元至8.0元且收入未连续两个季度恢复正增长",
-      "action": "仅观察，不追入",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格低于4.5元，且扣非利润为正、经营现金流未持续恶化、金融资产未出现重大亏损",
-      "action": "建立观察仓",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "价格低于4.0元，且海外收入或自动化业务出现恢复迹象，经营现金流/扣非净利润年度口径大于1",
-      "action": "加至标准仓",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "currency": "CNY",
-      "reason": "进入安全边际较充分的买入区间",
-      "action": "进入可买区，复核最新季报后考虑小仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "currency": "CNY",
-      "reason": "接近或低于净资产估值，现金资产保护更明显",
-      "action": "若基本面未恶化，可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "currency": "CNY",
-      "reason": "明显高于合理价值区间，风险收益不对称",
-      "action": "估值偏贵，避免新增买入"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "currency": "CNY",
-      "reason": "估值需要扣非利润和自动化业务高增长支撑",
-      "action": "除非扣非利润高增长，否则应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核2026年半年报，重点看收入、扣非利润、海外销售、自动化收入和经营现金流",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026Q1扣非改善是否延续",
-      "action": "更新财务模型和评级"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核2026年三季报，确认是否连续两个季度收入恢复、扣非利润改善",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能判断收入拐点和利润质量是否成立",
-      "action": "复核是否从不买上调至观察"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核2026年年报和资本配置，重点检查金融资产损益、分红和主业ROE",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整评估金融资产收益、分红和主业ROE",
-      "action": "复核盈利质量和可买价格"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "复核2027年半年报，关注焊接自动化占比是否接近10%、应收和存货是否恶化",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "一年后复核自动化业务是否具备成长重估基础",
-      "action": "复核成长性估值和营运资本风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入安全边际较充分的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "接近或低于净资产估值，现金资产保护更明显",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "明显高于合理价值区间，风险收益不对称",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "估值需要扣非利润和自动化业务高增长支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润及扣非净利率",
-    "经营现金流/扣非归母净利润",
-    "海外销售收入占比和毛利率",
-    "焊接自动化系列产品收入占比",
-    "交易性金融资产规模及公允价值变动损益",
-    "应收账款周转和存货周转",
-    "ROE和ROIC"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

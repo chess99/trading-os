@@ -1,155 +1,101 @@
 {
-  "symbol": "CN:002409",
-  "market": "CN",
-  "ticker": "002409",
-  "company_name": "雅克科技",
-  "name": "雅克科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "公司具备电子材料平台化、客户验证壁垒和LNG深冷复材增长弹性，存储行业景气证据仍偏强；但145元已处合理价值区间上沿，且7月8日后没有公司层面的新增业绩或订单证据，仍需等待更好安全边际或业绩兑现。",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "updated_at": "2026-07-17T16:15:00+08:00",
-  "conclusion": "雅克科技2026-07-17收于145.00元，较7月8日午间194.80元回落约25.6%，估值从明显透支降至合理价值区间上沿；存储景气偏强但公司尚无新增业绩验证，当前不主动买入，标准仓位0%，最多0%-1%观察仓。",
-  "rating": {
-    "quality": "A-",
-    "valuation": "C",
-    "overall": "观察/等待安全边际",
-    "confidence": "中等偏高"
-  },
-  "current_snapshot": {
-    "date": "2026-07-17",
-    "time": "16:14:54",
-    "price": 145.0,
-    "market_cap_cny_billion": 69.01,
-    "ttm_pe_estimate": 68.5,
-    "source": "腾讯行情接口与东方财富行情快照交叉核验；TTM PE按2025年报和2026Q1归母净利复算，东方财富动态PE约64.69倍"
-  },
-  "fair_value": {
+  "identity": {
     "currency": "CNY",
-    "range": [110, 145],
-    "method": "相对估值、简化DCF、悲观/基准/乐观情景交叉验证"
+    "market": "CN",
+    "name": "雅克科技",
+    "security_status": "active",
+    "symbol": "CN:002409",
+    "ticker": "002409"
   },
-  "fair_value_range": [110, 145],
-  "reasonable_price_range": [110, 145],
-  "buy_zone": [80, 100],
-  "buy_zone_detail": {
-    "watch_below": 120,
-    "safe_below": 100,
-    "strong_below": 80,
-    "currency": "CNY",
-    "reason": "145元处于合理价值区间上沿，120元以下且半年报验证后才适合小仓试买；低于100元时对应TTM PE约47倍以下，才开始充分补偿半导体材料验证、商誉和产能爬坡风险。"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "4bd1634bfa4c033e907e6a675ecd6dc7a37072fa036991d77c963589deb90d8c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "da5153b804cfefedaffafd95964e8926cf3298b1aae9369bb1ddbedaaae2612d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sell_or_reduce_zone": [160, 999],
-  "sell_or_reduce_zone_detail": {
-    "reduce_above": 160,
-    "avoid_chasing_above": 160,
-    "current_assessment": "当前145.00元处于合理价值区间上沿，已不再极端高估，但仍不适合主动新增仓位。",
-    "reason": "160元以上已接近乐观情景定价，需要前驱体、光刻胶、硅微粉和LNG同时较快兑现。"
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_at_or_above_145",
-      "action": "标准建议不新增仓位；如确需跟踪，最多0%-1%观察仓",
-      "target_weight": 0.0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点验证前驱体、光刻胶、硅微粉、湿电子化学品和LNG的收入、毛利率、现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_below_120_and_half_year_results_confirm",
-      "action": "建立小额观察仓",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报，确认下半年LNG交付和电子材料产能利用率是否兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_below_100_and_thesis_intact",
-      "action": "分批加至主仓",
-      "target_weight": 0.04,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 120.0
+      },
+      "reason": "进入合理价值区间偏下位置；若半年报验证前驱体放量、电子材料毛利率和现金流改善，可重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_below_80_and_thesis_intact",
-      "action": "提高至上限仓位",
-      "target_weight": 0.05,
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入安全边际区间，可考虑主仓分批。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 160.0
+      },
+      "reason": "高于不追高价，若已有仓位需复核估值和兑现速度。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "position_plan_detail": {
-    "max_weight": 0.05,
-    "first_entry_weight": 0.0,
-    "first_entry_price": "120元以下且半年报验证后可建0.5%-2%观察仓；100元以下考虑2%-4%；80元以下可提高至3%-5%。",
-    "current_action": "145元不主动买入，标准仓位0%；如确需跟踪，最多0%-1%观察仓。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
   },
-  "watch": {
-    "tracking_indicators": [
-      "前驱体出货量、产能利用率、国内存储客户导入数量，以及high-k/金属前驱体收入占比",
-      "光刻胶及配套试剂毛利率是否从2025年的16.72%修复，半导体/封装光刻胶是否形成批量收入",
-      "硅微粉和湿电子化学品新产能投产后的利用率、客户认证和单吨盈利",
-      "LNG在手订单、合同负债、履约义务、交付节奏及工程服务毛利率",
-      "经营现金流/归母净利、ROE、商誉减值迹象和新增折旧压力"
-    ]
-  },
-  "tracking_indicators": [
-    "前驱体出货量、产能利用率、国内存储客户导入数量，以及high-k/金属前驱体收入占比",
-    "光刻胶及配套试剂毛利率是否修复，半导体/封装光刻胶是否形成批量收入",
-    "硅微粉和湿电子化学品新产能投产后的利用率、客户认证和单吨盈利",
-    "LNG在手订单、合同负债、履约义务、交付节奏及工程服务毛利率",
-    "经营现金流/归母净利、ROE、商誉减值迹象和新增折旧压力"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 120,
-      "reason": "进入合理价值区间偏下位置；若半年报验证前驱体放量、电子材料毛利率和现金流改善，可重新评估观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 100,
-      "reason": "进入安全边际区间，可考虑主仓分批。"
-    },
-    {
-      "type": "price_above",
-      "price": 160,
-      "reason": "高于不追高价，若已有仓位需复核估值和兑现速度。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点验证前驱体、光刻胶、硅微粉、湿电子化学品和LNG的收入、毛利率、现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报，确认下半年LNG交付和电子材料产能利用率是否兑现。"
-    }
-  ],
-  "review_plan": "半年报后复核收入结构、毛利率、前驱体和LNG交付节奏；三季报后复核全年盈利区间与估值带。如股价跌入120元以下且业绩验证改善，复盘观察仓；跌入100元以下但基本面未恶化，复盘主仓买入计划。",
-  "key_risks": [
-    "当前145元约对应68.5倍TTM PE，虽然较7月8日明显降温，但仍处合理价值上沿且股价波动很大。",
-    "半导体材料客户验证和批量导入慢于预期。",
-    "新增产能利用率不足导致折旧和费用压制毛利率。",
-    "光刻胶及配套试剂毛利率继续下滑。",
-    "商誉规模较高，若并购资产经营不及预期可能出现减值。",
-    "LNG板材和工程服务交付节奏波动。",
-    "市场对特气、HBM、先进封装等概念过度解读。"
-  ],
-  "sources": [
-    "sources/2025-annual-report.pdf",
-    "sources/2025-annual-report.txt",
-    "sources/2026-q1-report.pdf",
-    "sources/2026-q1-report.txt",
-    "sources/2025-ir-record.pdf",
-    "sources/2025-ir-record.txt",
-    "sources/2026-07-02-abnormal-trading.pdf",
-    "sources/2026-07-02-abnormal-trading.txt",
-    "sources/2026-07-08-sina-quote.txt",
-    "sources/2026-07-08-tencent-quote.txt",
-    "sources/2026-05-08-boci-research.pdf",
-    "sources/2026-05-08-boci-research.txt"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ]
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

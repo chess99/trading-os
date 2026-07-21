@@ -1,90 +1,96 @@
 {
-  "symbol": "CN:002100",
-  "market": "CN",
-  "ticker": "002100",
-  "name": "天康生物",
-  "company_name": "天康生物",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "天康生物具备饲料、生猪养殖、动物疫苗和粮油收储加工的真实产业链资产，疫苗牌照和新疆区域全链条是核心优势；但2026Q1已转亏、6月商品猪均价降至8.80元/公斤，且羌都并表增加规模的同时也放大整合和负债压力，现价附近安全边际不足，等待4.8-5.6元区间或猪价与现金流改善后再考虑首笔观察仓。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    5.6,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    7.6,
-    8.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天康生物",
+    "security_status": "active",
+    "symbol": "CN:002100",
+    "ticker": "002100"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9bde099e1fdfe761d3858a80fdd53bd1d3bb523d18d6cdab7a8d06f993a2c8a6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入4.8-5.6元且月度商品猪均价止跌、资产负债率未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03,
-      "reason": "当前PB约1.3倍、周期利润承压；只有价格给出足够周期安全边际时才适合首笔仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、羌都并表影响、资产负债率、猪价和疫苗销售恢复情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价维持5.6-7.2元且2026H1未显示羌都整合和猪价改善",
-      "action": "继续观察",
-      "max_weight": 0.0,
-      "reason": "现价附近隐含正常化盈利修复，对短期猪价、出栏结构和疫苗修复要求较高。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报及7-9月生猪销售，判断猪价下行是否已传导为持续亏损。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.6元但2026年滚动净利未修复到5亿元以上",
-      "action": "不加仓或减仓",
-      "max_weight": 0.01,
-      "reason": "周期股上行阶段容易提前透支，若盈利未跟上则估值弹性转为回撤风险。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入估算买入区上沿，需要复核猪价、出栏、负债和羌都并表后的现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "接近深度安全边际区，可考虑提高首笔仓位但需排除猪价继续下行和资产减值风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.6
+      },
+      "reason": "进入减仓观察区，若盈利与现金流未同步修复，应降低周期暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入估算买入区上沿，需要复核猪价、出栏、负债和羌都并表后的现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "接近深度安全边际区，可考虑提高首笔仓位但需排除猪价继续下行和资产减值风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.6,
-      "reason": "进入减仓观察区，若盈利与现金流未同步修复，应降低周期暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、羌都并表影响、资产负债率、猪价和疫苗销售恢复情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报及7-9月生猪销售，判断猪价下行是否已传导为持续亏损。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度生猪销量、销售收入和商品猪均价",
-    "生猪完全成本、出栏结构和羌都畜牧并表口径",
-    "动物疫苗收入、口蹄疫/禽流感/猪瘟E2销量及批签发变化",
-    "经营活动现金流量净额和存货变化",
-    "短期借款、长期借款、资产负债率和利息费用",
-    "天康制药北交所上市审核进展",
-    "能繁母猪存栏、全国猪价、玉米豆粕成本"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

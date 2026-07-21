@@ -1,97 +1,106 @@
 {
-  "symbol": "CN:000848",
-  "market": "CN",
-  "ticker": "000848",
-  "name": "承德露露",
-  "company_name": "承德露露",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "承德露露是高现金分红、强区域品牌心智的成熟杏仁露植物蛋白饮料公司，主业现金流和毛利率较好，但品牌老化、区域依赖和新品不确定性限制估值上行；当前更适合等待7元附近安全边际或2026年中报验证增长质量后再提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "neutral",
-  "fair_value_range": [
-    7.4,
-    9.2
-  ],
-  "buy_zone": [
-    6.6,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    9.4,
-    10.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "承德露露",
+    "security_status": "active",
+    "symbol": "CN:000848",
+    "ticker": "000848"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "f6fc6dfff2c32a77d88be3502bc498f45c269c2c83892fb955f6de333f36a496"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.2元且2026H1收入保持正增长、股息率高于6.8%",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "高股息和品牌现金流提供防守，但成长证据不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入修复、费用率、存货和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.6元且毛利率维持42%以上、销售费用率未失控",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.04,
-      "reason": "安全边际扩大，静态分红回报足以覆盖低增长风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高增长是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.4元且新品和南方市场未验证放量",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.01,
-      "reason": "估值已反映修复预期，缺少第二曲线证据"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入初始买入区间，股息率和估值安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入强安全边际区间，需复核基本面后考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.4
+      },
+      "reason": "进入减仓复核区间，除非增长证据明显增强",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.2
+      },
+      "reason": "估值偏乐观，需用业绩或新品放量重新证明",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入初始买入区间，股息率和估值安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入强安全边际区间，需复核基本面后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.4,
-      "reason": "进入减仓复核区间，除非增长证据明显增强"
-    },
-    {
-      "type": "price_above",
-      "price": 10.2,
-      "reason": "估值偏乐观，需用业绩或新品放量重新证明"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入修复、费用率、存货和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高增长是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "杏仁露主品收入增速",
-    "分区域收入增速和南方市场动销",
-    "销售费用率和广告宣传费",
-    "新品收入占比",
-    "综合毛利率",
-    "经营现金流净额",
-    "存货周转天数",
-    "合同负债和经销商库存",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

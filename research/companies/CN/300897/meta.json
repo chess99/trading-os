@@ -1,77 +1,86 @@
 {
-  "symbol": "CN:300897",
-  "ticker": "300897",
-  "name": "山科智能",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "山科智能是智慧水务细分公司，长期受益于智能水表替换和管网漏损治理，但2025年利润大幅下滑、2026Q1仍未恢复，当前估值已透支正常化修复，缺乏安全边际，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.0
-  ],
-  "buy_zone": [
-    7.0,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山科智能",
+    "security_status": "active",
+    "symbol": "CN:300897",
+    "ticker": "300897"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "65277bfe2910ddf3533831596a797631908323f9a724501d998f6b1e3bf06c5a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.0元且2026H1收入不再继续恶化、毛利率接近或高于38%",
-      "action": "watch_to_starter",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核收入、毛利率、订单和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3收入恢复同比正增长、经营现金流未恶化、应收账款和合同资产占收入比例下降",
-      "action": "increase_after_recheck",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核利润修复是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.5元但TTM利润仍低于4000万元或毛利率低于35%",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入基础估值区间下沿并接近25%以上安全边际，需要复核基本面是否同步稳定。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "接近乐观情景估值下沿，若盈利未修复则缺乏安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入基础估值区间下沿并接近25%以上安全边际，需要复核基本面是否同步稳定。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "接近乐观情景估值下沿，若盈利未修复则缺乏安全边际。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核收入、毛利率、订单和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核利润修复是否成立。"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "2026H1营业收入同比增速",
-    "综合毛利率是否恢复至38%以上",
-    "经营现金流净额和应收账款回款",
-    "智慧水务管网和软件平台订单占比",
-    "控制权和主要股东变化公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

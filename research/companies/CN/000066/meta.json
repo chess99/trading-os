@@ -1,33 +1,101 @@
 {
-  "symbol": "CN:000066",
-  "market": "CN",
-  "ticker": "000066",
-  "name": "中国长城",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "连续三年巨亏，毛利率持续下行至15-16%，经营现金流持续为负，核心整机组装业务缺乏护城河。2025年虽减亏至-0.56亿但扣非基础不扎实（下半年转亏）。PB 5.5x对于一个持续亏损且经营现金流为负的公司显著偏高。飞腾股权提供部分战略价值，但不足以支撑当前估值。建议回避。",
-  "fair_value_range": [5, 10],
-  "buy_zone": [3.4, 5],
-  "sell_or_reduce_zone": [15, 25],
-  "position_plan": [
-    {"condition": "股价<3.4元且基本面边际改善（毛利率企稳、经营现金流转正）", "max_weight": 0.01},
-    {"condition": "股价3.4-5.0元，继续亏损但亏损缩窄", "max_weight": 0.005},
-    {"condition": "股价>15元或继续巨亏", "max_weight": 0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国长城",
+    "security_status": "active",
+    "symbol": "CN:000066",
+    "ticker": "000066"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "2311be057f9277ee8629bbeb8bd9d3a05cd764ef487ff93ddbbcc0cdfd2aa317"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "30c0f87828243d6d521ab4875335fcad4fbdbc9dccc723138b57a10f6458b6d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "2026年中报披露后复查毛利率和经营现金流趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复查亏损收窄进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入合理偏低区间，研究是否基本面改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-28", "reason": "2026年中报披露后复查毛利率和经营现金流趋势"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报披露后复查亏损收窄进度"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 5, "reason": "进入合理偏低区间，研究是否基本面改善"},
-    {"type": "price_below", "price": 3.4, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 15, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-08T22:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

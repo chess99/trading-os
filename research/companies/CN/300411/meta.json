@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:300411",
-  "market": "CN",
-  "ticker": "300411",
-  "name": "金盾股份",
-  "company_name": "浙江金盾风机股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备核电、军工、隧道和轨交专用通风系统资质，低空涵道推进器提供远期期权；但2025年主业收入下滑、营业利润为负、扣非亏损，2026Q1收入和扣非利润继续承压。2026-07-13收盘价6.59元带有明显主题溢价，高于3.2-4.8元/股的合理价值区间，等待订单、扣非利润和回款同时验证。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.2,
-    4.8
-  ],
-  "buy_zone": [
-    2.6,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金盾股份",
+    "security_status": "active",
+    "symbol": "CN:300411",
+    "ticker": "300411"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "345c6cb214e7a6c918fc6c4327eb6d4d16dcc9c8c5d72bfa6873d8accb9953c6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于5.5元且未公告可量化大额订单、扣非利润未连续两个季度改善",
-      "action": "不买；若已持有则减仓或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复核2026年半年报，重点看收入、扣非净利润、经营现金流、应收账款和合同负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至3.0元以下，且应收账款、信用减值和合同负债没有继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年扣非利润是否具备修复到3000万元以上的可能。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至2.6元以下，同时核电军工/隧道订单恢复、扣非利润年化超过3000万元",
-      "action": "提高至卫星仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化盈利能力、主题业务商业化和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "价格进入初步买区，需要确认基本面没有继续恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "价格低于净资产折价后的保守买点，具备小仓赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "价格高于合理价值区间上沿，主题溢价需要业绩验证。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "unit": "CNY/share",
-      "action": "复核订单、回款和应收账款后考虑1%观察仓",
-      "reason": "价格进入初步买区，需要确认基本面没有继续恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "unit": "CNY/share",
-      "action": "若基本面未恶化，评估2%-3%卫星仓",
-      "reason": "价格低于净资产折价后的保守买点，具备小仓赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "unit": "CNY/share",
-      "action": "无新增订单和扣非利润验证则减仓或退出",
-      "reason": "价格高于合理价值区间上沿，主题溢价需要业绩验证。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核2026年半年报，重点看收入、扣非净利润、经营现金流、应收账款和合同负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年扣非利润是否具备修复到3000万元以上的可能。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化盈利能力、主题业务商业化和合理估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "核电军工、隧道、水电、轨交更新新签订单金额和毛利率",
-    "扣非归母净利润是否年化超过3000万元",
-    "应收账款/营业收入是否下降至1.0倍以下",
-    "信用减值损失和资产减值损失是否显著下降",
-    "合同负债和经营现金流是否与订单同步改善",
-    "涵道推进器是否出现正式客户、订单金额、交付数量和收入确认",
-    "第一大股东质押比例、控制权交易是否重启及收购方资质"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

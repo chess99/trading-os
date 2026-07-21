@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920694",
-  "market": "CN",
-  "ticker": "920694",
-  "name": "中裕科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "特种软管认证和海外渠道构成中等壁垒，但客户集中、新项目回报和自由现金流尚待验证，当前价格接近合理价值上沿。",
-  "fair_value_range": [10.5, 13.5],
-  "buy_zone": [8.5, 10.5],
-  "sell_or_reduce_zone": [15.5, 18.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中裕科技",
+    "security_status": "active",
+    "symbol": "CN:920694",
+    "ticker": "920694"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "4c8ff35c46ace2e9a773be631e91da14e6031950e75b5a2bb0ef19bcc18c18cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价为9.5至10.5元且核心客户、海外需求和自由现金流未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报、自由现金流、新产品毛利和募投产能利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价为8.5至9.5元，复核API认证、新产品毛利、存货与资本开支后投资逻辑仍成立",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入有安全边际的初步买入区间，仍需复核核心假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "客户流失、募投项目失败或自由现金流持续恶化，不因价格下跌加仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报、自由现金流、新产品毛利和募投产能利用率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入有安全边际的初步买入区间，仍需复核核心假设"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-15T19:25:59+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

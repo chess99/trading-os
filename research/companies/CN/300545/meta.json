@@ -1,88 +1,110 @@
 {
-  "symbol": "CN:300545",
-  "market": "CN",
-  "ticker": "300545",
-  "name": "联得装备",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "京东方8.6代AMOLED设备中标和UTG批量出货证据真实，但截至2026-07-18没有新增验收收入、项目毛利或回款，半导体设备也未披露存储客户和独立收入。2026-07-17收盘26.13元已回到22-28元合理价值区间但仍高于18-23元买入区，评级调整为观察；新资金0.0，等待半年报验证订单转收入、毛利率和应收回款。",
-  "fair_value_range": [
-    22.0,
-    28.0
-  ],
-  "buy_zone": [
-    18.0,
-    23.0
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    40.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联得装备",
+    "security_status": "active",
+    "symbol": "CN:300545",
+    "ticker": "300545"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "dcb28be7618aada7d212cf1784a47e2378d41ba901cc5ead1e5e119b6d27bb34"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "3f03f7c39381946f1c745c7c7c11b63d6d0769df26ebdf275f28dcc5c1990687"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于28元且半年报未验证大额订单形成收入、毛利率和回款改善；新资金不买，已有低成本仓仅作风险观察",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的京东方项目验收、收入毛利率、客户集中、应收存货合同负债、减值和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于23-28元合理价值区但尚未进入买入区；新资金不买，已有低成本仓仅作风险观察",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认2.014亿元AMOLED项目是否开始形成收入及业绩下降是否结束",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入22-23元，重大合同待履行稳定且综合毛利率不再下降",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报的重大合同待履行余额、OLED和UTG量化收入、半导体封测复购与资本配置",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价进入18-22元，大额AMOLED项目按期验收且应收增速低于收入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入买入区上沿，复核重大订单验收、毛利率和应收回款后考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于18元，同时验证毛利率回升、经营现金流覆盖净利润和半导体设备复购",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入较高赔率区域，仅在基本面和订单价值未破坏时考虑提高至策略上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价进入32-40元但盈利预测未同步上修，或重大合同延期、毛利率低于28%、应收和减值恶化",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入减仓区，若盈利预测和验收证据未同步上修则降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的京东方项目验收、收入毛利率、客户集中、应收存货合同负债、减值和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认2.014亿元AMOLED项目是否开始形成收入及业绩下降是否结束"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报的重大合同待履行余额、OLED和UTG量化收入、半导体封测复购与资本配置"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23.0,
-      "reason": "进入买入区上沿，复核重大订单验收、毛利率和应收回款后考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入较高赔率区域，仅在基本面和订单价值未破坏时考虑提高至策略上限"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "reason": "进入减仓区，若盈利预测和验收证据未同步上修则降低仓位"
-    }
-  ],
-  "updated_at": "2026-07-17"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

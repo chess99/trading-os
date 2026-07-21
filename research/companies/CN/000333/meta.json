@@ -1,29 +1,91 @@
 {
-  "symbol": "CN:000333",
-  "market": "CN",
-  "ticker": "000333",
-  "name": "美的集团",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "美的集团是本批业务组合最均衡的高质量制造平台，但78.99元处于合理价值中部，2026Q1扣非净利润下降14.02%仍待半年报验证，当前只适合研究仓。",
-  "fair_value_range": [72, 92],
-  "buy_zone": [62, 70],
-  "sell_or_reduce_zone": [95, 110],
-  "position_plan": [
-    {"condition": "70元以上仅保留研究仓", "max_weight": 0.01},
-    {"condition": "62-70元且扣非利润与现金流未继续恶化", "max_weight": 0.03},
-    {"condition": "62元以下且复核确认长期价值未受损", "max_weight": 0.04}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美的集团",
+    "security_status": "active",
+    "symbol": "CN:000333",
+    "ticker": "000333"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "d789e5a0063bc51a2c03693084ad53dd51fe81520ae9969e739b063fb8fe7148"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-deep-review.md",
+        "sha256": "9e37855c2e602e6b3ba74a8cf9ebc1c75c77ff9422951a0163df6bb0b7193790"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查半年报扣非利润、海外增长、ToB利润率和现金转换",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报并确认Q1利润背离是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入有安全边际的买入区间上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "进入需要盈利上修支撑的减仓区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-11-deep-review.md",
-  "report_history": ["reports/2026-07-07-initial.md", "reports/2026-07-11-deep-review.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复查半年报扣非利润、海外增长、ToB利润率和现金转换"},
-    {"type": "date", "date": "2026-10-31", "reason": "复查三季报并确认Q1利润背离是否延续"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 70, "reason": "进入有安全边际的买入区间上沿"},
-    {"type": "price_above", "price": 95, "reason": "进入需要盈利上修支撑的减仓区间"}
-  ],
-  "updated_at": "2026-07-11T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,102 +1,105 @@
 {
-  "symbol": "CN:300250",
-  "market": "CN",
-  "ticker": "300250",
-  "name": "初灵信息",
-  "company_name": "杭州初灵信息技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备运营商数据感知、智能连接和企业AI/智算网转型题材，但2025年收入下滑、扣非利润很薄，2026Q1继续收入下滑并亏损，且2025年审计报告为带强调事项段的保留意见。以2026-07-13约13.56元价格看，市值主要反映AI/算网预期而非现有财务兑现，安全边际不足。",
-  "quality_rating": "低到中低",
-  "valuation_rating": "明显高估",
-  "fair_value_range": [
-    4.5,
-    7.0
-  ],
-  "buy_zone": [
-    0,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "初灵信息",
+    "security_status": "active",
+    "symbol": "CN:300250",
+    "ticker": "300250"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8b309396524a4cc2bfbc10888861cc8dd572fa041864267e5ba8ae5035811b75"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于10元且2026H1仍亏损或经营现金流恶化",
-      "action": "不买；已有仓位降至0-1%观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入、扣非利润、经营现金流、应收账款和审计事项进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于7-10元且尚未看到审计事项解决、扣非利润改善",
-      "action": "仅观察，不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：验证数据感知、AI数字员工、企业智算网订单转化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于5-7元，且2026H1扣非转正、经营现金流改善",
-      "action": "可建立1%-2%试验仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及审计意见，判断保留事项是否消除",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于5元，审计保留事项消除，AI/企业网业务形成可复用订单",
-      "action": "可提高到约3%仓位，但仍不重仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入初步可买区，需同步复核审计事项、扣非利润和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "若基本面未改善则进入减仓区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "明显高于合理价值区间，需要复核是否存在超预期订单或盈利兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "unit": "CNY/share",
-      "reason": "进入初步可买区，需同步复核审计事项、扣非利润和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "unit": "CNY/share",
-      "reason": "若基本面未改善则进入减仓区"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "unit": "CNY/share",
-      "reason": "明显高于合理价值区间，需要复核是否存在超预期订单或盈利兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入、扣非利润、经营现金流、应收账款和审计事项进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：验证数据感知、AI数字员工、企业智算网订单转化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及审计意见，判断保留事项是否消除"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1和2026全年营业收入同比增速",
-    "扣非归母净利润是否连续转正",
-    "经营活动现金流净额是否转正",
-    "数据感知收入增速和毛利率",
-    "智能连接收入是否止跌",
-    "AI数字员工和企业智算网订单、验收、回款金额",
-    "审计保留意见涉及仲裁和重庆贝特财务数据事项进展",
-    "应收账款、存货及周转变化",
-    "控股股东洪爱金减持计划执行情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

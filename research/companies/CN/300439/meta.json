@@ -1,110 +1,105 @@
 {
-  "symbol": "CN:300439",
-  "market": "CN",
-  "ticker": "300439",
-  "name": "美康生物",
-  "company_name": "美康生物科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司具备较完整的 IVD 产品线、渠道和参考实验室能力，但 2025 年受集采和业务结构影响，收入下滑、扣非净利率降至约 1%。当前价格约 1.1 倍 PB，不贵但也不便宜，已在押注利润修复；只有价格低于净资产并接近股权激励价格，或扣非利润连续修复后，才具备买入赔率。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    6.5,
-    8.0
-  ],
-  "buy_zone": [
-    0,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美康生物",
+    "security_status": "active",
+    "symbol": "CN:300439",
+    "ticker": "300439"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e03f927485d80abd7670df82f38dfc7c3deaeda8209a84b1a14bc015c1fc15a0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理区间上沿，且 2026 年利润修复尚未验证",
-      "action": "不建仓",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查试剂收入、仪器毛利率、扣非净利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 5.5-6.2 CNY，且经营现金流未恶化、无新增重大资产减值",
-      "action": "试探买入",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断一季度修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 5.5 CNY，且扣非利润仍为正、资产负债表保持低杠杆",
-      "action": "提高观察仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估集采后稳定盈利中枢和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入正增长，扣非净利率回到 3.5%以上，仪器毛利率明显改善",
-      "action": "按修复确认加仓",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
       "reason": "价格进入可买区，低于估算净资产并接近股权激励价格，安全边际改善",
-      "action": "进入可买区，复核最新季报和现金流"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
       "reason": "价格进入深度安全边际区，若基本面未恶化可提高仓位上限",
-      "action": "若基本面未恶化，可提高仓位上限"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 10.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
       "reason": "价格明显高于合理区间，若利润修复未兑现则赔率转差",
-      "action": "若扣非利润未实质修复，减仓或放弃追高"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查试剂收入、仪器毛利率、扣非净利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断一季度修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估集采后稳定盈利中枢和估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "扣非净利率",
-    "体外诊断试剂收入同比增速",
-    "体外诊断试剂毛利率",
-    "体外诊断仪器毛利率",
-    "医学诊断服务收入同比增速",
-    "海外收入及毛利率",
-    "经营活动现金流净额",
-    "应收账款周转",
-    "研发投入商业化进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

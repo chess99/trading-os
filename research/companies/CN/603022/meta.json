@@ -1,65 +1,86 @@
 {
-  "symbol": "CN:603022",
-  "ticker": "603022",
-  "name": "新通联",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新通联资产负债表稳、工业包装业务有一定客户粘性，但行业护城河偏浅，2026Q1 收入和利润同比下滑且 2025 年经营现金流弱于净利润；当前约 8 元价格处于公允区间偏上，等待现金流修复或更低买点。",
-  "fair_value_range": [
-    6.4,
-    8.6
-  ],
-  "buy_zone": [
-    5.6,
-    6.4
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新通联",
+    "security_status": "active",
+    "symbol": "CN:603022",
+    "ticker": "603022"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c789922a6800b866d488377922599bb7a636db3897e5fe60cd24a09593ce44f9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 6.4 元，且 2026 半年报显示收入降幅收窄、经营现金流明显改善",
-      "action": "可建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、毛利率、应收和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于 9.5 元但利润和现金流没有同步上修",
-      "action": "不追高并考虑退出观察仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "进入买入区间上沿以下，需要复核半年报现金流和订单恢复情况"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认全年利润和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "超过减仓观察价，若基本面未上修则安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、毛利率、应收和经营现金流"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "进入买入区间上沿以下，需要复核半年报现金流和订单恢复情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认全年利润和现金流趋势"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "超过减仓观察价，若基本面未上修则安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "latest_report": "reports/2026-07-17-initial.md"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

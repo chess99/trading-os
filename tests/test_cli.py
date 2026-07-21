@@ -78,7 +78,6 @@ def _attach_research_claims(company_dir: Path) -> None:
             "fair_value_range": [100.0, 120.0],
             "buy_zone": [80.0, 90.0],
             "reduce_zone": [130.0, 140.0],
-            "position_plan": [],
             "conclusion": "等待安全边际。",
         },
     }

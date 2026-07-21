@@ -1,108 +1,114 @@
 {
-  "symbol": "CN:002724",
-  "market": "CN",
-  "ticker": "002724",
-  "name": "海洋王",
-  "company_name": "海洋王照明科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "专业照明主业毛利率高、客户场景有粘性，账面现金和金融资产厚，提供资产安全垫；但收入增长停滞、2026Q1 扣非亏损，明之辉工程业务应收和减值风险仍需消化。当前 4.90 元接近合理价值区间上沿，等待 3.40-3.80 元买点或扣非利润连续修复。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [4.1, 4.8],
-  "buy_zone": [3.4, 3.8],
-  "sell_or_reduce_zone": [6.0, 999.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海洋王",
+    "security_status": "active",
+    "symbol": "CN:002724",
+    "ticker": "002724"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "938f581e63e76a445d668784a6c6ca26881adea98f60317080e0646294079c6a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在 4.10-5.30 元且未出现连续扣非修复证据",
-      "action": "观察，不主动买入；已有仓位维持低配",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价跌至 3.60-3.80 元且应收账款、合同资产、经营现金流没有恶化",
-      "action": "可建立 1% 以内观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价跌至 3.40-3.60 元且全年经营现金流/归母净利润大于 1",
-      "action": "可提高至 2% 左右仓位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "连续 4 个季度扣非利润恢复、照明设备收入转正、工程回款改善",
-      "action": "再评估是否提升至 3% 以上核心仓",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "unit": "CNY/share",
-      "reason": "进入买入复核区但仍需确认应收、合同资产和经营现金流未恶化",
-      "action": "进入买入复核区，检查应收、合同资产和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "unit": "CNY/share",
-      "reason": "低于安全边际阈值，若基本面未恶化可考虑建立或增加观察仓",
-      "action": "若基本面未恶化，可考虑建立或增加观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "unit": "CNY/share",
-      "reason": "价格显著高于合理价值区间，若主业增长和扣非利润未改善需降低仓位",
-      "action": "若主业增长和扣非利润未同步改善，降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026 年半年报披露窗口后复核收入、扣非利润、现金流、应收账款和合同资产",
-      "condition": "2026 年半年报披露窗口后",
-      "action": "复核收入、扣非利润、现金流、应收账款和合同资产"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026 年三季报披露窗口后复核照明设备收入是否恢复、销售费用率是否下降",
-      "condition": "2026 年三季报披露窗口后",
-      "action": "复核照明设备收入是否恢复、销售费用率是否下降"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026 年年报披露窗口后复核全年经营现金流、分红和金融资产公允价值波动",
-      "condition": "2026 年年报披露窗口后",
-      "action": "复核全年经营现金流/归母净利润、分红和金融资产公允价值波动"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "2027 年半年报披露窗口后复核是否达到买入或下调条件",
-      "condition": "2027 年半年报披露窗口后",
-      "action": "复核是否达到买入或下调条件"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入买入复核区但仍需确认应收、合同资产和经营现金流未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "低于安全边际阈值，若基本面未恶化可考虑建立或增加观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "价格显著高于合理价值区间，若主业增长和扣非利润未改善需降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "照明设备收入增速",
-    "扣非归母净利润",
-    "销售费用率",
-    "应收账款加合同资产占收入比例",
-    "经营现金流/归母净利润",
-    "境外收入占比",
-    "现金分红和股息率",
-    "明之辉工程项目回款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

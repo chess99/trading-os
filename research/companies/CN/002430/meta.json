@@ -1,146 +1,123 @@
 {
-  "symbol": "CN:002430",
-  "market": "CN",
-  "ticker": "002430",
-  "name": "杭氧股份",
-  "company_name": "杭氧集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "杭氧股份是A股工业气体与空分设备稀缺优质标的，设备技术与气体运营形成组合护城河；但2026-07-10收盘价25.99元已处于25-30元合理区间，安全边际不足，等待23元以下或盈利上修信号。",
-  "quality_rating": "A-",
-  "valuation_rating": "B-/C+",
-  "fair_value_range": [
-    25.0,
-    30.0
-  ],
-  "buy_zone": [
-    20.0,
-    23.0
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杭氧股份",
+    "security_status": "active",
+    "symbol": "CN:002430",
+    "ticker": "002430"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8ca8fca1a10c55c72a38e38fc80d43c3f739cdd6e0be2dc3f457a87c06126e10"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于20.0元且基本面未恶化",
-      "price": "<=20.0",
-      "action": "强吸引力买入",
-      "target_position": "4%-6%",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "股价20.0-23.0元且基本面未恶化",
-      "price": "20.0-23.0",
-      "action": "有安全边际买入",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价23.0-25.5元且中报指标改善",
-      "price": "23.0-25.5",
-      "action": "小仓观察",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价25.5-30.0元",
-      "price": "25.5-30.0",
-      "action": "合理区间，观察或持有",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价30.0-32.0元且盈利没有上修",
-      "price": "30.0-32.0",
-      "action": "偏贵，不加仓",
-      "target_position": "持有上限不变",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价大于等于32.0元且盈利没有上修",
-      "price": ">=32.0",
-      "action": "不追高，视盈利上修情况减仓",
-      "target_position": "降低仓位",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价小于等于23.0元且基本面未恶化",
-      "price": 23.0,
-      "reason": "进入有安全边际买入区",
-      "action": "复查是否买入2%-4%"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价小于等于20.0元且基本面未恶化",
-      "price": 20.0,
-      "reason": "进入强吸引力买入区",
-      "action": "复查是否提升至4%-6%"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价大于等于32.0元且盈利没有上修",
-      "price": 32.0,
-      "reason": "超过不应追高价",
-      "action": "不追高，考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证工业气体毛利率和现金流是否支撑当前估值",
-      "action": "复查工业气体毛利率、经营现金流、在建项目转固与折旧压力"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证全年盈利趋势和新项目爬坡",
-      "action": "复查收入利润增速、气体项目爬坡和设备订单趋势"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "2026年年报预告或业绩快报窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "初步确认2026年利润和现金流兑现情况",
-      "action": "复查全年利润、经营现金流和资本开支"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "用完整年报重估合理价值和安全边际",
-      "action": "重估合理价值区间与仓位计划"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "观察重资产扩张是否继续创造价值",
-      "action": "复查工业气体毛利率、ROIC和分红/资本开支平衡"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "工业气体收入增速",
-    "工业气体毛利率",
-    "设备制造及工程总包新签订单",
-    "经营现金流/归母净利润",
-    "资本开支与在建工程",
-    "ROE/ROIC",
-    "分红率",
-    "液氧/液氮/液氩价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

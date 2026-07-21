@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:920106",
-  "market": "CN",
-  "ticker": "920106",
-  "name": "林泰新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "林泰新材是自动变速器湿式纸基摩擦片国产替代稀缺标的，2025年高增长、净现金和高毛利验证了产品竞争力；但2026Q1收入和利润明显下滑，定增扩产及新应用仍需量产验证，当前股价接近合理价值下沿但安全边际不足，适合观察等待价格或业绩确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    36,
-    46
-  ],
-  "buy_zone": [
-    28,
-    33
-  ],
-  "sell_or_reduce_zone": [
-    50,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "林泰新材",
+    "security_status": "active",
+    "symbol": "CN:920106",
+    "ticker": "920106"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "e987753aa7a7faf6dc9b6921407d17fa0e8e74249e4244c21c9d0a809e96daa8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入28-33元且2026年收入下滑未进一步恶化时，建立观察仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查Q2收入恢复、毛利率、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q2/Q3连续验证收入恢复同比增长、经营现金流与净利润匹配且DHT或海外订单继续放量时，可提高仓位。",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断Q1下滑是短期扰动还是全年趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于50元但全年利润恢复和新项目量产证据不足时，降低或退出仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报及定增扩产进展，重新评估长期盈利中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入保守买入区，需要复核Q2订单和存货后评估是否升级为买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "高于基准合理价值上沿，需要新订单或利润恢复支撑，否则估值性价比下降。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入保守买入区，需要复核Q2订单和存货后评估是否升级为买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "reason": "高于基准合理价值上沿，需要新订单或利润恢复支撑，否则估值性价比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查Q2收入恢复、毛利率、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断Q1下滑是短期扰动还是全年趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报及定增扩产进展，重新评估长期盈利中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

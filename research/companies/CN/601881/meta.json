@@ -1,101 +1,96 @@
 {
-  "symbol": "CN:601881",
-  "market": "CN",
-  "ticker": "601881",
-  "name": "中国银河",
-  "company_name": "中国银河",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "current_thesis": "中国银河是大型央企券商中的高beta资产，渠道、客户和资本实力扎实，但投行与资管并非头部，当前价格接近合理价值中枢，适合观察而非重仓追高。",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "良好偏上",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    12.5,
-    14.5
-  ],
-  "buy_zone": [
-    10.8,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    17.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国银河",
+    "security_status": "active",
+    "symbol": "CN:601881",
+    "ticker": "601881"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "1447a149da4245857ae1d92c9d3dc41ccb342432efb1af3dd2dd0e1986872d4d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于15.5元且基本面无超预期改善",
-      "action": "reduce",
-      "max_weight": 0.02,
-      "reason": "估值透支，赔率偏低"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看ROE、两融、减值和净资本",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于12.5-14.5元合理区间",
-      "action": "watch",
-      "max_weight": 0.05,
-      "reason": "价格接近合理价值，缺少足够安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断成交额beta是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回到10.8-12.0元且跟踪指标未恶化",
-      "action": "buy",
-      "max_weight": 0.1,
-      "reason": "进入有安全边际的买入区间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "首次进入有安全边际观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于10.8元且基本面未明显转坏",
-      "action": "buy",
-      "max_weight": 0.2,
-      "reason": "赔率明显改善，可积极加仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "进入不应追高区，评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "首次进入有安全边际观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "进入不应追高区，评估减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看ROE、两融、减值和净资本"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断成交额beta是否持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "沪深两市日均成交额",
-    "经纪业务手续费净收入同比",
-    "融资融券余额",
-    "融资融券利息收入",
-    "信用减值损失",
-    "第3阶段信用资产规模",
-    "加权平均净资产收益率",
-    "净资本",
-    "风险覆盖率",
-    "资产管理主动管理规模",
-    "股权承销排名",
-    "国际业务收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

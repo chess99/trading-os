@@ -41,13 +41,12 @@
     },
     "decision": {
       "type": "object",
-      "required": ["rating", "fair_value_range", "buy_zone", "reduce_zone", "position_plan", "conclusion"],
+      "required": ["rating", "fair_value_range", "buy_zone", "reduce_zone", "conclusion"],
       "properties": {
         "rating": {"type": "string", "minLength": 1},
         "fair_value_range": {"$ref": "#/$defs/range"},
         "buy_zone": {"$ref": "#/$defs/range"},
         "reduce_zone": {"$ref": "#/$defs/range"},
-        "position_plan": {"type": "array", "items": {"type": "object"}},
         "conclusion": {"type": "string", "minLength": 1}
       },
       "additionalProperties": false

@@ -1,70 +1,86 @@
 {
-  "symbol": "CN:600927",
-  "ticker": "600927",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "永安期货",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "头部期货公司和A股稀缺标的，2026年行业景气和公司利润显著修复；但长期ROE中枢仍偏低，当前约1.4倍PB已反映较多修复预期，缺少足够安全边际，等待更低价格或ROE持续上台阶。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.0,
-    14.0
-  ],
-  "buy_zone": [
-    10.0,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永安期货",
+    "security_status": "active",
+    "symbol": "CN:600927",
+    "ticker": "600927"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "20a184dcbc40dbcd6595b1a83241477e06b61148dd36a608f4ad1de0e7246b2a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入10.0-11.0元且未出现风险管理业务重大亏损、监管处罚或行业成交急剧下行",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、业务结构和风险管理业务质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报和三季报确认年化ROE超过7%且风险管理业务质量良好",
-      "action": "可提高至小仓位持有",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认ROE和行业景气持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价达到16.0-18.0元但ROE未持续高于7%",
-      "action": "不追高并考虑减持",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入买入观察区，对应约1.2倍PB，安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入减持观察区，若ROE未同步抬升则估值偏贵",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入买入观察区，对应约1.2倍PB，安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入减持观察区，若ROE未同步抬升则估值偏贵"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、业务结构和风险管理业务质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认ROE和行业景气持续性"
-    }
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

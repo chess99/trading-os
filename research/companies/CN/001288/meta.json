@@ -1,108 +1,106 @@
 {
-  "symbol": "CN:001288",
-  "market": "CN",
-  "ticker": "001288",
-  "name": "运机集团",
-  "company_name": "运机集团",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "运机集团是散料输送和带式输送机细分设备公司，2025-2026年海外矿山EPC和国内大型矿山订单带来收入弹性，但当前估值已反映部分预期，需等待订单收入确认、毛利率和经营现金流验证后再提高仓位。",
-  "quality_rating": "B",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    24,
-    30
-  ],
-  "buy_zone": [
-    18,
-    21
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    38
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "运机集团",
+    "security_status": "active",
+    "symbol": "CN:001288",
+    "ticker": "001288"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "06010d089e082f0206e209c7eb5a7509a0bef87fcac486ec50f22340fbcc99d7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_around_23_without_cashflow_confirmation",
-      "action": "only_open_or_keep_tracking_position",
-      "max_weight": 0.01,
-      "reason": "当前价格接近基准合理区间下沿，但海外EPC订单兑现和经营现金流尚未验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查海外项目收入确认、毛利率、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_18_to_21_and_no_negative_order_or_cashflow_news",
-      "action": "accumulate_to_core_watch_position",
-      "max_weight": 0.02,
-      "reason": "该区间提供现金流和项目执行风险折价，适合分批买入。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断大额合同是否开始形成可持续利润和现金回款。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "overseas_projects_revenue_margin_and_cash_collection_confirmed",
-      "action": "increase_position_cap",
-      "max_weight": 0.04,
-      "reason": "只有收入、毛利率和回款同时验证，订单弹性才可上调为更高确定性成长逻辑。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入买入区间上沿，可复核公告和现金流后分批加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_32_without_earnings_upgrade",
-      "action": "reduce_or_stop_adding",
-      "max_weight": 0.01,
-      "reason": "股价进入乐观情景定价区，若基本面未同步上修，风险收益比下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入深度安全边际区，若订单未恶化，可提高研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入减持观察区，需要确认利润预测是否足以支撑估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入乐观情景估值区，若无回款和利润超预期，应主动降仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入买入区间上沿，可复核公告和现金流后分批加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入深度安全边际区，若订单未恶化，可提高研究优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "进入减持观察区，需要确认利润预测是否足以支撑估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "进入乐观情景估值区，若无回款和利润超预期，应主动降仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查海外项目收入确认、毛利率、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断大额合同是否开始形成可持续利润和现金回款。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "new_order_amount_and_overseas_order_share",
-    "guinea_bauxite_epc_progress_and_collection",
-    "zimbabwe_lithium_epc_progress_and_collection",
-    "honggenan_project_delivery_progress",
-    "quarterly_revenue_growth",
-    "gross_margin",
-    "net_margin",
-    "operating_cash_flow",
-    "accounts_receivable",
-    "contract_assets",
-    "inventory",
-    "steel_price_trend",
-    "fx_gain_or_loss",
-    "convertible_bond_conversion_and_total_share_count"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

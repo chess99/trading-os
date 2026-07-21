@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:301325",
-  "ticker": "301325",
-  "name": "曼恩斯特",
-  "company_name": "深圳市曼恩斯特科技股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "精密涂布技术和涂布模头具备中长期价值，固态电池、钙钛矿和泛半导体提供期权；但 2025 年与 2026Q1 显示收入确认、储能项目周转、存货、短债和经营现金流压力较大，当前仅适合观察，等待核心涂布业务恢复和现金流修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    18,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "曼恩斯特",
+    "security_status": "active",
+    "symbol": "CN:301325",
+    "ticker": "301325"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "e2f5d5708c1ddd6b423bc90cda67b5ad06c8caf6a3671e41a80cb6f31a6292fd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，不建仓；等待 2026 半年报确认经营现金流改善、存货下降且涂布应用类收入恢复增长。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点看收入确认、存货、短期借款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入 18-23 元且 2026H2 经营现金流转正、短期借款下降、涂布应用类毛利率维持 35% 以上，可建立小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认储能项目是否持续拖累业绩。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "公司披露固态电池或钙钛矿批量订单并完成验收，同时储能项目不再拖累现金流，可提高为研究仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重估涂布技术平台价值和储能系统业务风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入买入观察区，但仍需结合现金流和存货变化确认。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入资产折价区，应重新评估是否存在减值或融资压力后决定是否买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "高于基准合理价值区间，若基本面未同步改善应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入买入观察区，但仍需结合现金流和存货变化确认。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入资产折价区，应重新评估是否存在减值或融资压力后决定是否买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "高于基准合理价值区间，若基本面未同步改善应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点看收入确认、存货、短期借款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认储能项目是否持续拖累业绩。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重估涂布技术平台价值和储能系统业务风险。"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "涂布应用类收入增速和毛利率",
-    "能源系统类项目确收和回款进度",
-    "经营活动现金流净额",
-    "存货、预付款和短期借款变化",
-    "固态电池、干法电极、钙钛矿订单金额和验收进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

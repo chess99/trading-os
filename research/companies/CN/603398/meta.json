@@ -1,48 +1,91 @@
 {
-  "symbol": "CN:603398",
-  "market": "CN",
-  "ticker": "603398",
-  "name": "*ST沐邦",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "核心光伏业务持续负毛利、自由现金流为负、净资产接近耗尽，治理、诉讼及预重整风险极高，当前价格已透支对原股东友好的重整预期。",
-  "fair_value_range": [0.0, 2.5],
-  "buy_zone": [0.0, 0.0],
-  "sell_or_reduce_zone": [4.0, 100.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST沐邦",
+    "security_status": "active",
+    "symbol": "CN:603398",
+    "ticker": "603398"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "0aa9307d9fc125006b05c01fcef0cef2b54f838a71fa9b7d03543374e0d4a74a"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "e9f387f91e3cb319dbd56d708adcc982ae0849a05832d03b297e152f1014379d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前及重整、债务削减、股权稀释、毛利率和经营现金流尚未同时得到正面验证时不持仓；股价下跌不构成加仓理由",
-      "max_weight": 0.0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、归母净资产、持续经营风险、诉讼冻结及公司和江西捷锐预重整进展"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、归母净资产、持续经营风险、诉讼冻结及公司和江西捷锐预重整进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报毛利率、经营现金流、到期债务和风险警示状态"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "reason": "进入重整期权重新评估区；仅触发研究，正式方案、稀释比例、持续经营和现金流未验证前不自动买入"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报毛利率、经营现金流、到期债务和风险警示状态",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "高于包含重整期权的公允价值上沿，维持回避或减持"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "进入重整期权重新评估区；仅触发研究，正式方案、稀释比例、持续经营和现金流未验证前不自动买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "高于包含重整期权的公允价值上沿，维持回避或减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-20T22:45:39+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

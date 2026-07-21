@@ -1,96 +1,105 @@
 {
-  "symbol": "CN:600456",
-  "market": "CN",
-  "ticker": "600456",
-  "currency": "CNY",
-  "name": "宝钛股份",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "国内钛及钛合金加工龙头，认证、装备、研发和重大项目经验构成高端钛材护城河；但 2025-2026Q1 盈利下行、营运资本占用偏重，当前价格缺少足够安全边际，等待利润和现金流修复或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    24,
-    34
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    46
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝钛股份",
+    "security_status": "active",
+    "symbol": "CN:600456",
+    "ticker": "600456"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c80515648f62a6d1bcbab2cd564de527bc698f8ace306939481b09f95547366f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅处于观察期，股价在合理价值中段且 2026Q1 利润/现金流尚未修复",
-      "action": "watch_only",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘 2026 年中报，重点核验收入目标进度、钛产品毛利率、应收账款、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入 20-24 元买入区，且收入恢复、钛产品毛利率稳定、经营现金流转正至少满足两项",
-      "action": "start_position",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘 2026 年三季报，判断利润下滑是否结束及全年 71 亿元收入目标可达性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "盈利恢复至年化 6.5 亿元以上、经营现金流/归母净利大于 0.8 且估值仍低于 30 倍正常化盈利",
-      "action": "add_on_confirmation",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复盘 2026 年报，验证扩产、分红、现金流和高端钛材占比。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入初始买入区，重新核验订单、毛利率与现金流后可考虑建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入明显折价区，若基本面未恶化，应提高研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "超过估值减仓区下沿，若盈利修复未兑现，应降低或回避仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入初始买入区，重新核验订单、毛利率与现金流后可考虑建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入明显折价区，若基本面未恶化，应提高研究优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "超过估值减仓区下沿，若盈利修复未兑现，应降低或回避仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘 2026 年中报，重点核验收入目标进度、钛产品毛利率、应收账款、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘 2026 年三季报，判断利润下滑是否结束及全年 71 亿元收入目标可达性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复盘 2026 年报，验证扩产、分红、现金流和高端钛材占比。"
-    }
-  ],
-  "key_metrics": [
-    "钛产品销量",
-    "钛产品毛利率",
-    "应收账款",
-    "存货",
-    "经营现金流/归母净利",
-    "高端客户认证与长协",
-    "海绵钛价格",
-    "宝钛万豪新增熔炼产能利用率"
-  ],
-  "source_quality": {
-    "company_filings": "高",
-    "industry_data": "中",
-    "market_price_and_peer_valuation": "中低"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:600360",
-  "ticker": "600360",
-  "name": "华微电子",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "功率半导体 IDM 老牌厂商在国资入主、风险警示撤销和行业景气修复后经营质量改善，但历史治理折价尚未消失，当前约70倍TTM PE和约3.5倍PB已透支修复预期，需等待更低价格或连续盈利/现金流超预期。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.0,
-    9.5
-  ],
-  "buy_zone": [
-    5.8,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华微电子",
+    "security_status": "active",
+    "symbol": "CN:600360",
+    "ticker": "600360"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "aad158795584b91e171ee445e096d5258c5e8baebea5d2a3f8f0c2b62a5f13f1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入5.8-7.2元且半年报扣非利润、经营现金流、治理披露均未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、业绩预告兑现、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增长、毛利率改善、经营现金流接近或高于净利润",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认毛利率、存货、应收账款和8英寸线进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年归母净利润高置信度超过3亿元且高端产品订单可核验",
-      "action": "重新评估估值上沿和仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、内控意见、全年利润和分红能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入观察买入区，需要复核半年报、现金流和治理风险后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基准公允价值上沿且接近乐观情景低端，若无盈利上修应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入观察买入区，需要复核半年报、现金流和治理风险后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于基准公允价值上沿且接近乐观情景低端，若无盈利上修应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、业绩预告兑现、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认毛利率、存货、应收账款和8英寸线进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、内控意见、全年利润和分红能力"
-    }
-  ],
-  "notes": "2026-07-16结论为不买/观察；关键风险是历史治理折价、估值偏高、高端产品放量未证实。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

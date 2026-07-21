@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600408",
-  "market": "CN",
-  "ticker": "600408",
-  "currency": "CNY",
-  "name": "安泰集团",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "焦炭与H型钢产能真实，但公司连续亏损、资产负债率高、控股股东高比例质押，当前公开行情对应估值显著高于净资产和可验证盈利能力；仅在价差修复、扣非转正或价格跌入深度折价区后再考虑。",
-  "fair_value_range": [
-    1.1,
-    1.8
-  ],
-  "buy_zone": [
-    0.7,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    3.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安泰集团",
+    "security_status": "active",
+    "symbol": "CN:600408",
+    "ticker": "600408"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c4cca55b887aa95d5ea1177828882bebcee94bb6adc31b5ec667bd62072ed759"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于1.20元且2026H1正式报告未显著差于预告，允许建立观察仓",
-      "action": "watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度正式报告、吨毛利、现金流和预亏兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非净利润转正、经营现金流为正且资产负债率下降至65%以下",
-      "action": "increase_if_valuation_below_fair_value",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现扣非亏损继续收窄或经营拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.50元但主营仍亏损或控股股东质押未缓解",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "跌入按净资产和悲观情景估算的深度折价观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "超过当前基本面可验证估值上沿，若利润未转正应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "跌入按净资产和悲观情景估算的深度折价观察区"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "超过当前基本面可验证估值上沿，若利润未转正应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度正式报告、吨毛利、现金流和预亏兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现扣非亏损继续收窄或经营拐点"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

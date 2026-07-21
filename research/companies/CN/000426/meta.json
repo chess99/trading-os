@@ -1,125 +1,133 @@
 {
-  "symbol": "CN:000426",
-  "market": "CN",
-  "ticker": "000426",
-  "name": "兴业银锡",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "兴业银锡是A股稀缺的银+锡高弹性矿企，银漫、宇邦和Achmmach构成资源期权，2026Q1已验证高银价下的利润弹性；但34.10元股价已部分反映乐观预期，PB约5.6倍、TTM PE约22.7倍，安全边际不足，适合等待23-27元买入区间。",
-  "fair_value_range": [
-    28,
-    38
-  ],
-  "buy_zone": [
-    23,
-    27
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兴业银锡",
+    "security_status": "active",
+    "symbol": "CN:000426",
+    "ticker": "000426"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "84b68378960f6a3bf459e25e3c4e2aab8d9a5cce822bc588c41754ea0a5bbbad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入23-27元且银锡价格、宇邦项目进度未恶化",
-      "zone": [
-        23,
-        27
-      ],
-      "action": "first_buy",
-      "target_weight": 0.03,
-      "max_weight": 0.03,
-      "notes": "27元以下试仓2%-3%，前提是银锡价格和项目进度未恶化。"
-    },
-    {
-      "condition": "股价跌入18-22元且基本面未破坏",
-      "zone": [
-        18,
-        22
-      ],
-      "action": "strong_buy",
-      "target_weight": 0.05,
-      "max_weight": 0.08,
-      "notes": "强吸引力区，若基本面未破坏可提高到5%-8%。"
-    },
-    {
-      "condition": "股价升至40-45元且无新增超预期兑现",
-      "zone": [
-        40,
-        45
-      ],
-      "action": "reduce",
-      "target_weight": 0,
-      "max_weight": 0.02,
-      "notes": "40元以上不追，45元以上若无新增超预期考虑降仓。"
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报将验证2026Q1高盈利是否延续",
-      "condition": "2026半年报披露",
-      "action": "复核银、锡销量、毛利率、现金流和应收账款。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "宇邦矿业是未来1-3年核心增量",
-      "condition": "宇邦矿业825万吨/年采矿项目建设进度或资本开支出现重大变化",
-      "action": "重估中期产量和资本开支假设。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "Achmmach锡矿决定长期锡资源期权价值",
-      "condition": "Achmmach锡矿建设、融资、投产时间表出现重大变化",
-      "action": "重估海外锡矿期权价值。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "治理和股东风险会影响估值折扣",
-      "condition": "控股股东质押、重整后补偿承诺、关联交易或担保事项发生重大变化",
-      "action": "复核治理折价和仓位上限。"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "矿业公司重大事件可能改变投资结论",
-      "condition": "发生重大安全、环保、采矿权、海外政治或汇率风险事件",
-      "action": "立即复核投资结论。"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 27,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
       "reason": "进入有安全边际买入区",
-      "message": "进入有安全边际买入区，复核银锡价格和项目进度后可试仓。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 22,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
       "reason": "进入强吸引力区",
-      "message": "进入强吸引力区，若基本面未破坏可提高仓位。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 40,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
       "reason": "进入偏乐观定价区",
-      "message": "进入偏乐观定价区，不追高并评估降风险。"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 45,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
       "reason": "显著依赖乐观情景兑现",
-      "message": "显著依赖乐观情景兑现，若无新增超预期考虑减仓。"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

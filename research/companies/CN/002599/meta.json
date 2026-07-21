@@ -1,135 +1,124 @@
 {
-  "symbol": "CN:002599",
-  "market": "CN",
-  "ticker": "002599",
-  "name": "盛通股份",
-  "company_name": "北京盛通印刷股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "盛通股份主业出版/包装印刷现金流尚可但行业成熟、利润率薄，科技教育业务毛利率高但 2025 年收入明显下滑且 2026Q1 公司转亏；当前约 5.30 元、约 28.23 亿元市值对应约 2.27 倍 PB 和很高 PE，已透支利润修复与 AI/教育期权，缺乏安全边际。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.7,
-    3.6
-  ],
-  "buy_zone": [
-    1.9,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盛通股份",
+    "security_status": "active",
+    "symbol": "CN:002599",
+    "ticker": "002599"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c7ad35b33fc6662edc05c7b3222e1f068516180aed2472657d9217638d4dcf4b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价大于等于 4.20 元，且经营改善未被连续季度验证",
-      "price_range": ">=4.20",
-      "position": "0%-1%",
-      "max_weight": 0.01,
-      "action": "不买/若持有则减仓观察"
-    },
-    {
-      "condition": "股价位于 3.60-4.20 元，等待财报验证",
-      "price_range": "3.60-4.20",
-      "position": "0%-2%",
-      "max_weight": 0.02,
-      "action": "观察"
-    },
-    {
-      "condition": "股价位于 2.40-3.60 元，且无重大基本面恶化",
-      "price_range": "2.40-3.60",
-      "position": "2%-4%",
-      "max_weight": 0.04,
-      "action": "小仓位试探"
-    },
-    {
-      "condition": "股价位于 1.90-2.40 元，且现金流和资产负债表未恶化",
-      "price_range": "1.90-2.40",
-      "position": "4%-7%",
-      "max_weight": 0.07,
-      "action": "分批买入"
-    },
-    {
-      "condition": "股价低于 1.90 元，且不存在退市、商誉或应收爆雷风险",
-      "price_range": "<1.90",
-      "position": "7%-10%",
-      "max_weight": 0.1,
-      "action": "强吸引力买入"
-    }
-  ],
-  "price_triggers": [
-    {
-      "price": 3.6,
-      "type": "price_below",
-      "reason": "股价进入合理价值区间上沿附近",
-      "action": "复查估值"
-    },
-    {
-      "price": 2.4,
-      "type": "price_below",
-      "reason": "股价低于安全边际买入价",
-      "action": "进入安全边际买入区"
-    },
-    {
-      "price": 1.9,
-      "type": "price_below",
-      "reason": "股价低于悲观情景估值附近",
-      "action": "进入强吸引力买入区"
-    },
-    {
-      "price": 4.2,
-      "type": "price_above",
-      "reason": "股价高于合理价值区间且经营尚未验证",
-      "action": "不追高或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证收入恢复、扣非转正和现金流质量的最近关键节点",
-      "action": "复查收入、扣非净利、经营现金流和科技教育业务增速"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "股价跌入 3.60 元以下且无重大基本面恶化",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "价格进入合理价值上沿附近，需要重新评估是否出现安全边际",
-      "action": "复查估值和安全边际"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "连续两个季度扣非净利润转正且科技教育收入恢复正增长",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "基本面改善可能改变公司质量评级和科技教育期权价值",
-      "action": "上调关注度并重估科技教育期权价值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "科技教育服务收入继续同比下滑超过 20% 或经营现金流转弱",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "高毛利业务收缩或现金流转弱会削弱安全边际",
-      "action": "下调估值区间"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "股价进入合理价值区间上沿附近",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "股价低于安全边际买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.9
+      },
+      "reason": "股价低于悲观情景估值附近",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "股价高于合理价值区间且经营尚未验证",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "科技教育服务收入增速和毛利率",
-    "出版综合服务收入增速和毛利率",
-    "前五大客户收入占比",
-    "资本开支/经营现金流",
-    "ROE"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

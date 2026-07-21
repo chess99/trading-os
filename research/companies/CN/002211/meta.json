@@ -1,83 +1,86 @@
 {
-  "symbol": "CN:002211",
-  "market": "CN",
-  "ticker": "002211",
-  "name": "ST宏达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "ST、持续经营重大不确定性、失信执行和现金链风险尚未解除，当前3.34元价格显著高于0.60-1.10元合理区间，不买，仅观察。",
-  "fair_value_range": [
-    0.6,
-    1.1
-  ],
-  "buy_zone": [
-    0.45,
-    0.7
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    3.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST宏达",
+    "security_status": "active",
+    "symbol": "CN:002211",
+    "ticker": "002211"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "4cb55023222766f8b1c00b1997ef7598c386a7b59e703e40e86f2c1d6ed41286"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前3.34元且ST、持续经营、诉讼和现金链风险未解除",
-      "action": "不买；已有仓位卖出或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、经营现金流、受限资金、诉讼赔付和ST风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至0.70元以下但风险未解除",
-      "action": "继续观察，不因低价买入",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报审计意见、持续经营段落和是否满足撤销其他风险警示条件",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "ST撤销、连续两个报告期扣非为正、经营现金流转正，且价格位于0.45-0.70元",
-      "action": "可开第一笔观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "进入观察买入区，但需先复核ST撤销、诉讼执行、现金流和审计意见",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于1.20元且基本面未显著修复",
-      "action": "卖出或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "高于基准合理估值上沿，应减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "进入观察买入区，但需先复核ST撤销、诉讼执行、现金流和审计意见"
-    },
-    {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "高于基准合理估值上沿，应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、经营现金流、受限资金、诉讼赔付和ST风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报审计意见、持续经营段落和是否满足撤销其他风险警示条件"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价3.34元，总市值14.44亿元，腾讯行情接口口径。",
-    "2025年审计报告为带持续经营重大不确定性段落的无保留意见。",
-    "公司继续被实施其他风险警示，原因包括最近三个会计年度扣非前后孰低净利润为负且持续经营能力存在不确定性。",
-    "2026H1预告归母净利润160-240万元、扣非120-180万元，盈利仍处于较低水平。",
-    "投资者诉讼合计和解或判决金额2830.06万元，截至2026-07-14已支付2804.74万元，剩余25.32万元按分期约定支付。",
-    "澳银投资代位权纠纷涉案848万元，公司曾因此被列为失信被执行人，并存在东莞新东方股权份额执行风险。",
-    "当前评级为avoid，不因低价或ST壳预期买入。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

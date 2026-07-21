@@ -1,109 +1,106 @@
 {
-  "symbol": "CN:301319",
-  "market": "CN",
-  "ticker": "301319",
-  "name": "唯特偶",
-  "company_name": "唯特偶",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "current_thesis": "公司主业是具备一定护城河的电子焊接材料本土龙头，长期受益于国产替代和汽车电子/光伏等下游扩张，但当前股价远高于基于1-3年利润兑现可支撑的合理价值区间，现阶段以观察为主。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "B+",
-  "valuation_rating": "extremely_expensive",
-  "fair_value_range": [
-    30,
-    45
-  ],
-  "buy_zone": [
-    22,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "唯特偶",
+    "security_status": "active",
+    "symbol": "CN:301319",
+    "ticker": "301319"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "c08f2763e94a558e9c5c13181bbdd9019556b30a6a039e2b68db86f5d176d4ff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_55",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.01,
-      "reason": "题材溢价和流动性溢价显著高于基本面，风险收益比差。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年中报，重点看毛利率、经营现金流、应收账款和可靠性材料进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_45_and_55",
-      "action": "watch_only",
-      "max_weight": 0.02,
-      "reason": "接近乐观情景上沿，缺乏安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认收入增速与利润修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_30_and_45",
-      "action": "starter_position",
-      "max_weight": 0.03,
-      "reason": "进入估值可讨论区，但仍需要业绩继续兑现。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入合理价值下沿，开始考虑建立跟踪仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_between_22_and_30",
-      "action": "accumulate",
-      "max_weight": 0.06,
-      "reason": "达到有安全边际的买入区间。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入强吸引力区间，可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "price_below_22",
-      "action": "buy_aggressively",
-      "max_weight": 0.1,
-      "reason": "接近悲观估值，若基本面未恶化则具备较强吸引力。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "显著高于乐观估值上限，不应追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "若价格再次脱离基本面，应优先检查是否由题材炒作驱动。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入合理价值下沿，开始考虑建立跟踪仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入强吸引力区间，可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "显著高于乐观估值上限，不应追高。"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "若价格再次脱离基本面，应优先检查是否由题材炒作驱动。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年中报，重点看毛利率、经营现金流、应收账款和可靠性材料进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认收入增速与利润修复是否持续。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "锡膏/焊锡丝/助焊剂分产品收入增速",
-    "综合毛利率与分产品毛利率",
-    "经营活动现金流净额与净现比",
-    "应收账款增速是否快于收入增速",
-    "汽车电子/光伏/半导体相关收入占比",
-    "海外收入占比",
-    "可靠性材料收入规模",
-    "套期保值执行效果",
-    "前五大客户集中度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

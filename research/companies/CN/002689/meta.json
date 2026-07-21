@@ -1,97 +1,114 @@
 {
-  "symbol": "CN:002689",
-  "market": "CN",
-  "ticker": "002689",
-  "name": "ST远智",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "ST远智主业和现金流在2025年改善，但历史收入确认和租赁收入虚假记载导致的ST治理折价仍未消除；当前2.71元对应约28倍2025年归母PE和2.27倍2026Q1 PB，已提前反映摘帽预期，缺少安全边际，现阶段不买。",
-  "fair_value_range": [
-    1.35,
-    1.85
-  ],
-  "buy_zone": [
-    1.1,
-    1.45
-  ],
-  "sell_or_reduce_zone": [
-    2.3,
-    3.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST远智",
+    "security_status": "active",
+    "symbol": "CN:002689",
+    "ticker": "002689"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "b9b318291f904c5aa6a5937ede9a7640672348bf90bac24cb984c15d4ea4e675"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于2.30元或未验证2026年扣非利润恢复",
-      "action": "不建仓或减仓至零",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报扣非利润、经营现金流、应收账款和ST风险进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌破1.45元且无新增处罚、资金占用、违规担保、重大索赔",
-      "action": "观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否验证全年盈利恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于1.10至1.25元且2026中报或三季报扣非利润和经营现金流改善",
-      "action": "小仓位试买",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-12-20"
+      },
+      "reason": "行政处罚决定满12个月后复核撤销其他风险警示申请条件",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026年12月后成功撤销其他风险警示且全年扣非净利润稳定在0.9亿元以上",
-      "action": "重新评估后提高仓位上限",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、审计意见、现金流和摘帽结果",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.45
+      },
+      "reason": "进入可买观察区，需复核中报或三季报、ST进展和应收账款质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.1
+      },
+      "reason": "进入深度安全边际区，可重新做资产折价和现金链压力测试",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.3
+      },
+      "reason": "高于合理估值上沿且缺少安全边际，应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.45,
-      "reason": "进入可买观察区，需复核中报或三季报、ST进展和应收账款质量"
-    },
-    {
-      "type": "price_below",
-      "price": 1.1,
-      "reason": "进入深度安全边际区，可重新做资产折价和现金链压力测试"
-    },
-    {
-      "type": "price_above",
-      "price": 2.3,
-      "reason": "高于合理估值上沿且缺少安全边际，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报扣非利润、经营现金流、应收账款和ST风险进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否验证全年盈利恢复"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-20",
-      "reason": "行政处罚决定满12个月后复核撤销其他风险警示申请条件"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、审计意见、现金流和摘帽结果"
-    }
-  ],
-  "notes": [
-    "2026-07-17新浪行情最近价2.71元，对应市值约28.27亿元。",
-    "2025年归母净利润1.01亿元、扣非归母净利润0.76亿元、经营现金流净额2.13亿元，但包含债务重组收益和政府补助。",
-    "2026Q1收入同比增长64.49%，但归母净利润仍亏损0.31亿元。",
-    "ST核心风险来自2025-12-19行政处罚决定书认定的历史收入确认和租赁收入虚假记载。",
-    "2025年报披露无控股股东非经营性资金占用、无违规对外担保、无破产重整，不触及重大违法强制退市情形。",
-    "应收账款余额和长账龄应收较重，估值必须保留治理折价和回款折价。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

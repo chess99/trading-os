@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:603336",
-  "market": "CN",
-  "ticker": "603336",
-  "name": "XD宏辉果",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "公司通过收购施美药业41.128%股权获得医药并表转型机会，但原果蔬业务低毛利且承压，施美经济权益不能按100%归母利润估值；按当前约50亿元市值，市场已给出过高转型溢价，缺乏买方安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    3.0,
-    4.5
-  ],
-  "buy_zone": [
-    0.0,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "XD宏辉果",
+    "security_status": "active",
+    "symbol": "CN:603336",
+    "ticker": "603336"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "283be267a3c960a9626a02a7aba72248699023e12de40069d147f046d25630c1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前估值显著高于基准价值且施美并表质量尚未验证，不建立仓位。",
-      "action": "avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认施美并表起始日、少数股东损益、财务费用和商誉影响。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入3.2元以下，且施美药业半年报或三季报显示承诺利润节奏、现金流和治理安排正常。",
-      "action": "research_for_starter_position",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入安全边际买入区间，需要结合施美并表利润和债务结构重新估值。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证施美药业利润承诺节奏和原果蔬业务止跌情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "转型溢价进一步扩大且缺乏基本面兑现证据，应维持回避或减仓判断。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认施美并表起始日、少数股东损益、财务费用和商誉影响。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入安全边际买入区间，需要结合施美并表利润和债务结构重新估值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证施美药业利润承诺节奏和原果蔬业务止跌情况。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "转型溢价进一步扩大且缺乏基本面兑现证据，应维持回避或减仓判断。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

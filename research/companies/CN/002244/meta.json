@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:002244",
-  "market": "CN",
-  "ticker": "002244",
-  "name": "滨江集团",
-  "company_name": "滨江集团",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "滨江集团是少数仍保持绿档、现金短债覆盖充足、杭州和长三角土储质量较高的民营房企。当前估值低于账面净资产，适合在行业出清期用小仓位分批买入；主要风险是销售周期、毛利率下行和存货减值继续侵蚀净资产。",
-  "quality_rating": "A-",
-  "valuation_rating": "attractive",
-  "fair_value_range": [
-    9.2,
-    11.5
-  ],
-  "buy_zone": [
-    7.2,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    10.8,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "滨江集团",
+    "security_status": "active",
+    "symbol": "CN:002244",
+    "ticker": "002244"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c58bc98f17c22a4a915e7003f5bdd2029f06d174c4b1f2cb66ba20c8306ab302"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于8.10元且未出现新的重大负面公告",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "当前PB低于账面净资产，杭州和长三角土储质量较高，但行业仍在下行，先用小仓位验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报的毛利率、现金流、短债覆盖、存货减值和权益销售。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入7.20-7.80元，且半年报显示现金短债比仍高于2.0、经营现金流未显著恶化",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "价格进入买入区间中下部，安全边际提高，但仍需现金流和减值风险确认。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和金九银十销售表现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "销售和回款修复，毛利率企稳，存货减值压力下降",
-      "action": "提高至计划上限",
-      "max_weight": 0.06,
-      "reason": "基本面验证后可承受更高地产开发暴露。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报、分红、全年销售排名和减值风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格达到10.80元以上或基本面低于预期",
-      "action": "停止新增并逐步降仓",
-      "max_weight": 0.02,
-      "reason": "接近合理价值上沿或基本面安全边际下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入买入区间，若无基本面负面变化，可复核后加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "接近悲观情景估值，需要检查是否为行业情绪错杀或公司基本面恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "接近合理价值区间上部，新增风险收益比下降，应考虑降仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入买入区间，若无基本面负面变化，可复核后加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "接近悲观情景估值，需要检查是否为行业情绪错杀或公司基本面恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "接近合理价值区间上部，新增风险收益比下降，应考虑降仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报的毛利率、现金流、短债覆盖、存货减值和权益销售。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和金九银十销售表现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报、分红、全年销售排名和减值风险。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度销售额",
-    "权益销售额",
-    "销售回款率",
-    "杭州项目去化率",
-    "权益拿地金额",
-    "经营活动现金流量净额",
-    "货币资金",
-    "一年内到期债务",
-    "现金短债比",
-    "剔除预收款后的资产负债率",
-    "房地产开发毛利率",
-    "存货跌价准备",
-    "合同负债",
-    "少数股东损益占比",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

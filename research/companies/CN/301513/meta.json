@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:301513",
-  "ticker": "301513",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "尚水智能",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "尚水智能是锂电制浆装备细分龙头，循环式高效制浆系统具备技术路线、专利、头部客户和高毛利优势，2025年新增订单恢复明显；但当前约37倍TTM市盈率已反映较多预期，且客户集中、非标验收、利润率波动和核心人员变动风险仍需折价，当前以观察为主，等待价格跌入安全边际或订单利润兑现进一步确认。",
-  "fair_value_range": [
-    42,
-    55
-  ],
-  "buy_zone": [
-    35,
-    42
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "尚水智能",
+    "security_status": "active",
+    "symbol": "CN:301513",
+    "ticker": "301513"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "dae66e90c386f658e53955ac1c718320bf39ac7fcf6fd47fd3413a2e7677cc86"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入35-42元且无重大订单、治理或毛利率恶化，建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点关注新增订单、毛利率、现金流、应收账款和合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入30-35元且新增订单、经营现金流和客户结构仍健康，提高至核心跟踪仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认2025年新增订单向收入和利润的转化节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于55元但订单和利润尚未超预期兑现，仅持有原有仓位不新增",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新评估干法/半干法设备商业化进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入合理价值下沿和买入观察区，需要复核订单、毛利率和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入具备较强安全边际区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入乐观情景估值区，若无干法/固态设备规模化利润证据应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入合理价值下沿和买入观察区，需要复核订单、毛利率和现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入具备较强安全边际区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "进入乐观情景估值区，若无干法/固态设备规模化利润证据应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点关注新增订单、毛利率、现金流、应收账款和合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认2025年新增订单向收入和利润的转化节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新评估干法/半干法设备商业化进展"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "新增订单金额及新能源电池极片制造设备订单占比",
-    "主营毛利率是否维持45%以上",
-    "经营现金流净额与归母净利润匹配度",
-    "比亚迪和亿纬锂能以外客户收入占比",
-    "干法/半干法设备是否从小批量交付进入规模化订单",
-    "核心技术人员和项目交付团队稳定性"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

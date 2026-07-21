@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920914",
-  "market": "CN",
-  "ticker": "920914",
-  "name": "远航精密",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "收入增长和结构件放量尚未转化为自由现金流，当前约34倍TTM市盈率已透支募投爬坡、利润率修复与现金流转正预期。",
-  "fair_value_range": [13.0, 16.0],
-  "buy_zone": [10.0, 12.0],
-  "sell_or_reduce_zone": [18.0, 22.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "远航精密",
+    "security_status": "active",
+    "symbol": "CN:920914",
+    "ticker": "920914"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "8ea35734627529b91dbb5d9b40e0adbbfaa0109a880f9dde7138c1681f3f633b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于10至12元且至少两个季度经营现金流、产能利用率和扣非利润未继续恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、扣非利润、经营现金流和募投产能利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10元但核心客户、毛利率和长期商业价值已重新验证，不能仅因价格下跌加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及结构件放量能否转化为利润和自由现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "基本面恶化、募投产能长期闲置或经营现金流持续无法覆盖维护性资本开支",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入可重新验证基本面和安全边际的买入观察区，不能机械补仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入减仓或不应追高区间，除非可持续利润与自由现金流显著上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、扣非利润、经营现金流和募投产能利用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及结构件放量能否转化为利润和自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入可重新验证基本面和安全边际的买入观察区，不能机械补仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入减仓或不应追高区间，除非可持续利润与自由现金流显著上修"
-    }
-  ],
-  "updated_at": "2026-07-14T07:53:08+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000679",
-  "market": "CN",
-  "ticker": "000679",
-  "name": "大连友谊",
-  "company_name": "大连友谊",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "research_only",
-  "current_rating": "research_only",
-  "current_thesis": "大连友谊是资产属性强于经营属性的区域百货和商业物业小市值标的；当前利润体量不足以支撑高估值，只有在价格回落至买入区间且资产权属、租金现金流和治理风险经一手公告进一步核验后，才适合小仓位研究性买入。",
-  "quality_rating": "C",
-  "valuation_rating": "C-",
-  "fair_value_range": [
-    3.8,
-    5.2
-  ],
-  "buy_zone": [
-    3.2,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    7.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大连友谊",
+    "security_status": "active",
+    "symbol": "CN:000679",
+    "ticker": "000679"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "121340cf321cb960a931efe6c4b4621b9bbb1548633acd8708052ac766798c32"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.20元且无新增重大诉讼、担保、控制权或现金流恶化公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间上沿，但经营和资产价值尚未充分核验，只适合小仓位验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入、租赁业务、经营现金流、资产减值和治理风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.60元且最近两个季度经营现金流改善、未出现大额减值",
-      "action": "加至研究仓上限",
-      "max_weight": 0.02,
-      "reason": "安全边际改善，同时需要现金流证据确认不是单纯价值陷阱"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认商业物业和百货经营是否继续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.00元且没有公告验证的资产处置、治理改善或业绩拐点",
-      "action": "不加仓并考虑减持",
-      "max_weight": 0.005,
-      "reason": "价格已高于基准合理价值区间，利润体量无法单独支撑估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入初步买入区间，需要复核最新财报和治理公告",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "接近更有吸引力的资产折价观察点，可评估是否提高至研究仓上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "高于基准合理价值上沿，若无一手公告支撑需减持或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入初步买入区间，需要复核最新财报和治理公告"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "接近更有吸引力的资产折价观察点，可评估是否提高至研究仓上限"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "高于基准合理价值上沿，若无一手公告支撑需减持或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入、租赁业务、经营现金流、资产减值和治理风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认商业物业和百货经营是否继续改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比和环比",
-    "租赁及商业物业收入占比",
-    "综合毛利率",
-    "经营活动现金流净额",
-    "投资性房地产和固定资产变动",
-    "其他应收款和存货减值",
-    "资产减值损失和信用减值损失",
-    "短期借款和或有负债",
-    "控股股东股权质押、冻结或控制权变化",
-    "重大诉讼、担保和关联交易公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,87 @@
 {
-  "symbol": "CN:603021",
-  "market": "CN",
-  "ticker": "603021",
-  "name": "*ST华鹏",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "2026-07-20收盘价6.48元对应市值约20.73亿元，显著高于负净资产、持续亏损和债务逾期状态下的经营价值；投资价值主要来自高不确定性的债务重组或保壳期权，当前缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.0,
-    3.5
-  ],
-  "buy_zone": [
-    0.0,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST华鹏",
+    "security_status": "active",
+    "symbol": "CN:603021",
+    "ticker": "603021"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "8fd7bb3c455970281c80c26b7175a880efb8b19725a2d5a49e579d23195d919a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未看到债务展期或重组、净资产转正路径和持续经营审计风险解除前",
-      "action": "不新开仓，已有仓位降至观察仓或清仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、净资产、亏损、逾期债务与诉讼进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入2.0元以下且同时出现明确债务展期、账户冻结解除、半年报亏损收窄证据",
-      "action": "仅作为困境反转观察仓分批试错",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "进入带安全边际的困境期权观察区，但仍需债务和退市风险缓和作为确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "净资产转正方案、债务重组协议、撤销退市风险警示路径被公告确认",
-      "action": "重新估值后再决定是否提高仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "高于基准合理区间上沿，应减仓或回避追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "接近或高于当前高估区，除非重组实质落地，否则风险收益失衡",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "进入带安全边际的困境期权观察区，但仍需债务和退市风险缓和作为确认"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "高于基准合理区间上沿，应减仓或回避追高"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "接近或高于当前高估区，除非重组实质落地，否则风险收益失衡"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、净资产、亏损、逾期债务与诉讼进展"
-    }
-  ],
-  "notes": [
-    "2026-07-20初始覆盖，结论为高风险回避。",
-    "内控审计报告文字提取不完整，意见细节需后续核验。",
-    "估值以困境股、清算折价和重组期权为主，不适用PE和PB。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

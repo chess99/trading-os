@@ -1,131 +1,125 @@
 {
-  "symbol": "CN:300604",
-  "market": "CN",
-  "ticker": "300604",
-  "name": "长川科技",
-  "company_name": "杭州长川科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "国产半导体测试设备平台型龙头，2026H1 业绩预告与 SEMI 最新测试设备景气预测均强；2026-07-16 定增以 280.11 元发行 1116.36 万股、募集净额 30.92 亿元，资产负债表改善且摊薄约 1.73%，但不改变估值中枢。2026-07-17 收盘价 278.76 元对应发行后备考市值约 1800 亿元，仍显著高于 170-230 元合理价值，当前不买，等待价格回落或半年报继续超预期并验证现金流。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    170,
-    230
-  ],
-  "buy_zone": [
-    140,
-    160
-  ],
-  "sell_or_reduce_zone": [
-    320,
-    420
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长川科技",
+    "security_status": "active",
+    "symbol": "CN:300604",
+    "ticker": "300604"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "1724cf28605e792ac2dd37d7fa62092378c82a221184ce10e16e51aff8b09938"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5d837af08ad9c02069ebb9899edacbc44f20077ed5caf8c4e6e5c3f909e72106"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "6d053a44ad42a8507ad29c9516b7ba8b9d93776cc9fe5d9b1bfada45804cb9e8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "320元以上",
-      "condition": "股价处于极高预期区，除非后续多个季度订单、利润和现金流持续超预期，否则风险收益不对称",
-      "action": "不新买；已有仓位分批减风险",
-      "target_weight": 0.0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报披露后复核收入结构、数字测试机放量、毛利率、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "260-320元",
-      "condition": "估值仍处于高估区，市场已预支数字测试机持续放量和高毛利率",
-      "action": "观察，不加仓",
-      "target_weight": 0.0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露后复核订单持续性、利润率和现金流是否支持高估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "200-260元",
-      "condition": "估值从极端区回落但仍不便宜，需要半年报或三季报继续验证高端测试机放量",
-      "action": "仅允许很小仓位跟踪",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年年报披露后重估中期盈利中枢、研发资本化、客户集中度和融资摊薄影响",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "160-200元",
-      "condition": "进入合理价值附近，且经营现金流、应收和存货没有恶化",
-      "action": "分批建立底仓",
-      "target_weight": 0.03,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 200.0
+      },
+      "reason": "股价跌入可讨论区，若业绩和现金流未恶化，可开始研究底仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "zone": "140-160元",
-      "condition": "进入安全边际区，基本面未出现客户流失、毛利率坍塌或订单断档",
-      "action": "提高配置",
-      "target_weight": 0.05,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 160.0
+      },
+      "reason": "股价进入安全边际区，对应中性 2026E 盈利假设下估值更合理",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "zone": "140元以下",
-      "condition": "强吸引力区，需复核行业周期不是结构性反转向下",
-      "action": "积极配置但单股仍控制上限",
-      "target_weight": 0.07,
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 140.0
+      },
+      "reason": "股价进入强吸引力区，但需排除基本面结构性恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 320.0
+      },
+      "reason": "股价显著高于合理价值上沿，预期过满",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 200,
-      "action": "重开估值模型并检查半年报或三季报验证情况",
-      "reason": "股价跌入可讨论区，若业绩和现金流未恶化，可开始研究底仓"
-    },
-    {
-      "type": "price_below",
-      "price": 160,
-      "action": "评估分批建仓",
-      "reason": "股价进入安全边际区，对应中性 2026E 盈利假设下估值更合理"
-    },
-    {
-      "type": "price_below",
-      "price": 140,
-      "action": "在复核周期和订单后评估提高仓位",
-      "reason": "股价进入强吸引力区，但需排除基本面结构性恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 320,
-      "action": "禁止追高，已有仓位降低风险暴露",
-      "reason": "股价显著高于合理价值上沿，预期过满"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年半年报披露后复核收入结构、数字测试机放量、毛利率、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露后复核订单持续性、利润率和现金流是否支持高估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年年报披露后重估中期盈利中枢、研发资本化、客户集中度和融资摊薄影响"
-    }
-  ],
-  "key_tracking_metrics": [
-    "测试机收入增速、占比和毛利率，尤其是数字测试机放量情况",
-    "2026H1、2026Q3、2026 年报归母净利润与扣非净利润兑现程度",
-    "经营活动现金流净额与净利润的匹配度",
-    "应收账款、存货、合同负债相对收入的变化",
-    "研发投入总额、资本化研发比例、开发支出余额及后续减值风险",
-    "前五大客户销售占比和第一大客户占比",
-    "境外收入占比及海外客户复购",
-    "向特定对象发行股票的发行价、融资规模、资金用途和摊薄影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

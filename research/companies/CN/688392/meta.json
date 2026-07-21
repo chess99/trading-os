@@ -1,102 +1,96 @@
 {
-  "symbol": "CN:688392",
-  "market": "CN",
-  "ticker": "688392",
-  "name": "骄成超声",
-  "company_name": "骄成超声",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "骄成超声具备功率超声平台属性，新能源电池、线束连接器、半导体超声设备和高毛利配件共同驱动增长，但2026-07-09收盘价241.80元已提前反映半导体批量兑现的乐观预期。当前评级watch，合理价值区间135-175元，买入区间95-130元。",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    135,
-    175
-  ],
-  "buy_zone": [
-    95,
-    130
-  ],
-  "sell_or_reduce_zone": [
-    220,
-    260
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "骄成超声",
+    "security_status": "active",
+    "symbol": "CN:688392",
+    "ticker": "688392"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "45657752ef05eeea41e61c17339e0e04e393549afebe8d16e3b4b64dd3e1c6d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于175元且未出现半导体设备批量收入验证",
-      "action": "不买入，仅保留研究跟踪",
-      "max_weight": 0,
-      "reason": "当前价格隐含乐观半导体兑现预期，风险收益不对称"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报的收入增速、半导体订单、合同负债、存货、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至130-175元且2026半年报收入、毛利率、经营现金流均保持改善",
-      "action": "建立观察仓",
-      "max_weight": 0.008,
-      "reason": "业务质量较高但估值仍不便宜，只适合验证期仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报和再融资进展，判断半导体设备是否进入批量兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回落至95-130元且半导体订单、合同负债和配件收入继续增长",
-      "action": "分批买入",
-      "max_weight": 0.02,
-      "reason": "进入合理安全边际区间，可承担新能源周期和客户集中风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 130.0
+      },
+      "reason": "进入纪律性买入观察区，需要结合半年报订单和现金流复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于220元或主营毛利率跌破58%",
-      "action": "减仓或回避",
-      "max_weight": 0.003,
-      "reason": "估值进入乐观情景，同时毛利率下行会破坏核心定价逻辑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入深度价值区，可重新评估是否提升至buy",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "高于合理价值区间较多，若无半导体批量兑现应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 130,
-      "reason": "进入纪律性买入观察区，需要结合半年报订单和现金流复核"
-    },
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入深度价值区，可重新评估是否提升至buy"
-    },
-    {
-      "type": "price_above",
-      "price": 220,
-      "reason": "高于合理价值区间较多，若无半导体批量兑现应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报的收入增速、半导体订单、合同负债、存货、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报和再融资进展，判断半导体设备是否进入批量兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入同比增速",
-    "2026H1归母净利润同比增速",
-    "主营业务毛利率",
-    "半导体超声波设备收入及毛利率",
-    "新能源电池超声波设备收入及毛利率",
-    "配件收入增速及毛利率",
-    "前五大客户销售占比",
-    "第一大客户销售占比",
-    "合同负债",
-    "存货及发出商品",
-    "经营活动现金流净额",
-    "应收账款周转",
-    "再融资审核及发行摊薄比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

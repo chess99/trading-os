@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:603606",
-  "market": "CN",
-  "ticker": "603606",
-  "name": "东方电缆",
-  "company_name": "东方电缆",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "current_thesis": "东方电缆是海缆和海上风电电缆环节的高质量龙头，2026年订单和交付景气恢复明确，但项目制收入确认和现金流波动要求小仓位先手、按中报和订单兑现再加仓。",
-  "fair_value_range": [
-    45,
-    54
-  ],
-  "buy_zone": [
-    34,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    66
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东方电缆",
+    "security_status": "active",
+    "symbol": "CN:603606",
+    "ticker": "603606"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "4c6acbfd4f3c42620f7fa048dc6c8c3b763c863aa9bb6a066bcb5521717a848b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价不高于40元，且未出现重大订单取消、海缆毛利率恶化或现金流异常",
-      "action": "建立首笔观察性买入仓位",
-      "max_weight": 0.03,
-      "reason": "当前估值处于可接受区间但安全垫一般，适合先手而非重仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入、毛利率、经营现金流、应收和合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至34-36元，且中报确认订单交付、毛利率和经营现金流未恶化",
-      "action": "加仓至核心跟踪仓位",
-      "max_weight": 0.06,
-      "reason": "价格进入更有吸引力的买入区，风险收益改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和海风订单交付节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于58元且盈利预测没有同步上修",
-      "action": "分批减仓或停止加仓",
-      "max_weight": 0.04,
-      "reason": "估值进入偏乐观区间，预期收益下降"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、订单质量和海外项目兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入确认低于订单推导、海缆毛利率下行且经营现金流显著弱于净利润",
-      "action": "降至观察仓或退出",
-      "max_weight": 0.01,
-      "reason": "核心买入逻辑被破坏，不能用下跌自动解释为机会"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入更有吸引力的加仓观察区，需要复核订单、毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "触发逻辑止损复核，需判断是否基本面同步恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 54.0
+      },
+      "reason": "接近合理价值区间上沿，需要评估盈利预测是否上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "进入减仓观察区，若无业绩上修则风险收益转弱",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入更有吸引力的加仓观察区，需要复核订单、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "触发逻辑止损复核，需判断是否基本面同步恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 54,
-      "reason": "接近合理价值区间上沿，需要评估盈利预测是否上修"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "进入减仓观察区，若无业绩上修则风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入、毛利率、经营现金流、应收和合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和海风订单交付节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、订单质量和海外项目兑现情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    "海缆系统新签订单金额",
-    "海外海缆订单金额与交付周期",
-    "柔直和高压海缆项目进展",
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "综合毛利率和海缆系统毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款、存货和合同资产增速",
-    "国内海上风电项目开工和并网节奏",
-    "产能扩张进度与利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

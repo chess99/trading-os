@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:300423",
-  "market": "CN",
-  "ticker": "300423",
-  "name": "昇辉科技",
-  "company_name": "昇辉智能科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "传统配电和智慧城市业务受地产链拖累，2025年收入同比下降47.76%且继续亏损，2026Q1收入继续下滑、归母亏损扩大；应收账款和客户集中是核心折价项。赫普能源重组和储能转型提供期权，但当前5元以上股价已经隐含较多乐观预期，安全边际不足。",
-  "quality_rating": "低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.0,
-    4.0
-  ],
-  "buy_zone": [
-    0,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "昇辉科技",
+    "security_status": "active",
+    "symbol": "CN:300423",
+    "ticker": "300423"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9548869a3fc6e8ca4d3b148a09f258e8311e1629df540360e33822507f9cabe1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于2.8元，且最新季度未出现应收账款继续大幅恶化或重大重组失败",
-      "action": "可建立0.5%观察仓",
-      "max_weight": 0.005,
-      "max_position": "0.5%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入降幅、应收账款、经营现金流、碧桂园相关回款和赫普能源重组进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.2元，经营现金流至少单季度转正，且地产客户回款有明确改善",
-      "action": "可提高到1.0%以内",
-      "max_weight": 0.01,
-      "max_position": "1.0%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证传统业务是否止跌以及新能源业务毛利率是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正，前五大客户集中度下降，赫普能源重组落地且经审计利润质量可验证",
-      "action": "重新评估是否提升为事件驱动仓位",
-      "max_weight": 0.02,
-      "max_position": "2.0%"
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断重组、减值和现金流是否改变长期评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 2.8,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
       "reason": "低于可买价格上限，开始具备相对调整净资产和重组期权的安全边际",
-      "action": "进入可研究买入区，复核应收和现金流后决定是否开0.5%观察仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 2.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
       "reason": "接近保守净资产折价估值下沿，若基本面未恶化可提高赔率",
-      "action": "若基本面没有继续恶化，可考虑加至1.0%以内"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 5.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
       "reason": "高于估值区间且基本面仍未验证时，价格主要反映重组乐观预期",
-      "action": "若无经营现金流和重组兑现证据，视为减仓或回避区"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入降幅、应收账款、经营现金流、碧桂园相关回款和赫普能源重组进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证传统业务是否止跌以及新能源业务毛利率是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断重组、减值和现金流是否改变长期评级"
-    }
-  ],
-  "key_tracking_metrics": [
-    "应收账款余额、账龄结构和坏账计提",
-    "碧桂园及其他地产客户回款进度",
-    "经营活动现金流量净额",
-    "前五大客户销售占比和非地产客户收入占比",
-    "新能源业务收入、毛利率和订单质量",
-    "赫普能源重组审批、评估值、业绩承诺、并表利润和现金流",
-    "短期借款、受限资产和股东质押变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

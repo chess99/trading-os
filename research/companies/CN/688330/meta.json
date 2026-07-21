@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688330",
-  "market": "CN",
-  "ticker": "688330",
-  "name": "宏力达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "宏力达具备智能配电网细分技术积累和较厚资产负债表，但2025年表观利润主要来自非经营性公允价值收益，2026Q1主业收入仍明显下滑。当前股价接近保守公允区间下沿，需等待配电网智能设备收入、成套开关/组件销量和扣非利润确认恢复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    30,
-    40
-  ],
-  "buy_zone": [
-    0,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏力达",
+    "security_status": "active",
+    "symbol": "CN:688330",
+    "ticker": "688330"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "584b16f9d05ab81f48180c8400089866179ddced1d586e35e7a09ec145d064a9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于26元，且最近一期未出现经营现金流恶化、应收账款大幅失控或重大投资减值",
-      "action": "可建立观察性仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非利润、应收账款、存货和中腾微网并表影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3确认配电网智能设备收入恢复增长、扣非利润同比改善且非经常性损益占比下降",
-      "action": "可提高至标准小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认经营拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于42元但主业收入和扣非利润未恢复",
-      "action": "减持或不追高",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告、非经常损益占比和投资资产公允价值风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入具备较明显安全边际的买入观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过保守公允区间且需验证主业恢复，否则风险收益比下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入具备较明显安全边际的买入观察区"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过保守公允区间且需验证主业恢复，否则风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非利润、应收账款、存货和中腾微网并表影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认经营拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告、非经常损益占比和投资资产公允价值风险"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

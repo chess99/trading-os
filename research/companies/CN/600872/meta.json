@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600872",
-  "market": "CN",
-  "ticker": "600872",
-  "currency": "CNY",
-  "name": "中炬高新",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "治理修复、调味品主业再聚焦和渠道调整后的利润弹性已经在2026Q1及半年度预告中出现，但2025年主业收入下滑幅度大，仍需半年报验证动销、毛利率和现金流质量；当前价格接近合理区间下沿但未达到充分安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    27
-  ],
-  "buy_zone": [
-    15,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    27,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中炬高新",
+    "security_status": "active",
+    "symbol": "CN:600872",
+    "ticker": "600872"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4aec748b6dd52712e895ac2ae172034750abb326d573cdc3d0e5cb7e7e23049a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026年半年报确认收入、扣非利润和经营现金流同步改善，且股价低于17.5元",
-      "action": "分批建立观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-21"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流、分品类和味滋美并表情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15元且半年报未显示经营恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认渠道修复是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于27元且2026E利润未上修至8.5亿元以上",
-      "action": "不追涨并减持已有仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期盈利中枢和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入纪律性买入区，若半年报质量确认可建立仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "提供更高安全边际，适合在基本面未恶化时加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "超过合理价值区间下沿，若盈利未上修需减持或停止买入",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入纪律性买入区，若半年报质量确认可建立仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "提供更高安全边际，适合在基本面未恶化时加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "reason": "超过合理价值区间下沿，若盈利未上修需减持或停止买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-21",
-      "reason": "复核2026年半年报收入、毛利率、现金流、分品类和味滋美并表情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认渠道修复是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期盈利中枢和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

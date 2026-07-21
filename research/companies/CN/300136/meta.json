@@ -1,1 +1,105 @@
-{"buy_zone":[60,80],"company_name":"深圳市信维通信股份有限公司","currency":"CNY","current_rating":"watch","current_thesis":"射频前端与天线龙头之一，业绩拐点确认（2025扣非+19.6%、2026Q1+104%），但ROE/毛利率处历史中低位、估值PE-TTM 118x/PB 11x偏贵，自选观察不追高","do_not_chase_above":90,"fair_value_range":[65,80],"key_risks":["消费电子周期下行,手机需求疲软、AI手机渗透不及预期","大客户(苹果/华为/三星)砍单或份额下降","射频前端竞争加剧(卓胜微、唯捷创芯价格战,海外厂商反扑)","MLCC(江苏信维)爬坡不及预期,良率/客户认证延后","估值回调风险:当前PE-TTM>100x业绩不及预期杀估值","原材料价格波动(铜、陶瓷粉体、贵金属)","汇率波动(海外业务占比高)","股东减持/质押风险","环保与监管合规风险","技术替代(天线集成方案、滤波器技术路线变化)"],"latest_report":"reports/2026-07-08-initial.md","market":"CN","name":"信维通信","position_plan":[{"action":"分批建仓第一笔50%计划仓","condition":"强吸引力区间，估值合理偏低","max_weight":0.05,"target_weight":0.03,"zone":"below 52"},{"action":"分批建仓单笔≤2%","condition":"安全边际较好","max_weight":0.04,"target_weight":0.02,"zone":"52-60"},{"action":"试探小仓","condition":"合理区间上沿,需半年报验证","max_weight":0.02,"target_weight":0.01,"zone":"60-80"},{"action":"仅观察不追高","condition":"估值偏贵,成长预期已price-in","max_weight":0,"target_weight":0,"zone":"80-90"},{"action":"规避或减仓","condition":"估值压力大于成长性","max_weight":0,"target_weight":0,"zone":"above 90"}],"price_triggers":[{"price":52,"type":"price_below","reason":"强吸引力区间:股价跌破52元,可分批建仓"},{"price":60,"type":"price_below","reason":"安全边际较好:股价跌破60元,可启动建仓节奏"},{"price":90,"type":"price_above","reason":"估值压力较大:股价突破90元,不追高或减仓评估"}],"quality_rating":"B","report_history":["reports/2026-07-08-initial.md"],"review_triggers":[{"date":"2026-08-31","reason":"2026半年报披露，验证扣非同比是否维持+30%、毛利率是否回升23%+","type":"date"},{"date":"2026-09-30","reason":"2026三季报披露，验证射频前端与MLCC业务爬坡兑现度","type":"date"},{"date":"2027-04-30","reason":"2026年报披露，验证全年扣非净利与ROE回升趋势","type":"date"}],"sell_or_reduce_zone":[90,200],"status":"active","strong_attraction_zone":[52,60],"symbol":"CN:300136","ticker":"300136","updated_at":"2026-07-08T22:15:00+08:00","valuation_rating":"expensive"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信维通信",
+    "security_status": "active",
+    "symbol": "CN:300136",
+    "ticker": "300136"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "35b11fe11ec5bcf0c2521a186f12a6401795e1bea51e0e1e27897fa4e1315231"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露，验证扣非同比是否维持+30%、毛利率是否回升23%+",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "2026三季报披露，验证射频前端与MLCC业务爬坡兑现度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露，验证全年扣非净利与ROE回升趋势",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 52.0
+      },
+      "reason": "强吸引力区间:股价跌破52元,可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "安全边际较好:股价跌破60元,可启动建仓节奏",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "估值压力较大:股价突破90元,不追高或减仓评估",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

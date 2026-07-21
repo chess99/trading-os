@@ -1,113 +1,120 @@
 {
-  "symbol": "CN:001319",
-  "market": "CN",
-  "ticker": "001319",
-  "name": "铭科精技",
-  "company_name": "铭科精技控股股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium",
-  "valuation_rating": "fair",
-  "current_thesis": "铭科精技具备汽车冲压模具、金属结构件、焊接总成和焊装自动化集成的组合能力，2025年收入、扣非利润和经营现金流改善明显；但2026Q1收入增长未转化为利润增长，经营现金流转负，新能源汽车金属结构件毛利率偏低，并购整合仍需验证。当前约21倍TTM PE处于合理价值区间中部，缺少足够安全边际，适合观察等待15.5-17.5元买入区或等待利润率、现金流修复。",
-  "fair_value_range": [
-    18.5,
-    22.5
-  ],
-  "buy_zone": [
-    15.5,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    25.5,
-    29.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "铭科精技",
+    "security_status": "active",
+    "symbol": "CN:001319",
+    "ticker": "001319"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "aaa31de29cace5e2cb2589f50015fefe5efe284a905e9b9bbd94103e17c2281a"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d3315df8b78594cdd80cc19491fce1bfed4a294429e855de175a6900d6e1f5b2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于17.5元且无重大订单、毛利率或经营现金流恶化公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值区间下沿附近，初步具备安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证毛利率、经营现金流、应收账款、并购整合和外销毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15.5元且2026H1综合毛利率企稳、经营现金流改善",
-      "action": "加至基础仓",
-      "max_weight": 0.025,
-      "reason": "估值回到约15-16倍正常化利润，若利润质量改善则赔率更好"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认收入增长是否转化为扣非利润和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增长转化为扣非利润增长，安徽双骏和南京广岛并表不拖累集团利润",
-      "action": "加至策略仓",
-      "max_weight": 0.04,
-      "reason": "验证模具、冲压、焊接与焊装自动化平台化协同开始兑现"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，重新评估安徽双骏和南京广岛并表后的正常化利润与估值中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于25.5元但盈利预测未上修",
-      "action": "不追买并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "价格超过基准合理价值区间，风险收益转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入观察买入区，可评估首笔小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入更有安全边际的基础买入区，需同步确认毛利率和现金流企稳",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.5
+      },
+      "reason": "超过基准估值上沿，若盈利没有上修应降低仓位或停止追买",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "进入明显高估区，需重新评估是否卖出或大幅减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入观察买入区，可评估首笔小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入更有安全边际的基础买入区，需同步确认毛利率和现金流企稳"
-    },
-    {
-      "type": "price_above",
-      "price": 25.5,
-      "reason": "超过基准估值上沿，若盈利没有上修应降低仓位或停止追买"
-    },
-    {
-      "type": "price_above",
-      "price": 29.0,
-      "reason": "进入明显高估区，需重新评估是否卖出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证毛利率、经营现金流、应收账款、并购整合和外销毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认收入增长是否转化为扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，重新评估安徽双骏和南京广岛并表后的正常化利润与估值中枢"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率",
-    "新能源汽车金属结构件毛利率",
-    "扣非归母净利润同比增速",
-    "经营现金流净额/归母净利润",
-    "应收账款/营业收入",
-    "存货跌价准备和资产减值损失",
-    "前五大客户销售占比",
-    "外销收入占比与外销毛利率",
-    "安徽双骏并表收入、毛利率和订单验收",
-    "南京广岛并表收入、毛利率和客户协同",
-    "回购执行金额和股权激励条件"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:605179",
-  "market": "CN",
-  "ticker": "605179",
-  "name": "一鸣食品",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "一鸣食品具备华东区域低温乳品、短保烘焙和社区早餐奶吧的差异化网络，但2025年利润修复仍处低净利率、低基数阶段，2026Q1收入同比下滑，而2026-07-17股价对应约109倍TTM市盈率，已经透支门店复苏和渠道升级预期。合理策略是观察而非买入，等待价格跌入安全边际或连续季度证明利润台阶上移。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    6.5,
-    8.5
-  ],
-  "buy_zone": [
-    5.5,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "一鸣食品",
+    "security_status": "active",
+    "symbol": "CN:605179",
+    "ticker": "605179"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "857000f1df2c29464ebdb720f1dc71d08776cd29061004d72c525755e5fef560"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价高于合理价值区间且2026Q1收入同比下滑，维持0仓位观察。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点检查收入增速、加盟门店单店收入、线上毛利率和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元，且最近两个季度收入恢复正增长、经营现金流为正、加盟单店收入不再下滑，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否可持续以及估值是否仍明显透支。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "净利率稳定高于2.5%，非门店渠道增长不牺牲毛利，门店净增和同店收入同步改善，可提高至核心观察仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告，更新长期盈利中枢和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入买入区上沿，需要重新评估安全边际和基本面是否恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "高于牛市前置估值区间，若利润未进入1亿元以上台阶，应继续回避或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入买入区上沿，需要重新评估安全边际和基本面是否恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "高于牛市前置估值区间，若利润未进入1亿元以上台阶，应继续回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点检查收入增速、加盟门店单店收入、线上毛利率和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否可持续以及估值是否仍明显透支。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告，更新长期盈利中枢和合理价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

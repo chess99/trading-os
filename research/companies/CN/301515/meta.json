@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:301515",
-  "ticker": "301515",
-  "name": "港通医疗",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "港通医疗是医院医用气体与洁净系统工程商，长期受益于医院改扩建和存量运维，但2025年转亏、经营现金流为负，当前估值已较充分反映修复预期，需等待订单质量和回款改善后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13,
-    17
-  ],
-  "buy_zone": [
-    10,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    19,
-    23
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入12元以下，且最近两个季度收入修复、经营现金流改善、信用减值未继续扩大",
-      "action": "建立观察性仓位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价进入10元附近，且新签订单和回款质量同步改善",
-      "action": "提高至小仓位核心观察",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于19元但利润和现金流未验证修复",
-      "action": "不追高，已有仓位减持",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入基础买入区，需要复核订单、现金流和坏账趋势"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入高安全边际区，可在基本面未恶化时重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 19,
-      "reason": "接近减持/回避区，若财务修复未兑现则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、利润、经营现金流、应收账款和合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和订单修复持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认亏损后修复是否真实兑现"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "as_of": "2026-07-16",
-    "method_summary": "相对估值、DCF框架和情景估值交叉验证，因2025年亏损，主要采用正常化利润与现金流修复假设。",
-    "base_case": "13-17元/股",
-    "bear_case": "8-11元/股",
-    "bull_case": "20-25元/股"
+    "market": "CN",
+    "name": "港通医疗",
+    "security_status": "active",
+    "symbol": "CN:301515",
+    "ticker": "301515"
   },
-  "key_monitoring_items": [
-    "经营活动现金流净额是否连续转正",
-    "应收账款和合同资产占收入比例是否下降",
-    "新签订单金额、预收款和重大中标公告",
-    "医用气体系统和医用洁净系统毛利率",
-    "运维服务收入占比是否提升",
-    "信用减值损失是否收敛"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "62df2ecb148d923bbd4abd60f685164ca5817105f4c2a7a45a83b00c5c610bfe"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、利润、经营现金流、应收账款和合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和订单修复持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认亏损后修复是否真实兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入基础买入区，需要复核订单、现金流和坏账趋势",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入高安全边际区，可在基本面未恶化时重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "接近减持/回避区，若财务修复未兑现则风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

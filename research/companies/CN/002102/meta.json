@@ -1,85 +1,91 @@
 {
-  "symbol": "CN:002102",
-  "market": "CN",
-  "ticker": "002102",
-  "name": "ST能特",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    1.6,
-    2.3
-  ],
-  "buy_zone": [
-    1.1,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.2
-  ],
-  "current_thesis": "ST能特具备维生素E周期弹性和益曼特合资/分成价值，但2025年财报保留意见、内控否定意见、2026年证监会立案、塑贸收入核验不足、经营现金流转负、林氏家族遗留诉讼和回购股司法冻结尚未解除。当前2.40元对应约59.42亿元市值，未提供ST特殊风险所需安全边际，今天结论为不买，仅观察。",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST能特",
+    "security_status": "active",
+    "symbol": "CN:002102",
+    "ticker": "002102"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c430d166a1f65fc5f87fbaed52283f16a568bbc2747205be3e6c966a3d57c6e6"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "f90601bfe675e2cee31fb151868c0475825fb438b49a38bf2dc7907f89ddcb71"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约2.40元，ST、证监会立案、内控否定意见和回购股冻结均未解除",
-      "action": "不买；已有仓位降至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点看经营现金流、应收账款、VE业务利润、益曼特投资收益和风险事项进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至1.10-1.50元，且未新增退市风险、经营现金流改善、ST进展公告无恶化",
-      "action": "可小额试错，等待中报和风险事项进一步确认",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、财报审计意见、内控审计意见，以及是否触发退市风险警示",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "证监会立案落地且无重大财务冲击，2026年度内控审计恢复标准意见，VE价格和益曼特投资收益持续改善",
-      "action": "重新评估为小仓位周期股",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入安全边际复核区，需要重新核验中报现金流、VE价格、ST进展和立案调查进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于2.60元且治理风险未解除",
-      "action": "减仓或回避，不追高",
-      "max_weight": 0.003
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "进入减仓/回避区，若治理和审计风险未解除，估值对ST风险补偿不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入安全边际复核区，需要重新核验中报现金流、VE价格、ST进展和立案调查进展"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "reason": "进入减仓/回避区，若治理和审计风险未解除，估值对ST风险补偿不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看经营现金流、应收账款、VE业务利润、益曼特投资收益和风险事项进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、财报审计意见、内控审计意见，以及是否触发退市风险警示"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价2.40元，总市值约59.42亿元；2026-07-19为周日，采用最近交易日行情。",
-    "2025年度财务报告为保留意见，内部控制审计为否定意见，公司股票自2026-04-30起被实施其他风险警示。",
-    "公司2026-04-01收到证监会立案告知书，涉嫌信息披露违法违规，调查结果未落地。",
-    "2026H1业绩预告归母净利润9000万元至1.1亿元，同比下降69.07%至74.69%。",
-    "回购专用证券账户3427万股于2026-07-01至2029-06-29被司法冻结，可能影响回购注销进程。",
-    "林氏家族及关联方历史背信损害公司金额大，执行回款很少，仍是尾部风险来源。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

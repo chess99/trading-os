@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920578",
-  "market": "CN",
-  "ticker": "920578",
-  "name": "巨能股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备柔性自动化交付经验和净现金，但尚未形成可持续扣非利润与高资本回报，当前约8.5倍销售额估值已透支多年高增长和利润率跃升。",
-  "fair_value_range": [6.0, 9.0],
-  "buy_zone": [4.8, 6.2],
-  "sell_or_reduce_zone": [11.0, 20.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "巨能股份",
+    "security_status": "active",
+    "symbol": "CN:920578",
+    "ticker": "920578"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "b8fa4629daeb9186c6b8962fdde5cea71d43cf93b18bd6a692e886f5a8ccb6e8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.8至6.2元且连续两个季度收入同比增长超过20%、扣非转正、订单兑现",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的收入、扣非利润、合同负债转化和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元且滚动自由现金流不低于2000万元、ROIC或ROE不低于10%、应收风险未上升",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报和资本回报是否完成修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "基本面恶化、订单延迟或现金流依赖旧应收回收时不因价格下跌补仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入有安全边际的复核区，但需先验证基本面条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的收入、扣非利润、合同负债转化和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报和资本回报是否完成修复"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入有安全边际的复核区，但需先验证基本面条件"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-16T11:41:43+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

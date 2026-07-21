@@ -1,96 +1,105 @@
 {
-  "symbol": "CN:300649",
-  "ticker": "300649",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "杭州园林",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "杭州园林具备风景园林设计资质、历史品牌和城市更新相关业务入口，但2025年收入大幅下滑、扣非亏损、经营现金流显著为负，2026Q1仍未扭亏；按2026-07-15公开行情估算的PB/PS明显高于亏损项目制公司的合理区间，当前不具备买方安全边际。",
-  "fair_value_range": [
-    4.5,
-    7.0
-  ],
-  "buy_zone": [
-    3.5,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杭州园林",
+    "security_status": "active",
+    "symbol": "CN:300649",
+    "ticker": "300649"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f89a24e55ceb15bd496e68ff79105bb353725dcabf36e659eb23c2e47107a1db"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前估值远高于可核验基本面，且公司2025年与2026Q1仍亏损、经营现金流待修复，不建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入恢复、扣非亏损、经营现金流和应收/合同资产变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入5元以下，且连续两个季度经营现金流改善、扣非亏损明显收窄或转正，可考虑观察性试探仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断城市更新订单和现金流是否形成拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入4元以下，且订单恢复、扣非转正、无实际控制人后的治理保持稳定，可提高至小仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估无实际控制人后的治理效果和全年盈利质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入重新估值区，检查城市更新订单、现金流和扣非亏损是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "接近买入观察区，若经营指标转好可讨论试探仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "基本面未验证前高于合理估值上沿，继续回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入重新估值区，检查城市更新订单、现金流和扣非亏损是否同步改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "接近买入观察区，若经营指标转好可讨论试探仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "基本面未验证前高于合理估值上沿，继续回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入恢复、扣非亏损、经营现金流和应收/合同资产变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断城市更新订单和现金流是否形成拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估无实际控制人后的治理效果和全年盈利质量。"
-    }
-  ],
-  "tags": [
-    "A股",
-    "园林设计",
-    "城市更新",
-    "小盘",
-    "亏损"
-  ],
-  "key_metrics": {
-    "reference_price_cny": 27.9,
-    "reference_price_date": "2026-07-15",
-    "shares_outstanding": 132416609,
-    "market_cap_cny_estimate": 3690425380,
-    "revenue_2025_cny": 141681838.09,
-    "net_profit_2025_cny": -41707760.06,
-    "deducted_net_profit_2025_cny": -44644314.94,
-    "operating_cash_flow_2025_cny": -111770674.9,
-    "equity_attributable_2025_cny": 451126786.05,
-    "revenue_2026_q1_cny": 32397500,
-    "net_profit_2026_q1_cny": -9412900
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

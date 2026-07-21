@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:688612",
-  "market": "CN",
-  "ticker": "688612",
-  "name": "威迈斯",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "威迈斯是新能源汽车车载电源第三方供应商头部公司，2025 年利润质量和毛利率改善，800V 车载电源定点提供中期增长期权；但收入增长尚未重新打开、客户集中和整车年降压力仍高，当前价格附近安全边际不足，宜观察等待更低买点或 2026H1 进一步验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    31,
-    39
-  ],
-  "buy_zone": [
-    0,
-    27.5
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "威迈斯",
+    "security_status": "active",
+    "symbol": "CN:688612",
+    "ticker": "688612"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "8dacb3d8f22e28cec2e2cbd06badec866109c2caa893cf1f786a7ad108e2d194"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 27.5 元且 2026H1 前未出现毛利率或客户订单恶化信号，建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入增速、毛利率、经营现金流和 800V 项目进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 25 元且车载电源毛利率维持 21% 以上、经营现金流恢复为正，提升仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认全年盈利预测是否需要上修或下修。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 42 元且盈利预测未上修，停止加仓并评估减仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估合理价值区间和仓位上限。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.5
+      },
+      "reason": "进入具备初始安全边际的买入区间。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "若基本面未恶化，估值折价足以提升至核心观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过合理价值上沿，预期收益率下降，应停止加仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "若盈利未上修，进入减仓区间。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 27.5,
-      "reason": "进入具备初始安全边际的买入区间。"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "若基本面未恶化，估值折价足以提升至核心观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过合理价值上沿，预期收益率下降，应停止加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "若盈利未上修，进入减仓区间。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入增速、毛利率、经营现金流和 800V 项目进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认全年盈利预测是否需要上修或下修。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估合理价值区间和仓位上限。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

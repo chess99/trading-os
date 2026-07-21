@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688231",
-  "market": "CN",
-  "ticker": "688231",
-  "name": "隆达股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "隆达股份正从合金管材企业转型为以高温合金为核心的两机材料平台，2026H1业绩预告显示高温合金订单和盈利能力同步加速，当前价格处于基准估值下沿；但现金流、应收存货、产能爬坡和客户认证仍需跟踪，适合分批买入并控制最大仓位。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    33,
-    43
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "隆达股份",
+    "security_status": "active",
+    "symbol": "CN:688231",
+    "ticker": "688231"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a2c13ec6ddc6e84229c5337eff53f5181cfddc9c7f07545a4244ac47c9e9b7bb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于30元以下且2026H1正式半年报未显著低于业绩预告下限，可建立基础仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、高温合金收入占比、毛利率、现金流和应收存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1正式半年报落在预告中值以上，且高温合金收入、毛利率、经营现金流趋势继续改善，可加仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H2订单延续性和利润率是否持续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价跌破24元但订单、客户认证、毛利率和现金流未恶化，仅限补至计划上限；若基本面恶化则停止加仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2026年业绩快报或年度预告、马来西亚基地投产和新增变形高温合金产能落地情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入高安全边际区间，需要复核是否为市场情绪错杀还是基本面恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "进入减仓区间，需复核2026-2027年利润预期是否足以支撑估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过乐观情景估值上沿，应优先锁定收益或等待业绩上修证据。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入高安全边际区间，需要复核是否为市场情绪错杀还是基本面恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "进入减仓区间，需复核2026-2027年利润预期是否足以支撑估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过乐观情景估值上沿，应优先锁定收益或等待业绩上修证据。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、高温合金收入占比、毛利率、现金流和应收存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H2订单延续性和利润率是否持续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2026年业绩快报或年度预告、马来西亚基地投产和新增变形高温合金产能落地情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

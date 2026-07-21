@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:301093",
-  "ticker": "301093",
-  "name": "华兰股份",
-  "company_name": "江苏华兰药用新材料股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华兰股份是国内药用胶塞细分龙头，覆膜胶塞和共同审评客户锁定具备产业价值，笔式注射器组件有国产替代期权；但截至2026-07-15约170亿元市值对应2025年约283倍PE，而2026Q1扣非转亏，当前价格已隐含极乐观放量预期，缺少安全边际。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    45,
-    65
-  ],
-  "buy_zone": [
-    35,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    95,
-    120
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华兰股份",
+    "security_status": "active",
+    "symbol": "CN:301093",
+    "ticker": "301093"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "f35b3961d31629599fd94fa5b28069c337e5d10e8d9d002ad523257aaf5c1e3f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于45元且最近两个季度扣非净利润恢复为正，同时笔式注射器组件收入继续同比高增",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证扣非利润、覆膜胶塞毛利率、笔式组件收入和在建工程转固压力",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于35元且核心客户未流失、覆膜胶塞毛利率维持50%以上、经营现金流没有恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1扰动是否修复以及全年业绩是否足以支撑估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续四个季度扣非净利润年化超过1.5亿元且笔式组件订单可持续性得到披露验证",
-      "action": "重新估值后再决定是否提升仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估笔式注射器组件是否形成可持续第二增长曲线",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入基准估值上沿以下，若基本面未恶化可重新评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入具备更高安全边际区域，适合结合扣非利润和订单兑现情况复核买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "接近乐观情景估值上沿以上，若没有新增订单和利润证据应避免追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入基准估值上沿以下，若基本面未恶化可重新评估观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入具备更高安全边际区域，适合结合扣非利润和订单兑现情况复核买入"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "reason": "接近乐观情景估值上沿以上，若没有新增订单和利润证据应避免追高或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证扣非利润、覆膜胶塞毛利率、笔式组件收入和在建工程转固压力"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1扰动是否修复以及全年业绩是否足以支撑估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估笔式注射器组件是否形成可持续第二增长曲线"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

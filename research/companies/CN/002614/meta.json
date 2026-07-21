@@ -1,111 +1,105 @@
 {
-  "symbol": "CN:002614",
-  "market": "CN",
-  "ticker": "002614",
-  "name": "奥佳华",
-  "company_name": "奥佳华智能健康科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "资产估值不贵但盈利修复尚未确认；4.56元附近处于合理区间低位，需等待扣非利润和毛利率修复，或价格低于4.10元再考虑试仓。",
-  "quality_rating": "B-/中低",
-  "valuation_rating": "中性偏低估；PB/PS不贵，但盈利口径尚不支持显著低估",
-  "fair_value_range": [
-    4.4,
-    5.6
-  ],
-  "buy_zone": [
-    3.5,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥佳华",
+    "security_status": "active",
+    "symbol": "CN:002614",
+    "ticker": "002614"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c1f00e0ce2ca2959daca9fced6fd978b13aa11790c13acac735a577613b09cd3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于4.10元且2026年扣非利润尚未确认修复",
-      "action": "观察，不开新仓",
-      "target_weight": "0%",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复核扣非利润、毛利率、国外销售增速和汇兑损益",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.10元，且经营现金流为正、毛利率未继续下滑",
-      "action": "小仓试买",
-      "target_weight": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核盈利修复和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.50元，且未出现现金流恶化、应收存货失控或大额减值",
-      "action": "提高到价值观察仓",
-      "target_weight": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后复核全年扣非盈利、分红覆盖和新业务投入",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报确认扣非单季转正、毛利率修复且价格仍低于5.60元",
-      "action": "按经营修复确认加仓",
-      "target_weight": "最高5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "低于合理区间下沿约7%，开始具备资产口径安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于5.60元但利润修复未兑现",
-      "action": "不追高或减仓",
-      "target_weight": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "约0.5倍2026Q1 PB，安全边际明显",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "已超过基准合理价值上沿，需利润修复兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "action": "进入有安全边际买入区，复核现金流、毛利率和汇兑损益后可试仓",
-      "reason": "低于合理区间下沿约7%，开始具备资产口径安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "action": "进入强吸引力区，若基本面未恶化可提高仓位",
-      "reason": "约0.5倍2026Q1 PB，安全边际明显"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "action": "超过合理区间上沿，无利润修复不追高",
-      "reason": "已超过基准合理价值上沿，需利润修复兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后复核扣非利润、毛利率、国外销售增速和汇兑损益"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核盈利修复和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露后复核全年扣非盈利、分红覆盖和新业务投入"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "主营业务毛利率",
-    "按摩椅收入与毛利率",
-    "国外销售收入增速与毛利率",
-    "经营活动现金流净额",
-    "应收账款和存货周转",
-    "财务费用和汇兑损益",
-    "机器人/汽车按摩座椅可量化订单"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

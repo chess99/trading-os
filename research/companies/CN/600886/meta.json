@@ -1,102 +1,96 @@
 {
-  "symbol": "CN:600886",
-  "market": "CN",
-  "ticker": "600886",
-  "name": "国投电力",
-  "company_name": "国投电力",
-  "updated_at": "2026-07-09",
-  "status": "active",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察偏小仓买入",
-  "current_thesis": "核心价值来自雅砻江水电52%权益和高比例清洁能源底盘，分红能力在改善，但当前价格已大致反映水电质量、火电修复和部分新能源成长，适合小仓起步，等待来水或市场风格导致的更深回撤再加仓。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    12.8,
-    15.6
-  ],
-  "currency": "CNY",
-  "buy_zone": [
-    11.0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    15.8,
-    19.0
-  ],
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国投电力",
+    "security_status": "active",
+    "symbol": "CN:600886",
+    "ticker": "600886"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "705acd1b6dc56ee5c5f58a1f600f16315741ad1d8d9adadbf90bf07e45923b65"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于10.8元",
-      "action": "明显买入并快速建仓",
-      "max_weight": 0.25,
-      "reason": "接近悲观估值区间，股息率和安全边际同时改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的雅砻江发电量、结算电价、火电盈利和资本开支。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在10.8元到12.0元之间",
-      "action": "分批加仓",
-      "max_weight": 0.2,
-      "reason": "进入安全边际区，可以容纳中等程度的来水、电价和资本开支扰动。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年分红能力与来水趋势是否偏离基准情景。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在12.0元到13.0元之间",
-      "action": "小幅建仓或回补",
-      "max_weight": 0.12,
-      "reason": "低于中枢合理价值，但仍不足以支持高仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入安全边际区，适合从观察转向分批加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价在13.0元到14.0元之间",
-      "action": "仅试仓",
-      "max_weight": 0.08,
-      "reason": "当前赔率一般，适合保留观察仓位而非重仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入强吸引力买点，可显著提升目标仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价高于15.8元",
-      "action": "不追高或减仓",
-      "max_weight": 0.03,
-      "reason": "市场大概率已在交易顺风水文与高股息溢价，向上赔率下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.8
+      },
+      "reason": "超过不追高区间，应重新审视赔率并考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入安全边际区，适合从观察转向分批加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入强吸引力买点，可显著提升目标仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.8,
-      "reason": "超过不追高区间，应重新审视赔率并考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的雅砻江发电量、结算电价、火电盈利和资本开支。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年分红能力与来水趋势是否偏离基准情景。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "雅砻江流域年度来水和主要水电站利用小时",
-    "雅砻江水电结算电价及市场化交易比例",
-    "火电入炉标煤单价和单位盈利",
-    "新增风电光伏储能装机与项目回报率",
-    "经营活动现金流净额与资本开支匹配度",
-    "资产负债率、净债务水平与平均融资成本",
-    "每股分红和派息率变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

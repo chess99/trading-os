@@ -1,154 +1,142 @@
 {
-  "symbol": "CN:002386",
-  "market": "CN",
-  "ticker": "002386",
-  "name": "天原股份",
-  "company_name": "宜宾天原集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "传统氯碱、钛白粉和磷酸铁锂多周期业务处于利润修复期，2026Q1 已出现明显改善，但当前股价已落入基准合理区间，安全边际不足，等待更低价格或中报验证。",
-  "quality_rating": "B-",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    5.2,
-    6.4
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天原股份",
+    "security_status": "active",
+    "symbol": "CN:002386",
+    "ticker": "002386"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "1c40fbab55b2762315c240633f14bf569fc46a296cf0c9672a5d36293f3bf7ed"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于4.20元且无新增财务或减值风险",
-      "price_range": [
-        0,
-        4.2
-      ],
-      "position": "8%-12%",
-      "max_weight": 0.12,
-      "action": "强吸引力区，前提是无新增财务或减值风险"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证2026Q1利润修复是否延续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价4.21元至4.80元且后续季报确认经营改善",
-      "price_range": [
-        4.21,
-        4.8
-      ],
-      "position": "4%-8%",
-      "max_weight": 0.08,
-      "action": "可分批建立首仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "判断盈利修复是否失效或超预期",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价4.81元至5.20元",
-      "price_range": [
-        4.81,
-        5.2
-      ],
-      "position": "0%-4%",
-      "max_weight": 0.04,
-      "action": "只适合跟踪仓或已有仓位小幅补充"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证利润质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价5.21元至6.40元",
-      "price_range": [
-        5.21,
-        6.4
-      ],
-      "position": "0%-2%",
-      "max_weight": 0.02,
-      "action": "合理区间，等待业绩验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "跟踪财务风险",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.80元且缺乏更强盈利证据",
-      "price_range": [
-        6.81,
-        999
-      ],
-      "position": "reduce",
-      "max_weight": 0,
-      "action": "不追高，逐步减仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证增量业务能否贡献利润",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "跟踪治理稳定性",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "高于基准合理区间，缺乏安全边际",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "估值进入减仓区，除非盈利质量显著改善",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "高于基准合理区间，缺乏安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "估值进入减仓区，除非盈利质量显著改善"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年中报",
-      "reason": "验证2026Q1利润修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "单季扣非归母净利润低于0或高于0.7亿元",
-      "reason": "判断盈利修复是否失效或超预期"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营活动现金流与利润背离扩大",
-      "reason": "验证利润质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "资产负债率或短期债务明显上升",
-      "reason": "跟踪财务风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "钛白粉或磷酸铁锂价格/毛利率出现趋势变化",
-      "reason": "验证增量业务能否贡献利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "董事会和法定代表人安排出现重大变化",
-      "reason": "跟踪治理稳定性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季扣非归母净利润",
-    "经营活动现金流量净额",
-    "资产负债率",
-    "烧碱毛利率",
-    "PVC毛利率",
-    "钛白粉收入和毛利率",
-    "磷酸铁锂收入和毛利率",
-    "资本开支和资产减值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

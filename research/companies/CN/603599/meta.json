@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:603599",
-  "market": "CN",
-  "ticker": "603599",
-  "name": "广信股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "广信股份具备光气化、一体化配套和农药中间体平台优势，账面价值提供一定支撑，但农药行业仍处低景气修复阶段且控股股东立案事项带来治理折价；当前价格接近合理价值下沿但安全边际不足，宜观察至更低买入区或等待连续现金流/价格改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.8,
-    13.0
-  ],
-  "buy_zone": [
-    8.8,
-    9.3
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广信股份",
+    "security_status": "active",
+    "symbol": "CN:603599",
+    "ticker": "603599"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "8afc430badd767c828b7aba3d6af5ee1dc060f46a98c1e54d61567f6131170bd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.3元，且2026中报经营现金流继续改善、无新增治理负面",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、经营现金流、毛利率和控股股东立案进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.8元，PB低于约0.8倍，扣非利润未继续恶化",
-      "action": "提高至深度价值仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及行业价格恢复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "控股股东立案结果涉及上市公司重大治理问题，或连续两个季度扣非利润与经营现金流同步恶化",
-      "action": "退出或降为不买",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、资本开支与ROE修复情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.3
+      },
+      "reason": "进入初始买入区，需要复核中报现金流和治理进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入更高安全边际区，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "接近减仓区，若ROE未明显修复需降低估值假设",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.3,
-      "reason": "进入初始买入区，需要复核中报现金流和治理进展"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入更高安全边际区，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "接近减仓区，若ROE未明显修复需降低估值假设"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、经营现金流、毛利率和控股股东立案进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及行业价格恢复是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、资本开支与ROE修复情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

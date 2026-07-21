@@ -1,94 +1,105 @@
 {
-  "symbol": "CN:002903",
-  "ticker": "002903",
-  "name": "宇环数控",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备精密磨削、研磨抛光和拉削装备技术积累，受益于工业母机国产替代和高端制造升级，但2025年亏损、2026Q1亏损、2026H1预告亏损扩大，当前估值已反映乐观情景，缺乏安全边际，等待订单、毛利率和新应用收入兑现。",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    14,
-    21
-  ],
-  "buy_zone": [
-    12,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宇环数控",
+    "security_status": "active",
+    "symbol": "CN:002903",
+    "ticker": "002903"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "0f2377f5b40e2a0ab6ba87e29d4cf7af21970b046c3ad543ebee9577343d8221"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元，且最新定期报告显示收入同比降幅收窄、毛利率企稳、经营现金流未显著恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "公司预约披露2026年半年报，需核验收入、毛利率、亏损、现金流和订单进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于14元，且在手订单或合同负债出现明确修复，同时归母亏损收窄",
-      "action": "可提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口，观察Q3订单交付与亏损收窄情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于26元但公司仍亏损，或航天/机器人收入占比仍低且无重大订单",
-      "action": "不新增并考虑降低敞口",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报窗口，复核全年盈利恢复、新产品收入占比和估值假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入基准估值区间上沿以下，若基本面不继续恶化则具备重新评估价值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "接近悲观情景价值，若资产负债表稳健则安全边际明显改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "高于合理价值区间且接近乐观情景，若无订单和盈利兑现应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入基准估值区间上沿以下，若基本面不继续恶化则具备重新评估价值。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "接近悲观情景价值，若资产负债表稳健则安全边际明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "高于合理价值区间且接近乐观情景，若无订单和盈利兑现应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "公司预约披露2026年半年报，需核验收入、毛利率、亏损、现金流和订单进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口，观察Q3订单交付与亏损收窄情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报窗口，复核全年盈利恢复、新产品收入占比和估值假设。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 30.19,
-    "last_price_date": "2026-07-14",
-    "market_cap_cny_billion_est": 4.73,
-    "revenue_2025_cny_billion": 0.4105,
-    "net_profit_2025_cny_billion": -0.0196,
-    "revenue_2026q1_cny_billion": 0.1027,
-    "net_profit_2026q1_cny_billion": -0.0086,
-    "h1_2026_net_profit_guidance_cny_billion": [
-      -0.026,
-      -0.018
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,133 +1,133 @@
 {
-  "symbol": "CN:002572",
-  "market": "CN",
-  "ticker": "002572",
-  "name": "索菲亚",
-  "company_name": "索菲亚家居股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "定制家居龙头，估值和股息率具备吸引力，但 2026Q1 收入、利润和现金流仍在下行，当前价格不足以补偿周期与治理不确定性；7.0 元以下才有安全边际，6.0 元以下强吸引。",
-  "quality_rating": "B+",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    8.5,
-    10.5
-  ],
-  "buy_zone": [
-    6.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "索菲亚",
+    "security_status": "active",
+    "symbol": "CN:002572",
+    "ticker": "002572"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c19ff963076c736de2b84148a1858f7fdf13efd1fbf6e7018033db68c8437162"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前",
-      "action": "观察，首笔仓位 0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026H1 收入降幅是否收窄、扣非净利率是否恢复",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "<=6.0 CNY",
-      "action": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查经营现金流是否从 2026Q1 大额流出恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "6.0-7.0 CNY",
-      "action": "1%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查毛利率是否维持在 34%-36% 区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "7.0-8.5 CNY",
-      "action": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查经销、直营、整装和大宗渠道结构是否改善",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "8.5-10.5 CNY",
-      "action": "只持有，不新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查 2026 年分红政策与股权结构变化后的治理安排",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "condition": ">10.5 CNY",
-      "action": "不追高",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "低于安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": ">11.5 CNY",
-      "action": "基本面未改善则减仓/卖出候选",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于合理价值区间上沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "进入减仓或卖出候选区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "action": "进入安全边际买入区，允许建立 1%-3% 仓位",
-      "reason": "低于安全边际买入价"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "action": "进入强吸引力区，若基本面未破坏可提高至 3%-5%",
-      "reason": "低于强吸引力买入价"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "action": "接近合理价值上沿，不追高",
-      "reason": "高于合理价值区间上沿"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "action": "若缺乏基本面改善，考虑减仓或卖出",
-      "reason": "进入减仓或卖出候选区"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026H1 收入降幅是否收窄、扣非净利率是否恢复"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查经营现金流是否从 2026Q1 大额流出恢复"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查毛利率是否维持在 34%-36% 区间"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查经销、直营、整装和大宗渠道结构是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查 2026 年分红政策与股权结构变化后的治理安排"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润与扣非净利率",
-    "毛利率",
-    "经营活动现金流净额",
-    "合同负债和应收账款",
-    "经销商渠道收入",
-    "直营/整装收入增速",
-    "大宗业务占比与回款质量",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

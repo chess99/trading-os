@@ -1,1 +1,95 @@
-{"buy_zone": [16, 18], "company_name": "深圳市长盈精密技术股份有限公司", "currency": "CNY", "current_rating": "watch", "current_thesis": "双主业消费电子+新能源车精密结构件代工龙头，2025年营收188亿增11%但净利润同比-22.5%呈增收不增利；当前估值偏高(PE>60x)，等业绩验证与估值消化后再决策", "do_not_chase_above": 30, "fair_value_range": [15, 18], "key_risks": ["下游需求风险：手机/笔电/新能源车终端销量低于预期", "毛利率风险：新能源车价格战与消费电子结构件价格压力", "大客户集中风险：苹果/头部安卓客户订单转移", "客户回款风险：应收账款占比高、营运资金占用大", "负债风险：资产负债率65%+，融资成本上升", "新业务不达预期：具身智能机器人业务切入节奏低于预期", "汇率与贸易风险：海外业务比例较高受汇率与关税影响", "估值风险：当前PE>60x、PB>4.4x明显高于同业，下行风险大", "市场风格切换：创业板小盘股波动率高"], "latest_report": "reports/2026-07-08-initial.md", "market": "CN", "name": "长盈精密", "position_plan": [{"action": "不追/持仓减仓", "condition": "估值显著偏高PE>50x", "max_weight": 0.01, "target_weight": 0, "zone": ">30元"}, {"action": "观察/暂不建仓", "condition": "估值偏高区间等待业绩验证", "max_weight": 0.01, "target_weight": 0, "zone": "22-30元"}, {"action": "试探建仓", "condition": "接近合理估值上沿", "max_weight": 0.02, "target_weight": 0.02, "zone": "18-22元"}, {"action": "加仓", "condition": "进入买点估值合理", "max_weight": 0.04, "target_weight": 0.03, "zone": "16-18元"}, {"action": "持续买入", "condition": "强吸引力区间", "max_weight": 0.05, "target_weight": 0.04, "zone": "13-16元"}, {"action": "满仓至个人持仓上限", "condition": "周期底部概率高", "max_weight": 0.06, "target_weight": 0.05, "zone": "≤13元"}], "price_triggers": [{"price": 30, "reason": "估值PE>50x风险高，触发减仓评估", "type": "price_above"}, {"price": 16, "reason": "进入买点区间，触发加仓", "type": "price_below"}], "quality_rating": "B-", "report_history": ["reports/2026-07-08-initial.md"], "review_triggers": [{"date": "2026-08-31", "reason": "2026半年报：考察归母净利润是否高于2.8亿、毛利率是否回升至17%以上", "type": "date"}, {"date": "2026-10-31", "reason": "2026三季报：累计归母净利润是否同比转负，触发重评", "type": "date"}, {"date": "2027-04-30", "reason": "2026年报披露后整体重评", "type": "date"}], "sell_or_reduce_zone": [30, 35], "status": "active", "strong_attraction_zone": [13, 16], "symbol": "CN:300115", "ticker": "300115", "updated_at": "2026-07-08T16:30:00+08:00", "valuation_rating": "偏高"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长盈精密",
+    "security_status": "active",
+    "symbol": "CN:300115",
+    "ticker": "300115"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "bca32ff19c7b9849628660befa75be88d750ec429f9504d9d2b0c8cd510b4bd0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报：考察归母净利润是否高于2.8亿、毛利率是否回升至17%以上",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报：累计归母净利润是否同比转负，触发重评",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后整体重评",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "估值PE>50x风险高，触发减仓评估",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入买点区间，触发加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

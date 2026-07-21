@@ -1,108 +1,115 @@
 {
-  "symbol": "CN:000875",
-  "market": "CN",
-  "ticker": "000875",
-  "name": "电投绿能",
-  "company_name": "电投绿能",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "电投绿能是国家电投旗下清洁能源占比接近八成的绿色电力平台，央企信用、风光装机和潜在平台整合提供长期期权；但2025年和2026Q1利润下滑、市场化电价、利用小时、资本开支和债务压力仍需中报验证，当前以观察仓为宜。",
-  "quality_rating": "B",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    5.1,
-    6.2
-  ],
-  "buy_zone": [
-    4.1,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电投绿能",
+    "security_status": "active",
+    "symbol": "CN:000875",
+    "ticker": "000875"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "133c618b9f5c08a101354d323781b754ef683d9af6551006b6ae6f374415b6a7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.50元，且未出现新的盈利或现金流恶化公告",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "低于约0.93倍2026Q1 PB，具备初步资产安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，确认Q1利润下滑是否延续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026中报显示利润降幅显著收窄、经营现金流稳定、市场化电价压力可控",
-      "action": "加至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "盈利修复得到财报验证后，可提高央企新能源平台配置权重"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，更新电价、利用小时、现金流和债务判断",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "公告级资产注入或绿色氢基能源项目盈利模式清晰，且对价不显著摊薄小股东",
-      "action": "最高增持至上限",
-      "max_weight": 0.04,
-      "reason": "平台期权兑现后可给予更高估值，但仍受资本开支和债务约束"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报，重估分红、资本开支和平台资产整合进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.20元且无利润修复、现金流改善或资产注入实质进展",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02,
-      "reason": "估值进入减仓区间，交易平台预期的成分高于基本面兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入买入区间上沿，可评估首笔观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "进入深度价值区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "进入合理价值上沿，需要核验是否有基本面催化支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过乐观减仓区间，若无公告级资产注入应主动降仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入买入区间上沿，可评估首笔观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "进入深度价值区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "进入合理价值上沿，需要核验是否有基本面催化支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过乐观减仓区间，若无公告级资产注入应主动降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，确认Q1利润下滑是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，更新电价、利用小时、现金流和债务判断"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报，重估分红、资本开支和平台资产整合进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度上网电量和利用小时",
-    "风电和光伏综合上网电价",
-    "弃风弃光率与绿电消纳",
-    "新增投产装机和在建项目资本开支",
-    "经营现金流和应收账款回款",
-    "资产负债率、有息负债和财务费用率",
-    "火电煤价、容量电价和供热盈利",
-    "国家电投资产注入或绿色氢基能源平台公告",
-    "分红比例和股权融资安排"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

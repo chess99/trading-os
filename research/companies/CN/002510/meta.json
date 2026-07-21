@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:002510",
-  "market": "CN",
-  "ticker": "002510",
-  "name": "天汽模",
-  "company_name": "天津汽车模具股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "天汽模是汽车覆盖件模具细分龙头，但2025年扣非利润很薄、经营现金流为负，当前5.36元股价主要反映东实股份收购并表预期。若重组完成且现金流改善，公司利润体量会提高；但当前价格已接近基准偏乐观情景，安全边际不足，因此维持观察、不买。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.8,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.9
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天汽模",
+    "security_status": "active",
+    "symbol": "CN:002510",
+    "ticker": "002510"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4445811e12fbe46f641d69c8996283ddbc578617e79209f68fdb2c73603769d6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price": "<=3.20",
-      "max_weight": 0.05,
-      "position": "3%-5%",
-      "condition": "无重大财务雷，重组仍可推进，现金流边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年度报告、深交所审核问询与公司回复",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "price": "3.20-3.90",
-      "max_weight": 0.03,
-      "position": "1%-3%",
-      "condition": "可建立观察仓，等待订单、现金流、重组进度验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报、经营现金流和东实股份重组进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "price": "3.90-4.80",
-      "max_weight": 0.01,
-      "position": "0%-1%",
-      "condition": "合理区间，除非基本面明显超预期，否则不主动买"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报、重组落地结果和并表后归母利润质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "price": "4.80-5.30",
-      "max_weight": 0.0,
-      "position": "0%",
-      "condition": "风险收益比一般"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.9
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "price": ">5.30",
-      "max_weight": 0.0,
-      "position": "0%",
-      "condition": "不追高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "高于不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.9,
-      "action": "review_for_buy",
-      "reason": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "action": "review_for_strong_buy",
-      "reason": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "action": "do_not_chase_or_reduce",
-      "reason": "高于不应追高价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年度报告、深交所审核问询与公司回复"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报、经营现金流和东实股份重组进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报、重组落地结果和并表后归母利润质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款和合同资产合计/营业收入",
-    "新签订单及新能源客户项目占比",
-    "东实股份重组进度和业绩承诺完成率",
-    "并表后归母利润与少数股东损益结构"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

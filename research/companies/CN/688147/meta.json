@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:688147",
-  "market": "CN",
-  "ticker": "688147",
-  "name": "微导纳米",
-  "company_name": "微导纳米",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "avoid",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "current_thesis": "微导纳米具备ALD/CVD薄膜沉积平台化潜力，光伏TOPCon带来历史增长，半导体设备是长期估值上修关键；但2025年收入增长而利润转亏、现金流和应收压力需要验证，当前价格已较充分计入牛市情景，因此暂不新开仓，等待价格回到75元以下或半导体订单与经营现金流连续兑现。",
-  "fair_value_range": [
-    75,
-    105
-  ],
-  "buy_zone": [
-    55,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    130,
-    160
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "微导纳米",
+    "security_status": "active",
+    "symbol": "CN:688147",
+    "ticker": "688147"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "6c410879905e88df79cc9f56f5c61b32901e61aa22ad900334a48af2380a8447"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于130元或市值仍在600亿元附近，且未看到半导体设备批量订单和经营现金流改善",
-      "action": "不新开仓，已有仓位降至观察仓",
-      "max_weight": 0.02,
-      "reason": "当前价格主要依赖牛市情景，基准情景风险收益比不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点更新半导体订单、应收账款、存货、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至75元以下，且2026年中报显示经营现金流改善、应收账款增速低于收入增速",
-      "action": "允许试探性建仓",
-      "max_weight": 0.01,
-      "reason": "价格进入基准公允价值下沿，且财务质量开始验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复和现金流改善是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "半导体ALD/CVD连续两个季度出现可验证批量订单，毛利率企稳，经营现金流转正",
-      "action": "上调为核心观察仓并分批加仓",
-      "max_weight": 0.03,
-      "reason": "公司从光伏设备周期属性向半导体设备平台属性切换的证据增强"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入基准公允价值下沿，可结合订单和现金流复核是否试探建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入保守买入区，若基本面未恶化，赔率明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 130.0
+      },
+      "reason": "高于基准估值支撑区，需用牛市情景订单兑现解释，否则应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入基准公允价值下沿，可结合订单和现金流复核是否试探建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入保守买入区，若基本面未恶化，赔率明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 130,
-      "reason": "高于基准估值支撑区，需用牛市情景订单兑现解释，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点更新半导体订单、应收账款、存货、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复和现金流改善是否连续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "半导体ALD/CVD订单金额和重复订单客户数",
-    "光伏TOPCon及新技术路线设备新签订单",
-    "在手订单、合同负债和验收周期",
-    "综合毛利率及光伏/半导体设备毛利率",
-    "应收账款、合同资产、存货相对收入增速",
-    "经营活动现金流净额",
-    "研发费用率和核心研发项目产业化进展",
-    "前五大客户集中度和回款质量",
-    "募投产能利用率和资本开支节奏",
-    "股权激励目标、高管变动和大股东减持"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

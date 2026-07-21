@@ -1,67 +1,95 @@
 {
-  "symbol": "CN:301125",
-  "ticker": "301125",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "腾亚精工",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "腾亚精工是细分工具五金和紧固耗材制造商，2025年收入恢复但扣非亏损，2026Q1进一步转亏，当前更适合观察盈利修复而非直接买入。只有在价格进入明显安全边际区间且半年报或三季报证明扣非亏损收窄、现金流恢复后，才考虑小仓位参与周期修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    5.5,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "腾亚精工",
+    "security_status": "active",
+    "symbol": "CN:301125",
+    "ticker": "301125"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "ee5aa18883da6360358ca970661bf6215bdee91270d14fb44c1e4d8341aa4960"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入5.5-7.0元买入区间，且2026H1或2026Q3披露扣非亏损明显收窄、经营现金流恢复为正后，才允许试探性建仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、毛利率、扣非净利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扣非亏损扩大、经营现金流转负或毛利率继续恶化，则不建仓；已有仓位应降至零。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损是否收窄或单季度转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新完整盈利恢复和估值判断。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入买入观察区，需要结合最新半年报或三季报复核盈利修复。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过基准公允价值上沿，若无扣非利润和现金流恢复证据，应降低风险暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入买入观察区，需要结合最新半年报或三季报复核盈利修复。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过基准公允价值上沿，若无扣非利润和现金流恢复证据，应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、毛利率、扣非净利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损是否收窄或单季度转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新完整盈利恢复和估值判断。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

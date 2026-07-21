@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:688566",
-  "market": "CN",
-  "ticker": "688566",
-  "name": "吉贝尔",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "吉贝尔具备高毛利现金流产品、低负债资产负债表和尼群洛尔/创新管线带来的成长弹性；在约20-26元区间分批买入具备安全边际，但需持续验证2026年费用投入能否转化为收入和扣非利润增长。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    30,
-    36
-  ],
-  "buy_zone": [
-    20,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "吉贝尔",
+    "security_status": "active",
+    "symbol": "CN:688566",
+    "ticker": "688566"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bd6ea121250747ccd05f3972b67adbf4df7baacc7ddd5cb475104f4646f7b1f6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价20-23元且经营现金流、核心产品毛利率未恶化",
-      "action": "积极分批建仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、销售费用率、经营现金流和尼群洛尔推广迹象。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价23-26元且2026H1收入增速维持双位数",
-      "action": "分批买入至基础仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入加速和费用率拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价26-30元但扣非利润尚未恢复增长",
-      "action": "仅观察或小仓跟踪",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、股权激励达成情况、研发管线节点和下一年度经营指引。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于36元且没有尼群洛尔放量或研发关键节点支撑",
-      "action": "逐步降低仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入强安全边际区，若基本面未恶化应复核加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "显著低于悲观情景下沿，需要区分市场错杀与基本面恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "达到合理价值上沿，需要验证2026年扣非利润和尼群洛尔放量是否支撑继续持有。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过乐观情景前置定价，若缺乏研发或业绩超预期应考虑卖出或大幅减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入强安全边际区，若基本面未恶化应复核加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "显著低于悲观情景下沿，需要区分市场错杀与基本面恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "达到合理价值上沿，需要验证2026年扣非利润和尼群洛尔放量是否支撑继续持有。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过乐观情景前置定价，若缺乏研发或业绩超预期应考虑卖出或大幅减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、销售费用率、经营现金流和尼群洛尔推广迹象。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入加速和费用率拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、股权激励达成情况、研发管线节点和下一年度经营指引。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

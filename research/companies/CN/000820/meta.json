@@ -1,72 +1,77 @@
 {
-  "symbol": "CN:000820",
-  "market": "CN",
-  "ticker": "000820",
-  "name": "*ST节能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "不买，维持avoid：公司仍处ST特殊风险复核期，撤销退市风险警示尚未获批，且2026年6月因涉嫌信息披露违法违规被证监会立案；当前约17.84亿元市值已显著高于0.80-1.50元/股的合理价格区间。",
-  "fair_value_range": [
-    0.8,
-    1.5
-  ],
-  "buy_zone": [
-    0.4,
-    0.7
-  ],
-  "sell_or_reduce_zone": [
-    1.5,
-    2.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST节能",
+    "security_status": "active",
+    "symbol": "CN:000820",
+    "ticker": "000820"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "480a18a5fa337bfaa0fb0b05576f5f2421bbd19344f9cadae2b027fef8d2a3b6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价2.76元且退市风险警示撤销、证监会立案、诉讼和现金流风险均未闭环",
-      "action": "不买入，维持0仓位；已有非事件型仓位逢反弹降低",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报后复核收入质量、现金流、ST撤销、证监会立案和诉讼进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "撤销退市风险警示获批、证监会立案无重大处罚、经营现金流改善且价格低于0.70元",
-      "action": "仅可观察性试仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "进入有安全边际观察区，但仍需ST撤销和立案结论配合",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于1.50元且基本面风险未解除",
-      "action": "不追高；已有仓位卖出或降至跟踪仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.5
+      },
+      "reason": "高于合理价值区间上沿，应避免追高或降低事件型仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "进入有安全边际观察区，但仍需ST撤销和立案结论配合"
-    },
-    {
-      "type": "price_above",
-      "price": 1.5,
-      "reason": "高于合理价值区间上沿，应避免追高或降低事件型仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报后复核收入质量、现金流、ST撤销、证监会立案和诉讼进展"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价2.76元，总市值约17.84亿元，当前无安全边际。",
-    "2025年扣除后营业收入329980724.12元，刚超过3亿元退市风险警示财务门槛。",
-    "2026-05-25撤销退市风险警示申请仍处补充材料阶段，能否获批不确定。",
-    "2026-06-03公司因涉嫌信息披露违法违规被中国证监会立案。",
-    "2026年半年度业绩预告预计归母净利润亏损780万至880万元，扣非亏损795万至895万元。",
-    "非经营性资金占用专项PDF文本抽取失败，相关细节需下次人工复核原件。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

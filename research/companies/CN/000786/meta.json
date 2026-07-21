@@ -1,109 +1,115 @@
 {
-  "symbol": "CN:000786",
-  "market": "CN",
-  "ticker": "000786",
-  "name": "北新建材",
-  "company_name": "北新建材",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "北新建材是地产链低景气中的高质量现金流资产，石膏板主业具备规模、品牌、渠道和成本护城河，防水与涂料提供品类扩张弹性；当前约10倍TTM PE和约4%股息率已反映较多地产悲观预期，适合在15.0-17.5元区间分批买入，但需用2026中报和三季报验证石膏板毛利率、经营现金流、防水和涂料整合质量。",
-  "quality_rating": "A-",
-  "valuation_rating": "偏便宜",
-  "fair_value_range": [
-    19.5,
-    24.5
-  ],
-  "buy_zone": [
-    15.0,
-    17.5
-  ],
-  "sell_or_reduce_zone": [
-    26.0,
-    30.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北新建材",
+    "security_status": "active",
+    "symbol": "CN:000786",
+    "ticker": "000786"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "8f82dda72f83383ae8c96dc6f15e64bec1d2769786b358ad993258b0fbe05006"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "16.5-17.5元且未出现石膏板价格失控、防水或涂料大额减值",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.03,
-      "reason": "当前估值约10倍TTM PE，股息率约4%，已进入买入区间但地产竣工仍弱"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看石膏板毛利率、防水和涂料利润、经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "15.0-16.0元且2026中报显示毛利率和现金流未继续恶化",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "安全边际扩大，若基本面未破坏，估值折价过度"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年盈利和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报或三季报验证石膏板价格企稳、防水和涂料利润率稳定",
-      "action": "加仓至目标仓位",
-      "max_weight": 0.06,
-      "reason": "利润底部确认后可承受更高仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红方案，更新估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于26元且2026-2027年EPS未上修到2.1元以上",
-      "action": "分批减仓",
-      "max_weight": 0.03,
-      "reason": "估值修复基本完成，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入初始买入区间，可建立2%-3%观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "若基本面未恶化，安全边际扩大，可复核后加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "进入减持观察区间，需确认盈利是否足以支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "接近乐观情景估值上沿，除非EPS显著上修，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入初始买入区间，可建立2%-3%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "若基本面未恶化，安全边际扩大，可复核后加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "进入减持观察区间，需确认盈利是否足以支撑更高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "接近乐观情景估值上沿，除非EPS显著上修，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看石膏板毛利率、防水和涂料利润、经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年盈利和现金流趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红方案，更新估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "全国房屋竣工面积及住宅竣工面积月度同比",
-    "石膏板销量、均价、库存和毛利率",
-    "轻质建材收入增速和毛利率",
-    "防水建材收入增速、毛利率、应收账款和信用减值",
-    "涂料建材收入增速、毛利率和嘉宝莉整合利润贡献",
-    "经营现金流净额/归母净利润",
-    "分红率和股息率",
-    "资本开支、并购金额和商誉减值",
-    "境外收入增速和海外基地盈利情况",
-    "护面纸、能源、沥青、乳液、钛白粉等原材料价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

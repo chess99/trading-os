@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:600711",
-  "market": "CN",
-  "ticker": "600711",
-  "name": "盛屯矿业",
-  "company_name": "盛屯矿业",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "铜景气与海外项目兑现支撑利润修复，但镍周期偏弱、治理折价和杠杆约束估值，现价接近基准合理价值上沿。",
-  "current_rating": "watch",
-  "quality_rating": "B",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [8.8, 10.6],
-  "buy_zone": [7.8, 8.8],
-  "sell_or_reduce_zone": [11.5, 14.0],
-  "currency": "CNY",
-  "status": "active",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盛屯矿业",
+    "security_status": "active",
+    "symbol": "CN:600711",
+    "ticker": "600711"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "7e3c1bb2304aa76567b7e11afec0c66f3dbcf41f90efce9d81f8aff597843b56"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 11.5 元且基本面无超预期上修",
-      "action": "不追高或减仓",
-      "max_weight": 0.02,
-      "reason": "价格已高于基准合理价值区间，风险收益比偏弱。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报的利润、现金流、产量和问询事项进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于 10.6-11.5 元",
-      "action": "仅观察或保留跟踪仓",
-      "max_weight": 0.03,
-      "reason": "接近合理价值上沿，等待更好赔率。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认铜/镍盈利结构与经营现金流趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于 8.8-10.6 元",
-      "action": "小仓试错",
-      "max_weight": 0.08,
-      "reason": "进入合理区间，但安全边际一般。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入有安全边际的买入区间。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价位于 7.8-8.8 元",
-      "action": "分批买入",
-      "max_weight": 0.15,
-      "reason": "估值与周期风险大体匹配，开始具备安全边际。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入强吸引力买入区间，但仍需复核基本面。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价低于 7.0 元且基本面未恶化",
-      "action": "积极配置",
-      "max_weight": 0.2,
-      "reason": "已较充分计入治理折价、镍拖累和周期回撤。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "高于基准合理价值上沿，不宜追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入有安全边际的买入区间。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入强吸引力买入区间，但仍需复核基本面。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "高于基准合理价值上沿，不宜追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报的利润、现金流、产量和问询事项进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认铜/镍盈利结构与经营现金流趋势。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "铜、镍、钴分业务收入和毛利率",
-    "刚果（金）项目产量、销量、现金成本和达产进度",
-    "印尼镍项目盈亏平衡点与减值迹象",
-    "经营活动现金流与归母净利润匹配度",
-    "有息负债、财务费用和净负债率",
-    "存货与应收规模变化",
-    "上交所问询事项后续落实情况",
-    "资本开支强度与新增项目回报率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

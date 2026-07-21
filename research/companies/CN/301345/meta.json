@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:301345",
-  "market": "CN",
-  "ticker": "301345",
-  "name": "涛涛车业",
-  "company_name": "涛涛车业",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_thesis": "涛涛车业是北美渠道、自主品牌和全球产能驱动的高质量出口制造成长股，电动低速车带来高毛利增长，现金流和分红表现较好；但当前价格已接近乐观情景定价，库存、关税、汇率和北美可选消费周期仍需验证。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "偏贵",
-  "status": "active",
-  "fair_value_range": [
-    200,
-    240
-  ],
-  "buy_zone": [
-    170,
-    190
-  ],
-  "sell_or_reduce_zone": [
-    260,
-    300
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "涛涛车业",
+    "security_status": "active",
+    "symbol": "CN:301345",
+    "ticker": "301345"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "700827743a9574ced55ad6bff1d65cd5e1c5936e370ef9d747f6d9f9bcbf4345"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_150_and_no_fundamental_deterioration",
-      "action": "强吸引力买入",
-      "max_weight": 0.12,
-      "reason": "低于保守估值和悲观情景中枢，若库存、现金流和北美需求未恶化，赔率显著改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，验证业绩预告兑现、库存变化、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_150_and_170",
-      "action": "分批买入",
-      "max_weight": 0.08,
-      "reason": "估值回到较舒适区间，可承受一定关税、汇率和需求波动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证旺季后库存去化、汇率影响和海外产能爬坡",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_170_and_190",
-      "action": "建立观察仓",
-      "max_weight": 0.05,
-      "reason": "具备初步安全边际，但仍需半年报验证库存和电动低速车增长质量"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报，重新评估长期利润中枢、分红和全球产能效率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_between_190_and_240",
-      "action": "观察或小仓持有",
-      "max_weight": 0.03,
-      "reason": "处于合理价值区间，收益主要依赖业绩兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 190.0
+      },
+      "reason": "进入有安全边际的建仓区间，需要复核库存、现金流和电动低速车需求",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_260",
-      "action": "不追高并逐步降仓",
-      "max_weight": 0.01,
-      "reason": "价格接近乐观情景定价，对库存、汇率、关税和北美需求瑕疵容忍度低"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 150.0
+      },
+      "reason": "进入强吸引力买入区间，若基本面未恶化可提高目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 260.0
+      },
+      "reason": "超过不应追高区间，应复核是否已有业绩上修支撑，否则降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 300.0
+      },
+      "reason": "明显进入乐观情景估值，需要严格控制仓位并评估止盈",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 190,
-      "reason": "进入有安全边际的建仓区间，需要复核库存、现金流和电动低速车需求"
-    },
-    {
-      "type": "price_below",
-      "price": 150,
-      "reason": "进入强吸引力买入区间，若基本面未恶化可提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 260,
-      "reason": "超过不应追高区间，应复核是否已有业绩上修支撑，否则降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 300,
-      "reason": "明显进入乐观情景估值，需要严格控制仓位并评估止盈"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，验证业绩预告兑现、库存变化、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证旺季后库存去化、汇率影响和海外产能爬坡"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报，重新评估长期利润中枢、分红和全球产能效率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电动低速车收入增速和毛利率",
-    "美洲收入增速和占比",
-    "经销商数量及TSC/Walmart/Amazon等核心渠道表现",
-    "存货金额、库存车辆数和存货跌价准备",
-    "经营现金流净额/归母净利润",
-    "财务费用和汇兑损益",
-    "海运费、关税及其他占营业成本比重",
-    "越南、泰国、美国工厂产能利用率和单位成本",
-    "前五大客户销售占比",
-    "分红率、资本开支和并购支出"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

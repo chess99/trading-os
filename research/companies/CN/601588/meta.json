@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:601588",
-  "ticker": "601588",
-  "name": "北辰实业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北辰实业具备北京核心会展及配套资产价值，2025年会展及配套设施服务已成为第一大收入板块，但房地产存量项目仍导致2026H1大额预亏，当前价格缺少足够安全边际，适合观察而非买入。",
-  "fair_value_range": [
-    1.15,
-    1.65
-  ],
-  "buy_zone": [
-    1.05,
-    1.25
-  ],
-  "sell_or_reduce_zone": [
-    2.05,
-    2.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北辰实业",
+    "security_status": "active",
+    "symbol": "CN:601588",
+    "ticker": "601588"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "dc8ca835bbe4bfcd14a5f0d993222e1a55f4adfc44bd038580b449ab84ba8936"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入1.05至1.25元买入区，且2026年半年报确认现金余额不低于70亿元、经营活动现金流仍为正时，仅建立研究仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查预亏构成、现金余额、经营现金流和减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若后续两个季度房地产销售降幅收窄、没有新增大额减值、会展及配套设施服务毛利率维持在35%以上，可提高观察仓上限。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断地产亏损是否收窄以及会展业务是否维持韧性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若经营现金流转负或归母净资产继续快速下降，停止加仓并重新评估是否移出观察池。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和全年经营现金流，重估资产负债表安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.25
+      },
+      "reason": "进入保守买入区上沿，需要结合半年报现金流和减值情况复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入深度折价区，若流动性未恶化，可重新评估小仓位配置价值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.05
+      },
+      "reason": "超过当前估值上沿，若盈利仍未恢复，应考虑放弃或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.25,
-      "reason": "进入保守买入区上沿，需要结合半年报现金流和减值情况复核。"
-    },
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "reason": "进入深度折价区，若流动性未恶化，可重新评估小仓位配置价值。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.05,
-      "reason": "超过当前估值上沿，若盈利仍未恢复，应考虑放弃或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查预亏构成、现金余额、经营现金流和减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断地产亏损是否收窄以及会展业务是否维持韧性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和全年经营现金流，重估资产负债表安全边际。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

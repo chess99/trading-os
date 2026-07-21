@@ -1,104 +1,111 @@
 {
-  "symbol": "CN:000688",
-  "market": "CN",
-  "ticker": "000688",
-  "name": "国城矿业",
-  "company_name": "国城矿业",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "国城矿业的钼矿现金流与铅锌钛白粉底盘仍在，国城锂业一期6万吨/年电池级碳酸锂产线正式投产，使锂矿期权开始向实物产能迁移；但首份委托加工合同只对应约0.6万吨成品，尚未验证满产和现金毛利，叠加担保余额上限达到最近一期经审计净资产130.16%及关联交易风险，维持hold。26.85元已进入24-28元买入区，只适合1%-1.5%研究仓。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_attractive",
-  "fair_value_range": [
-    28.0,
-    36.0
-  ],
-  "buy_zone": [
-    24.0,
-    28.0
-  ],
-  "sell_or_reduce_zone": [
-    38.0,
-    45.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国城矿业",
+    "security_status": "active",
+    "symbol": "CN:000688",
+    "ticker": "000688"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "744ac34625b31af3f84841994de5cc0e9abbb9c27ed127ba83ab562d961649fb"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "8b2083ae5e5ceb87b7b17063261c0edc1e8bc05d7f670d1e7272071131f4d38f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于24-28元，且2026H1扣非利润兑现、锂盐一期实际交付和钼价未恶化",
-      "action": "建立研究型首笔仓位",
-      "max_weight": 0.015,
-      "reason": "价格已进入买入区，但正式投产尚未等于商业达产，治理、担保和负债仍需折扣"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际扣非利润、少数股东损益、负债率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于24元，半年报现金流与扣非利润未恶化且担保和负债率不再上升",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "进入深度价值区，钼矿现金流与锂矿期权的风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报以及金鑫矿业采矿许可证、国城实业扩产、钛白粉盈利持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "金鑫矿业500万吨/年采矿许可证落地，锂盐产线连续两个季度验证产销和现金毛利，经营现金流覆盖资本开支且担保占比下降",
-      "action": "提高组合上限",
-      "max_weight": 0.06,
-      "reason": "关键项目从投产进入商业达产，且资产负债表风险下降后才可承受更高资源平台暴露"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入首笔买入区，需要复核半年报扣非利润和项目进度",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于38元且无新增审批、产能或利润超预期证据",
-      "action": "逐步减仓",
-      "max_weight": 0.02,
-      "reason": "估值进入偏贵区，周期与治理风险补偿不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入高安全边际区，若基本面未变可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入减仓观察区，需要新增业绩或审批证据支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入牛市情景定价区，需严格验证锂矿扩产和钼矿利润持续性",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28.0,
-      "reason": "进入首笔买入区，需要复核半年报扣非利润和项目进度"
-    },
-    {
-      "type": "price_below",
-      "price": 24.0,
-      "reason": "进入高安全边际区，若基本面未变可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 38.0,
-      "reason": "进入减仓观察区，需要新增业绩或审批证据支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 45.0,
-      "reason": "进入牛市情景定价区，需严格验证锂矿扩产和钼矿利润持续性"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际扣非利润、少数股东损益、负债率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报以及金鑫矿业采矿许可证、国城实业扩产、钛白粉盈利持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "钼精矿价格、销量、毛利率和国城实业净利润",
-    "金鑫矿业原矿开采量、锂精矿销量、销售价格和权益法投资收益",
-    "500万吨/年采矿许可证申请进度",
-    "国城实业大苏计钼矿扩产至800万吨/年审批进度",
-    "国城锂业6万吨/年电池级碳酸锂产线负荷、实际产销量、回收率、加工毛利与非关联客户占比",
-    "4.8万吨锂辉石委托加工合同的实际到料、约0.6万吨成品交付与加工费回款",
-    "资产负债率、有息负债、财务费用、经营现金流及担保余额占净资产比例",
-    "控股股东股份质押、冻结及关联交易作价",
-    "钛白粉单吨成本、价差、开工率和库存"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

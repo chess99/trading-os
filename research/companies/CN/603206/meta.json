@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603206",
-  "ticker": "603206",
-  "name": "嘉环科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "通信技术服务与政企智能化订单充足，但 2025-2026Q1 利润率和 ROE 偏低，营运资本占用大，AI/算力业务财务贡献尚未核验；当前估值高于可验证基本面，等待价格或利润质量改善。",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉环科技",
+    "security_status": "active",
+    "symbol": "CN:603206",
+    "ticker": "603206"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "00b01bdbfe75fdba4fea1abb3f2595e35fe38a3a8bddfe4170a56c320251740f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 7.5-9.5 元且 2026 半年报显示毛利率企稳、经营现金流没有继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报：收入、毛利率、扣非净利、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "AI/政企智能化业务披露可核验收入和毛利率，且扣非净利率回升至 1.5% 以上",
-      "action": "提高到小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报：订单转化和现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 14 元但扣非净利率低于 1% 或经营现金流持续为负",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报：AI/政企智能化业务是否形成可验证利润贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入买入观察区上沿，需要复核半年报现金流和毛利率后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入更有安全边际区间，若基本面未恶化可重新评估小仓位买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "高于当前合理价值区间，若无利润率拐点则估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入买入观察区上沿，需要复核半年报现金流和毛利率后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入更有安全边际区间，若基本面未恶化可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "高于当前合理价值区间，若无利润率拐点则估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报：收入、毛利率、扣非净利、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报：订单转化和现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报：AI/政企智能化业务是否形成可验证利润贡献"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

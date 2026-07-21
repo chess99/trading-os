@@ -1,110 +1,115 @@
 {
-  "symbol": "CN:300694",
-  "market": "CN",
-  "ticker": "300694",
-  "name": "蠡湖股份",
-  "company_name": "无锡蠡湖增压技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "主业为涡轮增压器压气机壳和涡轮壳，客户质量较高但集中度高、毛利率低；2025年归母利润主要由资产处置贡献，2026Q1扣非修复需要继续验证；机器人和AI液冷目前收入规模很小，当前价格缺乏安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.2,
-    9.0
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蠡湖股份",
+    "security_status": "active",
+    "symbol": "CN:300694",
+    "ticker": "300694"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "bbfcb552f5a0499338232e6248ffa69a1aaa1a7329313f6990135f17dfcbabcc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.2元，且扣非利润连续两个季度改善、没有核心客户丢单",
-      "action": "强吸引力买入",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的收入、扣非净利、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在6.2-7.2元，且2026H1扣非净利润不低于2500万元",
-      "action": "小仓位试买",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认Q1利润修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在7.2-9.0元，基本面未超预期",
-      "action": "观察为主",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，重新评估主业盈利中枢和新业务收入贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.0元且机器人或AI液冷收入尚未形成规模",
-      "action": "不主动买入",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入有安全边际的观察买入区，需复核扣非利润和毛利率是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于13.0元且仍以题材驱动、无订单收入兑现",
-      "action": "卖出或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入强吸引力区，可在基本面未恶化前提下提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于基准合理价值上沿，若无新业务兑现不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入题材溢价过高区，若基本面未验证应减仓或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入有安全边际的观察买入区，需复核扣非利润和毛利率是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入强吸引力区，可在基本面未恶化前提下提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "高于基准合理价值上沿，若无新业务兑现不应追高"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入题材溢价过高区，若基本面未验证应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的收入、扣非净利、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认Q1利润修复是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，重新评估主业盈利中枢和新业务收入贡献"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "制造业毛利率",
-    "涡轮壳及压气机壳收入增速",
-    "前五大客户收入占比",
-    "盖瑞特收入占比",
-    "机器人零部件收入",
-    "AI液冷订单与收入",
-    "经营活动现金流净额",
-    "存货周转与应收账款变化",
-    "资本开支与分红"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

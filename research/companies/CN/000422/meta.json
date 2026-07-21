@@ -1,107 +1,106 @@
 {
-  "symbol": "CN:000422",
-  "market": "CN",
-  "ticker": "000422",
-  "name": "湖北宜化",
-  "company_name": "湖北宜化",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "current_thesis": "湖北宜化完成新疆宜化及煤矿资产并表后，形成磷复肥、尿素、氯碱/PVC和煤炭资源一体化组合；资源和现金流有吸引力，但高负债、担保余额、PVC亏损和周期价格波动要求更高安全边际，当前适合观察或小仓位持有，优先等待11.2元以下买点和2026年中报验证。",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.5,
-    11.2
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "湖北宜化",
+    "security_status": "active",
+    "symbol": "CN:000422",
+    "ticker": "000422"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b70e72918607d0aaa929fb53ad4789f0ae58701ea4a98a0759367738886c8269"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约13.17元附近，且未看到2026年中报验证PVC止亏和负债改善",
-      "action": "仅允许观察仓",
-      "max_weight": 0.01,
-      "reason": "估值处于合理区间中部，但安全边际不足，高负债和周期波动仍需折价"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看分产品毛利率、经营现金流、资产负债率和可转债进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入9.5-11.2元，且磷复肥毛利率未明显恶化、经营现金流保持强劲",
-      "action": "分批买入",
-      "max_weight": 0.04,
-      "reason": "价格回到买入区后，资源和现金流提供较好下行保护"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断磷肥旺季后景气和PVC亏损是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "PVC毛利率转正、资产负债率进入下行通道、可转债项目回报明确",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.06,
-      "reason": "周期盈利质量和资产负债表同时改善时，可给予更高仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.2
+      },
+      "reason": "进入买入区上沿，复查磷复肥、煤炭和PVC价差后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入16.5-18.5元且盈利预测没有同步上修",
-      "action": "减持或停止加仓",
-      "max_weight": 0.02,
-      "reason": "该区间已较充分反映景气改善预期，周期股应控制回撤"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "进入减持区，若盈利没有上修应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "估值对周期改善反映过满，优先锁定收益",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.2,
-      "reason": "进入买入区上沿，复查磷复肥、煤炭和PVC价差后考虑加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "进入减持区，若盈利没有上修应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "估值对周期改善反映过满，优先锁定收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看分产品毛利率、经营现金流、资产负债率和可转债进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断磷肥旺季后景气和PVC亏损是否改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "磷复肥收入和毛利率",
-    "尿素价格、价差和产能利用率",
-    "PVC毛利率是否转正",
-    "烧碱价格和其他氯碱产品毛利率",
-    "煤炭产量、吨煤售价、吨煤成本和毛利率",
-    "磷矿石、硫磺、合成氨采购价格",
-    "资产负债率、流动比率、速动比率",
-    "经营活动现金流净额/净利润",
-    "担保余额及占净资产比例",
-    "可转债审核、发行、转股价和募投项目进度",
-    "环保安全处罚、停产或矿山事故公告"
-  ],
-  "confidence": "medium",
-  "decision": "当前不追买，可保留1%观察仓；更优买点在11.2元以下"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

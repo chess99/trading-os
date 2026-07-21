@@ -1,113 +1,115 @@
 {
-  "symbol": "CN:603308",
-  "market": "CN",
-  "ticker": "603308",
-  "name": "应流股份",
-  "company_name": "应流股份",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "应流股份是高端铸件、航空发动机/燃气轮机和核电材料方向的优质制造平台，但 2026-07-09 股价已较充分反映乐观预期，当前以观察为主，等待利润、现金流和订单质量兑现或价格回落至安全边际区间。",
-  "quality_rating": "A-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    34,
-    44
-  ],
-  "buy_zone": [
-    24,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    70
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "应流股份",
+    "security_status": "active",
+    "symbol": "CN:603308",
+    "ticker": "603308"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "ac5557ac7b0f6256791fb4d81a0b0a31c0923421a0466115f2f72f32ecb25407"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 24",
-      "action": "分批买入",
-      "max_weight": 0.08,
-      "reason": "悲观情景已较充分反映，高端材料平台期权具备吸引力"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报中两机、核电业务收入和毛利率兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "24 < price <= 32",
-      "action": "买入或加仓",
-      "max_weight": 0.06,
-      "reason": "进入有安全边际的买入区间，基准情景赔率较好"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报现金流、存货、应收账款和订单质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "32 < price <= 44",
-      "action": "谨慎建仓或持有",
-      "max_weight": 0.04,
-      "reason": "处于合理价值区间，需跟踪两机和核电兑现质量"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报中的资本开支回报和高端业务利润贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "44 < price <= 55",
-      "action": "观察或持有不加仓",
-      "max_weight": 0.02,
-      "reason": "估值已要求较高增长兑现，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入有安全边际的买入观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price > 55",
-      "action": "不追高，必要时减仓",
-      "max_weight": 0.01,
-      "reason": "价格接近乐观情景下沿，利润和现金流尚需验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "估值偏乐观，不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "进入减仓或卖出观察区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入有安全边际的买入观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "估值偏乐观，不应追高"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "进入减仓或卖出观察区"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报中两机、核电业务收入和毛利率兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报现金流、存货、应收账款和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报中的资本开支回报和高端业务利润贡献"
-    }
-  ],
-  "key_tracking_metrics": [
-    "航空发动机和燃气轮机相关收入增速",
-    "核电材料与设备订单和交付节奏",
-    "综合毛利率和高端产品毛利率",
-    "经营现金流净额/归母净利润",
-    "存货和应收账款周转",
-    "在建工程转固和产能利用率",
-    "资本开支与新增订单匹配度",
-    "客户认证、型号放量和核电项目公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,141 +1,141 @@
 {
-  "symbol": "CN:002885",
-  "market": "CN",
-  "ticker": "002885",
-  "name": "京泉华",
-  "company_name": "深圳市京泉华科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于磁性元器件、特种变压器和电源产品的利润修复阶段，2025年和2026Q1业绩改善明确，但净利率、ROE、经营现金流和客户集中度仍限制质量评分。按2026-07-13公开行情约30.71元测算，估值已经显著高于18-24元合理价值区间，当前不具备安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    0,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    999999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "京泉华",
+    "security_status": "active",
+    "symbol": "CN:002885",
+    "ticker": "002885"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b374b52c828da92314346fe4be9438424a189b1d9c7bdbcfd6e2ab5aea7a1d39"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元，且最近一期毛利率不低于2025年水平、经营现金流净额为正、应收账款占收入比例未继续上升",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于14元，且2026年归母净利run-rate接近或高于1.5亿元、经营现金流覆盖净利",
-      "action": "可加至3%-4%仓位",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价处于18-24元且基本面正常",
-      "action": "已有仓位持有观察，不新增大仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价高于32元，且未来12个月归母净利run-rate未清晰接近2亿元以上",
-      "action": "不买入；已有仓位降低或退出",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "currency": "CNY",
-      "reason": "低于买入区上沿，开始具备安全边际",
-      "action": "复核毛利率、现金流和应收账款后考虑小仓买入"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "currency": "CNY",
-      "reason": "低于保守价值区，若基本面未恶化可提高仓位",
-      "action": "若利润趋势未恶化，评估加仓至标准观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "currency": "CNY",
-      "reason": "高于减仓区下沿，估值对利润兑现要求过高",
-      "action": "复核估值和订单兑现；缺乏利润支撑则减仓或不参与"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年半年度报告",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报将验证2026年利润修复是否持续",
-      "action": "复核收入、毛利率、净利率和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "单季归母净利低于2500万元或同比转负",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "利润run-rate低于估值假设",
-      "action": "下调利润假设并复核是否退出观察池"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "综合毛利率连续两个季度低于12%",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "毛利率是质量改善的核心指标",
-      "action": "复核价格竞争和产品结构恶化风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营现金流净额连续两个季度低于归母净利",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "现金转化不足会削弱利润质量",
-      "action": "复核应收账款和存货质量"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收账款占收入比例明显上升或出现大额坏账计提",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "应收账款高企是当前主要财务风险之一",
-      "action": "下调质量评级"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "披露算力中心、新能源汽车、充电桩或储能大客户批量订单",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "新订单是上调成长假设的必要证据",
-      "action": "复核成长性和合理估值上限"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "短期借款继续大幅增加且未伴随收入和现金流改善",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "借款增加但现金流不改善会提高资产负债表风险",
-      "action": "复核资产负债表风险"
+      "trigger_id": "legacy-review-7",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "低于买入区上沿，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "低于保守价值区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于减仓区下沿，估值对利润兑现要求过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "磁性元器件收入及毛利率",
-    "特种变压器收入及毛利率",
-    "综合毛利率",
-    "归母净利率",
-    "经营现金流净额/归母净利",
-    "应收账款/营业收入",
-    "存货周转和存货跌价准备",
-    "前五大客户收入占比",
-    "短期借款和资产负债率",
-    "研发投入占收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

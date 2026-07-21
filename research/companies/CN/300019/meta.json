@@ -1,119 +1,105 @@
 {
-  "symbol": "CN:300019",
-  "market": "CN",
-  "ticker": "300019",
-  "name": "硅宝科技",
-  "company_name": "成都硅宝科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是国内有机硅密封胶龙头之一，资产负债表稳健、现金流和分红较好，海外和工业胶具备结构增长空间。但 2026Q1 已出现毛利率下滑和利润同比下降，当前约 17 元价格处于合理价值区间中部偏上，安全边际不足，等待 14.5 元以下或毛利率修复信号。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    15.0,
-    19.0
-  ],
-  "buy_zone": [
-    12.5,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    21.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "硅宝科技",
+    "security_status": "active",
+    "symbol": "CN:300019",
+    "ticker": "300019"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e51abd694bac8870d9e8a30d0eaab00a68b2c956f15e539fc9c3d430dfd5911c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 12.5 元，且最近两个季度经营现金流/净利润不低于 0.8、综合毛利率未继续恶化",
-      "action": "逆周期加仓",
-      "target_position": "5%-7%",
-      "max_weight": 0.07
-    },
-    {
-      "condition": "股价位于 12.5-14.5 元，且建筑胶回款稳定、资产负债率维持低位",
-      "action": "分批买入",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价位于 14.5-16.0 元，且 2026Q2 或 Q3 毛利率环比改善",
-      "action": "小仓试探",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价位于 16.0-19.0 元，且未出现明确盈利上修",
-      "action": "观察或仅保留跟踪仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价高于 21.5 元，且利润和毛利率没有同步上修",
-      "action": "减仓或不新增",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "currency": "CNY",
-      "reason": "低于合理价值区间中枢并开始具备安全边际。",
-      "action": "进入买入观察区，复核毛利率、现金流和应收账款。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "currency": "CNY",
-      "reason": "进入深度安全边际区，但需要确认基本面未同步恶化。",
-      "action": "若基本面未恶化，考虑提高到核心仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 21.5,
-      "currency": "CNY",
-      "reason": "高于合理价值区间上沿且需要盈利上修支撑。",
-      "action": "若无盈利上修，减仓或停止新增。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026Q1 利润下滑后需要用中报验证毛利率和现金流是否修复。",
-      "condition": "预计 2026 年中报披露后",
-      "action": "复核毛利率、净利润、经营现金流和应收账款。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察全年盈利中枢是否继续下修。",
-      "condition": "预计 2026 年三季报披露后",
-      "action": "复核利润是否恢复、外销和工业胶是否继续增长。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报披露后需要重新估算正常化利润和合理价值区间。",
-      "condition": "预计 2026 年年报披露后",
-      "action": "重估合理价值区间和买入区间。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "低于合理价值区间中枢并开始具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入深度安全边际区，但需要确认基本面未同步恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.5
+      },
+      "reason": "高于合理价值区间上沿且需要盈利上修支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "综合毛利率及密封胶毛利率",
-    "归母净利润同比和环比变化",
-    "经营现金流/净利润",
-    "境外收入增速和境外毛利率",
-    "建筑胶收入、价格和回款",
-    "硅碳负极材料收入、毛利率和客户认证进展",
-    "应收账款周转和信用减值损失"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

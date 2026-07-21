@@ -1,99 +1,111 @@
 {
-  "symbol": "CN:688110",
-  "market": "CN",
-  "ticker": "688110",
-  "name": "东芯股份",
-  "company_name": "东芯股份",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "东芯股份受益于中小容量存储芯片价格上行、国产替代和SLC NAND/MCP放量，2026Q1已验证利润弹性；2026-07-17股价虽已回落至116.83元，但仍高于70-95元合理价值区间，且旧报告后没有新增一手基本面证据支持上调估值，当前仍不具备足够安全边际。",
-  "quality_rating": "watch",
-  "valuation_rating": "avoid",
-  "fair_value_range": [
-    70,
-    95
-  ],
-  "buy_zone": [
-    55,
-    70
-  ],
-  "sell_or_reduce_zone": [
-    120,
-    160
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东芯股份",
+    "security_status": "active",
+    "symbol": "CN:688110",
+    "ticker": "688110"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "19e59ec2e8aa5ea0380547055cd70617b18e559dd82f35923c64fccc90433c15"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "ec365b6787e707b3b419df7f26fba4d5ee5ca6bc577f17261d053307279d0fdc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于95元，仍处于合理价值区间上方",
-      "action": "不新开仓；已有低成本仓位仅保留观察仓，不加仓",
-      "max_weight": 0.01,
-      "reason": "即使股价已从高位回落，当前估值仍高于周期中枢合理价值，且半年报尚未验证高毛利持续性"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点验证Q2收入、毛利率、经营现金流和存货质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至70元以下且2026H1毛利率、现金流和存货质量继续验证",
-      "action": "允许首笔试仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间后，周期上行与国产替代才具备可接受赔率"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断利基存储涨价是否延续以及研发投入拖累程度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至55元以下且基本面未恶化",
-      "action": "可将仓位提高至小仓位上限",
-      "max_weight": 0.025,
-      "reason": "悲观预期已较多反映，若存储周期仍向上，风险收益比改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入买入观察区，需要结合最新半年报复核毛利率、现金流和存货",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入深度价值复核区，若基本面未恶化可评估提高试仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
+      "reason": "高于乐观估值下沿，应复核是否需要减仓或维持零仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 160.0
+      },
+      "reason": "明显高于基本面合理区间，应避免追高并降低已有仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入买入观察区，需要结合最新半年报复核毛利率、现金流和存货"
-    },
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入深度价值复核区，若基本面未恶化可评估提高试仓"
-    },
-    {
-      "type": "price_above",
-      "price": 120,
-      "reason": "高于乐观估值下沿，应复核是否需要减仓或维持零仓"
-    },
-    {
-      "type": "price_above",
-      "price": 160,
-      "reason": "明显高于基本面合理区间，应避免追高并降低已有仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点验证Q2收入、毛利率、经营现金流和存货质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断利基存储涨价是否延续以及研发投入拖累程度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "NAND Flash收入增速与毛利率",
-    "NOR Flash收入增速与毛利率",
-    "DRAM及MCP收入增速与毛利率",
-    "综合毛利率及环比变化",
-    "存货账面价值、周转天数和跌价准备比例",
-    "经营活动现金流净额",
-    "研发费用率和存算联项目产业化进度",
-    "晶圆代工产能与代工价格变化",
-    "网络通信、安防、工业、汽车电子客户导入进展",
-    "公司异常波动或交易风险提示公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

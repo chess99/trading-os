@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:301158",
-  "ticker": "301158",
-  "name": "德石股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "德石股份具备螺杆钻具细分技术积累、央国企客户准入、海外和高压软管/增产服务期权，但2026Q1收入与利润明显下滑，当前约24.6倍TTM市盈率处于合理区间中段，安全边际不足，等待中报验证订单和现金流恢复。",
-  "fair_value_range": [
-    11.5,
-    15.0
-  ],
-  "buy_zone": [
-    0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德石股份",
+    "security_status": "active",
+    "symbol": "CN:301158",
+    "ticker": "301158"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "6288525b939128ff54a25860a16143871ba648e48eb740bff36f6d75f782cdc2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.5元，且2026H1或2026Q3收入恢复同比正增长、经营现金流未继续恶化，可建立观察仓。",
-      "action": "initiate",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，确认Q1收入与利润下滑是否为交付节奏问题。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.0元，且应收账款、存货和坏账没有显著恶化，可提高至小仓位。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，跟踪高压软管、海外订单、增产服务和经营现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.0元且中报仍未证明Q1下滑只是交付节奏问题，应避免买入或降低持仓。",
-      "action": "reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估中期盈利中枢与估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入初始买入区，安全边际开始出现，需要复核业绩与现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "接近悲观情景估值，可重点复核是否存在基本面永久性恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "超过当前合理价值上沿，若业绩未显著上修则风险收益转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入初始买入区，安全边际开始出现，需要复核业绩与现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "接近悲观情景估值，可重点复核是否存在基本面永久性恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "reason": "超过当前合理价值上沿，若业绩未显著上修则风险收益转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，确认Q1收入与利润下滑是否为交付节奏问题。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，跟踪高压软管、海外订单、增产服务和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估中期盈利中枢与估值区间。"
-    }
-  ],
-  "key_monitoring_metrics": [
-    "2026H1收入和归母净利润同比增速",
-    "经营现金流与净利润匹配度",
-    "应收账款、存货和坏账计提",
-    "高压压裂酸化软管订单与交付",
-    "海外收入、汇兑损益和区域风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

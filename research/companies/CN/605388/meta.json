@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:605388",
-  "market": "CN",
-  "ticker": "605388",
-  "name": "均瑶健康",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "均瑶健康具备益生菌食品、电商、海外和ODM/KA定制业务的转型选项价值，但2025年亏损扩大、核心饮品下滑、销售费用前置，以及年报保留意见和供应链账外资金事项显著压低可投资性。当前约30亿元市值已接近乐观修复情景，安全边际不足，宜等待治理整改和连续扣非盈利验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.2,
-    4.4
-  ],
-  "buy_zone": [
-    2.8,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "均瑶健康",
+    "security_status": "active",
+    "symbol": "CN:605388",
+    "ticker": "605388"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3b05ea9cac46126c15e48a4dd7ae4889638fa236e1c64ae86b33c5b7f2bba44e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "保留意见事项未彻底消除或尚未连续两个季度扣非盈利时，仅观察或维持研究性跟踪，不主动建仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看保留意见事项整改、扣非净利润、销售费用率和供应链业务质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.5元，且公司公告显示供应链账外资金事项整改完成、2026年扣非净利润连续两个季度为正，可小仓位试探。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证益生菌食品、电商、海外业务增长是否转化为扣非利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "财报恢复标准无保留意见，益生菌食品和电商收入保持双位数增长，销售费用率下降且全年扣非净利润超过6000万元，再评估提升仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见，判断治理折价是否可解除并重新估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入买入区间上沿，需要复核治理整改和扣非盈利验证是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度安全边际区间，即使按悲观情景也接近资产折价，需要重新评估风险收益比。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "价格进入减持/回避区间，若无保留意见消除和盈利恢复证据，估值已透支乐观情景。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入买入区间上沿，需要复核治理整改和扣非盈利验证是否同步改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度安全边际区间，即使按悲观情景也接近资产折价，需要重新评估风险收益比。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "价格进入减持/回避区间，若无保留意见消除和盈利恢复证据，估值已透支乐观情景。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看保留意见事项整改、扣非净利润、销售费用率和供应链业务质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证益生菌食品、电商、海外业务增长是否转化为扣非利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见，判断治理折价是否可解除并重新估值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

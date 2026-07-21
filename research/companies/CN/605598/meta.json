@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:605598",
-  "market": "CN",
-  "ticker": "605598",
-  "name": "上海港湾",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "上海港湾主业是专业岩土工程，技术和海外项目经验有价值，但2026H1预告亏损显示工程基本面短期承压；当前约65亿元市值主要反映新业务期权，商业航天/空间能源等方向尚缺少足够可核验订单和利润贡献，现价安全边际不足，宜观察等待半年报、现金流和新业务里程碑。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12,
-    18
-  ],
-  "buy_zone": [
-    10,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海港湾",
+    "security_status": "active",
+    "symbol": "CN:605598",
+    "ticker": "605598"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4c7252750fee69ac2847a819f72950b3938ce78bcd6e977af15287491002741f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价不建新仓；在股价低于14元且半年报显示亏损原因可解释、经营现金流未明显恶化时，允许建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查亏损原因、毛利率、经营现金流、应收账款和合同资产。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于12元且工程主业订单恢复、新业务出现已公告可验证订单，可提高至核心观察仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业是否恢复及新业务是否有可验证收入。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于24元但无新业务订单和利润验证，不加仓并考虑降低已有仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估正常化利润和新业务商业化进度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入买入观察区，重新核验半年报、现金流和新业务订单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入悲观情形估值区间，可评估是否存在深度安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过基准公允价值上沿，若缺少订单验证应考虑回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入乐观情景上沿，需有新业务利润兑现支撑，否则估值风险高。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入买入观察区，重新核验半年报、现金流和新业务订单。"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入悲观情形估值区间，可评估是否存在深度安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "超过基准公允价值上沿，若缺少订单验证应考虑回避或减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "进入乐观情景上沿，需有新业务利润兑现支撑，否则估值风险高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查亏损原因、毛利率、经营现金流、应收账款和合同资产。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业是否恢复及新业务是否有可验证收入。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估正常化利润和新业务商业化进度。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

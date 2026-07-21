@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:000998",
-  "market": "CN",
-  "ticker": "000998",
-  "name": "隆平高科",
-  "company_name": "隆平高科",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "隆平高科具备水稻龙头、国内玉米龙头、巴西平台、转基因商业化和中信农业背景的长期价值，但2026Q1显示玉米去库存、巴西天气和渠道回款仍在压制利润。当前价格处于合理价值区间内，安全边际不足，适合观察或小仓试错，等待半年度报告验证库存、应收、毛利率和巴西减亏。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    6.4,
-    7.1
-  ],
-  "sell_or_reduce_zone": [
-    9.8,
-    11.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "隆平高科",
+    "security_status": "active",
+    "symbol": "CN:000998",
+    "ticker": "000998"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "4256ecb93f83682dd4b3392297c6fffbabcbed878043b69fedfdc02dc8b99e95"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至7.1元以下，且未出现应收账款、存货或巴西业务明显恶化的新公告",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间上沿，具备跟踪仓价值，但玉米去库存和2026Q1亏损仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看存货、应收账款、经营现金流、水稻毛利率、巴西亏损和玉米去库存",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至6.6元以下，且2026半年报显示存货下降、经营现金流同比继续改善、水稻毛利率稳定",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "安全边际扩大且经营质量被阶段性验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和新销售季订单，判断国内玉米和转基因商业化是否开始兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年三季报后确认国内玉米去库存完成、巴西接近盈亏平衡、转基因推广形成可量化收入",
-      "action": "提高为中等仓位",
-      "max_weight": 0.04,
-      "reason": "核心弹性兑现前不突破4%仓位上限，避免主题估值和经营波动叠加"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.1
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于9.8元但业绩仍未验证，或出现存货高于45亿元、应收账款高于26亿元、巴西继续大额亏损",
-      "action": "减仓或退出观察仓",
-      "max_weight": 0.005,
-      "reason": "估值先行透支或核心假设被证伪"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入加仓区间，需要结合半年报库存、回款和毛利率复核",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.8
+      },
+      "reason": "进入减仓区间，若无业绩验证则主题估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "超过本轮中性合理价值区间，需要强业绩兑现才能持有",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.1,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入加仓区间，需要结合半年报库存、回款和毛利率复核"
-    },
-    {
-      "type": "price_above",
-      "price": 9.8,
-      "reason": "进入减仓区间，若无业绩验证则主题估值透支"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "超过本轮中性合理价值区间，需要强业绩兑现才能持有"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看存货、应收账款、经营现金流、水稻毛利率、巴西亏损和玉米去库存"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和新销售季订单，判断国内玉米和转基因商业化是否开始兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026Q2/Q3存货余额及国内玉米库存去化",
-    "应收账款余额、账龄结构和经营现金流",
-    "合同负债及新销售季预收款",
-    "水稻种子收入、毛利率和净利润",
-    "国内玉米种子收入、价格、毛利率和渠道库存",
-    "转基因玉米审定品种推广面积、价格溢价和性状费分成",
-    "隆平巴西收入、毛利率、汇兑损益和净利润",
-    "财务费用和有息负债规模",
-    "商誉、无形资产减值迹象",
-    "中信农业及核心股东治理和并购整合进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

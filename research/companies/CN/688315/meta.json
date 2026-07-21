@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:688315",
-  "market": "CN",
-  "ticker": "688315",
-  "name": "诺禾致源",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "诺禾致源具备全球科研测序服务网络、自动化交付和多组学项目经验，资产负债表现金与金融资产较厚；但2025年和2026Q1呈现增收不增利、毛利率与现金流承压，且2026年6月1260H事件增加海外合规折价。当前价格接近合理偏低区间但安全边际仍不足，等待12.5元以下或利润率/现金流修复确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    18.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "诺禾致源",
+    "security_status": "active",
+    "symbol": "CN:688315",
+    "ticker": "688315"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9b15e166a8207adbd434fcf89c6dc460ce0fa21484dfc63614b58fcb40fb40c0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于12.5元且未出现实体清单、出口管制或核心海外客户明显流失",
-      "action": "小仓观察买入",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看利润率、经营现金流、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于10.5-11.5元且中报显示经营现金流和应收质量没有恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年增收不增利是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于18元但利润率和经营现金流尚未修复",
-      "action": "分批减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和1260H事件后续影响，更新长期估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入初始买入区间，当前估值开始体现现金资产和地缘折价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "接近悲观情景下沿，若基本面未恶化则安全边际显著扩大",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "达到基础公允价值上沿，若利润率未修复则风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "接近乐观情景定价，需要新业务利润曲线支撑，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入初始买入区间，当前估值开始体现现金资产和地缘折价"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "接近悲观情景下沿，若基本面未恶化则安全边际显著扩大"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "达到基础公允价值上沿，若利润率未修复则风险收益比下降"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "接近乐观情景定价，需要新业务利润曲线支撑，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看利润率、经营现金流、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年增收不增利是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和1260H事件后续影响，更新长期估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

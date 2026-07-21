@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600232",
-  "ticker": "600232",
-  "name": "金鹰股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "金鹰股份具备麻纺、绢纺机械细分技术壁垒，但上市公司整体仍受亚麻纺织周期、低毛利业务、应收和小体量新能源材料拖累；2026年上半年有修复信号，当前估值已反映较多乐观预期，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    0,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金鹰股份",
+    "security_status": "active",
+    "symbol": "CN:600232",
+    "ticker": "600232"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "da10eed6129c2e811d7070699ed2cfa58b71a3f8c2a22cbaf999bceb9ec00d14"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.10元，且2026年半年报正式数据确认纺织毛利率修复、经营现金流转正、应收账款未继续异常扩张时，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报正式数据、毛利率、现金流、应收账款和越南股权出售进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "越南子公司股权出售完成且现金回收明确，同时连续两个季度扣非净利润和机械业务毛利率改善，可提高至小仓位上限。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认修复是否延续到三季度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若亚麻价格再次剧烈波动、应收账款明显扩张或半年报正式利润低于预告下限，则不建仓并复核估值下限。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和越南交易最终损益确认。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "低于保守资产法和基准情景估值下沿，重新评估观察仓买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "高于当前乐观情景估值上沿，若无新增订单和利润证据应减持或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "低于保守资产法和基准情景估值下沿，重新评估观察仓买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "高于当前乐观情景估值上沿，若无新增订单和利润证据应减持或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报正式数据、毛利率、现金流、应收账款和越南股权出售进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认修复是否延续到三季度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和越南交易最终损益确认。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

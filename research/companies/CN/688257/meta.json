@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:688257",
-  "market": "CN",
-  "ticker": "688257",
-  "name": "新锐股份",
-  "company_name": "新锐股份",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备硬质合金材料、矿用工具和切削工具的复合平台价值，但2026-07-09约303亿元市值已明显计入海外矿山周期、数控刀片放量和慧联电子并购期权，当前更适合观察而非追高买入。",
-  "quality_rating": "A-",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    58,
-    72
-  ],
-  "buy_zone": [
-    48,
-    58
-  ],
-  "sell_or_reduce_zone": [
-    82,
-    105
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新锐股份",
+    "security_status": "active",
+    "symbol": "CN:688257",
+    "ticker": "688257"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "df19d81949597f77cd7500bdb3235ce3a8d86a70be17f7d3cf2839d77c046573"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至48-52元且2026H1毛利率、经营现金流未恶化",
-      "action": "建立试验仓",
-      "max_weight": 0.015,
-      "reason": "价格进入悲观和基础情景交界，安全边际开始出现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、毛利率、经营现金流、海外收入和并购进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于52-58元且海外矿用工具、切削工具收入继续增长",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值接近买入区上沿，但仍需等待半年度验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润兑现与估值匹配度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于82元且2026年盈利预测没有被一手业绩上修",
-      "action": "不新开仓或减仓",
-      "max_weight": 0.005,
-      "reason": "当前市值已接近乐观情景，风险收益比不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入初始买入观察区，需要复核2026H1毛利率、现金流和订单",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入悲观情景价值附近，可重新评估是否提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 82.0
+      },
+      "reason": "超过基础合理价值上沿较多，若无业绩上修需减仓或停止买入",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入初始买入观察区，需要复核2026H1毛利率、现金流和订单"
-    },
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入悲观情景价值附近，可重新评估是否提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 82,
-      "reason": "超过基础合理价值上沿较多，若无业绩上修需减仓或停止买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、毛利率、经营现金流、海外收入和并购进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润兑现与估值匹配度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "钨精矿、APT、碳化钨粉、钴粉价格",
-    "综合毛利率和分业务毛利率",
-    "矿用工具海外收入和回款",
-    "数控刀片收入、产能利用率和毛利率",
-    "存货周转天数和应收账款周转天数",
-    "经营现金流净额/归母净利润",
-    "在建工程和资本开支进度",
-    "慧联电子交易进展、业绩承诺和商誉规模"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

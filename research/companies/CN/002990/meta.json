@@ -1,120 +1,124 @@
 {
-  "symbol": "CN:002990",
-  "market": "CN",
-  "ticker": "002990",
-  "name": "盛视科技",
-  "company_name": "盛视科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "传统智慧口岸业务有政策和案例基础，但项目制波动、应收账款高、2025年ROE仅3.50%；2026年算力业务带来利润弹性，但60亿元合作和60亿元设备采购均存在履约、融资、毛利和回款不确定性。2026-07-13股价59.01元已显著高于26-34元合理价值区间，缺少安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    0,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盛视科技",
+    "security_status": "active",
+    "symbol": "CN:002990",
+    "ticker": "002990"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0b88dec0fa8172a278d94a02a81f53aaf9b58f6aab303d885ca95223cf025263"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元，且最近一期应收账款未恶化、资产负债率未因算力采购失控",
-      "action": "建立2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年度报告将验证业绩预告和算力业务质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价24-28元，且2026半年报确认算力业务毛利率、回款和负债可控",
-      "action": "小仓位试错或继续等待",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报可观察算力业务是否持续贡献利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价28-40元，但缺少算力业务现金流和毛利率验证",
-      "action": "观察，不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报可完整评估大额采购后的资产负债表变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于45元，或算力采购导致负债、应收和资本开支显著恶化",
-      "action": "减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "需要跨年度确认新业务是否可持续",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "接近基准合理价值区间下沿，需要结合算力业务质量决定是否试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "低于安全边际买入价，风险收益比开始改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "明显高于合理价值区间，依赖新业务高质量兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "接近当前高估区，缺少安全边际",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "currency": "CNY",
-      "action": "复核半年报后评估是否进入试探买入区",
-      "reason": "接近基准合理价值区间下沿，需要结合算力业务质量决定是否试错"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "currency": "CNY",
-      "action": "若财务指标未恶化，可考虑观察仓",
-      "reason": "低于安全边际买入价，风险收益比开始改善"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "currency": "CNY",
-      "action": "检查是否已兑现高质量算力利润，否则不追高",
-      "reason": "明显高于合理价值区间，依赖新业务高质量兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "currency": "CNY",
-      "action": "估值显著透支，优先风险控制",
-      "reason": "接近当前高估区，缺少安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核2026年半年度报告，重点核验算力业务收入、毛利率、回款、客户集中度和负债变化",
-      "reason": "半年度报告将验证业绩预告和算力业务质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核2026年三季报，检查算力业务延续性、设备采购实际金额、融资安排和现金流",
-      "reason": "三季报可观察算力业务是否持续贡献利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核2026年年报，检查应收账款、合同资产、存货、固定资产和有息债务是否显著高于收入增速",
-      "reason": "年报可完整评估大额采购后的资产负债表变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "复核2027年半年报，确认算力和智慧口岸双主线是否形成稳定利润和经营现金流",
-      "reason": "需要跨年度确认新业务是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "算力业务收入和毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款和合同资产余额",
-    "资产负债率和有息债务",
-    "智慧口岸新签订单和验收节奏",
-    "前五大客户收入占比",
-    "研发费用率和机器人业务商业化收入",
-    "综合毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

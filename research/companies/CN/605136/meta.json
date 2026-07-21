@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:605136",
-  "market": "CN",
-  "ticker": "605136",
-  "name": "丽人丽妆",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "丽人丽妆正在从传统美妆电商经销/代运营向海外品牌总代和全域分销修复，2026年上半年盈利改善值得跟踪；但2026年7月监管措施暴露历史担保、关联交易和资金占用问题，治理折价未出清，当前结论为观察，等待整改与经营现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.2,
-    8.4
-  ],
-  "buy_zone": [
-    5.5,
-    6.3
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "丽人丽妆",
+    "security_status": "active",
+    "symbol": "CN:605136",
+    "ticker": "605136"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9dea6b8e3f178facc3e4be266d2fb3e72148ad19acb4e3d864be7341925e80c3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "监管整改报告披露且无新增资金占用、担保或关联交易问题，同时2026年中报确认利润落在预告区间且经营现金流改善",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、经营现金流、存货和整改进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "整改完成前仅允许观察仓或不建仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证总代业务与费用控制的持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若半年报经营现金流继续明显弱于净利润或新增治理负面事项",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报与内控/审计意见，判断是否解除治理折价",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "进入估值买区上沿，可结合整改与现金流重新评估小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入更有安全边际的下沿区域，但仍需治理整改无新增负面",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "超过基准情景估值上沿，应确认利润是否可持续上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "进入估值买区上沿，可结合整改与现金流重新评估小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入更有安全边际的下沿区域，但仍需治理整改无新增负面"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "超过基准情景估值上沿，应确认利润是否可持续上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、经营现金流、存货和整改进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证总代业务与费用控制的持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报与内控/审计意见，判断是否解除治理折价"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:688449",
-  "market": "CN",
-  "ticker": "688449",
-  "name": "联芸科技",
-  "company_name": "联芸科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "联芸科技是国内稀缺的独立存储主控芯片公司，受益AI终端、国产NAND生态和PCIe/UFS代际升级，但当前价格已提前反映乐观成长情景，需等待价格回落或高端产品连续放量验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    35,
-    50
-  ],
-  "buy_zone": [
-    28,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    80
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联芸科技",
+    "security_status": "active",
+    "symbol": "CN:688449",
+    "ticker": "688449"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "66b149918b56cb469cd104d0df56f313dee6c61a507217a510eb34b13b3b9808"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于65元且缺少连续两个季度高端产品放量验证",
-      "action": "仅保留观察仓或不买入",
-      "max_weight": 0.005,
-      "reason": "估值已反映乐观情景，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证收入、毛利率、存货、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至38元以下且收入同比维持30%以上、毛利率不低于48%",
-      "action": "建立首笔买入仓位",
-      "max_weight": 0.015,
-      "reason": "价格进入中性估值下沿且基本面未破坏"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认PCIe 5.0、UFS和车载感知芯片是否进入连续放量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至30元附近且PCIe 5.0/UFS/车载新品持续放量、经营现金流为正",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "风险收益改善，成长兑现与估值修复空间并存"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入初始买入区上沿，需要复核半年报和新品放量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入更有安全边际的配置区，若基本面未破坏可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 80.0
+      },
+      "reason": "超过乐观情景估值上沿，若盈利未上修应减仓或避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入初始买入区上沿，需要复核半年报和新品放量"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入更有安全边际的配置区，若基本面未破坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 80,
-      "reason": "超过乐观情景估值上沿，若盈利未上修应减仓或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证收入、毛利率、存货、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认PCIe 5.0、UFS和车载感知芯片是否进入连续放量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润",
-    "主营业务毛利率和数据存储主控芯片毛利率",
-    "PCIe 5.0 SSD主控客户导入和收入贡献",
-    "UFS 3.1及后续UFS产品出货进展",
-    "AIoT及车载感知信号处理芯片收入和毛利率",
-    "存货余额、存货周转和跌价准备",
-    "经营活动现金流净额",
-    "前五大客户收入占比",
-    "晶圆供应商采购占比和代工价格变化",
-    "解禁、减持、关联交易公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

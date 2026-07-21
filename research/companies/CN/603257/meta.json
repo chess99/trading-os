@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603257",
-  "market": "CN",
-  "ticker": "603257",
-  "name": "中国瑞林",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "中国瑞林是A股稀缺的有色金属工程技术服务商，海外高毛利设计咨询和装备集成具备利润弹性，但当前估值已较充分反映BHP等海外项目预期，框架协议落地节奏和单季度利润波动仍需验证，适合观察等待安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    50,
-    62
-  ],
-  "buy_zone": [
-    40,
-    48
-  ],
-  "sell_or_reduce_zone": [
-    72,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国瑞林",
+    "security_status": "active",
+    "symbol": "CN:603257",
+    "ticker": "603257"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "fad3969a702359ea6a37ee1cd33e59caa3e9b09f1eeff1eacca01da281d29cd2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于48元，且2026H1未显示海外设计咨询毛利率或经营现金流明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "公司预约披露2026年中报，需核验境外收入、设计咨询毛利率、合同负债和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于42元，且BHP框架协议生效条件、合同负债和现金流未发生重大负面变化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高利润是否具有持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于72元，或2026H1利润高增被证明主要为一次性阶段确认",
-      "action": "不追高并降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
+      "reason": "跟踪BHP奥林匹克坝项目最终投资决策前进展和阶段开工通知",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入基准估值下沿并具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入悲观与基准估值交叉后的强安全边际区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "接近乐观预期定价，需防止海外框架协议兑现不及预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入基准估值下沿并具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入悲观与基准估值交叉后的强安全边际区"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "接近乐观预期定价，需防止海外框架协议兑现不及预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "公司预约披露2026年中报，需核验境外收入、设计咨询毛利率、合同负债和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高利润是否具有持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-07-31",
-      "reason": "跟踪BHP奥林匹克坝项目最终投资决策前进展和阶段开工通知"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,143 +1,106 @@
 {
-  "symbol": "CN:002281",
-  "market": "CN",
-  "ticker": "002281",
-  "name": "光迅科技",
-  "company_name": "光迅科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "公司处于 AI 光模块高景气赛道，技术和客户基础较强，但当前估值显著透支，需等待价格回到安全边际或业绩进一步证明。",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "updated_at": "2026-07-08T00:00:00+08:00",
-  "conclusion": "光迅科技是国内光通信器件与高速光模块平台型公司，2025-2026Q1 受 AI 数据中心需求拉动明显，但 2026-07-08 股价约 225.88 元、总市值约 1869.30 亿元，估值已显著透支乐观预期，当前不追高。",
-  "quality_rating": "B+",
-  "valuation_rating": "D/显著高估",
-  "fair_value_range": [
-    75,
-    105
-  ],
-  "fair_value_notes": "单位 CNY；由相对估值、绝对估值和情景估值交叉验证。",
-  "buy_zone": [
-    60,
-    80
-  ],
-  "buy_zone_notes": "单位 CNY；80 元以下具备安全边际，60 元以下且基本面未恶化时吸引力强。",
-  "sell_or_reduce_zone": [
-    120,
-    150
-  ],
-  "sell_or_reduce_zone_notes": "单位 CNY；120 元以上不新开仓，150 元以上偏减仓，当前价格属于过热区。",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "光迅科技",
+    "security_status": "active",
+    "symbol": "CN:002281",
+    "ticker": "002281"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "4238200a10aa0a3c476bd86057245e7fe80c263a2143210c09b9f385c8381ca2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前 225.88 元附近",
-      "action": "不买入，不追高；已有仓位可降至观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报后复核收入、毛利率、存货、现金流和募投进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "80 元以下",
-      "action": "考虑 1%-2% 首仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报后更新全年盈利、客户结构和估值区间。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "60 元以下且基本面未恶化",
-      "action": "提高到 3%-5%，组合最高不超过 6%。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 105.0
+      },
+      "reason": "跌入合理价上沿，重新评估是否可建立观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入安全边际买入区，可考虑首仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "估值进入过热区，已有仓位应复核并考虑减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "watch": [
-    "800G/1.6T 产品收入占比、出货节奏和客户认证",
-    "数据与接入业务毛利率是否维持在 22% 以上",
-    "存货、存货周转和跌价准备",
-    "前五大客户销售占比及第一大客户变化",
-    "海外收入占比和海外高端产品毛利",
-    "经营现金流净额与归母净利润匹配度",
-    "定增募投项目投产、产能利用率和投资回报"
-  ],
-  "tracking_indicators": [
-    "季度收入同比增速",
-    "季度归母净利润同比增速",
-    "数据与接入毛利率",
-    "存货余额及跌价准备",
-    "经营活动现金流净额",
-    "海外收入占比",
-    "研发投入占收入比例"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 105,
-      "currency": "CNY",
-      "reason": "跌入合理价上沿，重新评估是否可建立观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 80,
-      "currency": "CNY",
-      "reason": "进入安全边际买入区，可考虑首仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "currency": "CNY",
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 150,
-      "currency": "CNY",
-      "reason": "估值进入过热区，已有仓位应复核并考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报后复核收入、毛利率、存货、现金流和募投进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报后更新全年盈利、客户结构和估值区间。"
-    }
-  ],
-  "review_plan": "正常节奏为三季报和年报后复查；若股价跌破 105 元、80 元或 60 元，或出现大客户份额、存货跌价、数据与接入毛利率明显变化，应提前复核。",
-  "key_risks": [
-    "当前估值显著高于基本面可解释区间，存在估值压缩风险",
-    "存货高企和技术迭代导致跌价准备风险",
-    "前五大客户收入占比高，客户份额变化影响大",
-    "800G/1.6T、硅光、CPO、LPO 等技术路线变化风险",
-    "行业产能扩张后的价格竞争风险",
-    "海外交付、贸易限制和供应链风险",
-    "定增募投项目转化不及预期导致摊薄和低效资产风险"
-  ],
-  "sources": [
-    {
-      "title": "光迅科技 2025 年年度报告",
-      "publisher": "武汉光迅科技股份有限公司",
-      "date": "2026-04-27",
-      "url": "https://www.accelink.com/upload/1/cms/20260427/1777270551534.pdf"
-    },
-    {
-      "title": "光迅科技 2026 年第一季度报告",
-      "publisher": "新浪财经公告转载/公司公告原文",
-      "date": "2026-04-23",
-      "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12145443&stockid=002281"
-    },
-    {
-      "title": "光迅科技向特定对象发行股票并在主板上市之上市公告书",
-      "publisher": "深圳证券交易所静态公告",
-      "date": "2026-06-11",
-      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-06-11/48833ea1-289a-4b74-861a-0c73fd89948b.PDF"
-    },
-    {
-      "title": "光迅科技行情接口",
-      "publisher": "东方财富 push2",
-      "date": "2026-07-08",
-      "url": "https://push2.eastmoney.com/api/qt/stock/get?secid=0.002281"
-    }
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

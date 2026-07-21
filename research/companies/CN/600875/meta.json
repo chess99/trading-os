@@ -1,106 +1,77 @@
 {
-  "buy_zone": [
-    17.5,
-    23.5
-  ],
-  "company_name": "东方电气股份有限公司",
-  "currency": "CNY",
-  "current_rating": "watch",
-  "current_thesis": "国内综合发电装备龙头，2025年报营收+扣非大幅反弹、毛利率与ROE修复；当前PE动15.2/PB2.06已经较充分定价基本面修复，缺乏安全边际，观望等半年报与买区。",
-  "do_not_chase_above": 30,
-  "fair_value_range": [
-    23.5,
-    28.5
-  ],
-  "key_risks": [
-    "电力投资周期下行，火电核准放缓",
-    "经营现金流持续低于净利润，回款延后",
-    "钢材/铜等原材料价格大幅上行挤压毛利",
-    "海外订单汇率与地缘风险",
-    "核电安全事件导致核准暂停",
-    "估值修复已较充分，缺乏安全边际"
-  ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "market": "CN",
-  "name": "东方电气",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东方电气",
+    "security_status": "active",
+    "symbol": "CN:600875",
+    "ticker": "600875"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "a9eed972cf987867cc578c61d96a0f9c1c85d794532c0faf29c447c1b7d82073"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "action": "分批买入",
-      "condition": "强吸引力区且基本面未破坏",
-      "max_weight": 0.06,
-      "target_weight": 0.05,
-      "zone": "<17.5"
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "2026年半年报披露日，复查扣非增速、经营现金流、订单结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "action": "首笔建立",
-      "condition": "安全边际区",
-      "max_weight": 0.06,
-      "target_weight": 0.03,
-      "zone": "17.5-20.0"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入安全边际买入区，重新评估并准备分批",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "action": "小幅加仓",
-      "condition": "合理偏低区",
-      "max_weight": 0.06,
-      "target_weight": 0.04,
-      "zone": "20.0-23.5"
-    },
-    {
-      "action": "持有/观察",
-      "condition": "合理区",
-      "max_weight": 0.06,
-      "target_weight": 0.03,
-      "zone": "23.5-28.5"
-    },
-    {
-      "action": "不加仓",
-      "condition": "合理偏上",
-      "max_weight": 0.06,
-      "target_weight": 0.03,
-      "zone": "28.5-30.0"
-    },
-    {
-      "action": "减仓/止盈",
-      "condition": "不应追高",
-      "max_weight": 0.02,
-      "target_weight": 0.02,
-      "zone": ">30.0"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "进入减仓阈值，重新评估减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入安全边际买入区，重新评估并准备分批"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "进入减仓阈值，重新评估减仓"
-    }
-  ],
-  "quality_rating": "B+",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "2026年半年报披露日，复查扣非增速、经营现金流、订单结构"
-    }
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    99
-  ],
-  "status": "active",
-  "strong_attraction_zone": [
-    0,
-    17.5
-  ],
-  "symbol": "CN:600875",
-  "ticker": "600875",
-  "updated_at": "2026-07-08T23:59:00",
-  "valuation_rating": "fair"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

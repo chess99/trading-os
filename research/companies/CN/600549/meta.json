@@ -1,118 +1,120 @@
 {
-  "symbol": "CN:600549",
-  "market": "CN",
-  "ticker": "600549",
-  "name": "厦门钨业",
-  "company_name": "厦门钨业",
-  "updated_at": "2026-07-09T14:30:00+08:00",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-09-update.md"
-  ],
-  "rating": "watch",
-  "status": "active",
-  "current_thesis": "厦门钨业是具备钨资源、冶炼粉末、硬质合金/切削工具、细钨丝、稀土磁材和电池材料的平台型战略金属公司，2025-2026Q1 受益于钨、钴、稀土价格上涨和深加工放量，利润弹性显著。2026-07-09 盘中股价 64.21 元、总市值约 1019.39 亿元、PE(TTM) 约 33.6x、PB 约 6.24x，相对 7/6 快照 70.84 元回撤约 9.4%，估值压力略缓但仍高于合理区间（38-48 元）。洛阳豫鹭停产、钨价高位波动和新能源材料竞争仍是关键风险。当前不追高，等待 38 元以下再考虑分批买入。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    38,
-    48
-  ],
-  "buy_zone": [
-    30,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    75
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "厦门钨业",
+    "security_status": "active",
+    "symbol": "CN:600549",
+    "ticker": "600549"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "058fdb395c95261a521075e4f7dd55f9f2fda61968fc21467ca79c8e0a789132"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-update.md",
+        "sha256": "f6774b896434ef168737548efda9d02c8b12d1eccc4a0990c1823f946a52c857"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于28元，且钨钼业务毛利率未跌破20%，洛阳豫鹭或替代矿源进展可控",
-      "action": "深度复核后重仓配置",
-      "max_weight": 0.12,
-      "reason": "市值低于约445亿元时，若资源和现金流未被破坏，赔率明显偏高。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "复查2026年半年报，重点看钨钼利润、经营现金流、应收存货和洛阳豫鹭停产影响。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于28-32元，且黑钨精矿65%价格维持30万元/标吨以上",
-      "action": "强吸引力买入",
-      "max_weight": 0.1,
-      "reason": "用周期折扣买入战略金属平台，具备较好安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断钨价高位回落后的毛利率和现金流传导。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于32-38元，且经营现金流未连续两个季度显著弱于净利润",
-      "action": "分批买入",
-      "max_weight": 0.07,
-      "reason": "进入买入区，但仍需防范钨价和库存周期拐点。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报和分红，更新中周期盈利与资源项目进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价处于38-48元",
-      "action": "持有或小仓观察",
-      "max_weight": 0.04,
-      "reason": "接近合理价值，预期收益取决于景气继续上修。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入安全边际买入区，需要复核钨价、洛阳豫鹭和现金流后分批建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于60元",
-      "action": "不追高或减仓",
-      "max_weight": 0.01,
-      "reason": "当前价格已反映较多乐观预期，风险收益不对称。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入强吸引力区，若基本面未破坏，可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "进入不应追高区，需控制仓位并检验高景气持续性。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "显著高于基准合理价值，除非利润中枢大幅上修，否则应减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入安全边际买入区，需要复核钨价、洛阳豫鹭和现金流后分批建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入强吸引力区，若基本面未破坏，可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "进入不应追高区，需控制仓位并检验高景气持续性。"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "显著高于基准合理价值，除非利润中枢大幅上修，否则应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "复查2026年半年报，重点看钨钼利润、经营现金流、应收存货和洛阳豫鹭停产影响。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断钨价高位回落后的毛利率和现金流传导。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报和分红，更新中周期盈利与资源项目进展。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "SMM黑钨精矿65%价格",
-    "SMM白钨精矿65%价格",
-    "APT与钨粉/碳化钨粉价差",
-    "钨钼业务季度收入、利润总额和毛利率",
-    "硬质合金、切削工具、细钨丝销量及毛利率",
-    "洛阳豫鹭复产、补偿或替代矿源进展",
-    "博白巨典钨钼矿建设和投产进度",
-    "厦钨新能钴酸锂销量、高电压产品占比和净利率",
-    "稀土磁性材料销量和氧化镨/氧化钕价格",
-    "经营现金流/归母净利润比例",
-    "应收账款和存货周转",
-    "资本开支和年度分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

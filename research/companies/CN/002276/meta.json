@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:002276",
-  "market": "CN",
-  "ticker": "002276",
-  "name": "万马股份",
-  "company_name": "万马股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "万马股份收入规模和线缆/高分子材料/充电设备协同具备观察价值，但2026Q1增收不增利、应收账款和铜价扰动仍压制估值，当前应等待价格回到买入区或半年报验证扣非净利修复。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    7.2,
-    9.6
-  ],
-  "buy_zone": [
-    6.2,
-    7.4
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万马股份",
+    "security_status": "active",
+    "symbol": "CN:002276",
+    "ticker": "002276"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "05428b7c39202e66a922c5c4c676d97f5f6af958adae73e841463fb8ec9fcd5e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.4元且2026H1综合毛利率不低于12%、扣非净利恢复同比增长",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "估值回到买入区且经营质量开始验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查扣非净利、毛利率、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元且经营现金流改善、应收账款未继续快于收入增长",
-      "action": "提高至小仓位",
-      "max_weight": 0.03,
-      "reason": "安全边际扩大且回款风险下降"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断Q1利润下滑是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11元但扣非净利增速仍低于收入增速",
-      "action": "不追高或减仓",
-      "max_weight": 0.0,
-      "reason": "估值进入偏牛区间但基本面证据不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
+      "reason": "进入初始买入区，复核半年报毛利率、扣非净利和回款后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "进入减仓区，需要新能源和高分子材料利润兑现才能支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.4,
-      "reason": "进入初始买入区，复核半年报毛利率、扣非净利和回款后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "进入减仓区，需要新能源和高分子材料利润兑现才能支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查扣非净利、毛利率、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断Q1利润下滑是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率",
-    "电力产品毛利率",
-    "高分子材料毛利率",
-    "归母净利润同比增速",
-    "扣非净利润同比增速",
-    "经营活动现金流量净额",
-    "应收账款",
-    "应收票据",
-    "应收款项融资",
-    "存货",
-    "铜价",
-    "衍生金融资产和衍生金融负债",
-    "预付款项",
-    "充电平台充电量",
-    "重卡和超充设备销量",
-    "资本开支和在建工程转固"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

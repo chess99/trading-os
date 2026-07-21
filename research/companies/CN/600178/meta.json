@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:600178",
-  "ticker": "600178",
-  "name": "东安动力",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备国资动力总成平台、独立汽油机和自主AT细分地位，以及增程/混动定点放量期权；但2025扣非仍亏损、2026H1预告继续亏损，新能源产品尚处低毛利量产初期，当前价格略高于保守合理价值上沿，适合观察等待利润验证或更低价格。",
-  "fair_value_range": [
-    6.2,
-    8.0
-  ],
-  "buy_zone": [
-    0,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    13.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东安动力",
+    "security_status": "active",
+    "symbol": "CN:600178",
+    "ticker": "600178"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "161f90084fd7fc9ebdd41d3361ea8a4f2c4b566e7e8b534767f0686fdb336536"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于6.2元，且2026半年报扣非亏损不差于预告中值、毛利率环比2026Q1改善",
-      "action": "建立观察性试探仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点检查毛利率、扣非亏损、现金流和营运资金。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正，经营现金流为正，月度累计发动机或变速器销量同比转正",
-      "action": "提高至小仓位持有",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和三季度产销数据，判断新能源定点是否转化为收入与利润。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但扣非利润和毛利率尚未验证改善",
-      "action": "不追高并减仓或退出已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报与2027年一季报，确认扣非盈利拐点是否成立。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入保守买入区，接近资产折价和反转期权同时具备安全边际的位置。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "价格开始反映乐观情景，若扣非利润未验证应降低风险敞口。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入保守买入区，接近资产折价和反转期权同时具备安全边际的位置。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "价格开始反映乐观情景，若扣非利润未验证应降低风险敞口。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点检查毛利率、扣非亏损、现金流和营运资金。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和三季度产销数据，判断新能源定点是否转化为收入与利润。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报与2027年一季报，确认扣非盈利拐点是否成立。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

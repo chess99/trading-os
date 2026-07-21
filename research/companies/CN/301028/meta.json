@@ -1,100 +1,95 @@
 {
-  "symbol": "CN:301028",
-  "ticker": "301028",
-  "name": "鼎熔岩",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "鼎熔岩是国内压缩空气系统供应商，具备主机自研、捷豹品牌和渠道积累，2025-2026Q1增长质量尚可；但通用设备竞争充分，当前约13.86元价格处于合理价值区间中部，缺少足够安全边际，等待中报验证毛利率与现金流。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    0.0,
-    11.2
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    23.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于11.2元，且2026年中报收入增速保持10%以上、毛利率不低于28%、经营现金流未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价低于10.0元，且现金流/净利润恢复到0.8倍以上、应收和存货未显著快于收入",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于18.0元，且没有看到利润中枢或新品放量的明确上修证据",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.2,
-      "reason": "进入理想买入区间，需要复核中报毛利率、现金流与订单质量"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过基准估值上沿，若基本面未同步上修则安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证全年利润中枢与股权激励影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和评级"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "reference_price": 13.86,
-    "reference_price_date": "2026-07-15",
-    "reference_price_note": "公开网页盘中行情快照，非交易所收盘核验口径",
-    "base_case_value": 14.0
+    "market": "CN",
+    "name": "鼎熔岩",
+    "security_status": "active",
+    "symbol": "CN:301028",
+    "ticker": "301028"
   },
-  "key_sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c12d992fefb80ecdb6d65f75e8d423704789b17e8f49bddb821e5d12d2b63325"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "name": "公司官网-公司介绍",
-      "url": "https://www.jaguar-compressor.com/about",
-      "accessed_at": "2026-07-15"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "name": "深交所-2025年年度报告摘要",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-25/0ccc11da-beb5-47d9-a767-09eb9ce0dd1e.PDF",
-      "published_at": "2026-04-25"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证全年利润中枢与股权激励影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "name": "深交所-2026年第一季度报告",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-25/ad4b30e6-6786-4300-91b6-480c993c9fed.PDF",
-      "published_at": "2026-04-25"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.2
+      },
+      "reason": "进入理想买入区间，需要复核中报毛利率、现金流与订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过基准估值上沿，若基本面未同步上修则安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,106 +1,96 @@
 {
-  "symbol": "CN:000020",
-  "market": "CN",
-  "ticker": "000020",
-  "name": "深华发Ａ",
-  "company_name": "深华发Ａ",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.5,
-    6.5
-  ],
-  "buy_zone": [
-    3.8,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    99.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深华发Ａ",
+    "security_status": "active",
+    "symbol": "CN:000020",
+    "ticker": "000020"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "d574dd176d7d813ab6e36ff0bf1df7a81f2abd381627f78bf6f3655ed1feb8a9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价高于8.0元，且治理、司法变卖、旧改执行风险未解除",
-      "action": "不买入，维持0%仓位",
-      "max_weight": 0,
-      "reason": "当前市值已显著高于经营收益与折价资产期权可支撑区间"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报预计披露后复查收入、毛利率、现金流和司法事项",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入6.5元以下但仍高于4.8元，且最新公告未新增重大负面事项",
-      "action": "仅复查，不主动建仓",
-      "max_weight": 0,
-      "reason": "进入合理价值上沿附近，但安全边际仍不足"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复查订单趋势和存货风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入3.8-4.8元，经营现金流为正，控股股东司法事项无新增恶化",
-      "action": "可建立小观察仓",
-      "max_weight": 0.005,
-      "reason": "估值开始覆盖经营价值和部分资产期权，仍需控制事件风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入合理价值区间上沿，触发估值复查",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于3.8元，且万科仲裁/旧改风险有明确改善公告",
-      "action": "可分批加至研究上限",
-      "max_weight": 0.015,
-      "reason": "安全边际较充分，但公司质量和治理约束决定不适合重仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入买入区间上沿，可结合公告风险评估首笔观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于减持/回避区间，应维持0仓位或降低暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入合理价值区间上沿，触发估值复查"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入买入区间上沿，可结合公告风险评估首笔观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于减持/回避区间，应维持0仓位或降低暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报预计披露后复查收入、毛利率、现金流和司法事项"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复查订单趋势和存货风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入",
-    "显示器业务毛利率",
-    "注塑件毛利率",
-    "经营活动现金流量净额",
-    "前五大客户销售占比",
-    "第一大客户销售占比",
-    "关联采购金额",
-    "关联销售金额",
-    "存货余额及跌价准备",
-    "控股股东股份冻结和司法变卖进展",
-    "万科仲裁恢复执行及不予执行审查进展",
-    "深圳旧改项目补偿和实施进展"
-  ],
-  "thesis": "低毛利显示器代工和小体量注塑制造贡献有限经营价值，深圳物业/旧改提供期权但受诉讼和执行事项约束，当前价格已显著透支可核验基本面。",
-  "current_thesis": "低毛利显示器代工和小体量注塑制造贡献有限经营价值，深圳物业/旧改提供期权但受诉讼和执行事项约束，当前价格已显著透支可核验基本面。",
-  "last_price": 10.59,
-  "last_price_at": "2026-07-09 16:14:42",
-  "market_cap_cny": 2999000000,
-  "confidence": "medium_low"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

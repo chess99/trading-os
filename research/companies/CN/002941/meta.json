@@ -1,112 +1,105 @@
 {
-  "symbol": "CN:002941",
-  "market": "CN",
-  "ticker": "002941",
-  "name": "新疆交建",
-  "company_name": "新疆交通建设集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新疆交建受益于新疆交通基础设施投资高景气、控股股东资源协同和较充足未完工订单，2025年利润与经营现金流明显改善；但公司仍是低毛利、重营运资金、强回款周期的区域施工企业，当前约9.5元附近估值已偏充分，等待6.8元以下安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.0,
-    8.6
-  ],
-  "buy_zone": [
-    6.2,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新疆交建",
+    "security_status": "active",
+    "symbol": "CN:002941",
+    "ticker": "002941"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "57ec86a09a32abc430b15c04c2cc9b8d626feab9b66d8b54a2028037fb4aab01"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.2元，且最近一期未完工订单不低于年收入1.2倍、年度经营现金流/归母净利润大于1",
-      "action": "可建3%-5%观察仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价在6.2元至6.8元之间，且扣非归母净利润未出现同比大幅下滑、资产负债率低于70%",
-      "action": "可建2%-3%小仓位，等待后续现金流验证",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价在6.8元至8.6元之间，基本面无重大变化",
-      "action": "观察或持有，不主动加仓",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价高于10.0元，且未出现扣非利润、现金流或订单质量的超预期改善",
-      "action": "减仓或回避",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "currency": "CNY",
-      "reason": "低于估算合理价值下沿并进入可买区",
-      "action": "进入可买区，复核最近订单、现金流和资产负债率"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "currency": "CNY",
-      "reason": "接近1倍PB并提供较强安全边际",
-      "action": "进入强安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "currency": "CNY",
-      "reason": "高于合理价值上沿且股息率与扣非利润估值保护不足",
-      "action": "进入减仓/回避区，除非基本面显著上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证2026年收入下滑是否只是季度节奏，以及经营现金流是否修复",
-      "action": "复核收入确认、扣非利润、现金流和资产负债率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能进一步验证订单转化、回款和全年利润兑现概率",
-      "action": "复核新签订单、现金流和全年利润兑现节奏"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年度报告披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报是重估扣非盈利中枢、资产负债率和分红能力的关键节点",
-      "action": "重估合理价值、买入区间和仓位计划"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "低于估算合理价值下沿并进入可买区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "接近1倍PB并提供较强安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于合理价值上沿且股息率与扣非利润估值保护不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "新签合同额",
-    "未完工订单金额",
-    "订单/收入比",
-    "扣非归母净利润",
-    "扣非ROE",
-    "经营活动现金流量净额/归母净利润",
-    "应收账款与合同资产合计增速",
-    "资产负债率",
-    "毛利率",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

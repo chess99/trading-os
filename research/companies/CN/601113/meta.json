@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:601113",
-  "ticker": "601113",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "华鼎股份",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "公司回归锦纶长丝单主业，控股股东现金定增并锁定36个月，账面PB接近1倍；但2026年上半年业绩预减显示锦纶价差和原料成本压力仍大，扩产消化与现金流修复尚需验证，当前适合观察而非直接买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.0,
-    4.0
-  ],
-  "buy_zone": [
-    2.4,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.4,
-    5.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入2.4-2.8元且未出现控股股东质押恶化、库存大幅减值或半年度业绩继续下修",
-      "action": "观察仓试买",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "股价低于2.4元且2026年半年报/三季报确认毛利率、经营现金流和库存周转边际改善",
-      "action": "提高到小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于4.4元但年化利润仍低于2亿元或经营现金流未修复",
-      "action": "不追高并降低仓位",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入初始买入观察区，需同步复核锦纶价差、库存和质押风险"
-    },
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入深度安全边际区，若基本面未恶化可考虑小仓位提升"
-    },
-    {
-      "type": "price_above",
-      "price": 4.4,
-      "reason": "超过基准估值上沿，若利润恢复不足需减仓或停止买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际利润、毛利率、经营现金流、库存和6.5万吨PA6项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认业绩预减后是否出现经营拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和新产能爬坡情况，重新估算中周期利润"
-    }
-  ],
-  "valuation": {
-    "base_price": 3.38,
-    "base_price_date": "2026-07-17",
-    "base_price_source": "新浪实时行情接口，10:06:04，可能延迟",
-    "method_summary": "相对估值以静态PE和PB交叉，绝对估值以中周期利润和自由现金流粗估，情景估值覆盖行业价差与扩产爬坡差异。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华鼎股份",
+    "security_status": "active",
+    "symbol": "CN:601113",
+    "ticker": "601113"
   },
-  "key_risks": [
-    "锦纶丝售价下降与原材料上涨共同压缩毛利",
-    "新增产能消化不及预期导致折旧、库存和现金流压力",
-    "控股股东及一致行动人质押比例较高",
-    "母公司未分配利润为负，短期分红能力受限"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "e3834a0a66c967248df3f6ae82224be3ca49a056644ecdc50778352b4ba06961"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际利润、毛利率、经营现金流、库存和6.5万吨PA6项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认业绩预减后是否出现经营拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和新产能爬坡情况，重新估算中周期利润",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入初始买入观察区，需同步复核锦纶价差、库存和质押风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑小仓位提升",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.4
+      },
+      "reason": "超过基准估值上沿，若利润恢复不足需减仓或停止买入",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:301132",
-  "ticker": "301132",
-  "name": "满坤科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "满坤科技具备PCB行业需求恢复、产品结构升级和泰国扩产带来的中长期弹性，但2026年一季度出现收入增长而利润下滑、经营现金流转负，当前可见估值已提前反映较多成长预期，安全边际不足，适合继续观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    34
-  ],
-  "buy_zone": [
-    22,
-    27
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "满坤科技",
+    "security_status": "active",
+    "symbol": "CN:301132",
+    "ticker": "301132"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "981fc7b127436a976ee2ee116a7abdca133678ecf5544c7f089883c78c8df099"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于27元，且最近一期财报显示毛利率企稳、经营现金流为正、泰国扩产无重大延期",
-      "action": "small_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、扣非净利润、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入、归母净利润和经营现金流同步改善，且价格仍低于34元",
-      "action": "increase_after_validation",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于42元但利润率和现金流未验证，或泰国项目出现延期/良率问题",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估泰国扩产、客户结构和资本开支回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
+      "reason": "进入买入观察区，需要复核2026年中报毛利率、经营现金流和泰国扩产进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "接近熊市情景价值下沿，若基本面未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "接近乐观情景估值，若高端订单和现金流未验证则主题溢价过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "显著高于基准公允价值区间，应复核是否存在已披露的新订单或利润拐点",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 27,
-      "reason": "进入买入观察区，需要复核2026年中报毛利率、经营现金流和泰国扩产进展"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "接近熊市情景价值下沿，若基本面未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "接近乐观情景估值，若高端订单和现金流未验证则主题溢价过高"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "显著高于基准公允价值区间，应复核是否存在已披露的新订单或利润拐点"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、扣非净利润、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增长是否转化为利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估泰国扩产、客户结构和资本开支回报"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

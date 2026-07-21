@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301388",
-  "ticker": "301388",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "欣灵电气",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "欣灵电气是低压电器、继电器和工业控制元件细分制造商，资产负债表稳健但盈利能力和增长质量尚不足以支撑 2026-07-16 附近高估值；等待价格回落或扣非利润、毛利率、现金流同步改善后再评估买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    15,
-    20
-  ],
-  "buy_zone": [
-    12,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    35
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欣灵电气",
+    "security_status": "active",
+    "symbol": "CN:301388",
+    "ticker": "301388"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "a25cae3b9575960589c272e2b36601e9b5a05f984b3406794fbb015c031477e1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准合理价值且扣非利润拐点未确认，维持零仓位观察。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入、扣非利润、毛利率、现金流和股东减持进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 15 元，且最新财报显示收入同比增长超过 10%、扣非净利润同比转正、经营现金流未恶化。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断利润拐点是否具备连续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 12 元，且基本面未出现毛利率持续下滑、现金流恶化或治理风险升级。",
-      "action": "increase_research_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和年度经营现金流，重新估算合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入基准合理价值下沿，可结合最新扣非利润和现金流复核小仓位研究机会。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入具备安全边际的买区，若基本面未恶化可复核最高 3% 仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于基准估值区间，若缺乏连续高质量增长验证应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入基准合理价值下沿，可结合最新扣非利润和现金流复核小仓位研究机会。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入具备安全边际的买区，若基本面未恶化可复核最高 3% 仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "高于基准估值区间，若缺乏连续高质量增长验证应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入、扣非利润、毛利率、现金流和股东减持进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断利润拐点是否具备连续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和年度经营现金流，重新估算合理价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

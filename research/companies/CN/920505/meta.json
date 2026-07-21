@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920505",
-  "market": "CN",
-  "ticker": "920505",
-  "name": "九菱科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "传统粉末冶金具窄客户认证壁垒，但稀土永磁尚未证明盈利和自由现金流，当前百倍以上TTM PE已过度定价产能爬坡。",
-  "fair_value_range": [9.0, 13.0],
-  "buy_zone": [6.5, 9.0],
-  "sell_or_reduce_zone": [18.0, 24.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "九菱科技",
+    "security_status": "active",
+    "symbol": "CN:920505",
+    "ticker": "920505"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "2ef935abdb2a633481f79808cd2626b56155e7bd4ea4896b87e29030b3801c64"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于6.5至9.0元且半年报或年报验证磁性材料毛利率、回款和自由现金流未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的稀土永磁毛利率、产能利用率、应收存货及自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元但客户流失、减值或新业务持续亏损等核心逻辑被证伪",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入有条件的估值复核区，须先确认基本面和长期商业价值未受损",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于18元或未进入买入区间",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利和自由现金流预测已获上修证据",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的稀土永磁毛利率、产能利用率、应收存货及自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入有条件的估值复核区，须先确认基本面和长期商业价值未受损"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入减仓或不应追高区间，除非盈利和自由现金流预测已获上修证据"
-    }
-  ],
-  "updated_at": "2026-07-14T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

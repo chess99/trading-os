@@ -1,75 +1,86 @@
 {
-  "symbol": "CN:300068",
-  "market": "CN",
-  "ticker": "300068",
-  "name": "ST南都",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "ST南都处于内控否定意见、持续经营重大不确定性、债务逾期、账户冻结、诉讼和预重整申请叠加阶段；现价约4.24元显著高于0.80-1.60元保守公允价值区间，不具备常规买入安全边际。",
-  "fair_value_range": [
-    0.8,
-    1.6
-  ],
-  "buy_zone": [
-    0,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    10
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST南都",
+    "security_status": "active",
+    "symbol": "CN:300068",
+    "ticker": "300068"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "0733009e0c293c13e8dea8754c3255c2afecb0ecf83254313795ab76ca29f268"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于2.50元或重整方案、债务确认、内控整改尚未明朗",
-      "action": "不买；已有仓位减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、归母权益、现金链、逾期债务和诉讼冻结进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入0.80-1.60元但法院受理、重整投资人和债务削减方案仍未确定",
-      "action": "仅观察，不主动建仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报及预重整/重整程序是否取得法院和投资人层面的实质进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于0.80元，且预重整进入实质阶段、无新增退市硬伤",
-      "action": "事件驱动试错仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入重整期权试错观察区，需复核法院受理、债权确认和稀释方案",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "显著高于保守公允价值，减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入重整期权试错观察区，需复核法院受理、债权确认和稀释方案"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "显著高于保守公允价值，减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、归母权益、现金链、逾期债务和诉讼冻结进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报及预重整/重整程序是否取得法院和投资人层面的实质进展"
-    }
-  ],
-  "notes": [
-    "2026-07-17公开行情页交叉显示股价约4.24元，总市值约38.09亿元；非公司公告数据。",
-    "2025年财报为保留意见并带持续经营重大不确定性段落，内控审计为否定意见。",
-    "2026-07-14专项自查称暂未发现关联方非经营性资金占用，但年报审计报告对相关资金往来是否涉及非经营性资金占用无法作出合理判断。",
-    "预重整申请截至2026-07-14尚未获法院受理；若正式受理重整，将触发退市风险警示。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

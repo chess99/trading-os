@@ -1,96 +1,96 @@
 {
-  "symbol": "CN:688362",
-  "market": "CN",
-  "ticker": "688362",
-  "name": "甬矽电子",
-  "company_name": "甬矽电子",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "甬矽电子是先进封装弹性较强的成长型封测平台，2025年和2026Q1业绩已从低谷修复，但当前价格隐含较高成长预期，适合重点跟踪而非重仓追高。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    70,
-    90
-  ],
-  "buy_zone": [
-    55,
-    70
-  ],
-  "sell_or_reduce_zone": [
-    105,
-    125
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "甬矽电子",
+    "security_status": "active",
+    "symbol": "CN:688362",
+    "ticker": "688362"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "db41dfa444a76ddda4b41809e355edaec09745762b96e2c842e090754ee9425a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入70元以下且2026Q2/Q3收入、毛利率、扣非净利未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入可研究区间，但仍需验证先进封装订单和稼动率"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入、毛利率、扣非净利、资本开支和先进封装进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入55-65元且连续两个季度扣非净利同比增长超过25%",
-      "action": "提高至小仓位",
-      "max_weight": 0.03,
-      "reason": "价格提供安全边际，且经营杠杆继续兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认景气延续性和折旧压力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于105元且未来12个月利润指引或季度趋势无法支撑高估值",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已透支先进封装高成长，需要更强业绩验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入合理价值下沿附近，适合重新评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入更有安全边际的买入区，需要检查基本面是否同步恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 105.0
+      },
+      "reason": "进入减仓或回避区，估值容错率较低",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入合理价值下沿附近，适合重新评估首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入更有安全边际的买入区，需要检查基本面是否同步恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 105,
-      "reason": "进入减仓或回避区，估值容错率较低"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入、毛利率、扣非净利、资本开支和先进封装进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认景气延续性和折旧压力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比和环比",
-    "毛利率和净利率",
-    "扣非归母净利润",
-    "经营现金流净额",
-    "资本开支",
-    "固定资产和在建工程",
-    "折旧摊销",
-    "产能利用率或稼动率",
-    "SiP和倒装等先进封装收入线索",
-    "前五大客户收入占比",
-    "应收账款周转",
-    "存货周转",
-    "可转债转股和总股本变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

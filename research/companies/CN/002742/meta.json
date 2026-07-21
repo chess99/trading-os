@@ -1,84 +1,95 @@
 {
-  "symbol": "CN:002742",
-  "ticker": "002742",
-  "name": "冀衡医药",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "重整完成、建材和海外业务剥离后，公司聚焦医药主业，具备困境反转观察价值；但2026H1仍预亏、经营现金流承压、当前PB显著高于可比公司，现价缺少安全边际。资产注入计划尚未开展，不能纳入基础估值。",
-  "fair_value_range": [
-    2.0,
-    2.8
-  ],
-  "buy_zone": [
-    0.0,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    3.6,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "冀衡医药",
+    "security_status": "active",
+    "symbol": "CN:002742",
+    "ticker": "002742"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e21cd04520fff20c8aeda53413042f7647b769244a3ebecbada042842b3be89e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于1.8元，且未出现新的治理或现金流恶化信号",
-      "action": "可建立观察性小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际收入、亏损和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正，且扣非亏损显著收窄或转正",
-      "action": "重新评估是否提高至核心跟踪仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察医药主业是否接近扣非盈亏平衡",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于3.6元但资产注入无实质进展",
-      "action": "不追高，已有仓位应降低暴露",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认重整后完整年度盈利质量和现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入具备初步安全边际的观察买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.6
+      },
+      "reason": "超过当前基本面可支撑估值，需警惕资产注入预期过度资本化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入具备初步安全边际的观察买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 3.6,
-      "reason": "超过当前基本面可支撑估值，需警惕资产注入预期过度资本化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际收入、亏损和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察医药主业是否接近扣非盈亏平衡"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认重整后完整年度盈利质量和现金流"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "2026H2扣非净利润",
-    "经营活动现金流量净额",
-    "医药主业收入和毛利率",
-    "货币资金与短期债务",
-    "控股股东资产注入进展",
-    "财务投资人和历史股东减持安排"
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

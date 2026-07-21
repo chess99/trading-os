@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:002242",
-  "market": "CN",
-  "ticker": "002242",
-  "name": "九阳股份",
-  "company_name": "九阳股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "九阳股份是高现金、高分红但低成长的厨房小家电资产；当前品牌老化、渠道费用和新品验证不足，股价需跌入6.8元以下且2026年中报未恶化后才适合首笔观察仓。",
-  "quality_rating": "medium",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    6.8,
-    9.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "九阳股份",
+    "security_status": "active",
+    "symbol": "CN:002242",
+    "ticker": "002242"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f92b7a78ce492fe56728e600a6a717818b3204727332edc4e6ed3733598c5e05"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.8元，且2026年半年报收入降幅收窄、毛利率稳定、经营现金流未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入基准买入区，但主业修复仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的收入、扣非净利率、现金流和新品渠道进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.2元，且分红政策维持、扣非净利率不低于3.5%",
-      "action": "小幅加仓",
-      "max_weight": 0.02,
-      "reason": "股息和现金资产提供一定下行保护"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认利润修复是否具备连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "收入恢复正增长、扣非净利率回到4%以上、新品和内容电商渠道验证有效",
-      "action": "提高至最高跟踪仓位",
-      "max_weight": 0.03,
-      "reason": "基本面由防守观察转向弱复苏"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入基准买入区，复查半年报后可考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "安全边际和股息率改善，适合复查是否加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "超过基准合理价值上沿，若基本面未改善应减仓或放弃追买",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入基准买入区，复查半年报后可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "安全边际和股息率改善，适合复查是否加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "超过基准合理价值上沿，若基本面未改善应减仓或放弃追买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的收入、扣非净利率、现金流和新品渠道进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认利润修复是否具备连续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润及扣非净利率",
-    "毛利率和销售费用率",
-    "经营活动现金流净额",
-    "库存周转和应收账款变化",
-    "豆浆机、破壁机、空气炸锅、清洁电器线上份额",
-    "核心渠道价格带和爆品数量",
-    "年度现金分红金额及派息率",
-    "员工持股计划考核条件和达成情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

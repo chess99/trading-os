@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:300580",
-  "market": "CN",
-  "ticker": "300580",
-  "name": "贝斯特",
-  "company_name": "无锡贝斯特精机股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备较强精密加工和汽车零部件客户认证基础，新能源汽车、海外产能、工业母机和机器人线性运动部件提供中长期期权；但2025年利润和现金流弱于收入，2026年机器人相关业务仍处样品/早期阶段，当前价格安全边际不足。",
-  "quality_rating": "中高",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    16.0,
-    20.5
-  ],
-  "buy_zone": [
-    14.0,
-    16.5
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "贝斯特",
+    "security_status": "active",
+    "symbol": "CN:300580",
+    "ticker": "300580"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ba916632710acf920f6aa75a648f573ee7d0ce4ba963a65f277783607463e586"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16.5元，且最近一期毛利率不低于33%、经营现金流未继续恶化",
-      "action": "建立2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入增速、毛利率、经营现金流、泰国基地和新业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于14.5元，且主业订单稳定、新能源汽车零部件收入继续增长",
-      "action": "加仓至4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：现金流修复和机器人/丝杠订单是否验证",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于12.5元，且经营现金流/归母净利润回到0.8倍以上、无客户流失或毛利率失控",
-      "action": "最高加至6%",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：新增资本开支是否转化为利润和自由现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于20.5元但机器人/丝杠业务仍未形成可审计规模收入",
-      "action": "停止新增，只保留观察",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于25.0元且无明确量产订单和现金流改善",
-      "action": "减仓或退出",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
       "reason": "进入可买区上沿，需要复核毛利率和现金流是否支持建仓",
-      "action": "复核是否可建观察仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 14.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
       "reason": "进入较有安全边际区间，需要复核主业订单和新业务进展",
-      "action": "复核是否加仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 25.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
       "reason": "高于减持区下沿，需要确认是否已有足够量产订单支撑估值",
-      "action": "复核减仓或卖出"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入增速、毛利率、经营现金流、泰国基地和新业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：现金流修复和机器人/丝杠订单是否验证"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：新增资本开支是否转化为利润和自由现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季营业收入同比增速",
-    "综合毛利率是否维持33%以上",
-    "经营现金流/归母净利润",
-    "应收账款和存货周转变化",
-    "新能源汽车零部件量产收入和客户定点",
-    "机器人/丝杠相关业务收入、订单和毛利率",
-    "泰国基地利用率和盈利状态",
-    "研发费用率与新产品商业化进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,114 +1,123 @@
 {
-  "symbol": "CN:000338",
-  "market": "CN",
-  "ticker": "000338",
-  "name": "潍柴动力",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "潍柴动力是中国重卡动力链和全球化高端装备龙头，现金流和分红质量较好，境外收入占比高；但2026年7月初股价已处于基准合理区间上沿，需要等待更好的价格或后续业绩继续证明盈利中枢上移。",
-  "fair_value_range": [
-    24,
-    31
-  ],
-  "buy_zone": [
-    19,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "潍柴动力",
+    "security_status": "active",
+    "symbol": "CN:000338",
+    "ticker": "000338"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "1e3116c70f4505c6ebf6ce7faf5eed9acdb0a5aca370c8139f55be8df7b51f7a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入19-23元且重卡出口、现金流、KION修复未出现破坏性恶化",
-      "price_range": [
-        19,
-        23
-      ],
-      "action": "first_buy",
-      "target_weight": 0.03,
-      "max_weight": 0.05,
-      "note": "23元以下且基本面未恶化可首笔2%-3%，20元以下可加至5%。"
-    },
-    {
-      "condition": "股价跌破19元且基本面未触发逻辑止损条件",
-      "price_range": [
-        0,
-        19
-      ],
-      "action": "strong_buy",
-      "target_weight": 0.05,
-      "max_weight": 0.08,
-      "note": "19元以下进入强吸引力区间，若基本面未破坏可最高8%。"
-    },
-    {
-      "condition": "股价升至31-34元且业绩尚未证明盈利中枢继续抬升",
-      "price_range": [
-        31,
-        34
-      ],
-      "action": "hold_or_wait",
-      "target_weight": 0.03,
-      "max_weight": 0.03,
-      "note": "高于合理区间上沿，不新买，持仓观察业绩验证。"
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年中报披露后复核盈利中枢、分部毛利率、KION修复和现金流质量",
-      "condition": "2026年中报披露后复核盈利中枢、分部毛利率、KION修复和现金流质量"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "国内重卡月销量或出口销量连续3个月同比转负并明显低于行业预期",
-      "condition": "国内重卡月销量或出口销量连续3个月同比转负并明显低于行业预期"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "经营现金流连续两个季度显著弱于归母净利润",
-      "condition": "经营现金流连续两个季度显著弱于归母净利润"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "KION出现大额减值、订单明显下滑或利润率修复失败",
-      "condition": "KION出现大额减值、订单明显下滑或利润率修复失败"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "新能源重卡渗透加速但公司新能源动力链订单和份额未跟上",
-      "condition": "新能源重卡渗透加速但公司新能源动力链订单和份额未跟上"
-    }
-  ],
-  "price_triggers": [
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 23,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
       "reason": "进入有安全边际买入区间上沿，复核基本面后可考虑首笔仓位",
-      "note": "进入有安全边际买入区间上沿，复核基本面后可考虑首笔仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 19,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
       "reason": "进入强吸引力区间，若基本面未破坏可加大仓位",
-      "note": "进入强吸引力区间，若基本面未破坏可加大仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 34,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
       "reason": "超过基准估值上沿，需要连续业绩超预期支撑，否则考虑减仓",
-      "note": "超过基准估值上沿，需要连续业绩超预期支撑，否则考虑减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07T23:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

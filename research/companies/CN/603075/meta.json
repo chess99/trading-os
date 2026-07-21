@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:603075",
-  "ticker": "603075",
-  "name": "热威股份",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "热威股份是细分电热元件及组件优质制造商，现金流和利润率尚可，但以2026-07-17约22.5元价格估算已接近或超过基准公允价值上沿，缺少安全边际，适合继续跟踪而非追买。",
-  "fair_value_range": [
-    16,
-    21
-  ],
-  "buy_zone": [
-    14,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "热威股份",
+    "security_status": "active",
+    "symbol": "CN:603075",
+    "ticker": "603075"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "9a8f6ea72f9b8cf1f1dbed290fa36d0059f80de6a6cf6b95b3175b13373b11d3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入14-16元且2026年后续季度收入保持增长、毛利率和现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点观察收入增长、毛利率、现金流和汽车新能源业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌破14元且基本面未恶化、经营现金流仍能覆盖大部分资本开支",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润增速是否恢复并更新估值区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元且没有净利润增速、毛利率或新能源订单的明确上修证据",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新长期增长、资本开支和海外产能假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入基准公允价值下沿附近，开始具备重新评估买入安全边际的条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "若基本面未恶化，估值进入可接受安全边际区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过基准估值上沿并接近乐观情景估值，应检查是否存在过度定价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入基准公允价值下沿附近，开始具备重新评估买入安全边际的条件"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "若基本面未恶化，估值进入可接受安全边际区间"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "超过基准估值上沿并接近乐观情景估值，应检查是否存在过度定价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点观察收入增长、毛利率、现金流和汽车新能源业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润增速是否恢复并更新估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新长期增长、资本开支和海外产能假设"
-    }
-  ],
-  "sources": [
-    {
-      "title": "热威股份2025年年度报告",
-      "url": "https://stockmc.xueqiu.com/202604/603075_20260416_4PXJ.pdf",
-      "date": "2026-04-16"
-    },
-    {
-      "title": "热威股份2026年第一季度报告",
-      "url": "https://stockmc.xueqiu.com/202604/603075_20260429_1JHG.pdf",
-      "date": "2026-04-29"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

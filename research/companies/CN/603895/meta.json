@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:603895",
-  "market": "CN",
-  "ticker": "603895",
-  "name": "天永智能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "天永智能2025年扭亏、2026Q1保持小幅盈利，并有混动产线中标带来的订单修复线索；但公司仍是高杠杆、项目制、低净利率的小型非标自动化设备商，当前股价对应估值远高于可持续盈利能力，缺乏安全边际，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8,
-    12
-  ],
-  "buy_zone": [
-    8,
-    10
-  ],
-  "sell_or_reduce_zone": [
-    18,
-    25
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天永智能",
+    "security_status": "active",
+    "symbol": "CN:603895",
+    "ticker": "603895"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c0cb71a3077b801dbf8c29e2e50f2c789e9a32e8c2ec620ad552215d1998962a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作观察仓：价格低于10元且连续两个季度经营现金流为正、资产负债率下降到85%以下、正式合同订单覆盖未来12个月收入50%以上",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收账款和负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "基本面验证后小仓买入：价格低于8元且新能源/混动订单持续落地、综合毛利率稳定高于20%、大股东借款余额下降",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及中标项目合同签署和验收进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于18元且未出现净利润和现金流跃迁，不新增仓位并考虑退出观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断扭亏是否可持续以及估值区间是否需要调整",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入基准买入观察区，需要重新核验订单、现金流和负债率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入有安全边际区间，可在基本面验证后考虑小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过乐观情景下沿，若无盈利跃迁应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "估值显著高于基准合理价值，需警惕情绪定价和回撤风险",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入基准买入观察区，需要重新核验订单、现金流和负债率"
-    },
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入有安全边际区间，可在基本面验证后考虑小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 18,
-      "reason": "超过乐观情景下沿，若无盈利跃迁应减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "估值显著高于基准合理价值，需警惕情绪定价和回撤风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收账款和负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及中标项目合同签署和验收进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断扭亏是否可持续以及估值区间是否需要调整"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

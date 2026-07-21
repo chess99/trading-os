@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:002104",
-  "market": "CN",
-  "ticker": "002104",
-  "name": "恒宝股份",
-  "company_name": "恒宝股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "恒宝股份具备智能卡、金融IC卡、通信eSIM和数字人民币相关产品与客户基础，但截至2026-07-12，新业务仍未形成规模收入，2026Q1收入大幅下滑并转亏，当前10元附近估值显著高于可验证基本面，暂不买入，仅在4元以下结合订单和利润修复重新评估观察仓。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.0,
-    5.5
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    7.0,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒宝股份",
+    "security_status": "active",
+    "symbol": "CN:002104",
+    "ticker": "002104"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9d7382ba971243686d7ecfb713ef391c5eff58180c217ca780423d57c1525f33"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于7.0元且未看到数字人民币/eSIM规模收入",
-      "action": "不买入，维持0%仓位",
-      "max_weight": 0.0,
-      "reason": "当前估值已高于乐观情景上沿，2026Q1收入大幅下滑并转亏"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认制卡、模块、境外和新业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至4.0元以下，且制卡业务收入降幅收窄、现金资产稳定",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近资产底并给予客户资质和新业务期权有限溢价"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入是否止跌和扣非利润是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至3.2元附近，且连续两个季度扣非盈利改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "估值进入安全区，同时基本面出现可验证修复"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入观察仓买入区间，需要复核半年报和订单进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "接近悲观情景资产底，若现金资产未恶化可重新评估仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "高于基本面合理区间，若已有仓位应减仓或卖出",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入观察仓买入区间，需要复核半年报和订单进展"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "接近悲观情景资产底，若现金资产未恶化可重新评估仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.0,
-      "reason": "高于基本面合理区间，若已有仓位应减仓或卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认制卡、模块、境外和新业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入是否止跌和扣非利润是否修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "制卡类收入、销量、单价和毛利率",
-    "模块类收入增速和毛利率",
-    "境外收入增速和境外毛利率",
-    "数字人民币业务收入金额及订单披露",
-    "eSIM业务客户、订单、收入和毛利披露",
-    "研发费用、研发费用率和研发人员数量",
-    "经营活动现金流量净额",
-    "前五大客户收入占比",
-    "货币资金与交易性金融资产余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

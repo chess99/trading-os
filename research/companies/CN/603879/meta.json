@@ -1,58 +1,86 @@
 {
-  "symbol": "CN:603879",
-  "market": "CN",
-  "ticker": "603879",
-  "name": "永悦科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "永悦科技当前主业为低毛利不饱和聚酯树脂，2025年和2026Q1持续亏损，无人机业务收入极小且毛利为负，控股股东股份冻结与历史信披问题带来治理折价；在经营现金流、扣非利润和治理风险未实质改善前，不具备买入安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.6,
-    1.2
-  ],
-  "buy_zone": [
-    0.5,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    4.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永悦科技",
+    "security_status": "active",
+    "symbol": "CN:603879",
+    "ticker": "603879"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "88dfaeaeba568c3da5ceb8dc136b1c517cd67c660965c443344f032ca16d20d4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前阶段不建仓；只有股价低于0.8元且扣非亏损显著收窄、经营现金流转正、控股股东股份冻结风险解除后，才允许重新研究观察仓。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入净资产折价区间后重新评估是否存在资产安全边际，但不自动买入。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认亏损、毛利率、现金流和无人机业务进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "超过乐观情景上沿后估值缺乏经营支撑，应继续回避或降低任何观察仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认亏损、毛利率、现金流和无人机业务进展。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断主业修复是否持续、治理风险是否缓解。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断主业修复是否持续、治理风险是否缓解。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入净资产折价区间后重新评估是否存在资产安全边际，但不自动买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "超过乐观情景上沿后估值缺乏经营支撑，应继续回避或降低任何观察仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

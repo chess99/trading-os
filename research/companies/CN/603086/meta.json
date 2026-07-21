@@ -1,79 +1,95 @@
 {
-  "symbol": "CN:603086",
-  "ticker": "603086",
-  "name": "先达股份",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "先达股份已完成利润表修复，烯草酮价格回升和创制除草剂管线提供向上期权；但2025年经营现金流为负、存货和短期借款上升，当前更适合观察，等待现金流与创制产品放量验证。",
-  "fair_value_range": [
-    5.0,
-    6.5
-  ],
-  "buy_zone": [
-    0.0,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "先达股份",
+    "security_status": "active",
+    "symbol": "CN:603086",
+    "ticker": "603086"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3e2b484896b2b507aa45c323a86a1711b285815e0e99315556261663d34c1558"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.6元，且2026年连续两个季度经营现金流转正、存货周转未继续恶化时，允许建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看经营现金流、存货、短期借款和创制产品进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "创制产品收入或毛利贡献被公司明确披露并验证高于传统产品，同时短期借款不再继续扩张，可提高到核心跟踪仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否持续且现金流是否转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.2元且仍未看到创制产品放量或经营现金流改善，停止加仓并考虑退出观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估估值区间和是否从观察转为买入。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入买入观察区，需同步复核现金流和存货。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过减仓区上沿，若基本面无新增证据则安全边际不足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入买入观察区，需同步复核现金流和存货。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过减仓区上沿，若基本面无新增证据则安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看经营现金流、存货、短期借款和创制产品进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否持续且现金流是否转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估估值区间和是否从观察转为买入。"
-    }
-  ],
-  "risk_flags": [
-    "经营现金流为负",
-    "存货占比较高",
-    "短期借款上升",
-    "创制产品财务贡献未充分披露",
-    "农药价格周期波动"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

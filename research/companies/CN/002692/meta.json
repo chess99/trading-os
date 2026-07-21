@@ -1,115 +1,123 @@
 {
-  "symbol": "CN:002692",
-  "market": "CN",
-  "ticker": "002692",
-  "name": "远程股份",
-  "company_name": "远程电缆股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司收入规模真实且受电网、新能源并网等需求支撑，但2025年几乎不盈利、2026Q1亏损，经营现金流持续为负，应收账款和短期借款压力较大。3.78元附近缺乏安全边际，需等待现金流、毛利率和扣非利润修复后再评估。",
-  "quality_rating": "低到中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.2,
-    3.0
-  ],
-  "buy_zone": [
-    0,
-    2.1
-  ],
-  "sell_or_reduce_zone": [
-    3.4,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "远程股份",
+    "security_status": "active",
+    "symbol": "CN:002692",
+    "ticker": "002692"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ba7e267aa9fdcac008f561a65f3c4b92ec81752159fb54965908fb9545b7123d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.10元，且最近两个季度经营现金流改善、应收账款/TTM收入低于30%",
-      "max_weight": 0.03,
-      "action": "可建立2%-3%小仓位"
-    },
-    {
-      "condition": "股价在2.10-2.60元之间，且扣非净利润转正、短期借款未继续上升",
-      "max_weight": 0.02,
-      "action": "最多1%-2%观察仓"
-    },
-    {
-      "condition": "股价高于3.40元但基本面仍未改善，或经营现金流继续大幅为负",
-      "max_weight": 0,
-      "action": "不买；已有仓位应减仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.1,
-      "reason": "进入可买区，价格低于保守合理价值并留出安全边际",
-      "note": "进入可买区，需同时复核现金流和应收账款"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入观察区，需要结合季度经营拐点判断是否建观察仓",
-      "note": "进入观察区，复核是否有季度经营拐点"
-    },
-    {
-      "type": "price_above",
-      "price": 3.4,
-      "reason": "高于减仓线且基本面未修复时风险收益不对称",
-      "note": "估值缺乏安全边际，若未扭亏应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证2026Q1亏损是否延续的第一个关键窗口",
-      "condition": "发布2026年半年报或三季报",
-      "action": "复核收入、毛利率、扣非利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "连续季度现金流转正是买入前必须出现的财务质量信号",
-      "condition": "连续两个季度经营现金流为正",
-      "action": "评估是否从不买上调为观察或持有"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "应收账款周转决定收入质量和坏账风险",
-      "condition": "应收账款/TTM收入降至30%以下或继续升至40%以上",
-      "action": "分别上调或下调财务质量判断"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "短期借款压力直接影响安全边际和融资风险",
-      "condition": "短期借款较2026Q1明显上升或下降",
-      "action": "复核资产负债表风险和仓位上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "诉讼、减值或融资公告可能改变资产质量和估值折价",
-      "condition": "重大诉讼、减值或融资公告",
-      "action": "立即重估风险折价"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.1
+      },
+      "reason": "进入可买区，价格低于保守合理价值并留出安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入观察区，需要结合季度经营拐点判断是否建观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.4
+      },
+      "reason": "高于减仓线且基本面未修复时风险收益不对称",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "电线电缆毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款/TTM收入",
-    "短期借款/货币资金",
-    "前五大客户销售占比与回款质量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

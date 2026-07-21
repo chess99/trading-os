@@ -1,76 +1,96 @@
 {
-  "symbol": "CN:920160",
-  "market": "CN",
-  "ticker": "920160",
-  "name": "北矿检测",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "北矿检测是有色金属与矿产检测细分领域的高毛利、轻资产、现金充裕公司，2025 和 2026Q1 增长较好；但 18.83 元附近已反映较多增长预期，需等待半年报现金流和毛利率继续验证，回落至买入区才具备更好的安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    18.0,
-    24.0
-  ],
-  "buy_zone": [
-    14.5,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    26.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北矿检测",
+    "security_status": "active",
+    "symbol": "CN:920160",
+    "ticker": "920160"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "0bd8021bb83611855edc27e842ec66d62853b6531f95ef200d9ee406ec79e615"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入 14.5-17.0 元且 2026 半年报收入增速不低于 20%、毛利率不低于 60%、经营现金流没有结构性恶化",
-      "action": "可建立观察仓或小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计 2026 半年报披露后复核收入增速、毛利率和现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格维持在 18-24 元且半年报验证利润增长但现金流仍偏弱",
-      "action": "保持观察，不追高加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计 2026 三季报披露后复核全年利润能否达到基准情景",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 26 元且 2026 全年净利润没有上修至 1.15 亿元以上",
-      "action": "减仓或不新买",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入买入区上沿，需要复核基本面和流动性后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入更有安全边际的买入区下沿，若基本面无损可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "超过基准合理价值区间，需要检查是否已有业绩上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "进入买入区上沿，需要复核基本面和流动性后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入更有安全边际的买入区下沿，若基本面无损可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "超过基准合理价值区间，需要检查是否已有业绩上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计 2026 半年报披露后复核收入增速、毛利率和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计 2026 三季报披露后复核全年利润能否达到基准情景"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

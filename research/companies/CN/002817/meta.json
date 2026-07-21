@@ -1,115 +1,104 @@
 {
-  "symbol": "CN:002817",
-  "market": "CN",
-  "ticker": "002817",
-  "name": "黄山胶囊",
-  "company_name": "安徽黄山胶囊股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是药用空心胶囊细分龙头之一，主业清晰、现金流和资产负债表质量较好，2025 年利润修复来自降本和肠溶胶囊占比提升；但行业价格竞争仍强，2026Q1 收入和经营现金流走弱，当前 5.98 元附近安全边际不足。",
-  "quality_rating": "中高",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    5.0,
-    6.2
-  ],
-  "buy_zone": [
-    0,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "黄山胶囊",
+    "security_status": "active",
+    "symbol": "CN:002817",
+    "ticker": "002817"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "691c88eb795dc13aa2b85359931b8e109640b2f9eb9f9c7994eed7b77b1f6995"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 5.8 元且 2026H1 收入趋势尚未确认",
-      "action": "观察，不新增仓位",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "价格回落至 5.0-5.5 元，且最新半年收入跌幅收敛、肠溶或植物胶囊占比提升",
-      "action": "建立试探仓",
-      "target_position": "1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于 4.6 元，且无监管处罚、重大客户流失或质量事故",
-      "action": "提高到核心观察仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格高于 7.2 元但基本面没有进入持续双位数增长",
-      "action": "减仓或保持空仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "currency": "CNY",
-      "reason": "4.6 元以下开始具备相对 2025 年盈利和净资产的安全边际",
-      "action": "复核是否满足买入条件"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "currency": "CNY",
-      "reason": "7.2 元以上若基本面未加速，估值相对成熟制造属性偏高",
-      "action": "复核是否应卖出或降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 半年报披露或接近披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "Q1 收入和经营现金流走弱，需要用半年报验证趋势",
-      "action": "复核收入、毛利率、经营现金流和高端胶囊占比"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 三季报披露或接近披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证全年盈利修复是否持续",
-      "action": "复核收入是否从 Q1 下滑中恢复，并检查是否出现药监飞检、质量召回、重大客户流失或海外贸易限制"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年报披露或接近披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整验证高端产品占比、现金流和 ROE 改善",
-      "action": "复核肠溶明胶空心胶囊占比、经营现金流/净利润和 ROE 是否改善"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027 半年报披露或接近披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "持续跟踪财务质量和安全边际是否变化",
-      "action": "复核年度经营现金流/净利润是否低于 0.8，并更新安全边际"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "4.6 元以下开始具备相对 2025 年盈利和净资产的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "7.2 元以上若基本面未加速，估值相对成熟制造属性偏高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润增速",
-    "肠溶明胶空心胶囊收入占比",
-    "植物胶囊及其他产品收入占比",
-    "综合毛利率",
-    "经营现金流净额/归母净利润",
-    "存货余额和存货周转",
-    "国内与海外收入及毛利率",
-    "药监合规、质量投诉、召回或飞检结果"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

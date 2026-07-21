@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:301683",
-  "ticker": "301683",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "慧谷新材",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "慧谷新材具备高性能铜合金材料的工艺、客户认证和现金流优势，但上市后估值已反映较高成长预期，当前缺少足够安全边际，等待价格回落或业绩上修验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    75,
-    95
-  ],
-  "buy_zone": [
-    60,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    115,
-    140
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "慧谷新材",
+    "security_status": "active",
+    "symbol": "CN:301683",
+    "ticker": "301683"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "49d5f143c26b9de45ce991eae65396879db450df891ee3005dc949d068e2c99b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于75元且2026年后续季度收入、利润、经营现金流未出现明显恶化",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、现金流和募投进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入和归母净利润均超预期且毛利率稳定",
-      "action": "add_position",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润趋势和估值假设是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于125元但盈利预测未同步上修，或毛利率、现金流连续两个季度恶化",
-      "action": "reduce_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入中性估值下沿附近，具备重新评估买入价值的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 125.0
+      },
+      "reason": "进入乐观情景估值区间，若业绩没有同步上修应考虑降低预期收益率",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入中性估值下沿附近，具备重新评估买入价值的安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 125,
-      "reason": "进入乐观情景估值区间，若业绩没有同步上修应考虑降低预期收益率"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、现金流和募投进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润趋势和估值假设是否需要调整"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

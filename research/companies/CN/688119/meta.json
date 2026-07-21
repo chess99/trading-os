@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688119",
-  "market": "CN",
-  "ticker": "688119",
-  "name": "中钢洛耐",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "中钢洛耐具备央企背景、国家级耐火材料研发平台和较厚现金资产，但2025年亏损、2026Q1扣非仍亏，盈利修复尚未被验证；当前约1.49倍PB已反映部分修复预期，只有价格回到3元附近或扣非利润连续转正后才具备更清晰安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.0,
-    4.0
-  ],
-  "buy_zone": [
-    2.6,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中钢洛耐",
+    "security_status": "active",
+    "symbol": "CN:688119",
+    "ticker": "688119"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "581e01c7d67dfd9692944372436a68d234f771b2d51da5137599e21025e40ec4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于公允价值区间偏上且扣非利润未稳定转正，仅允许观察仓",
-      "action": "watch_or_tiny_tracking_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.10元且未出现新增大额减值、回款恶化或治理风险",
-      "action": "start_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.80元，且货币资金、应收回款和扣非利润趋势未恶化",
-      "action": "add_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期ROE和PB中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入买入区间上沿，PB接近1.2倍，安全边际改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度安全边际区间，适合复核资产质量后加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "进入减仓区间，若扣非ROE未明显改善则估值偏乐观",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "进入买入区间上沿，PB接近1.2倍，安全边际改善"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度安全边际区间，适合复核资产质量后加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "reason": "进入减仓区间，若扣非ROE未明显改善则估值偏乐观"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期ROE和PB中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

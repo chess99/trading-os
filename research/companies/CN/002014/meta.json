@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:002014",
-  "market": "CN",
-  "ticker": "002014",
-  "name": "永新股份",
-  "company_name": "永新股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "永新股份是高分红、较高ROE、客户准入壁垒较实的食品日化软包装公司，但当前股价处于合理区间中部，需等待9.8元以下或2026年中报验证利润恢复后再提高仓位。",
-  "quality_rating": "A-",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    10.0,
-    12.2
-  ],
-  "buy_zone": [
-    8.8,
-    9.8
-  ],
-  "sell_or_reduce_zone": [
-    12.8,
-    14.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永新股份",
+    "security_status": "active",
+    "symbol": "CN:002014",
+    "ticker": "002014"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9ce0ebfa3bebe45925c7d7cc5a65e33f193031df1e36d9953e1cd05b74b19355"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于9.8元且低于12.8元，且2026年中报尚未验证利润恢复",
-      "action": "观察或仅保留试探仓",
-      "max_weight": 0.01,
-      "reason": "当前估值处于合理区间中部，股息率有支撑但安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、利润、毛利率、现金流和分红预期",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.8元，且彩印包装材料毛利率未跌破24%",
-      "action": "建立首笔仓位",
-      "max_weight": 0.02,
-      "reason": "进入买入区间上沿，质量和分红对估值下限有支撑"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报以及原料价格传导效果",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于8.8-9.3元，经营现金流不低于归母净利润70%，且原料价格未持续上行",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "该价格对应更高股息率和更低PE，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、年度分红和产能扩张兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.8元，且未来12个月利润增速未确认高于10%",
-      "action": "逐步减仓",
-      "max_weight": 0.01,
-      "reason": "估值进入减持区间，制造业原料和需求波动不宜高仓位承受"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入买入区间上沿，可评估首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入深度买入区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.8
+      },
+      "reason": "进入减持区间，需复核利润增速是否支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "高于乐观情景下沿，除非盈利显著上修否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入买入区间上沿，可评估首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入深度买入区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.8,
-      "reason": "进入减持区间，需复核利润增速是否支撑更高估值"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "高于乐观情景下沿，除非盈利显著上修否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、利润、毛利率、现金流和分红预期"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报以及原料价格传导效果"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、年度分红和产能扩张兑现情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "经营现金流净额/归母净利润",
-    "加权ROE",
-    "彩印包装材料毛利率",
-    "塑料软包装薄膜收入增速和毛利率",
-    "国际市场收入占比",
-    "前五大客户销售占比",
-    "合成树脂和薄膜材料采购均价",
-    "现金分红总额和股息率",
-    "汇兑损益和财务费用"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

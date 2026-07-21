@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:000042",
-  "market": "CN",
-  "ticker": "000042",
-  "name": "中洲控股",
-  "company_name": "中洲控股",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中洲控股拥有深圳、惠州等存量地产项目和一定商业物业资产，但2025年仍大额亏损并计提存货等资产减值，2026Q1收入、利润和经营现金流再度转弱；当前价格相对调整后净资产和困境地产风险缺少安全边际，适合观察而非买入。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    3.4,
-    5.2
-  ],
-  "buy_zone": [
-    2.8,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    8.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中洲控股",
+    "security_status": "active",
+    "symbol": "CN:000042",
+    "ticker": "000042"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "8fc2cc78997d4bc961f76c8957c3aa3817f6bf05ade0078a8110c5bf6bb871f1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准合理价值区间，且2026Q1收入、利润和经营现金流明显转弱",
-      "action": "不买入，保持观察",
-      "max_weight": 0,
-      "reason": "连续亏损、减值未完全出清、控股股东质押冻结和短债压力使当前7元以上缺少安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的销售回款、短债、合同负债、存货减值和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入3.8元以下，且销售回款率维持85%以上、一年内到期非流动负债环比下降",
-      "action": "建立0.5%试探仓",
-      "max_weight": 0.005,
-      "reason": "价格进入折价账面价值区间，同时流动性边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及地产政策、深圳和惠州项目去化变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.2元，且2026中报确认经营现金流为正、无新增大额减值",
-      "action": "加至1.0%，总仓位上限2.0%",
-      "max_weight": 0.02,
-      "reason": "困境反转需要价格和基本面同时确认，仍不适合作为核心仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入初始买入区，复核回款、短债和减值后可考虑试探仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入深度折价区，若基本面未恶化可复核加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于乐观估值上沿附近，若无资产处置或盈利改善应继续回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入初始买入区，复核回款、短债和减值后可考虑试探仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入深度折价区，若基本面未恶化可复核加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8,
-      "reason": "高于乐观估值上沿附近，若无资产处置或盈利改善应继续回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的销售回款、短债、合同负债、存货减值和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及地产政策、深圳和惠州项目去化变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "销售金额",
-    "销售面积",
-    "销售回款率",
-    "经营活动现金流净额",
-    "货币资金",
-    "一年内到期非流动负债",
-    "长期借款",
-    "合同负债",
-    "存货余额",
-    "存货跌价准备",
-    "资产减值损失",
-    "财务费用",
-    "控股股东质押股份数量",
-    "控股股东冻结股份数量",
-    "重大诉讼和资产处置进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

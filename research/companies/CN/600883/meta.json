@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600883",
-  "ticker": "600883",
-  "name": "博闻科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "博闻科技更像食品小主业叠加新疆众和权益法资产的平台，主业收入体量小、毛利率低、经营现金流尚未稳定转正；当前股价相对经调整净资产缺少安全边际，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.0,
-    6.2
-  ],
-  "buy_zone": [
-    4.5,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博闻科技",
+    "security_status": "active",
+    "symbol": "CN:600883",
+    "ticker": "600883"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "fddbc7b97bfea0d38794725872579adaca8c81692ec6b0690ce938fb9c361825"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.2元，且新疆众和季度业绩未明显恶化、博闻科技食品主业经营现金流改善时，仅试探观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核食品主业收入、毛利率、经营现金流和新疆众和投资收益。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.5元且经调整NAV未受损，可将观察仓上限提高，但仍不重仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核全年盈利质量和经调整NAV。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.8元，或新疆众和股价跌破8.0元导致NAV明显收缩时，不新建仓并考虑减仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后重估分红、资产价值和主业改善持续性。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入买入观察区，需要复核新疆众和持仓价值和主业现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "高于当前估值上沿，若无主业拐点应卖出或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "新疆众和下跌会压缩博闻科技经调整NAV，是核心资产风险触发点。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "ticker": "600883",
-      "price": 5.2,
-      "reason": "进入买入观察区，需要复核新疆众和持仓价值和主业现金流。"
-    },
-    {
-      "type": "price_above",
-      "ticker": "600883",
-      "price": 7.8,
-      "reason": "高于当前估值上沿，若无主业拐点应卖出或回避。"
-    },
-    {
-      "type": "price_below",
-      "ticker": "600888",
-      "price": 8.0,
-      "reason": "新疆众和下跌会压缩博闻科技经调整NAV，是核心资产风险触发点。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核食品主业收入、毛利率、经营现金流和新疆众和投资收益。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核全年盈利质量和经调整NAV。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报披露后重估分红、资产价值和主业改善持续性。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

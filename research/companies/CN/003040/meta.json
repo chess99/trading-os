@@ -1,124 +1,115 @@
 {
-  "symbol": "CN:003040",
-  "market": "CN",
-  "ticker": "003040",
-  "name": "楚天龙",
-  "company_name": "楚天龙股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备银行、运营商、政务等高合规客户入口，以及智能卡、eSIM、数字人民币硬钱包、智能硬件等产业选项，但 2025 年扣非净利润仅 45.96 万元、2026Q1 转亏，当前 10.03 元价格已提前反映较多主题溢价，缺少买入安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    4.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "楚天龙",
+    "security_status": "active",
+    "symbol": "CN:003040",
+    "ticker": "003040"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0007155add3a72ba4e55bab5ff3375aacac95485ba60ad0a49d3e1ae809f5e2e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 7.0 元且未看到连续两个季度收入、毛利率和扣非利润改善",
-      "action": "不新增仓位",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格跌至 4.5-5.5 元，且最新报告期未出现应收账款恶化、客户重大流失或扣非亏损扩大",
-      "action": "观察后试探建仓",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "价格低于 4.5 元，且毛利率企稳、经营现金流未显著恶化",
-      "action": "分批买入",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "扣非净利润连续两个季度改善并具备 5,000 万元以上年化能力，且价格仍低于 7.0 元",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于 9.0 元但基本面没有同步上修",
-      "action": "减仓或维持空仓",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
-      "reason": "进入估算买入区间上沿，具备重新核验安全边际的价值",
-      "action": "进入买入复核"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "currency": "CNY",
-      "reason": "低于强安全边际区间，资产和期权价值可能覆盖低迷盈利风险",
-      "action": "复核强安全边际买入"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "currency": "CNY",
-      "reason": "显著高于合理价值区间，主题溢价开始主导",
-      "action": "减仓或停止新增"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "currency": "CNY",
-      "reason": "若利润未显著上修，该价格难以由基本面支撑",
-      "action": "卖出复核"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证 2026Q1 亏损是否只是季节性波动",
-      "action": "更新收入、扣非利润、毛利率和现金流判断"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证收入恢复、智能硬件增长和应收账款变化",
-      "action": "复核全年盈利恢复概率和仓位上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证扣非净利润是否恢复到可支撑估值的水平",
-      "action": "重估合理价值、买入区间和长期 thesis"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入估算买入区间上沿，具备重新核验安全边际的价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "低于强安全边际区间，资产和期权价值可能覆盖低迷盈利风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "显著高于合理价值区间，主题溢价开始主导",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "若利润未显著上修，该价格难以由基本面支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润及扣非净利率",
-    "嵌入式安全产品收入和毛利率",
-    "智能硬件收入增速",
-    "数字人民币和 eSIM 相关收入占比",
-    "经营活动现金流净额",
-    "应收账款余额和周转天数",
-    "合同负债及在手合同",
-    "前五大客户收入占比",
-    "研发投入占收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

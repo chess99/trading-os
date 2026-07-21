@@ -1,111 +1,106 @@
 {
-  "symbol": "CN:002373",
-  "market": "CN",
-  "ticker": "002373",
-  "name": "千方科技",
-  "company_name": "北京千方科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "千方科技具备智慧交通场景、AIoT产品和政策期权，账面净资产约等于当前市值；但2026Q1收入下滑、扣非亏损扩大，核心盈利修复尚未被验证，当前7.25元处于合理偏高观察区，不具备足够安全边际。",
-  "quality_rating": "B",
-  "valuation_rating": "C+ / 合理偏贵",
-  "fair_value_range": [
-    6.3,
-    8.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "千方科技",
+    "security_status": "active",
+    "symbol": "CN:002373",
+    "ticker": "002373"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "3e10a8105fb16a7454d448e5af89b8a349d4437b00c48ff920cd2dd0681faf4e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价<=4.8元",
-      "action": "建至6%-8%仓位",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "中报是验证2026Q1弱势是否暂时性的第一个关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价4.8-5.6元",
-      "action": "建至3%-5%仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报可判断全年利润恢复和订单现金流兑现概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价5.6-6.3元",
-      "action": "仅小仓验证，1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "低于悲观情景估值下沿附近，具备较高安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价6.3-8.2元",
-      "action": "合理区间，等待业绩确认，0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "较基准合理价值中枢有约20%以上折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价>8.2元",
-      "action": "不加仓；>9.0元考虑减仓或不追",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "接近本次合理价值区间上沿，需等待业绩兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "开始透支乐观情景，除非扣非利润和订单现金流明显超预期",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "action": "强吸引力买入区，复核基本面无恶化后建至6%-8%",
-      "reason": "低于悲观情景估值下沿附近，具备较高安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "action": "进入安全边际买入区，复核后可建至3%-5%",
-      "reason": "较基准合理价值中枢有约20%以上折价"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "action": "高于合理区间中枢，不加仓",
-      "reason": "接近本次合理价值区间上沿，需等待业绩兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "action": "不应追高，已有仓位考虑减仓",
-      "reason": "开始透支乐观情景，除非扣非利润和订单现金流明显超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "description": "2026年中报披露后复查收入、扣非利润、经营现金流、应收账款和合同资产",
-      "reason": "中报是验证2026Q1弱势是否暂时性的第一个关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "description": "2026年三季报披露后复查扣非利润是否连续改善以及全年业绩确定性",
-      "reason": "三季报可判断全年利润恢复和订单现金流兑现概率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营现金流净额/归母净利润",
-    "智慧交通收入与毛利率",
-    "智能物联收入、海外收入与毛利率",
-    "应收账款+合同资产增速",
-    "存货与资产减值损失",
-    "研发投入占收入比例及资本化率",
-    "公路数字化、车路云、双智路口订单验收回款",
-    "回购执行金额与是否注销"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

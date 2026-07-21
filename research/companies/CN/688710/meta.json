@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688710",
-  "market": "CN",
-  "ticker": "688710",
-  "name": "益诺思",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "益诺思是非临床安全性评价 CRO 头部公司，订单恢复和复杂药物评价需求提供基本面修复弹性，但 2026-07-17 股价已高于基准公允价值区间，当前缺少安全边际，适合观察等待半年报验证毛利率、现金流和订单转化。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    45,
-    58
-  ],
-  "buy_zone": [
-    40,
-    48
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "益诺思",
+    "security_status": "active",
+    "symbol": "CN:688710",
+    "ticker": "688710"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "28344d2a59fdca7a30a2733076b116ca1fb25cd2b0dcf4f051db75ab4792860c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于48元，且2026H1收入、毛利率和经营现金流同步改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、订单和现金流兑现情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于42元，且在手订单保持17亿元以上、无重大GLP或合规风险",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否验证全年收入和利润恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于75元但净利率未持续恢复到12%以上",
-      "action": "不加仓并考虑降低风险暴露",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和在手订单，重新估算公允价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入基准买入观察区，需要复核半年报质量后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "进入乐观情景估值区，若利润率未兑现应降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入基准买入观察区，需要复核半年报质量后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "进入乐观情景估值区，若利润率未兑现应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、订单和现金流兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否验证全年收入和利润恢复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和在手订单，重新估算公允价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

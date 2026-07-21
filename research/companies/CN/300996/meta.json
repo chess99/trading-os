@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:300996",
-  "ticker": "300996",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "普联软件",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "普联软件是能源央国企管理软件和信创替代方向的垂直型软件商，行业经验和客户粘性较好，但2025年收入增长停滞、利润下滑，2026Q1仅显示初步修复；当前估值已反映较多成长预期，需等待订单、回款和利润率进一步验证。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    9.5,
-    12.5
-  ],
-  "buy_zone": [
-    7.5,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "普联软件",
+    "security_status": "active",
+    "symbol": "CN:300996",
+    "ticker": "300996"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f825201cf72ec128df5b042e361a63bf444b791196c215f1cb43d44d89df70a1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.8元，且2026年中报验证收入增长、扣非利润修复、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、利润、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价接近7.5元，订单与回款保持稳定，且未出现重大坏账或项目延期",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年订单兑现节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14元但未来两季利润和现金流未同步上修",
-      "action": "不追高或降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入有吸引力的观察仓买入区间，可重新评估安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "超过基准合理估值上沿，需要利润或订单上修支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入有吸引力的观察仓买入区间，可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过基准合理估值上沿，需要利润或订单上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、利润、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年订单兑现节奏"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

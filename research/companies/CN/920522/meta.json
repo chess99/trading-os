@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:920522",
-  "market": "CN",
-  "ticker": "920522",
-  "name": "纳科诺尔",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "辊压设备细分优势和大额订单真实，但毛利率与现金转化恶化，19.98元隐含利润快速修复且缺乏安全边际。",
-  "fair_value_range": [11.5, 15.5],
-  "buy_zone": [8.5, 11.5],
-  "sell_or_reduce_zone": [18, 22],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "纳科诺尔",
+    "security_status": "active",
+    "symbol": "CN:920522",
+    "ticker": "920522"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "59d52e3968877564b4069cd3dcd6e8f580c5b21b8932ca3154a6669aa342768f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于8.5-11.5元且大合同未取消、毛利率回升至18%以上、经营现金流为正",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、订单验收、经营现金流及存货应收变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "毛利率持续低于15%、合同取消或应收存货减值显著恶化时不因价格下跌加仓",
-      "max_weight": 0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、订单验收、经营现金流及存货应收变化"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入有一定安全边际的买入观察区，仍须先复核基本面"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入有一定安全边际的买入观察区，仍须先复核基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 18,
-      "reason": "进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-14T23:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

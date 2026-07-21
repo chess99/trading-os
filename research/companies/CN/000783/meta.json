@@ -1,91 +1,106 @@
 {
-  "symbol": "CN:000783",
-  "market": "CN",
-  "ticker": "000783",
-  "name": "长江证券",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "长江证券是有湖北区域根基、研究品牌和较强市场弹性的中型综合券商。2025 年和 2026Q1 受益于成交活跃、自营收益和两融改善，盈利修复明显，资本指标充足；但当前价格约 1.23 倍 2026Q1 PB，已接近合理价值上沿，安全边际不足，适合观察等待回撤而非追高。",
-  "fair_value_range": [
-    7.8,
-    9.2
-  ],
-  "buy_zone": [
-    0,
-    7.4
-  ],
-  "sell_or_reduce_zone": [
-    9.8,
-    11.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长江证券",
+    "security_status": "active",
+    "symbol": "CN:000783",
+    "ticker": "000783"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "af10b4e4a938a7d4ba4130b5d9b5c4837f3204711846b1149bee849d2f93c643"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理区间上沿",
-      "action": "不新开仓，列入观察",
-      "weight": 0,
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "披露 2026 年中报后，复核经纪、自营、两融、资管、资本指标、信用减值和监管合规情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 7.4 元以下，且资本指标、自营风险、信用减值未恶化",
-      "action": "建立第一笔仓位",
-      "weight": 0.015,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "披露 2026 年三季报后，复核 ROE 可持续性、自营收益波动和估值区间。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至 6.8 元以下，且基本面未破坏",
-      "action": "提高至强吸引力仓位",
-      "weight": 0.03,
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于 9.8 元且 ROE 可持续性没有进一步验证",
-      "action": "不追高，已有仓位逐步降低",
-      "weight": 0,
-      "max_weight": 0.005
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "披露 2026 年中报后，复核经纪、自营、两融、资管、资本指标、信用减值和监管合规情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "披露 2026 年三季报后，复核 ROE 可持续性、自营收益波动和估值区间。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.4,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
       "reason": "进入安全边际买入价以下",
-      "action": "复核是否建立第一笔仓位"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 6.8,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
       "reason": "进入强吸引力买入价以下",
-      "action": "复核是否进入强吸引力买入区"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 9.8,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.8
+      },
       "reason": "高于不应追高价",
-      "action": "复核是否降低已有仓位"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 11.3,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.3
+      },
       "reason": "高于乐观情景合理价上沿",
-      "action": "复核乐观情景是否兑现，否则避免持有过高仓位"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07T23:59:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

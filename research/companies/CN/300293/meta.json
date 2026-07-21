@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300293",
-  "ticker": "300293",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "蓝英装备",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "工业清洗与 Ecoclean 资产具备产业价值，但 2025 年亏损扩大、2026Q1 尚未转正，当前市值约 53 亿元对应收入和净资产倍数偏高，盈利修复证据不足，缺乏安全边际。",
-  "fair_value_range": [
-    5.0,
-    8.5
-  ],
-  "buy_zone": [
-    0.0,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝英装备",
+    "security_status": "active",
+    "symbol": "CN:300293",
+    "ticker": "300293"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5ddd5256934a992906023c71b1bb5206253d205a5c749f6e2edd42dddfa248f1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且扣非利润未稳定转正，维持零仓位观察。",
-      "action": "avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查扣非利润、毛利率、经营现金流和工业清洗订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 5.5 元，且连续两个季度扣非归母净利润为正、经营现金流改善。",
-      "action": "research_starter",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断收入恢复是否转化为持续盈利。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 5.0 元，同时工业清洗订单质量和毛利率恢复得到中报或三季报验证。",
-      "action": "small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估 Ecoclean 资产盈利能力和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入观察买入区，若盈利和现金流同步改善可重估安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "显著高于基准合理价值区间，若业绩未兑现应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入观察买入区，若盈利和现金流同步改善可重估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "显著高于基准合理价值区间，若业绩未兑现应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查扣非利润、毛利率、经营现金流和工业清洗订单。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断收入恢复是否转化为持续盈利。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估 Ecoclean 资产盈利能力和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

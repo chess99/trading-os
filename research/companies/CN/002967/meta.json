@@ -1,102 +1,105 @@
 {
-  "symbol": "CN:002967",
-  "market": "CN",
-  "ticker": "002967",
-  "name": "广电计量",
-  "company_name": "广电计量检测集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是全国化第三方计量检测平台，2025 年现金流和利润质量改善，2026Q1 显示业务结构转型和经营杠杆开始兑现；但当前 17.27 元仅接近合理价值下沿，安全边际不足，需等待 16.5 元以下或 2026H1 继续验证。",
-  "quality_rating": "中高",
-  "valuation_rating": "中性",
-  "fair_value_range": [18.0, 22.5],
-  "buy_zone": [15.0, 16.5],
-  "sell_or_reduce_zone": [24.0, 26.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广电计量",
+    "security_status": "active",
+    "symbol": "CN:002967",
+    "ticker": "002967"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c9f8e4f2b685ab690f8ce31a0cc6d38444261d60a628875f3982ae1d14c95b22"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 16.5 元且 2026H1 尚未验证收入和利润加速",
-      "action": "观察或保持 0%-1% 试错仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证 2026Q1 高增长是否延续的第一个关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入 15.0-16.5 元，且毛利率稳定、应收账款没有明显恶化",
-      "action": "建立或加至 1%-2% 仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "前三季度能更清楚观察旺季收入、毛利率和应收账款变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 14.5 元，且 2026H1/2026Q3 验证净利润增速高于收入增速、经营现金流健康",
-      "action": "提高至 2%-3% 仓位，单票上限 3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报用于确认定增后资本回报、自由现金流和股东回报质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格超过 24 元且没有业绩上修，或出现资质/公信力/现金流重大风险",
-      "action": "减仓；若核心假设破坏则退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "低于合理价值下沿约 8% 且接近 20 倍左右前瞻 PE",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "相对合理价值中枢折价约 25% 以上",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于当前合理价值上沿，赔率下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "currency": "CNY",
-      "action": "进入可买区，复核中报和应收后考虑建仓",
-      "reason": "低于合理价值下沿约 8% 且接近 20 倍左右前瞻 PE"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "currency": "CNY",
-      "action": "进入强安全边际区，若基本面未恶化可加仓",
-      "reason": "相对合理价值中枢折价约 25% 以上"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "currency": "CNY",
-      "action": "估值进入偏贵区，除非业绩上修否则减仓",
-      "reason": "高于当前合理价值上沿，赔率下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露窗口，复核收入、利润、现金流和应收账款",
-      "reason": "半年报是验证 2026Q1 高增长是否延续的第一个关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露窗口，复核经营杠杆和回款质量",
-      "reason": "前三季度能更清楚观察旺季收入、毛利率和应收账款变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年年报披露窗口，复核定增后 ROE、资本开支和分红",
-      "reason": "年报用于确认定增后资本回报、自由现金流和股东回报质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "综合毛利率",
-    "数据科学分析与评价收入及毛利率",
-    "集成电路测试与分析收入及毛利率",
-    "可靠性与环境试验收入及毛利率",
-    "应收账款加合同资产占收入比例",
-    "经营现金流/归母净利润",
-    "资本开支/营业收入",
-    "定增后 ROE",
-    "有息负债和公司债余额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

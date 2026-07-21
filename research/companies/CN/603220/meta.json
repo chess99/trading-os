@@ -1,83 +1,95 @@
 {
-  "symbol": "CN:603220",
-  "market": "CN",
-  "ticker": "603220",
-  "name": "中贝通信",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "中贝通信从通信网络服务转向智算算力服务，智算业务在2025年贡献较高毛利并提供增长期权，但2026Q1几乎盈亏平衡、2026H1预告净利润同比大幅下滑，当前市值对算力利用率、客户回款和融资成本的要求偏高。现阶段应观察而非买入，等待股价进入安全边际或连续季度验证智算现金回报。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.0,
-    15.0
-  ],
-  "buy_zone": [
-    8.0,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中贝通信",
+    "security_status": "active",
+    "symbol": "CN:603220",
+    "ticker": "603220"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f1e270402006dcb996c24315f3a34a0ea25fcf153f8a29cb20fa73612dde43b0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约17元附近估值缺少安全边际，且2026H1利润尚未验证智算兑现能力，不建仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查智算收入、毛利率、经营现金流、应收账款和短期借款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入8-11元买入区，同时中报显示智算毛利率不低于25%、经营现金流改善且应收账款未恶化，可建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润是否从上半年低位恢复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026Q3后利润恢复、短期借款下降、智算合同回款和利用率被连续验证，可提高为小仓位配置。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证智算业务全年盈利质量和资本开支回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入估算买入区上沿，需要复核中报和现金流后评估是否建立观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过卖出或减仓区下沿，若利润和现金流未同步验证，应回避高估值风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入估算买入区上沿，需要复核中报和现金流后评估是否建立观察仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过卖出或减仓区下沿，若利润和现金流未同步验证，应回避高估值风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查智算收入、毛利率、经营现金流、应收账款和短期借款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润是否从上半年低位恢复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证智算业务全年盈利质量和资本开支回报。"
-    }
-  ],
-  "key_metrics": {
-    "last_price_cny": 17.18,
-    "last_price_date": "2026-07-17",
-    "market_cap_cny_billion": 92.15,
-    "book_value_q1_2026_cny_billion": 39.38,
-    "pb_estimate": 2.34,
-    "net_profit_2025_cny_million": 81.37,
-    "net_profit_h1_2026_guidance_cny_million": [
-      10.0,
-      11.15
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

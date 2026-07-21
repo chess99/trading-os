@@ -1,76 +1,101 @@
 {
-  "symbol": "CN:920252",
-  "market": "CN",
-  "ticker": "920252",
-  "name": "天宏锂电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "定制化锂电池模组业务真实但护城河偏弱，2025年毛利率10.95%、扣非ROE约1.86%、经营现金流为负；2026年推进200MW/600MWh独立储能项目带来期权，也放大融资和执行风险。2026-07-17收盘价15.69元对应约16.11亿元市值和约192倍TTM PE，已显著透支储能成功预期。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.2,
-    6.8
-  ],
-  "buy_zone": [
-    3.2,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    15.69
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天宏锂电",
+    "security_status": "active",
+    "symbol": "CN:920252",
+    "ticker": "920252"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "8608ac7afc7d34e73cdf912865014024123b297ad9b4999f5609f6804a313de1"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "f9d9664af3308a0819ff12be8df54409bd4648081f73751535196e29e5e61f18"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于8.50元，估值仍由题材和储能期权驱动，缺少现金流安全边际",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收账款和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.50-6.80元且2026半年报经营现金流仍未转正，仅观察或极小仓位",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及200MW/600MWh独立储能项目融资、并网、担保和电价机制进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.20-4.50元，且经营现金流转正、应收账款和存货未恶化、储能项目融资边界清楚",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入安全边际买入价，需要复核现金流、应收账款、存货和储能项目融资结构",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于3.20元，且核心客户稳定、毛利率不低于11%、储能项目未新增不可承受担保",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入强吸引力价，可在风险未恶化时评估1.5%以内小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "进入不追高区间，估值脱离当前盈利质量",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入安全边际买入价，需要复核现金流、应收账款、存货和储能项目融资结构"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入强吸引力价，可在风险未恶化时评估1.5%以内小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "进入不追高区间，估值脱离当前盈利质量"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收账款和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及200MW/600MWh独立储能项目融资、并网、担保和电价机制进展"
-    }
-  ],
-  "notes": "2026-07-19初始覆盖：今天决策为avoid，第一笔仓位0%；合理价格4.2-6.8元，安全边际买入价4.5元以下，强吸引力价3.2元以下，不追高价8.5元以上。置信度中等偏低。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

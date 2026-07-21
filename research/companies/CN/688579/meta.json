@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688579",
-  "market": "CN",
-  "ticker": "688579",
-  "name": "地纬智能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "地纬智能是民生政务、医保医疗、智能用电和数据要素方向的行业软件公司，现金流改善和山东高速入主提供中期修复线索，但2025年收入利润仍下滑、2026Q1亏损且现价已反映较多国资协同与数据要素期权，当前以观察为主，等待价格低于安全边际并验证订单转收入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.2,
-    8.4
-  ],
-  "buy_zone": [
-    0.0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "地纬智能",
+    "security_status": "active",
+    "symbol": "CN:688579",
+    "ticker": "688579"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "6e7dab5d04409a1ca89fec00f9fd30fe36de20e47cc4314ab3cdcc07008f05cd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价处于合理区间，仅保留观察，不主动建仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看订单转收入、毛利率、现金流和山东高速协同进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.0元，且2026H1或2026Q3收入恢复增长、新签订单同比保持15%以上、毛利率不低于52%。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断下半年验收恢复是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.3元，且山东高速协同出现明确合同或数据要素收入占比提升，同时经营现金流未恶化。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估正常化利润和数据要素商业化进度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入区间上沿，若订单和收入修复同步验证，可启动小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "超过合理区间上沿，需要利润加速或山东高速协同合同落地支撑，否则估值偏贵。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入区间上沿，若订单和收入修复同步验证，可启动小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "超过合理区间上沿，需要利润加速或山东高速协同合同落地支撑，否则估值偏贵。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看订单转收入、毛利率、现金流和山东高速协同进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断下半年验收恢复是否成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估正常化利润和数据要素商业化进度。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

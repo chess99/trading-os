@@ -1,121 +1,115 @@
 {
-  "symbol": "CN:003010",
-  "market": "CN",
-  "ticker": "003010",
-  "name": "若羽臣",
-  "company_name": "广州若羽臣科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "若羽臣已从传统电商代运营转向以自有/品牌管理业务驱动的线上品牌集团，2025 年和 2026Q1 利润弹性明显。但增长依赖平台流量效率、爆品生命周期和高毛利结构延续，当前约 22 元附近价格大致合理，缺少足够厚的安全边际，适合观察或小仓试买而非重仓。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    22,
-    29
-  ],
-  "buy_zone": [
-    19,
-    21
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    34
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "若羽臣",
+    "security_status": "active",
+    "symbol": "CN:003010",
+    "ticker": "003010"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9734db74c9cdbdeadeabd685e7603b2e49e670743525d20cfb86ce1742cdfc4b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 18 元，且最新季度收入增长、经营现金流和库存周转未恶化",
-      "action": "加仓至 5%-6% 上限",
-      "max_weight": 0.06,
-      "target_weight": "5%-6%"
-    },
-    {
-      "condition": "股价处于 19-21 元，且 2026 年利润兑现路径仍指向 3.0 亿元以上",
-      "action": "分批建立或加至核心观察仓",
-      "max_weight": 0.05,
-      "target_weight": "3%-5%"
-    },
-    {
-      "condition": "股价处于 21-24 元，且未看到 Q2/Q3 现金流和费用率进一步验证",
-      "action": "仅保留小仓观察",
-      "max_weight": 0.03,
-      "target_weight": "1%-3%"
-    },
-    {
-      "condition": "股价高于 30 元，且 2026 年净利润预期未上修至 3.8 亿元以上",
-      "action": "不加仓，等待业绩或价格重新匹配",
-      "max_weight": 0.03,
-      "target_weight": "0%-3%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 21,
-      "currency": "CNY",
-      "reason": "进入基础买入区上沿，安全边际开始出现",
-      "action": "复核最新季报后考虑买入"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "currency": "CNY",
-      "reason": "低于强吸引区，若基本面未破坏则赔率显著改善",
-      "action": "若基本面未破坏，进入强吸引买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "currency": "CNY",
-      "reason": "超过合理价值区间上沿，需要利润预测上修支撑",
-      "action": "停止加仓并复核估值假设"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "currency": "CNY",
-      "reason": "估值进入偏高区，安全边际不足",
-      "action": "除非利润中枢显著上修，否则考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证 2026 年利润中枢和现金流质量的第一关键节点",
-      "condition": "2026 年半年报披露后复核收入增速、毛利率、销售费用率和经营现金流",
-      "action": "更新盈利预测和仓位上限"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可判断品牌管理增长是否具有持续性",
-      "condition": "2026 年三季报披露后复核品牌增长是否延续",
-      "action": "决定是否从观察仓升级或下调评级"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整验证经营现金流、库存周转和全年净利率",
-      "condition": "2026 年年报披露后复核全年经营现金流/净利润、存货周转和净利率",
-      "action": "重估合理价值和买入区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入基础买入区上沿，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "低于强吸引区，若基本面未破坏则赔率显著改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过合理价值区间上沿，需要利润预测上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "估值进入偏高区，安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "归母净利润和扣非归母净利润",
-    "毛利率",
-    "销售费用率",
-    "经营现金流/净利润",
-    "存货周转",
-    "品牌管理业务收入占比",
-    "绽家、斐萃等核心品牌的增长和复购信号"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

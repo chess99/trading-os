@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301555",
-  "ticker": "301555",
-  "market": "CN",
-  "name": "惠柏新材",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是风电叶片用配方改性环氧树脂细分龙头之一，2025年业绩随风电景气显著修复，但毛利率低、现金流弱且当前估值已较充分反映成长预期，需等待更低价格或现金流验证。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    25.0,
-    31.0
-  ],
-  "buy_zone": [
-    20.0,
-    24.0
-  ],
-  "sell_or_reduce_zone": [
-    40.0,
-    46.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠柏新材",
+    "security_status": "active",
+    "symbol": "CN:301555",
+    "ticker": "301555"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "bbd16dedf9d7dd8391077a222fc7b9680c30dd22041a27e9269921bf8cd8e04d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入20-24元，且2026年半年报毛利率不低于11%、经营现金流明显改善时建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "核验2026年半年报收入、毛利率、经营现金流和珠海项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元，且风电树脂销量继续增长、珠海项目按期试生产、无重大客户流失时加仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "核验2026年三季报利润兑现、营运资本占用和股东减持变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于40元且未看到2026年利润超过1.2亿元或经营现金流转正的证据时不新增仓位并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复盘2026年全年利润、现金流、海外收入和新增产能贡献",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入观察区，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "若基本面未恶化，进入具备较强安全边际区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "进入减仓区间下沿，需要利润和现金流强兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24.0,
-      "reason": "进入买入观察区，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "若基本面未恶化，进入具备较强安全边际区间"
-    },
-    {
-      "type": "price_above",
-      "price": 40.0,
-      "reason": "进入减仓区间下沿，需要利润和现金流强兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "核验2026年半年报收入、毛利率、经营现金流和珠海项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-30",
-      "reason": "核验2026年三季报利润兑现、营运资本占用和股东减持变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复盘2026年全年利润、现金流、海外收入和新增产能贡献"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

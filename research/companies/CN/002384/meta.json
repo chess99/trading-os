@@ -1,29 +1,96 @@
 {
-  "symbol": "CN:002384",
-  "market": "CN",
-  "ticker": "002384",
-  "name": "东山精密",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "营收体量大但盈利能力极弱（净利率3.5%），ROE持续下降至6.9%，当前PE~284x/PB~19.2x泡沫估值，价格完全不反映基本面风险。需等待股价大幅回调至合理区间并确认盈利改善趋势后再考虑买入。",
-  "fair_value_range": [15, 60],
-  "buy_zone": [0, 30],
-  "sell_or_reduce_zone": [60, 100],
-  "position_plan": [
-    {"condition": "股价回调至有安全边际区间（<30元）且毛利率稳定在14%以上", "max_weight": 0.02},
-    {"condition": "股价进入强吸引力区间（<20元）且盈利改善趋势确认", "max_weight": 0.03}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东山精密",
+    "security_status": "active",
+    "symbol": "CN:002384",
+    "ticker": "002384"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "d90fd450428c0634cf136251a3d97b5b5a467eaddd1468f47f61121e90062a6f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报发布后复查",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报后复查",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入强吸引力买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "进入不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026半年报发布后复查"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026三季报后复查"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 30, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_below", "price": 20, "reason": "进入强吸引力买入区间"},
-    {"type": "price_above", "price": 60, "reason": "进入不应追高区间"}
-  ],
-  "updated_at": "2026-07-07T18:20:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

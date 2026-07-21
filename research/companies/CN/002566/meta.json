@@ -1,140 +1,133 @@
 {
-  "symbol": "CN:002566",
-  "market": "CN",
-  "ticker": "002566",
-  "name": "益盛药业",
-  "company_name": "吉林省集安益盛药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司有人参全产业链和医保中成药品种基础，但2023-2025年利润持续下行、扣非利润薄、ROE低，且2026年7月出现药监风险控制。当前6.11元/股接近乐观情景，缺少安全边际，需等待复产、扣非利润恢复和存货质量验证。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.2,
-    5.2
-  ],
-  "buy_zone": [
-    0,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "益盛药业",
+    "security_status": "active",
+    "symbol": "CN:002566",
+    "ticker": "002566"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f6eefa9cb055dd0c794dc5be5562c0a614f3a65e033cfc8fdd47b26068132a81"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格6.11元，药监复产未确认且无安全边际",
-      "price_range": "current",
-      "action": "不买",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "确认药监风险控制是否解除",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价小于等于3.50元且未出现新增重大质量处罚",
-      "price_range": "<=3.50",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "评估行政处罚和整改周期对估值折价的影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于3.50-4.20元且复产进展正常",
-      "price_range": "3.50-4.20",
-      "action": "有安全边际买入",
-      "position": "1%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "检查收入、扣非利润和现金流是否恢复",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价位于4.20-5.20元",
-      "price_range": "4.20-5.20",
-      "action": "合理区间，仅跟踪",
-      "position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "扣非盈利转负将证伪基准情景",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.50元",
-      "price_range": ">5.50",
-      "action": "不应追高",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "存货质量决定低PB估值是否有资产支撑",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "接近保守EPV和压力资产价值，安全边际足够",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "低于基准合理价值区间下沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "高于合理价值区间且接近乐观情景",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "经营修复被验证后可重新评估估值上沿",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价小于等于3.50元且未出现新增重大质量处罚",
-      "price": 3.5,
-      "action": "强吸引力买入",
-      "reason": "接近保守EPV和压力资产价值，安全边际足够"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价小于等于4.20元且复产进展正常",
-      "price": 4.2,
-      "action": "有安全边际买入",
-      "reason": "低于基准合理价值区间下沿"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价高于5.50元",
-      "price": 5.5,
-      "action": "不应追高或减仓",
-      "reason": "高于合理价值区间且接近乐观情景"
-    },
-    {
-      "type": "price_above",
-      "condition": "药监复产完成且连续两个季度扣非归母净利润恢复至800万元以上",
-      "price": 5.2,
-      "action": "重新上修估值",
-      "reason": "经营修复被验证后可重新评估估值上沿"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "披露生脉注射液和补金片相关生产线复产公告",
-      "reason": "确认药监风险控制是否解除"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "披露药监行政处罚或整改复查进展",
-      "reason": "评估行政处罚和整改周期对估值折价的影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "发布2026年中报或三季报",
-      "reason": "检查收入、扣非利润和现金流是否恢复"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "单季扣非归母净利润为负",
-      "reason": "扣非盈利转负将证伪基准情景"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "存货出现大额跌价或存货/总资产继续高于50%",
-      "reason": "存货质量决定低PB估值是否有资产支撑"
-    }
-  ],
-  "key_tracking_metrics": [
-    "生脉注射液和补金片复产进度",
-    "扣非归母净利润",
-    "振源胶囊收入增速",
-    "销售费用率",
-    "存货余额及存货/总资产",
-    "经营活动现金流净额",
-    "人参类产品收入和线上直销收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

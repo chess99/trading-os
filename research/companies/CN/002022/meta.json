@@ -1,82 +1,105 @@
 {
-  "symbol": "CN:002022",
-  "ticker": "002022",
-  "name": "科华生物",
-  "company_name": "上海科华生物工程股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "老牌 IVD 平台处在行业降价和自身减值后的盈利修复期，当前约 1 倍 PB 已反映部分悲观预期，但 2026Q1 仍亏损且经营现金流转弱，需等待毛利率、现金流和减值常态化共同验证后再买入。",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "fair_value_range": [
-    4.6,
-    6.2
-  ],
-  "buy_zone": [
-    3.4,
-    4.1
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科华生物",
+    "security_status": "active",
+    "symbol": "CN:002022",
+    "ticker": "002022"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1db870b2f6433aabadf5418692f643c7600b69234319c24e1ebfcaf37f5bf4cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 4.1 元，且最近一期财报显示亏损继续收窄、毛利率稳定在 36% 以上、无新增重大治理或偿债风险",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入增速、毛利率、经营现金流、减值和科华转债到期处理。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长、经营现金流转正、资产减值和信用减值回到常态水平",
-      "action": "提高至小仓位",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认是否形成连续经营修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 7.2 元但公司仍未实现扣非扭亏或现金流未改善",
-      "action": "不追高并考虑退出观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断亏损是否收窄至可估值的正常化盈利轨道。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.1
+      },
+      "reason": "进入初步买入区间，需要复核中报或三季报是否验证亏损收窄和现金流改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入深度安全边际区间，若无新增治理、偿债或退市风险，可重新评估逆向买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过基准估值上沿，若盈利拐点未确认，风险收益比明显转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.1,
-      "reason": "进入初步买入区间，需要复核中报或三季报是否验证亏损收窄和现金流改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入深度安全边际区间，若无新增治理、偿债或退市风险，可重新评估逆向买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过基准估值上沿，若盈利拐点未确认，风险收益比明显转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入增速、毛利率、经营现金流、减值和科华转债到期处理。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认是否形成连续经营修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断亏损是否收窄至可估值的正常化盈利轨道。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

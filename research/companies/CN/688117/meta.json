@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688117",
-  "market": "CN",
-  "ticker": "688117",
-  "name": "圣诺生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "圣诺生物是多肽原料药和多肽CDMO细分公司，2025年以来受GLP-1原料药境外销售和新产能释放驱动进入高增长阶段；但主要经销客户终端流向未完全核验、GLP-1 API价格下行和美国监管变量要求更高安全边际。当前估值合理偏低但安全边际不足，先观察，等待现金流、客户分散和半年报质量确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "圣诺生物",
+    "security_status": "active",
+    "symbol": "CN:688117",
+    "ticker": "688117"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "693949df2a5f68ed43c141dbebede7338ddcb743d8466079738d0b1e2ab6bb75"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入20-23元且2026半年报经营现金流改善、GLP-1原料药客户结构未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、现金流、GLP-1原料药价格与客户结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于20元且半年报验证归母净利润位于预告区间、应收和存货未异常恶化",
-      "action": "提高至核心小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和股权激励业绩目标完成进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于38元或GLP-1原料药终端需求/监管出现不利变化",
-      "action": "减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报预告或快报，重新评估2027年利润和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入初始买入区间，重新评估半年报现金流与客户分散情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "安全边际显著提高，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入乐观情景估值区间，需要检查是否透支GLP-1增长预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入初始买入区间，重新评估半年报现金流与客户分散情况"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "安全边际显著提高，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "进入乐观情景估值区间，需要检查是否透支GLP-1增长预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、现金流、GLP-1原料药价格与客户结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和股权激励业绩目标完成进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报预告或快报，重新评估2027年利润和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

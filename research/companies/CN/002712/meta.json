@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:002712",
-  "ticker": "002712",
-  "name": "思美传媒",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "收入规模恢复但盈利质量、现金流和治理折价仍未充分改善；当前估值不贵但安全边际不足，等待价格低于3.4元或连续季度证明利润率与经营现金流同步修复。",
-  "fair_value_range": [
-    3.8,
-    4.8
-  ],
-  "buy_zone": [
-    0,
-    3.4
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "思美传媒",
+    "security_status": "active",
+    "symbol": "CN:002712",
+    "ticker": "002712"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "b418cefc2b11f89bd3caa99700afa06d3b443e4b566b785d98d25c45d4b4d8e6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.4元，且无新增信披处罚、现金流恶化或重大客户流失信号",
-      "action": "可建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非净利润、经营现金流、应收账款和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在3.4元至5.2元之间，但净利率、经营现金流、应收账款周转未连续两个季度同步改善",
-      "action": "继续观察，不加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入增长是否转化为利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.2元，且没有证据显示净利率可稳定接近0.6%以上",
-      "action": "减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新校准估值区间和评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "跌入有安全边际的观察买区，需要复核现金流、应收账款和治理风险后再决定是否小仓位买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过基准价值区间上沿，需要除非盈利质量显著改善，否则减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "跌入有安全边际的观察买区，需要复核现金流、应收账款和治理风险后再决定是否小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过基准价值区间上沿，需要除非盈利质量显著改善，否则减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非净利润、经营现金流、应收账款和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入增长是否转化为利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新校准估值区间和评级"
-    }
-  ],
-  "price_triggers_note": "行情基准采用2026-07-15附近公开行情约4.2-4.3元，未逐笔核验交易所收盘价，置信度中。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

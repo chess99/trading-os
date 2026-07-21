@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:688025",
-  "market": "CN",
-  "ticker": "688025",
-  "name": "杰普特",
-  "company_name": "杰普特",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "杰普特具备高端MOPA激光器、激光/光学智能装备和光通信光纤器件三条增长线，2025-2026Q1经营加速且客户质量较高，但2026-07-09股价已明显反映牛市预期，当前以跟踪为主，等待更好的安全边际。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    250,
-    330
-  ],
-  "buy_zone": [
-    170,
-    260
-  ],
-  "sell_or_reduce_zone": [
-    360,
-    445
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杰普特",
+    "security_status": "active",
+    "symbol": "CN:688025",
+    "ticker": "688025"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "cfd463d57de278bd230a6f4614e9601ab84b4b66c4e1c2033aace0b1780cee69"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 210 and quarterly_orders_intact",
-      "action": "积极分批买入",
-      "max_weight": 0.06,
-      "reason": "强吸引力区间，若订单、毛利率和现金流未被证伪，赔率明显改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看光纤器件、消费电子检测设备、新能源订单、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price > 210 and price <= 260 and 2026_profit_visibility_good",
-      "action": "安全边际买入",
-      "max_weight": 0.04,
-      "reason": "处于安全边际买入价，适合确认中报后提高仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高增长是否持续以及估值是否需要上修或下修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price > 260 and price <= 330",
-      "action": "观察式买入或持有",
-      "max_weight": 0.03,
-      "reason": "接近合理价值区间，仓位取决于光通信和消费电子订单兑现"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和全年订单质量，重新评估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price > 330 and price <= 360",
-      "action": "只保留底仓",
-      "max_weight": 0.015,
-      "reason": "估值已偏贵，需要连续业绩超预期支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 260.0
+      },
+      "reason": "进入安全边际买入区，复核订单和现金流后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price > 360",
-      "action": "不追高或逢高减仓",
-      "max_weight": 0.01,
-      "reason": "价格高于不应追高价，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 210.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 360.0
+      },
+      "reason": "高于不应追高价，需检查是否存在估值泡沫或主题交易过热",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 430.0
+      },
+      "reason": "接近牛市情景定价，原则上应减仓或等待业绩继续上修",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 260,
-      "reason": "进入安全边际买入区，复核订单和现金流后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 210,
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 360,
-      "reason": "高于不应追高价，需检查是否存在估值泡沫或主题交易过热"
-    },
-    {
-      "type": "price_above",
-      "price": 430,
-      "reason": "接近牛市情景定价，原则上应减仓或等待业绩继续上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看光纤器件、消费电子检测设备、新能源订单、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高增长是否持续以及估值是否需要上修或下修"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和全年订单质量，重新评估合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入增速",
-    "归母净利润率",
-    "综合毛利率",
-    "激光器收入和毛利率",
-    "激光/光学智能装备新增订单和毛利率",
-    "光纤器件收入、毛利率和大客户订单持续性",
-    "经营现金流净额/归母净利润",
-    "应收账款和存货周转",
-    "前五大客户收入占比",
-    "研发投入金额和研发投入率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

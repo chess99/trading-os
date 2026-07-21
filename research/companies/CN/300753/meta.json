@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:300753",
-  "ticker": "300753",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "爱朋医疗",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "爱朋医疗具备疼痛管理、鼻腔护理和脑科学相关产品的细分技术与渠道基础，2026Q1亏损明显收窄，但当前约19.60元股价已经较充分反映脑科学期权，尚未由持续盈利和现金流支撑；等待12元以下或基本面连续兑现后再考虑小仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    11.0,
-    15.0
-  ],
-  "buy_zone": [
-    9.0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱朋医疗",
+    "security_status": "active",
+    "symbol": "CN:300753",
+    "ticker": "300753"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "cd63541f406684a6a91a31af5a038adea2defeea9cc9d4801eb98a1e209d44e3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入9-12元且最新财报显示收入恢复、扣非亏损继续收窄、经营现金流改善",
-      "action": "research_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入恢复、扣非净利、经营现金流、应收和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格高于18元且脑科学或鼻腔护理业务未披露明确收入与利润兑现",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损收窄趋势是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新评估脑科学和鼻腔护理业务兑现程度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入研究性买入区上沿，需要结合中报验证收入和现金流是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入较有安全边际区域，可重新评估小仓位配置",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过乐观情景上沿，若无订单和利润兑现应回避估值风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入研究性买入区上沿，需要结合中报验证收入和现金流是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入较有安全边际区域，可重新评估小仓位配置"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过乐观情景上沿，若无订单和利润兑现应回避估值风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入恢复、扣非净利、经营现金流、应收和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损收窄趋势是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新评估脑科学和鼻腔护理业务兑现程度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

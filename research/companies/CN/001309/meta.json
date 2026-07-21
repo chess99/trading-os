@@ -1,73 +1,115 @@
 {
-  "symbol": "CN:001309",
-  "market": "CN",
-  "ticker": "001309",
-  "name": "德明利",
-  "currency": "CNY",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "德明利2026年半年度业绩预告预计营收160-180亿元、归母净利润57-65亿元，确认存储超级周期利润继续兑现；倒算Q2归母净利润23.54-31.54亿元，仍处高位但中值较Q1下降约17.7%。2026-07-17收盘价536.54元已接近560-760元合理价值下沿，但半年报尚未验证经营现金流、存货与周转，且现价仍高于480元买入区上限，维持观察和0仓位。",
-  "fair_value_range": [560, 760],
-  "buy_zone": [0, 480],
-  "sell_or_reduce_zone": [850, 1200],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德明利",
+    "security_status": "active",
+    "symbol": "CN:001309",
+    "ticker": "001309"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "8c16875ac1d5d53b8b828d5ca1f69782ef7d4dd8ae2e68db7401bc74f106568d"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d758670fbd636260d6766f46898a0cc9962bfeade50bf6f8bd4cf96a81580aea"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "a961f777a2ccc022141ba36a63ada4d7f3222ac0cf68d49cf5db46e59108877b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于有安全边际买入区间，且2026Q2现金流和存货周转尚未验证，维持0仓位观察。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证Q2毛利率、经营现金流、存货金额和企业级/嵌入式业务质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于520元且半年报显示经营现金流明显改善、存货占总资产比例下降，允许进入重点跟踪但不急于建仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断存储涨价周期是否延续以及库存减值风险是否上升。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于480元，同时毛利率仍高于30%、经营现金流转正或接近转正，可试探性建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，重估周期高点利润的可持续性和中周期估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于380元且行业价格未转入明确下行周期、公司无大额存货减值，可提高到小中等观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 520.0
+      },
+      "reason": "进入重点跟踪区间，需要结合半年报验证经营现金流和存货风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 480.0
+      },
+      "reason": "进入有安全边际买入区间，可在基本面未恶化时评估1%-2%试探仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 850.0
+      },
+      "reason": "高于合理价值上沿且缺少新增利润和现金流证据时，赔率恶化。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 520,
-      "reason": "进入重点跟踪区间，需要结合半年报验证经营现金流和存货风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 480,
-      "reason": "进入有安全边际买入区间，可在基本面未恶化时评估1%-2%试探仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 850,
-      "reason": "高于合理价值上沿且缺少新增利润和现金流证据时，赔率恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证Q2毛利率、经营现金流、存货金额和企业级/嵌入式业务质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断存储涨价周期是否延续以及库存减值风险是否上升。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，重估周期高点利润的可持续性和中周期估值。"
-    }
-  ],
-  "updated_at": "2026-07-17"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

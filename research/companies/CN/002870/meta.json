@@ -1,137 +1,133 @@
 {
-  "symbol": "CN:002870",
-  "market": "CN",
-  "ticker": "002870",
-  "name": "香山股份",
-  "company_name": "广东香山衡器集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司已转型为汽车智能座舱部件与新能源充配电系统供应商，客户和空气管理系统地位较好，但2025年扣非利润大幅下滑、2026Q1转亏、海外业务和汇率扰动仍未解决，现价约37.21元已隐含较强盈利修复预期，安全边际不足。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    45
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "香山股份",
+    "security_status": "active",
+    "symbol": "CN:002870",
+    "ticker": "002870"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "18aaa2b321050acf2eb048d136b80130853714eb9d421671b03ce41512543cd1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于或等于28元，且2026Q2/Q3汽车零部件收入恢复正增长、毛利率不继续下滑",
-      "action": "试探买入",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于或等于24元，且经营现金流为正、应收账款和存货没有明显恶化",
-      "action": "提高到核心观察仓",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于32元但扣非利润连续两个季度转正且年化超过2亿元",
-      "action": "只允许小仓参与修复",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于42元且扣非利润未修复或定增摊薄落地",
-      "action": "降低或不持有",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "currency": "CNY",
-      "reason": "价格进入合理价值区间下沿并开始提供安全边际",
-      "action": "进入买入观察区，复核Q2/Q3经营数据"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "currency": "CNY",
-      "reason": "价格较合理价值中枢有约三成折价，补偿盈利修复不确定性",
-      "action": "若经营现金流和资产质量稳定，可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "currency": "CNY",
-      "reason": "价格高于合理价值上沿，除非扣非利润明显修复否则风险收益不佳",
-      "action": "若扣非利润未明显修复，减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "currency": "CNY",
-      "reason": "价格隐含较强成长和利润率改善，需用事实兑现支撑",
-      "action": "除非新能源充配电毛利率和海外盈利已改善，否则卖出或不买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证剥离衡器后的可比收入和扣非利润",
-      "action": "复核剥离衡器后的可比收入和扣非利润"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证扣非利润是否连续修复，并确认定增进展",
-      "action": "检查扣非利润是否连续修复，并确认定增是否落地或终止"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "年末前跟踪海外子公司和商誉风险",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "海外亏损和商誉减值是当前最大财务尾部风险",
-      "action": "若JOYSONQUIN继续亏损或出现商誉减值迹象，下调评级并重算净资产安全边际"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "2026年年报预计披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "年报能验证新能源充配电毛利率、海外重组和全年现金流质量",
-      "action": "复核新能源充配电业务毛利率是否连续改善到17%以上，并重估合理价值"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2027年一季报预计披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "一季报能观察修复趋势是否延续以及买区是否仍有效",
-      "action": "复核现金流、应收账款、存货质量和买区有效性"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "价格进入合理价值区间下沿并开始提供安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "价格较合理价值中枢有约三成折价，补偿盈利修复不确定性",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "价格高于合理价值上沿，除非扣非利润明显修复否则风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "价格隐含较强成长和利润率改善，需用事实兑现支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "汽车零部件收入同比增速",
-    "新能源充配电业务收入增速和毛利率",
-    "智能座舱部件收入增速和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款和存货周转",
-    "海外子公司JOYSONQUIN净利润",
-    "商誉减值测试结果",
-    "定增发行价格和股份数量",
-    "前五大客户销售占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

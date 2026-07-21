@@ -1,95 +1,115 @@
 {
-  "symbol": "CN:603273",
-  "market": "CN",
-  "ticker": "603273",
-  "name": "天元智能",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "天元智能具备AAC成套装备和机械装备配套的项目经验，海外收入增长与充足现金提供观察价值；但2025年和2026Q1收入仍下行，扣非利润弱、经营现金流波动大，且实控人留置事件虽解除仍需治理折价。当前股价显著透支乐观恢复情景，暂不买入，等待收入止跌、扣非利润和现金流共同验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    5.5,
-    8.0
-  ],
-  "buy_zone": [
-    4.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天元智能",
+    "security_status": "active",
+    "symbol": "CN:603273",
+    "ticker": "603273"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "ecfa7918173e899111e99c6fbe4c04408a6982dddd843e28174e154b6848865d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.5元，且最新半年报或三季报显示收入止跌、经营现金流为正、扣非净利润同比改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入是否止跌、海外业务、扣非利润和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.5元，净现金安全垫仍在、实控人事件无新增处罚或协查负面、海外订单持续兑现",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及股权激励考核进展，判断全年5%增长门槛可达性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元且扣非利润未明显恢复，或经营现金流重新转负",
-      "action": "不买入并减持已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认海外增长、治理事件后续和现金流修复是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入基准估值下沿附近，可结合收入止跌和现金流验证重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入更有安全边际的深度价值观察区，但仍需排除治理和回款新增风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "若核心扣非利润未恢复，高于该区间意味着估值再次显著透支。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过乐观情景估值上沿附近，应卖出或规避，除非海外订单和扣非利润显著超预期。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入基准估值下沿附近，可结合收入止跌和现金流验证重新评估观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入更有安全边际的深度价值观察区，但仍需排除治理和回款新增风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "若核心扣非利润未恢复，高于该区间意味着估值再次显著透支。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过乐观情景估值上沿附近，应卖出或规避，除非海外订单和扣非利润显著超预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入是否止跌、海外业务、扣非利润和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及股权激励考核进展，判断全年5%增长门槛可达性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认海外增长、治理事件后续和现金流修复是否兑现。"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "营业收入同比增速",
-    "蒸压加气混凝土装备收入与毛利率",
-    "海外收入占比与回款",
-    "扣非净利润率",
-    "经营活动现金流净额",
-    "应收账款与合同负债",
-    "实控人事件后续公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

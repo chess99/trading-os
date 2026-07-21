@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301335",
-  "ticker": "301335",
-  "name": "天元宠物",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "天元宠物具备宠物用品全品类、境内外渠道和食品拓展基础，但现有利润率、ROE与现金流质量不足以支撑20元附近估值；淘通科技并购是上行情景变量，当前应观察等待更便宜价格或业绩兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    15,
-    19
-  ],
-  "buy_zone": [
-    0,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天元宠物",
+    "security_status": "active",
+    "symbol": "CN:301335",
+    "ticker": "301335"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "c0f1eeb539b2bc3a1e3c47c0e91ac9ae0f62cd58c19a06c7fbf052fe15090c7f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于14元，且最近一期扣非净利润与经营现金流同时改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非利润、经营现金流、费用率和食品业务增速",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元，且外销订单、食品收入和费用率未明显恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及淘通科技重大资产重组进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24元但无利润上修、并购落地或现金流改善",
-      "action": "不加仓并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、现金流质量和并购落地后的业绩承诺基础",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入买入观察区，需要复核2026年利润与现金流是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过当前基本面可支撑估值，需要复核是否有并购或盈利上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入买入观察区，需要复核2026年利润与现金流是否改善"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "超过当前基本面可支撑估值，需要复核是否有并购或盈利上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非利润、经营现金流、费用率和食品业务增速"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及淘通科技重大资产重组进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、现金流质量和并购落地后的业绩承诺基础"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

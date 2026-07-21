@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:300275",
-  "market": "CN",
-  "ticker": "300275",
-  "name": "梅安森",
-  "company_name": "重庆梅安森科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是矿山安全与智能矿山垂直物联网标的，非煤矿山和智能矿山业务有增长潜力，但 2025 年和 2026Q1 收入利润仍下滑，当前 7.60 元约对应 60 倍 TTM PE，复苏预期已经较充分，缺乏安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.0,
-    6.5
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "梅安森",
+    "security_status": "active",
+    "symbol": "CN:300275",
+    "ticker": "300275"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9dc1e06b30bb9e76f25cce7b479942d24b722b28d7691e8fbbb68788e2e6caf7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 4.8 元，且未出现收入继续大幅下滑或经营现金流恶化",
-      "action": "建立 1%-2% 观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查收入增速、非煤矿山占比、扣非净利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比恢复 10% 以上、扣非净利率回到 12% 以上、经营现金流匹配净利润",
-      "action": "可加仓至 3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认收入利润是否走出 2025 年下行趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 8.5 元但净利润未恢复到年化 8000 万元以上",
-      "action": "不追高，已有仓位减仓或卖出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断智能矿山与非煤矿山增长是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入合理价值区间上沿附近，赔率开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "低于保守可买价格，具备安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于减仓区下限，估值需要强复苏兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "unit": "CNY/share",
-      "action": "重新评估基本面与估值",
-      "reason": "进入合理价值区间上沿附近，赔率开始改善"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "unit": "CNY/share",
-      "action": "进入可买区，检查最新订单和现金流后考虑小仓",
-      "reason": "低于保守可买价格，具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "unit": "CNY/share",
-      "action": "检查是否已有强业绩兑现，否则减仓或回避",
-      "reason": "高于减仓区下限，估值需要强复苏兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查收入增速、非煤矿山占比、扣非净利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认收入利润是否走出 2025 年下行趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断智能矿山与非煤矿山增长是否兑现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润同比增速",
-    "扣非净利率",
-    "经营现金流净额/归母净利润",
-    "非煤矿山收入及占比",
-    "智能矿山业务收入增速",
-    "应收账款和合同资产周转",
-    "新签订单和在手订单",
-    "研发费用率及产品化成果"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

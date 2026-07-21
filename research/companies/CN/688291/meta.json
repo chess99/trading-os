@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688291",
-  "market": "CN",
-  "ticker": "688291",
-  "name": "金橙子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "金橙子是激光加工控制系统小型技术平台，核心控制系统毛利率高、资产负债表轻，但2026Q1利润主要由一次性股权出售收益驱动，扣非经营仍需验证；萨米特并购若兑现可打开3D打印控制与设备增长曲线，当前价格缺少足够安全边际，先观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金橙子",
+    "security_status": "active",
+    "symbol": "CN:688291",
+    "ticker": "688291"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c062ac15f3ff0a9c670672c4abdd7c68ce6b00c4b1a587a27a064da18cd36b8c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于30元，且最新季报显示扣非归母净利润同比转正、控制系统收入未继续下滑",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利、经营现金流和萨米特并表进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于26元，且萨米特并表订单和现金流验证良好",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业是否恢复增长",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于48元，且扣非利润未明显改善或萨米特兑现低于预期",
-      "action": "不追高并降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与并购整合效果，更新估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入初步买入区，需复核扣非利润和控制系统收入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入悲观情景价值区，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "接近乐观情景估值，需要警惕估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入初步买入区，需复核扣非利润和控制系统收入"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入悲观情景价值区，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "接近乐观情景估值，需要警惕估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利、经营现金流和萨米特并表进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业是否恢复增长"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与并购整合效果，更新估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

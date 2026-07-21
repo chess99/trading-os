@@ -1,91 +1,115 @@
 {
-  "symbol": "CN:300831",
-  "market": "CN",
-  "ticker": "300831",
-  "name": "ST派瑞",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST派瑞具备特高压直流大功率晶闸管/IGCT细分技术稀缺性，资产负债表较轻且现金资产较多；但2026年6月行政处罚事先告知暴露收入确认被人为调节、核心管理层参与和内控可信度折损，当前约13.19元/股、42亿元市值仍高于风险调整合理价格区间，暂不买入，只保留研究跟踪。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    7.0,
-    10.5
-  ],
-  "buy_zone": [
-    5.2,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    13.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST派瑞",
+    "security_status": "active",
+    "symbol": "CN:300831",
+    "ticker": "300831"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "28dce00d48d1bdc01c04d8a83b033db76a76a0d32a46ffcf698d5e46c2c35950"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于10.5元或行政处罚正式决定未落地",
-      "action": "不新开仓，已有仓位降至观察仓或清仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报、正式处罚进展、收入确认质量和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至5.2-6.8元且正式处罚未触及重大违法强制退市、内控整改有实质披露",
-      "action": "仅建立观察仓，等待2026半年报验证现金流和收入确认质量",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报、ST风险警示后续和订单/减值变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.2元且处罚闭环、审计意见未恶化、经营现金流与利润匹配",
-      "action": "可分批买入，但仍按ST特殊情形控制仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报审计意见和内部控制审计意见是否改善",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入有安全边际观察区，可重新评估第一笔0.5%以内仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入强吸引力区，但仍需处罚和审计风险闭环后才可买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于风险调整合理区间上沿，不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.2
+      },
+      "reason": "接近或高于当前高风险定价区，需避免事件叙事驱动的估值回撤",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入有安全边际观察区，可重新评估第一笔0.5%以内仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入强吸引力区，但仍需处罚和审计风险闭环后才可买入"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "高于风险调整合理区间上沿，不应追高"
-    },
-    {
-      "type": "price_above",
-      "price": 13.2,
-      "reason": "接近或高于当前高风险定价区，需避免事件叙事驱动的估值回撤"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报、正式处罚进展、收入确认质量和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报、ST风险警示后续和订单/减值变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报审计意见和内部控制审计意见是否改善"
-    }
-  ],
-  "notes": [
-    "当前股价13.19元和市值42.21亿元来自Moomoo 2026-07-20收盘行情，Investing同日显示约13.20元作为交叉校验。",
-    "2025年财务报表审计意见和内部控制审计意见均为带强调事项段的无保留意见，强调证监会立案调查及相关不确定性。",
-    "2026年6月行政处罚仍为事先告知阶段，正式处罚决定、交易所后续适用和潜在投资者索赔规模尚未完全核验。",
-    "公司不是短期债务危机型ST，但治理、信披、收入确认和撤帽时间成本必须长期折价。",
-    "当前评级为avoid，含义是不在现价买入；若价格进入买入区且风险事项闭环，可重新评估。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

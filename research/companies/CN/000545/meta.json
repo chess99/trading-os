@@ -1,88 +1,86 @@
 {
-  "symbol": "CN:000545",
-  "market": "CN",
-  "ticker": "000545",
-  "name": "金浦钛业",
-  "company_name": "金浦钛业",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "金浦钛业是硫酸法钛白粉困境资产，当前亏损、经营现金流为负、账户冻结、应付账款逾期、控股股东股份冻结及南京钛白环保刑事案件等风险尚未出清；在价格约2.65元附近，市场已经给了周期修复和控制权期权，但基本面仍不支持买方主动建仓。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive_distressed",
-  "fair_value_range": [
-    1.4,
-    2.1
-  ],
-  "buy_zone": [
-    0.9,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.4,
-    3.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金浦钛业",
+    "security_status": "active",
+    "symbol": "CN:000545",
+    "ticker": "000545"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "69add9b5ebee4125800bfc35aa819e15bdcbaad60f317154c386ec5fcfceaed5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约2.65元且现金流、债务逾期、环保案件未明显改善",
-      "action": "不买入，已有仓位减至事件观察仓或清仓",
-      "max_weight": 0,
-      "reason": "亏损、经营现金流为负、账户冻结和环保刑事案件使赔率不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、经营现金流、受限资金和逾期债务",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至1.20元以下，且账户冻结降至货币资金5%以内、逾期债务显著清理",
-      "action": "仅建立观察仓",
-      "max_weight": 0.005,
-      "reason": "困境折价可能覆盖部分尾部风险，但仍需等待经营验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和南京钛白环保刑事案件进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流为正、钛白粉吨毛利转正、南京钛白案件无重大新增处罚",
-      "action": "重新评估并小幅提高仓位",
-      "max_weight": 0.01,
-      "reason": "从困境资产转为周期修复资产后才具备买方跟踪价值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入困境折价观察区，可复核债务、环保和现金流是否同步改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.4
+      },
+      "reason": "若无经营现金流和毛利率修复，价格已超过基准合理价值上沿，应回避或减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入困境折价观察区，可复核债务、环保和现金流是否同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 2.4,
-      "reason": "若无经营现金流和毛利率修复，价格已超过基准合理价值上沿，应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、经营现金流、受限资金和逾期债务"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和南京钛白环保刑事案件进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "钛白粉金红石型与锐钛型成交价",
-    "攀西46%钛精矿价格",
-    "硫酸和硫磺采购价格",
-    "公司钛白粉产量、销量和产能利用率",
-    "单季度毛利率和吨毛利",
-    "经营活动现金流净额",
-    "货币资金、受限资金和银行账户冻结金额",
-    "应付账款逾期金额",
-    "南京钛白污染环境案件进展",
-    "控股股东股份质押、冻结、司法拍卖和控制权变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

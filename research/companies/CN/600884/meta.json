@@ -1,94 +1,105 @@
 {
-  "symbol": "CN:600884",
-  "ticker": "600884",
-  "name": "杉杉股份",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "杉杉股份处于负极材料与偏光片双主业利润修复期，2026H1 预告验证经营拐点，但控制权切换、资产重与周期波动仍要求折价和更高安全边际。现价接近公允区间下沿，适合观察，等待正式半年报和更便宜价格。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    15.0
-  ],
-  "buy_zone": [
-    9.5,
-    10.8
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.0
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于10.8元且2026H1正式报告确认扣非利润和经营现金流质量",
-      "action": "建立观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于9.8元且2026Q3负极销量、偏光片毛利率和负债指标未恶化",
-      "action": "加仓至目标仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于16.0元且缺少2027年利润中枢上移证据",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入买入区间上沿，需要复核正式半年报和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入较高安全边际区间，可复核是否提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "超过基准公允价值上沿，需要复核是否减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、扣非利润、现金流、负债和控制权进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及负极材料、偏光片景气持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分业务利润质量和2027年经营指引"
-    }
-  ],
-  "key_metrics": {
-    "valuation_price_date": "2026-07-16",
-    "last_price": 12.10,
-    "market_cap_cny_bn": 27.218,
-    "shares_outstanding_bn": 2.249,
-    "forecast_2026_net_profit_cny_bn": [
-      1.30,
-      1.60
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杉杉股份",
+    "security_status": "active",
+    "symbol": "CN:600884",
+    "ticker": "600884"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "065d1c31af94f04b81548fa5cac796f15833c20fa3768b47879ec81a1052fa29"
+      }
     ],
-    "forecast_2026_pe_range": [
-      17.0,
-      20.9
-    ]
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、扣非利润、现金流、负债和控制权进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及负极材料、偏光片景气持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分业务利润质量和2027年经营指引",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入买入区间上沿，需要复核正式半年报和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入较高安全边际区间，可复核是否提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过基准公允价值上沿，需要复核是否减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

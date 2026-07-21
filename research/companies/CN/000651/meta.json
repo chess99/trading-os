@@ -1,30 +1,101 @@
 {
-  "symbol": "CN:000651",
-  "market": "CN",
-  "ticker": "000651",
-  "name": "格力电器",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "格力电器估值和股息率有吸引力，但2025年收入利润均下降约一成，2026Q1扣非利润仍未恢复，38.25元只适合观察仓，等待32-35元安全边际。",
-  "fair_value_range": [40, 48],
-  "buy_zone": [32, 35],
-  "sell_or_reduce_zone": [49, 60],
-  "position_plan": [
-    {"condition": "36-40元仅保留观察仓", "max_weight": 0.02},
-    {"condition": "32-35元且经营未继续恶化", "max_weight": 0.04},
-    {"condition": "28-31元且分红、回购和治理逻辑完整", "max_weight": 0.06}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "格力电器",
+    "security_status": "active",
+    "symbol": "CN:000651",
+    "ticker": "000651"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "8fdc95e83700eeeafeeda83999f1b215de44b944099038406b633371d46b7362"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-deep-review.md",
+        "sha256": "b8abe9917729e038bfeaf40e3bcb0c5058ff2e4a695f739cc34b5cfaee884474"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查半年报扣非利润、现金流、毛利率和回购注销",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报旺季经营和分红预期",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 31.0
+      },
+      "reason": "进入强吸引力区间，复核分红与回购",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 49.0
+      },
+      "reason": "超过合理价值上沿，评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-11-deep-review.md",
-  "report_history": ["reports/2026-07-07-initial.md", "reports/2026-07-11-deep-review.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复查半年报扣非利润、现金流、毛利率和回购注销"},
-    {"type": "date", "date": "2026-10-31", "reason": "复查三季报旺季经营和分红预期"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 35, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_below", "price": 31, "reason": "进入强吸引力区间，复核分红与回购"},
-    {"type": "price_above", "price": 49, "reason": "超过合理价值上沿，评估减仓"}
-  ],
-  "updated_at": "2026-07-11T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

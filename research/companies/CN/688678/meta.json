@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688678",
-  "market": "CN",
-  "ticker": "688678",
-  "name": "福立旺",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "福立旺具备多工艺精密金属零部件平台能力，2025年3C可穿戴精密件放量、2026Q1利润和现金流明显改善，但汽车、电动工具、金刚线母线等业务毛利率偏弱，强芯科技亏损和客户集中仍压制确定性。当前价格基本位于估算合理价值区间内，缺少足够安全边际，等待更低价格或连续季度验证利润率修复。",
-  "fair_value_range": [
-    15.0,
-    21.0
-  ],
-  "buy_zone": [
-    12.0,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福立旺",
+    "security_status": "active",
+    "symbol": "CN:688678",
+    "ticker": "688678"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "ccd87e18dabf84b34fb81a34a2e09b7a9ba586d231295e0babbc19b1dfa65c7c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入12-15元，且2026年中报未证伪3C订单、毛利率和现金流修复",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查3C毛利率、强芯科技亏损、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利率超过8%、经营现金流为正，且强芯科技亏损显著收窄",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证利润率修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于25元且全年2亿元以上归母净利缺乏可见度，或机器人业务没有量产订单验证",
-      "action": "不加仓并考虑降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及定增进展，更新估值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入观察区，赔率改善，需要复核中报订单、毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度安全边际区，可在基本面未恶化时重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "价格超过当前合理价值上沿，需要验证利润和机器人订单是否支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入买入观察区，赔率改善，需要复核中报订单、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入深度安全边际区，可在基本面未恶化时重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "价格超过当前合理价值上沿，需要验证利润和机器人订单是否支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查3C毛利率、强芯科技亏损、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证利润率修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及定增进展，更新估值和仓位上限"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

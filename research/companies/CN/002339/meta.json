@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:002339",
-  "market": "CN",
-  "ticker": "002339",
-  "name": "积成电子",
-  "company_name": "积成电子",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "积成电子受益于电网投资、配网自动化、智能电表和能源信息化需求，但当前利润率低、项目回款慢、应收与存货占用高，2026-07-10约6.70元股价缺乏盈利支撑；等待价格进入5.0元以下且毛利率、现金流改善后再考虑小仓位。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    4.2,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "积成电子",
+    "security_status": "active",
+    "symbol": "CN:002339",
+    "ticker": "002339"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "49e79b12069591c02d5da2acea24065f9520a0fcee1a6d25acba3476919a2ef6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 5.0 and next report confirms gross_margin >= 23% and operating_cash_flow improves",
-      "action": "start_small_position",
-      "max_weight": 0.01,
-      "reason": "估值回到买入区间且毛利率、现金流出现基本面确认后，只建立观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：收入、毛利率、费用率、经营现金流、应收账款、合同资产和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 4.5 and receivables_contract_assets_inventory_ratio declines versus 2025",
-      "action": "add_to_core_watch_position",
-      "max_weight": 0.02,
-      "reason": "价格进入悲观区间上沿，同时资产占用改善，风险收益比才足以支持提高仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报与电网招标订单兑现情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price >= 7.2 without profit and cash-flow improvement",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0,
-      "reason": "股价进入减仓区间但盈利与现金流未兑现，主题估值透支。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断配网和能源信息化业务是否改善盈利质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入初始买入区间，复核毛利率、订单质量和现金流后可考虑0.5%-1%观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入悲观估值区间，需要重新评估是否存在坏账、亏损或行业恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "进入减仓或回避区间，若无利润和现金流兑现则不追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入初始买入区间，复核毛利率、订单质量和现金流后可考虑0.5%-1%观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入悲观估值区间，需要重新评估是否存在坏账、亏损或行业恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "进入减仓或回避区间，若无利润和现金流兑现则不追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：收入、毛利率、费用率、经营现金流、应收账款、合同资产和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报与电网招标订单兑现情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断配网和能源信息化业务是否改善盈利质量。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "电力自动化收入及毛利率",
-    "信息安全收入及毛利率",
-    "综合毛利率",
-    "研发费用率",
-    "销售费用率",
-    "应收账款",
-    "合同资产",
-    "存货",
-    "经营活动现金流量净额",
-    "国家电网和南方电网中标金额",
-    "坏账准备和合同资产减值",
-    "山东国资股东持股变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

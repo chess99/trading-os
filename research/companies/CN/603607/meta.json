@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:603607",
-  "market": "CN",
-  "ticker": "603607",
-  "name": "京华激光",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "京华激光具备激光全息防伪、铂金浮雕和客户认证壁垒，现金流与分红质量较好，但主业收入增长偏弱，当前约35倍TTM PE已经计入较多主题溢价，需等待价格回到13元附近或新业务放量后再考虑配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13.0,
-    17.0
-  ],
-  "buy_zone": [
-    10.5,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "京华激光",
+    "security_status": "active",
+    "symbol": "CN:603607",
+    "ticker": "603607"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "be09100b00400ade5dfae809ab80a532958243bd9c3389679000a31db43e1dc3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于13.5元，且最近一期经营现金流/归母净利润不低于0.9，收入同比降幅收窄至10%以内",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非净利、现金流和新业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于11.0元，且防伪纸毛利率不低于25%，前五大客户占比未升至60%以上",
-      "action": "提高至价值仓位上限",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入下滑是否结束",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于24.0元但扣非净利未出现15%以上增长或新业务未单独证明放量",
-      "action": "不追高并减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及分红政策，重估长期自由现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入基础买入观察区，需复核收入和现金流是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "接近绝对估值安全边际，可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入牛市情景估值区，若无业绩兑现应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入基础买入观察区，需复核收入和现金流是否未恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "接近绝对估值安全边际，可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入牛市情景估值区，若无业绩兑现应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利、现金流和新业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入下滑是否结束"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及分红政策，重估长期自由现金流"
-    }
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

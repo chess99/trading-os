@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:600502",
-  "ticker": "600502",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "安徽建工",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安徽建工是安徽省属区域基建施工平台，订单和分红有支撑，2026Q1收入和扣非利润恢复增长；但资产负债率高、工程回款和高速投资现金流压力较大，当前价格接近合理价值下沿但安全边际不足，等待4.0-4.3元以下或现金流改善后再买。",
-  "fair_value_range": [
-    4.6,
-    5.8
-  ],
-  "buy_zone": [
-    4.0,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.1,
-    7.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于4.3元，且最近一期未出现分红削减、重大减值或经营现金流显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于4.0元，且经营现金流/归母净利改善至0.8倍以上或应收占用下降",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于6.1元但中报未验证现金流改善和利润增长",
-      "action": "减仓或不新增",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "出现分红大幅削减、重大坏账减值、资产负债率继续上升且现金流恶化",
-      "action": "退出观察仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入买入区间上沿，需要复核回款、分红和最新订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "安全边际明显扩大，可考虑提高仓位但需确认现金流未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 6.1,
-      "reason": "超过合理价值上沿，需要验证估值提升是否有基本面支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、两金和分红进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和前三季度新签合同，判断全年预算兑现概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、年度分红和高速投资项目资本开支"
-    }
-  ],
-  "valuation": {
-    "as_of_price_date": "2026-07-15",
-    "reference_price": 4.68,
-    "market_cap_cny_billion": 8.033,
-    "pe_ttm": 5.19,
-    "pb_market_source": 0.66,
-    "dividend_yield_reference": 0.058
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安徽建工",
+    "security_status": "active",
+    "symbol": "CN:600502",
+    "ticker": "600502"
   },
-  "key_monitoring": [
-    "经营现金流/归母净利",
-    "应收账款、合同资产、长期应收款占收入比例",
-    "新签合同金额与结构",
-    "资产负债率、财务费用率、永续债规模",
-    "每股分红是否维持0.25-0.30元",
-    "安徽省重大项目和专项债开工节奏"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "1321a8d44be35d8e0b9e64c6e40690c6ac4522b0373b3d47b48029e9ffd35f19"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、两金和分红进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和前三季度新签合同，判断全年预算兑现概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、年度分红和高速投资项目资本开支",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入买入区间上沿，需要复核回款、分红和最新订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "安全边际明显扩大，可考虑提高仓位但需确认现金流未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.1
+      },
+      "reason": "超过合理价值上沿，需要验证估值提升是否有基本面支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

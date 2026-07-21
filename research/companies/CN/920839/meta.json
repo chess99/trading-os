@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920839",
-  "market": "CN",
-  "ticker": "920839",
-  "name": "万通液压",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "油气弹簧差异化、现金创造和资本回报较好，但当前估值隐含的增长高于2026年一季度现实，等待16-19元安全边际或基本面重新加速。",
-  "fair_value_range": [20, 25],
-  "buy_zone": [16, 19],
-  "sell_or_reduce_zone": [27, 32],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万通液压",
+    "security_status": "active",
+    "symbol": "CN:920839",
+    "ticker": "920839"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "c42ea2553a01cc1ffdd1f246670a8984e905f42936991e785fce417fd518b1ae"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价18至19元且油气弹簧、海外订单、应收和存货未恶化时试探建仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、营运资本和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价16至18元且滚动自由现金流恢复为正、正常化利润不少于1.1亿元时分批增加",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及高毛利海外订单交付情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于16元且重新验证客户关系、产品竞争力和长期商业价值均未受损",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入有安全边际的买入复核区间，需先确认基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "进入减仓或不应追高区间，需用业绩上修支持更高估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、营运资本和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及高毛利海外订单交付情况"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19,
-      "reason": "进入有安全边际的买入复核区间，需先确认基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "reason": "进入减仓或不应追高区间，需用业绩上修支持更高估值"
-    }
-  ],
-  "updated_at": "2026-07-14T18:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,29 +1,86 @@
 {
-  "symbol": "CN:600900",
-  "market": "CN",
-  "ticker": "600900",
-  "name": "长江电力",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "全球最大水电上市平台，确定性极强的类债资产。当前PE~19.3x、PB~2.92x处于历史中性偏高水平，安全边际有限。适合等待回调至24元以下分批建仓作为底仓配置，当前价位仅适合持有或观望。",
-  "fair_value_range": [22, 28],
-  "buy_zone": [20, 24],
-  "sell_or_reduce_zone": [29, 32],
-  "position_plan": [
-    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.03},
-    {"condition": "当前价27-29元区间仅适合持有现有仓位", "max_weight": 0.015},
-    {"condition": "连续枯水或电价政策重大变化时减仓", "max_weight": 0.01}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长江电力",
+    "security_status": "active",
+    "symbol": "CN:600900",
+    "ticker": "600900"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "e45a1ab01d72bfd594a7eb2ea0a2e5230e146680af1975f1c6fb8ca5da6a0ee2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报公布，关注发电量和电价变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报，关注前三季度来水情况和全年业绩指引",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": ["reports/2026-07-07-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年中报公布，关注发电量和电价变化"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报，关注前三季度来水情况和全年业绩指引"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 24, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 29, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-07T22:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

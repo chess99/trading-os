@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:688120",
-  "market": "CN",
-  "ticker": "688120",
-  "name": "华海清科",
-  "company_name": "华海清科",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华海清科是中国大陆CMP设备国产替代核心资产，并向减薄、划切、清洗、湿法等平台化方向扩展；公司质量高但2026-07-09股价已透支较多增长预期，当前以跟踪等待更好买点为主。",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    230,
-    275
-  ],
-  "buy_zone": [
-    180,
-    230
-  ],
-  "sell_or_reduce_zone": [
-    330,
-    380
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华海清科",
+    "security_status": "active",
+    "symbol": "CN:688120",
+    "ticker": "688120"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "a3fd4ed763b0374aa4005e48501100b2870f464969f2a5a53179297986a1e111"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于330元且无业绩或订单显著上修",
-      "action": "不新增仓位，已有仓位分批降至核心观察仓",
-      "max_weight": 0.02,
-      "reason": "当前估值接近乐观情景，风险收益比偏弱"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看订单、毛利率、合同负债、现金流和新产品收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至220-230元且半年报显示订单、毛利率、现金流未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值下沿附近，可用小仓位跟踪国产替代兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证利润增速是否重新匹配收入增长",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至180-200元且CMP主业和新产品验证继续推进",
-      "action": "提高至中等仓位",
-      "max_weight": 0.03,
-      "reason": "安全边际明显改善，同时保留半导体设备周期风险缓冲"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 230.0
+      },
+      "reason": "进入合理价值区间下沿，触发买入复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "先进制程客户验证、订单或利润率出现超预期改善",
-      "action": "复核估值模型后再决定是否突破观察仓",
-      "max_weight": 0.04,
-      "reason": "只有基本面中枢上修才支持更高仓位上限"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 200.0
+      },
+      "reason": "进入更有安全边际的建仓区，复核基本面后考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 330.0
+      },
+      "reason": "高于减仓观察区下沿，若无业绩上修应控制仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 380.0
+      },
+      "reason": "接近或超过乐观估值区，需要重新评估止盈和估值消化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 230,
-      "reason": "进入合理价值区间下沿，触发买入复核"
-    },
-    {
-      "type": "price_below",
-      "price": 200,
-      "reason": "进入更有安全边际的建仓区，复核基本面后考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 330,
-      "reason": "高于减仓观察区下沿，若无业绩上修应控制仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 380,
-      "reason": "接近或超过乐观估值区，需要重新评估止盈和估值消化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看订单、毛利率、合同负债、现金流和新产品收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证利润增速是否重新匹配收入增长"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新签订单和在手订单",
-    "合同负债和预收款变化",
-    "CMP设备先进制程客户验证和重复采购",
-    "减薄、划切、清洗、湿法设备收入占比",
-    "综合毛利率和分产品毛利率",
-    "研发投入占收入比例",
-    "扣非归母净利润增速",
-    "经营现金流净额",
-    "存货和应收账款周转",
-    "定增发行与募投项目进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:605167",
-  "market": "CN",
-  "ticker": "605167",
-  "name": "利柏特",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "利柏特具备工业模块化设计制造与EPFC一体化服务稀缺性，核电、工业气体和化工项目可提供中期增长弹性；但2025年收入下滑、经营现金流显著转弱，2026Q1收入继续下降，当前约32倍TTM PE和约3倍PB已反映较高成长预期，需等待更好的价格或订单/现金流验证。",
-  "fair_value_range": [
-    12.0,
-    15.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.2
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利柏特",
+    "security_status": "active",
+    "symbol": "CN:605167",
+    "ticker": "605167"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "319936f2f1b9849f9d003415a94aaa59377a676febb795918b9f1d5f3448e9bc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.5-12.2元且半年报未显示毛利率低于17%、经营现金流继续显著恶化，可建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、利润、经营现金流、合同资产和在手订单披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若新签订单和经营现金流同步验证，且估值仍低于基准合理区间中枢，可加仓但总仓位受项目制现金流风险约束。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年业绩兑现节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于18.5元但没有订单或现金流超预期验证，逐步降仓或不追高。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、担保授信与订单结构。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.2
+      },
+      "reason": "进入买入观察区上沿，重新核验半年报、新签订单和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入安全边际较明显区间，若基本面未恶化可考虑建仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "进入减持区间下沿，需验证是否有足够订单和利润支撑高估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.2,
-      "reason": "进入买入观察区上沿，重新核验半年报、新签订单和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入安全边际较明显区间，若基本面未恶化可考虑建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "进入减持区间下沿，需验证是否有足够订单和利润支撑高估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、利润、经营现金流、合同资产和在手订单披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年业绩兑现节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、担保授信与订单结构。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

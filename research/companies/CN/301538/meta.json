@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:301538",
-  "ticker": "301538",
-  "name": "骏鼎达",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "骏鼎达是功能性保护套管细分龙头，盈利质量和资产负债表较好，但 2026Q1 已出现利润下滑，当前估值处于合理区间中部，缺少足够安全边际，适合观察等待更低价格或利润恢复确认。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    36,
-    48
-  ],
-  "buy_zone": [
-    31,
-    35
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    62
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "骏鼎达",
+    "security_status": "active",
+    "symbol": "CN:301538",
+    "ticker": "301538"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "f93e7eaee64d317de1bf3ea6c589118c3450cb82316d65e8e058afe1defdde70"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入 31-35 元，且最近一季毛利率不低于 35%、经营现金流没有明显恶化",
-      "action": "分批建立观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看毛利率、净利率、经营现金流和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 31 元，且收入仍保持双位数增长、归母净利率稳定在 15% 以上",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断利润下滑是否已经扭转",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 55 元但利润增速未恢复到 20% 以上",
-      "action": "不追高并减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报及募投产能利用率，重新评估公平价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入买入观察区，需要复核毛利率、现金流和订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 31.0
+      },
+      "reason": "出现较明显安全边际，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过合理估值上沿，需要检查是否有真实增长超预期支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入买入观察区，需要复核毛利率、现金流和订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 31,
-      "reason": "出现较明显安全边际，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过合理估值上沿，需要检查是否有真实增长超预期支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看毛利率、净利率、经营现金流和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断利润下滑是否已经扭转"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报及募投产能利用率，重新评估公平价值区间"
-    }
-  ],
-  "key_monitoring_items": [
-    "单季收入增速",
-    "毛利率是否稳定在 38% 以上",
-    "经营现金流与净利润匹配度",
-    "应收账款和存货增速",
-    "海外和非汽车应用收入贡献",
-    "募投项目产能利用率",
-    "控股股东及董监高减持公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

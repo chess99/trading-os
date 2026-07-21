@@ -1,122 +1,132 @@
 {
-  "symbol": "CN:300118",
-  "market": "CN",
-  "ticker": "300118",
-  "name": "东方日升",
-  "company_name": "东方日升新能源股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处于光伏制造下行周期，2025年及2026Q1仍大幅亏损，组件毛利为负且短债压力较高；HJT、储能和海外渠道提供可选项，但当前9.94元附近估值未充分补偿资产负债表与盈利修复不确定性。等待组件毛利转正、现金流连续改善和价格低于6.5元后的安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.0,
-    9.0
-  ],
-  "buy_zone": [
-    0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东方日升",
+    "security_status": "active",
+    "symbol": "CN:300118",
+    "ticker": "300118"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "cba23822f7e6b794f9273c8c398461d4d00712ab9163890b5d6a4cd545291ba5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.5元，且最近两个季度组件毛利率转正、经营现金流为正",
-      "action": "建立0.5%-1.0%试探仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流和债务变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.5元，且短期借款/货币资金下降、扣非亏损明显收窄",
-      "action": "可增至最高2.0%仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核组件业务是否出现可持续毛利拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于6.5-9.0元，但毛利和现金流未确认改善",
-      "action": "继续观察，不买入",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核亏损收窄或扭亏是否支持评级上调",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.5元且公司仍亏损或财务费用继续上行",
-      "action": "减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核资产负债表安全边际和流动性风险",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核HJT和储能是否从技术叙事变成利润来源",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核海外收入、关税和汇兑损益对利润的影响",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "低于保守估值下沿后可能出现安全边际，但需基本面同步确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "价格进入深度折价区，若现金流和债务改善可提高风险预算",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "高于合理价值区间且基本面未修复时风险收益比恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "action": "进入可买观察区，复核毛利率、现金流和短债指标",
-      "reason": "低于保守估值下沿后可能出现安全边际，但需基本面同步确认"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "action": "若基本面同步改善，考虑提高至2%以内仓位",
-      "reason": "价格进入深度折价区，若现金流和债务改善可提高风险预算"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "action": "若未扭亏或财务压力未降，减仓/不追高",
-      "reason": "高于合理价值区间且基本面未修复时风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年半年报或三季报",
-      "reason": "复核2026年半年报收入、毛利率、现金流和债务变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "组件业务毛利率连续两个季度转正",
-      "reason": "复核组件业务是否出现可持续毛利拐点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "扣非归母净利润季度亏损收窄超过50%或转正",
-      "reason": "复核亏损收窄或扭亏是否支持评级上调"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "短期借款、受限货币资金或股权质押出现重大变化",
-      "reason": "复核资产负债表安全边际和流动性风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "HJT组件或储能系统披露重大订单、产能投产、价格和毛利变化",
-      "reason": "复核HJT和储能是否从技术叙事变成利润来源"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "海外贸易政策、关税或汇率导致重大损益变化",
-      "reason": "复核海外收入、关税和汇兑损益对利润的影响"
-    }
-  ],
-  "key_tracking_metrics": [
-    "太阳能电池及组件收入、出货量和毛利率",
-    "储能系统、灯具及辅助光伏产品收入和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "货币资金、受限货币资金、短期借款和一年内到期非流动负债",
-    "财务费用和汇兑损益",
-    "HJT产品出货占比、单瓦成本和订单价格",
-    "境外销售占比及主要海外市场政策变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

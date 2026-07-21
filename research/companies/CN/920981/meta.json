@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920981",
-  "market": "CN",
-  "ticker": "920981",
-  "name": "晶赛科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "需求与产品结构正在修复，但低资本回报、现金流非经常性和并购整合风险尚未改善，当前价格已透支高端晶振放量预期。",
-  "fair_value_range": [18, 24],
-  "buy_zone": [12, 16],
-  "sell_or_reduce_zone": [28, 36],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晶赛科技",
+    "security_status": "active",
+    "symbol": "CN:920981",
+    "ticker": "920981"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "3d71733c803bac11c87e1b802bea61dd77fc09a2573605b60bff6f54dd3e0713"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于14至16元且毛利率不低于15%、峰华亏损收窄、存货增速未显著高于收入",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、峰华整合、毛利率与正常化自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于12至14元且正常化自由现金流转正、核心商业价值未受损",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入有安全边际的观察买入区间，需先复核基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "基本面恶化、并购整合失败或正常化自由现金流假设被证伪时，不因价格下跌加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "进入减仓或不应追高区间，除非现金流与资本回报显著超预期",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、峰华整合、毛利率与正常化自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入有安全边际的观察买入区间，需先复核基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "进入减仓或不应追高区间，除非现金流与资本回报显著超预期"
-    }
-  ],
-  "updated_at": "2026-07-14T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

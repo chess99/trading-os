@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688087",
-  "market": "CN",
-  "ticker": "688087",
-  "name": "英科再生",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "英科再生具备废塑料回收、再生粒子和再生塑料成品一体化能力，2026Q1扣非利润和经营现金流显示主业修复，但当前股价已接近保守合理价值下沿，需等待更厚安全边际或Q2/Q3连续性验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    36,
-    46
-  ],
-  "buy_zone": [
-    28,
-    33
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英科再生",
+    "security_status": "active",
+    "symbol": "CN:688087",
+    "ticker": "688087"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "316ac06d5182475075a3ac917131a047ca94718b3b6bad3b670b156af64b70f9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至28-33元且2026Q2扣非净利率不低于8%、经营现金流保持为正时，建立观察仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "2026年半年报预约披露后复核扣非利润率、现金流、海外订单和资产负债表。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026Q2/Q3连续验证扣非利润率9%-11%、经营现金流/归母净利润大于1且海外订单未恶化时，允许提高配置。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露窗口后验证Q1修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于52元且盈利预测未同步上修，或扣非利润率回落至6%以下时，降低仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后重估全年盈利中枢和自由现金流。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 33.0
+      },
+      "reason": "进入买入区间上沿，需要复核Q2业绩、现金流和订单连续性。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入深度安全边际区间，如基本面未恶化可重新评估买入评级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "超过保守合理价值区间，需要检查是否存在业绩上修，否则考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 33,
-      "reason": "进入买入区间上沿，需要复核Q2业绩、现金流和订单连续性。"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入深度安全边际区间，如基本面未恶化可重新评估买入评级。"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "超过保守合理价值区间，需要检查是否存在业绩上修，否则考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "2026年半年报预约披露后复核扣非利润率、现金流、海外订单和资产负债表。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露窗口后验证Q1修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报披露后重估全年盈利中枢和自由现金流。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

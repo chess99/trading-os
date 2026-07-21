@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:603052",
-  "ticker": "603052",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "可川科技",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "可川科技传统功能性器件业务仍有客户与工艺基础，但2025年增收不增利、2026H1预亏，光模块/硅光业务仍处送样验证阶段，当前市值隐含过高利润修复预期，买方安全边际不足。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    12,
-    22
-  ],
-  "buy_zone": [
-    0,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    120
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "可川科技",
+    "security_status": "active",
+    "symbol": "CN:603052",
+    "ticker": "603052"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "511df41a394987d208d70e8404f64ad67fd488e763d574747ef3444c5bd44412"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前盈利转亏且股价显著高于估值区间，暂不建仓。",
-      "action": "avoid_new_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "复核2026年半年报实际亏损、毛利率、现金流和可川光子进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至15元以下，且半年报后毛利率止跌、经营现金流改善、光模块业务有公告确认收入或订单。",
-      "action": "research_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现盈利修复和费用率改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "归母净利润恢复至8000万元以上，传统业务净利率稳定，光模块新业务开始形成可持续收入。",
-      "action": "consider_small_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入可研究买入区，需要复核毛利率、现金流和新业务订单兑现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "高于基准估值区间上沿较多，若持仓应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入可研究买入区，需要复核毛利率、现金流和新业务订单兑现。"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "高于基准估值区间上沿较多，若持仓应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-22",
-      "reason": "复核2026年半年报实际亏损、毛利率、现金流和可川光子进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现盈利修复和费用率改善。"
-    }
-  ],
-  "tags": [
-    "A股",
-    "功能性器件",
-    "消费电子",
-    "新能源电池",
-    "光模块观察"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

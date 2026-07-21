@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:605599",
-  "market": "CN",
-  "ticker": "605599",
-  "name": "菜百股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "菜百股份是北京强心智、全直营黄金珠宝零售商，2025-2026Q1 业绩受益于黄金投资需求和渠道扩张；当前约 9x TTM PE、分红率约 50% 以上，估值对低成长和现金流波动已有折价，适合在 12.5-14.5 元区间分批买入并以经营现金流、存货和产品结构作为核心复核指标。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    12.5,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "菜百股份",
+    "security_status": "active",
+    "symbol": "CN:605599",
+    "ticker": "605599"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a83a19b27e3a7ba57c88bfe8f120eafde3d21bc93f6ceaab83ee8149554750ca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于14.5元且2026H1未出现经营现金流/存货恶化证据，建立3%-4%观察仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、存货和门店爬坡。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于13.2元且扣非利润增长、分红政策和直营门店爬坡仍正常，加仓至6%。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高金价和投资金需求对利润质量的影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于12.0元且经营现金流修复、金价回落未造成库存损失，最高仓位8%。",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红率和新一年门店扩张计划。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于20元且利润中枢未上修至15亿元以上，降至3%-4%。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.2
+      },
+      "reason": "进入更有安全边际的加仓区，需同步复核经营现金流和存货。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "达到基准合理价值上沿，若业绩中枢未上修应分批降低仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过乐观估值区间，除非利润中枢显著提升，否则风险收益不佳。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.2,
-      "reason": "进入更有安全边际的加仓区，需同步复核经营现金流和存货。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "达到基准合理价值上沿，若业绩中枢未上修应分批降低仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过乐观估值区间，除非利润中枢显著提升，否则风险收益不佳。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非利润、经营现金流、存货和门店爬坡。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高金价和投资金需求对利润质量的影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红率和新一年门店扩张计划。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

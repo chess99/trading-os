@@ -1,30 +1,86 @@
 {
-  "symbol": "HK:9660",
-  "market": "HK",
-  "ticker": "9660",
-  "name": "地平线机器人",
-  "currency": "HKD",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中国智能驾驶平台型公司，有真实量产收入和高成长潜力，但仍处亏损阶段，只有在估值有安全边际时才适合小仓位参与。",
-  "fair_value_range": [4.8, 6.8],
-  "buy_zone": [3.6, 4.4],
-  "sell_or_reduce_zone": [8.5, 11.0],
-  "position_plan": [
-    {"condition": "价格高于 4.40 港元，等待更好买点或更强经营杠杆证据", "max_weight": 0.0},
-    {"condition": "价格在 4.00-4.40 港元，且增长和毛利率假设保持完整", "max_weight": 0.02},
-    {"condition": "价格在 3.60-4.00 港元，且基本面没有受损", "max_weight": 0.04},
-    {"condition": "价格低于 3.60 港元，且新一轮研究确认下跌主要来自估值压缩", "max_weight": 0.06}
+  "identity": {
+    "currency": "HKD",
+    "market": "HK",
+    "name": "地平线机器人",
+    "security_status": "active",
+    "symbol": "HK:9660",
+    "ticker": "9660"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-06-initial.md",
+        "sha256": "51bfde325a0ef5d1ab1302ba111610b92d80a57dec023691c4f00316a8ce2a95"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 中期业绩，重点看收入增长、毛利率和亏损收窄。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-11-30"
+      },
+      "reason": "复查三季度或中报后经营更新，以及车企定点和量产证据。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入买入观察区，需要重做估值和基本面检查。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "估值可能跑在经营兑现前面，需要复查减仓纪律。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-06-initial.md",
-  "report_history": ["reports/2026-07-06-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复查 2026 中期业绩，重点看收入增长、毛利率和亏损收窄。"},
-    {"type": "date", "date": "2026-11-30", "reason": "复查三季度或中报后经营更新，以及车企定点和量产证据。"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 4.4, "reason": "进入买入观察区，需要重做估值和基本面检查。"},
-    {"type": "price_above", "price": 8.5, "reason": "估值可能跑在经营兑现前面，需要复查减仓纪律。"}
-  ],
-  "updated_at": "2026-07-06T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

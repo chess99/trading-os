@@ -1,119 +1,106 @@
 {
-  "symbol": "CN:002375",
-  "market": "CN",
-  "ticker": "002375",
-  "name": "亚厦股份",
-  "company_name": "浙江亚厦装饰股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "建筑装饰老牌龙头仍有项目履约、幕墙和装配式装修能力，2026Q1 收入降幅收窄且扣非利润改善；但行业处于存量收缩期，ROE 约 4%，应收账款和合同资产占用过高，当前 3.37 元处于合理区间内但安全边际不足。",
-  "quality_rating": "B-",
-  "valuation_rating": "中性偏低估",
-  "fair_value_range": [
-    2.9,
-    3.8
-  ],
-  "buy_zone": [
-    2.3,
-    2.7
-  ],
-  "sell_or_reduce_zone": [
-    3.9,
-    4.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亚厦股份",
+    "security_status": "active",
+    "symbol": "CN:002375",
+    "ticker": "002375"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "b1ea9dbba93886772ccddccbf1f88b7564931c49f3b97a95baf63a586f772556"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<=2.30",
-      "action": "强吸引力买入",
-      "position": "2.0%-3.0%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "2.31-2.70",
-      "action": "小仓试错",
-      "position": "1.0%-2.0%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "2.71-3.80",
-      "action": "观察",
-      "position": "0%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "3.81-4.20",
-      "action": "不新增",
-      "position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": ">4.20",
-      "action": "减仓或回避",
-      "position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.7,
-      "reason": "低于安全边际买入价",
-      "condition": "price <= 2.70",
-      "action": "进入安全边际买入区，复核半年报和现金流后可小仓试错"
-    },
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "reason": "低于强吸引力买入价",
-      "condition": "price <= 2.30",
-      "action": "进入强吸引力买入区，若无新增减值或质押风险，可提高至目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 3.9,
-      "reason": "高于不应追高价",
-      "condition": "price > 3.90",
-      "action": "不追高，等待经营数据确认"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "高于无基本面改善时的减仓区",
-      "condition": "price > 4.20",
-      "action": "若无收入和现金流改善，减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证收入降幅是否继续收窄和现金流是否改善的关键节点",
-      "action": "2026 半年报披露后复查收入降幅、扣非利润、经营现金流、应收账款和合同资产"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可检验全年利润、回款和减值风险是否偏离基准假设",
-      "action": "2026 三季报披露后复查订单、现金流、减值和仓位上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.7
+      },
+      "reason": "低于安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.9
+      },
+      "reason": "高于不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "高于无基本面改善时的减仓区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流净额 TTM",
-    "应收账款加合同资产/最近 12 个月收入",
-    "建筑装饰工程和幕墙毛利率",
-    "未完工项目金额与新签订单",
-    "信用减值损失和资产减值损失",
-    "控股股东及实控人质押比例",
-    "每股现金分红"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

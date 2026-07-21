@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:300971",
-  "ticker": "300971",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "博亚精工",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "博亚精工是细分高端板带成形装备和特种装备零部件公司，2025-2026年业绩修复明显，但当前18.50元价格已进入合理价值区间，安全边际不足；等待15.5元以下或半年报确认订单、扣非利润与现金流同步改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    17.0,
-    24.0
-  ],
-  "buy_zone": [
-    13.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    25.0,
-    30.0
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博亚精工",
+    "security_status": "active",
+    "symbol": "CN:300971",
+    "ticker": "300971"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "2b5c6408aab790ff0ce67fda6af750510c52ba07b381c3fc8a6790b932217611"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于15.5元且未出现订单、毛利率或经营现金流恶化，建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、扣非净利润、毛利率、经营现金流、合同负债和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格接近13.0元且2026半年报确认收入、扣非利润和经营现金流同步改善，可提高至核心小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认订单交付和现金流改善是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于25.0元且盈利预测没有上修，降低或不新增仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期盈利中枢和资本配置质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入安全买入区间，需要复核订单、应收账款和经营现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可评估加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "超过合理价值区间上沿，若盈利未上修应考虑减仓或避免追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入安全买入区间，需要复核订单、应收账款和经营现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入深度安全边际区间，若基本面未恶化可评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "超过合理价值区间上沿，若盈利未上修应考虑减仓或避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、扣非净利润、毛利率、经营现金流、合同负债和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认订单交付和现金流改善是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期盈利中枢和资本配置质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

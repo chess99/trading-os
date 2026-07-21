@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:688707",
-  "market": "CN",
-  "ticker": "688707",
-  "name": "振华新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "振华新材具备央企背景、三元正极经验和钠电/固态相关材料技术期权，但2025年及2026Q1仍处于收入下滑、毛利率为负、连续亏损阶段；当前价格接近基准估值上沿，需等待毛利率转正、订单批量化和现金流改善后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    5.5,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "振华新材",
+    "security_status": "active",
+    "symbol": "CN:688707",
+    "ticker": "688707"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "8da1a71c70a2b6117ef97ca1b435e98d46af57c7b9b80b9c5f8eafdfaa0d6082"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察；若单季毛利率转正、收入连续两个季度环比改善、经营现金流不再显著恶化且股价进入买入区，再考虑试探仓。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、毛利率、经营现金流、存货和新产品订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026H1后仍毛利率为负或新产品无批量订单，即使股价回落也不加仓。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入估算买入区上沿，需要复核毛利率、现金流和订单改善是否同步出现。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损是否收窄及产能利用率是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "超过基准估值区间且经营尚未验证时，风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、毛利率、经营现金流、存货和新产品订单。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入估算买入区上沿，需要复核毛利率、现金流和订单改善是否同步出现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损是否收窄及产能利用率是否改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "超过基准估值区间且经营尚未验证时，风险收益比恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

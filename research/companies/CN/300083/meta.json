@@ -1,31 +1,105 @@
 {
-  "buy_zone": [5, 6.5],
-  "currency": "CNY",
-  "current_rating": "watch",
-  "current_thesis": "国内CNC钻攻机龙头但商业模式有重大瑕疵：1654M高商誉悬顶（占净资产31%）、经营性现金流弱于名义利润、2025Q4非经常性损失吞噬利润、正常化PE约50倍，明显偏贵；等待商誉清理+OCF改善后再评估",
-  "fair_value_range": [6.5, 11],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "market": "CN",
-  "name": "创世纪",
-  "position_plan": [
-    {"condition": "股价跌至6.5元以下（PE_normalized<25倍）且未出现新的商誉减值", "max_weight": 0.015},
-    {"condition": "股价跌至5元以下（PE_normalized<20倍）且OCF连续两季度显著改善", "max_weight": 0.03},
-    {"condition": "未达条件，仅在观察清单跟踪", "max_weight": 0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创世纪",
+    "security_status": "active",
+    "symbol": "CN:300083",
+    "ticker": "300083"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "c9def3d687a2534e9de7e3e0a9ce2bed093ec37a16a3f16d1f4926d2fd9f603e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露，重点核实Q2扣非净利润、OCF、应收/存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露，跟踪是否再次发生减值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年度报告披露，重点验证全年商誉及减值情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入有安全边际的买入区间，需结合基本面复查后行动",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "强吸引力买入区间，可考虑分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "明显偏贵区间，不应追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "price_triggers": [
-    {"price": 6.5, "reason": "进入有安全边际的买入区间，需结合基本面复查后行动", "type": "price_below"},
-    {"price": 5, "reason": "强吸引力买入区间，可考虑分批建仓", "type": "price_below"},
-    {"price": 14, "reason": "明显偏贵区间，不应追高或考虑减仓", "type": "price_above"}
-  ],
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"date": "2026-08-31", "reason": "2026年中报披露，重点核实Q2扣非净利润、OCF、应收/存货变化", "type": "date"},
-    {"date": "2026-10-31", "reason": "2026年三季报披露，跟踪是否再次发生减值", "type": "date"},
-    {"date": "2027-04-30", "reason": "2026年年度报告披露，重点验证全年商誉及减值情况", "type": "date"}
-  ],
-  "sell_or_reduce_zone": [14, 99],
-  "status": "active",
-  "symbol": "CN:300083",
-  "ticker": "300083",
-  "updated_at": "2026-07-09T03:25:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

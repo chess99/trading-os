@@ -1,117 +1,87 @@
 {
-  "symbol": "CN:300730",
-  "ticker": "300730",
-  "name": "科创信息",
-  "market": "CN",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "低",
-  "current_thesis": "区域数字政府和数据要素修复标的，但2025年亏损、低毛利、减值和监管处罚使当前估值缺少安全边际，需等待价格回落或经营现金流实质改善。",
-  "price": {
+  "identity": {
     "currency": "CNY",
-    "as_of": "2026-07-13",
-    "close": 12.28,
-    "source": "新浪财经/公开行情页"
+    "market": "CN",
+    "name": "科创信息",
+    "security_status": "active",
+    "symbol": "CN:300730",
+    "ticker": "300730"
   },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "30ec74eea68d6b9e969b02267d46512d7ff2a638ca79eec78f9f0e3e2e36b5be"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "??2026???/?????????????????????????????????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入观察买入区间，市值对政策期权和经营修复的不确定性已有部分折价。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入更有安全边际的跟踪区间，可结合最新订单、现金流和减值情况评估小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "在公司仍亏损且现金流未年度转正前，主题估值溢价过高，应避免追高或降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "base_case_fair_value": [
-      6.1,
-      8.1
-    ],
-    "bear_case_value": [
-      2.1,
-      5.1
-    ],
-    "bull_case_value": [
-      8.1,
-      12.0
-    ],
-    "buy_zone": [
-      6.0,
-      7.0
-    ],
-    "sell_zone": [
-      13.0,
-      16.0
-    ],
-    "currency": "CNY"
-  },
-  "buy_zone": [
-    6.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    16.0
-  ],
-  "price_range": [
-    6.0,
-    7.0
-  ],
-  "fair_value_range": [
-    6.1,
-    8.1
-  ],
-  "position_plan": [
-    {
-      "condition": "仅在股价进入6.0-7.0元安全边际区间，或公司连续两个季度收入恢复、亏损收窄且经营现金流同比改善后，建立观察仓；盈利兑现前不重仓。",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入观察买入区间，市值对政策期权和经营修复的不确定性已有部分折价。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入更有安全边际的跟踪区间，可结合最新订单、现金流和减值情况评估小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "在公司仍亏损且现金流未年度转正前，主题估值溢价过高，应避免追高或降低风险暴露。"
-    }
-  ],
-  "watch_items": [
-    "2026年二、三、四季度收入验收节奏",
-    "经营活动现金流和应收款项回收",
-    "数字政府业务毛利率是否从10%左右修复",
-    "湖南数据产业集团协同项目是否形成实质收入和利润",
-    "是否继续发生大额资产减值或监管事项"
-  ],
-  "sources": [
-    {
-      "title": "科创信息：2025年年度报告",
-      "date": "2026-04-25",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225181172.PDF"
-    },
-    {
-      "title": "科创信息：2026年第一季度报告",
-      "date": "2026-04-27",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-27/1225183267.PDF"
-    },
-    {
-      "title": "湖南证监局行政处罚决定书〔2026〕4号",
-      "date": "2026",
-      "url": "https://www.csrc.gov.cn/hunan/c104482/c7622021/content.shtml"
-    }
-  ],
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "??2026???/?????????????????????????????????"
-    }
-  ]
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

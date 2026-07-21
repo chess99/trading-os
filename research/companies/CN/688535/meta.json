@@ -1,100 +1,101 @@
 {
-  "symbol": "CN:688535",
-  "market": "CN",
-  "ticker": "688535",
-  "name": "华海诚科",
-  "company_name": "华海诚科",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华海诚科是A股稀缺的半导体环氧塑封料龙头整合平台，收购衡所华威后高性能与先进封装材料布局增强；但2026-07-10至07-17没有新增公告、业绩预告或快报，利润率、现金流和先进封装量产仍待中报验证。2026-07-17收盘价111.65元虽较07-09回撤37.7%，仍高于55-85元合理价值，维持观察、当前不买和0仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    55,
-    85
-  ],
-  "buy_zone": [
-    45,
-    65
-  ],
-  "sell_or_reduce_zone": [
-    110,
-    160
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华海诚科",
+    "security_status": "active",
+    "symbol": "CN:688535",
+    "ticker": "688535"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "0cb3f1622010a479fc8636423eb9be51b97d2f7c6afbb254c73e2c7e3d486dfc"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "056b76fad7e46f17538274cbc3bf2a02119f81bff23725ec07facf6d756aa97e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且没有新增利润证据",
-      "action": "维持空仓观察",
-      "max_weight": 0,
-      "reason": "111.65元仍比合理价值上沿高约31%，不因连续下跌机械补仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看并表后利润率、现金流和先进封装进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于80元且2026年中报显示收入、毛利率和经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入可研究区间，但先进封装放量仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认衡所华威整合和全年盈利趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于65元且先进封装或高性能产品客户导入有公开证据",
-      "action": "加至研究仓",
-      "max_weight": 0.03,
-      "reason": "进入买入区上沿，赔率改善但仍需控制并购整合风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "进入合理价值上沿，需要复核中报与先进封装量产证据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格低于55元且衡所华威并表后净利率、现金流和订单质量同步改善",
-      "action": "提高至中等研究仓",
-      "max_weight": 0.05,
-      "reason": "进入合理价值下沿并获得经营质量验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 65.0
+      },
+      "reason": "进入买入区上沿，需要重新核验基本面和并购整合",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 110.0
+      },
+      "reason": "高于合理价值上沿约30%，原则上不新增仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "进入合理价值上沿，需要复核中报与先进封装量产证据"
-    },
-    {
-      "type": "price_below",
-      "price": 65,
-      "reason": "进入买入区上沿，需要重新核验基本面和并购整合"
-    },
-    {
-      "type": "price_above",
-      "price": 110,
-      "reason": "高于合理价值上沿约30%，原则上不新增仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看并表后利润率、现金流和先进封装进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认衡所华威整合和全年盈利趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "半导体材料毛利率",
-    "先进封装类产品收入占比",
-    "衡所华威并表后收入和利润贡献",
-    "经营活动现金流量净额",
-    "应收账款和存货周转",
-    "研发投入占营业收入比例",
-    "定向可转债转股余额和总股本变化",
-    "主要股东减持或询价转让进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,56 +1,77 @@
 {
-  "symbol": "CN:920351",
-  "market": "CN",
-  "ticker": "920351",
-  "name": "华光源海",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "区域江海联运网络尚未转化为稳定高回报自由现金流，当前约54.5倍行情口径PE和2.26倍PB已透支核心利润与现金流修复预期。",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    4.2,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华光源海",
+    "security_status": "active",
+    "symbol": "CN:920351",
+    "ticker": "920351"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "6c0e9fbfccc2a1a9cec1e9449f648b8c9118fcf7c0265b30d3a7f8fab72a6010"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.2至5.0元且扣非盈利、应收质量和滚动自由现金流未继续恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年半年报或三季报中的收入、扣非利润、应收减值、经营现金流及新船利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.2元并重新验证长期商业价值未受损，不因坏账、事故或资本配置恶化而下跌",
-      "max_weight": 0.015
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年半年报或三季报中的收入、扣非利润、应收减值、经营现金流及新船利用率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入研究区，只有基本面未恶化且现金流赔率改善时才考虑小仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入研究区，只有基本面未恶化且现金流赔率改善时才考虑小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "进入减仓或不应追高区间，估值开始明显高于保守公允价值"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "进入减仓或不应追高区间，估值开始明显高于保守公允价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-18T20:40:26+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

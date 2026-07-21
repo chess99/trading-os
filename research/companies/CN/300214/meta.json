@@ -1,130 +1,133 @@
 {
-  "symbol": "CN:300214",
-  "market": "CN",
-  "ticker": "300214",
-  "name": "日科化学",
-  "company_name": "山东日科化学股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "本体 PVC/氯碱改性材料业务处于成熟周期行业，2025 年收入增长但仍亏损，低毛利和低 ROE 不支持高估值；2026 年 7 月拟收购亘元新材 70.75% 股权带来重估期权，但标的盈利持续性、交易作价和发行稀释尚未核验，当前价格已提前反映乐观预期，适合观察而非追买。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.5,
-    10.5
-  ],
-  "buy_zone": [
-    0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "日科化学",
+    "security_status": "active",
+    "symbol": "CN:300214",
+    "ticker": "300214"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "bea719281fb0d3d5ded9a2cd6b851687508da2884453b9f021bbafa9cec21c76"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 11.0 元，且亘元新材交易作价、审计利润、发行稀释尚未披露或未被验证",
-      "action": "不买入，维持 0% 仓位",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价低于 7.5 元，且重组方案显示标的盈利可持续、作价合理、股份稀释可控",
-      "action": "可建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 5.5 元，且公司未出现现金流恶化、重大减值或重组失败后的基本面恶化",
-      "action": "可建立研究性底仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "亘元新材经审计后可持续贡献归母利润且本体毛利率修复，股价仍低于 7.5 元",
-      "action": "可加至中等仓位上限",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
-      "reason": "进入并购中性情景可讨论区间",
-      "action": "复核重组方案并评估是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "currency": "CNY",
-      "reason": "接近本体资产折价和正常化估值区间",
-      "action": "复核现金流和重组风险后评估研究性底仓"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "currency": "CNY",
-      "reason": "价格已超过中性并购情景估值上沿",
-      "action": "若并购细节未充分兑现，维持不买或考虑降低已有仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "currency": "CNY",
-      "reason": "需要乐观情景完全兑现才可解释估值",
-      "action": "除非标的盈利和交易条款明显优于预期，否则回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "重大资产重组细节是当前估值核心变量",
-      "condition": "披露重大资产重组正式草案、审计报告、评估报告或交易所问询回复",
-      "action": "复核交易作价、盈利持续性、发行稀释和监管反馈"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "需要验证亘元新材 2026Q1 高利润是否可持续",
-      "condition": "亘元新材 2026 年半年度或年度盈利与现金流显著低于 2026Q1 年化水平",
-      "action": "下调并购情景估值并重新评估是否继续观察"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "本体毛利率决定不含并购时的资产价值下限",
-      "condition": "公司本体 PVC 塑料改性剂毛利率连续两个季度低于 3% 或高于 8%",
-      "action": "复核本体盈利修复或恶化幅度"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "算力业务低毛利且与主业协同有限，需防止资本配置风险",
-      "condition": "算力服务业务出现大额应收款、减值、亏损或重大合同变更",
-      "action": "复核资本配置和减值风险"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "短债和现金流决定周期下行时的安全边际",
-      "condition": "短期借款和一年内到期负债合计继续上升且经营现金流转负",
-      "action": "复核流动性风险和仓位上限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入并购中性情景可讨论区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "接近本体资产折价和正常化估值区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "价格已超过中性并购情景估值上沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "需要乐观情景完全兑现才可解释估值",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "亘元新材交易作价、发行股份价格、现金支付比例和配套融资规模",
-    "亘元新材经审计收入、毛利率、净利润、经营现金流和客户集中度",
-    "PVC 塑料改性剂收入、销量、毛利率和库存",
-    "氯碱化工产品价差、开工率和毛利率",
-    "人工智能算力综合服务收入、毛利率、应收账款和减值",
-    "经营现金流净额、短期借款、一年内到期非流动负债、货币资金",
-    "前五大客户销售占比和前五大供应商采购占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

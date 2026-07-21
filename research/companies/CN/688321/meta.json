@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688321",
-  "market": "CN",
-  "ticker": "688321",
-  "name": "微芯生物",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "微芯生物已经从高研发投入、盈利波动阶段切入两款商业化产品放量阶段，西格列他钠是主要增长引擎，西达本胺提供稳定性，西奥罗尼和早期管线提供期权；但2026-07-17收盘价约27.95元对应估值已反映较多增长预期，现价缺少足够安全边际，宜等待23元以下或半年度数据进一步确认。",
-  "fair_value_range": [
-    24,
-    34
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "微芯生物",
+    "security_status": "active",
+    "symbol": "CN:688321",
+    "ticker": "688321"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "04b56d4cf89e7f3d3970404736575e5582f2bff7b90a31d7bf12836639fec24f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于23元且2026半年报确认西格列他钠收入继续高增、经营现金流为正、应收账款周转未明显恶化时，建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查西格列他钠收入增速、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若西奥罗尼胰腺癌III期入组或数据进展明确，同时2026全年收入超过12亿元且归母净利润超过1.8亿元，可提高仓位上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认全年收入和利润是否达到基础估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于38元但缺少新增临床或授权催化，或西格列他钠增速低于40%且费用率回升，则不加仓并降至低配",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报、研发费用率、医保准入和西奥罗尼管线进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "低于买入区间上沿，若基本面未恶化可重新评估建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "高于减持区间下沿，若无西奥罗尼或外部授权重大利好则估值风险上升",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "低于买入区间上沿，若基本面未恶化可重新评估建立观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "高于减持区间下沿，若无西奥罗尼或外部授权重大利好则估值风险上升"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查西格列他钠收入增速、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认全年收入和利润是否达到基础估值假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报、研发费用率、医保准入和西奥罗尼管线进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

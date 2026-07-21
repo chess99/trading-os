@@ -1,101 +1,96 @@
 {
-  "symbol": "CN:002065",
-  "market": "CN",
-  "ticker": "002065",
-  "name": "东华软件",
-  "company_name": "东华软件",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "东华软件具备医疗IT、金融IT、政企软件和信创客户基础，但2025年增收不增利、应收账款和存货占用高、ROE偏低；当前估值已接近乐观情景，需等待价格回落或扣非净利、毛利率、经营现金流和回款连续改善后再考虑小仓位买入。",
-  "quality_rating": "medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.8,
-    6.4
-  ],
-  "buy_zone": [
-    4.5,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东华软件",
+    "security_status": "active",
+    "symbol": "CN:002065",
+    "ticker": "002065"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "abc81781ac49e21b573073ed4356a491e799e52961513fbd3a28769ad597bd76"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于7.0元且未看到扣非净利、毛利率、回款同步改善",
-      "action": "不新开仓，维持观察",
-      "max_weight": 0,
-      "reason": "当前估值已接近乐观情景起点，利润质量和资本效率不足以支撑追买"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、扣非净利、经营现金流、应收账款和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至5.2元以下，且无新增回款、治理或重大订单质量负面信号",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区并提供安全边际，可用小仓位验证医疗IT、金融IT、信创和AI兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认AI、信创、医疗IT和金融IT是否兑现为利润与回款改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报或三季报显示扣非净利同比增长超过20%，经营现金流为正，应收账款/收入比下降",
-      "action": "提高至低配仓位",
-      "max_weight": 0.02,
-      "reason": "核心矛盾从收入规模转向利润和回款改善，估值折价可部分收窄"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入研究买入区，可复核半年度财务质量后考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于8.0元但未见扣非净利率和现金流实质改善",
-      "action": "减持或不加仓",
-      "max_weight": 0.005,
-      "reason": "价格主要反映AI/信创主题溢价，基本面验证不足"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "进入减持或不加仓区，需要重新检验估值是否由利润兑现支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "已接近乐观情景估值，若无基本面超预期应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入研究买入区，可复核半年度财务质量后考虑首笔仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "进入减持或不加仓区，需要重新检验估值是否由利润兑现支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "已接近乐观情景估值，若无基本面超预期应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、扣非净利、经营现金流、应收账款和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认AI、信创、医疗IT和金融IT是否兑现为利润与回款改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "毛利率",
-    "经营活动现金流净额",
-    "应收账款/TTM收入",
-    "存货/TTM收入",
-    "短期借款与货币资金差额",
-    "研发费用率",
-    "医疗IT订单与回款",
-    "金融IT订单与回款",
-    "政企信创项目毛利率",
-    "AI产品合同和复购收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

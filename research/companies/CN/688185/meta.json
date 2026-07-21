@@ -1,79 +1,95 @@
 {
-  "symbol": "CN:688185",
-  "market": "CN",
-  "ticker": "688185",
-  "name": "康希诺",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "康希诺已从新冠疫苗周期切换为创新细菌疫苗平台公司，曼海欣扩龄、优佩欣上市、盼康欣获批和海外注册构成2026-2027年增长主线；但扣非盈利仍待验证，适合在45-52元区间以小仓位买入并用收入、现金流和批签发节奏持续验证。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    58,
-    70
-  ],
-  "buy_zone": [
-    45,
-    52
-  ],
-  "sell_or_reduce_zone": [
-    85,
-    100
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康希诺",
+    "security_status": "active",
+    "symbol": "CN:688185",
+    "ticker": "688185"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "dda930b8afb6ecf838ac7289bd331b6056bf6b971b6130ef85e967b055c358c4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于45-52元买入区且未出现产品放量恶化信号，建立观察型仓位。",
-      "action": "buy_initial",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、扣非净利、现金流和核心产品放量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌破46元且2026年收入、毛利率、批签发和现金流指标未恶化。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年收入目标可达性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报确认收入高增长、扣非亏损明显收窄且经营现金流改善。",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、管线进度和2027年盈利拐点假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价进入85元以上区间但盈利预测未同步上修，或连续两个季度收入低于预期且扣非亏损扩大。",
-      "action": "reduce_or_review",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 46.0
+      },
+      "reason": "跌入高安全边际区域，若基本面未变坏可加仓复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 85.0
+      },
+      "reason": "进入牛市情景估值下沿，需要用业绩上修支持，否则应减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 46,
-      "reason": "跌入高安全边际区域，若基本面未变坏可加仓复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 85,
-      "reason": "进入牛市情景估值下沿，需要用业绩上修支持，否则应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、扣非净利、现金流和核心产品放量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年收入目标可达性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、管线进度和2027年盈利拐点假设。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

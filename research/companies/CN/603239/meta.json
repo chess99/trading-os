@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:603239",
-  "market": "CN",
-  "ticker": "603239",
-  "name": "浙江仙通",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "浙江仙通是汽车密封条细分领域盈利质量较好的本土供应商，2025年收入和利润高增长、资产负债表稳健，受益于自主新能源客户和无边框密封条升级；但2026年一季度收入利润同比下滑，再融资也存在摊薄和募投回报不确定性。当前约16-18倍利润口径估值具备一定安全边际，适合小仓买入并用半年报验证增长恢复。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    16.0,
-    20.0
-  ],
-  "buy_zone": [
-    10.5,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    25.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浙江仙通",
+    "security_status": "active",
+    "symbol": "CN:603239",
+    "ticker": "603239"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "ac8c92d875aaaee239ee45a8ef938efc7e582afd67961170639835641d4f9693"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于13.5元且未出现客户流失、质量事故或毛利率明显下滑，可建立观察仓。",
-      "action": "buy_initial",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流和新能源客户进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12.0元，且2026年半年报收入恢复增长或经营现金流明显改善。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认一季度下滑是否已修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报继续收入和利润双降，或毛利率跌破32%。",
-      "action": "hold_or_reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和再融资募投项目进展，更新长期估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入更有吸引力的安全边际区间，需要复核基本面后评估加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "股价接近乐观情景估值下沿，若盈利预测未上修应减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入更有吸引力的安全边际区间，需要复核基本面后评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "股价接近乐观情景估值下沿，若盈利预测未上修应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、现金流和新能源客户进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认一季度下滑是否已修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和再融资募投项目进展，更新长期估值。"
-    }
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

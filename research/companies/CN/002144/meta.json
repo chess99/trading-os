@@ -1,97 +1,96 @@
 {
-  "symbol": "CN:002144",
-  "market": "CN",
-  "ticker": "002144",
-  "name": "宏达高科",
-  "company_name": "宏达高科",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "宏达高科是汽车内饰经编面料为主、医疗超声器械为辅并带有投资资产的低PB低ROE标的；当前价格接近合理价值上沿，需等待8.8元以下安全边际或中报证明收入和ROE修复后再买入。",
-  "quality_rating": "medium",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    8.8,
-    11.6
-  ],
-  "buy_zone": [
-    7.2,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏达高科",
+    "security_status": "active",
+    "symbol": "CN:002144",
+    "ticker": "002144"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "bc9c34d7ad4ecaacf5db965d9ddd74e7f08c198511fa1e78e7850335d3c3dbe0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于8.8元且缺少2026中报收入恢复证据",
-      "action": "不买入，仅跟踪",
-      "max_weight": 0,
-      "reason": "当前约50倍TTM PE、约85倍扣非TTM PE，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-24"
+      },
+      "reason": "公司预计披露2026年中报，复核收入、毛利率、现金流和医疗器械进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.8元，且未出现新的减值或订单恶化信号",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "进入合理价值下沿附近，可用小仓位验证低PB资产价值"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年盈利和经营现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.6元，且中报显示经营现金流为正、面料收入止跌、医疗器械未继续显著下滑",
-      "action": "加仓至中等偏低仓位",
-      "max_weight": 0.04,
-      "reason": "价格接近0.6倍2026Q1 PB，若基本面止跌则风险收益改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入首笔观察仓价格区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于12.5元且无ROE回升至4%以上或收入恢复增长证据",
-      "action": "减仓或退出",
-      "max_weight": 0.01,
-      "reason": "估值已超过中性情景，扣非收益率不足以支撑继续持有"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入加仓复核区，需要结合中报现金流和收入趋势",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "进入减仓复核区，若基本面未同步改善则估值偏高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入首笔观察仓价格区"
-    },
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入加仓复核区，需要结合中报现金流和收入趋势"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "进入减仓复核区，若基本面未同步改善则估值偏高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-24",
-      "reason": "公司预计披露2026年中报，复核收入、毛利率、现金流和医疗器械进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年盈利和经营现金流趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026中报营业收入同比增速",
-    "交运面料收入和毛利率",
-    "医疗器械收入和毛利率",
-    "经营活动现金流量净额",
-    "扣非归母净利润率",
-    "加权ROE",
-    "长期股权投资和商誉减值风险",
-    "2026年高端功能性面料和碳纤维复合材料项目资本开支进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

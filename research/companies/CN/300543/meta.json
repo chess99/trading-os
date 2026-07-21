@@ -1,89 +1,105 @@
 {
-  "symbol": "CN:300543",
-  "market": "CN",
-  "ticker": "300543",
-  "name": "朗科智能",
-  "company_name": "深圳市朗科智能电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备智能控制器、新能源电池包/BMS、智能终端ODM制造能力和海外产能，但2025年利润大幅下滑、2026Q1转亏，客户集中度高、毛利率低、汇率与产能爬坡风险仍未消化；2026-07-13收盘价6.79元缺乏安全边际，等待4.2元以下或利润率修复后再评估。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.0,
-    5.5
-  ],
-  "buy_zone": [
-    3.6,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗科智能",
+    "security_status": "active",
+    "symbol": "CN:300543",
+    "ticker": "300543"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "47d4781c99747c1b94fe63604d2a8d74337a9c8f5d2c06f22260c48c77d5b20b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于5.5元，且扣非净利润未恢复至年化5000万元以上",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证毛利率、扣非净利润、经营现金流和越南/安徽产能爬坡",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.2元，且最近一个季度收入没有继续双位数下滑、经营现金流转正",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.6元，同时毛利率回到17%以上、第一大客户占比下降或新客户放量被验证",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新客户集中度、地区结构、分产品毛利率和资本开支回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入观察建仓区，复核最新季度毛利率、经营现金流和客户集中度",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "若基本面未继续恶化，可评估提高至标准仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "若利润修复未被验证，应减仓或放弃买入",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入观察建仓区，复核最新季度毛利率、经营现金流和客户集中度"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "若基本面未继续恶化，可评估提高至标准仓"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "若利润修复未被验证，应减仓或放弃买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证毛利率、扣非净利润、经营现金流和越南/安徽产能爬坡"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新客户集中度、地区结构、分产品毛利率和资本开支回报"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率是否回到17%以上",
-    "扣非归母净利润是否恢复到单季1250万元以上",
-    "第一大客户销售占比是否从42.57%下降",
-    "越南朗科和朗科实业是否减亏并转正",
-    "经营现金流是否连续两个季度为正",
-    "财务费用和汇兑损益是否回到可控水平",
-    "新能源和智能终端收入是否恢复增长且毛利率不低于公司平均"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

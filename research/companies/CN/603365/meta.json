@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603365",
-  "market": "CN",
-  "ticker": "603365",
-  "name": "水星家纺",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "水星家纺是低增速但现金流、分红和资产负债表质量较好的家纺品牌公司；当前价格约对应 10-11 倍 TTM PE，低于基准合理价值区间，适合在 18.5 元以下分批买入并以收入、费用率、现金流和分红纪律跟踪验证。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    21,
-    27
-  ],
-  "buy_zone": [
-    16,
-    18.5
-  ],
-  "sell_or_reduce_zone": [
-    27,
-    34
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "水星家纺",
+    "security_status": "active",
+    "symbol": "CN:603365",
+    "ticker": "603365"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "17c4a3406697757ce4562b99c4c80eb7bbb8e2b5d5afa3cdeac91f580b9e579f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 18.5 元且未出现连续两个季度收入下滑、销售费用率上升和经营现金流恶化的组合信号时，分批建仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、利润、现金流、存货和渠道费用变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 16.5 元且最新季度归母净利润、经营现金流和分红纪律仍符合基准假设时，可加仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年 4.5-4.8 亿元归母净利润假设是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 27 元或估值超过 14 倍前瞻 PE，而利润增速未明显上移时，逐步降仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报、分红方案和下一年度增长指引。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "进入更高安全边际区，若基本面未恶化，可提高仓位上限。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "超过基准合理价值上沿，除非盈利增长显著超预期，否则应减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "进入更高安全边际区，若基本面未恶化，可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "reason": "超过基准合理价值上沿，除非盈利增长显著超预期，否则应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、利润、现金流、存货和渠道费用变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年 4.5-4.8 亿元归母净利润假设是否成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报、分红方案和下一年度增长指引。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

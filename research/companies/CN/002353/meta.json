@@ -1,137 +1,96 @@
 {
-  "symbol": "CN:002353",
-  "market": "CN",
-  "ticker": "002353",
-  "name": "杰瑞股份",
-  "company_name": "杰瑞股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-08T12:30:00+08:00",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "conclusion": "杰瑞股份是油气装备、海外天然气与数据中心电力新业务共同驱动的高质量能源装备公司，但2026-07-08盘中163.65元对应估值偏贵，不适合追高，等待100元以下更有安全边际。",
-  "current_rating": "watch",
-  "current_thesis": "油气装备与海外天然气业务构成高质量主业，北美数据中心电力订单提供第二成长曲线，但当前估值已透支乐观预期，需等待现金流和订单兑现或价格回落。",
-  "quality_rating": "A-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    110,
-    140
-  ],
-  "fair_value_basis": "相对估值、绝对估值与情景估值综合；对应优秀周期装备龙头在海外和数据中心订单兑现前提下的合理区间。",
-  "buy_zone": [
-    80,
-    100
-  ],
-  "buy_zone_reason": "100元以下开始给予油气装备周期和数据中心订单执行风险足够折价；80元以下进入强吸引力区。",
-  "strong_buy_below": 80,
-  "sell_or_reduce_zone": [
-    145,
-    180
-  ],
-  "sell_or_reduce_zone_reason": "145元以上已明显计入乐观增长预期，160元以上接近乐观情景上沿，除低成本仓位外不宜增加风险暴露。",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "杰瑞股份",
+    "security_status": "active",
+    "symbol": "CN:002353",
+    "ticker": "002353"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "8af24cdf104a05f0c2d15bdc6d12bd2fedb4ce5470dec937ea6c53bd736357b1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前163.65元处于不追高区，仅适合观察仓；100元以下才考虑分批建立核心仓。",
-      "max_weight": 0.05,
-      "initial_weight": 0.01,
-      "current_action": "不追高；如需跟踪，仅0.5%-1.0%观察仓。",
-      "add_rule": "100元以下分批建立核心观察仓，80元以下才考虑提高到3%-5%。",
-      "reduce_rule": "145元以上不加仓；160元以上若仓位较重可分批降风险。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年半年报披露后复查订单兑现、现金流和两金。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复查全年利润和经营现金流趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入安全边际买入区，复核后可分批建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未破坏可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 145.0
+      },
+      "reason": "超过合理价上沿，不追高；已有仓位需控制风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "watch": [
-    "北美数据中心燃气轮机发电机组订单的交付、毛利率和回款",
-    "海外收入占比和海外新增订单占比",
-    "经营现金流净额/归母净利润",
-    "应收账款、合同资产、存货与合同负债变化",
-    "天然气设备及工程服务收入增速",
-    "新能源及再生循环业务毛利和现金流贡献"
-  ],
-  "tracking_indicators": [
-    {
-      "name": "经营现金流质量",
-      "target": "全年经营现金流净额/归母净利润回到1倍以上",
-      "reason": "2026Q1经营现金流为-12.64亿元，是当前最大反向信号。"
-    },
-    {
-      "name": "海外收入占比",
-      "target": "稳定在50%左右或继续提升",
-      "reason": "海外化是公司估值溢价的重要来源。"
-    },
-    {
-      "name": "数据中心电力订单兑现",
-      "target": "收入确认、毛利率、回款均有季度证据",
-      "reason": "当前市场高估值主要依赖该第二成长曲线。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 100,
-      "currency": "CNY",
-      "reason": "进入安全边际买入区，复核后可分批建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 80,
-      "currency": "CNY",
-      "reason": "进入强吸引力买入区，若基本面未破坏可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 145,
-      "currency": "CNY",
-      "reason": "超过合理价上沿，不追高；已有仓位需控制风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年半年报披露后复查订单兑现、现金流和两金。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复查全年利润和经营现金流趋势。"
-    }
-  ],
-  "review_plan": "半年报披露后重点复查北美数据中心订单收入确认、毛利率和回款；若股价先跌破100元则提前复核。三季报后再确认经营现金流是否修复。",
-  "key_risks": [
-    "油价和上游资本开支下行导致油气装备与油服订单延后或毛利下降",
-    "北美数据中心电力订单交付不及预期或毛利率低于市场预期",
-    "海外地缘政治、贸易摩擦、关税、汇兑和外汇管制风险",
-    "应收账款、合同资产、客户融资担保带来的信用损失风险",
-    "新能源、SMR、热管理等新业务扩张过快导致资本配置失误",
-    "当前估值偏高导致季度波动时估值收缩"
-  ],
-  "sources": [
-    {
-      "title": "杰瑞股份2025年年度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225113312.PDF",
-      "type": "annual_report",
-      "date": "2026-04-17"
-    },
-    {
-      "title": "杰瑞股份2026年第一季度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-17/1225113322.PDF",
-      "type": "quarterly_report",
-      "date": "2026-04-17"
-    },
-    {
-      "title": "腾讯行情 sz002353",
-      "url": "https://qt.gtimg.cn/q=sz002353",
-      "type": "quote",
-      "date": "2026-07-08"
-    },
-    {
-      "title": "新浪行情 sz002353",
-      "url": "https://hq.sinajs.cn/list=sz002353",
-      "type": "quote",
-      "date": "2026-07-08"
-    }
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:688522",
-  "market": "CN",
-  "ticker": "688522",
-  "name": "纳睿雷达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "纳睿雷达是A股稀缺的民用全极化有源相控阵雷达标的，受益于气象现代化、水利防灾、海洋监测和低空监视需求扩张。2025年和2026Q1收入利润继续增长，2026Q1新签合同高增，但现金流仍为负、项目制和公共预算节奏带来波动。现价约20元附近安全边际一般，适合观察或小仓位跟踪，等待订单兑现和回款改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    22.0,
-    30.0
-  ],
-  "buy_zone": [
-    15.0,
-    18.5
-  ],
-  "sell_or_reduce_zone": [
-    34.0,
-    40.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "纳睿雷达",
+    "security_status": "active",
+    "symbol": "CN:688522",
+    "ticker": "688522"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "144c086d17c0dedb6fea50ed1a74ae7075889848b8331bef487be665078e3a99"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入18.5元以下，且新签合同、毛利率和回款未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入确认、订单、毛利率与经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入16元以下，且2026年收入确认和经营现金流改善得到验证",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及低空/水利订单兑现情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于34元且未来两年利润中枢未上修到3亿元以上",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断高增长是否转化为现金流和利润质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "进入初步买入区，若订单和回款未破坏，赔率改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入更高安全边际区，可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入明显高估区，需要利润中枢上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "reason": "进入初步买入区，若订单和回款未破坏，赔率改善"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入更高安全边际区，可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 34.0,
-      "reason": "进入明显高估区，需要利润中枢上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入确认、订单、毛利率与经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及低空/水利订单兑现情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断高增长是否转化为现金流和利润质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

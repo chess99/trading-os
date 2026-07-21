@@ -1,80 +1,95 @@
 {
-  "symbol": "CN:002431",
-  "market": "CN",
-  "ticker": "002431",
-  "name": "ST棕榈",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "ST棕榈当前属于高风险困境资产：2025年审计报告提示持续经营重大不确定性，2026Q1归母权益仅约2.97亿元且上半年预告继续亏损；国资支持和控股股东降息只能提高保壳概率，尚不足以支撑当前股价，普通组合不应买入。",
-  "fair_value_range": [
-    0.2,
-    0.45
-  ],
-  "buy_zone": [
-    0.15,
-    0.25
-  ],
-  "sell_or_reduce_zone": [
-    0.8,
-    1.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST棕榈",
+    "security_status": "active",
+    "symbol": "CN:002431",
+    "ticker": "002431"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "53dcdbca351fdefe83282560fee6febdf17beffe6df04cedf56a8ba62e39c862"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约1.33元，持续经营重大不确定性未解除，净资产继续被亏损侵蚀",
-      "action": "不买入；若持有则减持或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、净资产、现金流、诉讼冻结和应收/合同资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入0.15-0.25元但未出现正式重整、债务展期、回款改善和审计风险解除",
-      "action": "仅保留观察，不建立普通组合仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否继续亏损及ST/退市风险是否升级",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流为正、归母净资产回升至10亿元以上、2026年审计意见不再提示持续经营重大不确定性",
-      "action": "重新研究，最高仍按困境反转小仓位处理",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见及持续经营重大不确定性是否解除",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.25
+      },
+      "reason": "跌入困境资产观察区，检查是否已有正式重整/债务安排和回款改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.0
+      },
+      "reason": "高于减持/回避区间下限，当前基本面缺乏安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.25,
-      "reason": "跌入困境资产观察区，检查是否已有正式重整/债务安排和回款改善"
-    },
-    {
-      "type": "price_above",
-      "price": 1.0,
-      "reason": "高于减持/回避区间下限，当前基本面缺乏安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、净资产、现金流、诉讼冻结和应收/合同资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否继续亏损及ST/退市风险是否升级"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见及持续经营重大不确定性是否解除"
-    }
-  ],
-  "notes": [
-    "本轮研究结论为avoid，核心依据是持续亏损、净资产薄、资产负债率高、持续经营重大不确定性和诉讼冻结频发。",
-    "当前价格约1.33元相当于显著高于2026Q1每股归母净资产，缺乏安全边际。",
-    "控股股东降息和河南国资背景提高保壳概率，但尚不足以证明普通股东价值。",
-    "未发现已核验的控股股东非经营性资金占用证据；需以后续审计报告和监管问询为准。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

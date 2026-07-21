@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:300969",
-  "market": "CN",
-  "ticker": "300969",
-  "currency": "CNY",
-  "name": "恒帅股份",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "恒帅股份是汽车微电机、清洗系统与流体执行器细分优质公司，2025年业绩高增且电机业务打开第二曲线；但2026Q1增速放缓，当前公开行情对应估值偏高，需要等待新业务兑现或价格回落后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    78,
-    98
-  ],
-  "buy_zone": [
-    68,
-    78
-  ],
-  "sell_or_reduce_zone": [
-    120,
-    140
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒帅股份",
+    "security_status": "active",
+    "symbol": "CN:300969",
+    "ticker": "300969"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "54260e52503c17a4dadc8861c6c76c5f914caa05f3ed2e59757faad7b46336e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入68-78元且2026年单季度收入恢复15%以上增长，分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、利润、毛利率和新业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于68元且毛利率、客户订单、现金流未恶化，可提高到核心小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年增长能见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于120元且未披露ADAS清洗、热管理或电机新品放量证据，降低或不新增仓位",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、股本变化、现金流和估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 78.0
+      },
+      "reason": "进入基准合理价值下沿，可重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 68.0
+      },
+      "reason": "接近悲观情景估值，若基本面未恶化具备安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
+      "reason": "超过基准估值上沿较多，需要检查是否已有乐观情景兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 78,
-      "reason": "进入基准合理价值下沿，可重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 68,
-      "reason": "接近悲观情景估值，若基本面未恶化具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 120,
-      "reason": "超过基准估值上沿较多，需要检查是否已有乐观情景兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、利润、毛利率和新业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年增长能见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、股本变化、现金流和估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

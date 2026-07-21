@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301073",
-  "ticker": "301073",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "君亭酒店",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "君亭酒店具备中高端精选服务酒店和轻资产管理输出的成长弹性，但当前市值已明显提前反映扩张成功预期，已兑现盈利不足以支撑估值；需等待股价回落或后续财报验证 RevPAR、委托管理收入和扣非净利率持续改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.0,
-    15.0
-  ],
-  "buy_zone": [
-    0.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "君亭酒店",
+    "security_status": "active",
+    "symbol": "CN:301073",
+    "ticker": "301073"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "5dc1c43283719a2258663baff267c054d7dfd5a5267aeb113c32bede87d64429"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准合理价值上沿且盈利兑现不足，维持观察，不主动建仓。",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查RevPAR、扣非净利率、委托管理收入和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.5元，且2026H1扣非净利润同比改善、扣非净利率不低于4%、经营现金流保持为正。",
-      "action": "initial_buy",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认旺季后盈利弹性是否兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.5元，且连续两个季度RevPAR同比改善、委托管理收入占比提升、控制权和治理无新增重大不确定性。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年经营指引，更新估值区间和持仓计划。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入安全边际观察买入区，需要结合最新财报验证经营改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过减仓/回避区下沿，若利润未同步兑现则估值风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入安全边际观察买入区，需要结合最新财报验证经营改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过减仓/回避区下沿，若利润未同步兑现则估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查RevPAR、扣非净利率、委托管理收入和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认旺季后盈利弹性是否兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年经营指引，更新估值区间和持仓计划。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

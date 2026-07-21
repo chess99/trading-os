@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:300784",
-  "ticker": "300784",
-  "name": "利安科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "利安科技具备精密注塑和模具制造能力，并有汽车、医疗等成长方向，但2025年利润和现金流弱于收入增长，2026Q1盈利同比明显下滑；当前估值已透支乐观恢复预期，缺少安全边际，宜观察而非买入。",
-  "fair_value_range": [
-    19,
-    27
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利安科技",
+    "security_status": "active",
+    "symbol": "CN:300784",
+    "ticker": "300784"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c22b189b0cb8b8a8363d81d29a07d681834837af3861d62498af482b56ef3e56"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于18元，且最近一期扣非净利率不低于7%、经营现金流未明显恶化时，允许建立观察仓。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入恢复、扣非净利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比转正且扣非净利率恢复到9%以上，同时汽车或医疗订单质量改善，可提高至小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断盈利下滑是否收敛。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于34元且没有业绩超预期证据，维持零仓位或降低已有仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估募投产能、客户结构和长期利润中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入具备安全边际的买入复核区间。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "估值显著高于基准合理价值，若基本面未超预期应警惕回撤风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入具备安全边际的买入复核区间。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "估值显著高于基准合理价值，若基本面未超预期应警惕回撤风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入恢复、扣非净利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断盈利下滑是否收敛。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估募投产能、客户结构和长期利润中枢。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

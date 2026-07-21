@@ -1,1 +1,77 @@
-{"buy_zone":[55,65],"company_name":"深圳市铂科新材料股份有限公司","currency":"CNY","current_rating":"watch","current_thesis":"金属软磁粉芯全球头部厂商之一，毛利率40%+、ROE 15%+、资产负债表宽松，受益于光伏/储能/新能源车/AI数据中心电源对大功率电感的结构性升级；但当前估值PE_TTM ~78x、PB ~7.7x，已充分计入未来3年20%+复合增长，市场情绪偏热，不追高，等回调至50-65元价值区再分批介入。","do_not_chase_above":95,"fair_value_range":[60,70],"key_risks":[{"risk":"估值风险（PE_TTM ~78x，PB 7.7x，PEG ~6.9），若增长不及预期存在戴维斯双杀风险（下行-30%至-50%）","severity":"high"},{"risk":"AI数据中心电源放量节奏不及预期，PSU厂商切换良率爬坡慢","severity":"medium"},{"risk":"新扩产能（IPO募投+河源基地）消化失败，固定成本拖累毛利率","severity":"medium"},{"risk":"应收账款周转天数已升至121天，存货周转89天，若持续恶化有坏账/现金流压力","severity":"medium"},{"risk":"光伏/储能景气阶段性下行冲击主力下游订单","severity":"medium"},{"risk":"镍/铁/硅原料价格上行，向客户传导时滞","severity":"low"},{"risk":"海外贸易摩擦与汇率波动","severity":"low"},{"risk":"解禁与减持压力","severity":"low"},{"risk":"小市值低流动性强波动，事件型振幅可达8%+","severity":"low"}],"latest_report":"reports/2026-07-08-initial.md","market":"CN","name":"铂科新材","position_plan":[{"action":"分批建仓3-4笔","condition":"估值进入低估，PE<28x或PB<5x","max_weight":0.06,"target_weight":0.05,"zone":"<50"},{"action":"主仓加仓2笔","condition":"估值合理偏低，PE 30-36x","max_weight":0.05,"target_weight":0.04,"zone":"50-60"},{"action":"持仓不动","condition":"估值合理，PE 38-48x","max_weight":0.03,"target_weight":0.025,"zone":"60-75"},{"action":"不追高，逢高减仓","condition":"估值偏高，望增长兑现","max_weight":0.01,"target_weight":0.005,"zone":"75-95"},{"action":"减仓至清仓","condition":"透支多年增长","max_weight":0,"target_weight":0,"zone":">95"}],"price_triggers":[{"price":50,"reason":"股价回调至低估区，进入分批建仓阶段","type":"price_below"},{"price":95,"reason":"股价进入泡沫区，需减仓至清仓","type":"price_above"}],"quality_rating":"B+","report_history":["reports/2026-07-08-initial.md"],"review_triggers":[{"date":"2026-08-31","reason":"2026半年报披露，验证AI数据中心电源驱动是否兑现","type":"date"}],"sell_or_reduce_zone":[95,9999],"status":"active","strong_attraction_zone":[0,50],"symbol":"CN:300811","ticker":"300811","updated_at":"2026-07-08T16:30:00+08:00","valuation_rating":"overvalued"}
+{
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "铂科新材",
+    "security_status": "active",
+    "symbol": "CN:300811",
+    "ticker": "300811"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "f4e8c6d30f6b9bcc572ef663987219379bea74f29675e01846d8fa3610d9d9cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露，验证AI数据中心电源驱动是否兑现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "股价回调至低估区，进入分批建仓阶段",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "股价进入泡沫区，需减仓至清仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
+}

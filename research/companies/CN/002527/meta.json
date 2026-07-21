@@ -1,135 +1,124 @@
 {
-  "symbol": "CN:002527",
-  "market": "CN",
-  "ticker": "002527",
-  "name": "新时达",
-  "company_name": "上海新时达电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备工控、机器人和电梯控制资产，2025年海尔体系入主带来协同改善可能；但2025扣非仍亏损，2026H1预计归母亏损1100-1600万元、扣非亏损3300-3800万元，当前11.52元已包含较多乐观预期，需等待盈利和毛利率拐点。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    4.5,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新时达",
+    "security_status": "active",
+    "symbol": "CN:002527",
+    "ticker": "002527"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "6eef3d953c97ba3b8c72999de272968f618387a2231b44b689b31e5ca7523661"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格小于等于4.5元且基本面未恶化",
-      "price": "<=4.5",
-      "action": "强吸引力买入",
-      "position": "4%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格位于4.5-6.0元且毛利率企稳",
-      "price": "4.5-6.0",
-      "action": "有安全边际买入",
-      "position": "2%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格位于6.0-7.5元且仍需等待盈利拐点",
-      "price": "6.0-7.5",
-      "action": "小仓观察",
-      "position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格位于7.5-9.0元且盈利尚未连续改善",
-      "price": "7.5-9.0",
-      "action": "观察",
-      "position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格高于9.0元且没有连续两个季度扣非盈利改善",
-      "price": ">9.0",
-      "action": "不追高或减仓",
-      "position": "0%或降低",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "direction": "below",
-      "reason": "低于安全边际买入价",
-      "action": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "direction": "below",
-      "reason": "低于强吸引力买入价",
-      "action": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "direction": "above",
-      "reason": "高于不应追高价",
-      "action": "不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "direction": "above",
-      "reason": "接近乐观情景下沿但盈利尚未验证",
-      "action": "若未出现连续两个季度扣非盈利改善则降低或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报验证盈利修复",
-      "note": "2026年半年报披露后复核收入结构、毛利率、扣非亏损和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报验证海尔协同和扣非利润",
-      "note": "2026年三季报后复核海尔协同、毛利率和扣非盈利"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "定增进展可能影响每股价值",
-      "note": "复核向特定对象发行股票进展、发行价格、摊薄比例和募投回报"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报验证全年现金流和资产负债表",
-      "note": "2026年报后复核全年扣非利润、经营现金流和资产负债率"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "低于安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "低于强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "高于不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "接近乐观情景下沿但盈利尚未验证",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "毛利率是否回到20%以上",
-    "扣非净利润是否由亏转盈",
-    "通用控制与驱动产品及系统收入增速和毛利率",
-    "机器人业务订单质量、毛利率和回款",
-    "经营活动现金流净额",
-    "资产负债率",
-    "海尔协同订单金额和客户质量",
-    "定增摊薄比例与募投项目回报"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

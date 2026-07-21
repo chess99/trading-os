@@ -1,114 +1,124 @@
 {
-  "symbol": "CN:002992",
-  "market": "CN",
-  "ticker": "002992",
-  "name": "宝明科技",
-  "company_name": "深圳市宝明科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "传统显示业务现金流修复但成长性有限，复合铜箔和电子材料提供高弹性期权；当前 38.60 元已提前反映较多成功预期，2026Q1 亏损和较高杠杆使安全边际不足。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    16,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    40
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝明科技",
+    "security_status": "active",
+    "symbol": "CN:002992",
+    "ticker": "002992"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0e112740e9bec7c8a1ce0a24fe5d40857d703cf22de8e9a7ded9ed1a70e1dd8e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 30 元，且复合铜箔仍为小批量收入、公司单季亏损或自由现金流为负",
-      "action": "不建仓或维持 0% 仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报：收入、复合铜箔放量、毛利率、现金流和债务",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回到 22-24 元，且复合铜箔季度收入继续增长、亏损收窄",
-      "action": "可建立 0.5%-1.0% 观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报：是否恢复盈利、经营现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 18 元，且复合铜箔单季收入超过 5,000 万元、毛利率高于 25%、滚动四季度经营现金流为正",
-      "action": "可提升至 2%-3% 标准仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报：复合铜箔收入是否进入规模化、在建工程和固定资产是否减值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "客户验证失败、复合铜箔毛利率跌破 15%、资产减值扩大或有息负债继续明显上升",
-      "action": "降至 0% 或停止加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "年内事件复核：大客户认证、亿元级订单、股份冻结质押、高管减持和新增担保",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入合理价值区间上沿，安全边际开始出现但仍需基本面确认",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "低于可买区间上沿，复合铜箔期权价格更合理",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "高于合理价值区间较多，当前基本面难以支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "接近当前主题估值上沿，需要重大订单或盈利兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "action": "进入重点观察，复核复合铜箔订单、毛利率和 Q2/Q3 盈亏",
-      "reason": "进入合理价值区间上沿，安全边际开始出现但仍需基本面确认"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "action": "若基本面未恶化，评估小仓买入",
-      "reason": "低于可买区间上沿，复合铜箔期权价格更合理"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "action": "若无新材料实质订单和盈利兑现，避免追买并考虑减仓",
-      "reason": "高于合理价值区间较多，当前基本面难以支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "action": "除非复合铜箔进入亿元级放量，否则视为估值透支",
-      "reason": "接近当前主题估值上沿，需要重大订单或盈利兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报：收入、复合铜箔放量、毛利率、现金流和债务"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报：是否恢复盈利、经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报：复合铜箔收入是否进入规模化、在建工程和固定资产是否减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "年内事件复核：大客户认证、亿元级订单、股份冻结质押、高管减持和新增担保"
-    }
-  ],
-  "key_tracking_metrics": [
-    "复合铜箔季度收入和销量",
-    "复合铜箔毛利率",
-    "LED 背光源和液晶面板深加工毛利率",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "短期借款、一年内到期非流动负债、长期应付款",
-    "资产负债率",
-    "锂电复合铜箔建设项目进度和产能利用率",
-    "前五大客户销售占比",
-    "受限资产规模"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

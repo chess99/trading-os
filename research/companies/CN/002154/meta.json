@@ -1,116 +1,115 @@
 {
-  "symbol": "CN:002154",
-  "market": "CN",
-  "ticker": "002154",
-  "name": "报喜鸟",
-  "company_name": "报喜鸟",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "估值处于偏低区间，HAZZYS、LAFUMA和线上渠道提供修复弹性，现金流和分红提供一定下行缓冲；但报喜鸟主品牌、宝鸟职业装和库存周转仍需2026H1验证，因此采用首笔观察仓而非重仓买入。",
-  "quality_rating": "B",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    4.2,
-    5.0
-  ],
-  "buy_zone": [
-    3.2,
-    3.7
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "报喜鸟",
+    "security_status": "active",
+    "symbol": "CN:002154",
+    "ticker": "002154"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "60f9b681a501c1397ff0ca47e4be64b8e76be1222b8e7a82541dcfe0570a531e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于3.70元，且接受等待2026H1验证经营修复",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "当前估值约13-14倍TTM PE且股息率有支撑，但2026Q1扣非增速仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-15"
+      },
+      "reason": "市场预期的下一财报窗口，重点复核2026H1收入、扣非利润、存货和品牌分化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格不高于3.40元，且2026H1收入同比为正、存货周转未恶化",
-      "action": "加仓至中等观察仓",
-      "max_weight": 0.03,
-      "reason": "折价扩大后安全边际改善，同时需要基本面确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026Q3消费复苏、线上增长和团购业务回款",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1确认HAZZYS和LAFUMA维持增长、扣非净利率回升、线上收入增速不低于15%",
-      "action": "提高至策略上限仓位",
-      "max_weight": 0.05,
-      "reason": "多品牌矩阵修复被验证后可接受更高仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、分红、WOOLRICH培育投入和全年现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于4.80元但2026H1/H2业绩未继续超预期，或扣非利润和存货指标恶化",
-      "action": "减仓或退出至跟踪仓",
-      "max_weight": 0.01,
-      "reason": "估值进入合理区上沿后，需要更强业绩兑现支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入首笔观察仓买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "折价扩大，可结合中报基本面确认考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "接近合理价值区上沿，应复核兑现程度并考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "超过当前估值中枢上沿，除非盈利预测上修否则降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入首笔观察仓买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "折价扩大，可结合中报基本面确认考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "接近合理价值区上沿，应复核兑现程度并考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "超过当前估值中枢上沿，除非盈利预测上修否则降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-15",
-      "reason": "市场预期的下一财报窗口，重点复核2026H1收入、扣非利润、存货和品牌分化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026Q3消费复苏、线上增长和团购业务回款"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、分红、WOOLRICH培育投入和全年现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入同比增速",
-    "2026H1扣非归母净利润同比增速",
-    "HAZZYS收入增速",
-    "LAFUMA收入增速",
-    "报喜鸟主品牌收入跌幅",
-    "宝鸟及团购渠道收入增速",
-    "线上收入增速和线上毛利率",
-    "直营收入增速和直营毛利率",
-    "加盟收入增速",
-    "存货账面价值",
-    "存货周转率",
-    "存货跌价准备",
-    "销售费用率",
-    "管理费用率",
-    "经营活动现金流净额",
-    "WOOLRICH门店、收入和亏损投入",
-    "分红金额和派息率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

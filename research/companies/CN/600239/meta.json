@@ -1,96 +1,115 @@
 {
-  "symbol": "CN:600239",
-  "market": "CN",
-  "ticker": "600239",
-  "name": "ST云城",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "公司处于ST其他风险警示状态，近三年连续亏损且2025年审计报告提示持续经营重大不确定性；轻资产物业/商管转型尚未覆盖历史地产债务、担保和资产处置不确定性，当前1.36元已接近乐观修复情景上沿，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.55,
-    1.05
-  ],
-  "buy_zone": [
-    0.5,
-    0.7
-  ],
-  "sell_or_reduce_zone": [
-    1.15,
-    9.99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST云城",
+    "security_status": "active",
+    "symbol": "CN:600239",
+    "ticker": "600239"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "f9fd59c06a597a1c6a197b8d4c18a5b0d6b8a053d7ee6109e68af6441dd142ba"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于1.15元或债务展期、资产处置、担保风险未实质改善",
-      "action": "不新增，已有仓位减至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、扣非亏损、现金流和资产处置收益确认",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价0.70-1.05元且基本面改善未证实",
-      "action": "仅跟踪观察，不建议主动买入",
-      "max_weight": 0.003
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核中国人寿债务展期、老鹰地担保抵押登记和三季报经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于0.70元，且中国人寿债务展期落地、无新增重大代偿、七彩公司交易收款开始兑现",
-      "action": "特殊情境试错仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、持续经营不确定性是否消除及ST撤销路径",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于0.50元，且ST撤销路径、债务展期和资产处置均出现可验证进展",
-      "action": "可提高到小仓位，但仍需严格止损",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "进入理论安全边际区，但必须同时复核面值退市风险和债务展期进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "可能触发面值退市交易风险观察，需要优先复核是否应止损而非补仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.15
+      },
+      "reason": "高于不应追高价，估值接近乐观修复情景，应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.36
+      },
+      "reason": "达到当前乐观情景上沿附近，风险收益进一步恶化",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "进入理论安全边际区，但必须同时复核面值退市风险和债务展期进展"
-    },
-    {
-      "type": "price_below",
-      "price": 1.0,
-      "reason": "可能触发面值退市交易风险观察，需要优先复核是否应止损而非补仓"
-    },
-    {
-      "type": "price_above",
-      "price": 1.15,
-      "reason": "高于不应追高价，估值接近乐观修复情景，应减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 1.36,
-      "reason": "达到当前乐观情景上沿附近，风险收益进一步恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、扣非亏损、现金流和资产处置收益确认"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核中国人寿债务展期、老鹰地担保抵押登记和三季报经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、持续经营不确定性是否消除及ST撤销路径"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情收盘价1.36元，按约16.06亿股计算总市值约21.84亿元。",
-    "2026-04-29公告显示公司因近三年连续亏损且2025年审计报告提示持续经营重大不确定性，自2026-04-30起被实施其他风险警示，简称ST云城。",
-    "2026H1业绩预告显示归母净利润预计5000万至7000万元，但扣非归母净利润预计亏损8200万至10200万元，扭亏主要依赖非经常性收益。",
-    "2026-07-14公告显示公司及控股子公司对外担保总额约63.98亿元，占最近一期经审计净资产619.43%，逾期担保金额约1.59亿元。",
-    "部分2026Q1明细财务数据来自新浪财经财务表二级口径，置信度中等；资产处置回收和担保代偿概率置信度低。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

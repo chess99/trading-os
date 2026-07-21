@@ -1,111 +1,120 @@
 {
-  "symbol": "CN:001328",
-  "market": "CN",
-  "ticker": "001328",
-  "name": "登康口腔",
-  "company_name": "重庆登康口腔护理用品股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "冷酸灵抗敏感心智、较高电商毛利率、稳健现金流和高分红构成较高质量基本盘；但2026-07-13收盘价25.87元仅略低于中性合理价值区间下沿，销售费用率仍高，需等待24元以下或半年报验证电商增长质量后再提高仓位。",
-  "quality_rating": "high",
-  "valuation_rating": "fair",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "last_price": 25.87,
-  "last_price_date": "2026-07-13",
-  "fair_value_range": [
-    27.0,
-    34.0
-  ],
-  "buy_zone": [
-    21.0,
-    24.0
-  ],
-  "sell_or_reduce_zone": [
-    37.0,
-    42.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "登康口腔",
+    "security_status": "active",
+    "symbol": "CN:001328",
+    "ticker": "001328"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "3a669a360fad8af02716aed77aadb518fff8a5fca90f64a0a4410218b7d75e0a"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "57c2c600319e07bfd8f80e6eb1d2e56c154bab555d22384cc60948ab3737e33a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在24元以上且2026半年报尚未验证电商增速、销售费用率和经营现金流质量",
-      "action": "仅允许跟踪仓或暂不买入",
-      "max_weight": 0.01,
-      "reason": "质量较好但安全边际一般，当前估值接近合理区间下沿而非深度低估"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看电商收入增速、毛利率、销售费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于24元，且2026半年报收入增速不低于10%、销售费用率未继续明显上行、经营现金流覆盖归母净利润",
-      "action": "提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "价格进入买入区间上沿，且增长质量获得阶段性验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润增速、费用率趋势和分红能力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于21元，且冷酸灵份额稳定、电商毛利率保持优势、扣非归母净利润仍保持增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "价格进入高安全边际区间，同时核心基本面没有恶化"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年经营计划，更新估值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于37元但利润预测未上修，或销售费用率持续高于36%",
-      "action": "停止加仓并考虑减仓",
-      "max_weight": 0.01,
-      "reason": "估值进入偏贵区间，若增长仍依赖投放，风险收益下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区间上沿，复核半年报后可考虑小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入高安全边际区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 37.0
+      },
+      "reason": "进入减仓观察区间，需要确认利润预期是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过乐观情景上沿，除非增长中枢上修否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24.0,
-      "reason": "进入买入区间上沿，复核半年报后可考虑小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 21.0,
-      "reason": "进入高安全边际区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 37.0,
-      "reason": "进入减仓观察区间，需要确认利润预期是否足以支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 42.0,
-      "reason": "超过乐观情景上沿，除非增长中枢上修否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看电商收入增速、毛利率、销售费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润增速、费用率趋势和分红能力"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年经营计划，更新估值区间和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电商收入增速",
-    "电商渠道毛利率",
-    "销售费用率",
-    "成人牙膏收入增速",
-    "冷酸灵抗敏感牙膏市场份额",
-    "扣非归母净利润增速",
-    "经营现金流净额/归母净利润",
-    "现金分红率",
-    "交易性金融资产和定期存款余额",
-    "主要原材料、包材和委托生产成本变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

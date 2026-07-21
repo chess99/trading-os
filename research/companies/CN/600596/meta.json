@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:600596",
-  "ticker": "600596",
-  "name": "新安股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "新安股份处于作物保护与硅基新材料双周期底部修复阶段，具备氯-磷-硅循环经济、海外登记证、工业硅-有机硅-终端材料一体化优势，但2025年扣非仍亏损、2026年盈利修复仍需中报和三季报验证。当前估值接近合理区间下沿，维持观察，等待更厚安全边际或扣非利润与现金流持续改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    11.0,
-    15.5
-  ],
-  "buy_zone": [
-    8.8,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新安股份",
+    "security_status": "active",
+    "symbol": "CN:600596",
+    "ticker": "600596"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "76b45e205346841c59d2ffd5f9a0fd842e954cb153ad9c82bef274392d6a23e6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.2元，且草甘膦与有机硅价格未出现连续下跌，2026H1扣非净利润保持为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、农化与硅基终端收入结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于8.8至9.5元，且经营现金流与扣非净利润同步改善",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断周期修复是否延续到三季度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.5元且2026年可见利润中枢未上修至8亿元以上",
-      "action": "减仓或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及分红、资本开支、终端材料业务进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入初始买入区，需要复核产品价格、扣非利润和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "接近合理价值区间上沿，需要检查利润预期是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入初始买入区，需要复核产品价格、扣非利润和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "接近合理价值区间上沿，需要检查利润预期是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、农化与硅基终端收入结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断周期修复是否延续到三季度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及分红、资本开支、终端材料业务进展"
-    }
-  ],
-  "key_monitoring_items": [
-    "草甘膦价格、库存、出口量与开工率",
-    "DMC、有机硅基础产品、硅橡胶、特种硅油价格及价差",
-    "扣非归母净利润与经营现金流是否同步改善",
-    "农药制剂转化率和海外登记证/海外终端收入进展",
-    "有机硅终端转化率、终端材料利润率及客户导入",
-    "传化体系关联交易及同一控制下资产整合"
-  ],
-  "confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

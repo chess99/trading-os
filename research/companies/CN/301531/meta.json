@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301531",
-  "market": "CN",
-  "ticker": "301531",
-  "name": "春光集团",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "春光集团是国内软磁铁氧体磁粉龙头，具备规模和产业链协同优势，但上市后估值显著高于基本面可解释区间；等待股价回落或电源/磁心业务兑现后再评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    22,
-    32
-  ],
-  "buy_zone": [
-    0,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    1000
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "春光集团",
+    "security_status": "active",
+    "symbol": "CN:301531",
+    "ticker": "301531"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "63fb90627c2877c9704aceac206e10ec7c993969a40ec8d56aa2aa930fe72ab0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前估值高于乐观情景上沿，未进入买入区间，仅跟踪不建仓。",
-      "action": "avoid_new_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证收入、净利润、毛利率和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至24元以下，且最近两个报告期综合毛利率不低于20%、经营现金流/净利润不低于0.7。",
-      "action": "starter_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核募投项目进度、产能爬坡和次新股估值消化情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于22-32元公允区间内，且2026年归母净利润达到1.4亿元以上、电源或磁心业务收入占比提升。",
-      "action": "watch_or_add_selectively",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新评估公允价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入初始买入区间，重新核验半年报、毛利率和现金流后可考虑小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "明显高于乐观情景估值，若持有应减仓或回避新增买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入初始买入区间，重新核验半年报、毛利率和现金流后可考虑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "明显高于乐观情景估值，若持有应减仓或回避新增买入。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证收入、净利润、毛利率和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核募投项目进度、产能爬坡和次新股估值消化情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新评估公允价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,102 +1,105 @@
 {
-  "symbol": "CN:601700",
-  "market": "CN",
-  "ticker": "601700",
-  "currency": "CNY",
-  "name": "风范股份",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "风范股份正在从光伏资产拖累后的亏损状态切回输变电铁塔主业修复逻辑，2026年上半年业绩预告验证盈利恢复，但当前股价已部分反映修复预期，晶樱光电剥离、扣非利润和现金流仍需中报确认，暂列观察。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    3.6,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.7
-  ],
-  "sell_or_reduce_zone": [
-    5.4,
-    6.2
-  ],
-  "position_plan": [
-    {
-      "condition": "股价跌入3.2-3.7元且2026年中报扣非净利润和经营现金流均确认修复后，允许建立观察仓。",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "晶樱光电60%股权完成交割、价款回收明确，且后续无新增非主业大额投资，可将仓位上限提高。",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "若股价高于5.4元但未看到年化2.5亿元以上可持续扣非利润证据，不新增仓位并考虑降低已有仓位。",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入估算买入区间上沿，需要复核中报扣非利润、现金流和晶樱光电剥离进展。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入具备较强安全边际区间，若基本面未恶化可重新评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.4,
-      "reason": "超过基准估值区间，需要确认是否已有足够订单和扣非利润支撑，否则应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报正式披露的扣非利润、现金流、应收和晶樱光电处置进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单交付、毛利率和经营现金流是否延续修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认光伏资产风险是否出清以及主业ROE是否恢复。"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "as_of": "2026-07-17",
-    "fair_value_method": "relative_pb_pe_absolute_and_scenario_cross_check",
-    "current_price_reference": 4.47,
-    "current_price_source": "上海证券交易所行情页，2026-07-17查询；若与收盘后正式行情不一致，以交易所最终数据为准。",
-    "base_case_fair_value_per_share": [
-      3.6,
-      4.8
-    ],
-    "bear_case_fair_value_per_share": [
-      2.3,
-      3.2
-    ],
-    "bull_case_fair_value_per_share": [
-      5.5,
-      6.6
-    ]
+    "market": "CN",
+    "name": "风范股份",
+    "security_status": "active",
+    "symbol": "CN:601700",
+    "ticker": "601700"
   },
-  "key_monitoring": [
-    "2026年中报扣非归母净利润是否落在0.60-0.90亿元预告区间",
-    "晶樱光电60%股权转让成交、交割和价款回收情况",
-    "国网和南网输电线路材料招标中标金额及份额",
-    "铁塔业务毛利率、钢材价格和经营现金流匹配度",
-    "是否继续发生非主业大额投资或并购"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "aac616a44da7d82c022d4af5d7f0b6267ecd380c647d117a95acaad112f143e6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报正式披露的扣非利润、现金流、应收和晶樱光电处置进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单交付、毛利率和经营现金流是否延续修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认光伏资产风险是否出清以及主业ROE是否恢复。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入估算买入区间上沿，需要复核中报扣非利润、现金流和晶樱光电剥离进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入具备较强安全边际区间，若基本面未恶化可重新评估加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.4
+      },
+      "reason": "超过基准估值区间，需要确认是否已有足够订单和扣非利润支撑，否则应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

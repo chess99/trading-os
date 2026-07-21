@@ -1,133 +1,132 @@
 {
-  "symbol": "CN:002778",
-  "market": "CN",
-  "ticker": "002778",
-  "name": "中晟高科",
-  "company_name": "江苏中晟高科环境股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "剥离润滑油后公司聚焦环保业务，资产负债表改善，但2025年利润主要受资产出售收益和坏账准备转回驱动，2026Q1重新亏损。当前14.70元价格主要定价新控股股东入主、储能和潜在资本运作期权，现有主业无法支撑估值，适合观察不适合买入。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.0,
-    6.5
-  ],
-  "buy_zone": [
-    0.0,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中晟高科",
+    "security_status": "active",
+    "symbol": "CN:002778",
+    "ticker": "002778"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "59c36520a17892a2ddb03e07d63dabd9eeae7aa6e2cf192dea6f7b568071caa4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.0元，且2026年收入、扣非利润、经营现金流未继续恶化",
-      "action": "可建立0.5%-1.0%观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价在5.0-8.0元之间，且尚未公告高质量资产注入或储能稳定盈利",
-      "action": "保持观察，不新增仓位",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "股价高于10.0元且基本面无实质兑现",
-      "action": "减仓或清仓",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "公告收入低于3亿元且净利润为负的风险加大，或出现退市风险警示",
-      "action": "退出观察仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "currency": "CNY",
-      "reason": "进入可买价格区间",
-      "action": "复核半年报、订单、回款和质押状态，满足条件才小仓试探"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "currency": "CNY",
-      "reason": "高于现有基本面合理估值上沿",
-      "action": "若无公告兑现，降低或取消仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.7,
-      "currency": "CNY",
-      "reason": "当前价格主要反映转型期权",
-      "action": "当前价格附近不买入，仅跟踪事件进展"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "披露2026年半年报或三季报",
-      "condition": "披露2026年半年报或三季报",
-      "action": "复核收入、扣非利润、经营现金流和退市风险警示概率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "公告储能项目并网、收入或盈利数据",
-      "condition": "公告储能项目并网、收入或盈利数据",
-      "action": "重估第二增长曲线和合理价值上限"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "公告重大资产重组、资产注入、关联交易或产业协同项目",
-      "condition": "公告重大资产重组、资产注入、关联交易或产业协同项目",
-      "action": "核验资产质量、估值、同业竞争和中小股东利益"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "控股股东质押比例上升、补充质押、平仓风险或控制权变化",
-      "condition": "控股股东质押比例上升、补充质押、平仓风险或控制权变化",
-      "action": "下调治理评分并复核是否退出观察"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "收入低于3亿元且净利润为负的退市风险警示概率上升",
-      "condition": "收入低于3亿元且净利润为负的退市风险警示概率上升",
-      "action": "退出观察仓"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "应收账款继续上升或经营现金流持续为负",
-      "condition": "应收账款继续上升或经营现金流持续为负",
-      "action": "下调财务质量和可买价格"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入可买价格区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于现有基本面合理估值上沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.7
+      },
+      "reason": "当前价格主要反映转型期权",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "2026年营业收入是否超过3亿元",
-    "扣非归母净利润是否转正",
-    "经营活动现金流量净额",
-    "应收账款余额和账龄结构",
-    "前五大客户收入占比",
-    "华东以外收入占比",
-    "污水处理设施委托运营收入和毛利率",
-    "环境工程新签订单和在手订单",
-    "宜兴新建镇60MW/120MWh储能项目并网时间和收益",
-    "控股股东股份质押比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:001226",
-  "market": "CN",
-  "ticker": "001226",
-  "name": "拓山重工",
-  "company_name": "拓山重工",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "拓山重工主业受益工程机械底盘件周期修复，2025年和2026Q1利润改善明显，出口毛利率高于国内；但当前约48元股价对应市值约36亿元，已显著透支新开源并表和行业复苏预期。策略是不追高，等待24-30元买入区或半年报验证盈利兑现后再评估。",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    21,
-    28
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    60
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "拓山重工",
+    "security_status": "active",
+    "symbol": "CN:001226",
+    "ticker": "001226"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "a6439448f70ed38a0de7b8b77ca0aa90f7da436801a3b673f49da1e115728df1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入24-30元且2026半年报确认主业毛利率不低于14%、经营现金流改善、新开源并表无明显异常",
-      "action": "start_position",
-      "max_weight": 0.005,
-      "reason": "估值进入基础情景上沿附近后，允许用小仓位验证工程机械周期修复和并购兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报，重点确认主业毛利率、经营现金流、新开源并表和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于21元且行业挖机内销继续同比增长、公司前五大客户收入未明显流失",
-      "action": "add_position",
-      "max_weight": 0.015,
-      "reason": "低于基础合理价值区间下沿时，周期和资产端安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，验证工程机械周期修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于45元或市值超过35亿元但归母利润年化未达到8000万元",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.002,
-      "reason": "当前估值主要依赖预期，缺少盈利兑现支撑"
+      "active": true,
+      "condition": {
+        "date": "2027-06-30"
+      },
+      "reason": "复查募投项目延期后的预定可使用状态和产能利用率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入首笔买入观察区，需要复核半年报和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "低于基础合理价值区间下沿，可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "高于减仓区下沿，若盈利未兑现应回避或降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入首笔买入观察区，需要复核半年报和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "低于基础合理价值区间下沿，可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "高于减仓区下沿，若盈利未兑现应回避或降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报，重点确认主业毛利率、经营现金流、新开源并表和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，验证工程机械周期修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-06-30",
-      "reason": "复查募投项目延期后的预定可使用状态和产能利用率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "中国工程机械工业协会挖掘机月度销量: 国内销量、出口销量、同比增速",
-    "工程机械零部件收入增速和毛利率",
-    "境外收入占比和境外毛利率",
-    "直接材料占营业成本比例和钢材价格变化",
-    "热处理、锻压、分割生产线产能利用率",
-    "前五大客户销售占比和第一大客户销售占比",
-    "经营活动现金流量净额、应收账款、存货周转",
-    "河南新开源并表时间、净利润、现金流、商誉和主要客户",
-    "控股股东及一致行动人减持进展",
-    "三一重工、徐工机械、中联重科、柳工、山推股份的订单和开工小时趋势"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

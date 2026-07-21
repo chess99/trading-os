@@ -1,91 +1,95 @@
 {
-  "symbol": "CN:600055",
-  "ticker": "600055",
-  "name": "万东医疗",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "万东医疗拥有厚现金资产负债表、美的集团控股资源和完整医学影像产品线，但2025年转亏、2026Q1及2026H1预告继续亏损，集采压价、费用投入和现金流压力尚未证明拐点；当前适合观察，等待毛利率和经营现金流修复。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    6.5,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万东医疗",
+    "security_status": "active",
+    "symbol": "CN:600055",
+    "ticker": "600055"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "276d13a26b5d51f4b38c16d0028bcecb748175d9021c2c56aea497946eaa6ed9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入6.5-8.5元且2026H1正式报告未出现重大资产质量恶化，可建立研究性观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度正式报告与业绩预告差异，重点检查毛利率、现金流、应收和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "单季毛利率回到32%以上、经营现金流转正、海外收入继续增长后，才考虑提高至核心观察仓。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断集采交付、海外收入和费用率是否出现经营拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于13元但亏损和现金流未修复，不加仓并考虑退出观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报或业绩快报，重新评估正常化盈利能力和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入买入观察区间，需要复核2026H1正式报告、毛利率和经营现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "高于基准合理价值区间上沿，需要检查是否已有盈利拐点支撑估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入买入观察区间，需要复核2026H1正式报告、毛利率和经营现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "高于基准合理价值区间上沿，需要检查是否已有盈利拐点支撑估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度正式报告与业绩预告差异，重点检查毛利率、现金流、应收和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断集采交付、海外收入和费用率是否出现经营拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报或业绩快报，重新评估正常化盈利能力和估值区间。"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "单季综合毛利率是否回到30%以上",
-    "经营活动现金流是否转正",
-    "海外收入增速与海外毛利率",
-    "3.0T MR、中高端CT、DSA注册、订单、装机和验收进展",
-    "现金及金融资产是否维持在28亿元以上",
-    "应收账款和存货是否继续扩张"
-  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "reference_price": 10.87,
-    "reference_price_date": "2026-07-16",
-    "reference_market_cap_cny_billion": 7.64,
-    "methods": [
-      "P/B",
-      "EV/S",
-      "DCF",
-      "scenario"
-    ]
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

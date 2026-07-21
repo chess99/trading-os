@@ -1,112 +1,106 @@
 {
-  "symbol": "CN:000686",
-  "market": "CN",
-  "ticker": "000686",
-  "name": "东北证券",
-  "company_name": "东北证券",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "quality_rating": "medium_high",
-  "valuation_rating": "undervalued_to_fair",
-  "current_thesis": "东北证券是低估值中型区域券商，2025年和2026Q1盈利修复已验证，财富管理、经纪成交和权益自营带来周期弹性；当前接近1倍PB，可小仓位买入，但需持续跟踪净资本、自营敞口、信用减值和大股东股权转让进展。",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    9.7,
-    11.1
-  ],
-  "buy_zone": [
-    7.8,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    11.2,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东北证券",
+    "security_status": "active",
+    "symbol": "CN:000686",
+    "ticker": "000686"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "d76275fc00faa21aba3063f4fa7a3b605ae0608208a9fe251a894ee95077a061"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "8.2-8.6元且行业成交额维持活跃、公司净资本指标无恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "接近1倍PB，2025年和2026Q1盈利修复已验证，但仍有自营和治理不确定性"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证经纪、自营、资管和净资本指标",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "7.8-8.2元且风险覆盖率维持在180%以上",
-      "action": "分批加仓",
-      "max_weight": 0.025,
-      "reason": "PB折价扩大，赔率改善，前提是资本安全指标稳定"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和大股东股权转让进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报验证经纪、自营、资管继续增长且股价仍低于9.7元",
-      "action": "提高到核心周期仓",
-      "max_weight": 0.04,
-      "reason": "盈利持续性得到二次确认，估值仍低于合理价值区间下沿"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入更有安全边际的加仓观察区，需同步检查净资本和行业成交额",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于11.2元但ROE未稳定站上9%",
-      "action": "分批减仓",
-      "max_weight": 0.02,
-      "reason": "估值进入偏贵区，周期弹性兑现后安全边际下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "进入深度折价区，若基本面未恶化可评估加仓至上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.2
+      },
+      "reason": "达到减持区间下沿，除非ROE和中报继续超预期，否则降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "超过基准合理估值上沿较多，周期仓应显著兑现收益",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入更有安全边际的加仓观察区，需同步检查净资本和行业成交额"
-    },
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "进入深度折价区，若基本面未恶化可评估加仓至上限"
-    },
-    {
-      "type": "price_above",
-      "price": 11.2,
-      "reason": "达到减持区间下沿，除非ROE和中报继续超预期，否则降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "超过基准合理估值上沿较多，周期仓应显著兑现收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证经纪、自营、资管和净资本指标"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和大股东股权转让进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "A股日均成交额",
-    "两融余额",
-    "经纪业务手续费净收入",
-    "投资收益",
-    "公允价值变动收益",
-    "资产管理业务收入和东证融汇资管规模",
-    "归母净利润",
-    "ROE",
-    "每股净资产",
-    "母公司净资本",
-    "风险覆盖率",
-    "资本杠杆率",
-    "流动性覆盖率",
-    "净稳定资金率",
-    "自营权益类证券及其衍生品/净资本",
-    "信用减值损失",
-    "亚泰集团持股质押及股权转让进展",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

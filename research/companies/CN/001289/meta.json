@@ -1,159 +1,119 @@
 {
-  "symbol": "CN:001289",
-  "market": "CN",
-  "ticker": "001289",
-  "name": "龙源电力",
-  "company_name": "龙源电力集团股份有限公司",
-  "priority": "P2",
-  "analyst": "codex-research-worker",
-  "status": "active",
-  "research_type": "initial",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "last_report_date": "2026-07-13",
-  "last_updated": "2026-07-13",
-  "updated_at": "2026-07-13",
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "confidence": "medium",
-  "current_thesis": "龙源电力是央企风电运营龙头，2025年底控股装机45.99GW，具备规模、融资和交易能力优势；但新能源电价市场化、风电利用小时下滑、高资本开支和66%以上资产负债率压低ROE与股东自由现金流。以2026-07-13收盘价15.44元看，估值处于合理区间中上部，买入需要等待11.5-13.0元安全边际或2026H1利润与电价拐点确认。",
-  "reasonable_price_range": [
-    13.5,
-    16.5
-  ],
-  "fair_value_range": [
-    13.5,
-    16.5
-  ],
-  "buy_price": 13.0,
-  "buy_zone": [
-    11.5,
-    13.0
-  ],
-  "strong_buy_price": 11.5,
-  "sell_or_reduce_zone": [
-    17.2,
-    19.0
-  ],
-  "do_not_chase_price": 17.2,
-  "max_weight": 0.04,
-  "first_position_weight": 0.01,
-  "currency": "CNY",
-  "as_of_price": {
-    "date": "2026-07-13",
-    "price": 15.44,
-    "market_cap_cny": 129075562372.16,
-    "pe_2025": 28.52,
-    "pe_ttm": 30.41,
-    "pb_attributable_equity_q1_2026": 1.68,
-    "source": "搜狐证券、证券之星 2026-07-13 收盘行情"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "龙源电力",
+    "security_status": "active",
+    "symbol": "CN:001289",
+    "ticker": "001289"
   },
-  "key_points": [
-    "2025年底控股装机45.99GW，其中风电32.15GW、太阳能13.84GW，是A股稀缺的大型风电运营平台。",
-    "2025年归母净利润45.26亿元，同比下降28.78%；2026Q1归母净利润16.24亿元，同比下降14.78%，利润仍未确认拐点。",
-    "2026H1累计发电量同比下降2.19%，其中风电下降6.67%、太阳能增长22.22%，光伏增长尚未完全抵消风电压力。",
-    "2025年风电平均上网电价475元/MWh，同比下降52元/MWh；电价市场化是中期估值中枢的主要压制因素。",
-    "15.44元处于合理区间中上部，当前结论为观察；11.5-13.0元才具备较清晰安全边际。"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "e878ad8bfb0acbf5ffd3bbac43dd7b1049e500f3c6a9d2981e59b76cc7e34b0b"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "a514723b3d0ae2ebba9f5a9216b81df56a20d7e79c3441a699aa9f5e83bab086"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_11_5_and_no_structural_deterioration",
-      "price_range": [
-        0.0,
-        11.5
-      ],
-      "action": "strong_accumulate",
-      "target_weight": 0.04,
-      "max_weight": 0.04,
-      "note": "强安全边际区，前提是电价、发电量、负债率未出现结构性恶化。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点验证归母净利润、经营现金流、资本开支、资产负债率和平均电价。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_11_5_and_13_0",
-      "price_range": [
-        11.5,
-        13.0
-      ],
-      "action": "accumulate",
-      "target_weight": 0.03,
-      "max_weight": 0.03,
-      "note": "进入买入区，可分批建仓并等待半年度报告验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-10"
+      },
+      "reason": "复核2026年7月发电量公告，判断风电发电量同比降幅是否收窄。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_13_0_and_16_5",
-      "price_range": [
-        13.0,
-        16.5
-      ],
-      "action": "watch_or_track",
-      "target_weight": 0.01,
-      "max_weight": 0.015,
-      "note": "估值基本合理但赔率一般，仅适合跟踪仓或已有仓位观察。"
+      "active": true,
+      "condition": {
+        "date": "2026-09-10"
+      },
+      "reason": "复核2026年8月发电量公告，并结合半年度报告更新全年利润预测。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_above_17_2_without_earnings_upgrade",
-      "price_range": [
-        17.2,
-        999.0
-      ],
-      "action": "reduce_or_avoid_chasing",
-      "target_weight": 0.0,
-      "max_weight": 0.0,
-      "note": "超过减仓区且利润、电价未显著上修时，不追高。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，确认利润拐点是否成立并更新估值区间。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入区，需要复核2026年发电量、电价和负债情况后考虑分批建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入强安全边际区，若基本面未结构性恶化，可将最高仓位提高至4%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.2
+      },
+      "reason": "进入减仓或不追高区，除非半年度利润和电价趋势明显上修。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "condition": "price_below_or_equal_13_0",
-      "reason": "进入买入区，需要复核2026年发电量、电价和负债情况后考虑分批建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "condition": "price_below_or_equal_11_5",
-      "reason": "进入强安全边际区，若基本面未结构性恶化，可将最高仓位提高至4%。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.2,
-      "condition": "price_above_or_equal_17_2",
-      "reason": "进入减仓或不追高区，除非半年度利润和电价趋势明显上修。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点验证归母净利润、经营现金流、资本开支、资产负债率和平均电价。"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-10",
-      "reason": "复核2026年7月发电量公告，判断风电发电量同比降幅是否收窄。"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-10",
-      "reason": "复核2026年8月发电量公告，并结合半年度报告更新全年利润预测。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，确认利润拐点是否成立并更新估值区间。"
-    }
-  ],
-  "next_watch_items": [
-    "2026年半年度归母净利润是否达到或超过27亿元",
-    "月度风电发电量同比降幅是否从2026H1的-6.67%持续收窄",
-    "风电和太阳能平均上网电价是否继续低于2025年475元/MWh和318元/MWh基准",
-    "经营现金流改善是否来自持续补贴回款而非一次性因素",
-    "年度资本开支是否继续高于经营现金流",
-    "资产负债率是否维持在68%以下"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

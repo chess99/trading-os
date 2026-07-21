@@ -1,91 +1,86 @@
 {
-  "symbol": "CN:600630",
-  "ticker": "600630",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "龙头股份",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "龙头股份是上海国资体系下的老字号纺织服装平台，2026Q1 主业和扣非利润出现修复，但 2025 年扣非利润基数很低，品牌护城河和持续 ROE 尚未验证；以 2026-07-16 收盘价 6.58 元计，估值约 52x TTM PE、3.4x PB，已明显透支修复预期，当前只适合观察，不具备安全边际。",
-  "fair_value_range": [
-    3.2,
-    4.5
-  ],
-  "buy_zone": [
-    3.0,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    7.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "龙头股份",
+    "security_status": "active",
+    "symbol": "CN:600630",
+    "ticker": "600630"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "143d6e8eac20a073b5b05193f47c6749a22bdeb256b5031f65926042febe736b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至 3.8 元以下，且最近一期扣非净利润同比增长、经营现金流为正、针织品牌毛利率维持 30% 左右或以上",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非净利润、经营现金流、针织业务毛利率和存货周转。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1 或 2026Q3 显示扣非利润连续改善，全年可持续净利润中枢上修至 8000 万元以上，且股价仍低于 4.5 元",
-      "action": "小幅加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 Q1 修复是否延续以及全年盈利中枢是否上修。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 6.0 元且未出现扣非利润、现金流、品牌收入的连续验证",
-      "action": "不新增仓位或降低已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入安全边际观察区，若主业改善仍在可重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "高于基准公允价值上沿，若缺乏利润兑现应视为估值风险扩大。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入安全边际观察区，若主业改善仍在可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "高于基准公允价值上沿，若缺乏利润兑现应视为估值风险扩大。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非净利润、经营现金流、针织业务毛利率和存货周转。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q1 修复是否延续以及全年盈利中枢是否上修。"
-    }
-  ],
-  "sources": [
-    {
-      "title": "龙头股份 2025 年年度报告",
-      "url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-04-23/600630_20260423_U24K.pdf",
-      "accessed_at": "2026-07-17"
-    },
-    {
-      "title": "龙头股份 2026 年第一季度报告",
-      "url": "https://www.sse.com.cn/disclosure/listedinfo/announcement/c/new/2026-04-30/600630_20260430_ISWG.pdf",
-      "accessed_at": "2026-07-17"
-    },
-    {
-      "title": "上海龙头股份官网",
-      "url": "https://www.shanghaidragon.com.cn/",
-      "accessed_at": "2026-07-17"
-    },
-    {
-      "title": "腾讯行情接口 2026-07-16 收盘截面",
-      "url": "https://qt.gtimg.cn/q=sh600630,sh600398,sz002293,sz002327,sh600137,sh600400",
-      "accessed_at": "2026-07-17"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

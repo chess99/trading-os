@@ -1,30 +1,96 @@
 {
-  "symbol": "CN:000958",
-  "market": "CN",
-  "ticker": "000958",
-  "name": "电投产融",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "2024-2026年完成从热电到金控的重大重组，但扣非净利润持续下滑且估值偏高（扣非PE 127倍），重组整合效果有待验证，当前缺乏安全边际，等待更合理的价格和更稳定的经营数据",
-  "fair_value_range": [3.50, 5.00],
-  "buy_zone": [2.80, 3.50],
-  "sell_or_reduce_zone": [5.50, 7.00],
-  "position_plan": [
-    {"condition": "股价进入有安全边际的买入区间(2.80-3.50元)", "max_weight": 0.015},
-    {"condition": "股价进入强吸引力买入区间(<2.80元)", "max_weight": 0.03},
-    {"condition": "2026年中报确认可持续扣非净利润在15亿以上且股价低于5元", "max_weight": 0.02}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电投产融",
+    "security_status": "active",
+    "symbol": "CN:000958",
+    "ticker": "000958"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "110f28ba84d029684981d5ba96bc90239feabcd177370a559bfcb97cdbe6e85c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复查核心假设",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后复查扣非净利润趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入强吸引力买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年中报披露后复查核心假设"},
-    {"type": "date", "date": "2027-04-30", "reason": "2026年报披露后复查扣非净利润趋势"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 3.50, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_below", "price": 2.80, "reason": "进入强吸引力买入区间"},
-    {"type": "price_above", "price": 5.50, "reason": "进入减仓或不应追高区间"}
-  ],
-  "updated_at": "2026-07-08T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

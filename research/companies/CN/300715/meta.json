@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300715",
-  "market": "CN",
-  "ticker": "300715",
-  "name": "凯伦股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司通过收购佳智彩从防水材料扩展至显示面板检测修复设备，2026Q1收入和利润改善，但防水主业仍受地产链拖累，扣非盈利薄弱，应收账款、商誉、控股股东高质押和历史治理处罚需要折价；2026-07-17股价12.52元明显高于4.8-7.2元合理价值区间，当前不具备安全边际，仅观察。",
-  "fair_value_range": [
-    4.8,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    9,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯伦股份",
+    "security_status": "active",
+    "symbol": "CN:300715",
+    "ticker": "300715"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6dec92984a97ec43a8d1ed4e6e0870c370033b5c0c49130f18e38cf20b150351"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且扣非盈利尚未充分验证，未持有不建仓。",
-      "action": "no_buy",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非归母净利润、经营现金流、应收账款、佳智彩订单和商誉。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元，且最近一期扣非归母净利润为正、经营现金流为正、佳智彩无商誉减值迹象。",
-      "action": "watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及张勇减持计划执行情况，确认利润修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.0元，且连续两个季度扣非归母净利润为正、应收账款占收入比例下降、控股股东质押比例实质下降。",
-      "action": "small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估转型兑现、商誉减值和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入初步买入观察区，需要复核扣非利润、现金流、应收账款和商誉风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入更高安全边际区，需要评估是否允许小仓位验证。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "显著高于基准合理价值，应回避或降低已有仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入初步买入观察区，需要复核扣非利润、现金流、应收账款和商誉风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入更高安全边际区，需要评估是否允许小仓位验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "显著高于基准合理价值，应回避或降低已有仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非归母净利润、经营现金流、应收账款、佳智彩订单和商誉。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及张勇减持计划执行情况，确认利润修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估转型兑现、商誉减值和合理价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

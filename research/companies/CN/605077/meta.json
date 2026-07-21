@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:605077",
-  "market": "CN",
-  "ticker": "605077",
-  "name": "华康股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "华康股份是国内功能性糖醇龙头之一，具备规模、客户认证、质量体系和标准参与优势；但2026H1预告显示舟山产能释放阶段低毛利液体产品占比提升、可转债利息和汇率波动显著压低利润。当前股价接近1倍PB，有资产安全垫，但PE基于下修盈利并不便宜，需等待毛利率和现金流拐点或更低价格。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.8,
-    13.8
-  ],
-  "buy_zone": [
-    0,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华康股份",
+    "security_status": "active",
+    "symbol": "CN:605077",
+    "ticker": "605077"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2c70c81b76a17bef7d2c0574e01c9b5adcc42095bf9d4890541cce48e4bd29d9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.2元，且2026半年报未出现经营现金流明显恶化或净债务快速上升",
-      "action": "建立观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报的毛利率、现金流、净债务和舟山产能盈利质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "毛利率连续两个季度改善、财务费用率下降，且2027年利润恢复至2亿元以上的证据增强",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报是否出现利润率修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于14.5元但利润仍低于年化1.5亿元，或低毛利液体产品继续拖累综合毛利率",
-      "action": "减仓或回避",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报与2027经营指引，判断低毛利扩张是否结束",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入保守安全边际区域，可结合半年报质量评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "高于基准估值上沿，若盈利未恢复则风险收益转弱",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入保守安全边际区域，可结合半年报质量评估观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "高于基准估值上沿，若盈利未恢复则风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报的毛利率、现金流、净债务和舟山产能盈利质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报是否出现利润率修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报与2027经营指引，判断低毛利扩张是否结束"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

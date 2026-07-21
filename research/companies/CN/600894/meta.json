@@ -1,96 +1,105 @@
 {
-  "symbol": "CN:600894",
-  "ticker": "600894",
-  "name": "广日股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "广日股份是国资控股的电梯整机、后市场与零部件平台，并持有日立电梯重要权益资产；低PB、高分红和存量电梯更新政策提供防御，但地产链下行、零部件低毛利和2026Q1利润偏弱使当前价格缺乏足够安全边际，宜观察等待更低价格或中报验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    9.8
-  ],
-  "buy_zone": [
-    6.3,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    11.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广日股份",
+    "security_status": "active",
+    "symbol": "CN:600894",
+    "ticker": "600894"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0af8b6b1d52e4307b158f161c0bd75cfa92046d5b8c39dcb7b6816bdf705cf83"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.8元且2026中报未显示扣非利润或经营现金流进一步恶化",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的后市场订单、扣非利润、经营现金流和应收款质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "后市场订单、维保台量和经营现金流在2026中报或三季报继续改善",
-      "action": "将仓位上限提高",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润恢复和分红可持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.0元且日立电梯权益收益、分红与主业现金流未发生结构性恶化",
-      "action": "复核后逆向加仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及日立电梯权益收益、分红到账情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但盈利预测没有上修或后市场兑现不及预期",
-      "action": "减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入估算买入区，股息率和PB安全边际更清晰",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入深度复核区，如基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "接近卖出或减仓区，需确认盈利是否足以支撑估值上移",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入估算买入区，股息率和PB安全边际更清晰"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入深度复核区，如基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "接近卖出或减仓区，需确认盈利是否足以支撑估值上移"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的后市场订单、扣非利润、经营现金流和应收款质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润恢复和分红可持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及日立电梯权益收益、分红到账情况"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 8.0,
-    "reference_price_date": "2026-07-17",
-    "reference_price_confidence": "中低",
-    "revenue_2025_cny": 7245603231.3,
-    "net_profit_2025_cny": 689310453.92,
-    "deducted_net_profit_2025_cny": 632884518.7,
-    "operating_cash_flow_2025_cny": 350669162.04,
-    "revenue_2026_q1_cny": 1356833668.55,
-    "net_profit_2026_q1_cny": 9068208.42,
-    "equity_attributable_2026_q1_cny": 8896284643.05
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

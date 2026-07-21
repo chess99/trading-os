@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603803",
-  "market": "CN",
-  "ticker": "603803",
-  "name": "瑞斯康达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "瑞斯康达具备光网络、接入网和政企网络细分场景积累，受益于千兆/万兆光网、5G-A、算力网络和行业数字化需求，但 2025 年亏损、2026H1 仍预告亏损，盈利拐点尚未稳定；当前估值已反映较多预期，宜观察等待扣非盈利和现金流确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    6.5,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    13.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瑞斯康达",
+    "security_status": "active",
+    "symbol": "CN:603803",
+    "ticker": "603803"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "ee46661f75c990bf53d606f98dc078924b5e81594d685bcf3ce1f67443b4d676"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 7.0 元且未出现治理、现金流或减值恶化，允许建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入结构、毛利率、费用率、应收存货和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润为正，且经营现金流同步改善，可提高至小仓位配置。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 Q3 是否恢复扣非盈利。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 12.5 元但扣非盈利未兑现，或 2026 年全年继续亏损，应减仓或不参与。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断全年盈利拐点和估值锚是否成立。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入买入观察区，PB 约 1.9x，安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "超过减持观察区中枢，若盈利未同步兑现则估值风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入买入观察区，PB 约 1.9x，安全边际改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "超过减持观察区中枢，若盈利未同步兑现则估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入结构、毛利率、费用率、应收存货和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q3 是否恢复扣非盈利。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断全年盈利拐点和估值锚是否成立。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

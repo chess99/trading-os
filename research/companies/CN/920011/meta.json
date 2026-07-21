@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:920011",
-  "market": "CN",
-  "ticker": "920011",
-  "name": "晨光电机",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "晨光电机是清洁电器微特电机细分供应商，2025年收入和利润稳健增长、经营现金流好，2026Q1上市募资后资产负债表显著增强；当前约18.6倍TTM市盈率和约1.9倍PB低于合理估值区间。主要约束是2026Q1利润同比下滑、毛利率压力、清洁电器终端高基数回调及北交所小流通盘波动，因此仅适合小仓位分批买入并用半年度业绩验证。",
-  "fair_value_range": [
-    21,
-    27
-  ],
-  "buy_zone": [
-    15,
-    19.5
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    34
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晨光电机",
+    "security_status": "active",
+    "symbol": "CN:920011",
+    "ticker": "920011"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2d77ecad367e8eccb1ea86caff27a990c265cdeeea16a4d2873142bdcd262e00"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价位于19.5元以下且2026H1未出现收入下滑、毛利率跌破18.5%、经营现金流显著弱于净利润的组合恶化",
-      "action": "建立或维持小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、归母净利润、主营毛利率、无刷电机占比、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至17元以下，且无刷电机收入占比提升、应收账款周转未恶化、经营现金流净额/净利润维持0.8倍以上",
-      "action": "分批加仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1利润下滑是否为短期扰动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1归母净利润恢复正增长且主营毛利率稳定在19%以上，客户结构未集中恶化",
-      "action": "确认成长后提高仓位上限",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和募投项目转固/产能利用情况，重新评估长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价进入28元以上且利润预测没有同步上修，或2026H1净利润同比下降超过15%",
-      "action": "减仓至观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入更有安全边际的加仓观察区，需复核半年报毛利率、无刷电机占比和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "跌入悲观情景估值区，需要判断是流动性错杀还是订单/毛利实质恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "超过基准合理价值上沿，如无利润上修应逐步减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "接近乐观情景估值，风险回报转差，应大幅减仓或退出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入更有安全边际的加仓观察区，需复核半年报毛利率、无刷电机占比和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "跌入悲观情景估值区，需要判断是流动性错杀还是订单/毛利实质恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "超过基准合理价值上沿，如无利润上修应逐步减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "接近乐观情景估值，风险回报转差，应大幅减仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、归母净利润、主营毛利率、无刷电机占比、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1利润下滑是否为短期扰动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和募投项目转固/产能利用情况，重新评估长期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

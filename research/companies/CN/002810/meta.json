@@ -1,121 +1,115 @@
 {
-  "symbol": "CN:002810",
-  "market": "CN",
-  "ticker": "002810",
-  "name": "山东赫达",
-  "company_name": "山东赫达集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "山东赫达是纤维素醚龙头之一，并向高毛利植物胶囊延伸。2026年利润修复明确，但20.65元附近已部分反映修复预期，安全边际不足；等待17.5-18.5元以下或半年报进一步验证。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏高",
-  "fair_value_range": [
-    20.0,
-    25.0
-  ],
-  "buy_zone": [
-    16.5,
-    18.5
-  ],
-  "sell_or_reduce_zone": [
-    28.0,
-    32.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东赫达",
+    "security_status": "active",
+    "symbol": "CN:002810",
+    "ticker": "002810"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b05d03395a239fb274131c0254b849e94f1ad407e55d554612948f92e0a7fafb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于18.5元，且最新季度经营现金流/净利润不低于0.8，植物胶囊毛利率未明显跌破50%",
-      "action": "建立观察仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于16.5元，且2026E归母净利润仍可维持3.8亿元以上，海外订单和美国项目无重大负面变化",
-      "action": "加仓至核心跟踪仓",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格高于25元但全年利润预期未上修至4.5亿元以上",
-      "action": "停止加仓并等待业绩验证",
-      "target_position": "维持或小幅降低",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于30元，且植物胶囊收入增速或毛利率未继续超预期",
-      "action": "分批减仓",
-      "target_position": "降至1%以内或清仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "unit": "CNY/share",
-      "reason": "进入可买区上沿，较合理价值中枢具备初步安全边际",
-      "action": "复核半年报或最近季度数据，考虑建立1%-2%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "unit": "CNY/share",
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
-      "action": "若基本面未恶化，考虑加至3%-4%"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "unit": "CNY/share",
-      "reason": "高于合理价值区间上沿，除非盈利上修否则估值可能透支",
-      "action": "复核估值是否透支，若盈利未上修则减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "unit": "CNY/share",
-      "reason": "进入明显高估区，需要美国项目或植物胶囊显著超预期支撑",
-      "action": "除非美国项目和植物胶囊显著超预期，否则执行卖出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报预计已披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证2026年利润修复、植物胶囊毛利率和库存消化",
-      "action": "复核全年利润中枢、植物胶囊毛利率和库存变化"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报预计已披露",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证经营现金流和海外收入趋势是否匹配利润修复",
-      "action": "复核经营现金流、海外收入增速和纤维素醚吨价"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年度报告预计已披露",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整复核美国项目、资本开支、分红回购和全年估值假设",
-      "action": "复核美国项目、全年现金流、分红回购和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "进入可买区上沿，较合理价值中枢具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于合理价值区间上沿，除非盈利上修否则估值可能透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入明显高估区，需要美国项目或植物胶囊显著超预期支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "植物空心胶囊收入增速和毛利率",
-    "植物空心胶囊库存量及产能利用率",
-    "自产纤维素醚销量、吨售价和毛利率",
-    "海外收入占比及海外收入同比增速",
-    "经营活动现金流量净额/归母净利润",
-    "美国植物胶囊项目资本开支、投产和客户导入进度",
-    "现金短债比和净债务/EBITDA",
-    "分红和回购金额占归母净利润比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

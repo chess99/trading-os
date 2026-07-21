@@ -1,105 +1,105 @@
 {
-  "symbol": "CN:000719",
-  "market": "CN",
-  "ticker": "000719",
-  "name": "中原传媒",
-  "company_name": "中原传媒",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "中原传媒具备河南区域教材教辅出版发行壁垒、低杠杆高现金资产和高分红特征，当前约8.6倍2025年扣非PE、约5.8%股息率，适合作为红利和估值修复型小仓位资产；主要约束是教育人口长期下行、政策监管和国企资本效率。",
-  "quality_rating": "A-",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    13.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.8,
-    11.2
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中原传媒",
+    "security_status": "active",
+    "symbol": "CN:000719",
+    "ticker": "000719"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "881cf5a77155eb9722a27200e514b8d22af5c5042c44fed8624bca2d9aa2978d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_around_11_35_and_no_negative_policy_change",
-      "action": "open_initial_position",
-      "max_weight": 0.02,
-      "reason": "当前估值约8.6倍2025年扣非PE，股息率约5.8%，可用小仓获得红利和估值修复暴露。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年半年报披露后，复核教材教辅收入、发行业务毛利率、经营现金流和资产减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_at_or_below_10_8_with_dividend_policy_intact",
-      "action": "add_position",
-      "max_weight": 0.04,
-      "reason": "进入理想买入区，安全边际改善，若教材教辅和现金分红逻辑未变可提高仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核全年利润可见度和现金流季节性改善情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_at_or_below_9_8_and_fundamentals_unchanged",
-      "action": "add_to_full_position",
-      "max_weight": 0.06,
-      "reason": "低于悲观估值上沿，若经营现金流、分红和区域教材发行权未恶化，赔率明显改善。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报和分红预案披露后，复核股息率、分红率和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_at_or_above_16_5_without_new_growth_evidence",
-      "action": "reduce_position",
-      "max_weight": 0.03,
-      "reason": "达到合理价值上沿以上，若数字教育或利润增速没有新增证据，应兑现部分估值修复收益。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入可加仓区，复核2026年中报和分红预期后考虑加至3%-4%。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入深度买入区，若基本面未变可考虑接近6%上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "达到减持区，若没有利润增速或数字教育放量证据，应分批降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入可加仓区，复核2026年中报和分红预期后考虑加至3%-4%。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入深度买入区，若基本面未变可考虑接近6%上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "达到减持区，若没有利润增速或数字教育放量证据，应分批降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年半年报披露后，复核教材教辅收入、发行业务毛利率、经营现金流和资产减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核全年利润可见度和现金流季节性改善情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报和分红预案披露后，复核股息率、分红率和合理价值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "教材教辅出版与发行收入",
-    "发行业务毛利率",
-    "出版业务毛利率",
-    "经营活动现金流量净额",
-    "归母扣非净利润",
-    "每股现金分红和分红率",
-    "货币资金、现金及现金等价物、定期存单余额",
-    "应收账款和存货周转",
-    "河南义务教育及高中阶段在校生数量",
-    "数字教育和课后服务产品收入进展",
-    "政府采购、教材教辅和出版监管政策变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

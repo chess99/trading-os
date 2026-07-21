@@ -1,71 +1,96 @@
 {
-  "symbol": "CN:603801",
-  "market": "CN",
-  "ticker": "603801",
-  "name": "志邦家居",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "志邦家居是定制家居第二梯队中具备渠道、制造和多品类基础的修复型资产，当前 PB 较低但 2026H1 预亏使盈利拐点尚未确认；在现金流和亏损收窄得到验证前维持观察，只有跌入足够安全边际或基本面明确修复后才适合小仓位参与。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.8,
-    7.4
-  ],
-  "buy_zone": [
-    4.6,
-    5.1
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "志邦家居",
+    "security_status": "active",
+    "symbol": "CN:603801",
+    "ticker": "603801"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "330ea0b6187a874c662e952a3b7fb1259b05c152e4fc3fa6c9541bf423a1e629"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 5.1 元，且 2026 年三季报显示亏损明显收窄、经营现金流未恶化，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认亏损收窄、现金流和订单变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 4.6 元，且未出现新增重大坏账、减值或现金流断裂，可把上限提高至深度价值试错仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估净资产质量、全年亏损和分红能力。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 6.5 元但利润修复未被季度报表验证，不追涨，仅继续观察。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.1
+      },
+      "reason": "进入买入区间上沿，需要结合三季报亏损收窄和现金流验证。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入深度安全边际区间，若资产质量无新增恶化可复核建仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "超过基准估值上沿，需要检查利润是否已恢复，否则应降低或放弃。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.1,
-      "reason": "进入买入区间上沿，需要结合三季报亏损收窄和现金流验证。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入深度安全边际区间，若资产质量无新增恶化可复核建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "超过基准估值上沿，需要检查利润是否已恢复，否则应降低或放弃。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认亏损收窄、现金流和订单变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估净资产质量、全年亏损和分红能力。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

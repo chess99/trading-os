@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:920227",
-  "market": "CN",
-  "ticker": "920227",
-  "name": "美登科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "小而美的电商SaaS现金牛，2025年收入1.55亿元、归母净利润0.43亿元、经营现金流好于净利润，客户分散且现金充裕；但2026-07-17股价47.70元约对应42倍TTM PE，已较充分定价AI与多平台增长期权，当前缺少安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    36.0,
-    44.0
-  ],
-  "buy_zone": [
-    28.0,
-    34.0
-  ],
-  "sell_or_reduce_zone": [
-    47.0,
-    60.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美登科技",
+    "security_status": "active",
+    "symbol": "CN:920227",
+    "ticker": "920227"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "de35833196cbd0c3f10cf0f7dedfc19cf4aa450b314978f9b43a526a7978b944"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "确认基本面未恶化后加到核心观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "分两笔买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "仅在季度增长兑现时小仓试错",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "观察或持有，不主动加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入安全边际买入区，复核最近一季收入、扣非净利率和现金流后可建2%第一笔",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "不新增买入",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入强吸引力区，若核心SaaS收入和毛利率未恶化，可提高至4%-6%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "若业绩未显著上修，考虑降低或放弃追踪仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34.0,
-      "action": "进入安全边际买入区，复核最近一季收入、扣非净利率和现金流后可建2%第一笔",
-      "reason": "进入安全边际买入区，复核最近一季收入、扣非净利率和现金流后可建2%第一笔"
-    },
-    {
-      "type": "price_below",
-      "price": 30.0,
-      "action": "进入强吸引力区，若核心SaaS收入和毛利率未恶化，可提高至4%-6%",
-      "reason": "进入强吸引力区，若核心SaaS收入和毛利率未恶化，可提高至4%-6%"
-    },
-    {
-      "type": "price_above",
-      "price": 55.0,
-      "action": "若业绩未显著上修，考虑降低或放弃追踪仓",
-      "reason": "若业绩未显著上修，考虑降低或放弃追踪仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "复核2026年中报收入增速、SaaS毛利率、扣非净利率和AI产品商业化证据",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "复核2026年三季报，判断全年净利是否需要上修或下修",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "action": "复核2026年报、分红、现金用途和平台扩张进展",
-      "reason": "???????"
-    }
-  ],
-  "notes": [
-    "今天决策：watch，不买入；第一笔仓位0%，跌破34元且基本面未坏时再考虑2%。关键风险为平台依赖、个位数增长下的高估值、AI替代/同质化、小市值流动性和历史信息披露瑕疵。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

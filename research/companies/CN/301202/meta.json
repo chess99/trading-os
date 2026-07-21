@@ -1,72 +1,86 @@
 {
-  "symbol": "CN:301202",
-  "ticker": "301202",
-  "name": "朗威股份",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司受益于数据中心和算力基础设施建设，但2025年利润下滑、2026Q1增收不增利，当前34.29元对应TTM PE约72.72倍，已计入乐观预期，缺乏安全边际；等待利润率修复或价格回落。",
-  "fair_value_range": [
-    18,
-    26
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗威股份",
+    "security_status": "active",
+    "symbol": "CN:301202",
+    "ticker": "301202"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "9e7458276e0c043f6f70663ced8c15466a227c1a51ca3acef90646729fce43b9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于18元且最近一期扣非净利率不低于5.5%，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增长是否转化为扣非净利率修复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于22元且连续两个季度经营现金流/净利润大于1、收入同比增长超过15%，可提高至小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认经营现金流、订单和毛利率趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于32元且利润率未明显修复，不新增仓位并考虑退出已有仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入安全边际较充足的买入观察区，需要复核利润率和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于基准估值上沿，若基本面未超预期应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入安全边际较充足的买入观察区，需要复核利润率和现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "高于基准估值上沿，若基本面未超预期应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增长是否转化为扣非净利率修复。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认经营现金流、订单和毛利率趋势。"
-    }
-  ],
-  "data_quality": {
-    "financials": "high",
-    "valuation": "medium",
-    "governance": "low"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,132 +1,123 @@
 {
-  "symbol": "CN:300016",
-  "market": "CN",
-  "ticker": "300016",
-  "name": "北陆药业",
-  "company_name": "北京北陆药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "对比剂主业在2025年恢复，2026Q1扣非利润和经营现金流明显改善，但2025年表观利润含较大公允价值收益，且对比剂仿制药属性决定集采和价格竞争仍是核心约束。当前约7.99元处于合理价值区间中上部，等待6.5元以下或后续季度扣非持续验证。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    6.4,
-    8.6
-  ],
-  "buy_zone": [
-    0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北陆药业",
+    "security_status": "active",
+    "symbol": "CN:300016",
+    "ticker": "300016"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "35d9b920dac740a30bfb5ae774997f9cbe07f84c338b06975abc69e84f00a394"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于10.5元且业绩没有明显上修",
-      "action": "不追高；已有仓位减至0-2%",
-      "target_position": "0-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格在8.0-10.5元之间",
-      "action": "观察，等待2026Q2/Q3扣非利润和现金流验证",
-      "target_position": "0-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格在6.5-8.0元之间，且扣非利润延续改善",
-      "action": "小仓位试探",
-      "target_position": "1-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于6.5元，且无集采降价、应收恶化或重大监管风险",
-      "action": "分批买入",
-      "target_position": "3-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格低于5.8元，且经营现金流与利润匹配、对比剂毛利率稳定",
-      "action": "提高到中等仓位",
-      "target_position": "5-7%",
-      "max_weight": 0.07
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "unit": "CNY/share",
-      "reason": "低于可买价格并保留相对合理价值区间的安全边际",
-      "action": "进入可买区，复核集采、现金流和应收账款后分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "unit": "CNY/share",
-      "reason": "进入更深折价区，若基本面未恶化则风险收益比改善",
-      "action": "若基本面未恶化，可提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "unit": "CNY/share",
-      "reason": "高于乐观情景下的减仓线，除非业绩同步上修否则估值透支",
-      "action": "若业绩未上修，减仓或不追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年中报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报是验证2026Q1扣非利润能否延续的第一关键节点",
-      "action": "复核扣非归母净利润、经营现金流和毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "对比剂核心品种出现国家或地方集采价格显著变化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报和集采进展会决定全年利润质量和毛利率假设",
-      "action": "重估收入、毛利率和买入区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "海外收入或钆布醇原料药CEP相关订单出现实质性放量证据",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "海外化是当前低基数增长选项，需要订单证据验证",
-      "action": "上修海外增长假设并复核估值上限"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "应收账款、存货或销售费用率出现异常上升",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "年报前后需要检查利润是否转化为现金",
-      "action": "检查利润质量并降低目标仓位"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "公司发布重大融资、并购、资产减值或监管处罚公告",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年报将决定正常化利润和估值区间是否需要重估",
-      "action": "重新评估资本配置和风险折价"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "低于可买价格并保留相对合理价值区间的安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入更深折价区，若基本面未恶化则风险收益比改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于乐观情景下的减仓线，除非业绩同步上修否则估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润：2026年是否达到1.4-1.8亿元",
-    "对比剂收入增速和毛利率：毛利率是否稳定在56%-60%区间",
-    "经营活动现金流量净额/归母净利润",
-    "海外收入：是否从2025年0.24亿元提升到0.5-1.0亿元",
-    "核心对比剂品种集采中标价格和放量情况",
-    "新品注册、挂网、医院准入和实际销售放量进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

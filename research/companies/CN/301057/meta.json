@@ -1,137 +1,104 @@
 {
-  "market": "CN",
-  "symbol": "CN:301057",
-  "ticker": "301057",
-  "name": "汇隆新材",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "sector": "基础化工",
-  "industry": "化学纤维-涤纶",
-  "status": "active",
-  "coverage": "initial",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "latest_report_date": "2026-07-15",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "current_rating": "watch",
-  "rating": "watch",
-  "recommendation": "观察，暂不买入",
-  "current_thesis": "原液着色差别化涤纶长丝具备绿色工艺和海外扩张线索，但当前估值已接近乐观预期，需等待现金流、毛利率和印尼产能爬坡验证。",
-  "position_plan": [
-    {
-      "action": "watch",
-      "condition": "当前价格缺少安全边际",
-      "max_weight": 0
-    },
-    {
-      "action": "buy",
-      "condition": "13-15元区间且基本面未恶化",
-      "max_weight": 0.005
-    },
-    {
-      "action": "add",
-      "condition": "2026年中报/三季报验证扣非利润、经营现金流和印尼产能爬坡",
-      "max_weight": 0.015
-    },
-    {
-      "action": "reduce",
-      "condition": "20元以上且无利润上修与现金流改善",
-      "max_weight": 0
-    }
-  ],
-  "fair_value_range": [
-    13,
-    15
-  ],
-  "buy_zone": [
-    13,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    20,
-    24
-  ],
-  "max_weight": 0.015,
-  "updated_at": "2026-07-15",
-  "analyst": "independent_buy_side_worker",
-  "summary": "原液着色差别化涤纶长丝细分龙头线索清晰，2026Q1利润改善，但现金流、扩产爬坡和治理资本动作仍需验证；当前估值已接近乐观预期，缺少安全边际。",
-  "tags": [
-    "原液着色",
-    "差别化涤纶长丝",
-    "绿色纤维",
-    "印尼产能",
-    "观察"
-  ],
-  "key_metrics": {
-    "revenue_2025_cny": 951189189.5,
-    "net_profit_2025_cny": 35113567.22,
-    "deducted_net_profit_2025_cny": 27240183.21,
-    "operating_cash_flow_2025_cny": 124008186.02,
-    "revenue_2026_q1_cny": 231102943.15,
-    "net_profit_2026_q1_cny": 16324143.28,
-    "deducted_net_profit_2026_q1_cny": 16071193.57,
-    "operating_cash_flow_2026_q1_cny": -37986381.59
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汇隆新材",
+    "security_status": "active",
+    "symbol": "CN:301057",
+    "ticker": "301057"
   },
-  "valuation": {
-    "reference_price_date": "2026-07-14",
-    "reference_price_cny": 20.88,
-    "reference_market_cap_cny": 2442000000,
-    "data_confidence": "medium",
-    "fair_value_range_cny_per_share": [
-      13,
-      15
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1826908bc11bb53c2ca87313e52fb6f6a4cf5eec97d9d56c3cb249bed99259a1"
+      }
     ],
-    "stance": "current price lacks sufficient margin of safety"
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "risks": [
-    "原材料和涤纶产品价差波动",
-    "印尼及国内扩产爬坡不及预期",
-    "经营现金流与存货周转恶化",
-    "出口费用和汇率波动",
-    "控制权及股东减持相关治理折价",
-    "高估值回撤"
-  ],
-  "review_triggers": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后复核扣非利润、毛利率、经营现金流和存货"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复核扣非利润、毛利率、经营现金流和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核印尼基地爬坡、海外收入和现金流"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核印尼基地爬坡、海外收入和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报后复核扩产折旧压力、利润中枢和估值区间"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报后复核扩产折旧压力、利润中枢和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-15",
-      "reason": "年度滚动复核安全边际和最大仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-07-15"
+      },
+      "reason": "年度滚动复核安全边际和最大仓位",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入安全边际观察区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "进入减仓/回避区间，需利润上修和现金流改善支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "action": "review_for_buy",
-      "reason": "进入安全边际观察区间"
-    },
-    {
-      "type": "price_above",
-      "price": 20,
-      "action": "review_for_reduce",
-      "reason": "进入减仓/回避区间，需利润上修和现金流改善支撑"
-    }
-  ],
-  "next_review_triggers": [
-    "2026年中报",
-    "印尼基地达产和客户认证进展",
-    "毛利率是否稳定在16%-18%以上",
-    "经营现金流是否转正并覆盖利润"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

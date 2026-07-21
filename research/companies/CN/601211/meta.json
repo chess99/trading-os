@@ -1,79 +1,96 @@
 {
-  "symbol": "CN:601211",
-  "market": "CN",
-  "ticker": "601211",
-  "name": "国泰海通",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "priority": "P1",
-  "analyst": "codex-subagent-601211",
-  "fair_value_range": [
-    19.0,
-    24.0
-  ],
-  "buy_zone": [
-    16.0,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    25.5,
-    32.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国泰海通",
+    "security_status": "active",
+    "symbol": "CN:601211",
+    "ticker": "601211"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "5ec5dfea40f5941cf874ef9fc7f75a8f7803ed880de3421a679ce86ed792c7eb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "16.0-18.0元",
-      "action": "安全边际买入，开第一笔仓位",
-      "target_weight": 0.015,
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露后的利润质量、投资收益来源、风险指标和合并协同。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "14.0-15.5元",
-      "action": "强吸引力买入，基本面未恶化时加仓",
-      "target_weight": 0.03,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报、市场成交、两融余额、投行业务和ROE趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "25.5元以上",
-      "action": "不追高，除非ROE可持续性显著超预期，否则考虑降低仓位",
-      "target_weight": 0.0,
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入安全边际买入区，复核基本面后考虑首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入强吸引力买入区，若风险指标未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.5
+      },
+      "reason": "超过不应追高价，除非ROE可持续性显著超预期，否则考虑降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "thesis": "合并后国泰海通成为一线综合券商，资本、客户、两融、投行和机构交易能力显著增强；但盈利高度受资本市场 beta、自营和跟投收益影响，当前价格已部分反映2026H1高景气预期，等待安全边际。",
-  "current_thesis": "合并后国泰海通成为一线综合券商，资本、客户、两融、投行和机构交易能力显著增强；但盈利高度受资本市场 beta、自营和跟投收益影响，当前价格已部分反映2026H1高景气预期，等待安全边际。",
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露后的利润质量、投资收益来源、风险指标和合并协同。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报、市场成交、两融余额、投行业务和ROE趋势。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入安全边际买入区，复核基本面后考虑首笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入强吸引力买入区，若风险指标未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 25.5,
-      "reason": "超过不应追高价，除非ROE可持续性显著超预期，否则考虑降低仓位。"
-    }
-  ],
-  "updated_at": "2026-07-07T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688092",
-  "market": "CN",
-  "ticker": "688092",
-  "name": "爱科科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "爱科科技是非金属智能切割设备的小而专公司，具备工业软件、运动控制、多材料工艺和海外渠道积累，资产负债表稳健且现金流好于利润；但 2025 年和 2026Q1 利润连续承压，当前价格已反映海外和募投扩产的较多成功预期，安全边际不足，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16,
-    22
-  ],
-  "buy_zone": [
-    13,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    28
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱科科技",
+    "security_status": "active",
+    "symbol": "CN:688092",
+    "ticker": "688092"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "1fc9f8c65ad95b1654aa58b25b4cb795a6114ec5cc782f90c914307bf2248ec8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于16元，且2026H1或2026Q3显示收入恢复增长、毛利率稳定、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看利润降幅、海外毛利率、经营现金流和募投进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于13元，且海外收入、现金流和资产负债表未出现基本面破坏",
-      "action": "提高至小仓位持有",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-11-02"
+      },
+      "reason": "复核2026三季报，判断全年收入和利润恢复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于25元但归母净利润仍低于6500万元，或转债摊薄压力上升",
-      "action": "不加仓并考虑降低敞口",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-12-17"
+      },
+      "reason": "爱科转债进入转股期，复核转股价、下修风险和潜在摊薄",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入基础公允价值下沿，若基本面未恶化则安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入保守情景附近，需复核现金、订单和利润质量后考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "接近乐观情景和可转债初始转股价附近，需要重新测算摊薄和退出纪律",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入基础公允价值下沿，若基本面未恶化则安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入保守情景附近，需复核现金、订单和利润质量后考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "接近乐观情景和可转债初始转股价附近，需要重新测算摊薄和退出纪律"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看利润降幅、海外毛利率、经营现金流和募投进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-02",
-      "reason": "复核2026三季报，判断全年收入和利润恢复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-17",
-      "reason": "爱科转债进入转股期，复核转股价、下修风险和潜在摊薄"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

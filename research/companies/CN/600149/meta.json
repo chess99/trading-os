@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:600149",
-  "ticker": "600149",
-  "name": "廊坊发展",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "廊坊发展具备区域供热公用事业属性和一定现金流稳定性，但资产体量小、盈利中枢低、区域集中度高，当前价格相对盈利、净资产和DCF均缺乏安全边际；等待价格回落或资产整合与盈利改善被公告和财务数据验证。",
-  "fair_value_range": [
-    2.1,
-    3.2
-  ],
-  "buy_zone": [
-    1.8,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    4.0,
-    4.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "廊坊发展",
+    "security_status": "active",
+    "symbol": "CN:600149",
+    "ticker": "600149"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "600137700e8686c38cdb51b01934bcc915c1399959d349313cdb9911d2aaa750"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入1.80-2.40元且供热业务收入、经营现金流和应收回款未恶化时，可建立观察仓。",
-      "action": "initiate",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看供热淡季亏损、应收账款、现金流和成本变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年年报或连续两个供热季验证归母净利润中枢超过2500万元、经营现金流稳定为正且无重大治理瑕疵。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和新供热季启动前经营安排。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.00元且无已公告、可量化提升每股价值的资产整合或盈利改善。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，判断完整供热季盈利中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入观察买入区间，需要复核供热面积、成本、现金流和应收回款是否同步恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "进入具备较高安全边际的深度价值区间，可重新评估仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.0
+      },
+      "reason": "高于基准估值上沿且缺乏资产注入验证时，估值透支风险上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入观察买入区间，需要复核供热面积、成本、现金流和应收回款是否同步恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "进入具备较高安全边际的深度价值区间，可重新评估仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.0,
-      "reason": "高于基准估值上沿且缺乏资产注入验证时，估值透支风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看供热淡季亏损、应收账款、现金流和成本变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和新供热季启动前经营安排。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，判断完整供热季盈利中枢。"
-    }
-  ],
-  "key_monitoring_items": [
-    "供热面积、售热量和接入用户数",
-    "热源采购单价、毛利率和管网损耗",
-    "经营现金流、应收账款和补贴回款",
-    "供热价格调整、地方补贴和环保安全政策",
-    "控股股东资产整合、关联交易和担保公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

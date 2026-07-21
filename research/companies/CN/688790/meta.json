@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:688790",
-  "market": "CN",
-  "ticker": "688790",
-  "name": "昂瑞微",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "昂瑞微具备国内稀缺的5G高集成射频前端模组、射频SoC、车规和卫星通信射频芯片布局，但2025年收入下滑、仍未盈利、客户采购节奏和存货减值风险尚未完全出清。当前股价约处于公允价值区间中部偏上，适合观察并等待收入恢复、毛利率稳定和经营现金流改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    75,
-    110
-  ],
-  "buy_zone": [
-    60,
-    75
-  ],
-  "sell_or_reduce_zone": [
-    130,
-    160
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "昂瑞微",
+    "security_status": "active",
+    "symbol": "CN:688790",
+    "ticker": "688790"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2438e41d7d638ae2d677bc1c6a96df8c0905eb6e52aa6331cd5f5bdfa890eebf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入60-75元且2026H1未出现收入、毛利率、经营现金流继续恶化",
-      "action": "研究型试仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点查看收入恢复、毛利率、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3收入同比连续超过15%，毛利率稳定在22%以上，经营现金流改善",
-      "action": "可提升至观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证全年收入和亏损收窄趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于130元但盈利拐点和多客户放量证据不足",
-      "action": "不追高或减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断是否出现可持续盈利拐点",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入安全买入区间上沿，需复核基本面是否恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入悲观估值区间，若财务风险可控则重新评估买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 130.0
+      },
+      "reason": "进入乐观情景估值区间，若缺乏盈利兑现应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入安全买入区间上沿，需复核基本面是否恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入悲观估值区间，若财务风险可控则重新评估买入"
-    },
-    {
-      "type": "price_above",
-      "price": 130,
-      "reason": "进入乐观情景估值区间，若缺乏盈利兑现应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点查看收入恢复、毛利率、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证全年收入和亏损收窄趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断是否出现可持续盈利拐点"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

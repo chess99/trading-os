@@ -1,43 +1,77 @@
 {
-  "symbol": "CN:000056",
-  "market": "CN",
-  "ticker": "000056",
-  "name": "*ST皇庭",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "普通股清偿价值为零且现有经营无法覆盖融资成本，在法院受理重整、足额化债及可接受审计意见落地前，当前市值主要是无证据的保壳期权。",
-  "fair_value_range": [0, 0.35],
-  "buy_zone": [0, 0],
-  "sell_or_reduce_zone": [0.35, 5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST皇庭",
+    "security_status": "active",
+    "symbol": "CN:000056",
+    "ticker": "000056"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "31dc3a32b9b221f7e5edf129136be3bb879e57450ed4994009cac3fa060fa7c2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未出现具有法律约束力且足以使净资产转正、消除无法表示意见的低稀释重整或化债方案",
-      "max_weight": 0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、净资产变化、审计风险与化债进展"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.3,
-      "reason": "仅触发困境期权重估，不因价格下跌自动买入"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、净资产变化、审计风险与化债进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 0.35,
-      "reason": "高于概率加权合理价值上限，应减持或继续回避"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.3
+      },
+      "reason": "仅触发困境期权重估，不因价格下跌自动买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 0.35
+      },
+      "reason": "高于概率加权合理价值上限，应减持或继续回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-19T15:55:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,86 +1,95 @@
 {
-  "symbol": "CN:600500",
-  "ticker": "600500",
-  "name": "中化国际",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中化国际具备央企化工新材料平台、一体化装置和全球营销网络优势，2026年亏损显著收窄，但公司仍未稳定盈利、资产负债率高且南通星辰重组未完成；当前估值已提前反映部分修复，适合观察等待更好安全边际或扣非盈利转正。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    4.0,
-    5.2
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    8.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中化国际",
+    "security_status": "active",
+    "symbol": "CN:600500",
+    "ticker": "600500"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "1c970276df8fd02330abef902e2c563fd36de23eab6ebe95cd46dadfd440ec7e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.0元，且最近一期正式财报显示经营现金流为正、扣非亏损继续收窄",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-08"
+      },
+      "reason": "复核2026年半年度正式财报及亏损收窄质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润转正，资产负债率较2026Q1下降，且股价未高于合理价值上沿",
-      "action": "提高至中等仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认扣非盈利、现金流和负债趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.8元但扣非盈利和自由现金流尚未兑现",
-      "action": "不追涨并考虑减持观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2026年业绩预告和南通星辰重组进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入估算买入区，需要复核半年报和季度现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "高于减持/回避区下沿，若盈利未兑现则安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入估算买入区，需要复核半年报和季度现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "高于减持/回避区下沿，若盈利未兑现则安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-08",
-      "reason": "复核2026年半年度正式财报及亏损收窄质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认扣非盈利、现金流和负债趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2026年业绩预告和南通星辰重组进展"
-    }
-  ],
-  "key_metrics": {
-    "reference_price_cny": 5.58,
-    "reference_price_date": "2026-07-16",
-    "reference_market_cap_cny_billion": 19.93,
-    "q1_2026_revenue_cny_billion": 9.697,
-    "q1_2026_net_profit_attributable_cny_billion": -0.216,
-    "q1_2026_operating_cash_flow_cny_billion": 0.441,
-    "q1_2026_attributable_equity_cny_billion": 10.162,
-    "q1_2026_liability_ratio": 0.6994
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

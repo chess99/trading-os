@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:002163",
-  "ticker": "002163",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "海南发展",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司处于海南国资平台、建筑幕墙主业、玻璃资产出清和电商运营并购后的转型阶段，但仍亏损、经营现金流未转正，当前估值已提前反映反转预期，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    4.2,
-    5.8
-  ],
-  "buy_zone": [
-    0,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    7,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海南发展",
+    "security_status": "active",
+    "symbol": "CN:002163",
+    "ticker": "002163"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "8b831b8391cfc1115752cc3ace58b41e8cf7656dd0a9cfc8b8519fdbec353830"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且2026H1仍预计亏损，不建立新仓。",
-      "action": "avoid_new_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看亏损区间、扣非亏损、经营现金流和合同资产减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌至3.8元以下，且最新财报未出现新增重大减值或现金流恶化，可重新评估小仓观察。",
-      "action": "watch_for_small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认减亏趋势和经营现金流是否持续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026H2经营现金流转正、扣非亏损显著收窄且网营科技贡献稳定利润，可把评级上调至watch或hold。",
-      "action": "upgrade_review",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，判断转型后盈利能力、资产减值和网营科技贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入安全边际买入区，需要复核是否有新增减值和现金流恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入合理价值区间中部，适合结合最新财报重新评估。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.0
+      },
+      "reason": "高于估值上沿且公司仍未盈利，应提示减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入安全边际买入区，需要复核是否有新增减值和现金流恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 5,
-      "reason": "进入合理价值区间中部，适合结合最新财报重新评估。"
-    },
-    {
-      "type": "price_above",
-      "price": 7,
-      "reason": "高于估值上沿且公司仍未盈利，应提示减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看亏损区间、扣非亏损、经营现金流和合同资产减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认减亏趋势和经营现金流是否持续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，判断转型后盈利能力、资产减值和网营科技贡献。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

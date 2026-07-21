@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:920121",
-  "market": "CN",
-  "ticker": "920121",
-  "name": "江天科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "江天科技是中高端消费品标签印刷优质小公司，客户认证、工艺能力、区域配套和现金充裕构成基本盘；但第一大客户和主要供应商集中度高，且北交所流动性较弱，当前 27.90 元接近公允价值下沿但安全边际不足，因此列为观察，等待 24 元以下或中报继续验证后再建仓。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    34
-  ],
-  "buy_zone": [
-    21,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江天科技",
+    "security_status": "active",
+    "symbol": "CN:920121",
+    "ticker": "920121"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "ac80bf846da86a2e2054d800417024de1172a0d37e9f386d1502dc4906a031b1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 24 元，且最近两个季度收入和扣非净利润同比均为正",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看营收、扣非利润、毛利率、第一大客户占比和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 21 元，且第一大客户未出现订单恶化、综合毛利率不低于 27%",
-      "action": "加至核心小仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认全年利润区间和现金流质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 36 元且未出现客户集中度下降或利润增速上修",
-      "action": "减持或停止新增",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报及募投项目进展，重估长期增长和公允价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区间上沿，安全边际开始覆盖客户集中和流动性折价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入深度买入区间，可在基本面未恶化前提下提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "高于中性公允价值区间，需要减持或等待盈利上修验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入区间上沿，安全边际开始覆盖客户集中和流动性折价"
-    },
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入深度买入区间，可在基本面未恶化前提下提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "高于中性公允价值区间，需要减持或等待盈利上修验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看营收、扣非利润、毛利率、第一大客户占比和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认全年利润区间和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报及募投项目进展，重估长期增长和公允价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,75 +1,86 @@
 {
-  "symbol": "CN:601002",
-  "ticker": "601002",
-  "name": "晋亿实业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "公司是国内紧固件龙头之一，铁路扣件业务带来2026年盈利弹性，资产负债表稳健；但普通紧固件仍占收入大头、ROE不高，现价接近合理价值下沿但安全边际不足，宜观察或小仓持有。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    3.8,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晋亿实业",
+    "security_status": "active",
+    "symbol": "CN:601002",
+    "ticker": "601002"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "e14cafefa5a09f48c59c47b96959c4d4bdd06346e56157fc6d4cb56d2fb1253b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至4.3元以下，且2026半年报扣非净利润不低于预告下限、铁路扣件毛利率维持在20%左右",
-      "action": "分批建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报实际收入、扣非净利润、铁路扣件毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.8元至6.2元且没有新增订单或盈利预测上修",
-      "action": "持有或等待，不新增仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断上半年高增长是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.2元且2026下半年铁路扣件订单或扣非利润未继续超预期",
-      "action": "减仓或停止新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入买入观察区，若半年报验证扣非利润和铁路扣件毛利率，可重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "超过合理价值区间上沿，若订单与利润没有上修，应考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入买入观察区，若半年报验证扣非利润和铁路扣件毛利率，可重新评估建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "超过合理价值区间上沿，若订单与利润没有上修，应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报实际收入、扣非净利润、铁路扣件毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断上半年高增长是否延续。"
-    }
-  ],
-  "risk_flags": [
-    "railway_project_timing",
-    "raw_material_price",
-    "low_roe",
-    "non_recurring_profit"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

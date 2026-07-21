@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:301207",
-  "ticker": "301207",
-  "name": "华兰疫苗",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "华兰疫苗是国内流感疫苗第一梯队企业，批签发、质量体系和渠道执行有优势，但收入高度依赖流感疫苗，价格下调和接种意愿波动使利润中枢仍需验证；当前价格接近合理区间中上部，暂以观察为主。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    18.0
-  ],
-  "buy_zone": [
-    10.5,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    21.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华兰疫苗",
+    "security_status": "active",
+    "symbol": "CN:301207",
+    "ticker": "301207"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "1dbc55c9b8fc172a3b3f841f358cce9f8770f04f7bef188a6db82a9a381c7023"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入10.5-13.0元且2026年半年报或三季报验证流感疫苗收入恢复、毛利率稳定、经营现金流改善后试探建仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、经营现金流和存货情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于13.0-18.0元且经营数据仅温和恢复时只跟踪不加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和流感季批签发、订单转化情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于21.0元且未出现管线商业化或利润中枢上修证据时降低或避免持仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报、分红、研发管线和正常化利润中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入区间上沿，需要复核批签发、订单和现金流是否支持建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入保守安全边际区间，需要评估是否可提高至观察仓上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "达到乐观情景下沿，若利润和管线未同步上修则风险收益比转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过乐观情景估值上沿，考虑卖出或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入买入区间上沿，需要复核批签发、订单和现金流是否支持建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入保守安全边际区间，需要评估是否可提高至观察仓上限"
-    },
-    {
-      "type": "price_above",
-      "price": 21.0,
-      "reason": "达到乐观情景下沿，若利润和管线未同步上修则风险收益比转差"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过乐观情景估值上沿，考虑卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、经营现金流和存货情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和流感季批签发、订单转化情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报、分红、研发管线和正常化利润中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

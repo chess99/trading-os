@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000985",
-  "market": "CN",
-  "ticker": "000985",
-  "name": "大庆华科",
-  "company_name": "大庆华科",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中石油体系内低杠杆C5/C9和聚丙烯加工资产具备观察价值，但2026H1扣非预计亏损且当前估值高于合理区间，等待价格回落或价差改善后再考虑小仓位。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    10.0,
-    13.0
-  ],
-  "buy_zone": [
-    8.0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大庆华科",
+    "security_status": "active",
+    "symbol": "CN:000985",
+    "ticker": "000985"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "3f45f63fc83ed8721a10d0734a80644481a41e9c626ab622496073f7bddf0b65"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且2026H1扣非预计亏损",
-      "action": "不买入，仅观察",
-      "max_weight": 0.0,
-      "reason": "盈利质量和估值不匹配，等待价格或价差改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告、二季度毛利率和扣非亏损原因",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入8.0-10.0元且C5/C9树脂、聚丙烯粉料价差连续改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近资产价值支撑且主营拐点开始验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断价差错配是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.0元且公司扣非利润恢复为正、资产负债表维持低杠杆",
-      "action": "提高至小仓位",
-      "max_weight": 0.02,
-      "reason": "下行空间由净资产和低负债缓冲，周期修复赔率改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入初始买入区间，需要复核价差和半年度报告",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入深度价值观察区，复核资产质量和扣非盈利",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "高于合理价值区间，需要警惕题材溢价和减仓风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入初始买入区间，需要复核价差和半年度报告"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入深度价值观察区，复核资产质量和扣非盈利"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "高于合理价值区间，需要警惕题材溢价和减仓风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告、二季度毛利率和扣非亏损原因"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断价差错配是否修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "C5石油树脂价格与裂解C5馏分价差",
-    "C9石油树脂价格与裂解C9馏分价差",
-    "聚丙烯粉料-丙烯价差",
-    "装置开工率和产销率",
-    "季度毛利率",
-    "扣非归母净利润",
-    "经营现金流净额",
-    "存货周转率",
-    "中石油体系原料供应和资产整合公告",
-    "高附加值树脂或专用料产品占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

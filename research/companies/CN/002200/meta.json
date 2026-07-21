@@ -1,101 +1,95 @@
 {
-  "symbol": "CN:002200",
-  "ticker": "002200",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "交投生态",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "重整和摘帽后经营修复已经出现，但主营仍是项目制生态工程，现金流和扣非利润尚未证明可持续；当前约6元以上价格已透支乐观修复预期，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.0,
-    5.2
-  ],
-  "buy_zone": [
-    3.0,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.0
-  ],
-  "position_plan": [
-    {
-      "condition": "当前价格高于合理价值上沿且扣非利润、经营现金流仍需验证，维持0仓位观察。",
-      "action": "watch",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价进入3.0-3.8元区间，且2026H1扣非归母净利润不低于3000万元、经营现金流未继续恶化。",
-      "action": "research_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "连续两个季度扣非利润和经营现金流均改善，且新签订单显示外部获客能力恢复。",
-      "action": "increase_after_review",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入买入观察区，需要复核扣非利润、现金流和订单质量。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "超过合理价值上沿，若基本面未同步兑现应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际扣非利润、经营现金流、应收账款和合同资产。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和全年订单/回款质量，重新估值。"
-    }
-  ],
-  "key_metrics": {
-    "2025_revenue_cny": 521000000,
-    "2025_net_profit_parent_cny": 61000000,
-    "2026q1_revenue_cny": 95000000,
-    "2026q1_net_profit_parent_cny": 14000000,
-    "2026q1_parent_equity_cny": 1300000000,
-    "estimated_share_count": 451000000,
-    "data_confidence": "medium"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "交投生态",
+    "security_status": "active",
+    "symbol": "CN:002200",
+    "ticker": "002200"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5fa83d11c26370514b62ff0d748eed280e81056f26233f2ed7c5d99454385654"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "交投生态2025年年度报告",
-      "date": "2026-03-28",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-03-28/1225045299.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际扣非利润、经营现金流、应收账款和合同资产。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "交投生态2026年第一季度报告",
-      "date": "2026-04-18",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-18/1225117545.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "交投生态2026年半年度业绩预告",
-      "date": "2026-07-15",
-      "url": "https://www.cninfo.com.cn/",
-      "confidence": "medium"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和全年订单/回款质量，重新估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入买入观察区，需要复核扣非利润、现金流和订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "超过合理价值上沿，若基本面未同步兑现应回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

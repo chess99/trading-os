@@ -1,122 +1,123 @@
 {
-  "ticker": "301052",
-  "symbol": "CN:301052",
-  "name": "果麦文化",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "industry": "文化传媒",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "last_updated": "2026-07-15",
-  "updated_at": "2026-07-15",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "果麦文化具备民营图书策划、互联网账号矩阵和 AI 出版工具期权，但 2025 年转亏、2026Q1 继续承压，当前约 21.59 亿元市值已接近乐观情景下沿，需等待扣非利润和 AI 商业化被验证。",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    12.0,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    28.0
-  ],
-  "status": "active",
-  "max_weight": 0.02,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "果麦文化",
+    "security_status": "active",
+    "symbol": "CN:301052",
+    "ticker": "301052"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "7ac642cc825522414e9e35459ae0b03984d6a63b337c6ccf111b76e68efe8fd1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前估值缺乏安全边际",
-      "action": "观察",
-      "max_weight": 0,
-      "target_weight": 0
-    },
-    {
-      "condition": "连续两个季度扣非利润转正且 AI 商业化收入可核验",
-      "action": "试仓",
-      "max_weight": 0.02,
-      "target_weight": 0.02
-    },
-    {
-      "condition": "市值回落至 12-15 亿元且基本面未恶化",
-      "action": "重新评估买入",
-      "max_weight": 0.02,
-      "target_weight": 0.02
-    }
-  ],
-  "summary": "民营大众图书策划发行公司，具备互联网营销和内容方法论优势，正在推进 AI 校对与智能出版平台；但 2025 年归母亏损、2026Q1 收入和利润继续承压，当前市值已接近乐观情景下沿，安全边际不足。",
-  "key_points": [
-    "2025 年收入 6.41 亿元，同比增长 10.11%，但归母净利润 -208.11 万元，扣非归母净利润 -3522.43 万元。",
-    "2026Q1 收入 8348.09 万元，同比下降 32.52%，归母净利润 -822.76 万元，经营现金流 -6993.75 万元。",
-    "互联网用户数 10066 万，2025 年教辅图书销售码洋 70090 万元，但互联网 2C 销售收入同比下降 7.05%。",
-    "AI 校对王和书世界智能出版平台具备期权价值，但定期报告尚未披露可量化 AI 收入。"
-  ],
-  "risks": [
-    "图书行业折扣加深和平台流量成本上升。",
-    "教辅码洋增长无法转化为收入和利润。",
-    "AI 出版平台商业化低于预期。",
-    "影视和 IP 延伸项目继续拖累利润。",
-    "小市值股票估值和股价波动显著。"
-  ],
-  "watch_items": [
-    "2026H1 收入、扣非净利和经营现金流是否修复。",
-    "AI 校对王或书世界平台是否披露收入、客户数、续费率和回款。",
-    "互联网 2C 销售收入是否恢复增长。",
-    "教辅业务收入和毛利率转换效率。",
-    "是否新增大额主投主控影视/IP 项目。"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026 年半年报披露",
-      "condition": "2026 年半年报披露"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "检查 AI 出版平台是否披露收入、客户数或重大合同",
-      "condition": "公司披露 AI 出版平台收入、客户数或重大合同"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "检查扣非净利润是否连续两个季度转正或亏损扩大",
-      "condition": "扣非净利润连续两个季度转正或亏损扩大"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "检查是否新增大额影视/IP 投资项目",
-      "condition": "新增大额影视/IP 投资项目"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度复盘估值区间、仓位上限和安全边际",
-      "condition": "股价进入 12-15 元买入观察区或 22 元以上减持观察区"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入观察区上沿，需复核基本面是否恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入更有安全边际的买入区，需重新估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "接近牛市情景下沿，需评估减持或维持观察",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入买入观察区上沿，需复核基本面是否恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入更有安全边际的买入区，需重新估值"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "接近牛市情景下沿，需评估减持或维持观察"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

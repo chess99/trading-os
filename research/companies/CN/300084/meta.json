@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:300084",
-  "ticker": "300084",
-  "name": "海默科技",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备多相计量、油田测试和油气装备等真实技术资产，2025年收入与经营现金流改善显示反转迹象；但截至2026-07-15仍处亏损状态，2026Q1收入和现金流波动较大，当前市值已提前反映乐观情景，安全边际不足，维持观察。",
-  "fair_value_range": [
-    6.8,
-    8.6
-  ],
-  "buy_zone": [
-    0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    13
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海默科技",
+    "security_status": "active",
+    "symbol": "CN:300084",
+    "ticker": "300084"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3de55c4bca63594ee666f0ba0965b8a42e86493b7e2b4862e1fbb2e22702ce42"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.5元且2026H1收入、毛利率、经营现金流未明显恶化",
-      "action": "进入重点买入研究，可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、订单、毛利率、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H2扣非归母净利润转正或接近转正，且经营现金流连续改善",
-      "action": "重新评估加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否验证扭亏路径",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但订单、利润和现金流未显著超预期",
-      "action": "不追高，已有仓位降低风险暴露",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与股权激励业绩兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入买入研究区，具备重新评估安全边际的条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "股价进入高估区，若基本面未超预期应考虑规避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入买入研究区，具备重新评估安全边际的条件"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "股价进入高估区，若基本面未超预期应考虑规避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、订单、毛利率、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否验证扭亏路径"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与股权激励业绩兑现情况"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 11.79,
-    "reference_price_date": "2026-07-14",
-    "fair_value_method": "relative_ps_absolute_normalized_earnings_scenario_cross_check",
-    "confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

@@ -1,84 +1,115 @@
 {
-  "symbol": "CN:605577",
-  "market": "CN",
-  "ticker": "605577",
-  "name": "龙版传媒",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "龙版传媒拥有区域教材教辅和出版发行渠道壁垒，资产负债表现金充裕、PB接近1倍，提供一定下档保护；但2025年扣非利润大幅下滑、区域成长性有限、内容电商折扣压力仍在，当前价格接近公允价值中枢，适合观察并等待扣非修复和更积极分红验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    10.8
-  ],
-  "buy_zone": [
-    7.2,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "龙版传媒",
+    "security_status": "active",
+    "symbol": "CN:605577",
+    "ticker": "605577"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b5a3a86dbb5dfef555c767449e25143db6ce9fd324c6b5bffdd75e4f972b4ddb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.2元，且2026年中报扣非归母净利润未继续恶化、经营现金流为正、现金及交易性金融资产未显著流失",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非利润、经营现金流和现金理财资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.2元，且教材教辅基本盘稳定、分红政策不低于2025年水平",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和教材教辅旺季表现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.0元且扣非利润未恢复到2.5亿元以上或分红率未明显提升",
-      "action": "降低或放弃仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红政策和全年扣非修复程度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入基准估值下沿并接近具备安全边际的观察买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入悲观情景附近，若基本面未恶化则风险收益比改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "超过乐观估值前段，若利润和分红没有同步改善则应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "估值显著高于当前可验证盈利和资产价值支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入基准估值下沿并接近具备安全边际的观察买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入悲观情景附近，若基本面未恶化则风险收益比改善"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "超过乐观估值前段，若利润和分红没有同步改善则应减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "估值显著高于当前可验证盈利和资产价值支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非利润、经营现金流和现金理财资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和教材教辅旺季表现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红政策和全年扣非修复程度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

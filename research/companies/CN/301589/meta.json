@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:301589",
-  "market": "CN",
-  "ticker": "301589",
-  "currency": "CNY",
-  "name": "诺瓦星云",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "诺瓦星云是 LED 显示控制系统龙头型公司，具备技术、生态、客户习惯和全球服务网络优势，现金流质量较好；但 2025 年以来利润增速弱于收入，2026Q1 利润承压，当前股价已反映较多修复预期，缺少足够安全边际。",
-  "fair_value_range": [
-    105,
-    145
-  ],
-  "buy_zone": [
-    85,
-    105
-  ],
-  "sell_or_reduce_zone": [
-    165,
-    190
-  ],
-  "rating": {
-    "current_rating": "watch",
-    "decision": "观察",
-    "fair_value_range": [
-      105,
-      145
-    ],
-    "buy_zone": [
-      85,
-      105
-    ],
-    "sell_or_reduce_zone": [
-      165,
-      190
-    ],
-    "confidence": "中"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "诺瓦星云",
+    "security_status": "active",
+    "symbol": "CN:301589",
+    "ticker": "301589"
   },
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "c8de7621cfc885a51f2f7df621dd4c92fd594e4b6bcdac4d65cbf28002e244e2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 105 元且后续季度毛利率/净利率未继续恶化时，允许建立观察仓。",
-      "action": "initial_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入增速、毛利率、净利率、经营现金流和应收/存货变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 90 元且收入仍保持正增长、经营现金流/净利润大于 0.9 时，提高至核心观察仓。",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断 Q1 利润承压是否为阶段性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 165 元且利润率没有连续两个季度修复，降低或不新增仓位。",
-      "action": "reduce_or_pause",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重估长期增长和利润率中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 105.0
+      },
+      "reason": "进入估算合理价值区间下沿，开始具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "若基本面未恶化，赔率显著改善，可复核加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 165.0
+      },
+      "reason": "股价脱离基准估值，需确认利润率和增长是否足以支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 105,
-      "reason": "进入估算合理价值区间下沿，开始具备安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 90,
-      "reason": "若基本面未恶化，赔率显著改善，可复核加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 165,
-      "reason": "股价脱离基准估值，需确认利润率和增长是否足以支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入增速、毛利率、净利率、经营现金流和应收/存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断 Q1 利润承压是否为阶段性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重估长期增长和利润率中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

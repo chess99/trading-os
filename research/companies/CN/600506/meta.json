@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:600506",
-  "ticker": "600506",
-  "market": "CN",
-  "name": "统一股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "统一股份具备润滑油品牌和渠道基础，2026 年盈利修复有迹象，但 Q2 环比回落、商誉高、少数股东稀释和治理变化仍需验证；当前价格已计入较多修复预期，进入观察池而非买入。",
-  "fair_value_range": [
-    9.5,
-    12.5
-  ],
-  "buy_zone": [
-    8.0,
-    10.0
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    19.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "统一股份",
+    "security_status": "active",
+    "symbol": "CN:600506",
+    "ticker": "600506"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d5aea90422d48e1b87d3ecac627ae9d93fd2cf528eb7139bc56d24f79f054858"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 12.5 元且半年报尚未验证 Q2 回落原因、液冷订单和控制权事项",
-      "action": "watch_only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看 Q2 利润回落原因、现金流、毛利率和商誉风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入 8.0-10.0 元，且 2026 半年报确认经营现金流为正、商誉无减值迹象",
-      "action": "initiate_small_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度归母净利润年化超过 1.2 亿元，且防冻液/液冷业务收入持续增长并披露关键客户",
-      "action": "increase_after_validation",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报及商誉减值测试，更新估值和投资评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "出现商誉减值、经营现金流转负或控制权事项导致治理恶化",
-      "action": "exit_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入安全边际观察买入区，需复核半年报现金流、毛利率和商誉风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入深度折价区，若基本面未恶化可重新评估小仓位买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "价格已显著高于基准估值，除非液冷订单和利润连续兑现，否则应降低预期或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入安全边际观察买入区，需复核半年报现金流、毛利率和商誉风险"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入深度折价区，若基本面未恶化可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "价格已显著高于基准估值，除非液冷订单和利润连续兑现，否则应降低预期或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看 Q2 利润回落原因、现金流、毛利率和商誉风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报及商誉减值测试，更新估值和投资评级"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

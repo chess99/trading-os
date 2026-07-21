@@ -1,72 +1,105 @@
 {
-  "symbol": "CN:688081",
-  "market": "CN",
-  "ticker": "688081",
-  "name": "兴图新科",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "兴图新科具备国防视频指挥细分场景和视频智算治理期权，但2025年仍亏损、经营现金流为负，现价已接近乐观情景估值下沿；在经营拐点和现金流改善被连续财报验证前，仅适合观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    25
-  ],
-  "buy_zone": [
-    12,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兴图新科",
+    "security_status": "active",
+    "symbol": "CN:688081",
+    "ticker": "688081"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "39ec068a9e46f804cf7a06268cfde88d84b3b5b952b62acbf794bbdce05c2c72"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价33.52元附近仅观察；若跌入18元以下且2026年中报或三季报确认收入增长、毛利率维持50%以上、经营现金流改善，可建立试探仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、亏损收窄和经营现金流改善情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若跌入12元以下且资产负债表未恶化、国防与视频智算订单连续兑现，可提高到深度观察仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否连续验证经营拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年收入规模、现金流和视频智算产品化进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基础买入区上沿，但仍需经营拐点确认。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度安全边际区，可结合财报质量重新评估仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "超过乐观情景估值上沿，若无收入和现金流共同验证应降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入基础买入区上沿，但仍需经营拐点确认。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入深度安全边际区，可结合财报质量重新评估仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "超过乐观情景估值上沿，若无收入和现金流共同验证应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、亏损收窄和经营现金流改善情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否连续验证经营拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年收入规模、现金流和视频智算产品化进展。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

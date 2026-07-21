@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:688197",
-  "market": "CN",
-  "ticker": "688197",
-  "name": "首药控股",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "首药控股已从纯研发资产进入首个自研药康特替尼获批后的商业化验证期，ALK 二/三/四代布局和 RET 管线构成主要期权，但截至 2026-07-18 尚缺药品销售和医保准入验证，当前应观察为主，只在明显安全边际或销售超预期后小仓参与。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    34,
-    55
-  ],
-  "buy_zone": [
-    24,
-    31
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    75
-  ],
-  "position_plan": [
-    {
-      "condition": "股价跌入 24-31 元且康特替尼商业化、医保准入和核心管线审评没有出现负面变化时，可建立观察仓。",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "康特替尼出现可验证药品销售收入、SY-5007 审评进展顺利且股价仍低于 34 元时，可提高到小仓配置。",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于 58 元但康特替尼尚未证明年化 2 亿元以上销售能力，或 SY-5007/SY-3505 出现重大延迟时，降至跟踪仓或清仓。",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 31,
-      "reason": "进入安全买入区上沿，若基本面无恶化，可复核是否建观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入熊市情景估值附近，若核心产品未失败，安全边际显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "超过基础合理价值区间上沿，若销售和审评尚未兑现，应考虑减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，确认康特替尼上市准备、销售费用、现金消耗和 SY-5007 审评状态。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，检查是否出现药品销售收入、医保谈判进展及经营现金流变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复核医保目录和年度商业化进展，决定是否上调或下调合理价值区间。"
-    }
-  ],
-  "valuation": {
-    "method": "relative_rnpv_scenario_cross_check",
-    "base_case_per_share": [
-      34,
-      55
-    ],
-    "reference_price": 36.58,
-    "reference_price_date": "2026-07-17",
-    "reference_price_confidence": "low"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "首药控股",
+    "security_status": "active",
+    "symbol": "CN:688197",
+    "ticker": "688197"
   },
-  "decision": "观察",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "6d15057926fcb1f14e5a764fa64d55f8fb60b3c6ec19a12453eb5e2c16e605b1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，确认康特替尼上市准备、销售费用、现金消耗和 SY-5007 审评状态。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，检查是否出现药品销售收入、医保谈判进展及经营现金流变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复核医保目录和年度商业化进展，决定是否上调或下调合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 31.0
+      },
+      "reason": "进入安全买入区上沿，若基本面无恶化，可复核是否建观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入熊市情景估值附近，若核心产品未失败，安全边际显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "超过基础合理价值区间上沿，若销售和审评尚未兑现，应考虑减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

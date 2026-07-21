@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:000759",
-  "ticker": "000759",
-  "name": "中百集团",
-  "company_name": "中百控股集团股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "不买",
-  "confidence": "中",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "fair_value_range": [
-    1.2,
-    2.4
-  ],
-  "buy_zone": [
-    0.9,
-    1.4
-  ],
-  "sell_or_reduce_zone": [
-    3.5,
-    6.5
-  ],
-  "current_price": 6.14,
-  "price_date": "2026-07-13",
-  "current_thesis": "中百集团拥有武汉及湖北区域零售网络、供应链和国资背景，但 2025 年亏损大幅侵蚀净资产，2026Q1 收入仍同比下滑且继续亏损。现价对应净资产数倍估值，更多反映困境反转和题材预期，而非已验证的盈利能力；在同店、毛利、费用率、经营现金流和净资产稳定前，仅观察不买。",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中百集团",
+    "security_status": "active",
+    "symbol": "CN:000759",
+    "ticker": "000759"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e0de2b0ad7f1cfc54f5efcd89b1fcce3e15c168287ed5c4931e73fbf429220f6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价及缺乏连续扭亏证据时不建仓，仅跟踪 2026 中报、三季报和硬折扣店改造效果。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看收入降幅、亏损收窄、净资产、现金流和门店调整。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入 0.9-1.4 元且净资产未继续快速恶化，同时同店销售和经营现金流出现连续改善，可作为困境反转小仓位观察。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断硬折扣、前置仓和关店止损是否形成连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度归母净利润转正、收入降幅收窄至个位数以内且经营现金流质量为正，可重新评估是否提升为低权重买入候选。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估公司是否已从困境反转观察标的转为可投资标的。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.4
+      },
+      "reason": "进入资产价值买入观察区，需要复核净资产、负债和门店止损进度。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "高于基础合理价值上沿，若没有明确扭亏证据应维持不买或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "接近或超过强题材估值区，现有基本面难以支撑，需要警惕交易性回撤。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.4,
-      "reason": "进入资产价值买入观察区，需要复核净资产、负债和门店止损进度。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "高于基础合理价值上沿，若没有明确扭亏证据应维持不买或减持。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "接近或超过强题材估值区，现有基本面难以支撑，需要警惕交易性回撤。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看收入降幅、亏损收窄、净资产、现金流和门店调整。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断硬折扣、前置仓和关店止损是否形成连续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估公司是否已从困境反转观察标的转为可投资标的。"
-    }
-  ],
-  "key_monitoring_items": [
-    "同店销售增速",
-    "毛利率和费用率",
-    "经营现金流质量",
-    "归母净资产变化",
-    "短期借款和租赁负债",
-    "硬折扣店同店收入和客流",
-    "抱抱生活月活和订单密度",
-    "新增诉讼和内控整改"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

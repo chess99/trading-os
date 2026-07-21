@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688309",
-  "market": "CN",
-  "ticker": "688309",
-  "name": "恒誉环保",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "恒誉环保是A股稀缺的工业连续化热裂解装备和项目运营公司，2025-2026年利润快速修复，受益固废资源化、废塑料化学循环和海外循环经济项目需求。但当前股价已反映较多反转预期，现金流和订单兑现仍需验证，宜列入重点观察，等待52元以下或现金流改善后的更高确定性买点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    55,
-    75
-  ],
-  "buy_zone": [
-    45,
-    52
-  ],
-  "sell_or_reduce_zone": [
-    82,
-    95
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒誉环保",
+    "security_status": "active",
+    "symbol": "CN:688309",
+    "ticker": "688309"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "778a594958d59fa02077e84398fc25519493b69886f4bbaa3043801d10911475"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌至52元以下，且2026年半年报正式披露的收入和利润不显著低于业绩预告，可建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、经营现金流、应收账款和合同负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至45元附近，同时经营现金流转正或合同负债/预收款明显改善，可提高配置。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认H2订单兑现和现金流改善趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于82元且缺少新增大额订单或现金流验证，不追买并考虑降低已有仓位。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新全年盈利质量、订单和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 52.0
+      },
+      "reason": "进入初始买入区间，需要复核半年报兑现和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入高安全边际区间，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 82.0
+      },
+      "reason": "进入减持观察区间，需要判断是否已有新增订单和现金流支撑高估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 52,
-      "reason": "进入初始买入区间，需要复核半年报兑现和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入高安全边际区间，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 82,
-      "reason": "进入减持观察区间，需要判断是否已有新增订单和现金流支撑高估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、经营现金流、应收账款和合同负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认H2订单兑现和现金流改善趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新全年盈利质量、订单和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920856",
-  "market": "CN",
-  "ticker": "920856",
-  "name": "浩淼科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "公司资产负债表稳健但订单波动、低资本回报和资本配置风险明显，当前价格隐含的盈利修复强于可验证证据，等待更深安全边际。",
-  "fair_value_range": [5.8, 7.2],
-  "buy_zone": [4.8, 5.8],
-  "sell_or_reduce_zone": [8.0, 9.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "浩淼科技",
+    "security_status": "active",
+    "symbol": "CN:920856",
+    "ticker": "920856"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "1607dd23da13962afb19bca1ca3c6c7d8a885988042527fa5ee5ae7286795c2f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于5.2至5.8元且订单、毛利率、应收账款和经营现金流未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报、订单、合同负债、应收账款和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.8至5.2元，重新验证长期商业价值未受损且最新财报无会计异常",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报及智能消防装备检测和订单转化进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.0元或订单修复逻辑被证伪",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入可研究的安全边际区间，需重新验证核心假设后再建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于当前公允价值上沿，进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报、订单、合同负债、应收账款和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报及智能消防装备检测和订单转化进展"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入可研究的安全边际区间，需重新验证核心假设后再建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于当前公允价值上沿，进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-14T15:40:13+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:300482",
-  "market": "CN",
-  "ticker": "300482",
-  "name": "万孚生物",
-  "company_name": "广州万孚生物技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司仍具备 POCT/IVD 品牌、渠道、注册和海外商业化积累，但 2025 年首次亏损显示旧盈利模型被重置；2026Q1 盈利修复但收入仍下滑。当前价格接近合理价值下沿，安全边际不足，等待收入企稳和扣非利润恢复。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "合理偏高",
-  "fair_value_range": [
-    16.0,
-    21.0
-  ],
-  "buy_zone": [
-    12.5,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万孚生物",
+    "security_status": "active",
+    "symbol": "CN:300482",
+    "ticker": "300482"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "628ded8312b1ec5afd3542aea4284d7c982c2f721b4432aae00e7f0e210ebc3c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 14.0 元，且最近一期报告显示经营现金流为正、扣非利润未继续恶化",
-      "action": "建立 2%-3% 观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看收入是否企稳、扣非利润和经营现金流是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 12.5 元，且海外收入保持正增长、毛利率稳定在 55% 附近或以上",
-      "action": "提高至 4%-5% 仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年盈利修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 23.0 元但收入未恢复增长或扣非净利润低于预期",
-      "action": "降低仓位或暂停加仓",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估正常化利润和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 14.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
       "reason": "低于合理价值下沿约 12%，进入初始安全边际区",
-      "action": "进入初始买入区，复核中报或季报后可建观察仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 12.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
       "reason": "低于 2026Q1 每股净资产附近，若基本面未恶化则赔率改善",
-      "action": "进入强安全边际区，若基本面未恶化可提高仓位"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 23.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
       "reason": "高于当前合理价值区间上沿，需重新验证盈利修复假设",
-      "action": "触发减仓或重新估值"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看收入是否企稳、扣非利润和经营现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年盈利修复是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估正常化利润和合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营现金流净额/归母净利润",
-    "毛利率",
-    "销售费用率",
-    "研发费用率",
-    "境外收入增速和占比",
-    "慢性疾病检测收入",
-    "传染病检测收入",
-    "化学发光、分子诊断、病理和血气等战略产品装机及利润贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

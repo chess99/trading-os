@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:601886",
-  "ticker": "601886",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "江河集团",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "江河集团具备高端幕墙海外订单、高分红和眼科医疗可选项，但地产链下行、工程应收账款和控股股东质押仍压制安全边际；当前价格接近合理区间下沿但未达到买入折价，维持观察。",
-  "fair_value_range": [
-    8.5,
-    10.8
-  ],
-  "buy_zone": [
-    0,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    14
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江河集团",
+    "security_status": "active",
+    "symbol": "CN:601886",
+    "ticker": "601886"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "35076abd5414b53ba90540c38c812545daf525b9eb77fbfcc0981d766b9521fe"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.2元，且最近一期经营性现金流/净利润大于1、季度订单未同比大幅下滑、实控人质押比例未上升",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、海外订单收入确认、现金流和分红执行",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.5元，且海外订单继续兑现、应收账款无异常恶化、分红承诺维持",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报订单、应收账款、合同资产和经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.5元且盈利预测没有上修，或经营现金流连续两个季度弱于净利润",
-      "action": "降低或不建立仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红承诺兑现和海外项目毛利率",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入买入区间上沿，需要复核订单、现金流和质押情况后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入较高安全边际区间，若基本面未破坏可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "超过合理价值区间上沿附近，若利润未同步上修应考虑减仓或观望",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入买入区间上沿，需要复核订单、现金流和质押情况后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入较高安全边际区间，若基本面未破坏可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "超过合理价值区间上沿附近，若利润未同步上修应考虑减仓或观望"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、海外订单收入确认、现金流和分红执行"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报订单、应收账款、合同资产和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红承诺兑现和海外项目毛利率"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "季度建筑装饰中标金额及海外订单占比",
-    "幕墙与光伏建筑业务毛利率",
-    "经营性现金流净额/归母净利润",
-    "应收账款和合同资产变化",
-    "实控人及一致行动人股份质押比例",
-    "每股现金分红"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

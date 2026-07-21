@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688356",
-  "market": "CN",
-  "ticker": "688356",
-  "name": "键凯科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "键凯科技是国内稀缺的药用级聚乙二醇衍生物平台公司，客户验证和法规注册带来较强粘性，2025-2026Q1 经营已从低谷恢复；但当前估值已计入较多平台溢价，需等待更低价格或客户商业化放量证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    70,
-    95
-  ],
-  "buy_zone": [
-    60,
-    70
-  ],
-  "sell_or_reduce_zone": [
-    115,
-    130
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "键凯科技",
+    "security_status": "active",
+    "symbol": "CN:688356",
+    "ticker": "688356"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5499660be3479381fee1bca7b08dccd473c9c17c849cf87a6b721b8b84a6b32e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入 60-70 元且收入、扣非净利润恢复趋势未被证伪",
-      "action": "建立观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入、扣非利润、毛利率和订单线索",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入 50-60 元且客户项目和利润率继续改善",
-      "action": "提高配置",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及全年利润恢复的可持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 115 元且缺少新增商业化订单或盈利上修",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报、客户商业化进展和估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入基准买入区上沿，具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入更有吸引力的左侧配置区，可结合基本面验证提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 115.0
+      },
+      "reason": "高于基准估值区间，若缺少业绩催化应评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入基准买入区上沿，具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入更有吸引力的左侧配置区，可结合基本面验证提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 115,
-      "reason": "高于基准估值区间，若缺少业绩催化应评估减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入、扣非利润、毛利率和订单线索"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及全年利润恢复的可持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报、客户商业化进展和估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

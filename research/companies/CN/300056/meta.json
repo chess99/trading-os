@@ -1,71 +1,86 @@
 {
-  "symbol": "CN:300056",
-  "ticker": "300056",
-  "name": "中创环保",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于连续亏损、净资产接近或已经转负、资产负债率超过100%且治理事件冲击后的困境状态；过滤材料和环保业务有行业需求，但尚未体现为现金流和盈利能力，当前股价缺乏安全边际。",
-  "fair_value_range": [
-    0.8,
-    1.6
-  ],
-  "buy_zone": [
-    0.5,
-    1.0
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    5.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中创环保",
+    "security_status": "active",
+    "symbol": "CN:300056",
+    "ticker": "300056"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "7b72989fd65f1b3e8fb3ec73f51ae78f562cf0a261d886fade70ac420d6decc6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "净资产仍为负或资产负债率高于90%，且经营现金流未连续两个季度转正",
-      "action": "avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查净资产、经营现金流、扣非亏损和治理事件披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.0元，且半年报显示净资产修复、经营现金流转正、治理风险边界清晰",
-      "action": "research_only",
-      "max_weight": 0.5
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.0,
-      "reason": "低于困境资产买入观察区上沿，且需结合净资产和现金流修复复核"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认是否出现连续经营修复或财务风险恶化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "高于基本面估值区间上沿，若经营未修复则应继续回避或降低关注优先级"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查净资产、经营现金流、扣非亏损和治理事件披露"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "低于困境资产买入观察区上沿，且需结合净资产和现金流修复复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认是否出现连续经营修复或财务风险恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "高于基本面估值区间上沿，若经营未修复则应继续回避或降低关注优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "key_risks": [
-    "净资产为负或持续高杠杆导致风险警示、融资收缩或股权价值稀释",
-    "前董事长涉刑事项可能外溢至公司治理、内控、客户信用和融资能力",
-    "环保工程和环卫业务回款慢，应收账款及合同资产减值风险高",
-    "危废资源化业务受环保合规、开工率和金属价格波动影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

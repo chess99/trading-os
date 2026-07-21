@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:603766",
-  "market": "CN",
-  "ticker": "603766",
-  "name": "隆鑫通用",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "隆鑫通用是摩托车及通用动力设备出口链制造龙头，2025年利润、现金流和分红显著改善，2026Q1虽有短期回落，但高现金、低EV倍数和主业整合预期提供安全边际；主要风险是宗申体系同业竞争及资产置换关联交易定价。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    14.5,
-    17.5
-  ],
-  "buy_zone": [
-    0,
-    13.2
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "隆鑫通用",
+    "security_status": "active",
+    "symbol": "CN:603766",
+    "ticker": "603766"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f098471af58dea3e7f12a8dcb3a13d198cac0f23580ccffa4ebf88af1b147122"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于13.2元且资产置换未出现明显损害上市公司利益的条款",
-      "action": "分批建立基础仓位",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流和海外业务趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "资产置换方案披露且估值公允，2026H1扣非净利润未出现双位数下滑",
-      "action": "提高至核心观察仓位",
-      "max_weight": 0.12
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及资产置换关联交易最新进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18.5元或交易方案明显偏向关联方",
-      "action": "停止加仓并逐步减仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红政策和资产置换落地情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "低于悲观情景上沿，可复核是否存在非基本面错杀并考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "进入减仓区间，预期收益率下降且需要资产整合兑现支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "低于悲观情景上沿，可复核是否存在非基本面错杀并考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "进入减仓区间，预期收益率下降且需要资产整合兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流和海外业务趋势"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及资产置换关联交易最新进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红政策和资产置换落地情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

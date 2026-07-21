@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:601003",
-  "ticker": "601003",
-  "name": "柳钢股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "柳钢股份是广西区域钢铁龙头，2025年利润与现金流修复，但2026年一季度和半年度预告显示盈利再次承压；当前应以净资产折价和吨钢利润改善作为买入前提，评级为观察。",
-  "fair_value_range": [
-    3.0,
-    3.8
-  ],
-  "buy_zone": [
-    2.5,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    4.3,
-    5.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "柳钢股份",
+    "security_status": "active",
+    "symbol": "CN:601003",
+    "ticker": "601003"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "763c565302a0bff8653234f4f5cd519bca68fa3c5fb0bac6e3bbb8e7732dd3b7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入2.5-3.0元买入区间，且2026年中报或三季报显示扣非利润、经营现金流和吨钢毛利同步改善时，允许试探性建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告、业绩预告兑现情况和广西钢铁重组进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于2.5元且资产负债率未继续恶化、广西钢铁重组未显著摊薄中小股东权益，可将观察仓上限提高。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于4.3元但吨钢盈利和重组增厚未兑现，应不买入并考虑降低已有仓位。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和新一年度分红能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入初始买入观察区，需要复核吨钢毛利、现金流和行业价格。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "进入深度折价区，需要复核资产负债率、重组摊薄和是否存在基本面断裂。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.3
+      },
+      "reason": "超过乐观情景下沿，需要复核是否有盈利兑现支撑，否则降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入初始买入观察区，需要复核吨钢毛利、现金流和行业价格。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.5,
-      "reason": "进入深度折价区，需要复核资产负债率、重组摊薄和是否存在基本面断裂。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.3,
-      "reason": "超过乐观情景下沿，需要复核是否有盈利兑现支撑，否则降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告、业绩预告兑现情况和广西钢铁重组进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和新一年度分红能力。"
-    }
-  ],
-  "key_risks": [
-    "钢价继续下跌或区域竞争加剧导致吨钢利润回落",
-    "铁矿石、焦煤、焦炭等原燃料成本上行",
-    "广西钢铁13%股权重组的定价、审批、融资和摊薄风险",
-    "资产负债率较高，债务期限和利息压力影响股东回报",
-    "关联交易和国资体系资本安排对中小股东回报的影响"
-  ],
-  "research_notes": [
-    "2025年年度报告和2026年第一季度报告已核验公告文本。",
-    "2026年半年度业绩预告、广西钢铁13%股权重组和当前股价未核验公告全文，报告中已标注置信度低或未核验。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

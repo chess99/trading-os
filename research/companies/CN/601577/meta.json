@@ -1,109 +1,106 @@
 {
-  "symbol": "CN:601577",
-  "market": "CN",
-  "ticker": "601577",
-  "name": "长沙银行",
-  "company_name": "长沙银行",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长沙银行以湖南区域存贷基础、较高拨备和低估值提供中等吸引力，但净息差下行、地方债务和地产链穿透风险要求分批买入并控制仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "A-",
-  "fair_value_range": [
-    10.8,
-    12.5
-  ],
-  "buy_zone": [
-    7.8,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    11.8,
-    13.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长沙银行",
+    "security_status": "active",
+    "symbol": "CN:601577",
+    "ticker": "601577"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "00775029acb3f2577958cc4c267c563d98aaefc39bf235813a639d0de3e572f9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价约8.95元且尚无区域银行仓位",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "估值低、股息率有吸引力，但当前价略高于保守买入区上沿"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年半年报披露后复核净息差、资产质量、拨备和资本充足率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至8.50元以下且2026半年报不良率、拨备覆盖率和核心一级资本未恶化",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.03,
-      "reason": "安全边际改善，且资产质量未验证失败"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计2026年三季报披露后复核利润增速和风险指标趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至7.80元附近且核心风险指标稳定",
-      "action": "加至上限仓位",
-      "max_weight": 0.04,
-      "reason": "估值进入高股息和深折价区，但区域银行风险决定仓位上限仍需克制"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入更有安全边际的分批加仓区，需要复核半年报资产质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "不良率连续两个季度上升并超过1.35%或拨备覆盖率跌破240%",
-      "action": "减仓或退出",
-      "max_weight": 0.0,
-      "reason": "投资逻辑从低估值修复转向资产质量恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "进入深度价值区，若基本面未恶化可评估加至仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.8
+      },
+      "reason": "接近合理价值区下沿以上，若无基本面上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.2
+      },
+      "reason": "超过当前基准合理区间，区域信用风险补偿不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入更有安全边际的分批加仓区，需要复核半年报资产质量"
-    },
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "进入深度价值区，若基本面未恶化可评估加至仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 11.8,
-      "reason": "接近合理价值区下沿以上，若无基本面上修应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 13.2,
-      "reason": "超过当前基准合理区间，区域信用风险补偿不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年半年报披露后复核净息差、资产质量、拨备和资本充足率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报披露后复核利润增速和风险指标趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "不良贷款率",
-    "关注贷款率",
-    "逾期率",
-    "逾期90天以上贷款/不良贷款",
-    "拨备覆盖率",
-    "拨贷比",
-    "净息差",
-    "贷款收益率",
-    "存款成本率",
-    "核心一级资本充足率",
-    "最大十家客户贷款比率",
-    "房地产及建筑业贷款不良率",
-    "个人经营贷和消费贷不良率",
-    "每股现金分红",
-    "湖南省和长沙市财政收入增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

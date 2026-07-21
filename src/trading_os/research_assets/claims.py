@@ -34,7 +34,6 @@ DECISION_KEYS = {
     "fair_value_range",
     "buy_zone",
     "reduce_zone",
-    "position_plan",
     "conclusion",
 }
 CLAIM_CATEGORIES = {"fact", "business", "industry", "investment"}
@@ -236,11 +235,6 @@ def _validate_decision(decision: Mapping[str, Any]) -> None:
         upper = _require_number(value[1], f"decision.{field}[1]")
         if lower > upper:
             raise ClaimPacketError(f"decision.{field} must be ordered")
-    position_plan = decision.get("position_plan")
-    if not isinstance(position_plan, list):
-        raise ClaimPacketError("decision.position_plan must be an array")
-
-
 def _decision_numeric_values(decision: Mapping[str, Any]) -> set[float]:
     values: set[float] = set()
 

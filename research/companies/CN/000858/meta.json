@@ -1,154 +1,123 @@
 {
-  "symbol": "CN:000858",
-  "market": "CN",
-  "ticker": "000858",
-  "name": "五粮液",
-  "company_name": "宜宾五粮液股份有限公司",
-  "priority": "P2",
-  "status": "active",
-  "analyst": "codex-subagent-000858",
-  "last_researched": "2026-07-07",
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "research_type": "initial",
-  "current_rating": "buy",
-  "quality_rating": "A-",
-  "valuation_rating": "undervalued_with_governance_discount",
-  "current_thesis": "五粮液仍是高端浓香白酒核心资产，现金和股东回报强，但2025年收入确认差错、渠道批价倒挂、库存和治理事件要求折价买入；70元以下具备安全边际，当前只适合小仓试买并跟踪批价、库存、合同负债和现金流修复。",
-  "current_price": 71.72,
-  "current_price_as_of": "2026-07-07",
-  "market_cap_cny": 278389000000,
-  "reasonable_price_range": [
-    78,
-    98
-  ],
-  "fair_value_range": [
-    78,
-    98
-  ],
-  "buy_below": 70,
-  "buy_zone": [
-    60,
-    70
-  ],
-  "strong_buy_below": 60,
-  "do_not_chase_above": 105,
-  "sell_or_reduce_zone": [
-    105,
-    120
-  ],
-  "max_weight": 0.05,
-  "first_position_weight": 0.015,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "五粮液",
+    "security_status": "active",
+    "symbol": "CN:000858",
+    "ticker": "000858"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "4260ccd2a4824717ec4da84b6effc514a4a49265b256a59874062ec85dda5be1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": [
-        70,
-        78
-      ],
-      "condition": "当前价格处于观察试买区，批价和现金流尚未确认修复",
-      "action": "small_initial_buy",
-      "max_weight": 0.015,
-      "target_weight": 0.015
-    },
-    {
-      "price_range": [
-        60,
-        70
-      ],
-      "condition": "价格低于安全边际买入价且未出现新增治理或现金流恶化",
-      "action": "accumulate",
-      "max_weight": 0.035,
-      "target_weight": 0.035
-    },
-    {
-      "price_range": [
-        0,
-        60
-      ],
-      "condition": "价格进入强吸引力区，悲观情景较充分定价",
-      "action": "strong_buy",
-      "max_weight": 0.05,
-      "target_weight": 0.05
-    },
-    {
-      "price_range": [
-        105,
-        120
-      ],
-      "condition": "价格高于不应追高区且批价、库存、现金流未同步确认",
-      "action": "reduce",
-      "max_weight": 0.015,
-      "target_weight": 0.015
-    }
-  ],
-  "confidence": "medium_low",
-  "currency": "CNY",
-  "key_monitoring_items": [
-    "第八代普五批价是否稳定在850元以上",
-    "渠道库存是否继续下降并恢复经销商利润",
-    "经营现金流是否从2026Q1的-25.35亿元转正",
-    "合同负债是否稳定在140亿元附近或更高",
-    "80-100亿元注销式回购执行进度",
-    "新董事长上任后的控货和渠道治理效果"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "第八代普五批价连续两个月低于750元或重新站上850元",
-      "condition": "第八代普五批价连续两个月低于750元或重新站上850元",
-      "action": "review_valuation_and_channel_health"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026中报或三季报经营现金流继续显著弱于净利润",
-      "condition": "2026中报或三季报经营现金流继续显著弱于净利润",
-      "action": "review_cash_flow_quality"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "合同负债较2026Q1的141.38亿元明显下滑",
-      "condition": "合同负债较2026Q1的141.38亿元明显下滑",
-      "action": "review_demand_and_prepayment_quality"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-30",
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
       "reason": "80-100亿元注销式回购执行显著低于预期",
-      "condition": "80-100亿元注销式回购执行显著低于预期",
-      "action": "review_capital_allocation"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "监管问询、治理事件或收入确认问题出现新增负面",
-      "condition": "监管问询、治理事件或收入确认问题出现新增负面",
-      "action": "review_governance_discount"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "direction": "below",
-      "reason": "进入安全边际买入价"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 60,
-      "direction": "below",
-      "reason": "进入强吸引力买入价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 105,
-      "direction": "above",
-      "reason": "进入不应追高及减仓复核区"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 105.0
+      },
+      "reason": "进入不应追高及减仓复核区",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-07"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

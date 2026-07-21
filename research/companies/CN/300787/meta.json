@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:300787",
-  "ticker": "300787",
-  "name": "海能实业",
-  "market": "CN",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "消费电子周边 ODM/OEM 基本盘在 2025 年恢复增长，新能源收入开始放量，但 2026Q1 扣非亏损、财务费用和存货跌价上升，说明利润质量尚未验证；当前价格处于合理价值区间内，缺少安全边际，等待扣非和经营现金流修复。",
-  "decision": "观察",
-  "confidence": "中",
-  "currency": "CNY",
-  "last_price": 8.39,
-  "last_price_date": "2026-07-15",
-  "fair_value_range": [
-    7.0,
-    9.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海能实业",
+    "security_status": "active",
+    "symbol": "CN:300787",
+    "ticker": "300787"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c9727755cefcd514475dcf25b86cdcb839392ab442edf5f633120739c4baf399"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 6.8 元，且 2026 半年报扣非归母净利润转正、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点检查扣非利润、毛利率、经营现金流、存货和新能源质保",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 5.8 元，且未出现新能源大额存货跌价、质保费用失控或客户流失",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认 Q1 亏损是否为阶段性还是盈利能力下台阶",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 10.5 元但扣非净利率和经营现金流未明显修复",
-      "action": "不追涨或降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，更新正常化利润和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入初始买入观察区，需要结合扣非利润和现金流确认安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新评估小仓位买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入乐观情景估值区，若利润质量未跟上应考虑减持或放弃追涨",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入初始买入观察区，需要结合扣非利润和现金流确认安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新评估小仓位买入"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入乐观情景估值区，若利润质量未跟上应考虑减持或放弃追涨"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点检查扣非利润、毛利率、经营现金流、存货和新能源质保"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认 Q1 亏损是否为阶段性还是盈利能力下台阶"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，更新正常化利润和估值区间"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025": 3259294604.17,
-    "net_profit_2025": 94691004.96,
-    "deducted_net_profit_2025": 74353852.22,
-    "operating_cash_flow_2025": 112299690.4,
-    "revenue_2026_q1": 852488338.41,
-    "net_profit_2026_q1": -9685660.4,
-    "deducted_net_profit_2026_q1": -25798343.43
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

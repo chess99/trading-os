@@ -1,98 +1,106 @@
 {
-  "symbol": "CN:688802",
-  "market": "CN",
-  "ticker": "688802",
-  "name": "沐曦股份",
-  "company_name": "沐曦股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "沐曦股份是A股稀缺国产GPU/AI算力芯片平台型资产，收入已进入快速放量期，但仍处亏损、软件生态和客户复购仍需验证；当前估值已提前反映乐观国产替代预期，适合观察而非追高。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    420,
-    560
-  ],
-  "buy_zone": [
-    300,
-    420
-  ],
-  "sell_or_reduce_zone": [
-    650,
-    800
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沐曦股份",
+    "security_status": "active",
+    "symbol": "CN:688802",
+    "ticker": "688802"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "9ad86c225268d9d8ef8d4eb467db3a025701f6f85cd58ebbcbe31300ac0a94fa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿且订单质量仍需半年报验证",
-      "action": "保持观察，不开新仓",
-      "max_weight": 0,
-      "reason": "估值已反映国产GPU平台化乐观预期，当前赔率不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、亏损、现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入300-420元且2026H1收入、毛利率、现金流未明显恶化",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区后可用小仓验证国产AI算力长期逻辑"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和H股发行进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年收入能见度超过35亿元、毛利率稳定在50%以上且C600/C700客户复购超预期",
-      "action": "逐步加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "基本面显著上修后可承接更高估值，但仍需控制未盈利和供应链风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 420.0
+      },
+      "reason": "进入合理价值区间下沿附近，开始评估首笔观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 360.0
+      },
+      "reason": "进入较有吸引力买入区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 650.0
+      },
+      "reason": "超过减仓区下沿，若无业绩上修则估值赔率偏差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 800.0
+      },
+      "reason": "进入主题交易高估区域，需要复核是否兑现乐观情景",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 420,
-      "reason": "进入合理价值区间下沿附近，开始评估首笔观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 360,
-      "reason": "进入较有吸引力买入区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 650,
-      "reason": "超过减仓区下沿，若无业绩上修则估值赔率偏差"
-    },
-    {
-      "type": "price_above",
-      "price": 800,
-      "reason": "进入主题交易高估区域，需要复核是否兑现乐观情景"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、亏损、现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和H股发行进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入是否超过12亿元",
-    "2026全年收入能见度是否达到25-35亿元",
-    "毛利率是否稳定在50%以上",
-    "归母净亏损是否继续收窄",
-    "经营现金流、应收账款和存货是否同步恶化",
-    "C600/C700量产节奏和客户复购",
-    "GPU累计销量和板卡出货增长",
-    "H股发行比例、定价、募投方向和稀释影响",
-    "国产AI算力招标份额变化",
-    "与寒武纪、海光信息、摩尔线程等竞品的估值和订单差"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

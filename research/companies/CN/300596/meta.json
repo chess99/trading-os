@@ -1,110 +1,115 @@
 {
-  "symbol": "CN:300596",
-  "market": "CN",
-  "ticker": "300596",
-  "name": "利安隆",
-  "company_name": "天津利安隆新材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "利安隆具备全品类抗老化助剂、全球客户、双基地保供和润滑油添加剂第二曲线，质量中高；但扩张期现金流、债务、海外项目资本开支和行业价格竞争限制估值。2026-07-13 约43.78元处于合理价值区间下沿，缺少足够安全边际，等待35-38元分批买入。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    42,
-    52
-  ],
-  "buy_zone": [
-    35,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    62
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利安隆",
+    "security_status": "active",
+    "symbol": "CN:300596",
+    "ticker": "300596"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "044ff45d5282e598b1c8db7b55542cb48a50ed53bc141f97e97cefe48c8f38f5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于38元，且最近一期扣非归母利润同比为正、经营现金流没有显著恶化",
-      "action": "分批买入",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-18"
+      },
+      "reason": "公司预约披露2026年半年报，需复核收入、扣非利润、经营现金流、应收账款、存货和润滑油添加剂毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于34元，且抗老化助剂毛利率稳定、润滑油添加剂仍保持双位数收入增长",
-      "action": "提高到核心观察仓",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年盈利兑现度、财务费用和马来西亚项目资本开支节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于40-52元且没有盈利上修证据",
-      "action": "观察或仅保留小仓",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后重估海外基地投产前资本开支、ROE、分红和2027年盈利基准。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于58元，且2026年预期归母净利润未上修至6.8亿元以上",
-      "action": "减仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "低于估算合理价值下沿约10%，开始具备基础安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "低于买入区下沿，若盈利与现金流未恶化，风险收益显著改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "高于估算合理价值上沿，除非盈利明显上修，否则预期收益下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 62.0
+      },
+      "reason": "估值进入透支区，扩产期现金流和项目风险不支持继续加仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "action": "进入可买区，复核二季报和现金流后分批建仓",
-      "reason": "低于估算合理价值下沿约10%，开始具备基础安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 34,
-      "action": "若基本面未破坏，提升目标仓位",
-      "reason": "低于买入区下沿，若盈利与现金流未恶化，风险收益显著改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "action": "开始减仓或停止新增",
-      "reason": "高于估算合理价值上沿，除非盈利明显上修，否则预期收益下降。"
-    },
-    {
-      "type": "price_above",
-      "price": 62,
-      "action": "若盈利未上修，主动卖出或大幅降仓",
-      "reason": "估值进入透支区，扩产期现金流和项目风险不支持继续加仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-18",
-      "reason": "公司预约披露2026年半年报，需复核收入、扣非利润、经营现金流、应收账款、存货和润滑油添加剂毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年盈利兑现度、财务费用和马来西亚项目资本开支节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露后重估海外基地投产前资本开支、ROE、分红和2027年盈利基准。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "抗老化助剂销量、单价和毛利率，尤其光稳定剂毛利率是否维持30%以上",
-    "润滑油添加剂收入增速和毛利率，收入是否维持双位数增长、毛利率是否向16%-18%修复",
-    "经营现金流/归母净利润，年度目标恢复到0.9倍以上",
-    "应收账款和存货增长是否快于收入增长",
-    "在建工程、其他非流动资产和马来西亚项目资本开支进度",
-    "财务费用、汇兑损益和有息债务变化",
-    "分红率是否稳定在20%以上且不影响核心项目投入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

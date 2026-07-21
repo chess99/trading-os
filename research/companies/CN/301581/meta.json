@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301581",
-  "ticker": "301581",
-  "name": "黄山谷捷",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司处在新能源汽车功率半导体模块散热基板国产替代链条中，收入增长真实，但2025年和2026Q1利润显著承压，当前价格已隐含较乐观修复预期，需等待毛利率、现金流和净利润同步改善后再评估买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    28
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "黄山谷捷",
+    "security_status": "active",
+    "symbol": "CN:301581",
+    "ticker": "301581"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "330c3164eea5c39fd2148297b5fc2b7cc40f970fc9813ac185024a5bfced0cb6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于22元且连续两个季度毛利率或净利率环比改善，同时经营现金流不再明显弱于净利润时，可建立观察性仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且年化归母净利润恢复到1亿元以上、应收和存货未异常扩张时，可提高至核心观察仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增长是否重新转化为利润增长。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于34元且利润率未修复，或2026年中报继续出现收入增而利润降，应保持空仓或降低暴露。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及募投产能达产情况，重估长期盈利中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入合理价值下沿附近，若基本面同步修复，可重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入具备较强安全边际区间，需要复核利润和现金流后决定是否加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "超过当前基准估值上沿，若无利润率修复证据，应评估减持或继续回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入合理价值下沿附近，若基本面同步修复，可重新评估买入。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入具备较强安全边际区间，需要复核利润和现金流后决定是否加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "超过当前基准估值上沿，若无利润率修复证据，应评估减持或继续回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增长是否重新转化为利润增长。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及募投产能达产情况，重估长期盈利中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

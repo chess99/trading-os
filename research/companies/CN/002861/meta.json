@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:002861",
-  "ticker": "002861",
-  "name": "瀛通通讯",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "瀛通通讯处于消费电子声学与传输零组件赛道，行业有开放式耳机、智能音频和高速连接的结构性机会，但公司2025年亏损、2026H1预告亏损扩大，收入增长尚未转化为利润；叠加前期会计差错及警示函，当前约19元股价显著高于基于资产、收入和反转情景交叉验证的价值区间，缺乏安全边际。",
-  "fair_value_range": [
-    5.0,
-    7.5
-  ],
-  "buy_zone": [
-    4.5,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瀛通通讯",
+    "security_status": "active",
+    "symbol": "CN:002861",
+    "ticker": "002861"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "acfaa39286b0db2085d64ef4d2d7c0bf7370a495bdc31165ae39c05417bc9abc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于公允价值上沿且2026H1仍预告亏损扩大，不建立仓位。",
-      "action": "avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际收入、毛利率、扣非亏损与现金流是否符合预告。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至6元以下，且最新季度扣非亏损环比明显收窄、经营现金流为正、毛利率回到20%以上。",
-      "action": "research_watch",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现经营杠杆改善和亏损收窄。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利转正，年化净利润有望超过5000万元，且无新增监管处罚。",
-      "action": "re_underwrite",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、警示函整改后治理质量及新产能利用率。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区，需要复核盈利修复与现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "接近悲观资产价值区，可评估困境反转小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "显著高于基准公允价值，在未证明持续盈利前应回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区，需要复核盈利修复与现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "接近悲观资产价值区，可评估困境反转小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "显著高于基准公允价值，在未证明持续盈利前应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际收入、毛利率、扣非亏损与现金流是否符合预告。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现经营杠杆改善和亏损收窄。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、警示函整改后治理质量及新产能利用率。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "tags": [
-    "consumer-electronics",
-    "acoustics",
-    "cables",
-    "turnaround",
-    "governance-risk"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

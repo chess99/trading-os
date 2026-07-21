@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:300072",
-  "ticker": "300072",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "海新能科",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "海新能科处于从亏损化工/环保资产向 SAF/HVO 生物能源转型的验证期。2026 年大额 SAF/HVO 出口合同提供催化，但 2025 年亏损、现金流和资产质量压力仍未完全解除，当前价格安全边际不足，需等待订单交付、毛利率和现金流连续验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    2.4,
-    3.6
-  ],
-  "buy_zone": [
-    2.2,
-    2.6
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    5.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海新能科",
+    "security_status": "active",
+    "symbol": "CN:300072",
+    "ticker": "300072"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c7fad26b70e6557fdb8e039c74a81fe45b0dfbea8ee931ece69ded077446d866"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入买入区间且公司披露 SAF/HVO 合同按期发货、回款正常、毛利率改善时，允许研究性小仓位建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报、SAF/HVO 合同执行、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若 2026 年半年报仍亏损扩大、经营现金流转负或重大合同延期，不建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断是否出现连续经营改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度确认 SAF/HVO 收入且经营现金流为正，可复评是否提高至中等观察仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和重大合同全年兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入估算买入区间上沿，若基本面未恶化可重新评估小仓位安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "超过乐观情景下沿，若缺少利润和现金流验证应考虑降低预期或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入估算买入区间上沿，若基本面未恶化可重新评估小仓位安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "超过乐观情景下沿，若缺少利润和现金流验证应考虑降低预期或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报、SAF/HVO 合同执行、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断是否出现连续经营改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和重大合同全年兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

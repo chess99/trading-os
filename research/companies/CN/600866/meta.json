@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:600866",
-  "ticker": "600866",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "星湖科技",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "星湖科技具备全球级生物发酵规模、成本和客户准入优势，但2026年上半年业绩预告显示主要产品价格下滑导致利润大幅收缩；当前价格处于估算公允价值区间内，缺乏足够安全边际，等待中报和价格周期企稳信号。",
-  "fair_value_range": [
-    3.8,
-    5.2
-  ],
-  "buy_zone": [
-    0,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    7
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "星湖科技",
+    "security_status": "active",
+    "symbol": "CN:600866",
+    "ticker": "600866"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2390809e179ccfd7dc9f7e7a3846c8962a0bda02850a1f3322e97d3aba395b1b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于3.8元，且2026年中报或三季报显示毛利率企稳、经营现金流转正、存货不继续显著上升",
-      "action": "watch_to_small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "预计接近2026年半年报窗口，核验预告落点、毛利率、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "主要产品价格继续下滑，或2026年全年利润中枢低于2亿元且经营现金流持续为负",
-      "action": "avoid_new_position",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入估算买入区，需结合毛利率和现金流确认是否具备安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露后复核产品价格周期、盈利恢复和资本开支压力。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "高于基准公允价值上沿，若无产品价格修复证据，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "预计接近2026年半年报窗口，核验预告落点、毛利率、存货和经营现金流。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入估算买入区，需结合毛利率和现金流确认是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露后复核产品价格周期、盈利恢复和资本开支压力。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "高于基准公允价值上沿，若无产品价格修复证据，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

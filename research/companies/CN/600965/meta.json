@@ -1,90 +1,115 @@
 {
-  "symbol": "CN:600965",
-  "market": "CN",
-  "ticker": "600965",
-  "name": "*ST福成",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "公司拥有京津冀食品链品牌和灵山宝塔陵园高毛利资产，但2025年财务报告被出具无法表示意见、内部控制被出具否定意见，并已被实施退市风险警示及叠加其他风险警示。核心问题涉及固定资产建设成本、牛只存货权属及数量、中间商销售真实性、关联/资金占用判断、韶山陵园诉讼退赔与资质、灵山补税会计处理。当前价格没有充分补偿审计修复和退市风险，应回避或仅观察。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.55,
-    2.25
-  ],
-  "buy_zone": [
-    1.15,
-    1.45
-  ],
-  "sell_or_reduce_zone": [
-    2.2,
-    2.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST福成",
+    "security_status": "active",
+    "symbol": "CN:600965",
+    "ticker": "600965"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "6e048c1ae5a1ab1a47cf6e54c1aa19e93c97e714b68eac9a7439a0c208905fa0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于2.20元，或无法表示审计意见和内控否定意见尚未出现实质性消除证据",
-      "action": "不买入；已有仓位降至观察仓或清仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、其他风险警示月度进展、监管问询后续和中间商销售/存货/固定资产整改证据",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在1.15元至1.45元之间，且2026半年报未新增重大不利，月度整改公告显示存货系统、固定资产档案、税务处理和监管问询均有实质进展",
-      "action": "仅可建立事件驱动观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报现金流、存货变化、灵山补税处理和退市风险是否升降",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于或等于1.15元，且没有新增强制退市触发事项，审计修复路径明确",
-      "action": "可小幅提高至强吸引力观察仓，但仍按高风险*ST处理",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报审计意见和内部控制审计意见，判断是否触发终止上市风险或解除风险警示条件",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.45
+      },
+      "reason": "进入有安全边际观察区，可结合整改证据重新评估是否建立0.25%-0.50%观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.15
+      },
+      "reason": "进入强吸引力价格区，但仍需确认没有新增退市触发事项",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "高于不应追高价，当前审计和退市风险下风险补偿不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "价格隐含乐观审计修复预期，若修复未完成应回避或减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.45,
-      "reason": "进入有安全边际观察区，可结合整改证据重新评估是否建立0.25%-0.50%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 1.15,
-      "reason": "进入强吸引力价格区，但仍需确认没有新增退市触发事项"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "高于不应追高价，当前审计和退市风险下风险补偿不足"
-    },
-    {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "价格隐含乐观审计修复预期，若修复未完成应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、其他风险警示月度进展、监管问询后续和中间商销售/存货/固定资产整改证据"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报现金流、存货变化、灵山补税处理和退市风险是否升降"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报审计意见和内部控制审计意见，判断是否触发终止上市风险或解除风险警示条件"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情收盘价2.49元，总股本818700955股，推算总市值约20.39亿元。",
-    "2025年财报审计意见为无法表示意见，内部控制审计意见为否定意见，公司自2026-05-06起被实施退市风险警示并叠加其他风险警示。",
-    "低置信度核心数据包括中间商销售真实性、牛只存货数量及权属、三处养牛场固定资产成本、韶山陵园资产负债和灵山补税会计处理。",
-    "报告不建议按普通食品股或普通PB资产股估值，应按审计修复事件票处理。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

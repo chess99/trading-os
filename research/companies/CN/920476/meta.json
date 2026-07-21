@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920476",
-  "market": "CN",
-  "ticker": "920476",
-  "name": "海能技术",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "高毛利国产科学仪器平台的经营质量正在修复，但当前约44倍市盈率已透支色谱放量和国产替代预期，应等待13.5元以下并复核自由现金流后再介入。",
-  "fair_value_range": [13, 18],
-  "buy_zone": [10.5, 13.5],
-  "sell_or_reduce_zone": [22, 26],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海能技术",
+    "security_status": "active",
+    "symbol": "CN:920476",
+    "ticker": "920476"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "ace264760662681c0e3eb8b9c9661b757b926b375e51b3e0a1ef932dd830ff6f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于12至13.5元且最近四季收入增速不低于10%、经营现金流为正、核心产品竞争力未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入增速、自由现金流、存货、色谱商业化和上海新基地资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元且重新验证商誉、存货、色谱商业化和自由现金流假设均未受损",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入估值复核区，只有基本面未恶化时才考虑分批买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "收入、自由现金流或核心产品竞争力恶化时，不因价格下跌机械加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入减仓或不应追高区间，当前估值已要求较高增长兑现",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入增速、自由现金流、存货、色谱商业化和上海新基地资本开支"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入估值复核区，只有基本面未恶化时才考虑分批买入"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "进入减仓或不应追高区间，当前估值已要求较高增长兑现"
-    }
-  ],
-  "updated_at": "2026-07-17T13:34:32+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

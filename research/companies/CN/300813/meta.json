@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:300813",
-  "ticker": "300813",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "泰林生物",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "泰林生物是微生物检测、无菌生产与污染控制、TOC分析和高性能膜材料方向的小型生命科学工具公司，产品线具备一站式和耗材化潜力，但2025年收入下降、ROE偏低、前次募投效益不及预期且2026年可转债申请暂缓审议；当前估值已高于基准合理价值，适合观察等待收入恢复和价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    13.0,
-    17.0
-  ],
-  "buy_zone": [
-    11.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    21.0,
-    25.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰林生物",
+    "security_status": "active",
+    "symbol": "CN:300813",
+    "ticker": "300813"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f138d3fe5c9eeace7b6aa080d2dd1e1a80860d4b9abf722673ad4a95eca7c5bc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于13元且2026H1或2026Q3收入同比增速恢复到10%以上、经营现金流为正、扣非净利率持续改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、扣非净利率、经营现金流、分产品增长和膜材料/过滤器进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于13-17元且高性能过滤器/功能膜订单、产能利用率和毛利率得到公告或定期报告验证",
-      "action": "维持或小幅加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入恢复是否持续以及可转债审核/募投事项是否明朗",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于21元但收入增速仍为低个位数或可转债/募投继续不确定",
-      "action": "不追买并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间、资本开支回报和全年现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入区上沿，需要复核收入恢复、经营现金流和募投进展后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "超过基准合理价值上沿较多，若无订单和利润超预期证据应降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入买入区上沿，需要复核收入恢复、经营现金流和募投进展后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 21.0,
-      "reason": "超过基准合理价值上沿较多，若无订单和利润超预期证据应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、扣非净利率、经营现金流、分产品增长和膜材料/过滤器进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入恢复是否持续以及可转债审核/募投事项是否明朗"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间、资本开支回报和全年现金流质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

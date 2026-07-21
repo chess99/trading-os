@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:000913",
-  "market": "CN",
-  "ticker": "000913",
-  "name": "钱江摩托",
-  "company_name": "钱江摩托",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "钱江摩托具备中大排量摩托车、Benelli/QJMOTOR双品牌、出口渠道和吉利背景等稀缺资产属性，但当前价格接近基准合理值，需等待更好的买入价或2026年中报验证出口、毛利率和现金流后再提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    9.5,
-    13.0
-  ],
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "钱江摩托",
+    "security_status": "active",
+    "symbol": "CN:000913",
+    "ticker": "000913"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "3a2b2fbb96d99b548dc659260649af1f80ba84ed97ac954ac957fce52a9a71af"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.5元且2026年中报未显示出口、毛利率和经营现金流同步恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区上沿，赔率较当前价改善，但仍需验证中报"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的出口、大排量、毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.5元且大排量销量、出口收入、毛利率保持稳定",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "估值进入明显安全边际区间，可承受行业波动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和旺季后渠道库存",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度出口或大排量销量下滑且毛利率走弱",
-      "action": "停止加仓并降仓",
-      "max_weight": 0.005,
-      "reason": "核心增长逻辑和盈利质量被削弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入首笔观察仓买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入更高赔率加仓区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "超过基准合理区间上沿，需复核盈利上修是否成立",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入首笔观察仓买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入更高赔率加仓区"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过基准合理区间上沿，需复核盈利上修是否成立"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的出口、大排量、毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和旺季后渠道库存"
-    }
-  ],
-  "key_tracking_metrics": [
-    "250cc以上车型销量及同比增速",
-    "出口收入及主要区域增速",
-    "Benelli与QJMOTOR新车型上市节奏和终端折扣",
-    "综合毛利率",
-    "销售费用率",
-    "经营现金流净额",
-    "库存周转",
-    "人民币兑美元和欧元汇率",
-    "春风动力等竞品同级车型价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

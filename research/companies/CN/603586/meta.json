@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603586",
-  "market": "CN",
-  "ticker": "603586",
-  "name": "金麒麟",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "金麒麟是有海外AM渠道、SKU和配方积累的制动摩擦材料公司，但2026年上半年销量和扣非利润大幅下滑，当前股价接近每股净资产且位于合理价值区间中上部，缺乏追买安全边际；等待订单、毛利率和扣非利润修复后再考虑小仓位配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    9.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    17.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金麒麟",
+    "security_status": "active",
+    "symbol": "CN:603586",
+    "ticker": "603586"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3451cf522bf184542bb24ab7d8b529a16ea73f2a3449c71f719250294df2d7f7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.5元，且2026半年度正式报告未出现现金流、应收账款或存货显著恶化，海外AM订单有恢复迹象",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年度正式报告、扣非利润、现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.0元，且扣非利润确认见底、产品毛利率稳定在20%以上",
-      "action": "加至小仓位上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认销量下滑是否见底",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.0元但扣非净利润未恢复至年化8000万元以上",
-      "action": "不追买并减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和分红政策，重新估算中周期ROE与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入安全边际买入区上沿，需要复核半年报现金流和订单恢复情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "低于保守PB估值区间，可在基本面未恶化前提下评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "超过乐观情景估值下沿，若盈利修复未兑现应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入安全边际买入区上沿，需要复核半年报现金流和订单恢复情况"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "低于保守PB估值区间，可在基本面未恶化前提下评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "超过乐观情景估值下沿，若盈利修复未兑现应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年度正式报告、扣非利润、现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认销量下滑是否见底"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和分红政策，重新估算中周期ROE与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

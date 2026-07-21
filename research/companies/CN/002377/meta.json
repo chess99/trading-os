@@ -1,128 +1,123 @@
 {
-  "symbol": "CN:002377",
-  "market": "CN",
-  "ticker": "002377",
-  "name": "国创高新",
-  "company_name": "湖北国创高新材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "watch",
-  "current_thesis": "公司主业从房地产中介剥离后的低谷中恢复，宁波国沛并表带来华东收入和利润修复，2026H1预告继续增长；但沥青业务毛利率低、经营现金流尚未转正、关联采购占比高，当前2.75元对应约25.20亿元市值和约6.13倍2026Q1净资产，估值已明显高于基本面可支撑区间。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    1.2,
-    1.8
-  ],
-  "buy_zone": [
-    1.1,
-    1.4
-  ],
-  "sell_or_reduce_zone": [
-    2.1,
-    3.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国创高新",
+    "security_status": "active",
+    "symbol": "CN:002377",
+    "ticker": "002377"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c24c393cb859b30eac289d50b357dc2b73f6943bdb45318d810a1c8b2ab0cb38"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于1.10元，且2026利润和现金流未显著恶化",
-      "price_range": "<=1.10",
-      "action": "强吸引力区，若无重大财务恶化可建首笔",
-      "position": "1.5%-2.0%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证2026盈利修复质量的第一份完整定期报告",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在1.10元至1.40元，且宁波国沛承诺进度正常",
-      "price_range": "1.10-1.40",
-      "action": "有安全边际，分批观察买入",
-      "position": "0.5%-1.5%",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "现金流转正是从交易性修复转为可投资修复的关键条件",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在1.40元至1.80元，且经营现金流已改善",
-      "price_range": "1.40-1.80",
-      "action": "合理区，仅在现金流改善时小仓位",
-      "position": "0%-0.8%",
-      "max_weight": 0.008
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "宁波国沛是收入和利润修复的主要来源",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于1.80元，尤其高于2.10元",
-      "price_range": ">1.80",
-      "action": "不主动买；高于2.10不追高",
-      "position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "增持履约影响市场对治理和底部信号的判断",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "关联采购占比高是本报告的主要治理折价来源",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.4
+      },
+      "reason": "低于该价格才开始补偿低毛利、现金流和关联采购风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.1
+      },
+      "reason": "该价格接近2.5倍PB和悲观情景上沿，安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.1
+      },
+      "reason": "高于该价格后估值超过乐观情景可支撑区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.4,
-      "condition": "进入有安全边际买入区，重新核验2026利润和现金流",
-      "reason": "低于该价格才开始补偿低毛利、现金流和关联采购风险"
-    },
-    {
-      "type": "price_below",
-      "price": 1.1,
-      "condition": "进入强吸引力区，若宁波国沛承诺和现金流无恶化可考虑建仓",
-      "reason": "该价格接近2.5倍PB和悲观情景上沿，安全边际较充分"
-    },
-    {
-      "type": "price_above",
-      "price": 2.1,
-      "condition": "高于不应追高价，已持仓需复核减仓",
-      "reason": "高于该价格后估值超过乐观情景可支撑区间"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年度报告披露",
-      "action": "复核扣非净利润是否接近预告上沿",
-      "reason": "半年报是验证2026盈利修复质量的第一份完整定期报告"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026年年度经营现金流披露",
-      "action": "确认经营活动现金流是否转正并与净利润匹配",
-      "reason": "现金流转正是从交易性修复转为可投资修复的关键条件"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "宁波国沛2026年业绩承诺披露",
-      "action": "确认扣非净利润是否达到2600万元承诺",
-      "reason": "宁波国沛是收入和利润修复的主要来源"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "控股股东增持进展公告",
-      "action": "跟踪6000万-12000万元增持计划履行进度",
-      "reason": "增持履约影响市场对治理和底部信号的判断"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "定期报告关联交易披露",
-      "action": "复核关联采购比例和采购价格公允性是否改善",
-      "reason": "关联采购占比高是本报告的主要治理折价来源"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "沥青业务毛利率",
-    "道路石油沥青销量与价差",
-    "宁波国沛业绩承诺完成率",
-    "前五大供应商及关联采购占比",
-    "控股股东增持进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

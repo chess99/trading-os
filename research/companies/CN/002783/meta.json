@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:002783",
-  "market": "CN",
-  "ticker": "002783",
-  "name": "凯龙股份",
-  "company_name": "湖北凯龙化工集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "民爆牌照、区域产能和爆破服务一体化具备资产价值，2025年经营现金流强于利润；但2026Q1利润大幅下滑、ROE偏低、肥料/硝酸铵链条拖累，当前约6.93元缺少安全边际。",
-  "quality_rating": "中等",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [5.8, 7.2],
-  "buy_zone": [5.2, 5.8],
-  "sell_or_reduce_zone": [7.8, 8.2],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯龙股份",
+    "security_status": "active",
+    "symbol": "CN:002783",
+    "ticker": "002783"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "82927a539978df99879a5cbe0e68cc152b3da4cc40d55ab130ab5834e5564fc4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于5.8元且2026年中报未验证利润修复",
-      "action": "仅观察或保留0-1%观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格进入5.5-5.8元，且民爆/爆破服务毛利率维持35%以上、经营现金流为正",
-      "action": "分两次试探建仓至2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格低于5.2元，且2026年归母净利年化回到1.5亿元以上、应收账款占收入比未继续上升",
-      "action": "加仓至3%-4%，最高不超过5%",
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入可买区上沿，安全边际开始出现",
-      "action": "进入可买区上沿，复核2026年最新季度利润和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入高安全边际区",
-      "action": "进入高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超过合理估值区间上沿且需要利润上修支撑",
-      "action": "无利润上修则减仓或卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年半年度报告预计已披露",
-      "condition": "预计2026年半年度报告披露后复核盈利修复、现金流和估值区间",
-      "action": "更新报告"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季度报告预计已披露",
-      "condition": "预计2026年三季度报告披露后复核Q1低利润是否修复",
-      "action": "更新报告"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2026年年度报告预计已披露",
-      "condition": "预计2026年年度报告披露后复核全年归母利润、现金流和资本配置",
-      "action": "更新报告"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入可买区上沿，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入高安全边际区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超过合理估值区间上沿且需要利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "民用爆炸物品收入、毛利率和产能利用率",
-    "爆破服务收入、毛利率和新签/在手项目",
-    "硝酸铵及复合肥毛利率",
-    "经营活动现金流净额与归母净利润之比",
-    "自由现金流：经营现金流减资本开支",
-    "资产负债率、有息债务和货币资金",
-    "应收账款余额及前五大客户回款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

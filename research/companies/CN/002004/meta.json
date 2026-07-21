@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:002004",
-  "market": "CN",
-  "ticker": "002004",
-  "name": "华邦健康",
-  "company_name": "华邦健康",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华邦健康是低PB、高股息、现金流较强的多元控股平台，医药和旅游资产质量较好，但农化亏损、商誉、子公司权益穿透和治理复杂度要求显著折价；当前价格略低于基准合理价值下沿，适合观察仓而非重仓买入。",
-  "quality_rating": "medium",
-  "valuation_rating": "undervalued_with_complexity_discount",
-  "fair_value_range": [
-    4.6,
-    5.5
-  ],
-  "buy_zone": [
-    3.4,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    6.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "last_price": 4.13,
-  "last_price_date": "2026-07-10",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华邦健康",
+    "security_status": "active",
+    "symbol": "CN:002004",
+    "ticker": "002004"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "ad2a3307fba4a8dd7e8e933393bbd30141b80f111b1c57d0927ea34a8011d015"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价不高于4.15元且无新增商誉减值、质押恶化或重大治理风险",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "当前估值低于合理价值下沿但安全边际不足，适合小仓跟踪现金流和分红兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，穿透子公司权益、商誉、现金流和医药主业利润",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入3.40-3.80元且2026中报扣非利润和经营现金流未恶化",
-      "action": "加仓至小仓位",
-      "max_weight": 0.025,
-      "reason": "该区间对悲观情景有一定保护，股息率和PB提供下行缓冲"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认扣非利润、经营现金流、颖泰亏损收敛和旅游旺季表现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报或三季报确认医药主业稳定、颖泰亏损收窄且经营现金流覆盖分红和利息",
-      "action": "提高至核心观察仓上限",
-      "max_weight": 0.03,
-      "reason": "基本面验证后可适度提高仓位，但多元控股平台复杂度仍限制上限"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和分红政策，更新三情景估值和长期仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.80元且盈利预测未上修",
-      "action": "减仓或仅保留跟踪仓",
-      "max_weight": 0.01,
-      "reason": "价格进入估值上沿后，复杂度折价和利润波动不再提供足够补偿"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入买入区上沿，复核是否可从观察仓加至2.5%以内",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入深度价值区，若基本面未恶化可重新评估悲观情景保护",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "进入减仓区下沿，若利润没有同步上修应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "高于当前基准估值区间，应只保留极小跟踪仓或退出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入买入区上沿，复核是否可从观察仓加至2.5%以内"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入深度价值区，若基本面未恶化可重新评估悲观情景保护"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "进入减仓区下沿，若利润没有同步上修应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "高于当前基准估值区间，应只保留极小跟踪仓或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，穿透子公司权益、商誉、现金流和医药主业利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认扣非利润、经营现金流、颖泰亏损收敛和旅游旺季表现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和分红政策，更新三情景估值和长期仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度扣非归母净利润及同比增速",
-    "经营活动现金流净额与归母净利润比值",
-    "医药板块收入增速、毛利率、销售费用率和研发费用率",
-    "颖泰生物单季净利润、农化中间体价格和汇兑损益",
-    "凯盛新材收入、净利润及华邦直接/信托专户持股变化",
-    "丽江股份客流、索道运输收入、酒店入住率和经营现金流",
-    "商誉、长期股权投资及资产减值准备变化",
-    "控股股东质押比例、可交换债换股或担保资产变化",
-    "年度分红、回购、资产出售和聚焦主业资本配置动作",
-    "监管问询、关联交易、税务事项和重大诉讼"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

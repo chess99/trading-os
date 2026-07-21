@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603291",
-  "market": "CN",
-  "ticker": "603291",
-  "name": "联合水务",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "联合水务是弱周期水务运营商，主业现金流和分红具备防守属性，水价改革和沙特项目提供潜在催化；但2025年扣非利润下滑、ROE偏低、非经常性损益占比高，按2026-07-17约7.97元估算的PE/PB不便宜，需等待更高安全边际或扣非利润持续修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.0,
-    7.2
-  ],
-  "buy_zone": [
-    5.4,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    11.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联合水务",
+    "security_status": "active",
+    "symbol": "CN:603291",
+    "ticker": "603291"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "5902d2227e32fbc4d1a317ee1cf94c4aa8dcf97bdf35a18a068451a888e6afca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入5.4-6.2元且无重大项目回款、股东减持或信用减值恶化，建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款和沙特项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非利润连续两个季度改善且经营现金流/净利润大于1，股价仍低于7.2元，可提高配置",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "沙特项目融资、建设和服务费回款清晰，水价调整落地，且估值仍低于28倍TTM PE",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红，重新评估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入基准买入区间，具备初始安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入深度价值区间，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "高于基准价值区间较多，需检查是否有利润上修证据，否则考虑减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入基准买入区间，具备初始安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入深度价值区间，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "高于基准价值区间较多，需检查是否有利润上修证据，否则考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款和沙特项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红，重新评估合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

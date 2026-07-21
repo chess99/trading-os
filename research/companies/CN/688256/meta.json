@@ -1,126 +1,121 @@
 {
-  "symbol": "CN:688256",
-  "market": "CN",
-  "ticker": "688256",
-  "name": "寒武纪",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "寒武纪仍是国产AI加速芯片最稀缺的上市资产之一，2025年和2026Q1收入、利润拐点继续成立；但2026-07-09股价约1535元、市值约9640亿元，已经接近甚至超过乐观情景定价。缺少新的中报、订单、下一代产品量产和供应链改善证据前，维持watch，当前不追高，650元以下才考虑第一笔观察仓。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    600,
-    850
-  ],
-  "buy_zone": [
-    450,
-    650
-  ],
-  "sell_or_reduce_zone": [
-    1200,
-    1600
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "寒武纪",
+    "security_status": "active",
+    "symbol": "CN:688256",
+    "ticker": "688256"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "527fbdfd9829f277fae627783a992e8f1c8f2eadd55049667b8dc64fd4c0b9a3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-followup.md",
+        "sha256": "d6ee759eee554bce08ba60bc8ccb2973f1268a99d9eef1e34b3c1825a88150b2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于1200元且没有已公告大订单、业绩显著上修或下一代产品规模量产证据",
-      "price_range": [
-        1200,
-        1600
-      ],
-      "action": "reduce_or_watch_only",
-      "weight": 0,
-      "max_weight": 0.005,
-      "notes": "当前价格已处于乐观情景定价区，只保留研究观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、利润、经营现金流、合同负债、存货、客户集中度和毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入650-850元且收入、利润、现金流继续兑现",
-      "price_range": [
-        650,
-        850
-      ],
-      "action": "watch",
-      "weight": 0,
-      "max_weight": 0.01,
-      "notes": "接近合理价值区，等待更强财报证据。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高增长、现金流和订单兑现是否可持续；若此前出现下一代芯片规模量产、公开大额订单、核心客户复购、供应链受限或存货大额计提公告，则提前人工复核。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入450-650元且订单、毛利率、经营现金流、供应链未恶化",
-      "price_range": [
-        450,
-        650
-      ],
-      "action": "first_buy",
-      "weight": 0.005,
-      "max_weight": 0.02,
-      "notes": "只允许第一笔观察仓，不能因下跌机械补仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 850.0
+      },
+      "reason": "回到合理价值上沿附近，重新检查中报和订单证据。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价跌入350-450元且基本面验证仍在推进",
-      "price_range": [
-        350,
-        450
-      ],
-      "action": "accumulate",
-      "weight": 0.02,
-      "max_weight": 0.03,
-      "notes": "若订单复购、毛利率和现金流均未恶化，可分批提高仓位。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 650.0
+      },
+      "reason": "进入可考虑第一笔观察仓区间。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价低于350元且公司战略地位、商业化趋势、供应链和客户复购未破坏",
-      "price_range": [
-        0,
-        350
-      ],
-      "action": "strong_buy",
-      "weight": 0.03,
-      "max_weight": 0.04,
-      "notes": "仅在基本面未证伪时最高4%；若下跌来自核心假设破坏则不补仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 450.0
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1200.0
+      },
+      "reason": "进入乐观情景定价区，未有硬证据上修时不新增并复核减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1600.0
+      },
+      "reason": "接近超乐观定价，除非业绩和订单显著上修，否则只保留观察仓或退出。",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-09-followup.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-09-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、利润、经营现金流、合同负债、存货、客户集中度和毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高增长、现金流和订单兑现是否可持续；若此前出现下一代芯片规模量产、公开大额订单、核心客户复购、供应链受限或存货大额计提公告，则提前人工复核。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 850,
-      "reason": "回到合理价值上沿附近，重新检查中报和订单证据。"
-    },
-    {
-      "type": "price_below",
-      "price": 650,
-      "reason": "进入可考虑第一笔观察仓区间。"
-    },
-    {
-      "type": "price_below",
-      "price": 450,
-      "reason": "进入强安全边际区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 1200,
-      "reason": "进入乐观情景定价区，未有硬证据上修时不新增并复核减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 1600,
-      "reason": "接近超乐观定价，除非业绩和订单显著上修，否则只保留观察仓或退出。"
-    }
-  ],
-  "updated_at": "2026-07-09T23:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

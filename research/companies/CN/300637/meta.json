@@ -1,102 +1,105 @@
 {
-  "symbol": "CN:300637",
-  "market": "CN",
-  "ticker": "300637",
-  "name": "扬帆新材",
-  "company_name": "扬帆新材料（浙江）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2025年收入修复并实现微利，但2026Q1再次亏损，当前8.24元价格已隐含较强景气修复预期。公司具备光引发剂和巯基化合物细分工艺基础，但利润中枢、现金流和安全生产稳定性尚未验证，适合跟踪，不适合按当前价买入。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.0,
-    7.2
-  ],
-  "buy_zone": [
-    0.0,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "扬帆新材",
+    "security_status": "active",
+    "symbol": "CN:300637",
+    "ticker": "300637"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "90139c330f2768ba0acd86bdb959f23acd681169be15466918794b7cfd3c4a40"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于7.2元，且没有连续季度利润改善证据",
-      "action": "不新买，已有仓位仅按事件交易管理",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、毛利率、经营现金流和分产品收入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在5.5-7.2元之间，且2026Q2或Q3扣非净利润尚未连续转正",
-      "action": "继续观察，不建立基本面仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2025年盈利修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至4.8-5.5元，且单季度扣非净利润转正、经营现金流不恶化",
-      "action": "可试探建立不超过目标仓位25%的观察仓",
-      "max_weight": 0.25
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估利润中枢和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元，且毛利率、经营现金流、安全生产状态均未恶化",
-      "action": "可提高至目标仓位50%，后续按季度业绩确认加减",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入观察买入区，需要复核最近季度利润和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于8.5元，且没有盈利预测上修或连续两个季度利润超预期",
-      "action": "减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入可买区，若基本面未恶化可考虑建立核心观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "进入减仓或回避区，除非盈利中枢被验证上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入观察买入区，需要复核最近季度利润和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入可买区，若基本面未恶化可考虑建立核心观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "进入减仓或回避区，除非盈利中枢被验证上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、毛利率、经营现金流和分产品收入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2025年盈利修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估利润中枢和安全边际"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入是否连续高于2.3-2.5亿元",
-    "单季度扣非归母净利润是否连续两个季度为正",
-    "综合毛利率是否稳定在18%-22%以上",
-    "经营现金流净额是否连续改善",
-    "应收账款和存货周转是否恶化",
-    "安全环保事件、停产整改、重大处罚是否新增",
-    "前五大客户、外销占比和海外订单是否改善"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

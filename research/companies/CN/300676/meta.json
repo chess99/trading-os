@@ -1,106 +1,115 @@
 {
-  "symbol": "CN:300676",
-  "market": "CN",
-  "ticker": "300676",
-  "name": "华大基因",
-  "company_name": "深圳华大基因股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "华大基因具备基因检测平台、联合实验室、数据和全球交付资产，但 2025 年仍亏损且经营现金流转负，2026Q1 仅显示修复初期；当前股价已反映较强扭亏预期，需等待价格回落或现金流与扣非利润同步改善后再买入。",
-  "quality_rating": "B",
-  "valuation_rating": "偏贵/无安全边际",
-  "fair_value_range": [
-    28,
-    33
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    50
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华大基因",
+    "security_status": "active",
+    "symbol": "CN:300676",
+    "ticker": "300676"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3e0dfaf872a01c9810367da71189eca4e81e8173e0770b21251b48c70b2c93b1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于33元且尚未看到经营现金流转正、扣非利润转正和应收改善",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证收入增长、毛利率、经营现金流、应收账款和信用减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入28-33元合理区，但仅有收入恢复、现金流尚未确认",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认单季扣非利润是否转正及精准医学综合解决方案增长持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入24-28元买入区，且2026中报或三季报显示收入增长、毛利率稳定、经营现金流改善",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，判断扭亏是否兑现、现金流是否恢复、回购是否完成且价格合理",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价进入20-23元强吸引力区，且未出现应收恶化、重大减值或治理风险",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入安全边际观察买入区，需复核中报现金流和应收账款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于20元，同时公司现金流转正、扣非利润转正、精准医学解决方案维持双位数增长",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入强吸引力区，可按困境反转框架评估首笔仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "高于不应追高价格，若基本面未确认扭亏应避免加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入乐观估值区，若扣非利润和现金流未兑现应减仓或不参与",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入安全边际观察买入区，需复核中报现金流和应收账款"
-    },
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入强吸引力区，可按困境反转框架评估首笔仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "高于不应追高价格，若基本面未确认扭亏应避免加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "进入乐观估值区，若扣非利润和现金流未兑现应减仓或不参与"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证收入增长、毛利率、经营现金流、应收账款和信用减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认单季扣非利润是否转正及精准医学综合解决方案增长持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，判断扭亏是否兑现、现金流是否恢复、回购是否完成且价格合理"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流量净额",
-    "毛利率",
-    "应收账款及其占收入比例",
-    "信用减值损失",
-    "精准医学检测综合解决方案收入及同比",
-    "生育健康业务收入下滑幅度",
-    "感染防控业务收入",
-    "海外收入增速",
-    "回购执行金额和均价"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

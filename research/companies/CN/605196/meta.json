@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:605196",
-  "market": "CN",
-  "ticker": "605196",
-  "name": "华通线缆",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "华通线缆具备海外线缆本地化、油服产品和安哥拉铝产业链延伸带来的中期成长弹性，但2025年利润和现金流质量承压，2026Q1虽恢复增长，当前约40倍TTM PE已较充分反映乐观预期；在经营现金流、安哥拉项目爬坡和财务费用/汇兑改善得到验证前，维持观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    17,
-    23
-  ],
-  "buy_zone": [
-    0,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华通线缆",
+    "security_status": "active",
+    "symbol": "CN:605196",
+    "ticker": "605196"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2dfe8b4ca9bd22abe5c65bfc1b7c6bdc59445378767188a5ee37896a70fa36f6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入16元以下，且2026半年报显示经营现金流改善、应收账款增速不高于收入增速、安哥拉项目未继续扩大亏损",
-      "action": "建立观察性仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点查看经营现金流、应收账款、财务费用、汇兑损益和安哥拉项目爬坡",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "安哥拉项目连续两个季度贡献正利润，油服毛利率改善，经营现金流/归母净利润大于0.7",
-      "action": "将仓位提高到核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q1增长能否延续并验证估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于28元且没有新增可核验利润和现金流证据，或资产负债率超过70%且经营现金流恶化",
-      "action": "不追高，已有仓位减仓或清仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新评估海外产能、油服业务和自由现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入具备安全边际的买入复核区，需同步检查现金流和安哥拉项目进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "超过乐观情景估值中枢，若无新增业绩证据应降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入具备安全边际的买入复核区，需同步检查现金流和安哥拉项目进展"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "超过乐观情景估值中枢，若无新增业绩证据应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点查看经营现金流、应收账款、财务费用、汇兑损益和安哥拉项目爬坡"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认Q1增长能否延续并验证估值假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新评估海外产能、油服业务和自由现金流质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

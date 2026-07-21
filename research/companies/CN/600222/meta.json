@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600222",
-  "ticker": "600222",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "太龙药业",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "太龙药业有中成药、医药商业和药品研发服务资产，2025年扭亏且控股权调整带来产业协同预期，但2026Q1扣非利润和经营现金流偏弱，当前约8元附近价格已隐含较高改善预期，安全边际不足，适合观察等待现金流和利润质量验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.5,
-    6.2
-  ],
-  "buy_zone": [
-    0,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    99
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "太龙药业",
+    "security_status": "active",
+    "symbol": "CN:600222",
+    "ticker": "600222"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "0ab97160b2e441b7b149fa82725fd036372f69b395801bc2001dddb8516b9b97"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅作为观察仓，等待2026Q2/Q3扣非净利润和经营现金流改善被验证",
-      "action": "watchlist_or_probe",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非净利润、经营现金流、应收账款和存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.6元且最近两个季度经营现金流未继续恶化",
-      "action": "research_for_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认2025年扭亏是否具备持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.2元且没有明确利润上修或资产整合兑现证据",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入估算买入区，需要复核现金流和扣非利润是否同步改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "超过安全边际上限，若无基本面上修证据应回避或减持",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入估算买入区，需要复核现金流和扣非利润是否同步改善"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "超过安全边际上限，若无基本面上修证据应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非净利润、经营现金流、应收账款和存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认2025年扭亏是否具备持续性"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

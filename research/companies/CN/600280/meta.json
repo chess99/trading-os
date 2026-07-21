@@ -1,74 +1,96 @@
 {
-  "symbol": "CN:600280",
-  "ticker": "600280",
-  "name": "中央商场",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "区域百货与商业地产资产仍有经营现金流和核心商圈资产价值，但收入下滑、持续亏损、资产负债率约97%、控股股东股份全质押冻结，当前股价相对净资产和可核验现金流明显偏高，不具备安全边际。",
-  "fair_value_range": [
-    0.6,
-    1.1
-  ],
-  "buy_zone": [
-    0.4,
-    0.6
-  ],
-  "sell_or_reduce_zone": [
-    2.0,
-    2.7
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中央商场",
+    "security_status": "active",
+    "symbol": "CN:600280",
+    "ticker": "600280"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "6b3689f4ec69f871afaec22c101c31687cd6e4dfc784e62102ee4dd0342d69d4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前基本面和治理风险未改善，且价格高于合理价值区间上沿",
-      "action": "不建仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证亏损、现金流、负债率和商业地产去化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入0.6-1.1元且半年报显示亏损收窄、经营现金流为正、债务风险缓释",
-      "action": "重新研究，最多观察性小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断收入是否止跌及债务风险是否缓释",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入0.4-0.6元且无新增违约、退市或控制权恶化风险",
-      "action": "可进入困境反转候选池",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.1
+      },
+      "reason": "跌入合理价值区间上沿以下，开始复核安全边际与半年报改善证据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.6
+      },
+      "reason": "跌入买入观察区，需要重新评估净资产、债务续作和现金流",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.7
+      },
+      "reason": "价格显著高于合理价值区间，缺乏基本面支撑，应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.1,
-      "reason": "跌入合理价值区间上沿以下，开始复核安全边际与半年报改善证据"
-    },
-    {
-      "type": "price_below",
-      "price": 0.6,
-      "reason": "跌入买入观察区，需要重新评估净资产、债务续作和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 2.7,
-      "reason": "价格显著高于合理价值区间，缺乏基本面支撑，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证亏损、现金流、负债率和商业地产去化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断收入是否止跌及债务风险是否缓释"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

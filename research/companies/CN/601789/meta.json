@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:601789",
-  "ticker": "601789",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "宁波建工",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "宁波建工是宁波市国资背景区域建筑施工平台，2026年并入宁波交工后交通基建能力和股东资源增强，但2025年利润与现金流转弱、2026Q1新签合同大幅下降，当前只适合观察，等待订单和经营现金流修复后再考虑配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.4,
-    4.5
-  ],
-  "buy_zone": [
-    2.8,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.4
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁波建工",
+    "security_status": "active",
+    "symbol": "CN:601789",
+    "ticker": "601789"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b71b9bf443cd520c031e54fddad1eb55de0690d1fd32fa32730a2216dd84cd66"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入2.8-3.2元且2026Q2/Q3新签合同未继续断崖、经营现金流边际改善",
-      "action": "小仓位研究性买入",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查扣非利润、经营现金流、新签合同和宁波交工并表表现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.4-4.5元且订单、扣非利润、现金流尚未同时改善",
-      "action": "继续观察，不新增仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断订单下滑是否传导到收入和资产质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.8元但扣非利润和经营现金流未明显修复",
-      "action": "减持或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "跌入买入观察区，若订单和现金流未恶化，可重新评估小仓位机会",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "高于当前基本面支持的合理区间，若无订单和现金流改善，应考虑降低风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "跌入买入观察区，若订单和现金流未恶化，可重新评估小仓位机会"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "高于当前基本面支持的合理区间，若无订单和现金流改善，应考虑降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查扣非利润、经营现金流、新签合同和宁波交工并表表现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断订单下滑是否传导到收入和资产质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300855",
-  "ticker": "300855",
-  "market": "CN",
-  "name": "图南股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "图南股份是航空发动机和燃气轮机高温合金及精密铸件国产供应链中的细分优质公司；2025年受搬迁转产和费用刚性压制，2026Q1显示利润和现金流修复，但当前价格已部分反映修复预期，需要等待25元以下或连续季度验证后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    34
-  ],
-  "buy_zone": [
-    22,
-    25
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "图南股份",
+    "security_status": "active",
+    "symbol": "CN:300855",
+    "ticker": "300855"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "34ba9481be510befdb72c85b78730da53ef7288b3dcf7f7547a6690b96ae63e0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于25元，且最近一个季度收入、归母净利润和经营现金流同步改善，存货及应收账款未异常快于收入增长",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看沈阳图南转产后放量、毛利率、经营现金流和存货应收",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，且连续两个季度经营现金流/归母净利润大于0.8，精密铸件转产和放量继续验证",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1高增长是否具有持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于38元但2026年利润和现金流没有继续超预期，或TTM PE重新显著高于60倍",
-      "action": "不追高并评估减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，更新中长期盈利和自由现金流假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入买入观察区，重新核验2026年利润修复和现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入较厚安全边际区，若基本面未恶化可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "进入减仓观察区，要求基本面进一步超预期才能支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入买入观察区，重新核验2026年利润修复和现金流质量"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入较厚安全边际区，若基本面未恶化可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "进入减仓观察区，要求基本面进一步超预期才能支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看沈阳图南转产后放量、毛利率、经营现金流和存货应收"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1高增长是否具有持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，更新中长期盈利和自由现金流假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

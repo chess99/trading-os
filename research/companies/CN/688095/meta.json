@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688095",
-  "market": "CN",
-  "ticker": "688095",
-  "name": "福昕软件",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "福昕软件的核心价值在于全球 PDF 文档软件订阅化转型。2025 年文档业务恢复增长，2026Q1 ARR 同比约 40%、续费率约 94%，叠加较厚净现金，当前价格附近已反映较多竞争和治理折价。以小仓位买入，等待半年报验证 ARR、续费率、扣非利润和境外回款质量。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    62,
-    78
-  ],
-  "buy_zone": [
-    48,
-    57
-  ],
-  "sell_or_reduce_zone": [
-    90,
-    105
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福昕软件",
+    "security_status": "active",
+    "symbol": "CN:688095",
+    "ticker": "688095"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "dfba404354cf2328cfb3e5c0e59b0761d01630b203a0c2da37cdb3e0bbbad496"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于52元，且文档ARR同比增速未低于30%、订阅续费率未低于92%",
-      "action": "建立初始仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复核2026年半年报的ARR、订阅续费率、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报显示ARR同比增速不低于30%、续费率不低于92%、扣非亏损继续收窄或转正",
-      "action": "加至目标仓位上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和全年收入确认节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "ARR同比增速低于20%、续费率低于90%或境外回款显著恶化",
-      "action": "降仓或退出",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认订阅转型是否转化为自由现金流",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
+      "reason": "进入更有安全边际的买入区，需复核ARR、续费率和回款没有恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "接近乐观估值区间，若利润和现金流未同步兑现应减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 48,
-      "reason": "进入更有安全边际的买入区，需复核ARR、续费率和回款没有恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "接近乐观估值区间，若利润和现金流未同步兑现应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核2026年半年报的ARR、订阅续费率、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和全年收入确认节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认订阅转型是否转化为自由现金流"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

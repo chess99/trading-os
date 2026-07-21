@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600529",
-  "ticker": "600529",
-  "name": "山东药玻",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "山东药玻是药用玻璃包装龙头，模制瓶和配套药包材具备规模、认证和客户黏性优势；但2025年利润和现金流下滑、库存与减值压力较重，2026年定增引入国药系仍有审批与摊薄不确定性，当前价格处于合理区间内但安全边际不足，暂以观察为主。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    17.5,
-    21.5
-  ],
-  "buy_zone": [
-    14.0,
-    16.0
-  ],
-  "sell_or_reduce_zone": [
-    23.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山东药玻",
+    "security_status": "active",
+    "symbol": "CN:600529",
+    "ticker": "600529"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "72bf1e6458ed107be40f78a31c6d597a0784cce475a591fe70ab45f9c0d38b0e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于16元且未出现新的基本面恶化，先建立观察仓。",
-      "action": "initial_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点跟踪库存、经营现金流、高端产品和定增进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于14元，且2026中报显示库存下降、经营现金流修复或高端品类毛利率改善。",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于23元但利润和现金流未同步修复。",
-      "action": "reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报与定增落地情况，重估国药系协同和摊薄影响。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "接近定增价和买入区间上沿，重新评估是否建立观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入有安全边际的买入区间，需结合基本面验证考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "进入减持观察区间，若利润未修复则风险收益转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "接近定增价和买入区间上沿，重新评估是否建立观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入有安全边际的买入区间，需结合基本面验证考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "进入减持观察区间，若利润未修复则风险收益转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点跟踪库存、经营现金流、高端产品和定增进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报与定增落地情况，重估国药系协同和摊薄影响。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

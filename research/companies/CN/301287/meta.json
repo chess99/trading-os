@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:301287",
-  "ticker": "301287",
-  "name": "康力源",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "康力源资产负债表强、现金和理财形成较厚安全垫，海外产能与智能健身方案有潜在增长点；但2025年收入下滑、2026Q1扣非利润显著承压，当前估值处于高分位，尚未提供足够安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    23,
-    29
-  ],
-  "buy_zone": [
-    18,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康力源",
+    "security_status": "active",
+    "symbol": "CN:301287",
+    "ticker": "301287"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "39eacd2a1a03ca0318fa3f7c1c55b0b6b883ead368f83c483d6fa33f984c0af5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于23元，最近两个季度经营现金流为正，扣非净利率不低于7%，外销降幅明显收窄",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "公司预计披露2026年中报，重点复核境外收入、扣非净利率、马来西亚工厂进展和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于18至20元，现金安全垫未受损，马来西亚工厂量产无重大延期，订单恢复得到公告或财报验证",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润下滑是否为短期扰动",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于35元且EPS年化未回到1.20元以上，或PE-TTM仍高于35倍",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断海外产能和智能健身方案是否形成可持续收益",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入合理价值下沿和观察仓区间，复核外销订单、扣非利润率和现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入深度安全边际区，若现金和经营质量未恶化，可重新评估最高3%仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "超过基准合理价值上沿且估值偏高，需要验证智能化和海外产能是否兑现，否则应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入合理价值下沿和观察仓区间，复核外销订单、扣非利润率和现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入深度安全边际区，若现金和经营质量未恶化，可重新评估最高3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "超过基准合理价值上沿且估值偏高，需要验证智能化和海外产能是否兑现，否则应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "公司预计披露2026年中报，重点复核境外收入、扣非净利率、马来西亚工厂进展和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润下滑是否为短期扰动"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断海外产能和智能健身方案是否形成可持续收益"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-15",
-    "last_price": 33.69,
-    "market_cap_billion_cny": 2.246,
-    "pe_ttm": 37.84,
-    "pb": 1.93,
-    "fy2025_revenue_billion_cny": 0.5855,
-    "fy2025_net_profit_million_cny": 69.44,
-    "q1_2026_revenue_million_cny": 135.66,
-    "q1_2026_net_profit_million_cny": 8.66
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

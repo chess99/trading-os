@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:688209",
-  "market": "CN",
-  "ticker": "688209",
-  "name": "英集芯",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "英集芯处在消费电子电源管理芯片复苏通道，2025 年和 2026Q1 收入、利润均明显改善，研发投入和产品迭代能力具备跟踪价值；但客户集中、毛利率不高、经营现金流连续为负，当前价格相对基础公允价值有一定空间但安全边际不足，因此维持观察，等待更低价格或现金流确认。",
-  "fair_value_range": [
-    23,
-    29
-  ],
-  "buy_zone": [
-    18,
-    20.5
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英集芯",
+    "security_status": "active",
+    "symbol": "CN:688209",
+    "ticker": "688209"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3578dffa2d0d37b1a6c5db1dbe36625a0787dc8ad7838fe51141c218bf3159cb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 20.5 元，且最近一期收入同比增速不低于 20%、毛利率不低于 33%",
-      "action": "建立研究仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报收入增速、毛利率、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 18 元，且经营现金流较 2026Q1 明显修复、客户集中度未继续上升",
-      "action": "提高到小仓上限",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报利润兑现和客户集中风险。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 32 元，且 2026 年利润兑现未明显超过 2.6 亿元年化水平",
-      "action": "降低仓位或继续观察",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
+      "reason": "进入买入观察区，重新核对中报后的收入、毛利率和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过基础估值区间上沿附近，若业绩未上修则安全边际不足。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.5,
-      "reason": "进入买入观察区，重新核对中报后的收入、毛利率和现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过基础估值区间上沿附近，若业绩未上修则安全边际不足。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报收入增速、毛利率、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报利润兑现和客户集中风险。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

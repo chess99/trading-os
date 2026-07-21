@@ -1,97 +1,115 @@
 {
-  "symbol": "CN:688111",
-  "market": "CN",
-  "ticker": "688111",
-  "name": "金山办公",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "金山办公是高毛利、轻资本开支、现金流强的国产办公软件平台，个人订阅、机构订阅和 WPS AI 构成中长期增长来源；但 2026-07-09 约 227.60 元的价格已隐含未来五年经营性自由现金流约 18% 复合增长，安全边际不足，适合持续跟踪而非追高买入。",
-  "fair_value_range": [
-    185,
-    245
-  ],
-  "buy_zone": [
-    145,
-    180
-  ],
-  "sell_or_reduce_zone": [
-    285,
-    330
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金山办公",
+    "security_status": "active",
+    "symbol": "CN:688111",
+    "ticker": "688111"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "d2b61b6aff8900d42345629d32ae5fd2b07ccf789a8d14e3405d540ce594b4a3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "below 145",
-      "action": "强吸引力买入，前提是核心假设未破坏",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年中报后复核个人订阅、机构订阅、AI 商业化和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "145-180",
-      "action": "分批买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报后复核收入增速、费用率和合同负债",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "180-245",
-      "action": "观察或持有，不主动加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报后复核长期估值与仓位计划",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "245-285",
-      "action": "不追高",
-      "max_weight": 0
-    },
-    {
-      "condition": "285-330",
-      "action": "减仓或再平衡",
-      "max_weight": 0.02
-    }
-  ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年中报后复核个人订阅、机构订阅、AI 商业化和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报后复核收入增速、费用率和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报后复核长期估值与仓位计划"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 145,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 145.0
+      },
       "reason": "低于强吸引力买入价，需要确认核心假设未破坏",
-      "action": "强吸引力买入复核"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 180,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 180.0
+      },
       "reason": "进入买入区间，需要复核个人订阅、机构订阅、AI 商业化和经营现金流",
-      "action": "进入买入区间，复核后可分批建仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 245,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 245.0
+      },
       "reason": "高于合理价值区间上沿，安全边际不足",
-      "action": "高于合理区间上沿，不追高"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 285,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 285.0
+      },
       "reason": "进入减仓区间，市场预期可能过高",
-      "action": "进入减仓区间，复核估值与仓位"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-09"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

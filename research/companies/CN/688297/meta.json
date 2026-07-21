@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:688297",
-  "market": "CN",
-  "ticker": "688297",
-  "name": "中无人机",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中无人机是A股稀缺的中大型固定翼长航时无人机平台，背靠航空工业集团，具备资质、系统集成、军贸品牌和产品货架壁垒；但2025年国内交付占比提升后毛利率降至低位，2026Q1收入高增而利润几乎不动，当前估值已接近乐观情景，只有在价格回落并验证毛利率修复、回款改善和军贸订单后才具备买入条件。",
-  "fair_value_range": [
-    22,
-    31
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中无人机",
+    "security_status": "active",
+    "symbol": "CN:688297",
+    "ticker": "688297"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "923487e7119dadb63a74f0c0532e2085f1e80a4ca8c04a8ad72bb1cacbb2cbc9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元，且2026H1毛利率较2025年11.23%明显修复、经营现金流保持为正、应收账款继续下降后，建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入、毛利率、扣非净利率、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且未出现军贸订单取消、存货减值或回款恶化，可提高到深度价值试错仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认回款改善和利润率修复趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于38元且无高毛利军贸订单公告或利润率修复证据，不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入基准买入区上沿，需要复核半年报毛利率、现金流和订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "接近乐观情景估值上沿，若基本面未同步上修应降低关注优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入基准买入区上沿，需要复核半年报毛利率、现金流和订单质量"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "接近乐观情景估值上沿，若基本面未同步上修应降低关注优先级"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入、毛利率、扣非净利率、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认回款改善和利润率修复趋势"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

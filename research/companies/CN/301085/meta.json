@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301085",
-  "ticker": "301085",
-  "name": "亚康股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "亚康股份具备算力基础设施交付和企业级客户服务能力，但 2025 年大额亏损暴露资产质量和盈利波动，当前市值已较充分反映 AI 算力转型期权，需等待利润和现金流验证或股价回落后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    36,
-    48
-  ],
-  "buy_zone": [
-    28,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亚康股份",
+    "security_status": "active",
+    "symbol": "CN:301085",
+    "ticker": "301085"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "11a336b0a6663c0d3c14078804c240dbf395dafcafe4acb3c94e8729f5b595d6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于32元，且无新增重大减值、资金占用或治理风险",
-      "action": "可纳入观察仓或小比例试仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证收入质量、扣非利润、经营现金流和减值变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，且2026年经营现金流转正、扣非净利润修复趋势明确",
-      "action": "可提高至核心观察仓上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认算力业务是否形成连续改善趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于58元但未披露利润和现金流显著超预期证据",
-      "action": "不新增仓位并考虑减持",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估正常化盈利、现金流和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入研究区，开始重新评估安全边际和基本面变化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "若基本面未恶化，估值进入可试仓区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "高于情景估值乐观起点，若无业绩兑现则风险收益比恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入买入研究区，开始重新评估安全边际和基本面变化"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "若基本面未恶化，估值进入可试仓区间"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "高于情景估值乐观起点，若无业绩兑现则风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证收入质量、扣非利润、经营现金流和减值变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认算力业务是否形成连续改善趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估正常化盈利、现金流和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

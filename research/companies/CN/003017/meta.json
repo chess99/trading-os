@@ -1,122 +1,114 @@
 {
-  "symbol": "CN:003017",
-  "market": "CN",
-  "ticker": "003017",
-  "name": "大洋生物",
-  "company_name": "浙江大洋生物科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "细分钾盐和兽用原料药制造商，2025年利润和现金流明显修复，资产负债表稳健；但当前价格约处合理价值中部，扩产消化、原料价格和周期波动仍需折价，等待19元以下更好买点。",
-  "quality_rating": "中高",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    20.0,
-    26.0
-  ],
-  "buy_zone": [
-    0.0,
-    19.0
-  ],
-  "sell_or_reduce_zone": [
-    28.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大洋生物",
+    "security_status": "active",
+    "symbol": "CN:003017",
+    "ticker": "003017"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5443bcd2a0b96cf9584344034998cc75bcc04876c213d707e3cfb7b3fe3b4e8e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在21-26元且无新增基本面证据",
-      "action": "仅保留观察或极小跟踪仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格跌破19元且毛利率、订单、经营现金流未恶化",
-      "action": "建立初始仓位",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格跌破17元且2026年利润中枢仍指向1.1亿元以上",
-      "action": "加仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格跌破15.5元且无安全环保、治理或项目重大负面",
-      "action": "逆向较积极配置",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格高于28元且利润中枢未明显上修",
-      "action": "减仓或卖出",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "unit": "CNY/share",
-      "reason": "低于合理价值下沿并开始具备安全边际",
-      "action": "复核半年报和主要产品毛利率，若未破坏则可建2%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "unit": "CNY/share",
-      "reason": "较合理价值中枢折价明显，适合在基本面未破坏时加仓",
-      "action": "复核利润中枢与现金流，满足条件加至4%"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "unit": "CNY/share",
-      "reason": "高于当前合理价值区间，若无利润上修则估值偏满",
-      "action": "若无利润上修或项目超预期，减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证收入、毛利率、现金流和全年利润中枢",
-      "action": "复核收入、毛利率、现金流和全年利润中枢"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证主业价格、盐酸氨丙啉增长和经营现金流",
-      "action": "复核主业价格、盐酸氨丙啉增长和经营现金流"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证山东项目进度、资本开支、资产负债率和全年ROE",
-      "action": "复核山东项目进度、资本开支、资产负债率和全年ROE"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "年内若出现山东项目投资额重大变化、单季度经营现金流/归母净利润低于0.5倍、无机盐毛利率连续两个季度低于18%、重大安全环保处罚或停产事件，则提前复核",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "重大项目、现金流、毛利率或安全环保事件会改变持仓上限和估值",
-      "action": "提前复核评级、合理价值和持仓上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "低于合理价值下沿并开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "较合理价值中枢折价明显，适合在基本面未破坏时加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "高于当前合理价值区间，若无利润上修则估值偏满",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "碳酸钾/碳酸氢钾销量、均价、毛利率",
-    "盐酸氨丙啉收入、销量、毛利率",
-    "含氟精细化学品收入增速和毛利率",
-    "经营现金流净额/归母净利润",
-    "存货周转、应收账款周转和跌价准备",
-    "山东5亿元新项目资本开支、建设进度、投产时间和客户消化",
-    "资产负债率、有息负债和财务费用",
-    "出口收入占比、汇兑损益和主要客户变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

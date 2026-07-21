@@ -1,107 +1,115 @@
 {
-  "symbol": "CN:300402",
-  "market": "CN",
-  "ticker": "300402",
-  "name": "宝色股份",
-  "company_name": "南京宝色股份公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "宝色股份具备特材非标压力容器的工艺、资质和项目履历壁垒，但2025年扣非利润大幅下滑、2026Q1利润仍同比下降；以2026-07-13附近约14.17元行情参考价测算，静态和动态估值均高于当前ROE和现金流质量可支撑水平。合理区间约9.0-12.0元，当前以观察为主。",
-  "quality_rating": "B",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝色股份",
+    "security_status": "active",
+    "symbol": "CN:300402",
+    "ticker": "300402"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ddbfdac09c461c0afb9099578387de02aa3ddf23029ae3700f1b0bc2a402f2c7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.5元，且最近一期扣非净利润未继续恶化",
-      "max_weight": 0.01,
-      "action": "建立1%观察仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非净利润、毛利率、经营现金流和订单质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.5元，且公司没有出现重大订单取消、毛利率崩塌或现金流风险",
-      "max_weight": 0.03,
-      "action": "可增至2%-3%仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于12.0元，同时扣非净利率回到5%左右、经营现金流明显改善",
-      "max_weight": 0.05,
-      "action": "可评估提升至4%-5%上限仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红，重新校准合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于14.0元且没有利润上修或订单质量改善证据",
-      "max_weight": 0.0,
-      "action": "不加仓，已有仓位逐步降低"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
       "reason": "进入合理价值区间下半段，开始具备初步安全边际",
-      "action": "进入可买观察区，复核最新扣非利润、毛利率和经营现金流"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 8.5,
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
       "reason": "接近按低ROE装备制造商估值的保守买入区",
-      "action": "进入安全边际较足区域，若基本面未恶化可分批买入"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
       "reason": "价格高于合理价值区间上沿，估值需要利润上修支撑",
-      "action": "估值偏贵，除非业绩上修否则减仓或回避"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 16.0,
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
       "reason": "价格明显高于当前财务质量可支撑区间",
-      "action": "显著高估区，缺乏超预期订单和利润时卖出或不买"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非净利润、毛利率、经营现金流和订单质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红，重新校准合理估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "扣非净利率",
-    "毛利率",
-    "经营活动现金流净额/归母净利润",
-    "新签订单与在手订单质量",
-    "应收账款、合同资产和存货周转",
-    "研发投入率",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

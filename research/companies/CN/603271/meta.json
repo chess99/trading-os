@@ -1,104 +1,95 @@
 {
-  "symbol": "CN:603271",
-  "market": "CN",
-  "ticker": "603271",
-  "name": "永杰新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "永杰新材具备新能源铝板带箔客户认证、规模制造和高端产品升级优势，2026年奥科宁克秦皇岛/昆山并表带来产能和产品线跃迁；但当前股价已反映部分增长预期，且并购整合、扣非利润质量和负债压力仍需验证，因此暂列观察，等待更高安全边际或半年报确认。",
-  "fair_value_range": [
-    42,
-    55
-  ],
-  "buy_zone": [
-    34,
-    39
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永杰新材",
+    "security_status": "active",
+    "symbol": "CN:603271",
+    "ticker": "603271"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3ca20f69cd1443d77c1299ad36dd23bacdfc63f3aa84091d415572167df1a07b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于39元，且2026年半年报扣非净利润不低于2.4亿元、经营现金流与扣非利润匹配、并购贷款和资产负债率未显著恶化",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报正式数据，重点看扣非利润、经营现金流、奥科宁克并表影响和负债情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在39元至50元之间，且奥科宁克并表后毛利率、产能利用率、应收账款周转连续两个季度改善",
-      "action": "维持或小幅加仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证并购整合后的持续盈利能力和现金流质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于58元，且扣非利润未上修至年化6.5亿元以上或经营现金流明显弱于利润",
-      "action": "降低仓位或不追高",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核4.5万吨锂电池高精铝板带箔技改项目投产进度及2026年年报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 39.0
+      },
+      "reason": "进入买入观察区，需要复核半年报扣非利润、现金流和并购负债后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "股价进入估值透支区，若基本面未同步上修，应考虑降低仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 39,
-      "reason": "进入买入观察区，需要复核半年报扣非利润、现金流和并购负债后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "股价进入估值透支区，若基本面未同步上修，应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报正式数据，重点看扣非利润、经营现金流、奥科宁克并表影响和负债情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证并购整合后的持续盈利能力和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核4.5万吨锂电池高精铝板带箔技改项目投产进度及2026年年报"
-    }
-  ],
-  "key_metrics_to_watch": [
-    "2026H1扣非净利润是否达到2.4-2.6亿元",
-    "经营活动现金流净额与扣非净利润匹配度",
-    "奥科宁克秦皇岛和昆山并表后的产能利用率、毛利率和客户留存",
-    "资产负债率、并购贷款余额和利息费用",
-    "铝板带与铝箔分部毛利率、加工费和销量",
-    "前五大客户占比、应收账款周转和存货周转"
-  ],
-  "sources": [
-    {
-      "title": "永杰新材料股份有限公司2025年年度报告",
-      "date": "2026-03-31",
-      "url": "https://dataclouds.cninfo.com.cn/shgonggao/hsomarket/2026/20260330/0c3a8313bf0e429ea4b345919b6a3ffa.PDF"
-    },
-    {
-      "title": "永杰新材料股份有限公司2026年第一季度报告",
-      "date": "2026-04-30",
-      "url": "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-30/12274923.PDF"
-    },
-    {
-      "title": "永杰新材料股份有限公司2026年半年度业绩预增公告",
-      "date": "2026-07-15",
-      "url": "https://stockmc.xueqiu.com/202607/603271_20260715_1YE4.pdf"
-    },
-    {
-      "title": "永杰新材料股份有限公司重大资产购买实施情况报告书",
-      "date": "2026-06-23",
-      "url": "https://stockmc.xueqiu.com/202606/603271_20260623_SM0F.pdf"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

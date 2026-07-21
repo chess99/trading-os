@@ -1,97 +1,96 @@
 {
-  "symbol": "CN:000048",
-  "market": "CN",
-  "ticker": "000048",
-  "name": "京基智农",
-  "company_name": "京基智农",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "京基智农已实质转为生猪养殖周期股，具备华南区位、楼房猪场、自有饲料和深圳资产托底，但2026Q1亏损、猪价低于已核验的2024年成本线且控股股东质押比例高。现价约22元缺乏安全边际，等待13元以下并结合猪价、完全成本和现金流复核。",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    13,
-    18
-  ],
-  "buy_zone": [
-    10,
-    13
-  ],
-  "sell_or_reduce_zone": [
-    22,
-    26
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "京基智农",
+    "security_status": "active",
+    "symbol": "CN:000048",
+    "ticker": "000048"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "5723e34d4c6eea09ca2233ee246e9bcd15daf2b957a3513ba648ae75c4b2525f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于22元且2026Q1亏损、6月商品肥猪均价仍在10.09元/kg附近",
-      "action": "不建仓，仅观察",
-      "max_weight": 0,
-      "reason": "现价已反映猪周期修复预期，但成本和盈利尚未验证，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看完全成本、亏损来源、现金流和负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至13元以下，且月度商品肥猪均价连续回升、行业能繁母猪去化明确",
-      "action": "试探性建仓",
-      "max_weight": 0.01,
-      "reason": "价格进入基准估值下沿，同时周期改善信号出现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报与猪价旺季表现，判断周期是否确认修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至10-11元，资产负债率未继续恶化，2026H1披露完全成本可控",
-      "action": "提高至小仓位",
-      "max_weight": 0.03,
-      "reason": "进入悲观情景附近，具备周期反转期权和资产托底"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入观察区，需要复核猪价、成本和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入悲观估值区，可评估首笔仓位是否提高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "高于减仓/回避区下沿，若基本面未改善应继续回避或降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入买入观察区，需要复核猪价、成本和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入悲观估值区，可评估首笔仓位是否提高"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "高于减仓/回避区下沿，若基本面未改善应继续回避或降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看完全成本、亏损来源、现金流和负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报与猪价旺季表现，判断周期是否确认修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度商品肥猪销售均价",
-    "月度商品肥猪销售头数",
-    "商品肥猪完全成本",
-    "全国能繁母猪存栏",
-    "全国生猪集贸价格",
-    "玉米和豆粕价格",
-    "归母净利润",
-    "经营活动现金流净额",
-    "资产减值损失",
-    "资产负债率",
-    "流动比率",
-    "控股股东及一致行动人质押比例",
-    "房地产尾盘销售收入",
-    "关联担保和关联交易金额"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

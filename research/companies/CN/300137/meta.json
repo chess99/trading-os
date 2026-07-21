@@ -1,125 +1,133 @@
 {
-  "symbol": "CN:300137",
-  "market": "CN",
-  "ticker": "300137",
-  "name": "先河环保",
-  "company_name": "河北先河环保科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于环保监测与运维服务修复期，政策需求仍在，但2025年仅低位扭亏、2026Q1收入利润下滑、应收账款高、现金流尚未验证；2026-07-13收盘价16.11元显著高于4.2-6.5元合理价值区间，缺乏安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "明显高估",
-  "fair_value_range": [
-    4.2,
-    6.5
-  ],
-  "buy_zone": [
-    0,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "先河环保",
+    "security_status": "active",
+    "symbol": "CN:300137",
+    "ticker": "300137"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "da5c4e4b42cd419687e29001c825521e161befd5be9df8f0f53bdea186db56e5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于8元且未见连续扣非利润和经营现金流改善",
-      "action": "不建仓，已有仓位减持或回避",
-      "target_position": 0,
-      "max_weight": 0
-    },
-    {
-      "condition": "价格跌至4.5元以下，且最近两个季度扣非净利润为正、经营现金流改善、应收账款未继续扩张",
-      "action": "可建立1%-2%观察仓",
-      "target_position": 0.02,
-      "max_weight": 0.02
-    },
-    {
-      "condition": "年度扣非净利润恢复至8000万元以上、经营现金流持续转正、估值不超过20倍正常化利润",
-      "action": "可提高至3%-5%核心跟踪仓",
-      "target_position": 0.05,
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入合理价值上沿，值得复核基本面是否恶化",
-      "action": "进入估值观察区，复核最近季度经营质量"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "低于可买价上限，初步具备安全边际",
-      "action": "进入可买区，若基本面未恶化可考虑观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于合理价值区间较多，估值脱离当前盈利质量",
-      "action": "高估区，已有仓位考虑减持"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "严重高于资产和正常化利润可支撑价值",
-      "action": "严重高估区，以卖出或大幅降仓为主"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年中报后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报能验证2026Q1下滑是季节性还是趋势性",
-      "action": "复核收入、扣非利润、现金流和应收账款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "发布2026年三季报后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证运营及咨询服务和环境监测系统是否恢复增长",
-      "action": "复核单季扣非利润是否超过2000万元且经营现金流是否转正"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "发布2026年年报后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能完整检验扣非利润、现金流、应收账款和减值压力",
-      "action": "复核应收账款、坏账、经营现金流和年度扣非利润"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "发布2027年中报后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "需要确认AI和智慧环保业务是否形成可核验收入",
-      "action": "复核AI、智慧环保、算力或数据平台业务的可核验收入和利润"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-10-31",
-      "condition": "发布2027年三季报后",
+      "active": true,
+      "condition": {
+        "date": "2027-10-31"
+      },
       "reason": "连续多个季度后应重新判断公司是否真正走出修复期",
-      "action": "复核评级，重点关注信披处罚、审计意见异常、资金占用、重大诉讼或控制权变化"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入合理价值上沿，值得复核基本面是否恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "低于可买价上限，初步具备安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于合理价值区间较多，估值脱离当前盈利质量",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "严重高于资产和正常化利润可支撑价值",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款及应收账款/收入比例",
-    "运营及咨询服务收入和毛利率",
-    "环境监测系统收入增速",
-    "研发投入转化为订单和收入的证据",
-    "实控人及控股股东持股、质押、增减持和关联交易情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

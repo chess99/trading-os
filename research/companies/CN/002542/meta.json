@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:002542",
-  "market": "CN",
-  "ticker": "002542",
-  "name": "*ST中岩",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于负净资产、持续亏损、现金链紧张、债务逾期并拟申请预重整/重整的困境状态；2026-07-17收盘价1.32元/股主要反映保壳和重整期权，缺乏基本面安全边际，普通组合应规避。",
-  "fair_value_range": [
-    0.1,
-    0.35
-  ],
-  "buy_zone": [
-    0.0,
-    0.2
-  ],
-  "sell_or_reduce_zone": [
-    0.8,
-    1.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST中岩",
+    "security_status": "active",
+    "symbol": "CN:002542",
+    "ticker": "002542"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "4e521e319b58a8738556fd2c458b8d58602c1fc3c8f4ed636a96d0b2d5be31ba"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "无法院受理重整、无重整投资人、无债务重组和净资产转正路径",
-      "action": "avoid_no_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：净资产缺口、现金、逾期债务、诉讼仲裁、资产减值和重整进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "法院受理重整且草案披露债权调整、转增摊薄、投资人出资和2026年末净资产转正路径",
-      "action": "research_event_driven_only",
-      "max_weight": 0.0025
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：收入恢复、毛利率、经营现金流和年末净资产转正可能性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "重整计划执行完毕、归母净资产转正、连续两个季度经营现金流改善且价格低于0.20元",
-      "action": "consider_tiny_speculative_position",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和审计意见，判断是否触发终止上市风险或撤销退市风险警示条件。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "接近或跌破面值风险区，需复核是否存在连续二十个交易日低于1元退市风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.2
+      },
+      "reason": "进入理论重整期权低估区，但仅在重整受理、投资人和摊薄方案明确后重新研究。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "高于困境估值可承受区，若无重整方案落地应维持规避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：净资产缺口、现金、逾期债务、诉讼仲裁、资产减值和重整进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：收入恢复、毛利率、经营现金流和年末净资产转正可能性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和审计意见，判断是否触发终止上市风险或撤销退市风险警示条件。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.0,
-      "reason": "接近或跌破面值风险区，需复核是否存在连续二十个交易日低于1元退市风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 0.2,
-      "reason": "进入理论重整期权低估区，但仅在重整受理、投资人和摊薄方案明确后重新研究。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "高于困境估值可承受区，若无重整方案落地应维持规避或减仓。"
-    }
-  ],
-  "updated_at": "2026-07-19",
-  "notes": [
-    "2025年末经审计归母净资产为负，公司股票自2026-04-21起被实施退市风险警示。",
-    "2026-07-18公告显示公司拟向成都市中级人民法院申请预重整、重整，法院是否受理存在不确定性。",
-    "2026-07-18公告显示非金融机构累计逾期有息债务本息4,267.42万元。",
-    "估值以困境和重整期权为主，不适用正常PE/PB买入框架。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

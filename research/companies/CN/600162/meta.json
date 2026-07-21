@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600162",
-  "ticker": "600162",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "香江控股",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "存量商业物业、家居卖场网络和大湾区土储提供资产基础，但2025年转亏、2026H1继续预亏，当前约1.44倍PB不便宜，需等待价格回落或经营现金流和去化实质改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    1.45,
-    2.05
-  ],
-  "buy_zone": [
-    0,
-    1.45
-  ],
-  "sell_or_reduce_zone": [
-    2.3,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "香江控股",
+    "security_status": "active",
+    "symbol": "CN:600162",
+    "ticker": "600162"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "38fcb2347166b87c394815e40ed3d2d72fca69d3aafbea3dfd1cbad127d3c06b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于1.45元且半年报未显著低于预告区间、经营现金流未恶化时建立观察仓",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式利润、现金流、存货和负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若PB低于0.8倍且存货连续下降、经营现金流转正，可提高到小仓位",
-      "action": "add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入确认、去化和经营现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于2.30元且无利润和现金流改善证据，不参与或减仓",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及资产减值、担保、质押变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.45
+      },
+      "reason": "进入基准买入区间，资产折价开始提供安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.3
+      },
+      "reason": "高于基准估值上沿，需按交易性溢价和风险提示处理",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.45,
-      "reason": "进入基准买入区间，资产折价开始提供安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 2.3,
-      "reason": "高于基准估值上沿，需按交易性溢价和风险提示处理"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式利润、现金流、存货和负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入确认、去化和经营现金流趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及资产减值、担保、质押变化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

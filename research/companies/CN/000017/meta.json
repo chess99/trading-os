@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:000017",
-  "market": "CN",
-  "ticker": "000017",
-  "name": "深中华A",
-  "company_name": "深中华A",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "深中华A的经营实质已转为黄金珠宝B端供应链批发，2025年利润改善但现金流、存货、客户集中度和估值风险突出；当前价格主要反映小市值和题材交易，不适合买入。",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "overvalued",
-  "fair_value_range": [
-    1.8,
-    2.6
-  ],
-  "buy_zone": [
-    1.2,
-    1.8
-  ],
-  "sell_or_reduce_zone": [
-    3.2,
-    6.55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深中华A",
+    "security_status": "active",
+    "symbol": "CN:000017",
+    "ticker": "000017"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "a4cc2b3e5052e50e128e93f4a040989b664a2141bace80f20021e81cc01ff7de"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_above_3.2_or_after_abnormal_volatility_without_fundamental_change",
-      "action": "avoid_or_reduce",
-      "max_weight": 0,
-      "reason": "current valuation is far above verified earnings power and company has stated no major restructuring or acquisition plan"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "review after expected 2026 interim report disclosure window",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_1.8_and_2.6_with_cash_flow_still_negative",
-      "action": "watch_only",
-      "max_weight": 0,
-      "reason": "fair value range requires proof that earnings convert to operating cash flow before taking risk"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "review after expected 2026 third-quarter report disclosure window",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_1.2_and_1.8_and_operating_cash_flow_turns_positive_with_inventory_control",
-      "action": "research_starter_position",
-      "max_weight": 0.005,
-      "reason": "only a small research position is justified if price discounts concentration and cash conversion risks"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "recheck if market price enters the upper end of fair value range",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "two_year_positive_operating_cash_flow_and_customer_concentration_below_50_percent",
-      "action": "allow_small_core_position",
-      "max_weight": 0.01,
-      "reason": "larger weight requires evidence of durable supply-chain economics rather than one-year profit growth"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "evaluate first research position only if cash flow and inventory data improve",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.55
+      },
+      "reason": "review speculative risk if price exceeds the latest verified close after abnormal volatility",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "recheck if market price enters the upper end of fair value range"
-    },
-    {
-      "type": "price_below",
-      "price": 1.8,
-      "reason": "evaluate first research position only if cash flow and inventory data improve"
-    },
-    {
-      "type": "price_above",
-      "price": 6.55,
-      "reason": "review speculative risk if price exceeds the latest verified close after abnormal volatility"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "review after expected 2026 interim report disclosure window"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "review after expected 2026 third-quarter report disclosure window"
-    }
-  ],
-  "key_tracking_metrics": [
-    "operating_cash_flow_net",
-    "revenue_growth",
-    "deducted_net_profit_growth",
-    "inventory_balance",
-    "accounts_receivable_balance",
-    "top_five_customer_sales_ratio",
-    "top_five_supplier_purchase_ratio",
-    "gross_margin_gold_jewelry",
-    "controlling_shareholder_reduction_or_pledge",
-    "abnormal_trading_or_regulatory_inquiry"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

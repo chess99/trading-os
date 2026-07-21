@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301613",
-  "ticker": "301613",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "新铝时代",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新能源汽车电池盒箱体高纯度标的，2025年收入和现金流改善明显，但利润弹性弱于收入弹性，且宏联电子跨界并购带来商誉、整合和摊薄不确定性；当前价格大致落在合理价值区间内，安全边际不足，先观察。",
-  "fair_value_range": [
-    34,
-    42
-  ],
-  "buy_zone": [
-    28,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    58
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新铝时代",
+    "security_status": "active",
+    "symbol": "CN:301613",
+    "ticker": "301613"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "6da4340edfc0439a146b8a61628f545db803852e7df3abe7f670aa4f658e6ac3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于32元，且2026半年度主业净利率不继续恶化、经营现金流未显著背离利润",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点关注收入增速、毛利率、净利率、经营现金流和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，且客户结构、毛利率、并购进展均未出现基本面恶化",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认主业利润弹性和现金流是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于34-42元合理区间且未出现业绩超预期证据",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及宏联电子并购并表、商誉和业绩承诺兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入观察区，需要复核半年报利润率、现金流和订单质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "若基本面未恶化，安全边际明显提升，可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "超过基础合理价值上沿，若没有利润上修或并购高质量兑现，应减仓或回避新增",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入买入观察区，需要复核半年报利润率、现金流和订单质量"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "若基本面未恶化，安全边际明显提升，可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "超过基础合理价值上沿，若没有利润上修或并购高质量兑现，应减仓或回避新增"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点关注收入增速、毛利率、净利率、经营现金流和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认主业利润弹性和现金流是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及宏联电子并购并表、商誉和业绩承诺兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

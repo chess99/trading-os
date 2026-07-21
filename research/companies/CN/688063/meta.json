@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688063",
-  "market": "CN",
-  "ticker": "688063",
-  "name": "派能科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "派能科技处在储能需求恢复和盈利质量再验证阶段。2025年收入和销量已恢复，2026Q1销量、毛利率和归母利润继续改善，但扣非利润仍很薄、经营现金流转负，说明当前更适合作为观察标的而非无条件重仓买入。若价格跌入34-40元或后续连续季度证明扣非净利率与现金流修复，可分批建仓；若价格升至65元以上而利润率未同步改善，应减仓。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    42,
-    55
-  ],
-  "buy_zone": [
-    34,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "派能科技",
+    "security_status": "active",
+    "symbol": "CN:688063",
+    "ticker": "688063"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "66e43d1834ac37d08551e562587784cb20699c05c7919a4b15dece18b6688234"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于40元且未出现毛利率跌破20%、连续扣非亏损或重大治理风险",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非利润、毛利率、经营现金流和出货结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于36元且2026H1扣非利润转正、经营现金流改善",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证需求恢复是否转化为持续盈利",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于42-55元但2026H1和2026Q3连续证明扣非净利率提升、经营现金流转正",
-      "action": "重新评估右侧买入",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与2027年经营指引，重估中期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入基础公允价值下沿以下，若基本面未恶化具备分批建仓价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "接近悲观情景估值下沿，资产负债表提供更高安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "进入乐观情景区间，若扣非净利率未达到5%以上应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入基础公允价值下沿以下，若基本面未恶化具备分批建仓价值"
-    },
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "接近悲观情景估值下沿，资产负债表提供更高安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "进入乐观情景区间，若扣非净利率未达到5%以上应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非利润、毛利率、经营现金流和出货结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证需求恢复是否转化为持续盈利"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与2027年经营指引，重估中期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

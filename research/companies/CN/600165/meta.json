@@ -1,97 +1,115 @@
 {
-  "symbol": "CN:600165",
-  "market": "CN",
-  "ticker": "600165",
-  "name": "ST宁科",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "ST宁科已完成重整并撤销因重整触发的退市风险警示，但仍处于其他风险警示状态；主营月桂二酸和活性炭尚未证明持续盈利，2026H1预亏、经营现金流为负，且核心技术秘密诉讼金额高、结果不确定。当前2.19元对应约35亿元市值和约3.1倍2026Q1归母净资产，已过度反映复产与反转预期，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.65,
-    1.2
-  ],
-  "buy_zone": [
-    0.5,
-    0.75
-  ],
-  "sell_or_reduce_zone": [
-    1.35,
-    1.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST宁科",
+    "security_status": "active",
+    "symbol": "CN:600165",
+    "ticker": "600165"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "93c7b48566a81409d2894aa4994bec91b314a52661fb44b9bc0b57b119567cf0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current_price_above_1.60_or_core_litigation_unresolved",
-      "action": "avoid_new_buy_existing_position_reduce_to_watch_size",
-      "max_weight": 0.0025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "review 2026 half-year report for cash flow, impairment, liquidity and lawsuit progress",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_0.75_and_1.20_with_no_new_delisting_trigger",
-      "action": "watch_only_or_trial_after_cash_flow_improves",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "review 2026 third-quarter report for production ramp and ST risk changes",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_below_0.75_and_half_year_or_q3_report_confirms_cash_flow_improvement",
-      "action": "small_speculative_turnaround_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "review audited 2026 annual report and audit opinion",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price_below_0.50_no_stop_loss_event_and_litigation_not_deteriorated",
-      "action": "strong_watch_buy_zone_but_keep_distressed_cap",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.75
+      },
+      "reason": "enters risk-adjusted buy zone if no new delisting or litigation deterioration",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.5
+      },
+      "reason": "distressed option value becomes attractive for very small position",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.35
+      },
+      "reason": "above fair value with no margin of safety; reduce or avoid chasing",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.6
+      },
+      "reason": "optimistic scenario pricing before business proof; avoid or exit watch position",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.75,
-      "reason": "enters risk-adjusted buy zone if no new delisting or litigation deterioration"
-    },
-    {
-      "type": "price_below",
-      "price": 0.5,
-      "reason": "distressed option value becomes attractive for very small position"
-    },
-    {
-      "type": "price_above",
-      "price": 1.35,
-      "reason": "above fair value with no margin of safety; reduce or avoid chasing"
-    },
-    {
-      "type": "price_above",
-      "price": 1.6,
-      "reason": "optimistic scenario pricing before business proof; avoid or exit watch position"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "review 2026 half-year report for cash flow, impairment, liquidity and lawsuit progress"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "review 2026 third-quarter report for production ramp and ST risk changes"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "review audited 2026 annual report and audit opinion"
-    }
-  ],
-  "notes": [
-    "2026-07-20 close price 2.19 CNY from Sina quote; market cap estimated with 1,615,883,775 shares from 2026Q1 report.",
-    "2025 annual report audit opinion was unqualified with emphasis of matter; internal control audit opinion was effective in all material respects.",
-    "Company remains under other risk warning after reorganization-related delisting risk warning was removed from 2026-01-14.",
-    "2026H1 pre-loss announcement estimates net profit and recurring net profit at -120 million to -150 million CNY.",
-    "2026-07-15 technology secret litigation amount is about 965.87 million CNY plus 1 million CNY reasonable expenses; outcome unverified and low confidence.",
-    "Industry competitor data outside listed company announcements is partially unverified and used only as qualitative reference."
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

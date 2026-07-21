@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:001280",
-  "market": "CN",
-  "ticker": "001280",
-  "name": "中国铀业",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中国铀业是A股稀缺的天然铀与核燃料上游平台，战略资源属性强，受益全球核电重启和中国核电长期建设；但2026-07-08约62元附近对应千亿以上市值，已经充分计入资源稀缺性、铀价高位和未来增长，安全边际不足，适合重点跟踪等待而非追买。",
-  "fair_value_range": [
-    40,
-    50
-  ],
-  "buy_zone": [
-    32,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    87
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国铀业",
+    "security_status": "active",
+    "symbol": "CN:001280",
+    "ticker": "001280"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "a2f95cc856cb0b935205b3b5478de279c23983467cc5db2a6c025c7323002a92"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于55元",
-      "action": "不追高，已有仓位审视减仓或等待业绩兑现",
-      "target_weight": 0.01,
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价跌入32-38元且基本面无恶化",
-      "action": "建立第一笔仓位",
-      "target_weight": 0.015,
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价跌入24-32元且铀价、产量和现金流未恶化",
-      "action": "加仓，但单一公司总仓位不超过5%",
-      "target_weight": 0.03,
-      "max_weight": 0.05
-    }
-  ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证2026年利润增长和现金流质量的第一个关键节点",
-      "action": "复核收入、利润、毛利率、经营现金流和天然铀业务兑现情况"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可判断全年盈利中枢是否支持40-50元合理价格",
-      "action": "复核全年利润中枢、估值和仓位计划"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可系统复核天然铀业务、海外资产和资本配置质量",
-      "action": "复核长期thesis、合理价格区间和是否从watch调整评级"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "???????????1%-1.5%?????"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "price_below",
-      "price": 32,
-      "reason": "?????????????????????3%"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "???????????1%-1.5%?????",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 55,
-      "reason": "????????????????????????"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "?????????????????????3%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "????????????????????????",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-08T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

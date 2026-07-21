@@ -1,77 +1,86 @@
 {
-  "symbol": "CN:300991",
-  "market": "CN",
-  "ticker": "300991",
-  "currency": "CNY",
-  "name": "创益通",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司具备数据存储连接器和精密互连制造能力，但2025年亏损、2026Q1继续亏损，高速数据通讯收入仍小，当前股价对应约5.9倍TTM PS和6.4倍PB，已提前反映AI服务器/无人机等乐观情景，缺乏买入安全边际。",
-  "fair_value_range": [
-    12,
-    18
-  ],
-  "buy_zone": [
-    0,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    24,
-    30
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创益通",
+    "security_status": "active",
+    "symbol": "CN:300991",
+    "ticker": "300991"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "ccd1b66ed3858245a09046c7e251d844e06b3c8391b4014ab360f6d0289eff8d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且盈利未修复，不新建仓。",
-      "action": "avoid_new_buy",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入恢复、扣非利润、应收账款和高速数据通讯/无人机收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至14元以下，且最近一期扣非亏损明显收窄、经营现金流为正，可作为研究性小仓位观察。",
-      "action": "research_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年盈利修复和现金流持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比正增长、扣非归母转正，且高速数据通讯/数据存储/无人机合计收入占比提升，可重新评估仓位上限。",
-      "action": "reassess_for_hold_or_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入研究性买入区，需同步核验扣非利润、现金流和高毛利业务占比。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "高于基准合理价值，若无业绩兑现，风险收益偏差，应回避或降低暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入研究性买入区，需同步核验扣非利润、现金流和高毛利业务占比。"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "高于基准合理价值，若无业绩兑现，风险收益偏差，应回避或降低暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入恢复、扣非利润、应收账款和高速数据通讯/无人机收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年盈利修复和现金流持续性。"
-    }
-  ],
-  "key_metrics": {
-    "last_price_date": "2026-07-15",
-    "last_price": 27.7,
-    "shares_outstanding": 144000000,
-    "market_cap": 3988800000,
-    "pb_q1_2026": 6.36,
-    "ps_ttm_q1_2026": 5.9
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

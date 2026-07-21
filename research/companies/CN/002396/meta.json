@@ -1,135 +1,123 @@
 {
-  "symbol": "CN:002396",
-  "market": "CN",
-  "ticker": "002396",
-  "name": "星网锐捷",
-  "company_name": "福建星网锐捷通讯股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "星网锐捷具备国资 ICT 平台和锐捷网络 AI 数据中心交换机弹性，但母公司 ROE 偏低、归母利润受少数股东和非经常项影响，2026-07-10 收盘价 27.47 元安全边际不足；等待 22 元以下或 2026 中报验证扣非与现金流后再考虑首笔。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    18,
-    25
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "星网锐捷",
+    "security_status": "active",
+    "symbol": "CN:002396",
+    "ticker": "002396"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "720566e7e83880000ccbfdafe25d5c37f5a84aedfb2f7d9e1546534eb34ff64e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price < 18",
-      "price": "<18 CNY",
-      "action": "强吸引力，若基本面未恶化可分批买",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "18 <= price < 22",
-      "price": "18-22 CNY",
-      "action": "有安全边际，先建观察仓",
-      "position": "1.5%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "22 <= price < 25",
-      "price": "22-25 CNY",
-      "action": "接近合理区间，只能小仓验证",
-      "position": "0%-1.5%",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "25 <= price <= 30",
-      "price": "25-30 CNY",
-      "action": "等待中报/三季报，不主动加仓",
-      "position": "0%-0.5%",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "price > 30",
-      "price": ">30 CNY",
-      "action": "不追高，已有仓位视兑现情况减仓",
-      "position": "0%或减仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入有安全边际买入区",
-      "action": "若 2026 中报扣非增长兑现且现金流未恶化，考虑 1.5% 首笔"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入强吸引力买入区",
-      "action": "若订单和毛利率未坏，考虑加至 3%-5%"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "超过不应追高价",
-      "action": "不追高；若业绩未上修，已有仓位减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证 2026H1 业绩预告兑现质量",
-      "action": "复查收入、扣非归母、经营现金流和存货/预付款"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "数据中心交换机订单或互联网客户需求出现明显变化",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "核心增长来源依赖数据中心交换机",
-      "action": "重估增长持续性和合理估值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "企业级网络设备毛利率继续下滑超过 2pct",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "收入增长若伴随毛利率下行会削弱利润弹性",
-      "action": "下修盈利质量评级和买入价"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "锐捷网络二级市场估值大幅回落或核心客户份额变化",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "锐捷网络是母公司 SOTP 估值的重要锚",
-      "action": "重做 SOTP 估值"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "股价跌破 22 元或升破 30 元",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "价格进入买入区或不应追高区",
-      "action": "按价格与仓位表复核交易决策"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "数据中心交换机收入增速与订单交付",
-    "企业级网络设备毛利率",
-    "扣非归母净利润",
-    "经营现金流/净利润",
-    "存货和预付款变化",
-    "海外收入增速与毛利率",
-    "锐捷网络市场份额和估值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

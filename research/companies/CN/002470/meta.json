@@ -1,154 +1,133 @@
 {
-  "symbol": "CN:002470",
-  "market": "CN",
-  "ticker": "002470",
-  "name": "金正大",
-  "company_name": "金正大生态工程集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于困境修复期，收入规模仍在但盈利极薄、资产负债率高、控股股东质押比例高。当前 1.93 元对应约 2.97 倍 2026Q1 归母 PB 和超过百倍 PE，已经高于合理价值区间，只有在价格回到 1.05 元以下且债务和现金流没有恶化时才具备小仓试错价值。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    0.7,
-    1.1
-  ],
-  "buy_zone": [
-    0.85,
-    1.05
-  ],
-  "sell_or_reduce_zone": [
-    1.25,
-    1.6
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金正大",
+    "security_status": "active",
+    "symbol": "CN:002470",
+    "ticker": "002470"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "e5190bfb507b242727f091a161b9b4cbcdb74d387010889b4412cadbef1ca5cf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": "<=0.85",
-      "action": "困境反转小仓试错",
-      "initial_position": "0.5%-1.0%",
-      "max_position": "3%",
-      "max_weight": 0.03,
-      "condition": "未触发面值退市风险，季度经营现金流为正，债务续作无重大异常"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证收入增长是否转化为扣非利润和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "price_range": "0.85-1.05",
-      "action": "有安全边际的观察买点",
-      "initial_position": "0.5%",
-      "max_position": "2%",
-      "max_weight": 0.02,
-      "condition": "毛利率稳定在 10% 附近或以上，扣非净利继续为正"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证高杠杆压力是否缓解",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "price_range": "1.05-1.25",
-      "action": "观察不加仓",
-      "initial_position": "0%",
-      "max_position": "0%-1%",
-      "max_weight": 0.01,
-      "condition": "仅在净利率显著改善后重估"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "验证控制权和股权质押风险是否下降",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "price_range": ">=1.25",
-      "action": "不买或减仓",
-      "initial_position": "0%",
-      "max_position": "0%",
-      "max_weight": 0,
-      "condition": "估值已提前反映反转"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "验证反转逻辑是否有利润来源",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "验证价格是否进入安全边际或减仓区",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.05
+      },
+      "reason": "进入有安全边际的观察买点",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.85
+      },
+      "reason": "进入强吸引力价格，但必须核验面值退市风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.25
+      },
+      "reason": "高于不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.6
+      },
+      "reason": "估值明显高于当前基本面",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.05,
-      "action": "review",
-      "reason": "进入有安全边际的观察买点"
-    },
-    {
-      "type": "price_below",
-      "price": 0.85,
-      "action": "strong_review",
-      "reason": "进入强吸引力价格，但必须核验面值退市风险"
-    },
-    {
-      "type": "price_above",
-      "price": 1.25,
-      "action": "avoid",
-      "reason": "高于不应追高价"
-    },
-    {
-      "type": "price_above",
-      "price": 1.6,
-      "action": "reduce_or_avoid",
-      "reason": "估值明显高于当前基本面"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026 半年报披露后复查毛利率、扣非净利率和经营现金流",
-      "reason": "验证收入增长是否转化为扣非利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026 三季报后复查短期借款、一年内到期非流动负债、长期借款和财务费用",
-      "reason": "验证高杠杆压力是否缓解"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026 年报后复查控股股东质押比例",
-      "reason": "验证控制权和股权质押风险是否下降"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026 年报后复查磷化工、特种肥或农服业务是否出现可量化利润贡献",
-      "reason": "验证反转逻辑是否有利润来源"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "年末复查股价是否跌入 1.05 元以下或上涨超过 1.60 元",
-      "reason": "验证价格是否进入安全边际或减仓区"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "毛利率",
-      "target": "稳定在 10% 以上并持续改善"
-    },
-    {
-      "metric": "扣非净利率",
-      "target": "提升到 1% 以上"
-    },
-    {
-      "metric": "经营活动现金流净额",
-      "target": "连续为正且高于净利润"
-    },
-    {
-      "metric": "资产负债率",
-      "target": "从 82% 附近下降"
-    },
-    {
-      "metric": "财务费用/营业收入",
-      "target": "持续下降"
-    },
-    {
-      "metric": "控股股东质押比例",
-      "target": "明显下降"
-    },
-    {
-      "metric": "存货和存货跌价",
-      "target": "不再恶化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603062",
-  "ticker": "603062",
-  "name": "麦加芯彩",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分龙头与工业涂料平台化方向有价值，但2026H1利润预告显示集装箱周期下行和新业务费用前置造成盈利断档；当前价格处于合理价值区间，缺少买入安全边际，等待更低价格或半年报验证。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    31,
-    39
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    43,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "麦加芯彩",
+    "security_status": "active",
+    "symbol": "CN:603062",
+    "ticker": "603062"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b8f150491ce6fa877e1de3aa37134018d12ef48990f1b79e5c69ed253e16ee68"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于28元且2026半年报显示经营现金流、毛利率和应收账款没有继续恶化时，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据，重点检查分业务收入、毛利率、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于24元且风电业务毛利额继续增长、新业务出现可核验批量订单时，可提高仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断集装箱需求是否触底以及新业务费用投入是否转化为收入。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于43元但新业务利润尚未兑现，或2026全年利润低于1亿元时，不新增并考虑减仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，重新估算正常化利润和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入观察区，需要复核半年报现金流、毛利率和集装箱需求底部。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入较充分安全边际区，需要判断是否为基本面恶化导致的价值陷阱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 43.0
+      },
+      "reason": "超过基准价值区上沿，若缺少新业务利润兑现，应减仓或回避追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入买入观察区，需要复核半年报现金流、毛利率和集装箱需求底部。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入较充分安全边际区，需要判断是否为基本面恶化导致的价值陷阱。"
-    },
-    {
-      "type": "price_above",
-      "price": 43,
-      "reason": "超过基准价值区上沿，若缺少新业务利润兑现，应减仓或回避追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据，重点检查分业务收入、毛利率、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断集装箱需求是否触底以及新业务费用投入是否转化为收入。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，重新估算正常化利润和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

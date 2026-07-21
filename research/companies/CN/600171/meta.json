@@ -1,85 +1,120 @@
 {
-  "symbol": "CN:600171",
-  "market": "CN",
-  "ticker": "600171",
-  "name": "上海贝岭",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "汽车、工业、高端ADC和AFE产品带来真实升级期权，2026Q1扣非经营亦在修复；但2026-07-17收盘23.27元仍对应约75倍TTM归母利润、约91倍TTM扣非利润，且存货快速上升、功率器件低毛利、商誉和关联资金风险尚未被充分验证。新增SLC NAND涨价证据不能直接映射到公司未量化的NOR Flash业务，合理价值仍为15-20元，等待12-15元且基本面完好后再考虑买入。",
-  "fair_value_range": [
-    15.0,
-    20.0
-  ],
-  "buy_zone": [
-    12.0,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海贝岭",
+    "security_status": "active",
+    "symbol": "CN:600171",
+    "ticker": "600171"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c247849254762cfe5e58343d215734bb5a7da536b22b4447e0d9e6cedec476fe"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "44a57918b083a53f0cabe1facbb5896e4d0f616ddc6a416defb483fc7754c5f5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于24元且盈利预测未显著上修时回避或减仓，不建立新仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的分产品收入与毛利率、汽车和工业放量、库存及跌价准备、应收回款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入15-20元，且最新毛利率不低于27%、存货增速不再持续高于收入增速时，只建立观察仓。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高增长持续性、库存拐点、费用转化效率及商誉假设。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入12-15元，且汽车或工业产品形成可量化收入、商誉无减值迹象、扣非ROE改善时分批买入。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、年度分红、商誉减值测试和高端模拟及汽车业务年度进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元后完成全量复核，确认业务价值、库存、客户和资金安全均未破坏时，组合仓位上限。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入合理价值上沿，先复核库存、毛利率和汽车工业收入再决定是否建立观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入区，基本面假设仍成立时可分批建立不超过1.5%的仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入深度价值复核区，禁止机械加仓，需重新承保库存、商誉、客户和关联资金风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入减仓区；若连续盈利与现金流未显著上修，应回避或降低仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的分产品收入与毛利率、汽车和工业放量、库存及跌价准备、应收回款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高增长持续性、库存拐点、费用转化效率及商誉假设。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、年度分红、商誉减值测试和高端模拟及汽车业务年度进展。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入合理价值上沿，先复核库存、毛利率和汽车工业收入再决定是否建立观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入买入区，基本面假设仍成立时可分批建立不超过1.5%的仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入深度价值复核区，禁止机械加仓，需重新承保库存、商誉、客户和关联资金风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入减仓区；若连续盈利与现金流未显著上修，应回避或降低仓位。"
-    }
-  ],
-  "updated_at": "2026-07-18T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

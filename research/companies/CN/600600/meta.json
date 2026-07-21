@@ -1,63 +1,57 @@
 {
-  "symbol": "CN:600600",
-  "market": "CN",
-  "ticker": "600600",
-  "name": "青岛啤酒",
-  "company_name": "青岛啤酒股份有限公司",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "维持观望。2025年年报营收324.7亿元（同比+1.04%）、归母净利润45.88亿元（同比+5.60%），高端化产品占比提升推动毛利率到41.84%；当前股价53.5元、动态市盈率10.14倍、市净率2.50倍、市值729.8亿元，处于合理估值区间但缺乏深度安全边际。等待2026年半年报（8月27日披露）验证营收环比改善与高端产品放量进展。",
-  "quality_rating": 8.5,
-  "valuation_rating": 6.8,
-  "fair_value_range": [45, 65],
-  "buy_zone": [48, 60],
-  "strong_attraction_zone": [40, 48],
-  "sell_or_reduce_zone": [68, 72],
-  "do_not_chase_above": 68,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "青岛啤酒",
+    "security_status": "active",
+    "symbol": "CN:600600",
+    "ticker": "600600"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "2c32a55c63ee6251e2b84ec1c0949f94a0292e1e4aa1f1bdd383e05319a13d09"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "buy_zone",
-      "condition": "股价位于48-60元区间且2025/2026业绩季报确认盈利能力稳定",
-      "action": "建立首笔仓位",
-      "target_weight": 0.03,
-      "max_weight": 0.06
-    },
-    {
-      "zone": "strong_attraction_zone",
-      "condition": "股价低于48元且业绩未出现断崖式下跌",
-      "action": "分批加仓",
-      "target_weight": 0.07,
-      "max_weight": 0.08
-    },
-    {
-      "zone": "sell_or_reduce_zone",
-      "condition": "股价高于68元或对应2026E市盈率超过25倍",
-      "action": "减仓或暂停加仓",
-      "target_weight": 0.02,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "2026年半年报预约披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "2026年半年报预约披露"
-    }
-  ],
-  "price_triggers": [],
-  "key_risks": [
-    "原材料（麦芽、啤酒花、包材）成本上升压缩利润率",
-    "经济放缓或消费疲软导致啤酒需求下滑",
-    "竞争对手激烈促销导致价格战",
-    "高端化进程放缓导致吨价提升停滞",
-    "极端天气或夏季旺季需求低于预期"
-  ],
-  "updated_at": "2026-07-08T10:30:45"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

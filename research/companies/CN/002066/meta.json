@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:002066",
-  "ticker": "002066",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "瑞泰科技",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "瑞泰科技具备央企耐火材料平台和新兴高温场景观察价值，但 2025 年亏损、2026Q1 继续亏损、2026H1 预告亏损，且 2026-07-13 股价对应约 7 倍以上归母 PB，当前价格缺乏安全边际，需等待毛利率、归母利润和经营现金流共同修复。",
-  "fair_value_range": [
-    8.5,
-    12.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    16,
-    30
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瑞泰科技",
+    "security_status": "active",
+    "symbol": "CN:002066",
+    "ticker": "002066"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "b57cf84c1e16472954c19f3e25793e985f5dc916cc97674a44f5fcded8a06086"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不建初始仓位；仅当股价低于 8.5 元且最近两个季度经营现金流转正、单季归母利润转正时重新评估。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据，验证亏损、毛利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于 8.5 元且综合毛利率回到 13.5% 以上、应收和存货未继续扩张，可试探性建仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断单季归母利润和经营现金流是否转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于 16 元且未证明年化归母利润达到 1.2 亿元以上，维持回避或减仓。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，更新周期修复、估值区间和安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入中性估值下沿，若基本面同步改善可重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "明显高于当前盈利能力可支撑区间，除非利润和现金流已实质修复，否则应回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入中性估值下沿，若基本面同步改善可重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 16,
-      "reason": "明显高于当前盈利能力可支撑区间，除非利润和现金流已实质修复，否则应回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据，验证亏损、毛利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断单季归母利润和经营现金流是否转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，更新周期修复、估值区间和安全边际。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

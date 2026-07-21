@@ -1,69 +1,95 @@
 {
-  "symbol": "CN:603880",
-  "market": "CN",
-  "ticker": "603880",
-  "name": "南卫股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "南卫股份收入规模横盘但连续亏损、净资产快速下降，防护用品和丁腈手套业务仍拖累利润；叠加历史资金占用、信披违规、内幕交易处罚和控股股东质押，治理折价显著。当前股价对应约10倍PB，远高于亏损低值耗材企业可接受水平，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    1.2,
-    2.2
-  ],
-  "buy_zone": [
-    0.8,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    3.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南卫股份",
+    "security_status": "active",
+    "symbol": "CN:603880",
+    "ticker": "603880"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "998b4af1b7a4ff3736f70095813d6ff5adc11ef25b29d0cf45888280bcc97167"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格明显高于基本面公允价值且治理风险未消除，维持零仓位。",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度正式报告，验证业绩预告、毛利率、防护用品亏损和净资产变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入1.20元以下，且连续两个季度主营毛利率改善、防护用品毛利率转正、经营现金流为正，可重新研究小仓位观察。",
-      "action": "research_watch_only",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，观察收入、毛利率、经营现金流和控股股东质押变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告，判断是否完成扭亏和治理修复。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "低于基准公允价值下沿且接近2倍PB，可重新核验是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
+      "reason": "高于乐观情景上沿，若无真实扭亏和治理改善证据，应继续规避或卖出。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "低于基准公允价值下沿且接近2倍PB，可重新核验是否具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.5,
-      "reason": "高于乐观情景上沿，若无真实扭亏和治理改善证据，应继续规避或卖出。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度正式报告，验证业绩预告、毛利率、防护用品亏损和净资产变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，观察收入、毛利率、经营现金流和控股股东质押变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告，判断是否完成扭亏和治理修复。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

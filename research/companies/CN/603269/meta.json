@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603269",
-  "market": "CN",
-  "ticker": "603269",
-  "name": "海鸥股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "海鸥股份具备冷却塔资质、项目经验和海外本地化交付能力，正在从传统工业冷却塔延伸至数据中心液冷一次侧、核电和半导体温控配套；订单结构改善真实，但当前估值已反映较多成长预期，且2026Q1经营现金流转负，需等待更好安全边际或现金流修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.5,
-    14.0
-  ],
-  "buy_zone": [
-    0.0,
-    9.8
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海鸥股份",
+    "security_status": "active",
+    "symbol": "CN:603269",
+    "ticker": "603269"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "acb8039d98dedfa096017dcbcdbc60dae1210ede52fa274b442bf219ebc6f63f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理价值区间内但安全边际不足，仅允许观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的经营现金流、合同负债、存货、应收账款和新兴领域订单兑现。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于9.8元，或2026年半年报显示经营现金流转正且新兴领域订单继续增长，可提高仓位。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报收入利润增速和订单回款质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于16.0元且利润未明显超预期，或经营现金流连续两个报告期弱于利润，应减仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证数据中心、核电、半导体订单是否转化为收入和利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.8
+      },
+      "reason": "进入具备安全边际的买入区间，可复核订单和现金流后加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "超过乐观情景的下沿，若无利润超预期支撑应卖出或降低仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.8,
-      "reason": "进入具备安全边际的买入区间，可复核订单和现金流后加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "超过乐观情景的下沿，若无利润超预期支撑应卖出或降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的经营现金流、合同负债、存货、应收账款和新兴领域订单兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报收入利润增速和订单回款质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证数据中心、核电、半导体订单是否转化为收入和利润。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

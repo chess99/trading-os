@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603533",
-  "market": "CN",
-  "ticker": "603533",
-  "name": "掌阅科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "掌阅科技正从数字阅读平台转向IP与AI短剧/漫剧驱动的内容平台，2025年短剧等衍生业务已成为第一大收入来源，但当前增长仍依赖高销售费用和高强度投放，海外短剧商业模型与经营现金流尚未充分验证。当前估值处于合理区间中部，安全边际不足，适合观察等待更低价格或现金流改善信号。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    16.0,
-    23.0
-  ],
-  "buy_zone": [
-    12.5,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "掌阅科技",
+    "security_status": "active",
+    "symbol": "CN:603533",
+    "ticker": "603533"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "89309fb470357f2495220fea721d81651f4e9cdf36b9c05e1956cf2b0b187323"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入买入区间且2026H2经营现金流改善、销售费用率环比下降",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查销售费用率、经营现金流、短剧和海外业务披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长15%以上且亏损继续收窄，海外短剧LTV/CAC或投流回收周期得到披露并改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断亏损收窄是否延续以及收入增长质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于减持区间但经营现金流和利润率未验证",
-      "action": "不追买并减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估AI短剧出海商业模型和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入估算买入区间上沿，需复核销售费用率、现金流和短剧增长质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入有较高安全边际的试错区间，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过公允价值区间上沿，若利润和现金流仍未验证应降低敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入估算买入区间上沿，需复核销售费用率、现金流和短剧增长质量"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入有较高安全边际的试错区间，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过公允价值区间上沿，若利润和现金流仍未验证应降低敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查销售费用率、经营现金流、短剧和海外业务披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断亏损收窄是否延续以及收入增长质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估AI短剧出海商业模型和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

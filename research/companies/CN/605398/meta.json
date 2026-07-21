@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:605398",
-  "market": "CN",
-  "ticker": "605398",
-  "name": "新炬网络",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "新炬网络处于企业 IT 运维、信创和数据资产管理赛道，但 2025 年利润下滑、2026 年上半年预亏，当前约 3 倍以上 PB 和高静态 PE 与盈利质量不匹配；除非收入、毛利率、现金流和净利率连续修复，当前不具备买方安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    8.0,
-    12.0
-  ],
-  "buy_zone": [
-    0.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新炬网络",
+    "security_status": "active",
+    "symbol": "CN:605398",
+    "ticker": "605398"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e8222325fab44e1499fc66fe74e78501551a116625bdf6af87a73e77cc9ba970"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价显著高于估算合理价值区间，且 2026 年半年度业绩预告亏损；维持不买。",
-      "action": "no_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，确认预亏原因、毛利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌至 8 元以下，且最新一期收入恢复增长、经营现金流转正、亏损未继续扩大，可重新评估观察仓。",
-      "action": "reassess_watch_position",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断收入、利润和现金流是否出现连续修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度净利率恢复到 5% 以上、经营现金流为正且估值低于正常化 PE 25 倍，可重新做买入研究。",
-      "action": "reopen_buy_case",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新估算正常化盈利能力和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入基于 1.2-1.5 倍 PB 的安全边际观察区。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "在业绩未修复前估值进一步脱离合理区间，应避免追高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入基于 1.2-1.5 倍 PB 的安全边际观察区。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "在业绩未修复前估值进一步脱离合理区间，应避免追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，确认预亏原因、毛利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断收入、利润和现金流是否出现连续修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新估算正常化盈利能力和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

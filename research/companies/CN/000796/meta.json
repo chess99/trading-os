@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:000796",
-  "market": "CN",
-  "ticker": "000796",
-  "name": "凯撒旅业",
-  "company_name": "凯撒旅业",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "凯撒旅业是重整后国资控股的旅游困境反转标的，收入端受出境游和海洋文旅恢复驱动，但扣非利润和经营现金流尚未验证，适合观察仓等待2026年中报确认。",
-  "quality_rating": "C+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.6,
-    3.1
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯撒旅业",
+    "security_status": "active",
+    "symbol": "CN:000796",
+    "ticker": "000796"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "ea720547b5339f9aaef01b7a2cf14865873315e71eba83ba44b1f7649acdb2b3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.10元且未出现新增退市风险、重大诉讼或控股股东稳定性问题",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "困境反转赔率开始改善，但扣非利润和经营现金流尚未验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证扣非亏损、经营现金流和关联交易回款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报显示收入继续双位数增长、扣非亏损同比收窄50%以上、经营现金流明显改善",
-      "action": "加仓至小仓位",
-      "max_weight": 0.02,
-      "reason": "收入修复开始转化为经营质量改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认旅游旺季后收入质量和现金流表现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期扣非盈利且经营活动现金流转正",
-      "action": "提高至反转仓位上限",
-      "max_weight": 0.04,
-      "reason": "困境反转从预期交易进入财务验证阶段"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.1
+      },
+      "reason": "进入观察仓买入区间，重新评估风险收益比",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于5.50元但扣非利润仍亏损或现金流继续净流出",
-      "action": "减仓或退出",
-      "max_weight": 0,
-      "reason": "估值已透支反转预期，缺少基本面兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入深度赔率区间，若基本面未恶化可考虑提高跟踪优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "进入减仓观察区间，需确认扣非盈利和现金流是否同步兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "超过当前乐观前验证估值上沿，若无业绩兑现应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.1,
-      "reason": "进入观察仓买入区间，重新评估风险收益比"
-    },
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入深度赔率区间，若基本面未恶化可考虑提高跟踪优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "进入减仓观察区间，需确认扣非盈利和现金流是否同步兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "超过当前乐观前验证估值上沿，若无业绩兑现应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证扣非亏损、经营现金流和关联交易回款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认旅游旺季后收入质量和现金流表现"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "旅游服务收入及毛利率",
-    "海洋文旅和目的地运营收入",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "货币资金余额",
-    "资产负债率",
-    "关联交易实际发生额及回款",
-    "应收账款周转",
-    "重大诉讼和重整债权清偿进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,77 @@
 {
-  "symbol": "CN:000911",
-  "market": "CN",
-  "ticker": "000911",
-  "name": "*ST广糖",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_rating": "avoid",
-  "current_thesis": "净资产为负、持续经营重大不确定性、内控否定意见和信披立案处罚风险叠加，当前3.92元缺少安全边际；只有风险实质解除且价格大幅低于合理区间时才重新研究。",
-  "fair_value_range": [
-    0.8,
-    2.2
-  ],
-  "buy_zone": [
-    0.4,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    3.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST广糖",
+    "security_status": "active",
+    "symbol": "CN:000911",
+    "ticker": "000911"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "3fb4a88be0af26d5eb628610d6a7999ac529aac308a838a4c6350650a7d85742"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "风险未解除或价格高于2.50元",
-      "action": "不买；若持有则卖出或降至观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报、净资产、现金链、内控整改和监管处罚进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在0.80-2.20元但仍为ST且净资产未转正",
-      "action": "仅观察，不开仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入风险解除后的观察买入区，需要重新核验退市、内控和债务进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格在0.40-0.80元且退市、内控、立案风险有实质解除证据",
-      "action": "重新研究后小额试探",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "价格低于0.50元且净资产修复、债务重组或资产注入路径明确",
-      "action": "特殊情形首笔仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "超过合理价值上沿后的不应追高区，若持有应复核减仓或卖出。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入风险解除后的观察买入区，需要重新核验退市、内控和债务进展。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "超过合理价值上沿后的不应追高区，若持有应复核减仓或卖出。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报、净资产、现金链、内控整改和监管处罚进展。"
-    }
-  ],
-  "notes": [
-    "当前评级为avoid，不因低价或国资背景给买入结论。",
-    "当前股价3.92元、市值约15.69亿元，行情戳为2026-07-17 16:14:45，来源腾讯行情接口。",
-    "ST特殊风险复核重点为净资产为负、持续经营重大不确定性、内控否定意见、证监会立案及行政处罚事先告知书。",
-    "债务、诉讼、担保和资金占用明细需在2026半年报和后续公告中继续逐项核验。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

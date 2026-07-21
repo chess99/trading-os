@@ -1,80 +1,86 @@
 {
-  "symbol": "CN:600429",
-  "ticker": "600429",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "三元股份",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三元股份是区域乳企修复标的，2025年亏损后2026Q1收入和利润恢复，但渠道整合、经营现金流和长期ROE仍需验证；当前股价接近合理区间中部偏上，安全边际不足，适合观察而非追高。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    3.6,
-    4.7
-  ],
-  "buy_zone": [
-    0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三元股份",
+    "security_status": "active",
+    "symbol": "CN:600429",
+    "ticker": "600429"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "da9e8dc4ede56ff96a60520b67d30de1acccc22b47d9c5e3c1d1ad1b866ef392"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理区间中部偏上且半年报尚未验证现金流修复，仅允许观察仓。",
-      "action": "watch_or_small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、毛利率、经营现金流和经销商数量变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.50元，且2026半年报收入同比转正、毛利率维持23%左右、经营现金流恢复。",
-      "action": "accumulate",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报利润修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于5.30元，或毛利率跌破22%、经营现金流连续弱于净利润。",
-      "action": "reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "接近1.1倍左右账面价值，若基本面未恶化，安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "隐含估值超过乐观情景，需要可持续ROE上台阶支撑。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "接近1.1倍左右账面价值，若基本面未恶化，安全边际改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "reason": "隐含估值超过乐观情景，需要可持续ROE上台阶支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、毛利率、经营现金流和经销商数量变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报利润修复是否延续。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 4.38,
-    "last_price_date": "2026-07-16",
-    "market_cap_cny": 6579150105,
-    "pb": 1.36,
-    "pe_ttm": 16.39,
-    "2025_revenue_cny": 6340356841.64,
-    "2025_parent_net_profit_cny": -225581449.06,
-    "2026q1_revenue_cny": 1720530825.46,
-    "2026q1_parent_net_profit_cny": 100365164.16
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

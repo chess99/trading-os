@@ -1,175 +1,143 @@
 {
-  "symbol": "CN:002500",
-  "market": "CN",
-  "ticker": "002500",
-  "name": "山西证券",
-  "company_name": "山西证券股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "山西证券是山西省内稀缺的上市综合券商，国有控股、区域资源和分红纪律构成基本盘，2025 年财富管理和自营/FICC 推动业绩改善；但公司长期 ROE 约 5%-5.5%，护城河更多来自牌照与区域关系而非强定价权。2026-07-10 收盘价 5.30 元约等于 1.02 倍 2026Q1 每股净资产，处于合理区间上沿，缺乏安全边际，当前不买，等待 4.40 元以下。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    4.4,
-    5.3
-  ],
-  "buy_zone": [
-    3.9,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.1,
-    6.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "山西证券",
+    "security_status": "active",
+    "symbol": "CN:002500",
+    "ticker": "002500"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "af4bbe6920bf88387213cbd5388251eaedc03d22f788e7143075648a2dfc6a6d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价 5.30 CNY，处于合理区间上沿",
-      "price": "current 5.30 CNY",
-      "action": "watch, no initial purchase",
-      "max_weight": 0,
-      "target_position": "0%"
-    },
-    {
-      "condition": "股价回落至安全边际买入价",
-      "price": "<=4.40 CNY",
-      "action": "open small position",
-      "max_weight": 0.04,
-      "target_position": "2%-4%"
-    },
-    {
-      "condition": "股价回落至强吸引力买入价且基本面未恶化",
-      "price": "<=3.90 CNY",
-      "action": "add if thesis intact",
-      "max_weight": 0.06,
-      "target_position": "5%-6%"
-    },
-    {
-      "condition": "股价高于不应追高价",
-      "price": ">5.60 CNY",
-      "action": "do not add",
-      "max_weight": 0.01,
-      "target_position": "0%-1%"
-    },
-    {
-      "condition": "股价进入减仓/卖出区且 ROE 未显著改善",
-      "price": ">=6.10 CNY",
-      "action": "reduce or exit unless ROE improves",
-      "max_weight": 0,
-      "target_position": "0%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "price <= 4.40 CNY",
-      "reason": "低于约 0.84x 2026Q1 PB，开始具备安全边际",
-      "action": "进入安全边际买入区，复核基本面后可开小仓",
-      "price": 4.4
-    },
-    {
-      "type": "price_below",
-      "condition": "price <= 3.90 CNY",
-      "reason": "低于约 0.75x 2026Q1 PB，若基本面未恶化则赔率改善明显",
-      "action": "进入强吸引力买入区，若逻辑未破坏可加仓",
-      "price": 3.9
-    },
-    {
-      "type": "price_above",
-      "condition": "price >= 5.60 CNY",
-      "reason": "高于合理价格上沿，低 ROE 券商不宜追高",
-      "action": "不追高",
-      "price": 5.6
-    },
-    {
-      "type": "price_above",
-      "condition": "price >= 6.10 CNY",
-      "reason": "估值进入减仓区，除非 ROE 和手续费收入明显改善",
-      "action": "评估减仓",
-      "price": 6.1
-    },
-    {
-      "type": "price_above",
-      "condition": "price >= 6.50 CNY",
-      "reason": "价格隐含较高 ROE 改善预期，若未兑现应退出",
-      "action": "若 ROE 未提升则卖出",
-      "price": 6.5
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年中报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报将验证 2026 年业绩和 ROE 是否延续改善",
-      "action": "复查营业收入、归母净利润、ROE、BVPS 和分红预期"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "连续两个报告期归母净利润同比下滑且弱于行业平均",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "盈利持续弱于行业会削弱基准估值和买入区间",
-      "action": "重估投资结论"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "出现监管处罚、风控指标或信用评级实质恶化",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "券商投资逻辑高度依赖合规资质和资本安全",
-      "action": "立即复查"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "股价跌破 4.40 元",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "价格进入安全边际买入区，需要区分便宜和基本面恶化",
-      "action": "检查是否为基本面恶化导致；若不是，评估开仓"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "股价超过 6.10 元且 ROE 未提升至 6.5% 以上",
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
       "reason": "估值进入减仓区，需要确认是否有基本面支撑",
-      "action": "评估减仓或卖出"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "低于约 0.84x 2026Q1 PB，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.9
+      },
+      "reason": "低于约 0.75x 2026Q1 PB，若基本面未恶化则赔率改善明显",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "高于合理价格上沿，低 ROE 券商不宜追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.1
+      },
+      "reason": "估值进入减仓区，除非 ROE 和手续费收入明显改善",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "价格隐含较高 ROE 改善预期，若未兑现应退出",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    {
-      "metric": "ROE",
-      "baseline": "2026Q1 加权平均 ROE 1.37%，年化约 5.5%",
-      "target_or_threshold": "持续高于 6.5% 才支持 PB 溢价"
-    },
-    {
-      "metric": "BVPS",
-      "baseline": "2026Q1 约 5.22 元/股",
-      "target_or_threshold": "稳步增长且不被自营亏损侵蚀"
-    },
-    {
-      "metric": "财富管理收入",
-      "baseline": "2025 年约 13.50 亿元，占收入约 40.29%",
-      "target_or_threshold": "收入和投顾/AUM 增速继续跑赢行业交易额"
-    },
-    {
-      "metric": "自营/FICC 收入",
-      "baseline": "2025 年自营业务收入约 13.05 亿元，占收入约 38.94%",
-      "target_or_threshold": "保持正贡献且波动不过度侵蚀净资产"
-    },
-    {
-      "metric": "分红率",
-      "baseline": "2025 年全年现金分红约 4.67 亿元，占归母净利润约 50.5%",
-      "target_or_threshold": "维持 45%-55% 或以上，除非有高 ROE 再投资项目"
-    },
-    {
-      "metric": "行业景气",
-      "baseline": "2025 年沪深 A 股日均成交额约 1.7 万亿元",
-      "target_or_threshold": "成交额、两融余额、公募新发和 IPO/再融资规模不出现系统性恶化"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,109 +1,105 @@
 {
-  "symbol": "CN:603407",
-  "market": "CN",
-  "ticker": "603407",
-  "name": "长裕集团",
-  "company_name": "长裕集团",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "长裕集团是一家质量较高的家居五金出口制造企业，但2026-07-10价格已显著透支成长和次新股溢价；当前不买，等待估值回落至20-26元并验证上市后业绩、毛利率和现金流连续兑现。",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    25,
-    35
-  ],
-  "buy_zone": [
-    20,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    80
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长裕集团",
+    "security_status": "active",
+    "symbol": "CN:603407",
+    "ticker": "603407"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "6ba1b5f01dbd7ca894f70e61b16aa0b70a7b008754a5404c7d49640c97cc7b1e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于45元或估值仍显著高于基本面可支撑区间",
-      "action": "不买入，已有仓位逐步降低或回避新增",
-      "max_weight": 0,
-      "reason": "2026-07-10收盘价68.44元对应总市值约279亿元，显著高于基准合理价值区间"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查收入增速、毛利率、经营现金流、应收和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入20-26元且2026年中报或三季报验证收入增长、毛利率稳定、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间后，若上市后业绩兑现，可用小仓位验证研究假设"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认上市后业绩兑现是否具备连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个报告期收入和利润保持15%以上增长，经营现金流与净利润匹配，募投产能爬坡顺利",
-      "action": "上调至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "只有增长、利润率和现金流同时兑现，才适合提高组合权重"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及募投项目进度，重估长期盈利和现金流假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入买入观察区间，需要复核中报或三季报后决定是否建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入更有安全边际的价格区间，可重新测算悲观情景保护",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "高于乐观估值下沿，需警惕次新股估值和流动性风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入买入观察区间，需要复核中报或三季报后决定是否建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入更有安全边际的价格区间，可重新测算悲观情景保护"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "高于乐观估值下沿，需警惕次新股估值和流动性风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查收入增速、毛利率、经营现金流、应收和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认上市后业绩兑现是否具备连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及募投项目进度，重估长期盈利和现金流假设"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "综合毛利率",
-    "经营活动现金流量净额",
-    "经营现金流量净额/归母净利润",
-    "应收账款周转天数",
-    "存货周转天数",
-    "境外收入占比",
-    "前五大客户收入占比",
-    "募投项目建设进度",
-    "产能利用率",
-    "汇兑损益",
-    "限售股解禁安排"
-  ],
-  "research_notes": {
-    "last_price": 68.44,
-    "last_price_date": "2026-07-10",
-    "market_cap_cny_billion": 27.92,
-    "decision": "不买，等待估值消化和上市后业绩连续兑现",
-    "confidence": "medium_high"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

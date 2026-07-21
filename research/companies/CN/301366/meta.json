@@ -1,113 +1,115 @@
 {
-  "symbol": "CN:301366",
-  "ticker": "301366",
-  "name": "一博科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "一博科技是稀缺的PCB研发设计与PCBA中小批量一站式硬件创新服务商，2026Q1显示珠海PCB工厂爬坡改善，但当前股价已预支2026-2028年利润修复，需要等待更好安全边际或业绩现金流超预期验证。",
-  "current_rating": "watch",
-  "rating": {
-    "current_rating": "watch",
-    "decision": "观察",
-    "confidence": "中",
-    "as_of": "2026-07-16"
-  },
-  "fair_value_range": [
-    30,
-    38
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    58
-  ],
-  "position_plan": [
-    {
-      "condition": "股价跌入30元以下且2026年扣非净利润达成股权激励触发值7200万元的概率未恶化，可建立观察仓。",
-      "action": "初始建仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "2026年扣非净利润接近或超过9000万元目标值，PCBA毛利率修复且经营现金流转正，可提高仓位。",
-      "action": "加仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于48元且缺乏利润或现金流超预期支撑，或2026年扣非净利润低于7200万元触发值。",
-      "action": "减仓或回避",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入基准合理价值区间下沿，开始具备重新评估买入赔率的安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入悲观情形上沿附近，若基本面未恶化，可考虑提高研究优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "接近乐观情形估值区间，若没有珠海PCB工厂爬坡和扣非利润超预期验证，赔率转差。"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "超过乐观情形上沿，除非2028年利润目标提前高置信达成，否则应考虑减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点验证收入增速、PCBA毛利率、珠海PCB工厂亏损收窄和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年扣非净利润能否达到股权激励触发值7200万元。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及2027年一季报，更新估值、激励目标完成情况和仓位计划。"
-    }
-  ],
-  "valuation": {
+  "identity": {
     "currency": "CNY",
-    "last_price": 45.05,
-    "last_price_date": "2026-07-15",
-    "market_cap_billion": 9.44,
-    "method_summary": "相对估值、绝对估值和情景估值交叉后取30-38元/股为合理价值区间。"
+    "market": "CN",
+    "name": "一博科技",
+    "security_status": "active",
+    "symbol": "CN:301366",
+    "ticker": "301366"
   },
-  "key_sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "5bd65661cae423ca6c2ef83b132d1d0fd335d9ec095d3842689fec84b34e0983"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "2025年年度报告",
-      "date": "2026-04-16",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225107111.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点验证收入增速、PCBA毛利率、珠海PCB工厂亏损收窄和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "2026年第一季度报告",
-      "date": "2026-04-28",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225198335.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年扣非净利润能否达到股权激励触发值7200万元。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "2026年限制性股票激励计划（草案）",
-      "date": "2026-04-16",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225107105.PDF"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及2027年一季报，更新估值、激励目标完成情况和仓位计划。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入基准合理价值区间下沿，开始具备重新评估买入赔率的安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入悲观情形上沿附近，若基本面未恶化，可考虑提高研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "接近乐观情形估值区间，若没有珠海PCB工厂爬坡和扣非利润超预期验证，赔率转差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "超过乐观情形上沿，除非2028年利润目标提前高置信达成，否则应考虑减仓或回避。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

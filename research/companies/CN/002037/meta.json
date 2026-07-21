@@ -1,67 +1,105 @@
 {
-  "symbol": "CN:002037",
-  "ticker": "002037",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "保利联合",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "current_thesis": "央企民爆平台具备牌照、区域网络和行业整合选项价值，但 2025-2026Q1 仍亏损、经营现金流为负、杠杆高、应收账款和诉讼压力突出；当前价格已反映偏乐观修复预期，安全边际不足。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [3.2, 4.4],
-  "buy_zone": [2.8, 3.5],
-  "sell_or_reduce_zone": [5.5, 7.0],
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "保利联合",
+    "security_status": "active",
+    "symbol": "CN:002037",
+    "ticker": "002037"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9d96c1f2b542b7270cc47d5cc604bd67667dfcb0d8cfe2bf2bcb1b2a4189169f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价低于 3.5 元且未出现新的重大诉讼或流动性恶化时，允许建立观察性仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查经营现金流、归母亏损、应收账款和诉讼进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度经营现金流为正、扣非亏损接近盈亏平衡且应收账款下降，可将仓位上限提高。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断是否出现连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若资产负债率降至 75% 以下且归母净利润恢复为正，可重新评估核心仓位资格。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估困境反转是否成立。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入买入区间上沿，需要结合现金流和诉讼进展复核安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入深度折价区间，若基本面未继续恶化可重新做完整估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "超过合理价值上沿且接近乐观情景估值，应维持回避或减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入买入区间上沿，需要结合现金流和诉讼进展复核安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入深度折价区间，若基本面未继续恶化可重新做完整估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "超过合理价值上沿且接近乐观情景估值，应维持回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查经营现金流、归母亏损、应收账款和诉讼进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断是否出现连续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估困境反转是否成立。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

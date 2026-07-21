@@ -1,93 +1,115 @@
 {
-  "symbol": "CN:600739",
-  "market": "CN",
-  "ticker": "600739",
-  "name": "辽宁成大",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "辽宁成大当前核心价值来自广发证券、中华保险和成大生物等权益资产的折价修复，2026H1 业绩预增验证投资收益改善，但主业成长性不足、新疆宝明长期停产和股东高质押仍要求保留控股平台折价；适合等待更厚安全边际后配置。",
-  "fair_value_range": [
-    12.5,
-    15.5
-  ],
-  "buy_zone": [
-    9.0,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    13.8,
-    15.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "辽宁成大",
+    "security_status": "active",
+    "symbol": "CN:600739",
+    "ticker": "600739"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "257c1c251b263d954fe6364f3e4049d7eaab892b17fdbfaa7e93e2dcbd864feb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 10.2 元，且 2026H1 正式业绩不低于预告下限、广发证券盈利未出现突发逆转",
-      "action": "建立观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据、投资收益拆分和成大生物经营趋势",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 9.0 元，且无新增重大减值或主要股东质押风险恶化",
-      "action": "提高至价值仓位",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、广发证券业绩弹性和新疆宝明减亏进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价达到 13.8 元以上但新疆宝明未减亏、成大生物未企稳",
-      "action": "逐步降低仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报、分红、债务期限结构和估值中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入基准估值下沿具备观察仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入悲观情景价值区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.8
+      },
+      "reason": "接近合理价值区间中部，需要评估是否由基本面而非券商 beta 驱动",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "达到基准合理价值上沿，控股平台折价和业务风险下收益风险比下降",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入基准估值下沿具备观察仓安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入悲观情景价值区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.8,
-      "reason": "接近合理价值区间中部，需要评估是否由基本面而非券商 beta 驱动"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "达到基准合理价值上沿，控股平台折价和业务风险下收益风险比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据、投资收益拆分和成大生物经营趋势"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、广发证券业绩弹性和新疆宝明减亏进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报、分红、债务期限结构和估值中枢"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "广发证券季度净利润和分红",
-    "中华保险净利润和股权结构优化进展",
-    "成大生物狂犬疫苗销量价格和海外收入",
-    "新疆宝明减值、停产费用、处置或引战进展",
-    "主要股东股份质押比例",
-    "公司现金余额、短期债务和债券融资成本"
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

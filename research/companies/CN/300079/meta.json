@@ -1,115 +1,113 @@
 {
-  "symbol": "CN:300079",
-  "market": "CN",
-  "ticker": "300079",
-  "name": "数码视讯",
-  "company_name": "北京数码视讯科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司资产负债表稳健、视频技术和广电政企客户积累仍有价值，但 2025 年扣非利润基数很低，2026 年一季度收入下滑并亏损，当前约 4.06 元/股的价格已经高于 2.8-3.6 元/股的合理价值区间。只有收入恢复增长且扣非净利率修复后，才值得上调评级。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.8,
-    3.6
-  ],
-  "buy_zone": [
-    0,
-    2.6
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "数码视讯",
+    "security_status": "active",
+    "symbol": "CN:300079",
+    "ticker": "300079"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e98c975004dd80f8b6e701d13aa572302697f84eb924335ff81b91d1fc731936"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于 2.6 元，且最近两个季度经营现金流未明显恶化",
-      "action": "可建立 0.5%-1.0% 观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价处于 2.6-3.6 元，且收入尚未连续两个季度恢复正增长",
-      "action": "仅跟踪，不主动加仓",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "扣非净利率连续两个季度达到 6%-8%，收入恢复双位数增长",
-      "action": "重新评估合理价值和仓位上限",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价高于 5.0 元且缺少业绩验证",
-      "action": "已有仓位逐步减仓，不追高",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "unit": "CNY/share",
-      "reason": "低于合理价值区间下沿并接近净资产折价，安全边际较充分。",
-      "action": "进入可买区，结合最新季报复核现金流和订单。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "unit": "CNY/share",
-      "reason": "若缺少扣非利润和收入兑现，5 元以上主要由主题预期支撑。",
-      "action": "进入减仓/回避区，除非扣非利润和收入增速已明显兑现。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布 2026 年中报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证 2026 年一季度收入下滑和亏损是否延续。",
-      "action": "复核收入增速、扣非利润、现金流和应收存货变化。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "披露单笔重大合同、超高清/应急广播/数据安全/AI 视频相关重大订单",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "新业务订单是估值上修的关键证据。",
-      "action": "评估订单金额、毛利率、交付周期和收入确认节奏。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "扣非净利润连续两个季度转正且扣非净利率超过 6%",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "扣非利润修复决定公司是否能从主题股变成业绩股。",
-      "action": "重新评估估值中枢和仓位上限。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "经营现金流、应收账款或存货出现明显恶化",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "项目型业务容易通过回款和验收周期暴露质量问题。",
-      "action": "下调质量评级并复核买入区间。"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-31",
-      "condition": "实施大额并购、对外投资或新的回购注销计划",
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
       "reason": "资本配置会改变低负债现金型公司的风险收益特征。",
-      "action": "评估资本配置对股东回报和风险暴露的影响。"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "低于合理价值区间下沿并接近净资产折价，安全边际较充分。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "若缺少扣非利润和收入兑现，5 元以上主要由主题预期支撑。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润和扣非净利率",
-    "经营活动现金流净额",
-    "应收账款、合同资产和存货周转",
-    "超高清、应急广播、数据安全、AI 视频相关订单金额与收入确认",
-    "分红和回购注销执行情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

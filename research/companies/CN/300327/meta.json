@@ -1,80 +1,120 @@
 {
-  "symbol": "CN:300327",
-  "market": "CN",
-  "ticker": "300327",
-  "name": "中颖电子",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "家电MCU与锂电管理具备真实业务基础，但MCU收入恢复、毛利率改善和AMOLED减亏尚未验证；23.00元已回到18-23元合理价值上沿，价格风险明显释放但仍未进入15-18元安全边际买入区。存储超级周期主要由AI与存储涨价驱动，不能直接外推为中颖盈利上修。",
-  "fair_value_range": [18, 23],
-  "buy_zone": [15, 18],
-  "sell_or_reduce_zone": [28, 34],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中颖电子",
+    "security_status": "active",
+    "symbol": "CN:300327",
+    "ticker": "300327"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fd4f5a27cf5953c9cabb927d4b0684b0d98df9c98a681b1d3bda7c80d979622b"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "89760fd5478788a7bca28a88df0f5ee7c4104e407a0f3277a08574690bf11c71"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格位于18-23元合理价值区但盈利修复尚未验证",
-      "action": "不买第一笔，已有低成本观察仓不超过1%",
-      "target_weight": 0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "最晚在2026年半年报披露后复核收入、毛利率、存货、芯颖科技亏损和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于18元且存货、毛利率和AMOLED亏损未恶化，完成重新研究后建立观察仓",
-      "action": "建立观察仓",
-      "target_weight": 0.01,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "最晚在2026年三季报披露后验证海外家电MCU、动力BMIC、车规与AMOLED进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格进入15-18元且连续两个季度毛利率改善、存货低于5亿元、芯颖科技亏损收窄",
-      "action": "分批提高仓位",
-      "target_weight": 0.02,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "最晚在2026年年报披露后复核完整盈利周期和定增项目执行",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入合理价值下沿，重新核验基本面后评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入安全边际区，但须确认价值未被永久破坏",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "进入减仓区，当前盈利不能支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "若无2.5亿元以上年化归母利润趋势则清仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "最晚在2026年半年报披露后复核收入、毛利率、存货、芯颖科技亏损和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "最晚在2026年三季报披露后验证海外家电MCU、动力BMIC、车规与AMOLED进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "最晚在2026年年报披露后复核完整盈利周期和定增项目执行"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入合理价值下沿，重新核验基本面后评估观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入安全边际区，但须确认价值未被永久破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "进入减仓区，当前盈利不能支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "若无2.5亿元以上年化归母利润趋势则清仓"
-    }
-  ],
-  "updated_at": "2026-07-17T16:30:00+08:00",
-  "analyst": "Codex + GPT-5",
-  "research_type": "followup"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

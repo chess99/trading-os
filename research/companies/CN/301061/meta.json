@@ -1,106 +1,124 @@
 {
-  "market": "CN",
-  "symbol": "CN:301061",
-  "ticker": "301061",
-  "name": "匠心家居",
-  "company_name": "常州匠心独具智能家居股份有限公司",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "updated_at": "2026-07-15",
-  "last_updated": "2026-07-15",
-  "current_rating": "watch",
-  "rating": "watch",
-  "current_thesis": "公司是面向美国零售商的智能电动功能家具制造平台，2025年利润和现金流强，但2026Q1承压且美国市场、关税、汇率和海外合规风险集中；当前估值合理偏低但安全边际不足以重仓。",
-  "fair_value_range": [
-    35,
-    44
-  ],
-  "buy_zone": [
-    28,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    46,
-    53
-  ],
-  "conviction": "medium",
-  "max_weight": 0.06,
-  "currency": "CNY",
-  "tags": [
-    "智能家居",
-    "功能沙发",
-    "出口链",
-    "美国零售商",
-    "高ROE"
-  ],
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "匠心家居",
+    "security_status": "active",
+    "symbol": "CN:301061",
+    "ticker": "301061"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "42d76344f006f64450e51ead638f4abcae98282ae2924c365edba9d44937dc99"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "action": "watch_or_small_position",
-      "condition": "市值约95-105亿元且2026H1扣非利润未继续恶化",
-      "max_weight": 0.02
-    },
-    {
-      "action": "add",
-      "condition": "市值80-85亿元以下且美国零售商订单、现金流和汇率风险无实质恶化",
-      "max_weight": 0.04
-    },
-    {
-      "action": "reduce",
-      "condition": "市值130-150亿元以上但扣非利润和扩产订单可见度未同步改善",
-      "max_weight": 0.01
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证Q1压力是否延续",
-      "action": "复核2026H1扣非归母净利润、美国零售商收入和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证全年盈利中枢和汇率影响",
-      "action": "复核2026Q3财报、汇兑损益和扩建项目进度"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整复核客户、产品和资本配置",
-      "action": "复核2026年报、客户集中、分产品收入和资本开支"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-31",
+      "active": true,
+      "condition": {
+        "date": "2027-07-31"
+      },
       "reason": "海外合规、关税和扩建项目需中期复盘",
-      "action": "复核美国关税、原产地规则和Raffel Systems相关事项进展"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入报告定义的安全边际买入区上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "接近80亿元市值的深度安全边际区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 46.0
+      },
+      "reason": "进入减仓观察区下沿",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 53.0
+      },
+      "reason": "接近150亿元市值的充分定价区",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入报告定义的安全边际买入区上沿"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "接近80亿元市值的深度安全边际区"
-    },
-    {
-      "type": "price_above",
-      "price": 46,
-      "reason": "进入减仓观察区下沿"
-    },
-    {
-      "type": "price_above",
-      "price": 53,
-      "reason": "接近150亿元市值的充分定价区"
-    }
-  ],
-  "summary": "匠心家居是以美国市场为核心的智能电动沙发、智能电动床和核心配件出口型制造商。2025年收入和利润高增、现金流较好，但2026Q1利润承压，核心风险集中在美国需求、关税、汇率、客户集中和海外合规诉讼。当前估值大致处于合理偏低到合理区间，安全边际尚未厚到可重仓。",
-  "next_review": "2026-10-31"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301027",
-  "ticker": "301027",
-  "name": "华蓝集团",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华蓝集团具备广西区域综合设计咨询资质与城市更新受益方向，但 2025 年和 2026Q1 仍处扣非亏损，收入下滑、应收账款和合同资产占用较高；以 2026-07-15 约 20.66 元股价估算，P/S 与 P/B 均高于当前基本面可支撑水平，安全边际不足，暂不买入，仅在价格回落并验证现金流改善后观察。",
-  "fair_value_range": [
-    9.0,
-    14.5
-  ],
-  "buy_zone": [
-    0.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华蓝集团",
+    "security_status": "active",
+    "symbol": "CN:301027",
+    "ticker": "301027"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e6c62b5b8f17a84e8c1b82455e93da7ab6975a4a2f2706e3c3e6d6f2d2ded204"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 10.5 元，且连续两个季度经营现金流为正、扣非亏损明显收窄或转正、应收账款与合同资产合计占收入比例下降时，允许研究性试探仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入、扣非利润、经营现金流、应收账款和合同资产。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 9.0 元，且 2026 年累计扣非利润转正、信用减值低于收入 2%、城市更新或公共项目订单出现可核验改善时，允许小幅加仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认城市更新订单、信用减值和现金流趋势是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 17.5 元且收入、现金流、信用减值未出现同步改善时，保持零仓位或减持。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断公司是否完成盈利修复并更新估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入初始买入观察区，需要复核中报现金流、扣非利润和应收款趋势。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入基准估值下沿附近，若基本面同时改善可重新评估小仓位配置。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "价格高于乐观估值中枢而基本面尚未验证时，风险收益比恶化。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入初始买入观察区，需要复核中报现金流、扣非利润和应收款趋势。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入基准估值下沿附近，若基本面同时改善可重新评估小仓位配置。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "价格高于乐观估值中枢而基本面尚未验证时，风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入、扣非利润、经营现金流、应收账款和合同资产。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认城市更新订单、信用减值和现金流趋势是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断公司是否完成盈利修复并更新估值区间。"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

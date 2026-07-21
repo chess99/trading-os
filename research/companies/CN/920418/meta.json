@@ -1,43 +1,77 @@
 {
-  "symbol": "CN:920418",
-  "market": "CN",
-  "ticker": "920418",
-  "name": "苏轴股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "细分龙头具备高现金流和高资本回报，但增长降档且19.12元已隐含中期复苏，等待14.5至16.5元并验证客户、汇率与高端项目假设后再建仓。",
-  "fair_value_range": [17.0, 21.5],
-  "buy_zone": [14.5, 16.5],
-  "sell_or_reduce_zone": [23.0, 26.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏轴股份",
+    "security_status": "active",
+    "symbol": "CN:920418",
+    "ticker": "920418"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "6b0c0f2172a15bf1b6147bd58a3293f83cc63eec9184899931e80cf702e497af"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于14.5至16.5元且中报确认核心客户、毛利率和自由现金流未恶化",
-      "max_weight": 0.03
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-18",
-      "reason": "复核2026年中报、汇兑损失、客户项目和自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "进入有安全边际的买入复核区间，需先验证长期商业价值未受损"
+      "active": true,
+      "condition": {
+        "date": "2026-08-18"
+      },
+      "reason": "复核2026年中报、汇兑损失、客户项目和自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "进入减仓或不应追高区间，除非增长与资本回报同步上修"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "进入有安全边际的买入复核区间，需先验证长期商业价值未受损",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "进入减仓或不应追高区间，除非增长与资本回报同步上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-18T04:09:17+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,113 +1,96 @@
 {
-  "symbol": "CN:600392",
-  "market": "CN",
-  "ticker": "600392",
-  "name": "盛和资源",
-  "company_name": "盛和资源",
-  "updated_at": "2026-07-09T13:00:00+08:00",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察",
-  "status": "active",
-  "current_thesis": "盛和资源具备稀土海外资源、冶炼分离、锆钛独居石和循环经济协同，受益于稀土价格中枢修复和供给政策约束；但当前股价已反映较多景气上行与海外项目预期，安全边际不足。2026-07-09 盘中复核：现价 23.33 元、市值约 408.93 亿元、PE(TTM) 约 40.97、PB 约 3.18，仍位于 17-23 元观察/小仓与 23-27 元持有不加仓的交界下沿，维持观察不买入，结论与区间不变。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    18,
-    23
-  ],
-  "buy_zone": [
-    14,
-    17
-  ],
-  "sell_or_reduce_zone": [
-    27,
-    35
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盛和资源",
+    "security_status": "active",
+    "symbol": "CN:600392",
+    "ticker": "600392"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "74089c54f6dda2ca6f842e6a0173c3b27cfe8a47e89e938529583fbeb803e6ec"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price < 12",
-      "action": "分批积极买入",
-      "max_weight": 0.08,
-      "reason": "低于悲观情景估值下沿，周期和项目风险已有较大折价。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报中的毛利率、现金流、存货、预付款和海外项目进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "12 <= price < 14",
-      "action": "积极买入",
-      "max_weight": 0.06,
-      "reason": "进入强吸引力区间，赔率显著改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报和稀土价格三季度均价，判断全年利润中枢。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "14 <= price < 17",
-      "action": "建立首笔仓位",
-      "max_weight": 0.04,
-      "reason": "具备安全边际，可承担稀土价格波动。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入有安全边际的买入区间，需要复核稀土价格和现金流后决定首仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "17 <= price <= 23",
-      "action": "观察或小仓持有",
-      "max_weight": 0.02,
-      "reason": "处于合理价值区间，需等待行业数据继续验证。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入强吸引力买入区间，可提高目标仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "23 < price < 27",
-      "action": "持有不加仓",
-      "max_weight": 0.01,
-      "reason": "赔率一般，当前价格已反映较多景气修复。"
-    },
-    {
-      "condition": "price >= 27",
-      "action": "减仓或回避",
-      "max_weight": 0,
-      "reason": "高于合理价格区间，除非利润和资源项目显著上修。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "进入不应追高区间，需考虑减仓或暂停买入。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入有安全边际的买入区间，需要复核稀土价格和现金流后决定首仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入强吸引力买入区间，可提高目标仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "reason": "进入不应追高区间，需考虑减仓或暂停买入。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报中的毛利率、现金流、存货、预付款和海外项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报和稀土价格三季度均价，判断全年利润中枢。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "氧化镨钕月均价",
-    "镨钕金属价格",
-    "氧化镝和氧化铽价格",
-    "稀土开采和冶炼分离总量控制政策",
-    "进口稀土矿冶炼分离政策口径",
-    "单季度毛利率",
-    "经营现金流净额/归母净利润",
-    "存货余额和存货跌价准备",
-    "预付款项余额",
-    "Peak Rare Earths 和坦桑尼亚恩古拉项目进度",
-    "锆钛业务产销量和毛利率",
-    "资本开支和并购支出"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

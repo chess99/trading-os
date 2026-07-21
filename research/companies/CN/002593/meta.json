@@ -1,116 +1,105 @@
 {
-  "symbol": "CN:002593",
-  "market": "CN",
-  "ticker": "002593",
-  "name": "日上集团",
-  "company_name": "厦门日上集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是商用车车轮出口与钢结构工程制造双主业企业，2025年利润和海外收入修复明显，2026Q1延续改善；但ROE仍低、锻造铝轮毛利率尚未证明、钢结构项目属性和海外贸易摩擦风险较高。当前股价4.09元接近合理价值上沿，缺少安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    3.0,
-    3.8
-  ],
-  "buy_zone": [
-    2.4,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "日上集团",
+    "security_status": "active",
+    "symbol": "CN:002593",
+    "ticker": "002593"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8aa8b2babd738710a48b3105bb645646b8f140cf5f2d801dc34609669c327b2b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格",
-      "action": "观察",
-      "position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价<=2.40元且基本面未恶化",
-      "action": "强吸引力买入",
-      "position": "2.0%-3.0%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价2.41-2.80元",
-      "action": "有安全边际买入",
-      "position": "1.0%-2.0%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价2.81-3.80元",
-      "action": "仅跟踪仓",
-      "position": "0%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价>=3.81元",
-      "action": "不追高",
-      "position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入有安全边际买入区",
-      "action": "进入有安全边际买入区，复核半年报后可建1%-2%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入强吸引力买入区",
-      "action": "进入强吸引力买入区，若基本面未恶化可提高至2%-3%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "进入不应追高/减仓观察区",
-      "action": "进入不应追高/减仓观察区"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证海外收入、车轮毛利率、钢结构回款和经营现金流是否延续改善",
-      "action": "复查海外收入、车轮毛利率、钢结构回款和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证海外产能爬坡、ROE和现金流质量",
-      "action": "复查海外产能爬坡、ROE和经营现金流"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "重新评估全年收入结构、利润质量、分红和估值区间",
-      "action": "完整复核收入结构、利润质量、分红和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "进入不应追高/减仓观察区",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "国外收入及同比增速",
-    "车轮销量、产量和产能利用率",
-    "钢制车轮、锻造铝轮、钢结构分部毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款、合同资产及回款周期",
-    "ROE是否提升至8%以上",
-    "海外基地资本开支、产能爬坡和订单覆盖率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

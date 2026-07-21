@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:600742",
-  "ticker": "600742",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "富维股份",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "低PB、高分红和2025-2026年新增项目定点提供下行支撑，但2026Q1收入利润下滑、客户集中和低ROE限制估值修复；现价处于合理区间，等待更低价格或半年报验证订单兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.8,
-    8.6
-  ],
-  "buy_zone": [
-    5.8,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富维股份",
+    "security_status": "active",
+    "symbol": "CN:600742",
+    "ticker": "600742"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d6bfee76f00198d69f3ee55fdadd1b1a0b6b93df6592e095d71acd64d0638045"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至6.5元以下，且未出现重大项目取消、毛利率继续快速下滑或监管问询升级",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流与项目转化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报确认收入增速转正、毛利率不低于9%、经营现金流保持净流入",
-      "action": "可提高至小仓配置",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年分红/订单兑现趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.8元但ROE仍低于6%，新能源客户收入占比和项目量产无实质改善",
-      "action": "降低仓位或退出观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-02-28"
+      },
+      "reason": "跟踪2026年项目定点量产进展和全年业绩预告",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入买入区间上沿，低PB和股息率提供更清晰安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "超过基础合理价值区间，需要重新评估ROE与新能源项目兑现是否足以支撑估值修复",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入买入区间上沿，低PB和股息率提供更清晰安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "超过基础合理价值区间，需要重新评估ROE与新能源项目兑现是否足以支撑估值修复"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、现金流与项目转化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年分红/订单兑现趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-02-28",
-      "reason": "跟踪2026年项目定点量产进展和全年业绩预告"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

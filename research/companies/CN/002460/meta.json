@@ -1,140 +1,101 @@
 {
-  "symbol": "CN:002460",
-  "name": "赣锋锂业",
-  "market": "CN",
-  "ticker": "002460",
-  "company_name": "赣锋锂业",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "updated_at": "2026-07-17T20:57:23+08:00",
-  "conclusion": "2026年半年度业绩预告验证锂盐价量、资源降本和储能放量带来的盈利修复；48.48元已进入分批买入区，但锂价回落、供给弹性和投资收益增厚要求控制仓位，不能把半年利润机械年化。",
-  "current_thesis": "赣锋锂业的资源、锂盐、电池与回收一体化优势仍在，2026H1扣非预盈30-42亿元证明主业修复；后续价值取决于锂价在12-15万元/吨中枢下的持续现金利润、海外项目爬坡和储能业务回款质量，适合分批而非重仓押注锂价。",
-  "current_rating": "buy",
-  "quality_rating": "A-",
-  "valuation_rating": "有吸引力但需周期折价",
-  "fair_value_range": [
-    56,
-    72
-  ],
-  "fair_value_method": "基于2026-2027年正常化利润70-90亿元的周期中枢PE、2.4-3.1倍PB和SOTP三法交叉，单位为CNY/股。",
-  "buy_zone": [
-    46,
-    52
-  ],
-  "strong_buy_zone": [
-    38,
-    44
-  ],
-  "buy_zone_reason": "46-52元低于合理价值下沿并已对锂价回落计入一定折价；38-44元在经营现金流和项目进度未恶化时提供更厚周期安全垫。",
-  "sell_or_reduce_zone": [
-    75,
-    85
-  ],
-  "sell_or_reduce_reason": "75元以上若全年利润和经营现金流没有同步上修，价格将超过本次合理价值上沿，风险收益转弱。",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赣锋锂业",
+    "security_status": "active",
+    "symbol": "CN:002460",
+    "ticker": "002460"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "62031109ecd71abe6c2e8c1644a669b8bd49b81f79bdaf292314c6c288d3e0f8"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "ae6be05187671d45408b37b79fdbe300800e1718a25edc05667730a687f92327"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "initial",
-      "price_range": [
-        46,
-        52
-      ],
-      "target_weight": 0.025,
-      "max_weight": 0.06,
-      "condition": "股价位于标准买入区且半年度预告的经营修复逻辑未被正式财报推翻",
-      "action": "可分批建立1.5%-2.5%仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报披露后复查扣非利润、经营现金流、锂盐销量与吨毛利、电池业务和净负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "buy",
-      "price_range": [
-        44,
-        46
-      ],
-      "target_weight": 0.035,
-      "max_weight": 0.06,
-      "condition": "价格继续回落但锂价未持续跌破12万元/吨，半年报现金流和项目进度未恶化",
-      "action": "分批加至2.5%-3.5%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后确认全年利润中枢和项目爬坡节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "strong_buy",
-      "price_range": [
-        38,
-        44
-      ],
-      "target_weight": 0.05,
-      "max_weight": 0.06,
-      "condition": "股价进入38-44元强吸引力区间且经营现金流、核心项目和锂价中枢未恶化",
-      "action": "若基本面未恶化可提高至3%-5%，验证后上限6%"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 46.0
+      },
+      "reason": "接近强买区上沿，可复核锂价、半年报现金流和项目进度后加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "zone": "reduce",
-      "price_range": [
-        75,
-        85
-      ],
-      "target_weight": 0.02,
-      "max_weight": 0.06,
-      "condition": "股价高于75元且全年利润或经营现金流没有同步上修",
-      "action": "缺少利润上修时逐步减仓，不追高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 44.0
+      },
+      "reason": "进入强吸引力区间，若基本面未恶化，可提高目标仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "超过合理价值上沿，应检查估值是否先于利润和现金流兑现。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 46,
-      "currency": "CNY",
-      "reason": "接近强买区上沿，可复核锂价、半年报现金流和项目进度后加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 44,
-      "currency": "CNY",
-      "reason": "进入强吸引力区间，若基本面未恶化，可提高目标仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "currency": "CNY",
-      "reason": "超过合理价值上沿，应检查估值是否先于利润和现金流兑现。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "半年报披露后复查扣非利润、经营现金流、锂盐销量与吨毛利、电池业务和净负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后确认全年利润中枢和项目爬坡节奏。"
-    }
-  ],
-  "review_plan": "固定复查2026年半年报和三季报；触发式复查条件包括股价低于44元、高于75元、SMM电池级碳酸锂均价连续4周低于12万元/吨、或海外核心资源项目出现重大延期。",
-  "key_risks": [
-    "碳酸锂价格大幅回落并连续一个月低于12万元/吨",
-    "海外资源项目延期、成本超预算或政策风险上升",
-    "电池业务扩张快于订单和现金回款，导致库存与资本开支压力",
-    "非经常性收益和公允价值变动占利润比例过高，主业现金流未验证",
-    "汇率、地缘政治和贸易壁垒影响海外资产与销售",
-    "固态电池商业化慢于市场预期导致估值溢价回吐"
-  ],
-  "sources": [
-    "https://pdf.dfcfw.com/pdf/H2_AN202603301820873426_1.pdf",
-    "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12277069&stockid=002460",
-    "https://www.stcn.com/article/detail/3871271.html",
-    "https://www.moomoo.com/hans/stock/002460-SZ",
-    "https://hq.smm.cn/h5/Li2CO3",
-    "https://www.news.cn/fortune/20260610/24116a9f8ff14182a8c052eb4d380392/c.html",
-    "https://pdf.dfcfw.com/pdf/H3_AP202605031821950453_1.pdf",
-    "https://data.eastmoney.com/notices/detail/002460/AN202607141826957400.html",
-    "https://data.eastmoney.com/notices/detail/002460/AN202607101826878491.html",
-    "https://push2.eastmoney.com/api/qt/stock/get?secid=0.002460&fields=f43,f44,f45,f46,f47,f48,f49,f50,f57,f58,f60,f86,f116,f117,f162,f167",
-    "https://qt.gtimg.cn/q=sz002460",
-    "https://new-energy.smm.cn/content/14042/103999601"
-  ],
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

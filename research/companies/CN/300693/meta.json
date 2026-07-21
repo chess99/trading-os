@@ -1,99 +1,115 @@
 {
-  "symbol": "CN:300693",
-  "market": "CN",
-  "ticker": "300693",
-  "name": "盛弘股份",
-  "company_name": "深圳市盛弘电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是电力电子平台型企业，工业配套电源/AIDC、充换电、储能PCS、电池检测构成多业务组合；质量较好但38元已接近合理价值中枢，等待32元以下更有安全边际的买点。",
-  "quality_rating": "A-",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    35,
-    45
-  ],
-  "buy_zone": [
-    28,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盛弘股份",
+    "security_status": "active",
+    "symbol": "CN:300693",
+    "ticker": "300693"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1761328d4a573c97d29ccc8a45ce4da08e4795c932fd6f6a5c06866797729895"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于45元且无超预期订单或业绩验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看工业配套电源/AIDC、海外收入、充电设备毛利率和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于35-45元合理区间且基本面正常",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断全年股权激励触发值和目标值达成概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入28-32元且2026H1或三季报验证收入、毛利率、现金流未恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，验证扣非净利润是否达到5.1482亿元触发值或5.6162亿元目标值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元且核心增长逻辑未破坏",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入有安全边际买入区间，复核半年报和订单后可考虑第一笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入强吸引力区间，若基本面未破坏可提高目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "超过合理价值上沿，不应追高，已有仓位需复核预期是否充分反映",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "进入减仓或不建仓区，除非AIDC或海外业务出现可验证超预期",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入有安全边际买入区间，复核半年报和订单后可考虑第一笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入强吸引力区间，若基本面未破坏可提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "超过合理价值上沿，不应追高，已有仓位需复核预期是否充分反映"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "进入减仓或不建仓区，除非AIDC或海外业务出现可验证超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看工业配套电源/AIDC、海外收入、充电设备毛利率和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断全年股权激励触发值和目标值达成概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，验证扣非净利润是否达到5.1482亿元触发值或5.6162亿元目标值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "工业配套电源收入增速和毛利率",
-    "AIDC相关订单、产品进展和客户验证",
-    "海外收入占比及海外毛利率",
-    "电动汽车充电设备收入增速和毛利率",
-    "新能源电能变换设备收入是否恢复增长",
-    "经营活动现金流量净额/归母净利润",
-    "应收账款和存货合计占收入比例",
-    "2026年扣非净利润相对股权激励触发值5.1482亿元和目标值5.6162亿元的进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

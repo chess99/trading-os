@@ -1,59 +1,86 @@
 {
-  "symbol": "CN:600892",
-  "ticker": "600892",
-  "name": "大晟文化",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "收入端低基数修复和撤销退市风险警示改善了尾部风险，但公司仍处扣非亏损、经营现金流为负、净资产安全垫极薄的阶段；当前市值已明显透支短剧、游戏和国资协同预期，安全边际不足。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    0.8,
-    1.4
-  ],
-  "buy_zone": [
-    0.6,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    2.0,
-    2.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大晟文化",
+    "security_status": "active",
+    "symbol": "CN:600892",
+    "ticker": "600892"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "8f1386588d1b71799cd1201bdea8a01bb805732e7bf6de9a1c515c8a7d747ae5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "不持有；仅在股价进入0.60-0.80元且半年报或三季报同时证明净资产安全垫、经营现金流和毛利率改善后，才重新评估小仓位观察。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入基准买入观察区上沿，需要重新核验业务修复和净资产安全垫。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "核验2026年半年报正式数据，重点看归母净资产、经营现金流、毛利率和亏损收窄情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "高于乐观情景估值上沿附近，若持有应减持或继续回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "核验2026年半年报正式数据，重点看归母净资产、经营现金流、毛利率和亏损收窄情况。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "核验2026年三季报是否出现连续改善，并决定是否从回避调整为观察。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "核验2026年三季报是否出现连续改善，并决定是否从回避调整为观察。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入基准买入观察区上沿，需要重新核验业务修复和净资产安全垫。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "高于乐观情景估值上沿附近，若持有应减持或继续回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

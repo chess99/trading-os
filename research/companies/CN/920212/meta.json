@@ -1,99 +1,115 @@
 {
-  "symbol": "CN:920212",
-  "market": "CN",
-  "ticker": "920212",
-  "name": "智新电子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "小而专的连接器及线缆组件公司，资产负债表稳健、消费电子和汽车新能源业务在2026Q1恢复增长，但2025扣非利润很弱、客户集中和应收减值风险真实发生；当前9.22元缺少安全边际，适合观察等待。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.5
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "智新电子",
+    "security_status": "active",
+    "symbol": "CN:920212",
+    "ticker": "920212"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "24c3000bb9fb4abe99c1c781a561d51e5ee87c99a4015663fa6084c200ab4b0c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current price 8.0-10.5",
-      "action": "watch only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 7.2 and no new credit impairment",
-      "action": "initial position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price <= 6.2 and fundamentals stable",
-      "action": "add to full small-cap position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price > 11.5 without earnings upgrade",
-      "action": "reduce or avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "review for first 2% position",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "review for 4%-5% position if impairment risk is contained",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "do not chase",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "reduce or avoid unless fundamentals beat materially",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "action": "review for first 2% position",
-      "reason": "review for first 2% position"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "action": "review for 4%-5% position if impairment risk is contained",
-      "reason": "review for 4%-5% position if impairment risk is contained"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "action": "do not chase",
-      "reason": "do not chase"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "action": "reduce or avoid unless fundamentals beat materially",
-      "reason": "reduce or avoid unless fundamentals beat materially"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "review 2026 interim report for revenue, margin, impairments and customer concentration",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "review 2026 third-quarter report for normalized profit recovery",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "action": "review 2026 annual report and reassess fair value",
-      "reason": "???????"
-    }
-  ],
-  "notes": [
-    "2026-07-17 close 9.22 CNY/share; fair value 8.0-10.5; buy below 7.2; strong below 6.2; current decision watch, first position 0%."
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

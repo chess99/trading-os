@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:601996",
-  "ticker": "601996",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "丰林集团",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "资产端有现金、低杠杆、180万立方米人造板产能和约20万亩林地支撑，但2025年和2026Q1持续亏损，2026H1又受税务事项冲击，当前更适合作为资产型反转观察标的，等待扣非经营改善或价格跌出安全边际。",
-  "fair_value_range": [
-    1.65,
-    2.25
-  ],
-  "buy_zone": [
-    1.45,
-    1.65
-  ],
-  "sell_or_reduce_zone": [
-    2.55,
-    2.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "丰林集团",
+    "security_status": "active",
+    "symbol": "CN:601996",
+    "ticker": "601996"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "5da4aaa5d206cfaf7a310190d780f68b293304a932987f199e3b8c26916b1352"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入1.45-1.65元且2026半年报确认税务事项未继续扩散",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、税务事项和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非亏损收窄且经营现金流转正",
-      "action": "上调至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报毛利率、扣非亏损和库存周转",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.55元但扣非净利润仍为负",
-      "action": "减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.65
+      },
+      "reason": "进入压力后净资产折价区间，可重新评估安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.55
+      },
+      "reason": "高于乐观情景下沿，若基本面未改善则风险收益不佳",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.65,
-      "reason": "进入压力后净资产折价区间，可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 2.55,
-      "reason": "高于乐观情景下沿，若基本面未改善则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、税务事项和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报毛利率、扣非亏损和库存周转"
-    }
-  ],
-  "key_monitoring_items": [
-    "2026年半年度业绩预告兑现情况",
-    "税务事项是否继续扩散",
-    "经营现金流和应收账款变化",
-    "E0级及无醛添加板材销售占比",
-    "刨花板库存和价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

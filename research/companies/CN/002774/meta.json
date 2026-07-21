@@ -1,122 +1,132 @@
 {
-  "symbol": "CN:002774",
-  "market": "CN",
-  "ticker": "002774",
-  "name": "快意电梯",
-  "company_name": "快意电梯股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司资产负债表较稳，旧梯更新、海外和维保有中期机会，但2025年收入和利润下滑、2026Q1扣非亏损，当前15.50元附近对应约73倍2025归母PE和4.3倍PB，显著高于可由主业现金流和ROE支撑的价值。合理价值约6.0-8.5元，只有价格回到安全边际区或经营连续改善后才考虑。",
-  "quality_rating": "中等偏低",
-  "valuation_rating": "明显高估",
-  "fair_value_range": [
-    6.0,
-    8.5
-  ],
-  "buy_zone": [
-    0,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "快意电梯",
+    "security_status": "active",
+    "symbol": "CN:002774",
+    "ticker": "002774"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "51ac80cee40de462d3cf694fc1332abe44e627fcb5b86052836dac368a149318"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.5元，且无重大财务造假、退市、流动性或控制权风险",
-      "action": "watchlist_buy",
-      "max_weight": 0.01,
-      "target_position": "0.5%-1.0%"
-    },
-    {
-      "condition": "股价低于6.5元，且连续两个季度收入同比转正、毛利率改善、经营现金流转正",
-      "action": "increase_small",
-      "max_weight": 0.015,
-      "target_position": "1.0%-1.5%"
-    },
-    {
-      "condition": "股价高于11元，且扣非净利润未恢复到1亿元以上或ROE未恢复到10%以上",
-      "action": "reduce_or_avoid",
-      "max_weight": 0,
-      "target_position": "0%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入有条件研究买入区，需复核最近两个季度经营改善",
-      "note": "进入有条件研究买入区，需复核最近两个季度经营改善"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入安全边际买入区，可评估0.5%-1.0%试探仓",
-      "note": "进入安全边际买入区，可评估0.5%-1.0%试探仓"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "明显高于当前基本面价值，若持有应复核减仓",
-      "note": "明显高于当前基本面价值，若持有应复核减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复核2026年半年度报告是否验证收入、毛利率和现金流改善",
-      "condition": "发布2026年半年度报告或三季度报告"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核旧梯更新、轨交、海外项目的订单质量和盈利能力",
-      "condition": "旧梯更新、轨交、海外项目出现重大中标或重大亏损项目"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核安装维保是否成为更稳定的后市场收入来源",
-      "condition": "安装维保收入占比提升至20%以上或出现明显下滑"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核毛利率是否进入改善或恶化趋势",
-      "condition": "毛利率连续两个季度低于20%或高于25%"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核控股股东和实际控制人质押变化对股价和治理风险的影响",
-      "condition": "控股股东或实际控制人质押比例显著变化"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "复核产业基金和资本开支是否压低ROE或产生减值风险",
-      "condition": "产业基金后续大额出资或出现减值迹象"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入有条件研究买入区，需复核最近两个季度经营改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入安全边际买入区，可评估0.5%-1.0%试探仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "明显高于当前基本面价值，若持有应复核减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "电梯业务毛利率",
-    "安装维保收入及占比",
-    "国外收入及国外毛利率",
-    "合同负债和订单质量",
-    "经营现金流净额/净利润",
-    "ROE",
-    "资本开支和产业基金出资节奏",
-    "控股股东及实际控制人质押数量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

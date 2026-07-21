@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688339",
-  "market": "CN",
-  "ticker": "688339",
-  "name": "亿华通",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "亿华通具备国内燃料电池系统先发技术与示范应用积累，但2025年扣除后收入大幅下滑、系统业务负毛利、应收账款长账龄化和持续亏损尚未改善。当前约16.81元价格已隐含较乐观的政策放量预期，缺乏安全边际，宜观察等待毛利率、回款和现金流拐点。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.0,
-    12.0
-  ],
-  "buy_zone": [
-    0.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "亿华通",
+    "security_status": "active",
+    "symbol": "CN:688339",
+    "ticker": "688339"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5ca6e6fd6bbef74ddda93dabd370054ef3ffc0a984fd1a13a6b260c13f11230d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于6.5元，且最近两个季度经营现金流合计不低于-5000万元，同时燃料电池系统毛利率不再恶化",
-      "action": "试探建仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的扣除后收入、系统毛利率、经营现金流和应收账款账龄",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "燃料电池系统毛利率连续两个季度回正，扣除后营业收入同比增长超过30%，主要长账龄应收出现实质回款",
-      "action": "提高观察仓位",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否确认收入和现金流拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣除后年度收入重新超过5亿元且经营现金流转正，重新评估是否进入核心池",
-      "action": "复核后再加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、审计意见、减值和持续经营披露",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入初始买入区，需要同步复核毛利率、回款和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过减仓/回避区，估值已接近乐观情景下沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入初始买入区，需要同步复核毛利率、回款和现金流"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过减仓/回避区，估值已接近乐观情景下沿"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的扣除后收入、系统毛利率、经营现金流和应收账款账龄"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否确认收入和现金流拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、审计意见、减值和持续经营披露"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

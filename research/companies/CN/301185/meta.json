@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:301185",
-  "ticker": "301185",
-  "name": "鸥玛软件",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "鸥玛软件是考试信息化细分供应商，资产负债表轻、现金充裕、客户场景有黏性，但收入体量小且项目制波动明显。2026Q1 下滑使增长兑现仍需验证，2026-07-15 约 15.76 元价格接近基准价值上沿，暂列观察而非买入。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    0.0,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    19.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鸥玛软件",
+    "security_status": "active",
+    "symbol": "CN:301185",
+    "ticker": "301185"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "c1b37c40c1ab2353734a83423895fc2736b59e25d301855c973b5e6c66401366"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 11.5 元且 2026 半年报确认延后项目恢复、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点检查延后项目确认、收入恢复和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 10.0 元且全年净利润预期不低于 5500 万元、现金资产未被低效消耗",
-      "action": "提高至小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，判断全年利润是否能回到正常化区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 19.0 元但利润预测未上修或 2026 全年利润低于 5000 万元",
-      "action": "不买入或退出观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，更新估值基准和治理变化影响",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入初始买入区间，需要结合 2026 半年报验证项目恢复",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "接近绝对估值保守区间，可复核是否具备更高安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "进入乐观情景估值区间，若盈利未上修应降低预期或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入初始买入区间，需要结合 2026 半年报验证项目恢复"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "接近绝对估值保守区间，可复核是否具备更高安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "进入乐观情景估值区间，若盈利未上修应降低预期或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点检查延后项目确认、收入恢复和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，判断全年利润是否能回到正常化区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，更新估值基准和治理变化影响"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "key_metrics": [
-    "2026 半年报收入和归母净利润是否恢复增长",
-    "经营现金流净额是否接近或高于净利润",
-    "行业考试项目新增与交付节奏",
-    "控制权变更后的关联交易和资本配置",
-    "现金及交易性金融资产使用效率"
-  ],
-  "risks": [
-    "项目验收延后导致季度和年度利润波动",
-    "客户预算和采购节奏不确定",
-    "AI 与大厂进入考试评价场景带来的技术替代",
-    "治理变化后资本配置效率下降",
-    "当前估值对增长兑现要求较高"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

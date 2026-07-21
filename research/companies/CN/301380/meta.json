@@ -1,78 +1,105 @@
 {
-  "symbol": "CN:301380",
-  "ticker": "301380",
-  "name": "挖金客",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "挖金客具备企业通信和数字营销的大客户服务基础，但2025年至2026Q1利润连续下滑、毛利率承压，当前估值已经隐含明显修复预期，缺乏安全边际，适合观察等待利润率和现金流改善。",
-  "fair_value_range": [
-    16,
-    22
-  ],
-  "buy_zone": [
-    12,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    30
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "挖金客",
+    "security_status": "active",
+    "symbol": "CN:301380",
+    "ticker": "301380"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "bb2aec76e1ff7dcd016a106eed5c53702d0ca3d2337eea5c13f05f2a87cc3dca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于15元且2026半年度归母净利润降幅明显收窄、经营现金流改善后，允许建立观察仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看利润降幅、毛利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于12元且移动信息化与数字营销毛利率没有继续恶化，可提高为小仓位配置。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认数字营销投放效果问题是否缓解。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于25元且年化归母净利润仍低于6000万元，不新增仓位并考虑退出观察仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期盈利能力和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入初步买入观察区，需要结合半年报验证利润率和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入较有安全边际区间，若基本面未恶化可考虑小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "估值进入减仓或不参与区，除非利润恢复至年化6000万元以上。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入初步买入观察区，需要结合半年报验证利润率和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入较有安全边际区间，若基本面未恶化可考虑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "reason": "估值进入减仓或不参与区，除非利润恢复至年化6000万元以上。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看利润降幅、毛利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认数字营销投放效果问题是否缓解。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期盈利能力和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

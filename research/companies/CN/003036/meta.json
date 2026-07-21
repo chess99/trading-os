@@ -1,130 +1,123 @@
 {
-  "symbol": "CN:003036",
-  "market": "CN",
-  "ticker": "003036",
-  "name": "泰坦股份",
-  "company_name": "浙江泰坦股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司是有真实制造基础的纺织机械企业，但2025年收入和利润双降，2026Q1利润修复和现金流质量尚不足以证明进入高质量上行周期；以2026-07-10可核验收盘价79.13元估算，市值约171亿元，对应2025年归母净利润约361倍PE、2026Q1末净资产约11.4倍PB，显著透支基本面，当前不具备买方安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "极贵",
-  "fair_value_range": [
-    10,
-    18
-  ],
-  "buy_zone": [
-    0,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰坦股份",
+    "security_status": "active",
+    "symbol": "CN:003036",
+    "ticker": "003036"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c9e088aada01b3a2ca47db55bc4ef4a9f8752b61c66bd5102f2e2c2769350147"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于40元，且没有连续两个季度订单、毛利率、扣非利润率和经营现金流同步改善",
-      "action": "保持0仓位，不做基本面买入",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价在25元至40元之间，且2026年后续季度收入增长但现金流未验证",
-      "action": "最多0-1%观察仓，仅用于跟踪",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价在12元至25元之间，且扣非净利率回升至3%以上、经营现金流改善",
-      "action": "最多1-2%研究仓，等待更明确的利润修复",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于12元，且连续两个季度收入增长、扣非净利率和经营现金流同步改善",
-      "action": "可建立2-4%观察仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价低于10元，且ROE修复至8%-10%、海外或高端设备订单持续兑现",
-      "action": "可提高至4-6%，仍按周期制造股管理",
-      "max_weight": 0.06
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "unit": "CNY/share",
-      "reason": "25元以下开始接近重新研究区，但仍高于合理价值中枢",
-      "action": "重新检查估值和基本面是否已进入可研究区"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "unit": "CNY/share",
-      "reason": "12元以下进入可买观察区，需要同步验证基本面改善",
-      "action": "若基本面改善同步出现，启动买入评估"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "unit": "CNY/share",
-      "reason": "40元以上显著透支当前利润和净资产基础",
-      "action": "维持0仓位或减仓，不按基本面买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报披露后验证收入修复质量",
-      "action": "复核收入增长是否转化为扣非利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司披露重大订单、海外订单、高端设备订单或募投项目投产进展",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报和订单进展可验证增长来源",
-      "action": "更新增长来源和产能回报判断"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "整体毛利率连续两个季度回升至27%以上",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证毛利率和扣非利润率修复",
-      "action": "复核盈利修复是否可持续"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "扣非净利率回升至5%以上或ROE回升至8%以上",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "中报可复核ROE是否进入可投资区间",
-      "action": "重估质量评级和合理估值上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "condition": "经营现金流连续两个季度明显弱于净利润，或应收账款、存货异常上升",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "长期复核现金流、周转和募投回报",
-      "action": "下调财务质量和仓位上限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "25元以下开始接近重新研究区，但仍高于合理价值中枢",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "12元以下进入可买观察区，需要同步验证基本面改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "40元以上显著透支当前利润和净资产基础",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "新签订单和在手订单",
-    "纺纱设备、织造设备收入增速和结构",
-    "整体毛利率及纺纱设备毛利率",
-    "扣非净利率",
-    "经营现金流净额/归母净利润",
-    "应收账款和存货周转",
-    "境外收入占比和境外毛利率",
-    "ROE",
-    "募投项目达产和资本开支回报"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

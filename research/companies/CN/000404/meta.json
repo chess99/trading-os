@@ -1,103 +1,106 @@
 {
-  "symbol": "CN:000404",
-  "market": "CN",
-  "ticker": "000404",
-  "name": "长虹华意",
-  "company_name": "长虹华意",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长虹华意是全球冰箱压缩机龙头之一，制造规模、客户认证和海外布局构成中等偏强护城河；但行业成熟、净利率低、受下游白电客户和上游原材料夹击，当前价格安全边际不足，适合等待回落至买入区或验证商用压缩机与海外业务利润率改善后再提高仓位。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    6.8,
-    8.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.6
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长虹华意",
+    "security_status": "active",
+    "symbol": "CN:000404",
+    "ticker": "000404"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "5140132242b9297e0c76c9a34543d3bb7352c92fbea6dd177df1ec189fdced1a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格回落至 6.60 元以下，且无业绩或治理负面公告",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "进入保守买入区上沿，安全边际开始出现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报的收入、毛利率、海外业务和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至 5.80 元以下，且毛利率和订单未恶化",
-      "action": "提高至中等仓位",
-      "max_weight": 0.03,
-      "reason": "对应成熟制造周期股低估区，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报和家电需求、原材料价格变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度商用压缩机或海外业务利润率改善",
-      "action": "允许加至最高仓位",
-      "max_weight": 0.05,
-      "reason": "利润结构改善可提高合理估值中枢"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "触及买入区上沿，可评估建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于 8.80 元且盈利预测没有上修",
-      "action": "逐步减仓",
-      "max_weight": 0.02,
-      "reason": "价格进入减仓区，成熟制造业务安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "触及深度价值区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "进入减仓区，需检查是否有足够业绩上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.2
+      },
+      "reason": "显著高于基准合理价值，除非乐观情景兑现否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "触及买入区上沿，可评估建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "触及深度价值区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "进入减仓区，需检查是否有足够业绩上修支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 10.2,
-      "reason": "显著高于基准合理价值，除非乐观情景兑现否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报的收入、毛利率、海外业务和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报和家电需求、原材料价格变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比和环比",
-    "单季度毛利率和压缩机业务毛利率",
-    "冰箱冰柜压缩机销量和产能利用率",
-    "商用压缩机收入、毛利率和客户认证进展",
-    "海外收入占比、海外基地开工率和汇率损益",
-    "铜、铝、钢价格指数",
-    "存货周转天数和应收账款周转天数",
-    "现金分红方案、派息率和股息率",
-    "海立股份、东贝集团的毛利率、净利率和估值差"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

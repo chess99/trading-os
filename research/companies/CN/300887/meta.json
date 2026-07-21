@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:300887",
-  "ticker": "300887",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "谱尼测试",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "谱尼测试具备综合检测资质、实验室网络和品牌公信力，但2025年仍亏损且信用减值压力明显；2026Q1亏损收窄和现金流改善值得跟踪，当前价格相对基准估值安全边际不足，先观察盈利修复斜率。",
-  "fair_value_range": [
-    5.8,
-    7.6
-  ],
-  "buy_zone": [
-    4.6,
-    5.4
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "谱尼测试",
+    "security_status": "active",
+    "symbol": "CN:300887",
+    "ticker": "300887"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "b83201fac39044e77b1af0ee5d359677e9ce0b3a2e19df6b83ba5250e6b5e986"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "观察期内不建仓，等待2026H1收入恢复、亏损显著收窄且经营现金流继续为正。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "预计披露2026年半年报，核验收入恢复、亏损收窄、现金流和信用减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价进入4.6-5.4元且无新增合规或减值风险，可建立跟踪仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘2026年三季报，判断全年是否具备接近盈亏平衡的可能。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026H1后确认新兴业务放量、费用率下降且2027年盈利可见度提高，可提升为小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入买入观察区，若基本面未恶化可重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过基准估值上沿，若盈利未兑现应考虑回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入买入观察区，若基本面未恶化可重新评估建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过基准估值上沿，若盈利未兑现应考虑回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "预计披露2026年半年报，核验收入恢复、亏损收窄、现金流和信用减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘2026年三季报，判断全年是否具备接近盈亏平衡的可能。"
-    }
-  ],
-  "key_metrics": [
-    "2026H1收入同比增速",
-    "归母净利润亏损收窄幅度",
-    "经营活动现金流净额",
-    "信用减值损失",
-    "期间费用率",
-    "生命科学与健康环保毛利率",
-    "新能源汽车、生物医药、医疗器械、特殊行业检测收入转化"
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

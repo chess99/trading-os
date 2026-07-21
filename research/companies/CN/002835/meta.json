@@ -1,102 +1,95 @@
 {
-  "symbol": "CN:002835",
-  "market": "CN",
-  "ticker": "002835",
-  "name": "同为股份",
-  "company_name": "深圳市同为数码科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "同为股份是海外占比极高的视频监控设备和解决方案公司，资产负债表稳健、研发投入较高，但2025利润下滑、2026Q1净利润和经营现金流继续承压，当前11.20元附近缺少足够安全边际。等待8.5元以下或收入、毛利、经营现金流连续修复后再考虑加仓。",
-  "quality_rating": "中等",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同为股份",
+    "security_status": "active",
+    "symbol": "CN:002835",
+    "ticker": "002835"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ea85deb3086e0710c73abf900bf1b17dc847bd85568e1d0c7922068b3b71772c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.5元，且未出现重大海外制裁、毛利率跌破40%、客户回款恶化等负面变化",
-      "action": "分批买入",
-      "target_position": "1%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看境外收入、毛利率、经营现金流、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于8.5-11.5元，且收入增速、毛利率、经营现金流尚未连续两个季度改善",
-      "action": "观察或小仓跟踪",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润和现金流是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长超过10%、毛利率稳定在42%以上、经营现金流/净利润明显修复",
-      "action": "允许在合理价内提高仓位",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估合理价值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于14元且TTM归母净利润未恢复至1.5亿元以上",
-      "action": "减仓或卖出",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "低于估算合理价值下沿，提供约25%以上安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "若利润和现金流未恢复，该价格对应估值偏高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "action": "进入可买区，复核最新季报后分批建仓",
-      "reason": "低于估算合理价值下沿，提供约25%以上安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "action": "进入减仓区，若基本面无显著改善则降低仓位",
-      "reason": "若利润和现金流未恢复，该价格对应估值偏高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看境外收入、毛利率、经营现金流、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润和现金流是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估合理价值和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "境外收入增速",
-    "前端视频监控产品收入和毛利率",
-    "后端视频监控产品收入和毛利率",
-    "综合毛利率",
-    "研发费用率",
-    "经营活动现金流净额",
-    "经营现金流/归母净利润",
-    "应收账款周转",
-    "存货周转",
-    "财务费用和汇兑损益",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

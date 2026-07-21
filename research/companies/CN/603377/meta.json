@@ -1,61 +1,91 @@
 {
-  "symbol": "CN:603377",
-  "market": "CN",
-  "ticker": "603377",
-  "name": "ST东时",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "ST东时的普通股价值取决于预重整转正式重整、债务削减和原股东稀释条款，2.84元已反映较多乐观预期而主业仍在下滑，应回避。",
-  "fair_value_range": [
-    0.8,
-    1.6
-  ],
-  "buy_zone": [
-    0.5,
-    0.8
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    2.4
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST东时",
+    "security_status": "active",
+    "symbol": "CN:603377",
+    "ticker": "603377"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "ac80e59062fe23c6a71eb984b5cf81e69e7ae1ec92319ab2c23dbb264f24b8ab"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "7f124b35eb41e2b556785a3362ef987b92107618f5bf1b9174bc9eb193411512"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于0.50至0.80元，且法院正式受理重整、重整计划对原股东稀释可承受、核心北京业务和真实经营现金流未恶化",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告、归母净资产、报名量和预重整是否转入正式程序",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "重整未正式受理、方案未披露、逻辑恶化或股价高于0.80元，不因下跌机械补仓",
-      "max_weight": 0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告、归母净资产、报名量和预重整是否转入正式程序"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、真实经营现金流和重整计划中的债权清偿及股本稀释",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、真实经营现金流和重整计划中的债权清偿及股本稀释"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.8,
-      "reason": "进入事件仓复核区，只有重整条款和核心经营同时通过验证才考虑极小仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.8
+      },
+      "reason": "进入事件仓复核区，只有重整条款和核心经营同时通过验证才考虑极小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "进入减仓或不应追高区间，当前基本面不足以支撑乐观重整定价"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "进入减仓或不应追高区间，当前基本面不足以支撑乐观重整定价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-20T21:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

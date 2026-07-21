@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:688387",
-  "market": "CN",
-  "ticker": "688387",
-  "name": "信科移动",
-  "company_name": "信科移动",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "技术和产业位置真实，运营商客户与中国信科体系提供长期研发和订单基础；但公司仍处亏损阶段，经营现金流尚未稳定转正，当前约20元以上股价已提前计入6G、5G-A和卫星互联网远期期权，缺乏买入安全边际。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    9.5,
-    13.5
-  ],
-  "buy_zone": [
-    8.5,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    23.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信科移动",
+    "security_status": "active",
+    "symbol": "CN:688387",
+    "ticker": "688387"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "abbe6c8f052b0146bf7b8d3c37ace3e0d716dac4384d099309959795a2a98b65"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于17元且未看到连续两个季度经营现金流改善",
-      "action": "不买入，仅保留研究跟踪",
-      "max_weight": 0.0,
-      "reason": "当前估值已超过乐观情景上沿，缺乏安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点确认收入、毛利率、亏损收窄和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.5元，且收入增速不低于8%、毛利率稳定、亏损继续收窄",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入买入区且基本面开始验证扭亏路径"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和运营商集采进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流改善，5G-A/核心网/卫星互联网订单形成可量化收入贡献",
-      "action": "加至小仓位",
-      "max_weight": 0.015,
-      "reason": "技术期权开始转化为订单和现金流"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入观察买入区，需要复核中报和订单兑现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "公司实现年度扭亏，毛利率稳定在25%以上且研发费用率下降",
-      "action": "提高至上限仓位",
-      "max_weight": 0.02,
-      "reason": "盈利模型从研发投入期进入经营杠杆兑现期"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入深度价值复核区，需判断是否为基本面恶化导致",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "高于减仓/回避区下沿，除非盈利拐点明确，否则不宜加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 23.0
+      },
+      "reason": "超过减仓/回避区上沿，估值严重依赖远期期权",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入观察买入区，需要复核中报和订单兑现"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入深度价值复核区，需判断是否为基本面恶化导致"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "reason": "高于减仓/回避区下沿，除非盈利拐点明确，否则不宜加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 23.0,
-      "reason": "超过减仓/回避区上沿，估值严重依赖远期期权"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点确认收入、毛利率、亏损收窄和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和运营商集采进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "运营商无线主设备与核心网集采份额",
-    "5G-A、通感一体、RedCap、6G原型验证及卫星互联网订单",
-    "营业收入同比增速",
-    "综合毛利率",
-    "研发费用率和研发投入资本化情况",
-    "归母净利润和扣非归母净利润亏损收窄幅度",
-    "经营活动现金流净额",
-    "应收账款、存货和合同资产周转",
-    "境外收入占比和毛利率",
-    "中国信科体系协同项目的订单转化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

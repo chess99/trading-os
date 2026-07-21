@@ -1,98 +1,105 @@
 {
-  "symbol": "CN:603519",
-  "market": "CN",
-  "ticker": "603519",
-  "name": "立霸股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "立霸股份是家电用覆膜板和有机涂层板细分优质供应商，客户质量、现金流和资产负债表较好，但主业增长偏稳态制造，当前价格已接近或高于合理价值区间，适合等待安全边际后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    15.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    20.0
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
-    {
-      "condition": "价格低于12.5元，且半年报收入、毛利率、经营现金流没有恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格低于10.8元，且经营现金流/归母净利润持续大于1",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格高于17.5元且净利润仍仅按预算低个位数增长",
-      "action": "不新增或减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入基础买入区间上沿，需要复核半年报和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入较高安全边际区间，股息率和估值吸引力显著提升"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "超过合理价值区间上沿，需要警惕估值回撤"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、客户集中度和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年预算完成度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红可持续性和估值区间"
-    }
-  ],
-  "valuation": {
-    "base_price": 15.6,
-    "base_price_date": "2026-07-17",
-    "base_price_source": "新浪财经页面时点数据，非交易所收盘确认，置信度中",
-    "methods": [
-      "relative_pe",
-      "normalized_fcf",
-      "scenario_pe"
-    ]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "立霸股份",
+    "security_status": "active",
+    "symbol": "CN:603519",
+    "ticker": "603519"
   },
-  "watch_metrics": [
-    "2026年半年报收入增速",
-    "综合毛利率和覆膜板毛利率",
-    "经营活动现金流净额/归母净利润",
-    "前五大客户销售占比",
-    "分红率和货币资金变化"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "10d3f5f4c18ba6dbce33e0bcc8593e06bc6caeef0e154634dd5439e148605704"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、客户集中度和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年预算完成度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红可持续性和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入基础买入区间上沿，需要复核半年报和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入较高安全边际区间，股息率和估值吸引力显著提升",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "超过合理价值区间上沿，需要警惕估值回撤",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

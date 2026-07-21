@@ -1,110 +1,115 @@
 {
-  "symbol": "CN:002081",
-  "market": "CN",
-  "ticker": "002081",
-  "name": "金螳螂",
-  "company_name": "金螳螂",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金螳螂是建筑装饰行业公装龙头，品牌和订单储备仍有价值，但地产后周期、应收账款和合同资产减值风险尚未完全出清。当前价格接近合理价值区间下沿，适合观察仓，等待2026半年报验证现金流和减值改善后再决定是否加仓。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "neutral_to_slightly_cheap",
-  "fair_value_range": [
-    3.7,
-    4.8
-  ],
-  "buy_zone": [
-    3.3,
-    3.7
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    6.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金螳螂",
+    "security_status": "active",
+    "symbol": "CN:002081",
+    "ticker": "002081"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "f33af5d030fb2b739f57f84412b740449a284090e62ac744c7d9d2ab78193fa8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 4.10 and no new receivable impairment warning",
-      "action": "open_tracking_position",
-      "max_weight": 0.01,
-      "reason": "当前价格位于合理价值区间下半部，但应收账款和合同资产风险仍需半年报验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看经营现金流、应收账款、合同资产和减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price between 3.30 and 3.70 and 2026 interim cash flow and impairment remain controlled",
-      "action": "add_to_watch_core",
-      "max_weight": 0.02,
-      "reason": "买入区提供更高安全边际，且需用经营现金流和减值数据确认不是价值陷阱。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和前三季度经营简报，判断订单与现金流趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "two consecutive reports show improving operating cash flow and stable public decoration orders",
-      "action": "increase_selectively",
-      "max_weight": 0.04,
-      "reason": "只有订单质量、回款和减值同步改善时，才允许提升至策略上限仓位。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估长期盈利中枢和分红能力。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入买入区上沿，复核是否可从观察仓提升到2%以内。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新估值。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "高于基准合理区间，需要评估是否减持或等待业绩上修。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "进入减持区，若无利润和现金流上修则风险收益不合适。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入买入区上沿，复核是否可从观察仓提升到2%以内。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新估值。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "高于基准合理区间，需要评估是否减持或等待业绩上修。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "进入减持区，若无利润和现金流上修则风险收益不合适。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看经营现金流、应收账款、合同资产和减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和前三季度经营简报，判断订单与现金流趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估长期盈利中枢和分红能力。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "new_orders_total",
-    "new_orders_public_decoration",
-    "new_orders_residential",
-    "backlog_signed_unfinished",
-    "accounts_receivable",
-    "contract_assets",
-    "bad_debt_provision",
-    "asset_impairment_loss",
-    "actual_receivable_writeoff",
-    "operating_cash_flow",
-    "operating_cash_flow_to_net_profit",
-    "gross_margin",
-    "net_margin",
-    "interest_bearing_debt",
-    "cash_and_cash_equivalents",
-    "dividend_per_share",
-    "abnormal_trading_announcements"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

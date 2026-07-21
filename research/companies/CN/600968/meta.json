@@ -1,71 +1,101 @@
 {
-  "symbol": "CN:600968",
-  "market": "CN",
-  "ticker": "600968",
-  "name": "海油发展",
-  "status": "active",
-  "updated_at": "2026-07-11T00:00:00+08:00",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-11-initial.md"
-  ],
-  "current_rating": "watch",
-  "current_thesis": "海上油气生产阶段综合服务平台，FPSO稀缺资产+央企红利，估值处合理区间下半部（PE_TTM≈9.2，PB≈1.19，股息率≈4.2%），等更深买点或2026H1现金流修复再提升评级。",
-  "fair_value_range": [
-    3.4,
-    4.3
-  ],
-  "buy_zone": [
-    2.95,
-    3.25
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.2
-  ],
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海油发展",
+    "security_status": "active",
+    "symbol": "CN:600968",
+    "ticker": "600968"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "016ff34bbfb5773e80660f8e8fd03e89874c0fd1d6ba7b8b4dceaf1716fe77a3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "1a1e42846980b22f07141a73c91237e7a57ea66b44f057d47103e2a7529a6130"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入2.95-3.25元且中国海油资本开支指引未下修",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报收入、利润、经营现金流和分红表述",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1收入恢复增长且经营现金流明显修复",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和中国海油资本开支执行情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价超过4.60元且盈利预测未上修",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.25
+      },
+      "reason": "进入初始买入区间上沿，重新核验油价、订单和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.95
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "超过减持区间下沿，若无盈利上修应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.25,
-      "reason": "进入初始买入区间上沿，重新核验油价、订单和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 2.95,
-      "reason": "进入深度安全边际区，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "reason": "超过减持区间下沿，若无盈利上修应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报收入、利润、经营现金流和分红表述"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和中国海油资本开支执行情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

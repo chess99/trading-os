@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600935",
-  "ticker": "600935",
-  "name": "华塑股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "华塑股份是省属国资背景的氯碱化工资产，PVC、烧碱和新材料项目构成主要价值来源；但2025年及2026年上半年仍亏损，PVC售价低于成本，PBAT项目尚未验证盈利，当前价格缺乏足够安全边际，适合跟踪而非买入。",
-  "fair_value_range": [
-    1.55,
-    2.2
-  ],
-  "buy_zone": [
-    1.25,
-    1.45
-  ],
-  "sell_or_reduce_zone": [
-    2.4,
-    2.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华塑股份",
+    "security_status": "active",
+    "symbol": "CN:600935",
+    "ticker": "600935"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "d0eca65b0e9923fbb0aaa0160a7ad970c4f14850cd523c55c7537d889e6e9579"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准合理价值区间上沿附近且公司仍处亏损，维持0仓位，仅研究跟踪。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认亏损区间、PVC和烧碱毛利、PBAT项目进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入1.25-1.45元且PVC单吨亏损收窄、烧碱毛利维持、经营现金流为正，可试探配置。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认单季是否转盈、经营现金流和在建工程转固影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非盈利、PVC毛利转正且PBAT/BDO项目贡献正现金利润后，可重新评估提升上限。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，验证周期修复是否转化为扣非盈利。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.45
+      },
+      "reason": "进入买入观察区，安全边际开始出现，需要复核PVC、烧碱和PBAT经营数据。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.4
+      },
+      "reason": "超过基准估值上沿，若缺乏盈利兑现应避免追高或考虑降低研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.45,
-      "reason": "进入买入观察区，安全边际开始出现，需要复核PVC、烧碱和PBAT经营数据。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.4,
-      "reason": "超过基准估值上沿，若缺乏盈利兑现应避免追高或考虑降低研究优先级。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认亏损区间、PVC和烧碱毛利、PBAT项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认单季是否转盈、经营现金流和在建工程转固影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，验证周期修复是否转化为扣非盈利。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

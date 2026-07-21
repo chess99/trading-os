@@ -1,106 +1,106 @@
 {
-  "symbol": "CN:600415",
-  "market": "CN",
-  "ticker": "600415",
-  "name": "小商品城",
-  "company_name": "小商品城",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "quality_rating": "high",
-  "valuation_rating": "attractive",
-  "current_thesis": "小商品城的核心买点是义乌市场稀缺商铺和全球小商品贸易网络带来的稳定现金流，Chinagoods、跨境支付、物流、数据服务和H股国际化提供增量期权；当前估值低于合理价值区间，但需用经营性现金流、出租率和平台业务兑现度持续验证。",
-  "fair_value_range": [
-    12.5,
-    15.5
-  ],
-  "buy_zone": [
-    9.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    18.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "小商品城",
+    "security_status": "active",
+    "symbol": "CN:600415",
+    "ticker": "600415"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ea51abf856d0c9ca13d1a9e965db1ee5b20d6b9122fefc1b2094e9e37a590fe2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格处于9.0-10.5元且未出现外贸、出租率、经营性现金流恶化",
-      "action": "首笔建仓",
-      "max_weight": 0.02,
-      "reason": "当前估值低于合理价值区间，先用小仓位获得义乌市场现金流底盘和跨境服务期权敞口"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的市场经营、经营性现金流、合同负债、平台和跨境服务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至9.2元附近且2026年中报验证市场经营收入、合同负债和经营性现金流稳定",
-      "action": "加仓",
-      "max_weight": 0.04,
-      "reason": "安全边际扩大且核心假设得到验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和H股发行进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "H股发行、平台交易、支付物流和数据业务均有明确兑现，且股价仍低于14.5元",
-      "action": "提高上限",
-      "max_weight": 0.06,
-      "reason": "从线下市场现金流资产升级为跨境贸易基础设施平台的概率提高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入高安全边际加仓观察区，复核外贸、出租率和现金流后可加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于16.5元但利润和经营现金流未同步上修",
-      "action": "减仓",
-      "max_weight": 0.03,
-      "reason": "主题化估值透支，安全边际下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "触发逻辑止损复核，检查是否存在基本面恶化而非单纯市场波动",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "接近合理价值中枢上沿，停止加仓并等待业绩兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "进入减持观察区，若上涨主要由主题驱动应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入高安全边际加仓观察区，复核外贸、出租率和现金流后可加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "触发逻辑止损复核，检查是否存在基本面恶化而非单纯市场波动"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "接近合理价值中枢上沿，停止加仓并等待业绩兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "进入减持观察区，若上涨主要由主题驱动应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的市场经营、经营性现金流、合同负债、平台和跨境服务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和H股发行进度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "市场经营收入",
-    "商铺出租率",
-    "商位租金或使用费",
-    "合同负债",
-    "经营性现金流净额",
-    "Chinagoods GMV",
-    "Chinagoods活跃商户和采购商",
-    "义支付交易规模",
-    "跨境物流单量",
-    "义乌出口额",
-    "H股发行进展",
-    "资本开支和有息负债"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

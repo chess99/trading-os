@@ -1,108 +1,115 @@
 {
-  "symbol": "CN:000507",
-  "market": "CN",
-  "ticker": "000507",
-  "name": "珠海港",
-  "company_name": "珠海港",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "珠海港是珠海国资港航物流与新能源双主业平台，资产折价和区位价值提供一定安全边际，但2025年及2026Q1收入、归母净利润下滑，ROE偏低且多元化折价明显，现阶段以观察为主，等待价格进入4.10-4.45元买入区间或吞吐量增长转化为利润改善。",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    4.8,
-    5.8
-  ],
-  "buy_zone": [
-    4.1,
-    4.45
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    6.3
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "珠海港",
+    "security_status": "active",
+    "symbol": "CN:000507",
+    "ticker": "000507"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "edfcaa964243e4d2b8cf2154fc65f14ee1b5032822fd6276734360dd4b1bf59f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约4.63元，尚未进入买入区间，仅适合建立观察仓",
-      "action": "watch_or_starter",
-      "max_weight": 0.01,
-      "reason": "资产折价存在，但2025年和2026Q1收入、归母净利润下滑，ROE偏低"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看吞吐量增长是否转化为收入、利润和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.45元且码头吞吐量、经营现金流未恶化",
-      "action": "buy_small",
-      "max_weight": 0.02,
-      "reason": "进入买入区间上沿，安全边际改善，但仍需控制多元化和债务风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和码头业务量，判断全年盈利趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.20元且港航物流毛利率维持30%左右、资产负债率低于56%",
-      "action": "add",
-      "max_weight": 0.03,
-      "reason": "相对归母净资产折价加深，若基本面稳定可提高至核心观察仓"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估合理价值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.80元或基本面证伪",
-      "action": "reduce",
-      "max_weight": 0.0,
-      "reason": "达到合理价值上沿，若无ROE提升或利润加速，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.45
+      },
+      "reason": "进入初始买入区间，可复核吞吐量和经营现金流后建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "接近悲观情景中枢，若基本面无恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "达到合理价值区间上沿，需复核是否有足够利润增长支撑继续持有",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.3
+      },
+      "reason": "进入减持区间上沿，除非ROE和利润显著改善，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.45,
-      "reason": "进入初始买入区间，可复核吞吐量和经营现金流后建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "接近悲观情景中枢，若基本面无恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "达到合理价值区间上沿，需复核是否有足够利润增长支撑继续持有"
-    },
-    {
-      "type": "price_above",
-      "price": 6.3,
-      "reason": "进入减持区间上沿，除非ROE和利润显著改善，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看吞吐量增长是否转化为收入、利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和码头业务量，判断全年盈利趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估合理价值区间和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "码头货物吞吐量及长江、珠江流域拆分",
-    "港航物流收入、毛利率和低毛利贸易收缩情况",
-    "新能源收入、风电发电量、上网电量和电价变化",
-    "秀强股份收入、净利润和少数股东损益变化",
-    "经营活动现金流量净额",
-    "资产负债率、一年内到期非流动负债和债券滚动成本",
-    "港弘码头50%股权交易进展及控制权安排",
-    "投资收益、公允价值变动和其他权益工具投资波动",
-    "分红率、回购和每股净资产变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

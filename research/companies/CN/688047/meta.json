@@ -1,113 +1,115 @@
 {
-  "symbol": "CN:688047",
-  "market": "CN",
-  "ticker": "688047",
-  "name": "龙芯中科",
-  "company_name": "龙芯中科",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "research_only",
-  "current_rating": "research_only",
-  "current_thesis": "龙芯中科具备自主指令集LoongArch和国产CPU生态稀缺性，但收入规模仍小、持续亏损、应收和存货压力较高，当前约600亿元市值已提前反映乐观情景，适合研究跟踪并等待价格回落和基本面进一步验证。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    75,
-    105
-  ],
-  "buy_zone": [
-    85,
-    105
-  ],
-  "sell_or_reduce_zone": [
-    145,
-    170
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "龙芯中科",
+    "security_status": "active",
+    "symbol": "CN:688047",
+    "ticker": "688047"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "a7c54cf79c4b5540c0ddcaf1c0dbc5f60a3e515f8c8c0976ca1422e322fe8049"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于105元或2026年中报尚未证明收入、毛利、库存同时改善",
-      "action": "仅研究跟踪，不建立新仓",
-      "max_weight": 0,
-      "reason": "当前估值已计入较多国产CPU和LoongArch生态成功预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证收入提速、毛利率、应收和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于105元，且收入同比不低于20%、毛利率不低于45%、存货未继续恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区上沿后可用小仓位跟踪产业化兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和信创订单交付节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于90元，且回款改善、存货下降、服务器或工控批量订单持续验证",
-      "action": "加至中等观察仓",
-      "max_weight": 0.03,
-      "reason": "估值回落后，若基本面同时改善，赔率开始具备吸引力"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，判断全年收入确认、现金流和亏损收窄质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026至2027年收入持续高增长、亏损显著收窄、LoongArch生态适配和客户复购明确",
-      "action": "提高至策略仓位上限",
-      "max_weight": 0.05,
-      "reason": "只有产业生态和财务拐点均兑现时，才允许承担单票较高波动"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 105.0
+      },
+      "reason": "进入买入区上沿，重新评估首笔1%观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "进入更有安全边际区间，若基本面未恶化可评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "接近或高于当前减仓区，若无订单和收入超预期应避免追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 170.0
+      },
+      "reason": "进入乐观情景估值区，需要强基本面证据，否则应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 105,
-      "reason": "进入买入区上沿，重新评估首笔1%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 90,
-      "reason": "进入更有安全边际区间，若基本面未恶化可评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 150,
-      "reason": "接近或高于当前减仓区，若无订单和收入超预期应避免追高"
-    },
-    {
-      "type": "price_above",
-      "price": 170,
-      "reason": "进入乐观情景估值区，需要强基本面证据，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证收入提速、毛利率、应收和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和信创订单交付节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，判断全年收入确认、现金流和亏损收窄质量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "信息化类芯片收入和毛利率",
-    "工控类芯片收入和毛利率",
-    "整体毛利率",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流量净额",
-    "销售商品、提供劳务收到的现金/营业收入",
-    "应收账款余额",
-    "存货账面价值和存货跌价准备",
-    "研发投入金额及占收入比例",
-    "3C6000、3B6000M、2K3000、2P0300/2P0500批量订单",
-    "LoongArch软件生态适配和二进制翻译兼容性进展",
-    "定增发行价格、募资额和摊薄比例",
-    "股东询价转让或减持价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

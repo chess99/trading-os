@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688562",
-  "market": "CN",
-  "ticker": "688562",
-  "name": "航天软件",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "航天软件具备央企航天体系入口、神通数据库与AVPLM等高安全场景软件资产，但2025年扣非仍亏损、2026Q1收入下滑且客户/补助依赖较高；当前价格接近合理区间中部，需等待更大安全边际或扣非亏损收窄证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.5,
-    15.5
-  ],
-  "buy_zone": [
-    0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "航天软件",
+    "security_status": "active",
+    "symbol": "CN:688562",
+    "ticker": "688562"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5eca0aed587f4258959db3fda4fbd781bbd37188c969f6f9421e1eea64719bb7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于10.5元且未出现收入继续恶化、重大减值或关联订单明显下滑时，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入恢复、自主软件占比、扣非亏损和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3显示收入恢复正增长、扣非亏损同比明显收窄、自主软件收入占比提升后，可提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认项目验收节奏、应收存货占用及全年盈利可见度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若价格高于16.5元且扣非仍未接近盈亏平衡，或经营现金流继续恶化，应降低或不建立仓位。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，判断扣非转正路径是否成立。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入带有约20%安全边际的买入观察区，可复核基本面后试探建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过基准合理价值上沿，若没有扣非转正或自主软件放量证据，风险收益转差。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入带有约20%安全边际的买入观察区，可复核基本面后试探建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过基准合理价值上沿，若没有扣非转正或自主软件放量证据，风险收益转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入恢复、自主软件占比、扣非亏损和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认项目验收节奏、应收存货占用及全年盈利可见度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，判断扣非转正路径是否成立。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

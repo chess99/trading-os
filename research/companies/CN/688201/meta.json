@@ -1,52 +1,86 @@
 {
-  "symbol": "CN:688201",
-  "market": "CN",
-  "ticker": "688201",
-  "name": "ST信安",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "内控否定意见与低资本回报尚未修复，6.98元已隐含自由现金流数倍增长和顺利摘帽，当前赔率不足。",
-  "fair_value_range": [4.0, 5.2],
-  "buy_zone": [3.2, 4.0],
-  "sell_or_reduce_zone": [6.0, 7.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST信安",
+    "security_status": "active",
+    "symbol": "CN:688201",
+    "ticker": "688201"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "51a54ddc1289e2a2aaeb1728761c4314f01e6616ca01e3bda155918b6d1ff0cc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于3.2-4.0元且研发核算整改持续有效、退市风险未升级、滚动经营现金流为正",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、应收账款、经营现金流与研发核算整改",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "内控审计再次被否定或无法表示意见、普世利润显著下滑或滚动自由现金流转负",
-      "max_weight": 0.0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、应收账款、经营现金流与研发核算整改"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及内部控制审计意见，确认是否具备撤销风险警示条件",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及内部控制审计意见，确认是否具备撤销风险警示条件"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入有条件观察区，需重新验证内控、现金流和商誉假设后才可建仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入有条件观察区，需重新验证内控、现金流和商誉假设后才可建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "进入减仓或不应追高区间，股价已更多反映顺利摘帽和利润率改善"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "进入减仓或不应追高区间，股价已更多反映顺利摘帽和利润率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-19T18:09:28+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

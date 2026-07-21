@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:300256",
-  "ticker": "300256",
-  "name": "星星科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "星星科技处于亏损修复和双主业重组阶段，2025年收入恢复但利润仍依赖非经常性债务重组收益，2026Q1收入下滑且归母亏损扩大；以2026-07-15盘中约2.51元、PB约6.3倍计，估值已显著透支修复预期，当前不具备安全边际。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    0.8,
-    1.3
-  ],
-  "buy_zone": [
-    0.65,
-    0.9
-  ],
-  "sell_or_reduce_zone": [
-    2.0,
-    2.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "星星科技",
+    "security_status": "active",
+    "symbol": "CN:300256",
+    "ticker": "300256"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "314e749baac0c10fa0b7d2ac177354452b751ce0a07fe06980472ea2349e9b74"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于0.90元且2026年中报显示扣非亏损继续收窄、广西立马已复产、加特智研剩余股权款回收无新增恶化时，仅建立观察仓。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入、扣非亏损、电动两轮车毛利率、广西立马复产和灾害损失。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非转正、经营现金流为正、关联销售和采购占比下降后，重新评估是否提高仓位。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认扣非盈利趋势、经营现金流、库存和应收变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于2.00元且扣非仍未转正或广西立马损失未核清时，不新增买入并减持或回避。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及审计意见，验证全年修复质量、关联交易和资产处置回款。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.9
+      },
+      "reason": "进入买入观察区，需要复核扣非亏损、复产和资产回款是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.0
+      },
+      "reason": "超过卖出或回避区下限，若基本面未证明扣非盈利，应降低敞口。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "显著高于估值上沿，当前证据不足以支持亏损资产维持高PB。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.9,
-      "reason": "进入买入观察区，需要复核扣非亏损、复产和资产回款是否同步改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.0,
-      "reason": "超过卖出或回避区下限，若基本面未证明扣非盈利，应降低敞口。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "显著高于估值上沿，当前证据不足以支持亏损资产维持高PB。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入、扣非亏损、电动两轮车毛利率、广西立马复产和灾害损失。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认扣非盈利趋势、经营现金流、库存和应收变化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及审计意见，验证全年修复质量、关联交易和资产处置回款。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

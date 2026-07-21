@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300779",
-  "ticker": "300779",
-  "name": "惠城环保",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "惠城环保的核心价值来自20万吨混合废塑料资源化项目的工业化兑现，传统危废和催化剂业务不足以支撑当前高估值；当前价格已部分反映2026-2027年利润弹性，需等待项目负荷、毛利率和经营现金流验证后再提高评级。",
-  "fair_value_range": [
-    45,
-    70
-  ],
-  "buy_zone": [
-    35,
-    43
-  ],
-  "sell_or_reduce_zone": [
-    78,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠城环保",
+    "security_status": "active",
+    "symbol": "CN:300779",
+    "ticker": "300779"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "dacb3909db5184905ac46b3779afc6437d28865cdc3b39ee473c5d9cf26ff3fc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约54元且废塑料项目利润数据尚未充分验证时，仅跟踪不建仓或维持极小观察仓",
-      "action": "watch",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认废塑料项目收入、毛利率、经营现金流和资产负债率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入35-43元且连续两个季度确认废塑料项目收入、毛利率和经营现金流改善",
-      "action": "initiate",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断项目爬坡是否开始兑现到单季度利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "废塑料项目负荷率超过70%、单季度归母净利润超过1.5亿元且经营现金流转正",
-      "action": "add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证联合资信预测口径与实际业绩差异",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入估算买入区上沿，需要结合项目爬坡和现金流重新评估是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 78.0
+      },
+      "reason": "进入减仓观察区，若缺乏废塑料项目利润兑现数据则估值安全边际不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "进入估算买入区上沿，需要结合项目爬坡和现金流重新评估是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 78,
-      "reason": "进入减仓观察区，若缺乏废塑料项目利润兑现数据则估值安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认废塑料项目收入、毛利率、经营现金流和资产负债率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断项目爬坡是否开始兑现到单季度利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证联合资信预测口径与实际业绩差异"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

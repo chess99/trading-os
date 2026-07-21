@@ -1,81 +1,95 @@
 {
-  "symbol": "CN:600088",
-  "ticker": "600088",
-  "name": "中视传媒",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "央媒体系资源和现金资产底具备稀缺性，但2025年ROE低、2026H1预亏，当前估值已透支主题期权，等待更低价格或经营连续修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.5,
-    8.0
-  ],
-  "buy_zone": [
-    5.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.5
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中视传媒",
+    "security_status": "active",
+    "symbol": "CN:600088",
+    "ticker": "600088"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "7e87199c0b127e88a0e3b0127804d2badaa684862d1073a99ec2d9bdc58bb7ad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于公允价值上沿且2026H1预亏尚未消化，不建仓。",
-      "action": "watch",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认预亏落点、现金流、广告和旅游业务拆分。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入5.0-6.5元且无新增重大经营恶化，允许观察性试仓。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断亏损是否延续以及经营现金流是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正，广告与旅游毛利率同步修复，且估值不超过2.5倍PB。",
-      "action": "increase_if_confirmed",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与2027年一季报，重估盈利中枢和资产底。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入买入观察区，需要复核半年报、现金流和广告业务趋势。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "高于减持/回避区上沿，若基本面无改善应维持不买或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入买入观察区，需要复核半年报、现金流和广告业务趋势。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "高于减持/回避区上沿，若基本面无改善应维持不买或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认预亏落点、现金流、广告和旅游业务拆分。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断亏损是否延续以及经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与2027年一季报，重估盈利中枢和资产底。"
-    }
-  ],
-  "key_risks": [
-    "传统电视广告承包收入和毛利率继续下降",
-    "影视服务业务低毛利且关联客户集中",
-    "旅游基地客流和客单价恢复不及预期",
-    "央媒主题估值回落导致PB收缩",
-    "2026年全年亏损扩大"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

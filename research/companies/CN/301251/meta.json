@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301251",
-  "ticker": "301251",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "威尔高",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "威尔高具备AI服务器电源PCB与泰国产能带来的成长弹性，但当前净利率、经营现金流和DC/DC收入占比尚未验证，2026-07中旬股价已提前反映乐观预期，暂以观察为主。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    28,
-    36
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "威尔高",
+    "security_status": "active",
+    "symbol": "CN:301251",
+    "ticker": "301251"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "cf0a4d7635068d6b0431e9fd252bca064709c0a1694b8e4b1074de920cbc27cf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026年半年报确认营业收入继续高增长、毛利率恢复至20%以上且经营现金流未继续恶化，同时股价回落至28元以下",
-      "action": "小仓位观察买入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、应收存货和扩产进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "DC/DC及AI服务器电源PCB收入占比明确提升，连续两个季度净利率恢复至6%以上，且无明显再融资摊薄压力",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认AI电源PCB订单是否转化为利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于45元但利润率、现金流、DC/DC收入占比未同步验证",
-      "action": "不买或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和再融资进展，重新评估长期利润率与估值中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入基准估值区下沿，可结合半年报质量复核是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入熊市估值区上沿，若基本面未恶化，安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入乐观情景估值区，需要利润率和现金流快速兑现，否则风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入基准估值区下沿，可结合半年报质量复核是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入熊市估值区上沿，若基本面未恶化，安全边际明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "进入乐观情景估值区，需要利润率和现金流快速兑现，否则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、经营现金流、应收存货和扩产进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认AI电源PCB订单是否转化为利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和再融资进展，重新评估长期利润率与估值中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,113 +1,110 @@
 {
-  "symbol": "CN:300454",
-  "market": "CN",
-  "ticker": "300454",
-  "name": "深信服",
-  "company_name": "深信服科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "深信服具备网络安全、私有云、超融合、AI Infra 和渠道体系的长期竞争力，2025 年利润和现金流改善、2026Q1 收入高增和亏损收窄显示经营拐点概率上升。但 2026-07-13 收盘价 107.02 元已隐含较多利润率修复和 AI/云第二曲线预期，当前更适合观察，等待 70-90 元买入区或中报进一步验证收入、毛利率、费用率和现金流同步改善。",
-  "quality_rating": "A-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    90,
-    115
-  ],
-  "buy_zone": [
-    70,
-    90
-  ],
-  "sell_or_reduce_zone": [
-    135,
-    160
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深信服",
+    "security_status": "active",
+    "symbol": "CN:300454",
+    "ticker": "300454"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "2b017e7ec68e910ed2e4c374645178f2fd17dd6c443a93fad46bf63d43e199f3"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "a80f1a749a5c57c270e8ef0123d290e330c2376ff7a00a731945645c1c23484a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在 100 元以上且 2026 中报尚未验证收入、毛利率、费用率和现金流同步改善",
-      "action": "不新开重仓，仅保留研究型观察仓",
-      "max_weight": 0.005,
-      "reason": "当前市值约 462 亿元，按 2025 年净利润约 118 倍 PE，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "复查 2026 年半年报，重点验证 Q2 收入增速、毛利率、销售费用率、经营现金流和网络安全业务是否恢复",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 80-90 元且 2026 中报显示收入增长不低于 15%、销售费用率同比下降、网络安全收入企稳",
-      "action": "建立初始观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值区间下沿附近，且经营拐点获得初步验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，判断全年利润率修复和现金流改善是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 70-80 元且云业务毛利率稳定、经营现金流全年修复趋势明确",
-      "action": "提高至中等观察仓",
-      "max_weight": 0.03,
-      "reason": "估值具备较好安全边际，利润率修复兑现概率上升"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查 2026 年报和 2027 年一季报，重新评估 AI Infra、海外和云业务是否成为可量化增长曲线",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于 70 元且基本面未出现网络安全持续下滑、云业务毛利率崩塌或现金流恶化",
-      "action": "可加至核心观察仓上限",
-      "max_weight": 0.04,
-      "reason": "价格明显低于基准合理价值区间，赔率改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "进入初步买入观察区，复核 2026 中报收入增速、销售费用率和云业务毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于 135 元但 2026-2027 年净利润不能进入 8-10 亿元区间或现金流质量未同步改善",
-      "action": "减仓或放弃追买",
-      "max_weight": 0.005,
-      "reason": "股价进入乐观估值区，若基本面兑现不足则风险收益不匹配"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入更有安全边际区域，若现金流和网络安全业务未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 135.0
+      },
+      "reason": "进入减仓观察区，除非利润和现金流明显超预期，否则估值偏乐观",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 90,
-      "reason": "进入初步买入观察区，复核 2026 中报收入增速、销售费用率和云业务毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 80,
-      "reason": "进入更有安全边际区域，若现金流和网络安全业务未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 135,
-      "reason": "进入减仓观察区，除非利润和现金流明显超预期，否则估值偏乐观"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-22",
-      "reason": "复查 2026 年半年报，重点验证 Q2 收入增速、毛利率、销售费用率、经营现金流和网络安全业务是否恢复"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，判断全年利润率修复和现金流改善是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查 2026 年报和 2027 年一季报，重新评估 AI Infra、海外和云业务是否成为可量化增长曲线"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入增速",
-    "网络安全业务收入增速",
-    "云计算及 IT 基础设施业务收入增速和毛利率",
-    "整体毛利率",
-    "销售费用率",
-    "研发费用率",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流量净额",
-    "合同负债和递延收入",
-    "AI 算力网关、AI 安全、CoStrict 的客户和收入进展",
-    "海外收入增速",
-    "股权激励费用和股本摊薄"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

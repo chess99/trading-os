@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301288",
-  "ticker": "301288",
-  "name": "清研环境",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "清研环境已从市政污水装备转向危固废资源化和油气田环保，摘帽降低退市规则风险，但2025年和2026Q1仍亏损且经营现金流为负，当前估值已提前反映较强转型预期，需等待价格安全边际或现金流转正验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.5,
-    15.0
-  ],
-  "buy_zone": [
-    8.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "清研环境",
+    "security_status": "active",
+    "symbol": "CN:301288",
+    "ticker": "301288"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "6ed64803202c710bbc3687c9eaa85d622bc7f64fcdc6172f11b3312d479f2fd4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.5元且无新增重大环保、安全生产、资金占用或并购资产减值风险",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看通海镍业、自贡正鼎贡献、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正且TTM归母净利润转正，股价仍低于15元",
-      "action": "提高到小仓位",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断转型资产是否进入可持续盈利阶段",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于18元但尚未证明年化3000万元以上可持续归母利润",
-      "action": "不加仓或降低仓位",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估全年盈利质量、现金流和安全边际",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入按约1.45倍PB估算的观察买入区，具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过当前乐观验证前估值区间下沿，需利润和现金流兑现支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入按约1.45倍PB估算的观察买入区，具备初步安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过当前乐观验证前估值区间下沿，需利润和现金流兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看通海镍业、自贡正鼎贡献、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断转型资产是否进入可持续盈利阶段"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估全年盈利质量、现金流和安全边际"
-    }
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

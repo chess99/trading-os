@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:603421",
-  "market": "CN",
-  "ticker": "603421",
-  "name": "鼎信通讯",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "鼎信通讯具备电力通信和消防报警技术资产，但国网/南网信用修复尚未转化为中标和利润恢复；2026H1 仍预亏且净资产继续被侵蚀，当前只适合观察，等待价格低于经亏损调整后的净资产折价或连续批次中标验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.8,
-    5.4
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    8.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鼎信通讯",
+    "security_status": "active",
+    "symbol": "CN:603421",
+    "ticker": "603421"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2fb294f119feac72b36d9ff1e02a4e4e400c0f52e7cacb9cc359241c6645eeac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未出现国家电网和南方电网连续两个批次实质中标前，仅保持观察，不建立主动仓位。",
-      "action": "watch_only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、减值、现金流和订单恢复情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.0元，且未新增重大监管处罚、2026半年报未显著差于预告。",
-      "action": "starter_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报与国网/南网后续批次中标情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个招标批次中标合计金额超过3亿元，毛利率不继续下滑，经营现金流环比改善。",
-      "action": "increase_selectively",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、全年亏损幅度、净资产变化和2027年订单展望。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "滚动四季度接近盈亏平衡，订单恢复可持续，治理和合规事件明显减少。",
-      "action": "core_small_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入经亏损调整后净资产折价区间，可重新评估观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "接近悲观情景估值下沿，若基本面未继续恶化，安全边际显著提升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "若无连续中标和利润修复，估值已提前反映乐观修复，应降低风险敞口。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入经亏损调整后净资产折价区间，可重新评估观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "接近悲观情景估值下沿，若基本面未继续恶化，安全边际显著提升。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "若无连续中标和利润修复，估值已提前反映乐观修复，应降低风险敞口。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、减值、现金流和订单恢复情况。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报与国网/南网后续批次中标情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、全年亏损幅度、净资产变化和2027年订单展望。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

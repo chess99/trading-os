@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:300015",
-  "market": "CN",
-  "ticker": "300015",
-  "name": "爱尔眼科",
-  "company_name": "爱尔眼科",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "爱尔眼科仍是中国眼科医疗服务龙头，医院网络、医生资源、品牌和现金流质量构成长期优势；但2026年增长已进入中速阶段，税务事项、商誉并购、消费医疗客单价和监管风险要求更高安全边际。当前判断为持有/等待，6.8-7.6元才具备首笔小仓位买入吸引力。",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    8.5,
-    10.5
-  ],
-  "buy_zone": [
-    6.8,
-    7.6
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱尔眼科",
+    "security_status": "active",
+    "symbol": "CN:300015",
+    "ticker": "300015"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "2559e928629809b173b141ef6ee4b211b3e1a564f6f597f34dd736a9abced6aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入6.8-7.6元，且2026中报收入和利润未明显失速、税务事项无新增重大处罚",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "龙头质量仍高，但需要价格补偿监管、商誉和消费医疗复苏不确定性"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报、现金流、同店恢复、税务事项和商誉变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "同店增长恢复、经营现金流持续显著高于净利润、屈光和视光价格稳定",
-      "action": "分批加仓",
-      "max_weight": 0.04,
-      "reason": "基本面验证后可给龙头网络和现金流更高权重"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和港股上市进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.5元且利润增速仍低于10%，或税务/商誉/监管风险扩大",
-      "action": "减仓至观察仓或退出",
-      "max_weight": 0.005,
-      "reason": "估值进入乐观区但增长和风险不匹配"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.6
+      },
+      "reason": "进入买入观察区，需复核中报和税务事项后考虑首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入偏保守安全边际区，可评估是否提高至目标首仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "进入减仓评估区，需检验利润增速是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.6,
-      "reason": "进入买入观察区，需复核中报和税务事项后考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入偏保守安全边际区，可评估是否提高至目标首仓"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "进入减仓评估区，需检验利润增速是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报、现金流、同店恢复、税务事项和商誉变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和港股上市进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度收入同比增速",
-    "归母净利润同比增速",
-    "经营现金流/归母净利润",
-    "屈光手术量与客单价",
-    "视光业务复购和价格",
-    "白内障手术量与医保支付变化",
-    "成熟医院同店增长",
-    "新医院爬坡周期",
-    "商誉余额和减值准备",
-    "少数股东损益占比",
-    "税务及监管公告",
-    "港股上市进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

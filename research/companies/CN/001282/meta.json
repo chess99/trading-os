@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:001282",
-  "market": "CN",
-  "ticker": "001282",
-  "name": "三联锻造",
-  "company_name": "三联锻造",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "三联锻造收入受益于新能源汽车零部件增长和产能释放，但2025年收入增长未转化为利润增长，毛利率、现金流和存货压力仍需2026年中报验证；当前价格接近合理价值中枢，等待12.8-15.0元买入区或经营拐点确认。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "neutral_to_expensive",
-  "fair_value_range": [
-    15.5,
-    19.5
-  ],
-  "buy_zone": [
-    12.8,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    21.5,
-    25.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三联锻造",
+    "security_status": "active",
+    "symbol": "CN:001282",
+    "ticker": "001282"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "4f689de32125bbd5cfc7a66c2384d79f2a05df497be35166bf55c759570f9208"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入12.8-15.0元，且2026年中报显示毛利率环比修复、经营现金流改善",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区且经营拐点开始验证，具备小仓位试错价值"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点确认毛利率、现金流、存货和新能源件收入占比",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于15.0-17.0元，收入增长但利润修复证据不足",
-      "action": "仅允许极小观察仓或继续等待",
-      "max_weight": 0.005,
-      "reason": "估值安全边际有限，需等待毛利率和现金流证据"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.0元且无新增利润兑现证据",
-      "action": "不买入",
-      "max_weight": 0,
-      "reason": "当前估值已反映部分新能源件和产能释放预期，赔率不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入区上沿，重新评估中报或三季报是否支持首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "新能源件收入占比继续提升、综合毛利率回到20%以上、净利率回到8%左右",
-      "action": "上调为核心观察仓",
-      "max_weight": 0.03,
-      "reason": "收入增长重新转化为利润增长，成长逻辑得到验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.8
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.5
+      },
+      "reason": "进入减仓区下沿，若利润未同步兑现需降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "高于基准合理估值区，除非新能源件和产能释放超预期，否则应卖出或回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入买入区上沿，重新评估中报或三季报是否支持首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 12.8,
-      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 21.5,
-      "reason": "进入减仓区下沿，若利润未同步兑现需降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "高于基准合理估值区，除非新能源件和产能释放超预期，否则应卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点确认毛利率、现金流、存货和新能源件收入占比"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润修复是否成立"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率是否回到20%以上",
-    "新能源汽车零部件收入占比是否继续高于28.15%",
-    "新能源汽车零部件毛利率是否显著高于传统汽车零部件",
-    "经营活动现金流净额/净利润是否回到1倍附近",
-    "存货增速、存货跌价准备和存货周转天数",
-    "固定资产、在建工程和折旧增速",
-    "可转债募投项目投产节奏、订单和产能利用率",
-    "前五大客户集中度和客户价格调整机制",
-    "钢材价格与产品调价滞后",
-    "出口收入占比和出口毛利率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

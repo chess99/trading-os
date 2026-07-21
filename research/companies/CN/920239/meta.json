@@ -1,104 +1,115 @@
 {
-  "symbol": "CN:920239",
-  "market": "CN",
-  "ticker": "920239",
-  "name": "长虹能源",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "长虹能源是碱性锌锰电池现金流与高倍率/聚合物锂电成长弹性的组合型制造公司。2025年收入和利润恢复，2026Q1增长延续，当前21.10元对应估值不贵，但资产负债率高、锂电毛利率偏低、客户集中和定增摊薄限制仓位。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    24.0,
-    30.0
-  ],
-  "buy_zone": [
-    18.0,
-    20.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长虹能源",
+    "security_status": "active",
+    "symbol": "CN:920239",
+    "ticker": "920239"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "0e9d43b81edb9cacd2a67a2beb034581f48dee2280034cae031f1c8b90b5378c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "strong_buy",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "buy",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "starter_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "watch_or_hold",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入安全边际区，可加到组合6%。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "reduce",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入强吸引力区，可加到组合8%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "不新增仓位，等待业绩验证。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "若半年报和募投订单未超预期，减仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "action": "进入安全边际区，可加到组合6%。",
-      "reason": "进入安全边际区，可加到组合6%。"
-    },
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "action": "进入强吸引力区，可加到组合8%。",
-      "reason": "进入强吸引力区，可加到组合8%。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "action": "不新增仓位，等待业绩验证。",
-      "reason": "不新增仓位，等待业绩验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "action": "若半年报和募投订单未超预期，减仓。",
-      "reason": "若半年报和募投订单未超预期，减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "复核2026半年报收入、扣非净利、现金流、高倍率锂电毛利率和资产负债率。",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "复核2026三季报及马来西亚募投项目、定增摊薄和客户导入进展。",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "action": "复核2026年报、现金流质量、分红、商誉减值和海外产能落地情况。",
-      "reason": "???????"
-    }
-  ],
-  "notes": [
-    "当前价格日期为2026-07-17，收盘/延时价21.10元，估算市值约38.42亿元。今天决策为买第一笔2%-3%，不追高；逻辑止损看基本面而非单纯股价。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

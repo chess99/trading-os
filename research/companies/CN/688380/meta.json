@@ -1,90 +1,96 @@
 {
-  "symbol": "CN:688380",
-  "market": "CN",
-  "ticker": "688380",
-  "name": "中微半导",
-  "company_name": "中微半导",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "current_thesis": "中微半导处于国产MCU库存周期和价格修复阶段，2026年一季度利润弹性已显现，但当前估值已提前反映较强复苏预期，适合观察等待回落而非追高买入。",
-  "fair_value_range": [
-    50,
-    62
-  ],
-  "buy_zone": [
-    38,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    72,
-    85
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中微半导",
+    "security_status": "active",
+    "symbol": "CN:688380",
+    "ticker": "688380"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "4be6dd41a7499beab3e3cde98c2298f762279db609ba129dda445c15cac94b81"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至45元以下，且季度收入同比增速仍保持30%以上、毛利率不低于33%",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "景气复苏得到验证但估值回到可承受区间"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入增速、毛利率、库存和研发投入",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至38元以下，或2026年全年业绩兑现且远期市盈率降至35倍以内",
-      "action": "加至核心小仓",
-      "max_weight": 0.03,
-      "reason": "国产MCU平台型公司的成长赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报是否延续涨价、放量和现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于72元且未出现收入、毛利率或车规放量的进一步上修证据",
-      "action": "不追高并减仓",
-      "max_weight": 0.005,
-      "reason": "当前估值对景气持续和竞争改善的隐含要求过高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入观察仓买入区上沿，需复核季度经营质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入买入区下沿，赔率明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 72.0
+      },
+      "reason": "超过基础情景估值上沿，需重新评估仓位和止盈",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入观察仓买入区上沿，需复核季度经营质量"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入买入区下沿，赔率明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 72,
-      "reason": "超过基础情景估值上沿，需重新评估仓位和止盈"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入增速、毛利率、库存和研发投入"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报是否延续涨价、放量和现金流改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比和环比增速",
-    "综合毛利率及MCU产品毛利率",
-    "存货余额、存货周转天数和跌价准备",
-    "研发费用率及32位MCU、车规MCU新品进展",
-    "前五大客户集中度和经销渠道库存",
-    "晶圆代工产能、采购价格和交期变化",
-    "与兆易创新、国民技术及海外MCU厂商的价格差"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

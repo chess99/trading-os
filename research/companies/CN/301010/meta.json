@@ -1,115 +1,105 @@
 {
-  "symbol": "CN:301010",
-  "ticker": "301010",
-  "name": "晶雪节能",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "晶雪节能具备冷库围护系统节能保温材料细分龙头特征，技术、认证、项目经验和服务能力较强，但 2025 年和 2026Q1 收入利润仍在下滑，当前价格已反映较乐观盈利修复，安全边际不足，适合观察等待订单、毛利率和现金流改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14,
-    16
-  ],
-  "position_plan": [
-    {
-      "condition": "现价约 15.86 元，超过基准合理价值区间，未看到连续收入和毛利率修复前不建仓。",
-      "action": "watch_only",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价低于 8.5 元且最近一期经营现金流未恶化、应收和存货无重大风险。",
-      "action": "starter_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 7.0 元，且收入同比转正、主产品毛利率回到 15% 以上、滚动四季度经营现金流为正。",
-      "action": "increase_position",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入基准买入区间，需要复核基本面是否同步恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "可能出现足够安全边际，需复核现金流和订单质量后决定是否提高权重。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "接近乐观情景估值上沿，若无盈利兑现应降低预期或移出候选。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入、毛利率、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认盈利修复是否成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估长期盈利中枢和分红政策。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 15.86,
-    "last_price_date": "2026-07-15",
-    "market_cap_cny_billion": 1.69,
-    "shares_outstanding": 108000000,
-    "bvps_2026q1": 7.67,
-    "revenue_2025": 861508298.03,
-    "net_profit_2025": 8336607.96,
-    "operating_cash_flow_2025": 55656886.47,
-    "revenue_2026q1": 71470617.12,
-    "net_profit_2026q1": 2182102.03
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晶雪节能",
+    "security_status": "active",
+    "symbol": "CN:301010",
+    "ticker": "301010"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d266baa6ba7cbf24d53b46df2410675259549cf700ed77c8f2f929586e9e23d9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "江苏晶雪节能科技股份有限公司 2025 年年度报告",
-      "date": "2026-04-27",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-27/d313edd3-48fc-4fce-bdb3-5ce8e9cd5f56.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入、毛利率、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "江苏晶雪节能科技股份有限公司 2026 年第一季度报告",
-      "date": "2026-04-27",
-      "url": "https://pdf.dfcfw.com/pdf/H2_AN202604261821589096_1.pdf"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认盈利修复是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "晶雪节能官网",
-      "date": "2026-07-15",
-      "url": "https://www.jingxue.com/"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估长期盈利中枢和分红政策。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "title": "Investing.com 晶雪节能行情页",
-      "date": "2026-07-15",
-      "url": "https://cn.investing.com/equities/jingxue-insulation-technology"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入基准买入区间，需要复核基本面是否同步恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "可能出现足够安全边际，需复核现金流和订单质量后决定是否提高权重。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "接近乐观情景估值上沿，若无盈利兑现应降低预期或移出候选。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

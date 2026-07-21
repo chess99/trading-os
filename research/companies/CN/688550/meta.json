@@ -1,84 +1,110 @@
 {
-  "symbol": "CN:688550",
-  "market": "CN",
-  "ticker": "688550",
-  "name": "瑞联新材",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "hold",
-  "current_thesis": "瑞联新材液晶与OLED升华前材料基本盘稳健，2026年7月新增调研确认PSPI已对国外头部客户每月吨级出货、光刻胶数款量产并有部分稳定批供；但2026Q1毛利率与现金流压力尚未被半年报验证。7月17日收盘44.07元已到买入区上沿附近，适合1%观察仓而非重仓。",
-  "fair_value_range": [
-    44.0,
-    54.0
-  ],
-  "buy_zone": [
-    38.0,
-    44.0
-  ],
-  "sell_or_reduce_zone": [
-    60.0,
-    68.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "瑞联新材",
+    "security_status": "active",
+    "symbol": "CN:688550",
+    "ticker": "688550"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "0716cb9a51bdc695d6e8a247360deb540fe62ce28756264dee29bae64933df19"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "ad407bfbfe1729d7ae0f015a0ce5785f2b7d9d6eaf7879f3739f1526aec7919a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于54元且半年报尚未证明毛利率恢复、电子材料收入和利润放量",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的显示材料量价、综合毛利率、医药和电子材料收入、存货及经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在44元附近，PSPI月度吨级出货和光刻胶稳定批供事实未被证伪",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及8000万元高性能光电材料项目投产和订单爬坡",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入38-44元，半年报综合毛利率不低于39%且医药、电子材料增长逻辑未破坏",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-05-31"
+      },
+      "reason": "复核200吨PSPI项目完工、客户订单和产能利用率计划",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于38元，半年报或三季报确认经营现金流恢复、电子材料批量供货和医药多产品商业化",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 44.0
+      },
+      "reason": "进入买入区上沿，复核毛利率和订单后可建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价进入60-68元但盈利预测未同步上修，或核心基本面止损触发",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入高安全边际区，基本面未破坏时复核是否加至4%上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "超过合理价值区，若盈利预测未上修应分批减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的显示材料量价、综合毛利率、医药和电子材料收入、存货及经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及8000万元高性能光电材料项目投产和订单爬坡"
-    },
-    {
-      "type": "date",
-      "date": "2027-05-31",
-      "reason": "复核200吨PSPI项目完工、客户订单和产能利用率计划"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 44.0,
-      "reason": "进入买入区上沿，复核毛利率和订单后可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 38.0,
-      "reason": "进入高安全边际区，基本面未破坏时复核是否加至4%上限"
-    },
-    {
-      "type": "price_above",
-      "price": 60.0,
-      "reason": "超过合理价值区，若盈利预测未上修应分批减仓"
-    }
-  ],
-  "updated_at": "2026-07-18"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

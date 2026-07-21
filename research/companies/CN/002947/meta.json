@@ -1,95 +1,115 @@
 {
-  "symbol": "CN:002947",
-  "market": "CN",
-  "ticker": "002947",
-  "name": "恒铭达",
-  "company_name": "苏州恒铭达电子科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是精密柔性结构件与精密金属结构件制造商，2025年收入和利润保持双位数增长，2026Q1利润增速继续加快，现金流和资产负债表质量较好；但客户集中度高、当前估值已反映较多成长预期，65.83元只处于合理区间而非高安全边际买点。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [58, 74],
-  "buy_zone": [50, 56],
-  "sell_or_reduce_zone": [78, 90],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "恒铭达",
+    "security_status": "active",
+    "symbol": "CN:002947",
+    "ticker": "002947"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ddeba6d41d9734de1809a45a7ba145690f04d9982b222a70335c19a0c748e203"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在65-74元且仅完成初始研究、尚未看到2026中报验证时",
-      "action": "不主动买入，最多保留0-1%跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-24"
+      },
+      "reason": "2026年半年报预约披露日后，复核收入增速、扣非净利润增速、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至50-56元，且最新财报收入同比不低于10%、制造业毛利率不低于31%、经营现金流没有明显恶化",
-      "action": "分批买入至2-3%仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露窗口后，复核增长持续性和客户集中风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至45-50元，且客户集中、回款、毛利率没有发生基本面破坏",
-      "action": "可加仓至4-5%上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露窗口后，完整复核估值、质量和资本配置",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于78元，且2026年利润未显示超过7亿元的高确定性",
-      "action": "停止加仓并考虑逐步减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 56.0
+      },
+      "reason": "进入可买区上沿，复核中报/季报后可建2-3%仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入高安全边际区，若基本面未破坏可加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 78.0
+      },
+      "reason": "进入减仓复核区，检查利润兑现是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "进入明显高估区，除非新增增长曲线被验证，否则卖出或大幅降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 56,
-      "reason": "进入可买区上沿，复核中报/季报后可建2-3%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入高安全边际区，若基本面未破坏可加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 78,
-      "reason": "进入减仓复核区，检查利润兑现是否足以支撑估值"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "进入明显高估区，除非新增增长曲线被验证，否则卖出或大幅降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-24",
-      "reason": "2026年半年报预约披露日后，复核收入增速、扣非净利润增速、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露窗口后，复核增长持续性和客户集中风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报披露窗口后，完整复核估值、质量和资本配置"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "制造业毛利率",
-    "精密金属结构件收入占比与毛利率",
-    "前五大客户销售占比",
-    "经营现金流/归母净利润",
-    "应收账款增速与周转天数",
-    "存货跌价损失",
-    "回购股份用途和股权激励考核条件"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

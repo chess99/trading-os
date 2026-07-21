@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:688089",
-  "market": "CN",
-  "ticker": "688089",
-  "name": "嘉必优",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "嘉必优具备国内稀缺的ARA/DHA发酵产业化能力和HMOs新原料期权，但2026Q1受海外舆情与监管新要求冲击出现经营断点，当前估值接近恢复情景中枢，安全边际不足，需等待海外订单恢复、库存回落和现金流转正后再提高评级。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.0,
-    12.5
-  ],
-  "buy_zone": [
-    7.5,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    17.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "嘉必优",
+    "security_status": "active",
+    "symbol": "CN:688089",
+    "ticker": "688089"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c212e0a5fda96359ecc5ececec68a8ea8049f4c7b135a16ddd3073a173dd0548"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.5-9.0元且未出现新增监管恶化，可建立观察仓",
-      "action": "小仓位试买，等待半年报或三季报验证",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入修复、现金流、存货和海外风险披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入修复、经营现金流转正且存货下降",
-      "action": "复核后考虑提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1冲击是一次性还是持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "海外ARA恢复不及预期或存货减值扩大",
-      "action": "不加仓并下调估值区间",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和审计意见，确认海外舆情与监管新要求是否闭环",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入买入区上沿，若基本面未继续恶化则具备重新评估安全边际的条件",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "超过当前基准估值区间，需要HMOs放量或海外订单恢复证据支撑，否则应减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入买入区上沿，若基本面未继续恶化则具备重新评估安全边际的条件"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "超过当前基准估值区间，需要HMOs放量或海外订单恢复证据支撑，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入修复、现金流、存货和海外风险披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1冲击是一次性还是持续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和审计意见，确认海外舆情与监管新要求是否闭环"
-    }
-  ],
-  "confidence": "中",
-  "decision": "观察"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

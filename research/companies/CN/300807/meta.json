@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:300807",
-  "ticker": "300807",
-  "name": "天迈科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "老主业仍亏损，当前股价主要定价控制权变化和上海芬能并购期权；并购未完成前安全边际不足，等待价格回落或交易完成后重新评估。",
-  "fair_value_range": [
-    22,
-    30
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天迈科技",
+    "security_status": "active",
+    "symbol": "CN:300807",
+    "ticker": "300807"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "9365e36a7fa6b9ffb979598a70f17820c2335180b80e69e27ca9c45021e0b7f0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察，不建仓；若股价低于24元且重组风险没有恶化，可重新评估0.5%试探仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、上海芬能交易进展、问询函及回复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若上海芬能交易完成、发行稀释可控、2026年利润和现金流兑现，再考虑提高到组合1.5%以内。",
-      "max_weight": 0.015
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入观察区，需要复核重组进度和老主业亏损收窄情况。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报和重组审批/并表节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 42,
-      "reason": "接近乐观情景估值，若交易未实质落地应降低关注或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、上海芬能交易进展、问询函及回复。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入观察区，需要复核重组进度和老主业亏损收窄情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报和重组审批/并表节奏。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "接近乐观情景估值，若交易未实质落地应降低关注或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

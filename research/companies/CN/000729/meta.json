@@ -1,100 +1,96 @@
 {
-  "symbol": "CN:000729",
-  "market": "CN",
-  "ticker": "000729",
-  "name": "燕京啤酒",
-  "company_name": "燕京啤酒",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "燕京啤酒处在U8大单品放量、产品结构升级和国企改革释放利润率的改善期；在10.5-11.5元区间估值约为2026E净利润14倍左右，风险收益比具备吸引力，但需持续跟踪U8增速、吨价、费用率和旺季需求。",
-  "quality_rating": 7.5,
-  "valuation_rating": 8.0,
-  "fair_value_range": [
-    14.5,
-    17.5
-  ],
-  "buy_zone": [
-    9.5,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    20.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "燕京啤酒",
+    "security_status": "active",
+    "symbol": "CN:000729",
+    "ticker": "000729"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "334db190a29454193f266054c554572d747bac2e6bc35dc120eb23f91c676e94"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于9.5-11.5元且U8放量、费用率改善逻辑未被新财报破坏",
-      "action": "建立首笔仓位",
-      "max_weight": 0.03,
-      "reason": "当前估值约为2026E净利润14倍左右，低于改善型啤酒资产合理中枢"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，验证H1业绩预告、U8增长、费用率和分红政策",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.5元且2026中报确认主营利润增长质量",
-      "action": "分批加仓",
-      "max_weight": 0.07,
-      "reason": "估值安全边际扩大，若基本面未恶化则预期收益率提升"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，检查旺季完整表现和全年利润指引",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.5元或对应2026E市盈率超过24倍",
-      "action": "减仓或暂停加仓",
-      "max_weight": 0.03,
-      "reason": "估值已较充分反映U8放量和国企改革利润率改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入深度低估区，若基本面未破坏可复核加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个报告期U8增速明显低于公司整体、吨价下降或费用率反弹",
-      "action": "降仓至观察仓或退出",
-      "max_weight": 0.02,
-      "reason": "核心投资逻辑由结构升级和效率改善转为不确定"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "接近基准合理价值上沿，需要评估是否兑现收益或降仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.5
+      },
+      "reason": "进入乐观估值区，风险收益比明显下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入深度低估区，若基本面未破坏可复核加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "接近基准合理价值上沿，需要评估是否兑现收益或降仓"
-    },
-    {
-      "type": "price_above",
-      "price": 20.5,
-      "reason": "进入乐观估值区，风险收益比明显下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，验证H1业绩预告、U8增长、费用率和分红政策"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，检查旺季完整表现和全年利润指引"
-    }
-  ],
-  "key_tracking_metrics": [
-    "U8销量及同比增速",
-    "啤酒吨价",
-    "啤酒吨成本",
-    "毛利率",
-    "销售费用率",
-    "管理费用率",
-    "归母净利润和扣非归母净利润",
-    "核心区域收入和市场份额",
-    "现金分红率",
-    "渠道库存和经销商回款",
-    "大麦、玻璃瓶、铝罐、纸箱和能源价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

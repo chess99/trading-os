@@ -1,76 +1,111 @@
 {
-  "base_currency": "CNY",
-  "buy_zone": [10, 12],
-  "company_name": "英唐智控",
-  "currency": "CNY",
-  "current_rating": "watch",
-  "current_thesis": "电子元器件分销现金流底盘 + 自研车载显示芯片/MEMS微振镜 + 拟并购光通信/模拟芯片的转型组合体。产业逻辑成立但2026-07-08收盘19.68元、总市值223亿已接近乐观情景上沿，PE-TTM>1700倍无利润支撑；重组问询函延期回复显示审核进度慢于预期；当前风险收益比不佳，等价格回落或重组/订单/利润兑现再行动。",
-  "fair_value_range": [13, 16],
-  "key_tracking_metrics": [
-    "芯片、器件类产品研发制造业务收入",
-    "车载DDIC/TDDI定点、量产和客户验证进展",
-    "MEMS微振镜医疗、工业、车载LBS订单金额",
-    "重组问询函回复披露及深交所审核进度",
-    "光隆集成和奥简微电子重组审核/注册进度",
-    "光隆集成和奥简微电子业绩承诺完成率",
-    "电子分销收入增速和毛利率",
-    "研发费用及资本化开发支出",
-    "经营活动现金流量净额",
-    "应收账款、存货和短期借款",
-    "实控人质押比例"
-  ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "market": "CN",
-  "name": "英唐智控",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英唐智控",
+    "security_status": "active",
+    "symbol": "CN:300131",
+    "ticker": "300131"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial-v1-superseded.md",
+        "sha256": "62b3ec86e31b15a3affc0c04fff36110580c652523308a5a011a2c67deb3f0d1"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "00e4df43863cc4341504732681d0b2fb93cd1a2e04f2d2ca282db188baf548a9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "action": "不新开主动仓；极小观察仓最多0.5%。",
-      "condition": "价格高于18元且无新增订单、利润或重组审核确定性验证。",
-      "label": "当前价格不追高",
-      "max_weight": 0.005,
-      "price_range": [18, null]
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报、芯片/器件收入、研发费用、经营现金流和重组问询函回复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "action": "小仓观察",
-      "condition": "重组问询回复清晰，芯片/器件收入继续增长，分子业务毛利率稳定。",
-      "label": "合理区小仓观察",
-      "max_weight": 0.015,
-      "price_range": [13, 16]
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报及股权激励收入目标达成节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "action": "分批买入",
-      "condition": "基本面未恶化，分销现金流稳定，车载显示或MEMS订单进展可验证。",
-      "label": "安全买入区",
-      "max_weight": 0.03,
-      "price_range": [10, 12]
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入安全买入区，复核是否可建立1.5%-3.0%研究仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "action": "提高仓位上限",
-      "condition": "非重组失败或核心产品验证失败导致的下跌。",
-      "label": "强吸引区",
-      "max_weight": 0.05,
-      "price_range": [8, 9.5]
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入强吸引区，若基本面未恶化可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入不追高/减仓区，检查是否有订单、利润或重组确定性支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "接近乐观情景上沿，若无基本面上修应退出观察仓。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {"price": 12, "reason": "进入安全买入区，复核是否可建立1.5%-3.0%研究仓。", "type": "price_below"},
-    {"price": 9.5, "reason": "进入强吸引区，若基本面未恶化可提高仓位上限。", "type": "price_below"},
-    {"price": 18, "reason": "进入不追高/减仓区，检查是否有订单、利润或重组确定性支撑。", "type": "price_above"},
-    {"price": 22, "reason": "接近乐观情景上沿，若无基本面上修应退出观察仓。", "type": "price_above"}
-  ],
-  "quality_rating": "B-",
-  "report_history": [
-    "reports/2026-07-08-initial-v1-superseded.md",
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {"date": "2026-08-31", "reason": "复查2026半年报、芯片/器件收入、研发费用、经营现金流和重组问询函回复。", "type": "date"},
-    {"date": "2026-10-31", "reason": "复查2026三季报及股权激励收入目标达成节奏。", "type": "date"}
-  ],
-  "sell_or_reduce_zone": [18, 22],
-  "status": "active",
-  "symbol": "CN:300131",
-  "ticker": "300131",
-  "updated_at": "2026-07-08T22:50:00+08:00",
-  "valuation_rating": "D"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

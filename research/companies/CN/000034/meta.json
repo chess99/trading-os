@@ -1,33 +1,101 @@
 {
-  "symbol": "CN:000034",
-  "market": "CN",
-  "ticker": "000034",
-  "name": "神州数码",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中国最大IT分销商之一，营收超1400亿但毛利率极薄（~3.4%），转型云计算和信创方向正确但体量仍小。归母净利润连续两年大幅下滑（2024年-35.8%, 2025年-30.5%），ROE从14.65%跌至5.05%，经营现金流2025年大幅流出24亿。当前PE过高（基于实际利润约56x），估值偏贵，基本面疲弱与转型故事之间存在矛盾，建议观察等待更佳买点。",
-  "fair_value_range": [16, 22],
-  "buy_zone": [14, 18],
-  "sell_or_reduce_zone": [28, 50],
-  "position_plan": [
-    {"condition": "股价低于14元且基本面未进一步恶化", "max_weight": 0.02},
-    {"condition": "股价处于14-18元区间", "max_weight": 0.01},
-    {"condition": "股价回到18-22元合理区间", "max_weight": 0.005}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "神州数码",
+    "security_status": "active",
+    "symbol": "CN:000034",
+    "ticker": "000034"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "0963871bfd14fb8a2d13d0b506709e4654d136b4ca8762615f27f85797042b12"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "06f780c0d6a3a01f07b144f1bd1574bcb0717667ab5a0dd6fe84023766cafd62"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报发布后复查收入、扣非净利润、现金流、应收和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复查AI服务器/信创订单兑现情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入合理偏低区间，开始密切观察",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "进入高估区间，不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026年半年报发布后复查收入、扣非净利润、现金流、应收和存货"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报后复查AI服务器/信创订单兑现情况"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 18, "reason": "进入合理偏低区间，开始密切观察"},
-    {"type": "price_below", "price": 14, "reason": "进入有安全边际的买入区间"},
-    {"type": "price_above", "price": 28, "reason": "进入高估区间，不应追高"}
-  ],
-  "updated_at": "2026-07-08T22:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

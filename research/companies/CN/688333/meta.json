@@ -1,104 +1,115 @@
 {
-  "symbol": "CN:688333",
-  "market": "CN",
-  "ticker": "688333",
-  "name": "铂力特",
-  "company_name": "铂力特",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "铂力特是国内金属3D打印设备、材料、工艺和定制化制造服务一体化龙头，航空航天与工业客户共同驱动增长；但当前价格已接近合理价值上沿，且证监会立案调查、应收存货占用和重资产扩产风险仍需折价，适合观察或低位小仓位配置。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    92,
-    112
-  ],
-  "buy_zone": [
-    78,
-    88
-  ],
-  "sell_or_reduce_zone": [
-    125,
-    145
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "铂力特",
+    "security_status": "active",
+    "symbol": "CN:688333",
+    "ticker": "688333"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "029608f4b91869a821d4c9fcbe404a2107834ccbdc747df82b1000e519dd8deb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于95元且证监会立案事项无新增负面进展",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格回到合理价值区间中部以下，适合验证订单和现金流。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非净利率、现金流、存货和应收款变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入78-88元买入区间，且2026年收入、扣非净利率、应收存货周转未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "进入有安全边际的买入区间，同时基本面仍支持金属3D打印批产逻辑。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和下半年订单验收节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于125元且盈利预测无上修，或证监会调查/现金流/应收存货出现负面变化",
-      "action": "减仓或退出",
-      "max_weight": 0.005,
-      "reason": "估值进入乐观情景区间，且治理或营运资本风险会压缩风险收益比。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、证监会立案事项进展和全年经营现金流质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 88.0
+      },
+      "reason": "进入买入区间上沿，需要复核证监会事项、订单验收和应收存货后考虑加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 78.0
+      },
+      "reason": "进入悲观情景上沿附近，若基本面未恶化，赔率明显改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 125.0
+      },
+      "reason": "进入减持区间下沿，当前盈利兑现不足以支撑继续追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 145.0
+      },
+      "reason": "接近乐观情景估值上沿，除非利润率和订单能见度大幅上修，否则应降低仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 88,
-      "reason": "进入买入区间上沿，需要复核证监会事项、订单验收和应收存货后考虑加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 78,
-      "reason": "进入悲观情景上沿附近，若基本面未恶化，赔率明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 125,
-      "reason": "进入减持区间下沿，当前盈利兑现不足以支撑继续追高。"
-    },
-    {
-      "type": "price_above",
-      "price": 145,
-      "reason": "接近乐观情景估值上沿，除非利润率和订单能见度大幅上修，否则应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非净利率、现金流、存货和应收款变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和下半年订单验收节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、证监会立案事项进展和全年经营现金流质量。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入增速",
-    "扣非归母净利润率",
-    "经营活动现金流量净额",
-    "3D打印设备销量与库存",
-    "航空航天收入及毛利率",
-    "工业收入及毛利率",
-    "设备及配件毛利率",
-    "应收账款、应收票据及应收款项融资合计",
-    "存货余额及跌价准备",
-    "研发投入占营业收入比例",
-    "证监会立案调查进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

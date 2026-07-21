@@ -1,130 +1,123 @@
 {
-  "symbol": "CN:003005",
-  "market": "CN",
-  "ticker": "003005",
-  "name": "竞业达",
-  "company_name": "北京竞业达数码科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司有教育考试、智慧教学和智慧轨道场景积累，净资产和现金类资产提供一定底部，但2025年扣非亏损、2026Q1亏损扩大且经营现金流显著流出；叠加实控人/董事长被留置的治理风险，当前12元以上价格缺乏安全边际。等待治理事件明朗、扣非利润和经营现金流改善，或价格回到净资产附近再评估。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    8.0,
-    11.0
-  ],
-  "buy_zone": [
-    0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "竞业达",
+    "security_status": "active",
+    "symbol": "CN:003005",
+    "ticker": "003005"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "791777f0351f4a62dd76d3266068c7dc4be87ec1feea91ac04f4a9315830510d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于12元，且治理事件、扣非利润、经营现金流尚未改善",
-      "action": "不买入；已有仓位以观察仓或减仓处理",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "价格回到8.0-9.0元，且未出现新增重大治理或财务风险",
-      "action": "建立跟踪仓，等待中报或三季报验证",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格低于8元，治理风险边界清晰，且订单、应收、现金流未恶化",
-      "action": "分批加仓",
-      "target_position": "1.5%-2.5%",
-      "max_weight": 0.025
-    },
-    {
-      "condition": "2026年扣非利润转正且经营现金流转正，服务化收入占比提升",
-      "action": "可上调合理估值并重新评估仓位上限",
-      "target_position": "2.5%-4.0%",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入观察区，接近资产底估值上沿",
-      "action": "重新检查治理进展、订单和中报现金流，评估是否建立小仓",
-      "source": "估值安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "低于估算合理价值下沿，接近2026Q1每股净资产",
-      "action": "若基本面未恶化，进入可买区并更新估值",
-      "source": "接近2026Q1每股净资产"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "高于当前估值上沿且需要利润和现金流验证",
-      "action": "若缺乏业绩验证，减仓或维持不买",
-      "source": "估值上沿"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后，或此前披露实控人、董事长钱瑞被留置事项调查进展",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证亏损是否收窄，治理事件可能改变估值折价",
-      "action": "重估治理折价、扣非利润、经营现金流和可买价格"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证销售和研发投入是否开始转化为收入与现金流",
-      "action": "重点检查扣非净利润、经营现金流和销售费用率"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "年末订单和治理状态复盘",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "订单决定下一年度收入可见度，治理状态决定仓位上限",
-      "action": "上修或下修未来12个月收入可见度"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可确认全年扣非利润、经营现金流和服务化收入兑现程度",
-      "action": "重新评估AI服务化商业模式和估值倍数"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "跨年度后仍需检查应收账款、现金流和AI收入可持续性",
-      "action": "下调质量评级和仓位上限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入观察区，接近资产底估值上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "低于估算合理价值下沿，接近2026Q1每股净资产",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "高于当前估值上沿且需要利润和现金流验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "在手订单金额",
-    "智慧教学收入及服务化收入占比",
-    "智慧招考收入恢复情况",
-    "智慧轨道收入增速和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "销售费用率和研发费用率",
-    "应收账款余额和周转",
-    "货币资金加交易性金融资产",
-    "实控人留置事项进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

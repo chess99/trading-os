@@ -1,85 +1,119 @@
 {
-  "symbol": "CN:002213",
-  "market": "CN",
-  "ticker": "002213",
-  "name": "大为股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "2026年半年报预告确认存储上行周期带来扭亏，但倒算Q2归母与扣非利润均较Q1回落，且预告仍未验证存货去化、经营现金流和短债改善。公司经济实质仍是低毛利、重库存、委外制造的模组方案商；25.09元仍高于12-20元合理区间，只在深度折价且库存、现金流、债务共同改善时以0.01上限参与。",
-  "fair_value_range": [
-    12,
-    20
-  ],
-  "buy_zone": [
-    8,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大为股份",
+    "security_status": "active",
+    "symbol": "CN:002213",
+    "ticker": "002213"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "6647997f09d199b444fef2fd717013d144af8c2257281dd2b5c9ec514b7f5ff0"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "d2a10c80dfae957519299e2189791c74eaecf8efb4ab820f2a930be31a40cfa4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于20元，或存货与经营现金流尚未完成验证",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
+      "reason": "复核证监会批复后十个工作日内发行缴款、实际募集净额与股份登记进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于12-20元且库存现金化信号不完整，仅允许研究观察仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复核存货、预付款、短期借款、跌价准备、存储毛利率与经营现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于8-12元，且存货环比下降、经营现金流转正、短期借款不再上升",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后验证利润持续性、库存去化与经营现金流转正",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "存储价格反转并出现减值、短期借款超过4亿元或连续两个季度经营现金净流出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "年度复核定增募投项目、LPDDR5与UFS量产、采矿权进展和债务承受能力",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入买入区上沿，需同时验证库存环比下降、经营现金流转正与短债稳定",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入深度折价区，先开展库存减值、矿业投入和流动性专项复核，禁止机械补仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "进入减仓区，若正常化净利润仍低于2亿元则兑现主题溢价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-31",
-      "reason": "复核证监会批复后十个工作日内发行缴款、实际募集净额与股份登记进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后复核存货、预付款、短期借款、跌价准备、存储毛利率与经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后验证利润持续性、库存去化与经营现金流转正"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "年度复核定增募投项目、LPDDR5与UFS量产、采矿权进展和债务承受能力"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入买入区上沿，需同时验证库存环比下降、经营现金流转正与短债稳定"
-    },
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入深度折价区，先开展库存减值、矿业投入和流动性专项复核，禁止机械补仓"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "reason": "进入减仓区，若正常化净利润仍低于2亿元则兑现主题溢价"
-    }
-  ],
-  "updated_at": "2026-07-18T09:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

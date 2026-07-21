@@ -1,111 +1,138 @@
 {
-  "symbol": "CN:300205",
-  "market": "CN",
-  "ticker": "300205",
-  "name": "*ST天喻",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST天喻仍处于OFAC SDN制裁、退市/其他风险警示申请未获明确同意、年报问询函延期、重大诉讼和治理修复交织阶段；2025年收入同比下降79.70%，2026Q1收入继续同比下降70.09%，当前约4.95元对应约21.3亿元市值和约5.1倍PB，已隐含较强摘帽与经营恢复预期，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.0,
-    3.2
-  ],
-  "buy_zone": [
-    1.5,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    6.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST天喻",
+    "security_status": "active",
+    "symbol": "CN:300205",
+    "ticker": "300205"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8930597b767b45bd1c8cbabe1adfe36778a83574f12e65e6a6df5db6e7aa3722"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "cb07c08b52417e7cd6d6049199269f2f480e5788e47706e72c77fe6731f074f5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于4.5元，且OFAC SDN、退市风险警示、年报问询函和重大诉讼未全部落地解决",
-      "action": "不买不加仓，已有仓位降至观察仓或清仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查深交所是否同意撤销退市风险警示和其他风险警示，以及年报问询函回复是否出现新增风险。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至2.0-3.2元，但SDN和退市风险警示仍未解决",
-      "action": "只跟踪不买，等待监管和经营现金流证据",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查OFAC SDN官方记录是否移除，SDN仍是在客户准入、外汇结算和供应链恢复中的首要变量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于2.0元，且未新增重大违法强退、审计非标或诉讼执行恶化",
-      "action": "可建立事件观察仓，第一笔不超过0.5%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，重点看单季收入是否恢复到3000万/5000万以上和经营现金流是否改善。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于1.5元，同时撤销风险警示或SDN移除至少一项取得明确正面进展",
-      "action": "可小额提高困境反转仓位，但仍按高风险资产管理",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查受限货币资金、预计负债和重大诉讼执行情况，判断净资产质量是否继续恶化。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "OFAC SDN正式移除、退市及其他风险警示撤销、单季收入恢复到5000万元以上且经营现金流转正",
-      "action": "重新建模，届时再决定是否从avoid上调至watch或hold",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报审计意见、内控审计意见、扣非收入与净资产是否满足持续上市安全边界。",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "低于基准合理价值区间下沿，开始具备受损资产加反转期权的安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "接近强吸引力买入价，若未新增退市和诉讼恶化，可复核小仓试错。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "价格已进入乐观反转情景定价区间，若无硬催化支撑不应追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "明显高于当前可验证基本面支持范围，应触发减仓或回避。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "低于基准合理价值区间下沿，开始具备受损资产加反转期权的安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "接近强吸引力买入价，若未新增退市和诉讼恶化，可复核小仓试错。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "价格已进入乐观反转情景定价区间，若无硬催化支撑不应追高。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "明显高于当前可验证基本面支持范围，应触发减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查深交所是否同意撤销退市风险警示和其他风险警示，以及年报问询函回复是否出现新增风险。"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查OFAC SDN官方记录是否移除，SDN仍是在客户准入、外汇结算和供应链恢复中的首要变量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，重点看单季收入是否恢复到3000万/5000万以上和经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查受限货币资金、预计负债和重大诉讼执行情况，判断净资产质量是否继续恶化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报审计意见、内控审计意见、扣非收入与净资产是否满足持续上市安全边界。"
-    }
-  ],
-  "notes": [
-    "2026-07-20新浪行情接口显示当前价4.95元，按总股本430,056,000股估算总市值约21.3亿元；部分行情页显示4.94元，属于0.01元级差异。",
-    "2025年报显示收入1.72亿元、归母净利润-6.05亿元、经营现金流-8042.48万元；2026Q1收入1357.06万元、归母净利润-4260.43万元、经营现金流-1.08亿元。",
-    "OFAC官方SDN详情页截至2026-07-17更新仍列示WUHAN TIANYU INFORMATION INDUSTRY CO LTD，Program为RUSSIA-EO14024。",
-    "公司已申请撤销退市及其他风险警示，但截至公开报道和公告进展仍未见深交所明确同意，且年报问询函存在延期回复。",
-    "可比公司估值数据来自多家行情平台，口径和日期不完全一致，仅用于相对比较，置信度低于公司公告数据。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

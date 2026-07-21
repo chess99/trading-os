@@ -1,89 +1,95 @@
 {
-  "symbol": "CN:688177",
-  "market": "CN",
-  "ticker": "688177",
-  "name": "百奥泰",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "百奥泰具备多款生物类似药商业化和欧美出海期权，但持续亏损、现金流消耗、国内价格压力和永和工厂欧盟 GMP 不确定性仍压制安全边际；当前更适合观察，等待价格跌入明显折扣区或海外放量/GMP/现金流三类证据改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    22.0
-  ],
-  "buy_zone": [
-    0.0,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百奥泰",
+    "security_status": "active",
+    "symbol": "CN:688177",
+    "ticker": "688177"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f1a0266fd4b21e0502c1da72c9a4fb5a60f138ec554a929f387c256740d736d9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 14 元且无新增重大 GMP、审批、融资或现金流负面时，可建立观察仓。",
-      "action": "buy_watch_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入增速、研发费用率、经营现金流和现金余额。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于 14-22 元且海外放量、GMP 整改、经营现金流尚未形成明确正反馈时，仅跟踪不加仓。",
-      "action": "hold_or_watch",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及海外产品商业化、GMP 整改进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 24 元但海外收入和现金流未显著超预期时，降低仓位或不追高。",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断收入放量、亏损收窄和现金流拐点是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入基准估值下沿，若基本面未恶化可重新评估小仓位买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过当前情景估值基准上沿，需确认海外放量或现金流改善是否足以支撑。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入基准估值下沿，若基本面未恶化可重新评估小仓位买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过当前情景估值基准上沿，需确认海外放量或现金流改善是否足以支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入增速、研发费用率、经营现金流和现金余额。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及海外产品商业化、GMP 整改进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断收入放量、亏损收窄和现金流拐点是否兑现。"
-    }
-  ],
-  "key_risks": [
-    "永和工厂欧盟 GMP 相关整改或复查不及预期，影响海外供货和注册信任。",
-    "研发费用和销售费用持续高于收入增量，导致亏损和融资压力扩大。",
-    "国内生物类似药价格竞争、医保和集采压力压低毛利。",
-    "海外伙伴销售、定价、医保准入和分成兑现慢于预期。",
-    "创新抗体和 ADC 管线临床失败或 BD 价值低于预期。"
-  ],
-  "watch_metrics": [
-    "2026H1 和 2026 全年收入增速是否保持 25% 以上",
-    "研发费用/收入比例和销售费用率是否下降",
-    "经营现金流和现金余额变化",
-    "乌司奴、戈利木等海外产品获批、发货、订单、里程碑和分成进展",
-    "永和工厂 GMP 整改、复查和海外监管反馈",
-    "新 BD 合同的首付款、里程碑和区域权益质量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

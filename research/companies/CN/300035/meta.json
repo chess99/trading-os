@@ -1,124 +1,132 @@
 {
-  "symbol": "CN:300035",
-  "market": "CN",
-  "ticker": "300035",
-  "name": "中科电气",
-  "company_name": "湖南中科电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备负极材料客户、技术和石墨化装备协同优势，但 2026 年一季度呈现收入高增、利润下滑、经营现金流继续大幅为负的组合。当前价格约 12.62 元处于合理区间中部偏上，安全边际不足，等待 9.5 元以下或现金流修复后再考虑买入。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    10.5,
-    14.5
-  ],
-  "buy_zone": [
-    0,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中科电气",
+    "security_status": "active",
+    "symbol": "CN:300035",
+    "ticker": "300035"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "2773a10a5d8a6e79ae6f8dca851394d97968d2cb7b247c6aba5e583668f725dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 12.5 元且毛利率、经营现金流尚未修复",
-      "action": "不新增仓位，仅跟踪",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核半年报收入、利润、现金流和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在 10.5-12.5 元且连续两个季度毛利率企稳、经营现金流改善",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "确认经营现金流是否从大幅流出转向改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于 9.5 元且未出现客户流失、重大减值或融资风险",
-      "action": "建立初始仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "毛利率是估值能否上修的核心变量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于 8.5 元且经营现金流转正、负极吨毛利恢复",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "客户集中和营运资本决定风险折价",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "重大扩产项目影响资本开支、折旧和产能利用率",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "新产品兑现会影响中长期利润弹性",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "低于约 1.3 倍 PB，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "价格已明显低于合理区间，需要判断是否为基本面破坏",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "高于乐观估值下沿，若利润和现金流未兑现应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
-      "action": "进入可买区，复核最近季度毛利率和经营现金流",
-      "reason": "低于约 1.3 倍 PB，开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "action": "进入强安全边际区，复核是否存在重大基本面破坏",
-      "reason": "价格已明显低于合理区间，需要判断是否为基本面破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "currency": "CNY",
-      "action": "进入减仓复核区，检查利润和现金流是否支撑估值",
-      "reason": "高于乐观估值下沿，若利润和现金流未兑现应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布 2026 年半年报或三季报",
-      "reason": "复核半年报收入、利润、现金流和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "单季度经营活动现金流连续两季转正或继续大幅为负",
-      "reason": "确认经营现金流是否从大幅流出转向改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "石墨类负极材料毛利率回到 16%-18% 以上或跌破 12%",
-      "reason": "毛利率是估值能否上修的核心变量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "前五大客户占比、应收账款、存货出现明显异常变化",
-      "reason": "客户集中和营运资本决定风险折价"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "阿曼、四川泸州等重大项目披露投资进度、投产或延期",
-      "reason": "重大扩产项目影响资本开支、折旧和产能利用率"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "硬碳、硅碳、快充负极产品形成明确批量订单",
-      "reason": "新产品兑现会影响中长期利润弹性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "石墨类负极材料销量、均价、吨毛利和毛利率",
-    "经营活动现金流净额",
-    "应收账款和存货占收入比例",
-    "短期借款、长期借款和一年内到期非流动负债",
-    "前五大客户销售占比",
-    "在建产能投产节奏和产能利用率",
-    "储能负极、快充负极、硬碳、硅碳产品收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

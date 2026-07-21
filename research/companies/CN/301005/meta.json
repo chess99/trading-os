@@ -1,26 +1,77 @@
 {
-  "symbol": "CN:301005",
-  "market": "CN",
-  "ticker": "301005",
-  "name": "超捷股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "严重泡沫：汽车紧固件主业盈利极弱（净利率1.2%、ROE 2.15%、经营现金流连续两年为负），但市场因商业航天/人形机器人/低空经济等多重概念给予PB 16.8x的极端高估值（汽车零部件行业均值为2-4x）。当前96元/129亿市值对应PS 14.7x，任何合理假设下的目标市值均低于50亿。坚决不碰。",
-  "fair_value_range": [15, 20],
-  "buy_zone": [0, 0],
-  "sell_or_reduce_zone": [30, 9999],
-  "position_plan": [
-    {"condition": "股价处于买入区间且基本面未恶化", "max_weight": 0.00}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "超捷股份",
+    "security_status": "active",
+    "symbol": "CN:301005",
+    "ticker": "301005"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "19c87813ab4cb11390c6b0f73e375af91754474134ef47055011639b163d357c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报，检查营收是否重回增长、经营现金流是否转正",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "PS降至约5x，可重新评估是否进入关注区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "股价过高脱离基本面，不应参与",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": ["reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报，检查营收是否重回增长、经营现金流是否转正"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 35, "reason": "PS降至约5x，可重新评估是否进入关注区间"},
-    {"type": "price_above", "price": 30, "reason": "股价过高脱离基本面，不应参与"}
-  ],
-  "updated_at": "2026-07-09T06:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

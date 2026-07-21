@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603810",
-  "market": "CN",
-  "ticker": "603810",
-  "name": "丰山集团",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "丰山集团农药主业在2025年修复并扭亏，但新能源电解液和甲苯氯化新业务仍处负毛利爬坡期，经营现金流连续承压；当前估值需要正常化利润兑现来支撑，因此以观察为主，等待现金流转正和新业务毛利改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.5,
-    13.5
-  ],
-  "buy_zone": [
-    7.5,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    17.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "丰山集团",
+    "security_status": "active",
+    "symbol": "CN:603810",
+    "ticker": "603810"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "0c4bf3b5c18132bb627f7b03833da1b48bb8a4df7307acdf2a428f092a16dbac"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价附近仅保留观察仓，等待2026半年报验证经营现金流和新业务毛利率",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点检查经营现金流、应收账款、存货和新业务毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入买入区间且2026H1经营现金流改善、甲苯氯化和电解液亏损收窄",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认农药主业修复和湖北丰山、丰山全诺爬坡进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026年经营现金流继续显著为负或新业务持续负毛利，不加仓并降为回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重估正常化盈利和资产负债表质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入初步买入观察区，市值接近账面权益并开始提供安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入深度安全边际区，可在基本面未恶化前提下重新评估加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "超过合理价值上沿，需要减仓或等待正常化利润兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入初步买入观察区，市值接近账面权益并开始提供安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入深度安全边际区，可在基本面未恶化前提下重新评估加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "超过合理价值上沿，需要减仓或等待正常化利润兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点检查经营现金流、应收账款、存货和新业务毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认农药主业修复和湖北丰山、丰山全诺爬坡进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重估正常化盈利和资产负债表质量"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

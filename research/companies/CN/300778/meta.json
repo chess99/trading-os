@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:300778",
-  "ticker": "300778",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "新城市",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "新城市具备较厚金融资产垫和粤港澳大湾区规划设计客户资源，但传统主业仍下行、2026Q1收入和利润继续承压，智慧能源与智慧运维尚处订单转收入早期。当前股价已高于基准公允价值，等待更低价格或经营拐点验证。",
-  "fair_value_range": [
-    7.0,
-    8.5
-  ],
-  "buy_zone": [
-    5.8,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新城市",
+    "security_status": "active",
+    "symbol": "CN:300778",
+    "ticker": "300778"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "921d9d16142b9eff21f506f0e9d2ed16b971e29bab306137ffaffc4ca3333aa3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入5.8-6.8元区间，且最新公告未显示应收账款、合同资产或经营现金流进一步恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入止跌、智慧能源收入确认、经营现金流和应收/合同资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报或三季报确认收入止跌、智慧能源订单转收入、专业技术与服务毛利率回升至15%以上且经营现金流改善",
-      "action": "可提高至小仓位上限",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年亏损收窄和两翼业务放量是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但仍未验证收入和利润拐点，或应收/合同资产减值加速",
-      "action": "减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新长期估值和评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入安全边际买入观察区，可重新评估小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "低于保守买入区下沿，若基本面未恶化则资产垫吸引力提升",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "接近乐观情景估值，下次需核验是否已有收入和利润兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入安全边际买入观察区，可重新评估小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "低于保守买入区下沿，若基本面未恶化则资产垫吸引力提升"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "接近乐观情景估值，下次需核验是否已有收入和利润兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入止跌、智慧能源收入确认、经营现金流和应收/合同资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年亏损收窄和两翼业务放量是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新长期估值和评级"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

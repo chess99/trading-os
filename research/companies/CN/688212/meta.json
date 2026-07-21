@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688212",
-  "market": "CN",
-  "ticker": "688212",
-  "name": "澳华内镜",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "澳华内镜是国产软性内窥镜稀缺平台，AQ-400、海外渠道和ERCP手术机器人提供中长期增长期权；但2025年扣非亏损、2026Q1仍亏损，费用率与营运资本压力尚未消化，当前价格安全边际不足，适合观察并等待20-24元买入区或连续季度业绩验证。",
-  "fair_value_range": [
-    28,
-    34
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    40,
-    48
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "澳华内镜",
+    "security_status": "active",
+    "symbol": "CN:688212",
+    "ticker": "688212"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "4967ecdff36c463fa087a8b7cdb5bb76e47b2ed4ef87bcaa107119c58b4636c7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 24 and no deterioration in revenue growth, gross margin, receivables or inventory",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入增速、AQ-400装机、费用率、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "two consecutive quarters show revenue growth above 18%, lower expense ratio and improving operating cash flow",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：验证收入加速和经营现金流改善是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "AQ-400 tertiary hospital installation accelerates and full-year operating cash flow turns positive",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及ERCP手术机器人注册临床进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入初始买入区，可复核AQ-400放量和现金流后建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入悲观情景上沿附近，若基本面未恶化则安全边际明显",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "超过基准估值区间较多，若扣非利润和现金流未兑现应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入初始买入区，可复核AQ-400放量和现金流后建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入悲观情景上沿附近，若基本面未恶化则安全边际明显"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "超过基准估值区间较多，若扣非利润和现金流未兑现应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入增速、AQ-400装机、费用率、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：验证收入加速和经营现金流改善是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及ERCP手术机器人注册临床进展"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

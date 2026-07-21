@@ -1,71 +1,86 @@
 {
-  "symbol": "CN:300091",
-  "market": "CN",
-  "ticker": "300091",
-  "name": "*ST金灵",
-  "currency": "CNY",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "重整使公司短期净资产和现金链修复，但财务类退市风险警示仍未解除，主营尚未证明恢复盈利，历史系统性财务造假和诉讼赔偿带来长期信用折价；2026-07-17 收盘价 2.50 元对应约 5.5 倍 2026Q1 PB、约 9.5 倍 2025 PS，显著高于可验证经营价值。",
-  "fair_value_range": [0.7, 1.1],
-  "buy_zone": [0.45, 0.65],
-  "sell_or_reduce_zone": [1.4, 1.8],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST金灵",
+    "security_status": "active",
+    "symbol": "CN:300091",
+    "ticker": "300091"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "bf2faa9b1e8cc87ae7bccd97395d88307f46a089ee01c675f94faf96d21c508e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于 1.40 元且 2026 年尚未确认撤销财务类退市风险警示",
-      "action": "不买；已有仓位减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非亏损、经营现金流、订单和现金消耗。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 0.65 元但尚未看到扣非盈利和经营现金流转正",
-      "action": "仅观察或极小试错",
-      "max_weight": 0.003
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报、审计意见、净资产和撤销财务类退市风险警示进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价 0.45-0.65 元，2026 年报确认净资产为正、审计标准无保留且未触及收入类退市指标",
-      "action": "建立困境反转仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.65
+      },
+      "reason": "进入可观察买入区间上沿，但仍需结合 2026 年报和现金流验证。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "2027 年连续两个季度主营恢复、毛利率超过 18%、扣非盈利且无新增重大诉讼/担保/占用",
-      "action": "重新估值后决定是否加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.8
+      },
+      "reason": "明显高于当前可验证合理价值，除非主营和退市风险解除已被年报确认，否则应卖出或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非亏损、经营现金流、订单和现金消耗。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报、审计意见、净资产和撤销财务类退市风险警示进展。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.65,
-      "reason": "进入可观察买入区间上沿，但仍需结合 2026 年报和现金流验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.8,
-      "reason": "明显高于当前可验证合理价值，除非主营和退市风险解除已被年报确认，否则应卖出或减仓。"
-    }
-  ],
-  "updated_at": "2026-07-19",
-  "notes": [
-    "2026-07-17 收盘价 2.50 元，市值约 71 亿元，当前不具备安全边际。",
-    "财务类退市风险警示仍未解除，2026 年年报是核心复核点。",
-    "2025 年财务审计和内控审计均为标准无保留意见，但历史造假背景下仍需持续折价。",
-    "本报告未逐笔核验全部未决诉讼、担保合同和重整信托底层资产，相关尾部风险按中低置信度处理。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

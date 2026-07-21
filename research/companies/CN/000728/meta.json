@@ -1,106 +1,96 @@
 {
-  "symbol": "CN:000728",
-  "market": "CN",
-  "ticker": "000728",
-  "name": "国元证券",
-  "company_name": "国元证券",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "国元证券是安徽省属背景突出的中型地方券商，资本指标安全、PB处于低位，但ROE中枢约6%左右且利润对自营和市场成交高度敏感；当前适合观察或小仓试探，核心买点在0.75倍PB附近。",
-  "quality_rating": "B",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    7.2,
-    8.8
-  ],
-  "buy_zone": [
-    6.4,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    10.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国元证券",
+    "security_status": "active",
+    "symbol": "CN:000728",
+    "ticker": "000728"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "df63e1571cd72fa77a9d37e6abe9128838e1958f5ff1a724cf37530070ab10a3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约7.53元且未进入核心买入区",
-      "action": "仅允许建立观察仓",
-      "max_weight": 0.01,
-      "reason": "当前约0.85倍PB不贵但安全边际不足，2026Q1净利已受自营波动拖累。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看自营投资收益、公允价值变动、经纪和信用业务增速。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至6.80-7.00元且A股日均成交额未显著低于1.2万亿元",
-      "action": "分批加仓",
-      "max_weight": 0.025,
-      "reason": "估值接近0.76-0.79倍2026Q1 BVPS，能够提供中型券商周期波动所需折价。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和市场成交环境，更新PB/ROE估值区间。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.80元且无净资本、监管处罚或信用减值恶化",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.04,
-      "reason": "低于0.76倍PB时下行保护更充分，适合用小中仓位持有行业Beta。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入买入观察区，需要复核成交额、自营收益和风险指标后决定是否加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于9.20元且ROE未确认上行至8%以上",
-      "action": "逐步减仓",
-      "max_weight": 0.015,
-      "reason": "估值超过约1倍PB后需要更高ROE支撑，否则风险收益比下降。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "进入深度价值区，但必须排除公司特定风险或行业系统性恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "达到减仓区下沿，若ROE和盈利弹性未同步改善，应降低仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入买入观察区，需要复核成交额、自营收益和风险指标后决定是否加仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.4,
-      "reason": "进入深度价值区，但必须排除公司特定风险或行业系统性恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "达到减仓区下沿，若ROE和盈利弹性未同步改善，应降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看自营投资收益、公允价值变动、经纪和信用业务增速。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和市场成交环境，更新PB/ROE估值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "A股日均成交额",
-    "两融余额",
-    "公司融出资金规模",
-    "投资收益",
-    "公允价值变动收益",
-    "其他综合收益",
-    "归母净利润同比增速",
-    "加权平均ROE",
-    "BVPS",
-    "风险覆盖率",
-    "流动性覆盖率",
-    "净稳定资金率",
-    "自营权益类证券及衍生品/净资本",
-    "自营非权益类证券及衍生品/净资本",
-    "经纪业务手续费净收入",
-    "证券信用业务利息净收入",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

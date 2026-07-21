@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688004",
-  "market": "CN",
-  "ticker": "688004",
-  "name": "博汇科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "博汇科技处在广电安全、视听监管、超高清和AI媒体应用交汇处，长期方向有政策需求支撑；但公司收入体量小、项目制波动大、2025及2026Q1仍亏损，当前约8倍收入估值已反映较多AI期权，需等待收入恢复、亏损收窄和经营现金流改善后再考虑买入。",
-  "fair_value_range": [
-    13.0,
-    17.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    21.0,
-    24.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博汇科技",
+    "security_status": "active",
+    "symbol": "CN:688004",
+    "ticker": "688004"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "aeba5a26de5ef48359bed88e35b0fcf1aacdb1dccc09d38fa9959feee63f69e4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.5-12.5元且未出现治理或现金流恶化新风险，可建立观察仓",
-      "action": "buy_probe",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、亏损、现金流和订单变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3收入同比转正、亏损明显收窄且经营现金流改善，可提高至小仓位",
-      "action": "add_after_fundamental_confirmation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入与利润拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价超过21元且没有利润拐点或订单放量证据，降低或避免持仓",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断AI视听监管与传媒安全业务是否兑现",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入估算买入区间上沿，安全边际开始可讨论",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入更有吸引力的深度安全边际区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 21.0
+      },
+      "reason": "超过乐观情景下沿，若无利润拐点需警惕主题估值过热",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入估算买入区间上沿，安全边际开始可讨论"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入更有吸引力的深度安全边际区间"
-    },
-    {
-      "type": "price_above",
-      "price": 21.0,
-      "reason": "超过乐观情景下沿，若无利润拐点需警惕主题估值过热"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、亏损、现金流和订单变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入与利润拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断AI视听监管与传媒安全业务是否兑现"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

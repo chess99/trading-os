@@ -1,90 +1,105 @@
 {
-  "symbol": "CN:002620",
-  "market": "CN",
-  "ticker": "002620",
-  "name": "*ST瑞和",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "负净资产、持续亏损、现金链和诉讼冻结压力主导，当前价值主要来自预重整期权；在法院受理重整、投资人资金和债务削减方案落地前，不具备普通股票买入价值。",
-  "fair_value_range": [
-    0.6,
-    1.2
-  ],
-  "buy_zone": [
-    0,
-    0.6
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST瑞和",
+    "security_status": "active",
+    "symbol": "CN:002620",
+    "ticker": "002620"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "c9b778f7ad4ccc57dd7be508f6964bbb8e8863b5a77baacf7b8e1016f49b0d72"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "未正式受理重整、净资产仍为负、股价高于2.50元",
-      "action": "不买入，已有仓位减持或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、诉讼冻结变化和预重整进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "法院正式受理重整且投资人方案披露，但价格仍高于1.20元",
-      "action": "仅跟踪，不新建仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报、净资产变化、现金链和法院重整受理状态",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "法院受理重整、投资款到账路径清晰、老股东摊薄可测算且股价低于0.60元",
-      "action": "仅事件驱动观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、净资产是否转正及退市风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2026年报审计后归母净资产转正并出现撤销退市风险警示路径",
-      "action": "重新估值后再决定是否提高到小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "价格进入重整期权观察区，重新核验法院受理和投资人资金进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.6
+      },
+      "reason": "价格进入极低期权区，若重整核心条件同步落地，可评估0.5%以内观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "高于安全边际上限，基本面难以支撑，已有仓位应减持或退出",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "价格进入重整期权观察区，重新核验法院受理和投资人资金进展"
-    },
-    {
-      "type": "price_below",
-      "price": 0.6,
-      "reason": "价格进入极低期权区，若重整核心条件同步落地，可评估0.5%以内观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "高于安全边际上限，基本面难以支撑，已有仓位应减持或退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、诉讼冻结变化和预重整进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报、净资产变化、现金链和法院重整受理状态"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、净资产是否转正及退市风险"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘价约4.80元，行情来源为公开页面搜索结果交叉验证，本地行情API未成功返回，置信度中等。",
-    "核心结论基于2025年报、2026一季报、2026半年度业绩预告、预重整和诉讼公告。",
-    "公司为负净资产和持续亏损的困境股，普通估值方法不适用，当前价值主要来自重整期权。",
-    "未完整核验2026年深交所年报问询函及回复全文，监管问询细节置信度低。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

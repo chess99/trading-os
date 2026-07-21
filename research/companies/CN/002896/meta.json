@@ -1,104 +1,104 @@
 {
-  "symbol": "CN:002896",
-  "market": "CN",
-  "ticker": "002896",
-  "name": "中大力德",
-  "company_name": "宁波中大力德智能传动股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是精密传动与机器人执行器链条的真实参与者，产品矩阵覆盖减速电机、减速器、智能执行单元和驱动器，但 2025 年净利润、ROE、经营现金流与 2026Q1 利润趋势尚不足以支撑 2026-07-13 附近约 70 元/股的估值。等待价格回到安全边际区，或等待机器人相关订单、收入增速、毛利率和现金流同步兑现。",
-  "quality_rating": "中",
-  "valuation_rating": "贵",
-  "fair_value_range": [
-    22,
-    32
-  ],
-  "buy_zone": [
-    0,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    9999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中大力德",
+    "security_status": "active",
+    "symbol": "CN:002896",
+    "ticker": "002896"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "78b5cabc5939bce6ce6d22c53adff8ee3c224c65859039af18cfc949b182d35e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 22 元，且最近年度或连续两个季度收入仍增长、经营现金流没有继续恶化",
-      "action": "建立 3%-5% 基本面仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价位于 22-32 元，且机器人相关收入或智能执行单元增长有明确证据",
-      "action": "保留 0%-2% 观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价高于 45 元但未披露可核验批量订单、净利率改善和经营现金流转正",
-      "action": "不新增，已有仓位降低至 0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "unit": "CNY/share",
-      "reason": "低于中性合理价值下沿，开始具备价格安全边际",
-      "action": "进入可买区，复核最新季度收入、毛利率、现金流后决定建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "unit": "CNY/share",
-      "reason": "高于机器人期权观察区，若基本面未兑现则风险收益比恶化",
-      "action": "估值进入高风险区，若基本面未兑现则减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计 2026 年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证收入增长是否转化为利润和现金流",
-      "action": "复核收入增速、净利率、经营现金流和存货/应收变化"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计 2026 年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察机器人链条订单和费用摊薄是否兑现",
-      "action": "检查机器人链条收入是否加速、利润率是否改善"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计 2026 年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整评估扩产回报、ROE 和自由现金流质量",
-      "action": "重做估值，重点核对 ROE、经营现金流和新增产能回报"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-07-13",
-      "condition": "初始报告一年后",
+      "active": true,
+      "condition": {
+        "date": "2027-07-13"
+      },
       "reason": "一年后需要复盘初始假设、估值区间和价格纪律",
-      "action": "复盘投资假设是否兑现并更新报告"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "低于中性合理价值下沿，开始具备价格安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "高于机器人期权观察区，若基本面未兑现则风险收益比恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季营业收入同比增速",
-    "综合毛利率与净利率",
-    "智能执行单元收入及占比",
-    "经营活动现金流净额/归母净利润",
-    "存货周转与应收账款变化",
-    "ROE",
-    "机器人相关批量订单和客户导入进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,87 +1,106 @@
 {
-  "symbol": "CN:301139",
-  "market": "CN",
-  "ticker": "301139",
-  "name": "*ST元道",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST元道不是普通低估通信服务股，而是重大违法强制退市未决的困境资产。证监会事先告知书拟认定欺诈发行和年报虚假记载，叠加保留意见、债务提前到期、账户冻结、诉讼仲裁和重要客户合同终止，当前应以规避为主，只有在正式处罚决定排除退市且流动性风险缓解后才可重新评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.6,
-    1.8
-  ],
-  "buy_zone": [
-    0.7,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.2,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST元道",
+    "security_status": "active",
+    "symbol": "CN:301139",
+    "ticker": "301139"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "3d55b6f6d4df53af3b6a96bc8c992b4e3c1c239ad7e8bd974539d680fe427761"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "处罚决定未落地或仍可能触及重大违法强制退市",
-      "action": "不买入；已有仓位降至可承受终止上市损失的事件仓",
-      "max_weight": 0.0025
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、处罚决定进展、合同终止影响、回款和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "正式处罚决定排除重大违法强制退市，且债务展期或账户冻结解除取得实质进展，价格低于1.20元",
-      "action": "可建立事件观察仓，持续跟踪半年报现金流与合同替代",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报、债务展期、账户冻结解除和诉讼仲裁变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "退市风险解除、2026半年报现金流为正、核心合同替代明确，价格低于1.80元",
-      "action": "可转为小仓位困境反转跟踪",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入有安全边际观察区，但仍需先确认重大违法强制退市风险是否解除",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "进入强吸引力事件价格区，可重新评估残余资产和存续期权",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "高于风险调整合理区间上沿，应避免追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.8
+      },
+      "reason": "接近或高于当前乐观情景隐含价格，正式处罚未落地前风险补偿不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入有安全边际观察区，但仍需先确认重大违法强制退市风险是否解除"
-    },
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "进入强吸引力事件价格区，可重新评估残余资产和存续期权"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "高于风险调整合理区间上沿，应避免追高或考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 2.8,
-      "reason": "接近或高于当前乐观情景隐含价格，正式处罚未落地前风险补偿不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、处罚决定进展、合同终止影响、回款和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报、债务展期、账户冻结解除和诉讼仲裁变化"
-    }
-  ],
-  "notes": [
-    "2026-07-20腾讯行情显示收盘价2.79元，总市值约3.39亿元。",
-    "2026-07-20公司第十二次提示可能被实施重大违法强制退市，尚未收到正式处罚决定。",
-    "2026-05-08证监会行政处罚事先告知书拟认定公司IPO发行文件编造重大虚假内容并存在2022年年报虚假记载，拟对公司罚款2.3884亿元。",
-    "2025年年报被出具保留意见，核心涉及应收账款、合同资产和证监会立案影响。",
-    "2026-07-17公告连续十二个月累计诉讼仲裁金额约3.3838亿元，未结金额约3.0307亿元。",
-    "估值置信度偏低，当前评级为avoid。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

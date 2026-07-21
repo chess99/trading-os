@@ -1,89 +1,105 @@
 {
-  "symbol": "CN:300768",
-  "ticker": "300768",
-  "name": "迪普科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "迪普科技资产负债表强、研发投入高、应用交付及网络产品恢复增长，但传统网络安全产品2025年下滑，2026Q1收入同比下降，当前15.51元对应TTM PE约50.8倍，缺少足够安全边际，适合观察等待价格或基本面确认。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    11.0,
-    14.5
-  ],
-  "buy_zone": [
-    9.0,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    20.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "迪普科技",
+    "security_status": "active",
+    "symbol": "CN:300768",
+    "ticker": "300768"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "94603f660af469ca3d965162e4ff67b9b6fcbeafbe862a1632bd7c8e12c86df7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于11.5元，且最新半年报或三季报显示收入恢复正增长、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入恢复、产品结构、经营现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于10.0元，且网络安全产品止跌、应用交付及网络产品保持增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年订单和第四季度收入兑现概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于17.0元但收入增速仍低于10%或利润主要来自利息收入、退税和补助",
-      "action": "不追高或降低仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估估值区间和长期ROE改善情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入基础估值区间下沿，开始具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "接近绝对估值基础情景，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "超过基础估值上沿，需要收入和利润加速来支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入基础估值区间下沿，开始具备初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "接近绝对估值基础情景，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "reason": "超过基础估值上沿，需要收入和利润加速来支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入恢复、产品结构、经营现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年订单和第四季度收入兑现概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估估值区间和长期ROE改善情况"
-    }
-  ],
-  "key_metrics": {
-    "price_as_of_2026_07_15": 15.51,
-    "market_cap_cny": 9985788394.89,
-    "ttm_revenue_cny": 1199494040.09,
-    "ttm_net_profit_cny": 196639778.6,
-    "ttm_pe": 50.78,
-    "pb_2026q1": 2.82,
-    "ev_to_ttm_sales": 5.87,
-    "cash_and_trading_assets_per_share_cny": 4.6
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

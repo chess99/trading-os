@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:000736",
-  "ticker": "000736",
-  "name": "中交发展",
-  "company_name": "中交城市发展控股集团股份有限公司",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "current_price": 3.75,
-  "price_date": "2026-07-13",
-  "fair_value_range": [
-    3.1,
-    3.8
-  ],
-  "buy_zone": [
-    2.4,
-    2.8
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    6.0
-  ],
-  "current_thesis": "中交发展已完成房地产开发业务置出，转型为物业服务、资产管理与城市运营轻资产平台，资产负债表风险显著下降；但2026Q1持续经营利润和现金流仍薄弱，且经历重大会计差错处分，当前估值已部分反映央企平台预期，需观察半年报和三季报验证收入、利润率、现金流及中交体系订单兑现。",
-  "position_plan": [
-    {
-      "condition": "股价回落至2.80元以下，且2026H1持续经营收入不低于7亿元、归母净利润为正、经营现金流较2026Q1明显改善",
-      "action": "建立跟踪仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "2026Q3后连续两个季度收入稳定在3.5亿元以上、毛利率高于17%、经营现金流转正，并披露可核验的中交体系城市运营或资产管理订单",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于4.80元但没有持续经营利润、现金流或订单兑现支撑",
-      "action": "不追高并减仓观察",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.8,
-      "reason": "进入初始买入观察区，可结合半年报验证建立小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "接近平台价值与收入倍数法保守区间，若基本面未恶化则安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "高于减仓区，若缺乏订单和利润兑现则估值透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看持续经营收入、毛利率、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证转型后连续季度盈利能力和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断轻资产城市运营平台是否形成可持续利润底"
-    }
-  ],
-  "key_metrics": {
-    "shares_outstanding": 747098401,
-    "market_cap_cny_billion": 2.8,
-    "q1_2026_revenue_cny_billion": 0.348,
-    "q1_2026_net_profit_to_parent_cny_million": 3.43,
-    "q1_2026_equity_to_parent_cny_billion": 1.212,
-    "q1_2026_cash_cny_billion": 0.881
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中交发展",
+    "security_status": "active",
+    "symbol": "CN:000736",
+    "ticker": "000736"
   },
-  "risks": [
-    "轻资产转型后持续经营收入和利润率尚未充分验证",
-    "经营现金流仍为负且应收账款较高",
-    "未来增长可能依赖中交体系关联交易，需关注定价和回款公允性",
-    "2025年三季报重大会计差错被深交所通报批评，治理信用需要修复",
-    "当前估值已反映部分央企平台化预期"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0bb2f9a22c6ac0b6496f11ed0e088c4f0614a8dd7949488d96a6f6261469d834"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看持续经营收入、毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证转型后连续季度盈利能力和现金流质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断轻资产城市运营平台是否形成可持续利润底",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.8
+      },
+      "reason": "进入初始买入观察区，可结合半年报验证建立小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "接近平台价值与收入倍数法保守区间，若基本面未恶化则安全边际改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "高于减仓区，若缺乏订单和利润兑现则估值透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

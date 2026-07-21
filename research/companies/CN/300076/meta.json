@@ -1,75 +1,86 @@
 {
-  "symbol": "CN:300076",
-  "market": "CN",
-  "ticker": "300076",
-  "name": "*ST宁视",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司处于退市风险警示期，2025年扣除后收入低于1亿元且持续亏损，内控和收入确认风险突出；当前价格显著高于保守资产价值，基本面买入风险收益不佳。",
-  "fair_value_range": [
-    1.2,
-    2.0
-  ],
-  "buy_zone": [
-    0.9,
-    1.3
-  ],
-  "sell_or_reduce_zone": [
-    2.4,
-    10.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST宁视",
+    "security_status": "active",
+    "symbol": "CN:300076",
+    "ticker": "300076"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "be82e9b245419c7788dfab4d221ab3722aba21aa27ac58bbbc99d8637c8d468f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于2.40元且2026年收入、利润、审计与内控风险未明显改善",
-      "action": "avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报收入、毛利率、现金流和ST撤销可行性",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于1.30元但未披露有效整改和订单证据",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、审计意见、内控审计意见和退市风险警示结果",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年报确认扣除后收入超过1亿元、审计意见干净且退市风险实质解除",
-      "action": "reassess",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.3
+      },
+      "reason": "进入资产折价观察区，但仍需先核验退市风险和内控整改",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.4
+      },
+      "reason": "高于保守合理价值上沿，应回避或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.3,
-      "reason": "进入资产折价观察区，但仍需先核验退市风险和内控整改"
-    },
-    {
-      "type": "price_above",
-      "price": 2.4,
-      "reason": "高于保守合理价值上沿，应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报收入、毛利率、现金流和ST撤销可行性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、审计意见、内控审计意见和退市风险警示结果"
-    }
-  ],
-  "notes": [
-    "2026-07-17收盘参考价4.15元，来源为新浪行情，置信度中。",
-    "2025年扣除后营业收入8022.41万元，归母净利润-8124.90万元，触发退市风险警示。",
-    "2025年存在非财务报告内部控制重大缺陷1项、重要缺陷1项。",
-    "当前结论为avoid；价格低于1.30元仅触发重新研究，不自动买入。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

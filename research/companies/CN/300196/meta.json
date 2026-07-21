@@ -1,126 +1,133 @@
 {
-  "symbol": "CN:300196",
-  "market": "CN",
-  "ticker": "300196",
-  "name": "长海股份",
-  "company_name": "江苏长海复合材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长海股份是玻纤制品细分龙头，短切毡和湿法薄毡具备工艺与客户积累，负债率约35%，分红回购较友好；但2026-07-13股价19.04元已反映玻纤景气修复和电子材料预期，且公司公开口径尚不包含电子布业务，当前安全边际不足，等待价格回落或业绩现金流进一步验证。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    15.0,
-    18.5
-  ],
-  "buy_zone": [
-    13.5,
-    15.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长海股份",
+    "security_status": "active",
+    "symbol": "CN:300196",
+    "ticker": "300196"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "864681fef3e40987da08d6fe92bdf8e3d20982747014a0e6b3b89e2fc5297d56"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于15.0元，且2026H1扣非净利润不低于1.6亿元、经营现金流转正",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于13.5元，或市值低于约55亿元，且资产负债率维持40%以下",
-      "action": "加至3%-4%中等仓位",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "2026年全年归母净利润上修至4.2亿元以上，且高端湿法薄毡或电子毡收入放量被财报验证",
-      "action": "可在16-18元区间维持中等仓位",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于24元但TTM净利润仍在3.2-3.6亿元区间",
-      "action": "降至观察仓或仅保留跟踪仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "低于中性PE和PB估值中枢，开始具备观察仓安全边际",
-      "action": "进入买入观察区，复核半年度利润、现金流和行业价格"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "接近保守估值区间，若基本面未恶化则预期收益风险比改善",
-      "action": "若基本面未恶化，进入主要买区"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "对应市值已显著高于中性利润和PB估值，需要利润超预期支撑",
-      "action": "估值进入偏高区，若利润未超预期则减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "超过本次乐观估值区间，主题溢价可能大于基本面兑现",
-      "action": "主题溢价过高，若无电子材料或利润兑现则退出价值仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年度报告或三季度报告",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年度报告可以验证全年利润节奏、毛利率和经营现金流是否改善",
-      "action": "复核利润节奏、现金流和毛利率"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司公告进入电子布、电子纱或其他高端电子材料产线",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "电子材料产品边界变化会影响估值倍数和成长假设",
-      "action": "重新评估成长空间和估值倍数"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "单季毛利率低于22%或经营现金流连续两个季度弱于净利润",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "毛利率和现金流是判断周期修复质量的核心指标",
-      "action": "下调质量评级和合理估值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-01-31",
-      "condition": "国内池窑产能继续大幅投放导致玻纤价格下行",
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
       "reason": "行业供给变化会直接影响玻纤价格和公司利润弹性",
-      "action": "复核周期假设和买入价格"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "资产负债率升破40%或扩产项目资本开支明显超预期",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "扩产资本开支和杠杆变化会影响自由现金流与仓位上限",
-      "action": "降低可接受仓位上限"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "低于中性PE和PB估值中枢，开始具备观察仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "接近保守估值区间，若基本面未恶化则预期收益风险比改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "对应市值已显著高于中性利润和PB估值，需要利润超预期支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "超过本次乐观估值区间，主题溢价可能大于基本面兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "玻纤纱、短切毡、湿法薄毡价格与库存",
-    "单季营业收入、归母净利润、扣非净利润和毛利率",
-    "经营现金流净额/归母净利润",
-    "ROE是否从6%-7%恢复至9%-10%",
-    "高端湿法薄毡、电子毡、热塑玻纤制品收入占比",
-    "新增产能投产、达产、单位成本和良率",
-    "分红率、回购价格区间和可转债转股导致的股本变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

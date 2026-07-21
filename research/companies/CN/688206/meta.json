@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:688206",
-  "market": "CN",
-  "ticker": "688206",
-  "name": "概伦电子",
-  "company_name": "概伦电子",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "概伦电子是国产 EDA 稀缺资产，核心能力集中在器件建模、电路仿真和可靠性分析，长期受益国产替代和客户验证深化；但当前收入规模小、研发投入高、仍处亏损阶段，2026-07-09 约 46.83 元价格已反映较强增长和并购预期，当前更适合跟踪而非追买。",
-  "quality_rating": "B",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "概伦电子",
+    "security_status": "active",
+    "symbol": "CN:688206",
+    "ticker": "688206"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "9e0429f47d1091155ac2f090d20c36d62cf0c151d9c78c92ff3ac453445f29a1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "2026-07-09 当前价约 46.83 元，显著高于合理价值区间上沿",
-      "action": "不买入，仅纳入重点跟踪池",
-      "max_weight": 0,
-      "reason": "当前估值已反映较强国产替代和并购预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计 2026 年半年报披露后复查收入增速、亏损收窄、订阅/授权收入和并购进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 24-28 元，且最近一期收入增速不低于 20%、亏损同比收窄",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格接近合理区间，同时基本面开始验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报后复查全年盈利拐点和经营现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入 18-24 元，且软件授权/订阅收入增长、客户复购和现金流改善同时确认",
-      "action": "分批加至核心小仓",
-      "max_weight": 0.03,
-      "reason": "安全边际和业务兑现同时满足，适合承担国产 EDA 成长风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入合理价值区间，重新评估是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区间，若基本面同步验证可分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "估值进入明显乐观区，若无基本面超预期应减仓或回避追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入合理价值区间，重新评估是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入区间，若基本面同步验证可分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "估值进入明显乐观区，若无基本面超预期应减仓或回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计 2026 年半年报披露后复查收入增速、亏损收窄、订阅/授权收入和并购进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报后复查全年盈利拐点和经营现金流趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入增速",
-    "EDA 软件授权及订阅收入占比",
-    "研发投入占营业收入比例",
-    "归母净利润和扣非净利润亏损收窄幅度",
-    "经营现金流净额",
-    "合同负债和订单能见度",
-    "头部客户验证、复购和扩品类进展",
-    "锐成芯微、纳能微并购审批、交割和整合进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

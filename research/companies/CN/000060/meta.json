@@ -1,32 +1,91 @@
 {
-  "symbol": "CN:000060",
-  "market": "CN",
-  "ticker": "000060",
-  "name": "中金岭南",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "低毛利率、高杠杆的铅锌铜综合矿业公司，贸易占比过大拉低利润质量，ROE仅5.11%(2025)。当前PE~33x、PB~1.57x，估值偏贵且缺乏安全边际。2026Q1同比改善但基数低，建议等待4.0-5.5元区间再考虑。",
-  "fair_value_range": [4.0, 6.0],
-  "buy_zone": [4.0, 5.5],
-  "sell_or_reduce_zone": [7.5, 10.0],
-  "position_plan": [
-    {"condition": "股价处于4.0-5.5元买入区间且基本面未恶化", "max_weight": 0.03},
-    {"condition": "股价3.5-4.0元出现深度周期底部机会", "max_weight": 0.03},
-    {"condition": "股价高于7.5元不买入", "max_weight": 0.0}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中金岭南",
+    "security_status": "active",
+    "symbol": "CN:000060",
+    "ticker": "000060"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "060c1bb3a0ec2b0d8cabc2b8e1f2d19483ae9fedec7b7011f37e93717f856821"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "82aa2921d7403bf705eb2399b89812ddcac7b8311730e0427f676f0f90d536a2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，关注毛利率变化、贸易业务占比、存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和金属价格周期位置",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入可关注买入区间，复核基本面后考虑建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "进入不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报，关注毛利率变化、贸易业务占比、存货变化"},
-    {"type": "date", "date": "2026-10-31", "reason": "复核2026年三季报和金属价格周期位置"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 5.5, "reason": "进入可关注买入区间，复核基本面后考虑建仓"},
-    {"type": "price_above", "price": 7.5, "reason": "进入不应追高区间"}
-  ],
-  "updated_at": "2026-07-08T18:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

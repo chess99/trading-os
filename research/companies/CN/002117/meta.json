@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:002117",
-  "market": "CN",
-  "ticker": "002117",
-  "name": "东港股份",
-  "company_name": "东港股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.8,
-    7.0
-  ],
-  "buy_zone": [
-    5.2,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东港股份",
+    "security_status": "active",
+    "symbol": "CN:002117",
+    "ticker": "002117"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9c25289bc6ec0ba9f58a9bfef73b35a09bde0e52c5e2777bb5543e5b09782f09"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于6.2元且未看到技术服务或电子票证收入加速",
-      "action": "观察，不建立首笔仓位",
-      "max_weight": 0,
-      "reason": "当前估值已经隐含转型兑现预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点看技术服务收入、扣非利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至5.2-6.2元且扣非利润、经营现金流和分红能力保持稳定",
-      "action": "可建立0.5%-1.0%试仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理偏低区间，可用小仓位买现金流和转型选择权"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年利润和分红能力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "技术服务、电子票证或AI机器人出现可核验订单和收入占比提升",
-      "action": "复核估值后逐步加仓",
-      "max_weight": 0.03,
-      "reason": "只有转型兑现后才适合提高组合权重"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入初步买入区，需复核2026年中报扣非利润和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高试仓性价比",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "进入减仓观察区，若缺少转型收入兑现则估值过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入初步买入区，需复核2026年中报扣非利润和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高试仓性价比"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "进入减仓观察区，若缺少转型收入兑现则估值过高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点看技术服务收入、扣非利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年利润和分红能力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "技术服务收入增速和毛利率",
-    "电子票证、档案数字化、AI机器人订单或收入披露",
-    "印刷产品收入跌幅和毛利率",
-    "智能卡和无线射频产品收入增速",
-    "扣非归母净利润同比增速",
-    "经营活动现金流量净额",
-    "研发投入占营业收入比例",
-    "应收账款和合同资产变化",
-    "现金分红总额与归母净利润比例",
-    "主要股东持股和冻结股份变化"
-  ],
-  "last_price": 7.99,
-  "last_price_date": "2026-07-10",
-  "market_cap_cny": 4184530430.45,
-  "thesis": "成熟票证印刷现金流叠加电子票证、档案数字化和AI机器人转型选择权，但当前价格对转型兑现预期偏高，适合观察等待回落。",
-  "current_thesis": "成熟票证印刷现金流叠加电子票证、档案数字化和AI机器人转型选择权，但当前价格对转型兑现预期偏高，适合观察等待回落。",
-  "risk_summary": "纸质票证电子化替代、低价招标竞争、技术服务增长慢、AI机器人商业化不确定、高分红可持续性和主题估值回落风险。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

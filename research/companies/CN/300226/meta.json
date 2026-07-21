@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:300226",
-  "market": "CN",
-  "ticker": "300226",
-  "name": "上海钢联",
-  "company_name": "上海钢联电子商务股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "上海钢联的数据服务和价格指数资产有稀缺性，但钢银电商供应链业务带来高杠杆、低毛利、现金流波动和治理折价。2026-07-13 股价 15.38 元大致处于合理价值区间中部，缺乏足够安全边际，等待 12 元以下或数据服务重新进入明确增长。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    14.0,
-    18.0
-  ],
-  "buy_zone": [
-    10.0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海钢联",
+    "security_status": "active",
+    "symbol": "CN:300226",
+    "ticker": "300226"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "437b87ddd28eed131beac21d607bbd2c26a92614536c1900f7e47a3dec2cb2e7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在 15.38 元附近且数据服务仍未恢复增长",
-      "action": "仅保留观察或 0-2% 跟踪仓",
-      "target_weight": "0-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-22"
+      },
+      "reason": "公司预约披露 2026 年半年报，需核验产业数据服务收入、扣非利润、现金流和钢银存货应收变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至 12.0-13.5 元，且半年报显示数据服务收入降幅收窄、应收和存货未恶化",
-      "action": "可建立小仓",
-      "target_weight": "2-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年利润节奏、AI 产品商业化进展和供应链业务风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于 12.0 元，且无坏账、存货跌价、监管或质押风险升级",
-      "action": "逐步加仓",
-      "target_weight": "3-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后重估数据业务长期增速、资本配置和合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于 20.0 元，但数据服务未恢复两位数增长或扣非利润未改善",
-      "action": "减仓或不追高",
-      "target_weight": "0-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入有吸引力的买入区，需要复核半年报经营质量后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入极限机会区，但必须优先核查应收、存货、短债和控股股东质押风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过合理价值上沿，若数据服务和 AI 收入没有同步改善，应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入有吸引力的买入区，需要复核半年报经营质量后考虑加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入极限机会区，但必须优先核查应收、存货、短债和控股股东质押风险"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过合理价值上沿，若数据服务和 AI 收入没有同步改善，应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-22",
-      "reason": "公司预约披露 2026 年半年报，需核验产业数据服务收入、扣非利润、现金流和钢银存货应收变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年利润节奏、AI 产品商业化进展和供应链业务风险"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年报后重估数据业务长期增速、资本配置和合理估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "产业数据服务收入增速",
-    "数据订阅收入增速",
-    "互联网增值服务付费用户数",
-    "数据终端付费用户数和 ARPU",
-    "境外产业数据服务收入",
-    "AI 产品客户数或收入披露",
-    "钢银平台结算量和总交易金额",
-    "寄售交易服务收入占比",
-    "供应链服务收入占比",
-    "应收账款、存货、信用减值损失",
-    "经营活动现金流净额",
-    "短期借款、应付票据和担保余额",
-    "控股股东质押比例和关联交易"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

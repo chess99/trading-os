@@ -1,99 +1,105 @@
 {
-  "symbol": "CN:300157",
-  "market": "CN",
-  "ticker": "300157",
-  "name": "新锦动力",
-  "company_name": "新锦动力集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司高端能源装备收入和毛利率修复，但扣非利润和经营现金流仍未转正。2026-07-13 收盘价 3.80 元对应约 28.65 亿元市值，已提前反映成功反转，缺少买方安全边际。",
-  "quality_rating": "低",
-  "valuation_rating": "高估",
-  "fair_value_range": [
-    1.0,
-    1.6
-  ],
-  "buy_zone": [
-    0,
-    1.1
-  ],
-  "sell_or_reduce_zone": [
-    2.2,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新锦动力",
+    "security_status": "active",
+    "symbol": "CN:300157",
+    "ticker": "300157"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c0b365fa317e768750c2d23de7282d68aac85cdb7dec1d70a564a34cae6a8d8e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "扣非利润和经营现金流未连续两个季度转正，或股价高于 1.60 元",
-      "action": "不建仓，仅跟踪",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报披露后复核扣非利润、经营现金流和高端装备毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 1.10 元，且连续两个季度扣非利润与经营现金流均转正",
-      "action": "小仓试错",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露后复核是否出现连续经营改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "全年扣非净利率达到 3%-5%，经营现金流持续为正，债务和罚息风险明显解除",
-      "action": "复核后可提升为观察仓",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报披露后复核全年扣非盈利、现金流和资产负债表修复程度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 1.6,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
       "reason": "进入合理价值区间上沿，适合重新核对基本面验证程度",
-      "action": "进入估值复核，但不自动买入"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 1.1,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.1
+      },
       "reason": "进入安全买点区间，若扣非利润和现金流同步转正可评估试错仓",
-      "action": "若基本面触发条件满足，可评估 0.5%-1.0% 试错仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 2.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
       "reason": "高于回避区间下沿，基本面未验证时缺少安全边际",
-      "action": "若基本面未验证，维持回避或减仓"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年半年报披露后复核扣非利润、经营现金流和高端装备毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露后复核是否出现连续经营改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报披露后复核全年扣非盈利、现金流和资产负债表修复程度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "高端装备制造收入及毛利率",
-    "境外收入及回款质量",
-    "应收账款、应收票据和存货周转",
-    "管理费用率和股权激励费用",
-    "逾期债务、违约金和罚息",
-    "前五大客户收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

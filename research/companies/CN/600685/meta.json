@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:600685",
-  "market": "CN",
-  "ticker": "600685",
-  "name": "中船防务",
-  "company_name": "中船防务",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中船防务处于船舶上行周期利润兑现阶段，2025年和2026Q1业绩改善明确，手持订单覆盖期较长，但当前估值已计入较多周期改善和央企整合预期，适合等待价格回落或现金流改善后分批配置。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    40
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中船防务",
+    "security_status": "active",
+    "symbol": "CN:600685",
+    "ticker": "600685"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "2fc0239bae0d53ab621e190401a37009369ff677692c6466d8d565e5ac809408"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于24元且新船价格指数未明显下行、公司造船毛利率维持在9%以上",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "估值进入合理区间下沿，订单覆盖期接近三年，但现金流仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查造船毛利率、新接订单、经营现金流和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于21元且2026H1订单、毛利率、经营现金流均未恶化",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "风险收益改善，周期利润兑现概率提高"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润高增长是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026全年归母净利润超过16亿元且经营现金流转正",
-      "action": "提高核心仓上限",
-      "max_weight": 0.05,
-      "reason": "利润中枢上移得到验证，可承受更高组合权重"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报并重估2027-2028年利润中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于34元且未出现可核验资产注入或军船订单增量",
-      "action": "降低交易性仓位",
-      "max_weight": 0.01,
-      "reason": "估值已反映较乐观周期和整合预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入合理价值区间下沿，触发首次买入复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入深度价值买入区，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入减仓区，需重新评估周期利润和资产注入预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 40.0
+      },
+      "reason": "估值偏乐观，若无重大增量应退出多数交易仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入合理价值区间下沿，触发首次买入复核"
-    },
-    {
-      "type": "price_below",
-      "price": 21,
-      "reason": "进入深度价值买入区，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "进入减仓区，需重新评估周期利润和资产注入预期"
-    },
-    {
-      "type": "price_above",
-      "price": 40,
-      "reason": "估值偏乐观，若无重大增量应退出多数交易仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查造船毛利率、新接订单、经营现金流和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润高增长是否持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报并重估2027-2028年利润中枢"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新接订单金额及船型结构",
-    "手持订单合同总价和交付排期",
-    "造船业务收入和毛利率",
-    "经营活动现金流净额",
-    "合同负债和预收节点款变化",
-    "Clarksons新船价格指数",
-    "钢材和船用设备成本",
-    "美元兑人民币汇率",
-    "军船和防务装备订单披露",
-    "中国船舶集团资产整合公告",
-    "投资收益占归母净利润比例",
-    "分红率和央企市值管理动作"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

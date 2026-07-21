@@ -1,86 +1,115 @@
 {
-  "symbol": "CN:603166",
-  "ticker": "603166",
-  "name": "福达股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "福达股份是曲轴、精密锻件和新能源电驱齿轮供应商，2025 年盈利显著修复，混动曲轴和电驱齿轮带来转型弹性；但 2026Q1 增速已回归温和，齿轮毛利率仍低，精密减速器尚未形成可核验利润贡献，当前价格处于合理价值区间中部，适合观察等待更高安全边际。",
-  "fair_value_range": [
-    8.8,
-    11.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "福达股份",
+    "security_status": "active",
+    "symbol": "CN:603166",
+    "ticker": "603166"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2facffa26c9a073fe7d3bc523792298f3d9db08b3247a316787edab3689ee4e1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入 7.0-8.5 元且 2026H1 扣非归母仍保持增长、经营现金流未明显恶化、齿轮毛利率改善或至少不继续下滑",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看收入增速、扣非利润、经营现金流、齿轮毛利率和在建工程转固",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "电驱齿轮毛利率提升至 12% 以上，精密减速器出现可核验批量订单或收入披露，且估值仍低于 20 倍前瞻扣非 PE",
-      "action": "加仓至核心小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 2025 高增长后的持续性和客户订单变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 13.5 元但齿轮毛利率低于 10% 或精密减速器仍无利润贡献",
-      "action": "减仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年年报和精密减速器、电驱齿轮利润贡献是否可核验",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初始买入区上沿，需复核半年报、经营现金流和齿轮毛利率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入深度安全边际区，但必须确认客户和产能爬坡未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "高于基准合理价值，需要减仓或要求机器人/电驱齿轮兑现更高增长",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入乐观情景估值区，若无新增可核验利润贡献应卖出",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初始买入区上沿，需复核半年报、经营现金流和齿轮毛利率"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入深度安全边际区，但必须确认客户和产能爬坡未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "高于基准合理价值，需要减仓或要求机器人/电驱齿轮兑现更高增长"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入乐观情景估值区，若无新增可核验利润贡献应卖出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看收入增速、扣非利润、经营现金流、齿轮毛利率和在建工程转固"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 2025 高增长后的持续性和客户订单变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年年报和精密减速器、电驱齿轮利润贡献是否可核验"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

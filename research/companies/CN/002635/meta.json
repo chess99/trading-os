@@ -1,144 +1,87 @@
 {
-  "market": "CN",
-  "ticker": "002635",
-  "symbol": "CN:002635",
-  "name": "安洁科技",
-  "company_name": "苏州安洁科技股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "sector": "电子",
-  "industry": "消费电子与新能源汽车精密功能件/结构件",
-  "status": "active",
-  "coverage_status": "initiated",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "last_updated": "2026-07-12",
-  "updated_at": "2026-07-12",
-  "decision": "观察",
-  "current_rating": "watch",
-  "confidence": "中",
-  "current_thesis": "消费电子与新能源汽车精密功能件/结构件供应商，具备客户认证、多工艺平台和全球交付能力；但2025年扣非盈利显著下滑，当前估值已预支利润修复和无线充电、光通信外延期权，需等待扣非利润、现金流和ROE改善后再买入。",
-  "summary": "消费电子与新能源汽车精密功能件、结构件和模组供应商，具备客户认证、多工艺平台和全球交付能力，但2025年扣非盈利显著下滑，当前估值已预支利润修复和新业务期权。",
-  "thesis": [
-    "公司在消费电子、新能源汽车、信息存储三大战略领域有客户和工艺积累，业务韧性强于单一终端供应商。",
-    "新能源汽车无线充电、连接器和充电相关产品提供第二曲线，但量产节奏和利润贡献仍需验证。",
-    "2026年收购苏州志烽51%股权可能带来光模块精密结构件增量，但当前只作为期权处理。"
-  ],
-  "key_risks": [
-    "消费电子客户集中和订单波动",
-    "新能源汽车零部件年降压缩利润率",
-    "无线充电商业化慢于预期",
-    "海外产能爬坡、关税和汇率风险",
-    "外延并购整合及商誉风险",
-    "扣非利润和ROE持续偏低导致估值压缩"
-  ],
-  "watch_items": [
-    "2026H1收入同比增速是否超过10%",
-    "扣非净利润是否连续两个季度同比转正",
-    "经营现金流/归母净利润是否大于1",
-    "新能源汽车业务收入增速和毛利率",
-    "无线充电是否获得明确量产定点或收入披露",
-    "苏州志烽并购完成进度、业绩承诺和客户导入",
-    "存货、应收账款和资本开支是否异常上升"
-  ],
-  "review_triggers": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安洁科技",
+    "security_status": "active",
+    "symbol": "CN:002635",
+    "ticker": "002635"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "6f80762a2d11875ad55085105ad4bf41eb429a1664261c7dc1f66ffe79bed764"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后",
-      "action": "复核收入、扣非利润、经营现金流、苏州志烽并购进展和估值区间",
-      "reason": "当前结论取决于利润修复和并购期权能否兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "当前结论取决于利润修复和并购期权能否兑现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "估值接近中性买入区，需确认基本面没有继续恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "PB降至约1.4倍，开始具备资产和盈利修复双重安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "市值进入乐观估值区间，若扣非利润未改善则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "as_of": "2026-07-10",
-    "price": 17.36,
-    "market_cap_cny_bn": 11.45,
-    "pe_ttm": 99.7,
-    "pb": 2.0,
-    "base_case_value_per_share": 13.6,
-    "bear_case_value_per_share": 7.6,
-    "bull_case_value_per_share": 21.2
-  },
-  "fair_value_range": [
-    13.6,
-    21.2
-  ],
-  "buy_zone": [
-    12.0,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "position_plan": [
-    {
-      "condition": "股价跌至14元以下，且最新财报未出现收入、现金流、存货和应收账款同步恶化",
-      "action": "开始小仓位观察性买入",
-      "target_weight": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌至12元附近，且扣非利润连续改善、经营现金流/归母净利润大于1",
-      "action": "提高到核心观察仓",
-      "target_weight": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于22元且扣非净利润未年化恢复到2亿元以上",
-      "action": "不追高，已有仓位减仓或停止加仓",
-      "target_weight": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "note": "进入小仓位观察区，复核中报和订单质量",
-      "reason": "估值接近中性买入区，需确认基本面没有继续恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "note": "进入较有安全边际区，若基本面未恶化可考虑提高仓位",
-      "reason": "PB降至约1.4倍，开始具备资产和盈利修复双重安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "note": "主题溢价偏高，需扣非利润和订单兑现支撑",
-      "reason": "市值进入乐观估值区间，若扣非利润未改善则风险收益转弱"
-    }
-  ],
-  "review_schedule": {
-    "next_review": "2026-08-31",
-    "frequency": "quarterly",
-    "reason": "等待2026年中报验证扣非利润、现金流和新业务进展"
-  },
-  "sources": [
-    {
-      "title": "苏州安洁科技股份有限公司2025年年度报告摘要",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-03-28/8b5cc2d6-20f6-4090-b1dc-a49a1f4e4ad8.PDF"
-    },
-    {
-      "title": "安洁科技：2026年一季度净利润3489.32万元 同比增长11.80%",
-      "url": "https://finance.eastmoney.com/a/202605013727285328.html"
-    },
-    {
-      "title": "安洁科技新能源汽车业务官网页面",
-      "url": "https://www.anjiecorp.com/?about_3%2F="
-    },
-    {
-      "title": "安洁无线新能源汽车无线充电系统",
-      "url": "https://www.anjiewl.com/?list_27%2F100.html="
-    },
-    {
-      "title": "证券之星：安洁科技2026年7月10日收盘行情",
-      "url": "https://stock.stockstar.com/RB2026071000039818.shtml"
-    }
-  ]
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,133 +1,132 @@
 {
-  "symbol": "CN:002987",
-  "market": "CN",
-  "ticker": "002987",
-  "name": "京北方",
-  "company_name": "京北方信息技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是银行金融科技和数智化运营服务商，客户粘性和现金流改善具备价值，但2026Q1利润显著承压，当前约33倍TTM PE已反映较乐观预期，需等待利润修复和AI产品收入兑现后再买入。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    7.0,
-    8.8
-  ],
-  "buy_zone": [
-    0,
-    6.4
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "京北方",
+    "security_status": "active",
+    "symbol": "CN:002987",
+    "ticker": "002987"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "00145a650612b42ffe87409d76e67a75bad9e59b73e3732b70576c7c92c1a671"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于或等于6.4元，且最近一期经营现金流/归母净利润大于1，应收账款和合同资产未继续恶化",
-      "action": "分批买入",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格位于6.4-7.5元，且2026H1归母净利润同比降幅收窄、金融科技解决方案和AI/大数据产品继续增长",
-      "action": "试仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于8.8元且没有新的利润加速证据",
-      "action": "不新增",
-      "target_position": "0%新增",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格高于11.5元，且收入增速低于8%或利润率未修复",
-      "action": "减仓或退出",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入合理价值下半区，若基本面改善可试仓",
-      "action": "复核半年报和现金流，考虑小仓观察"
-    },
-    {
-      "type": "price_below",
-      "price": 6.4,
-      "reason": "低于安全买入价，提供足够估值缓冲",
-      "action": "若基本面未恶化，进入安全买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "价格高于估值上沿较多，需要利润高增长支撑",
-      "action": "若利润增速未恢复到10%以上，考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年度报告",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026Q1利润下滑较大，需要用半年报确认是否修复",
-      "action": "复核利润率、现金流和订单/收入结构"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营现金流/归母净利润连续两个报告期低于0.8",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "公司现金流季节性强，全年前需要观察回款质量",
-      "action": "下调质量评级并复核买入区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收账款与合同资产合计同比或环比明显上升",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "项目验收和回款风险会直接影响估值安全边际",
-      "action": "检查回款和项目验收风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "AI与大数据创新产品收入占比提升到5%以上或增速显著放缓",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "AI产品化是估值上修的关键证据",
-      "action": "重新评估成长性和估值倍数"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "控股股东、实际控制人或核心高管出现新的大额减持计划",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "资本市场动作可能压制估值并影响治理折价",
-      "action": "复核治理和市场压力"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "银行IT或数字人民币相关政策、采购节奏发生重大变化",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "行业采购节奏决定收入增长和项目交付强度",
-      "action": "更新行业景气判断"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入合理价值下半区，若基本面改善可试仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "低于安全买入价，提供足够估值缓冲",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "价格高于估值上沿较多，需要利润高增长支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利率",
-    "经营现金流/归母净利润",
-    "应收账款加合同资产占收入比例",
-    "金融科技解决方案收入及毛利率",
-    "人工智能及大数据创新产品收入占比",
-    "前五大客户收入占比",
-    "管理费用和人工成本增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

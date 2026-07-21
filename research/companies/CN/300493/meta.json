@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:300493",
-  "market": "CN",
-  "ticker": "300493",
-  "name": "润欣科技",
-  "company_name": "上海润欣科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "润欣科技处在端侧AI、AIoT、无线连接和半导体周期修复的交叉点，但当前仍呈现低毛利、低净利率的分销/方案商特征。2026-07-13收盘价13.04元对应约66.8亿元市值，显著透支当期利润，除非未来1-2年净利润跃迁至1亿元以上且经营现金流改善，否则安全边际不足。",
-  "quality_rating": "B-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    0,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "润欣科技",
+    "security_status": "active",
+    "symbol": "CN:300493",
+    "ticker": "300493"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "acdd4bb6422ee4b2c9d1c3acdd8e2601a00639a8612ea3a011b227ebf39ef75a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于10.5元且未来两个季度未证明利润和经营现金流同步改善",
-      "action": "不新买，已有仓位减至观察仓",
-      "target_weight": 0.0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点验证收入增速、毛利率、经营现金流和AIoT/端侧AI项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至7.0元以下，且最新季报收入恢复增长、毛利率不低于9.5%",
-      "action": "建立跟踪仓",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断利润改善是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.8元，且经营现金流未恶化、无核心供应商或客户重大流失",
-      "action": "分批买入",
-      "target_weight": 0.02,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理估值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增速超过15%、毛利率超过10.5%、经营现金流转正",
-      "action": "重新评估估值中枢并允许提高仓位上限",
-      "target_weight": 0.03,
-      "max_weight": 0.05
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
       "reason": "进入合理价值区间上沿，估值压力开始缓解",
-      "action": "进入重点复核区，检查最新季报和现金流"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 5.8,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
       "reason": "低于可买价格，若基本面未恶化则具备安全边际",
-      "action": "若基本面未恶化，允许分批买入"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 10.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
       "reason": "高于减仓观察区，估值重新依赖主题溢价",
-      "action": "若利润未兑现，减仓或维持零仓位"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 12.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
       "reason": "明显高于基本面估值中枢，风险收益不对称",
-      "action": "视为主题估值过热区，除非盈利跃迁已被季报验证"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点验证收入增速、毛利率、经营现金流和AIoT/端侧AI项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断利润改善是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理估值区间和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "毛利率是否稳定高于10.5%",
-    "归母净利润和扣非归母净利润增速",
-    "经营活动现金流净额与净利润匹配度",
-    "存货周转和应收账款周转变化",
-    "AI眼镜、端侧AI、车载电子等项目是否进入量产",
-    "控股股东及一致行动人减持进度",
-    "核心供应商授权和重要客户变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

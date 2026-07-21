@@ -1,85 +1,115 @@
 {
-  "symbol": "CN:002927",
-  "ticker": "002927",
-  "name": "泰永长征",
-  "company_name": "贵州泰永长征技术股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中低压配电与高可靠供电场景具备技术和客户基础，AI数据中心配电、固态断路器、智能云能源管理平台提供上行期权；但2025年扣非亏损、2026Q1利润同比下滑且现金流为负，当前股价已反映较多乐观预期，需等待业绩和现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.0,
-    16.0
-  ],
-  "buy_zone": [
-    9.5,
-    11.5
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泰永长征",
+    "security_status": "active",
+    "symbol": "CN:002927",
+    "ticker": "002927"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "68831661ea179573c2f21f99f23e11a10ceae5c03be3594aeb8007a83fd545b0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入11.5元以下，且2026半年报显示扣非利润为正、经营现金流改善",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报：收入、扣非利润、经营现金流、库存和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入9.5-10.5元，且连续两个季度收入、扣非利润、经营现金流同步改善",
-      "action": "可提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报：验证利润修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于18.5元但未披露数据中心或固态断路器的可量化订单和利润贡献",
-      "action": "不追高，已有仓位减持或止盈",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报：确认AI数据中心、固态断路器和智能配电平台商业化进展。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.5
+      },
+      "reason": "进入买入观察区，需要重估安全边际和半年报质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入深度价值区，若基本面未恶化可重新评估小仓位买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "超过基准合理价值上沿，若无订单和利润兑现则风险收益比恶化。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "接近乐观情景估值上沿，需要显著降低仓位或等待业绩验证。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.5,
-      "reason": "进入买入观察区，需要重估安全边际和半年报质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入深度价值区，若基本面未恶化可重新评估小仓位买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "超过基准合理价值上沿，若无订单和利润兑现则风险收益比恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "接近乐观情景估值上沿，需要显著降低仓位或等待业绩验证。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报：收入、扣非利润、经营现金流、库存和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报：验证利润修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报：确认AI数据中心、固态断路器和智能配电平台商业化进展。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

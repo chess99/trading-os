@@ -1,118 +1,114 @@
 {
-  "symbol": "CN:002693",
-  "market": "CN",
-  "ticker": "002693",
-  "name": "双成药业",
-  "company_name": "海南双成药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2025年白蛋白紫杉醇美国获批后带动扭亏，国际GMP和复杂制剂能力有跟踪价值；但按2026-07-10可核验收盘价10.45元测算，TTM PE约133倍、PS约15倍，已显著透支未来放量，当前不买，等待价格回到合理区间并验证现金流持续性。",
-  "quality_rating": "中低",
-  "valuation_rating": "昂贵",
-  "fair_value_range": [
-    3.5,
-    5.2
-  ],
-  "buy_zone": [
-    0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "双成药业",
+    "security_status": "active",
+    "symbol": "CN:002693",
+    "ticker": "002693"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5f583aebeb948274c667a95bf71bcf26a4bc9fcde7568e1041be2eebef874bdc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于8.0元且没有连续两个季度经营数据显著超预期",
-      "max_weight": 0.01,
-      "action": "不新增；已有仓位控制在0%-1%的观察仓。"
-    },
-    {
-      "condition": "价格处于5.2-8.0元，且Q2/Q3收入、经营现金流和回款继续改善",
-      "max_weight": 0.01,
-      "action": "最多0.5%-1.0%观察仓，只用于跟踪催化。"
-    },
-    {
-      "condition": "价格低于3.5元，且经营现金流连续为正、境外核心客户回款正常",
-      "max_weight": 0.015,
-      "action": "可建立0.5%-1.5%小仓位。"
-    },
-    {
-      "condition": "价格低于2.8元，且无FDA/GMP、回款、核心产品销量恶化等基本面负面事件",
-      "max_weight": 0.03,
-      "action": "可提高到2%-3%；若下跌由基本面恶化导致则不加仓。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "unit": "CNY/share",
-      "reason": "进入估算合理价值区间上沿，估值风险开始下降。",
-      "action": "进入合理区间，复核最近季度收入、经营现金流和客户集中度。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "unit": "CNY/share",
-      "reason": "低于合理价值区间下沿，若基本面未恶化则具备安全边际。",
-      "action": "进入可买区，若基本面验证通过可建小仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "unit": "CNY/share",
-      "reason": "显著高于合理价值区间，需要强业绩兑现支撑。",
-      "action": "估值偏贵，除非业绩连续超预期，否则减仓或不买。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或三季报",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证2025年扭亏是否可持续的第一个完整窗口。",
-      "action": "复核白蛋白紫杉醇收入、毛利、利润分成和经营现金流。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "第一大客户收入占比仍超过40%或应收账款环比大幅上升",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "客户集中和回款是当前估值能否成立的关键约束。",
-      "action": "复核客户集中度和回款风险。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "发生FDA/GMP检查、产品质量、注册审批、SC-C141里程碑收款或重大许可协议进展",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "合规和管线里程碑会直接改变风险折价或期权价值。",
-      "action": "立即复核投资结论和估值区间。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "一年内到期债务、宁波双成亏损或开发支出余额明显上升",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "债务、子公司亏损和资本化研发会影响财务质量。",
-      "action": "复核财务质量和安全边际。"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入估算合理价值区间上沿，估值风险开始下降。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "低于合理价值区间下沿，若基本面未恶化则具备安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "显著高于合理价值区间，需要强业绩兑现支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "白蛋白紫杉醇美国收入和利润分成金额",
-    "国外地区收入占比及同比增速",
-    "第一大客户及前五大客户收入占比",
-    "应收账款余额、账龄和境外回款周期",
-    "经营活动现金流量净额",
-    "宁波双成少数股东损益和产能利用率",
-    "研发投入资本化率、开发支出余额和减值风险",
-    "一年内到期债务与货币资金及理财资产覆盖倍数",
-    "SC-C141研发注册进展和实际收到的里程碑款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

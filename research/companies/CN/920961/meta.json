@@ -1,52 +1,86 @@
 {
-  "symbol": "CN:920961",
-  "market": "CN",
-  "ticker": "920961",
-  "name": "创远信科",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "存量业务资本回报与自由现金流偏弱，现价已高度计入关联并购及6G卫星业务兑现，缺乏安全边际。",
-  "fair_value_range": [12, 16],
-  "buy_zone": [9, 12],
-  "sell_or_reduce_zone": [19, 27],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创远信科",
+    "security_status": "active",
+    "symbol": "CN:920961",
+    "ticker": "920961"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "74200152320d125bb616af07bb34cd87b9a0754a2b2bd4fa0d2ba3b7b2521fa8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于9至12元、并购及标的业绩假设经重新验证且存量业务现金流未恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、自由现金流与研发资本化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "并购失败、业绩承诺可信度下降、资本化资产减值或合规风险扩大",
-      "max_weight": 0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、自由现金流与研发资本化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报及重大资产重组注册交割进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报及重大资产重组注册交割进展"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "进入有条件研究买入区，须重新验证并购、现金流和合规假设"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入有条件研究买入区，须重新验证并购、现金流和合规假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 19,
-      "reason": "进入减仓或不应追高区间，估值再次明显透支"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "进入减仓或不应追高区间，估值再次明显透支",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-14T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

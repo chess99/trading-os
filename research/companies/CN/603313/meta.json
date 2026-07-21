@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:603313",
-  "market": "CN",
-  "ticker": "603313",
-  "name": "梦百合",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "梦百合具备全球产能布局和海外线上床垫品牌放量潜力，当前约1.16倍PB、0.43倍TTM PS已反映较多悲观预期；但2025年保留意见、关联方逾期应收账款、销售费用率高企和2026H1利润预减尚未出清，需等待回款、费用率和审计意见改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    5.6,
-    6.3
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "梦百合",
+    "security_status": "active",
+    "symbol": "CN:603313",
+    "ticker": "603313"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "9a3d6c528cd152e80dd7ec223e0d9ce198e5c911e2f11cd592afa83364dae7e1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.3元，且未出现新增关联方占用、回款违约或审计意见恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复核2026年中报、Q2盈利修复、销售费用率和关联方应收回款进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年中报确认Q2盈利修复，销售费用率下降，且MC/Dormeo逾期应收继续回收",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报现金流、费用率、海外线上增长质量和汇兑损益",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年底前关联方逾期款基本清零，审计保留事项有明确消除路径，正常化净利率回到2%以上",
-      "action": "提高至上限仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "检查实控人承诺的MC/Dormeo逾期应收款2026年底清偿结果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "出现新增资金占用、关联方回款承诺违约、保留意见恶化或销售费用率持续高于25%",
-      "action": "退出或不买",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "进入观察仓买入区，估值折价足以覆盖部分治理和利润波动风险",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入更高安全边际区间，可在无新增负面前提下复核加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
+      "reason": "接近基准公允价值上沿，若基本面未同步改善应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "进入乐观情景估值区间，需用利润率恢复和治理出清验证",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "进入观察仓买入区，估值折价足以覆盖部分治理和利润波动风险"
-    },
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入更高安全边际区间，可在无新增负面前提下复核加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.5,
-      "reason": "接近基准公允价值上沿，若基本面未同步改善应减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "进入乐观情景估值区间，需用利润率恢复和治理出清验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核2026年中报、Q2盈利修复、销售费用率和关联方应收回款进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报现金流、费用率、海外线上增长质量和汇兑损益"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "检查实控人承诺的MC/Dormeo逾期应收款2026年底清偿结果"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

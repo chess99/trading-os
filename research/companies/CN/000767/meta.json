@@ -1,114 +1,97 @@
 {
-  "symbol": "CN:000767",
-  "market": "CN",
-  "ticker": "000767",
-  "name": "晋控电力",
-  "company_name": "晋能控股山西电力股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "山西区域保供火电资产有地位，但高杠杆、永续债利息、不分红和普通股盈利弱使当前3.47元缺乏安全边际；合理区间约2.10-2.70元，2.00元以下才考虑小仓。",
-  "quality_rating": "C+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    2.1,
-    2.7
-  ],
-  "buy_zone": [
-    1.6,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    3.0,
-    3.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "晋控电力",
+    "security_status": "active",
+    "symbol": "CN:000767",
+    "ticker": "000767"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "ca3632aea58675fddb81d8f43b416fe888dc40acc401d1a907b3bebb0118596d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格<=1.60且基本面未恶化",
-      "price_range": "<=1.60",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格在1.61-2.00且煤价、电价、债务通过复核",
-      "price_range": "1.61-2.00",
-      "action": "小仓试错",
-      "position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格在2.01-2.70",
-      "price_range": "2.01-2.70",
-      "action": "观察",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格在2.71-3.00",
-      "price_range": "2.71-3.00",
-      "action": "不新增",
-      "position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格>3.00且无普通股盈利质量显著改善",
-      "price_range": ">3.00",
-      "action": "不追高/减仓",
-      "position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "价格接近1倍普通股账面权益，开始具备安全边际",
-      "action": "重新核验煤价、电价、普通股EPS和债务后考虑首笔1%-2%"
-    },
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "reason": "价格约0.8倍普通股账面权益，若基本面未恶化则折价充分",
-      "action": "若基本面未恶化，可提高至3%-5%"
-    },
-    {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "价格高于合理区间上沿且普通股盈利尚未支撑估值",
-      "action": "不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 3.2,
-      "reason": "接近乐观情景估值，缺乏安全边际",
-      "action": "若无普通股盈利质量显著改善，持有者减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "预计2026年中报披露后复查",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "中报可验证普通股EPS、燃料成本、现金流、资本开支和债务是否改善",
-      "action": "复核普通股EPS、现金流、资本开支和债务"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "价格接近1倍普通股账面权益，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "价格约0.8倍普通股账面权益，若基本面未恶化则折价充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "价格高于合理区间上沿且普通股盈利尚未支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.2
+      },
+      "reason": "接近乐观情景估值，缺乏安全边际",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣除永续债利息后的普通股EPS",
-    "火电毛利率",
-    "单位燃料成本",
-    "经营现金流/资本开支覆盖倍数",
-    "资产负债率",
-    "永续债余额和永续债利息",
-    "新能源装机、利用小时和消纳",
-    "现金分红政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

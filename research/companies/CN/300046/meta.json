@@ -1,116 +1,133 @@
 {
-  "symbol": "CN:300046",
-  "market": "CN",
-  "ticker": "300046",
-  "name": "台基股份",
-  "company_name": "湖北台基半导体股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是大功率晶闸管和功率模块细分领域的老牌IDM，资产负债表稳健，国资入主后存在IGBT、SiC、脉冲功率和外延整合的中期弹性；但2025年收入仅小幅增长、扣非利润下滑、经营现金流走弱，2026Q1收入恢复但扣非利润继续下降。2026-07-13约27.81元对应估值已明显透支成长预期，缺乏足够安全边际。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    16,
-    22
-  ],
-  "buy_zone": [
-    14,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    25,
-    28
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "台基股份",
+    "security_status": "active",
+    "symbol": "CN:300046",
+    "ticker": "300046"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "7fdb483669cdb14d493f03b1c71f1084ec10bef17566d404c2a532ea15d929d3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于16元且2026半年度或三季度收入同比增长不低于20%、毛利率稳定在28%左右",
-      "action": "建立观察仓，单票不超过组合净值的1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证收入恢复、毛利率和现金流质量的最近窗口",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于14元且扣非利润连续两个季度改善、经营现金流转正",
-      "action": "提高至2%-3%核心跟踪仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "新业务兑现是当前估值能否成立的关键",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于25元且仍未披露IGBT/SiC/脉冲功率的订单、收入或毛利率兑现证据",
-      "action": "不新增，已有仓位减至观察仓或清仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-12-31"
+      },
+      "reason": "募投项目延期影响中期产能和成长兑现节奏",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "国资协同是市场给予高估值的重要预期来源",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "若主业利润和现金流继续背离，应下调评级和估值中枢",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "低于合理价值区间下沿，赔率开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "接近保守估值区间，具备初步安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "价格高于基准合理价值区间，需要新业务兑现支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "接近乐观情景上沿，业绩证据不足时下行风险大",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "note": "进入合理价值下沿，可结合半年报/三季报质量复核",
-      "reason": "低于合理价值区间下沿，赔率开始改善"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "note": "进入安全边际区，若基本面未恶化可考虑加仓",
-      "reason": "接近保守估值区间，具备初步安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 25,
-      "note": "估值重新偏贵，要求强业绩验证",
-      "reason": "价格高于基准合理价值区间，需要新业务兑现支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 28,
-      "note": "接近乐观情景上沿，若业绩未兑现应减仓或回避",
-      "reason": "接近乐观情景上沿，业绩证据不足时下行风险大"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后复核收入、毛利率、扣非利润和经营现金流",
-      "reason": "半年报是验证收入恢复、毛利率和现金流质量的最近窗口"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司披露IGBT、SiC/GaN、脉冲功率订单金额、量产进度、产能利用率或客户认证信息",
-      "reason": "新业务兑现是当前估值能否成立的关键"
-    },
-    {
-      "type": "date",
-      "date": "2027-12-31",
-      "condition": "新型高功率半导体器件产业升级项目进度、预算或投产时间发生变化",
-      "reason": "募投项目延期影响中期产能和成长兑现节奏"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "长江产业集团带来明确产业并购、资产注入、订单协同或资金支持",
-      "reason": "国资协同是市场给予高估值的重要预期来源"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "扣非净利润连续两个季度同比下滑或经营现金流持续为负",
-      "reason": "若主业利润和现金流继续背离，应下调评级和估值中枢"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季营业收入是否超过1亿元且同比增速维持20%以上",
-    "综合毛利率是否稳定在28%-32%",
-    "年度扣非归母净利润是否恢复至5000万元以上",
-    "经营现金流净额/归母净利润是否超过0.8",
-    "IGBT、SiC/GaN、脉冲功率收入、订单、客户认证和产能利用率",
-    "前五大供应商采购占比及原材料价格变化",
-    "新型高功率半导体器件产业升级项目是否按2027年底节点推进"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

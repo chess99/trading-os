@@ -1,97 +1,96 @@
 {
-  "symbol": "CN:000011",
-  "market": "CN",
-  "ticker": "000011",
-  "name": "深物业A",
-  "company_name": "深物业A",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "hold",
-  "current_thesis": "深圳国资控股的小型地产与物业资产平台，核心看点是低P/B下的深圳资产折价、现金流改善和城市更新期权；但地产周期、存货去化和项目透明度限制仓位，当前更适合观察或持有而非重仓买入。",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    6.8,
-    8.6
-  ],
-  "buy_zone": [
-    5.2,
-    5.8
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深物业A",
+    "security_status": "active",
+    "symbol": "CN:000011",
+    "ticker": "000011"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "7010314c5555987096bb473be49fdd32541db4539fb5b63929c8ae495c7e645f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入5.20-5.80元，且2026中报确认经营现金流未恶化、无新增重大减值",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "资产折价开始有安全边际，但地产周期和项目透明度仍限制仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026中报的现金流、存货、合同负债、利润和分红可持续性",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.20元，且存货、负债、分红三项未出现负面变化",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "折价扩大后可提高资产股配置，但仍不作为核心仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报及深圳地产销售、城市更新项目进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于8.80元且缺乏城市更新、资产处置或盈利恢复支撑",
-      "action": "减仓",
-      "max_weight": 0.01,
-      "reason": "估值已接近乐观折价收敛区间，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入首笔观察仓买入区间，需要复核中报现金流和存货减值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入更有吸引力的资产折价区间，可评估加仓至最高3%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "接近减持区间，除非有实质催化，否则应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入首笔观察仓买入区间，需要复核中报现金流和存货减值"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入更有吸引力的资产折价区间，可评估加仓至最高3%"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "接近减持区间，除非有实质催化，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026中报的现金流、存货、合同负债、利润和分红可持续性"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报及深圳地产销售、城市更新项目进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "存货余额",
-    "存货跌价准备",
-    "合同负债",
-    "有息负债",
-    "货币资金",
-    "房地产项目销售金额",
-    "房地产项目结转毛利率",
-    "投资性房地产出租率",
-    "分红率",
-    "城市更新项目进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

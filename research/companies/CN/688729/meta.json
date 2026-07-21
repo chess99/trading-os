@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:688729",
-  "market": "CN",
-  "ticker": "688729",
-  "name": "屹唐股份",
-  "company_name": "屹唐股份",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "current_thesis": "屹唐股份具备干法去胶、快速热处理和刻蚀设备的国产替代弹性，海外并购资产带来全球装机与工艺积累；但2026-07-09可核验价格已反映乐观情景，当前以观察为主，等待价格回落或刻蚀订单、毛利率、现金流进一步验证。",
-  "fair_value_range": [
-    24,
-    30
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    52
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "屹唐股份",
+    "security_status": "active",
+    "symbol": "CN:688729",
+    "ticker": "688729"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c1484edcefe0749a635f80eb62a14b701ce55e15295c4f0199566ea0d801a2f2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌入20-24元，且最新报告未显示毛利率跌破35%或订单恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "核心资产质量较好，但当前估值过高，需要价格安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、订单、毛利率、现金流和解禁后股东行为",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价20-22元，且2026H1收入恢复增长、毛利率维持37%以上、经营现金流改善",
-      "action": "加至小仓位",
-      "max_weight": 0.025,
-      "reason": "价格进入中性估值下沿，同时订单与盈利质量得到验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及刻蚀设备放量进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "刻蚀设备获得多客户量产订单，连续两个季度收入和扣非利润恢复两位数增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "刻蚀第二曲线兑现后，公司估值中枢可上移"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入观察区，需复核毛利率、订单和解禁后减持情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "高于中性合理价值上沿，需避免追高或考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入观察区，需复核毛利率、订单和解禁后减持情况"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入深度安全边际区，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "高于中性合理价值上沿，需避免追高或考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、订单、毛利率、现金流和解禁后股东行为"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及刻蚀设备放量进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润增速",
-    "综合毛利率是否维持37%-40%",
-    "经营活动现金流净额",
-    "存货、合同负债和应收账款变化",
-    "干法刻蚀设备量产订单与客户数",
-    "备品备件和服务收入占比",
-    "海外收入及出口管制影响",
-    "2026年7月限售股解禁后的减持与成交承接"
-  ],
-  "notes": "2026-07-10初始覆盖：公司质量较好但估值偏高，现价已接近乐观情景下沿，建议观察等待。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

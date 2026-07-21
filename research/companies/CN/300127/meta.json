@@ -1,122 +1,133 @@
 {
-  "symbol": "CN:300127",
-  "market": "CN",
-  "ticker": "300127",
-  "name": "银河磁体",
-  "company_name": "成都银河磁体股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "银河磁体是低负债、高分红、粘结钕铁硼细分优势明显的磁材公司，但当前价格已显著反映稀土永磁和机器人主题溢价。合理价值约15-18元/股，14元以下才具备较好安全边际；25元以上除非利润和新业务收入显著上修，否则不宜买入。",
-  "quality_rating": "中高",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [15.0, 18.0],
-  "buy_zone": [0.0, 14.0],
-  "sell_or_reduce_zone": [24.0, 26.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "银河磁体",
+    "security_status": "active",
+    "symbol": "CN:300127",
+    "ticker": "300127"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "fdf016c5459d74fbb3737b0b9595084efda0ab5b05bc0ae490ae57a77c053e0a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于18元，或估值仍高于30倍正常化净利润且未见新业务收入兑现",
-      "action": "不买，仅保留观察",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格跌至14元以下，且最近两个季度收入同比为正、毛利率未明显恶化、经营现金流没有持续背离净利润",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格跌至13元以下，且年度净利润中枢仍可维持1.8亿元以上、高分红政策延续",
-      "action": "增持至1.5%-2.5%",
-      "max_weight": 0.025
-    },
-    {
-      "condition": "价格高于24元且未来12个月利润没有上修到2.6亿元以上，或机器人/汽车磁组件收入未能量化",
-      "action": "减仓或不参与主题交易",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "currency": "CNY",
-      "reason": "低于合理价值下沿并具备初步安全边际",
-      "action": "进入可买区，复核季度收入、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "currency": "CNY",
-      "reason": "相对15-18元合理价值区间折价较充分",
-      "action": "若基本面未恶化，可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "currency": "CNY",
-      "reason": "估值重新进入主题溢价区，需要利润上修支撑",
-      "action": "估值偏高，检查是否有利润上修证据，否则减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "currency": "CNY",
-      "reason": "价格显著高于合理价值区间，风险收益比不佳",
-      "action": "主题溢价过高，原则上卖出或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证2026年增长和现金流质量的第一处关键节点",
-      "condition": "发布2026年半年报后",
-      "action": "复核收入增速、毛利率、经营现金流和产品结构"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证全年利润中枢是否高于当前正常化假设",
-      "condition": "粘结磁体以外产品收入占比超过20%",
-      "action": "重估成长性和合理估值倍数"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可核验新业务、分地区收入和分红政策",
-      "condition": "公司披露机器人、汽车高端磁组件批量订单或可量化收入",
-      "action": "上修乐观情景假设"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "若毛利率或现金流恶化，需要及时下修估值",
-      "condition": "综合毛利率明显跌破28%或经营现金流连续两个季度显著弱于净利润",
-      "action": "下修估值并检查收入质量"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-10-31",
+      "active": true,
+      "condition": {
+        "date": "2027-10-31"
+      },
       "reason": "资本配置变化会影响高分红资产的估值底",
-      "condition": "分红率明显下降或资本开支/并购显著增加",
-      "action": "复核资本配置质量"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "低于合理价值下沿并具备初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "相对15-18元合理价值区间折价较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "估值重新进入主题溢价区，需要利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "价格显著高于合理价值区间，风险收益比不佳",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润增速",
-    "综合毛利率与粘结磁体毛利率",
-    "经营现金流净额/净利润",
-    "应收账款和存货周转",
-    "粘结磁体以外产品收入占比",
-    "机器人、汽车高端磁组件订单和收入披露",
-    "分红率和每股现金分红"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

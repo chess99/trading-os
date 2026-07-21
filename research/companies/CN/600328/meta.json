@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:600328",
-  "ticker": "600328",
-  "name": "中盐化工",
-  "company_name": "中盐内蒙古化工股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "资源、规模和两钠业务具备底部价值，但纯碱/PVC价格低迷已使公司2026年上半年预告亏损，天然碱项目仍处重资本投入期；当前价格约处合理区间中部，需等待价格修复、现金流改善和项目进度验证。",
-  "confidence": "中",
-  "decision": "观察",
-  "fair_value_range": [
-    5.2,
-    7.0
-  ],
-  "buy_zone": [
-    4.6,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    8.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中盐化工",
+    "security_status": "active",
+    "symbol": "CN:600328",
+    "ticker": "600328"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "14c616b52f7dc16d5e0263b7d4436752756ba0462fa93ebd0c6eb9d652db4101"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于5.2元且纯碱价格企稳、经营现金流未继续恶化时，仅作为周期底部观察仓",
-      "action": "watchlist_or_small_entry",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、亏损构成、现金流和天然碱项目资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.6元且后续季度亏损收窄、天然碱项目进度和资本开支可控",
-      "action": "increase_cautiously",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认纯碱/PVC价格变化是否传导到毛利率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于7.5元但未看到季度盈利和纯碱毛利率修复",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和天然碱项目全年进展，决定是否调整估值锚",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入估算买入区间上沿，需复核纯碱价格和现金流后决定是否小仓试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入更有安全边际的深度价值区间，可在基本面未恶化前提下重新评估仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "超过基准合理区间，若盈利修复未兑现应考虑降低预期或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入估算买入区间上沿，需复核纯碱价格和现金流后决定是否小仓试错"
-    },
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入更有安全边际的深度价值区间，可在基本面未恶化前提下重新评估仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "超过基准合理区间，若盈利修复未兑现应考虑降低预期或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、亏损构成、现金流和天然碱项目资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认纯碱/PVC价格变化是否传导到毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和天然碱项目全年进展，决定是否调整估值锚"
-    }
-  ],
-  "key_metrics": {
-    "last_price_cny": 6.1,
-    "last_price_date": "2026-07-16",
-    "market_cap_cny": 8944488151,
-    "pb": 0.76,
-    "revenue_2025_cny": 11343134247.28,
-    "net_profit_2025_cny": 73949395.49,
-    "q1_2026_net_profit_cny": -154351085.96,
-    "h1_2026_net_profit_forecast_cny": -272000000
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

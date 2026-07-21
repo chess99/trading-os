@@ -1,131 +1,115 @@
 {
-  "symbol": "CN:300669",
-  "market": "CN",
-  "ticker": "300669",
-  "name": "沪宁股份",
-  "company_name": "杭州沪宁电梯部件股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司是电梯安全部件细分头部，产品和客户基础真实，但2025年利润下滑、2026Q1继续承压，当前约263倍TTM PE和5.27倍PB已严重透支旧梯更新、新品和第二曲线预期，不具备买方安全边际。",
-  "quality_rating": "B",
-  "valuation_rating": "极贵",
-  "fair_value_range": [
-    5.0,
-    8.0
-  ],
-  "buy_zone": [
-    0.0,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沪宁股份",
+    "security_status": "active",
+    "symbol": "CN:300669",
+    "ticker": "300669"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "725157ab4499a146ebd14b1ded80ba3b63b17fb7a0af830ae35d1924425622dd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于12元或基本面未验证修复",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、扣非利润、毛利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至4.5元以下，且最近一期毛利率和扣非利润未继续恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证旧梯更新、新品放量和海外业务是否形成利润贡献。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回落至3.5元以下，且经营现金流/净利润维持大于1",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估公司中期盈利中枢和资本配置纪律。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格处于4.5元至8.0元且2026年收入、扣非利润、毛利率均确认修复",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入有安全边际的初始买入区，需要复核最新利润和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入强吸引力区，若基本面未破坏可考虑提高至5%仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "明显高于合理价值区间，应避免新增并考虑减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "估值严重透支未来增长，已有仓位应坚决降风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入有安全边际的初始买入区，需要复核最新利润和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入强吸引力区，若基本面未破坏可考虑提高至5%仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "明显高于合理价值区间，应避免新增并考虑减持。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "估值严重透支未来增长，已有仓位应坚决降风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、扣非利润、毛利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证旧梯更新、新品放量和海外业务是否形成利润贡献。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估公司中期盈利中枢和资本配置纪律。"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "营业收入增速",
-      "target": "2026H1/全年转正并超过10%",
-      "reason": "验证旧梯更新和新品需求是否抵消新梯下滑。"
-    },
-    {
-      "metric": "扣非净利润",
-      "target": "单季稳定超过800万至1000万元",
-      "reason": "验证利润修复是否真实。"
-    },
-    {
-      "metric": "电梯安全部件毛利率",
-      "target": "回到22%至25%",
-      "reason": "验证产品结构和议价能力。"
-    },
-    {
-      "metric": "经营现金流/净利润",
-      "target": "年度大于1",
-      "reason": "验证利润含金量和回款质量。"
-    },
-    {
-      "metric": "应收账款",
-      "target": "增速不高于收入增速且周转不恶化",
-      "reason": "防止大客户付款周期拉长侵蚀现金流。"
-    },
-    {
-      "metric": "G系列缓冲器和限速器收入",
-      "target": "持续放量并披露客户数或收入贡献",
-      "reason": "验证新品增长是否可持续。"
-    },
-    {
-      "metric": "海外收入",
-      "target": "单独披露并持续提高",
-      "reason": "验证海外布局是否从叙事进入收入阶段。"
-    },
-    {
-      "metric": "对外投资和资本开支",
-      "target": "不继续大额跨界投入且ROIC改善",
-      "reason": "验证资本配置纪律。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

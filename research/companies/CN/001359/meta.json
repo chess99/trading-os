@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:001359",
-  "market": "CN",
-  "ticker": "001359",
-  "name": "平安电工",
-  "company_name": "平安电工",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "平安电工主业为云母绝缘材料、新能源安全防护复合零部件和玻纤布制品，业务真实且现金流较好，但2026Q1毛利率和扣非利润承压，当前股价按可验证主业估值已显著透支，石英布和Low Dk电子级材料仍缺少公告级收入与订单核验，因此现阶段不适合基本面买入，只保留研究跟踪。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    32,
-    48
-  ],
-  "buy_zone": [
-    24,
-    35
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    120
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "平安电工",
+    "security_status": "active",
+    "symbol": "CN:001359",
+    "ticker": "001359"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "01e4246f99b39b8e80f186646533279e116d3e2b25d7410ffde58fc4c104e31b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于75元或市值继续按高于可验证主业100倍PE交易",
-      "action": "不买；若已有持仓则降至跟踪仓",
-      "max_weight": 0.005,
-      "reason": "当前价格显著透支云母绝缘材料主业和未核验新材料期权"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报分产品收入、毛利率、现金流和新材料进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入35元以下，且最新财报显示毛利率不低于32%、经营现金流与净利润匹配",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区间上沿，主业质量仍需财报确认"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认毛利率和经营现金流是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌入28元以下，且2026中报验证收入、毛利率、现金流均未恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.03,
-      "reason": "风险收益比改善，但石英布和Low Dk材料仍未纳入核心估值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "进入可研究首笔观察仓区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "若基本面稳定，具备更好安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "高于可验证主业合理估值，需减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "进入可研究首笔观察仓区间"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "若基本面稳定，具备更好安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "高于可验证主业合理估值，需减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报分产品收入、毛利率、现金流和新材料进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认毛利率和经营现金流是否修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "综合毛利率",
-    "经营现金流净额/归母净利润",
-    "应收账款和应收票据增速",
-    "存货增速",
-    "新能源安全防护复合零部件收入和毛利率",
-    "云母绝缘材料产能利用率",
-    "高纯石英纤维布和Low Dk电子级玻纤布量产收入",
-    "前五大客户收入占比",
-    "募投项目投产和折旧进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

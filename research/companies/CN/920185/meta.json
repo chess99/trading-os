@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:920185",
-  "market": "CN",
-  "ticker": "920185",
-  "name": "???",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "负极材料龙头，质量良好但现金流和资本开支压力明显；当前价格接近合理区间上沿，建议观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    17.0,
-    23.0
-  ],
-  "buy_zone": [
-    0,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    24.5,
-    29.4
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "???",
+    "security_status": "active",
+    "symbol": "CN:920185",
+    "ticker": "920185"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "660ff7ea3fe5adba53dc80045be8966ec51cf61fccf91a92ba22275ec975f470"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<=14.5",
-      "action": "强吸引力买入，分两到三笔建仓",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露后复查收入增长是否转化为扣非利润增长。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "14.5-17.0",
-      "action": "有安全边际，适合买入",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "综合毛利率跌破17%或负极材料毛利率跌破20%时立即复查。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "17.0-19.5",
-      "action": "合理偏低，小幅吸纳",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年度经营现金流/归母净利低于0.6倍时复查利润质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "19.5-22.0",
-      "action": "安全边际不足，仅跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "???????????????",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "22.0-24.5",
-      "action": "不新增，等待业绩验证",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "?????????????",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": ">24.5",
-      "action": "不追高，已有仓位考虑降低",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.5
+      },
+      "reason": "???????????????????",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "???????????????"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "?????????????"
-    },
-    {
-      "type": "price_above",
-      "price": 24.5,
-      "reason": "???????????????????"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026半年报披露后复查收入增长是否转化为扣非利润增长。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "综合毛利率跌破17%或负极材料毛利率跌破20%时立即复查。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "年度经营现金流/归母净利低于0.6倍时复查利润质量。"
-    }
-  ],
-  "notes": [
-    "2025年收入169.83亿元，同比+19.29%；归母净利8.75亿元，同比-5.93%；扣非归母净利6.85亿元，同比-24.93%。",
-    "2025年负极材料收入135.15亿元，占总收入约79.6%；正极材料收入30.33亿元。",
-    "2025年前五大客户收入106.03亿元，占总收入62.43%，客户名称因商业机密未披露。",
-    "2026Q1收入43.10亿元，同比+27.09%；归母净利1.61亿元，同比-8.87%；经营现金流-3.89亿元。",
-    "当前股价21.02元取自2026-07-17新浪行情；市值按行权后总股本1,138,190,398股估算约239亿元。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:300370",
-  "ticker": "300370",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "安控科技",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "油气自动化国产替代和智慧油田方向存在产业机会，但公司仍处持续亏损与高费用率阶段，客户集中、股权质押、诉讼赔付和估值偏高使当前风险收益比不佳；等待价格大幅回落或连续季度验证扭亏。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.65,
-    1.1
-  ],
-  "buy_zone": [
-    0.45,
-    0.7
-  ],
-  "sell_or_reduce_zone": [
-    1.4,
-    2.1
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安控科技",
+    "security_status": "active",
+    "symbol": "CN:300370",
+    "ticker": "300370"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "78b5ed601f2c495ac28bd489d463b80b5106ea09d72342604feca419bc13530b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价低于0.70元且2026半年度或三季度显示扣非亏损明显收窄、经营现金流改善时，允许建立观察性仓位。",
-      "action": "watchlist_entry",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "公司预约披露2026年半年报，需复核收入、扣非亏损、经营现金流和客户集中度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于0.55元且连续两个季度经营现金流改善、自动化业务毛利率回升至30%以上时，可小仓位试错。",
-      "action": "starter_position",
-      "max_weight": 1.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年扭亏可能性及现金流持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于1.40元且公司仍未实现扣非扭亏或经营现金流转正时，不新增并减持已有风险敞口。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，确认国产化产品、智慧油田业务和诉讼赔付风险是否有实质变化。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.7
+      },
+      "reason": "进入买入观察区，需要结合半年报验证基本面是否改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.55
+      },
+      "reason": "接近绝对估值下沿，若经营现金流和亏损同步改善，可重新测算安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.4
+      },
+      "reason": "高于合理价值上沿且未扭亏时风险收益比恶化。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.7,
-      "reason": "进入买入观察区，需要结合半年报验证基本面是否改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 0.55,
-      "reason": "接近绝对估值下沿，若经营现金流和亏损同步改善，可重新测算安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.4,
-      "reason": "高于合理价值上沿且未扭亏时风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "公司预约披露2026年半年报，需复核收入、扣非亏损、经营现金流和客户集中度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年扭亏可能性及现金流持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，确认国产化产品、智慧油田业务和诉讼赔付风险是否有实质变化。"
-    }
-  ],
-  "key_metrics": {
-    "last_price_reference": {
-      "price": 2.08,
-      "date": "2026-07-15",
-      "source": "中财网11:30行情"
-    },
-    "market_cap_billion_cny": 3.255,
-    "revenue_2025_cny": 411356914.74,
-    "net_profit_2025_cny": -123230689.43,
-    "q1_2026_revenue_cny": 45229886.79,
-    "q1_2026_net_profit_cny": -25986000.14
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

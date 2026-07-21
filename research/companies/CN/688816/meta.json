@@ -1,80 +1,105 @@
 {
-  "symbol": "CN:688816",
-  "market": "CN",
-  "ticker": "688816",
-  "name": "易思维",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "易思维是汽车制造机器视觉国产龙头，具备汽车工艺理解、全栈视觉技术和头部客户项目经验，长期受益于新能源车产线柔性化、国产替代、海外建厂和轨交运维视觉化。但公司项目制和季节性明显，2026Q1仍亏损，当前约50元价格处于合理价值区间中部，缺少足够安全边际，应观察等待中报/三季报验证或回落至买入区间。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    45,
-    58
-  ],
-  "buy_zone": [
-    38,
-    43
-  ],
-  "sell_or_reduce_zone": [
-    68,
-    75
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "易思维",
+    "security_status": "active",
+    "symbol": "CN:688816",
+    "ticker": "688816"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "ffe5541c10069649d4c55641b968362d5a896b73ab12532e74b0bf99af0c58cb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于43元，且2026年中报收入确认、毛利率和订单线索未明显弱于基准假设时，可首次小仓位建仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点确认收入节奏、亏损收窄、毛利率、订单和海外收入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于38元，且机器视觉毛利率维持约60%、全年净利润0.85亿元以上假设未被破坏时，可加至上限。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年0.85亿元以上净利润假设是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于45至58元且未出现2027年净利润显著上修证据时，仅跟踪不加仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，更新估值锚和买入区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于68元，且没有海外业务或智能打磨业务超预期放量证据时，降低或停止配置。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入初始买入区间，若基本面未恶化可重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入高安全边际区间，若毛利率和订单未破坏可评估加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 68.0
+      },
+      "reason": "超过基准情景估值上沿，若无盈利预测上修应考虑减仓或回避追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "进入初始买入区间，若基本面未恶化可重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入高安全边际区间，若毛利率和订单未破坏可评估加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 68,
-      "reason": "超过基准情景估值上沿，若无盈利预测上修应考虑减仓或回避追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点确认收入节奏、亏损收窄、毛利率、订单和海外收入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年0.85亿元以上净利润假设是否成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，更新估值锚和买入区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

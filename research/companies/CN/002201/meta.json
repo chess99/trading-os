@@ -1,128 +1,106 @@
 {
-  "symbol": "CN:002201",
-  "market": "CN",
-  "ticker": "002201",
-  "name": "九鼎新材",
-  "company_name": "九鼎新材",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "2025年风电叶片和玻纤深加工带动利润修复，但当前估值约64.7倍TTM PE、4.95倍PB，已提前计入乐观预期；在应收、存货、客户集中和治理折价未进一步改善前不追买，仅在5.6元以下进入观察性买入区间。",
-  "quality_rating": "B-/中等偏弱",
-  "valuation_rating": "D/偏贵",
-  "fair_value_range": [
-    4.8,
-    6.4
-  ],
-  "buy_zone": [
-    4.8,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "last_price": 8.92,
-  "last_price_date": "2026-07-10",
-  "market_cap_cny_billion": 5.813,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "九鼎新材",
+    "security_status": "active",
+    "symbol": "CN:002201",
+    "ticker": "002201"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "1b7ca7f84990df9bb4a7d702e5a604be0ab4c2e4b4037529388df64e090bf71f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于8.5元且没有新增超预期订单、毛利率和现金流验证",
-      "action": "不买入或逐步降至观察仓",
-      "max_weight": 0.0,
-      "reason": "当前估值约64.7倍TTM PE、4.95倍PB，已提前反映乐观预期"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证收入目标、毛利率、经营现金流、应收和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入5.6元以下，且应收账款、合同资产、存货未相对收入恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "进入估算买入区间上沿以下，但仍需等待基本面验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认风电产能爬坡和特种玻纤技改效果",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年中报确认收入增长、毛利率改善、经营现金流覆盖净利润",
-      "action": "提高到研究仓",
-      "max_weight": 0.02,
-      "reason": "风电叶片和特种玻纤增长质量获得阶段性验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入可观察买入区间，需要同步复核订单、应收和库存",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个报告期收入、毛利率、现金流、应收周转同步改善",
-      "action": "提高到最高仓位",
-      "max_weight": 0.03,
-      "reason": "周期修复转化为可持续盈利能力，但小市值和治理折价仍限制仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入合理价值区间下沿，若基本面未恶化可考虑提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于减仓区间下沿，估值对业绩验证要求过高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "超过乐观情景中枢，除非利润和现金流大幅超预期，否则应回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入可观察买入区间，需要同步复核订单、应收和库存"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入合理价值区间下沿，若基本面未恶化可考虑提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "高于减仓区间下沿，估值对业绩验证要求过高"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "超过乐观情景中枢，除非利润和现金流大幅超预期，否则应回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证收入目标、毛利率、经营现金流、应收和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认风电产能爬坡和特种玻纤技改效果"
-    }
-  ],
-  "key_tracking_metrics": [
-    "玻璃纤维及制品毛利率",
-    "玻璃钢制品毛利率",
-    "前五大客户销售占比",
-    "第一大客户销售占比",
-    "应收账款和合同资产占收入比例",
-    "存货占收入比例",
-    "经营现金流净额/归母净利润",
-    "甘肃风电和如东风电产能利用率",
-    "大型兆瓦级风电叶片生产线进度",
-    "特种玻璃纤维涡卷毡技改项目进度",
-    "高硅氧、连续毡、涂层毡等高附加值产品订单",
-    "原材料、电、天然气和运费成本",
-    "控股股东股份冻结、关联交易和监管处罚"
-  ],
-  "confidence": "medium",
-  "sources": [
-    {
-      "title": "江苏九鼎新材料股份有限公司2025年年度报告",
-      "date": "2026-04-22",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-22/1225134549.PDF"
-    },
-    {
-      "title": "江苏九鼎新材料股份有限公司2026年第一季度报告",
-      "date": "2026-04-28",
-      "url": "https://disc.static.szse.cn/disc/disk03/finalpage/2026-04-28/9cc9b22b-de62-4dfc-b8d0-41a115105bf4.PDF"
-    },
-    {
-      "title": "腾讯行情API 002201.SZ",
-      "date": "2026-07-10",
-      "url": "https://qt.gtimg.cn/q=sz002201"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

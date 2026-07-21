@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:603090",
-  "ticker": "603090",
-  "market": "CN",
-  "name": "宏盛股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "宏盛股份是铝制板翅式换热器和热管理系统细分供应商，受益于工业热管理升级和数据中心液冷主题，但2026Q1收入增长未转化为利润增长，当前估值已隐含较强乐观预期，安全边际不足，适合观察等待价格或订单兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    30,
-    42
-  ],
-  "buy_zone": [
-    0,
-    34
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏盛股份",
+    "security_status": "active",
+    "symbol": "CN:603090",
+    "ticker": "603090"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "ec0ee768cae824b4ecf902bd5873b296e678ff9610a8a4840c8fff14619ab3c2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价回落至34元以下，且最近两个季度经营活动现金流为正、毛利率未继续恶化时，允许建立观察仓。",
-      "action": "watchlist_probe",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、汇兑损益、经营现金流和热管理新业务披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于30元，且公司披露液冷或高端热管理订单形成可核验批量收入，可提高至小仓位。",
-      "action": "small_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断2026Q1利润下滑是否为短期扰动。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于55元但未披露新增大额订单或利润率修复，避免买入并考虑从观察池降级。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估液冷业务兑现和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入基准估值下沿附近，需要复核订单、毛利率和现金流后决定是否建立观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入更有安全边际的买入复评区，若基本面未恶化可考虑小仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过基准估值上沿，若缺少液冷业务利润兑现，估值风险明显上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入基准估值下沿附近，需要复核订单、毛利率和现金流后决定是否建立观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入更有安全边际的买入复评区，若基本面未恶化可考虑小仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过基准估值上沿，若缺少液冷业务利润兑现，估值风险明显上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、汇兑损益、经营现金流和热管理新业务披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断2026Q1利润下滑是否为短期扰动。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估液冷业务兑现和估值区间。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

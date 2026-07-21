@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:301007",
-  "ticker": "301007",
-  "name": "德迈仕",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "德迈仕具备精密轴和精密切削件制造能力、客户认证壁垒和较好现金流，但当前市值对应近百倍以上盈利估值，已显著透支现有业务。新产品和高价值汽车零部件放量尚未被财报充分验证，当前应观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14,
-    22
-  ],
-  "buy_zone": [
-    0,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "德迈仕",
+    "security_status": "active",
+    "symbol": "CN:301007",
+    "ticker": "301007"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f416a770fd828289dfd4d5443850a29b3a47b11e78165f4b9f7209e42ed7890e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于14元，且最近一期收入恢复增长、毛利率不低于20%、经营现金流未明显恶化",
-      "action": "可建立观察性小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流和新产品披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在14-22元之间，且新产品订单仍未量化",
-      "action": "继续观察，不主动加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否验证收入恢复和利润改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元，且没有可量化新产品订单或利润上台阶证据",
-      "action": "不买入，已有仓位应减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报并重估长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "跌入买入区间后重新评估基本面和安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "估值重新进入需要乐观情景支撑的区间，应检查是否有订单和利润验证",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "跌入买入区间后重新评估基本面和安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "估值重新进入需要乐观情景支撑的区间，应检查是否有订单和利润验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、现金流和新产品披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否验证收入恢复和利润改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报并重估长期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,52 +1,86 @@
 {
-  "symbol": "CN:920419",
-  "market": "CN",
-  "ticker": "920419",
-  "name": "路斯股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "出口OEM基本盘仍增长且柬埔寨基地出现盈利拐点，但利润率和自由现金流尚未修复，9.59元接近合理价值中枢、缺乏安全边际。",
-  "fair_value_range": [8.5, 10.5],
-  "buy_zone": [7.2, 8.0],
-  "sell_or_reduce_zone": [11.5, 13.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "路斯股份",
+    "security_status": "active",
+    "symbol": "CN:920419",
+    "ticker": "920419"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "4d127e61d085bd61a6b584460559604072e98738e0619f5a34e7f41b956db8c3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于7.2-8.0元且毛利率、柬埔寨盈利、应收与存货周转未恶化",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的毛利率、柬埔寨盈利、营运资金和自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.2元且复核确认核心客户未流失、长期商业价值未受损、自由现金流改善",
-      "max_weight": 0.025
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的毛利率、柬埔寨盈利、营运资金和自由现金流"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及柬埔寨二期投产进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及柬埔寨二期投产进度"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入有一定安全边际的观察买入区间，需先复核基本面"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入有一定安全边际的观察买入区间，需先复核基本面",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流明显上修"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利与自由现金流明显上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-18T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

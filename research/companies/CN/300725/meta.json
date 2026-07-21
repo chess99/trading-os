@@ -1,94 +1,86 @@
 {
-  "symbol": "CN:300725",
-  "market": "CN",
-  "ticker": "300725",
-  "currency": "CNY",
-  "status": "active",
-  "name": "药石科技",
-  "company_name": "南京药石科技股份有限公司",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "药石科技具备分子砌块源头能力和CRDMO一体化潜力，但当前估值已反映部分利润率修复预期，需等待33元以下安全边际或连续报告期验证毛利率与现金流改善。",
-  "decision": "观察",
-  "confidence": "中",
-  "price_date": "2026-07-13",
-  "last_price": 38.5,
-  "buy_zone": [30, 33],
-  "fair_value_range": [34, 47],
-  "sell_or_reduce_zone": [48, 55],
-  "price_ranges": {
-    "buy": [30, 33],
-    "fair_value": [34, 47],
-    "trim": [48, 55]
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "药石科技",
+    "security_status": "active",
+    "symbol": "CN:300725",
+    "ticker": "300725"
   },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "529b000ae9de0ea0a11ecd57c24676a3974e0b5ea2c05dbd2ed164f3ba09cc90"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核收入、毛利率、扣非净利润和经营现金流是否同步改善。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核CDMO项目放量、OPC订单、营运资本和实控人质押变化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 33.0
+      },
+      "reason": "进入买入区间下沿，估值对利润率修复的依赖下降，安全边际改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "超过当前合理价值区间上沿，若没有毛利率和扣非利润加速验证，应降低风险暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "market_cap_cny_billion": 9.0,
-    "ttm_revenue_cny_billion": 2.027,
-    "ttm_net_profit_cny_billion": 0.197,
-    "ttm_pe": 45.7,
-    "ttm_deducted_pe": 58.8,
-    "ev_to_ttm_sales": 3.6
-  },
-  "position_plan": [
-    {
-      "condition": "仅观察或轻仓；价格低于33元，或连续两个报告期出现CDMO毛利率、扣非净利率和经营现金流同步改善后再提高仓位。",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 33,
-      "reason": "进入买入区间下沿，估值对利润率修复的依赖下降，安全边际改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "超过当前合理价值区间上沿，若没有毛利率和扣非利润加速验证，应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后复核",
-      "reason": "复核收入、毛利率、扣非净利润和经营现金流是否同步改善。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后复核",
-      "reason": "复核CDMO项目放量、OPC订单、营运资本和实控人质押变化。"
-    }
-  ],
-  "watch_items": [
-    "CDMO收入增速、毛利率和重点客户收入占比",
-    "临床III期及商业化项目数量、PPQ项目数量、商业化GMP批次收入",
-    "药物研究阶段产品和服务是否恢复增长",
-    "OPC新分子实体业务订单和收入",
-    "经营现金流、应收账款、存货与收入的匹配关系",
-    "实控人杨民民股权质押变化"
-  ],
-  "sources": [
-    {
-      "title": "药石科技2025年年度报告",
-      "date": "2026-04-22",
-      "url": "https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?stockid=300725&id=12136499"
-    },
-    {
-      "title": "药石科技2026年一季度报告",
-      "date": "2026-04-22",
-      "url": "https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?stockid=300725&id=12136502"
-    },
-    {
-      "title": "Yahoo Finance 300725.SZ Historical Price",
-      "date": "2026-07-14",
-      "url": "https://finance.yahoo.com/quote/300725.SZ/"
-    }
-  ]
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,124 +1,120 @@
 {
-  "symbol": "CN:600104",
-  "market": "CN",
-  "ticker": "600104",
-  "name": "上汽集团",
-  "company_name": "上海汽车集团股份有限公司",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "undervalued_but_unverified",
-  "current_thesis": "上汽集团处于低估值资产型整车集团的转型验证期，新能源和海外销量增长较快，现金与分红提供一定底部，但合资利润池衰退、ROE偏低、扣非利润修复不足仍压制估值。当前适合观察或极小研究仓，等待2026年半年报验证毛利率、扣非利润和海外盈利质量。",
-  "fair_value_range": [
-    11.0,
-    14.0
-  ],
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上汽集团",
+    "security_status": "active",
+    "symbol": "CN:600104",
+    "ticker": "600104"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "8a75ff5e3d435871a5e5fbbaf8ac1c32d00c156646c3973ffe86e5ed32a5705e"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "90c4ee24a4d3d2985096c386809f17e14f95d11ed9df9698fc2aba8f817293d1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于9.5至11.0元且2026年半年报尚未披露或利润质量未验证",
-      "action": "仅保留观察或研究仓",
-      "max_weight": 0.02,
-      "reason": "估值偏低但合资下滑和新能源盈利质量仍未充分核验"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、扣非归母净利润、权益法投资收益、经营现金流和分品牌盈利线索",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.5元且月度新能源、海外销量未明显恶化",
-      "action": "小仓位分批买入",
-      "max_weight": 0.04,
-      "reason": "接近0.36倍PB，资产折价开始提供安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认新能源和海外销量增长是否转化为利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.5元且2026年半年报扣非利润和经营现金流未显著恶化",
-      "action": "提高到价值仓",
-      "max_weight": 0.07,
-      "reason": "悲观预期反映较充分，分红、现金和净资产折价提供更厚保护"
+      "active": true,
+      "condition": {
+        "date": "2027-01-15"
+      },
+      "reason": "复核2026年全年产销快报和分红预期，重估2027年利润中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于14.0元但ROE、毛利率和扣非净利率没有明确修复",
-      "action": "停止加仓并考虑部分减仓",
-      "max_weight": 0.02,
-      "reason": "价格接近合理价值上沿，继续持有需要基本面改善确认"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入有安全边际的初步买入区，需要复核新能源、海外销量和半年报前瞻",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于16.0元且公司仍处于低ROE、低净利率状态",
-      "action": "减仓或退出",
-      "max_weight": 0.0,
-      "reason": "乐观修复已被充分定价，风险收益转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "接近合理价值上沿，若ROE未修复应降低新增仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "进入乐观估值区，除非利润率和自主新能源盈利明显超预期，否则应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入有安全边际的初步买入区，需要复核新能源、海外销量和半年报前瞻"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入强安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "接近合理价值上沿，若ROE未修复应降低新增仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "进入乐观估值区，除非利润率和自主新能源盈利明显超预期，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查毛利率、扣非归母净利润、权益法投资收益、经营现金流和分品牌盈利线索"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认新能源和海外销量增长是否转化为利润"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-15",
-      "reason": "复核2026年全年产销快报和分红预期，重估2027年利润中枢"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度整车销量",
-    "月度新能源汽车销量",
-    "月度出口及海外基地销量",
-    "上汽大众销量同比",
-    "上汽通用销量同比",
-    "上汽乘用车销量同比",
-    "上汽通用五菱销量同比",
-    "智己汽车销量同比",
-    "营业收入同比",
-    "毛利率",
-    "销售费用率",
-    "研发费用率",
-    "扣非归母净利润",
-    "权益法投资收益",
-    "经营活动现金流量净额",
-    "归母净资产和PB",
-    "现金分红率",
-    "海外关税和本地化政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

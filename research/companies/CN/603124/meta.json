@@ -1,74 +1,96 @@
 {
-  "symbol": "CN:603124",
-  "ticker": "603124",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "江南新材",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "江南新材受益于AI算力带动的高端PCB、氧化铜粉和服务器液冷散热需求，2026年利润弹性明显；但当前股价已反映乐观情景，低毛利、铜价波动和经营现金流压力限制安全边际，适合观察等待估值回落和现金流改善。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    65,
-    90
-  ],
-  "buy_zone": [
-    55,
-    70
-  ],
-  "sell_or_reduce_zone": [
-    105,
-    125
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江南新材",
+    "security_status": "active",
+    "symbol": "CN:603124",
+    "ticker": "603124"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "bba71c41e097d8b90c27bf0dbbc7f75575e34c1e75a7b6a33bec313afc3afcd2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于70元，2026年半年度归母净利润不低于1.65亿元，且经营现金流较2026Q1边际改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告实际利润、现金流和产品结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于60元，三季报验证全年归母净利润中枢不低于3.6亿元，且氧化铜粉和散热片占比继续提升",
-      "action": "提高至小仓位配置",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢和估值区间是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于105元且无全年归母净利润超过4.3亿元的新增证据",
-      "action": "不追高或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入买入观察区，需要复核半年报兑现度和经营现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 60.0
+      },
+      "reason": "进入更有安全边际的配置区，需要结合三季报验证全年利润中枢",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 105.0
+      },
+      "reason": "高于合理价值上沿，除非业绩显著超预期，否则风险收益比转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入买入观察区，需要复核半年报兑现度和经营现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 60,
-      "reason": "进入更有安全边际的配置区，需要结合三季报验证全年利润中枢"
-    },
-    {
-      "type": "price_above",
-      "price": 105,
-      "reason": "高于合理价值上沿，除非业绩显著超预期，否则风险收益比转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告实际利润、现金流和产品结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢和估值区间是否需要调整"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

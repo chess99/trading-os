@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:000925",
-  "ticker": "000925",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "众合科技",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "轨交信号与系统集成提供现金流底盘，泛半导体和数智化提供周期与主题弹性；但2025年仍亏损、半导体拖累明显、有息负债较高，当前价格缺少足够安全边际，需等待2026H1利润和现金流验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.0,
-    9.2
-  ],
-  "buy_zone": [
-    5.6,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众合科技",
+    "security_status": "active",
+    "symbol": "CN:000925",
+    "ticker": "000925"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c07cf8fdcb9a791b83700e949aabc62dd3a19954a6af3d7882fa267b5896150b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.5元，且2026H1收入延续修复、亏损收窄、经营现金流未明显恶化时，允许建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入修复、归母净利润、经营现金流、应收和有息负债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.6元，且有息负债下降或订单回款显著改善时，可提高至小仓位上限。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认轨交订单交付、泛半导体恢复和现金流趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元但利润尚未转正或低空/半导体订单未实质兑现时，不加仓并考虑减仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估正常化利润、资产负债表和合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入初始买入区间，需要复核2026H1收入、亏损和经营现金流是否支持小仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入深度安全边际区间，需要复核是否存在基本面恶化或债务风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过基准估值上沿，若利润和订单未兑现，主题估值扩张风险上升。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入初始买入区间，需要复核2026H1收入、亏损和经营现金流是否支持小仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入深度安全边际区间，需要复核是否存在基本面恶化或债务风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过基准估值上沿，若利润和订单未兑现，主题估值扩张风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入修复、归母净利润、经营现金流、应收和有息负债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认轨交订单交付、泛半导体恢复和现金流趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估正常化利润、资产负债表和合理估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

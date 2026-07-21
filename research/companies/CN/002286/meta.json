@@ -1,108 +1,106 @@
 {
-  "symbol": "CN:002286",
-  "market": "CN",
-  "ticker": "002286",
-  "name": "保龄宝",
-  "company_name": "保龄宝",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "保龄宝是功能糖和减糖甜味剂链条中产品矩阵较完整的公司，2025年受益于核心产品毛利修复、欧洲赤藓糖醇贸易格局和原料成本改善；但业务仍具明显周期属性，阿洛酮糖审批和订单尚需验证，当前价格更适合观察仓而非主仓买入。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    6.2,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "保龄宝",
+    "security_status": "active",
+    "symbol": "CN:002286",
+    "ticker": "002286"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "47f84f4573163020991d2fcd047e59d9d76af388aa58b5c7e4cabe7123b5be79"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在8.13元附近且半年报未验证前",
-      "action": "仅保留或建立观察仓",
-      "max_weight": 0.005,
-      "reason": "当前估值已反映2025年修复和阿洛酮糖预期，扣非与现金流仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "公司暂定披露2026年半年度报告，需复核扣非净利、核心毛利率、现金流和阿洛酮糖进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至6.2-7.0元且核心产品毛利率保持18%以上",
-      "action": "分批买入",
-      "max_weight": 0.03,
-      "reason": "进入安全边际区间，且三大核心产品未明显恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报窗口，检验2026全年利润和股权激励目标完成概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1/H2扣非净利和经营现金流同步改善，阿洛酮糖订单得到公告或财报验证",
-      "action": "可提高为中小仓位",
-      "max_weight": 0.05,
-      "reason": "新产品期权转化为可验证利润，周期资产质量上移"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入初始买入区间上沿，复核半年报和核心毛利率后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于10.5元或核心毛利率跌破16%",
-      "action": "减持或停止加仓",
-      "max_weight": 0.01,
-      "reason": "估值进入乐观预期区间，或基本面验证失败"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入强安全边际区间，如基本面未破坏可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减持区间下沿，需要2026年利润超过2.2亿元或阿洛酮糖确定性提升支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "达到乐观估值区间，应主动复核并兑现部分收益",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入初始买入区间上沿，复核半年报和核心毛利率后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入强安全边际区间，如基本面未破坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减持区间下沿，需要2026年利润超过2.2亿元或阿洛酮糖确定性提升支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "达到乐观估值区间，应主动复核并兑现部分收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "公司暂定披露2026年半年度报告，需复核扣非净利、核心毛利率、现金流和阿洛酮糖进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报窗口，检验2026全年利润和股权激励目标完成概率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "三大核心产品收入占比",
-    "三大核心产品合计毛利率",
-    "减糖甜味剂销量和售价",
-    "益生元收入同比增速",
-    "膳食纤维收入同比增速",
-    "阿洛酮糖审批进度和产能利用率",
-    "海外收入占比和欧洲赤藓糖醇订单",
-    "玉米、淀粉、葡萄糖采购价格",
-    "经营活动现金流净额",
-    "扣非归母净利润",
-    "存货和预付款项",
-    "短期借款",
-    "前五大供应商采购占比",
-    "股东质押和冻结变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

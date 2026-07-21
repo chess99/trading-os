@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:605100",
-  "market": "CN",
-  "ticker": "605100",
-  "name": "华丰股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "华丰股份主业处于修复期，资产负债表稳健，智能制造业务提供远期弹性，但当前市值已大幅透支传统发动机及零部件业务可验证利润和新业务期权，安全边际不足。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    8.5,
-    13.5
-  ],
-  "buy_zone": [
-    6.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    18,
-    22
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华丰股份",
+    "security_status": "active",
+    "symbol": "CN:605100",
+    "ticker": "605100"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "df1b69593b6675c1f0a8835588b60605ef46ecbc0e784d5b44cd754a7bd162cb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价显著高于合理价值区间，未看到智能制造或机器人相关业务形成可验证的大额利润贡献前不建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中分业务收入、毛利率、前五大客户和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入9.5元以下，且最近一期扣非净利润、经营现金流和发动机核心零部件毛利率同步改善，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认业绩修复是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "智能制造业务年收入超过1.5亿元且毛利率维持35%以上，同时公司归母净利润可持续超过1.2亿元，再重新评估是否提高仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和智能制造业务财务兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "跌入买入观察区间，需要复核扣非利润、现金流和订单兑现情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "显著高于乐观情景估值上沿，若无盈利上修应回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "跌入买入观察区间，需要复核扣非利润、现金流和订单兑现情况。"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "显著高于乐观情景估值上沿，若无盈利上修应回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中分业务收入、毛利率、前五大客户和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认业绩修复是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和智能制造业务财务兑现。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

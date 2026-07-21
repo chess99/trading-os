@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600855",
-  "ticker": "600855",
-  "name": "航天长峰",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "航天长峰具备航天科工体系、军工电子、边海空防和低空安全场景的稀缺平台属性，但 2025 年仍亏损、2026Q1 收入下滑、2026H1 预告继续亏损，当前股价主要反映主题期权而非可见盈利。需等待军工电子交付恢复、公共安全回款改善和 ECMO 取证/销售落地后再考虑小仓位。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    6.0,
-    8.5
-  ],
-  "buy_zone": [
-    0.0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    14.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "航天长峰",
+    "security_status": "active",
+    "symbol": "CN:600855",
+    "ticker": "600855"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3fdf423f121586514f6bee5dab240e1950f2380426ff07aaa35c77ae9d2ed60b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价低于 6.0 元，且军工电子交付恢复、公共安全回款改善、ECMO 取证或销售落地中至少两项被公告验证时，建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查亏损、毛利率、应收减值和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若 2026 年半年报仍显示收入下滑、经营现金流为负且应收减值继续增加，即使价格进入估值区间也不加仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断军工电子交付和公共安全回款是否出现拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于 11.0 元且未出现盈利和现金流拐点，保持空仓或减持至 0。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 ECMO 商业化进展，决定是否维持观察评级。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入估算买入区间，需要复核经营拐点是否被公告验证。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "高于基准合理价值上沿，若仍亏损且现金流未改善，风险收益不对称。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入估算买入区间，需要复核经营拐点是否被公告验证。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "高于基准合理价值上沿，若仍亏损且现金流未改善，风险收益不对称。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查亏损、毛利率、应收减值和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断军工电子交付和公共安全回款是否出现拐点。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 ECMO 商业化进展，决定是否维持观察评级。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

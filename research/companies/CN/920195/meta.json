@@ -1,97 +1,115 @@
 {
-  "symbol": "CN:920195",
-  "market": "CN",
-  "ticker": "920195",
-  "name": "三祥科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "三祥科技是汽车胶管和总成细分赛道中经营质量较好的北交所小市值公司，2025年收入、利润和经营现金流明显修复，海外售后与比亚迪/吉利等主机客户构成主要支撑；但2026Q1收入和利润下滑，说明客户节奏、汇率、毛利率和扩产爬坡仍有压力。12.03元附近可小仓累积，10.50元以下才有较好安全边际。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    12.0,
-    15.5
-  ],
-  "buy_zone": [
-    0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三祥科技",
+    "security_status": "active",
+    "symbol": "CN:920195",
+    "ticker": "920195"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "baa7ef92b47136b43b9a6b2333c27907279fb478c238d70bde100fb6dea33308"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.00元且基本面未恶化",
-      "action": "强吸引力区间，分批买入",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看Q2是否恢复、毛利率和经营现金流是否稳定",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在9.00至10.50元且半年报未继续恶化",
-      "action": "累积至中等仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q1下滑是短期扰动还是全年趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格在10.50至12.20元",
-      "action": "仅建立或维持跟踪仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，验证海外产能、新能源管路、液冷软管等增长来源兑现度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格在12.20至15.50元",
-      "action": "持有观察，等待业绩验证，不主动加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入安全边际买入区，按2026年约1亿元净利估算仍接近10倍PE",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于16.50元或估值超过基本面兑现",
-      "action": "减仓或只保留观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入强吸引力区，已反映较多2026Q1下滑和北交所流动性折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过基准合理价值上沿，除非液冷或空气悬架业务有明确利润兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "若跌破该价且半年报收入、毛利率、扣非净利率没有改善，应先降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入安全边际买入区，按2026年约1亿元净利估算仍接近10倍PE"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入强吸引力区，已反映较多2026Q1下滑和北交所流动性折价"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过基准合理价值上沿，除非液冷或空气悬架业务有明确利润兑现"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "若跌破该价且半年报收入、毛利率、扣非净利率没有改善，应先降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看Q2是否恢复、毛利率和经营现金流是否稳定"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认Q1下滑是短期扰动还是全年趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，验证海外产能、新能源管路、液冷软管等增长来源兑现度"
-    }
-  ],
-  "notes": [
-    "当前价格采用证券时报2026-07-17收盘价12.03元；总股本采用2025年报98,030,000股，测算总市值约11.79亿元。旧代码831195行情页存在代码切换噪音，未作为估值基准。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

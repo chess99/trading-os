@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688229",
-  "market": "CN",
-  "ticker": "688229",
-  "name": "博睿数据",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "博睿数据是A股稀缺的可观测性/APM软件标的，产品毛利率高、现金储备较充足，但2025年和2026Q1收入仍下滑，规模化盈利与现金流拐点尚未被验证；当前股价已反映较乐观预期，适合观察而非追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    38,
-    55
-  ],
-  "buy_zone": [
-    30,
-    38
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    90
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博睿数据",
+    "security_status": "active",
+    "symbol": "CN:688229",
+    "ticker": "688229"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bc060c3d9edc91a5276cca43e01986cc098e566d92aad812dcae47668c261a27"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准估值区间且收入尚未恢复增长，仅观察，不建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、费用率、经营现金流和订单线索。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入30-38元且最新半年报收入降幅收窄、经营现金流同比改善，可试探小仓位。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现收入转正和亏损继续收窄。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "收入连续两个报告期转正且经营现金流接近转正，可提高为低配观察仓。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断Bonree ONE和AI运维产品化是否转化为增长。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入基准估值下沿并具备安全边际，需复核基本面是否恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "超过乐观情景估值下沿，若收入和现金流未同步改善，应考虑回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入基准估值下沿并具备安全边际，需复核基本面是否恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "超过乐观情景估值下沿，若收入和现金流未同步改善，应考虑回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、费用率、经营现金流和订单线索。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现收入转正和亏损继续收窄。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断Bonree ONE和AI运维产品化是否转化为增长。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

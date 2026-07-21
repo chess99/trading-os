@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:002292",
-  "market": "CN",
-  "ticker": "002292",
-  "name": "奥飞娱乐",
-  "company_name": "奥飞娱乐",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "奥飞娱乐拥有稀缺儿童动漫IP矩阵、玩具衍生品和海外婴童用品渠道，但2025年收入下滑、2026Q1扣非利润承压，商誉和存货风险仍高；当前股价已透支IP年轻化、潮玩和AI硬件期权，适合观察，等待价格回到买入区间并看到扣非利润与现金流改善。",
-  "quality_rating": "medium_weak",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.8,
-    6.2
-  ],
-  "buy_zone": [
-    4.2,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥飞娱乐",
+    "security_status": "active",
+    "symbol": "CN:002292",
+    "ticker": "002292"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "02e0124f5feee815ebf55846d81d85bfb27139a3bcd802779079c461fcc2201b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.20元，且2026H1扣非净利、经营现金流、存货没有继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "价格进入买入区间上沿，安全边际开始出现，但商业化改善仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证扣非利润、经营现金流、存货、商誉和AI/IP商业化进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.20元，且商誉未出现新增大额减值，玩具或影视收入恢复增长",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "悲观估值附近可补偿商誉、库存和成长不确定性"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认费用率、渠道动销和海外婴童业务趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.20元，且没有连续两个季度扣非净利和经营现金流改善",
-      "action": "减持或不新增仓位",
-      "max_weight": 0.01,
-      "reason": "估值接近乐观情景，缺少利润兑现时风险收益不佳"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入买入区间上沿，可复查中报和库存后考虑首笔观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入悲观估值附近，若资产质量未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过减持区间上沿，除非AI玩具或IP授权已明显放量，否则估值过度透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入买入区间上沿，可复查中报和库存后考虑首笔观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入悲观估值附近，若资产质量未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过减持区间上沿，除非AI玩具或IP授权已明显放量，否则估值过度透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证扣非利润、经营现金流、存货、商誉和AI/IP商业化进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认费用率、渠道动销和海外婴童业务趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "经营活动现金流量净额",
-    "玩具销售收入及毛利率",
-    "影视类收入及毛利率",
-    "婴童用品收入及Babytrend净利润",
-    "存货余额和存货跌价准备",
-    "商誉余额和减值测试结果",
-    "销售费用率",
-    "AI智能玩具销量、收入、毛利率",
-    "核心IP授权金和衍生品销售数据",
-    "境外收入、汇兑损益和贸易政策影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

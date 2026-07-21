@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:603227",
-  "market": "CN",
-  "ticker": "603227",
-  "name": "雪峰科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "雪峰科技是新疆区域民爆与爆破服务龙头，并通过能源化工资产获得利润弹性；2025年收入、利润和现金流均同比下滑，2026Q1收入、利润和现金流继续承压，当前价格接近基准价值而非深度低估，适合观察，等待5.6-6.4元区间或连续季度改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.8,
-    8.4
-  ],
-  "buy_zone": [
-    5.6,
-    6.4
-  ],
-  "sell_or_reduce_zone": [
-    8.8,
-    10.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "雪峰科技",
+    "security_status": "active",
+    "symbol": "CN:603227",
+    "ticker": "603227"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0fa140d3b3fba9a84e55673c59ec80767c1ccc4131ad25a67cd785c0cf04a9ab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入5.6-6.4元且未出现重大安全事故、许可风险或现金流持续恶化",
-      "action": "分两到三笔建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入、归母净利润、经营现金流和民爆/能源化工分部表现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3显示收入、归母净利润和经营现金流同步修复，且估值仍低于合理区间中位数",
-      "action": "可把观察仓提高至核心小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1下滑是否已修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于8.8元且利润修复证据不足，或能源化工价差继续下行",
-      "action": "减仓或只保留跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重新计算正常化盈利与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "进入初始买入观察区，需要复核基本面是否未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入较厚安全边际区，若现金流和订单未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.8
+      },
+      "reason": "高于合理价值区间上沿，需要检查业绩改善是否足以支撑估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.4,
-      "reason": "进入初始买入观察区，需要复核基本面是否未恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入较厚安全边际区，若现金流和订单未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 8.8,
-      "reason": "高于合理价值区间上沿，需要检查业绩改善是否足以支撑估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入、归母净利润、经营现金流和民爆/能源化工分部表现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1下滑是否已修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重新计算正常化盈利与估值区间"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 7.11,
-    "reference_price_date": "2026-07-17",
-    "shares_outstanding": 1071692330,
-    "market_cap_cny_billion": 7.62,
-    "fair_value_method": "relative_pe_dcf_scenario_cross_check"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

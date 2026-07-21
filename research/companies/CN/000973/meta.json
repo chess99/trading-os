@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:000973",
-  "market": "CN",
-  "ticker": "000973",
-  "name": "佛塑科技",
-  "company_name": "佛塑科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "佛塑科技完成收购金力新能源后，从传统高分子薄膜平台升级为薄膜材料与锂电池湿法隔膜组合资产；但2026Q1表观归母净利润受重组会计影响较大，真正的买入依据应是金力新能源扣非利润、毛利率和经营现金流连续验证。当前价格已反映隔膜复苏和国资重组溢价，适合观察，不宜追高。",
-  "quality_rating": "B",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    9.2,
-    12.0
-  ],
-  "buy_zone": [
-    8.5,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    17.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佛塑科技",
+    "security_status": "active",
+    "symbol": "CN:000973",
+    "ticker": "000973"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "d6779841075d25d810525d002af79ea052a05946ad99fae373db517e4792e52f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于12.0元且2026H1扣非利润与经营现金流尚未验证",
-      "action": "不建仓，仅跟踪",
-      "max_weight": 0.0,
-      "reason": "重组后表观利润含重大非经常影响，当前估值已反映隔膜复苏和国资重组溢价"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看金力新能源扣非利润、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至10.2元以下且未出现隔膜价格、订单、现金流恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "进入中性估值下沿附近，可用小仓位验证金力新能源并表后的经营质量"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认隔膜盈利修复是否具备连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至8.5-9.2元且2026H1或2026Q3扣非利润、经营现金流持续改善",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05,
-      "reason": "估值进入安全边际区，同时隔膜盈利修复获得财务报表验证"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入初步买入区，复核隔膜价格、扣非利润和经营现金流后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价升至14.0元以上但全年扣非利润预期未上修至10亿元以上",
-      "action": "减仓或不追买",
-      "max_weight": 0.01,
-      "reason": "价格进入乐观情景区间，风险回报不再有利"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "进入乐观估值区，若没有利润预期上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "超过乐观情景上沿，应复核是否存在过度主题化定价",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入初步买入区，复核隔膜价格、扣非利润和经营现金流后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入深度安全边际区，若基本面未恶化可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "进入乐观估值区，若没有利润预期上修应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "reason": "超过乐观情景上沿，应复核是否存在过度主题化定价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看金力新能源扣非利润、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认隔膜盈利修复是否具备连续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1和2026Q3扣非归母净利润",
-    "经营活动现金流净额与净利润匹配度",
-    "金力新能源收入、毛利率、净利率和产能利用率",
-    "湿法隔膜和涂覆隔膜价格趋势",
-    "头部电池客户订单、认证和账期变化",
-    "BOPP及包装薄膜价差与原料聚丙烯价格",
-    "应收账款、存货、资本开支和潜在减值",
-    "广新集团新材料平台后续资产整合进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

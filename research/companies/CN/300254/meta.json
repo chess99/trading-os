@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:300254",
-  "market": "CN",
-  "ticker": "300254",
-  "name": "仟源医药",
-  "company_name": "山西仟源医药集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司2025年扭亏且经营现金流改善，但净利率薄、2026年一季度利润下滑，当前约8元价格已计入较多修复预期；合理价值约5.0-6.5元，需等待更高安全边际和后续季度利润质量确认。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.0,
-    6.5
-  ],
-  "buy_zone": [
-    4.5,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    8.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "仟源医药",
+    "security_status": "active",
+    "symbol": "CN:300254",
+    "ticker": "300254"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4677a4ae3daa57bd01f9d3dc4fdce5211f5777b11e0d948f762c76c0f01f47d6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于6.5元，且2026年后续季度扣非利润和经营现金流尚未同步改善",
-      "max_weight": 0.0,
-      "action": "维持0仓位，仅跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非净利润、经营现金流、费用率和负债变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于5.2元，且2026年中报扣非利润同比改善、经营现金流为正",
-      "max_weight": 0.01,
-      "action": "可建立0.5%-1%观察仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.5元，且核心产品收入稳定、负债和财务费用继续下降",
-      "max_weight": 0.03,
-      "action": "可提高至2%-3%，仍不重仓"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入初步可买区，需复核中报利润质量和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入深度安全边际区，若基本面未破坏可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于减仓观察线，若业绩无同步改善则估值偏贵",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入初步可买区，需复核中报利润质量和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入深度安全边际区，若基本面未破坏可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于减仓观察线，若业绩无同步改善则估值偏贵"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非净利润、经营现金流、费用率和负债变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润及净利率",
-    "经营活动现金流净额",
-    "毛利率和销售费用率",
-    "泌尿系统药、戒烟药、儿童用药收入增速",
-    "有息负债、财务费用、商誉、存货和应收账款变化",
-    "集采、医保控费、监管问询和大额资本运作事件"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

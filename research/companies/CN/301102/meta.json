@@ -1,89 +1,115 @@
 {
-  "symbol": "CN:301102",
-  "ticker": "301102",
-  "name": "兆讯传媒",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "全国高铁站数字媒体网络稀缺且现金充足，但2025年与2026Q1盈利显著下滑，修复证据不足；当前以观察为主，等待价格进入净资产折价区且收入降幅收窄。",
-  "rating": {
-    "current_rating": "watch",
-    "updated_at": "2026-07-16",
-    "reason": "资产负债表提供安全垫，但经营趋势未确认修复，当前价格缺少足够安全边际。"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兆讯传媒",
+    "security_status": "active",
+    "symbol": "CN:301102",
+    "ticker": "301102"
   },
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    10.2
-  ],
-  "buy_zone": [
-    6.8,
-    7.4
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.0
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "13b5e1d62c07fcf50d2f4f9e3381721ee118e9eeb60aedde37cb040624e97c34"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.4元，且2026H1收入降幅收窄至15%以内或在手订单/回款继续改善",
-      "action": "建立观察性试探仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘2026年中报，重点核验收入降幅、费用率、应收账款与裸眼3D商业化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "收入连续两个季度环比改善，正常化净利率恢复至8%以上，裸眼3D大屏收入贡献可量化",
-      "action": "复盘后再决定是否提高仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘2026年三季报，判断收入修复是否连续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1收入降幅仍大于25%，或现金被低回报资本开支明显消耗",
-      "action": "维持不买或移出重点观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复盘2026年年报，更新正常化利润和现金消耗假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
+      "reason": "进入买入观察区，接近每股净资产折价，需结合收入修复验证。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "接近悲观情景下沿，若现金和经营资产未恶化，安全边际显著提升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "超过基准估值上沿，若盈利修复未验证，应降低或避免追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "接近乐观情景估值，除非收入与利润率明显超预期，否则风险收益比转差。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.4,
-      "reason": "进入买入观察区，接近每股净资产折价，需结合收入修复验证。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "接近悲观情景下沿，若现金和经营资产未恶化，安全边际显著提升。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "超过基准估值上沿，若盈利修复未验证，应降低或避免追高。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "接近乐观情景估值，除非收入与利润率明显超预期，否则风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘2026年中报，重点核验收入降幅、费用率、应收账款与裸眼3D商业化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘2026年三季报，判断收入修复是否连续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复盘2026年年报，更新正常化利润和现金消耗假设。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

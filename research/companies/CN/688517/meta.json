@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:688517",
-  "market": "CN",
-  "ticker": "688517",
-  "name": "金冠电气",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "公司是A股稀缺的避雷器和智能配网小市值标的，受益于特高压、配网投资和新能源接入，现金流与分红有吸引力；但2026Q1收入利润下滑、毛利率承压、国网南网客户集中和应收账款较高，当前14.96元接近基准价值中枢，缺乏足够安全边际，宜观察等待12元以下或基本面修复确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    12.5,
-    16.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    19.0,
-    22.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金冠电气",
+    "security_status": "active",
+    "symbol": "CN:688517",
+    "ticker": "688517"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "1a7993fd4685ab58332166fb9277610989b434aad36b53e68819e5771fca7be8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12.0元，且最新定期报告未出现毛利率继续大幅下滑、核心订单丢失或经营现金流持续恶化",
-      "action": "试探性买入",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流和订单转化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1扣非净利润同比转正、经营现金流修复且2026年中标项目转化为正式合同",
-      "action": "可加至中等观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和国网南网中标情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于19.0元但盈利预测没有上修，或应收账款和合同资产继续快速增加",
-      "action": "减仓或停止买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红和长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入保守买入区，具备约20%以上安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "超过基准估值上沿，需要盈利上修支撑，否则应减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "进入保守买入区，具备约20%以上安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "超过基准估值上沿，需要盈利上修支撑，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流和订单转化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和国网南网中标情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红和长期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

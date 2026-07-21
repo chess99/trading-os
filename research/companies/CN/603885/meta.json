@@ -1,88 +1,105 @@
 {
-  "symbol": "CN:603885",
-  "market": "CN",
-  "ticker": "603885",
-  "name": "吉祥航空",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "吉祥航空具备上海主基地、民营机制、九元低成本子品牌和国际线宽体机弹性，但2026H1业绩预减显示航油上行会迅速吞噬利润，当前约20倍TTM PE相对春秋航空不够便宜。结论为观察，等待9.2元以下安全边际或三季度旺季与油价改善确认。",
-  "fair_value_range": [
-    10.5,
-    13.0
-  ],
-  "buy_zone": [
-    8.0,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    13.8,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "吉祥航空",
+    "security_status": "active",
+    "symbol": "CN:603885",
+    "ticker": "603885"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "0f864ffe4e09bbceffb91774c478080a76156999e34b5c8f61e7e13010e6ee8c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.2元，且2026中报未出现新增资产负债表风险",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认Q2亏损、航油影响、资产负债表和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于8.5元，且三季度月度客座率维持85%以上、航油压力边际缓解",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和暑运旺季表现，判断H1冲击是否可逆",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于13.8元但2027年正常化利润预期未上修至15亿元以上",
-      "action": "减仓或不新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "复核2026年全年运营数据、国际线恢复和航油汇率假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入初始买入区间，安全边际开始具备吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入深度价值区间，可在运营数据未恶化时提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.8
+      },
+      "reason": "超过当前基准估值上沿，需要盈利上修才能继续持有较高仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入初始买入区间，安全边际开始具备吸引力"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入深度价值区间，可在运营数据未恶化时提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.8,
-      "reason": "超过当前基准估值上沿，需要盈利上修才能继续持有较高仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认Q2亏损、航油影响、资产负债表和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和暑运旺季表现，判断H1冲击是否可逆"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "reason": "复核2026年全年运营数据、国际线恢复和航油汇率假设"
-    }
-  ],
-  "key_monitoring_indicators": [
-    "月度ASK、RPK、客座率，特别是国际线恢复",
-    "航油价格与燃油附加费传导",
-    "人民币兑美元汇率和财务费用",
-    "A320系列发动机维修和飞机日利用率",
-    "控股股东股份质押比例",
-    "2026中报和三季报扣非归母净利润"
-  ],
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,254 +1,116 @@
 {
-  "symbol": "CN:002155",
-  "market": "CN",
-  "ticker": "002155",
-  "company_name": "湖南黄金",
-  "name": "湖南黄金",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "updated_at": "2026-07-08",
-  "research_date": "2026-07-08",
-  "current_rating": "watch",
-  "investment_decision": "观察",
-  "current_thesis": "湖南黄金是A股中较稀缺的黄金、锑、钨国资矿业平台，资源组合和价格弹性有价值；但当前股价已反映较多高景气预期，安全生产事故、外购非标金低毛利收入占比高、重大资产重组尚未落地均压低安全边际。当前适合观察，不适合追买。",
-  "quality_rating": "良好",
-  "valuation_rating": "合理",
-  "current_price": {
-    "price": 23.7,
-    "date": "2026-07-08 10:02:30 GMT+8",
-    "source": "Google Finance 002155:SHE；总市值按公司2026Q1总股本1,562,651,316股自行计算",
-    "market_cap_cny_billion": 37.05
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "湖南黄金",
+    "security_status": "active",
+    "symbol": "CN:002155",
+    "ticker": "002155"
   },
-  "fair_value_range": [
-    22.0,
-    27.0
-  ],
-  "fair_value_market_cap_cny_billion": [
-    34.38,
-    42.19
-  ],
-  "buy_price": 19.5,
-  "strong_buy_price": 16.5,
-  "no_chase_price": 28.0,
-  "buy_zone": [
-    16.5,
-    19.5
-  ],
-  "strong_buy_zone": [
-    0.0,
-    16.5
-  ],
-  "sell_or_reduce_zone": [
-    28.0,
-    999.0
-  ],
-  "position_plan": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "f016dfc795ba5a8e543769fca0b4c9209c4873845a00072fcadacc144329d499"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "strong_buy",
-      "condition": "股价低于16.5元且金价、锑价、自有矿产量和安全事故进展未恶化",
-      "price_range": [
-        0.0,
-        16.5
-      ],
-      "judgment": "强吸引力，前提是基本面没有破坏",
-      "action": "分批买入",
-      "target_weight": 0.04,
-      "max_weight": 0.05,
-      "notes": "确认金价、锑价、自有矿产量和安全事故进展未恶化后执行"
-    },
-    {
-      "zone": "buy",
-      "condition": "股价处于16.5-19.5元且基本面未出现逻辑止损条件",
-      "price_range": [
-        16.5,
-        19.5
-      ],
-      "judgment": "有安全边际",
-      "action": "分批买入",
-      "target_weight": 0.025,
-      "max_weight": 0.03,
-      "notes": "适合建立核心观察仓"
-    },
-    {
-      "zone": "watch_buy",
-      "condition": "股价处于19.5-22.0元且半年报自产量和现金流可验证",
-      "price_range": [
-        19.5,
-        22.0
-      ],
-      "judgment": "接近合理区间下沿",
-      "action": "小仓试买或等待财报验证",
-      "target_weight": 0.01,
-      "max_weight": 0.015,
-      "notes": "需要半年度自产量和现金流确认"
-    },
-    {
-      "zone": "fair",
-      "condition": "股价处于22.0-27.0元合理区间且无新增重大利好",
-      "price_range": [
-        22.0,
-        27.0
-      ],
-      "judgment": "合理区间",
-      "action": "观察或仅持有",
-      "target_weight": 0.0,
-      "max_weight": 0.02,
-      "notes": "当前不新增重仓"
-    },
-    {
-      "zone": "expensive",
-      "condition": "股价处于27.0-28.0元且重组或盈利上修尚未明确兑现",
-      "price_range": [
-        27.0,
-        28.0
-      ],
-      "judgment": "合理偏贵",
-      "action": "不新增，视重组和金价减仓",
-      "target_weight": 0.0,
-      "max_weight": 0.01,
-      "notes": "需要乐观情景兑现支撑"
-    },
-    {
-      "zone": "reduce",
-      "condition": "股价高于28.0元且无重组明显增厚或盈利显著上修",
-      "price_range": [
-        28.0,
-        999.0
-      ],
-      "judgment": "预期较满",
-      "action": "不追高，逐步降低仓位",
-      "target_weight": 0.0,
-      "max_weight": 0.005,
-      "notes": "除非重组明显增厚每股资源量或利润"
-    }
-  ],
-  "tracking_indicators": [
-    "上金所Au99.99/Au9999价格是否维持850元/克以上",
-    "SMM 1#锑锭、0#锑锭、三氧化二锑价格是否维持在10万元/吨附近或以上",
-    "SMM黑钨精矿>=65%价格是否维持40万元/标吨以上",
-    "自产黄金、自产锑品、自产钨精矿季度完成率",
-    "安化渣滓溪、新龙矿业复产后是否稳定生产，是否再发生安全环保事故",
-    "黄金天岳和中南冶炼重组报告书中的评估值、资源量、发行价格和摊薄比例",
-    "经营现金流与归母净利润匹配度",
-    "资本开支、在建工程、探矿增储投入和新增资源量"
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22.0,
-      "reason": "股价低于合理区间下沿，风险收益开始改善",
-      "action": "进入合理区间下沿，复核金价、锑价、自产量和复产稳定性，可考虑0.5%-1.5%观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 19.5,
-      "reason": "股价低于安全边际买入价",
-      "action": "进入安全边际买入区，若基本面未恶化，可分批提高至2%-3%"
-    },
-    {
-      "type": "price_below",
-      "price": 16.5,
-      "reason": "股价低于强吸引力买入价",
-      "action": "进入强吸引力区，若只是市场情绪杀估值而非基本面破坏，可提高至3%-5%"
-    },
-    {
-      "type": "price_above",
-      "price": 27.0,
-      "reason": "股价高于合理区间上沿附近，安全边际不足",
-      "action": "进入合理偏贵区，不新增仓位，等待重组和半年报验证"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "股价高于不应追高价",
-      "action": "不追高；若无重组增厚或盈利上修，考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报将验证2026年自产量、利润和现金流质量",
-      "condition": "2026年半年报披露窗口结束",
-      "action": "复核自产黄金、自产锑、自产钨进度和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报将决定全年利润和估值区间是否需要上修或下修",
-      "condition": "2026年三季报披露窗口结束",
-      "action": "复核全年利润区间、金锑钨价格和重组进展"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "股价低于合理区间下沿，风险收益开始改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.5
+      },
+      "reason": "股价低于安全边际买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "股价低于强吸引力买入价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "股价高于合理区间上沿附近，安全边际不足",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "股价高于不应追高价",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "review_plan": {
-    "next_review_date": "2026-08-31",
-    "focus": "半年报自产量、经营现金流、复产矿山稳定性、黄金天岳和中南冶炼重组报告书进展"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
   },
-  "key_risks": [
-    "黄金、锑、钨价格同时回落导致利润和估值双杀",
-    "安全生产事故再次发生并导致核心矿山长时间停产",
-    "重大资产重组估值过高或摊薄每股资源量和利润",
-    "2026年自产黄金、自产锑、自产钨完成率低于计划",
-    "外购非标金业务放大营运资金、套保、存货和价格波动风险",
-    "深部开采、安全环保和项目建设推高成本与资本开支"
-  ],
-  "logical_stop_loss": [
-    "人民币金价连续一个季度低于750元/克，且公司矿山利润率明显回到2024年以前水平",
-    "1#锑锭价格跌破8万元/吨并持续一个季度，且锑品毛利率显著下行",
-    "黑钨精矿价格跌破30万元/标吨，且钨资产产量或成本低于预期",
-    "复产后再次发生重大安全生产事故并导致核心矿山长时间停产",
-    "重组以明显高估值注入，导致每股资源量或每股利润被摊薄",
-    "经营现金流连续两个季度明显弱于净利润并由营运资金压力驱动"
-  ],
-  "sources": [
-    {
-      "name": "湖南黄金2025年年度报告全文",
-      "date": "2026-04-10",
-      "path": "sources/2025-annual-report.txt"
-    },
-    {
-      "name": "湖南黄金2026年第一季度报告",
-      "date": "2026-04-27",
-      "path": "sources/2026-q1-report.txt"
-    },
-    {
-      "name": "湖南黄金2025年度暨2026年第一季度业绩说明会投资者关系活动记录表",
-      "date": "2026-04-28",
-      "path": "sources/2026-ir-record.txt"
-    },
-    {
-      "name": "Google Finance 002155:SHE行情",
-      "date": "2026-07-08",
-      "url": "https://www.google.com/finance/quote/002155:SHE?hl=zh"
-    },
-    {
-      "name": "上海黄金交易所Au99.99行情",
-      "date": "2026-07-08",
-      "url": "https://www.sge.com.cn/"
-    },
-    {
-      "name": "上海有色网SMM锑价格",
-      "date": "2026-07-07",
-      "url": "https://hq.smm.cn/h5/antimony-price"
-    },
-    {
-      "name": "上海有色网SMM钨精矿价格",
-      "date": "2026-07-07",
-      "url": "https://hq.smm.cn/h5/tungsten-concentrate-price"
-    },
-    {
-      "name": "湖南黄金关于安化渣滓溪恢复生产的公告",
-      "date": "2026-05-19",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-05-20/b072258f-52ff-48f9-87e4-ea6ed7a1c86f.PDF"
-    },
-    {
-      "name": "湖南黄金关于新龙矿业本部恢复生产的公告",
-      "date": "2026-05-25",
-      "url": "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-05-26/f365c957-25d3-460d-9b6b-c59be66a2c1e.PDF"
-    }
-  ]
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:601298",
-  "market": "CN",
-  "ticker": "601298",
-  "name": "青岛港",
-  "company_name": "青岛港",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "high",
-  "valuation_rating": "fair",
-  "current_thesis": "青岛港是中国北方核心港口资产，集装箱和液体散货业务提供质量基础，山东港口整合带来协同潜力；当前估值合理但安全边际一般，等待6.8-7.5元区间或分红率/现金流上修后买入。",
-  "fair_value_range": [
-    8.0,
-    9.6
-  ],
-  "buy_zone": [
-    6.8,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    9.8,
-    10.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "青岛港",
+    "security_status": "active",
+    "symbol": "CN:601298",
+    "ticker": "601298"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "99d7884503ab99cea110aa8a7c9bdbc3e2eaac2f3223dcbee64c9a162f0402f8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入6.8-7.5元，且吞吐量、分红率和经营现金流未出现趋势性恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "核心港口资产质量较高，估值进入安全边际区间后股息率和PB提供支撑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的吞吐量、经营现金流、资本开支和分红预期",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入6.2-6.6元，且年度经营现金流可覆盖分红与主要资本开支",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.04,
-      "reason": "下行价格提供更高股息率，若现金流质量确认，可按高股息基础设施资产持有"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润增速与现金流质量是否匹配",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "集装箱吞吐量保持中个位数增长、分红率提升至50%左右且无不利关联交易",
-      "action": "提高长期持仓上限",
-      "max_weight": 0.06,
-      "reason": "成长与分红同时兑现时，估值可从普通港口股上修至核心红利资产"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入买入区间上沿，复核吞吐量、现金流和分红后可建立首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于9.8元或股息率低于3.6%，且盈利没有同步上修",
-      "action": "降低新增买入或减持",
-      "max_weight": 0.03,
-      "reason": "估值超过基准合理价值后，港口主业成长性不足以支撑高仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入更有吸引力的安全边际区间，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.8
+      },
+      "reason": "接近减持区间，若EPS和分红率无上修，应降低仓位或停止新增买入",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入买入区间上沿，复核吞吐量、现金流和分红后可建立首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入更有吸引力的安全边际区间，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 9.8,
-      "reason": "接近减持区间，若EPS和分红率无上修，应降低仓位或停止新增买入"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的吞吐量、经营现金流、资本开支和分红预期"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润增速与现金流质量是否匹配"
-    }
-  ],
-  "key_tracking_metrics": [
-    "货物吞吐量同比增速",
-    "集装箱吞吐量TEU及同比增速",
-    "液体散货吞吐量及同比增速",
-    "干散货吞吐量及同比增速",
-    "经营活动现金流量净额/归母净利润",
-    "资本开支/经营活动现金流量净额",
-    "年度分红率和股息率",
-    "山东港口体系内关联交易和资产注入公告",
-    "A股港口同业PE、PB、股息率相对位置"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

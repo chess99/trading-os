@@ -87,7 +87,6 @@ def _write_case_company(tmp_path: Path, case: dict[str, Any]) -> Path:
             "fair_value_range": case["prior_fair_value_range"],
             "buy_zone": [50.0, 60.0],
             "reduce_zone": [180.0, 190.0],
-            "position_plan": [],
             "conclusion": f"legacy-conclusion-{case['case_id']}",
         },
     }

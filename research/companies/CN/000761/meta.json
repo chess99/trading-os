@@ -1,73 +1,95 @@
 {
-  "symbol": "CN:000761",
-  "market": "CN",
-  "ticker": "000761",
-  "name": "本钢板材",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_price": 2.19,
-  "price_as_of": "2026-07-13",
-  "currency": "CNY",
-  "fair_value_range": [
-    1.2,
-    1.8
-  ],
-  "buy_zone": [
-    0.9,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.3,
-    2.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "本钢板材",
+    "security_status": "active",
+    "symbol": "CN:000761",
+    "ticker": "000761"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "d0803399a788a544dc33187a89a268f54d2d07dce07b5242e4f3e13885f64a17"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "保持观察，不建仓；等待2026半年报验证亏损收窄、转债兑付后流动性稳定、重组方案明确。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露窗口后复核亏损、现金、短债和转债兑付后的资产负债表。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入1.20元以下，且扣非亏损连续收窄、货币资金和短债结构未恶化，可重新评估小仓位试探。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报披露窗口后复核吨毛利和扣非亏损是否连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若重大资产置换落地且矿业资产显著改善原料自给率，同时主业毛利率转正，可上调至观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露窗口后重估周期盈利、重组影响和资产负债表修复程度。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入资产法安全边际区，需要复核是否可从观察转为买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.3
+      },
+      "reason": "若经营仍亏损，估值进入风险收益不匹配区，需要复核是否回避或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入资产法安全边际区，需要复核是否可从观察转为买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.3,
-      "reason": "若经营仍亏损，估值进入风险收益不匹配区，需要复核是否回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026半年报披露窗口后复核亏损、现金、短债和转债兑付后的资产负债表。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026三季报披露窗口后复核吨毛利和扣非亏损是否连续改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露窗口后重估周期盈利、重组影响和资产负债表修复程度。"
-    }
-  ],
-  "current_thesis": "本钢板材是千万吨级板材平台，具备集团信用、区域客户和重组期权，但2025年与2026Q1主业持续大额亏损、资产负债率约84%、转债到期兑付带来流动性压力。2026-07-13收盘价2.19元对应约1.31倍2026Q1 PB，未提供足够安全边际；只有在股价显著下行且亏损收窄、流动性稳定、矿业资产注入改善成本曲线被公告验证后，才考虑从观察转向买入。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

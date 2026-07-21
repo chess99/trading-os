@@ -1,102 +1,115 @@
 {
-  "symbol": "CN:300508",
-  "market": "CN",
-  "ticker": "300508",
-  "name": "维宏股份",
-  "company_name": "上海维宏电子科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是工业运动控制和数控系统细分供应商，研发强度高、细分工艺know-how和客户服务网络具备一定护城河；但2026Q1主业扣非利润接近盈亏平衡，交易性金融资产造成报表波动，2026-07-13股价43.91元对应约84倍TTM PE，已明显透支工业母机和具身智能预期。等待价格回到安全边际或中报确认利润恢复。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    27,
-    36
-  ],
-  "buy_zone": [
-    24,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "维宏股份",
+    "security_status": "active",
+    "symbol": "CN:300508",
+    "ticker": "300508"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "ba44307bfce58dafaf68139c0530ba3b798ea571d77c53168a51e67d1e17d6aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于28元，且最近一期扣非净利润未继续恶化，交易性金融资产未继续扩大",
-      "action": "建立2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
+      "reason": "公司计划披露2026年中报，复核收入增速、扣非净利率、应收账款、存货和交易性金融资产波动",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于24元，且2026H1或2026Q3收入恢复增长、扣非净利率回到8%以上",
-      "action": "提高至3%-5%核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断主业是否恢复增长以及机器人相关业务是否开始贡献收入",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于45元且未披露高端数控、激光控制或具身智能批量订单兑现",
-      "action": "不新增，已有仓位降至跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和股权激励考核兑现情况，重新评估合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入初步可买区，需复核中报扣非利润和订单",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "达到强安全边际区，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "超过合理价值上沿，若缺乏业绩兑现应考虑降仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "主题溢价过高，需具身智能或高端数控订单实质兑现支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "currency": "CNY",
-      "reason": "进入初步可买区，需复核中报扣非利润和订单"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "currency": "CNY",
-      "reason": "达到强安全边际区，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "currency": "CNY",
-      "reason": "超过合理价值上沿，若缺乏业绩兑现应考虑降仓"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "currency": "CNY",
-      "reason": "主题溢价过高，需具身智能或高端数控订单实质兑现支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-07-31",
-      "reason": "公司计划披露2026年中报，复核收入增速、扣非净利率、应收账款、存货和交易性金融资产波动"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断主业是否恢复增长以及机器人相关业务是否开始贡献收入"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和股权激励考核兑现情况，重新评估合理估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1/2026Q3营业收入同比增速",
-    "扣非净利润和扣非净利率",
-    "经营活动现金流净额与净利润匹配度",
-    "交易性金融资产规模及公允价值变动损益",
-    "应收账款和存货增速是否高于收入增速",
-    "伺服驱动、激光加工、高端五轴产品放量情况",
-    "汉姆电子或具身智能相关订单、收入、毛利率披露",
-    "研发投入占收入比例及费用率经营杠杆"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

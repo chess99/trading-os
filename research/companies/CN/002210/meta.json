@@ -1,96 +1,106 @@
 {
-  "symbol": "CN:002210",
-  "market": "CN",
-  "ticker": "002210",
-  "name": "飞马国际",
-  "company_name": "飞马国际",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "飞马国际已从历史债务重整后的生存风险中修复，但当前约57.75亿元市值主要反映低价股、控制权变更和壳价值预期，经营资产本身难以支撑约208倍TTM PE和约6.2倍PB；在控制权交易未签正式协议、应收账款和商誉占比偏高前，不建议买入。",
-  "quality_rating": "low_to_mid",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    0.75,
-    1.15
-  ],
-  "buy_zone": [
-    0.65,
-    0.9
-  ],
-  "sell_or_reduce_zone": [
-    1.6,
-    2.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "飞马国际",
+    "security_status": "active",
+    "symbol": "CN:002210",
+    "ticker": "002210"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "d037d2abfcad6737be6dc37480ccb4c52a9a48b987869cb194227a6ad8ed269f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约2.17元且控制权变更未签正式协议",
-      "action": "不买入，已有仓位减仓或退出",
-      "max_weight": 0,
-      "reason": "当前市值约57.75亿元，对应约208倍TTM PE和约6.2倍PB，经营资产难以支撑。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计半年报披露后复核利润持续性、经营现金流、应收账款和控制权进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入0.65-0.90元且下一期报告确认扣非利润、经营现金流和应收账款改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格回到经营资产与有限壳期权可接受区间后，允许小仓位跟踪。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年盈利中枢和资产质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "控制权变更正式落地且受让方资产、资金和项目扩张可核验",
-      "action": "上调至watch后再评估加仓",
-      "max_weight": 0.02,
-      "reason": "只有基本面或资产注入证据兑现后，壳价值才可能转化为可估值现金流。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.9
+      },
+      "reason": "进入买入观察区上沿，复核半年报现金流、应收账款和控制权进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.65
+      },
+      "reason": "跌破基准买入区下沿，检查是否为基本面恶化导致，避免机械补仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.6
+      },
+      "reason": "超过基准公允价值上沿较多，若无控制权或利润兑现，应减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.2
+      },
+      "reason": "接近当前高估区上沿，经营利润难以支撑，已有仓位应退出。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.9,
-      "reason": "进入买入观察区上沿，复核半年报现金流、应收账款和控制权进展。"
-    },
-    {
-      "type": "price_below",
-      "price": 0.65,
-      "reason": "跌破基准买入区下沿，检查是否为基本面恶化导致，避免机械补仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 1.6,
-      "reason": "超过基准公允价值上沿较多，若无控制权或利润兑现，应减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "接近当前高估区上沿，经营利润难以支撑，已有仓位应退出。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计半年报披露后复核利润持续性、经营现金流、应收账款和控制权进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年盈利中枢和资产质量。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入和扣非归母净利润",
-    "经营活动现金流净额及经营现金流/净利润",
-    "应收账款余额及应收账款/收入",
-    "商誉和无形资产减值迹象",
-    "控股股东质押比例",
-    "控制权变更正式协议进展",
-    "垃圾焚烧处理费和电费补贴回款",
-    "新增BOT或并购项目的处理量、处理费、电价和IRR"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,113 +1,115 @@
 {
-  "symbol": "CN:600580",
-  "market": "CN",
-  "ticker": "600580",
-  "name": "卧龙电驱",
-  "company_name": "卧龙电驱",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "status": "active",
-  "current_thesis": "卧龙电驱具备全球工业电机、防爆电机和驱动控制平台价值，新能源交通、机器人组件和低空经济构成成长型期权；但 2026-07-09 股价已较充分反映乐观预期，当前更适合观察，等待价格回落或订单利润验证。",
-  "current_rating": "watch",
-  "quality_rating": "A-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    24,
-    30
-  ],
-  "buy_zone": [
-    20,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    38
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "卧龙电驱",
+    "security_status": "active",
+    "symbol": "CN:600580",
+    "ticker": "600580"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "0b78fb6949c09fe0fd4e606a5b8ae87e4de7ce392011ba39403f3b38addd24b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 18 元且防爆电机、海外业务和扣非利润未出现结构性恶化",
-      "action": "分批买入",
-      "max_weight": 0.08,
-      "reason": "主业估值进入明显低估区，机器人和低空经济期权接近免费"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，重点验证扣非利润、海外收入和新兴业务订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在 18-22 元且 2026 年扣非利润恢复增长",
-      "action": "积极建仓",
-      "max_weight": 0.06,
-      "reason": "对应基准情景估值有安全边际，可承受周期波动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认全年利润趋势和现金流质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在 22-24 元且新能源交通和机器人组件收入继续放量",
-      "action": "试探买入",
-      "max_weight": 0.03,
-      "reason": "进入可接受买区，但需要基本面继续验证"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查 2026 年年报和 2027 年一季报，重估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价在 24-30 元",
-      "action": "持有或等待",
-      "max_weight": 0.02,
-      "reason": "接近合理价值，适合已有仓位，不适合新开重仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入初步买入观察区，需要复核半年报和订单数据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于 32 元且无明确订单或利润上修",
-      "action": "不追高或减仓",
-      "max_weight": 0.01,
-      "reason": "市场已提前资本化机器人、低空经济和海外修复预期"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入安全边际较明确区域，可结合基本面分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于不应追高阈值，需检查是否有真实订单和利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "超出乐观估值上沿，若基本面未同步上修应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入初步买入观察区，需要复核半年报和订单数据"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入安全边际较明确区域，可结合基本面分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "高于不应追高阈值，需检查是否有真实订单和利润上修支撑"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "超出乐观估值上沿，若基本面未同步上修应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，重点验证扣非利润、海外收入和新兴业务订单"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认全年利润趋势和现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查 2026 年年报和 2027 年一季报，重估合理价值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润同比增速",
-    "防爆电机及驱控收入增速和毛利率",
-    "境外收入增速和境外毛利率",
-    "新能源交通电机收入增速和毛利率",
-    "机器人组件收入规模、订单和客户验证",
-    "低空经济/eVTOL 相关订单和收入披露",
-    "经营现金流净额与净利润匹配度",
-    "应收账款和存货周转变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

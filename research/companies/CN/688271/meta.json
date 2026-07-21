@@ -1,113 +1,134 @@
 {
-  "symbol": "CN:688271",
-  "market": "CN",
-  "ticker": "688271",
-  "name": "联影医疗",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "联影医疗是国内高端医学影像和放疗设备龙头，2025 年收入、利润、现金流显著修复，海外和服务收入构成长期上行弹性。但 2026-07-09 价格 108.14 元已隐含海外持续高增长、净利率改善和服务化兑现，安全边际不足，宜观察等待 75-90 元买入区间或更强基本面验证。",
-  "fair_value_range": [
-    90,
-    115
-  ],
-  "buy_zone": [
-    75,
-    90
-  ],
-  "sell_or_reduce_zone": [
-    130,
-    150
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联影医疗",
+    "security_status": "active",
+    "symbol": "CN:688271",
+    "ticker": "688271"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "1b3ebc50ae4ab643ff3df3aeaf315d22fc26b93df2fb10a43a1ef7a227579dca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "90-120",
-      "action": "观察，不追高",
-      "condition": "当前价处于合理价值区间中上部，等待估值回落或盈利现金流上修",
-      "target_weight": 0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年中报披露后，重点复核海外收入、服务收入占比、扣非净利率和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "85-90",
-      "action": "建立观察仓",
-      "condition": "海外订单、服务占比、扣非净利率和经营现金流未恶化",
-      "target_weight": 0.02,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露后，复核境外收入增速、海外毛利率、国内设备更新招标和核心细分市占率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "75-85",
-      "action": "分批加仓",
-      "condition": "扣非利润仍增长，服务收入占比提升，应收账款没有失控",
-      "target_weight": 0.04,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年报披露后，复核应收账款/收入、经营现金流/净利润、服务收入占比和长期仓位计划。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "<75",
-      "action": "强吸引力区间加仓",
-      "condition": "价格下跌不是由政策、海外、现金流或产品竞争恶化导致，并完成核心假设重验",
-      "target_weight": 0.05,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "2027 年中报披露后，重估海外突破、服务化和 ROE/ROIC 是否达到买入假设。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "zone": ">130",
-      "action": "减仓",
-      "condition": "盈利和现金流未显著上修时，估值进入透支区间",
-      "target_weight": 0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 90.0
+      },
+      "reason": "进入可建观察仓区间，需复核核心假设。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "若基本面未恶化，可考虑 3%-4% 仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "强吸引力买入价，需同时验证现金流和海外收入质量。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
+      "reason": "高于合理区间上沿，不追高。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 130.0
+      },
+      "reason": "若盈利和现金流未上修，进入减仓观察区间。",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年中报披露后，重点复核海外收入、服务收入占比、扣非净利率和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露后，复核境外收入增速、海外毛利率、国内设备更新招标和核心细分市占率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年报披露后，复核应收账款/收入、经营现金流/净利润、服务收入占比和长期仓位计划。"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "reason": "2027 年中报披露后，重估海外突破、服务化和 ROE/ROIC 是否达到买入假设。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "price": 90,
-      "type": "price_below",
-      "reason": "进入可建观察仓区间，需复核核心假设。"
-    },
-    {
-      "price": 85,
-      "type": "price_below",
-      "reason": "若基本面未恶化，可考虑 3%-4% 仓位。"
-    },
-    {
-      "price": 75,
-      "type": "price_below",
-      "reason": "强吸引力买入价，需同时验证现金流和海外收入质量。"
-    },
-    {
-      "price": 120,
-      "type": "price_above",
-      "reason": "高于合理区间上沿，不追高。"
-    },
-    {
-      "price": 130,
-      "type": "price_above",
-      "reason": "若盈利和现金流未上修，进入减仓观察区间。"
-    }
-  ],
-  "updated_at": "2026-07-09"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

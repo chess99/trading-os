@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000685",
-  "market": "CN",
-  "ticker": "000685",
-  "name": "中山公用",
-  "company_name": "中山公用",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "地方公用事业现金流叠加广发证券股权价值，当前市值低于2026Q1归母净资产，具备净资产折价和分红支撑；但经营现金流、应收账款和合同资产仍需2026中报验证，因此维持观察评级，等待9.0-10.2元买入区间。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "moderately_cheap",
-  "fair_value_range": [
-    12.5,
-    15.5
-  ],
-  "buy_zone": [
-    9.0,
-    10.2
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    17.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中山公用",
+    "security_status": "active",
+    "symbol": "CN:000685",
+    "ticker": "000685"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b5f19f5e119ecf68c3bec68af84c578ce27f8de255575589aa7b618124025f30"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.2元且2026中报未显示经营现金流和政府回款继续恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "低于约0.78倍2026Q1每股归母净资产，资产折价开始提供足够安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点看经营现金流、应收账款、合同资产和水价政策传导",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.0元且分红、净资产和广发证券股权价值未发生实质恶化",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "进入深度净资产折价区，公用事业底层资产和金融股权的组合赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证广发证券权益法收益和公用事业主业现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.5元但现金分红率和经营现金流没有同步改善",
-      "action": "停止加仓并分批减仓",
-      "max_weight": 0.02,
-      "reason": "达到中性合理价值上沿，若缺少现金流和分红验证，继续上行主要依赖估值扩张"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.2
+      },
+      "reason": "进入首笔买入区间，需复核2026中报现金流和应收款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入深度净资产折价区，可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "达到中性合理价值上沿，需评估减仓或仅保留底仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.2,
-      "reason": "进入首笔买入区间，需复核2026中报现金流和应收款"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入深度净资产折价区，可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "达到中性合理价值上沿，需评估减仓或仅保留底仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点看经营现金流、应收账款、合同资产和水价政策传导"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证广发证券权益法收益和公用事业主业现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流量净额",
-    "应收账款",
-    "合同资产",
-    "供水售水量和水价执行",
-    "污水处理量",
-    "垃圾焚烧处理量和上网电量",
-    "广发证券净利润和分红",
-    "中山公用每股现金分红",
-    "短期借款和长期借款",
-    "政府付费和工程回款进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

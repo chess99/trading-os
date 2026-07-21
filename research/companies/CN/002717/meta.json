@@ -1,82 +1,96 @@
 {
-  "symbol": "CN:002717",
-  "market": "CN",
-  "ticker": "002717",
-  "name": "*ST岭南",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.1,
-    0.4
-  ],
-  "buy_zone": [
-    0.0,
-    0.2
-  ],
-  "sell_or_reduce_zone": [
-    0.6,
-    1.09
-  ],
-  "current_price": 1.09,
-  "current_price_date": "2026-07-17",
-  "current_thesis": "净资产为负、审计无法表示、主要账户冻结、债务和转债违约、行政处罚及退市风险叠加；当前只能视为高风险重整期权，普通买方资金应回避。",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST岭南",
+    "security_status": "active",
+    "symbol": "CN:002717",
+    "ticker": "002717"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "3aef794cd3fb070313077a4cd84320242b8414a7ffd46f33e3fed8caad5d03b2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "无正式重整方案、主要银行账户冻结未解除、审计无法表示事项未消除",
-      "action": "不建仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、账户冻结、债务逾期和新增订单情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "正式重整或债务重组方案获法院/交易所路径确认，且披露净资产转正与保壳收入方案",
-      "action": "仅作事件驱动观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报是否消除退市风险、无法表示意见和内控否定意见",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年报仍触及退市风险或审计意见未恢复",
-      "action": "卖出或继续回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.0
+      },
+      "reason": "进入面值退市风险重点监控区，连续20个交易日低于1元将触发交易类强制退市",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.2
+      },
+      "reason": "接近仅反映壳/重整期权的观察价，但仍需等待正式重整和审计风险消除路径",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 0.6
+      },
+      "reason": "高于困境期权估值上沿，应卖出或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.0,
-      "reason": "进入面值退市风险重点监控区，连续20个交易日低于1元将触发交易类强制退市"
-    },
-    {
-      "type": "price_below",
-      "price": 0.2,
-      "reason": "接近仅反映壳/重整期权的观察价，但仍需等待正式重整和审计风险消除路径"
-    },
-    {
-      "type": "price_above",
-      "price": 0.6,
-      "reason": "高于困境期权估值上沿，应卖出或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、账户冻结、债务逾期和新增订单情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报是否消除退市风险、无法表示意见和内控否定意见"
-    }
-  ],
-  "notes": [
-    "当前结论为avoid，普通买方资金不参与。",
-    "2026-07-17最新价1.09元来自东方财富行情接口；2026-07-19为周末非交易日。",
-    "未检索到截至2026-07-19的正式重整或预重整公告。",
-    "估值区间主要代表退市前壳/重整期权残值，不代表经营性内在价值。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

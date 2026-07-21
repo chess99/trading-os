@@ -1,107 +1,106 @@
 {
-  "symbol": "CN:000603",
-  "market": "CN",
-  "ticker": "000603",
-  "name": "盛达资源",
-  "company_name": "盛达资源",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "白银价格高位、金山技改释放与东晟/金山扩建/鸿林等项目增量共同驱动2026年利润弹性；当前估值处于合理价值下沿附近，但需用轻仓控制资源品周期和项目兑现风险。",
-  "quality_rating": 7,
-  "valuation_rating": 6.5,
-  "fair_value_range": [
-    27,
-    34
-  ],
-  "buy_zone": [
-    19,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盛达资源",
+    "security_status": "active",
+    "symbol": "CN:000603",
+    "ticker": "000603"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "6b09f5fc6f1074b61ca3739077d3ddccfd36a947a851857db617be73284dbd6d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于19-22元且白银价格维持在13000元/千克以上",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "当前估值处于合理价值下沿，但白银价格和资源股波动较大，先用小仓位验证半年报兑现。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年半年报披露后复核利润、现金流、分矿山产销量和项目进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报归母净利润接近或超过预告上沿且经营现金流同步改善",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "金山技改释放和银价弹性得到财务确认后，可提高仓位但仍控制周期风险。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核白银价格高位对全年利润的兑现程度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "东晟投产、金山扩建、鸿林正式生产均有明确进展且银价仍在13000元/千克以上",
-      "action": "评估加至上限仓位",
-      "max_weight": 0.06,
-      "reason": "产量增量与价格景气共振时，资源期权转化为现金流，可作为资源品组合中的白银核心仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入买入区间中部，若白银价格未明显走弱，可复核并加首笔仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "银价跌破11500元/千克或半年报低于预告下限",
-      "action": "降仓或退出",
-      "max_weight": 0.01,
-      "reason": "主逻辑依赖白银高景气和产量兑现，任一失效都会压缩利润和估值倍数。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "跌破逻辑止损观察线，需要确认是否由银价下跌、业绩落空或质押风险触发。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入减仓区间下沿，除非银价和产量继续超预期，否则风险收益比下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过基准估值上沿，应复核是否已经计入乐观银价和项目顺利投产假设。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入买入区间中部，若白银价格未明显走弱，可复核并加首笔仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "跌破逻辑止损观察线，需要确认是否由银价下跌、业绩落空或质押风险触发。"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "进入减仓区间下沿，除非银价和产量继续超预期，否则风险收益比下降。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过基准估值上沿，应复核是否已经计入乐观银价和项目顺利投产假设。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年半年报披露后复核利润、现金流、分矿山产销量和项目进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核白银价格高位对全年利润的兑现程度。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "上海黄金交易所上海银价格",
-    "SHFE白银主力价格和库存",
-    "矿产银产量和销量",
-    "含银铅精粉和含银锌精粉产销量",
-    "金山矿业技改后产能释放进度",
-    "东晟矿业25万吨/年项目建设进度",
-    "金山90万吨/年地下开采工程进度",
-    "鸿林菜园子铜金矿试生产和安全生产许可证进度",
-    "银都矿业外围矿权整合后的新增储量",
-    "经营活动现金流净额",
-    "资产负债率和短期有息负债",
-    "控股股东股份质押数量",
-    "安全环保处罚或停产事项"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

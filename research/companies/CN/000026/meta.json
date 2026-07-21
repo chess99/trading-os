@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000026",
-  "market": "CN",
-  "ticker": "000026",
-  "name": "飞亚达",
-  "company_name": "飞亚达",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "飞亚达具备自有腕表品牌、亨吉利名表零售渠道和航空精密科技三重资产，现金流和分红质量尚可，但2025年利润率低、名表零售受消费复苏和库存折扣影响明显；当前估值已提前反映修复预期，适合跟踪等待14元以下或中报验证后再建仓。",
-  "quality_rating": "medium",
-  "valuation_rating": "slightly_expensive",
-  "fair_value_range": [
-    15.0,
-    18.0
-  ],
-  "buy_zone": [
-    12.0,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    23.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "飞亚达",
+    "security_status": "active",
+    "symbol": "CN:000026",
+    "ticker": "000026"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "158f11c59ca411e5eda04587fc54d25908f4a90da04851926b9444362db8e170"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于14元且2026年中报显示收入、毛利率、库存周转和经营现金流没有恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已反映复苏预期，需要价格安全垫和基本面确认"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点核验收入、毛利率、存货和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于12.5元且经营现金流为正、存货周转改善、自有品牌收入恢复增长",
-      "action": "加仓至研究仓",
-      "max_weight": 0.03,
-      "reason": "安全边际提升且核心经营指标开始验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断一季度利润修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度验证消费复苏、亨吉利毛利率改善、精密科技增长，同时价格不高于18元",
-      "action": "提高至上限仓位",
-      "max_weight": 0.05,
-      "reason": "复苏从预期转为业绩兑现，可给品牌与现金流质量适度溢价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入初始买入区间，需要复核中报库存和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入较高安全边际区间，可评估加仓至3%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过当前基本面可支持区间，除非利润上修否则应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入初始买入区间，需要复核中报库存和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入较高安全边际区间，可评估加仓至3%"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "超过当前基本面可支持区间，除非利润上修否则应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点核验收入、毛利率、存货和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断一季度利润修复是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润率",
-    "经营活动现金流量净额",
-    "存货余额和存货周转天数",
-    "综合毛利率和亨吉利零售毛利率",
-    "自有品牌手表收入增速",
-    "亨吉利门店数量和单店效率",
-    "精密科技业务收入增速",
-    "现金分红率",
-    "管理层对折扣和库存的表述"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:002463",
-  "market": "CN",
-  "ticker": "002463",
-  "name": "沪电股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "沪电股份是A股高端数通PCB龙头，2025年受益于AI基础设施投资业绩创历史新高（营收189亿+42%，净利38.2亿+48%），2026Q1延续高增长（+54%/+63%）。公司在高速交换机PCB领域壁垒深厚、客户粘性强，但当前约2500亿市值对应TTM PE 58x，已充分反映增长预期。建议等待回调至80~110元合理区再评估。",
-  "fair_value_range": [80, 110],
-  "buy_zone": [75, 95],
-  "sell_or_reduce_zone": [115, 170],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "沪电股份",
+    "security_status": "active",
+    "symbol": "CN:002463",
+    "ticker": "002463"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "748dadefb81b87c182c55855f46ad0a688575126a2468ded773ce9ee5cc9efbc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_130",
-      "price_range": [130, 170],
-      "action": "avoid_or_reduce",
-      "target_weight": 0,
-      "max_weight": 0.01,
-      "notes": "显著高于合理区，不追高；已有仓位降至观察仓。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，验证AI数通需求持续性及毛利率趋势。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_115_and_130",
-      "price_range": [115, 130],
-      "action": "observe",
-      "target_weight": 0,
-      "max_weight": 0.01,
-      "notes": "合理至偏贵区域，可持有不买，等待回调。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断行业景气度拐点及资本开支效率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_95_and_115",
-      "price_range": [95, 115],
-      "action": "observe",
-      "target_weight": 0.01,
-      "max_weight": 0.02,
-      "notes": "合理偏低区域，可少量跟踪，需确认基本面趋势。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入安全边际买入区间，启动基本面复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_between_75_and_95",
-      "price_range": [75, 95],
-      "action": "accumulate",
-      "target_weight": 0.02,
-      "max_weight": 0.03,
-      "notes": "进入安全边际区，开始分批建仓；需确认AI资本开支未明显放缓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 75.0
+      },
+      "reason": "进入强吸引力区，若基本面未破坏可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "price_below_75",
-      "price_range": [60, 75],
-      "action": "buy",
-      "target_weight": 0.03,
-      "max_weight": 0.04,
-      "notes": "强吸引力区，若基本面未破坏可加大仓位。"
-    },
-    {
-      "condition": "price_below_60",
-      "price_range": [0, 60],
-      "action": "strong_buy",
-      "target_weight": 0.04,
-      "max_weight": 0.05,
-      "notes": "极端低估区间，可重仓配置。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 130.0
+      },
+      "reason": "高于合理价值上沿，避免追高或考虑降仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，验证AI数通需求持续性及毛利率趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断行业景气度拐点及资本开支效率。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入安全边际买入区间，启动基本面复核。"
-    },
-    {
-      "type": "price_below",
-      "price": 75,
-      "reason": "进入强吸引力区，若基本面未破坏可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 130,
-      "reason": "高于合理价值上沿，避免追高或考虑降仓。"
-    }
-  ],
-  "updated_at": "2026-07-08T15:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,183 +1,123 @@
 {
-  "symbol": "CN:000811",
-  "market": "CN",
-  "ticker": "000811",
-  "currency": "CNY",
-  "name": "冰轮环境",
-  "company_dir": "research/companies/CN/000811",
-  "latest_report": "reports/2026-07-07-initial.md",
-  "latest_report_date": "2026-07-07",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "research_type": "initial",
-  "analyst": "codex-subagent-000811",
-  "priority": "P2",
-  "status": "active",
-  "current_rating": "avoid",
-  "quality_rating": "B+",
-  "valuation_rating": "overvalued",
-  "confidence": "medium",
-  "current_price_cny": 52.65,
-  "current_price_date": "2026-07-07",
-  "market_cap_cny": 52254000000,
-  "fair_value_range": [
-    24,
-    34
-  ],
-  "fair_value_range_cny": [
-    24,
-    34
-  ],
-  "buy_below_cny": 25,
-  "buy_zone": [
-    20,
-    25
-  ],
-  "strong_buy_below_cny": 20,
-  "do_not_chase_above_cny": 38,
-  "sell_or_reduce_zone": [
-    38,
-    999
-  ],
-  "max_weight": 0.01,
-  "first_position_weight": 0,
-  "position_plan": [
-    {
-      "price_range": [
-        0,
-        20
-      ],
-      "condition": "价格低于20元且基本面未结构性恶化",
-      "action": "strong_buy",
-      "weight": 0.05,
-      "max_weight": 0.05
-    },
-    {
-      "price_range": [
-        20,
-        25
-      ],
-      "condition": "价格20-25元且订单、现金流和毛利率未恶化",
-      "action": "buy",
-      "weight": 0.03,
-      "max_weight": 0.03
-    },
-    {
-      "price_range": [
-        25,
-        34
-      ],
-      "condition": "价格25-34元，估值接近合理区间",
-      "action": "watch",
-      "weight": 0.02,
-      "max_weight": 0.02
-    },
-    {
-      "price_range": [
-        34,
-        38
-      ],
-      "condition": "价格34-38元，安全边际不足",
-      "action": "hold_watch",
-      "weight": 0.005,
-      "max_weight": 0.005
-    },
-    {
-      "price_range": [
-        38,
-        999
-      ],
-      "condition": "价格高于38元且无新增业绩证据",
-      "action": "avoid_or_reduce",
-      "weight": 0,
-      "max_weight": 0
-    }
-  ],
-  "tags": [
-    "industrial_refrigeration",
-    "hvac",
-    "data_center_cooling",
-    "heat_pump",
-    "state_owned"
-  ],
-  "thesis": "公司是具备工业制冷、暖通空调、工业热泵和数据中心冷源/换热能力的细分装备平台，但当前约520亿元以上市值已显著透支液冷和AI温控期权，现价不具备安全边际。",
-  "current_thesis": "公司是具备工业制冷、暖通空调、工业热泵和数据中心冷源/换热能力的细分装备平台，但当前约520亿元以上市值已显著透支液冷和AI温控期权，现价不具备安全边际。",
-  "key_risks": [
-    "估值显著高于已披露利润支撑",
-    "数据中心液冷收入和利润缺乏单独披露",
-    "工程施工业务回款和现金流波动",
-    "热管理赛道竞争加剧",
-    "国资控股下资本配置效率需持续观察"
-  ],
-  "next_watch_items": [
-    "数据中心/液冷/冷源装备订单、收入占比和毛利率",
-    "海外收入增速和海外毛利率",
-    "经营现金流与归母净利润匹配度",
-    "工业产品销售毛利率",
-    "应收账款、存货、合同资产变化"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后复盘数据中心/液冷/冷源装备订单或收入占比",
-      "reason": "验证数据中心业务是否从主题进入财务兑现"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后复盘海外收入增速或毛利率变化",
-      "reason": "海外业务是公司质量和利润弹性的关键来源"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露后复盘全年经营现金流是否明显低于归母净利润",
-      "reason": "现金流恶化会削弱制造业估值支撑"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露后复盘工业产品销售毛利率是否跌破24%",
-      "reason": "毛利率下行说明竞争或业务结构恶化"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "年末复盘价格是否跌入25元以下或突破60元且基本面未同步变化",
-      "reason": "价格进入买入区或明显泡沫区时需要重新定价"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "action": "review_for_buy",
-      "reason": "进入安全边际买入价"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "action": "review_for_strong_buy",
-      "reason": "进入强吸引力买入价"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "action": "avoid_or_reduce",
-      "reason": "高于不应追高价且缺乏安全边际"
-    }
-  ],
-  "source_snapshot": {
-    "as_of": "2026-07-06",
-    "price": 53.63,
-    "market_cap_cny": 53226594335.55,
-    "pe_ttm": 94.088,
-    "pb": 8.148,
-    "turnover_cny": 3022338615.0,
-    "turnover_rate_pct": 5.5786,
-    "source": "Sina Market_Center.getHQNodeData hs_a"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "冰轮环境",
+    "security_status": "active",
+    "symbol": "CN:000811",
+    "ticker": "000811"
   },
-  "updated_at": "2026-07-07"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "0c6578b06a977143e4027302f24e7952cd6e9b183ac6f12ec00780e15dc09eb9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证数据中心业务是否从主题进入财务兑现",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "海外业务是公司质量和利润弹性的关键来源",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "现金流恶化会削弱制造业估值支撑",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "毛利率下行说明竞争或业务结构恶化",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "价格进入买入区或明显泡沫区时需要重新定价",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入安全边际买入价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入强吸引力买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "高于不应追高价且缺乏安全边际",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

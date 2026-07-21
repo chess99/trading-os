@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:000881",
-  "ticker": "000881",
-  "name": "中广核技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中广核技是中广核体系内核技术应用平台，电子加速器、辐照加工、同位素和核医疗设备具备政策与集团资源期权，但当前收入主体仍是低毛利改性材料，2025 年与 2026Q1 仍亏损；当前价格接近合理价值中部，需等待利润拐点或更低价格。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    7.0
-  ],
-  "buy_zone": [
-    4.2,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中广核技",
+    "security_status": "active",
+    "symbol": "CN:000881",
+    "ticker": "000881"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5275983284879ca813feddf6d17b1e8757f7461dd240de625a94af36fb3a672f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 5.2 元，且无新的重大减值、退市或融资失败风险",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看亏损收窄、核技术应用收入和定增进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 半年报或三季报显示扣非亏损明显收窄，电子加速器及辐照加工收入同比增长超过 20%",
-      "action": "可提高至小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年是否具备扭亏基础",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 8.2 元但归母净利润仍未转正",
-      "action": "不追高并降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估平台价值和资产负债表修复",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入估算合理价值下沿，资产折价提供初步安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入悲观情景估值区间，可重新评估是否扩大仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超过基准合理价值上沿，若盈利拐点未兑现应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入估算合理价值下沿，资产折价提供初步安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入悲观情景估值区间，可重新评估是否扩大仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超过基准合理价值上沿，若盈利拐点未兑现应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看亏损收窄、核技术应用收入和定增进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年是否具备扭亏基础"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估平台价值和资产负债表修复"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

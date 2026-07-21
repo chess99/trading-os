@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000912",
-  "market": "CN",
-  "ticker": "000912",
-  "name": "泸天化",
-  "company_name": "泸天化",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "低负债老牌化肥化工资产，尿素和甲醇周期修复具备利润弹性，但2025年扣非亏损、2026Q1归母转亏，需等待产品价差和季度扣非利润验证后再提高仓位。",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    3.2,
-    4.2
-  ],
-  "buy_zone": [
-    2.7,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    4.4,
-    5.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "泸天化",
+    "security_status": "active",
+    "symbol": "CN:000912",
+    "ticker": "000912"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "4e5712e2ca7c29311e4f32a374b6ffe0546f57c043819e257f3523dd8ffa8d46"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入2.70-3.30元，且尿素或甲醇价格企稳，2026年季度扣非亏损未扩大",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "周期底部资产具备修复弹性，但扣非盈利尚未验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告、扣非利润、现金流和装置开工",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.00元，经营现金流保持正值，单季扣非归母净利润转正",
-      "action": "小幅加仓",
-      "max_weight": 0.04,
-      "reason": "价格安全边际和主业改善同时出现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告和秋季肥需求",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.40元但行业价差未改善，或连续两个季度扣非亏损扩大",
-      "action": "减仓或退出",
-      "max_weight": 0,
-      "reason": "估值脱离主业验证，周期股赔率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入初始买入观察区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.7
+      },
+      "reason": "进入深度价值复核区间，需要重新核验现金流和资产质量",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.4
+      },
+      "reason": "进入减仓复核区间，需确认利润修复是否已被报表验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入初始买入观察区间"
-    },
-    {
-      "type": "price_below",
-      "price": 2.7,
-      "reason": "进入深度价值复核区间，需要重新核验现金流和资产质量"
-    },
-    {
-      "type": "price_above",
-      "price": 4.4,
-      "reason": "进入减仓复核区间，需确认利润修复是否已被报表验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告、扣非利润、现金流和装置开工"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告和秋季肥需求"
-    }
-  ],
-  "key_tracking_metrics": [
-    "尿素现货价格和气头/煤头价差",
-    "甲醇现货价格、港口库存和MTO开工率",
-    "天然气、煤炭、电力成本",
-    "季度扣非归母净利润",
-    "经营活动现金流净额",
-    "资产负债率",
-    "合成氨、尿素、甲醇、复合肥装置开工率",
-    "存货和在建工程变化",
-    "安全环保事故和非计划停车公告",
-    "地方国资和重整遗留事项公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

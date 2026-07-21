@@ -1,69 +1,95 @@
 {
-  "symbol": "CN:300267",
-  "ticker": "300267",
-  "name": "尔康制药",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "药用辅料资产具备一定质量，但公司2025年仍亏损、2026Q1盈利基数小，海外锂矿项目兑现周期长且不确定性高；当前价格接近乐观情景下沿，安全边际不足。",
-  "fair_value_range": [
-    2.2,
-    2.8
-  ],
-  "buy_zone": [
-    1.8,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    3.4,
-    4.2
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "尔康制药",
+    "security_status": "active",
+    "symbol": "CN:300267",
+    "ticker": "300267"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "9c309fa8b65115ca38c66d7a360377825a3b1c0792b0b222e41ca3536f9712b9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于2.20元且连续两个季度扣非盈利、经营现金流不恶化、海外矿产项目没有明显超预算或延期",
-      "action": "consider_small_tracking_position",
-      "max_weight": 1.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、药辅毛利率和矿产项目资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格高于3.40元或主业未证明年化1亿元以上稳定利润",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认盈利修复是否具有连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及海外矿产项目建设进度，重新估算合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入基准合理价值区间下沿以下，可重新评估安全边际和小仓位观察价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.8
+      },
+      "reason": "价格进入乐观情景估值区间，而主业盈利和锂矿兑现证据可能不足",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入基准合理价值区间下沿以下，可重新评估安全边际和小仓位观察价值"
-    },
-    {
-      "type": "price_above",
-      "price": 3.8,
-      "reason": "价格进入乐观情景估值区间，而主业盈利和锂矿兑现证据可能不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、药辅毛利率和矿产项目资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认盈利修复是否具有连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及海外矿产项目建设进度，重新估算合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

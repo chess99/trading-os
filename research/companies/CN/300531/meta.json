@@ -1,95 +1,95 @@
 {
-  "symbol": "CN:300531",
-  "market": "CN",
-  "ticker": "300531",
-  "name": "优博讯",
-  "company_name": "深圳市优博讯科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处于利润恢复和海外增长验证期，2026H1 预告显示收入与净利润高增，但经营现金流仍弱，当前价格缺少足够安全边际，等待现金流改善或股价进入 12 元以下买入区。",
-  "quality_rating": "中",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    14.0,
-    17.0
-  ],
-  "buy_zone": [
-    0,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "优博讯",
+    "security_status": "active",
+    "symbol": "CN:300531",
+    "ticker": "300531"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "11ad3076a15e6df013141725d6d6eeea4dd7493a96d210972fce34ad4e7f3221"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于 12 元，且最近一期经营现金流较 2026Q1 明显改善",
-      "action": "建立观察仓",
-      "target_position": "0.5% NAV",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报中的经营现金流、海外收入占比、毛利率和存货变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于或等于 12 元，海外收入继续同比高增且毛利率不低于 25%",
-      "action": "加至标准小仓",
-      "target_position": "1.0% NAV",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认利润高增是否转化为现金流和订单持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于或等于 13 元，经营现金流累计转正，且 2026 年净利润预期不低于 1.8 亿元",
-      "action": "提高至积极小仓",
-      "target_position": "1.5%-2.0% NAV",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估海外增长、上海芝柯并表效果、分红和资本配置质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入 25%-30% 安全边际区间，适合重新评估买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "超过当前合理价值上沿，若基本面未同步上修则风险收益恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "unit": "CNY/share",
-      "action": "复核现金流与海外收入后考虑买入",
-      "reason": "进入 25%-30% 安全边际区间，适合重新评估买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "unit": "CNY/share",
-      "action": "若无盈利和现金流上修，减仓或卖出",
-      "reason": "超过当前合理价值上沿，若基本面未同步上修则风险收益恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报中的经营现金流、海外收入占比、毛利率和存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认利润高增是否转化为现金流和订单持续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估海外增长、上海芝柯并表效果、分红和资本配置质量。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流净额",
-    "海外收入增速与海外收入占比",
-    "毛利率",
-    "存货和预付款项变化",
-    "应收账款周转",
-    "扣非归母净利润",
-    "上海芝柯并表后的收入利润贡献",
-    "AIDC+AI、OpenHarmony、信创适配相关订单披露"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

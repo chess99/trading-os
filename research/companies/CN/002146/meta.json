@@ -1,64 +1,86 @@
 {
-  "symbol": "CN:002146",
-  "ticker": "002146",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "荣盛发展",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "荣盛发展处于民营房企困境反转阶段，估值低不能抵消持续亏损、现金流为负、债务化解未完成和持续经营重大不确定性；当前价格缺少安全边际，需等待债务重组和经营现金流改善的连续证据。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.55,
-    0.95
-  ],
-  "buy_zone": [
-    0.35,
-    0.55
-  ],
-  "sell_or_reduce_zone": [
-    1.2,
-    1.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "荣盛发展",
+    "security_status": "active",
+    "symbol": "CN:002146",
+    "ticker": "002146"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "74207bbd84a12301661cb439cbd972b4b341e745d6f7292e744c4be70ac104db"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在价格低于0.55元且公司披露债务重组实质性落地、经营现金流连续改善后，才允许建立观察性仓位。",
-      "action": "watch_only",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查经营现金流、归母净资产、减值和债务化解进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若持续经营重大不确定性仍未解除或经营现金流继续为负，不建立正式仓位。",
-      "action": "avoid",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.55,
-      "reason": "价格进入估值下沿并可能提供重新核验债务和现金流改善的观察价值。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认销售回款和流动性风险是否边际改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 1.2,
-      "reason": "价格高于基础情景估值上沿但基本面未确认修复时，应降低或回避风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查经营现金流、归母净资产、减值和债务化解进展。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.55
+      },
+      "reason": "价格进入估值下沿并可能提供重新核验债务和现金流改善的观察价值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认销售回款和流动性风险是否边际改善。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.2
+      },
+      "reason": "价格高于基础情景估值上沿但基本面未确认修复时，应降低或回避风险暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

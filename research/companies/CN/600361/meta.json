@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:600361",
-  "ticker": "600361",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "创新新材",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "国内领先铝合金加工平台，3C/汽车轻量化/再生铝具备客户与规模壁垒；2026Q1 高端产品占比提升带来利润修复，但经营现金流和短债压力尚未充分消除，适合观察仓而非重仓买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.8,
-    4.6
-  ],
-  "buy_zone": [
-    3.2,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    6.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "创新新材",
+    "security_status": "active",
+    "symbol": "CN:600361",
+    "ticker": "600361"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "85dc1c46151f691f622a5d8f1bede227a0fba3b6ad9d6509dced4fe642432d44"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格处于3.2-3.5元且2026H1扣非利润延续增长、经营现金流明显改善",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "复核2026年中报，重点看扣非利润、经营现金流、应收账款、存货和短期借款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.2元且基本面未恶化、短债未继续扩张",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认高端产品占比提升是否持续转化为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "经营现金流连续两个报告期为负且短期借款继续上升",
-      "action": "停止加仓并降至跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入绝对估值下沿和账面价值附近，若基本面未恶化可复核买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "接近基准估值上沿，若盈利未上修需考虑减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入绝对估值下沿和账面价值附近，若基本面未恶化可复核买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "接近基准估值上沿，若盈利未上修需考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "复核2026年中报，重点看扣非利润、经营现金流、应收账款、存货和短期借款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认高端产品占比提升是否持续转化为利润和现金流。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,48 +1,86 @@
 {
-  "symbol": "CN:920689",
-  "market": "CN",
-  "ticker": "920689",
-  "name": "克莱特",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "高端定制风机资质和客户黏性较强，但自由现金流弱且可转债扩产风险未获当前估值充分补偿，等待价格与项目验证提供安全边际。",
-  "fair_value_range": [13.0, 17.0],
-  "buy_zone": [10.5, 12.5],
-  "sell_or_reduce_zone": [19.0, 22.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "克莱特",
+    "security_status": "active",
+    "symbol": "CN:920689",
+    "ticker": "920689"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "550415584aa76d8b684d9b3812285a02f84f21ed2667273f2cc9ca9540e8be43"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.5-12.5元且中报验证应收、存货、现金流未恶化，可分批建仓；只有核心假设复核通过才可加仓",
-      "max_weight": 0.03
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报的扣非增长、现金回款、应收存货和可转债募投进展"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报的扣非增长、现金回款、应收存货和可转债募投进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-06-30",
-      "reason": "复查高速离心鼓风机和智能变频风机认证、投产及收入贡献"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入有初步安全边际的买入区间，仍需复核基本面后分批建仓"
+      "active": true,
+      "condition": {
+        "date": "2027-06-30"
+      },
+      "reason": "复查高速离心鼓风机和智能变频风机认证、投产及收入贡献",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "进入减仓或不应追高区间，除非盈利和现金流已显著上修"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入有初步安全边际的买入区间，仍需复核基本面后分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利和现金流已显著上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15T19:56:20+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

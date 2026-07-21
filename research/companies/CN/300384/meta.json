@@ -1,120 +1,115 @@
 {
-  "symbol": "CN:300384",
-  "market": "CN",
-  "ticker": "300384",
-  "name": "三联虹普",
-  "company_name": "北京三联虹普新合纤技术服务股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备尼龙6/66聚合纺丝、SSP与食品级rPET工艺技术壁垒，现金和理财资产厚、负债率低；但2025年和2026Q1收入利润下滑、经营现金流转负、合同负债下降，当前11.47元附近处于合理区间内但安全边际不足，等待9.5元以下或订单/现金流明确恢复。",
-  "quality_rating": "中上",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    8.5,
-    9.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三联虹普",
+    "security_status": "active",
+    "symbol": "CN:300384",
+    "ticker": "300384"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9b6b4914326df42ee56d15366ac98bb3315fa86fa47a3ee986d731395b0ae12c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "11.5元附近且合同负债、现金流尚未企稳",
-      "action": "仅观察或保留跟踪仓",
-      "max_weight": 0.01,
-      "target_position_pct": "0%-1%"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：收入利润、经营现金流、合同负债、Polymetrix盈利和工业AI业务毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌破9.5元，且半年报未显示经营现金流和订单继续恶化",
-      "action": "试买",
-      "max_weight": 0.02,
-      "target_position_pct": "1%-2%"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：判断2026Q1下滑是否延续，以及全年利润是否低于1.6亿元压力线",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌破8.5元，且合同负债或新签订单企稳、综合毛利率维持45%以上",
-      "action": "加仓",
-      "max_weight": 0.05,
-      "target_position_pct": "3%-5%"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：验证经营现金流能否转正、合同负债是否企稳、商誉是否存在减值风险",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于13.5元但收入、利润、合同负债尚未恢复增长",
-      "action": "停止买入",
-      "max_weight": 0.05,
-      "target_position_pct": "不加仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "价格低于合理价值中枢约20%，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于15.0元或动态PE高于25倍，且订单未明显恢复",
-      "action": "减仓或卖出",
-      "max_weight": 0.02,
-      "target_position_pct": "0%-2%"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "接近压力情景估值，可覆盖订单继续低迷风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "价格进入合理价值区间上沿，缺少继续加仓安全边际",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "估值已透支技术和现金资产溢价，需要基本面恢复支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
-      "action": "进入试买区，复核半年报现金流、合同负债和毛利率",
-      "reason": "价格低于合理价值中枢约20%，开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "action": "进入高安全边际区，若订单未继续恶化可考虑加仓",
-      "reason": "接近压力情景估值，可覆盖订单继续低迷风险"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "currency": "CNY",
-      "action": "高于合理区间中枢，停止新增买入",
-      "reason": "价格进入合理价值区间上沿，缺少继续加仓安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "currency": "CNY",
-      "action": "若基本面未恢复，触发减仓复核",
-      "reason": "估值已透支技术和现金资产溢价，需要基本面恢复支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：收入利润、经营现金流、合同负债、Polymetrix盈利和工业AI业务毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：判断2026Q1下滑是否延续，以及全年利润是否低于1.6亿元压力线"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：验证经营现金流能否转正、合同负债是否企稳、商誉是否存在减值风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "合同负债余额及新签订单趋势",
-    "经营活动现金流净额及经营现金流/净利润",
-    "新材料及合成材料工艺解决方案收入和毛利率",
-    "再生材料及可降解材料工艺解决方案收入和海外项目进展",
-    "工业AI集成应用收入规模和毛利率",
-    "境外收入占比与Polymetrix净利润",
-    "商誉减值迹象、受限资金和资产负债率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

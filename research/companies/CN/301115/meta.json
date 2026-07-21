@@ -1,90 +1,95 @@
 {
-  "symbol": "CN:301115",
-  "ticker": "301115",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "联检科技",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "联检科技具备检测认证资质、区域工程检测底盘和汽车/新能源/工业检测转型方向，但2025年扣非亏损、2026Q1亏损扩大、并购资产业绩承诺未完全达标，当前价格已接近乐观情景，需等待扣非利润和现金流修复验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    19,
-    25
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    38,
-    45
-  ],
-  "position_plan": [
-    {
-      "condition": "仅当股价低于18元且2026H1扣非亏损明显收窄、经营现金流未恶化时，允许研究性试探仓。",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "若股价处于18-25元且2026全年扣非转正、汽车和工业检测继续双位数增长，可提高到小仓位。",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "若股价高于25元但扣非利润和ROE尚未修复，不新增仓位。",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入保守买入区间，可结合最新财报复核是否具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "价格接近乐观情景上沿，若无1亿元级正常化利润证据，应降低预期或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核扣非利润、现金流、费用率和新业务增长质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核全年激励目标达成概率和费用扩张压力。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露后重新评估正常化利润、并购整合质量和估值区间。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 30.6,
-    "reference_price_date": "2026-07-15",
-    "market_cap_estimate_billion_cny": 5.62,
-    "2025_revenue_billion_cny": 1.4121,
-    "2025_net_profit_million_cny": 21.53,
-    "2025_deducted_net_profit_million_cny": -20.78,
-    "2026_q1_revenue_million_cny": 243.81,
-    "2026_q1_net_profit_million_cny": -32.15
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联检科技",
+    "security_status": "active",
+    "symbol": "CN:301115",
+    "ticker": "301115"
   },
-  "risks": [
-    "扣非利润持续为负",
-    "工程服务和建筑相关需求继续承压",
-    "并购整合和商誉减值风险",
-    "销售费用、管理费用、财务费用扩张吞噬增长",
-    "股权激励潜在摊薄",
-    "股东减持压制短期估值",
-    "检测认证公信力和合规风险"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "27bb77eb762b5276c9b669defde7b298471072d775fb1d4eabc8f15fd3255dcf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核扣非利润、现金流、费用率和新业务增长质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核全年激励目标达成概率和费用扩张压力。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后重新评估正常化利润、并购整合质量和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入保守买入区间，可结合最新财报复核是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "价格接近乐观情景上沿，若无1亿元级正常化利润证据，应降低预期或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

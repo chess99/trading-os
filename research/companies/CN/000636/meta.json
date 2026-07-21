@@ -1,98 +1,133 @@
 {
-  "symbol": "CN:000636",
-  "market": "CN",
-  "ticker": "000636",
-  "name": "风华高科",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "国内被动元件龙头之一，阻容感平台和高端化方向具备长期价值，但截至2026-07-07股价已明显透支AI、车规和涨价预期；公司公告确认新兴市场收入占比不超过15%，且未获英伟达认证。等待毛利率、现金流和高端项目兑现，现价不追。",
-  "fair_value_range": [
-    30,
-    42
-  ],
-  "buy_zone": [
-    24,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "风华高科",
+    "security_status": "active",
+    "symbol": "CN:000636",
+    "ticker": "000636"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "03deb61223e69bb53826edfcbebf90ad8caf71cd7699f245070a813ccf94c9e0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "30-42元且2026H1/H2毛利率和扣非利润改善得到验证",
-      "max_weight": 0.015,
-      "action": "观察或保留小仓位，需2026H1/H2毛利率和扣非利润改善验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "发布2026年半年度报告",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "24-30元且基本面未恶化",
-      "max_weight": 0.02,
-      "action": "基本面未恶化时分批买入"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "高端电阻技改扩产项目或新增月产1亿只大电流叠层电感器技改扩产项目完成竣工验收",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "18-24元且行业复苏未破坏",
-      "max_weight": 0.03,
-      "action": "行业复苏未破坏时提高仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "公司披露新兴市场收入占比超过20%或高端MLCC收入占比明显提升",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "45-55元且利润未兑现",
-      "max_weight": 0.01,
-      "action": "不新增，利润未兑现则降仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "连续两个季度经营现金流显著弱于净利润",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "公司再次发布股票交易异常波动或严重异常波动风险提示",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入合理价值区间上沿，复核业绩兑现和仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入安全边际买入区间，复核毛利率与现金流",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入强吸引力买入区间，确认基本面未恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "估值重新进入题材高温区，若利润未兑现则减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "发布2026年半年度报告"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "高端电阻技改扩产项目或新增月产1亿只大电流叠层电感器技改扩产项目完成竣工验收"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "公司披露新兴市场收入占比超过20%或高端MLCC收入占比明显提升"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "连续两个季度经营现金流显著弱于净利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "公司再次发布股票交易异常波动或严重异常波动风险提示"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入合理价值区间上沿，复核业绩兑现和仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入安全边际买入区间，复核毛利率与现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入强吸引力买入区间，确认基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "估值重新进入题材高温区，若利润未兑现则减仓"
-    }
-  ],
-  "updated_at": "2026-07-07"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

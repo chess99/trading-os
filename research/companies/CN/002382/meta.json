@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:002382",
-  "ticker": "002382",
-  "name": "蓝帆医疗",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处于健康防护周期修复与心脑血管业务恢复的交叉点，2026H1预告显示盈利明显改善，但总部费用、股权质押、手套周期和并购资产质量仍需半年报与后续季度验证。当前价格接近买入区间上沿，适合观察等待更厚安全边际。",
-  "fair_value_range": [
-    6.0,
-    7.5
-  ],
-  "buy_zone": [
-    4.8,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝帆医疗",
+    "security_status": "active",
+    "symbol": "CN:002382",
+    "ticker": "002382"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e519fe7c446a988b0fa4359e19fd879e8e49d7260892fabb93bbdde92776c718"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入4.80-5.20元且2026半年报确认归母净利润不低于0.90亿元、扣非归母净利润不低于1.70亿元",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，验证业绩预告、分部利润、总部费用和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年归母净利润上修至3.5亿元以上且总部费用下降趋势明确",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断健康防护景气与心脑血管恢复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于8.50元且全年利润未上修至4.5亿元以上",
-      "action": "减仓或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，更新全年盈利中枢、资产减值和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入买入区间上沿，若半年报兑现则具备约20%以上安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度安全边际区间，可重新评估仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过减仓区间下沿，若盈利未同步上修则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入买入区间上沿，若半年报兑现则具备约20%以上安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度安全边际区间，可重新评估仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过减仓区间下沿，若盈利未同步上修则风险收益转弱"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，验证业绩预告、分部利润、总部费用和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断健康防护景气与心脑血管恢复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，更新全年盈利中枢、资产减值和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,78 +1,86 @@
 {
-  "symbol": "CN:600859",
-  "ticker": "600859",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "王府井",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "王府井具备北京国资背景、全国性商业门店网络和免税牌照期权，当前 PB 较低且现金流仍有韧性；但百货主业承压、2025 年亏损、2026Q1 利润同比大幅下滑，免税业务盈利路径仍需验证，因此先观察经营拐点和更深安全边际。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    10.5,
-    13.0
-  ],
-  "buy_zone": [
-    7.8,
-    8.8
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "王府井",
+    "security_status": "active",
+    "symbol": "CN:600859",
+    "ticker": "600859"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "08996f5b979f092e30a0eb5d3d4e631089965fd655555b917736a1418844c321"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 8.8 元，且最近一季经营现金流为正、归母净利润未继续恶化时，可建立观察仓。",
-      "action": "start_tracking_position",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点检查分业态收入、免税亏损、经营现金流和资产减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入降幅收窄、归母净利润同比改善，且股价低于 11 元时，可复核是否加仓。",
-      "action": "review_add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认收入和利润是否连续改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 14.5 元但利润修复证据不足，或免税业务亏损扩大时，降低或退出仓位。",
-      "action": "reduce_or_exit",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "进入安全边际买入区间，需复核经营现金流和利润趋势。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "进入安全边际买入区间，需复核经营现金流和利润趋势。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 14.5,
-      "reason": "接近乐观情景估值，若基本面未同步改善应考虑减持。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "接近乐观情景估值，若基本面未同步改善应考虑减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点检查分业态收入、免税亏损、经营现金流和资产减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认收入和利润是否连续改善。"
-    }
-  ],
-  "research_notes": {
-    "decision": "观察",
-    "confidence": "中",
-    "last_price_reference": {
-      "price": 10.0,
-      "date": "2026-07-16",
-      "source": "Investing.com historical data, confidence medium"
-    }
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

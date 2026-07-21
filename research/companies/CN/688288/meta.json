@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:688288",
-  "market": "CN",
-  "ticker": "688288",
-  "name": "鸿泉技术",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "鸿泉技术受益于商用车复苏、国三/国四老旧营运货车更新、智能座舱和两轮车智能化扩张，2025年收入恢复并扭亏；但2026Q1增收不增利、经营现金流为负、存货与应收高企，且存在实控人资金往来披露和内控监管警示，当前价格接近合理价值区间但安全边际不足，宜观察等待现金流、毛利率和治理整改验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.0,
-    20.0
-  ],
-  "buy_zone": [
-    10.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    30.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鸿泉技术",
+    "security_status": "active",
+    "symbol": "CN:688288",
+    "ticker": "688288"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f8be8780046690144fd570d7a71fd46634eec6a5ef3c673b9b74b3d3665c631d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入10-13元买入区，且最近一个季度毛利率不低于25%、经营现金流未继续显著恶化时，允许建立跟踪仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、存货、经营现金流和治理整改披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度经营现金流转正、存货较2026Q1下降且营收同比增速高于15%，可将仓位提高到观察型核心仓。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年扭亏质量和订单恢复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若新增监管处罚、实控人资金往来复发、或2026年累计归母净利润再次亏损，清仓或不建仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告，重新估算正常化利润和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入安全边际买入区，需复核最新毛利率、现金流和监管整改。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "进入乐观情景估值区，若未见净利率与现金流实质改善应减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入安全边际买入区，需复核最新毛利率、现金流和监管整改。"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "进入乐观情景估值区，若未见净利率与现金流实质改善应减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、存货、经营现金流和治理整改披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年扭亏质量和订单恢复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告，重新估算正常化利润和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

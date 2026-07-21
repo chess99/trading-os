@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000504",
-  "market": "CN",
-  "ticker": "000504",
-  "name": "南华生物",
-  "company_name": "南华生物",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "南华生物当前更接近高风险转型平台和壳属性观察标的，而非可按生物医药成长股估值的核心资产；细胞存储和检测业务尚未证明规模化收入、利润和现金流，2025年放大的新能源材料/贸易收入需按低质量收入折价处理，当前不建议建仓。",
-  "quality_rating": "low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.5,
-    6.0
-  ],
-  "buy_zone": [
-    3.8,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    99.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南华生物",
+    "security_status": "active",
+    "symbol": "CN:000504",
+    "ticker": "000504"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "66a9f461d6e6a2e2fea1f1904e634f83760228a7b1a0a991e068faa5f0156220"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于买入区间或无法验证经营现金流改善",
-      "action": "不建仓",
-      "max_weight": 0,
-      "reason": "现有业务质量弱，题材和壳价值溢价较高，风险收益比不吸引"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证经营现金流、生物业务收入和新能源材料业务回款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入3.8-4.8元且最新季报经营现金流改善、生物业务收入和回款可验证",
-      "action": "仅建立观察仓",
-      "max_weight": 0.005,
-      "reason": "只有在估值折价和基本面验证同时出现时，才允许小仓位跟踪"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年持续经营和减值风险",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "新增监管处罚、重大问询、收入真实性疑点、持续经营压力或重大减值",
-      "action": "退出或维持零仓位",
-      "max_weight": 0,
-      "reason": "该类事件会直接削弱壳价值和转型期权价值"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入观察买入区间上沿，复核现金流、生物业务和监管风险后再决策",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入深度折价区间，若无新增重大风险可重新评估小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "高于减仓或回避区间，题材溢价可能明显高于基本面价值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入观察买入区间上沿，复核现金流、生物业务和监管风险后再决策"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入深度折价区间，若无新增重大风险可重新评估小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "高于减仓或回避区间，题材溢价可能明显高于基本面价值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证经营现金流、生物业务收入和新能源材料业务回款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年持续经营和减值风险"
-    }
-  ],
-  "key_tracking_metrics": [
-    "生物医药业务收入",
-    "生物医药业务毛利率",
-    "合同负债和预收款",
-    "经营活动现金流净额",
-    "扣非归母净利润",
-    "应收账款及账龄",
-    "存货及跌价准备",
-    "新能源锂电材料业务收入占比和毛利率",
-    "交易所问询函和监管函",
-    "重大诉讼仲裁和资产减值"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

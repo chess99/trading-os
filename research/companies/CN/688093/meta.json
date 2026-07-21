@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688093",
-  "market": "CN",
-  "ticker": "688093",
-  "name": "世华科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "世华科技是高毛利、现金流质量较好的功能性材料平台公司，2025年业绩高增长且资产负债表干净；但2026Q1收入和利润同比回落，客户集中度高，当前价格接近基准内在价值，适合观察并等待更厚安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    26,
-    34
-  ],
-  "buy_zone": [
-    22,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "世华科技",
+    "security_status": "active",
+    "symbol": "CN:688093",
+    "ticker": "688093"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5ce5f88d35e0c1c15a65cfb5af17dee345cc1a52d07bd6cd6371cb0c8dcb584c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于24元，且2026H1综合毛利率不低于56%、TTM归母净利润不低于3.8亿元",
-      "action": "建立观察仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、客户集中度和在建项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于22元，且客户集中度没有进一步恶化、经营现金流/归母净利润大于0.9",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否恢复增长以及现金流质量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于36元且没有2026年利润上修证据",
-      "action": "停止新增买入并评估减持",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和高性能光学胶膜材项目产能兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入初始买入区，需要复核半年报毛利率与现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "安全边际较充分，可评估提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入减持观察区，除非利润预期上修否则赔率下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入初始买入区，需要复核半年报毛利率与现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "安全边际较充分，可评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "进入减持观察区，除非利润预期上修否则赔率下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、客户集中度和在建项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否恢复增长以及现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和高性能光学胶膜材项目产能兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

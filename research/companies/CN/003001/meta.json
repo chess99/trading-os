@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:003001",
-  "market": "CN",
-  "ticker": "003001",
-  "name": "中岩大地",
-  "company_name": "北京中岩大地科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "岩土工程专业公司有订单修复线索，2026Q1新签订单约3.53亿元、未完工订单约7.16亿元，但2025年扣非利润仅约481.5万元，2026Q1归母净利润同比下降36.53%，当前13-14元附近价格明显高于按净资产、正常化利润和收入订单交叉得到的合理价值区间，缺少安全边际。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    6.5,
-    9.0
-  ],
-  "buy_zone": [
-    0,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中岩大地",
+    "security_status": "active",
+    "symbol": "CN:003001",
+    "ticker": "003001"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "73afcb51e63ba10d9d0daba1905c8252c94b439cb21fd907c2c0de7cf5c6e430"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.00元，且最近两个季度新签订单未明显低于2.5亿元、经营现金流没有恶化",
-      "action": "建立小型观察仓",
-      "target_position": "0.3%-0.5%",
-      "max_weight": 0.005
-    },
-    {
-      "condition": "股价低于5.00元，且未完工订单维持在7亿元以上、扣非利润没有转负",
-      "action": "提高到低仓位配置",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价高于11.50元，且尚未看到2026年扣非净利润恢复到6000万元以上",
-      "action": "不买；如已有仓位则减仓或退出",
-      "target_position": "0%",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "unit": "CNY/share",
-      "reason": "低于约0.9倍2026Q1每股净资产，开始具备资产安全边际。",
-      "action": "进入买入观察区，复核订单、回款、应收和毛利率。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "unit": "CNY/share",
-      "reason": "低于约0.75倍2026Q1每股净资产，若基本面未恶化则风险收益比改善。",
-      "action": "若基本面未恶化，可考虑0.5%-1.0%低仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "unit": "CNY/share",
-      "reason": "显著高于合理价值区间，且需要较高利润修复才能支撑。",
-      "action": "估值进入高估区，除非利润显著兑现，否则回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "预计2026年半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证订单收入化、扣非利润和现金流质量。",
-      "action": "复核收入、扣非利润、经营现金流和应收账款。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "预计2026年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证修复是否连续以及估值是否需要上修或下修。",
-      "action": "复核订单兑现、扣非利润和现金流是否连续改善。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "预计2026年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整验证全年盈利、分红、减值和下一年订单展望。",
-      "action": "复核全年扣非利润、分红、减值和2027年订单展望。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "低于约0.9倍2026Q1每股净资产，开始具备资产安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "低于约0.75倍2026Q1每股净资产，若基本面未恶化则风险收益比改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "显著高于合理价值区间，且需要较高利润修复才能支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "单季新签订单金额",
-    "累计已签约未完工订单金额",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款和合同资产变化",
-    "信用减值损失",
-    "主营工程业务毛利率",
-    "现金分红与资本开支"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

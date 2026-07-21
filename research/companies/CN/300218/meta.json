@@ -1,100 +1,105 @@
 {
-  "symbol": "CN:300218",
-  "market": "CN",
-  "ticker": "300218",
-  "name": "安利股份",
-  "company_name": "安徽安利材料科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "安利股份具备聚氨酯复合材料研发、客户认证、多应用场景和越南产能布局等中等偏强制造壁垒，但 2025 年利润下滑、2026Q1 利润大幅承压，当前估值仅接近合理区间下沿，安全边际不足。适合观察或小仓位跟踪，等待 11 元以下价格或 2026H2 经营修复验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "B-",
-  "fair_value_range": [
-    12.0,
-    15.5
-  ],
-  "buy_zone": [
-    0,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "安利股份",
+    "security_status": "active",
+    "symbol": "CN:300218",
+    "ticker": "300218"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8bf4beea4e553949d58a8acf2f1b31173d0065683620197d110720cc6461b8bd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 11.0 元且未看到 2026H2 需求、毛利率和现金流修复",
-      "action": "观察或仅建立不超过 2% 的跟踪仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入恢复、毛利率、扣非净利润和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于或等于 11.0 元，且未出现大客户流失、现金流恶化或越南基地重大爬坡失败",
-      "action": "可建立 3%-4% 仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 Q1 利润下滑是短期冲击还是趋势恶化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于或等于 9.5 元，且收入恢复、毛利率企稳、经营现金流重新转正",
-      "action": "可提高至 5%-6% 上限仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，验证越南基地、分红、资本开支和标准化盈利能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于或等于 17.0 元，但利润修复证据不足",
-      "action": "减仓或退出，等待估值回落",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入初始买入区，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入加仓区，前提是基本面未继续恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
+      "reason": "超过合理价值上沿，需减仓或重新评估",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "currency": "CNY",
-      "reason": "进入初始买入区，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "currency": "CNY",
-      "reason": "进入加仓区，前提是基本面未继续恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 17.0,
-      "currency": "CNY",
-      "reason": "超过合理价值上沿，需减仓或重新评估"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入恢复、毛利率、扣非净利润和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q1 利润下滑是短期冲击还是趋势恶化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，验证越南基地、分红、资本开支和标准化盈利能力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "毛利率是否恢复并稳定在 23%-25% 以上",
-    "扣非归母净利润率是否恢复到 6%-8%",
-    "经营现金流量净额与归母净利润匹配度",
-    "越南安利收入、产能利用率和利润贡献",
-    "海外收入占比和重点客户订单变化",
-    "原材料价格、汇兑损益和存货周转天数"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

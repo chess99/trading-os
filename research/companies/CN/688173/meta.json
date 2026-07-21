@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688173",
-  "market": "CN",
-  "ticker": "688173",
-  "name": "希荻微",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "希荻微收入与亏损拐点已出现，电源管理、VCM、传感器、车规和AI POL共同构成增长选项，但公司仍未稳定盈利且经营现金流为负，当前估值已预支部分修复，适合观察而非追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    13.0,
-    17.0
-  ],
-  "buy_zone": [
-    11.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "希荻微",
+    "security_status": "active",
+    "symbol": "CN:688173",
+    "ticker": "688173"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f33f63cee711fd7f0d2b69f971ff73a665f44807ee97dac77a6f83f4dc1057ce"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至11-13元且2026Q2或Q3毛利率回到30%以上、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看诚芯微并表、毛利率、存货、应收和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长30%以上且归母净利润转正、存货和应收增速低于收入增速",
-      "action": "加仓至核心小仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认全年盈亏平衡概率和AI POL/车规收入节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元但AI POL、车规和诚芯微利润贡献未被定期报告验证",
-      "action": "不追高或降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报及诚芯微业绩承诺完成情况，重估长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入基准估值买入观察区，可结合季度报验证小仓试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入悲观情景价值区，若基本面未恶化则安全边际较好",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "高于基准合理价值区，除非盈利和AI/车规进展显著上修，否则应谨慎",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入基准估值买入观察区，可结合季度报验证小仓试错"
-    },
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入悲观情景价值区，若基本面未恶化则安全边际较好"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "高于基准合理价值区，除非盈利和AI/车规进展显著上修，否则应谨慎"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看诚芯微并表、毛利率、存货、应收和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认全年盈亏平衡概率和AI POL/车规收入节奏"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报及诚芯微业绩承诺完成情况，重估长期盈利中枢"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,96 +1,96 @@
 {
-  "symbol": "CN:603588",
-  "market": "CN",
-  "ticker": "603588",
-  "name": "高能环境",
-  "company_name": "高能环境",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B+/A-",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "current_thesis": "高能环境利润正在从2025年低基数和资源化业务改善中恢复，但应收、合同资产、有息负债和经营现金流仍是核心约束；当前价格处于合理偏上区间，适合观察或小仓位跟踪，等待中报验证现金流改善后再提高仓位。",
-  "fair_value_range": [
-    13.0,
-    17.0
-  ],
-  "buy_zone": [
-    10.5,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    20.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "高能环境",
+    "security_status": "active",
+    "symbol": "CN:603588",
+    "ticker": "603588"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "5be2402c04f5c1ed3e5663c3a64089cb52f1c5e32a2f35877a344b8c9838bbcf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 10.5 and cash_flow_not_deteriorating",
-      "action": "strong_buy",
-      "max_weight": 0.1,
-      "reason": "估值给足工程回款和周期折价，若现金流未恶化，赔率明显改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证经营现金流、应收和资源化毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "10.5 < price <= 13.0",
-      "action": "accumulate",
-      "max_weight": 0.08,
-      "reason": "进入有安全边际买入区，可分批建仓并等待中报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认利润恢复是否转化为现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "13.0 < price <= 17.0",
-      "action": "watch_or_hold",
-      "max_weight": 0.05,
-      "reason": "处于合理估值区间，新增仓位需要现金流和应收改善支持"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入有安全边际买入区，复核现金流后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price > 18.0",
-      "action": "do_not_chase_or_reduce",
-      "max_weight": 0.05,
-      "reason": "价格已反映乐观情景，若没有持续现金流验证，风险补偿不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入强吸引力区间，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过不应追高区间，需检查中报是否支持乐观估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入有安全边际买入区，复核现金流后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入强吸引力区间，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过不应追高区间，需检查中报是否支持乐观估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证经营现金流、应收和资源化毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认利润恢复是否转化为现金流"
-    }
-  ],
-  "key_tracking_metrics": [
-    "经营活动现金流净额/归母净利润",
-    "应收账款和合同资产合计增速",
-    "危废资源化板块毛利率",
-    "危废资源化产能利用率",
-    "生活垃圾处理项目处理量和回款",
-    "有息负债余额和利息费用",
-    "资产减值和坏账准备"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

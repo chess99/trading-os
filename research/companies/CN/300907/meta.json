@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:300907",
-  "ticker": "300907",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "康平科技",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司进入百得、TTI等全球电动工具供应链，并通过海外产能和收购凌臣采集尝试从电机/整机制造延伸到电控与工控业务；但客户集中、外销集中、毛利率偏低、短期借款和商誉上升，且2026Q1收入高增没有转化为利润和经营现金流。当前股价已反映乐观情景，安全边际不足，保留观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18.0,
-    30.0
-  ],
-  "buy_zone": [
-    0.0,
-    20.0
-  ],
-  "sell_or_reduce_zone": [
-    42.0,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康平科技",
+    "security_status": "active",
+    "symbol": "CN:300907",
+    "ticker": "300907"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "d21d28616e27f642a3cf6c1ba64aaa2f4e61122f904ca3115152ddc54e550066"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于20元，且2026年连续两个季度扣非净利率高于5%、经营现金流转正后，才允许建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看并表后扣非净利率、经营现金流、短期借款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于25元，且短期借款较2026Q1明显回落、凌臣采集贡献可验证利润后，最高仓位可提高。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证收入高增是否转化为利润和现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于42元且年化净利未超过1.2亿元或经营现金流未同步转正时，不新增仓位并考虑回避。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-12-23"
+      },
+      "reason": "复核控股股东1-2亿元增持计划6个月期限内的执行情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入估算买入区，需要复核利润率、现金流和短期借款是否同步改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过减持/规避区，若基本面未进入乐观情景，风险收益比恶化。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入估算买入区，需要复核利润率、现金流和短期借款是否同步改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 42.0,
-      "reason": "超过减持/规避区，若基本面未进入乐观情景，风险收益比恶化。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看并表后扣非净利率、经营现金流、短期借款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证收入高增是否转化为利润和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-23",
-      "reason": "复核控股股东1-2亿元增持计划6个月期限内的执行情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

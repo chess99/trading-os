@@ -1,107 +1,115 @@
 {
-  "symbol": "CN:300403",
-  "market": "CN",
-  "ticker": "300403",
-  "name": "汉宇集团",
-  "company_name": "汉宇集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "细分龙头、低负债、现金流稳定，但主业成熟且2026Q1利润承压；9.88元附近估值高于合理区间，等待价格回落或新业务放量验证。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    6.8,
-    8.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "汉宇集团",
+    "security_status": "active",
+    "symbol": "CN:300403",
+    "ticker": "300403"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "179b0dfbdd82fd54a93fa1ca635193a84db1605fd8df300b83295980be7b008e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于8.5元，且未看到2026中报或三季报恢复增长",
-      "action": "不买入，仅跟踪",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-16"
+      },
+      "reason": "复核2026年半年报，重点看Q1利润下滑是否修复、外销和汇兑影响是否缓和",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至6.5元以下，TTM扣非归母净利润仍高于2.0亿元且经营现金流未恶化",
-      "action": "建立2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证TTM扣非净利、毛利率和经营现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.8元，家电配件毛利率维持约33%，电子水泵或洗涤泵继续增长",
-      "action": "提高到4%-5%中等仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估电子水泵、洗涤泵、泰国产能和资本开支回报",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元，且收入、扣非净利没有重新加速",
-      "action": "已有仓位减持或清仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入可买区，需复核基本面和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入高安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于合理价值较多，若增长未验证应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "明显透支稳态主业估值",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "currency": "CNY",
-      "reason": "进入可买区，需复核基本面和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "currency": "CNY",
-      "reason": "进入高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "高于合理价值较多，若增长未验证应减仓或回避"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "currency": "CNY",
-      "reason": "明显透支稳态主业估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-16",
-      "reason": "复核2026年半年报，重点看Q1利润下滑是否修复、外销和汇兑影响是否缓和"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证TTM扣非净利、毛利率和经营现金流趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估电子水泵、洗涤泵、泰国产能和资本开支回报"
-    }
-  ],
-  "key_tracking_metrics": [
-    "TTM扣非归母净利润是否高于2.0亿元",
-    "家用电器配件毛利率是否维持约33%",
-    "排水及循环泵收入和毛利率是否止跌",
-    "洗涤泵、阀类、电子水泵收入占比及毛利率",
-    "境外收入、人民币汇率和汇兑损益",
-    "前五大客户销售占比",
-    "泰国子公司收入、净利润和产能利用率",
-    "经营现金流净额/归母净利润"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

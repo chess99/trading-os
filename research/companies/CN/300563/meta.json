@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:300563",
-  "market": "CN",
-  "ticker": "300563",
-  "name": "神宇股份",
-  "company_name": "神宇通信科技股份公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是高频射频同轴电缆细分制造商，2025年压缩低毛利黄金业务后扣非利润和现金流改善，汽车通信、医疗线缆、高速数据通信和AI服务器线缆提供中期弹性；但截至2026-07-13，24.60元股价已反映较多成长预期，公告尚未拆出AI/高速数据线收入和客户，需等待价格回落或基本面进一步验证。",
-  "quality_rating": "B+",
-  "valuation_rating": "C",
-  "fair_value_range": [18.0, 23.0],
-  "buy_zone": [16.0, 18.0],
-  "sell_or_reduce_zone": [30.0, 999.0],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "神宇股份",
+    "security_status": "active",
+    "symbol": "CN:300563",
+    "ticker": "300563"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c761f4ab76220591039ef412333ec84751eb5e56eb7af58f4f284b6fdedbdfa0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元，且最近一期综合毛利率不低于21%、经营现金流未持续恶化",
-      "max_weight": 0.05,
-      "action": "可建立3%-5%仓位，作为细分制造成长股持有。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、毛利率、现金流和高速数据线/AI服务器线缆披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在16-18元之间，且同轴电缆收入维持双位数增长",
-      "max_weight": 0.03,
-      "action": "可分批建立1%-3%观察仓，等待中报或订单证据。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润兑现和经营现金流是否恢复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在18-23元之间，但高速数据线/AI服务器线缆尚未披露明确收入贡献",
-      "max_weight": 0.01,
-      "action": "只跟踪或保留很小试错仓，不主动加仓。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估募投项目、可转债摊薄和新业务收入贡献。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元，且未来12个月利润预期没有上修至1.4亿元以上",
-      "max_weight": 0.0,
-      "action": "减仓或停止加仓，等待估值回落。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入可买观察区，需要复核毛利率、现金流和新业务订单。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入强安全边际区，可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "超过当前合理估值区较多，除非新业务兑现超预期，否则需要减仓复核。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "currency": "CNY",
-      "reason": "进入可买观察区，需要复核毛利率、现金流和新业务订单。"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "currency": "CNY",
-      "reason": "进入强安全边际区，可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "currency": "CNY",
-      "reason": "超过当前合理估值区较多，除非新业务兑现超预期，否则需要减仓复核。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、毛利率、现金流和高速数据线/AI服务器线缆披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润兑现和经营现金流是否恢复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估募投项目、可转债摊薄和新业务收入贡献。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "同轴电缆收入增速",
-    "综合毛利率和同轴电缆毛利率",
-    "高速数据通信/AI服务器线缆订单、客户验证和量产收入",
-    "经营现金流净额/归母净利润",
-    "应收账款和存货周转",
-    "可转债转股和股本摊薄",
-    "募投项目进度和产能利用率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,85 +1,95 @@
 {
-  "symbol": "CN:002548",
-  "ticker": "002548",
-  "name": "金新农",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金新农具备猪用饲料品牌、种猪资源和区域一体化基础，但2026Q1亏损扩大、H1预告继续大幅亏损、资产负债率高且净资产被侵蚀；现价约4元对应PB约3倍以上，安全边际不足，暂列观察。",
-  "fair_value_range": [
-    2.8,
-    3.8
-  ],
-  "buy_zone": [
-    0,
-    2.4
-  ],
-  "sell_or_reduce_zone": [
-    4.5,
-    6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金新农",
+    "security_status": "active",
+    "symbol": "CN:002548",
+    "ticker": "002548"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "298d3d6f1728185582b39e8d7d5350859411f8ad58e28057f17225c7acc3a489"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价附近不建仓；仅观察2026H1正式报告、月度生猪销售和经营现金流。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，确认亏损、减值、现金流和资产负债表变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.4元，且2026H1正式报告无新增重大流动性风险或超预期减值。",
-      "action": "starter_position_after_review",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，判断经营现金流和净资产是否止跌。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正，商品猪完全成本明显下降，归母净资产停止下滑。",
-      "action": "upgrade_review",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年度报告及猪周期位置，重估正常化盈利。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入买入区上沿，需要复核净资产、亏损和流动性后决定是否小仓位跟踪。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "高于减仓观察区下沿，若基本面仍亏损则周期情绪溢价过高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "reason": "进入买入区上沿，需要复核净资产、亏损和流动性后决定是否小仓位跟踪。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "高于减仓观察区下沿，若基本面仍亏损则周期情绪溢价过高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，确认亏损、减值、现金流和资产负债表变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，判断经营现金流和净资产是否止跌。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年度报告及猪周期位置，重估正常化盈利。"
-    }
-  ],
-  "key_monitoring_items": [
-    "月度生猪销量、销售收入和商品猪均价",
-    "商品猪完全成本、料肉比、死淘率、配种分娩率",
-    "饲料销量、饲料毛利率和应收账款",
-    "经营活动现金流净额",
-    "归母净资产和资产负债率",
-    "短期借款、一年内到期负债和受限资金",
-    "生物资产及存货跌价准备",
-    "控股股东质押和董监高变动"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

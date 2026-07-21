@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:605339",
-  "market": "CN",
-  "ticker": "605339",
-  "name": "南侨食品",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "南侨食品具备烘焙油脂与烘焙原料领域的品牌、渠道、应用服务和现金资产底座，但 2025-2026H1 受原料涨价与高毛利产品占比下降影响，扣非利润已接近盈亏线；在收入、毛利率和扣非利润出现连续修复前，只适合观察，合理买入需接近净资产并提供足够安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    9.0,
-    11.5
-  ],
-  "buy_zone": [
-    8.0,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "南侨食品",
+    "security_status": "active",
+    "symbol": "CN:605339",
+    "ticker": "605339"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "81a0834f765358519b59245a69d8d68a3c3875b3f236d62d788e2964d20ac345"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 9.2 元，且无食品安全、治理或控制权恶化事件，仅建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年度报告正式数据，确认毛利率、扣非利润和原料成本压力。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 8.0 元，且最新季度毛利率环比改善、扣非亏损收窄或转正，可提高配置。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断利润修复是否从预告低点走出。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "季度扣非归母净利润重新超过 3000 万元，月度收入连续 3 个月同比转正，再评估是否上调评级。",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年报和分红政策，重估正常化盈利与安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入初步买入区间，接近基准估值下沿。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "接近 1.0 倍左右市净率，若基本面未恶化，安全边际明显改善。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "进入乐观修复估值区，若扣非利润未恢复，应考虑减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入初步买入区间，接近基准估值下沿。"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "接近 1.0 倍左右市净率，若基本面未恶化，安全边际明显改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "进入乐观修复估值区，若扣非利润未恢复，应考虑减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年度报告正式数据，确认毛利率、扣非利润和原料成本压力。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断利润修复是否从预告低点走出。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年报和分红政策，重估正常化盈利与安全边际。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:001335",
-  "market": "CN",
-  "ticker": "001335",
-  "name": "信凯科技",
-  "company_name": "信凯科技",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "expensive",
-  "current_thesis": "信凯科技是有机颜料出口渠道和供应链整合能力较强的公司，海外客户、品类和REACH注册构成一定壁垒，但当前估值已经反映较多辽宁基地投产改善预期；在经营现金流、扣非利润和辽宁基地亏损改善前，适合观察而非买入。",
-  "fair_value_range": [
-    20,
-    27
-  ],
-  "buy_zone": [
-    18,
-    22
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    38
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "信凯科技",
+    "security_status": "active",
+    "symbol": "CN:001335",
+    "ticker": "001335"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "295222bf96fe17f35137d620f6282fa64c8c1d15f36154daacb9d4a0620f1d79"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于22元，且2026年半年报收入正增长、扣非净利不下滑、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区间且增长质量初步改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非净利、经营现金流、存货和辽宁基地亏损",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价22-27元，且辽宁信凯或辽宁紫源单季亏损明显收窄",
-      "action": "分批加至小仓",
-      "max_weight": 0.02,
-      "reason": "生产化转型开始得到报表验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及可转债募投进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于32元且扣非净利增速仍低于15%",
-      "action": "不买入或减仓",
-      "max_weight": 0.005,
-      "reason": "估值已经反映偏乐观改善预期"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "跌至熊市估值附近，需要复核是否为基本面破坏或安全边际机会",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "高于减仓区下沿，若扣非增速未改善则风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "跌至熊市估值附近，需要复核是否为基本面破坏或安全边际机会"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "高于减仓区下沿，若扣非增速未改善则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非净利、经营现金流、存货和辽宁基地亏损"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及可转债募投进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1和2026Q3营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "经营活动现金流净额及现金流/净利润",
-    "主营业务毛利率",
-    "辽宁信凯和辽宁紫源单体净利润",
-    "存货周转率和存货跌价损失",
-    "境外收入占比与美国收入占比",
-    "前五大客户收入占比",
-    "可转债审核和募投项目进展",
-    "环保安全处罚或停产事件"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300126",
-  "ticker": "300126",
-  "name": "锐奇股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "锐奇股份是资产负债表较稳健但主业仍未验证拐点的专业电动工具小市值公司。现金及金融资产提供安全垫，但2025年和2026Q1扣非亏损、低毛利率和经营现金流流出说明当前价格不具备足够安全边际，适合观察而非主动买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.2,
-    5.6
-  ],
-  "buy_zone": [
-    4.0,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    6.6,
-    7.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "锐奇股份",
+    "security_status": "active",
+    "symbol": "CN:300126",
+    "ticker": "300126"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "7aec31a7b15f512dbc7d2d20bb83f92ec34ccf7d73b342177429d57cee3f0640"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于4.60元，且最近一季毛利率高于12%、经营现金流明显改善",
-      "action": "small_tracking_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点检查毛利率、扣非利润、经营现金流和应收存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非亏损收窄，TTM收入恢复增长，毛利率稳定在15%以上",
-      "action": "add_on_turnaround_confirmation",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季度报告，确认经营拐点是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于6.60元但扣非仍亏损或经营现金流继续大额流出",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重估正常化盈利能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
+      "reason": "进入观察买区，需要复核毛利率、现金流和金融资产安全垫",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "接近悲观情景估值下沿，若基本面未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.6
+      },
+      "reason": "超过基准公允价值上沿，若经营拐点未确认应考虑减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.6,
-      "reason": "进入观察买区，需要复核毛利率、现金流和金融资产安全垫"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "接近悲观情景估值下沿，若基本面未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 6.6,
-      "reason": "超过基准公允价值上沿，若经营拐点未确认应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点检查毛利率、扣非利润、经营现金流和应收存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季度报告，确认经营拐点是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重估正常化盈利能力"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

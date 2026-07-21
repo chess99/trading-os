@@ -1,100 +1,87 @@
 {
-  "symbol": "CN:002897",
-  "market": "CN",
-  "ticker": "002897",
-  "name": "意华股份",
-  "company_name": "温州意华接插件股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "意华股份具备高速连接器技术、客户和精密模具能力，通讯连接器是主要增长来源；但公司收入过半来自毛利率较低的光伏支架，客户集中、应收存货和债务压力较高。2026-07-13盘中87.10元附近对应约57倍TTM PE，风险收益不佳，等待45-55元安全边际或利润可见度显著上修。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    60,
-    75
-  ],
-  "buy_zone": [
-    45,
-    55
-  ],
-  "sell_or_reduce_zone": [
-    95,
-    105
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "意华股份",
+    "security_status": "active",
+    "symbol": "CN:002897",
+    "ticker": "002897"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1c56439644a4b5bfdc6b8b98bbdd8ab2a3e7467f46df6326111e1300e6417070"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于75元且未看到2026年利润可见度显著上修",
-      "action": "不新增仓位，仅跟踪公告和季度经营指标",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报将验证高速连接器放量是否抵消2026Q1利润下滑，并更新合理价格区间。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至50-55元，且通讯连接器收入继续增长、连接器毛利率不低于26%、经营现金流未恶化",
-      "action": "建立观察仓",
-      "target_position": "0.5%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入可买区上沿，若基本面未破坏，安全边际开始出现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格跌至45元以下，且没有客户流失、毛利率坍塌或存货大额减值",
-      "action": "提高至中等仓位",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入强买区，估值对光伏支架和利润波动已有较充分折价。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "2026年净利润可见度上修至4.5亿元以上，且800G/1.6T产品形成连续批量收入",
-      "action": "允许在60-75元区间持有或小幅加仓",
-      "target_position": "2%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 95.0
+      },
+      "reason": "价格超过当前估算合理价值上沿较多，需要新增利润台阶支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 55,
-      "unit": "CNY/share",
-      "action": "复核基本面并考虑观察仓",
-      "reason": "进入可买区上沿，若基本面未破坏，安全边际开始出现。"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "unit": "CNY/share",
-      "action": "若基本面未破坏，评估提高仓位",
-      "reason": "进入强买区，估值对光伏支架和利润波动已有较充分折价。"
-    },
-    {
-      "type": "price_above",
-      "price": 95,
-      "unit": "CNY/share",
-      "action": "若没有新增利润台阶证据，减仓或避免追买",
-      "reason": "价格超过当前估算合理价值上沿较多，需要新增利润台阶支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核2026年半年度报告、通讯连接器收入增速、毛利率、经营现金流和应收存货周转",
-      "reason": "半年报将验证高速连接器放量是否抵消2026Q1利润下滑，并更新合理价格区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "通讯连接器收入增速",
-    "连接器毛利率",
-    "800G/1.6T/CPO/NPC产品批量交付进展",
-    "太阳能支架收入与毛利率",
-    "经营现金流/归母净利润",
-    "应收账款+存货/总资产",
-    "短期借款和一年内到期非流动负债",
-    "前五大客户收入占比",
-    "研发投入占收入比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

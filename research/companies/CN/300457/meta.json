@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:300457",
-  "market": "CN",
-  "ticker": "300457",
-  "name": "赢合科技",
-  "company_name": "深圳市赢合科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "锂电前中段装备头部公司，海外收入和固态/干法设备具备期权，但行业资本开支周期、利润率和现金流仍需验证；当前价格接近合理偏低，适合小仓跟踪而非重仓买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏低",
-  "fair_value_range": [
-    20.0,
-    27.0
-  ],
-  "buy_zone": [
-    16.5,
-    18.5
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    33.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "赢合科技",
+    "security_status": "active",
+    "symbol": "CN:300457",
+    "ticker": "300457"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9354dcb00f99abf6facb9afb9a1e3dd0136bd5b93efab6dc8e237a4eff3728ba"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格不高于18.5元，且最新财报未出现毛利率继续下滑或经营现金流显著恶化",
-      "action": "建立1%-2%观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、毛利率、经营现金流、存货和应收变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格不高于16.5元，且锂电设备订单、海外收入和回款没有恶化",
-      "action": "提高到3%-5%核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断订单恢复是否转化为全年利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于18.5-23元且缺少新增订单或利润率改善证据",
-      "action": "持有或等待，不追高加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估行业周期、海外收入和固态设备商业化进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于30元，且没有固态/海外订单和利润率同步改善",
-      "action": "逐步减仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
       "reason": "进入初步安全边际区，估值低于合理价值下沿约7%以上",
-      "action": "进入可小仓买入区，复核最近一期订单、毛利率和现金流"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 16.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
       "reason": "进入较强安全边际区，价格低于保守合理价值下沿约17%以上",
-      "action": "进入强安全边际区，若基本面未恶化可考虑加仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 30.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
       "reason": "价格明显高于合理价值区间，需要基本面上修支撑",
-      "action": "进入减仓观察区，复核估值是否由真实利润上修支撑"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、毛利率、经营现金流、存货和应收变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断订单恢复是否转化为全年利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估行业周期、海外收入和固态设备商业化进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新签订单、在手订单及海外订单占比",
-    "锂电设备毛利率是否稳定在19%-21%以上",
-    "经营现金流/归母净利润是否长期大于0.8",
-    "存货、应收账款、合同资产增速是否明显快于收入增速",
-    "固态电池和干法电极设备是否形成批量订单",
-    "前五大客户收入占比是否下降或至少不继续上升",
-    "并购昂华自动化后的收入、利润和回款兑现情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

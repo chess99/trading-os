@@ -1,72 +1,105 @@
 {
-  "symbol": "CN:603777",
-  "market": "CN",
-  "ticker": "603777",
-  "name": "来伊份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "来伊份具备长三角品牌、门店和会员资产，但直营转加盟尚未证明能修复盈利，2025年和2026H1扣非亏损扩大，量贩零食竞争继续压制毛利率；当前估值已计入较多转型期权，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    7.0,
-    10.5
-  ],
-  "buy_zone": [
-    6.0,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "来伊份",
+    "security_status": "active",
+    "symbol": "CN:603777",
+    "ticker": "603777"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "5113b033dcc17daaf1dee55afbce25d1da5a27435789db8f77fb70c0e6cd15a1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价进入买入区间且连续两个季度扣非亏损收窄、加盟毛利率企稳后建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报正式数据与业绩预告差异，重点看毛利率、费用率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026年全年仍大额亏损或主营毛利率继续下滑，不建仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断扣非亏损是否收窄及加盟转型是否出现可验证拐点",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估转型成败、估值区间和是否仍需avoid评级",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入初步买入观察区，需同步核验扣非亏损和加盟毛利率是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基准合理价值上沿，若基本面未改善则风险收益比偏差",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "接近乐观情景估值上沿，除非已验证全年扭亏，否则应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入初步买入观察区，需同步核验扣非亏损和加盟毛利率是否改善"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于基准合理价值上沿，若基本面未改善则风险收益比偏差"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "接近乐观情景估值上沿，除非已验证全年扭亏，否则应回避或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报正式数据与业绩预告差异，重点看毛利率、费用率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断扣非亏损是否收窄及加盟转型是否出现可验证拐点"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估转型成败、估值区间和是否仍需avoid评级"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

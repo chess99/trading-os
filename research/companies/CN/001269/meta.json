@@ -1,65 +1,95 @@
 {
-  "symbol": "CN:001269",
-  "ticker": "001269",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "欧晶科技",
-  "updated_at": "2026-07-13",
-  "status": "active",
-  "current_thesis": "欧晶科技具备长寿命石英坩埚、半导体级石英坩埚国产替代和硅材料配套服务的修复弹性，但 2025 年和 2026Q1 仍处亏损、现金流承压阶段，当前股价已较充分反映周期修复预期，需等待毛利率、经营现金流和半导体客户批量供货验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [11.0, 17.0],
-  "buy_zone": [0.0, 10.5],
-  "sell_or_reduce_zone": [20.0, 999.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欧晶科技",
+    "security_status": "active",
+    "symbol": "CN:001269",
+    "ticker": "001269"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "24144077d7d4e2d4d5cfe6983889e917d26838c4753f938e5729ad4c374b6a33"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 10.5 元，且未出现新增重大诉讼、账户冻结或流动性风险，石英坩埚毛利率开始修复",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入、毛利率、经营现金流、减值和半导体坩埚进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度经营现金流转正，石英坩埚毛利率转正，半导体级石英坩埚形成批量供货",
-      "action": "上调至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断光伏硅片开工率修复是否传导至公司订单和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 20 元但盈利和现金流未确认改善，或再次出现重大资金冻结、资产减值、可转债压力",
-      "action": "不买入或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估周期修复、资产减值和可转债压力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入初始买入区间，估值相对 2026Q1 净资产与周期修复情景具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "高于基准估值上沿，若缺少连续盈利和现金流验证，应减仓或回避追高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入初始买入区间，估值相对 2026Q1 净资产与周期修复情景具备安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "高于基准估值上沿，若缺少连续盈利和现金流验证，应减仓或回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入、毛利率、经营现金流、减值和半导体坩埚进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断光伏硅片开工率修复是否传导至公司订单和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估周期修复、资产减值和可转债压力"
-    }
-  ],
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

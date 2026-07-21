@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:688361",
-  "market": "CN",
-  "ticker": "688361",
-  "name": "中科飞测",
-  "company_name": "中科飞测",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "research_only",
-  "current_rating": "research_only",
-  "current_thesis": "中科飞测是国产半导体前道量检测设备稀缺平台，缺陷检测、三维形貌量测和薄膜量测具备长期国产替代空间；但以2026-07-09价格计算，市值已显著预支长期成长，当前以研究跟踪为主，等待价格回落或收入、毛利率、扣非利润和订单兑现进一步确认。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    220,
-    300
-  ],
-  "buy_zone": [
-    160,
-    220
-  ],
-  "sell_or_reduce_zone": [
-    380,
-    460
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中科飞测",
+    "security_status": "active",
+    "symbol": "CN:688361",
+    "ticker": "688361"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "bb58fca13aa942f10719f64189185347993d8c662333ff72d02a3f7576dfb097"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于300元或2026半年报尚未验证收入加速、毛利率稳定和扣非亏损收窄",
-      "action": "不建仓，仅跟踪",
-      "max_weight": 0,
-      "reason": "当前估值已经充分预支国产替代和长期成长，缺少安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看收入确认、毛利率、合同负债、存货和扣非亏损变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至160-220元且未出现订单、毛利率、客户验证恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值下沿，可用小仓位换取后续基本面验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断全年收入和利润兑现是否支撑估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入高增长、综合毛利率维持45%以上、扣非盈利改善且合同负债或订单支持未来12个月增长",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "基本面从研发投入期转向收入和利润兑现期，估值可获得更高置信度"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 220.0
+      },
+      "reason": "进入买入观察区上沿，需要复核半年报、订单和毛利率后决定是否建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 160.0
+      },
+      "reason": "进入深度价值观察区，如基本面未恶化可考虑提高观察仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 380.0
+      },
+      "reason": "进入减仓或回避区，除非出现显著超预期订单和盈利拐点，否则风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 220,
-      "reason": "进入买入观察区上沿，需要复核半年报、订单和毛利率后决定是否建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 160,
-      "reason": "进入深度价值观察区，如基本面未恶化可考虑提高观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 380,
-      "reason": "进入减仓或回避区，除非出现显著超预期订单和盈利拐点，否则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看收入确认、毛利率、合同负债、存货和扣非亏损变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断全年收入和利润兑现是否支撑估值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度收入增速",
-    "综合毛利率",
-    "扣非归母净利润",
-    "研发费用率",
-    "合同负债",
-    "存货和发出商品",
-    "应收账款周转",
-    "缺陷检测设备客户验证和量产进展",
-    "三维形貌量测设备订单和收入确认",
-    "前五大客户集中度",
-    "晶圆厂资本开支和国产设备招标节奏"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

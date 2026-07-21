@@ -1,106 +1,111 @@
 {
-  "symbol": "CN:600667",
-  "market": "CN",
-  "ticker": "600667",
-  "name": "太极实业",
-  "company_name": "太极实业",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "太极实业具备半导体工程（十一科技 EPC/洁净室）与海太半导体后工序服务的真实产业资产，但2025年归母净利润4.48亿元、毛利率约7.65%、资产负债率约72.91%，且有2022年-7.43亿元归母亏损的周期先例。公司已明确半导体业务目前不涉及HBM产品，海太采用'全部成本+约定收益'模式、上行弹性受合同约束。2026-07-17收盘16.86元虽较上一报告价下跌约32%，仍对应约353亿元市值和约79倍2025年PE，显著高于6.50-9.00元合理价值。控股股东一致行动人7月9日减持4,800万股（占总股本2.30%），构成偏负面的供给信号；7月17日收盘后披露的累计诉讼、仲裁涉案9.20亿元（占经审计净资产10.66%），其中楚雄项目反映竣工后结算与回款争议，强化EPC现金转换风险。在利润、毛利率与经营现金流同步兑现前维持观察、当前不买。",
-  "current_rating": "watch",
-  "quality_rating": "B-",
-  "valuation_rating": "极贵",
-  "fair_value_range": [
-    6.5,
-    9.0
-  ],
-  "buy_zone": [
-    0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    999.0
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "太极实业",
+    "security_status": "active",
+    "symbol": "CN:600667",
+    "ticker": "600667"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "22552f7986b594fc260066f1624cb3b347d88b01f989ed32336b6746f06d362f"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "71c796cb93e6f4483a3aac4fb35d6d73b1fcc23e584afd3c7ef4c68f071b87a9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_5.20",
-      "action": "分批买入",
-      "max_weight": 0.06,
-      "reason": "价格低于悲观与基准估值交界，工程周期和应收风险已有较充分折价。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年中报披露后复核半导体工程订单、毛利率、现金流、应收账款、合同资产，以及2026-07-18累计诉讼公告所列案件的坏账、预计负债和回款影响。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_5.20_and_6.50",
-      "action": "小仓位买入",
-      "max_weight": 0.04,
-      "reason": "有安全边际，但仍需确认半导体订单质量和经营现金流。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计2026年三季报披露后复核全年利润兑现路径、订单质量和新任董事长秦晨飞任期内的资本开支与产业整合动作。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_6.50_and_9.00",
-      "action": "观察或试探",
-      "max_weight": 0.02,
-      "reason": "接近合理价值区间，仅适合在订单、毛利率和回款同时改善时持有。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入有安全边际的买入观察区，需同步复核订单和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_12.00",
-      "action": "不新增并逐步减仓",
-      "max_weight": 0.0,
-      "reason": "估值开始明显透支先进封装/HBM期权，风险收益不对称。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于不应追高价格，除非利润和现金流显著上修，否则应减仓或不买。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入题材性高估区，需要严格防范估值回撤。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入有安全边际的买入观察区，需同步复核订单和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于不应追高价格，除非利润和现金流显著上修，否则应减仓或不买。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入题材性高估区，需要严格防范估值回撤。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年中报披露后复核半导体工程订单、毛利率、现金流、应收账款、合同资产，以及2026-07-18累计诉讼公告所列案件的坏账、预计负债和回款影响。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报披露后复核全年利润兑现路径、订单质量和新任董事长秦晨飞任期内的资本开支与产业整合动作。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "十一科技新签订单总额及半导体订单占比（基线2025年新签234.60亿元）",
-    "工程业务毛利率和项目回款条款",
-    "海太半导体收入、利润及SK海力士合同变化，关注'全部成本+约定收益'收益率是否调整",
-    "经营性现金流净额/归母净利润",
-    "应收账款、合同资产及坏账准备变化",
-    "资产负债率和应付账款规模",
-    "公司整体毛利率是否提升至9%以上",
-    "归母净利润是否突破8亿元（参考2021年9.09亿元周期高点）且由现金流支持",
-    "是否出现与先进封装/HBM相关的实质性产品、客户或订单披露",
-    "新任董事长秦晨飞任期内的资本开支节奏与产业整合动作",
-    "2026-07-18累计诉讼、仲裁案件的结算、判决、坏账准备、预计负债和执行回款进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

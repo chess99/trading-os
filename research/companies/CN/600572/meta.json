@@ -1,89 +1,105 @@
 {
-  "symbol": "CN:600572",
-  "ticker": "600572",
-  "name": "康恩贝",
-  "market": "CN",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "康恩贝是现金流扎实的中药大健康与OTC品牌药公司，2026Q1经营修复明显，但现价相对合理价值折价有限，需等待半年报验证或更低价格提供安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "currency": "CNY",
-  "fair_value_range": [
-    4.6,
-    5.6
-  ],
-  "buy_zone": [
-    3.4,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.8,
-    6.3
-  ],
-  "position_plan": [
-    {
-      "condition": "价格低于或等于3.80元，且2026H1扣非归母净利润同比为正、经营现金流不低于4.5亿元",
-      "action": "建立观察仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "价格低于或等于3.40元，且没有重大集采降价、资产减值或治理负面",
-      "action": "提高到价值仓",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格高于5.80元且盈利预测没有上修，或2026H1制剂收入恢复证伪",
-      "action": "降低仓位或退出",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入买入区间上沿，股息率和2026E PE提供更好安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "进入深度价值区间，可在基本面未恶化时加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.8,
-      "reason": "超过合理价值上沿附近，若盈利没有同步上修应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026半年报，重点检查制剂收入、扣非利润、经营现金流和销售费用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认全年利润中枢是否达到6.5-8.0亿元区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和分红政策，重新估算长期自由现金流和合理价值"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 4.41,
-    "last_price_date": "2026-07-16",
-    "market_cap_estimate_cny_billion": 11.19,
-    "normalized_2026_profit_estimate_cny_billion": [
-      0.65,
-      0.8
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康恩贝",
+    "security_status": "active",
+    "symbol": "CN:600572",
+    "ticker": "600572"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "fd2270cac9852ac46b5d603a90d78e06abf3b883b982823c5139fdcd4cc4b702"
+      }
     ],
-    "dividend_yield_estimate": 0.034
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026半年报，重点检查制剂收入、扣非利润、经营现金流和销售费用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认全年利润中枢是否达到6.5-8.0亿元区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和分红政策，重新估算长期自由现金流和合理价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入买入区间上沿，股息率和2026E PE提供更好安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "进入深度价值区间，可在基本面未恶化时加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.8
+      },
+      "reason": "超过合理价值上沿附近，若盈利没有同步上修应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

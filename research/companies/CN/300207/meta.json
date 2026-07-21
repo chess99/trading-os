@@ -1,136 +1,140 @@
 {
-  "symbol": "CN:300207",
-  "market": "CN",
-  "ticker": "300207",
-  "name": "欣旺达",
-  "company_name": "欣旺达电子股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "欣旺达具备消费电池客户认证和制造底盘，动力电池与储能提供第二曲线，但2025年扣非净利大幅下滑、2026Q1扣非接近盈亏线，且资产负债率、长期借款、汇兑损失和质量索赔风险仍高。2026-07-13收盘价16.62元已接近可试错区，但还不满足重仓买入条件，应等待价格进入14.0-15.5元或中报验证动储毛利率、扣非利润和经营现金流修复。",
-  "quality_rating": "B-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    14,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    27,
-    32
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "欣旺达",
+    "security_status": "active",
+    "symbol": "CN:300207",
+    "ticker": "300207"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "5692ea58c1db8d7e98f0833cd3df68eecfad90c40bfe5a22cf317b82a3e98161"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3857a6c34b684e0fe79576a285ce5a6d040ccd408856eb7f81bcea06a4c8b354"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在16-18元且尚未披露2026中报验证动储毛利率和扣非利润修复",
-      "action": "仅保留或建立观察仓",
-      "max_weight": 0.01,
-      "reason": "当前价格接近试错区，但2026Q1扣非净利为负、经营现金流明显转弱，基本面证据不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点看扣非净利、经营现金流、动储毛利率、存货和负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入14.0-15.5元且未出现新增重大质量索赔、现金流恶化或客户流失",
-      "action": "分批买入至中低仓位",
-      "max_weight": 0.02,
-      "reason": "价格相对合理价值区间形成安全边际，可承受盈利修复的不确定性"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证盈利修复是否连续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026中报或三季报显示扣非净利恢复正增长、经营现金流改善且动储毛利率上行",
-      "action": "提高至计划仓位上限",
-      "max_weight": 0.03,
-      "reason": "投资假设从价格赔率转为基本面验证，可给予更高仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "年末复盘重大质量索赔、客户召回、海外汇兑损失或港股上市进展；若期间提前披露重大事项则提前复评",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于27元但扣非净利和经营现金流没有同步修复",
-      "action": "逐步减仓",
-      "max_weight": 0.005,
-      "reason": "估值开始提前反映乐观情景，而利润质量尚未匹配"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入买入区上沿，复查公告和现金流后可分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度扣非净利低于2025同期且资产负债率继续上行",
-      "action": "退出或降为零仓位",
-      "max_weight": 0,
-      "reason": "说明收入增长无法转化为股东回报，高杠杆扩张风险上升"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入更高安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "深度安全边际区，需重点排查是否存在未反映的质量、客户或流动性风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "接近合理价值区间上沿，需要重新评估盈利修复兑现度",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "进入减仓观察区，若扣非利润未明显改善应降低仓位",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过当前乐观估值区，除非盈利预测显著上修，否则应卖出或大幅减仓",
+      "trigger_id": "legacy-price-6",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入买入区上沿，复查公告和现金流后可分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入更高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "深度安全边际区，需重点排查是否存在未反映的质量、客户或流动性风险"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "接近合理价值区间上沿，需要重新评估盈利修复兑现度"
-    },
-    {
-      "type": "price_above",
-      "price": 27,
-      "reason": "进入减仓观察区，若扣非利润未明显改善应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过当前乐观估值区，除非盈利预测显著上修，否则应卖出或大幅减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点看扣非净利、经营现金流、动储毛利率、存货和负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证盈利修复是否连续"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "年末复盘重大质量索赔、客户召回、海外汇兑损失或港股上市进展；若期间提前披露重大事项则提前复评"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入增速",
-    "归母净利润增速",
-    "扣非归母净利润及扣非净利率",
-    "综合毛利率",
-    "消费类电池毛利率",
-    "电动汽车类电池毛利率",
-    "储能系统毛利率",
-    "动力电池和储能电芯出货量",
-    "经营活动现金流净额",
-    "自由现金流",
-    "应收账款增速",
-    "存货增速",
-    "资产负债率",
-    "短期借款和一年内到期非流动负债",
-    "长期借款",
-    "财务费用和汇兑损益",
-    "在建工程和资本开支",
-    "海外收入占比",
-    "重大质量索赔或预计负债",
-    "主要客户定点、量产和回款情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

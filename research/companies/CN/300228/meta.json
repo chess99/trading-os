@@ -1,91 +1,105 @@
 {
-  "symbol": "CN:300228",
-  "market": "CN",
-  "ticker": "300228",
-  "name": "富瑞特装",
-  "company_name": "张家港富瑞特种装备股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "富瑞特装是 LNG 重卡景气链条中弹性较高的低温装备公司，2025 年利润修复明显，业务核心在 LNG 车用供气系统而非氢能概念。公司护城河来自工程经验、客户认证和交付能力，但仍受天然气重卡周期、油气价差、主机厂排产和现金流波动影响。2026-07-13 附近约 7.4 元价格安全边际不足，等待 6 元以下更合适。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [6.0, 7.2],
-  "buy_zone": [5.0, 6.0],
-  "sell_or_reduce_zone": [8.5, 9.5],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富瑞特装",
+    "security_status": "active",
+    "symbol": "CN:300228",
+    "ticker": "300228"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "32f8e2e2f58efb97748ddbcded9f6a00aa9c106b0273e97e0efa02d9d886e12e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 6.0 元，且 LNG 重卡月度销量、公司订单和毛利率未出现明显恶化",
-      "action": "建立试探仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看 LNG 车用供气系统收入、毛利率、经营现金流和存货应收",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 5.2 元，且最近单季归母净利润不低于 0.45 亿元、毛利率不低于 18%",
-      "action": "提升至中等偏低仓位",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报及天然气重卡旺季数据，确认景气是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 8.5 元，或天然气重卡销量连续 3 个月同比转负且公司订单放缓",
-      "action": "降至观察仓或不持有",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估利润中枢、现金流质量和资本配置",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "价格低于合理价值下沿，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "若基本面未恶化，赔率明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "价格进入估值上沿以上，除非盈利预测上修，否则安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "currency": "CNY",
-      "action": "进入试买观察",
-      "reason": "价格低于合理价值下沿，开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "currency": "CNY",
-      "action": "复核后可加仓",
-      "reason": "若基本面未恶化，赔率明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "currency": "CNY",
-      "action": "考虑减仓",
-      "reason": "价格进入估值上沿以上，除非盈利预测上修，否则安全边际不足"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看 LNG 车用供气系统收入、毛利率、经营现金流和存货应收"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报及天然气重卡旺季数据，确认景气是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估利润中枢、现金流质量和资本配置"
-    }
-  ],
-  "key_tracking_metrics": [
-    "天然气重卡月度终端销量、渗透率和油气价差",
-    "LNG 车用供气系统收入、订单和毛利率",
-    "境外收入占比及高端装备订单",
-    "经营现金流净额/归母净利润",
-    "应收账款、存货、合同资产增速",
-    "氢阀、液氢供氢系统、低温阀门的新客户认证和量产收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

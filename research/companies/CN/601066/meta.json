@@ -1,47 +1,110 @@
 {
-  "symbol": "CN:601066",
-  "market": "CN",
-  "ticker": "601066",
-  "name": "中信建投",
-  "company_name": "中信建投证券股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中信建投是投行业务头部、综合能力较强的大型券商，质量评级A-；但A股当前估值（PB≈1.89x、PE≈26.6x）显著高于其7%-10%可持续ROE对应的合理区间，也大幅高于H股与多数头部同行；现阶段更适合观察，等待价格回到22元以下再考虑建仓，16-20元才具备明确安全边际。",
-  "quality_rating": "A-",
-  "valuation_rating": "expensive",
-  "fair_value_range": [19, 24],
-  "buy_zone": [16, 20],
-  "strong_attraction_zone": [14, 16],
-  "sell_or_reduce_zone": [26, 30],
-  "do_not_chase_above": 26,
-  "position_plan": [
-    {"zone": ">30元", "condition": "price_above_30_or_market_euphoria", "action": "avoid_new_buy_and_reduce_if_held", "target_weight": 0.0, "max_weight": 0.02},
-    {"zone": "26-30元", "condition": "price_between_26_and_30", "action": "watch_only_or_tiny_tracking_position", "target_weight": 0.02, "max_weight": 0.06},
-    {"zone": "22-26元", "condition": "price_between_22_and_26", "action": "start_small_position", "target_weight": 0.05, "max_weight": 0.08},
-    {"zone": "18-22元", "condition": "price_between_18_and_22", "action": "build_position_gradually", "target_weight": 0.10, "max_weight": 0.15},
-    {"zone": "14-18元", "condition": "price_between_14_and_18", "action": "buy_aggressively", "target_weight": 0.20, "max_weight": 0.25},
-    {"zone": "<14元", "condition": "price_below_14", "action": "buy_strongly", "target_weight": 0.30, "max_weight": 0.35}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中信建投",
+    "security_status": "active",
+    "symbol": "CN:601066",
+    "ticker": "601066"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "0420db4a22e60589ff0818419a456b6b7c1881d49ad9123bda03c9b35abae120"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "e846970dcef2fe86d07d78d69ca9d00ee6c625c857df06b1c4a60d0d19b5aa35"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报：复查投行修复、ROE和机构交易收入质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报：确认盈利弹性是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "2026年年报预告与资本配置",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "首次回到可认真评估建仓的价格区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入高安全边际和强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "超过不追高阈值，需重新审视估值与仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md", "reports/2026-07-09-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026半年报：复查投行修复、ROE和机构交易收入质量"},
-    {"type": "date", "date": "2026-10-31", "reason": "2026年三季报：确认盈利弹性是否可持续"},
-    {"type": "date", "date": "2027-03-31", "reason": "2026年年报预告与资本配置"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 22, "reason": "首次回到可认真评估建仓的价格区间"},
-    {"type": "price_below", "price": 16, "reason": "进入高安全边际和强吸引力买入区"},
-    {"type": "price_above", "price": 26, "reason": "超过不追高阈值，需重新审视估值与仓位"}
-  ],
-  "key_risks": [
-    "市场成交额下滑压缩财富管理与机构业务弹性",
-    "IPO/再融资继续偏弱损伤投行高估值叙事",
-    "监管政策收紧（资本中介、衍生品、投行收费、研究销售）",
-    "自营波动（债市、权益、衍生品）放大利润波动",
-    "A/H溢价向行业均值回落",
-    "ROE抬升证伪：2026全年仍维持7%-8%"
-  ],
-  "updated_at": "2026-07-09T11:21:29Z"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

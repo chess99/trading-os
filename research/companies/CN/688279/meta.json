@@ -1,71 +1,110 @@
 {
-  "symbol": "CN:688279",
-  "market": "CN",
-  "ticker": "688279",
-  "name": "峰岹科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "峰岹科技凭借自主ME内核、无感FOC和系统级服务形成电机驱动控制芯片壁垒，汽车与工业已贡献可量化增长，2026Q1延续高增；2026-07-17收盘188.57元虽已回到150-195元合理价值区间，但约84.5倍TTM PE仍缺乏安全边际，且无新增机器人量产或汽车订单证据，等待125-155元或利润兑现后再建常规仓位。",
-  "fair_value_range": [150, 195],
-  "buy_zone": [125, 155],
-  "sell_or_reduce_zone": [220, 280],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "峰岹科技",
+    "security_status": "active",
+    "symbol": "CN:688279",
+    "ticker": "688279"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "0bb589df5c3d8c289e188e08afadd00ef80d70db65e79ecd830333b55a716c37"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "46e6bd24438e787e3e868c2226160b8a030b9a7eefbd9057fd620ae28f96b2bf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于155元，或机器人仍无量产收入且估值超过80倍TTM PE",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报的收入、毛利率、扣非净利、经营现金流、汽车和工业占比及库存结构。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入145-155元，综合毛利率不低于49%、汽车收入保持增长且存货增速不高于收入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报、上海华芯减持结果及全年业绩兑现度。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格进入125-145元，核心假设未破坏且经营现金流与扣非利润匹配",
-      "max_weight": 0.025
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年报的车规量产、机器人和传感器收入、海外收入、募集资金使用及ROE。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格进入110-125元且确认下跌仅为估值压缩，不是毛利、库存、客户或治理恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 155.0
+      },
+      "reason": "进入买入区上沿，需复核毛利率、汽车收入、存货和渠道动销后再建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 125.0
+      },
+      "reason": "进入强吸引力复核区，确认不是基本面证伪后方可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 250.0
+      },
+      "reason": "进入高估值减仓复核区，除非可持续利润预期和机器人量产证据同步上修。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报的收入、毛利率、扣非净利、经营现金流、汽车和工业占比及库存结构。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报、上海华芯减持结果及全年业绩兑现度。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年报的车规量产、机器人和传感器收入、海外收入、募集资金使用及ROE。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 155,
-      "reason": "进入买入区上沿，需复核毛利率、汽车收入、存货和渠道动销后再建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 125,
-      "reason": "进入强吸引力复核区，确认不是基本面证伪后方可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 250,
-      "reason": "进入高估值减仓复核区，除非可持续利润预期和机器人量产证据同步上修。"
-    }
-  ],
-  "updated_at": "2026-07-18T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

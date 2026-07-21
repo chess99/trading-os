@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:301361",
-  "ticker": "301361",
-  "name": "众智科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "众智科技是高毛利、低负债、现金充裕的发电机组控制器细分龙头，但当前价格已接近合理价值中枢，新能源控制器和海外高端市场仍需验证，宜观察等待安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    31
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    36,
-    42
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众智科技",
+    "security_status": "active",
+    "symbol": "CN:301361",
+    "ticker": "301361"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "2ca480a3e16b780808ed041a14885f7e2561a365f53f2da010653aef4ac98835"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于23元，且2026年中报收入和扣非净利润保持双位数增长、综合毛利率未明显下滑时，可建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、扣非净利润、毛利率、海外收入和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于23-27元之间，仅保留跟踪，不主动加仓，等待中报和海外收入验证。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报，判断全年利润增速和估值区间是否需要调整。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若新能源控制器或海外高端客户形成可核验收入增量，且估值仍低于30倍2026年利润，可把上限提高到中等小仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证新能源控制器、海外市场和现金流质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入买入观察区，需复核中报增长、毛利率和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "进入高估或减仓复核区，若利润增速未显著高于20%，赔率转弱。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入买入观察区，需复核中报增长、毛利率和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "进入高估或减仓复核区，若利润增速未显著高于20%，赔率转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、扣非净利润、毛利率、海外收入和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报，判断全年利润增速和估值区间是否需要调整。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证新能源控制器、海外市场和现金流质量。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

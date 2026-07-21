@@ -1,115 +1,120 @@
 {
-  "symbol": "CN:001296",
-  "market": "CN",
-  "ticker": "001296",
-  "name": "长江材料",
-  "company_name": "重庆长江造型材料（集团）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B",
-  "valuation_rating": "C",
-  "current_thesis": "长江材料是铸造材料、废旧砂再生和压裂支撑剂领域的工业材料公司，资产负债表稳健、2025年现金流质量较好，但2026Q1收入和利润双降，当前价格接近合理价值区间上半部，缺少买方安全边际，适合继续观察而非主动买入。",
-  "fair_value_range": [
-    14.5,
-    18.5
-  ],
-  "buy_zone": [
-    12.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    19.0,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长江材料",
+    "security_status": "active",
+    "symbol": "CN:001296",
+    "ticker": "001296"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "33729d288640897676cb86509ed6c5f0f283d8b45b151225a25085e73ec6ef7d"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "56fe66f870e5ec0a9c840c456fc3bb6e110a4c58bcc1b67c1e9ac743b42471af"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于17元且2026H1尚未证明收入和利润修复",
-      "action": "仅观察，不主动买入",
-      "max_weight": 0.0,
-      "reason": "当前估值已经反映稳定现金流小龙头的大部分价值，缺少安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后复核收入修复、毛利率、现金流和压裂支撑剂价格",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至14.5元以下，且最新季度铸造材料毛利率未低于27%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入合理价值区间下沿，风险收益开始改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后复核全年利润中枢和估值区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至13.5元附近，且半年报确认收入恢复、压裂支撑剂毛利率不低于15%",
-      "action": "加至小仓位",
-      "max_weight": 0.02,
-      "reason": "估值折价足以补偿周期和招投标价格风险"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报披露后重估长期自由现金流和分红能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于19元但未来12个月利润没有上修",
-      "action": "不追价，已有仓位可降至观察仓",
-      "max_weight": 0.005,
-      "reason": "股价进入合理价值区间上方，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入买入观察区，复核最新季度毛利率、现金流和订单稳定性",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "连续两个季度收入同比下滑且综合毛利率低于24%",
-      "action": "退出观察仓或维持零仓位",
-      "max_weight": 0.0,
-      "reason": "核心盈利假设被破坏"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入更有吸引力的安全边际区，若基本面未恶化可考虑提高至小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 19.0
+      },
+      "reason": "超过合理价值区间上沿，若利润没有上修则不应追价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入减持或放弃区，除非再生砂和环保材料出现明确超预期放量",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入买入观察区，复核最新季度毛利率、现金流和订单稳定性"
-    },
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入更有吸引力的安全边际区，若基本面未恶化可考虑提高至小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 19.0,
-      "reason": "超过合理价值区间上沿，若利润没有上修则不应追价"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入减持或放弃区，除非再生砂和环保材料出现明确超预期放量"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后复核收入修复、毛利率、现金流和压裂支撑剂价格"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后复核全年利润中枢和估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报披露后重估长期自由现金流和分红能力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "归母净利润和扣非归母净利润同比增速",
-    "综合毛利率、铸造材料毛利率和压裂支撑剂毛利率",
-    "经营活动现金流净额与净利润匹配度",
-    "应收账款和存货周转",
-    "前五大客户销售占比和能源客户订单变化",
-    "石英砂、酚醛树脂、能源和运输成本",
-    "再生砂项目新增客户和产能利用率",
-    "油气勘探费用和管理费用变化",
-    "分红与回购执行情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

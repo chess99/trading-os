@@ -1,135 +1,123 @@
 {
-  "symbol": "CN:002942",
-  "market": "CN",
-  "ticker": "002942",
-  "name": "新农股份",
-  "company_name": "浙江新农化工股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是有制剂品牌和研发/EHS积累的小市值农化企业，2025年和2026Q1利润恢复、资产负债表很稳健，但行业仍处于供给过剩和监管升级阶段，ROE尚不高，14元附近缺少足够安全边际；等待跌入11.5-12.0元以下或后续季度证明正常化盈利上台阶。",
-  "quality_rating": "中上",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    13.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新农股份",
+    "security_status": "active",
+    "symbol": "CN:002942",
+    "ticker": "002942"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "f83f51010abf59d6d991f2c57e251de7c96954229ae5a4d60fb2fa42c6a77259"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约14.08元，处于合理价值区间中部且安全边际不足",
-      "action": "不主动买入；已有仓位可持有观察但不加仓",
-      "max_weight": 0.01,
-      "target_position": "0%-1%"
-    },
-    {
-      "condition": "股价跌至12.0元以下，且2026年后续季度扣非净利、毛利率、应收账款没有明显恶化",
-      "action": "开始分批建仓",
-      "max_weight": 0.02,
-      "target_position": "1.5%-2%"
-    },
-    {
-      "condition": "股价跌至10.5元以下，且未出现安全环保、监管、客户流失或现金流恶化等硬伤",
-      "action": "提高仓位",
-      "max_weight": 0.04,
-      "target_position": "3%-4%"
-    },
-    {
-      "condition": "股价在13.0-14.0元但连续两个季度扣非利润同比双位数增长且经营现金流恢复为正",
-      "action": "允许小额验证仓位",
-      "max_weight": 0.01,
-      "target_position": "不超过1%"
-    },
-    {
-      "condition": "股价升至17.5元以上且正常化归母净利润仍在1.0-1.2亿元区间",
-      "action": "减仓或停止买入",
-      "max_weight": 0.01,
-      "target_position": "0%-1%"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "currency": "CNY",
-      "reason": "跌入可买区，较合理价值中枢具备约20%以上安全边际",
-      "action": "进入可买区，复核基本面后可建1.5%-2%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "跌入强安全边际区，估值已明显低于保守PB/DCF下沿",
-      "action": "进入强安全边际区，若无基本面恶化可提高到3%-4%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "currency": "CNY",
-      "reason": "价格超过当前合理价值上沿，除非正常化盈利上台阶否则风险收益转弱",
-      "action": "复核估值是否透支，若盈利未上台阶则减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年度报告预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "确认2026年上半年利润恢复是否由制剂和海外业务驱动，并检查应收账款风险",
-      "action": "复核制剂收入、海外制剂增速、应收账款和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证三季度淡旺季切换后盈利和现金流是否维持韧性",
-      "action": "复核项目ROIC、折旧压力和产能利用率"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年度报告预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "用全年数据重估正常化利润、自由现金流和合理价格区间",
-      "action": "复核利润质量和坏账风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年半年度报告预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "跟踪海外制剂和高毛利制剂业务是否形成持续增长曲线",
-      "action": "复核海外制剂增长、制剂毛利率和现金回款"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "condition": "2027年年度报告预计披露后",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "评估扩产项目、ROE和资本配置是否兑现长期投资逻辑",
-      "action": "复核长期ROE、分红率、20000吨制剂项目回报和估值区间"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "跌入可买区，较合理价值中枢具备约20%以上安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "跌入强安全边际区，估值已明显低于保守PB/DCF下沿",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "价格超过当前合理价值上沿，除非正常化盈利上台阶否则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "制剂收入增速与制剂毛利率",
-    "海外制剂收入增速、登记进展和重点区域渠道质量",
-    "原药及中间体毛利率",
-    "经营现金流/净利润和自由现金流",
-    "应收账款增速、账龄和坏账计提",
-    "20000吨制剂项目进度、投产后产能利用率和ROIC",
-    "研发投入率、新产品登记和产业化进度",
-    "分红率、现金及交易性金融资产使用效率",
-    "安全事故、环保事件、职业病人数"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

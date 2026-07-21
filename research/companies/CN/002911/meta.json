@@ -1,126 +1,129 @@
 {
-  "symbol": "CN:002911",
-  "market": "CN",
-  "ticker": "002911",
-  "name": "佛燃能源",
-  "company_name": "佛燃能源集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "佛燃能源具备佛山区域城燃管网、工商业客户和高分红现金流优势，2025年归母净利润10.30亿元、经营性净现金流18.98亿元、累计现金分红6.75亿元，形成股息率估值底；但城市燃气销量下降、2026年一季度收入下滑，能源化工服务毛利率仅0.71%，新业务仍偏期权。当前约10.4元价格接近合理价值区间下沿但安全边际不足，等待9.4元以下或中报现金流继续验证后再买。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏低但安全边际不足",
-  "fair_value_range": [
-    10.2,
-    12.5
-  ],
-  "buy_zone": [
-    8.7,
-    9.4
-  ],
-  "sell_or_reduce_zone": [
-    13.2,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "佛燃能源",
+    "security_status": "active",
+    "symbol": "CN:002911",
+    "ticker": "002911"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "96cfebe146bfabf44033e3d479d699407fb916801341f42b14217031f218ce19"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "13f4c7bfd70cc3e1cdca3c0f48b248a1c08e63f748eef6cef706f7927e274e99"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于9.4元，且分红政策未变化、城燃毛利率未明显恶化",
-      "max_weight": 0.04,
-      "action": "建立2%-4%观察仓"
-    },
-    {
-      "condition": "价格低于8.7元，且最新中报或三季报经营现金流回正、扣非利润未显著下滑",
-      "max_weight": 0.07,
-      "action": "提高至5%-7%仓位"
-    },
-    {
-      "condition": "价格处于10.2-12.5元，基本面符合预期但无利润上修",
-      "max_weight": 0.04,
-      "action": "持有观察，不主动加仓"
-    },
-    {
-      "condition": "价格高于13.2元，或股息率降至约4%以下且利润没有上修",
-      "max_weight": 0.02,
-      "action": "停止新增并评估减仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.4,
-      "unit": "CNY/share",
-      "reason": "对应2025年现金分红约5.5%股息率，开始具备小仓位配置价值",
-      "action": "复核最新现金流和城燃毛利率后小仓买入"
-    },
-    {
-      "type": "price_below",
-      "price": 8.7,
-      "unit": "CNY/share",
-      "reason": "对应约6%股息率，若分红和现金流未恶化则安全边际较厚",
-      "action": "在基本面未恶化前提下提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.2,
-      "unit": "CNY/share",
-      "reason": "高于基准合理价值区间，预期收益率下降",
-      "action": "停止新增，等待利润上修或新业务订单验证"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "unit": "CNY/share",
-      "reason": "若无利润上修或绿色甲醇/SOFC实质兑现，估值已进入乐观区间",
-      "action": "考虑减仓并锁定收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证2026年上半年业绩快报、现金流和城燃销量变化的关键节点",
-      "condition": "2026年半年报披露",
-      "action": "复核经营现金流、扣非利润、能源化工服务毛利率和应收/存货变化"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证天然气贸易现金流季节性差异是否回补",
-      "condition": "2026年三季报披露",
-      "action": "复核经营现金流/归母净利润、售气量和单位毛差"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年度报告可验证高分红政策、2026年利润增长目标和新业务资本开支纪律",
-      "condition": "2026年年度报告披露",
-      "action": "重估股息率估值、DCF自由现金流和买入区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "绿色甲醇和SOFC仍属期权资产，需要以订单、产能和毛利率验证",
-      "condition": "公司披露绿色甲醇或SOFC项目重大进展",
-      "action": "评估是否将新业务纳入基准估值"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.4
+      },
+      "reason": "对应2025年现金分红约5.5%股息率，开始具备小仓位配置价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.7
+      },
+      "reason": "对应约6%股息率，若分红和现金流未恶化则安全边际较厚",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.2
+      },
+      "reason": "高于基准合理价值区间，预期收益率下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "若无利润上修或绿色甲醇/SOFC实质兑现，估值已进入乐观区间",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "总天然气供应量和城市燃气销售量",
-    "工商业用户用气占比和单位毛差",
-    "城燃等能源业务毛利率",
-    "能源化工服务业务收入、毛利率、存货周转和应收账款",
-    "经营性现金流/归母净利润",
-    "LNG长协及套期损益对利润的贡献",
-    "每股现金分红和分红率",
-    "绿色甲醇项目资本开支、产能、订单和毛利率",
-    "SOFC示范项目运行情况和商业订单",
-    "全国天然气表观消费量与佛山工业景气"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

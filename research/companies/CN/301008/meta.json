@@ -1,78 +1,105 @@
 {
-  "symbol": "CN:301008",
-  "ticker": "301008",
-  "name": "宏昌科技",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "家电流体控制零部件主业有客户和模块化能力，但2025年至2026Q1盈利下滑明显；机器人关节/无框电机仍是低置信度期权，当前估值已透支乐观情景，缺少安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    14,
-    22
-  ],
-  "buy_zone": [
-    10,
-    15
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    40
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏昌科技",
+    "security_status": "active",
+    "symbol": "CN:301008",
+    "ticker": "301008"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "0289ddf090fa73339b10367ba6a4ff779e239911e5ac6a0490cb0581943d07dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于基准估值上沿且机器人业务关键订单未核验，维持0仓位观察。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利、经营现金流、主业毛利率、汽车部件毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若价格回落至15元以下，且2026H1扣非净利和经营现金流未继续恶化，可建立研究仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断盈利修复是否可持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若家电主业毛利率恢复至15%以上、汽车部件毛利率转正、机器人业务披露可量化批量订单，再评估提升仓位。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，评估机器人业务并表、订单和投资减值风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入买入研究区，需复核半年报、现金流和机器人订单进展。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入悲观情景价值区，若基本面未坍塌可重新评估赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "估值进一步脱离可核验基本面，需确认是否存在未覆盖的重大订单或主题交易风险。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "进入买入研究区，需复核半年报、现金流和机器人订单进展。"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入悲观情景价值区，若基本面未坍塌可重新评估赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "估值进一步脱离可核验基本面，需确认是否存在未覆盖的重大订单或主题交易风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利、经营现金流、主业毛利率、汽车部件毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断盈利修复是否可持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，评估机器人业务并表、订单和投资减值风险。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

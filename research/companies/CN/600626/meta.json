@@ -1,84 +1,95 @@
 {
-  "symbol": "CN:600626",
-  "ticker": "600626",
-  "name": "申达股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司是以上海国资为背景的汽车内饰与进出口平台，2026H1 预计扭亏说明底部修复正在发生；但业务毛利率低、汇兑敏感、资产负债率较高，当前价格接近基准估值上沿，缺乏足够安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    2.7,
-    3.4
-  ],
-  "buy_zone": [
-    2.2,
-    2.6
-  ],
-  "sell_or_reduce_zone": [
-    4.2,
-    4.6
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于 2.60 元，且 2026 半年报确认扣非盈利为正、经营现金流未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 2.20 元，且汽车内饰毛利率未继续下滑、没有新增重大汇兑或债务风险",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于 4.20 元但扣非净利率仍低于 1.5%",
-      "action": "减仓或不参与",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入买入观察区，需要结合半年报确认利润和现金流质量。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.2,
-      "reason": "超过基准估值上沿，除非扣非盈利显著上修，否则风险收益不划算。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点验证预盈兑现、扣非利润、现金流和汇兑敞口。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，判断汽车内饰毛利率和海外业务修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，确认全年扣非盈利是否达到估值上修门槛。"
-    }
-  ],
-  "key_metrics": {
-    "verified_price_date": "2026-07-16",
-    "verified_close_price": 3.34,
-    "shares_outstanding_billion": 1.320744667,
-    "market_cap_billion_cny": 4.41,
-    "q1_2026_attributable_equity_billion_cny": 3.208,
-    "q1_2026_estimated_pb": 1.38
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "申达股份",
+    "security_status": "active",
+    "symbol": "CN:600626",
+    "ticker": "600626"
   },
-  "decision": "观察",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c2c51a41d1e5ea91b88d1f0bcd5258e58010e60b92cecefff66d70ed81374a7e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点验证预盈兑现、扣非利润、现金流和汇兑敞口。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，判断汽车内饰毛利率和海外业务修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，确认全年扣非盈利是否达到估值上修门槛。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入买入观察区，需要结合半年报确认利润和现金流质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.2
+      },
+      "reason": "超过基准估值上沿，除非扣非盈利显著上修，否则风险收益不划算。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

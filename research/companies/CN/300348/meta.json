@@ -1,103 +1,105 @@
 {
-  "symbol": "CN:300348",
-  "market": "CN",
-  "ticker": "300348",
-  "name": "长亮科技",
-  "company_name": "深圳市长亮科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长亮科技具备银行核心系统、数据治理、财务价值链和东南亚金融 IT 项目经验，但 2025 年净利率和 ROE 很低，2026Q1 收入增长未能转化为利润，经营现金流和应收/存货压力上升。8 元以上价格已隐含较强修复预期，当前不买；等待 5 元以下安全边际或利润率/现金流明确修复后再评估。",
-  "quality_rating": "中等偏低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    5.2,
-    6.5
-  ],
-  "buy_zone": [
-    4.6,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    10.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长亮科技",
+    "security_status": "active",
+    "symbol": "CN:300348",
+    "ticker": "300348"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8faf1e41fc88fa34c94438d931da2e05ce5d4a731c6ed98191f06d16c4292540"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.6元，且未出现重大应收账款/存货减值、海外交付事故或控股股东质押显著扩大",
-      "action": "可建立2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、扣非净利率、经营现金流、应收账款和存货变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在4.6-5.0元之间，且2026年半年报显示收入增长、毛利率未继续恶化",
-      "action": "可建立1%-2%小仓，等待全年现金流验证",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1亏损是否只是季节性，以及全年利润修复概率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.5元，且扣非净利率仍低于3%或经营现金流未转正",
-      "action": "不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否上调可买价格或维持观察。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.5元，且基本面没有显著超预期改善",
-      "action": "若已持有则减仓或退出",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
       "reason": "进入估值安全边际初步可接受区域",
-      "action": "进入可买观察区，复核半年报、现金流、应收账款和存货后决定是否建仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 4.6,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.6
+      },
       "reason": "低于保守买入区下沿，赔率明显改善",
-      "action": "进入较好安全边际区，可考虑2%-3%观察仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 8.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
       "reason": "高于合理价值区较多且需要基本面显著改善支撑",
-      "action": "若利润率未修复，视为估值透支，考虑减仓或回避"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、扣非净利率、经营现金流、应收账款和存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1亏损是否只是季节性，以及全年利润修复概率。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否上调可买价格或维持观察。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非净利率是否在2026年回到2%以上、2027年回到3%以上",
-    "经营现金流净额是否持续为正，且经营现金流/归母净利润大于1",
-    "应收账款加存货占营业收入比例是否下降",
-    "海外收入、海外毛利率和重点项目上线进度",
-    "软件开发业务毛利率和人力成本增速",
-    "DataMind、AIStack、财务价值链产品是否带来标准化复用和毛利率提升",
-    "控股股东质押股份数量是否扩大"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

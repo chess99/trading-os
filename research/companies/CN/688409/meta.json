@@ -1,92 +1,96 @@
 {
-  "symbol": "CN:688409",
-  "market": "CN",
-  "ticker": "688409",
-  "name": "富创精密",
-  "company_name": "富创精密",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "富创精密是国内半导体设备精密零部件平台型公司，腔体、结构件、模组和气体管路受益于国产替代与客户认证壁垒，但当前股价已大幅预支远期成长，需等待价格回落或利润率、现金流显著修复后再考虑买入。",
-  "quality_rating": "A-",
-  "valuation_rating": "D",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "fair_value_range": [
-    150,
-    190
-  ],
-  "buy_zone": [
-    115,
-    150
-  ],
-  "sell_or_reduce_zone": [
-    220,
-    300
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富创精密",
+    "security_status": "active",
+    "symbol": "CN:688409",
+    "ticker": "688409"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "eb5607fa000c18ec81800aee43c10de9dc70e29ec8a72a3bc559cf48c2180550"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前股价高于220元且2026年利润率尚未充分修复",
-      "action": "不新增，已有仓位降至观察仓",
-      "max_weight": 0.01,
-      "reason": "估值已显著预支远期成长，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的收入增速、毛利率、扣非净利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至150元以内，且最近两个季度收入同比增速不低于25%、毛利率环比稳定或改善",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "价格接近基准合理价值下沿，且基本面仍在兑现"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证产能爬坡和利润率修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入115-130元区间，且订单、毛利率、经营现金流未出现破坏性恶化",
-      "action": "分批加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "进入较有吸引力的安全边际区间，但仍需控制半导体设备周期风险"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 150.0
+      },
+      "reason": "进入初始买入区，需要复核最新订单、毛利率与现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 115.0
+      },
+      "reason": "进入悲观情景价值区，需要判断是否为错杀还是基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 220.0
+      },
+      "reason": "估值再次明显高于基准合理价值，需要限制仓位或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 150,
-      "reason": "进入初始买入区，需要复核最新订单、毛利率与现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 115,
-      "reason": "进入悲观情景价值区，需要判断是否为错杀还是基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 220,
-      "reason": "估值再次明显高于基准合理价值，需要限制仓位或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的收入增速、毛利率、扣非净利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证产能爬坡和利润率修复是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "综合毛利率及腔体/模组产品结构变化",
-    "扣非归母净利率",
-    "经营现金流净额",
-    "存货与应收账款周转",
-    "在建工程、固定资产与折旧压力",
-    "国内头部半导体设备客户订单与认证进展",
-    "海外客户认证、Compart Systems整合与气体模组放量",
-    "新莱应材、正帆科技、海外供应链竞争和价格压力"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

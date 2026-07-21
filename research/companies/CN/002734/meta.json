@@ -1,106 +1,105 @@
 {
-  "symbol": "CN:002734",
-  "market": "CN",
-  "ticker": "002734",
-  "name": "利民股份",
-  "company_name": "利民控股集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "农药杀菌剂和杀虫剂景气修复、海外长协与百菌清投资收益带来利润弹性，但 2025 年高增长具有周期属性，约 16 元附近缺少足够安全边际；等待 13.0-14.0 元或中报继续验证后再加仓。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "中性",
-  "fair_value_range": [
-    16.0,
-    19.0
-  ],
-  "buy_zone": [
-    13.0,
-    14.0
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "利民股份",
+    "security_status": "active",
+    "symbol": "CN:002734",
+    "ticker": "002734"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "aff195e422c6c7aacc5a8d2d16973c0dfb2790ce5220879111b928349f69bafa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于 14.0 元且未出现环保安全、订单取消或产品价格快速下跌等负面变化",
-      "action": "建立目标仓位的 30%-50%",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报可以验证 2025 年景气修复是否延续到 2026 年",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 13.0 元且 2026H1 毛利率、经营现金流和海外订单兑现均保持健康",
-      "action": "提高至目标仓位的 50%-70%",
-      "max_weight": 0.7
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报和产品价格共同决定全年利润能否继续上修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于 15.0-19.0 元且 2026Q2/Q3 未明显超预期",
-      "action": "以持有或观察为主，不主动加仓",
-      "max_weight": 0.3
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报和下一年一季报能判断高景气是否进入新常态",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于 22.0 元且未来 12 个月归母净利润没有上修到 6.5 亿元以上",
-      "action": "分批减仓或退出",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "低于合理价值区间下沿约 12%，开始接近安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "相对 16.0-19.0 元合理价值区间形成约 20%-30% 折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "价格高于基准合理价值区间，周期股风险收益比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "action": "进入首轮买入观察",
-      "reason": "低于合理价值区间下沿约 12%，开始接近安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "action": "评估加仓到中等仓位",
-      "reason": "相对 16.0-19.0 元合理价值区间形成约 20%-30% 折价"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "action": "若盈利未显著上修则减仓",
-      "reason": "价格高于基准合理价值区间，周期股风险收益比下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "复核 2026 年半年报，重点看毛利率、经营现金流、海外收入和拜耳长协交付",
-      "reason": "半年报可以验证 2025 年景气修复是否延续到 2026 年"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "复核 2026 年三季报，并检查代森锰锌、百菌清、甲维盐、阿维菌素价格趋势",
-      "reason": "三季报和产品价格共同决定全年利润能否继续上修"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "复核 2026 年报和 2027 年一季报，重新评估合理价值、买入区和分红持续性",
-      "reason": "年报和下一年一季报能判断高景气是否进入新常态"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润同比增速",
-    "销售毛利率",
-    "经营活动现金流量净额",
-    "应收账款和存货周转",
-    "境外收入占比",
-    "拜耳长协交付金额",
-    "江苏新河化工投资收益",
-    "代森锰锌、百菌清、甲维盐、阿维菌素价格",
-    "分红率和资产负债率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

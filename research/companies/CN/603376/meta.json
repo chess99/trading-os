@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603376",
-  "market": "CN",
-  "ticker": "603376",
-  "name": "大明电子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "大明电子具备汽车车身电子控制总成的客户和产品扩张基础，但2026Q1及2026H1预告显示价格战、需求走弱、折旧和成本压力已经显著压低利润；在23.60元附近估值高于可比公司和行业中位，缺少买方安全边际，等待利润修复或股价回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14,
-    18
-  ],
-  "buy_zone": [
-    11,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    21,
-    24
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大明电子",
+    "security_status": "active",
+    "symbol": "CN:603376",
+    "ticker": "603376"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "0ec8687eb2588d1d71fcc8d0c77e3988532ff39b9b6960c942b63dc6ddaae021"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于14元且2026中报未出现新增治理或现金流风险",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际收入、毛利率、净利润和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元且毛利率企稳、经营现金流为正",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润修复和新产能折旧影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于20元且利润未连续两个季度修复",
-      "action": "不买入",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和海外/新厂项目兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入公允价值下沿和初始观察仓区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "接近保守买入区间，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "接近乐观情景估值上沿，若利润未修复应回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入公允价值下沿和初始观察仓区间"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "接近保守买入区间，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 24,
-      "reason": "接近乐观情景估值上沿，若利润未修复应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际收入、毛利率、净利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润修复和新产能折旧影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和海外/新厂项目兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300500",
-  "ticker": "300500",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "启迪设计",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "启迪设计完成嘉力达剥离后具备困境反转观察价值，但 2026 年仍存在证监会立案调查、年报保留意见、前期会计差错和尾部担保/财务资助风险；当前价格相对保守估值缺乏安全边际，等待风险落地和主业现金流修复。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.2,
-    7.2
-  ],
-  "buy_zone": [
-    0,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    12
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "启迪设计",
+    "security_status": "active",
+    "symbol": "CN:300500",
+    "ticker": "300500"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "61a1cc8cf605be74ca58c2d678579141314c4484c27e6338cc6c5e645f59c4d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅观察；若股价低于 5.2 元且监管处罚、嘉力达担保/财务资助风险无新增恶化，可建立跟踪仓。",
-      "action": "watch_then_small_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报收入、亏损收窄、经营现金流、应收和嘉力达尾部风险。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若 2026 半年报显示收入企稳、经营现金流为正、归母亏损明显收窄，并且调查结论影响可控，可提高至试错仓。",
-      "action": "increase_on_validation",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报主业修复和现金流延续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若出现新增重大处罚、嘉力达尾部风险扩大或经营现金流重新转负，退出观察或不建仓。",
-      "action": "avoid_or_exit",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报审计意见、监管调查进展和嘉力达转让损益最终确认。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "跌入保守买入区，具备约 25%-30% 安全边际，可重新评估困境反转赔率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于减持/回避区，当前治理和盈利风险下估值缺乏安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "跌入保守买入区，具备约 25%-30% 安全边际，可重新评估困境反转赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "高于减持/回避区，当前治理和盈利风险下估值缺乏安全边际。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报收入、亏损收窄、经营现金流、应收和嘉力达尾部风险。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报主业修复和现金流延续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报审计意见、监管调查进展和嘉力达转让损益最终确认。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

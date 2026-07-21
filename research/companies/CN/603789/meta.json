@@ -1,62 +1,86 @@
 {
-  "symbol": "CN:603789",
-  "market": "CN",
-  "ticker": "603789",
-  "name": "星光农机",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "星光农机处于困境反转与控制权变更窗口，但可核验经营资产仍连续亏损、现金流为负、净资产快速消耗，且公告明确新控股方36个月无资产注入或重组上市计划。当前股价隐含较高壳/反转预期，缺乏安全边际，评级avoid；只有在股价显著低于2.20元且经营现金流、扣非亏损、净资产趋势同步改善后才重新评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.2,
-    3.8
-  ],
-  "buy_zone": [
-    0.8,
-    2.2
-  ],
-  "sell_or_reduce_zone": [
-    5.0,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "星光农机",
+    "security_status": "active",
+    "symbol": "CN:603789",
+    "ticker": "603789"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "6273e7232c178a6155e99f42d43593f955a56aee5345e4f5fbc3fd502d85a1e2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前不建仓；若股价低于2.20元、2026年中报后连续两个季度经营现金流转正、扣非亏损收窄至单季不超过1000万元且归母净资产停止快速消耗，可重新评估观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、控制权变更进展、坏账和减值情况。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若控制权过户完成且公告确认新控股股东提供持续流动性支持，同时主营毛利率恢复至10%以上、燃油泵和专汽业务贡献正向归母利润，可将观察仓上限提高。",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.2,
-      "reason": "进入基准公允价值下沿和观察买区，需要复核是否出现可验证经营改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报现金流、毛利率、归母净资产和ST风险。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 5.0,
-      "reason": "明显高于当前可验证基本面价值区，若无利润和现金流改善，应继续回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、控制权变更进展、坏账和减值情况。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.2
+      },
+      "reason": "进入基准公允价值下沿和观察买区，需要复核是否出现可验证经营改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报现金流、毛利率、归母净资产和ST风险。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
+      "reason": "明显高于当前可验证基本面价值区，若无利润和现金流改善，应继续回避或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,66 +1,91 @@
 {
-  "symbol": "CN:002496",
-  "ticker": "002496",
-  "name": "辉丰股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "摘帽降低交易和退市尾部风险，但公司主营仍处修复早期，扣非盈利和经营现金流尚未验证；当前价格相对净资产和经营质量偏贵，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.7,
-    1.15
-  ],
-  "buy_zone": [
-    0.55,
-    0.75
-  ],
-  "sell_or_reduce_zone": [
-    1.8,
-    2.2
-  ],
-  "decision": "不买",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST辉丰",
+    "security_status": "active",
+    "symbol": "CN:002496",
+    "ticker": "002496"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c4515ceb0905835d997974f57d83e2de9fcbb99dfe1b5031fd4cf62dc33b975c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "82063e39208fb4de600b6b7a90d0061adc10af87ffc25e4287985a69da5f0437"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间，且扣非利润、经营现金流尚未持续转正。",
-      "action": "不建仓，仅观察。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-21"
+      },
+      "reason": "公司计划披露2026年半年度报告，复核收入质量、扣非亏损和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入0.55-0.75元买入区，且连续两个季度扣非净利润或经营现金流转正。",
-      "action": "重新评估小仓位试探。",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.75,
-      "reason": "进入估值观察/买入区，需要复核扣非利润和现金流是否同步改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认摘帽后经营修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 2.2,
-      "reason": "价格明显高于当前基本面可支撑区间，若基本面未同步改善应维持回避或降低关注优先级。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点看扣非净利润、经营现金流、石化毛利率和小分子肥收入。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.65
+      },
+      "reason": "进入观察区，需复核2026H1正式报告、扣非利润、经营现金流和诉讼现金压力。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认摘帽后经营修复是否持续。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.0
+      },
+      "reason": "价格明显高于本轮合理价值区间，若基本面未同步改善应继续回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

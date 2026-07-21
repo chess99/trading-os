@@ -1,102 +1,115 @@
 {
-  "symbol": "CN:000158",
-  "market": "CN",
-  "ticker": "000158",
-  "name": "常山北明",
-  "company_name": "常山北明",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "research_only",
-  "current_rating": "watch",
-  "current_thesis": "常山北明是华为鸿蒙、鲲鹏、昇腾生态相关的主题型软件集成商，纺织资产剥离后业务结构改善，但2025年扣非仍亏损、2026Q1继续亏损，当前约200亿元市值主要依赖主题预期而非已兑现利润；进入买入区前应等待价格回落或扣非利润、经营现金流和应收账款质量改善。",
-  "quality_rating": "C+",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    5.2,
-    8.0
-  ],
-  "buy_zone": [
-    4.8,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "常山北明",
+    "security_status": "active",
+    "symbol": "CN:000158",
+    "ticker": "000158"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "f12ed8f9d80df45b35f417f28774fcbeb62b463d599b63a2d4aed1d0b02a3f4d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于11.5元且未出现公告级高毛利软件订单或扣非利润改善",
-      "action": "不买；已有仓位减仓或仅保留跟踪仓",
-      "max_weight": 0.0,
-      "reason": "当前估值主要依赖华为鸿蒙/鲲鹏主题，2025扣非亏损且2026Q1亏损，基本面支撑不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款、合同资产和华为生态业务披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入6.5元以内，且2026H1或2026Q3经营现金流、应收账款和扣非亏损未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区后安全边际改善，但主营盈利质量仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年盈利和现金流是否具备转正基础",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非净利润连续两个报告期转正，经营现金流年度转正，华为生态收入利润贡献可核验",
-      "action": "提高至小型主题仓",
-      "max_weight": 0.02,
-      "reason": "利润兑现后可给予一定主题溢价，但项目制集成和回款风险仍限制仓位"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和审计附注，确认纺织剥离后正常化盈利能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入观察买入区，复核2026最新财报后可考虑首笔0.5%-1.0%仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度价值观察区，若基本面未恶化可重新评估风险收益比",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "高于基本面合理区间上沿，若无利润兑现应减仓或避免追买",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "主题估值显著透支，除非公告级订单和利润验证，否则触发卖出或大幅降仓复核",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入观察买入区，复核2026最新财报后可考虑首笔0.5%-1.0%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度价值观察区，若基本面未恶化可重新评估风险收益比"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "高于基本面合理区间上沿，若无利润兑现应减仓或避免追买"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "主题估值显著透支，除非公告级订单和利润验证，否则触发卖出或大幅降仓复核"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、经营现金流、应收账款、合同资产和华为生态业务披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年盈利和现金流是否具备转正基础"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和审计附注，确认纺织剥离后正常化盈利能力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1/2026Q3营业收入增速",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款、合同资产、存货合计占收入比例",
-    "华为鸿蒙、鲲鹏、昇腾、华为云相关订单和毛利率",
-    "软件产品和运维订阅收入占比",
-    "前五大客户集中度和回款情况",
-    "控股股东借款余额和关联交易变化",
-    "新能源风电及光伏资产利润贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

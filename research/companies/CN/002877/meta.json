@@ -1,123 +1,132 @@
 {
-  "symbol": "CN:002877",
-  "market": "CN",
-  "ticker": "002877",
-  "name": "智能自控",
-  "company_name": "无锡智能自控工程股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备控制阀国产替代、严苛工况经验、资质和服务响应等真实产业壁垒，但2025年ROE仅1.95%、净利率低、应收和存货占用重；2026-07-13价格约6.81元对应估值已提前计入利润修复，当前安全边际不足。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.8,
-    5.2
-  ],
-  "buy_zone": [
-    0,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.5,
-    7.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "智能自控",
+    "security_status": "active",
+    "symbol": "CN:002877",
+    "ticker": "002877"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c06518701a3595581a42ab1f33eb97240c8f8907bbfac9a4a4ce7034e2fe3e32"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于6.5元且TTM扣非净利润未超过5000万元",
-      "action": "不买；已有仓位降至观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证利润修复和现金流改善的第一个关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在5.2元至6.5元之间",
-      "action": "仅跟踪，不新增仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "扣非利润超过5000万元才有基础上修估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格在3.6元至4.0元之间，且毛利率稳定在28%以上",
-      "action": "小仓位观察",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "项目型公司需要全年现金流验证利润质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.6元，且经营现金流和扣非净利润改善被验证",
-      "action": "分批买入",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "毛利率决定国产替代和高端产品是否真正改善盈利能力",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "营运资本占用过高会削弱安全边际",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "募投项目能否按期投产是中期增长和ROIC改善的核心变量",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "低于4.0元接近保守合理价值下沿，开始具备观察仓安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "低于3.6元相对基础估值有约25%以上折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "高于6.5元需要接近2023年利润水平才能支撑，当前基本面尚未验证",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "action": "进入买入观察区，复核半年报现金流和毛利率",
-      "reason": "低于4.0元接近保守合理价值下沿，开始具备观察仓安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "action": "若基本面未恶化，可考虑分批买入",
-      "reason": "低于3.6元相对基础估值有约25%以上折价"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "action": "估值偏贵，已有仓位考虑减仓",
-      "reason": "高于6.5元需要接近2023年利润水平才能支撑，当前基本面尚未验证"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后，复核收入、毛利率、扣非净利润、经营现金流和应收存货",
-      "reason": "半年报是验证利润修复和现金流改善的第一个关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后，复核扣非归母净利润TTM是否超过5000万元",
-      "reason": "扣非利润超过5000万元才有基础上修估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后，复核经营活动现金流是否转正且覆盖净利润",
-      "reason": "项目型公司需要全年现金流验证利润质量"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后，复核毛利率是否低于27%或高于30%",
-      "reason": "毛利率决定国产替代和高端产品是否真正改善盈利能力"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后，复核应收账款加存货占收入比例是否超过110%",
-      "reason": "营运资本占用过高会削弱安全边际"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "condition": "复核开关控制阀制造基地项目是否在2026-12-31前达到预定可使用状态",
-      "reason": "募投项目能否按期投产是中期增长和ROIC改善的核心变量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "控制阀收入占比和毛利率",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "经营现金流/净利润",
-    "应收账款+存货/营业收入",
-    "ROE",
-    "开关控制阀制造基地项目进度",
-    "前五大客户销售占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

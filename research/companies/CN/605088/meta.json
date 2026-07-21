@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:605088",
-  "market": "CN",
-  "ticker": "605088",
-  "name": "冠盛股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "冠盛股份的核心价值来自全球汽车后市场零部件平台能力，海外渠道、SKU宽度和现金流改善支撑主业估值；马来西亚项目提供出海产能期权，固液混合电池和机器人业务暂不计入核心价值。当前股价接近绝对估值下沿，适合分批买入但需控制仓位。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    24.0,
-    30.0
-  ],
-  "buy_zone": [
-    19.0,
-    22.5
-  ],
-  "sell_or_reduce_zone": [
-    33.0,
-    38.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "冠盛股份",
+    "security_status": "active",
+    "symbol": "CN:605088",
+    "ticker": "605088"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2e18174c67945e23fdd553c3c6a32506ac5cebfbbbb212eda861d3f35853b444"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于22.5元且未出现主营毛利率、应收账款或马来西亚项目重大负面变化时分批建仓",
-      "action": "buy_initial",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、利润、毛利率、经营现金流、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于19.0元且2026半年报收入保持增长、经营现金流为正时加仓",
-      "action": "add",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报及马来西亚项目建设进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于33.0元但新业务仍无订单或主业利润率未修复时降仓",
-      "action": "reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、分红、海外区域增长和新业务订单兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入更高安全边际区间，需复核半年报和现金流后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 33.0
+      },
+      "reason": "超过主业合理估值上沿，若缺乏新业务订单验证应考虑降仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "reason": "进入更高安全边际区间，需复核半年报和现金流后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 33.0,
-      "reason": "超过主业合理估值上沿，若缺乏新业务订单验证应考虑降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、利润、毛利率、经营现金流、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报及马来西亚项目建设进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、分红、海外区域增长和新业务订单兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

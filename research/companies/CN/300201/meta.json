@@ -1,113 +1,114 @@
 {
-  "symbol": "CN:300201",
-  "market": "CN",
-  "ticker": "300201",
-  "name": "海伦哲",
-  "company_name": "徐州海伦哲专用车辆股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "海伦哲主业恢复质量明显改善，2025年利润和现金流均较强，及安盾并表带来储能消防成长弹性；但2026-07-13收盘价15.10元对应约47-50倍TTM/静态PE，已透支较多乐观预期，当前收益风险比不足，等待10.5元以下或业绩显著超预期后再评估买入。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    10.0,
-    13.0
-  ],
-  "buy_zone": [
-    9.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    17.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海伦哲",
+    "security_status": "active",
+    "symbol": "CN:300201",
+    "ticker": "300201"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "f8d7652b3f2a487b34a1f2df531e9e0958b620c0c3885364084ab83682fb8537"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9.0元，且2026H1/H2主业订单、毛利率、及安盾利润承诺未出现负面变化",
-      "action": "可建立5%-6%观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报收入、归母净利润、扣非净利润、经营现金流和毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于9.0-10.5元，且经营现金流/净利润全年预期不低于0.8倍",
-      "action": "可买入3%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报经营改善是否兑现，重点看及安盾并表利润、海外订单、认证和商誉/摊销披露。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于10.5-13.0元，且及安盾订单和高空作业车增长仍在验证期",
-      "action": "仅保留1%-2%跟踪仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复查中国安能合作是否从框架协议转化为大额订单，以及应急排水设备订单落地情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.0元且盈利预测未上修",
-      "action": "不新买",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复查2026年年报，确认全年经营现金流/净利润、综合毛利率和及安盾承诺利润兑现情况。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.0元且没有2026年净利润超过5亿元或现金流大幅改善证据",
-      "action": "减仓或回避",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
       "reason": "进入买入复核区，重新核验半年报、订单、现金流和及安盾承诺利润。",
-      "action": "进入买入复核区，重新核验半年报、订单、现金流和及安盾承诺利润。"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 9.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
       "reason": "若基本面未变坏，可进入高安全边际买入区。",
-      "action": "若基本面未变坏，可进入高安全边际买入区。"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 17.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.0
+      },
       "reason": "估值进入减仓区，除非盈利中枢被公告或半年报实质上调。",
-      "action": "估值进入减仓区，除非盈利中枢被公告或半年报实质上调。"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报收入、归母净利润、扣非净利润、经营现金流和毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报经营改善是否兑现，重点看及安盾并表利润、海外订单、认证和商誉/摊销披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复查中国安能合作是否从框架协议转化为大额订单，以及应急排水设备订单落地情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复查2026年年报，确认全年经营现金流/净利润、综合毛利率和及安盾承诺利润兑现情况。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年归母净利润是否达到4.0亿元以上，5.0亿元以上可上调估值中枢。",
-    "经营现金流/净利润，目标全年不低于0.8倍。",
-    "及安盾净利润、储能消防订单、海外客户和认证维持情况。",
-    "高空作业车收入增速，2026Q1同比36.96%，全年能否保持20%以上。",
-    "应急排水车和中国安能合作订单金额。",
-    "综合毛利率是否稳定在30%以上。",
-    "回购价格、回购资金来源和股权激励落地情况。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

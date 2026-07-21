@@ -1,101 +1,125 @@
 {
-  "symbol": "CN:300481",
-  "market": "CN",
-  "ticker": "300481",
-  "name": "濮阳惠成",
-  "company_name": "濮阳惠成电子材料股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-13-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "濮阳惠成是顺酐酸酐衍生物周期底部资产叠加功能材料中间体成长选择权，资产负债表安全、现金充足，但2025年利润下滑、2026Q1继续承压，功能材料客户与OLED订单仍缺少可核验披露。2026-07-17收盘13.61元已回到12.0-15.5元合理价值区间，但仍高于10.5-12.5元买入区；价格回落没有伴随基本面新证据，维持观察、不新买。",
-  "quality_rating": "中等偏上",
-  "valuation_rating": "合理但安全边际不足",
-  "fair_value_range": [
-    12.0,
-    15.5
-  ],
-  "buy_zone": [
-    10.5,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    20.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "濮阳惠成",
+    "security_status": "active",
+    "symbol": "CN:300481",
+    "ticker": "300481"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "0591943d2dfe00abcd8d7169f336d9f602e0f4f2252f7e4d551f2f20f9246f71"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "aec73343dcbc70d86c784f3ca17a98dadc3e3bb19109b8da414622d5ad625609"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "a4f680a56aa7b8bd468de3961d3a6dd761aa508ce6cdd8c4687e531194972791"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于15.5元，或功能材料客户、订单、顺酐毛利率修复仍不可核验时，不新开仓；已有仓位控制为研究仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报的分产品收入毛利、顺酐毛利率、库存、经营现金流、汇兑损益和功能材料项目投入。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入12.0-15.5元且2026半年报确认经营现金流不弱于利润、顺酐毛利率企稳、功能材料收入未恶化时，仅允许0.5%-1.0%观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证原料回落后的价格传导、盈利修复和现金流质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入10.5-12.5元且核心假设未破坏，分两批建立1.0%-1.5%跟踪仓。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复查功能材料研发及中试项目、福建古雷产能爬坡、雷佰瑞收购进展和控股股东质押变化。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.5元，且功能材料收入恢复增长、顺酐价差修复、净现金仍安全并完成重新承保后，最高仓位不超过3%。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入可买区上沿，复核顺酐毛利率、功能材料收入、库存和经营现金流后决定是否建立跟踪仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入深度价值区，若基本面未破坏且净现金安全，重新评估是否加至最高3%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "进入减仓观察区，若无OLED订单实证、顺酐价差修复和盈利上修，风险收益不匹配。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "价格依赖乐观情景，应复核并原则上降低仓位。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入可买区上沿，复核顺酐毛利率、功能材料收入、库存和经营现金流后决定是否建立跟踪仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入深度价值区，若基本面未破坏且净现金安全，重新评估是否加至最高3%。"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "进入减仓观察区，若无OLED订单实证、顺酐价差修复和盈利上修，风险收益不匹配。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "价格依赖乐观情景，应复核并原则上降低仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报的分产品收入毛利、顺酐毛利率、库存、经营现金流、汇兑损益和功能材料项目投入。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证原料回落后的价格传导、盈利修复和现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复查功能材料研发及中试项目、福建古雷产能爬坡、雷佰瑞收购进展和控股股东质押变化。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "顺酐酸酐衍生物毛利率是否回到18%以上",
-    "功能材料中间体收入是否恢复增长且毛利率维持33%-36%",
-    "经营现金流/归母净利润是否持续大于1",
-    "存货、应收账款和产能利用率变化",
-    "汇兑损益、美元资产和套保敞口",
-    "4.3亿元功能材料研发及中试项目的累计投入、试生产和订单披露",
-    "控股股东质押数量和比例",
-    "分红、资本开支和并购对净现金的影响"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

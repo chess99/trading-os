@@ -1,73 +1,95 @@
 {
-  "symbol": "CN:301089",
-  "ticker": "301089",
-  "market": "CN",
-  "name": "拓新药业",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "核苷（酸）原料药和中间体平台具备工艺与资质积累，资产负债表稳健，但 2025 年价格/需求下行后进入亏损，2026Q1 尚未证明盈利修复；现价对拐点预期偏满，需等待毛利率、经营现金流和新产品放量验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    15,
-    21
-  ],
-  "buy_zone": [
-    12,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    32
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "拓新药业",
+    "security_status": "active",
+    "symbol": "CN:301089",
+    "ticker": "301089"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "57646b36ad1715019a9828da31c3a50e306379c8997ea4680179dfc02d59608b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 12-16 元区间，且最新季度综合毛利率不低于 28%、经营现金流边际改善，可建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 中报，重点看收入、毛利率、经营现金流和功能食品原料毛利改善。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "收入同比转正，原料药毛利率稳定在 35% 以上，经营现金流连续两个季度转正，可提高配置。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，确认是否形成连续修复趋势。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若亏损扩大、综合毛利率低于 22% 或大健康业务继续低毛利放量，则不加仓并重新评估。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核 2026 年报或业绩快报，重估正常化盈利与估值锚。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入买入观察区上沿，需结合毛利率和现金流验证是否具备安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "超过当前合理价值区间上沿且仍处亏损期，需评估预期透支和减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入买入观察区上沿，需结合毛利率和现金流验证是否具备安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "超过当前合理价值区间上沿且仍处亏损期，需评估预期透支和减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 中报，重点看收入、毛利率、经营现金流和功能食品原料毛利改善。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，确认是否形成连续修复趋势。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核 2026 年报或业绩快报，重估正常化盈利与估值锚。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

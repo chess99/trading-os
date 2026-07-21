@@ -1,75 +1,96 @@
 {
-  "symbol": "CN:600846",
-  "ticker": "600846",
-  "name": "同济科技",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "同济科技具备同济品牌、上海国资和工程咨询资质底座，但施工及地产相关业务拖累主业纯度，2026H1施工新签合同大幅下降使当前约29倍TTM PE缺乏安全边际；合理价值约7.2-9.5元，适合观察等待低估。",
-  "fair_value_range": [
-    7.2,
-    9.5
-  ],
-  "buy_zone": [
-    6.8,
-    7.8
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同济科技",
+    "security_status": "active",
+    "symbol": "CN:600846",
+    "ticker": "600846"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "4ee319af038d727f34c275f968be1157b9c339fda5276943dba9e35735bf7bd7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.8元，2026年三季度工程咨询新签合同未恶化且经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、分部毛利率、现金流和合同资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.8元，PB接近或低于1倍，施工订单出现连续两个季度修复",
-      "action": "提高至低配仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及三季度新签合同修复情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.5元且施工新签合同未恢复到单季3亿元以上",
-      "action": "不买或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "进入观察买入区，需要复核订单、现金流和估值安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入更有吸引力的买入区，PB接近1倍且下行保护增强",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "价格高于合理价值区间上沿，若基本面未明显改善则风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "进入观察买入区，需要复核订单、现金流和估值安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入更有吸引力的买入区，PB接近1倍且下行保护增强"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "价格高于合理价值区间上沿，若基本面未明显改善则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、分部毛利率、现金流和合同资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及三季度新签合同修复情况"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

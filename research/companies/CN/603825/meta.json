@@ -1,48 +1,86 @@
 {
-  "symbol": "CN:603825",
-  "market": "CN",
-  "ticker": "603825",
-  "name": "ST华扬",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "高杠杆、负现金流和历史治理问题令普通股更像困境期权，当前价格已过度计入国资支持、业务修复和解ST预期。",
-  "fair_value_range": [1.5, 3.0],
-  "buy_zone": [0, 0],
-  "sell_or_reduce_zone": [4.5, 8.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "ST华扬",
+    "security_status": "active",
+    "symbol": "CN:603825",
+    "ticker": "603825"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "2f89e63f324ade99776256ee90caeae9b68a2d1f277a89f383a2426ce8035fdf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前基本面未满足买入条件；任何价格下均不机械补仓",
-      "max_weight": 0.0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、现金流、减值和债务变化"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、现金流、减值和债务变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-09-10",
-      "reason": "行政处罚满12个月后复核撤销其他风险警示的实际进展"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.5,
-      "reason": "进入重新研究区；须先验证现金流、净债务、净资产和ST撤销，不代表自动买入"
+      "active": true,
+      "condition": {
+        "date": "2026-09-10"
+      },
+      "reason": "行政处罚满12个月后复核撤销其他风险警示的实际进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 4.5,
-      "reason": "超过高不确定性下的合理价值区间，进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
+      "reason": "进入重新研究区；须先验证现金流、净债务、净资产和ST撤销，不代表自动买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.5
+      },
+      "reason": "超过高不确定性下的合理价值区间，进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-20T18:07:05+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688680",
-  "market": "CN",
-  "ticker": "688680",
-  "name": "\u6d77\u4f18\u65b0\u6750",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "HIUV is in a post-downcycle repair phase for photovoltaic encapsulant film, with automotive PDCLC/PVE materials as the main upside option. As of 2026Q1 the company was still loss-making and gross margin had only turned slightly positive, while the current share price already prices in part of the recovery and automotive ramp-up. Wait for either a lower price with margin of safety or clear earnings delivery.",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    24,
-    32
-  ],
-  "buy_zone": [
-    22,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    56
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海优新材",
+    "security_status": "active",
+    "symbol": "CN:688680",
+    "ticker": "688680"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "58210cdb24e7c6f3c9d00f17840a00938d6517c3dfdcf37d00fcccd63c522384"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "Only consider a starter position if the share price enters 22-26 CNY and 2026H1 gross margin remains positive without a sharp operating cash flow deterioration.",
-      "action": "initial_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "Review 2026 interim report for revenue, gross margin, adjusted profit, cash flow, receivables and automotive materials ramp-up.",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "Add only after two consecutive quarters with gross margin above 5%, non-GAAP quarterly loss narrowed to below 10 million CNY or turned positive, and measurable automotive materials revenue growth.",
-      "action": "add_on_confirmation",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "Review 2026 third-quarter report to confirm whether photovoltaic film pricing recovery and automotive business momentum continue.",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "Avoid or reduce attention if the share price exceeds 45 CNY while automotive ramp-up is not disclosed and the company remains loss-making.",
-      "action": "avoid_or_reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "Review 2026 annual report to judge whether the company has shifted from loss repair to sustainable profitability.",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "Price enters the upper end of the watch-to-buy zone; recheck H1 margin, cash flow and automotive revenue.",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "Price approaches the estimated margin-of-safety zone and may justify reassessing a small position.",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "Price enters the optimistic scenario range; without fundamental delivery, risk-reward deteriorates.",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "Price enters the upper end of the watch-to-buy zone; recheck H1 margin, cash flow and automotive revenue."
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "Price approaches the estimated margin-of-safety zone and may justify reassessing a small position."
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "Price enters the optimistic scenario range; without fundamental delivery, risk-reward deteriorates."
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "Review 2026 interim report for revenue, gross margin, adjusted profit, cash flow, receivables and automotive materials ramp-up."
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "Review 2026 third-quarter report to confirm whether photovoltaic film pricing recovery and automotive business momentum continue."
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "Review 2026 annual report to judge whether the company has shifted from loss repair to sustainable profitability."
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603585",
-  "market": "CN",
-  "ticker": "603585",
-  "name": "苏利股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "苏利股份是农药杀菌剂与溴系阻燃剂双主业的周期修复标的。2025年盈利从亏损恢复至约1.93亿元，估值处于低PB、中低PE区间，但2026Q1利润同比回落，价格周期和原料成本仍需验证。当前以观察为主，等待更厚安全边际或后续季度证明盈利中枢上移。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    10.8,
-    13.2
-  ],
-  "buy_zone": [
-    7.5,
-    8.6
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "苏利股份",
+    "security_status": "active",
+    "symbol": "CN:603585",
+    "ticker": "603585"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "b7cfdedf5e86f42f74bc1e8978b753087a8518350a4a287c7441dcfdced83f44"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于8.6元，且百菌清、嘧菌酯、啶酰菌胺及阻燃剂价差未继续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-15"
+      },
+      "reason": "复核2026年半年报、产品价格、产能利用率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于或等于7.5元，且无重大安全环保、治理或现金流恶化事件",
-      "action": "提高至中等小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年盈利中枢是否上修或下修",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.0元且2026年盈利中枢仍低于2.2亿元",
-      "action": "减仓或不新增",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年经营指引，重新校准估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.6
+      },
+      "reason": "进入初始买入区间，需要复核产品价格和订单情况",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入深度安全边际区间，需要判断是否为基本面恶化导致",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "接近合理价值上沿，需要检查盈利是否足以支撑估值上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.6,
-      "reason": "进入初始买入区间，需要复核产品价格和订单情况"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入深度安全边际区间，需要判断是否为基本面恶化导致"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "接近合理价值上沿，需要检查盈利是否足以支撑估值上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-15",
-      "reason": "复核2026年半年报、产品价格、产能利用率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年盈利中枢是否上修或下修"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年经营指引，重新校准估值"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,86 +1,105 @@
 {
-  "symbol": "CN:600340",
-  "market": "CN",
-  "ticker": "600340",
-  "name": "*ST华幸",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-20",
-  "latest_report": "reports/2026-07-20-initial.md",
-  "report_history": [
-    "reports/2026-07-20-initial.md"
-  ],
-  "current_thesis": "*ST华幸是华夏幸福基业股份有限公司在退市风险警示后的证券简称，当前核心不是正常地产估值，而是负净资产、保留审计意见、预重整和普通股摊薄风险下的困境重整期权。2025年归母净资产-177.43亿元，2026Q1降至-190.80亿元，2026上半年仍预计亏损50亿元至70亿元；在法院正式受理重整、投资协议、债权削减和出资人权益调整明确前，不应按低价股逻辑买入。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    0.3,
-    0.7
-  ],
-  "buy_zone": [
-    0.0,
-    0.4
-  ],
-  "sell_or_reduce_zone": [
-    0.9,
-    1.3
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST华幸",
+    "security_status": "active",
+    "symbol": "CN:600340",
+    "ticker": "600340"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-20-initial.md",
+        "sha256": "6c27edc03578c0156fb3ce7b2412cd9f421f4e83a618d8669e0086bab643e390"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于0.90元且重整方案、出资人权益调整和净资产转正路径尚未明确",
-      "action": "不新建仓，已有仓位降至观察仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、净资产、现金流、资产减值、重整进展和面值退市风险",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.40元，法院正式受理重整，重整投资协议已签署，且普通股摊薄幅度可接受",
-      "action": "仅允许事件型研究仓，等待半年报和重整草案验证",
-      "max_weight": 0.003
+      "active": true,
+      "condition": {
+        "date": "2026-11-15"
+      },
+      "reason": "复核三季报、重整投资协议、债权人会议安排和出资人权益调整草案",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于0.25元，重整草案显示债务削减足以推动净资产转正且原股东权益未被极端稀释",
-      "action": "可小幅提高事件型观察仓，但不得作为核心配置",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、审计意见、内控意见、净资产是否转正及退市风险是否解除",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.4
+      },
+      "reason": "进入有安全边际观察区，需同时核验重整文件和摊薄安排",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.25
+      },
+      "reason": "进入强吸引力事件型观察区，但仍需重整方案确认",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 0.9
+      },
+      "reason": "高于基准合理价值区间上沿，缺乏安全边际，应回避或降仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.4,
-      "reason": "进入有安全边际观察区，需同时核验重整文件和摊薄安排"
-    },
-    {
-      "type": "price_below",
-      "price": 0.25,
-      "reason": "进入强吸引力事件型观察区，但仍需重整方案确认"
-    },
-    {
-      "type": "price_above",
-      "price": 0.9,
-      "reason": "高于基准合理价值区间上沿，缺乏安全边际，应回避或降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、净资产、现金流、资产减值、重整进展和面值退市风险"
-    },
-    {
-      "type": "date",
-      "date": "2026-11-15",
-      "reason": "复核三季报、重整投资协议、债权人会议安排和出资人权益调整草案"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、审计意见、内控意见、净资产是否转正及退市风险是否解除"
-    }
-  ],
-  "notes": [
-    "600340历史简称为华夏幸福，2026-05-06起简称变更为*ST华幸；本研究未研究600421。",
-    "当前价格采用腾讯行情2026-07-20 16:14:48口径，价格1.09元，总市值约42.44亿元；行情股本口径与定期报告股本字段存在小幅差异。",
-    "2025年财报为保留意见，涉及持续经营、合同资产减值和或有事项；估值置信度因此下调。",
-    "2026年半年度业绩预告未经审计，最终以半年报为准。",
-    "重整投资人已中选不等于重整成功，投资协议、债权人会议、法院裁定和出资人权益调整仍是核心不确定性。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

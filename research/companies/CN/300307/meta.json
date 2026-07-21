@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:300307",
-  "market": "CN",
-  "ticker": "300307",
-  "name": "慈星股份",
-  "company_name": "宁波慈星股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "慈星股份是电脑横机龙头，2026年上半年业绩从低位明显修复，STOLL资产收购可能增强高端品牌和海外渠道；但公司仍是强周期设备股，2026-07-13收盘价6.83元已接近合理价值上沿，安全边际不足，等待5.2元以下或订单/现金流进一步验证。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    5.5,
-    7.0
-  ],
-  "buy_zone": [
-    4.8,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "慈星股份",
+    "security_status": "active",
+    "symbol": "CN:300307",
+    "ticker": "300307"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e0e9b6220e4ac23277023e6f1866a94d600bbc23946194cf4ec8afb22f9cc6f7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至5.2元以下，且订单、电脑横机毛利率、经营现金流未出现恶化",
-      "action": "建立观察仓",
-      "target_position": "目标仓位的1/3",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入结构、电脑横机毛利率、经营现金流和应收存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至4.8元以下，且2026年全年归母净利润2.2亿元以上的可见性较高",
-      "action": "加仓",
-      "target_position": "目标仓位的1/2",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断上半年高增长是否延续到下半年",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于6.8-7.2元且基本面仅符合当前预期",
-      "action": "观察不新增",
-      "target_position": "0或维持已有跟踪仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及STOLL交易交割、并表和整合效果",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于8.2元且盈利预测没有上修",
-      "action": "减仓或回避",
-      "target_position": "降至目标仓位的1/3以下",
-      "max_weight": 0.005
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
       "reason": "进入初步安全边际区间，但仍需确认订单、毛利率和现金流未恶化",
-      "action": "复核订单、毛利率和现金流，考虑建立观察仓"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_below",
-      "price": 4.8,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
       "reason": "进入更有吸引力的买入区间，若盈利兑现则赔率改善",
-      "action": "若全年净利可见性不低于2.2亿元，考虑提高到半仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 8.2,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
       "reason": "股价超过合理价值上沿，若盈利没有上修则安全边际不足",
-      "action": "若没有盈利上修，减仓或停止买入"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 9.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.5
+      },
       "reason": "估值需要2027年更高利润支撑，否则风险收益不匹配",
-      "action": "除非2027年净利可见性升至3.5亿元以上，否则卖出或仅保留跟踪仓"
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入结构、电脑横机毛利率、经营现金流和应收存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断上半年高增长是否延续到下半年"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及STOLL交易交割、并表和整合效果"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "电脑横机收入和毛利率",
-    "归母净利润和扣非归母净利润",
-    "经营现金流净额与净利润匹配度",
-    "应收账款和存货周转变化",
-    "STOLL交易交割进度、整合费用和海外收入贡献",
-    "合同负债或订单线索",
-    "研发费用率及高端机型、一线成型产品推进情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

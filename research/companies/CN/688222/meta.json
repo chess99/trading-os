@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688222",
-  "market": "CN",
-  "ticker": "688222",
-  "name": "成都先导",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "成都先导是A股稀缺的DEL/FBDD/SBDD早期药物发现平台，2025年和2026Q1显示业务放量与利润弹性，但2026-07-17收盘价29.70元已反映较多平台溢价，当前应观察而非追高，等待24元以下或半年报继续超预期后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    27,
-    35
-  ],
-  "buy_zone": [
-    0,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "成都先导",
+    "security_status": "active",
+    "symbol": "CN:688222",
+    "ticker": "688222"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "fc5a89571df96a7d3184ef7cb0b336911cfcca24741893ecf2a0437b67fb23ef"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于24元且2026半年报收入、扣非净利润、经营现金流未出现明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报收入、扣非净利润、经营现金流和分业务增速",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于20元且DEL/FBDD/SBDD订单趋势保持增长、毛利率维持在52%以上",
-      "action": "提高至核心小仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断Q1高增长是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于42元且无重大授权、盈利上修或现金流超预期",
-      "action": "减仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，更新估值中枢和平台授权兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区，赔率改善，可以结合半年报质量评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "若基本面未恶化，安全边际显著提升，可以提高最大仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过牛市情景下沿且估值对平台期权要求较高，需要减仓或重新核验授权兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入区，赔率改善，可以结合半年报质量评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "若基本面未恶化，安全边际显著提升，可以提高最大仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过牛市情景下沿且估值对平台期权要求较高，需要减仓或重新核验授权兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报收入、扣非净利润、经营现金流和分业务增速"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断Q1高增长是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，更新估值中枢和平台授权兑现情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

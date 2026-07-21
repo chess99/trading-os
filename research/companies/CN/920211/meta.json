@@ -1,99 +1,115 @@
 {
-  "symbol": "CN:920211",
-  "market": "CN",
-  "ticker": "920211",
-  "name": "新睿电子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "新睿电子是工业机器人控制系统及伺服系统细分供应商，驱控一体产品放量、客户分散、毛利率和ROE较好，但公司规模小、研发费用率低于同业、产品单价下行，当前144.87元约对应49.84亿元市值和76.6倍2026E PE，安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    58.0,
-    78.0
-  ],
-  "buy_zone": [
-    40.0,
-    50.0
-  ],
-  "sell_or_reduce_zone": [
-    90.0,
-    144.87
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新睿电子",
+    "security_status": "active",
+    "symbol": "CN:920211",
+    "ticker": "920211"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "cd05ae53e48d175b6b795c9f216706a420cb54d861b34c8bdc97473401946760"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "若基本面未破坏且现金流改善，可分批买入至3%。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "具备安全边际，可先买入0.5%-1.0%，中报验证后加仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "合理区间，只保留观察仓或等待更低价格。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "不追高，若已有仓位逐步降风险。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入安全边际买入区，复核中报和现金流后考虑第一笔0.5%-1.0%。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入强吸引力区，若核心假设未破坏，可提升至最高3%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "估值偏贵，不新增仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 120.0
+      },
+      "reason": "显著透支乐观情景，若已有仓位应主动降风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 50,
-      "action": "进入安全边际买入区，复核中报和现金流后考虑第一笔0.5%-1.0%。",
-      "reason": "进入安全边际买入区，复核中报和现金流后考虑第一笔0.5%-1.0%。"
-    },
-    {
-      "type": "price_below",
-      "price": 40,
-      "action": "进入强吸引力区，若核心假设未破坏，可提升至最高3%。",
-      "reason": "进入强吸引力区，若核心假设未破坏，可提升至最高3%。"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "action": "估值偏贵，不新增仓位。",
-      "reason": "估值偏贵，不新增仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 120,
-      "action": "显著透支乐观情景，若已有仓位应主动降风险。",
-      "reason": "显著透支乐观情景，若已有仓位应主动降风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "复核2026年中报：收入增速、驱控一体占比、毛利率、经营现金流、应收与存货。",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "复核2026年三季报和上市后订单/客户变化。",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "action": "复核2026年年报、税收优惠续期、募投进度和限售股安排。",
-      "reason": "???????"
-    }
-  ],
-  "notes": [
-    "质量评级B+，估值评级D；今天决策为不买、观察。关键结论：公司质地可以跟踪，但当前价格缺少安全边际，50元以下才考虑第一笔仓位。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

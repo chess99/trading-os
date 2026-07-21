@@ -1,115 +1,120 @@
 {
-  "symbol": "CN:600039",
-  "market": "CN",
-  "ticker": "600039",
-  "name": "四川路桥",
-  "company_name": "四川路桥建设集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-16-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "四川路桥是蜀道体系内交通基建施工核心平台，2025年订单、现金流和分红仍强，但2026Q1收入利润下滑、经营现金流继续流出，且2026H1固定资产和基建投资转弱；当前8.4-8.5元附近处于合理价值中枢，缺少足够安全边际，等待7.4元以下或现金流/新签订单恢复证据。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    6.6,
-    7.4
-  ],
-  "sell_or_reduce_zone": [
-    9.6,
-    10.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "四川路桥",
+    "security_status": "active",
+    "symbol": "CN:600039",
+    "ticker": "600039"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "c3257c4d151c73c9d481ed21514279a06a79ee7bca24e7cc72841eafcbde0db9"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "a68e900b74fe49078a41684d5a3b8412177a08c0c800b74f51c4a6fb53d69db8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价在8.4-8.5元附近且2026半年报尚未验证现金流和订单恢复",
-      "action": "仅保持观察仓或不新增仓位",
-      "max_weight": 0.01,
-      "reason": "当前估值已反映高ROE和高分红，未给足地方基建回款及2026Q1业绩下滑风险折价"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、新签合同、经营现金流、应收账款和合同资产变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入6.6-7.4元且没有重大基本面恶化，经营现金流和应收合同资产未继续显著恶化",
-      "action": "分批买入",
-      "max_weight": 0.03,
-      "reason": "静态PE、股息率和剩余收益法均开始提供安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润趋势、订单恢复、分红可持续性和资产负债率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.6元且2026中报确认分红政策维持、新签订单恢复或现金流改善",
-      "action": "提高到核心观察仓",
-      "max_weight": 0.05,
-      "reason": "悲观情景已较充分定价，四川国资基建平台和高分红提供下行保护"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、年度分红方案、BOT/PPP项目运营亏损及2027年订单展望",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.6元但利润、现金流、新签订单没有同步改善",
-      "action": "停止加仓并逐步减仓",
-      "max_weight": 0.01,
-      "reason": "进入乐观估值区间，缺乏基本面上修支撑时风险收益变差"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.4
+      },
+      "reason": "进入初始买入区间，需复核2026订单、经营现金流、应收账款和合同资产后分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入高赔率区间，若分红政策和基本面未恶化，可考虑提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.6
+      },
+      "reason": "进入减持观察区，若无现金流或订单改善，应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "超过乐观情景估值上沿，需要重新验证继续持有的基本面依据",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.4,
-      "reason": "进入初始买入区间，需复核2026订单、经营现金流、应收账款和合同资产后分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入高赔率区间，若分红政策和基本面未恶化，可考虑提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 9.6,
-      "reason": "进入减持观察区，若无现金流或订单改善，应降低风险暴露"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "超过乐观情景估值上沿，需要重新验证继续持有的基本面依据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、新签合同、经营现金流、应收账款和合同资产变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润趋势、订单恢复、分红可持续性和资产负债率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、年度分红方案、BOT/PPP项目运营亏损及2027年订单展望"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度新签合同金额及同比增速",
-    "基建类、房建类和其他合同结构",
-    "经营活动现金流净额与归母净利润匹配度",
-    "应收账款、合同资产、长期应收款合计规模",
-    "工程施工板块毛利率",
-    "资产负债率、长期借款和应付债券规模",
-    "年度及中期现金分红比例",
-    "BOT/PPP高速项目运营收入和利润总额",
-    "四川省交通投资、专项债和重大项目开工节奏",
-    "控股股东可交换债及质押专户变化"
-  ],
-  "research_notes": {
-    "decision": "观察",
-    "confidence": "中",
-    "data_quality": "公司财报和评级报告置信度高；实时行情和部分同业估值来自行情/估值网站，置信度中低。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

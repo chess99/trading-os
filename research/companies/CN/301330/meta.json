@@ -1,82 +1,105 @@
 {
-  "symbol": "CN:301330",
-  "ticker": "301330",
-  "name": "熵基科技",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "熵基科技具备全球渠道、多模态生物识别与智慧出入口产品矩阵，现金储备厚、毛利率较高；但2026Q1利润大幅下滑、费用和海外经营扰动仍需验证，脑机接口等新业务暂不能作为主估值支柱。当前价格处于合理区间中部，安全边际不足，适合观察等待业绩修复或价格回落。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    20,
-    28
-  ],
-  "buy_zone": [
-    17,
-    19
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "熵基科技",
+    "security_status": "active",
+    "symbol": "CN:301330",
+    "ticker": "301330"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "2c035bb6e748cd4d56b2b77db4423e5f09fb1014433ef95bb60f85bfe5cdf7b7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入17-19元且2026H1/2026Q3扣非利润未继续恶化、经营现金流保持稳健",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查扣非利润、毛利率、海外收入和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "扣非利润同比转正、收入增速超过10%、毛利率维持约50%且价格仍低于合理价值中枢",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证利润修复和股权激励目标达成概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于32元但利润、订单和现金流没有同步上修",
-      "action": "减持或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估长期增长、治理整改和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入买入区上沿，若基本面未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入更有吸引力的防守区，净现金和现金流提供较高下行保护",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过合理价值上沿，若无业绩上修应降低主题溢价敞口",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19,
-      "reason": "进入买入区上沿，若基本面未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入更有吸引力的防守区，净现金和现金流提供较高下行保护"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过合理价值上沿，若无业绩上修应降低主题溢价敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查扣非利润、毛利率、海外收入和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证利润修复和股权激励目标达成概率"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估长期增长、治理整改和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

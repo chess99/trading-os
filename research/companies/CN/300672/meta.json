@@ -1,102 +1,101 @@
 {
-  "symbol": "CN:300672",
-  "market": "CN",
-  "ticker": "300672",
-  "name": "国科微",
-  "company_name": "国科微",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "rating": "观察",
-  "current_thesis": "国科微具备国产视频编解码、固态存储控制器和端侧视觉芯片的真实技术积累，2026 年一季度利润显著恢复，但 2026-07-17 收盘价 158 元仍高于合理价值上沿；同日收盘后披露的最高 50.61 亿元定增强化长期 AI 芯片布局，也增加摊薄与项目执行风险，在半年报和发行条款落定前不适合新开仓。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "C-",
-  "fair_value_range": [
-    90,
-    130
-  ],
-  "buy_zone": [
-    65,
-    85
-  ],
-  "sell_or_reduce_zone": [
-    150,
-    200
-  ],
-  "base_currency": "CNY",
-  "currency": "CNY",
-  "status": "active",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国科微",
+    "security_status": "active",
+    "symbol": "CN:300672",
+    "ticker": "300672"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "7cc5dd6847f255306db5dd6d5c941726565c633373905e5c9636ea9edd27a595"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "c90a72f0826ed29c0380cf665a9a888c1553de6aaf96244315c238597f9bf39a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 65 元，半年报未证伪且定增条款可接受",
-      "action": "强吸引力买入，分批建立核心仓",
-      "max_weight": 0.08,
-      "reason": "悲观情景下仍具备较好保护，技术资产和国产替代期权被低估，但需排除定增与现金流恶化风险。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复查 2026 年半年报，验证一季度高增长是否延续，并检查经营现金流、存货和应收。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于 65-85 元且 Q2 利润、毛利率和经营现金流继续改善",
-      "action": "买入或加仓",
-      "max_weight": 0.05,
-      "reason": "进入有安全边际区域，但仍需验证利润恢复可持续性。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，重点确认利润、毛利率和经营现金流质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价位于 85-130 元",
-      "action": "仅保留跟踪仓，等待半年报和定增条款验证",
-      "max_weight": 0.03,
-      "reason": "价格大致落在合理价值区间，风险收益取决于后续利润兑现。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "进入安全边际买入区上沿，需复核最新季度利润和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于 150 元且缺少年化 8 亿元以上净利润的高置信证据",
-      "action": "不追高，已有仓位分批降仓",
-      "max_weight": 0.01,
-      "reason": "价格仍高于合理价值上沿，且收盘后定增方案尚未被市场定价。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 65.0
+      },
+      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "高于不应追高区间，除非利润中枢显著上修，否则应控制仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "进入安全边际买入区上沿，需复核最新季度利润和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 65,
-      "reason": "进入强吸引力买入区，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 150,
-      "reason": "高于不应追高区间，除非利润中枢显著上修，否则应控制仓位。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复查 2026 年半年报，验证一季度高增长是否延续，并检查经营现金流、存货和应收。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，重点确认利润、毛利率和经营现金流质量。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入",
-    "归母净利润",
-    "扣非归母净利润",
-    "毛利率",
-    "经营现金流净额",
-    "存货周转",
-    "应收账款周转",
-    "研发费用率",
-    "AI 视觉芯片量产客户和收入占比",
-    "存储控制器业务收入和毛利率",
-    "定增审批进度、发行价、发行股数和实际募资额",
-    "三项 AI 芯片募投项目的流片、客户验证和量产节点"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

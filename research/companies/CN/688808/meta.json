@@ -1,116 +1,115 @@
 {
-  "symbol": "CN:688808",
-  "market": "CN",
-  "ticker": "688808",
-  "name": "联讯仪器",
-  "company_name": "联讯仪器",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "联讯仪器是国产高端电子测量仪器和半导体测试设备稀缺标的，受益于800G/1.6T光模块、硅光和功率器件测试国产替代，但当前价格已透支多年高增长，结论为高质量、极高估值、等待订单与业绩兑现后再评估买入。",
-  "quality_rating": "A-",
-  "valuation_rating": "E",
-  "fair_value_range": [
-    420,
-    700
-  ],
-  "buy_zone": [
-    260,
-    420
-  ],
-  "sell_or_reduce_zone": [
-    1000,
-    2500
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联讯仪器",
+    "security_status": "active",
+    "symbol": "CN:688808",
+    "ticker": "688808"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "39b7c94029812e9fea30701e79e6839c8ea2fa580ca0fd1f1203eb29e915ded6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于1000元或TTM PE仍显著高于300倍",
-      "action": "不买入，仅跟踪公告、订单和半年报兑现",
-      "max_weight": 0,
-      "reason": "估值已透支2026-2028年高增长，缺少安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、订单兑现、经营现金流和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于700元且2026半年报收入、净利润、经营现金流基本兑现",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "公司质量高，但仍需验证高增长和现金流质量"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证Q1高增长是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于420元且2026全年归母净利润超过4.3亿元、经营现金流为正、毛利率不低于52%",
-      "action": "分批买入",
-      "max_weight": 0.02,
-      "reason": "进入合理偏低估值区，且订单兑现降低基本面不确定性"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新三情景估值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于260元且核心订单、客户验证、毛利率未恶化",
-      "action": "提高至核心观察持仓",
-      "max_weight": 0.03,
-      "reason": "悲观估值附近提供更高安全边际"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 700.0
+      },
+      "reason": "进入严肃买入观察区，需要复核半年报和订单兑现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 420.0
+      },
+      "reason": "进入基础买入区，若基本面未恶化可考虑首笔仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1000.0
+      },
+      "reason": "高估值回避区，禁止新建常规仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1800.0
+      },
+      "reason": "极端估值区，除非业绩远超预期否则应继续回避",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 700,
-      "reason": "进入严肃买入观察区，需要复核半年报和订单兑现"
-    },
-    {
-      "type": "price_below",
-      "price": 420,
-      "reason": "进入基础买入区，若基本面未恶化可考虑首笔仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 1000,
-      "reason": "高估值回避区，禁止新建常规仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 1800,
-      "reason": "极端估值区，除非业绩远超预期否则应继续回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、订单兑现、经营现金流和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证Q1高增长是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新三情景估值和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入",
-    "季度归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "综合毛利率",
-    "通信测试仪器收入",
-    "采样示波器收入和毛利率",
-    "时钟恢复单元收入和毛利率",
-    "误码分析仪收入和毛利率",
-    "光电子器件测试设备订单",
-    "功率器件测试设备订单",
-    "硅光晶圆测试系统订单",
-    "前五大客户收入占比",
-    "应收账款周转率",
-    "存货周转率",
-    "研发投入率",
-    "1.6T及下一代光模块测试产品客户验证进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

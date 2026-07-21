@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:603950",
-  "market": "CN",
-  "ticker": "603950",
-  "name": "长源东谷",
-  "company_name": "长源东谷",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "长源东谷是发动机核心零部件供应商，产品位置和客户粘性尚可，2025年盈利修复且2026年一季度现金流为正；但客户集中、重资产、应收存货占用和商用车/工程机械周期仍是主要约束。以2026-07-09收盘价43.32元估算，市值约140亿元，已高于基准和乐观情景估值，当前适合观察而非买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    20,
-    28
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长源东谷",
+    "security_status": "active",
+    "symbol": "CN:603950",
+    "ticker": "603950"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "6ed5951f653acf59edffbbefa7b5718d111dd6588ee5e2478a23505eca691cc2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 15 and fundamentals intact",
-      "action": "strong_buy",
-      "max_weight": 0.08,
-      "reason": "悲观情景仍有较厚安全边际，约对应2025年利润12.5倍PE"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、毛利率、现金流、应收账款、存货和客户结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "15 < price <= 18 and cash flow remains healthy",
-      "action": "buy_in_batches",
-      "max_weight": 0.06,
-      "reason": "进入有安全边际的买入区间，可承受行业周期波动"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及商用车、工程机械订单趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "18 < price <= 28",
-      "action": "watch_or_small_position",
-      "max_weight": 0.03,
-      "reason": "处于合理价值区间，需要继续确认收入、毛利率和回款"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，更新中周期盈利与估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "28 < price <= 32",
-      "action": "hold_only",
-      "max_weight": 0.01,
-      "reason": "估值偏贵，预期收益率不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "跌入合理价值区间，重新复核基本面和估值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price > 32",
-      "action": "do_not_add_or_reduce",
-      "max_weight": 0,
-      "reason": "明显高于合理估值区间，除非增长显著超预期，否则赔率差"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "跌入有安全边际买入区间，可考虑首笔仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "跌入强吸引力买入区间，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入不应追高区间，已有仓位需评估降风险",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "跌入合理价值区间，重新复核基本面和估值"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "跌入有安全边际买入区间，可考虑首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "跌入强吸引力买入区间，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "进入不应追高区间，已有仓位需评估降风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、毛利率、现金流、应收账款、存货和客户结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及商用车、工程机械订单趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，更新中周期盈利与估值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly_revenue_growth",
-    "gross_margin",
-    "operating_cash_flow_to_net_profit",
-    "accounts_receivable_and_financing_to_revenue",
-    "inventory_turnover",
-    "top_customer_concentration",
-    "capacity_utilization",
-    "capex_and_fixed_asset_turnover",
-    "yuchai_joint_venture_progress",
-    "commercial_vehicle_and_construction_machinery_cycle"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

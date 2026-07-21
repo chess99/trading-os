@@ -1,76 +1,86 @@
 {
-  "symbol": "CN:002856",
-  "market": "CN",
-  "ticker": "002856",
-  "name": "*ST美芝",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "负净资产、持续经营重大不确定性、退市风险和庭外重组不确定性尚未解除，当前价格显著高于保守重组期权和经营资产交叉验证价值，维持回避。",
-  "fair_value_range": [
-    2.0,
-    5.0
-  ],
-  "buy_zone": [
-    0.8,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST美芝",
+    "security_status": "active",
+    "symbol": "CN:002856",
+    "ticker": "002856"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "96ee3d932bb61ac55da21e8f488c5dff55e43d24ff68122e95db48b80903398d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值上沿，且负净资产、持续经营重大不确定性和庭外重组不确定性未解除",
-      "action": "不建仓，已有仓位应降低或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、庭外重组进展、诉讼和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入2.00元以下，且公告确认债务削减、净资产转正路径、审计不确定性消除三项中至少两项有实质进展",
-      "action": "仅事件驱动观察仓",
-      "max_weight": 0.003
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、净资产是否转正及审计意见",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "进入司法预重整或重整但方案涉及普通股大比例让渡、增发稀释或债权人优先受偿导致少数股东价值受损",
-      "action": "维持回避，不参与博弈",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "价格进入可研究区间，需结合净资产转正和债务重组进展复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "高于保守重组期权价值，应降低或退出风险暴露",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "reason": "价格进入可研究区间，需结合净资产转正和债务重组进展复核"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "高于保守重组期权价值，应降低或退出风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、庭外重组进展、诉讼和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、净资产是否转正及审计意见"
-    }
-  ],
-  "notes": [
-    "公司名称按队列名称写为*ST美芝。",
-    "2026-07-17收盘价13.31元来自证券之星/搜狐及新浪行情页，非交易所终端，置信度中等。",
-    "2025年审计意见为带持续经营重大不确定性段落的无保留意见，不是无法表示意见。",
-    "庭外重组不等同于司法预重整或重整，普通股东收益高度不确定。",
-    "当前评级为avoid，组合建议仓位为0。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

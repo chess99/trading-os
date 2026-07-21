@@ -1,87 +1,86 @@
 {
-  "symbol": "CN:601669",
-  "market": "CN",
-  "ticker": "601669",
-  "name": "中国电建",
-  "company_name": "中国电建",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "current_thesis": "低估值央企水电水利和能源电力工程龙头，受益抽水蓄能、新能源EPC、海外订单和央企重估，但高负债、应收合同资产、地产投资风险和工程毛利率下行限制仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "A-",
-  "fair_value_range": [
-    5.4,
-    6.4
-  ],
-  "buy_zone": [
-    4.2,
-    4.6
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国电建",
+    "security_status": "active",
+    "symbol": "CN:601669",
+    "ticker": "601669"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "2862f35dc12dfaef62a5b4f11bb1e9a6895c13e0b79e53813036dd925e2f3268"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价位于4.20-4.60元且未出现新增重大减值、订单和现金回款趋势未恶化",
-      "action": "建立观察性首笔仓位",
-      "max_weight": 0.03,
-      "reason": "估值接近0.3倍PB和9倍左右PE，安全边际较好，但ROE下行、资产负债率高和Q1经营现金流流出限制仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的利润率、经营现金流、应收款和订单结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.20元，同时2026年半年报显示经营现金流和应收周转改善或订单结构继续向能源电力倾斜",
-      "action": "加仓至中等仓位",
-      "max_weight": 0.06,
-      "reason": "若低估值叠加现金流修复，央企水电与抽蓄资产重估的赔率更清晰"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报和前三季度新签合同，判断全年业绩兑现概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价达到6.80元以上，或估值超过0.45倍PB但利润率、ROE没有同步恢复",
-      "action": "分批减仓",
-      "max_weight": 0.02,
-      "reason": "建筑央企利润率薄、负债高，估值修复快于基本面时应锁定收益"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入强安全边际区，需复核现金流和订单质量后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "接近或超过上行情景估值下沿，需评估减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入强安全边际区，需复核现金流和订单质量后考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "接近或超过上行情景估值下沿，需评估减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的利润率、经营现金流、应收款和订单结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报和前三季度新签合同，判断全年业绩兑现概率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度新签合同总额及同比",
-    "能源电力新签合同占比",
-    "境外新签合同同比",
-    "经营活动现金流净额",
-    "应收账款、合同资产和信用减值损失",
-    "工程承包与勘测设计毛利率",
-    "资产负债率和有息负债成本",
-    "地产及投资业务减值、回款和处置进展",
-    "抽水蓄能、水利水电、新能源基地政策和开工节奏"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

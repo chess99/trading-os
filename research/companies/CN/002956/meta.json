@@ -1,113 +1,115 @@
 {
-  "symbol": "CN:002956",
-  "market": "CN",
-  "ticker": "002956",
-  "name": "西麦食品",
-  "company_name": "桂林西麦食品股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "买入",
-  "current_rating": "buy",
-  "current_thesis": "西麦食品是国内燕麦主业龙头，2025年收入和利润创新高，2026H1业绩预告显示利润继续高增。公司具备品牌、渠道、现金流和分红优势，但燕麦品类壁垒不是顶级，且高位存在实控人及一致行动人减持压力。当前20-21元附近适合小仓分批，18.5元以下安全边际更充分。",
-  "quality_rating": "较高",
-  "valuation_rating": "中性偏合理",
-  "fair_value_range": [
-    19,
-    25
-  ],
-  "buy_zone": [
-    16.5,
-    20.5
-  ],
-  "sell_or_reduce_zone": [
-    28,
-    30
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "西麦食品",
+    "security_status": "active",
+    "symbol": "CN:002956",
+    "ticker": "002956"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "745552fcc3f75035f6ced3951ee7496370df34cf81e368723991e2f5ac2e07d8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于或等于18.5元，且2026H1预告兑现、毛利率未明显回落",
-      "max_weight": 0.5,
-      "action": "加仓至目标仓位40%-50%"
-    },
-    {
-      "condition": "股价在18.5元至20.5元之间，且复合燕麦、燕麦+、牛奶燕麦继续增长",
-      "max_weight": 0.3,
-      "action": "建立20%-30%观察仓"
-    },
-    {
-      "condition": "股价在20.5元至25元之间，且全年净利润中枢未上修到2.8亿元以上",
-      "max_weight": 0.3,
-      "action": "持有为主，不追高加仓"
-    },
-    {
-      "condition": "股价高于28元，或动态估值超过30倍且增长未进一步兑现",
-      "max_weight": 0.1,
-      "action": "逐步减仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.5,
-      "reason": "进入小仓买入区，动态估值与成长性基本匹配",
-      "action": "允许建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "reason": "较基准合理价约22元有更明确折价",
-      "action": "进入加仓复核区"
-    },
-    {
-      "type": "price_above",
-      "price": 28.0,
-      "reason": "接近或超过乐观估值区，需要复核增长持续性",
-      "action": "进入减仓复核区"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "隐含较高成长预期，若利润未显著上修则风险收益转弱",
-      "action": "若业绩未显著上修则降低到观察仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年度报告预计披露窗口结束",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报将验证2026H1预增质量和渠道结构",
-      "action": "核验收入结构、毛利率、销售费用率和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报预计披露窗口结束",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报将验证Q1高增长后的持续性",
-      "action": "复核复合燕麦、燕麦+增速、现金流和全年利润中枢"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年度报告预计披露窗口结束",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报将决定是否把公司从小仓买入提升为核心持仓",
-      "action": "复核全年净利润、分红、自由现金流、治理与估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
+      "reason": "进入小仓买入区，动态估值与成长性基本匹配",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "较基准合理价约22元有更明确折价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 28.0
+      },
+      "reason": "接近或超过乐观估值区，需要复核增长持续性",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "隐含较高成长预期，若利润未显著上修则风险收益转弱",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "复合燕麦与燕麦+收入增速",
-    "纯燕麦系列销售规模是否稳定在8亿元量级",
-    "牛奶燕麦系列销售规模与复购表现",
-    "毛利率、销售费用率和扣非净利率",
-    "经营现金流净额/归母净利润",
-    "零食渠道与下沉终端动销质量",
-    "经销商库存与应收账款变化",
-    "实控人及一致行动人减持进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

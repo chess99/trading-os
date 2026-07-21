@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:300369",
-  "ticker": "300369",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "绿盟科技",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "绿盟科技具备国内网络安全一线厂商的技术、客户和安全服务积累，但 2025 年仍亏损、2026Q1 仍未验证盈利拐点。当前核心矛盾是收入温和恢复与经营杠杆修复能否持续，合理策略是等待价格回到安全边际区间，并用 2026H1/Q3 的收入、现金流和亏损收窄情况确认。",
-  "fair_value_range": [
-    6.0,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "绿盟科技",
+    "security_status": "active",
+    "symbol": "CN:300369",
+    "ticker": "300369"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "61830e6d6a7562c5147040ad4e74a4a213b7de8f2e7c9c1bdc34cda6074ebee2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入 4.8-5.5 元买入区间，且 2026H1 或 2026Q3 收入同比增速达到 8% 以上、亏损继续收窄、经营现金流未恶化",
-      "action": "建立观察性底仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核 2026 年中报，重点检查收入增速、亏损收窄、经营现金流和应收账款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于 5.0 元，同时毛利率稳定、经营现金流为正、应收账款周转未恶化",
-      "action": "小幅加仓但仍不作为核心仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "复核 2026 年三季报，判断全年盈利修复路径是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于 8.2 元，或收入恢复低于行业、亏损扩大、经营现金流转弱",
-      "action": "不买入或减持观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入基准买入区间上沿，若同时出现收入恢复和现金流改善，可重新评估小仓位买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "超过乐观情景下沿，若盈利拐点尚未确认，风险收益比转差。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入基准买入区间上沿，若同时出现收入恢复和现金流改善，可重新评估小仓位买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "超过乐观情景下沿，若盈利拐点尚未确认，风险收益比转差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核 2026 年中报，重点检查收入增速、亏损收窄、经营现金流和应收账款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-30",
-      "reason": "复核 2026 年三季报，判断全年盈利修复路径是否成立。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

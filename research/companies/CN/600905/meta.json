@@ -1,108 +1,105 @@
 {
-  "symbol": "CN:600905",
-  "market": "CN",
-  "ticker": "600905",
-  "name": "三峡能源",
-  "company_name": "三峡能源",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "观察",
-  "status": "active",
-  "current_thesis": "海上风电资源和央企融资能力构成长期资产价值，但市场化电价、补贴应收、高杠杆和重资本开支压制股东回报，当前价格仅具观察价值。",
-  "current_rating": "watch",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    3.8,
-    4.8
-  ],
-  "currency": "CNY",
-  "buy_zone": [
-    3.1,
-    3.7
-  ],
-  "sell_or_reduce_zone": [
-    4.9,
-    6.0
-  ],
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "三峡能源",
+    "security_status": "active",
+    "symbol": "CN:600905",
+    "ticker": "600905"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "36a23fe7f818a209283e51db0e5053e0dd8ced70bf55941618650da16f4fe213"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于4.9元且没有超预期基本面改善",
-      "action": "不追高，若已有底仓可逢高减仓",
-      "max_weight": 0.02,
-      "reason": "估值已透支中期盈利修复，风险收益比偏弱。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报中的电价、利用小时、补贴应收与回款。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于3.8元至4.2元，基本面无明显恶化",
-      "action": "仅保留观察仓或极小试探仓",
-      "max_weight": 0.05,
-      "reason": "接近合理价值区间，赔率一般。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报盈利弹性、负债变化与REITs进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至3.1元至3.7元，且补贴回款和电价未明显恶化",
-      "action": "分批买入",
-      "max_weight": 0.1,
-      "reason": "开始具备安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估中期合理价值区间与仓位计划。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价回落至2.6元至3.0元，且海风投产、融资和回款逻辑未破坏",
-      "action": "积极加仓",
-      "max_weight": 0.15,
-      "reason": "进入强吸引力区间，容错率显著提升。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入安全边际区间，适合重新评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入强吸引力买入区间，但需确认不是基本面恶化驱动。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.9
+      },
+      "reason": "高于不追高区间，应检查是否需要减仓或停止加仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入安全边际区间，适合重新评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入强吸引力买入区间，但需确认不是基本面恶化驱动。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.9,
-      "reason": "高于不追高区间，应检查是否需要减仓或停止加仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报中的电价、利用小时、补贴应收与回款。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报盈利弹性、负债变化与REITs进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估中期合理价值区间与仓位计划。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "累计并网装机容量及其中海上风电装机",
-    "风电平均利用小时数",
-    "太阳能平均利用小时数",
-    "综合平均上网电价",
-    "市场化交易电量占比",
-    "绿电交易和绿证收入",
-    "应收可再生能源电价附加余额",
-    "年度补贴回款金额",
-    "经营活动现金流净额",
-    "投资活动现金流净额",
-    "资产负债率",
-    "综合融资成本",
-    "分红率",
-    "REITs推进进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

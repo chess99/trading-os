@@ -1,84 +1,95 @@
 {
-  "symbol": "CN:605003",
-  "market": "CN",
-  "ticker": "605003",
-  "name": "众望布艺",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "众望布艺资产负债表稳健、现金流和分红质量较好，装饰面料出口业务具备窄护城河；但公司规模小、境外收入占比高、2025年扣非利润不增长且2026Q1利润下滑，当前价格已高于保守合理价值区间，缺少买入安全边际，维持观察。",
-  "fair_value_range": [
-    13.5,
-    17.5
-  ],
-  "buy_zone": [
-    0,
-    13
-  ],
-  "sell_or_reduce_zone": [
-    22,
-    28
-  ],
-  "position_plan": [
-    {
-      "condition": "股价跌至13元以下，且最近一期扣非净利润未继续恶化、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "连续两个季度收入和扣非净利润恢复正增长，毛利率稳定，且价格仍低于17.5元",
-      "action": "提高至小仓位",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于22元且未看到利润中枢上移至8000万元以上",
-      "action": "不追高或减仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "进入保守买入区间，可重新评估是否建立观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 22,
-      "reason": "价格进入乐观情景估值上沿，应检查是否需要降低仓位或维持回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看境外订单、扣非净利润、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1下滑是否已修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和分红，更新长期利润中枢与估值区间"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 20.64,
-    "reference_price_date": "2026-07-18",
-    "fair_value_method": "相对估值、DCF、情景估值交叉验证",
-    "normalized_core_profit_cny": [
-      55000000,
-      70000000
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众望布艺",
+    "security_status": "active",
+    "symbol": "CN:605003",
+    "ticker": "605003"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "9da4b6840b19b5b57eef95acc927c238481907e3eff4f78a424862790f300b29"
+      }
     ],
-    "estimated_market_cap_cny": 2270000000
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看境外订单、扣非净利润、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1下滑是否已修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和分红，更新长期利润中枢与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入保守买入区间，可重新评估是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "价格进入乐观情景估值上沿，应检查是否需要降低仓位或维持回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

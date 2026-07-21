@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688819",
-  "market": "CN",
-  "ticker": "688819",
-  "name": "天能股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "天能股份是电动轻型车铅蓄电池龙头，主业具备渠道、规模、回收闭环和政策顺风，2025年现金流与分红能力较好；2026Q1利润受原材料和销售规模拖累显著下滑，需用后续季度验证修复。20元附近接近保守合理价值下沿，适合小仓有条件买入。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    21,
-    27
-  ],
-  "buy_zone": [
-    0,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    29,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天能股份",
+    "security_status": "active",
+    "symbol": "CN:688819",
+    "ticker": "688819"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "76b9efd1b850d5822a92eb2a6a0a703e78f008065fa38cb779b9782180b92828"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于20元且2026H1未出现连续低毛利恶化，先建2%-3%观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-28"
+      },
+      "reason": "复核2026年半年报，重点检查毛利率、扣非利润和经营现金流是否修复",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3扣非利润、毛利率确认修复后，允许提高至核心观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1盈利下滑是暂时性还是趋势性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于17元且铅蓄主业收入、现金流和治理未恶化，可逆向加仓",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红，更新正常化利润与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入买入区间，且接近保守PB和正常化PE估值下沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "若基本面未恶化，提供更充分安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "超过当前合理价值区间上沿，需要减仓或等待盈利预测上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入买入区间，且接近保守PB和正常化PE估值下沿"
-    },
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "若基本面未恶化，提供更充分安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 29,
-      "reason": "超过当前合理价值区间上沿，需要减仓或等待盈利预测上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-28",
-      "reason": "复核2026年半年报，重点检查毛利率、扣非利润和经营现金流是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1盈利下滑是暂时性还是趋势性"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红，更新正常化利润与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

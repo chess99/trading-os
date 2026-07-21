@@ -1,108 +1,97 @@
 {
-  "symbol": "CN:002516",
-  "market": "CN",
-  "ticker": "002516",
-  "name": "旷达科技",
-  "company_name": "旷达科技集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "汽车内饰材料主业现金流和资产负债表较稳，高端合成革、超纤仿麂皮、飞织和国资协同带来成长选项；但当前约6.06元、约89.13亿元市值已接近乐观情景下沿，2025年ROE仅约4.98%，光伏利润显著下滑，芯投微仍处爬坡承压阶段，安全边际不足。",
-  "quality_rating": "B",
-  "valuation_rating": "D",
-  "fair_value_range": [
-    4.0,
-    5.0
-  ],
-  "buy_zone": [
-    3.4,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    6.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "旷达科技",
+    "security_status": "active",
+    "symbol": "CN:002516",
+    "ticker": "002516"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4f1b805906da70668fead83b066d53d726a5c55633b178cda43f867a82576d53"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格<=3.40元",
-      "action": "强吸引力买入，目标仓位3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格3.41-4.00元",
-      "action": "分批买入，目标仓位2%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "价格4.01-5.00元",
-      "action": "合理区间，只观察或极小试仓0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "价格5.01-5.50元",
-      "action": "偏贵，不新增",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "价格>5.50元",
-      "action": "不追高，持有者考虑降仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.4,
-      "reason": "价格低于保守价值，安全边际显著",
-      "condition": "价格<=3.40元",
-      "action": "强吸引力买入"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入安全边际买入区",
-      "condition": "价格<=4.00元",
-      "action": "进入安全边际买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "高于合理价值区间上沿，依赖乐观预期",
-      "condition": "价格>5.50元",
-      "action": "不追高"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "接近或超过乐观情景估值下沿，风险收益比下降",
-      "condition": "价格>6.20元",
-      "action": "持有者考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报应能验证2026年内饰主业增速、毛利率、现金流和芯投微阶段性进展",
-      "condition": "2026年半年报披露后",
-      "action": "复查营收、利润、毛利率、现金流、芯投微进展和国资协同"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.4
+      },
+      "reason": "价格低于保守价值，安全边际显著",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入安全边际买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "高于合理价值区间上沿，依赖乐观预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "接近或超过乐观情景估值下沿，风险收益比下降",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "汽车内饰业务收入增速",
-    "汽车内饰毛利率",
-    "合成革、超纤仿麂皮、飞织等高端产品放量情况",
-    "应收账款周转与存货周转",
-    "经营活动现金流净额/归母净利润",
-    "光伏售电量、限电率与市场化交易电价",
-    "芯投微收入、毛利率、净利润与产能利用率",
-    "国资协同订单和资本配置动作"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

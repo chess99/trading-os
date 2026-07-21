@@ -1,130 +1,132 @@
 {
-  "symbol": "CN:002788",
-  "market": "CN",
-  "ticker": "002788",
-  "name": "鹭燕医药",
-  "company_name": "鹭燕医药股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "区域医药流通商，福建渠道和分红有价值，但行业低毛利、应收账款和短期有息负债偏高；合理价值约8.5-10.5元/股，只有跌入8.5元以下才有足够安全边际。",
-  "quality_rating": "中等偏弱",
-  "valuation_rating": "合理偏贵",
-  "fair_value_range": [
-    8.5,
-    10.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鹭燕医药",
+    "security_status": "active",
+    "symbol": "CN:002788",
+    "ticker": "002788"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4fbcb86967e8c248e9c5bbe9e81452c4de274dc21797613dc2b46ce079ff28c9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.5元，且最近季度经营现金流/归母净利润不低于1倍，应收账款增速不高于收入增速",
-      "action": "分批买入",
-      "target_position": "30%-50%",
-      "max_weight": 0.5
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "中报将验证收入增长、毛利率、回款和债务压力是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于7.5元，且分红政策维持、短期借款和财务费用未继续恶化",
-      "action": "提高至防守型核心仓位",
-      "target_position": "60%-70%",
-      "max_weight": 0.7
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "应收账款是公司财务质量和安全边际的核心变量",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格处于8.5-10.5元，基本面未出现利润率和回款改善",
-      "action": "观察或仅保留跟踪小仓位",
-      "target_position": "0%-20%",
-      "max_weight": 0.2
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "现金流弱化会削弱分红能力和估值支撑",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于13.0元，或估值高于18倍PE但ROE未回到10%以上",
-      "action": "减仓或卖出",
-      "target_position": "0%-10%",
-      "max_weight": 0.1
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "高短债和财务费用会侵蚀低净利率业务的利润",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "分销毛利率下行将直接压低合理估值区间",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "分红是当前投资价值的重要组成部分",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "低于合理价值下沿，PE、PB和股息率开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "估值接近保守情形，股息率和PB保护更充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "超过低毛利高杠杆流通公司的合理估值上限",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "action": "进入可买区，复核回款和现金流后分批建仓",
-      "reason": "低于合理价值下沿，PE、PB和股息率开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
-      "action": "进入高安全边际区，若基本面未恶化可提高仓位",
-      "reason": "估值接近保守情形，股息率和PB保护更充分"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "currency": "CNY",
-      "action": "估值偏高，复核是否减仓",
-      "reason": "超过低毛利高杠杆流通公司的合理估值上限"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "发布2026年中报或年报",
-      "reason": "中报将验证收入增长、毛利率、回款和债务压力是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "应收账款增速连续两个季度高于收入增速",
-      "reason": "应收账款是公司财务质量和安全边际的核心变量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "经营现金流/归母净利润连续两个季度低于1倍",
-      "reason": "现金流弱化会削弱分红能力和估值支撑"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "短期借款或财务费用同比大幅上升",
-      "reason": "高短债和财务费用会侵蚀低净利率业务的利润"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "分销毛利率跌破6.3%",
-      "reason": "分销毛利率下行将直接压低合理估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "年度分红率明显低于40%",
-      "reason": "分红是当前投资价值的重要组成部分"
-    }
-  ],
-  "key_tracking_metrics": [
-    "应收账款/营业收入",
-    "应收账款周转天数",
-    "经营现金流/归母净利润",
-    "综合毛利率和医药分销毛利率",
-    "短期借款和财务费用率",
-    "资产负债率",
-    "福建省外收入占比及毛利率",
-    "ROE",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

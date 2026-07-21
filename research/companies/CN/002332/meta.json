@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:002332",
-  "market": "CN",
-  "ticker": "002332",
-  "name": "仙琚制药",
-  "company_name": "仙琚制药",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "仙琚制药具备甾体原料药和制剂一体化平台、妇科/麻醉/皮质激素产品梯队及海外规范市场能力，但2025扣非利润和2026Q1业绩仍承压，当前更适合在8元以下小仓位观察，等待扣非利润、原料药价格和制剂新品放量验证后再加仓。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_attractive",
-  "fair_value_range": [
-    9.0,
-    11.5
-  ],
-  "buy_zone": [
-    7.2,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    11.5,
-    13.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "仙琚制药",
+    "security_status": "active",
+    "symbol": "CN:002332",
+    "ticker": "002332"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "777a2974ed8c71a5e504f95bb2dfe4d0b7db320666eb728ecd525ba80bfbcead"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.0元且未出现新的集采或减值负面公告",
-      "action": "建立0.5%-1.0%观察仓",
-      "max_weight": 0.01,
-      "reason": "当前估值已接近修复情景下沿，但2026Q1扣非净利仍同比下滑，需要先小仓位验证拐点。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点确认扣非净利、原料药价格、制剂新品和现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报扣非净利恢复同比正增长且经营现金流好于扣非净利",
-      "action": "加仓至2%-3%",
-      "max_weight": 0.03,
-      "reason": "若原料药降幅收窄、制剂新品放量和现金流改善同时成立，利润修复可信度提高。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及国家基药目录自2026-09-01施行后的市场拓展信号。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于11.5元但扣非利润和原料药收入未明显修复",
-      "action": "暂停加仓并减持交易仓",
-      "max_weight": 0.01,
-      "reason": "高于合理价值区间下沿后，若基本面未验证，风险收益比转弱。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入观察仓买入区间，且接近公司2026年6月回购成交区间上沿。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入强安全边际区间，可复核是否加至计划仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.5
+      },
+      "reason": "触及合理价值区间上沿，若业绩未超预期应考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入观察仓买入区间，且接近公司2026年6月回购成交区间上沿。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入强安全边际区间，可复核是否加至计划仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.5,
-      "reason": "触及合理价值区间上沿，若业绩未超预期应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点确认扣非净利、原料药价格、制剂新品和现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及国家基药目录自2026-09-01施行后的市场拓展信号。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非净利润同比增速",
-    "原料药收入增速和毛利率",
-    "制剂收入增速和毛利率",
-    "呼吸制剂收入增速",
-    "妇科新品放量进度",
-    "销售费用率",
-    "研发费用率",
-    "经营现金流/扣非净利润",
-    "商誉和存货减值",
-    "集采中选价格与执行量",
-    "回购执行进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

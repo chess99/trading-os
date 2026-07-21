@@ -1,63 +1,106 @@
 {
-  "symbol": "CN:000100",
-  "market": "CN",
-  "ticker": "000100",
-  "name": "TCL科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "2026H1业绩预告显示归母净利润37.0至39.2亿元、扣非归母净利润29.2至31.4亿元，TCL华星盈利显著改善，验证显示周期韧性；但光伏仍处亏损改善阶段，小尺寸OLED短期承压，高杠杆及t9少数股权收购的发股摊薄仍需核验。2026-07-17收盘5.00元位于合理价值下沿但高于买入区，维持观察，不建议新买。",
-  "fair_value_range": [5.0, 6.5],
-  "buy_zone": [4.0, 4.8],
-  "sell_or_reduce_zone": [6.5, 8.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "TCL科技",
+    "security_status": "active",
+    "symbol": "CN:000100",
+    "ticker": "000100"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "61593fb9d84cd0810dce15ea306eef0eb384792d863c60f26d272f15b8f6b9ce"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "14bcca3e973bbf7b36a5afc24ee0ca61bee8f85b280faca4b2c2cb164d062aa6"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "4b2cac30a17f973107753d61f1a2012ea0c6b462fc41ab4a5c05419ec447542f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.8元至6.5元，已有仓位仅观察",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报后复核面板利润率、光伏亏损收窄程度、现金流和负债率变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元且半年报确认现金流、负债和光伏业务未恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核全年盈利指引和光伏业务趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.0元",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入有安全边际的买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入强吸引力买入区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报后复核面板利润率、光伏亏损收窄程度、现金流和负债率变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核全年盈利指引和光伏业务趋势"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入有安全边际的买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入强吸引力买入区间"
-    },
-    {
-      "type": "price_above",
-      "price": 6.5,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-18T12:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

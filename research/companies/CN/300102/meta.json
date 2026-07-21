@@ -1,45 +1,101 @@
 {
-  "symbol": "CN:300102",
-  "market": "CN",
-  "ticker": "300102",
-  "name": "乾照光电",
-  "company_name": "厦门乾照光电股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "乾照光电是LED芯片二线制造商，2025年行业（三安/华灿）巨额亏损背景下维持微利（扣非仅0.37亿），经营性现金流真实改善（OCF 5.6亿为利润4.9倍），但2026Q1营收同比-47%为重大红旗信号。当前P/B 4.38x为全行业最高，远超三安（2.38x）和聚灿（2.59x），股价20.46元的支撑完全依赖'化合物半导体+Mini LED'成长期权，而该期权在财务数据中无任何验证。不建议买入，建议等待8-13元合理区间或2026H1营收逐季验证后再评估。",
-  "quality_rating": "B-",
-  "valuation_rating": "D+",
-  "fair_value_range": [8.0, 13.0],
-  "buy_zone": [5.0, 7.0],
-  "strong_attraction_zone": [0, 5.0],
-  "sell_or_reduce_zone": [14.0, 18.0],
-  "do_not_chase_above": 14.0,
-  "position_plan": [
-    {"zone":"18元以上","condition":"股价超出合理价值上沿40%+，已完全反映成长期权","action":"不买入，已有持仓建议减仓","target_weight":0.0,"max_weight":0.0},
-    {"zone":"14-18元","condition":"偏贵区间，但不至极端泡沫","action":"不新增，已有仓位可持有观望","target_weight":0.0,"max_weight":0.005},
-    {"zone":"8-13元","condition":"合理估值区间且基本面未进一步恶化","action":"可建立轻仓观察","target_weight":0.01,"max_weight":0.01},
-    {"zone":"5-7元","condition":"有安全边际且最新财报营收恢复正增长","action":"逢低建仓","target_weight":0.02,"max_weight":0.02},
-    {"zone":"0-5元","condition":"深度价值区间且营收恢复正增长、扣非转正","action":"分批加仓","target_weight":0.03,"max_weight":0.03}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "乾照光电",
+    "security_status": "active",
+    "symbol": "CN:300102",
+    "ticker": "300102"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial-superseded.md",
+        "sha256": "e81c5f93acc0089c9691a302d29e83bb15615d26553128adc80ebbeb5a73a3c7"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "b969d852b409fb79e78c4ba35788ea620e3fa4900ebf385ccea04a925f03c9c0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，核心关注：营收同比是否改善、毛利率能否维持18%+、扣非净利润绝对值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断行业供需是否触底",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入合理估值区间下沿，关注2026H1营收数据后评估",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入强吸引买入区，需确认营收恢复正增长和扣非转正",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超出合理价值上沿40%+，不适合建立新仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type":"date","date":"2026-08-31","reason":"复核2026年半年报，核心关注：营收同比是否改善、毛利率能否维持18%+、扣非净利润绝对值"},
-    {"type":"date","date":"2026-10-31","reason":"复核2026年三季报，判断行业供需是否触底"}
-  ],
-  "price_triggers": [
-    {"type":"price_below","price":8.0,"reason":"进入合理估值区间下沿，关注2026H1营收数据后评估"},
-    {"type":"price_below","price":5.0,"reason":"进入强吸引买入区，需确认营收恢复正增长和扣非转正"},
-    {"type":"price_above","price":18.0,"reason":"超出合理价值上沿40%+，不适合建立新仓"}
-  ],
-  "key_risks": [
-    "营收持续下滑（2026Q1同比-47%）",
-    "行业价格战导致毛利率受压",
-    "Mini LED/化合物半导体期权兑现不及预期",
-    "重资产折旧压力（固定资产27.8亿）",
-    "非经常性损益依赖（2025年占利润68%）",
-    "相对估值回调风险（P/B 4.38x全行业最高）"
-  ],
-  "updated_at": "2026-07-08T22:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

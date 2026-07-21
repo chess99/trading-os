@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:601368",
-  "ticker": "601368",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "绿城水务",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "绿城水务具备南宁区域供排水专营优势和公用事业防御性，但2025年ROE低、杠杆高，2026年治理事件未完全出清；当前价格缺乏足够安全边际，等待低价或现金流/治理改善验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    3.4,
-    4.2
-  ],
-  "buy_zone": [
-    2.8,
-    3.3
-  ],
-  "sell_or_reduce_zone": [
-    4.8,
-    5.5
-  ],
-  "decision": "观察",
-  "confidence": "中",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "绿城水务",
+    "security_status": "active",
+    "symbol": "CN:601368",
+    "ticker": "601368"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6df7a09767a43c35581407e772f805388c72015157b124e1446056c7956cf776"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.3元，且2026年半年报验证利润修复、经营现金流未明显恶化、治理事件无进一步负面扩散",
-      "action": "可建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报利润、现金流、应收款和财务费用变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.4至4.2元且缺乏调价、回款或治理出清证据",
-      "action": "仅跟踪不买入",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认上半年修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于4.8元或公告显示治理事件涉及上市公司资金、工程招投标、财务真实性",
-      "action": "回避或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及治理事件后续披露",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.3
+      },
+      "reason": "进入买入区上沿，若基本面未恶化可重新评估安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "接近乐观情景估值，若无明确调价和现金流改善证据应考虑减仓或回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.3,
-      "reason": "进入买入区上沿，若基本面未恶化可重新评估安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "reason": "接近乐观情景估值，若无明确调价和现金流改善证据应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报利润、现金流、应收款和财务费用变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认上半年修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及治理事件后续披露"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

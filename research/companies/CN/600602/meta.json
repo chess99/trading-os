@@ -1,87 +1,105 @@
 {
-  "symbol": "CN:600602",
-  "ticker": "600602",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "云赛智联",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "上海国资数字底座和智算/数据要素期权真实，但当前价格已充分反映乐观预期；在利润率、智算利用率和数据运营商业化未兑现前，仅观察不买。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "云赛智联",
+    "security_status": "active",
+    "symbol": "CN:600602",
+    "ticker": "600602"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "05687ff2bdf1cfb709a1061e455672191409fb653aa46123ed14b52e262decb3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.5元，且云计算与大数据毛利率稳定、经营现金流未恶化",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的收入结构、毛利率、智算中心投入产出和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "智算中心上架率、算力服务收入和毛利率披露后明显优于预期，且估值仍低于公允价值上限",
-      "action": "将仓位上限提高",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年盈利趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.5元而TTM归母净利润仍约2亿元、无高毛利智算或数据运营兑现",
-      "action": "不买入或降低已有仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，判断智算和公共数据运营是否进入可持续盈利",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "接近估值区间上沿，需要复核智算运营和毛利率是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初始买入区间，可评估建立小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "高于卖出或降低区间，若利润未兑现则风险收益恶化",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "接近估值区间上沿，需要复核智算运营和毛利率是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初始买入区间，可评估建立小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "高于卖出或降低区间，若利润未兑现则风险收益恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的收入结构、毛利率、智算中心投入产出和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年盈利趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，判断智算和公共数据运营是否进入可持续盈利"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 18.26,
-    "reference_price_date": "2026-07-16",
-    "market_cap_cny_billion": 24.97,
-    "ttm_pe": 127.7,
-    "pb_2026q1": 5.1,
-    "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

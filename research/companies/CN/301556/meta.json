@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:301556",
-  "ticker": "301556",
-  "name": "托普云农",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司是A股稀缺的智慧农业软硬件一体化标的，政策方向、研发强度和资产负债表较好，但项目制业务导致收入、毛利和现金流波动；当前价格已接近乐观情景，安全边际不足，暂列观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "buy_zone": [
-    0,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    55,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "托普云农",
+    "security_status": "active",
+    "symbol": "CN:301556",
+    "ticker": "301556"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "850e7cb90fe2e96c2321c4dbb39a070bd089802f78b6a85480cb18c823af9084"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于35元且2026中报显示收入、扣非利润和经营现金流未继续恶化时，进入重点观察，不建仓或小于1%试探。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入、扣非净利润、经营现金流、应收账款和项目毛利率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于32元，且连续两个季度经营现金流改善、扣非净利润同比转正时，可建立初始仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润质量问题是否延续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入增长15%以上、扣非净利增长20%以上、经营现金流转正且智慧农业项目毛利率稳定在48%以上时，可提高配置。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和现金流兑现情况，重新评估合理估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "接近中性估值上沿以下，值得重新核对中报和订单质量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入本次测算买入区间，若基本面未恶化可考虑初始仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "高于合理价值区间且接近乐观情景，若业绩未验证应降低预期或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "reason": "接近中性估值上沿以下，值得重新核对中报和订单质量。"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入本次测算买入区间，若基本面未恶化可考虑初始仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "高于合理价值区间且接近乐观情景，若业绩未验证应降低预期或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入、扣非净利润、经营现金流、应收账款和项目毛利率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润质量问题是否延续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和现金流兑现情况，重新评估合理估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

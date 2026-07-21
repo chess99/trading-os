@@ -1,93 +1,95 @@
 {
-  "symbol": "CN:301163",
-  "ticker": "301163",
-  "name": "宏德股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "宏德股份具备风电和高端装备铸件供应链资质，2025年盈利修复，但ROE偏低、经营现金流为负、应收和存货占用较重；2026-07-15收盘价22.27元对应约44倍TTM PE和1.60倍PB，安全边际不足，适合观察等待现金流和订单验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    0,
-    17
-  ],
-  "sell_or_reduce_zone": [
-    29,
-    34
-  ],
-  "position_plan": [
-    {
-      "condition": "当前估值处于合理区间偏上且经营现金流尚未修复，仅允许跟踪观察，不主动建仓。",
-      "action": "watch_only",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价跌至17元以下，同时最近一期经营现金流转正、应收账款增速低于收入增速、风电订单恢复得到公告或财报验证。",
-      "action": "initiate_small_position",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌至15元以下且基本面未恶化，可在组合风险预算内提高到观察型上限。",
-      "action": "add_on_margin_of_safety",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入买入观察区，约对应1.2倍PB，安全边际开始显现。"
-    },
-    {
-      "type": "price_above",
-      "price": 29,
-      "reason": "若盈利未同步上修，估值进入减持/回避区。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入恢复、毛利率、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润和现金流趋势是否支持估值上修。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新评估产能释放、客户结构和合理价值区间。"
-    }
-  ],
-  "valuation": {
-    "as_of": "2026-07-15",
-    "last_price": 22.27,
-    "market_cap_cny_billion": 1.817,
-    "ttm_pe": 44.05,
-    "pb": 1.6,
-    "method": "relative_valuation_absolute_valuation_scenario_cross_check"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宏德股份",
+    "security_status": "active",
+    "symbol": "CN:301163",
+    "ticker": "301163"
   },
-  "key_monitoring_items": [
-    "2026H1营收和风电业务订单恢复",
-    "毛利率是否稳定在18%-22%以上",
-    "经营活动现金流是否转正",
-    "应收票据及应收账款占收入比例是否下降",
-    "存货周转与跌价计提",
-    "募投项目产能利用率和折旧压力",
-    "与日月股份、吉鑫科技、金雷股份的估值折溢价"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "05e773960c3012acc4b3af91b42b8e431564c889e27691d3a2bc9a1d886e12d3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入恢复、毛利率、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润和现金流趋势是否支持估值上修。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新评估产能释放、客户结构和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入买入观察区，约对应1.2倍PB，安全边际开始显现。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "若盈利未同步上修，估值进入减持/回避区。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

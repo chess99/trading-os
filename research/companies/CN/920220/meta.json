@@ -1,87 +1,96 @@
 {
-  "symbol": "CN:920220",
-  "market": "CN",
-  "ticker": "920220",
-  "name": "朗信电气",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "current_thesis": "朗信电气是国内乘用车热管理电子风扇细分龙头，2024年国内乘用车热管理电子风扇份额约20.97%，客户覆盖比亚迪、吉利、奇瑞、长安等头部车企；但产品和客户集中、整车厂年降压力和北交所新股估值波动使当前43.98元缺少足够安全边际，35元以下才进入可买区。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    34.0,
-    43.0
-  ],
-  "buy_zone": [
-    30.0,
-    35.0
-  ],
-  "sell_or_reduce_zone": [
-    43.0,
-    50.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗信电气",
+    "security_status": "active",
+    "symbol": "CN:920220",
+    "ticker": "920220"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "0c4346767c71e4bcff9e9bfa60e19828039407df4f6cd6c28d2f79dc51900e63"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price review zone",
-      "action": "强吸引力，可分批提高仓位",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "有安全边际，可建立核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "???????",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price review zone",
-      "action": "合理区间，仅允许小仓跟踪",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 35.0
+      },
+      "reason": "复核半年报和毛利率，若无恶化可开2%-3%第一笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price review zone",
-      "action": "不追高，等待半年报验证",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "若基本面未证伪，可提高至5%-8%上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 50.0
+      },
+      "reason": "若无新产品或利润超预期，视为高估并回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 35,
-      "action": "复核半年报和毛利率，若无恶化可开2%-3%第一笔仓位",
-      "reason": "复核半年报和毛利率，若无恶化可开2%-3%第一笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "action": "若基本面未证伪，可提高至5%-8%上限",
-      "reason": "若基本面未证伪，可提高至5%-8%上限"
-    },
-    {
-      "type": "price_above",
-      "price": 50,
-      "action": "若无新产品或利润超预期，视为高估并回避或减持",
-      "reason": "若无新产品或利润超预期，视为高估并回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "action": "复查2026年半年报：收入、毛利率、净利润、经营现金流、应收账款、客户集中度和募投进度",
-      "reason": "???????"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "action": "复查三季报及主要客户销量/订单变化，判断全年净利是否可维持1.25亿元以上",
-      "reason": "???????"
-    }
-  ],
-  "notes": [
-    "今日决策：观察不买，第一笔仓位0%。关键风险为客户集中、整车厂年降、单品类依赖、关联交易边界和北交所新股流动性波动。置信度中等。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

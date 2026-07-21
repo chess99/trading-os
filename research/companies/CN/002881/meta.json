@@ -1,111 +1,105 @@
 {
-  "symbol": "CN:002881",
-  "market": "CN",
-  "ticker": "002881",
-  "name": "美格智能",
-  "company_name": "美格智能技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司处于物联网连接数增长、5G/RedCap/FWA/AI智能模组升级的赛道，2025年和2026Q1收入利润明显修复；但毛利率低、经营现金流为负、应收和存货占用较重，且当前A股价格已计入较乐观增长预期，安全边际不足。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    28,
-    34
-  ],
-  "buy_zone": [
-    0,
-    27
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美格智能",
+    "security_status": "active",
+    "symbol": "CN:002881",
+    "ticker": "002881"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8b1760ac8e8a3a8b898776481b5d3bb94841e204a54ad5793dca1eb146b952f0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格<=27元，且最近两个季度收入同比增长、综合毛利率不低于17%、经营现金流没有持续恶化",
-      "action": "建立3%-5%标准仓",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "价格在27-34元之间，且FWA/5G/智能模组订单继续增长、应收账款和存货周转未恶化",
-      "action": "只建立1%-2%观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "价格高于34元但低于42元，且利润尚未显著超预期",
-      "action": "不新增仓位，等待业绩消化估值",
-      "max_weight": 0
-    },
-    {
-      "condition": "价格>=42元，或TTM PE仍高于60倍且利润增速回落",
-      "action": "减仓或退出观察仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 27,
-      "currency": "CNY",
-      "reason": "低于合理价值下沿并开始提供安全边际",
-      "action": "进入可买区，复核最近季度毛利率和现金流后建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 23,
-      "currency": "CNY",
-      "reason": "若基本面未恶化，价格已接近保守情形价值",
-      "action": "若基本面未恶化，提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "currency": "CNY",
-      "reason": "高于合理价值上沿且隐含较乐观增长预期",
-      "action": "估值进入减仓区，除非业绩显著超预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报可验证2026年上半年增长和现金流质量",
-      "condition": "2026年半年报披露后复核收入增速、毛利率、经营现金流和应收存货周转",
-      "action": "决定是否维持观察评级和28-34元合理价值区间"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证FWA、5G和智能模组增长是否持续",
-      "condition": "2026年三季报披露后复核FWA/5G/智能模组增长是否兑现",
-      "action": "更新2026-2027年利润假设和仓位计划"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可验证全年利润质量、现金流和融资后资本配置效率",
-      "condition": "2026年年报披露后复核全年利润质量、现金流和资本配置效率",
-      "action": "重写跟踪报告并更新meta"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 27.0
+      },
+      "reason": "低于合理价值下沿并开始提供安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "若基本面未恶化，价格已接近保守情形价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "高于合理价值上沿且隐含较乐观增长预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润和扣非归母净利润增速",
-    "综合毛利率及境内/境外毛利率",
-    "经营现金流净额/净利润",
-    "应收账款周转天数",
-    "存货周转天数",
-    "5G/RedCap/FWA/AI智能模组收入占比",
-    "前五大客户销售占比",
-    "前五大供应商采购占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

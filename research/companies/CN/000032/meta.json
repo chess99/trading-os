@@ -1,84 +1,96 @@
 {
-  "symbol": "CN:000032",
-  "market": "CN",
-  "ticker": "000032",
-  "name": "深桑达Ａ",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "中国电子体系内的信创云与高科技洁净工程平台，战略位置和订单资源较好，但2025年及2026Q1仍处亏损，项目制回款、低毛利工程和应收减值压力尚未出清；当前股价处于合理区间中上部，仅适合观察仓，需等待扣非转正、经营现金流持续改善和数字与信息服务放量后再提高仓位。",
-  "fair_value_range": [
-    17.0,
-    23.0
-  ],
-  "buy_zone": [
-    14.0,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    26.0,
-    31.0
-  ],
-  "position_plan": [
-    {
-      "condition": "当前约21元，处于合理区间中上部",
-      "action": "仅观察仓",
-      "target_weight": 0.01,
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价跌入14-17元且基本面未恶化",
-      "action": "分批买入",
-      "target_weight": 0.02,
-      "max_weight": 0.03
-    },
-    {
-      "condition": "扣非转正、经营现金流持续改善、数字与信息服务收入增速维持20%以上",
-      "action": "复核后提高仓位上限",
-      "target_weight": 0.03,
-      "max_weight": 0.05
-    }
-  ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：高科技产业服务毛利率、扣非利润、经营现金流和数字与信息服务增速。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：募投项目、回款、资产处置和盈利拐点。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "进入安全边际买入区，若基本面未恶化可考虑加至1%-2%。"
-    },
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入强吸引力买入区，需复核应收和毛利后再提升仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 26.0,
-      "reason": "高于不应追高价，若盈利拐点未兑现应降低风险暴露。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 21.36,
-    "last_price_date": "2026-07-07",
-    "market_cap_cny": 25950000000,
-    "quality_rating": "B-",
-    "valuation_rating": "neutral_to_expensive",
-    "confidence": "medium_low"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深桑达Ａ",
+    "security_status": "active",
+    "symbol": "CN:000032",
+    "ticker": "000032"
   },
-  "updated_at": "2026-07-07T23:30:00+08:00"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "f7765075699c80853b8a85e658c4f89b8ee54b8123ad87fd6e80d41aa0027ecf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：高科技产业服务毛利率、扣非利润、经营现金流和数字与信息服务增速。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：募投项目、回款、资产处置和盈利拐点。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入安全边际买入区，若基本面未恶化可考虑加至1%-2%。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入强吸引力买入区，需复核应收和毛利后再提升仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "高于不应追高价，若盈利拐点未兑现应降低风险暴露。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

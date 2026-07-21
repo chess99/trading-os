@@ -1,105 +1,110 @@
 {
-  "symbol": "CN:300458",
-  "market": "CN",
-  "ticker": "300458",
-  "name": "全志科技",
-  "company_name": "珠海全志科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "hold",
-  "current_rating": "watch",
-  "current_thesis": "全志科技是国内智能终端SoC、模拟器件和无线互联芯片设计公司，2026H1业绩预告显著上修利润中枢，端侧AI、AIoT、机器人、工业控制、智慧视觉等新品方向提供成长弹性；但2026-07-13约39.95元股价已处于合理价值区间中部，部分反映高景气预期，安全边际不足，适合观察或小仓跟踪，等待36元以下更优买点。",
-  "quality_rating": "A-",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    39,
-    48
-  ],
-  "buy_zone": [
-    30,
-    36
-  ],
-  "sell_or_reduce_zone": [
-    58,
-    65
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "全志科技",
+    "security_status": "active",
+    "symbol": "CN:300458",
+    "ticker": "300458"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "61559e1c34a12b353a31ce9ffac8c19cabb4138faaed7c818eafc60af0260d41"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "eac69cfeb37cd55948a03daa55c436804580766a5a4f2b31e24f80e05a6db1ee"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于36元且2026H1正式半年报确认收入约40%增长、归母净利润落在4.75-5.15亿元预告区间",
-      "action": "分批建立观察仓，单笔1.0%-1.5%",
-      "target_weight": 0.04,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "公司预约披露2026年半年报，复核收入、净利润、毛利率、研发费用、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于30元且毛利率、存货、研发投入未明显恶化",
-      "action": "提高至强吸引买入仓位，单笔1.5%-2.0%",
-      "target_weight": 0.06,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H1高增长是否由备货透支以及Q3利润率是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价处于36-48元且缺少新的全年利润上修证据",
-      "action": "仅保留0.5%-1.0%跟踪仓或持有原仓，不追高",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，确认全年净利润是否达到8-10亿元区间及新品结构升级进度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于58元且2026全年净利润无法上修到10亿元以上",
-      "action": "逐步减仓，将仓位降至0%-2%",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入可买区间上沿，若半年报兑现预告可开始分批建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "进入减仓区，估值需要2026全年和2027年继续高增长支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入可买区间上沿，若半年报兑现预告可开始分批建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入强安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "进入减仓区，估值需要2026全年和2027年继续高增长支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "公司预约披露2026年半年报，复核收入、净利润、毛利率、研发费用、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H1高增长是否由备货透支以及Q3利润率是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，确认全年净利润是否达到8-10亿元区间及新品结构升级进度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1营业收入同比是否接近40%",
-    "2026H1归母净利润是否落在4.75-5.15亿元预告区间",
-    "2026Q3单季收入和净利润是否继续同比高增",
-    "毛利率是否稳定在35%以上，若低于33%需重新评估",
-    "研发费用率是否维持在16%-22%且研发费用绝对额继续增长",
-    "存货增速是否明显高于收入增速，是否出现跌价准备压力",
-    "MR153、T153、T536、V861、V881、A537、A333等新品量产和客户导入进展",
-    "工业控制、机器人、车载、智慧视觉、智能眼镜等高ASP场景收入占比是否提升",
-    "前五大客户收入占比是否继续上升并带来客户集中度风险",
-    "半导体和AIoT同业估值是否收缩"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,112 +1,106 @@
 {
-  "symbol": "CN:002128",
-  "market": "CN",
-  "ticker": "002128",
-  "name": "电投能源",
-  "company_name": "电投能源",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "电投能源是露天煤矿低成本现金流、煤电铝一体化和新能源装机共同支撑的高质量周期资产，2026Q1受铝产品量价齐升推动利润显著增长；但股本和盈利口径受重组影响仍需半年报确认，当前更适合等待20-23元买入区间。",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    25,
-    31
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    33,
-    38
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "电投能源",
+    "security_status": "active",
+    "symbol": "CN:002128",
+    "ticker": "002128"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "1364e76d96303e7661d2a371edb8de3e401dc96e76abdd9a824000895b28e915"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于22元且煤价、铝价、新能源消纳未同步恶化",
-      "action": "建立首笔观察仓位",
-      "max_weight": 0.02,
-      "reason": "进入买入区间上沿，具备分红和现金流保护，但仍保留周期波动余地"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报、扎铝二期投产进度、重组并表口径和中期分红",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价20-21元且2026半年报确认铝产量释放、现金流正常",
-      "action": "加仓至核心仓位",
-      "max_weight": 0.05,
-      "reason": "安全边际提升，煤电铝一体化和分红回报可以覆盖主要周期风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认Q1高利润是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于19元且归母利润中枢未跌破45亿元",
-      "action": "逆周期加仓但设定组合上限",
-      "max_weight": 0.08,
-      "reason": "价格显著低于合理价值区间，适合利用周期恐慌获取长期收益"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入首笔买入区间，股息率和前瞻PE更具吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于33元且没有利润显著上修证据",
-      "action": "停止加仓并逐步减仓",
-      "max_weight": 0.03,
-      "reason": "股价进入卖出或减仓区间，周期资产风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入强买区间，需要复核煤价、铝价和产量后提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 33.0
+      },
+      "reason": "进入减仓区间，若无利润上修则估值性价比下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 38.0
+      },
+      "reason": "明显高于中性合理价值，除非盈利中枢上移否则应主动兑现",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入首笔买入区间，股息率和前瞻PE更具吸引力"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入强买区间，需要复核煤价、铝价和产量后提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 33,
-      "reason": "进入减仓区间，若无利润上修则估值性价比下降"
-    },
-    {
-      "type": "price_above",
-      "price": 38,
-      "reason": "明显高于中性合理价值，除非盈利中枢上移否则应主动兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报、扎铝二期投产进度、重组并表口径和中期分红"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认Q1高利润是否延续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "煤炭产量",
-    "煤炭销量",
-    "吨煤售价",
-    "吨煤成本",
-    "A00铝价",
-    "氧化铝价格",
-    "电解铝产量",
-    "吨铝成本",
-    "扎铝二期投产进度",
-    "火电利用小时",
-    "新能源装机容量",
-    "新能源发电量",
-    "新能源市场化交易电价",
-    "经营现金流",
-    "资本开支",
-    "分红率",
-    "归母净利润",
-    "少数股东损益"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

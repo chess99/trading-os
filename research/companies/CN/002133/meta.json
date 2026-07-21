@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:002133",
-  "market": "CN",
-  "ticker": "002133",
-  "name": "广宇集团",
-  "company_name": "广宇集团",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "low_to_medium",
-  "valuation_rating": "undervalued_with_value_trap_risk",
-  "current_thesis": "广宇集团处于地产存量去化和康养转型阶段，当前估值低于账面净资产但盈利质量和存货减值风险仍高，适合观察而非重仓买入。",
-  "fair_value_range": [
-    2.6,
-    3.1
-  ],
-  "buy_zone": [
-    2.1,
-    2.3
-  ],
-  "sell_or_reduce_zone": [
-    3.4,
-    3.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广宇集团",
+    "security_status": "active",
+    "symbol": "CN:002133",
+    "ticker": "002133"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fd7a9b44908eebf4fb373625efc91108621baaed3f2c48ba1561ab6e1dbba7aa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于2.30元，且最新公告未出现新增大额减值、债务展期或经营现金流继续显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "价格进入折价净资产买入区间，但基本面仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、经营现金流、存货去化和减值情况",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于2.10元，且2026半年报经营现金流修复、存货减值低于预期",
-      "action": "小幅加仓",
-      "max_weight": 0.01,
-      "reason": "安全边际扩大，同时现金流风险下降"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及地产销售回款趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价达到3.40元以上，但ROE、合同销售和康养盈利没有同步改善",
-      "action": "减仓或不再加仓",
-      "max_weight": 0.0,
-      "reason": "估值接近或超过基准合理价值，低ROE资产不宜给高PB"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.1
+      },
+      "reason": "进入高安全边际买入区间，需要复核现金流和减值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.4
+      },
+      "reason": "进入减持观察区，需验证基本面是否支撑估值提升",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 2.1,
-      "reason": "进入高安全边际买入区间，需要复核现金流和减值"
-    },
-    {
-      "type": "price_above",
-      "price": 3.4,
-      "reason": "进入减持观察区，需验证基本面是否支撑估值提升"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、经营现金流、存货去化和减值情况"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及地产销售回款趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "合同销售金额和销售回款",
-    "存货账面价值及跌价准备",
-    "经营活动现金流净额",
-    "货币资金与短期有息债务覆盖",
-    "资产减值损失",
-    "康养业务收入和利润贡献",
-    "回购执行进度",
-    "杭州和浙江区域新房/二手房成交价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

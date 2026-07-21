@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:600538",
-  "ticker": "600538",
-  "name": "国发股份",
-  "exchange": "SSE",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司主营包括医药流通、医药制造和司法IVD，但2025年和2026H1仍处亏损，现金流偏弱，治理处于无控股股东、无实际控制人状态，现价相对可验证资产和盈利能力缺乏安全边际，暂不买入，仅观察主营修复和治理稳定性。",
-  "fair_value_range": [
-    1.2,
-    2.1
-  ],
-  "buy_zone": [
-    0.9,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    999.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国发股份",
+    "security_status": "active",
+    "symbol": "CN:600538",
+    "ticker": "600538"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "753fe45462a04ca35ee10c95ea0fed01d7b04fd22f631d5bd186b5b4b3e27981"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于2.50元且主营仍亏损、无实控人治理未稳定",
-      "action": "不建仓，已有仓位应减持或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、商誉、现金流和分部经营",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.20元，且2026H2主营扣非亏损明显收窄、未出现新增大额减值或治理冲突",
-      "action": "仅作为困境反转观察仓",
-      "max_weight": 0.002
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否出现主营亏损收窄或现金流改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非转正，高盛生物订单和毛利率可验证恢复，治理结构稳定",
-      "action": "重新研究后再决定是否提高仓位",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报审计意见、商誉减值和无实控人治理稳定性",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入估算买入观察区间，需要复核半年报、商誉和现金流后决定是否小仓位跟踪",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "高于基准估值上沿且主营未验证反转时，风险收益比恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入估算买入观察区间，需要复核半年报、商誉和现金流后决定是否小仓位跟踪"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "高于基准估值上沿且主营未验证反转时，风险收益比恶化"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、商誉、现金流和分部经营"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否出现主营亏损收窄或现金流改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报审计意见、商誉减值和无实控人治理稳定性"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

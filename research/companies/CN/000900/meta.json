@@ -1,102 +1,106 @@
 {
-  "symbol": "CN:000900",
-  "market": "CN",
-  "ticker": "000900",
-  "name": "现代投资",
-  "company_name": "现代投资",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "现代投资是湖南地方国资控制的收费公路平台，主业现金流稳定且估值便宜，但高杠杆、长永高速免费、商品贸易低毛利和金融资产波动要求更高安全边际；当前评级为观察，3.20元以下开始具备首笔买入价值。",
-  "quality_rating": "B-",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    3.8,
-    4.5
-  ],
-  "buy_zone": [
-    2.95,
-    3.25
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "现代投资",
+    "security_status": "active",
+    "symbol": "CN:000900",
+    "ticker": "000900"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "2bf086c5a7f618bb4326d7a006707908996be69246e902f722742451e8bfad7a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约3.60元且未跌入买入区",
-      "action": "保持观察或仅建立0.5%-1.0%观察仓",
-      "max_weight": 0.01,
-      "reason": "估值便宜但长永免费、高杠杆和非主业波动仍需安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看长永免费影响、通行费、财务费用和信用减值",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.20元且未出现重大信用或担保损失",
-      "action": "建立首笔买入仓位",
-      "max_weight": 0.02,
-      "reason": "进入约0.35-0.39倍PB区间，安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润和现金流是否符合基准情景",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.00元且2026H1通行费降幅收窄、财务费用继续下降",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.04,
-      "reason": "低估值叠加基本面未恶化，赔率转强"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入首笔买入观察区，需复核通行费和信用减值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格高于4.60元且无新增成长催化",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02,
-      "reason": "估值接近基准合理区间上沿，风险收益下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入强安全边际区，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "达到减仓区下沿，若无新增催化应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过基准估值上沿，原则上只保留跟踪仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入首笔买入观察区，需复核通行费和信用减值"
-    },
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "进入强安全边际区，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 4.6,
-      "reason": "达到减仓区下沿，若无新增催化应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过基准估值上沿，原则上只保留跟踪仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看长永免费影响、通行费、财务费用和信用减值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润和现金流是否符合基准情景"
-    }
-  ],
-  "key_tracking_metrics": [
-    "长潭、湘衡、长韶娄、溆怀、怀芷等核心路段通行费收入同比",
-    "长永高速免费对通行费和归母净利润的影响金额",
-    "财务费用、利息费用和平均融资成本",
-    "资产负债率、长期借款、短期借款和应付债券规模",
-    "道路运输业毛利率和商品贸易毛利率",
-    "经营活动现金流净额",
-    "信用减值损失、担保敞口和金融资产质量",
-    "新能源、服务区环保、数智物流业务的收入和利润贡献"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

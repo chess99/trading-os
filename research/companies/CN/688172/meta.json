@@ -1,101 +1,106 @@
 {
-  "symbol": "CN:688172",
-  "market": "CN",
-  "ticker": "688172",
-  "name": "燕东微",
-  "company_name": "燕东微",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "燕东微具备北京国资、6/8/12英寸产线和特色工艺平台稀缺性，但当前仍处扣非大额亏损，12英寸爬坡带来的折旧和借款压力尚未消化，2026-07-09股价88.30元已显著透支硅光、国产替代和产能放量预期，因此当前不新买，等待价格回到18-26元且毛利率和扣非亏损改善后再复评。",
-  "quality_rating": "medium",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    24,
-    36
-  ],
-  "buy_zone": [
-    18,
-    26
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "燕东微",
+    "security_status": "active",
+    "symbol": "CN:688172",
+    "ticker": "688172"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "3782bb1a7fb5b319c275cecb2808c6b4ba1a1c23d2d33371a98706c864eb7d52"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格显著高于合理价值区间且公司仍处扣非亏损",
-      "action": "不新买，已有仓位减至观察仓或退出",
-      "max_weight": 0.005,
-      "reason": "2026-07-09股价88.30元对应约6.94倍PB和超过60倍PS，缺乏盈利支撑"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点确认收入、毛利率、扣非亏损、在建工程和长期借款变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至18-26元且2026中报或三季报显示收入增长、毛利率改善、扣非亏损收窄",
-      "action": "建立首笔仓位",
-      "max_weight": 0.01,
-      "reason": "该区间接近1.4-2.0倍PB，且需要财务拐点确认后才有安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证12英寸产线爬坡和折旧压力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非亏损收窄、12英寸产线客户导入和稼动率改善得到定期报告验证",
-      "action": "小幅加仓",
-      "max_weight": 0.03,
-      "reason": "公司产线和北京国资背景具备战略价值，但在持续盈利前不宜高仓位"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 26.0
+      },
+      "reason": "进入买入观察区，需要同步核验毛利率和扣非亏损是否改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入深度价值区，但若基本面无改善则仅可重新研究，不自动买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "超过乐观估值下沿，应降低已有仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过乐观估值上沿，除非业绩已显著超预期，否则应卖出或仅保留极小观察仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 26,
-      "reason": "进入买入观察区，需要同步核验毛利率和扣非亏损是否改善"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入深度价值区，但若基本面无改善则仅可重新研究，不自动买入"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "超过乐观估值下沿，应降低已有仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过乐观估值上沿，除非业绩已显著超预期，否则应卖出或仅保留极小观察仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点确认收入、毛利率、扣非亏损、在建工程和长期借款变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证12英寸产线爬坡和折旧压力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "quarterly_revenue_growth",
-    "gross_margin",
-    "net_profit_attributable_to_parent",
-    "deducted_net_profit_attributable_to_parent",
-    "rd_expense_ratio",
-    "operating_cash_flow",
-    "capex_and_construction_in_progress",
-    "fixed_assets_and_depreciation",
-    "long_term_borrowings",
-    "twelve_inch_capacity_ramp",
-    "top_five_customer_concentration",
-    "related_party_sales",
-    "government_subsidies"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

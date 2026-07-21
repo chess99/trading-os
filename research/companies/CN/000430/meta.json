@@ -1,100 +1,96 @@
 {
-  "symbol": "CN:000430",
-  "market": "CN",
-  "ticker": "000430",
-  "name": "张家界",
-  "company_name": "张家界",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "张家界是稀缺目的地修复资产，但2026Q1利润主要来自重整收益，扣非主业仍亏；当前价格接近乐观情景，需等待扣非转正、经营现金流改善和大庸古城风险出清后再考虑买入。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    3.8,
-    5.0
-  ],
-  "buy_zone": [
-    3.2,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    8.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "张家界",
+    "security_status": "active",
+    "symbol": "CN:000430",
+    "ticker": "000430"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "d49e1244ad0ee8f7a147090a9f7cfb5a8c4814d9af0b6f0e3dc9f6a04b5420c6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于4.00元，且最新季报扣非亏损同比收窄、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "用较低仓位验证重整后经营改善"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报、扣非利润、经营现金流和大庸古城进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于4.00-5.00元，且大庸古城处置或减亏有一手公告支撑",
-      "action": "小幅加仓",
-      "max_weight": 0.02,
-      "reason": "估值接近合理区间，风险开始释放"
+      "active": true,
+      "condition": {
+        "date": "2026-10-15"
+      },
+      "reason": "复核暑期和国庆旺季客流、索道/环保客运收入趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非转正，核心景区客流和索道/环保客运收入同步增长",
-      "action": "提升为核心观察仓",
-      "max_weight": 0.03,
-      "reason": "从困境反转转向经营兑现"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入买入观察区，可结合扣非利润和经营现金流复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于6.80元但扣非仍亏，或估值主要依赖重整收益",
-      "action": "不买或减仓",
-      "max_weight": 0,
-      "reason": "价格已反映乐观预期，缺少盈利验证"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "高于合理价值上沿，应检查是否已透支乐观重整预期",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "若无主业盈利兑现，停止加仓并考虑退出",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入买入观察区，可结合扣非利润和经营现金流复核"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "高于合理价值上沿，应检查是否已透支乐观重整预期"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "若无主业盈利兑现，停止加仓并考虑退出"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报、扣非利润、经营现金流和大庸古城进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-15",
-      "reason": "复核暑期和国庆旺季客流、索道/环保客运收入趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "武陵源核心景区接待人次",
-    "旅游环保客运购票人次",
-    "杨家界索道收入和毛利率",
-    "十里画廊观光电车收入和毛利率",
-    "入境游客人数及韩国、东南亚客源恢复",
-    "扣非归母净利润",
-    "经营现金流净额",
-    "固定资产折旧和减值",
-    "大庸古城亏损、处置或重组进展",
-    "资产负债率和财务费用",
-    "天气、安全事故和景区政策变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

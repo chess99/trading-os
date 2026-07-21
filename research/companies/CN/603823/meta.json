@@ -1,101 +1,96 @@
 {
-  "symbol": "CN:603823",
-  "market": "CN",
-  "ticker": "603823",
-  "name": "百合花",
-  "company_name": "百合花",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "百合花是国内有机颜料细分龙头之一，主业质量中等偏上但周期属性明显；2026-07-09 股价已严重透支光刻胶颜料等高端材料期权，而相关收入占比仍极低，当前不具备买入价值，应等待价格回落至安全边际区或高端材料利润实质兑现后再复查。",
-  "quality_rating": "B",
-  "valuation_rating": "extremely_expensive",
-  "fair_value_range": [
-    14,
-    22
-  ],
-  "buy_zone": [
-    10,
-    14
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "百合花",
+    "security_status": "active",
+    "symbol": "CN:603823",
+    "ticker": "603823"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "e19bdd9896a7169e83edf8b3caae5f5fe392fe53ac48f4b4b46066977496379d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_below_10",
-      "action": "分批买入",
-      "max_weight": 0.06,
-      "reason": "低于强吸引力买入价，主业周期资产和现金流提供较高安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 年半年报，重点验证销量、毛利率、现金流、存货和高端材料订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_10_to_14",
-      "action": "小步买入",
-      "max_weight": 0.04,
-      "reason": "进入有安全边际买入区，但仍需验证毛利率、需求和现金流。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 年三季报，确认周期修复或题材兑现是否有财务证据。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_14_to_22",
-      "action": "观察或极小仓",
-      "max_weight": 0.02,
-      "reason": "接近合理价值区间，新增仓位需要基本面改善证据。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入有安全边际买入区，复核基本面后可考虑小仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_above_30",
-      "action": "减仓或回避",
-      "max_weight": 0,
-      "reason": "估值已明显脱离传统颜料主业可验证利润，需等待高端材料收入实质兑现。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入强吸引力买入区，若财务质量未恶化可提高仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于不应追高价格，除非高端电子材料利润贡献已被证实，否则应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入有安全边际买入区，复核基本面后可考虑小仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 10,
-      "reason": "进入强吸引力买入区，若财务质量未恶化可提高仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "高于不应追高价格，除非高端电子材料利润贡献已被证实，否则应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 年半年报，重点验证销量、毛利率、现金流、存货和高端材料订单。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 年三季报，确认周期修复或题材兑现是否有财务证据。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "有机颜料销量",
-    "有机颜料销售单价",
-    "有机颜料吨毛利",
-    "综合毛利率",
-    "经营现金流净额/归母净利润",
-    "存货周转",
-    "应收账款周转",
-    "海外收入增速",
-    "高性能颜料及光刻胶颜料收入",
-    "资本开支与新增产能利用率",
-    "环保安全监管事件",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

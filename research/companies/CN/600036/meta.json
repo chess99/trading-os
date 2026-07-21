@@ -1,64 +1,111 @@
 {
-  "symbol": "CN:600036",
-  "market": "CN",
-  "ticker": "600036",
-  "name": "招商银行",
-  "currency": "CNY",
-  "status": "active",
-  "rating": "buy",
-  "current_rating": "buy",
-  "current_thesis": "招商银行在37-38元附近对应约0.7-0.8倍PB，估值已反映ROE下行和零售信用风险，但低成本存款、零售AUM、财富管理恢复、387%以上拨备覆盖率和14%以上核心一级资本仍支撑11%-13%可持续ROE，适合分批买入；主要风险是信用卡、消费贷和净息差继续恶化。",
-  "fair_value_range": [42, 52],
-  "buy_zone": [34, 39],
-  "sell_or_reduce_zone": [55, 62],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "招商银行",
+    "security_status": "active",
+    "symbol": "CN:600036",
+    "ticker": "600036"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "3c3887173255e41883e90dc7d2f6646e26b4fd756627b5952d556440f12f3d6b"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-deep-review.md",
+        "sha256": "b53d560c9a65fa76eef18ebef1ba8f4ba41cb563d3171c405489ac1b558dd154"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-chatgpt.md",
+        "sha256": "992bfb2d519bee1b0ca83ba671177bfa8286934dd7a457c0a79a8f1b4c324de2"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "786b3e03922fff6a9dfff8c3398aaea0ee2823f78c888d813612a24e083979f0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "34-39元建立首仓，且净息差、信用卡不良和拨备覆盖率未显著恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-30"
+      },
+      "reason": "复查2026年半年报净息差、零售关注率、信用卡不良率、拨备覆盖率和核心一级资本充足率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "32-34元且零售关注率、信用卡关注率环比稳定或下降",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-30"
+      },
+      "reason": "复查2026年三季报财富管理收入、零售AUM、信用卡新生成不良和ROE趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "32元以下经复核确认核心一级资本充足率高于13.5%且拨备覆盖率高于350%",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入更高安全边际区间，若资产质量未恶化可提高仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入强安全边际区间，需重做信用风险和资本充足率检查",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 55.0
+      },
+      "reason": "超过当前估值上沿，若内在价值未上修应评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-11-deep-review.md",
-    "reports/2026-07-16-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-30",
-      "reason": "复查2026年半年报净息差、零售关注率、信用卡不良率、拨备覆盖率和核心一级资本充足率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-30",
-      "reason": "复查2026年三季报财富管理收入、零售AUM、信用卡新生成不良和ROE趋势"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入更高安全边际区间，若资产质量未恶化可提高仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入强安全边际区间，需重做信用风险和资本充足率检查"
-    },
-    {
-      "type": "price_above",
-      "price": 55,
-      "reason": "超过当前估值上沿，若内在价值未上修应评估减仓"
-    }
-  ],
-  "updated_at": "2026-07-16"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

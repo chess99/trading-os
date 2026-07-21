@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:688285",
-  "market": "CN",
-  "ticker": "688285",
-  "name": "高铁电气",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "高铁电气具备中铁体系牵引供电接触网装备的资质、技术和客户壁垒，受益于铁路投资高位和存量更新，但低ROE、回款慢、应收与合同资产集中、轨外业务亏损压制估值。现价接近合理价值区间中低位但安全边际不足，需等待价格低于6.2元且半年报确认毛利率和经营现金流改善后再小仓位介入。",
-  "fair_value_range": [
-    6.5,
-    8.4
-  ],
-  "buy_zone": [
-    0,
-    6.2
-  ],
-  "sell_or_reduce_zone": [
-    9.2,
-    10.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "高铁电气",
+    "security_status": "active",
+    "symbol": "CN:688285",
+    "ticker": "688285"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e5d7e2eb7d9edd644e58398c5f33935b49d55ed214358ff284ebe0b69c8e4fff"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.2元，且2026H1收入同比增长超过20%、综合毛利率不低于20%、经营现金流改善三项中至少满足两项",
-      "action": "initial_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年度报告，重点检查收入增速、毛利率、经营现金流、应收账款和轨外业务毛利",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.5元，且未出现订单恶化、毛利率跌破18%或经营现金流持续恶化",
-      "action": "add",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q1高增长是否延续以及全年利润是否有望达到0.75-0.90亿元基准区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.2元且2026E归母净利润无法上修至1亿元以上，或经营现金流显著弱于净利润",
-      "action": "reduce",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报和分红政策，重新评估长期ROE、现金流质量和合理估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.2
+      },
+      "reason": "进入观察买入区，需要结合2026H1毛利率和现金流验证后小仓位介入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "若基本面未恶化，估值折价足以覆盖低ROE和回款风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.2
+      },
+      "reason": "进入减仓区，除非订单和利润显著上修，否则收益风险比转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.2,
-      "reason": "进入观察买入区，需要结合2026H1毛利率和现金流验证后小仓位介入"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "若基本面未恶化，估值折价足以覆盖低ROE和回款风险"
-    },
-    {
-      "type": "price_above",
-      "price": 9.2,
-      "reason": "进入减仓区，除非订单和利润显著上修，否则收益风险比转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年度报告，重点检查收入增速、毛利率、经营现金流、应收账款和轨外业务毛利"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q1高增长是否延续以及全年利润是否有望达到0.75-0.90亿元基准区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报和分红政策，重新评估长期ROE、现金流质量和合理估值区间"
-    }
-  ],
-  "key_monitoring_items": [
-    "2026H1营业收入同比增速是否超过20%",
-    "综合毛利率是否稳定在20%以上",
-    "经营活动现金流净额是否转正并接近归母净利润",
-    "应收账款和合同资产占收入比例是否下降",
-    "电气化铁路接触网产品收入占比和毛利率",
-    "轨外产品毛利率是否由负转正",
-    "重大铁路或城轨牵引供电项目中标公告",
-    "全国铁路固定资产投资和新线投产里程"
-  ],
-  "last_price_reference": {
-    "date": "2026-07-17",
-    "price": 6.98,
-    "source": "新浪财经/雪球公开行情摘要",
-    "confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

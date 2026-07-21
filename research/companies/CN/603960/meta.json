@@ -1,67 +1,95 @@
 {
-  "symbol": "CN:603960",
-  "market": "CN",
-  "ticker": "603960",
-  "name": "克来机电",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "克来机电具备新能源汽车电子智能装备、汽车零部件和R744热管理方向的技术积累，并通过控股上海壹徕尝试延伸至汽车电子PCBA制造，但2025年以来营收、利润和2026H1预告均显示老业务承压。当前股价约14.82元附近已反映乐观复苏和并购兑现预期，缺乏安全边际，需等待订单、毛利率和上海壹徕并表质量验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    11.0
-  ],
-  "buy_zone": [
-    6.5,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    16.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "克来机电",
+    "security_status": "active",
+    "symbol": "CN:603960",
+    "ticker": "603960"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "2c5ad8a540736730488f0c4fa25cdce13ab75a32051f8270b31744750ccd27b1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入6.5-8.5元且智能装备订单恢复、汽车零部件毛利率止跌、上海壹徕并表利润和现金流正常时，允许小仓位试探。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、亏损原因、现金流和上海壹徕并表进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026H2继续亏损或上海壹徕业绩承诺兑现低于进度，不新增仓位并退出观察买入计划。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察订单、毛利率和费用率是否出现修复。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及上海壹徕业绩承诺首年兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入安全买入区上沿，需要复核订单、毛利率和并表质量后评估是否小仓位买入。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "高于基准公允价值区间，若基本面未同步修复，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入安全买入区上沿，需要复核订单、毛利率和并表质量后评估是否小仓位买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "高于基准公允价值区间，若基本面未同步修复，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、亏损原因、现金流和上海壹徕并表进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察订单、毛利率和费用率是否出现修复。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及上海壹徕业绩承诺首年兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

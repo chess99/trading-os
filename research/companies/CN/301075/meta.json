@@ -1,89 +1,105 @@
 {
-  "symbol": "CN:301075",
-  "ticker": "301075",
-  "name": "多瑞医药",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "原核心制剂业务受集采重定价后盈利能力大幅削弱，多肽原料药有真实订单和成长弹性，但收入集中、现金流为负、关联借款体量大，当前市值已预支乐观情景，安全边际不足。",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    15,
-    25
-  ],
-  "buy_zone": [
-    0,
-    12
-  ],
-  "sell_or_reduce_zone": [
-    35,
-    1000
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "多瑞医药",
+    "security_status": "active",
+    "symbol": "CN:301075",
+    "ticker": "301075"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "eab1eb18a26d7bd80e73dfce7769a56b4d2535fdebecf4abb2bf76d3377b6113"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于乐观情景估值上沿，且经营现金流仍为负；不建立仓位。",
-      "action": "avoid_new_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年半年报窗口后复核收入结构、经营现金流、前沿生物合同履约和关联借款余额。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于25元且半年报显示多肽原料药收入和回款正常，可进入观察清单但仍不买入。",
-      "action": "watch_only",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计2026年三季报窗口后复核多肽原料药收入持续性和短债压力。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于12元，经营现金流连续两个季度改善，多肽原料药毛利率稳定在30%以上，且无新增重大关联交易或质押风险。",
-      "action": "starter_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "预计2026年年报窗口后重估中长期盈利能力和治理折价。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入观察复核区，重新核对订单、现金流和关联借款。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "可能进入有安全边际的试错区，但必须同时满足现金流和治理条件。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "估值再次明显预支乐观情景，应维持回避或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入观察复核区，重新核对订单、现金流和关联借款。"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "reason": "可能进入有安全边际的试错区，但必须同时满足现金流和治理条件。"
-    },
-    {
-      "type": "price_above",
-      "price": 35,
-      "reason": "估值再次明显预支乐观情景，应维持回避或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年半年报窗口后复核收入结构、经营现金流、前沿生物合同履约和关联借款余额。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报窗口后复核多肽原料药收入持续性和短债压力。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "预计2026年年报窗口后重估中长期盈利能力和治理折价。"
-    }
-  ],
-  "key_monitoring_items": [
-    "多肽原料药收入、毛利率、客户数量和回款",
-    "前沿生物2.82亿元合同履约进度",
-    "经营活动现金流是否连续改善",
-    "关联借款余额、新增关联交易和控股股东质押比例",
-    "中间体毛利率是否由负转正",
-    "司美格鲁肽、替尔泊肽、兰瑞肽等项目注册及商业化进展"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

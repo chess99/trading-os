@@ -1,118 +1,120 @@
 {
-  "symbol": "CN:300476",
-  "market": "CN",
-  "ticker": "300476",
-  "name": "胜宏科技",
-  "company_name": "胜宏科技（惠州）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "胜宏科技是AI算力PCB景气中兑现度很高的高端PCB龙头，2025年收入192.92亿元、归母净利润43.12亿元，2026Q1收入55.19亿元、归母净利润12.88亿元，经营现金流强。公司具备高多层、高阶HDI、AI算力卡和数据中心交换机板能力，出口占比高，头部客户订单仍在增长。但2026-07-13收盘价273.01元对应约57倍TTM PE，已经反映较高增长预期，安全边际不足，适合观察或已有仓位持有，不宜追高。",
-  "quality_rating": "A",
-  "valuation_rating": "C",
-  "fair_value_range": [
-    260,
-    340
-  ],
-  "buy_zone": [
-    200,
-    245
-  ],
-  "sell_or_reduce_zone": [
-    330,
-    400
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "胜宏科技",
+    "security_status": "active",
+    "symbol": "CN:300476",
+    "ticker": "300476"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "67772a192bd8ce4ffc3abffd05d8f014c189d090d81775336d24ae20adff8379"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8db235d1152187c860c8701c12e612d87dae67d0fe023ff1146b84284c70d724"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "330元以上",
-      "condition": "股价进入高估区且没有2026-2027年利润进一步上修证据",
-      "action": "不新增，已有仓位逐步降风险",
-      "target_weight": 0.005,
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报：收入增速、毛利率、归母净利润、经营现金流、在建工程和短期借款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "260-330元",
-      "condition": "股价处于合理到偏贵区，2026H1收入、毛利率和现金流尚未完成新一轮验证",
-      "action": "观察或持有，不追高",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报：AI订单持续性、扩产爬坡、利润率是否维持高位",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "245-260元",
-      "condition": "订单持续、毛利率不低于33%、经营现金流未明显弱于净利润",
-      "action": "小仓试探",
-      "target_weight": 0.015,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报及2027经营指引，重新评估200亿元投资计划的回报率和资产负债压力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "200-245元",
-      "condition": "进入安全边际买入区且AI订单、扩产良率、毛利率未结构性恶化",
-      "action": "分批买入",
-      "target_weight": 0.03,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 245.0
+      },
+      "reason": "进入安全边际买入区，启动分批建仓评估",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "zone": "200元以下",
-      "condition": "估值进入强吸引区且未出现客户流失、质量事故或现金流恶化",
-      "action": "积极买入",
-      "target_weight": 0.04,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 200.0
+      },
+      "reason": "进入强吸引区，若基本面未恶化可提高仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 330.0
+      },
+      "reason": "进入高估区，需降低新增买入并评估减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 360.0
+      },
+      "reason": "除非盈利预期明显上修，否则估值风险较高",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 245,
-      "reason": "进入安全边际买入区，启动分批建仓评估"
-    },
-    {
-      "type": "price_below",
-      "price": 200,
-      "reason": "进入强吸引区，若基本面未恶化可提高仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 330,
-      "reason": "进入高估区，需降低新增买入并评估减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 360,
-      "reason": "除非盈利预期明显上修，否则估值风险较高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报：收入增速、毛利率、归母净利润、经营现金流、在建工程和短期借款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报：AI订单持续性、扩产爬坡、利润率是否维持高位"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报及2027经营指引，重新评估200亿元投资计划的回报率和资产负债压力"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026H1和2026Q3营业收入同比增速是否保持25%以上",
-    "毛利率是否维持33%-36%，若连续两个季度低于30%需重估",
-    "经营现金流净额/归母净利润是否维持0.8倍以上",
-    "在建工程、固定资产、短期借款和资本开支是否与收入增量匹配",
-    "惠州厂房四、十、十一以及泰国、越南、马来西亚产能爬坡和客户审厂进度",
-    "AI高端产品订单能见度、2027-2028长期需求是否继续被财报验证",
-    "沪电股份、深南电路、生益电子等同业毛利率和订单表述"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

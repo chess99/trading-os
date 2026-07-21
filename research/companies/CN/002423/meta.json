@@ -1,113 +1,123 @@
 {
-  "symbol": "CN:002423",
-  "market": "CN",
-  "ticker": "002423",
-  "name": "中粮资本",
-  "company_name": "中粮资本控股股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "央企金控平台具备牌照和产业链协同价值，但2025年ROE仅5.23%，当前8.77元约0.85x 2026Q1 PB，缺少足够安全边际；等待6.8元以下或ROE持续改善。",
-  "quality_rating": "B+",
-  "valuation_rating": "C+",
-  "fair_value_range": [
-    6.8,
-    8.6
-  ],
-  "buy_zone": [
-    5.5,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    9.8,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中粮资本",
+    "security_status": "active",
+    "symbol": "CN:002423",
+    "ticker": "002423"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "c6c5670cb37eba848b6b89aa4d3aa00c6e17f577738a283c28ab648d8b45f89e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "低于5.50元",
-      "target_position": "6%-8%",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证中英人寿、中粮信托和公司ROE是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "5.50-6.80元",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证保险权益法收益和投资收益趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "6.80-8.60元",
-      "target_position": "0%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "验证全年ROE、分红率和信托转型进展",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "高于8.60元",
-      "target_position": "不新增",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
+      "reason": "验证利润改善是否具备持续性",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
+      "reason": "判断是否应调整长期合理估值区间",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.8
+      },
+      "reason": "ROE未改善时不应追高或考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入安全边际买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 9.8,
-      "reason": "ROE未改善时不应追高或考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "description": "复查2026年半年报",
-      "reason": "验证中英人寿、中粮信托和公司ROE是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "description": "复查2026年三季报",
-      "reason": "验证保险权益法收益和投资收益趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "description": "复查2026年年度报告",
-      "reason": "验证全年ROE、分红率和信托转型进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-08-31",
-      "description": "复查2027年半年报",
-      "reason": "验证利润改善是否具备持续性"
-    },
-    {
-      "type": "date",
-      "date": "2028-04-30",
-      "description": "复查2027年年度报告",
-      "reason": "判断是否应调整长期合理估值区间"
-    }
-  ],
-  "key_tracking_metrics": [
-    "归母净利润",
-    "ROE",
-    "中英人寿净利润",
-    "中粮信托营业收入和营业支出",
-    "中粮期货客户权益和期货经纪收入",
-    "投资收益",
-    "PB",
-    "分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

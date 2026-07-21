@@ -1,69 +1,95 @@
 {
-  "symbol": "CN:603226",
-  "market": "CN",
-  "ticker": "603226",
-  "name": "菲林格尔",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "菲林格尔主营家居业务仍处亏损和低毛利状态，2026年半年度预告继续亏损；当前市值主要反映控制权变更和跨界预期，已显著脱离可核验经营基本面，缺乏安全边际。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "fair_value_range": [
-    2.5,
-    5.5
-  ],
-  "buy_zone": [
-    0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    8,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "菲林格尔",
+    "security_status": "active",
+    "symbol": "CN:603226",
+    "ticker": "603226"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "1a5d6f8eb7266d1350f4e536a390ddafeb72b70596142dcb4783802569daad1c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格显著高于主营业务可支撑价值，且2026年半年度仍预亏；不建立基本面仓位。",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认预亏落点、毛利率、现金流和转型披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌至3.5元以下，同时最近两个季度主营毛利率修复且经营现金流转正，可重新研究试探仓。",
-      "action": "research_only",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察主营是否止血和经营现金流是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和审计意见，重新评估治理、财务质量和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入按净资产和修复情景重新评估的安全边际观察区。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "若无经审计转型收入和现金流支撑，超过该价位应继续回避或减持。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入按净资产和修复情景重新评估的安全边际观察区。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "若无经审计转型收入和现金流支撑，超过该价位应继续回避或减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认预亏落点、毛利率、现金流和转型披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察主营是否止血和经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和审计意见，重新评估治理、财务质量和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

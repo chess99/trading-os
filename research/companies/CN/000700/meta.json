@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:000700",
-  "market": "CN",
-  "ticker": "000700",
-  "name": "模塑科技",
-  "company_name": "模塑科技",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "模塑科技主业清晰，汽车外饰件和保险杠业务具备客户认证、产能布局和新能源/北美项目弹性，但当前股价已较充分反映订单预期；等待价格回到买入区间或2026年中报验证利润中枢上移后再正式建仓。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    10.5,
-    13.5
-  ],
-  "buy_zone": [
-    8.8,
-    10.8
-  ],
-  "sell_or_reduce_zone": [
-    15.5,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "模塑科技",
+    "security_status": "active",
+    "symbol": "CN:000700",
+    "ticker": "000700"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "03d5b6d6f8ce2ffa5a5f527a560d7481297fded94d5af886e1151923af0fc9e4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价高于合理价值上沿且缺少2026年利润上修证据",
-      "action": "仅保留观察仓或不买入",
-      "max_weight": 0.01,
-      "reason": "估值已反映北美电动车和新能源客户预期，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的收入、毛利率、扣非净利和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于10.8元且2026年中报未显示订单、毛利率或现金流恶化",
-      "action": "建立首笔仓位",
-      "max_weight": 0.02,
-      "reason": "价格进入买入区间，基准情景预期收益率转正"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及墨西哥项目量产进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于9.5元且扣非净利同比增长、汽车业务毛利率不低于18.5%",
-      "action": "加仓",
-      "max_weight": 0.04,
-      "reason": "估值折价与基本面验证同时出现"
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、海外项目兑现和控股股东质押减持变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "北美项目量产顺利、收入增长超过10%、经营现金流接近归母净利润",
-      "action": "提高至核心观察仓上限",
-      "max_weight": 0.06,
-      "reason": "订单兑现为利润和现金流，周期制造属性中的确定性提高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入首笔买入区间，重新评估建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.5
+      },
+      "reason": "进入加仓区间，若基本面未恶化则风险收益比明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.5
+      },
+      "reason": "高于合理价值上沿，若无利润上修应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "进入乐观情景估值区，除非订单和利润兑现超预期，否则退出至观察仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "reason": "进入首笔买入区间，重新评估建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 9.5,
-      "reason": "进入加仓区间，若基本面未恶化则风险收益比明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 15.5,
-      "reason": "高于合理价值上沿，若无利润上修应减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "进入乐观情景估值区，除非订单和利润兑现超预期，否则退出至观察仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的收入、毛利率、扣非净利和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及墨西哥项目量产进展"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、海外项目兑现和控股股东质押减持变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "汽车业务毛利率",
-    "保险杠业务毛利率",
-    "经营活动现金流量净额/归母净利润",
-    "前五大客户销售占比",
-    "墨西哥名华北美电动车项目量产进度",
-    "新能源和豪华车外饰件项目新增定点金额",
-    "直接材料成本占保险杠成本比例",
-    "控股股东质押比例和减持进展",
-    "人民币兑美元汇率",
-    "PP、ABS和油漆等主要原材料价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

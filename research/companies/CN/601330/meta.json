@@ -1,78 +1,105 @@
 {
-  "symbol": "CN:601330",
-  "ticker": "601330",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "绿色动力",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "绿色动力是垃圾焚烧发电准公用事业资产，存量项目现金流稳健、供热供汽和污泥协同带来增量，但行业成长放缓、补贴/税收/应收账款风险压制估值。当前价格约在合理价值区间内，安全边际不足，等待回落到买入区。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    6.8,
-    8.2
-  ],
-  "buy_zone": [
-    5.8,
-    6.4
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    10.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "绿色动力",
+    "security_status": "active",
+    "symbol": "CN:601330",
+    "ticker": "601330"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "2d558f64780d421ae43572fc87cc83966630c129fbe8e3894c8ea832c534b2a5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格跌入6.4元以下，且2026年后续经营数据保持正增长、经营现金流未明显弱于净利润、应收账款未异常扩张",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查经营现金流、应收账款、财务费用和供热供汽增长。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格接近5.8元，且无补贴政策、环保合规、再融资稀释或重大并购减值负面变化",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及三季度主要经营数据，确认全年盈利和分红假设是否需要调整。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于9.0元但盈利预测没有同步上修，停止加仓并考虑降低观察仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报，重估并购项目贡献、补贴回款、税收优惠和股东回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.4
+      },
+      "reason": "进入初始买入观察区，需要复核半年报现金流、应收账款和经营量。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入较高安全边际区，若基本面未恶化可评估提升仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "价格进入减仓区，若无盈利上修则风险收益比下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.4,
-      "reason": "进入初始买入观察区，需要复核半年报现金流、应收账款和经营量。"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入较高安全边际区，若基本面未恶化可评估提升仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "价格进入减仓区，若无盈利上修则风险收益比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查经营现金流、应收账款、财务费用和供热供汽增长。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及三季度主要经营数据，确认全年盈利和分红假设是否需要调整。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报，重估并购项目贡献、补贴回款、税收优惠和股东回报。"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

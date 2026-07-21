@@ -1,106 +1,95 @@
 {
-  "symbol": "CN:603138",
-  "ticker": "603138",
-  "name": "海量数据",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "海量数据是国产数据库稀缺标的，Vastbase 产品和安全可靠测评资质具备战略价值，2025 年数据库自主产品收入高增且毛利率较高；但 2026 年上半年预亏扩大、收入规模尚不能覆盖研发和销售投入，当前估值对商业化拐点要求较高，宜观察而非买入。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    8.0,
-    11.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    18.0
-  ],
-  "position_plan": [
-    {
-      "condition": "仅当股价进入买入区间且 2026 半年报或三季报显示数据库自主产品收入恢复增长、亏损率明显收窄时，建立观察仓。",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "若连续两个季度自主数据库收入同比高增且经营现金流改善，可提高至小仓位。",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "若 2026 年收入继续下滑或净亏损扩大，维持零仓位。",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初步买入区间，需要同步复核自主数据库收入、毛利率和亏损收窄情况。"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "超过减持/回避区间下沿，若盈利拐点未验证则估值风险上升。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报中数据库自主产品收入、毛利率、费用率、现金流和定增进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否出现收入恢复和亏损收窄。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断国产数据库商业化拐点是否成立。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price_cny": 12.77,
-    "reference_price_date": "2026-07-14",
-    "reference_price_confidence": "medium",
-    "market_cap_cny_billion_estimate": 37.5,
-    "revenue_2025_cny_billion": 0.512,
-    "net_profit_2025_cny_billion": -0.0472344,
-    "q1_2026_revenue_cny_billion": 0.0992594,
-    "q1_2026_net_profit_cny_billion": -0.0417691,
-    "h1_2026_revenue_forecast_cny_billion": 0.1921,
-    "h1_2026_net_profit_forecast_cny_billion": -0.0948
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "海量数据",
+    "security_status": "active",
+    "symbol": "CN:603138",
+    "ticker": "603138"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b18d78fc1cf1ff9a893e7765c542fdecbab1960b909a9fb1532737f6496a36a7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "北京海量数据技术股份有限公司2025年年度报告",
-      "url": "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-17/12102825.PDF",
-      "date": "2026-04-17"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报中数据库自主产品收入、毛利率、费用率、现金流和定增进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "海量数据2026年半年度业绩预亏公告",
-      "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12444543&stockid=603138",
-      "date": "2026-07-14"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否出现收入恢复和亏损收窄。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "安全可靠测评结果公告（2024年第2号）",
-      "url": "https://www.itsec.gov.cn/aqkkcp/cpgg/202409/t20240930_194299.html",
-      "date": "2024-09-30"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断国产数据库商业化拐点是否成立。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "title": "中国信通院数据库发展研究报告公开报道",
-      "url": "https://www.cww.net.cn/article?id=611597",
-      "date": "2026-07-14"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初步买入区间，需要同步复核自主数据库收入、毛利率和亏损收窄情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "超过减持/回避区间下沿，若盈利拐点未验证则估值风险上升。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

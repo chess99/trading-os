@@ -1,115 +1,115 @@
 {
-  "symbol": "CN:300645",
-  "market": "CN",
-  "ticker": "300645",
-  "name": "正元智慧",
-  "company_name": "正元智慧集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "智慧校园一卡通和校园数字化存量客户有价值，运营与服务毛利率较高，但当前收入仍下滑、净利率和ROE偏低，11.49元附近缺乏足够安全边际。需要等待收入恢复、净利率提升和现金流可持续验证。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    6.8,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "正元智慧",
+    "security_status": "active",
+    "symbol": "CN:300645",
+    "ticker": "300645"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "0621b05852d0b40b09183f238d57210b13617ae9ef36e508746707200bdf70da"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.50元，且最近一期收入降幅收窄、经营现金流为正或季节性改善明确",
-      "action": "初始观察仓",
-      "target_position": "0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入恢复、运营与服务占比、净利率、经营现金流和财务费用",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.80元，且应收账款和合同资产没有继续恶化，年度归母净利润有望超过3000万元",
-      "action": "提高到小仓",
-      "target_position": "1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年利润恢复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.20元，且订单或收入重新正增长、经营现金流连续两个年度为正",
-      "action": "提高到中等仓",
-      "target_position": "1.5%-2.0%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.50元但利润率仍低于3%",
-      "action": "减仓或不追",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入可买观察区间，但仍需确认收入降幅和现金流没有恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "低于基础买入区间下沿，安全边际改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "超过基础合理价值区间，需用利润率恢复证明估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "进入乐观估值区间上方，若基本面未同步改善则风险收益不佳",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "currency": "CNY",
-      "action": "复核基本面并考虑0.5%观察仓",
-      "reason": "进入可买观察区间，但仍需确认收入降幅和现金流没有恶化"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "currency": "CNY",
-      "action": "若收入和现金流未恶化，考虑提高到1.0%",
-      "reason": "低于基础买入区间下沿，安全边际改善"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "currency": "CNY",
-      "action": "若利润率未改善，减仓或维持观察",
-      "reason": "超过基础合理价值区间，需用利润率恢复证明估值"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "currency": "CNY",
-      "action": "除非2026年净利润显著恢复，否则卖出或降至跟踪仓",
-      "reason": "进入乐观估值区间上方，若基本面未同步改善则风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入恢复、运营与服务占比、净利率、经营现金流和财务费用"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年利润恢复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估合理价值区间和仓位上限"
-    }
-  ],
-  "key_tracking_metrics": [
-    "运营与服务收入增速和收入占比",
-    "系统建设收入增速和毛利率",
-    "归母净利润是否恢复到3000万至5000万元区间",
-    "净利率是否提升到3%-4%",
-    "经营活动现金流净额是否持续为正",
-    "应收账款、合同资产和存货周转",
-    "财务费用和有息负债变化",
-    "重大高校、基础教育和政企园区订单"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

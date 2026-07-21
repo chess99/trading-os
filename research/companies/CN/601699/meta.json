@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:601699",
-  "market": "CN",
-  "ticker": "601699",
-  "name": "潞安环能",
-  "company_name": "潞安环能",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "潞安环能是低PB山西煤炭资源股，2026年前5个月产量和销量恢复、上马和姚家山带来资源接续期权，但2025年ROE低、分红股息率不高、盈利仍依赖动力煤和喷吹煤价格修复；当前14.83元接近合理价值中枢，适合观察或小仓位跟踪，不适合大仓位追买。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    13.5,
-    16.5
-  ],
-  "buy_zone": [
-    11.8,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    19.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "潞安环能",
+    "security_status": "active",
+    "symbol": "CN:601699",
+    "ticker": "601699"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ec7d458391fe66b5eac862380655c5d88265d60e0b1b6a5749393d6190107119"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于12.8元，且月度商品煤销量累计同比仍为正，未出现重大安全生产事故",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "低于合理价值中枢并具备产量稳定证据，但煤价周期尚未确认反转"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，确认煤价、吨煤成本、现金流和分红能力",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于11.8元，且商品煤综合售价未跌破500元/吨或喷吹煤价格企稳",
-      "action": "加仓至小仓位",
-      "max_weight": 0.03,
-      "reason": "PB折价扩大，资源接续期权具备更高安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报和上马、姚家山项目进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于17.5元，且没有煤价上行、分红提升或新矿投产进度超预期支撑",
-      "action": "减仓或停止新增",
-      "max_weight": 0.01,
-      "reason": "价格进入乐观区间，风险回报转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.8
+      },
+      "reason": "进入首笔买入观察区，接近0.83倍2026Q1账面价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.8
+      },
+      "reason": "进入较有安全边际的买入区，可结合煤价和月度运营数据加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "进入减仓区，需要煤价上行或新矿进展验证才能继续持有较高仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.8,
-      "reason": "进入首笔买入观察区，接近0.83倍2026Q1账面价值"
-    },
-    {
-      "type": "price_below",
-      "price": 11.8,
-      "reason": "进入较有安全边际的买入区，可结合煤价和月度运营数据加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "reason": "进入减仓区，需要煤价上行或新矿进展验证才能继续持有较高仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，确认煤价、吨煤成本、现金流和分红能力"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报和上马、姚家山项目进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度原煤产量",
-    "月度商品煤销量",
-    "商品煤综合售价",
-    "吨煤销售成本",
-    "喷吹煤价格与钢厂利润",
-    "长协煤及保供煤履约量",
-    "经营活动现金流净额",
-    "资本开支",
-    "上马煤矿审批和建设进度",
-    "姚家山煤矿建设进度",
-    "现金分红率和每股股利",
-    "安全生产事故和监管处罚"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

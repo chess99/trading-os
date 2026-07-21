@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:603999",
-  "market": "CN",
-  "ticker": "603999",
-  "name": "读者传媒",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "读者传媒拥有强品牌、低杠杆和较厚现金/理财资产，教材教辅提供稳定基本盘；但期刊收入明显下滑、数字化商业化仍小、ROE和分红偏低，当前股价约5.26元已接近或略高于4.30-5.10元合理价值区间，缺少买入安全边际，适合观察等待更低价格或扣非利润改善。",
-  "fair_value_range": [
-    4.3,
-    5.1
-  ],
-  "buy_zone": [
-    0,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    99.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "读者传媒",
+    "security_status": "active",
+    "symbol": "CN:603999",
+    "ticker": "603999"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d73050e00e62e2ce0f660e9dddf6b8772db4557fa6e0cc163865851cc657c2b0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至4.20元以下，且最新定期报告未显示教材教辅毛利率明显恶化、经营现金流未持续弱于净利润",
-      "action": "可建立观察性小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入降幅、扣非利润、期刊止跌和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于4.20-5.10元且基本面无显著改善",
-      "action": "继续观察，不主动加仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认教材教辅旺季表现和全年利润能见度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于6.00元且扣非利润、数字业务收入没有同步上修",
-      "action": "减仓或回避",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红方案，重新评估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入估算买入区间，需复核最新扣非利润、现金资产和教材教辅毛利率后决定是否小仓位建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.0
+      },
+      "reason": "超过乐观情景下沿，若无业绩上修应考虑减仓或不参与",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入估算买入区间，需复核最新扣非利润、现金资产和教材教辅毛利率后决定是否小仓位建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.0,
-      "reason": "超过乐观情景下沿，若无业绩上修应考虑减仓或不参与"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入降幅、扣非利润、期刊止跌和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认教材教辅旺季表现和全年利润能见度"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红方案，重新评估合理价值区间"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

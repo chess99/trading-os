@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688597",
-  "market": "CN",
-  "ticker": "688597",
-  "name": "煜邦电力",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "煜邦电力受益于电网数字化、智能计量、低空智能巡检和储能建设，但 2025 年利润下滑、2026Q1 转亏，说明公司仍受国网招标价格、标准切换和项目毛利波动影响。当前股价位于合理价值区间中部，缺少足够安全边际，适合观察等待价格回落或利润修复证据。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.8,
-    7.2
-  ],
-  "buy_zone": [
-    4.8,
-    5.4
-  ],
-  "sell_or_reduce_zone": [
-    8.2,
-    9.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "煜邦电力",
+    "security_status": "active",
+    "symbol": "CN:688597",
+    "ticker": "688597"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3412ffdc984a3732843fda18d8d2275e8e45d8d18f9e4a39281b5008f47fdd2d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 4.8-5.4 元且未出现订单、毛利率或现金流继续恶化",
-      "action": "建立观察性小仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查 Q2 利润、毛利率、经营现金流、智能电表和储能业务质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 年连续两个季度扣非利润修复、毛利率回到 25% 以上且经营现金流转正",
-      "action": "可提高至验证仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断全年利润恢复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 8.2 元但 TTM PE 仍高于 35 倍且利润修复未验证",
-      "action": "不追高，已有仓位减持",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和 2027 年一季报，更新正常化利润与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入买入区上沿，需要复核订单、毛利率和现金流后评估小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入具备更高安全边际的价格区间，若基本面未恶化可重点复盘",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.2
+      },
+      "reason": "进入减持观察区，若利润恢复证据不足则估值偏贵",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入买入区上沿，需要复核订单、毛利率和现金流后评估小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入具备更高安全边际的价格区间，若基本面未恶化可重点复盘"
-    },
-    {
-      "type": "price_above",
-      "price": 8.2,
-      "reason": "进入减持观察区，若利润恢复证据不足则估值偏贵"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查 Q2 利润、毛利率、经营现金流、智能电表和储能业务质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断全年利润恢复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和 2027 年一季报，更新正常化利润与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

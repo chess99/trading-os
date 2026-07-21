@@ -1,122 +1,123 @@
 {
-  "symbol": "CN:002807",
-  "market": "CN",
-  "ticker": "002807",
-  "name": "江阴银行",
-  "company_name": "江苏江阴农村商业银行股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "江阴银行是低估值、较高拨备覆盖和较强资本充足率支撑的苏南区域农商行，但行业净息差下行和区域信用集中限制估值弹性。3.50元以下安全边际较好，当前3.86元附近适合观察仓或小仓位分批。",
-  "quality_rating": "中上",
-  "valuation_rating": "偏低估",
-  "fair_value_range": [
-    4.4,
-    5.1
-  ],
-  "buy_zone": [
-    0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    5.3,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江阴银行",
+    "security_status": "active",
+    "symbol": "CN:002807",
+    "ticker": "002807"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1a3ba57214a8b505478ecef342a63fcb9e836f4837a2f1b0f34edb5845d2cd43"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于3.50元，且不良贷款率低于1.0%、拨备覆盖率高于450%",
-      "action": "分批买入",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价位于3.50-4.10元，且2026年利润增速不低于3%",
-      "action": "建立或维持观察仓",
-      "target_position": "1%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于5.30元，且ROE未改善至10%以上或净息差继续下行",
-      "action": "减仓或卖出",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "currency": "CNY",
-      "reason": "低于3.50元时估算PB约0.48倍，安全边际明显改善",
-      "action": "进入重点买入复核"
-    },
-    {
-      "type": "price_above",
-      "price": 4.8,
-      "currency": "CNY",
-      "reason": "高于4.80元后进入合理价值区间中部，新增买入赔率下降",
-      "action": "暂停加仓并复核估值"
-    },
-    {
-      "type": "price_above",
-      "price": 5.3,
-      "currency": "CNY",
-      "reason": "高于5.30元后若基本面未超预期，估值修复较充分",
-      "action": "卖出或减仓复核"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证2026年收入、净息差和资产质量趋势的第一轮关键节点",
-      "condition": "2026半年报披露",
-      "action": "复核净息差、利润增速和不良生成"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察不良率是否升至1.10%以上",
-      "condition": "不良贷款率升至1.10%以上",
-      "action": "重新评估资产质量和买入区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证拨备覆盖率是否跌破400%",
-      "condition": "拨备覆盖率跌破400%",
-      "action": "复核拨备安全垫和利润质量"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可观察净息差是否低于1.60%",
-      "condition": "净息差低于1.60%",
-      "action": "下调盈利假设"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报和分红方案可验证分红率与资本充足率",
-      "condition": "分红率低于25%或资本充足率明显下降",
-      "action": "复核股息率逻辑和资本安全边际"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "低于3.50元时估算PB约0.48倍，安全边际明显改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.8
+      },
+      "reason": "高于4.80元后进入合理价值区间中部，新增买入赔率下降",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.3
+      },
+      "reason": "高于5.30元后若基本面未超预期，估值修复较充分",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "不良贷款率",
-    "拨备覆盖率",
-    "净息差",
-    "归母净利润增速",
-    "加权平均ROE",
-    "核心一级资本充足率",
-    "分红率",
-    "存款增长率与负债成本"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

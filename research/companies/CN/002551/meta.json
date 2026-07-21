@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:002551",
-  "ticker": "002551",
-  "name": "尚荣医疗",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "尚荣医疗当前更像资产型困境修复标的而非成长股。2026Q1 PB 约 1 倍，但医疗产品毛利低、工程业务收缩、回款和信用减值仍在恶化；只有股价跌入明显折价区且半年报证明减值边际收敛，才值得小仓位观察买入。",
-  "fair_value_range": [
-    2.1,
-    2.8
-  ],
-  "buy_zone": [
-    1.8,
-    2.1
-  ],
-  "sell_or_reduce_zone": [
-    3.1,
-    3.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "尚荣医疗",
+    "security_status": "active",
+    "symbol": "CN:002551",
+    "ticker": "002551"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f3c38bec32d4c936259de21a26f367086d2b8f1cb5d6104e044376076b5160e2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前仅观察，不建仓；等待 2026 半年报验证信用减值、应收账款账龄和经营现金流。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 半年报，重点检查信用减值、应收账款账龄、合同资产和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于 2.10 元，且 2026 半年报显示信用减值损失边际收敛、经营现金流未显著恶化，可试探性建仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 三季报，观察扣非亏损是否继续收窄及医疗产品毛利率是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扣非亏损收窄、医疗产品毛利率回升至 12% 以上，并出现工程回款现金证据，可提高至困境修复小仓位。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，重新评估资产质量、回款兑现和长期评级。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.1
+      },
+      "reason": "进入调整后净资产法和基准 PB 估值下沿，若基本面未继续恶化可复核安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.1
+      },
+      "reason": "高于当前基准合理价值上沿，若无盈利与回款修复证据应降低关注或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.1,
-      "reason": "进入调整后净资产法和基准 PB 估值下沿，若基本面未继续恶化可复核安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.1,
-      "reason": "高于当前基准合理价值上沿，若无盈利与回款修复证据应降低关注或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 半年报，重点检查信用减值、应收账款账龄、合同资产和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 三季报，观察扣非亏损是否继续收窄及医疗产品毛利率是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，重新评估资产质量、回款兑现和长期评级。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

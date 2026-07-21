@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:920015",
-  "market": "CN",
-  "ticker": "920015",
-  "name": "锦华新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "锦华新材是酮肟硅新材料细分龙头，传统硅烷交联剂和羟胺盐具备循环产业链、客户认证和国资平台优势，JH-2电子级羟胺水溶液提供第二曲线；但2026年一季度利润下滑明显，57元附近已经部分反映电子材料期权，缺少足够安全边际。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    45,
-    58
-  ],
-  "buy_zone": [
-    38,
-    44
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "锦华新材",
+    "security_status": "active",
+    "symbol": "CN:920015",
+    "ticker": "920015"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "fa5ae54cd01522d332e20937f2b7bb4ce80b8d478bc6bcafa54cfc2039ec1069"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于44元，且2026年半年报显示收入和利润降幅较一季度收窄，JH-2环评或建设节点正常推进",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、现金流和JH-2项目进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于38元，传统产品毛利率未明显跌破2025年水平，经营现金流仍覆盖净利润",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及传统产品价格周期是否企稳",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于70元但JH-2尚未披露实质性放量或客户验证结果",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、募投资金使用和JH-2工业化建设节点",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 44.0
+      },
+      "reason": "进入买入观察区间，若基本面未恶化则安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入深度价值区间，需复核周期利润底和现金流质量",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "股价进入乐观情景区间，若电子级羟胺水溶液未兑现则预期透支",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 44,
-      "reason": "进入买入观察区间，若基本面未恶化则安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入深度价值区间，需复核周期利润底和现金流质量"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "股价进入乐观情景区间，若电子级羟胺水溶液未兑现则预期透支"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、现金流和JH-2项目进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及传统产品价格周期是否企稳"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、募投资金使用和JH-2工业化建设节点"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

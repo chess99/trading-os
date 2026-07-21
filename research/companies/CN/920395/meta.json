@@ -1,56 +1,86 @@
 {
-  "symbol": "CN:920395",
-  "market": "CN",
-  "ticker": "920395",
-  "name": "朗鸿科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "高毛利和高资本回报的细分零售安防企业，但客户集中、订单下滑和扩产现金消耗尚未被当前约26倍PE充分补偿。",
-  "fair_value_range": [4.4, 5.6],
-  "buy_zone": [3.8, 4.5],
-  "sell_or_reduce_zone": [6.2, 7.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "朗鸿科技",
+    "security_status": "active",
+    "symbol": "CN:920395",
+    "ticker": "920395"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "5f6cfbc641851e1a990a9698f2c06799fb3e34ef267cb6a7e9071918ff5fbc31"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于4.1至4.5元且收入降幅收窄、毛利率不低于50%、主要客户未流失、募投项目未新增延期",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的订单恢复、毛利率、客户集中度、经营现金流和募投进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于3.8至4.0元且复核后长期商业价值未受损、正常化自由现金流恢复路径更清晰",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及研发投入、股份支付和新增产能回报",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "出现主要客户流失、毛利率连续两个季度低于48%或募投项目回报显著低于资本成本",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "进入有安全边际的候选买入区间，需先复核客户、毛利率和募投假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利和自由现金流显著上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的订单恢复、毛利率、客户集中度、经营现金流和募投进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及研发投入、股份支付和新增产能回报"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "进入有安全边际的候选买入区间，需先复核客户、毛利率和募投假设"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "进入减仓或不应追高区间，除非盈利和自由现金流显著上修"
-    }
-  ],
-  "updated_at": "2026-07-18T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

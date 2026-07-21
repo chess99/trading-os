@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920802",
-  "market": "CN",
-  "ticker": "920802",
-  "name": "保丽洁",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "现金充裕且海外与运维业务改善，但护城河偏浅、ROE不高，当前价格已透支较多增长预期，等待更大安全边际。",
-  "fair_value_range": [7.5, 9.0],
-  "buy_zone": [6.4, 7.2],
-  "sell_or_reduce_zone": [10.8, 12.5],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "保丽洁",
+    "security_status": "active",
+    "symbol": "CN:920802",
+    "ticker": "920802"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "015539ebcc39ec4d0ac386a616630765b061110a680918fb944849d6bb72fa7d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于6.4至7.2元且国内核心业务企稳、AVC无减值迹象、规范化自由现金流未恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "复核2026年半年报后的海外、运维、现金流和新产能利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.4元且重新验证长期商业价值未受损、规范化自由现金流仍不低于2500万元",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入有安全边际的试探买入区间，需先复核核心假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "基本面恶化、核心假设被证伪或股价进入10.8至12.5元而盈利未上修",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利与现金流显著上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "reason": "复核2026年半年报后的海外、运维、现金流和新产能利用率"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入有安全边际的试探买入区间，需先复核核心假设"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "进入减仓或不应追高区间，除非盈利与现金流显著上修"
-    }
-  ],
-  "updated_at": "2026-07-14T23:26:40+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

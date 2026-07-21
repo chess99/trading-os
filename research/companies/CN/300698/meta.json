@@ -1,116 +1,96 @@
 {
-  "symbol": "CN:300698",
-  "market": "CN",
-  "ticker": "300698",
-  "name": "万马科技",
-  "company_name": "万马科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司车联网连接管理业务已成为第一收入来源，2025年车联网收入3.81亿元、同比增长49.33%，并向海外ONE SIM/eSIM和L4无人驾驶网联方案延伸；但当前股价约24.81元对应约69倍TTM PE，利润体量、现金流和分业务毛利披露不足，安全边际不够，等待18.5元以下或半年报验证后再考虑买入。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    20.0,
-    27.0
-  ],
-  "buy_zone": [
-    15.0,
-    18.5
-  ],
-  "sell_or_reduce_zone": [
-    31.0,
-    36.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "万马科技",
+    "security_status": "active",
+    "symbol": "CN:300698",
+    "ticker": "300698"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9d0941cbc9570c64898152b94619c2eafa25d4ce79f38439a1161dbaeaaa690b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格位于18.5-27.0元合理区间内但缺少安全边际，未持有时保持观察",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-24"
+      },
+      "reason": "预计下一份财报披露窗口，复查2026年中报车联网增速、现金流和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至18.5元以下且车联网收入仍保持20%以上增长、经营现金流未恶化，可建立首笔仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报披露后复查全年利润兑现和AIDC/电网订单转收入情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至15.0元以下且核心增长逻辑未破坏，可提高至强吸引力仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "进入有安全边际的买入区间，可结合半年报验证首笔买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于31.0元且没有新增订单、利润率或现金流验证，不新增仓位并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "进入强吸引力区间，若业务逻辑未破坏可加至目标仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 31.0
+      },
+      "reason": "高于不应追高价，估值需要乐观情景支撑，应停止加仓或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "reason": "进入有安全边际的买入区间，可结合半年报验证首笔买入"
-    },
-    {
-      "type": "price_below",
-      "price": 15.0,
-      "reason": "进入强吸引力区间，若业务逻辑未破坏可加至目标仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 31.0,
-      "reason": "高于不应追高价，估值需要乐观情景支撑，应停止加仓或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-24",
-      "reason": "预计下一份财报披露窗口，复查2026年中报车联网增速、现金流和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报披露后复查全年利润兑现和AIDC/电网订单转收入情况"
-    }
-  ],
-  "key_tracking_metrics": [
-    {
-      "metric": "车联网收入同比增速",
-      "latest": "2025年同比增长49.33%",
-      "watch_level": "若2026年中报低于25%需下调估值"
-    },
-    {
-      "metric": "车联网连接总数",
-      "latest": "2026年7月公司披露超过1800万辆",
-      "watch_level": "关注海外连接数和单连接收入是否同步提升"
-    },
-    {
-      "metric": "海外连接数",
-      "latest": "2026年7月披露超过130万辆",
-      "watch_level": "若海外连接增长停滞，出海逻辑减弱"
-    },
-    {
-      "metric": "归母净利润",
-      "latest": "2025年4704.27万元，2026Q1为606.19万元",
-      "watch_level": "收入增长必须转化为利润率提升"
-    },
-    {
-      "metric": "经营活动现金流",
-      "latest": "2025年5641万元，2026Q1为-3502.88万元",
-      "watch_level": "若半年报继续为负且应收上升，降低质量评级"
-    },
-    {
-      "metric": "AIDC和电网订单",
-      "latest": "2025年累计中标国家电网项目金额8127.42万元",
-      "watch_level": "关注收入确认、毛利率和回款周期"
-    },
-    {
-      "metric": "L4无人驾驶网联方案",
-      "latest": "公司称已与头部客户合作并完成交付",
-      "watch_level": "关注是否形成规模部署和可重复订单"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

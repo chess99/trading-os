@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688269",
-  "market": "CN",
-  "ticker": "688269",
-  "name": "凯立新材",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "凯立新材是精细化工贵金属催化剂和催化工艺平台型公司，2025年与2026Q1利润恢复明确，但贵金属采购、库存和应收导致现金流波动较大；当前估值已部分反映增长，需等待25-29元安全边际或2026H1/H2现金流修复后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    32,
-    42
-  ],
-  "buy_zone": [
-    25,
-    29
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凯立新材",
+    "security_status": "active",
+    "symbol": "CN:688269",
+    "ticker": "688269"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "523941a54aaec60a35e6caf003a6eba4dea9e475ea4e523f2c926c5069b814cf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格进入25-29元且2026H1或后续季度扣非利润维持增长、经营现金流较2026Q1明显修复",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的扣非利润、经营现金流、存货和应收账款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌入22-25元且未出现客户流失、毛利率显著恶化或贵金属库存失控",
-      "max_weight": 0.07
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1高增长是否延续以及现金流是否修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于45元且未连续两个季度证明扣非利润和经营现金流同步增长",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新完整估值和仓位上限",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 29.0
+      },
+      "reason": "进入初始买入区间，若基本面未破坏可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入较高安全边际区间，需复核现金流和订单质量后提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "超过基准估值上沿，若现金流未同步验证应停止加仓或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 29,
-      "reason": "进入初始买入区间，若基本面未破坏可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入较高安全边际区间，需复核现金流和订单质量后提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "超过基准估值上沿，若现金流未同步验证应停止加仓或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的扣非利润、经营现金流、存货和应收账款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1高增长是否延续以及现金流是否修复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新完整估值和仓位上限"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

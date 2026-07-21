@@ -1,144 +1,113 @@
 {
-  "market": "CN",
-  "ticker": "301049",
-  "symbol": "CN:301049",
-  "name": "超越科技",
-  "company_name": "安徽超越环保科技股份有限公司",
-  "currency": "CNY",
-  "exchange": "SZSE",
-  "sector": "环保",
-  "industry": "固体废物处置与资源化利用",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "last_report_date": "2026-07-15",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "rating_label": "回避",
-  "thesis": "资质和区域地位真实，但危废、家电拆解、汽车拆解、锂电回收核心业务均处亏损，现价对应约3.31倍PB，安全边际不足。",
-  "current_thesis": "资质和区域地位真实，但危废、家电拆解、汽车拆解、锂电回收核心业务均处亏损，现价对应约3.31倍PB，安全边际不足。",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    0.0,
-    7.0
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    999.0
-  ],
-  "position_plan": [
-    {
-      "zone": "avoid",
-      "condition": "价格高于10元或未出现经营反转证据",
-      "price_range": [
-        10.0,
-        999.0
-      ],
-      "action": "不建仓或减持",
-      "max_weight": 0.0
-    },
-    {
-      "zone": "watch",
-      "condition": "价格位于7-10元且核心业务仍未证明毛利转正",
-      "price_range": [
-        7.0,
-        10.0
-      ],
-      "action": "仅观察，等待业务毛利率转正和现金流改善",
-      "max_weight": 0.0
-    },
-    {
-      "zone": "research",
-      "condition": "价格低于7元，且连续两个季度收入和毛利率同步改善",
-      "price_range": [
-        0.0,
-        7.0
-      ],
-      "action": "重新评估困境反转，不自动买入",
-      "max_weight": 0.0
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "三季报后检查收入、毛利率和亏损收窄情况",
-      "reason": "验证困境反转是否出现早期证据"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "年报后检查危废焚烧产能利用率是否回升至70%以上",
-      "reason": "危废主业利用率决定固定成本摊薄能力"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "年报后检查电子废物处置业务毛利率是否转正",
-      "reason": "家电拆解补贴新机制下毛利修复是重要反转条件"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "三季报后检查短期借款、一年内到期负债和股权质押风险",
-      "reason": "流动性和质押风险可能改变安全边际"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "年报后检查固定资产、在建工程或存货是否继续大额减值",
-      "reason": "继续减值会削弱PB估值锚"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入安全边际研究区间，但仍需业务反转证据"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "高于基准估值上沿，应维持回避"
-    }
-  ],
-  "max_weight": 0.0,
-  "confidence": "medium",
-  "updated_at": "2026-07-15",
-  "tags": [
-    "A股",
-    "创业板",
-    "环保",
-    "危废处置",
-    "电子废物拆解",
-    "困境反转观察"
-  ],
-  "key_metrics": {
-    "price_date": "2026-07-15",
-    "price_cny": 18.49,
-    "market_cap_cny_billion": 1.743,
-    "pb": 3.31,
-    "revenue_2025_cny_billion": 0.19523046299,
-    "net_profit_2025_cny_billion": -0.14118098404,
-    "revenue_2026_q1_cny_billion": 0.03141826639,
-    "net_profit_2026_q1_cny_billion": -0.0177508436,
-    "equity_2026_q1_cny_billion": 0.52725780751
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "超越科技",
+    "security_status": "active",
+    "symbol": "CN:301049",
+    "ticker": "301049"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "61b8b2911ea2935b3b9921b487edb22e7c541cce6a08cc0672c8789f34987cae"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "2025年年度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-21/1225132527.PDF",
-      "date": "2026-04-21"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "验证困境反转是否出现早期证据",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "2026年第一季度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-21/1225132537.PDF",
-      "date": "2026-04-21"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "危废主业利用率决定固定成本摊薄能力",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "家电拆解补贴新机制下毛利修复是重要反转条件",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "流动性和质押风险可能改变安全边际",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "继续减值会削弱PB估值锚",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入安全边际研究区间，但仍需业务反转证据",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "高于基准估值上沿，应维持回避",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,36 +1,106 @@
 {
-  "symbol": "CN:688303",
-  "market": "CN",
-  "ticker": "688303",
-  "name": "大全能源",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "大全能源低负债与111.7亿元现金储备仍提供周期生存能力，但2026Q1收入仅1.89亿元、归母亏损8.01亿元、经营现金净流出12.45亿元，Q1产4.3万吨仅销0.45万吨并计提6.85亿元存货减值；2026-07-15 N型复投料3.25万元/吨仍低于4Q25现金成本约3.4万元/吨。拟投60亿元AIDC配电项目会消耗穿越周期的现金垫，尚无订单和盈利验证。2026-07-17收盘15.80元、PB约0.89处于13-17元合理区间中上部，维持watch，当前不可买，等待11-13元或硅料与经营现金流共同右侧确认。",
-  "fair_value_range": [13, 17],
-  "buy_zone": [11, 13],
-  "sell_or_reduce_zone": [20, 23],
-  "position_plan": [
-    {"condition": "当前15.80元且硅料3.25万元/吨、2026Q1经营现金流大额为负", "max_weight": 0.00},
-    {"condition": "股价处于11-13元且半年报未显示现金及理财快速下降或固定资产重大减值", "max_weight": 0.01},
-    {"condition": "N型复投料连续4周不低于3.4万元/吨、行业库存下降且单季经营现金流显著改善", "max_weight": 0.02},
-    {"condition": "N型复投料连续8周不低于4.0万元/吨、单季经营现金流转正且AIDC一期有明确客户订单和投资纪律", "max_weight": 0.03},
-    {"condition": "股价达20-23元但硅料仍低于4.0万元/吨，或任一逻辑失效条件触发", "max_weight": 0.00}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "大全能源",
+    "security_status": "active",
+    "symbol": "CN:688303",
+    "ticker": "688303"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "9135690b648b8ed879d78eb9c881102b2e17f017025dfa2b0172464fdaa83c77"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "cb03f7da4dd2e2e74520e836cecb12a974f08f334704c509a806a5c11edb1a7d"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "5e7827a860c615403b2ee4c2f2d7abf315b913fceb33221a3c5456d6fd917c9b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：Q2销量和库存、存货及固定资产减值、经营现金流、现金及理财、实际现金成本、AIDC一期审批与承诺支出",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报、硅料价格及库存拐点、AIDC客户订单与实际资本开支",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入下修后的初始买入区间，复核现金流、库存减值和AIDC资本开支后仅允许1%试探仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入悲观情景上沿，复核是否发生现金安全垫塌陷或非周期风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "进入减仓观察区，若硅料仍低于4.0万元/吨则减仓或不追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md",
-    "reports/2026-07-11-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "复核2026年半年报：Q2销量和库存、存货及固定资产减值、经营现金流、现金及理财、实际现金成本、AIDC一期审批与承诺支出"},
-    {"type": "date", "date": "2026-10-31", "reason": "复核2026三季报、硅料价格及库存拐点、AIDC客户订单与实际资本开支"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 13, "reason": "进入下修后的初始买入区间，复核现金流、库存减值和AIDC资本开支后仅允许1%试探仓"},
-    {"type": "price_below", "price": 11, "reason": "进入悲观情景上沿，复核是否发生现金安全垫塌陷或非周期风险"},
-    {"type": "price_above", "price": 20, "reason": "进入减仓观察区，若硅料仍低于4.0万元/吨则减仓或不追高"}
-  ],
-  "updated_at": "2026-07-18T00:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

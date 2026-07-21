@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603466",
-  "market": "CN",
-  "ticker": "603466",
-  "name": "风语筑",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "风语筑是数字展示和沉浸式文旅空间龙头，2026Q1 利润修复、现金较厚，但 2025 年仍亏损且项目制回款和资产占用风险高；当前价格已部分反映复苏预期，适合观察，等待 8 元以下或中报验证后再买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    0,
-    8
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    18
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "风语筑",
+    "security_status": "active",
+    "symbol": "CN:603466",
+    "ticker": "603466"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6eb576e89fb4fb3b77666e6ea8c03cccf7bbf1dbabf1c976b4651ec1541d3701"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 8.0 元，且最新季度扣非归母净利为正、应收和存货未继续恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入、扣非净利、经营现金流、应收及存货变化",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026 中报或三季报确认归母净利超过 0.8 亿元、经营现金流转正且收入同比增长",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报是否延续利润修复并验证全年估值假设",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 13.5 元但未出现全年利润上修证据",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年报，判断项目制波动是否转向可持续盈利",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入安全边际较好的买入观察区，需同步复核利润和现金流质量",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "已进入减仓或回避追高区，除非业绩明显上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8,
-      "reason": "进入安全边际较好的买入观察区，需同步复核利润和现金流质量"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "已进入减仓或回避追高区，除非业绩明显上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入、扣非净利、经营现金流、应收及存货变化"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报是否延续利润修复并验证全年估值假设"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年报，判断项目制波动是否转向可持续盈利"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

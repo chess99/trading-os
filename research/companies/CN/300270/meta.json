@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:300270",
-  "ticker": "300270",
-  "name": "中威电子",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "中威电子具备AI视频、智慧交通和控制权变化带来的题材弹性，但2025年仍亏损、经营现金流为负，当前约25倍P/S已反映较乐观预期，缺乏买入安全边际；应等待价格回落或连续季度验证收入、毛利和现金流改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    5.0,
-    7.5
-  ],
-  "buy_zone": [
-    4.5,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中威电子",
+    "security_status": "active",
+    "symbol": "CN:300270",
+    "ticker": "300270"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "5c19af4717020816a6fbaa414e3f882d0724f1d9331609c82f8b53a5f001dde0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于公允价值且基本面未连续验证，保持空仓观察。",
-      "action": "no_buy",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证收入增长、毛利率、经营现金流、应收账款和诉讼进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入4.5-6.0元且无新增重大诉讼、退市或流动性风险，同时最近一季收入和现金流未恶化。",
-      "action": "starter_watch_position",
-      "max_weight": 0.008
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断一季度高增长是否持续以及控制权变化是否带来可核验业务兑现。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比增长超过50%，毛利率稳定，经营现金流明显改善或转正，并有可核验高质量订单。",
-      "action": "increase_after_validation",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年盈利能力、现金流和估值锚是否发生根本变化。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入观察区间，需要重新核验财务、订单、诉讼和控制权变化兑现情况。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "超过减持/回避区间，若基本面未同步兑现，应维持不买或降低观察优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入买入观察区间，需要重新核验财务、订单、诉讼和控制权变化兑现情况。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "超过减持/回避区间，若基本面未同步兑现，应维持不买或降低观察优先级。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证收入增长、毛利率、经营现金流、应收账款和诉讼进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断一季度高增长是否持续以及控制权变化是否带来可核验业务兑现。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年盈利能力、现金流和估值锚是否发生根本变化。"
-    }
-  ],
-  "decision": "不买",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,69 +1,77 @@
 {
-  "symbol": "CN:002175",
-  "market": "CN",
-  "ticker": "002175",
-  "name": "*ST东智",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-19",
-  "latest_report": "reports/2026-07-19-initial.md",
-  "report_history": [
-    "reports/2026-07-19-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "不买：2025年扣除后收入低于3亿元且亏损触发财务类退市风险警示，2026Q1仍亏损且经营现金流为负；控制权转让尚未完成过户，当前股价主要交易保壳和控制权期权，基本面安全边际不足。",
-  "fair_value_range": [
-    0.6,
-    1.2
-  ],
-  "buy_zone": [
-    0.45,
-    0.75
-  ],
-  "sell_or_reduce_zone": [
-    1.6,
-    2.9
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "*ST东智",
+    "security_status": "active",
+    "symbol": "CN:002175",
+    "ticker": "002175"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "6dacfc82c3f5f796be1da42c389500cba961a964b62254ec27b1291a7df591a5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "退市风险未撤销或控制权未完成过户",
-      "action": "不买入/不加仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "公司计划披露2026年半年报，复核收入扣除、亏损、现金流与控制权过户",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年扣非后收入显著超过3亿元且扣非净利转正，并撤销*ST后重新复核",
-      "action": "观察仓",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.75
+      },
+      "reason": "进入风险调整买入观察区，但需同时复核退市风险解除进度",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格跌入0.45-0.75元且退市风险已有实质解除证据",
-      "action": "试探买入",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.6
+      },
+      "reason": "高于风险调整合理区，避免追高或减仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.75,
-      "reason": "进入风险调整买入观察区，但需同时复核退市风险解除进度"
-    },
-    {
-      "type": "price_above",
-      "price": 1.6,
-      "reason": "高于风险调整合理区，避免追高或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "公司计划披露2026年半年报，复核收入扣除、亏损、现金流与控制权过户"
-    }
-  ],
-  "notes": [
-    "needs_review/ST特殊风险复核；2025年扣除后收入299472346.17元且亏损，已触发财务类退市风险警示。",
-    "2026-07-15控制权转让仍需深交所合规确认和中登过户，尚未完成。",
-    "当前2.52元价格主要反映控制权和保壳期权，基本面安全边际不足；决策为不买。"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

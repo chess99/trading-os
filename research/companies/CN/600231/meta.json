@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:600231",
-  "ticker": "600231",
-  "name": "凌钢股份",
-  "company_name": "凌源钢铁股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "凌钢股份仍处于钢铁行业弱周期和自身深度亏损阶段，2026H1预亏继续侵蚀净资产；当前股价相对调整后净资产没有足够折价，只有在亏损止血、经营现金流转正且价格跌入明显折价区间后才具备重新研究价值。",
-  "fair_value_range": [
-    0.8,
-    1.2
-  ],
-  "buy_zone": [
-    0.65,
-    0.9
-  ],
-  "sell_or_reduce_zone": [
-    1.45,
-    1.9
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "凌钢股份",
+    "security_status": "active",
+    "symbol": "CN:600231",
+    "ticker": "600231"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b809b00bd16a308df9592d81e2c4d6da1143480c9f3e529298f45426144fbccf"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前亏损仍在扩大且动态PB相对H1后估算净资产偏高，不建仓，仅跟踪2026中报和三季报亏损收窄情况。",
-      "action": "avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年中报披露后，核验实际亏损、净资产、经营现金流和债务结构。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价跌入0.65-0.90元且最新季度经营现金流转正、吨钢毛利连续改善，可重新评估小仓位观察。",
-      "action": "watch",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 0.9,
-      "reason": "跌入买入观察区间后，若亏损止血和现金流改善同时出现，可能形成净资产折价安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报披露后，判断亏损是否继续收窄以及现金流是否转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 1.9,
-      "reason": "若基本面仍亏损而股价高于乐观情景上沿，市场可能过度定价周期修复或未核验重组预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年中报披露后，核验实际亏损、净资产、经营现金流和债务结构。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 0.9
+      },
+      "reason": "跌入买入观察区间后，若亏损止血和现金流改善同时出现，可能形成净资产折价安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报披露后，判断亏损是否继续收窄以及现金流是否转正。"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 1.9
+      },
+      "reason": "若基本面仍亏损而股价高于乐观情景上沿，市场可能过度定价周期修复或未核验重组预期。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

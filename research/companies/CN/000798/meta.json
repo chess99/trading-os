@@ -1,105 +1,96 @@
 {
-  "symbol": "CN:000798",
-  "market": "CN",
-  "ticker": "000798",
-  "name": "中水渔业",
-  "company_name": "中水渔业",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "中水渔业是农业央企体系内稀缺远洋渔业平台，2025年依靠捕捞量价改善实现扭亏，但2026Q1亏损和经营现金流转负显示周期与资本开支压力仍大；当前股价高于估算合理价值区间，适合跟踪等待而非主动买入。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    4.6,
-    6.1
-  ],
-  "buy_zone": [
-    4.0,
-    5.0
-  ],
-  "sell_or_reduce_zone": [
-    7.8,
-    9.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中水渔业",
+    "security_status": "active",
+    "symbol": "CN:000798",
+    "ticker": "000798"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "47038e69683c98949076b65163b77ff9e43b6855aa16595ca0499ca2c5cf832a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "current price above fair value range and 2026Q1 profit/cash flow still weak",
-      "action": "watch_only_or_research_position",
-      "max_weight": 0.01,
-      "reason": "估值已反映较多改善预期，先用小仓位保持跟踪纪律。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看鱿鱼均价、金枪鱼毛利率、经营现金流和债务。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price below 5.0 CNY with no deterioration in quota, safety, debt, or cash flow outlook",
-      "action": "start_accumulating",
-      "max_weight": 0.03,
-      "reason": "进入买入区间后，央企远洋渔业平台和船队资产的风险回报改善。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断2025年扭亏是否具备持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "two consecutive quarters of positive recurring profit and positive operating cash flow",
-      "action": "increase_if_price_still_reasonable",
-      "max_weight": 0.05,
-      "reason": "只有盈利和现金流同时验证，才适合提高到核心观察仓。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.0
+      },
+      "reason": "进入买入区间上沿，复核半年报、鱼价、燃油和现金流后决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price above 8.5 CNY without matching profit and cash-flow improvement",
-      "action": "reduce_or_avoid_new_buying",
-      "max_weight": 0.0,
-      "reason": "价格接近乐观情景，需要兑现更高利润才有安全边际。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入更有安全边际的位置，若基本面未恶化可考虑加到2%-3%。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过合理价值上沿较多，若利润和现金流未兑现应减仓或不参与。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.0,
-      "reason": "进入买入区间上沿，复核半年报、鱼价、燃油和现金流后决定是否建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入更有安全边际的位置，若基本面未恶化可考虑加到2%-3%。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过合理价值上沿较多，若利润和现金流未兑现应减仓或不参与。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看鱿鱼均价、金枪鱼毛利率、经营现金流和债务。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断2025年扭亏是否具备持续性。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "share_price",
-    "market_cap",
-    "catch_revenue",
-    "catch_gross_margin",
-    "tuna_revenue",
-    "tuna_gross_margin",
-    "squid_revenue",
-    "squid_average_selling_price",
-    "operating_cash_flow",
-    "inventory_balance",
-    "fuel_cost",
-    "short_term_debt",
-    "long_term_debt",
-    "related_party_borrowings",
-    "quota_and_fishing_license_changes",
-    "safety_and_compliance_events"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

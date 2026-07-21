@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300795",
-  "ticker": "300795",
-  "name": "米奥会展",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "境外自主办展稀缺平台，2025年仍保持出国办展规模领先，但利润率和现金流受展会取消、地缘冲突、外贸预算和阶段性帮扶政策影响较大。当前价格接近保守公允价值中枢，安全边际不足，等待2026年半年报和下半年核心展会兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.2,
-    9.2
-  ],
-  "buy_zone": [
-    0,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    99
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "米奥会展",
+    "security_status": "active",
+    "symbol": "CN:300795",
+    "ticker": "300795"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "3fcf023bc54674d208b9cbc50e44e8ba933b418b7678f5933e58b12f9a53386c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约8.3-8.4元且2026H1预告亏损，安全边际不足",
-      "action": "不建仓，仅跟踪半年报与下半年展会排期",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-27"
+      },
+      "reason": "预计披露2026年半年度报告，核验亏损、现金流、合同负债和展会取消影响",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.8元，且半年报亏损未超预告区间、核心展会未继续取消",
-      "action": "允许建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及下半年核心展会执行情况",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026全年归母净利润恢复至1.3亿元以上、经营现金流超过1亿元且2027合同负债和排期可见度良好",
-      "action": "可提高至小幅核心仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、全年利润修复和2027年展会排期",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入估值安全边际区，需要复核展会排期、现金和半年报实际亏损",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "接近悲观情景折价区，若现金资产仍稳健可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "高于基准公允区间，若利润修复证据不足应减持或回避追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入估值安全边际区，需要复核展会排期、现金和半年报实际亏损"
-    },
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "接近悲观情景折价区，若现金资产仍稳健可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "高于基准公允区间，若利润修复证据不足应减持或回避追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-27",
-      "reason": "预计披露2026年半年度报告，核验亏损、现金流、合同负债和展会取消影响"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及下半年核心展会执行情况"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、全年利润修复和2027年展会排期"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

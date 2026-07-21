@@ -1,92 +1,105 @@
 {
-  "symbol": "CN:300845",
-  "ticker": "300845",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "捷安高科",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "捷安高科是轨道交通、应急安全、船舶等职业教育/安全培训仿真实训细分供应商，政策与行业训练刚需提供中期空间；但公司体量小、项目制波动强，2026Q1仍亏损，2026-07-15估值已反映较多修复预期，当前宜观察，等待更低价格或订单与现金流兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    9.0,
-    12.5
-  ],
-  "buy_zone": [
-    6.5,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    18.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "捷安高科",
+    "security_status": "active",
+    "symbol": "CN:300845",
+    "ticker": "300845"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "49fa6f5e9f371640e2ae23ef18a41cb0ce4ea8bb89ea5949909eee498c4572cd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于8.5元，且最近一期报告未出现应收账款/合同资产恶化或订单断档",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入、利润、订单、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.0元，且2026年中报或三季报显示收入、利润、经营现金流同步改善",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年项目验收和费用杠杆是否兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于15.0元但TTM归母净利润未超过5000万元或现金流未改善",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估正常化盈利和合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入初步买入区间，需要复核订单、回款和最新财报",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入深度安全边际区间，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "超过合理价值区间上方，若盈利未超预期应考虑降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入初步买入区间，需要复核订单、回款和最新财报"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入深度安全边际区间，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "reason": "超过合理价值区间上方，若盈利未超预期应考虑降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入、利润、订单、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年项目验收和费用杠杆是否兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估正常化盈利和合理价值区间"
-    }
-  ],
-  "key_metrics": {
-    "price_date": "2026-07-15",
-    "last_price": 11.9,
-    "market_cap_cny_billion": 2.446,
-    "pe_ttm": 73.86,
-    "pb": 2.96,
-    "revenue_2025_cny_million": 290.6977,
-    "net_profit_2025_cny_million": 40.267,
-    "revenue_2026q1_cny_million": 24.9075,
-    "net_profit_2026q1_cny_million": -13.9323
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

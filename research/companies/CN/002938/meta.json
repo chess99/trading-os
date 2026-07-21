@@ -1,106 +1,110 @@
 {
-  "symbol": "CN:002938",
-  "market": "CN",
-  "ticker": "002938",
-  "name": "鹏鼎控股",
-  "company_name": "鹏鼎控股（深圳）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md",
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "鹏鼎控股是全球 PCB 龙头，消费电子基本盘稳固，并通过高阶 HDI、SLP、HLC、800G/1.6T 光模块板切入 AI 云端和管端增量。2026-07-13 股价约 96 元，已较充分反映 AI 服务器、光模块和扩产预期；当前不追高，等待 58-70 元安全买入区。",
-  "quality_rating": "A-",
-  "valuation_rating": "D+",
-  "fair_value_range": [
-    78,
-    92
-  ],
-  "buy_zone": [
-    58,
-    70
-  ],
-  "sell_or_reduce_zone": [
-    115,
-    130
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鹏鼎控股",
+    "security_status": "active",
+    "symbol": "CN:002938",
+    "ticker": "002938"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "5ecdc98eeb134227187fa25710d8d8a1ab3959d760d364c56bade56257ec0fc9"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "618382ed915cc6eb6ac133ff70c4e5e2728aa31743ba466224310a8c9d236c61"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至 70 元以下，且月度收入、扣非利润、AI 服务器和光模块订单未出现基本面恶化。",
-      "action": "建立 1.0%-1.5% 首笔仓位；58 元附近可加至 3%；48-58 元且基本面未变坏可加至 4%-5%；100 元以上不新增。",
-      "max_weight": 0.05,
-      "first_buy_below": 70,
-      "add_below": 58,
-      "trim_above": 115
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点看扣非净利率、服务器/光模块订单、资本开支和在建工程。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于 78-92 元合理价值区间，但 2026Q2/Q3 扣非利润率、HLC/光模块订单和月度收入连续超预期。",
-      "action": "仅保留 0.5%-1.5% 跟踪仓，不因题材扩散追高，等待业绩确认后再评估是否上调估值中枢。",
-      "max_weight": 0.015,
-      "first_buy_below": 92,
-      "add_below": 78,
-      "trim_above": 115
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报和旺季收入兑现，判断 AI 云端业务是否足以支撑当前估值。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 115 元，但 2026-2028 年利润预测未因订单、良率和毛利率兑现而明显上修。",
-      "action": "进入减仓或卖出观察区，已有仓位分批降低风险暴露。",
-      "max_weight": 0.005,
-      "first_buy_below": 70,
-      "add_below": 58,
-      "trim_above": 115
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "复核 2026 年度向特定对象发行 A 股股票预案进展、发行价格、摊薄比例、募投项目建设期、达产期和预计回报。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 70.0
+      },
+      "reason": "进入安全买入区；若月度收入和扣非利润未恶化，可建立首笔仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 58.0
+      },
+      "reason": "进入强吸引买入区；若 AI 服务器、光模块订单与产能爬坡正常，可加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 115.0
+      },
+      "reason": "进入减仓观察区；除非利润预测明显上修，否则风险收益偏差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 70,
-      "reason": "进入安全买入区；若月度收入和扣非利润未恶化，可建立首笔仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 58,
-      "reason": "进入强吸引买入区；若 AI 服务器、光模块订单与产能爬坡正常，可加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 115,
-      "reason": "进入减仓观察区；除非利润预测明显上修，否则风险收益偏差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点看扣非净利率、服务器/光模块订单、资本开支和在建工程。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报和旺季收入兑现，判断 AI 云端业务是否足以支撑当前估值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "reason": "复核 2026 年度向特定对象发行 A 股股票预案进展、发行价格、摊薄比例、募投项目建设期、达产期和预计回报。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "月度合并营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "扣非净利率",
-    "服务器和光模块相关收入占比",
-    "高阶 HDI/HLC 客户认证和量产进度",
-    "800G/1.6T/3.2T 光模块板订单进展",
-    "毛利率",
-    "资本开支、在建工程和折旧压力",
-    "经营活动现金流净额",
-    "汇率损益和财务费用",
-    "定增项目进展和摊薄幅度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

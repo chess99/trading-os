@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:605058",
-  "market": "CN",
-  "ticker": "605058",
-  "name": "澳弘电子",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "澳弘电子是现金流较好的中小型PCB平台，估值显著低于A股PCB高景气可比公司。当前买入逻辑来自泰国基地试产、HDI和高端电源/汽车电子产品放量、汇兑损失潜在收敛，以及23倍左右TTM PE提供的相对安全边际；主要约束是主业毛利率偏低、客户供应商集中和新增产能爬坡不确定。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "decision": "买入",
-  "confidence": "中",
-  "fair_value_range": [
-    26,
-    32
-  ],
-  "buy_zone": [
-    22,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "澳弘电子",
+    "security_status": "active",
+    "symbol": "CN:605058",
+    "ticker": "605058"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a7c2b09720f6a314884e6c501559acd7dd1e92c0291fe4a103ee50572b3b9e42"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价24元以下且未出现客户流失、泰国基地重大爬坡失败或主业毛利率继续快速下滑",
-      "action": "建立第一笔观察型仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看主业毛利率、泰国基地爬坡、汇兑损益和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026年半年报或三季报显示主业毛利率回到15.5%以上、泰国基地订单和产能利用率爬坡顺利、汇兑损失明显收敛",
-      "action": "加仓至核心小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润能否达到1.65亿元以上的基准情景",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价进入34元以上且2026E归母净利润未上修至1.8亿元以上，或主营毛利率低于14%且库存/应收恶化",
-      "action": "减仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年经营指引，重新评估泰国产能与高端产品兑现程度",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入买入区间，可建立第一笔小仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "若基本面未恶化，估值接近悲观情景，需要复核是否加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "进入减仓观察区，需确认利润和订单是否同步上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入买入区间，可建立第一笔小仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "若基本面未恶化，估值接近悲观情景，需要复核是否加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "进入减仓观察区，需确认利润和订单是否同步上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看主业毛利率、泰国基地爬坡、汇兑损益和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润能否达到1.65亿元以上的基准情景"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年经营指引，重新评估泰国产能与高端产品兑现程度"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

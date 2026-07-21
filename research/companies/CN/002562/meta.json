@@ -1,126 +1,114 @@
 {
-  "symbol": "CN:002562",
-  "market": "CN",
-  "ticker": "002562",
-  "name": "兄弟科技",
-  "company_name": "兄弟科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "兄弟科技处于维生素、铬盐/皮革化学品和医药中间体的周期修复阶段，2025 年扭亏、2026 年一季度利润继续改善，但经营现金流和 ROE 仍需验证。以 2026-07-10 收盘价 4.30 元和约 49.14 亿元市值看，当前价格高于基准合理区间上沿，缺少安全边际。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    3.2,
-    4.0
-  ],
-  "buy_zone": [
-    2.5,
-    3.0
-  ],
-  "sell_or_reduce_zone": [
-    4.6,
-    5.7
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "兄弟科技",
+    "security_status": "active",
+    "symbol": "CN:002562",
+    "ticker": "002562"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "a3c562c82e01b9be851ce7b35d484cb3ea89d3f68ee67525858c08a3d65f759e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价 <= 2.50 元",
-      "action": "强吸引力买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价 2.51-3.00 元",
-      "action": "分批买入",
-      "position": "1%-3%",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价 3.01-4.00 元",
-      "action": "观察或小仓试错",
-      "position": "0%-1%",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "股价 4.01-4.60 元",
-      "action": "观察不新增",
-      "position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价 > 4.60 元",
-      "action": "不追高，已有仓位可减仓",
-      "position": "0%或降仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价 <= 3.00 元且经营现金流/净利润改善",
-      "price": 3.0,
-      "reason": "进入安全边际买入区",
-      "action": "重新评估首笔 1%-3% 仓位"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价 <= 2.50 元且基本面未恶化",
-      "price": 2.5,
-      "reason": "进入强吸引力买入区",
-      "action": "进入强吸引力买入区"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价 >= 4.60 元且利润与现金流未同步验证",
-      "price": 4.6,
-      "reason": "超过不应追高价",
-      "action": "不追高或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证利润修复和现金流改善是否持续",
-      "action": "复核收入结构、毛利率和现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "判断全年利润中枢和周期位置",
-      "action": "复核盈利修复是否延续"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026 年年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "评估全年资本回报和新项目兑现情况",
-      "action": "复核全年经营现金流、ROE 和新项目回报"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027 年中报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "滚动更新 1-3 年跟踪指标",
-      "action": "复核 1-3 年跟踪指标和估值区间"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入安全边际买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.5
+      },
+      "reason": "进入强吸引力买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.6
+      },
+      "reason": "超过不应追高价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "医药食品收入和毛利率",
-    "特种化学品收入和毛利率",
-    "经营现金流净额/归母净利润",
-    "ROE",
-    "在建工程、固定资产周转和折旧压力",
-    "境外收入占比和境外毛利率",
-    "维生素、铬盐关键产品价格"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

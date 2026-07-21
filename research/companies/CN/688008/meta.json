@@ -1,83 +1,125 @@
 {
-  "symbol": "CN:688008",
-  "market": "CN",
-  "ticker": "688008",
-  "name": "澜起科技",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "全球DDR5内存接口芯片龙头，正向PCIe Retimer、CXL MXC、CKD等高速互连产品扩展。2026H1预计营收33.35亿元(+26.6%)、归母净利润19-21亿元(+63.9%~81.2%)、扣非净利润12.5-14.5亿元(+14.5%~32.9%)，Q2互连类芯片收入同比增长28.2%、环比增长19.5%，基本盘与新品增长得到强化；但韩国检方已就潜在反垄断事项在公司韩国办公室搜查取证，调查结果及客户影响无法预测。2026-07-17收盘183.60元已显著释放估值风险，但尚不足以覆盖韩国区域客户与法律尾部风险，当前维持观察，仅允许0.5%-1%观察仓。",
-  "quality_rating": "优秀",
-  "valuation_rating": "合理但事件风险未定价清楚",
-  "fair_value_range": [190, 225],
-  "buy_zone": [150, 175],
-  "sell_or_reduce_zone": [245, 290],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "澜起科技",
+    "security_status": "active",
+    "symbol": "CN:688008",
+    "ticker": "688008"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "390f52ae20fecc662e99e03852aa8ac936f536a28a9561592d65395be92a73f7"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-followup.md",
+        "sha256": "1f3ae043344a950b7500c81ffe5464e53104ae10a49e8c0b07d05cb6a26c268c"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "b980a72a0ca83cc486360e1b1ac00ddc05b27c14ac55948fad4049234c7380b8"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "175-190元且韩国调查结果未知",
-      "action": "继续观察；确需跟踪仅设观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-17"
+      },
+      "reason": "复核韩国反垄断调查、主要客户合作及3-6亿元回购方案进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "150-175元且无正式指控、主要客户合作与出货正常",
-      "action": "小步分批建仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：扣非利润增速、互连类毛利率、新产品收入占比、库存周转",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "150元以下且核心假设重验通过",
-      "action": "分批提高仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：Retimer/CXL/CKD放量、DDR5子代结构变化和现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "245-290元",
-      "action": "不新增；已有较高仓位分批降风险",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 175.0
+      },
+      "reason": "进入风险调整后买入区上沿，买入前复核韩国调查、客户合作和出货",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 150.0
+      },
+      "reason": "进入安全边际较好区间，核心假设重验通过后可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 225.0
+      },
+      "reason": "超过风险调整后合理价值上沿，停止新增并复核调查风险折价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 245.0
+      },
+      "reason": "进入偏贵区间，已有较高仓位分批降低风险",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md",
-    "reports/2026-07-09-followup.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-17",
-      "reason": "复核韩国反垄断调查、主要客户合作及3-6亿元回购方案进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：扣非利润增速、互连类毛利率、新产品收入占比、库存周转"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：Retimer/CXL/CKD放量、DDR5子代结构变化和现金流质量"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 175,
-      "reason": "进入风险调整后买入区上沿，买入前复核韩国调查、客户合作和出货"
-    },
-    {
-      "type": "price_below",
-      "price": 150,
-      "reason": "进入安全边际较好区间，核心假设重验通过后可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 225,
-      "reason": "超过风险调整后合理价值上沿，停止新增并复核调查风险折价"
-    },
-    {
-      "type": "price_above",
-      "price": 245,
-      "reason": "进入偏贵区间，已有较高仓位分批降低风险"
-    }
-  ],
-  "updated_at": "2026-07-17T23:59:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

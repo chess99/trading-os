@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:002300",
-  "market": "CN",
-  "ticker": "002300",
-  "name": "太阳电缆",
-  "company_name": "太阳电缆",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "福建区域电线电缆龙头具备品牌、区域客户和海缆期权，但当前利润率、ROE和营运资本质量不足以支撑约58.85倍PE，等待价格回到3.6元以下或海缆/特种电缆利润拐点验证。",
-  "quality_rating": "medium_low",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    3.4,
-    4.5
-  ],
-  "buy_zone": [
-    2.8,
-    3.6
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    6.8
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "太阳电缆",
+    "security_status": "active",
+    "symbol": "CN:002300",
+    "ticker": "002300"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "0732ca9bcf4e0bff1b7371c2c10fadc6c6d8444c3a1360c330c0f75e05537f48"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价约6.38元且未看到海缆订单与主业毛利率拐点",
-      "action": "不买入，仅观察",
-      "max_weight": 0,
-      "reason": "当前市值约46.08亿元，对应约58.85倍PE，利润质量和ROE不足以支撑估值"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看主业毛利率、海缆订单、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.6元且2026H1扣非利润不恶化、应收账款不回升",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "进入合理价值下沿并要求基本面没有继续恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入增长是否转化为归母和扣非利润",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于3.0元且经营现金流改善、存货跌价风险可控",
-      "action": "小幅加仓",
-      "max_weight": 0.015,
-      "reason": "价格具备安全边际且营运资本压力缓和"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入买入区间上沿，需复核中报扣非利润、应收账款和存货",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "海缆订单和特种电缆毛利率验证，电线电缆制造毛利率超过8.5%，ROE回到6%以上",
-      "action": "提高为核心观察仓",
-      "max_weight": 0.03,
-      "reason": "高端电缆成长逻辑从期权变为可验证利润"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "进入较强安全边际区间，若现金流改善可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "高于合理价值区间上沿，若无海缆订单和毛利率拐点应回避或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "估值进一步透支，需要重新验证牛市情景是否成立",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入买入区间上沿，需复核中报扣非利润、应收账款和存货"
-    },
-    {
-      "type": "price_below",
-      "price": 3,
-      "reason": "进入较强安全边际区间，若现金流改善可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "高于合理价值区间上沿，若无海缆订单和毛利率拐点应回避或减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "估值进一步透支，需要重新验证牛市情景是否成立"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看主业毛利率、海缆订单、应收账款和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入增长是否转化为归母和扣非利润"
-    }
-  ],
-  "key_tracking_metrics": [
-    "电线电缆制造毛利率",
-    "铜加工收入占比和毛利率",
-    "海底电缆收入和在手订单",
-    "应收账款余额及信用减值损失",
-    "存货余额及跌价准备",
-    "经营活动现金流量净额",
-    "合同负债",
-    "短期借款和资产负债率",
-    "每股现金分红",
-    "沪铜和伦铜价格及套保损益"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

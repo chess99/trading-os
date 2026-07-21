@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:300739",
-  "ticker": "300739",
-  "name": "明阳电路",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "明阳电路具备小批量多品种 PCB、HDI、高频高速和海外产能布局等成长线索，2025 年利润从低基数恢复，2026Q1 利润仍增长；但以最近可核验价格测算，市值对当前利润的估值已明显偏高，必须等待价格回落或高端订单和利润兑现后再买入。",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    15,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "明阳电路",
+    "security_status": "active",
+    "symbol": "CN:300739",
+    "ticker": "300739"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "14c0991bb3e5e63af8046cb8e4cb3c2483cfaf26caf28ebfa468b47d0a9cab08"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于 24 元且未披露高端 HDI、高频高速或数据中心订单显著放量证据",
-      "action": "仅观察，不建正式仓位",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报，重点看扣非净利润、毛利率、经营现金流和高端产品订单",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回落至 18 元以下，且最新季度扣非净利润和经营现金流未恶化",
-      "action": "可建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，判断利润改善是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格回落至 15 元附近，且海外产能爬坡、毛利率、扣非净利润均持续改善",
-      "action": "可提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重估海外产能和高端产品放量后的长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入估值合理区间下沿，具备重新评估建仓价值的必要",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.0
+      },
+      "reason": "接近保守买入区，若基本面未恶化，安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "高于本次合理价值区间且接近减仓区，需要检查是否已有利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入估值合理区间下沿，具备重新评估建仓价值的必要"
-    },
-    {
-      "type": "price_below",
-      "price": 15,
-      "reason": "接近保守买入区，若基本面未恶化，安全边际明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 30,
-      "reason": "高于本次合理价值区间且接近减仓区，需要检查是否已有利润上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报，重点看扣非净利润、毛利率、经营现金流和高端产品订单"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，判断利润改善是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重估海外产能和高端产品放量后的长期盈利中枢"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

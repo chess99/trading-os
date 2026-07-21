@@ -1,84 +1,105 @@
 {
-  "symbol": "CN:688636",
-  "market": "CN",
-  "ticker": "688636",
-  "name": "智明达",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "智明达是军工高可靠嵌入式计算机小市值弹性标的，2025 年订单和交付恢复，2026Q1 延续增长，当前价格接近低位买入区；但客户集中、应收账款高和经营现金流为负限制仓位上限，需要用半年报验证订单转收入、毛利率和现金流修复。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    29.0,
-    38.0
-  ],
-  "buy_zone": [
-    0.0,
-    27.5
-  ],
-  "sell_or_reduce_zone": [
-    45.0,
-    52.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "智明达",
+    "security_status": "active",
+    "symbol": "CN:688636",
+    "ticker": "688636"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "293870d5527087da23b23b574f5ef6338354a507d569c51175aaad9af78defca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "27.5 元以下且无订单、毛利率、现金流恶化信号时，建立观察性底仓。",
-      "action": "buy_initial",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-20"
+      },
+      "reason": "预计披露 2026 年半年报，核验收入、利润、订单、应收和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "24 元以下且 2026H1 收入、订单和应收回款未恶化时，加仓。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季报订单转化、弹载毛利率和全年业绩达成概率。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "35 元以上但半年报未证明经营现金流改善时，降低仓位。",
-      "action": "reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "检查铭科思微股权转让是否完成以及年底回款情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "45 元以上且现金流仍未转正或弹载毛利率仍低于 12% 时，退出或仅保留跟踪仓。",
-      "action": "sell_or_watch",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入更有安全边际的加仓区，需同步核验订单和现金流未恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 35.0
+      },
+      "reason": "接近基准估值中枢上沿，需要用半年报验证利润与现金流。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "进入减持区，若无现金流和新业务放量支撑则风险收益比下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24.0,
-      "reason": "进入更有安全边际的加仓区，需同步核验订单和现金流未恶化。"
-    },
-    {
-      "type": "price_above",
-      "price": 35.0,
-      "reason": "接近基准估值中枢上沿，需要用半年报验证利润与现金流。"
-    },
-    {
-      "type": "price_above",
-      "price": 45.0,
-      "reason": "进入减持区，若无现金流和新业务放量支撑则风险收益比下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-20",
-      "reason": "预计披露 2026 年半年报，核验收入、利润、订单、应收和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季报订单转化、弹载毛利率和全年业绩达成概率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "检查铭科思微股权转让是否完成以及年底回款情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

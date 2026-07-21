@@ -1,105 +1,96 @@
 {
-  "symbol": "CN:601225",
-  "market": "CN",
-  "ticker": "601225",
-  "name": "陕西煤业",
-  "company_name": "陕西煤业",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "A",
-  "valuation_rating": "neutral_to_cheap",
-  "current_thesis": "陕西煤业是低成本、高股息、强现金流的动力煤龙头，当前价格接近合理价值中枢，适合观察仓或小仓跟踪，等待煤价或股价给出更大安全边际后再加仓。",
-  "fair_value_range": [
-    19.0,
-    24.0
-  ],
-  "buy_zone": [
-    16.0,
-    19.0
-  ],
-  "sell_or_reduce_zone": [
-    24.0,
-    28.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "陕西煤业",
+    "security_status": "active",
+    "symbol": "CN:601225",
+    "ticker": "601225"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "1f63284f188ef0078532e78fbd9d631e0799eb62740c4f6c37cba367c5f8eaa1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价小于等于15.0元，且煤价未出现基本面断崖式恶化",
-      "action": "buy",
-      "max_weight": 0.2,
-      "reason": "接近悲观情景估值下沿，股息和低成本资产提供较强保护"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报、吨煤盈利、经营现金流和中期分红",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在15.0至17.0元之间",
-      "action": "buy",
-      "max_weight": 0.15,
-      "reason": "进入明显安全边际区间，可建立主仓"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季度煤价走势、月度成本变化和盈利中枢",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在17.0至19.0元之间",
-      "action": "accumulate",
-      "max_weight": 0.1,
-      "reason": "低于基准合理价值，赔率开始明显改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 19.0
+      },
+      "reason": "进入有安全边际的基础买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价在19.0至22.0元之间",
-      "action": "watch_small_position",
-      "max_weight": 0.05,
-      "reason": "接近合理价值中枢，适合观察仓"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入高吸引力买入区间，可考虑明显加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "股价高于24.0元",
-      "action": "reduce_or_avoid_chasing",
-      "max_weight": 0.03,
-      "reason": "已提前反映乐观情景，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 24.0
+      },
+      "reason": "超过合理价值上沿，不宜追高，应审视减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 19.0,
-      "reason": "进入有安全边际的基础买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "进入高吸引力买入区间，可考虑明显加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 24.0,
-      "reason": "超过合理价值上沿，不宜追高，应审视减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报、吨煤盈利、经营现金流和中期分红"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季度煤价走势、月度成本变化和盈利中枢"
-    }
-  ],
-  "key_tracking_metrics": [
-    "秦皇岛/环渤海5500K动力煤价格",
-    "月度自产煤单位生产成本",
-    "自产煤销量与总销量差额",
-    "长协煤占比与平均售价",
-    "经营活动现金流净额/归母净利润",
-    "年度与中期现金分红率",
-    "投资收益规模及波动",
-    "电力分部毛利率",
-    "资本开支总额与新增项目回报",
-    "陕煤集团相关资产注入或资本运作公告"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

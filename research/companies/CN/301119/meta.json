@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:301119",
-  "market": "CN",
-  "ticker": "301119",
-  "currency": "CNY",
-  "name": "正强股份",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司是汽车十字轴万向节、节叉、十字轴和转向轴细分零部件企业，客户资质、现金流和净现金资产质量较好，节叉与新能源转向相关新品提供增长线索；但当前估值已反映较多成长预期，2026Q1利润下滑显示财务收益与毛利率压力，暂列观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    17,
-    23
-  ],
-  "buy_zone": [
-    14,
-    17
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    30
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "正强股份",
+    "security_status": "active",
+    "symbol": "CN:301119",
+    "ticker": "301119"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "5fbe1e2f323dae25c33c71a8fe27a27210f45e90d1a8287bac3701e2428b1862"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入14-17元且最近两个季度收入保持增长、毛利率不低于29%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、泰国基地进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于17-23元且没有利润上修证据",
-      "action": "仅跟踪，不新增仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认利润下滑是否收敛以及新品放量证据",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于26元且2026年净利润无法上修至1.35亿元以上",
-      "action": "回避或减仓",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估全年盈利质量和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入合理价值区间下沿，需要复核基本面后评估是否建立观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入绝对估值和净现金安全边际更有吸引力的位置",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "超过基准合理价值区间上沿，需要确认是否有利润上修支撑",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入合理价值区间下沿，需要复核基本面后评估是否建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入绝对估值和净现金安全边际更有吸引力的位置"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "reason": "超过基准合理价值区间上沿，需要确认是否有利润上修支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、经营现金流、泰国基地进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认利润下滑是否收敛以及新品放量证据"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估全年盈利质量和估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

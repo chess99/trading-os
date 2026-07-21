@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603027",
-  "ticker": "603027",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "千禾味业",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "千禾味业具备零添加和中高端家庭调味品品牌心智，资产负债表稳健，2026Q1 利润修复明显；但 2025 年酱油主品类下滑、扣非利润承压，当前价格安全边际一般，需等待收入恢复和费用效率改善的连续验证。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    7.0,
-    9.2
-  ],
-  "buy_zone": [
-    6.0,
-    6.8
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "千禾味业",
+    "security_status": "active",
+    "symbol": "CN:603027",
+    "ticker": "603027"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c6a384ddcb0e5a96080054e3577601cad54b2b5a5f44e32678508dffc1fbb356"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 6.0-6.8 元且 2026H1 收入恢复为正、酱油收入未继续显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报，重点检查收入、酱油品类、毛利率和销售费用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1 和 2026Q3 连续验证收入正增长、扣非利润增速高于收入增速、销售费用率改善",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认 Q1 修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 11.0 元但收入恢复弱于预期或毛利率继续下行",
-      "action": "减持或不追高",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报和全年经营数据，更新长期估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "进入买入区上沿，若基本面未恶化可启动小仓位跟踪",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入更有安全边际区域，需复核酱油收入和毛利率趋势",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "进入减持观察区，若经营未充分兑现应控制估值风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "进入买入区上沿，若基本面未恶化可启动小仓位跟踪"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "reason": "进入更有安全边际区域，需复核酱油收入和毛利率趋势"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "进入减持观察区，若经营未充分兑现应控制估值风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报，重点检查收入、酱油品类、毛利率和销售费用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认 Q1 修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报和全年经营数据，更新长期估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

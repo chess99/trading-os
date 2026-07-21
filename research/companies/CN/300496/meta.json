@@ -1,147 +1,125 @@
 {
-  "symbol": "CN:300496",
-  "market": "CN",
-  "ticker": "300496",
-  "company_name": "中科创达软件股份有限公司",
-  "name": "中科创达",
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "rating": "watch",
-  "current_thesis": "A股稀缺的操作系统级平台型公司，正处于AIOS+端侧智能驱动的业绩拐点。2025年营收77.78亿(+44.5%)、扣非净利3.44亿(+96.4%)验证拐点，但当前PE TTM 58.5x处估值偏贵，机构预测2026-2028 EPS CPE约24%但2027年增速放缓。当前58.28元处合理估值上限附近，无安全边际，建议观察等待2026半年报验证或市场回调至45元区间再试水。",
-  "quality_rating": "B+",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    45,
-    60
-  ],
-  "buy_zone": [
-    36,
-    42
-  ],
-  "strong_attraction_zone": [
-    30,
-    36
-  ],
-  "sell_or_reduce_zone": [
-    65,
-    75
-  ],
-  "do_not_chase_above": 65,
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中科创达",
+    "security_status": "active",
+    "symbol": "CN:300496",
+    "ticker": "300496"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "abaf83cedad93230e2b1dbf8b0f9f62e37d62f160867f7dd7005185bd7f99dfd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "<36",
-      "condition": "强吸引力区，基本面未恶化",
-      "action": "分批建仓",
-      "target_weight": 0.05,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-26"
+      },
+      "reason": "2026年半年报披露，验证营收增速、毛利率、扣非净利和AIOS业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "36-42",
-      "condition": "价值区，PE~30x，2026H1业绩正常",
-      "action": "分批买入",
-      "target_weight": 0.035,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026三季报，复核全年利润兑现度和估值区间",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "42-50",
-      "condition": "合理偏低，业绩拐点确认",
-      "action": "小幅加仓",
-      "target_weight": 0.025,
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报，验证三年增长路径和AIOS落地节奏",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "50-60",
-      "condition": "合理估值上限",
-      "action": "观察为主",
-      "target_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入合理偏低区，需复核2026H1业绩与AIOS进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "zone": "60-65",
-      "condition": "偏贵",
-      "action": "仅持有/止盈",
-      "target_weight": 0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 42.0
+      },
+      "reason": "进入安全边际买入区，若基本面未恶化可分批加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "zone": ">65",
-      "condition": "高估",
-      "action": "优先止盈",
-      "target_weight": 0,
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 36.0
+      },
+      "reason": "进入强吸引力区，可分批建仓至上限",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 65.0
+      },
+      "reason": "不应追高区，需确认业绩足以支撑估值上修",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "止盈区，无业绩催化优先清仓",
+      "trigger_id": "legacy-price-5",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": [
-    "reports/2026-07-08-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-26",
-      "reason": "2026年半年报披露，验证营收增速、毛利率、扣非净利和AIOS业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026三季报，复核全年利润兑现度和估值区间"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报，验证三年增长路径和AIOS落地节奏"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入合理偏低区，需复核2026H1业绩与AIOS进展"
-    },
-    {
-      "type": "price_below",
-      "price": 42,
-      "reason": "进入安全边际买入区，若基本面未恶化可分批加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 36,
-      "reason": "进入强吸引力区，可分批建仓至上限"
-    },
-    {
-      "type": "price_above",
-      "price": 65,
-      "reason": "不应追高区，需确认业绩足以支撑估值上修"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "止盈区，无业绩催化优先清仓"
-    }
-  ],
-  "key_risks": [
-    "华为鸿蒙车机OS、Android Automotive对滴水OS的生态挤压",
-    "软硬一体产品占比提升导致毛利率持续下行",
-    "机构预测2026-2028 EPS CPE约24%若AIOS落地不达预期存在下修空间",
-    "客户集中度风险：依赖头部主机厂与AI芯片厂",
-    "实控人赵鸿飞2026年6月已开始质押，需跟踪质押比例",
-    "PE TTM 58.5x处历史估值上方，无业绩超预期支撑下估值回调风险大",
-    "研发团队分布在14个国家，地缘政治与跨境合规风险",
-    "AIOS、AI智能体叙事若2027年前未在B端收入结构中兑现可能进入估值杀阶段"
-  ],
-  "key_tracking_metrics": [
-    "单季度营收同比增速（健康线>20%）",
-    "单季度毛利率（健康线>30%）",
-    "扣非净利同比增速（健康线>25%）",
-    "经营性现金流/净利润比（健康线>1.0）",
-    "滴水OS新车型量产公告与搭载车型数",
-    "AIBOX出货量与车企客户拓展",
-    "机器人业务海外订单披露",
-    "三大业务分部收入占比与毛利率结构",
-    "实控人质押比例变化",
-    "机构盈利预测均值上修/下修"
-  ],
-  "updated_at": "2026-07-08T18:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

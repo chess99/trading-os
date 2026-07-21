@@ -1,128 +1,123 @@
 {
-  "symbol": "CN:002999",
-  "market": "CN",
-  "ticker": "002999",
-  "name": "天禾股份",
-  "company_name": "广东天禾农资股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "天禾股份具备广东供销系统背景、农资渠道网络和终端客户基础，但商业模式仍是低毛利、低净利、高营运资金占用的农资流通业务。2025年收入约130.47亿元、归母净利润约5981.85万元，2026Q1收入微增但利润同比下降。当前约5.36元价格对应估值未充分补偿低ROE、高负债和现金流波动风险，等待4.0元以下或盈利质量明显改善。",
-  "quality_rating": "中低",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    4.0,
-    5.0
-  ],
-  "buy_zone": [
-    0,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天禾股份",
+    "security_status": "active",
+    "symbol": "CN:002999",
+    "ticker": "002999"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "e8a046d60e831388672edb5d3bd6e218a34f1ba98f1fcc77c8e418a7c3610683"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于5.0元且2026Q1利润同比下降尚未修复",
-      "action": "不买入，仅跟踪",
-      "target_position": "0%",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价跌至4.3元以下，且中报未出现库存、应收或现金流恶化",
-      "action": "建立观察仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌至3.8元以下，且归母净利润恢复、经营现金流为正、资产负债率不继续上升",
-      "action": "提高至核心小仓",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "condition": "股价高于6.2元但利润和ROE没有同步上修",
-      "action": "卖出或减仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "unit": "CNY/share",
-      "reason": "进入合理区间下沿，开始具备观察仓意义",
-      "action": "进入观察买点，复核中报与现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "unit": "CNY/share",
-      "reason": "低于基础买入价，安全边际更充分",
-      "action": "若基本面未恶化，可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "unit": "CNY/share",
-      "reason": "明显高于合理价值区间，除非盈利上修否则风险回报转差",
-      "action": "若业绩没有明显上修，卖出或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年度报告披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026Q1利润下滑是否延续",
-      "action": "复核收入、毛利率、归母净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季度报告披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证旺季后盈利和营运资金质量",
-      "action": "复核旺季后利润修复、库存和应收账款"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年度报告披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "验证全年ROE、现金流和分红是否支撑估值",
-      "action": "复核全年现金流、ROE、分红和估值区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年半年度报告披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "验证农技服务和省外扩张是否贡献利润",
-      "action": "复核农技服务占比和省外扩张利润贡献"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
-      "condition": "2027年年度报告披露窗口",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "验证三年跟踪指标是否兑现",
-      "action": "复核三年跟踪指标是否兑现"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入合理区间下沿，开始具备观察仓意义",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "低于基础买入价，安全边际更充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "明显高于合理价值区间，除非盈利上修否则风险回报转差",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "综合毛利率是否稳定高于8%",
-    "农药和农技服务收入占比",
-    "归母净利润是否恢复到8000万元以上",
-    "经营活动现金流净额",
-    "存货周转与应收账款回收",
-    "资产负债率",
-    "广东省外收入增长对应的利润贡献",
-    "现金分红率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

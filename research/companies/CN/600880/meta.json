@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:600880",
-  "ticker": "600880",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "博瑞传播",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "低负债成都国资文化传媒资产平台具备资产底座和AI教育/数字文创期权，但2025年扣非亏损、2026H1预亏及信用/资产减值显示经营反转尚未验证，当前需等待减值出清和现金流转正。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    2.7,
-    3.4
-  ],
-  "buy_zone": [
-    2.4,
-    2.9
-  ],
-  "sell_or_reduce_zone": [
-    4.1,
-    4.6
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "博瑞传播",
+    "security_status": "active",
+    "symbol": "CN:600880",
+    "ticker": "600880"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "9a49c713a4601364f9cd95734656d04a42f415bd3a645ab2070172dc8ab310dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在价格进入买入区间且2026半年报显示信用减值和资产减值基本出清、经营现金流改善时建立观察仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报实际亏损、资产减值、信用减值和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度扣非盈利且经营现金流转正，可提高到小仓位跟踪。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认减值是否收敛及经营性现金流是否转正。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若2026全年亏损超过1亿元或应收账款/发放贷款减值继续扩大，则不新增并退出观察仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断资产质量出清和AI教育/智能传媒业务兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.9
+      },
+      "reason": "进入经调整净资产折价买入区间，具备重新评估安全边际的必要。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 4.1
+      },
+      "reason": "价格进入减持区间，若盈利和现金流尚未兑现，主题估值风险高。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.9,
-      "reason": "进入经调整净资产折价买入区间，具备重新评估安全边际的必要。"
-    },
-    {
-      "type": "price_above",
-      "price": 4.1,
-      "reason": "价格进入减持区间，若盈利和现金流尚未兑现，主题估值风险高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报实际亏损、资产减值、信用减值和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认减值是否收敛及经营性现金流是否转正。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断资产质量出清和AI教育/智能传媒业务兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

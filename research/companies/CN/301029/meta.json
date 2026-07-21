@@ -1,78 +1,105 @@
 {
-  "symbol": "CN:301029",
-  "ticker": "301029",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "怡合达",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "怡合达是国内FA工厂自动化零部件一站式供应平台的稀缺标的，长期受益制造业自动化、品类扩张和平台化复购；但当前估值已反映较多修复预期，且2026Q1利润增速明显低于收入增速，需要等待利润率和现金流验证或更低价格。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    24,
-    31
-  ],
-  "buy_zone": [
-    20,
-    23
-  ],
-  "sell_or_reduce_zone": [
-    34,
-    38
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "怡合达",
+    "security_status": "active",
+    "symbol": "CN:301029",
+    "ticker": "301029"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "266ed2e7b9c51fa7f8c13df6744a559a2068a90337e7eea95024def3d1e94418"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格处于合理区间中部偏上且2026Q1利润弹性未验证，暂不建仓。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、归母净利润增速、毛利率、净利率、应收账款和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至23元以下，且2026H1收入增速保持15%以上、经营现金流未明显恶化，可建立跟踪仓。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润是否能达到基准情景。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至20元以下，且毛利率稳定在38%以上、净利率恢复趋势确认，可提升为核心观察仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和股权激励执行情况，更新长期盈利中枢和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 23.0
+      },
+      "reason": "进入买入区间上沿，需要复核2026年利润与现金流是否支持25倍以内估值。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可评估提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "高于基准合理价值区间，若利润增速未明显上修应降低预期或回避追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 23,
-      "reason": "进入买入区间上沿，需要复核2026年利润与现金流是否支持25倍以内估值。"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入深度安全边际区，若基本面未恶化可评估提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 34,
-      "reason": "高于基准合理价值区间，若利润增速未明显上修应降低预期或回避追高。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、归母净利润增速、毛利率、净利率、应收账款和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润是否能达到基准情景。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和股权激励执行情况，更新长期盈利中枢和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

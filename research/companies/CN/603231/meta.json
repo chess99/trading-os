@@ -1,76 +1,95 @@
 {
-  "symbol": "CN:603231",
-  "market": "CN",
-  "ticker": "603231",
-  "name": "索宝蛋白",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "索宝蛋白是现金充足、负债很低的非转基因大豆蛋白深加工企业，当前估值已反映部分周期和小市值折价；买入逻辑建立在净金融资产提供下行保护、组织化蛋白等高毛利产品占比提升、海外销售毛利较优之上，但2026Q1利润下滑要求用小仓位等待半年报验证。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    17.0,
-    22.0
-  ],
-  "buy_zone": [
-    12.0,
-    15.5
-  ],
-  "sell_or_reduce_zone": [
-    22.5,
-    26.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "索宝蛋白",
+    "security_status": "active",
+    "symbol": "CN:603231",
+    "ticker": "603231"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "feb874513c2f8719f253b590ea5bba46acf122f600f2ea351f3cacc056a968ca"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价位于买入区间且2026H1毛利率不低于12%、经营现金流未显著恶化时，建立初始仓位。",
-      "action": "buy_initial",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报毛利率、组织化蛋白收入占比、扣非净利和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至13.5元以下且无原料成本失控、治理或现金流异常，补至目标仓位。",
-      "action": "add",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1利润下滑是否为短期波动。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H1扣非净利润同比下降超过25%或毛利率低于12%，暂停加仓并降为观察。",
-      "action": "hold_or_reduce",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报与分红，重新评估正常化净利润和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入更有吸引力的买入区，需复核原料成本和半年报毛利率后加仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.5
+      },
+      "reason": "进入减持区，除非正常化净利润上调至2.3亿元以上，否则估值吸引力下降。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入更有吸引力的买入区，需复核原料成本和半年报毛利率后加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 22.5,
-      "reason": "进入减持区，除非正常化净利润上调至2.3亿元以上，否则估值吸引力下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报毛利率、组织化蛋白收入占比、扣非净利和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1利润下滑是否为短期波动。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报与分红，重新评估正常化净利润和估值区间。"
-    }
-  ],
-  "decision": "买入",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,66 +1,86 @@
 {
-  "symbol": "CN:688667",
-  "market": "CN",
-  "ticker": "688667",
-  "name": "菱电电控",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "菱电电控是小市值本土汽车动力电控供应商，2025年和2026Q1利润率显著修复，净现金充足，GECU、混动增程、海外和低空飞行应用提供成长弹性；但2026Q1收入同比下滑、客户和车型周期敏感，适合在安全边际区间分批买入而非追高。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    95,
-    125
-  ],
-  "buy_zone": [
-    70,
-    85
-  ],
-  "sell_or_reduce_zone": [
-    125,
-    150
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "菱电电控",
+    "security_status": "active",
+    "symbol": "CN:688667",
+    "ticker": "688667"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "a72403cad8fad4c6635de6a4c189be9083551129a7175ae8769fd2b6df629e6e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价处于85-95元且基本面无新增恶化时建立观察型底仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入增速、GECU量产、毛利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至80元以下，且2026Q2收入环比改善或毛利率保持26%以上",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润台阶和估值区间是否需要调整",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至70元以下，且GECU量产、客户订单和现金流未恶化",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 80.0
+      },
+      "reason": "进入主要买入区间，需要复核Q2收入、毛利率和GECU量产进度后加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 125.0
+      },
+      "reason": "达到公允价值上沿，需要降低仓位或等待业绩兑现",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 80,
-      "reason": "进入主要买入区间，需要复核Q2收入、毛利率和GECU量产进度后加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 125,
-      "reason": "达到公允价值上沿，需要降低仓位或等待业绩兑现"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入增速、GECU量产、毛利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润台阶和估值区间是否需要调整"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

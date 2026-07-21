@@ -1,142 +1,120 @@
 {
-  "symbol": "CN:301308",
-  "market": "CN",
-  "ticker": "301308",
-  "name": "江波龙",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "全球存储模组龙头，FORESEE/Lexar/Zilia、企业级存储与自研主控构成长线成长性；2026H1的92-110亿元归母净利润预告已被市场计价，但2026-07-09后无新增法定公告或基本面证据。2026-07-17收盘价396元仍高于130-280元合理价值区间上限约41%，单日下跌不构成上调估值理由，维持观察、不买和0%首仓，待跌破230元后结合颗粒价格、毛利率、库存减值与现金流复核。",
-  "quality_rating": "B",
-  "valuation_rating": "very_expensive",
-  "research_date": "2026-07-17",
-  "analyst": "Claude Code 2.1.195 (Claude Code) + glm-5.2",
-  "priority": "P2",
-  "fair_value_range": [
-    130,
-    280
-  ],
-  "buy_zone": [
-    110,
-    180
-  ],
-  "strong_buy_zone": [
-    80,
-    110
-  ],
-  "sell_or_reduce_zone": [
-    300,
-    400
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江波龙",
+    "security_status": "active",
+    "symbol": "CN:301308",
+    "ticker": "301308"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "15aa3011cf757a540a314e64187fa7a77eb17974c81a6688c58ae5974c776c35"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "0124b6626cf8c5ce773000e92346701979f7092298777369fa20f9d2aabe1bdd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "no_position_now",
-      "price_range": [
-        300,
-        650
-      ],
-      "first_weight": 0,
-      "max_weight": 0,
-      "action": "do_not_chase",
-      "condition": "2026-07-17收盘价396元仍高于合理价值上限约41%，且旧报告后无新增基本面证据。不建立首仓，不因单日下跌抄底。"
-    },
-    {
-      "zone": "watch_to_accumulate",
-      "price_range": [
-        180,
-        230
-      ],
-      "first_weight": 0.01,
-      "max_weight": 0.02,
-      "action": "small_watch_position",
-      "condition": "回落至合理偏高区间，且季度颗粒价格未大跌(NAND/DRAM现货价环比跌幅<10%)、公司存货跌价准备未出现大额计提(<5亿/季)。"
-    },
-    {
-      "zone": "buy_zone",
-      "price_range": [
-        110,
-        180
-      ],
-      "target_weight": 0.02,
-      "max_weight": 0.03,
-      "action": "accumulate_if_quality_holds",
-      "condition": "股价进入买入区间，且最新季度毛利率仍>30%、企业级业务同比增速>30%、经营性现金流明显改善或融资到位。"
-    },
-    {
-      "zone": "strong_buy_zone",
-      "price_range": [
-        80,
-        110
-      ],
-      "target_weight": 0.03,
-      "max_weight": 0.04,
-      "action": "increase_if_no_fundamental_break",
-      "condition": "股价进入强吸引力区间，且无大额存货减值、定增/H股融资未明显摊薄、季度仍维持盈利能力。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 230,
-      "action": "review_to_add",
-      "reason": "进入偏贵下沿，需要复核最新季度毛利率、颗粒价格走势与库存减值数据。"
-    },
-    {
-      "type": "price_below",
-      "price": 110,
-      "action": "review_strong_buy",
-      "reason": "进入强吸引力区，前提是基本面无实质恶化(颗粒价格未暴跌、无大额减值、现金流不恶化)。"
-    },
-    {
-      "type": "price_above",
-      "price": 300,
-      "action": "review_to_reduce",
-      "reason": "超过不应追高价，若已持仓且周期峰EPS预期未上修，应分批止盈。"
-    },
-    {
-      "type": "price_above",
-      "price": 400,
-      "action": "avoid_or_clear",
-      "reason": "进入泡沫区间，无论基本面是否兑现，估值已无任何安全边际。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "复核2026半年报正式公告：实际营收/净利是否落在预告区间220-250亿/92-110亿，存货、经营性现金流、企业级业务增速。",
-      "notes": "重点核验：(1)半年报实际净利是否达预告中值101亿；(2)Q2毛利率；(3)存货周转与减值；(4)H股IPO进度。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "复核2026三季报：颗粒价格是否延续上涨、Q3毛利率是否见顶、存货是否开始消化。",
-      "notes": "重点判断周期是否进入下半场，决定是否继续观察或放弃跟踪。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "复核2026年报、定增完成情况、H股融资情况、全年净利和分红。",
-      "notes": "年度复盘：周期峰盈利兑现程度、定增摊薄影响、A+H折价、大基金减持进度。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 230.0
+      },
+      "reason": "进入偏贵下沿，需要复核最新季度毛利率、颗粒价格走势与库存减值数据。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 110.0
+      },
+      "reason": "进入强吸引力区，前提是基本面无实质恶化(颗粒价格未暴跌、无大额减值、现金流不恶化)。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 300.0
+      },
+      "reason": "超过不应追高价，若已持仓且周期峰EPS预期未上修，应分批止盈。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 400.0
+      },
+      "reason": "进入泡沫区间，无论基本面是否兑现，估值已无任何安全边际。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_monitoring_metrics": [
-    "CFM闪存市场NAND Flash/DRAM现货合约价(周度) - 周期方向核心指标",
-    "季度毛利率水平(从2026Q1的55.53%高位走向)",
-    "季度末存货余额及存货跌价准备(2026Q1末179亿)",
-    "季度经营性现金流(连续三年为负是否改善)",
-    "企业级存储业务营收同比增速(2025 +93.30%)",
-    "FORESEE/Lexar/Zilia三大品牌营收分别增速",
-    "定增1.26亿股募37亿完成进度及价格",
-    "H股A+H上市进度及发行价",
-    "实控人蔡华波/蔡丽江家族及大基金持股变化与减持节奏",
-    "三星/SK海力士/美光等原厂资本开支计划与产能节奏",
-    "AMD SSD智能体/HLC技术方案大客户落地进展"
-  ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "updated_at": "2026-07-17T19:17:38+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

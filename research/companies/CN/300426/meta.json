@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:300426",
-  "market": "CN",
-  "ticker": "300426",
-  "name": "唐德影视",
-  "company_name": "浙江华智数媒传媒股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司已转为浙江广电集团体系内的国资控股内容与数字传媒转型平台，生存概率提高，但2025年和2026Q1仍处于收入低位、亏损、经营现金流为负、资产质量弱和负债压力高的困境状态。当前5.16元股价隐含较强扭亏预期，缺乏安全边际。",
-  "quality_rating": "低",
-  "valuation_rating": "高估",
-  "fair_value_range": [
-    1.2,
-    2.2
-  ],
-  "buy_zone": [
-    0,
-    1.5
-  ],
-  "sell_or_reduce_zone": [
-    3.5,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "唐德影视",
+    "security_status": "active",
+    "symbol": "CN:300426",
+    "ticker": "300426"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3eafdabadff47e331e9e1e66227cc43c93cba0d38b07575b28d43b3de381166d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约5.16元且未看到连续经营现金流转正",
-      "action": "不建仓",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点确认收入恢复、经营现金流、存货和预付款变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于1.50元，且最近两个季度经营现金流累计转正、存货和预付款开始下降",
-      "action": "仅允许试验仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，验证项目收入确认和扣非亏损是否继续收窄。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "收入年化恢复至5亿元以上、扣非利润转正、财务费用下降，并且股价仍低于2.20元",
-      "action": "可提高至小仓观察",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
-    }
-  ],
-  "price_triggers": [
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复查2026年年报，判断转型业务是否形成可持续收入和利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
     {
-      "type": "price_below",
-      "price": 1.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.5
+      },
       "reason": "进入困境反转试验仓观察区，但仍需经营现金流和资产周转改善确认。",
-      "action": "重新评估是否具备困境反转试验仓条件"
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 3.5,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.5
+      },
       "reason": "超过估值上沿较多，若经营证据未改善则安全边际不足。",
-      "action": "若经营证据未改善，已有仓位应减仓"
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 5.0,
-      "currency": "CNY",
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.0
+      },
       "reason": "接近当前高估区，隐含强扭亏预期，需要收入和利润实际兑现支撑。",
-      "action": "除非收入和扣非利润已修复，否则视为显著高估"
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点确认收入恢复、经营现金流、存货和预付款变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，验证项目收入确认和扣非亏损是否继续收窄。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复查2026年年报，判断转型业务是否形成可持续收入和利润。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入是否恢复到5000万元以上",
-    "经营活动现金流是否连续两个季度为正",
-    "存货加预付款是否从2026Q1约13.50亿元持续下降",
-    "应收账款回款和坏账准备变化",
-    "核心项目许可证、播出、回款和收入确认进度",
-    "互联网营销、短剧出海、互动影游等新业务收入占比和毛利率",
-    "控股股东借款、担保和关联交易规模"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

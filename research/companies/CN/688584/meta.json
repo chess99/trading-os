@@ -1,101 +1,105 @@
 {
-  "symbol": "CN:688584",
-  "market": "CN",
-  "ticker": "688584",
-  "name": "上海合晶",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "上海合晶具备半导体硅外延片一体化能力，12英寸扩产、SOI布局和国产替代提供中长期增量；但截至2026-07-17股价对应估值已显著透支，2026Q1收入持平且利润下滑，当前只适合观察，等待价格回到安全边际或产能爬坡数据兑现。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18,
-    24
-  ],
-  "buy_zone": [
-    14,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    30,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "上海合晶",
+    "security_status": "active",
+    "symbol": "CN:688584",
+    "ticker": "688584"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "01aa632c78ca8fc8f9561d82f39c71db61cecdcb1acc968aa675cb410dd1f606"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入14-18元且2026H1收入不低于5.8亿元、扣非净利率不低于4%",
-      "action": "分三档建立观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "公司计划披露2026年半年度报告，验证收入、扣非净利率和12英寸爬坡进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价高于30元且没有12英寸产能、毛利率或订单明确超预期证据",
-      "action": "不新增仓位并考虑降低风险暴露",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，观察郑州二期产线启用后的收入和毛利率贡献",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026H2单季收入超过4亿元且扣非净利率超过9%",
-      "action": "重新评估公平价值区间和上限仓位",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报及再融资/科创债落地情况，更新估值模型",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基准估值上沿以下，若基本面未恶化可重新评估买入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入明显安全边际区间，适合结合财报验证分批建仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "超过当前牛市情景下沿，若无业绩上修需警惕估值回撤",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入基准估值上沿以下，若基本面未恶化可重新评估买入"
-    },
-    {
-      "type": "price_below",
-      "price": 14,
-      "reason": "进入明显安全边际区间，适合结合财报验证分批建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "超过当前牛市情景下沿，若无业绩上修需警惕估值回撤"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "公司计划披露2026年半年度报告，验证收入、扣非净利率和12英寸爬坡进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，观察郑州二期产线启用后的收入和毛利率贡献"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报及再融资/科创债落地情况，更新估值模型"
-    }
-  ],
-  "key_sources": [
-    {
-      "title": "上海合晶2025年年度报告",
-      "date": "2026-03-14",
-      "url": "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESH_STOCK/2026/2026-3/2026-03-14/11996018.PDF"
-    },
-    {
-      "title": "上海合晶2026年第一季度报告",
-      "date": "2026-04-30",
-      "url": "https://file.finance.sina.com.cn/211.154.219.97%3A9494/MRGG/CNSESH_STOCK/2026/2026-4/2026-04-30/12282554.PDF"
-    },
-    {
-      "title": "上海合晶投资者关系活动记录表",
-      "date": "2026-06-09",
-      "url": "https://pdf.dfcfw.com/pdf/H22_AN202606101823425562_1.pdf"
-    },
-    {
-      "title": "上海合晶股票交易异常波动公告",
-      "date": "2026-07-14",
-      "url": "https://dataclouds.cninfo.com.cn/shgonggao/hsomarket/2026/20260713/7451cf63c4d248a7b130f3b4503b961c.PDF"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

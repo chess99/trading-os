@@ -1,113 +1,105 @@
 {
-  "symbol": "CN:002437",
-  "market": "CN",
-  "ticker": "002437",
-  "name": "誉衡药业",
-  "company_name": "哈尔滨誉衡药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司资产负债表和费用率修复明显，2026Q1扣非利润继续增长，但收入仍下滑，核心产品多为成熟仿制药/化学制剂，护城河偏弱。当前价格高于基准合理价值，等待2.00元以下或收入恢复增长后再评估买入。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    1.8,
-    2.5
-  ],
-  "buy_zone": [
-    1.6,
-    2.0
-  ],
-  "sell_or_reduce_zone": [
-    2.6,
-    3.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "誉衡药业",
+    "security_status": "active",
+    "symbol": "CN:002437",
+    "ticker": "002437"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "cf50de0272139c072501920590a09f45aeda04c7f949b5fdfac3fc6c8ada195b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "current",
-      "price": "3.13",
-      "position": "0%",
-      "max_weight": 0,
-      "condition": "观察，不买入"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证收入是否恢复增长、扣非利润和经营现金流是否匹配",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "buy",
-      "price": "<=2.00",
-      "position": "1%-3%",
-      "max_weight": 0.03,
-      "condition": "收入企稳且经营现金流/扣非净利润不低于0.7"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "确认前三季度利润质量和费用率是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "strong_buy",
-      "price": "<=1.60",
-      "position": "3%-5%",
-      "max_weight": 0.05,
-      "condition": "基本面未恶化且仍维持净现金"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "更新全年估值中枢和仓位计划",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "zone": "no_chase",
-      "price": ">=2.60",
-      "position": "0%",
-      "max_weight": 0,
-      "condition": "不追高"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.0
+      },
+      "reason": "低于基准合理价值，允许小仓位试探",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.6
+      },
+      "reason": "相对悲观情形也有较好安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.6
+      },
+      "reason": "需要乐观情形才能支撑，风险收益不佳",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.0,
-      "note": "进入有安全边际买入区",
-      "reason": "低于基准合理价值，允许小仓位试探"
-    },
-    {
-      "type": "price_below",
-      "price": 1.6,
-      "note": "进入强吸引力买入区",
-      "reason": "相对悲观情形也有较好安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 2.6,
-      "note": "高于合理区间上沿，不追高",
-      "reason": "需要乐观情形才能支撑，风险收益不佳"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026年中报披露后复查收入、扣非利润和现金流",
-      "reason": "验证收入是否恢复增长、扣非利润和经营现金流是否匹配"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026年三季报披露后复查收入、扣非利润和现金流",
-      "reason": "确认前三季度利润质量和费用率是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026年年报披露后复查全年自由现金流、费用率和资本配置",
-      "reason": "更新全年估值中枢和仓位计划"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润",
-    "经营现金流/扣非净利润",
-    "销售费用率",
-    "货币资金-短期借款",
-    "维生素类药物收入",
-    "心脑血管药物收入",
-    "电解质类药物收入",
-    "新品获批和放量进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

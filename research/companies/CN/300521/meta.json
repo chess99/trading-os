@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:300521",
-  "ticker": "300521",
-  "name": "爱司凯",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "爱司凯是CTP成熟设备业务叠加3D砂型打印期权的小盘公司；资产负债表尚有缓冲，但2025年和2026Q1仍亏损且经营现金流为负，当前约37.9亿元市值已提前反映较乐观的3D打印产业化预期，安全边际不足。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.0,
-    13.0
-  ],
-  "buy_zone": [
-    6.0,
-    9.0
-  ],
-  "sell_or_reduce_zone": [
-    18.0,
-    25.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "爱司凯",
+    "security_status": "active",
+    "symbol": "CN:300521",
+    "ticker": "300521"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1e782ebb943e018ccf512db251e32985f5ba98ac5a0845418a7217bd958dd3f5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于9元，且最近一期报告显示经营现金流改善、3D砂型打印订单或收入有可核验增长后，可启动小仓位观察。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、亏损收窄、经营现金流和3D打印订单披露。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价仍高于18元且未披露可核验大客户订单、收入高增长或经营现金流转正，不建仓。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证全年收入节奏和现金流改善是否成立。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若连续两个报告期收入同比超过30%、经营现金流转正、3D打印业务形成复购证据，再上调仓位上限。",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估3D砂型打印商业化和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入基础估值买入区间，需要重新核验订单、现金流和估值赔率。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.0
+      },
+      "reason": "超过基础合理价值区间，若缺少新增订单和利润验证，应保持回避或减仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "接近或高于当前高估区间，市场已支付乐观3D打印期权，需要强证据支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "reason": "进入基础估值买入区间，需要重新核验订单、现金流和估值赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.0,
-      "reason": "超过基础合理价值区间，若缺少新增订单和利润验证，应保持回避或减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "接近或高于当前高估区间，市场已支付乐观3D打印期权，需要强证据支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、亏损收窄、经营现金流和3D打印订单披露。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证全年收入节奏和现金流改善是否成立。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估3D砂型打印商业化和估值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,61 +1,95 @@
 {
-  "symbol": "CN:920478",
-  "market": "CN",
-  "ticker": "920478",
-  "name": "峆一药业",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "工艺和日韩客户积累有一定价值，但客户去库存导致盈利骤降、重资本扩产尚未验证回报，11.42元缺乏安全边际。",
-  "fair_value_range": [7.5, 9.0],
-  "buy_zone": [6.0, 7.0],
-  "sell_or_reduce_zone": [10.5, 12.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "峆一药业",
+    "security_status": "active",
+    "symbol": "CN:920478",
+    "ticker": "920478"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "4499ff23ee62daeb213d6c558506364728d0511fc030644581696aebe8ee89f6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于6.0至7.0元且最近两个季度订单、毛利率和经营现金流确认改善",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报中的抗过敏订单、毛利率、客户集中度和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.0元，重新验证客户关系、安全整改及项目回报未恶化后才可加仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核三季度订单恢复、募投项目设备安装及自由现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元或客户去库存演变为永久份额流失",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-02-28"
+      },
+      "reason": "复核制剂韩国产地变更认证和2026年度业绩",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入候选买入区间，但须先复核订单恢复与资本回报假设",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报中的抗过敏订单、毛利率、客户集中度和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核三季度订单恢复、募投项目设备安装及自由现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-02-28",
-      "reason": "复核制剂韩国产地变更认证和2026年度业绩"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入候选买入区间，但须先复核订单恢复与资本回报假设"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-17T13:32:22+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

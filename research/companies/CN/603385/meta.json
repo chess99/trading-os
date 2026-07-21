@@ -1,75 +1,95 @@
 {
-  "symbol": "CN:603385",
-  "market": "CN",
-  "ticker": "603385",
-  "name": "惠达卫浴",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "惠达卫浴具备老牌卫浴品牌、全品类制造和低杠杆资产负债表，2026-07-17 约0.5倍PB提供一定资产折价保护；但2025年由盈转亏且2026H1仍预亏，主业收入和利润拐点尚未确认。当前更适合作为困境反转观察标的，等待收入降幅收窄、毛利率稳定和经营现金流保持正向后再考虑小仓位。",
-  "fair_value_range": [
-    4.5,
-    6.0
-  ],
-  "buy_zone": [
-    3.8,
-    4.3
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "惠达卫浴",
+    "security_status": "active",
+    "symbol": "CN:603385",
+    "ticker": "603385"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b02bdeb7f2b52a6587314bdc71f243ef7b912cdf0923bb604261a3dad3cfccf6"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入3.8-4.3元，且后续季报显示收入降幅收窄、毛利率稳定在24%左右、经营现金流未恶化时，仅建立困境反转观察仓。",
-      "action": "watchlist_or_small_buy",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、现金流、应收存货和广西新高盛处置进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若2026年全年扣非亏损继续扩大、经营现金流转负或资产减值超预期，则不买并移出买入观察。",
-      "action": "avoid_new_position",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认收入降幅、毛利率和扣非亏损是否环比改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断转型费用、减值压力和主业盈利修复是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入买入观察区间，需要复核经营现金流、毛利率和H2收入降幅是否改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "超过当前估值上沿，若利润仍未扭亏则安全边际不足，应考虑减仓或放弃。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "reason": "进入买入观察区间，需要复核经营现金流、毛利率和H2收入降幅是否改善。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "reason": "超过当前估值上沿，若利润仍未扭亏则安全边际不足，应考虑减仓或放弃。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、现金流、应收存货和广西新高盛处置进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认收入降幅、毛利率和扣非亏损是否环比改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断转型费用、减值压力和主业盈利修复是否兑现。"
-    }
-  ],
-  "valuation_notes": {
-    "base_price_date": "2026-07-17",
-    "base_price": 4.88,
-    "decision": "观察",
-    "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

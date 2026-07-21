@@ -1,55 +1,67 @@
 {
-  "symbol": "CN:600028",
-  "market": "CN",
-  "ticker": "600028",
-  "name": "中国石化",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "周期底部石油央企，上游盈利、下游炼化恶化，当前股息率约4.2%，PB 0.69x，估值便宜但盈利能力下滑未见拐点。",
-  "fair_value_range": [
-    4.0,
-    7.0
-  ],
-  "buy_zone": [
-    3.5,
-    4.5
-  ],
-  "sell_or_reduce_zone": [
-    6.0,
-    7.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国石化",
+    "security_status": "active",
+    "symbol": "CN:600028",
+    "ticker": "600028"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "9381988fe29d5ce97496eb04059ea8005ea07668f6a9fa6c82ce52d17b4cf38e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格4.76元，估值偏低但有下行风险",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报，关注炼化盈利和分红信号",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.0元，且分红维持或增加",
-      "max_weight": 0.06
-    },
-    {
-      "condition": "价格低于3.5元且上游油价不崩溃",
-      "max_weight": 0.1
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "接近买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "半年报，关注炼化盈利和分红信号"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "接近买入区间"
-    }
-  ],
-  "updated_at": "2026-07-07T15:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

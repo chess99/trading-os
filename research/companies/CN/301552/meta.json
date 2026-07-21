@@ -1,111 +1,115 @@
 {
-  "symbol": "CN:301552",
-  "ticker": "301552",
-  "name": "科力装备",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "细分汽车玻璃总成组件龙头，客户认证和多工艺交付构成中等护城河；但客户集中且2026Q1利润明显下滑，当前价格有一定价值但安全边际不足，等待17-20元或中报恢复信号。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    24,
-    31
-  ],
-  "buy_zone": [
-    17,
-    20
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    36
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入17-20元且2026H1或2026Q3收入/扣非利润恢复正增长",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于17元且毛利率不低于33%、经营现金流未恶化",
-      "action": "提高到小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "2026H1扣非净利润继续同比下滑超过25%或毛利率跌破33%",
-      "action": "暂不买入或退出观察仓",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "进入初步安全边际区，结合中报验证是否可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 17,
-      "reason": "进入更有吸引力的买入区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "进入基准公允价值上沿，需要利润上修支撑，否则减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 36,
-      "reason": "接近乐观情景估值，应考虑兑现收益"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，确认Q1利润下滑是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和全年利润预测"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、客户集中度、分红和现金流质量"
-    }
-  ],
-  "valuation": {
-    "base_price": 22.4,
-    "base_price_date": "2026-07-15",
-    "fair_value_method": "相对估值、简化FCFE和情景估值交叉验证",
-    "base_case_2026_net_profit_million": 140,
-    "base_case_pe": 18
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "科力装备",
+    "security_status": "active",
+    "symbol": "CN:301552",
+    "ticker": "301552"
   },
-  "sources": [
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "12cf645b39d2a8395587cb75e3c2b7de7c508ed3c7e281a05961a90e5c158cfa"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "科力装备2025年年度报告",
-      "url": "https://static.cninfo.com.cn/finalpage/2026-04-04/1225079072.PDF",
-      "date": "2026-04-04"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，确认Q1利润下滑是否延续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "科力装备2026年第一季度报告",
-      "url": "https://money.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12157336&stockid=301552",
-      "date": "2026-04-23"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和全年利润预测",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "2025年我国新能源汽车产销量双超1600万辆",
-      "url": "https://www.news.cn/20260114/751ac93c5125463cb86951ecbcb6b3e9/c.html",
-      "date": "2026-01-14"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、客户集中度、分红和现金流质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入初步安全边际区，结合中报验证是否可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入更有吸引力的买入区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "进入基准公允价值上沿，需要利润上修支撑，否则减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 36.0
+      },
+      "reason": "接近乐观情景估值，应考虑兑现收益",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688607",
-  "market": "CN",
-  "ticker": "688607",
-  "name": "康众医疗",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "康众医疗具备数字化X射线平板探测器全系列产品、工业/安检增长和AI影像转型期权，但2025年扣非亏损、2026Q1亏损扩大，拟控股收购脉得智能带来贷款、商誉与整合风险；当前估值相对盈利质量偏贵，适合观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    25,
-    32
-  ],
-  "buy_zone": [
-    20,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "康众医疗",
+    "security_status": "active",
+    "symbol": "CN:688607",
+    "ticker": "688607"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e2837d30ce3ece8bafaf1bb8218d9e6b84d12fc7736e00a3f56089b69199ec64"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于28元，且最近一期财报显示主营毛利率企稳、经营现金流改善，可建立观察仓。",
-      "max_weight": 0.015
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入增速、毛利率、扣非利润、经营现金流与脉得智能并购进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于22元，主业收入未恶化且脉得智能并购风险可量化，可提高至小仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断亏损是否收窄、工业/安检增长是否持续、并购贷款和商誉影响是否清晰。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "扣非归母净利润连续两个季度转正、工业/安检收入高增且并购标的亏损收窄后，再重新评估加仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，验证扣非盈利拐点和脉得智能业绩承诺完成情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入买入观察区，需要结合半年报或季报确认毛利率和现金流是否改善。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可重新测算小仓位买入。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "超过当前估值上沿，若利润与并购兑现不足应停止加仓或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入买入观察区，需要结合半年报或季报确认毛利率和现金流是否改善。"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "进入深度安全边际区，若基本面未恶化可重新测算小仓位买入。"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "超过当前估值上沿，若利润与并购兑现不足应停止加仓或减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入增速、毛利率、扣非利润、经营现金流与脉得智能并购进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断亏损是否收窄、工业/安检增长是否持续、并购贷款和商誉影响是否清晰。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，验证扣非盈利拐点和脉得智能业绩承诺完成情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,113 +1,120 @@
 {
-  "symbol": "CN:001323",
-  "market": "CN",
-  "ticker": "001323",
-  "name": "慕思股份",
-  "company_name": "慕思健康睡眠股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "慕思股份是国内中高端健康睡眠龙头，床垫品牌、线下体验网络、床垫高毛利和较高分红具备价值；但2025年至2026Q1收入修复尚未传导到利润，销售费用率高位、扣非利润和经营现金流承压，当前估值仅属合理偏低而非深度低估。等待股价进入安全边际区或扣非利润连续修复后再升级买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_cheap",
-  "fair_value_range": [
-    15.0,
-    19.5
-  ],
-  "buy_zone": [
-    11.8,
-    13.5
-  ],
-  "sell_or_reduce_zone": [
-    22.0,
-    25.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "慕思股份",
+    "security_status": "active",
+    "symbol": "CN:001323",
+    "ticker": "001323"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "4bd3493d96dcc780fadff04d3aa2f729bd4de5e51cb5c93967f3fd51f630c352"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "4a81ef1b68218d3de57c7a2ea3a1ca667ca99c8620ed4ccedcfd1d65fef69fd1"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约16.2-16.3元且2026年中报尚未验证利润率修复",
-      "action": "仅允许观察仓或不建仓",
-      "max_weight": 0.01,
-      "reason": "估值不贵但安全边际不足，扣非利润和销售费用率仍承压"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "预计2026年中报披露后复查收入、扣非利润、销售费用率、库存和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌入13.5元以下且库存、现金流、费用率未继续恶化",
-      "action": "分批建立研究仓",
-      "max_weight": 0.02,
-      "reason": "价格进入安全边际区，可承受等待利润修复"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "预计2026年三季报披露后验证收入复苏是否传导至利润和现金流",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度扣非归母净利润恢复同比增长且销售费用率低于29%",
-      "action": "升级为买入候选并评估提高仓位",
-      "max_weight": 0.03,
-      "reason": "经营拐点得到财务数据确认，可接受略高估值"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年报披露后复核AI产品收入、出海利润贡献、分红兑现和实控人质押变化",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于22元且扣非利润未恢复双位数增长",
-      "action": "减仓或停止新增",
-      "max_weight": 0.005,
-      "reason": "价格已反映修复预期，但利润质量尚未证明"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.5
+      },
+      "reason": "进入初始买入区，需要复核中报或最新季度库存、费用率和经营现金流后决定是否加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.8
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可评估提高至仓位上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "进入减持观察区，若扣非利润未恢复增长应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 25.0
+      },
+      "reason": "进入乐观情景估值区，除非AI床垫、出海和费用率修复均被验证，否则应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.5,
-      "reason": "进入初始买入区，需要复核中报或最新季度库存、费用率和经营现金流后决定是否加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 11.8,
-      "reason": "进入深度安全边际区，若基本面未恶化可评估提高至仓位上限"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "进入减持观察区，若扣非利润未恢复增长应降低仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 25.0,
-      "reason": "进入乐观情景估值区，除非AI床垫、出海和费用率修复均被验证，否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "预计2026年中报披露后复查收入、扣非利润、销售费用率、库存和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "预计2026年三季报披露后验证收入复苏是否传导至利润和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年报披露后复核AI产品收入、出海利润贡献、分红兑现和实控人质押变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "归母净利润同比增速",
-    "扣非归母净利润同比增速",
-    "销售费用率",
-    "广告及业务推广费增速",
-    "床垫收入和床垫毛利率",
-    "AI产品收入、毛利率和终端动销",
-    "经销收入增速、门店数量和经销商库存",
-    "电商收入增速和毛利率",
-    "境外收入占比及海外业务利润贡献",
-    "存货金额和存货周转",
-    "经营现金流净额/归母净利润",
-    "有息负债、货币资金和交易性金融资产",
-    "分红、回购和实控人质押变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

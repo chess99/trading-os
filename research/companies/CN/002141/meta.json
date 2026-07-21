@@ -1,93 +1,86 @@
 {
-  "symbol": "CN:002141",
-  "market": "CN",
-  "ticker": "002141",
-  "name": "贤丰控股",
-  "company_name": "贤丰控股",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "low",
-  "valuation_rating": "overvalued",
-  "fair_value_range": [
-    1.2,
-    1.8
-  ],
-  "buy_zone": [
-    0.9,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.5,
-    5.15
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "贤丰控股",
+    "security_status": "active",
+    "symbol": "CN:002141",
+    "ticker": "002141"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "10c94c379dd92c9d8e8e9ba979549259bb378b8918c26583f77c2f56bf35d54a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于2.50元，且未看到覆铜板业务连续两个季度扣非盈利",
-      "action": "不买入，已有仓位逐步降低风险",
-      "max_weight": 0,
-      "reason": "估值显著高于可验证利润和净资产，历史治理与监管折价仍高"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看覆铜板收入、毛利率、扣非净利润、应收账款和存货",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至0.90-1.20元，且最近两个季度扣非归母净利润为正、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.005,
-      "reason": "价格回到资产和正常化利润可支撑区间后，可用小仓位验证覆铜板转型"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认扣非盈利和现金流是否连续改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "高硕航宇披露中高端覆铜板订单兑现，全年归母净利润达到0.7亿元以上且无新增监管风险",
-      "action": "可上调至小仓位持有",
-      "max_weight": 0.015,
-      "reason": "只有业务兑现后才可把转型期权转为盈利资产配置"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入买入观察区，需要复核扣非利润、经营现金流和覆铜板订单",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.5
+      },
+      "reason": "高于减持或回避区，若无新增一手基本面兑现应降低风险",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入买入观察区，需要复核扣非利润、经营现金流和覆铜板订单"
-    },
-    {
-      "type": "price_above",
-      "price": 2.5,
-      "reason": "高于减持或回避区，若无新增一手基本面兑现应降低风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看覆铜板收入、毛利率、扣非净利润、应收账款和存货"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认扣非盈利和现金流是否连续改善"
-    }
-  ],
-  "key_tracking_metrics": [
-    "高硕航宇覆铜板收入和净利润",
-    "覆铜板毛利率与产能利用率",
-    "HDI和高速板订单或客户认证进展",
-    "归母净利润和扣非归母净利润",
-    "经营活动现金流净额",
-    "应收账款、信用减值损失和回款周期",
-    "存货金额、存货跌价准备和原材料价格传导",
-    "史纪生物资产减值和业务收缩进展",
-    "控股股东及主要股东质押、冻结、拍卖、表决权安排",
-    "监管处罚、问询函、投资者索赔和内控审计意见"
-  ],
-  "last_price": 5.15,
-  "last_price_date": "2026-07-10",
-  "market_cap_cny_billion": 5.32,
-  "thesis": "摘帽后的覆铜板转型期权值得观察，但当前价格已经显著透支，2025年扣非亏损、2026Q1盈利规模小，治理和监管风险仍需折价。",
-  "current_thesis": "摘帽后的覆铜板转型期权值得观察，但当前价格已经显著透支，2025年扣非亏损、2026Q1盈利规模小，治理和监管风险仍需折价。",
-  "confidence": "medium_low"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

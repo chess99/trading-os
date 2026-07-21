@@ -1,90 +1,95 @@
 {
-  "symbol": "CN:301357",
-  "ticker": "301357",
-  "name": "北方长龙",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "北方长龙本体是军用车辆人机环内饰与防护配套企业，具备军工准入和型号配套壁垒，但收入体量小、订单波动大、应收存货占用高。拟收购顺义科技可扩展军用仿真训练和座舱显控业务，但交易完成、利润质量和整合效果仍需验证；当前股价已显著透支乐观预期，适合观察而非买入。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    30,
-    45
-  ],
-  "buy_zone": [
-    0,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    999
-  ],
-  "position_plan": [
-    {
-      "condition": "仅在股价跌入32元以下且2026年半年报显示收入恢复、经营现金流改善时，允许建立观察仓。",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "若顺义科技完成并表且可验证归母利润贡献显著、合计年化归母利润超过1亿元，可提高至核心观察仓。",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "若股价高于60元但未出现利润兑现，原则上不新增并逐步降低暴露。",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入买入观察区，估值接近基准合理价值下沿，重新核验订单、现金流和并购进度。"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "超过乐观情景估值上沿，若无顺义科技利润兑现或本体订单拐点，应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点查看收入恢复、归母净利润、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和顺义科技收购进度，更新并表和估值假设。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及并购落地后的利润质量、商誉或长期资产风险。"
-    }
-  ],
-  "key_metrics": {
-    "last_close_date": "2026-07-15",
-    "last_close_price": 73.66,
-    "shares_outstanding_million": 95.2,
-    "market_cap_cny_billion": 7.01,
-    "revenue_2025_cny_million": 206.19,
-    "net_profit_2025_cny_million": 28.87,
-    "operating_cash_flow_2025_cny_million": -31.3,
-    "q1_2026_revenue_cny_million": 30.53,
-    "q1_2026_net_profit_cny_million": -3.33
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "北方长龙",
+    "security_status": "active",
+    "symbol": "CN:301357",
+    "ticker": "301357"
   },
-  "risk_flags": [
-    "订单与验收节奏波动",
-    "客户集中",
-    "应收账款和存货占用高",
-    "顺义科技并购审批和整合风险",
-    "当前估值显著透支乐观预期"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "aeba6f9e33df800420dac1a9235521da9ed414c4d0bfc1852dcdc55002f2a742"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点查看收入恢复、归母净利润、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和顺义科技收购进度，更新并表和估值假设。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及并购落地后的利润质量、商誉或长期资产风险。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入观察区，估值接近基准合理价值下沿，重新核验订单、现金流和并购进度。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "超过乐观情景估值上沿，若无顺义科技利润兑现或本体订单拐点，应减仓或回避。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

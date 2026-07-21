@@ -1,47 +1,77 @@
 {
-  "symbol": "CN:920718",
-  "market": "CN",
-  "ticker": "920718",
-  "name": "合肥高科",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "海尔依赖和低毛利叠加新产能折旧使资本回报跌破资本成本，2026Q1扣非亏损而现价仍隐含盈利大幅修复，当前应回避。",
-  "fair_value_range": [5.8, 7.2],
-  "buy_zone": [4.8, 5.8],
-  "sell_or_reduce_zone": [8.5, 10.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "合肥高科",
+    "security_status": "active",
+    "symbol": "CN:920718",
+    "ticker": "920718"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "861b4d8dc77b2b95e899f15c4a12bcc15a3ab830acc0e6d0d7363b64a93b1d21"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入4.8至5.8元且连续两个季度扣非为正、毛利率回到9%以上",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的毛利率、扣非利润、募投项目和自由现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.8元且核心客户关系未受损、募投产能利用率提升、自由现金流转正",
-      "max_weight": 0.015
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、扣非利润、募投项目和自由现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.8,
-      "reason": "进入观察性买入区间，仍需先验证基本面未恶化"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.8
+      },
+      "reason": "进入观察性买入区间，仍需先验证基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "超过公允价值上沿附近，进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "超过公允价值上沿附近，进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-15T17:30:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

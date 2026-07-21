@@ -1,99 +1,96 @@
 {
-  "symbol": "CN:605499",
-  "market": "CN",
-  "ticker": "605499",
-  "name": "东鹏饮料",
-  "company_name": "东鹏饮料",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "东鹏饮料是具备品牌心智、深度渠道和强现金流的功能饮料龙头，东鹏特饮提供利润底盘，补水啦验证第二曲线；但2026年Q1收入降速、经营现金流下滑和返利余额上升仍需半年报验证，因此当前评级为watch，等待更好的买入价或经营确认。",
-  "quality_rating": "A-",
-  "valuation_rating": "B",
-  "fair_value_range": [
-    138,
-    166
-  ],
-  "buy_zone": [
-    100,
-    115
-  ],
-  "sell_or_reduce_zone": [
-    165,
-    185
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东鹏饮料",
+    "security_status": "active",
+    "symbol": "CN:605499",
+    "ticker": "605499"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "8d45844c863d2cb0c829cca50da3edcfa36445174fa4e2f8113f4c592842a010"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "现价约121.51元且未见2026年半年报现金流恢复前",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "龙头质量较高，但Q1经营现金流和返利余额需要继续验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入增速、经营现金流、返利余额和补水啦增速",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至110元以下且收入增速维持20%左右、返利余额未继续异常扩张",
-      "action": "加仓",
-      "max_weight": 0.05,
-      "reason": "估值进入买入区间上沿，安全边际改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报旺季动销、费用投放和全年目标达成概率",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至100元以下且半年报未证伪核心逻辑",
-      "action": "提高至核心仓",
-      "max_weight": 0.08,
-      "reason": "悲观估值已较充分反映，消费龙头长期回报赔率改善"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 115.0
+      },
+      "reason": "进入初步买入区间，复核2026年动销、返利和现金流后考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价升至165元以上且增长未明显超预期",
-      "action": "减仓",
-      "max_weight": 0.03,
-      "reason": "估值进入合理区间上沿，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 100.0
+      },
+      "reason": "进入深度价值区间，若基本面未恶化可提高目标仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 165.0
+      },
+      "reason": "接近合理价值上沿，若业绩未超预期应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 115,
-      "reason": "进入初步买入区间，复核2026年动销、返利和现金流后考虑加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 100,
-      "reason": "进入深度价值区间，若基本面未恶化可提高目标仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 165,
-      "reason": "接近合理价值上沿，若业绩未超预期应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入增速、经营现金流、返利余额和补水啦增速"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报旺季动销、费用投放和全年目标达成概率"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "东鹏特饮收入增速与能量饮料份额",
-    "补水啦收入增速与毛利率",
-    "其他饮料收入增速与毛利率",
-    "销售费用率和渠道推广费增速",
-    "应付销售返利余额",
-    "经营现金流量净额/归母净利润",
-    "经销商数量和活跃终端网点数量",
-    "华北、华东、华西战区收入增速",
-    "分红和回购执行进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

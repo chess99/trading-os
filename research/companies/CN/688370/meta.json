@@ -1,84 +1,114 @@
 {
-  "symbol": "CN:688370",
-  "market": "CN",
-  "ticker": "688370",
-  "name": "丛麟科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "丛麟科技是危废资源化与无害化处置的区域型资产平台，账面净资产、净金融资产、上海地区盈利能力和回购提供一定下限；但行业产能过剩、处置价格下滑导致2025年扣非亏损，当前估值已接近公允区间中上部，需等待价格回落或扣非利润连续修复后再建仓。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    18.0,
-    24.0
-  ],
-  "buy_zone": [
-    14.5,
-    18.0
-  ],
-  "sell_or_reduce_zone": [
-    29.0,
-    34.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "丛麟科技",
+    "security_status": "active",
+    "symbol": "CN:688370",
+    "ticker": "688370"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3e3e86ae22a29f692265a8fa5e9fcb3f262b79f98aeca646ff16ad9cdb8abeb4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于18元，且2026H1扣非归母利润转正、经营现金流保持为正",
-      "action": "试探性建仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报：扣非利润、上海/非上海毛利率、经营现金流和回购进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15元，且归母权益和净金融资产未显著恶化、无重大安全环保事故",
-      "action": "提升至价值仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：确认Q1修复是否延续，更新情景估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于29元且年化扣非利润低于8000万元",
-      "action": "不追高或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-03-30"
+      },
+      "reason": "回购方案期限届满，评估员工持股或股权激励落地质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2028-02-29"
+      },
+      "reason": "临港募投项目延期后的预定可使用节点，复核投产和产能利用率",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入基准买入观察区，需要复核最新扣非利润、毛利率和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "跌至悲观情景资产折价区，需要检查是否存在未披露基本面恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "超过乐观情景下沿，若扣非利润未显著恢复应考虑减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 18.0,
-      "reason": "进入基准买入观察区，需要复核最新扣非利润、毛利率和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "跌至悲观情景资产折价区，需要检查是否存在未披露基本面恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 29.0,
-      "reason": "超过乐观情景下沿，若扣非利润未显著恢复应考虑减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报：扣非利润、上海/非上海毛利率、经营现金流和回购进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：确认Q1修复是否延续，更新情景估值"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-30",
-      "reason": "回购方案期限届满，评估员工持股或股权激励落地质量"
-    },
-    {
-      "type": "date",
-      "date": "2028-02-29",
-      "reason": "临港募投项目延期后的预定可使用节点，复核投产和产能利用率"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,90 +1,95 @@
 {
-  "symbol": "CN:301126",
-  "ticker": "301126",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "达嘉维康",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "区域医药商业公司具备DTP/特门专业药房和湖南分销网络差异化，但2025年商誉减值、高负债、经营现金流为负使当前价格缺乏足够安全边际；等待现金流和资产质量修复后再考虑买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    6.0,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    11.0,
-    13.0
-  ],
-  "position_plan": [
-    {
-      "condition": "仅观察，不建仓，等待2026半年报验证经营现金流和商誉风险。",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价进入6.0-7.2元且经营现金流转正、未新增重大减值时，可试探建仓。",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "连续两个季度扣非净利改善且经营现金流为正，应收账款未继续扩张，可提高仓位。",
-      "max_weight": 0.04
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入买入观察区，对应约0.9倍以下2026Q1 PB，重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "价格超过公允区间上沿附近，若现金流和减值风险未改善则应减仓或不追。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看经营现金流、应收账款、商誉和短债。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认扣非利润和现金流修复是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，确认商誉减值是否出清以及全年现金流质量。"
-    }
-  ],
-  "key_metrics": {
-    "reference_price": 9.56,
-    "reference_price_date": "2026-07-15",
-    "market_cap_cny_billion": 1.96,
-    "pb_2026q1": 1.22,
-    "revenue_2025_cny_billion": 5.144,
-    "net_profit_2025_cny_billion": -0.242,
-    "operating_cash_flow_2025_cny_billion": -0.149,
-    "revenue_2026q1_cny_billion": 1.384,
-    "net_profit_2026q1_cny_billion": 0.006,
-    "operating_cash_flow_2026q1_cny_billion": -0.068
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "达嘉维康",
+    "security_status": "active",
+    "symbol": "CN:301126",
+    "ticker": "301126"
   },
-  "risks": [
-    "商誉继续减值",
-    "分销回款账期延长",
-    "高负债和短债压力",
-    "医保控费压缩零售和DTP毛利",
-    "跨区域门店整合不及预期"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "40ffbd29ca21152277504d64737a42278ab049fd4a1ca72fba73ed6f02a0c4ad"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看经营现金流、应收账款、商誉和短债。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认扣非利润和现金流修复是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，确认商誉减值是否出清以及全年现金流质量。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入买入观察区，对应约0.9倍以下2026Q1 PB，重新评估安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "价格超过公允区间上沿附近，若现金流和减值风险未改善则应减仓或不追。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

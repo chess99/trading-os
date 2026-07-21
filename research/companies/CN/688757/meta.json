@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688757",
-  "market": "CN",
-  "ticker": "688757",
-  "name": "胜科纳米",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "胜科纳米是A股稀缺的半导体第三方失效分析与材料分析实验室，受益于国产半导体研发、先进制程、先进封装和Labless渗透率提升；但截至2026-07-17约145.96亿元市值对应约26倍TTM收入和高位盈利倍数，已经透支较强增长与利润率修复预期。当前应观察而非追买，等待价格回到25元以下或中报验证收入高增与利润率修复。",
-  "fair_value_range": [
-    25,
-    33
-  ],
-  "buy_zone": [
-    20,
-    25
-  ],
-  "sell_or_reduce_zone": [
-    48,
-    60
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "胜科纳米",
+    "security_status": "active",
+    "symbol": "CN:688757",
+    "ticker": "688757"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "e3152de3559ed0fb01bc56fecfbd7baef39df3f23aae2e4cde6c1ced1eb6dcc5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于25元，且2026H1收入同比增速高于25%、毛利率改善、经营现金流保持为正",
-      "action": "建立观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报收入增速、毛利率、分业务结构、折旧和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价接近20元，且先进工艺收入占比维持70%以上、净利率开始修复",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润率修复和订单趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于48元但利润率和订单没有超预期证据",
-      "action": "减仓或不追高",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-25"
+      },
+      "reason": "上市满两年节点附近检查限售股解禁、股东减持和估值消化情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入基准合理价值区间下沿，可结合中报验证考虑观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近悲观情景上沿，若基本面未恶化则安全边际明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 48.0
+      },
+      "reason": "进入乐观情景区间，若无业绩超预期应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "进入基准合理价值区间下沿，可结合中报验证考虑观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 20,
-      "reason": "接近悲观情景上沿，若基本面未恶化则安全边际明显改善"
-    },
-    {
-      "type": "price_above",
-      "price": 48,
-      "reason": "进入乐观情景区间，若无业绩超预期应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报收入增速、毛利率、分业务结构、折旧和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润率修复和订单趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-25",
-      "reason": "上市满两年节点附近检查限售股解禁、股东减持和估值消化情况"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

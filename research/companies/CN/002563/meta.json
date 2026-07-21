@@ -1,136 +1,133 @@
 {
-  "symbol": "CN:002563",
-  "market": "CN",
-  "ticker": "002563",
-  "name": "森马服饰",
-  "company_name": "浙江森马服饰股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "森马服饰是现金充裕、分红友好、巴拉巴拉品牌壁垒较强的成熟服装零售公司；当前价格接近合理区间下沿但安全边际不足，等待4.80元以下或经营重新加速。",
-  "quality_rating": "A-/中上",
-  "valuation_rating": "中性略低估",
-  "fair_value_range": [
-    5.8,
-    6.8
-  ],
-  "buy_zone": [
-    4.3,
-    4.8
-  ],
-  "sell_or_reduce_zone": [
-    6.8,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "森马服饰",
+    "security_status": "active",
+    "symbol": "CN:002563",
+    "ticker": "002563"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "3c4b641df67dcd48840bb63584b8341806042a55c48ea9de5eb984e25b9a5e51"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<=4.30元",
-      "action": "强吸引力买入",
-      "target_position": "6%-8%",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "中报是验证2026Q1改善能否延续的关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "4.31-4.80元",
-      "action": "有安全边际买入",
-      "target_position": "3%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "儿童服饰是公司核心增长引擎，失速会压低合理估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "4.81-5.40元",
-      "action": "观察或极小仓位",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "库存恶化可能带来折扣、跌价准备和毛利率下行",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "5.41-6.40元",
-      "action": "观察/持有，不加仓",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "现金流低于利润会削弱分红与资产负债表安全垫",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": ">6.80元",
-      "action": "不追高，基本面未超预期则减仓",
-      "target_position": "降低",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "成熟服装公司的投资价值高度依赖稳定股东回报",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.3
+      },
+      "reason": "进入强吸引力买入区，悲观情景也有较好赔率",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入有安全边际买入区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.8
+      },
+      "reason": "超过合理区间上沿，安全边际不足",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "若基本面未明显超预期，应考虑减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.3,
-      "action": "strong_buy",
-      "reason": "进入强吸引力买入区，悲观情景也有较好赔率"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "action": "buy",
-      "reason": "进入有安全边际买入区"
-    },
-    {
-      "type": "price_above",
-      "price": 6.8,
-      "action": "do_not_chase",
-      "reason": "超过合理区间上沿，安全边际不足"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "action": "reduce",
-      "reason": "若基本面未明显超预期，应考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年中报披露",
-      "focus": "复查儿童服饰收入增速、毛利率和库存",
-      "reason": "中报是验证2026Q1改善能否延续的关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "儿童服饰收入连续两个半年度低于3%",
-      "focus": "复查核心增长假设",
-      "reason": "儿童服饰是公司核心增长引擎，失速会压低合理估值"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "存货持续高于45亿元且收入不增",
-      "focus": "复查库存风险",
-      "reason": "库存恶化可能带来折扣、跌价准备和毛利率下行"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "经营现金流/归母净利润年度低于70%",
-      "focus": "复查利润质量",
-      "reason": "现金流低于利润会削弱分红与资产负债表安全垫"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "分红率显著低于50%且无高回报投资项目说明",
-      "focus": "复查资本配置",
-      "reason": "成熟服装公司的投资价值高度依赖稳定股东回报"
-    }
-  ],
-  "key_tracking_metrics": [
-    "儿童服饰收入增速",
-    "休闲服饰收入增速",
-    "综合毛利率",
-    "存货金额与周转",
-    "经营现金流/归母净利润",
-    "分红率",
-    "海外收入"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

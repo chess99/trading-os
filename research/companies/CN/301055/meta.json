@@ -1,94 +1,77 @@
 {
-  "market": "CN",
-  "symbol": "CN:301055",
-  "ticker": "301055",
-  "name": "张小泉",
-  "company_name": "张小泉股份有限公司",
-  "exchange": "SZSE",
-  "sector": "轻工制造",
-  "industry": "生活五金用品",
-  "status": "active",
-  "coverage_status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "老字号刀剪品牌经营修复明确，但当前估值已透支中期利润弹性，需等待更低价格或利润中枢显著抬升。",
-  "conviction": "low",
-  "max_weight": 0.01,
-  "fair_value_range": [
-    12,
-    18
-  ],
-  "buy_zone": [
-    12,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    26,
-    32
-  ],
-  "position_plan": [
-    {
-      "condition": "价格跌入 12-16 元且基本面未恶化",
-      "action": "consider",
-      "max_weight": 0.01,
-      "note": "仅观察仓"
-    },
-    {
-      "condition": "价格高于 26 元",
-      "action": "avoid_or_reduce",
-      "max_weight": 0,
-      "note": "估值缺乏安全边际"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年度报告披露",
-      "action": "复核收入、扣非净利率和经营现金流",
-      "reason": "验证 2026Q1 高增长是否可持续"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "action": "复核买入观察仓",
-      "reason": "进入安全边际区间上沿"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "action": "回避或减持",
-      "reason": "超过乐观情景估值区间"
-    }
-  ],
-  "currency": "CNY",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "last_report_date": "2026-07-15",
-  "last_updated": "2026-07-15",
-  "updated_at": "2026-07-15",
-  "summary": "老字号刀剪品牌，2025-2026Q1 经营修复明确，但 2026-07-15 股价对应约 70 倍滚动 PE，已透支乐观预期；治理和大股东重整仍需跟踪，仅适合观察或极小仓位。",
-  "key_metrics": {
-    "price_date": "2026-07-15",
-    "close_price": 32.53,
-    "market_cap_cny": 5074680000,
-    "revenue_2025_cny": 1021806508.91,
-    "net_profit_2025_cny": 55062766.14,
-    "deducted_net_profit_2025_cny": 50601739.1,
-    "operating_cash_flow_2025_cny": 141087329.26,
-    "revenue_2026q1_cny": 275373679.71,
-    "net_profit_2026q1_cny": 29162820.32,
-    "roe_2025": 0.0845
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "张小泉",
+    "security_status": "active",
+    "symbol": "CN:301055",
+    "ticker": "301055"
   },
-  "tags": [
-    "中华老字号",
-    "刀剪具",
-    "厨房五金",
-    "消费修复",
-    "治理观察"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "c7fd5e4111919d81eddc410ffb3946adb7c7bc994114592f52765de57446f369"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "验证 2026Q1 高增长是否可持续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入安全边际区间上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "超过乐观情景估值区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,81 +1,115 @@
 {
-  "symbol": "CN:301086",
-  "ticker": "301086",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "鸿富瀚",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备消费电子精密功能件客户认证壁垒，散热与自动化装备带来2026年利润弹性，但当前约151元股价和约190亿元市值已前置牛市情景，经营现金流、光伏储能重资产投入和估值压缩风险仍需观察。",
-  "fair_value_range": [
-    65,
-    95
-  ],
-  "buy_zone": [
-    50,
-    65
-  ],
-  "sell_or_reduce_zone": [
-    115,
-    150
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鸿富瀚",
+    "security_status": "active",
+    "symbol": "CN:301086",
+    "ticker": "301086"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "bd11d310ba992a5e971756cf9a3bfe6ffb5adb1c396637bc34a3e2ea1aa10ab9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入50-65元买入区间，且2026年半年报验证散热与自动化装备收入增长、扣非利润符合预告、经营现金流明显修复时，建立观察仓。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "预约披露2026年半年报，重点核验散热和自动化增长、毛利率、应收账款与经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价高于115元但半年报尚未验证经营现金流修复，不新增仓位；已有仓位以减仓或等待为主。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认半年报增长是否延续以及光伏储能项目现金流影响。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若光伏储能项目延期、融资成本显著上升、经营现金流连续两个季度为负，清空观察仓并重新估值。",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复盘2026年全年业绩和资本开支，重估合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 65.0
+      },
+      "reason": "进入基准估值下沿附近，可重新评估是否建立小仓位观察。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 50.0
+      },
+      "reason": "进入更有吸引力的安全边际区间，若基本面未恶化可提高研究优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 115.0
+      },
+      "reason": "高于合理价值上沿，需警惕估值压缩并限制新增仓位。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "接近或超过牛市情景定价，应复核盈利兑现和减持风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 65,
-      "reason": "进入基准估值下沿附近，可重新评估是否建立小仓位观察。"
-    },
-    {
-      "type": "price_below",
-      "price": 50,
-      "reason": "进入更有吸引力的安全边际区间，若基本面未恶化可提高研究优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 115,
-      "reason": "高于合理价值上沿，需警惕估值压缩并限制新增仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 150,
-      "reason": "接近或超过牛市情景定价，应复核盈利兑现和减持风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "预约披露2026年半年报，重点核验散热和自动化增长、毛利率、应收账款与经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认半年报增长是否延续以及光伏储能项目现金流影响。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复盘2026年全年业绩和资本开支，重估合理价值区间。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

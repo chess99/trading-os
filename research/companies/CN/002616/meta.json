@@ -1,126 +1,132 @@
 {
-  "symbol": "CN:002616",
-  "market": "CN",
-  "ticker": "002616",
-  "name": "长青集团",
-  "company_name": "广东长青（集团）股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "生物质热电联产资产具备公用事业属性，2025年利润受非经常性收益抬高，2026Q1扣非利润改善但现金流和补贴回款仍需验证；4.64元附近接近合理区间下沿但安全边际不足，等待4.00元以下或半年报确认现金流改善。",
-  "quality_rating": "B，中等偏上",
-  "valuation_rating": "B-，合理偏低但安全边际不足",
-  "fair_value_range": [
-    4.6,
-    5.4
-  ],
-  "buy_zone": [
-    3.5,
-    4.0
-  ],
-  "sell_or_reduce_zone": [
-    5.4,
-    7.1
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长青集团",
+    "security_status": "active",
+    "symbol": "CN:002616",
+    "ticker": "002616"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "8394e0766b9e5febd4de49232ae83f468cd30d24df7ee846d0bd5da5b031cc89"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格4.64元附近且未披露2026半年报现金流改善证据",
-      "max_weight": 0.0,
-      "target_position": "0%",
-      "action": "观察，不主动买入"
-    },
-    {
-      "condition": "股价≤4.00元且扣非利润、补贴回款、资产负债率未恶化",
-      "max_weight": 0.04,
-      "target_position": "2%-4%",
-      "action": "建立首笔或加至基础仓"
-    },
-    {
-      "condition": "股价≤3.50元且基本面无重大恶化",
-      "max_weight": 0.06,
-      "target_position": "4%-6%",
-      "action": "提高至强吸引力仓位"
-    },
-    {
-      "condition": "股价>5.40元且2026-2027年可持续扣非利润没有明显上修",
-      "max_weight": 0.02,
-      "target_position": "0%-2%",
-      "action": "不新增，已有持仓分批减仓"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.0,
-      "reason": "进入相对合理价值下沿约15%折价区，补偿补贴回款和现金流不确定性",
-      "action": "进入安全边际买入区，复核半年报和现金流后可建首笔2%仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入强安全边际区，接近悲观情景估值和账面资产折价区",
-      "action": "进入强吸引力买入区，若基本面未恶化可提高至4%-6%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.4,
-      "reason": "超过基准合理价值上沿，除非可持续扣非利润和现金流上修，否则赔率下降",
-      "action": "超过合理区间上沿，不追高；已有仓位复核是否减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报披露后复核扣非利润、经营现金流、补贴回款和资产出售后口径",
-      "condition": "披露2026年半年度报告"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报披露后检查经营现金流/归母净利润是否连续低于0.5倍",
-      "condition": "经营现金流/归母净利润连续两个季度低于0.5倍"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报披露后检查扣非归母净利润是否连续两个季度同比转负",
-      "condition": "扣非归母净利润连续两个季度同比转负"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报披露后检查应收账款、合同资产或补贴应收是否大幅上升",
-      "condition": "应收账款、合同资产或补贴应收大幅上升"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "年报披露后复核资产负债率和有息债务是否重新上行",
-      "condition": "资产负债率或有息债务重新上行"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "年报披露后复核资本开支、资产处置和分红政策变化",
-      "condition": "新增重大资本开支、资产处置或分红政策变化"
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.0
+      },
+      "reason": "进入相对合理价值下沿约15%折价区，补偿补贴回款和现金流不确定性",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入强安全边际区，接近悲观情景估值和账面资产折价区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.4
+      },
+      "reason": "超过基准合理价值上沿，除非可持续扣非利润和现金流上修，否则赔率下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营现金流/归母净利润",
-    "应收账款、合同资产和补贴应收",
-    "电力与热力收入及毛利率",
-    "燃料采购成本",
-    "资产负债率和有息债务",
-    "分红率和现金分红总额",
-    "项目利用小时和供热量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

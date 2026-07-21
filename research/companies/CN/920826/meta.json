@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920826",
-  "market": "CN",
-  "ticker": "920826",
-  "name": "盖世食品",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "标准化凉菜业务增长较快，但现金流、库存和海外扩产尚未验证，当前估值已计入较强成长预期，等待5.4元以下的安全边际。",
-  "fair_value_range": [5.8, 6.8],
-  "buy_zone": [4.6, 5.4],
-  "sell_or_reduce_zone": [7.8, 9.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盖世食品",
+    "security_status": "active",
+    "symbol": "CN:920826",
+    "ticker": "920826"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "cbd81abdf26f988e2d942e9b825a27ef98b92742498b11677dbbe8fc4342ab1f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于5.0至5.4元且收入保持双位数增长、扣非利润未恶化、经营现金流明显改善",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报的扣非利润、自由现金流、库存、借款及泰国工厂亏损",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于4.6至5.0元且泰国亏损收窄、存货和应收增速低于收入增速",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.4
+      },
+      "reason": "进入有安全边际的买入区间，但须先验证基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于4.6元时仅在重新验证客户、食品安全、存货和扩产逻辑均未受损后维持仓位，不机械加仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.8
+      },
+      "reason": "进入减仓或不应追高区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报的扣非利润、自由现金流、库存、借款及泰国工厂亏损"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.4,
-      "reason": "进入有安全边际的买入区间，但须先验证基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 7.8,
-      "reason": "进入减仓或不应追高区间"
-    }
-  ],
-  "updated_at": "2026-07-14T17:57:45+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

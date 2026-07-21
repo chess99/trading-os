@@ -1,71 +1,95 @@
 {
-  "symbol": "CN:603897",
-  "market": "CN",
-  "ticker": "603897",
-  "name": "长城科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "长城科技是电磁线/漆包线中游制造商，受益于电机化、新能源汽车和高效电机需求，但商业模式仍以铜价成本传导、规模制造和客户认证为主，利润率薄、周期扰动大。当前估值大致处于合理区间下沿附近，需等待18-21元买入区间或现金流、毛利率进一步确认后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    22,
-    29
-  ],
-  "buy_zone": [
-    18,
-    21
-  ],
-  "sell_or_reduce_zone": [
-    31,
-    36
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "长城科技",
+    "security_status": "active",
+    "symbol": "CN:603897",
+    "ticker": "603897"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "6b64f91442d8966599420611d993d6df56ac1675d8d49d1352e125772cd60e43"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当收盘价跌入18-21元买入区间，且最近两个季度经营性现金流/归母净利润大于0.8、毛利率未继续恶化时建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看收入、毛利率、经营现金流和新能源/高效电机订单进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若股价低于18元且未出现需求、现金流或治理恶化，可分批提高至纪律性小仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断一季度利润下滑是否延续以及铜价传导是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于31元或TTM PE超过20倍且盈利未上修，减至观察仓或退出",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红和关联交易，重新校准正常化盈利与估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
+      "reason": "进入接近买入区间的位置，需复核毛利率、现金流和铜价传导后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 31.5
+      },
+      "reason": "高于合理价值区间上沿，若盈利没有同步上修应考虑减仓或不买",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.5,
-      "reason": "进入接近买入区间的位置，需复核毛利率、现金流和铜价传导后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 31.5,
-      "reason": "高于合理价值区间上沿，若盈利没有同步上修应考虑减仓或不买"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看收入、毛利率、经营现金流和新能源/高效电机订单进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断一季度利润下滑是否延续以及铜价传导是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红和关联交易，重新校准正常化盈利与估值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,104 +1,106 @@
 {
-  "symbol": "CN:000987",
-  "market": "CN",
-  "ticker": "000987",
-  "name": "越秀资本",
-  "company_name": "越秀资本",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "越秀资本是广州国资体系内稀缺上市金融控股平台，2025-2026年利润修复明显，但当前价格已反映部分业绩预告利好，适合观察仓跟踪，等待7.2元以下或半年报确认利润质量后再提高仓位。",
-  "quality_rating": "B+",
-  "valuation_rating": "neutral",
-  "fair_value_range": [
-    7.6,
-    9.4
-  ],
-  "buy_zone": [
-    6.7,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    9.8,
-    11.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "越秀资本",
+    "security_status": "active",
+    "symbol": "CN:000987",
+    "ticker": "000987"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ae9c6ec585746d171e0fa83c0a824dbe8190bc0a8d8b2f6f3fb1a633b17b4413"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前约8.0-8.3元且组合需要地方金控、高分红或券商权益beta敞口",
-      "action": "建立观察仓",
-      "max_weight": 0.02,
-      "reason": "当前估值处于合理区间中部，适合跟踪但安全边际不足以重仓"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，拆解利润来源、资产质量和分红预期",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至7.2元以下且最新季报未显示信用成本显著上行",
-      "action": "提高至正式买入仓位",
-      "max_weight": 0.04,
-      "reason": "接近1.0x 2026E PB，地方国资金控平台与ROE修复具备较好风险收益比"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认ROE修复是否持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至6.7元以下且广州资产、越秀租赁资产质量未恶化",
-      "action": "逆周期加仓",
-      "max_weight": 0.06,
-      "reason": "低于1.0x PB时已对金融周期和资产质量风险给出较充分折价"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入正式买入区间，需复核最新资产质量和信用成本",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价升至9.8元以上但ROE中枢未被证明上移至13%以上",
-      "action": "分批减仓",
-      "max_weight": 0.02,
-      "reason": "估值进入1.4x PB附近后需要更强盈利质量支撑"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.7
+      },
+      "reason": "进入逆周期加仓区间，PB安全边际较高",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.8
+      },
+      "reason": "进入减仓观察区间，需确认ROE中枢是否足以支撑更高PB",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.0
+      },
+      "reason": "进入乐观估值上沿，若无业绩质量超预期应明显降仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入正式买入区间，需复核最新资产质量和信用成本"
-    },
-    {
-      "type": "price_below",
-      "price": 6.7,
-      "reason": "进入逆周期加仓区间，PB安全边际较高"
-    },
-    {
-      "type": "price_above",
-      "price": 9.8,
-      "reason": "进入减仓观察区间，需确认ROE中枢是否足以支撑更高PB"
-    },
-    {
-      "type": "price_above",
-      "price": 11.0,
-      "reason": "进入乐观估值上沿，若无业绩质量超预期应明显降仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，拆解利润来源、资产质量和分红预期"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认ROE修复是否持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "归母ROE",
-    "PB估值",
-    "归母净利润与扣非归母净利润",
-    "资产减值损失和信用成本",
-    "越秀租赁资产质量和不良率",
-    "广州资产项目处置回款和收益率",
-    "中信证券股价、分红及投资收益贡献",
-    "分红率",
-    "有息负债成本",
-    "地方AMC、融资租赁和金控监管政策"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

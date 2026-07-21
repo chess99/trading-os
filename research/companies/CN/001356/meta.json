@@ -1,94 +1,96 @@
 {
-  "symbol": "CN:001356",
-  "market": "CN",
-  "ticker": "001356",
-  "name": "富岭股份",
-  "company_name": "富岭股份",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "富岭股份主营一次性餐饮具真实且海外客户基础较强，但2025年和2026年一季度已出现利润率、经营现金流和汇兑压力同步恶化；当前8.39元估值已透支较多修复预期，需等待印尼基地爬坡、关税转嫁和现金流改善被财报验证后再考虑小仓位。",
-  "quality_rating": "medium_weak",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    5.0,
-    6.8
-  ],
-  "buy_zone": [
-    4.5,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    9.4
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富岭股份",
+    "security_status": "active",
+    "symbol": "CN:001356",
+    "ticker": "001356"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "7864799a7564368b60747b4d57683ac5dc453d5104db2acc69538e45ec13e380"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于5.6元，且2026年中报综合毛利率回到18%以上、经营现金流转正",
-      "action": "试探建仓",
-      "max_weight": 0.01,
-      "reason": "盈利质量出现初步修复但仍需控制贸易政策和产能爬坡风险"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报的分产品毛利率、印尼基地爬坡、经营现金流和客户集中度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于4.8元，且印尼基地单位成本下降、美国订单恢复得到公告或财报验证",
-      "action": "小幅加仓",
-      "max_weight": 0.02,
-      "reason": "估值进入有安全边际区间且核心修复逻辑被验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年利润修复是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "毛利率低于16%或经营现金流连续为负",
-      "action": "不买入或退出",
-      "max_weight": 0.0,
-      "reason": "产能爬坡和关税压力尚未消化，利润质量不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入观察买入区上沿，需要结合毛利率和现金流验证",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入更有安全边际的首笔仓位区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "高于当前合理价值区间，若未见利润修复应回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入观察买入区上沿，需要结合毛利率和现金流验证"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入更有安全边际的首笔仓位区间"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "高于当前合理价值区间，若未见利润修复应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报的分产品毛利率、印尼基地爬坡、经营现金流和客户集中度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年利润修复是否可持续"
-    }
-  ],
-  "key_tracking_metrics": [
-    "综合毛利率",
-    "塑料餐饮具毛利率",
-    "纸制餐饮具收入增速",
-    "生物降解材料餐饮具收入增速",
-    "美国销售收入占比",
-    "印尼基地产能利用率",
-    "经营活动现金流量净额",
-    "存货周转",
-    "应收账款周转",
-    "财务费用和汇兑损益",
-    "前五大客户销售占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

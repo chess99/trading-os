@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603279",
-  "market": "CN",
-  "ticker": "603279",
-  "name": "景津装备",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "景津装备是国内压滤机和过滤成套装备龙头，现金流和资产负债表质量较好，但2025年至2026Q1利润仍在下行，当前价格处于合理价值区间内而非深度低估，适合观察等待订单、毛利率和现金流修复或更低买入价。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.0,
-    16.0
-  ],
-  "buy_zone": [
-    10.0,
-    11.0
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    19.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "景津装备",
+    "security_status": "active",
+    "symbol": "CN:603279",
+    "ticker": "603279"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "c156407f37e8266355e3ba312a5586dfa34c096f70563b1160ea9188427a056e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入10.0-11.0元且合同负债未连续恶化、经营现金流仍不低于归母净利润的70%",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看收入、扣非净利率、合同负债和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026半年报或三季报显示收入恢复增长、扣非净利率企稳且经营现金流覆盖净利润",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认利润下行是否企稳。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于16.5元且利润仍同比下滑或合同负债继续下降",
-      "action": "不加仓并考虑降低仓位",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报和分红资本开支，重估盈利中枢与安全边际。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入偏保守买入区间上沿，需复核订单与现金流后考虑建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "接近熊市情景估值，若基本面未恶化则安全边际较厚。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过基准合理价值上沿，若盈利未恢复则预期收益率下降。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入偏保守买入区间上沿，需复核订单与现金流后考虑建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "接近熊市情景估值，若基本面未恶化则安全边际较厚。"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过基准合理价值上沿，若盈利未恢复则预期收益率下降。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看收入、扣非净利率、合同负债和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认利润下行是否企稳。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报和分红资本开支，重估盈利中枢与安全边际。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

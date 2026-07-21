@@ -1,162 +1,114 @@
 {
-  "market": "CN",
-  "ticker": "002676",
-  "symbol": "CN:002676",
-  "name": "顺威股份",
-  "company_name": "广东顺威精密塑料股份有限公司",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "decision": "观察",
-  "current_rating": "watch",
-  "confidence": "中",
-  "currency": "CNY",
-  "exchange": "SZSE",
-  "status": "active",
-  "industry": "塑料空调风叶及汽车零部件",
-  "current_thesis": "公司具备空调风叶细分龙头的规模、客户和一体化制造优势，汽车零部件业务提供第二增长曲线；但当前扣非利润质量偏弱、杠杆较高，按可得行情估值缺乏安全边际。",
-  "thesis": "公司具备空调风叶细分龙头的规模、客户和一体化制造优势，汽车零部件业务提供第二增长曲线；但当前扣非利润质量偏弱、杠杆较高，按可得行情估值缺乏安全边际。",
-  "business_summary": "主营塑料空调风叶、汽车零部件、工程塑料及相关精密组件，形成塑料改性、高精密模具、智能装备、风叶和精密嵌件注塑的一体化链条。",
-  "key_metrics": {
-    "revenue_2025_cny": 2901023388.53,
-    "net_profit_2025_cny": 79722979.32,
-    "deducted_net_profit_2025_cny": 28151799.78,
-    "operating_cash_flow_2025_cny": 195439927.35,
-    "revenue_2026_q1_cny": 753700348.07,
-    "net_profit_2026_q1_cny": 26268132.93,
-    "deducted_net_profit_2026_q1_cny": 23896468.44,
-    "operating_cash_flow_2026_q1_cny": 150697759.33,
-    "shares_outstanding": 720000000,
-    "reference_price_cny": 4.99,
-    "reference_price_date": "2026-07-10",
-    "estimated_market_cap_cny": 3592800000,
-    "estimated_ttm_pe": 43.4,
-    "estimated_pb_attributable": 2.67
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "顺威股份",
+    "security_status": "active",
+    "symbol": "CN:002676",
+    "ticker": "002676"
   },
-  "quality_score": {
-    "business_quality": "中",
-    "financial_quality": "中低",
-    "management_quality": "中",
-    "valuation_attractiveness": "低"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "6a363eb6ddc8405bcb9fecf30df9cdba5c7c16dbe6de8d290074e7f16e47f675"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "watch_items": [
-    "汽车零部件收入增速和毛利率能否同步改善",
-    "扣非归母净利润是否恢复增长",
-    "经营现金流改善是否具有持续性",
-    "有息负债、财务费用和汇兑损益变化",
-    "商誉减值和汽车业务整合风险",
-    "定增发行价格、摊薄比例和募投回报"
-  ],
-  "risks": [
-    "空调行业需求下行或出口订单转移导致风叶收入承压",
-    "下游大客户议价强导致毛利率难以提升",
-    "汽车零部件业务整合、质量、订单和商誉减值风险",
-    "汇率波动、关税和海外基地经营风险",
-    "财务杠杆较高及再融资摊薄风险"
-  ],
-  "valuation": {
-    "pe_fair_value_per_share_cny": "1.73-2.30；乐观情景 3.61-4.51",
-    "dcf_fair_value_per_share_cny": "1.70-2.50；乐观情景 3.50-4.40",
-    "sotp_fair_value_per_share_cny": "1.70-2.70",
-    "margin_of_safety_price_cny": 3.5
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
   },
-  "fair_value_range": [
-    1.7,
-    2.7
-  ],
-  "buy_zone": [
-    3.0,
-    3.5
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    6.5
-  ],
-  "position_plan": [
+  "schema_version": 2,
+  "triggers": [
     {
-      "action": "observe",
-      "max_weight": 0,
-      "condition": "当前价格高于估算安全边际，且扣非利润质量尚未连续改善。"
-    },
-    {
-      "action": "starter_position",
-      "max_weight": 0.33,
-      "condition": "股价低于3.50元，且2026中报扣非净利润同比增长、经营现金流为正。"
-    },
-    {
-      "action": "add_position",
-      "max_weight": 0.67,
-      "condition": "股价低于3.00元，且汽车零部件毛利率没有恶化、净有息负债未继续上升。"
-    },
-    {
-      "action": "reassess_upside",
-      "max_weight": 0.33,
-      "condition": "连续两个季度扣非净利率高于3.5%、汽车零部件收入同比增长高于30%、净有息负债下降。"
-    },
-    {
-      "action": "avoid_or_reduce",
-      "max_weight": 0,
-      "condition": "股价高于5.50元但没有扣非利润上修，或定增显著摊薄且募投回报不清晰。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "进入安全边际观察区，需要结合中报扣非和现金流决定是否建立研究仓。",
-      "note": "进入安全边际观察区，结合中报扣非和现金流决定是否建立研究仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.0,
-      "reason": "估值保护较明显，如基本面未恶化可考虑加仓。",
-      "note": "估值保护较明显，如基本面未恶化可考虑加仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "reason": "若无扣非利润上修，估值可能透支。",
-      "note": "若无扣非利润上修，视为估值透支。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "2026年中报披露后更新扣非利润、汽车零部件毛利率和经营现金流判断。",
-      "condition": "复盘2026年中报，重点检查扣非利润、汽车零部件毛利率和经营现金流。"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "2026年三季报披露后验证汽车零部件增长是否转化为扣非利润。",
-      "condition": "复盘2026年三季报，重点检查汽车零部件增长是否转化为扣非利润。"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "2026年报信息出来后检查商誉、债务和定增摊薄。",
-      "condition": "复盘2026年报预告或正式年报，检查商誉、债务和定增摊薄。"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "2027年一季报披露后确认收入恢复、财务费用和汇兑损益趋势。",
-      "condition": "复盘2027年一季报，确认收入恢复、财务费用和汇兑损益趋势。"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "进入安全边际观察区，需要结合中报扣非和现金流决定是否建立研究仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.0
+      },
+      "reason": "估值保护较明显，如基本面未恶化可考虑加仓。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "若无扣非利润上修，估值可能透支。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "sources": [
-    "https://pdf.dfcfw.com/pdf/H2_AN202604141821191012_1.pdf",
-    "https://disc.static.szse.cn/download/disc/disk03/finalpage/2026-04-25/c196418c-0c7e-4e4f-a226-91921f994869.PDF",
-    "https://www.sunwill.com.cn/about",
-    "https://www.sunwill.com.cn/news/detail/post-317.html",
-    "https://www.stcn.com/article/detail/3998125.html",
-    "https://www.stcn.com/article/detail/3545387.html",
-    "https://wap.eastmoney.com/a/202606163773178764.html",
-    "https://q.stock.sohu.com/cn/002676/index.shtml",
-    "https://www.sohu.com/a/1048679621_121319643",
-    "https://stockmc.xueqiu.com/202604/603726_20260424_LVHK.pdf"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

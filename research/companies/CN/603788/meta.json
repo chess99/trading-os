@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:603788",
-  "market": "CN",
-  "ticker": "603788",
-  "name": "宁波高发",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "宁波高发是资产负债表稳健、分红率较高的汽车操纵控制系统细分供应商，但2025年至2026Q1收入增长尚未修复，电子化和新能源客户放量仍需验证。当前估值不贵但安全边际不足，适合观察，跌入买入区间或基本面改善后再小仓配置。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    14.5,
-    17.5
-  ],
-  "buy_zone": [
-    11.0,
-    12.5
-  ],
-  "sell_or_reduce_zone": [
-    18.5,
-    22.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁波高发",
+    "security_status": "active",
+    "symbol": "CN:603788",
+    "ticker": "603788"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "c7b70fde128dc50a6cbca695c7cfa6e09557946d27c1b86b9b58932d24bb082b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入11.0-12.5元且未出现经营现金流持续恶化、重大治理或客户流失风险时，允许建立观察仓。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入增速、毛利率、经营现金流和电子化产品进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026H1或2026Q3收入恢复正增长、毛利率保持25%以上、经营现金流/归母净利润滚动12个月超过0.7倍后，可提高至核心小仓。",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认现金流是否修复以及全年利润区间。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价超过18.5元且基本面未超预期，或毛利率跌破24%并伴随收入下滑时，降低或退出仓位。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，重新评估分红可持续性和估值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.5
+      },
+      "reason": "进入买入区间上沿，可结合最新财报复核是否建立观察仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 11.0
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化，可提高买入优先级。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 18.5
+      },
+      "reason": "超过合理价值上沿附近，若无电子化产品放量证据，应考虑减持。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.5,
-      "reason": "进入买入区间上沿，可结合最新财报复核是否建立观察仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 11.0,
-      "reason": "进入深度安全边际区，若基本面未恶化，可提高买入优先级。"
-    },
-    {
-      "type": "price_above",
-      "price": 18.5,
-      "reason": "超过合理价值上沿附近，若无电子化产品放量证据，应考虑减持。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入增速、毛利率、经营现金流和电子化产品进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认现金流是否修复以及全年利润区间。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，重新评估分红可持续性和估值。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

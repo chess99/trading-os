@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:001396",
-  "market": "CN",
-  "ticker": "001396",
-  "name": "誉帆科技",
-  "company_name": "誉帆科技",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "地下管网检测、非开挖修复和养护细分龙头，受益于地下管网建设改造政策周期；但项目制、财政付款、应收账款和合同资产占用仍压制现金流质量，当前价格接近合理区上沿，适合观察仓等待回款和扣非利润验证。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    30,
-    37
-  ],
-  "buy_zone": [
-    25,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    43,
-    48
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "誉帆科技",
+    "security_status": "active",
+    "symbol": "CN:001396",
+    "ticker": "001396"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "92eabc17880f962645e52447710794058c4f72bebe593f7f26b1f579b6f7ca59"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约35元且仅建立研究跟踪",
-      "action": "可选0-0.5%观察仓，不追高",
-      "max_weight": 0.005,
-      "reason": "估值已接近合理区上沿，现金流和扣非利润仍需中报验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-29"
+      },
+      "reason": "复核2026年中报：收入、扣非净利润、经营现金流、应收账款和合同资产",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于30元且中报显示应收账款未恶化、主营毛利率稳定",
-      "action": "加至1.0%-1.5%",
-      "max_weight": 0.015,
-      "reason": "进入基础买入区，风险收益比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：项目交付旺季后的利润质量和回款",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于25元且经营现金流改善、扣非利润保持正增长",
-      "action": "加至2.0%-2.5%",
-      "max_weight": 0.025,
-      "reason": "估值充分补偿财政回款和项目制波动风险"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报：养护类增长、修复类毛利率、现金转化率和分红",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于43元且没有订单、回款和毛利率同步改善",
-      "action": "减仓至观察仓或退出",
-      "max_weight": 0.005,
-      "reason": "超过合理估值区，向乐观情景透支"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入基础买入区，复核中报后可考虑加仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "若基本面未恶化，估值安全边际较充分",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 43.0
+      },
+      "reason": "若无现金流和订单验证，应减仓或停止加仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入基础买入区，复核中报后可考虑加仓"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "reason": "若基本面未恶化，估值安全边际较充分"
-    },
-    {
-      "type": "price_above",
-      "price": 43,
-      "reason": "若无现金流和订单验证，应减仓或停止加仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-29",
-      "reason": "复核2026年中报：收入、扣非净利润、经营现金流、应收账款和合同资产"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：项目交付旺季后的利润质量和回款"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报：养护类增长、修复类毛利率、现金转化率和分红"
-    }
-  ],
-  "key_tracking_metrics": [
-    "新签合同额和在手订单",
-    "修复类收入增速和毛利率",
-    "养护类收入增速和续约情况",
-    "经营活动现金流净额",
-    "经营现金流净额/归母净利润",
-    "应收账款余额",
-    "合同资产余额",
-    "应收账款和合同资产合计/总资产",
-    "坏账准备和合同资产减值准备",
-    "扣非归母净利润",
-    "非经常性损益占归母净利润比例",
-    "华东以外区域收入增速和毛利率",
-    "研发投入和研发人员数量"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

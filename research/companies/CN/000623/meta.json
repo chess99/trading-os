@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000623",
-  "market": "CN",
-  "ticker": "000623",
-  "name": "吉林敖东",
-  "company_name": "吉林敖东",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "吉林敖东是中成药现金流叠加广发证券权益法投资的低PB资产折价标的，适合在0.60-0.65倍净资产附近观察建仓，核心跟踪广发证券投资收益、医药主业止跌和分红回购持续性。",
-  "quality_rating": "B+",
-  "valuation_rating": "A-",
-  "fair_value_range": [
-    21.0,
-    26.0
-  ],
-  "buy_zone": [
-    15.5,
-    17.0
-  ],
-  "sell_or_reduce_zone": [
-    27.0,
-    33.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "吉林敖东",
+    "security_status": "active",
+    "symbol": "CN:000623",
+    "ticker": "000623"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "534ce983b3f4c9821e9320c0ac8b508625a20e3a401e35f496008be0fbf9a7cd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于17.0元，且广发证券投资收益未显著恶化，医药主业收入没有进一步失速",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "低于约0.65倍2026Q1每股净资产，资产折价具备初步安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报：广发证券投资收益、医药收入、经营现金流和中期分红",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于15.5元，且2026中报归母净资产稳定、分红或回购延续",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.03,
-      "reason": "低于约0.60倍PB，能更好覆盖券商周期和医药收入下滑风险"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报：净资产变化、投资收益波动和全年分红回购预期",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于27.0元，且医药收入仍未恢复或资本配置没有进一步改善",
-      "action": "减仓或仅保留跟踪仓",
-      "max_weight": 0.01,
-      "reason": "价格接近或超过1倍净资产后，平台折价修复收益已较充分"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.0
+      },
+      "reason": "进入首笔买入区间，约0.65倍2026Q1每股净资产",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 15.5
+      },
+      "reason": "进入高安全边际区间，适合复核中报后加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "达到减仓观察线，需要确认医药主业和资本配置是否支撑更高估值",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 17.0,
-      "reason": "进入首笔买入区间，约0.65倍2026Q1每股净资产"
-    },
-    {
-      "type": "price_below",
-      "price": 15.5,
-      "reason": "进入高安全边际区间，适合复核中报后加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 27.0,
-      "reason": "达到减仓观察线，需要确认医药主业和资本配置是否支撑更高估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报：广发证券投资收益、医药收入、经营现金流和中期分红"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报：净资产变化、投资收益波动和全年分红回购预期"
-    }
-  ],
-  "key_tracking_metrics": [
-    "广发证券季度归母净利润和ROE",
-    "吉林敖东对联营企业和合营企业投资收益",
-    "医药主业营业收入增速",
-    "经营活动现金流量净额",
-    "每股净资产和PB折价",
-    "年度及中期分红金额",
-    "回购金额及是否注销",
-    "控股股东质押数量",
-    "销售费用率和研发费用率",
-    "长期股权投资占归母净资产比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:601933",
-  "ticker": "601933",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "永辉超市",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "永辉超市处于调改驱动的经营修复期，2026 年一季度与半年度预盈证明扭亏有进展，但扣非利润稳定性和全年现金回报仍未充分验证；当前估值已反映较多修复预期，适合观察而非追高买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    2.5,
-    3.4
-  ],
-  "buy_zone": [
-    2.2,
-    2.6
-  ],
-  "sell_or_reduce_zone": [
-    3.8,
-    4.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "永辉超市",
+    "security_status": "active",
+    "symbol": "CN:601933",
+    "ticker": "601933"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "babf627b51587d70f670637fd5b72fd0c564a141c4e1b3a9245d82f61ee6dfc0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 2.60 元，且最近一个季度扣非归母利润为正、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式披露后的扣非利润、现金流和调改门店数据",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 2.30 元，且调改门店同店销售和毛利率继续改善",
-      "action": "提高至中等观察仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报，确认二季度后盈利修复是否延续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 3.80 元，且扣非净利率未证明可持续超过 1%",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估调改模型的全年盈利能力",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.6
+      },
+      "reason": "进入安全边际初步可接受区间，可结合扣非利润和现金流复核",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.3
+      },
+      "reason": "进入更有吸引力的风险收益区间，前提是调改数据未恶化",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.8
+      },
+      "reason": "估值开始显著反映乐观修复预期，若扣非盈利未同步验证应减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 2.6,
-      "reason": "进入安全边际初步可接受区间，可结合扣非利润和现金流复核"
-    },
-    {
-      "type": "price_below",
-      "price": 2.3,
-      "reason": "进入更有吸引力的风险收益区间，前提是调改数据未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 3.8,
-      "reason": "估值开始显著反映乐观修复预期，若扣非盈利未同步验证应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式披露后的扣非利润、现金流和调改门店数据"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报，确认二季度后盈利修复是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估调改模型的全年盈利能力"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

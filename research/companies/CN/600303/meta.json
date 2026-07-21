@@ -1,97 +1,105 @@
 {
-  "symbol": "CN:600303",
-  "ticker": "600303",
-  "name": "曙光股份",
-  "company_name": "辽宁曙光汽车集团股份有限公司",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "公司有车桥和黄海整车的历史资产，但2025年和2026H1仍处持续亏损，整车产能利用率不足导致毛利无法覆盖固定成本；当前股价相对2026Q1净资产已不便宜，需等待车桥毛利、整车销量和经营现金流出现连续改善后再评估。",
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "decision": "不买",
-  "confidence": "中",
-  "fair_value_range": [
-    1.4,
-    2.0
-  ],
-  "buy_zone": [
-    0.9,
-    1.2
-  ],
-  "sell_or_reduce_zone": [
-    2.4,
-    3.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "曙光股份",
+    "security_status": "active",
+    "symbol": "CN:600303",
+    "ticker": "600303"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "af5fd260c2c3a8b3c3a8122da765d1c41f27619295e7d9e744f0f34dba17f0d0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅当股价进入0.90-1.20元且无退市、重大治理恶化或新增大额逾期担保风险，同时最新归母权益仍高于8亿元时，允许研究性试仓。",
-      "action": "research_probe",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式数据、担保余额、经营现金流、毛利率和归母权益变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若连续两个季度经营现金流转正、毛利率明显改善且整车月销量恢复到可摊薄固定成本的水平，可重新评估是否提高到观察仓。",
-      "action": "reassess_for_watch_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报是否延续减亏、车桥业务是否放量提毛利、经营现金流是否改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于2.40元但没有交易所公告确认的重大资产重组、强产业整合或经营拐点，避免买入并降低已有暴露。",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-01-15"
+      },
+      "reason": "复核2026年全年产销快报与行业数据，判断整车产能利用率和车桥客户需求是否形成趋势。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.2
+      },
+      "reason": "进入买入观察区间，需复核净资产、退市风险、担保风险和最新产销快报后决定是否研究性试仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 2.4
+      },
+      "reason": "高于基准估值上沿且缺乏安全边际，需核查是否仅由传闻或情绪驱动。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 3.0
+      },
+      "reason": "达到乐观情景估值上沿，若无正式公告确认的强经营拐点或产业整合，应视为减仓/回避信号。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 1.2,
-      "reason": "进入买入观察区间，需复核净资产、退市风险、担保风险和最新产销快报后决定是否研究性试仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 2.4,
-      "reason": "高于基准估值上沿且缺乏安全边际，需核查是否仅由传闻或情绪驱动。"
-    },
-    {
-      "type": "price_above",
-      "price": 3.0,
-      "reason": "达到乐观情景估值上沿，若无正式公告确认的强经营拐点或产业整合，应视为减仓/回避信号。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式数据、担保余额、经营现金流、毛利率和归母权益变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报是否延续减亏、车桥业务是否放量提毛利、经营现金流是否改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-15",
-      "reason": "复核2026年全年产销快报与行业数据，判断整车产能利用率和车桥客户需求是否形成趋势。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 2.62,
-    "last_price_date": "2026-07-16",
-    "market_cap_estimate_cny_billion": 1.79,
-    "revenue_2025_cny_billion": 1.559,
-    "net_profit_2025_cny_billion": -0.358,
-    "revenue_2026_q1_cny_billion": 0.219,
-    "net_profit_2026_q1_cny_billion": -0.0602334,
-    "equity_to_parent_2026_q1_cny_billion": 0.9422,
-    "forecast_net_profit_2026_h1_cny_billion": [
-      -0.14,
-      -0.12
-    ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

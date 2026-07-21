@@ -1,77 +1,105 @@
 {
-  "symbol": "CN:600056",
-  "ticker": "600056",
-  "name": "中国医药",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "current_thesis": "中国医药具备央企医药商业平台和部分工业板块修复价值，但当前价格已计入较强利润恢复预期；在商业流通低毛利、工业规模偏小、现金流仍需连续验证的情况下，安全边际不足，暂不买入，仅观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    6.0,
-    8.5
-  ],
-  "buy_zone": [
-    5.0,
-    6.5
-  ],
-  "sell_or_reduce_zone": [
-    9.5,
-    11.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "中国医药",
+    "security_status": "active",
+    "symbol": "CN:600056",
+    "ticker": "600056"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "b73d97ac51e70cc7b2b8e3dd4ec12bcf06a4115b340f7b4aceeec2c3ac193e2e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于6.5元，且最新一期扣非净利润同比为正、经营现金流没有显著恶化",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非利润、工业板块收入和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.5元，且2026年累计扣非净利润同比增长超过15%、经营现金流转正或明显改善",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于9.5元且利润未恢复到年化7.5亿元以上",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红，重新测算公允价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入初步买入区间，需要复核利润质量和现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入更高安全边际区间，可评估提高观察仓上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "价格接近乐观情景估值，若利润未显著修复应回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入初步买入区间，需要复核利润质量和现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入更高安全边际区间，可评估提高观察仓上限"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "价格接近乐观情景估值，若利润未显著修复应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非利润、工业板块收入和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红，重新测算公允价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

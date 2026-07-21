@@ -1,106 +1,106 @@
 {
-  "symbol": "CN:000726",
-  "market": "CN",
-  "ticker": "000726",
-  "name": "鲁 泰Ａ",
-  "company_name": "鲁 泰Ａ",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "B",
-  "valuation_rating": "B+",
-  "fair_value_range": [
-    6.2,
-    7.4
-  ],
-  "buy_zone": [
-    4.8,
-    5.3
-  ],
-  "sell_or_reduce_zone": [
-    7.2,
-    8.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鲁 泰Ａ",
+    "security_status": "active",
+    "symbol": "CN:000726",
+    "ticker": "000726"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "a75e11ec24a4accb564b958358553ea3eae2108573499191ae3745fba0faaae9"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约5.56元且未看到2026年中报验证利润修复",
-      "action": "仅允许建立观察仓",
-      "max_weight": 0.01,
-      "reason": "估值不贵但订单、毛利率和海外产能利用率仍需验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、扣非利润、现金流和海外产能利用率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价进入4.80-5.30元且无重大负面公告",
-      "action": "分批买入并跟踪中报",
-      "max_weight": 0.03,
-      "reason": "低于基准合理价值下沿，赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及纺织出口、棉价、汇率变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "2026年中报确认收入恢复、毛利率改善、经营现金流健康",
-      "action": "可提高到核心观察仓",
-      "max_weight": 0.05,
-      "reason": "利润修复从假设变为披露数据"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.3
+      },
+      "reason": "进入首选买入区间，可建立或补足观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价高于7.20元但利润和订单未同步改善",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.015,
-      "reason": "价格接近合理价值上沿，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "接近合理价值上沿，需复核利润修复是否兑现",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "超过基准估值区间，除非进入乐观情景否则应减仓",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.3,
-      "reason": "进入首选买入区间，可建立或补足观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "reason": "进入深度安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "接近合理价值上沿，需复核利润修复是否兑现"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "reason": "超过基准估值区间，除非进入乐观情景否则应减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、扣非利润、现金流和海外产能利用率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及纺织出口、棉价、汇率变化"
-    }
-  ],
-  "key_tracking_metrics": [
-    "2026年中报营业收入增速",
-    "毛利率与扣非归母净利率",
-    "经营现金流净额与净利润匹配度",
-    "存货周转与应收账款周转",
-    "色织布和衬衫面料订单趋势",
-    "越南及其他海外产能利用率",
-    "中国纺织品服装出口月度数据",
-    "中国棉花价格指数3128B",
-    "USD/CNY汇率与汇兑损益",
-    "年度分红率、回购和资本开支"
-  ],
-  "thesis": "鲁泰A是低PB、持续盈利并具备全球色织布和衬衫面料制造能力的纺织龙头，但出口需求、棉价、汇率和海外产能利用率仍需验证。当前更适合观察仓，等待4.80-5.30元买入区或2026年中报确认利润修复。",
-  "current_thesis": "鲁泰A是低PB、持续盈利并具备全球色织布和衬衫面料制造能力的纺织龙头，但出口需求、棉价、汇率和海外产能利用率仍需验证。当前更适合观察仓，等待4.80-5.30元买入区或2026年中报确认利润修复。",
-  "confidence": "medium_low"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

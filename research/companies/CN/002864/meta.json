@@ -1,121 +1,123 @@
 {
-  "symbol": "CN:002864",
-  "market": "CN",
-  "ticker": "002864",
-  "name": "盘龙药业",
-  "company_name": "陕西盘龙药业集团股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司拥有盘龙七片这一骨伤风湿领域核心中成药品种，资产负债表现金充足，盘龙七片进入2026版国家基本药物目录带来潜在放量机会；但2025年增收不增利、2026Q1收入和利润双降，低毛利中药饮片及商业配送占比上升稀释盈利质量，当前29元附近估值已透支恢复预期，适合跟踪等待更高安全边际。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    19,
-    24
-  ],
-  "buy_zone": [
-    0,
-    18
-  ],
-  "sell_or_reduce_zone": [
-    29,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "盘龙药业",
+    "security_status": "active",
+    "symbol": "CN:002864",
+    "ticker": "002864"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "8b2390d61a900d4cb00e7348ef7d08c8532af5a453855eda77e882f0fdbd9618"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于29元，且未看到自产中成药恢复增长或扣非净利润改善",
-      "action": "不买；已有仓位减至0%-1%观察仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证2026Q1下滑是否延续的第一个关键节点",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价位于20-24元，且经营现金流为正、应收账款未继续恶化",
-      "action": "最多建立1%-2%试错仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "基药目录催化需要通过终端准入和采购数据验证",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元，且核心品种、现金流和资产负债表未恶化",
-      "action": "分批提高到2%-4%仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "低毛利业务可能造成收入增长但利润不增长",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于18元且连续两个季度扣非净利润恢复增长、盘龙七片基药目录放量得到验证",
-      "action": "可提高到4%-6%上限仓位",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "研发投入上升需要跟踪商业化兑现或费用压力",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-07-31"
+      },
+      "reason": "价格触发会改变仓位动作和安全边际",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "接近合理价值下沿，开始具备试错价值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "相对19-24元合理价值区间具备约20%以上安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "当前盈利质量下29元以上隐含过高恢复预期",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20,
-      "currency": "CNY",
-      "action": "进入试买观察区，复核最近季度利润和现金流",
-      "reason": "接近合理价值下沿，开始具备试错价值"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "currency": "CNY",
-      "action": "进入可买区，若基本面未恶化则分批建仓",
-      "reason": "相对19-24元合理价值区间具备约20%以上安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 29,
-      "currency": "CNY",
-      "action": "估值偏贵，不追高；已有仓位复核减仓",
-      "reason": "当前盈利质量下29元以上隐含过高恢复预期"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后复核自产中成药收入、扣非净利润、经营现金流和应收账款",
-      "reason": "半年报是验证2026Q1下滑是否延续的第一个关键节点"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "盘龙七片进入2026版国家基本药物目录后的省级执行、挂网、医院准入或基层采购数据出现明确变化",
-      "reason": "基药目录催化需要通过终端准入和采购数据验证"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "中药饮片或医药商业配送毛利率继续下行，或低毛利业务占比进一步抬升",
-      "reason": "低毛利业务可能造成收入增长但利润不增长"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "研发管线取得生产批件、临床关键进展或出现重大费用化压力",
-      "reason": "研发投入上升需要跟踪商业化兑现或费用压力"
-    },
-    {
-      "type": "date",
-      "date": "2026-07-31",
-      "condition": "股价跌入20元以下或涨至29元以上",
-      "reason": "价格触发会改变仓位动作和安全边际"
-    }
-  ],
-  "key_tracking_metrics": [
-    "自产中成药收入增速",
-    "盘龙七片终端动销及医院/基层覆盖",
-    "中药饮片毛利率",
-    "医药商业配送毛利率",
-    "扣非归母净利润",
-    "经营现金流/净利润",
-    "应收账款余额和周转天数",
-    "销售费用率",
-    "中药配方颗粒备案数、销售收入和毛利率",
-    "现金、有息负债和净现金"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

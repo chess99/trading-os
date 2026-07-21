@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:688418",
-  "market": "CN",
-  "ticker": "688418",
-  "name": "震有科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司具备核心网、光网络、数智专网和卫星互联网/星地融合方向的稀缺业务弹性，但2025年重新亏损、2026Q1收入和现金流继续承压，当前约7.2倍2025年PS和约7.7倍2026Q1 PB已计入较多主题预期，适合观察订单、毛利率和现金流验证，不适合在当前价格追买。",
-  "fair_value_range": [
-    24,
-    36
-  ],
-  "buy_zone": [
-    18,
-    24
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    50
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "震有科技",
+    "security_status": "active",
+    "symbol": "CN:688418",
+    "ticker": "688418"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d1712fef5feb197f3aa400fb716376923c6fd80396286da5e1d1c07e41489e4a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅为跟踪建立观察仓，且价格不高于30元，同时确认无新增重大减值或治理风险。",
-      "action": "watch_position",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收和存货减值。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入18-24元买入区间，且后续季度收入恢复、经营现金流改善、重大订单可核验。",
-      "action": "initiate_or_add",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及卫星互联网、专网订单兑现情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于42元但仍亏损、经营现金流未改善或订单兑现低于预期。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断公司是否完成收入恢复和现金流修复。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 24.0
+      },
+      "reason": "进入估算买入区间上沿，需要复核订单、现金流和估值安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.0
+      },
+      "reason": "进入悲观情景价值附近，若基本面未恶化可能具备深度安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "超过合理价值区间上沿，若业绩未同步验证需降低预期或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 24,
-      "reason": "进入估算买入区间上沿，需要复核订单、现金流和估值安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 18,
-      "reason": "进入悲观情景价值附近，若基本面未恶化可能具备深度安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "reason": "超过合理价值区间上沿，若业绩未同步验证需降低预期或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、毛利率、经营现金流、应收和存货减值。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及卫星互联网、专网订单兑现情况。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断公司是否完成收入恢复和现金流修复。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

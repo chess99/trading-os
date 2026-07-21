@@ -1,47 +1,111 @@
 {
-  "symbol": "CN:920274",
-  "market": "CN",
-  "ticker": "920274",
-  "name": "宏裕包材",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "avoid",
-  "current_thesis": "利润率正在修复，但客户集中、新材料亏损和低资本回报尚未解决，当前价格已透支乐观预期。",
-  "fair_value_range": [8.0, 11.0],
-  "buy_zone": [6.5, 8.0],
-  "sell_or_reduce_zone": [13.0, 16.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "众智科技",
+    "security_status": "active",
+    "symbol": "CN:920274",
+    "ticker": "920274"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "25ff38ea946a3585b8d1d06c85e6a9d10cde1e935fa9288428f8594440fe7c5e"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-19-initial.md",
+        "sha256": "e5f6b5516f23a246b5ffa8842bd37da6dc9767f15111c621ca080cfda0dd3424"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于6.5-8.0元且最近两期扣非利润同比为正、综合毛利率不低于12%、新材料亏损收窄",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报：收入、扣非净利、毛利率、应收账款、经营现金流、境外收入和AIDC/船舶/出口订单。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "安琪酵母采购明显下滑、新材料再次大额减值或经营现金流与利润连续两期背离时，不因价格下跌加仓",
-      "max_weight": 0.0
-    }
-  ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的毛利率、经营现金流、关联客户与新材料减亏情况"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入有安全边际的研究性买入区间，仍需先验证基本面未恶化"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报：确认Q1现金流转负是否季节性，以及全年利润是否能达到基准情景。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入减仓或不应追高区间"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 21.0
+      },
+      "reason": "进入有安全边际的研究性买入区，仍需先确认920274与众智科技代码映射问题。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.5
+      },
+      "reason": "进入强吸引力区，可在基本面未恶化时提高目标仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.5
+      },
+      "reason": "高于合理区间上沿，不应追高。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 34.0
+      },
+      "reason": "估值进入减仓或退出复核区，除非盈利预期明显上修。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "updated_at": "2026-07-19T12:13:36+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

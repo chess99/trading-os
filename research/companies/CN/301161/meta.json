@@ -1,93 +1,105 @@
 {
-  "symbol": "CN:301161",
-  "ticker": "301161",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "唯万密封",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司主业受工程机械温和复苏和国产替代支撑，上海嘉诺并购及半导体密封件提供中期成长选择权；但以2026-07-16约38元附近公开行情估算，当前估值已计入较多成长预期，安全边际不足，适合观察而非追高。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    29,
-    36
-  ],
-  "buy_zone": [
-    22,
-    28
-  ],
-  "sell_or_reduce_zone": [
-    45,
-    55
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于28元，且最近一期收入和归母净利润继续同比增长，经营现金流未显著恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价位于22-25元，且2026年中报显示经营现金流改善、上海嘉诺交易或半导体业务进展可验证",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于45元但半导体密封件仍未披露量产收入或明确订单",
-      "action": "不新增并考虑减仓",
-      "max_weight": 0.01
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "进入初始买入观察区，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 22,
-      "reason": "接近悲观情景估值下沿，可复核是否具备逆向配置价值"
-    },
-    {
-      "type": "price_above",
-      "price": 45,
-      "reason": "估值开始显著依赖半导体和机器人期权兑现，需要复核减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘2026年中报收入、利润、现金流和半导体业务披露"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "reason": "复盘上海嘉诺交易进度、业绩承诺和并表影响"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复盘2026年年报和股权激励考核兑现情况"
-    }
-  ],
-  "key_metrics": {
-    "last_reported_revenue_2025_cny": 796000000,
-    "last_reported_net_profit_2025_cny": 87039300,
-    "q1_2026_revenue_cny": 204300000,
-    "q1_2026_net_profit_cny": 29265600,
-    "base_case_2026_net_profit_cny": 125000000
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "唯万密封",
+    "security_status": "active",
+    "symbol": "CN:301161",
+    "ticker": "301161"
   },
-  "risk_labels": [
-    "cyclical_demand",
-    "valuation_high",
-    "acquisition_integration",
-    "semiconductor_ramp_uncertain",
-    "cash_conversion"
-  ]
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "147dcd3ef0ed368d3ef823b73b5e76386197387b6f00239515ba64207c60aa62"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘2026年中报收入、利润、现金流和半导体业务披露",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "复盘上海嘉诺交易进度、业绩承诺和并表影响",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复盘2026年年报和股权激励考核兑现情况",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "进入初始买入观察区，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 22.0
+      },
+      "reason": "接近悲观情景估值下沿，可复核是否具备逆向配置价值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 45.0
+      },
+      "reason": "估值开始显著依赖半导体和机器人期权兑现，需要复核减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

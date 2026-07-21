@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605060",
-  "market": "CN",
-  "ticker": "605060",
-  "name": "联德股份",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "联德股份是高精度机械零部件小龙头，受益于商用HVAC、数据中心冷却、能源动力和全球OEM供应链扩张，财务稳健且2026Q1增长较好；但当前估值已反映较多成长预期，需等待更高安全边际或后续业绩上修确认。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    34,
-    46
-  ],
-  "buy_zone": [
-    28,
-    32
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    58
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "联德股份",
+    "security_status": "active",
+    "symbol": "CN:605060",
+    "ticker": "605060"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "bea1c8cba2333019904e3c80e2415bf056a603b40fca7366913b9c9582816891"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于32元且2026年后续季度收入增速维持15%以上、毛利率不低于34%、经营现金流未明显恶化",
-      "action": "建立或加至观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-21"
+      },
+      "reason": "预计披露2026年中报，重点验证收入增速、毛利率、现金流和明德二期进度。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元且明德二期推进正常、客户订单未见恶化、TTM PE回落至约28倍以下",
-      "action": "加至核心小仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认全年盈利区间和估值假设是否需要调整。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于52元但未来12个月盈利预测没有同步上修",
-      "action": "减仓或仅保留跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和2027年一季报，判断扩产项目是否开始贡献订单和利润。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 32.0
+      },
+      "reason": "进入买入区间上沿，需要复核基本面是否未恶化并评估建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "出现较明显安全边际，若业绩和现金流正常可考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "进入乐观情景估值区，若无盈利上修应考虑减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 32,
-      "reason": "进入买入区间上沿，需要复核基本面是否未恶化并评估建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "reason": "出现较明显安全边际，若业绩和现金流正常可考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "进入乐观情景估值区，若无盈利上修应考虑减仓。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-21",
-      "reason": "预计披露2026年中报，重点验证收入增速、毛利率、现金流和明德二期进度。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认全年盈利区间和估值假设是否需要调整。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和2027年一季报，判断扩产项目是否开始贡献订单和利润。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

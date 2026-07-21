@@ -1,95 +1,105 @@
 {
-  "symbol": "CN:002735",
-  "ticker": "002735",
-  "name": "王子新材",
-  "company_name": "深圳王子新材料股份有限公司",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "观察型转型标的：塑料包装提供收入底盘，军工电子毛利较高但收入下滑，薄膜电容有新能源需求弹性但2025年仍为负毛利。2026Q1利润修复不足以证明拐点，需等待薄膜电容毛利转正、经营现金流改善和治理减持压力缓和。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    8.5,
-    11.0
-  ],
-  "buy_zone": [
-    7.0,
-    8.2
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "王子新材",
+    "security_status": "active",
+    "symbol": "CN:002735",
+    "ticker": "002735"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "e4366f346ecad30482d7e365ee96bb782a19d2ed3bdf7ea26dd64be3af0edf6a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.0-8.2元，且2026半年报或三季报显示薄膜电容毛利率转正、经营现金流明显改善",
-      "action": "小仓位试探",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看薄膜电容毛利率、库存、经营现金流和股东减持",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价未进入买入区，或薄膜电容仍为负毛利、经营现金流仍为负",
-      "action": "继续观察，不建仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认利润修复是否具备连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于13.0元但利润和现金流未兑现",
-      "action": "不追高，已有仓位减持",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新评估减值风险、资本开支兑现和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.2
+      },
+      "reason": "进入安全边际观察区，可结合半年报验证薄膜电容毛利和现金流改善",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入悲观情景下限附近，但仍需基本面确认后才可买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入乐观情景估值区，若未见利润兑现应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.2,
-      "reason": "进入安全边际观察区，可结合半年报验证薄膜电容毛利和现金流改善"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "reason": "进入悲观情景下限附近，但仍需基本面确认后才可买入"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入乐观情景估值区，若未见利润兑现应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看薄膜电容毛利率、库存、经营现金流和股东减持"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认利润修复是否具备连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新评估减值风险、资本开支兑现和估值区间"
-    }
-  ],
-  "key_metrics": {
-    "last_verified_price_date": "2026-07-14",
-    "last_verified_price": 11.56,
-    "estimated_market_cap_cny_billion": 4.34,
-    "pb_2026q1": 2.78,
-    "ps_2025": 2.01,
-    "revenue_2025_cny": 2157574752.82,
-    "net_profit_2025_cny": -158333555.95,
-    "operating_cash_flow_2025_cny": 17405323.11,
-    "revenue_2026q1_cny": 527230145.1,
-    "net_profit_2026q1_cny": 10082978.75,
-    "operating_cash_flow_2026q1_cny": -16761572.39
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

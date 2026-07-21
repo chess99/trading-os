@@ -1,97 +1,96 @@
 {
-  "symbol": "CN:000411",
-  "market": "CN",
-  "ticker": "000411",
-  "name": "英特集团",
-  "company_name": "英特集团",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "quality_rating": "medium",
-  "valuation_rating": "cheap_to_fair",
-  "current_thesis": "英特集团是浙江国资背景的区域医药流通平台，具备渠道、终端配送和信用优势，但医药商业低毛利、高营运资本占用和集采压价限制估值弹性。当前评级为 watch，等待 2026 半年报验证经营现金流、应收账款和毛利率；8.0-9.2 元为可评估小仓位买入区，13.5 元以上且基本面未上修应减仓。",
-  "fair_value_range": [
-    10.2,
-    12.6
-  ],
-  "buy_zone": [
-    8.0,
-    9.2
-  ],
-  "sell_or_reduce_zone": [
-    13.5,
-    15.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英特集团",
+    "security_status": "active",
+    "symbol": "CN:000411",
+    "ticker": "000411"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "03cc3e9a6e0059f57c90e4a129b4ce39058f7c77e316d1143acf65759e161cf5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 8.8 元，且无应收账款恶化、经营现金流持续转负或重大负面公告",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.015,
-      "reason": "估值进入较有吸引力区间，但行业低毛利和现金流波动要求小仓位验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 半年报，重点验证利润趋势、经营现金流、应收账款和毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 8.0 元，且 2026 半年报确认经营现金流改善、应收账款周转未恶化",
-      "action": "加仓至防守型标准仓",
-      "max_weight": 0.03,
-      "reason": "价格接近保守估值下沿，同时财务质量得到阶段性验证"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 三季报，确认一季度利润下滑是否延续或修复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 13.5 元，且利润、毛利率、现金流未同步上修",
-      "action": "逐步减仓或降至观察仓",
-      "max_weight": 0.01,
-      "reason": "估值进入乐观区间，风险收益比下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.8
+      },
+      "reason": "触发首笔观察仓评估，重点复核现金流和应收账款",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "接近保守估值下沿，若基本面未恶化可考虑提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.5
+      },
+      "reason": "进入减仓区间，除非业绩和现金流显著上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.8,
-      "reason": "触发首笔观察仓评估，重点复核现金流和应收账款"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "接近保守估值下沿，若基本面未恶化可考虑提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 13.5,
-      "reason": "进入减仓区间，除非业绩和现金流显著上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 半年报，重点验证利润趋势、经营现金流、应收账款和毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 三季报，确认一季度利润下滑是否延续或修复"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "归母净利润增速",
-    "扣非归母净利润增速",
-    "综合毛利率",
-    "经营活动现金流量净额",
-    "销售商品提供劳务收到的现金/营业收入",
-    "应收账款余额",
-    "应收账款周转天数",
-    "存货周转天数",
-    "财务费用率",
-    "零售/DTP/器械耗材收入占比",
-    "现金分红率"
-  ],
-  "confidence": "medium",
-  "notes": "2026-07-10 初始覆盖。评级为 watch，核心等待 2026 半年报验证经营现金流、应收账款和毛利率。"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

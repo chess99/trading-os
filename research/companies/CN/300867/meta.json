@@ -1,66 +1,95 @@
 {
-  "symbol": "CN:300867",
-  "ticker": "300867",
-  "name": "圣元环保",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "圣元环保存量垃圾焚烧与协同处置资产现金流改善明显，2025年经营现金流和2026年上半年业绩预告均显示基本盘修复；但国补目录/应收账款、治理警示函、牛磺酸跨界资本开支和非经常性投资收益降低确定性。当前价格处于合理价值区间，等待更厚安全边际或现金回款兑现。",
-  "fair_value_range": [15.0, 20.0],
-  "buy_zone": [12.0, 14.0],
-  "sell_or_reduce_zone": [22.0, 26.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "圣元环保",
+    "security_status": "active",
+    "symbol": "CN:300867",
+    "ticker": "300867"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "b95ff5fe1479e17463d93964ea98f9b5e8f0592ec34013adf289aba362029222"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于14.0元，且2026年中报扣非归母净利润不低于1.37亿元、经营现金流未明显恶化、未新增治理或国补重大负面",
-      "max_weight": 0.03,
-      "action": "小仓位观察性买入"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报、扣非利润、经营现金流、应收账款和国补目录进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格处于14.0-20.0元，且国补回款、应收账款和牛磺酸项目进度未显著超预期",
-      "max_weight": 0.01,
-      "action": "以跟踪为主，不追买"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及牛磺酸项目建设/资金安排变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于22.0元，且主业现金流或牛磺酸盈利没有同步兑现",
-      "max_weight": 0.0,
-      "action": "减仓或不新增"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报、分红、债务、治理整改与长期估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入买入区，需要复核中报扣非利润、经营现金流和国补回款后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "超过当前乐观情景估值下沿，需要检查是否已有新业务或现金流超预期支撑",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.0,
-      "reason": "进入买入区，需要复核中报扣非利润、经营现金流和国补回款后决定是否建仓"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "超过当前乐观情景估值下沿，需要检查是否已有新业务或现金流超预期支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报、扣非利润、经营现金流、应收账款和国补目录进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及牛磺酸项目建设/资金安排变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报、分红、债务、治理整改与长期估值假设"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

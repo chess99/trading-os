@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:603155",
-  "ticker": "603155",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "新亚强",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "新亚强具备有机硅功能性助剂和苯基硅烷细分龙头特征，电子级产品和苯基下游材料提供中期增长可选项，但2026-07-17除权后股价约14.23元对应估值已高于基准价值区间，需等待价格回落或业绩显著验证。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    10.0,
-    13.0
-  ],
-  "buy_zone": [
-    8.5,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    19.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新亚强",
+    "security_status": "active",
+    "symbol": "CN:603155",
+    "ticker": "603155"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "de96b9bb2d1dc07aa437e9677358e322f9510e2fad450559254c9c4d89c95ba5"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于10.5元，且2026年半年报显示收入同比增长、扣非净利率回到10%以上、经营现金流/归母净利润不低于0.8",
-      "action": "small_initial_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看电子级产品、苯基硅烷系列、扣非净利率和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于8.5元，且功能性助剂均价未跌破3.0万元/吨、电子级或苯基下游产品继续放量",
-      "action": "add_on_margin_of_safety",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和主要经营数据，判断价格周期是否企稳",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于16.0元但半年报未证明利润中枢上移，或公司再次提示热点概念收入占比极低",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否从观察转为可买或回避",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入买入观察区，需结合半年报现金流和扣非利润验证",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入较有安全边际区间，可重新评估建仓上限",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "接近乐观情景估值起点，若业绩未同步兑现应降低暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入买入观察区，需结合半年报现金流和扣非利润验证"
-    },
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入较有安全边际区间，可重新评估建仓上限"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "reason": "接近乐观情景估值起点，若业绩未同步兑现应降低暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看电子级产品、苯基硅烷系列、扣非净利率和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和主要经营数据，判断价格周期是否企稳"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否从观察转为可买或回避"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

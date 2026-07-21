@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:002091",
-  "market": "CN",
-  "ticker": "002091",
-  "name": "江苏国泰",
-  "company_name": "江苏国泰",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "江苏国泰当前是低PB、高分红、现金资产较厚的供应链服务资产，叠加瑞泰新材带来新能源材料周期弹性；但2026Q1扣非利润受汇率拖累明显下滑，化工新能源产能利用率低，故维持watch，等待6.30-7.10元买入区间或半年报确认扣非和现金流修复。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "undervalued_with_quality_discount",
-  "fair_value_range": [
-    8.0,
-    9.5
-  ],
-  "buy_zone": [
-    6.3,
-    7.1
-  ],
-  "sell_or_reduce_zone": [
-    10.0,
-    11.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "江苏国泰",
+    "security_status": "active",
+    "symbol": "CN:002091",
+    "ticker": "002091"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fe2e953052d2340683173a73a455c629c545fcbfa1b30046122b094e41763597"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入6.30-7.10元且未出现重大贸易摩擦、汇率损失扩大或应收账款恶化信号",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "低于合理价值区间下沿，股息率和PB安全垫较好，但2026Q1扣非利润下滑需要控制初始仓位"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点验证扣非利润、经营现金流、应收账款、存货和汇兑损失",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "半年报确认扣非归母净利润同比修复、经营现金流转正且应收账款未继续显著扩张",
-      "action": "加仓至核心低估值分红仓",
-      "max_weight": 0.03,
-      "reason": "利润质量改善后可提高对低PB和分红稳定性的定价权重"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润质量和分红可持续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.00元但扣非利润未恢复或上涨主要由非经常性收益驱动",
-      "action": "分批减仓或停止加仓",
-      "max_weight": 0.01,
-      "reason": "贸易型公司估值弹性有限，非经常性收益不宜给高倍数"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.1
+      },
+      "reason": "进入买入观察区间，可复核汇率、应收和半年报预期后执行首笔仓位",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "进入更有安全垫区间，但必须排除贸易摩擦、汇兑损失或资产减值导致的基本面下修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.0
+      },
+      "reason": "进入减仓观察区间，若扣非利润和瑞泰新材景气未同步改善，应降低仓位",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.1,
-      "reason": "进入买入观察区间，可复核汇率、应收和半年报预期后执行首笔仓位"
-    },
-    {
-      "type": "price_below",
-      "price": 6.3,
-      "reason": "进入更有安全垫区间，但必须排除贸易摩擦、汇兑损失或资产减值导致的基本面下修"
-    },
-    {
-      "type": "price_above",
-      "price": 10.0,
-      "reason": "进入减仓观察区间，若扣非利润和瑞泰新材景气未同步改善，应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点验证扣非利润、经营现金流、应收账款、存货和汇兑损失"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润质量和分红可持续性"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润同比增速",
-    "经营活动现金流净额",
-    "应收账款余额和周转率",
-    "存货余额和跌价准备",
-    "财务费用和汇兑损益",
-    "国外销售收入占比和主要市场关税政策",
-    "瑞泰新材电解液销量、毛利率和产能利用率",
-    "海外生产基地盈利情况",
-    "分红金额和股息率",
-    "可交换债发行进度和换股条款"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

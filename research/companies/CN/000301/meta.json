@@ -1,101 +1,123 @@
 {
-  "symbol": "CN:000301",
-  "market": "CN",
-  "ticker": "000301",
-  "name": "东方盛虹",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "东方盛虹是民营炼化和化工新材料一体化龙头，2026H1 业绩预告显示景气修复和价差扩大带来显著利润弹性；但公司资产负债率约 81%、利润强周期、当前 12.43 元已处于基准合理价值区间中部，缺少足够安全边际，适合观察并等待 10.80 元以下分批买入。",
-  "fair_value_range": [
-    11.3,
-    14.4
-  ],
-  "buy_zone": [
-    9.5,
-    10.8
-  ],
-  "sell_or_reduce_zone": [
-    14.5,
-    18.9
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东方盛虹",
+    "security_status": "active",
+    "symbol": "CN:000301",
+    "ticker": "000301"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-07-initial.md",
+        "sha256": "a066a5b4f09791fffb33fb251dd1a0a7cb56f2fba5f86a2c064578e8ca93ca34"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "10.80 元以下且半年报利润兑现、价差未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年半年报正式披露，核验归母净利润是否落在 42-50 亿元预告区间及经营现金流质量",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "9.50 元以下且资产负债率未继续恶化",
-      "action": "分批加仓",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026Q3 单季度归母净利润低于 8 亿元或扣非利润明显回落",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "8.00 元以下且无债务、安全生产或重大减值风险",
-      "action": "提高到强吸引力仓位上限",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "资产负债率高于 82% 或一年内到期非流动负债继续显著上升",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "14.50 元以上且缺乏 2027 年盈利上修证据",
-      "action": "不追高并考虑减仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-09-30"
+      },
+      "reason": "EVA/POE、丙烯腈、PX/PTA、涤纶长丝价差连续两个季度恶化",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "重大资本开支、债务融资、安全环保或装置停产公告",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.8
+      },
+      "reason": "进入有安全边际买入区上沿，复核半年报利润和价差后可建 2%-3% 观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入强吸引力区间，若债务和景气未恶化可评估提升至 6%-8%",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.5
+      },
+      "reason": "高于合理区间上沿，若缺乏 2027 盈利上修证据，不应追高并考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-07-initial.md",
-  "report_history": [
-    "reports/2026-07-07-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报正式披露，核验归母净利润是否落在 42-50 亿元预告区间及经营现金流质量",
-      "reason": "2026 年半年报正式披露，核验归母净利润是否落在 42-50 亿元预告区间及经营现金流质量"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026Q3 单季度归母净利润低于 8 亿元或扣非利润明显回落",
-      "reason": "2026Q3 单季度归母净利润低于 8 亿元或扣非利润明显回落"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "资产负债率高于 82% 或一年内到期非流动负债继续显著上升",
-      "reason": "资产负债率高于 82% 或一年内到期非流动负债继续显著上升"
-    },
-    {
-      "type": "date",
-      "date": "2026-09-30",
-      "condition": "EVA/POE、丙烯腈、PX/PTA、涤纶长丝价差连续两个季度恶化",
-      "reason": "EVA/POE、丙烯腈、PX/PTA、涤纶长丝价差连续两个季度恶化"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "重大资本开支、债务融资、安全环保或装置停产公告",
-      "reason": "重大资本开支、债务融资、安全环保或装置停产公告"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.8,
-      "message": "进入有安全边际买入区上沿，复核半年报利润和价差后可建 2%-3% 观察仓",
-      "reason": "进入有安全边际买入区上沿，复核半年报利润和价差后可建 2%-3% 观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "message": "进入强吸引力区间，若债务和景气未恶化可评估提升至 6%-8%",
-      "reason": "进入强吸引力区间，若债务和景气未恶化可评估提升至 6%-8%"
-    },
-    {
-      "type": "price_above",
-      "price": 14.5,
-      "message": "高于合理区间上沿，若缺乏 2027 盈利上修证据，不应追高并考虑减仓",
-      "reason": "高于合理区间上沿，若缺乏 2027 盈利上修证据，不应追高并考虑减仓"
-    }
-  ],
-  "updated_at": "2026-07-07T23:59:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

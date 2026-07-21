@@ -1,69 +1,86 @@
 {
-  "symbol": "CN:000860",
-  "ticker": "000860",
-  "name": "顺鑫农业",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "牛栏山仍有大众白酒品牌和渠道资产，但2025年白酒收入大幅下滑、2026Q1利润同比继续承压，当前价格缺乏足够安全边际，等待收入降幅收窄和现金流改善。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    8.5,
-    11.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.3
-  ],
-  "sell_or_reduce_zone": [
-    12.5,
-    14.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "顺鑫农业",
+    "security_status": "active",
+    "symbol": "CN:000860",
+    "ticker": "000860"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "1563b882bfa6d85ce404180b68454f98ac039cfdacebf169243d536bf3797498"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.0-8.3元且2026半年报显示白酒收入降幅明显收窄、经营现金流改善",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报，重点看白酒收入降幅、毛利率、合同负债和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入企稳且归母净利率回升至4%以上",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，确认白酒旺季后渠道库存和利润修复情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于12.5元但白酒收入和利润未确认修复",
-      "action": "不新增并考虑降低仓位",
-      "max_weight": 0.00
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.3
+      },
+      "reason": "进入买入观察区，需要结合白酒收入、合同负债和经营现金流复核。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.5
+      },
+      "reason": "超过中性估值上沿，若基本面未同步修复应降低预期收益率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.3,
-      "reason": "进入买入观察区，需要结合白酒收入、合同负债和经营现金流复核。"
-    },
-    {
-      "type": "price_above",
-      "price": 12.5,
-      "reason": "超过中性估值上沿，若基本面未同步修复应降低预期收益率。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报，重点看白酒收入降幅、毛利率、合同负债和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，确认白酒旺季后渠道库存和利润修复情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,70 +1,105 @@
 {
-  "symbol": "CN:300842",
-  "ticker": "300842",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "帝科股份",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "帝科股份是光伏导电浆料头部公司，并通过江苏晶凯切入存储芯片第二曲线；2026Q1 扣非利润显著改善，但归母利润和现金流仍受白银金融工具、白银租赁、扩产投入和客户票据周期扰动。当前约 70 元股价接近合理价值区间中上部，安全边际不足，等待 45-55 元或 2026H1 现金流/归母利润质量验证。",
-  "fair_value_range": [55, 75],
-  "buy_zone": [45, 55],
-  "sell_or_reduce_zone": [90, 110],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "帝科股份",
+    "security_status": "active",
+    "symbol": "CN:300842",
+    "ticker": "300842"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "1bfc09e731ca4d9d46e412d2949a4254c0bbd44270f5d6b4ad08800ac765d6b4"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 45-55 元且 2026H1 经营现金流/扣非归母比例大于 70%，白银相关非经常性亏损明显收敛",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘 2026 年半年报，重点检查扣非利润、归母利润、经营现金流和白银相关损益",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "高铜或银包铜浆料放量、存储业务收入和毛利率连续两个报告期改善，且定增摊薄影响明确",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘 2026 年三季报，检查少银化浆料和存储芯片业务是否持续兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 90 元但归母利润、现金流和存储业务兑现不足",
-      "action": "不追高或降低仓位",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复盘 2026 年年报和定增项目进展，重新校准长期估值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 55.0
+      },
+      "reason": "进入合理价值区间下沿，可复核是否具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "接近悲观情景上沿，若基本面未恶化可重点复盘买入",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 90.0
+      },
+      "reason": "高于基准估值区间，需要检验业绩兑现是否支撑估值扩张",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 55,
-      "reason": "进入合理价值区间下沿，可复核是否具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "接近悲观情景上沿，若基本面未恶化可重点复盘买入"
-    },
-    {
-      "type": "price_above",
-      "price": 90,
-      "reason": "高于基准估值区间，需要检验业绩兑现是否支撑估值扩张"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘 2026 年半年报，重点检查扣非利润、归母利润、经营现金流和白银相关损益"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘 2026 年三季报，检查少银化浆料和存储芯片业务是否持续兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复盘 2026 年年报和定增项目进展，重新校准长期估值"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,76 +1,110 @@
 {
-  "symbol": "CN:300812",
-  "market": "CN",
-  "ticker": "300812",
-  "name": "易天股份",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "股价回落至18.30元、接近13-18元合理价值区间上沿，估值风险部分释放；但旧报告后没有新增财报、订单验收、回款或半导体减亏证据，存储涨价还可能经手机与面板需求间接压制设备订单和验收，现价仍不适合买第一笔。",
-  "fair_value_range": [
-    13.0,
-    18.0
-  ],
-  "buy_zone": [
-    10.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    25.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "易天股份",
+    "security_status": "active",
+    "symbol": "CN:300812",
+    "ticker": "300812"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "79a310fbe2fe0576433a2bc1384fd2c2af2bed1316a40aa12c76bb99410bc13d"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "0fab0a19f18299fe7e44ef6a8390ea404d7497dc08a29fd13e41485567f930c7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于13元且尚无OLED明确验收、回款及半导体减亏证据，未持有者不买；已有低成本跟踪仓仅观察。",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报的分业务收入、验收、发出商品、合同负债、应收回款、减值和半导体子公司亏损。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格进入10-13元，且最新季报显示验收、回款、存货减值和半导体亏损均未恶化，可建立观察仓。",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，验证项目验收和经营现金流是否来自真实回款。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于10元，且OLED订单形成明确验收、半导体持续减亏、重大信用风险受控，经重新研究后最高配置。",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报、OLED与半导体商业化、诉讼执行及新业务现金投入。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "进入买入复核区，需确认验收、回款、存货减值和半导体亏损未恶化。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.0
+      },
+      "reason": "进入深度价值复核区，仅在业务价值未破坏时考虑提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "进入减仓区，除非正常化归母利润已达到8500万元以上。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-17-memory-cycle-followup.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报的分业务收入、验收、发出商品、合同负债、应收回款、减值和半导体子公司亏损。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，验证项目验收和经营现金流是否来自真实回款。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报、OLED与半导体商业化、诉讼执行及新业务现金投入。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "进入买入复核区，需确认验收、回款、存货减值和半导体亏损未恶化。"
-    },
-    {
-      "type": "price_below",
-      "price": 10.0,
-      "reason": "进入深度价值复核区，仅在业务价值未破坏时考虑提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "进入减仓区，除非正常化归母利润已达到8500万元以上。"
-    }
-  ],
-  "updated_at": "2026-07-18T06:09:30+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,110 +1,105 @@
 {
-  "symbol": "CN:300636",
-  "market": "CN",
-  "ticker": "300636",
-  "name": "同和药业",
-  "company_name": "江西同和药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "出口型特色原料药公司具备注册推进、二厂区产能释放和专利悬崖需求带来的中期弹性，但2025年利润下滑、ROE偏低、存货跌价和2026Q1尚未确认拐点使当前6.51元缺乏足够安全边际；等待5.20元以下或半年报验证改善后再买入。",
-  "quality_rating": "中",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    5.5,
-    6.8
-  ],
-  "buy_zone": [
-    0,
-    5.2
-  ],
-  "sell_or_reduce_zone": [
-    8.0,
-    999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同和药业",
+    "security_status": "active",
+    "symbol": "CN:300636",
+    "ticker": "300636"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "427cb4b13ed0c4db58bed45378f9a8eeeb17210a09215c10ea1b0a55cc3582d0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于6.80元，且2026半年报未显示毛利率或扣非利润恢复",
-      "action": "不买或仅保留跟踪仓",
-      "target_position": "0%-1%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看毛利率、扣非净利、存货和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在5.20元至6.80元之间，且半年报确认收入、毛利率、现金流改善",
-      "action": "小仓试错",
-      "target_position": "0%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断二厂区转固后的收入和利润转化。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于或等于5.20元，且未发生重大安全环保、客户流失或注册失败事件",
-      "action": "建立观察仓",
-      "target_position": "2%-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认注册推进、资本开支回报和分红政策。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格低于或等于4.70元，且扣非净利润趋势恢复、经营现金流保持为正",
-      "action": "提高到中等仓位",
-      "target_position": "4%-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入可买区，安全边际开始足够。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.7
+      },
+      "reason": "低于1倍PB并提供更高赔率。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.0
+      },
+      "reason": "估值进入偏贵区，需业绩兑现支撑。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "unit": "CNY/share",
-      "action": "复核半年报和存货后考虑首笔买入",
-      "reason": "进入可买区，安全边际开始足够。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.7,
-      "unit": "CNY/share",
-      "action": "若基本面未恶化则提高仓位",
-      "reason": "低于1倍PB并提供更高赔率。"
-    },
-    {
-      "type": "price_above",
-      "price": 8.0,
-      "unit": "CNY/share",
-      "action": "若缺乏利润修复证据则减仓",
-      "reason": "估值进入偏贵区，需业绩兑现支撑。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看毛利率、扣非净利、存货和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断二厂区转固后的收入和利润转化。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认注册推进、资本开支回报和分红政策。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "原料药收入增速",
-    "外销收入占比与外销毛利率",
-    "综合毛利率和原料药毛利率",
-    "扣非归母净利润及同比增速",
-    "经营活动现金流净额/净利润",
-    "存货余额、存货周转和资产减值损失",
-    "二厂区二期转固后的固定资产周转率",
-    "国内外注册、DMF备案和客户审计进展",
-    "合同定制类收入占比",
-    "汇兑损益和财务费用"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

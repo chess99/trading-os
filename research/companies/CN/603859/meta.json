@@ -1,93 +1,115 @@
 {
-  "symbol": "CN:603859",
-  "market": "CN",
-  "ticker": "603859",
-  "name": "能科科技",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "能科科技的核心看点是工业AI Agent与自主工业软件转型已在2025年和2026Q1得到收入增长验证，但总收入仍接近横盘，扣非利润和经营现金流尚未同步兑现，且历史财务内控瑕疵需要估值折扣。现价处于估算公允区间内，安全边际不足，适合观察等待30-33元或中报验证后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    32,
-    46
-  ],
-  "buy_zone": [
-    30,
-    33
-  ],
-  "sell_or_reduce_zone": [
-    52,
-    58
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "能科科技",
+    "security_status": "active",
+    "symbol": "CN:603859",
+    "ticker": "603859"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "329925d785da6829bf27f089a0bbfaabfd7539a21ad52ad9255eb462737f482a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入30-33元，且无新增监管处罚、AI收入和合同负债趋势未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看AI收入、毛利率、扣非净利、经营现金流和合同负债",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "2026中报显示AI收入同比增速约50%或更高，毛利率不低于50%，经营现金流明显修复",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年AI商业化和现金流修复是否成立",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于52元但扣非净利润和经营现金流未同步改善",
-      "action": "减仓或不追高",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和定增募投进展，重估长期盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "再次出现重大财务内控问题，或AI收入增速低于25%且现金流继续恶化",
-      "action": "退出观察",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 33.0
+      },
+      "reason": "进入买入区间上沿，需要复核中报和现金流后考虑建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入较有安全边际区间，若基本面未破坏可提高关注优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 52.0
+      },
+      "reason": "超过减持区间下沿，若利润和现金流未同步兑现则风险收益转弱",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 58.0
+      },
+      "reason": "明显高于基准公允价值，需要牛市情景兑现才能支撑",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 33,
-      "reason": "进入买入区间上沿，需要复核中报和现金流后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "进入较有安全边际区间，若基本面未破坏可提高关注优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 52,
-      "reason": "超过减持区间下沿，若利润和现金流未同步兑现则风险收益转弱"
-    },
-    {
-      "type": "price_above",
-      "price": 58,
-      "reason": "明显高于基准公允价值，需要牛市情景兑现才能支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看AI收入、毛利率、扣非净利、经营现金流和合同负债"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年AI商业化和现金流修复是否成立"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和定增募投进展，重估长期盈利中枢"
-    }
-  ],
-  "last_price": 37.37,
-  "last_price_date": "2026-07-17",
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

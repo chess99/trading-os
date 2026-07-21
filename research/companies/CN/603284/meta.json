@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603284",
-  "market": "CN",
-  "ticker": "603284",
-  "name": "林平发展",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "current_thesis": "林平发展是区域成本效率较强的包装原纸周期企业，当前估值低于IPO发行价且约15倍PE不贵，但新增产能、行业供给和现金流兑现仍需验证；破发后继续下跌至足够安全边际时可小仓位观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    40,
-    52
-  ],
-  "buy_zone": [
-    28,
-    34
-  ],
-  "sell_or_reduce_zone": [
-    56,
-    65
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "林平发展",
+    "security_status": "active",
+    "symbol": "CN:603284",
+    "ticker": "603284"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "3df21c2d7ec486ff7c55a5552f7be3b7457b2529fab7471310c2384a727f14a3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于34元，且2026H1未出现经营现金流恶化、应收和存货显著快于收入增长",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查新增产能、毛利率、经营现金流、应收账款和存货。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于30元，且新增产能爬坡正常、净利率维持7%以上、经营现金流/归母净利润大于0.8",
-      "action": "提高至核心观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证产能爬坡和吨纸利润是否持续。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于56元且2026年利润兑现不足2.2亿元",
-      "action": "不追高或减仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-02-10"
+      },
+      "reason": "上市满一年后复核限售、流通盘、价格表现和扩产兑现情况。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入安全边际初始买入区，需要复核现金流和产能爬坡。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "接近熊市情景价值上沿，若基本面未恶化可提高仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 56.0
+      },
+      "reason": "高于基准估值区间上沿，需要利润上修支持，否则风险收益转弱。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入安全边际初始买入区，需要复核现金流和产能爬坡。"
-    },
-    {
-      "type": "price_below",
-      "price": 30,
-      "reason": "接近熊市情景价值上沿，若基本面未恶化可提高仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 56,
-      "reason": "高于基准估值区间上沿，需要利润上修支持，否则风险收益转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查新增产能、毛利率、经营现金流、应收账款和存货。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证产能爬坡和吨纸利润是否持续。"
-    },
-    {
-      "type": "date",
-      "date": "2027-02-10",
-      "reason": "上市满一年后复核限售、流通盘、价格表现和扩产兑现情况。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

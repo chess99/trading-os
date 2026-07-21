@@ -1,95 +1,96 @@
 {
-  "symbol": "CN:300681",
-  "market": "CN",
-  "ticker": "300681",
-  "name": "英搏尔",
-  "company_name": "珠海英搏尔电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "观察",
-  "current_rating": "watch",
-  "current_thesis": "公司是新能源汽车电驱、电源总成二线优质供应商，2025 年收入、利润和现金流显著修复，2026Q1 延续改善；但 24.60 元对应 TTM PE 约 32.5 倍，已基本反映主业恢复和海外客户放量的基准情景，需等待更低价格或半年报继续验证毛利率、现金流与海外收入持续性。",
-  "quality_rating": "B+",
-  "valuation_rating": "中性偏贵",
-  "fair_value_range": [
-    21.0,
-    27.0
-  ],
-  "buy_zone": [
-    17.5,
-    20.5
-  ],
-  "sell_or_reduce_zone": [
-    30.0,
-    36.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英搏尔",
+    "security_status": "active",
+    "symbol": "CN:300681",
+    "ticker": "300681"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "3b3a0183a73f17d86ef22ac2d40e3635ade9d062388e21aee2919cccb4ff4fe0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于17.5元，且最近季度毛利率不低于15%、无重大客户丢失",
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026半年报收入增速、毛利率、经营现金流、存货与海外收入持续性",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格在17.5元至20.5元之间，且经营现金流未明显恶化",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026三季报，验证全年利润能否达到基准情景",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格在20.5元至22.5元之间，且2026Q2或Q3确认海外订单和盈利继续兑现",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
+      "reason": "进入有安全边际的买入区，较基准合理价值有约25%折价",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "价格在22.5元至27.0元之间，仅已有低位仓位可持有观察",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 17.5
+      },
+      "reason": "进入强吸引力买入区，悲观情景已有较充分反映",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "价格高于27.0元，不新增仓位；高于30.0元且盈利未上修则减仓或回避",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 30.0
+      },
+      "reason": "价格超过当前基准估值上沿，若盈利未上修则不应追高",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.5,
-      "reason": "进入有安全边际的买入区，较基准合理价值有约25%折价"
-    },
-    {
-      "type": "price_below",
-      "price": 17.5,
-      "reason": "进入强吸引力买入区，悲观情景已有较充分反映"
-    },
-    {
-      "type": "price_above",
-      "price": 30.0,
-      "reason": "价格超过当前基准估值上沿，若盈利未上修则不应追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026半年报收入增速、毛利率、经营现金流、存货与海外收入持续性"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026三季报，验证全年利润能否达到基准情景"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季度营业收入同比增速",
-    "综合毛利率",
-    "归母净利润率",
-    "经营现金流净额/归母净利润",
-    "存货余额与周转",
-    "应收账款和应收票据余额",
-    "海外收入占比及VinFast订单持续性",
-    "前五大客户集中度",
-    "电源总成和驱动总成出货量",
-    "机器人、低空经济等新业务的可核验收入或定点订单"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

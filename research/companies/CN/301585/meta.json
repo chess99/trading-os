@@ -1,94 +1,105 @@
 {
-  "symbol": "CN:301585",
-  "ticker": "301585",
-  "name": "蓝宇股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司是国内数码喷印墨水细分小龙头，受益于纺织数码印花渗透率提升和国产替代，但当前估值约36-39倍2025年利润，2026Q1增长尚未证明足够弹性，需等待价格安全边际或半年报经营加速。",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "fair_value_range": [
-    20.0,
-    26.0
-  ],
-  "buy_zone": [
-    16.0,
-    20.0
-  ],
-  "sell_or_reduce_zone": [
-    32.0,
-    36.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价低于20元且2026H1收入增速不低于10%、毛利率未明显下滑、经营现金流没有显著恶化",
-      "action": "watchlist_to_probe",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于16元且基本面未恶化、募投产能爬坡正常",
-      "action": "increase_to_core_small_position",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于32元但收入和利润增速未同步加速",
-      "action": "avoid_or_reduce",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.0,
-      "reason": "进入合理价值下沿，约对应30倍以下2025年利润，值得复核半年报后小仓位试错"
-    },
-    {
-      "type": "price_below",
-      "price": 16.0,
-      "reason": "出现较明显安全边际，若基本面未恶化可考虑提高权重"
-    },
-    {
-      "type": "price_above",
-      "price": 32.0,
-      "reason": "脱离中性估值区间，若业绩未加速应降低预期或减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入增速、毛利率、经营现金流和募投进度"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认旺季订单、存货和应收账款变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，判断产能扩张是否转化为利润增长"
-    }
-  ],
-  "key_metrics": {
-    "market_price_reference_cny": [
-      24.9,
-      26.4
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "蓝宇股份",
+    "security_status": "active",
+    "symbol": "CN:301585",
+    "ticker": "301585"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "09bde3b36bd8658a1fde3c9b4c664a16bff2cc646ee742c2477d7395381dccdf"
+      }
     ],
-    "shares_outstanding_million": 104.0,
-    "market_cap_reference_billion_cny": [
-      2.59,
-      2.74
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入增速、毛利率、经营现金流和募投进度",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认旺季订单、存货和应收账款变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，判断产能扩张是否转化为利润增长",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.0
+      },
+      "reason": "进入合理价值下沿，约对应30倍以下2025年利润，值得复核半年报后小仓位试错",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "出现较明显安全边际，若基本面未恶化可考虑提高权重",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "脱离中性估值区间，若业绩未加速应降低预期或减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
     ],
-    "revenue_2025_million_cny": 487.0,
-    "net_profit_2025_million_cny": 70.78,
-    "revenue_2026q1_million_cny": 108.76,
-    "net_profit_2026q1_million_cny": 13.69
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

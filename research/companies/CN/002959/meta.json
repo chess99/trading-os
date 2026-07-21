@@ -1,128 +1,132 @@
 {
-  "symbol": "CN:002959",
-  "market": "CN",
-  "ticker": "002959",
-  "name": "小熊电器",
-  "company_name": "小熊电器股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "小熊电器是运营能力较强的小家电品牌制造商，2025年收入和利润修复、现金流好、分红较高，但2026Q1收入和利润明显下滑，行业已进入成熟分化期。当前价格约处合理区间下沿，但安全边际不足，等待30元以下或经营修复确认后再提高仓位。",
-  "quality_rating": "中高",
-  "valuation_rating": "合理偏低但未到深度低估",
-  "fair_value_range": [
-    33,
-    40
-  ],
-  "buy_zone": [
-    26,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    42,
-    48
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "小熊电器",
+    "security_status": "active",
+    "symbol": "CN:002959",
+    "ticker": "002959"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "90f9d27671aa693c9ca36085746fdb1b4fcaea43e67ab42de3eccdcf8c30fe7d"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于30元，且最近一季收入降幅未扩大、毛利率维持在35%以上",
-      "action": "建立观察仓",
-      "min_weight": 0.01,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026中报后确认收入是否恢复。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于28元，且经营现金流/净利润维持大于1、销售费用率未继续上升",
-      "action": "提高到基础仓",
-      "min_weight": 0.03,
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后判断利润率是否低于买入假设。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于26元，且厨房主业恢复正增长或个护/海外增长能抵消主业压力",
-      "action": "加到中等仓",
-      "min_weight": 0.05,
-      "max_weight": 0.06
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后检查渠道和营销效率。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价高于42元，且单季收入和归母净利未恢复双位数增长",
-      "action": "减仓或停止加仓",
-      "min_weight": 0,
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后检查线下和海外扩张的营运资金风险。",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后确认第二增长曲线是否有效。",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报后检查资本配置是否继续股东友好。",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "价格低于合理价值下沿约10%，开始具备基础安全边际。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 28.0
+      },
+      "reason": "价格较合理价值下沿折价约15%以上，补偿短期业绩波动。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 42.0
+      },
+      "reason": "价格高于合理价值上沿，需业绩加速才能支撑估值。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "action": "进入可买观察区，复核最近季报和费用率。",
-      "reason": "价格低于合理价值下沿约10%，开始具备基础安全边际。"
-    },
-    {
-      "type": "price_below",
-      "price": 28,
-      "action": "进入基础仓买入区，若基本面未恶化可分批买入。",
-      "reason": "价格较合理价值下沿折价约15%以上，补偿短期业绩波动。"
-    },
-    {
-      "type": "price_above",
-      "price": 42,
-      "action": "进入减仓审查区，除非增长重新加速，否则降低仓位。",
-      "reason": "价格高于合理价值上沿，需业绩加速才能支撑估值。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026Q2/Q3收入继续同比下滑且降幅扩大",
-      "reason": "复核2026中报后确认收入是否恢复。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "归母净利率连续两个季度低于6%",
-      "reason": "三季报后判断利润率是否低于买入假设。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "销售费用率持续高于18%且收入增速低于费用增速",
-      "reason": "三季报后检查渠道和营销效率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "存货或应收账款同比增速显著高于收入增速",
-      "reason": "三季报后检查线下和海外扩张的营运资金风险。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "海外和个护业务毛利率明显低于预期，第二曲线质量变差",
-      "reason": "三季报后确认第二增长曲线是否有效。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "分红政策或回购节奏明显弱化",
-      "reason": "年报后检查资本配置是否继续股东友好。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "单季营业收入同比增速",
-    "单季归母净利润同比增速",
-    "毛利率",
-    "销售费用率",
-    "经营现金流/净利润",
-    "厨房小家电收入增速",
-    "个护小家电收入和毛利率",
-    "海外收入占比和毛利率",
-    "应收账款周转",
-    "存货周转"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,110 +1,106 @@
 {
-  "symbol": "CN:603186",
-  "market": "CN",
-  "ticker": "603186",
-  "name": "华正新材",
-  "company_name": "华正新材",
-  "status": "active",
-  "updated_at": "2026-07-09",
-  "latest_report": "reports/2026-07-09-initial.md",
-  "report_history": [
-    "reports/2026-07-09-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司方向正确，受益于AI服务器、高速高频覆铜板和半导体封装材料升级，但2026-07-09股价188.66元已明显透支未来2-3年乐观预期；现阶段应观察经营性利润修复与高端产品放量，不宜追高买入。",
-  "quality_rating": "B+",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    90,
-    120
-  ],
-  "buy_zone": [
-    65,
-    85
-  ],
-  "sell_or_reduce_zone": [
-    150,
-    9999
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华正新材",
+    "security_status": "active",
+    "symbol": "CN:603186",
+    "ticker": "603186"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "da2d28e8f9dc112ead752ea7bda2f8567af4f066f1314c5742e0b1962b45e48e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price_above_150",
-      "action": "avoid_buying",
-      "max_weight": 0.0,
-      "reason": "估值已透支未来2-3年的高端覆铜板和封装材料放量预期。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年中报，重点验证扣非利润、毛利率和高端产品放量质量。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price_between_120_and_150",
-      "action": "tracking_only",
-      "max_weight": 0.02,
-      "reason": "只适合建立很小的跟踪仓，等待盈利质量继续验证。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，确认景气持续性与扩产兑现情况。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price_between_90_and_120",
-      "action": "accumulate_cautiously",
-      "max_weight": 0.05,
-      "reason": "估值接近合理区间，但仍需观察高速高频材料和封装材料兑现节奏。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 120.0
+      },
+      "reason": "股价回到估计合理价值上沿，适合重新评估首笔试仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "price_between_65_and_85",
-      "action": "buy",
-      "max_weight": 0.08,
-      "reason": "估值开始具备安全边际，可以为未来1-3年的成长预期支付合理价格。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "进入有安全边际买入区间。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     },
     {
-      "condition": "price_below_65",
-      "action": "buy_aggressively",
-      "max_weight": 0.1,
-      "reason": "对周期、融资和扩产执行风险已给出较充分折价。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 65.0
+      },
+      "reason": "进入强吸引力买入区间。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 150.0
+      },
+      "reason": "进入不应追高区域，需要警惕高估值回撤。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 120,
-      "reason": "股价回到估计合理价值上沿，适合重新评估首笔试仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "进入有安全边际买入区间。"
-    },
-    {
-      "type": "price_below",
-      "price": 65,
-      "reason": "进入强吸引力买入区间。"
-    },
-    {
-      "type": "price_above",
-      "price": 150,
-      "reason": "进入不应追高区域，需要警惕高估值回撤。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年中报，重点验证扣非利润、毛利率和高端产品放量质量。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，确认景气持续性与扩产兑现情况。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "覆铜板业务毛利率",
-    "高速/高频材料收入占比",
-    "BT封装材料与CBF积层绝缘膜收入进展",
-    "珠海高端产能利用率",
-    "资产负债率",
-    "树脂/铜箔/玻布成本波动与传导情况",
-    "2026年度定增项目审批和开工进度",
-    "前五大客户销售占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

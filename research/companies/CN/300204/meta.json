@@ -1,108 +1,114 @@
 {
-  "symbol": "CN:300204",
-  "market": "CN",
-  "ticker": "300204",
-  "name": "舒泰神",
-  "company_name": "舒泰神（北京）生物制药股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "STSP-0601/注射用波米泰酶α已于2026-06-09获批，显著提高公司上行期权；但老品种收入下滑、经营现金流为负，且截至2026-07-13缺少新药定价、医保、准入、收入和回款验证。当前23.45元/股附近市值约112亿元，已预支偏乐观商业化假设，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [14, 19],
-  "buy_zone": [12, 14],
-  "sell_or_reduce_zone": [26, 30],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "舒泰神",
+    "security_status": "active",
+    "symbol": "CN:300204",
+    "ticker": "300204"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5a2d88d614791b911a82368e2d40c10df57798d24a06aae97bf7cd6567b19e0a"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于合理价值区间且缺少STSP-0601商业化收入验证",
-      "action": "不建仓，保持观察",
-      "max_weight": 0
-    },
-    {
-      "condition": "股价跌至12-14元/股且无重大药品安全性或融资失败风险",
-      "action": "建立观察仓",
-      "max_weight": 0.015
-    },
-    {
-      "condition": "STSP-0601连续两个季度披露可核验商业化收入、毛利率和回款质量，且股价仍低于18元/股",
-      "action": "加仓至核心观察仓",
-      "max_weight": 0.035
-    },
-    {
-      "condition": "股价高于26元/股但新药收入未兑现或定增摊薄显著",
-      "action": "减仓至0",
-      "max_weight": 0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14,
-      "unit": "CNY/share",
-      "reason": "进入可买区间上沿，安全边际开始接近要求",
-      "action": "复核是否可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 12,
-      "unit": "CNY/share",
-      "reason": "低于基准买入区间下沿，若基本面未恶化则赔率改善",
-      "action": "若基本面未恶化，评估提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 26,
-      "unit": "CNY/share",
-      "reason": "高于合理价值区间较多且可能预支新药商业化成功",
-      "action": "若缺少STSP-0601收入验证，减仓或不参与"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报通常能提供新药获批后的首轮信息窗口",
-      "condition": "2026年三季报或STSP-0601挂网/中标/医保/商保支付进展披露",
-      "action": "复核峰值销售、利润率假设和仓位上限"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可系统核验STSP-0601商业化、费用投放和现金消耗",
-      "condition": "2026年年报披露后，核验STSP-0601收入、毛利率、回款、医院准入和老品种止跌情况",
-      "action": "更新估值区间、财务质量和买入区间"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "中报可观察商业化第二阶段与核心管线进展",
-      "condition": "2027年中报披露后，核验BDB-001、STSA-1002等管线进展、现金消耗和融资摊薄",
-      "action": "更新管线期权价值和摊薄后每股价值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2028-04-30",
+      "active": true,
+      "condition": {
+        "date": "2028-04-30"
+      },
       "reason": "两年维度足以判断STSP-0601是否形成可持续收入曲线",
-      "condition": "2027年年报披露后，判断STSP-0601商业化是否形成可持续收入曲线",
-      "action": "决定维持观察、转买入或转不买"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.0
+      },
+      "reason": "进入可买区间上沿，安全边际开始接近要求",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "低于基准买入区间下沿，若基本面未恶化则赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 26.0
+      },
+      "reason": "高于合理价值区间较多且可能预支新药商业化成功",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "STSP-0601季度销售收入",
-    "STSP-0601医院准入数量和支付覆盖",
-    "STSP-0601毛利率与回款周期",
-    "苏肽生收入增速",
-    "舒泰清收入和销量是否止跌",
-    "经营活动现金流净额",
-    "研发投入总额及资本化比例",
-    "货币资金、借款和定增摊薄比例"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

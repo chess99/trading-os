@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:600724",
-  "ticker": "600724",
-  "name": "宁波富达",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "current_thesis": "宁波富达核心价值来自宁波天一广场等商业物业和较厚净现金，水泥业务已基本退出；资产质量尚可但当前估值接近乐观情景，安全边际不足，适合观察而非新买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.0,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.7
-  ],
-  "sell_or_reduce_zone": [
-    5.6,
-    6.4
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宁波富达",
+    "security_status": "active",
+    "symbol": "CN:600724",
+    "ticker": "600724"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "f7b4491e86f4b026dea00aa99e91b8aec9733bfaae0e842fe8e7aa30631ef4e0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入3.2-3.7元且商业物业收入、毛利率和经营现金流未恶化时，仅可建立观察仓位。",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026年半年报披露后复核商业地产收入、租金趋势、毛利率和现金使用。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至3.0元附近且2026年半年报确认商业物业现金流稳定、净现金仍充足时，仓位上限可提高但需保持分散。",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026年三季报后复核利润基底和经营现金流。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于5.6元且无租金高增长、优质资产注入或大额现金返还证据时，不新增并考虑降低已有敞口。",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026年年报及分红方案披露后重估资本回报和公允价值。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.7
+      },
+      "reason": "进入买入区间上沿，需要复核商业物业现金流和最新资产负债表。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入具备较强安全边际区间，需要评估是否提高观察仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.6
+      },
+      "reason": "高于减持区间下沿且估值接近乐观情景，需要复核是否存在基本面超预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.7,
-      "reason": "进入买入区间上沿，需要复核商业物业现金流和最新资产负债表。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入具备较强安全边际区间，需要评估是否提高观察仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 5.6,
-      "reason": "高于减持区间下沿且估值接近乐观情景，需要复核是否存在基本面超预期。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026年半年报披露后复核商业地产收入、租金趋势、毛利率和现金使用。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026年三季报后复核利润基底和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026年年报及分红方案披露后重估资本回报和公允价值。"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

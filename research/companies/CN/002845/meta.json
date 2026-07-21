@@ -1,123 +1,123 @@
 {
-  "symbol": "CN:002845",
-  "market": "CN",
-  "ticker": "002845",
-  "name": "同兴达",
-  "company_name": "深圳同兴达科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "传统显示/摄像头模组收入规模大但净利率很薄，日月同芯先进封测带来转型期权；2026 年上半年盈利修复值得跟踪，但高杠杆、大额担保和当前估值提前反映乐观预期，现价安全边际不足。",
-  "quality_rating": "低-中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    10.0,
-    13.0
-  ],
-  "buy_zone": [
-    9.0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.0,
-    18.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "同兴达",
+    "security_status": "active",
+    "symbol": "CN:002845",
+    "ticker": "002845"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "9a8a0921e6e5e51fa8e1e60373214e865982a304cb3fd735900b6488ea80d2fb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 10.5 元/股，且最新财报未出现资产负债率继续上行或大额减值扩大",
-      "action": "建立 1%-2% 观察仓",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价低于 9.0 元/股，且连续两个季度扣非归母净利润为正、经营现金流为正",
-      "action": "提高至 3%-4% 仓位",
-      "max_weight": 0.04
-    },
-    {
-      "condition": "股价高于 13.0 元/股，但日月同芯盈利能力和杠杆下降尚未验证",
-      "action": "不新增仓位",
-      "max_weight": 0.0
-    },
-    {
-      "condition": "股价高于 16.0 元/股且缺乏新增基本面证据",
-      "action": "减持或继续空仓观察",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "unit": "元/股",
-      "reason": "进入初始买入区，PB 和 PS 开始具备一定安全边际",
-      "condition": "进入初始买入区，复核三季报或最近一期财报后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 9.0,
-      "unit": "元/股",
-      "reason": "进入深度折价区，若基本面未恶化，赔率明显改善",
-      "condition": "进入深度安全边际区，若扣非利润和现金流仍在改善，可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 16.0,
-      "unit": "元/股",
-      "reason": "价格超过保守估值上沿，需防止为未验证转型支付过高溢价",
-      "condition": "超过基本面可支撑区，除非封测连续盈利且杠杆下降，否则降低风险敞口"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报通常能验证上半年修复是否延续",
-      "condition": "披露 2026 年三季报或年度报告",
-      "action": "复核扣非利润、现金流、资产负债率和封测贡献"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "封测业务是当前估值弹性的主要来源",
-      "condition": "日月同芯披露新增大客户、重大订单、产能利用率或盈利能力变化",
-      "action": "重估封测期权价值"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "资产负债表压力是该公司的核心尾部风险",
-      "condition": "新增担保、短期借款、资产负债率或减值准备显著上升",
-      "action": "下调质量评级和可接受仓位"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "传统模组毛利率决定百亿收入能否转化为利润",
-      "condition": "显示模组毛利率连续两个季度低于 8%",
-      "action": "下调传统模组估值中枢"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "价格触及买入或减持区间时需要重新校验安全边际",
-      "condition": "股价触及 10.5 元、9.0 元或 16.0 元价格触发线",
-      "action": "按价格触发计划复核买入或减持动作"
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入初始买入区，PB 和 PS 开始具备一定安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.0
+      },
+      "reason": "进入深度折价区，若基本面未恶化，赔率明显改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.0
+      },
+      "reason": "价格超过保守估值上沿，需防止为未验证转型支付过高溢价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "扣非归母净利润及连续性",
-    "经营活动现金流净额与自由现金流",
-    "资产负债率、短期借款、实际担保余额",
-    "显示模组毛利率",
-    "日月同芯收入、毛利率、净利润、客户导入和稼动率",
-    "前五大客户销售占比",
-    "存货和应收账款减值准备"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

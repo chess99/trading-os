@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:603026",
-  "ticker": "603026",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "石大胜华",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "2026年盈利从行业低谷明显修复，但现价已部分反映上半年景气弹性；在现金流、产能利用率和价格中枢未连续验证前，按周期中枢估值更合适，等待45元以下或基本面继续验证后再考虑买入。",
-  "fair_value_range": [
-    46,
-    58
-  ],
-  "buy_zone": [
-    38,
-    45
-  ],
-  "sell_or_reduce_zone": [
-    75,
-    85
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "石大胜华",
+    "security_status": "active",
+    "symbol": "CN:603026",
+    "ticker": "603026"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b424cbb1759ab25641035ad2d7b412636de765a6130b647450f409f86d1509dc"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至45元以下，且最近一个季度扣非归母净利润不低于1.3亿元、经营现金流未恶化",
-      "action": "start_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报正式披露后的收入结构、毛利率、现金流和产能利用率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至40元以下，且未出现新的资产减值、客户流失或现金流恶化证据",
-      "action": "add_position",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断Q2后盈利是否继续环比回落。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于75元且无法验证9亿元以上可持续年化利润",
-      "action": "reduce_position",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，确认全年经营现金流和盈利中枢。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 45.0
+      },
+      "reason": "进入初始买入区间，需要复核Q3利润、现金流和行业价格。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "安全边际扩大，若基本面未恶化可考虑提高至计划上限仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 75.0
+      },
+      "reason": "价格进入乐观情景区间，若缺少可持续高利润证据应减仓或回避。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 45,
-      "reason": "进入初始买入区间，需要复核Q3利润、现金流和行业价格。"
-    },
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "安全边际扩大，若基本面未恶化可考虑提高至计划上限仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 75,
-      "reason": "价格进入乐观情景区间，若缺少可持续高利润证据应减仓或回避。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报正式披露后的收入结构、毛利率、现金流和产能利用率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断Q2后盈利是否继续环比回落。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，确认全年经营现金流和盈利中枢。"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

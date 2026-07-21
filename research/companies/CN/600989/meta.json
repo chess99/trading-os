@@ -1,42 +1,82 @@
 {
-  "symbol": "CN:600989",
-  "market": "CN",
-  "ticker": "600989",
-  "name": "宝丰能源",
-  "company_name": "宁夏宝丰能源集团股份有限公司",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "煤制烯烃低成本龙头,内蒙古大项目达产后盈利与现金流显著改善,但行业仍处供给偏宽松阶段,当前更适合观察偏买入与分档建仓,而非高仓位追价。",
-  "quality_rating": "high",
-  "valuation_rating": "moderately_attractive",
-  "fair_value_range": [19.0, 24.0],
-  "buy_zone": [16.5, 18.5],
-  "strong_attraction_zone": [13.0, 16.5],
-  "sell_or_reduce_zone": [29.0, 999.0],
-  "do_not_chase_above": 27.0,
-  "position_plan": [
-    {"zone": "24-27元", "condition": "合理偏贵", "action": "观察", "target_weight": 0.01, "max_weight": 0.02},
-    {"zone": "19-24元", "condition": "合理区间", "action": "小仓试探", "target_weight": 0.03, "max_weight": 0.04},
-    {"zone": "16.5-19元", "condition": "买入区", "action": "分批买入", "target_weight": 0.05, "max_weight": 0.06},
-    {"zone": "13-16.5元", "condition": "强吸引力区", "action": "建仓至6%", "target_weight": 0.06, "max_weight": 0.06}
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "宝丰能源",
+    "security_status": "active",
+    "symbol": "CN:600989",
+    "ticker": "600989"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-08-initial.md",
+        "sha256": "e6657635d2cbcda0b7039f01e2f91327e701739ab2ae4b8d41964067402461c4"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-09-initial.md",
+        "sha256": "272b4fba2d518e4fb801f2355f1158d6c1c6e5343f98324a8722953dcbcd4257"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026半年报披露,关注内蒙古项目达产与烯烃价差",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "进入买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 27.0
+      },
+      "reason": "不追高/减仓评估",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    }
   ],
-  "latest_report": "reports/2026-07-08-initial.md",
-  "report_history": ["reports/2026-07-08-initial.md"],
-  "review_triggers": [
-    {"type": "date", "date": "2026-08-31", "reason": "2026半年报披露,关注内蒙古项目达产与烯烃价差"}
-  ],
-  "price_triggers": [
-    {"type": "price_below", "price": 18.5, "reason": "进入买入区"},
-    {"type": "price_above", "price": 27, "reason": "不追高/减仓评估"}
-  ],
-  "key_risks": [
-    "煤制烯烃行业供给偏宽松,产品价差收窄",
-    "煤炭原料价格波动",
-    "内蒙古项目产能爬坡不及预期",
-    "环保与碳排放政策约束",
-    "油价下跌削弱煤制烯烃经济性",
-    "资本开支大,现金流波动"
-  ],
-  "updated_at": "2026-07-08T16:00:00+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:688668",
-  "market": "CN",
-  "ticker": "688668",
-  "name": "鼎通科技",
-  "company_name": "鼎通科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "鼎通科技是AI算力高速互连与精密连接器制造链条中的高弹性标的，2025年通讯连接器和外销业务显著放量，112G需求旺盛、224G实现量产，但当前股价已接近乐观情景估值，安全边际不足，适合跟踪等待回撤而非追高买入。",
-  "quality_rating": "high",
-  "valuation_rating": "expensive",
-  "fair_value_range": [
-    180,
-    240
-  ],
-  "buy_zone": [
-    120,
-    165
-  ],
-  "sell_or_reduce_zone": [
-    300,
-    360
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "鼎通科技",
+    "security_status": "active",
+    "symbol": "CN:688668",
+    "ticker": "688668"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "ba2a67fc8d3daee9fdf435327286aa36c717a928fb1e1c4d922a998e51ab19a3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于300元且估值已接近乐观情景",
-      "action": "不追高，保持0%仓位，仅纳入跟踪池",
-      "max_weight": 0,
-      "reason": "2026E前瞻估值仍处高位，安全边际不足"
+      "active": true,
+      "condition": {
+        "date": "2026-08-25"
+      },
+      "reason": "市场预期下一财报披露窗口，需复核2026年半年报、订单、毛利率和现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价回落至165元以下，且最新季度通讯连接器收入同比增速不低于20%、毛利率不低于30%、经营现金流未明显恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.01,
-      "reason": "价格进入买入区上沿，同时核心业务仍保持增长"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报后复核AI高速互连订单持续性、224G/448G量产进度和估值",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价回落至130元附近，且224G/448G或液冷散热产品客户认证和量产继续兑现",
-      "action": "分批加仓",
-      "max_weight": 0.03,
-      "reason": "估值回到更有风险补偿的位置，且成长逻辑未破坏"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 165.0
+      },
+      "reason": "进入买入区上沿，适合复核基本面并考虑首笔观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 130.0
+      },
+      "reason": "进入更具安全边际区间，若基本面未恶化可考虑加仓",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 360.0
+      },
+      "reason": "高于乐观情景估值上沿，应避免追高或考虑降风险",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 165,
-      "reason": "进入买入区上沿，适合复核基本面并考虑首笔观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 130,
-      "reason": "进入更具安全边际区间，若基本面未恶化可考虑加仓"
-    },
-    {
-      "type": "price_above",
-      "price": 360,
-      "reason": "高于乐观情景估值上沿，应避免追高或考虑降风险"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-25",
-      "reason": "市场预期下一财报披露窗口，需复核2026年半年报、订单、毛利率和现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "三季报后复核AI高速互连订单持续性、224G/448G量产进度和估值"
-    }
-  ],
-  "key_tracking_metrics": [
-    "通讯连接器组件季度收入同比和环比",
-    "112G、224G、448G产品认证、量产和良率",
-    "CAGE、Wafer、Housing、信号Pin、铜缆连接器、液冷散热器收入进展",
-    "通讯连接器毛利率",
-    "汽车连接器收入增速和毛利率",
-    "外销收入同比及占比",
-    "经营现金流净额/归母净利润",
-    "存货和应收账款周转",
-    "前五大客户收入占比和新增客户认证",
-    "可转债募投及海外产能释放进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

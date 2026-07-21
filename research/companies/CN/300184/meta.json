@@ -1,114 +1,105 @@
 {
-  "symbol": "CN:300184",
-  "market": "CN",
-  "ticker": "300184",
-  "name": "力源信息",
-  "company_name": "武汉力源信息技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "公司受益于AI服务器、存储、MLCC、光模块、电源和液冷链条景气回升，2026Q1利润弹性明显；但主营仍是低毛利、重营运资金的电子元器件分销，现金流尚未验证，14.69元附近安全边际不足，等待回调或中报现金流改善。",
-  "quality_rating": "中",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    12.0,
-    15.0
-  ],
-  "buy_zone": [
-    10.5,
-    12.0
-  ],
-  "sell_or_reduce_zone": [
-    17.5,
-    20.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "力源信息",
+    "security_status": "active",
+    "symbol": "CN:300184",
+    "ticker": "300184"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "562a62b78336109c18712493b030906f75444b9cca7d21eff92571ef9f75134e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价跌至12.0元以下，且2026半年报显示收入同比增长、毛利率不低于10.5%、应收账款增速不明显高于收入增速",
-      "action": "建立观察仓",
-      "target_position_pct": 2,
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价跌至10.5元以下，或股价低于12.5元且2026Q2单季归母净利润继续高于1亿元、经营现金流明显改善",
-      "action": "加至中等仓位",
-      "target_position_pct": 4,
-      "max_weight": 0.04
-    },
-    {
-      "condition": "连续两个季度经营现金流为正，AI相关收入占比维持20%以上，且2026-2027年净利润中枢上修到5.5-6.5亿元",
-      "action": "上调仓位上限",
-      "target_position_pct": 6,
-      "max_weight": 0.06
-    },
-    {
-      "condition": "股价高于17.5元且没有盈利上修，或应收账款、存货、经营现金流任一项显著恶化",
-      "action": "不追高并减仓",
-      "target_position_pct": 0,
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "currency": "CNY",
-      "reason": "进入合理价值下沿和可买区上沿",
-      "action": "进入可买区上沿，复核半年报和现金流后可建立观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "currency": "CNY",
-      "reason": "提供较充分安全边际",
-      "action": "进入高安全边际区，若基本面未恶化可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 17.5,
-      "currency": "CNY",
-      "reason": "估值进入偏乐观区间",
-      "action": "若无盈利继续上修，降低仓位或避免追高"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "验证2026Q1高增长是否延续",
-      "action": "复核AI相关收入占比、毛利率、单季归母净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "验证旺季需求、应收存货和现金流质量",
-      "action": "复核收入增长持续性、现金流和应收存货周转"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "重估全年利润中枢和长期安全边际",
-      "action": "复核全年利润中枢、经营现金流、回购注销执行和2027年估值"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "进入合理价值下沿和可买区上沿",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "提供较充分安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 17.5
+      },
+      "reason": "估值进入偏乐观区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "AI行业市场收入占主营业务收入比例",
-    "单季营业收入同比增速",
-    "单季归母净利润和扣非归母净利润",
-    "销售毛利率和净利率",
-    "经营现金流净额与归母净利润的匹配度",
-    "应收账款周转和存货周转",
-    "短期借款和净负债变化",
-    "回购注销执行进度"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

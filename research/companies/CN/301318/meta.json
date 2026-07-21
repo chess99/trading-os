@@ -1,110 +1,95 @@
 {
-  "symbol": "CN:301318",
-  "ticker": "301318",
-  "name": "维海德",
-  "market": "CN",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "维海德账上净金融资产厚、研发投入高，在视频会议摄像机和音视频终端细分领域有工程积累；但2025年利润下滑、2026Q1收入和利润显著承压，毛利率降至35.44%，当前19.92元附近缺少足够安全边际，需等待毛利率与扣非净利修复或价格跌入买入区。",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    15.0,
-    20.0
-  ],
-  "buy_zone": [
-    0.0,
-    14.5
-  ],
-  "sell_or_reduce_zone": [
-    22.5,
-    30.0
-  ],
-  "last_price": {
-    "price": 19.92,
+  "identity": {
     "currency": "CNY",
-    "as_of": "2026-07-15",
-    "source": "Sina quote API"
+    "market": "CN",
+    "name": "维海德",
+    "security_status": "active",
+    "symbol": "CN:301318",
+    "ticker": "301318"
   },
-  "position_plan": [
-    {
-      "condition": "股价低于14.5元，且2026年后续财报未出现现金大幅消耗、治理恶化或毛利率继续失控",
-      "action": "建立观察仓",
-      "max_weight": 0.01
-    },
-    {
-      "condition": "连续两个季度收入恢复同比增长、毛利率回到40%以上、扣非净利年化不低于0.8亿元",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价高于22.5元但扣非净利和毛利率未恢复",
-      "action": "不加仓并考虑减仓",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 14.5,
-      "reason": "进入估算买入区，净现金提供较高安全边际，可重新评估观察仓"
-    },
-    {
-      "type": "price_above",
-      "price": 22.5,
-      "reason": "高于乐观情景下沿，若基本面未同步改善则风险收益比转差"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点看收入、毛利率、扣非净利、存货和汇兑损益"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，验证利润修复是否具有连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估AI音视频硬件增长和资本配置质量"
-    }
-  ],
-  "key_metrics": {
-    "shares_outstanding": 135298885,
-    "reference_market_cap_cny": 2695150189.2,
-    "net_financial_assets_q1_2026_cny": 1171960016.31,
-    "revenue_2025_cny": 718119427.79,
-    "net_profit_2025_cny": 85402429.5,
-    "revenue_q1_2026_cny": 156510334.43,
-    "net_profit_q1_2026_cny": 3918257.33,
-    "gross_margin_q1_2026": 0.3544
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "a0f0c6b02886bd552e1eb49a0cefc3c1597ccb56bb775219ecee4b0f204d533f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
   },
-  "sources": [
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "title": "维海德2025年年度报告",
-      "date": "2026-04",
-      "url": "https://notice.10jqka.com.cn/api/pdf/f54a8e123591a85e.pdf"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点看收入、毛利率、扣非净利、存货和汇兑损益",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "title": "维海德2026年第一季度报告",
-      "date": "2026-04-25",
-      "url": "http://file.finance.sina.com.cn/211.154.219.97:9494/MRGG/CNSESZ_STOCK/2026/2026-4/2026-04-25/12180851.PDF"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，验证利润修复是否具有连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "title": "新浪行情API",
-      "date": "2026-07-15",
-      "url": "https://hq.sinajs.cn/list=sz301318"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估AI音视频硬件增长和资本配置质量",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 14.5
+      },
+      "reason": "进入估算买入区，净现金提供较高安全边际，可重新评估观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.5
+      },
+      "reason": "高于乐观情景下沿，若基本面未同步改善则风险收益比转差",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
-  ]
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

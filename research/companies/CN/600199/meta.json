@@ -1,91 +1,115 @@
 {
-  "symbol": "CN:600199",
-  "ticker": "600199",
-  "name": "金种子酒",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "金种子酒是华润赋能下的安徽区域白酒困境反转标的，但2025年和2026Q1仍处收入下滑、扣非亏损、经营现金流为负阶段；当前估值已部分反映反转预期，需等待合同负债、动销、现金流和收入降幅收窄共同验证。",
-  "fair_value_range": [
-    4.2,
-    5.6
-  ],
-  "buy_zone": [
-    3.5,
-    4.2
-  ],
-  "sell_or_reduce_zone": [
-    7.5,
-    9.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "金种子酒",
+    "security_status": "active",
+    "symbol": "CN:600199",
+    "ticker": "600199"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "5b4bdd98bb86ab9381d2421f11b0ab9669669a9e44bc4bf5939b08260ba906ab"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格高于公允价值中枢且2026Q1收入继续下滑、经营现金流为负，维持观察不建仓。",
-      "action": "observe",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026半年报的收入、合同负债、经营现金流、白酒毛利率和存货变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于4.2元，且2026半年报显示合同负债回升或经营现金流同比改善。",
-      "action": "starter_position",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026三季报，判断Q3是否出现收入止跌和现金流改善。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价低于3.5元，且白酒收入降幅明显收窄、存货没有继续恶化。",
-      "action": "add_small",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年报，重新评估华润协同和渠道改革是否兑现。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "2027年确认白酒收入恢复增长、扣非接近盈亏平衡、经营现金流转正。",
-      "action": "raise_cap",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.2
+      },
+      "reason": "进入保守公允价值下沿，若基本面未继续恶化，可复核试探仓位。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "接近资产底和熊市情景估值，可重新评估安全边际。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.5
+      },
+      "reason": "若尚未扭亏或现金流未转正，价格已透支反转预期。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "进入乐观反转情景估值区间，需减仓或回避估值回撤风险。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.2,
-      "reason": "进入保守公允价值下沿，若基本面未继续恶化，可复核试探仓位。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.5,
-      "reason": "接近资产底和熊市情景估值，可重新评估安全边际。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.5,
-      "reason": "若尚未扭亏或现金流未转正，价格已透支反转预期。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "reason": "进入乐观反转情景估值区间，需减仓或回避估值回撤风险。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026半年报的收入、合同负债、经营现金流、白酒毛利率和存货变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026三季报，判断Q3是否出现收入止跌和现金流改善。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年报，重新评估华润协同和渠道改革是否兑现。"
-    }
-  ],
-  "risk_level": "high",
-  "confidence": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

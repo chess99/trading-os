@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:688561",
-  "market": "CN",
-  "ticker": "688561",
-  "name": "奇安信",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "奇安信仍是中国政企网络安全龙头，终端安全、数据安全和安全分析与情报等赛道具备客户与品牌优势，AI-SOC和大模型安全提供中期增长期权；但公司仍大额亏损、毛利率下滑、短债和回款压力未消除，当前估值已预支部分扭亏预期，需等待现金流和扣非亏损改善后再提高仓位。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "decision": "观察",
-  "confidence": "中",
-  "fair_value_range": [
-    18,
-    26
-  ],
-  "buy_zone": [
-    0,
-    16
-  ],
-  "sell_or_reduce_zone": [
-    32,
-    45
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奇安信",
+    "security_status": "active",
+    "symbol": "CN:688561",
+    "ticker": "688561"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "d0c1e3e6a292def7507e8371f7af0d7189b8c27c541a1b00a5cd855a17424d4c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于16元，且最近一期经营现金流同比继续改善、毛利率不低于50%",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查收入增速、毛利率、扣非亏损和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于13元，且未出现收入持续下滑、融资恶化或核心客户流失",
-      "action": "提高到小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年现金流和费用率改善是否可持续",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于32元，但扣非亏损和经营现金流未显著改善",
-      "action": "不加仓并考虑减持",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，决定是否从观察转为买入或回避",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 16.0
+      },
+      "reason": "进入保守买入区，约对应2.3倍2026E PS，安全边际开始出现",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "若基本面未恶化，赔率明显改善，可评估提高至小仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 32.0
+      },
+      "reason": "超过基准估值上沿，若现金流和扭亏未兑现应降低风险暴露",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 16,
-      "reason": "进入保守买入区，约对应2.3倍2026E PS，安全边际开始出现"
-    },
-    {
-      "type": "price_below",
-      "price": 13,
-      "reason": "若基本面未恶化，赔率明显改善，可评估提高至小仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 32,
-      "reason": "超过基准估值上沿，若现金流和扭亏未兑现应降低风险暴露"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查收入增速、毛利率、扣非亏损和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年现金流和费用率改善是否可持续"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，决定是否从观察转为买入或回避"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

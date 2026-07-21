@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:605188",
-  "market": "CN",
-  "ticker": "605188",
-  "name": "国光连锁",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "国光连锁具备江西区域零售密度、自有物业和稳定现金流底盘，但 2025 年利润厚度很薄，2026 年一季度修复仍需淡季验证；当前市值已透支瑞金项目和利润修复预期，合理策略是观察而非买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    4.0,
-    6.5
-  ],
-  "buy_zone": [
-    3.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    8.5,
-    12.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "国光连锁",
+    "security_status": "active",
+    "symbol": "CN:605188",
+    "ticker": "605188"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "3754459bbedcb859fb937caff6f7938ce033f568bb85b6213dd0bfa1e1a044db"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 5.5 元，且连续两个季度扣非净利润同比改善、毛利率不低于 23%、经营现金流为正",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年中报收入、扣非净利润、经营现金流与瑞金项目进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 4.5 元，瑞金项目开业投入和培育亏损可量化，且全年扣非净利润有望超过 6000 万元",
-      "action": "提高至小仓位",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报淡季盈利质量和费用率变化",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 8.5 元且未证明年化归母净利润可稳定在 1.5 亿元以上",
-      "action": "不买入或减仓",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，判断利润修复是否可持续并重估合理价值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入初步买入观察区，需要复核季度经营数据和瑞金项目进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.5
+      },
+      "reason": "接近具备安全边际的小仓位区间，需重新计算资产底和正常化利润",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 8.5
+      },
+      "reason": "高于保守合理价值上沿，若利润未同步上修则估值风险上升",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "reason": "进入初步买入观察区，需要复核季度经营数据和瑞金项目进展"
-    },
-    {
-      "type": "price_below",
-      "price": 4.5,
-      "reason": "接近具备安全边际的小仓位区间，需重新计算资产底和正常化利润"
-    },
-    {
-      "type": "price_above",
-      "price": 8.5,
-      "reason": "高于保守合理价值上沿，若利润未同步上修则估值风险上升"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年中报收入、扣非净利润、经营现金流与瑞金项目进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报淡季盈利质量和费用率变化"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，判断利润修复是否可持续并重估合理价值区间"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

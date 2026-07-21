@@ -1,51 +1,77 @@
 {
-  "symbol": "CN:920892",
-  "market": "CN",
-  "ticker": "920892",
-  "name": "广咨国际",
-  "currency": "CNY",
-  "status": "active",
-  "current_rating": "watch",
-  "current_thesis": "现金流、资本回报和分红质量较好，但区域集中、数字化未创收与减持压力使当前价格仅接近公允，等待8.0至9.2元的安全边际。",
-  "fair_value_range": [9.5, 12.0],
-  "buy_zone": [8.0, 9.2],
-  "sell_or_reduce_zone": [13.0, 15.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广咨国际",
+    "security_status": "active",
+    "symbol": "CN:920892",
+    "ticker": "920892"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-14-initial.md",
+        "sha256": "28fd3f037c4a3785813ae60fba2276071deb328e6f73d0e08aee7f4b8610848e"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价处于9.2至10.0元且半年报验证订单、毛利和回款未恶化",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的订单、分业务毛利率、应收账款和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于8.0至9.2元、长期商业价值未受损且减持压力可控",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 9.2
+      },
+      "reason": "进入有安全边际的买入区间，需先确认基本面未恶化",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于8.0元但订单、回款、核心人才或治理假设尚未重新验证",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "进入减仓或不应追高区间，除非盈利预测已上修",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "latest_report": "reports/2026-07-14-initial.md",
-  "report_history": [
-    "reports/2026-07-14-initial.md"
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的订单、分业务毛利率、应收账款和经营现金流"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 9.2,
-      "reason": "进入有安全边际的买入区间，需先确认基本面未恶化"
-    },
-    {
-      "type": "price_above",
-      "price": 13.0,
-      "reason": "进入减仓或不应追高区间，除非盈利预测已上修"
-    }
-  ],
-  "updated_at": "2026-07-14T08:17:34+08:00"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

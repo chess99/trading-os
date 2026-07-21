@@ -1,105 +1,105 @@
 {
-  "symbol": "CN:300436",
-  "market": "CN",
-  "ticker": "300436",
-  "name": "广生堂",
-  "company_name": "福建广生堂药业股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "广生堂具备乙肝临床治愈创新药期权，但成熟业务连续亏损、资产负债表承压；以2026-07-13约99.87元价格和约159亿元市值看，市场已提前计入高度乐观的GST-HG141/GST-HG131成功预期，安全边际不足。",
-  "quality_rating": "中低",
-  "valuation_rating": "明显偏贵",
-  "fair_value_range": [
-    28,
-    47
-  ],
-  "buy_zone": [
-    25,
-    30
-  ],
-  "sell_or_reduce_zone": [
-    70,
-    100
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广生堂",
+    "security_status": "active",
+    "symbol": "CN:300436",
+    "ticker": "300436"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "33694fc2c472563bf82e5b94c579ae3c025612863ec61aca5278642819ab3cfe"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于70元且GST-HG141 III期未披露明确阳性数据",
-      "action": "不买入，已有仓位减仓或回避",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、亏损、现金流、负债和再融资进展。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至25-30元且没有新增临床失败、重大财务恶化或治理风险",
-      "action": "可建立研究型观察仓",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及乙肝创新药临床/注册进展。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "GST-HG141 III期主要终点明确达成、NDA路径清晰且股价仍低于45元",
-      "action": "重新评估买入并可提高仓位",
-      "target_position": "2.0%-3.0%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年报、GST-HG141 III期/NDA节奏及商业化假设。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "GST-HG141 III期失败或需要重大补充试验",
-      "action": "退出或保持零仓位，等待成熟业务深度低估再评估",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 30.0
+      },
+      "reason": "进入初始可买观察区，需要重新核验临床和融资风险。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 25.0
+      },
+      "reason": "进入较高安全边际区，可评估提高研究型仓位。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "在缺乏明确III期阳性前估值过高，触发回避或减仓复核。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 30,
-      "currency": "CNY",
-      "reason": "进入初始可买观察区，需要重新核验临床和融资风险。"
-    },
-    {
-      "type": "price_below",
-      "price": 25,
-      "currency": "CNY",
-      "reason": "进入较高安全边际区，可评估提高研究型仓位。"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "currency": "CNY",
-      "reason": "在缺乏明确III期阳性前估值过高，触发回避或减仓复核。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、亏损、现金流、负债和再融资进展。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及乙肝创新药临床/注册进展。"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年报、GST-HG141 III期/NDA节奏及商业化假设。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "GST-HG141 III期主要终点、HBV DNA/pgRNA指标、安全性和入组后随访进度",
-    "GST-HG141 NDA受理、优先审评、现场核查和获批进展",
-    "GST-HG131及GST-HG131+GST-HG141联合疗法II期入组和疗效数据",
-    "季度营业收入同比增速和肝胆疾病药物收入增速",
-    "销售费用率、研发投入资本化比例和经营现金流净额",
-    "归母净资产、短期借款、一年内到期非流动负债和再融资摊薄比例",
-    "前五大客户收入占比、政府采购占比和集采价格变化",
-    "实控人及一致行动人质押、冻结和减持风险"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

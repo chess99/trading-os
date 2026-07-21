@@ -1,133 +1,124 @@
 {
-  "symbol": "CN:002565",
-  "market": "CN",
-  "ticker": "002565",
-  "name": "顺灏股份",
-  "company_name": "上海顺灏新材料科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "不买",
-  "current_rating": "avoid",
-  "current_thesis": "公司主业为烟草/高端环保包装，客户准入和电子烟许可证有真实价值，但2025年收入下滑21.78%、扣非利润仅414.40万元、ROE仅3.20%；当前11.15元、118.19亿元市值主要定价太空算力和新型烟草期权，安全边际不足。",
-  "quality_rating": "C+",
-  "valuation_rating": "明显高估",
-  "fair_value_range": [
-    3.2,
-    4.8
-  ],
-  "buy_zone": [
-    2.4,
-    3.2
-  ],
-  "sell_or_reduce_zone": [
-    5.5,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "顺灏股份",
+    "security_status": "active",
+    "symbol": "CN:002565",
+    "ticker": "002565"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "091e96c20938defd4199f96745fde526da498c310631b330626c0c0d606510bd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "price_range": "<=2.4",
-      "condition": "主业现金流未恶化且轨道辰光无重大减值迹象",
-      "action": "强吸引力买入",
-      "position": "5%-8%",
-      "max_weight": 0.08
-    },
-    {
-      "price_range": "2.4-3.2",
-      "condition": "扣非利润恢复至5000万元以上或经营现金流保持为正",
-      "action": "有安全边际买入",
-      "position": "3%-5%",
-      "max_weight": 0.05
-    },
-    {
-      "price_range": "3.2-4.8",
-      "condition": "需要新型烟草放量或轨道辰光订单获得验证",
-      "action": "观察/小仓验证",
-      "position": "0%-2%",
-      "max_weight": 0.02
-    },
-    {
-      "price_range": ">5.5",
-      "condition": "估值超过合理区间上沿",
-      "action": "不买/已有则减仓",
-      "position": "0%",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "direction": "below",
-      "action": "review",
-      "reason": "跌入合理价值区间上沿，重新估值"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "direction": "below",
-      "action": "buy",
-      "reason": "进入有安全边际买入价"
-    },
-    {
-      "type": "price_below",
-      "price": 2.4,
-      "direction": "below",
-      "action": "strong_buy",
-      "reason": "进入强吸引力买入价"
-    },
-    {
-      "type": "price_above",
-      "price": 5.5,
-      "direction": "above",
-      "action": "avoid_or_reduce",
-      "reason": "超过不应追高价"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "trigger": "2026半年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证收入下滑是否收敛以及扣非利润质量",
-      "focus": "复查收入、扣非净利润和经营现金流"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "trigger": "2026三季报披露后",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证新型烟草和海外收入是否持续放量",
-      "focus": "验证新型烟草、海外收入和扣非利润趋势"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "trigger": "2026年报披露后",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报能全面评估主业盈利、权益投资损益和资本配置",
-      "focus": "评估主业恢复、轨道辰光权益损益和资本配置"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-12-31",
-      "trigger": "年底复盘",
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
       "reason": "若股价或基本面发生明显变化，需要重新校准安全边际",
-      "focus": "复查股价是否跌入4.8元以下并重新估值"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "跌入合理价值区间上沿，重新估值",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入有安全边际买入价",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 2.4
+      },
+      "reason": "进入强吸引力买入价",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.5
+      },
+      "reason": "超过不应追高价",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入同比增速",
-    "扣非归母净利润",
-    "经营活动现金流净额",
-    "省中烟客户收入占比",
-    "前五大客户销售占比",
-    "新型烟草收入",
-    "轨道辰光持股比例与权益法损益",
-    "应收账款和存货周转",
-    "回购和分红执行情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

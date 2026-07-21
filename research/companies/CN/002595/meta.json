@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:002595",
-  "market": "CN",
-  "ticker": "002595",
-  "name": "豪迈科技",
-  "company_name": "豪迈科技",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "豪迈科技是轮胎模具全球龙头和高质量机械加工平台，现金流与利润率优秀，但当前估值已接近合理区间，适合等待38-43元买入区或小仓位跟踪。",
-  "quality_rating": "A",
-  "valuation_rating": "fair_to_expensive",
-  "fair_value_range": [
-    50,
-    58
-  ],
-  "buy_zone": [
-    38,
-    43
-  ],
-  "sell_or_reduce_zone": [
-    62,
-    70
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "豪迈科技",
+    "security_status": "active",
+    "symbol": "CN:002595",
+    "ticker": "002595"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "165d4d7d27c2128cd1d39bf44e83aca30c98797b178f58fc44e8257bcff53ef2"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于43元，且最近一期收入和扣非净利润仍保持双位数增长，毛利率未连续恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.03,
-      "reason": "进入买入区上沿，质量较高但仍需保留估值安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查毛利率、现金流、大型零部件和机床业务进展",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于38元，且经营现金流接近或高于归母净利润，大型零部件订单未转弱",
-      "action": "提高至核心跟踪仓",
-      "max_weight": 0.06,
-      "reason": "悲观情景已较多计入，赔率改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报和海外订单节奏",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于62元，且未来两年利润预期未上修至年化15%以上",
-      "action": "分批减仓",
-      "max_weight": 0.02,
-      "reason": "估值进入充分定价区，制造业周期风险回报不匹配"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 43.0
+      },
+      "reason": "进入首笔买入区，复核订单、毛利率和现金流后可建观察仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 38.0
+      },
+      "reason": "进入高赔率区，若基本面未变坏可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 62.0
+      },
+      "reason": "进入减仓区，除非盈利预期显著上修，否则风险回报下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 43,
-      "reason": "进入首笔买入区，复核订单、毛利率和现金流后可建观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 38,
-      "reason": "进入高赔率区，若基本面未变坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 62,
-      "reason": "进入减仓区，除非盈利预期显著上修，否则风险回报下降"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查毛利率、现金流、大型零部件和机床业务进展"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报和海外订单节奏"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入同比增速",
-    "扣非归母净利润同比增速",
-    "毛利率和净利率",
-    "经营现金流净额/归母净利润",
-    "轮胎模具海外订单和海外收入占比",
-    "大型零部件产能利用率和在手订单",
-    "数控机床收入和订单",
-    "存货和应收账款周转",
-    "海外轮胎企业资本开支计划",
-    "人民币兑美元和欧元汇率"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

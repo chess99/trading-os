@@ -1,76 +1,105 @@
 {
-  "symbol": "CN:688615",
-  "market": "CN",
-  "ticker": "688615",
-  "name": "合合信息",
-  "currency": "CNY",
-  "status": "active",
-  "updated_at": "2026-07-18",
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-18-initial.md"
-  ],
-  "current_thesis": "合合信息是具备全球C端流量、OCR/多模态文本智能技术、商业数据资产和B端标准化产品能力的高毛利AI软件公司。2025年与2026Q1收入和利润仍保持20%以上增长，现金流质量好；95.70元处于估算公平价值区间下沿附近，适合小仓位买入并用付费转化、海外增长和B端标准化兑现来加仓。",
-  "rating": "buy",
-  "current_rating": "buy",
-  "fair_value_range": [
-    105,
-    130
-  ],
-  "buy_zone": [
-    75,
-    98
-  ],
-  "sell_or_reduce_zone": [
-    135,
-    160
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "合合信息",
+    "security_status": "active",
+    "symbol": "CN:688615",
+    "ticker": "688615"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f28e3230371e8c042b1529321c8568865f76912ec0c605cb668b4bdd20f96ca3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "95元以下且2026H1收入增速维持20%以上、经营现金流不弱于净利润时建立基础仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入增速、销售费用率、经营现金流和C/B端增长结构",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "85元以下且C端MAU、付费转化和B端续约未恶化时加仓",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报利润兑现、海外增长和B端标准化进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "75元以下且基本面无重大下修、销售费用率可控时提高到满仓位上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复核2026年年报、分红、研发投入效率和估值假设",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 95.0
+      },
+      "reason": "进入买入区上沿，风险收益比开始有吸引力",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 85.0
+      },
+      "reason": "在基本面未变时提供更充分安全边际",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 135.0
+      },
+      "reason": "超过基准公平价值区间上沿，需要减仓或等待盈利预测上修",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 95,
-      "reason": "进入买入区上沿，风险收益比开始有吸引力"
-    },
-    {
-      "type": "price_below",
-      "price": 85,
-      "reason": "在基本面未变时提供更充分安全边际"
-    },
-    {
-      "type": "price_above",
-      "price": 135,
-      "reason": "超过基准公平价值区间上沿，需要减仓或等待盈利预测上修"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入增速、销售费用率、经营现金流和C/B端增长结构"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报利润兑现、海外增长和B端标准化进度"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复核2026年年报、分红、研发投入效率和估值假设"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

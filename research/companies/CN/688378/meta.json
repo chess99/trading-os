@@ -1,95 +1,125 @@
 {
-  "symbol": "CN:688378",
-  "market": "CN",
-  "ticker": "688378",
-  "name": "奥来德",
-  "currency": "CNY",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "奥来德的OLED蒸发源设备在2026年已进入业绩兑现期，2026Q1和H1预告验证了8.6代线设备交付带来的利润弹性；但2025年扣非利润很低，2026H1归母与扣非差额仍较大，材料业务恢复和设备订单持续性尚需半年报验证。42.23元接近合理价值下沿但安全边际不足，40元以下再开始小仓位买入更合适。",
-  "fair_value_range": [
-    43,
-    55
-  ],
-  "buy_zone": [
-    34,
-    40
-  ],
-  "sell_or_reduce_zone": [
-    60,
-    70
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "奥来德",
+    "security_status": "active",
+    "symbol": "CN:688378",
+    "ticker": "688378"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "b738265932ef721cdff97242b2d543734235c6a15908719fca91adf234afb281"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-memory-cycle-followup.md",
+        "sha256": "449a601bfab60491cb8c0e49e044240b816e3f02aa0644485dfb0532b8372fdd"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-18-initial.md",
+        "sha256": "f88b7f62fac80d264a013b63eb83a282cc182bb2a19ef389146b6647a7db8c96"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于40元且2026年半年报尚未确认扣非利润质量、合同负债、回款和材料业务恢复",
-      "action": "保持观察，不新开仓",
-      "max_weight": 0.0,
-      "reason": "价格缺乏足够安全边际，且设备订单持续性仍未完全验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报的分产品收入、毛利率、扣非净利润、非经常性损益、合同负债和经营现金流",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价跌至38至40元，且半年报显示经营现金流为正、扣非利润不低于预告中枢、合同负债或在手订单未恶化",
-      "action": "建立观察仓",
-      "max_weight": 0.015,
-      "reason": "进入第一买点，但仍需保留订单波动和非经常性损益折价"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断蒸发源设备收入是否延续、材料业务是否恢复增长",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价跌至34至38元，且8.6代蒸发源新增订单或验收延续，OLED材料收入恢复正增长",
-      "action": "分批买入",
-      "max_weight": 0.03,
-      "reason": "相对基础价值下沿具备约15%以上安全边际"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重估订单持续性、研发投入效率、客户集中度和2027年盈利中枢",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价低于34元，经复核确认客户订单、回款、材料验证和治理无重大恶化",
-      "action": "提高到计划仓位上限",
-      "max_weight": 0.04,
-      "reason": "价格进入悲观情景附近，若基本面未坏可获得较好赔率"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 40.0
+      },
+      "reason": "进入第一买点，需复核半年报扣非利润、经营现金流、合同负债和材料收入",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 34.0
+      },
+      "reason": "进入安全边际较厚区域，需重新核验基本面是否出现永久性损伤",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 60.0
+      },
+      "reason": "进入乐观估值区间下沿，若2026E利润预期未同步上修应考虑减仓",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 70.0
+      },
+      "reason": "超过乐观估值上沿，除非订单和材料验证显著超预期，否则应降低仓位",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 40,
-      "reason": "进入第一买点，需复核半年报扣非利润、经营现金流、合同负债和材料收入"
-    },
-    {
-      "type": "price_below",
-      "price": 34,
-      "reason": "进入安全边际较厚区域，需重新核验基本面是否出现永久性损伤"
-    },
-    {
-      "type": "price_above",
-      "price": 60,
-      "reason": "进入乐观估值区间下沿，若2026E利润预期未同步上修应考虑减仓"
-    },
-    {
-      "type": "price_above",
-      "price": 70,
-      "reason": "超过乐观估值上沿，除非订单和材料验证显著超预期，否则应降低仓位"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报的分产品收入、毛利率、扣非净利润、非经常性损益、合同负债和经营现金流"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断蒸发源设备收入是否延续、材料业务是否恢复增长"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重估订单持续性、研发投入效率、客户集中度和2027年盈利中枢"
-    }
-  ],
-  "latest_report": "reports/2026-07-18-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md",
-    "reports/2026-07-17-memory-cycle-followup.md",
-    "reports/2026-07-18-initial.md"
-  ],
-  "updated_at": "2026-07-18"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

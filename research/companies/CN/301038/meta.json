@@ -1,108 +1,105 @@
 {
-  "market": "CN",
-  "ticker": "301038",
-  "symbol": "CN:301038",
-  "name": "深水规院",
-  "company_name": "深圳市水务规划设计院股份有限公司",
-  "exchange": "SZSE",
-  "currency": "CNY",
-  "status": "active",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "latest_rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "水利投资和数字水务方向值得跟踪，但当前市值已充分反映乐观预期，安全边际不足。",
-  "fair_value_range": [
-    4.4,
-    6.4
-  ],
-  "buy_zone": [
-    4.5,
-    6.0
-  ],
-  "sell_or_reduce_zone": [
-    10.1,
-    14.8
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深水规院",
+    "security_status": "active",
+    "symbol": "CN:301038",
+    "ticker": "301038"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "f96ac2028c9967ac72c7188bc89cd2f5bf04a4fe73f04644c5ab923e890c28fb"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "zone": "current",
-      "condition": "股价显著高于基准价值区间，且 2026Q1 仍亏损。",
-      "action": "hold_off",
-      "max_weight": 0.005,
-      "note": "当前不买入，最多观察仓 0.0%-0.5%。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "2026 年中报披露后需要复核收入增长、亏损收窄和经营现金流。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "zone": "watch",
-      "price_range": [
-        7.0,
-        8.0
-      ],
-      "condition": "股价回落至 7-8 元且中报验证收入增长、现金流未恶化。",
-      "action": "review",
-      "max_weight": 0.005,
-      "note": "若中报验证收入增长且现金流未恶化，重新评估小仓位。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "2026 年三季报披露后需要复核全年利润恢复和现金流质量。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "zone": "buy",
-      "price_range": [
-        4.5,
-        6.0
-      ],
-      "condition": "股价回落至 4.5-6.0 元且全年利润恢复明确。",
-      "action": "review_for_buy",
-      "max_weight": 0.015,
-      "note": "若全年利润恢复明确，进入买入区间复核。"
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "2026 年年报披露后需要复核数字水务增长、回款质量和估值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入观察区间，复核中报和现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.0
+      },
+      "reason": "进入买入复核区间，需确认利润恢复。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.8
+      },
+      "reason": "超过乐观情景估值上沿，安全边际不足。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "2026 年中报披露后需要复核收入增长、亏损收窄和经营现金流。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "2026 年三季报披露后需要复核全年利润恢复和现金流质量。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "2026 年年报披露后需要复核数字水务增长、回款质量和估值区间。"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "action": "review",
-      "reason": "进入观察区间，复核中报和现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 6.0,
-      "action": "review_for_buy",
-      "reason": "进入买入复核区间，需确认利润恢复。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.8,
-      "action": "reduce",
-      "reason": "超过乐观情景估值上沿，安全边际不足。"
-    }
-  ],
-  "max_weight": 0.005,
-  "updated_at": "2026-07-15",
-  "tags": [
-    "A股",
-    "水利",
-    "工程咨询",
-    "智慧水务"
-  ],
-  "thesis": "水利投资和数字水务方向值得跟踪，但当前市值已充分反映乐观预期，安全边际不足。",
-  "risk_level": "high",
-  "data_quality": "medium"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

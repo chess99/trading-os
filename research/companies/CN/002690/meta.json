@@ -1,120 +1,124 @@
 {
-  "symbol": "CN:002690",
-  "market": "CN",
-  "ticker": "002690",
-  "name": "美亚光电",
-  "company_name": "合肥美亚光电技术股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "高 ROE、高现金、低负债和高分红的光电识别设备龙头，色选机主业稳健且海外仍有增长，医疗设备处于低谷修复期；现价合理偏低但安全边际不足，适合等待 13 元以下分批买入。",
-  "quality_rating": "高",
-  "valuation_rating": "合理偏低",
-  "fair_value_range": [
-    15.5,
-    18.5
-  ],
-  "buy_zone": [
-    12.0,
-    13.0
-  ],
-  "sell_or_reduce_zone": [
-    20.0,
-    22.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "美亚光电",
+    "security_status": "active",
+    "symbol": "CN:002690",
+    "ticker": "002690"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "5520526fc1b53001ac32dc988b677a8d6c2fd86960dcd044d38e6c1ecd3b9615"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格在 14.0-15.0 元且基本面没有明显上修",
-      "max_weight": 0.02,
-      "action": "观察或试探性 0-2% 仓位"
-    },
-    {
-      "condition": "价格低于 13.0 元且色选机收入、毛利率和现金流未恶化",
-      "max_weight": 0.05,
-      "action": "建立 3-5% 基础仓位"
-    },
-    {
-      "condition": "价格低于 12.0 元且医疗设备没有继续大幅下滑",
-      "max_weight": 0.08,
-      "action": "提高到 6-8% 目标仓位"
-    },
-    {
-      "condition": "价格高于 20.0 元且扣非利润没有加速增长",
-      "max_weight": 0.03,
-      "action": "逐步降至 0-3% 仓位"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 13.0,
-      "reason": "低于合理价值下沿约 15% 且接近保守买入区",
-      "note": "进入基础买入区"
-    },
-    {
-      "type": "price_below",
-      "price": 12.0,
-      "reason": "相对合理价值区间折价更充分，可提高仓位",
-      "note": "进入加仓区"
-    },
-    {
-      "type": "price_above",
-      "price": 20.0,
-      "reason": "高于合理价值上沿，若业绩未上修则风险收益下降",
-      "note": "若无业绩上修，进入减仓观察区"
-    },
-    {
-      "type": "price_above",
-      "price": 22.0,
-      "reason": "估值需要医疗设备高增长验证，否则偏贵",
-      "note": "估值需要医疗设备高增长支撑"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026 年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报能验证医疗设备修复和海外增长是否延续",
-      "action": "复核医疗设备收入和境外收入"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026 年三季报披露",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报能验证扣非利润、毛利率和经营现金流是否恢复",
-      "action": "复核成长假设、估值倍数和仓位计划"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-03-31",
-      "condition": "2026 年年报披露",
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
       "reason": "年报能完整验证医疗设备、境外收入、现金流和分红",
-      "action": "重估合理价值区间和买入区间"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027 年半年报披露",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "连续两个中报可观察医疗设备修复是否可持续",
-      "action": "复核第二增长曲线和目标仓位上限"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 13.0
+      },
+      "reason": "低于合理价值下沿约 15% 且接近保守买入区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 12.0
+      },
+      "reason": "相对合理价值区间折价更充分，可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 20.0
+      },
+      "reason": "高于合理价值上沿，若业绩未上修则风险收益下降",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 22.0
+      },
+      "reason": "估值需要医疗设备高增长验证，否则偏贵",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "色选机收入增速",
-    "境外收入占比和境外毛利率",
-    "医疗设备收入增速",
-    "主营业务毛利率",
-    "扣非归母净利润增速",
-    "经营现金流/净利润",
-    "研发费用率",
-    "每股分红"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

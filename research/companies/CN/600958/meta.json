@@ -1,91 +1,96 @@
 {
-  "symbol": "CN:600958",
-  "market": "CN",
-  "ticker": "600958",
-  "name": "东方证券",
-  "company_name": "东方证券",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "东方证券具备东方红资管品牌、上海国资背景和上海证券并购期权，但ROE仍处于中低水平，当前约1倍PB估值合理偏中性，适合等待低PB和权益市场回暖共振后分批买入。",
-  "quality_rating": "medium_high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    8.9,
-    11.2
-  ],
-  "buy_zone": [
-    7.8,
-    8.7
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    13.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "东方证券",
+    "security_status": "active",
+    "symbol": "CN:600958",
+    "ticker": "600958"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "e7dc8fc93f876956aa0f0cd34d3620cc5f8049988ae6155555ec7b0a85485f5f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格低于8.7元，且市场成交额和东方红资管规模未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "低于基准买入区间上沿，PB提供一定下行保护"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，确认2026Q1利润高增长是否延续",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格低于7.8元，且上海证券收购条款未明显摊薄现有股东",
-      "action": "分批加仓",
-      "max_weight": 0.05,
-      "reason": "进入悲观情景估值下沿，周期修复期权性价比改善"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查三季报、东方红资管规模和上海证券收购进展",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格高于12.0元但ROE仍低于6%或资管规模增长停滞",
-      "action": "减仓或停止加仓",
-      "max_weight": 0.02,
-      "reason": "估值提前反映乐观情景，基本面兑现不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.7
+      },
+      "reason": "触及买入区间上沿，复核市场成交额、东方红规模和并购进展",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.8
+      },
+      "reason": "触及深度买入区间，复核是否存在新增风控或监管事件",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "触及减仓观察区，复核ROE和并购协同是否支持更高PB",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.7,
-      "reason": "触及买入区间上沿，复核市场成交额、东方红规模和并购进展"
-    },
-    {
-      "type": "price_below",
-      "price": 7.8,
-      "reason": "触及深度买入区间，复核是否存在新增风控或监管事件"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "触及减仓观察区，复核ROE和并购协同是否支持更高PB"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，确认2026Q1利润高增长是否延续"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查三季报、东方红资管规模和上海证券收购进展"
-    }
-  ],
-  "key_tracking_metrics": [
-    "全市场日均成交额",
-    "两融余额",
-    "东方红资管AUM和公募基金净申购",
-    "东方证券季度ROE",
-    "归母净利润同比增速",
-    "净资本和杠杆水平",
-    "上海证券收购审批和评估进展",
-    "监管处罚或警示函事项"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

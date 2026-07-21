@@ -1,138 +1,114 @@
 {
-  "symbol": "CN:002410",
-  "market": "CN",
-  "ticker": "002410",
-  "name": "广联达",
-  "company_name": "广联达科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "建筑工程数字化龙头，数字成本业务具备工作流、数据和客户续费壁垒，2025年利润与现金流修复明显；但地产和建筑投资仍下行，2026Q1收入继续下降，当前价格合理偏低但安全边际不足，等待中报验证收入拐点或价格跌入7.5元以下。",
-  "quality_rating": "B+",
-  "valuation_rating": "合理偏低但安全边际不足",
-  "fair_value_range": [
-    9.5,
-    12.5
-  ],
-  "buy_zone": [
-    0,
-    7.5
-  ],
-  "sell_or_reduce_zone": [
-    13.0,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "广联达",
+    "security_status": "active",
+    "symbol": "CN:002410",
+    "ticker": "002410"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "1d9a40660be9fa9a39ecc3f429ee4fe6b6bd57808bca99802fd918c0b20e5312"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价高于13.0元",
-      "price_range": ">13.0",
-      "action": "不追高，已有仓位可减仓",
-      "position": "0-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "半年报是验证2026年收入拐点和现金流恢复的第一份关键报告",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价在11.5-13.0元",
-      "price_range": "11.5-13.0",
-      "action": "只持有验证仓",
-      "position": "0-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "三季报可观察全年订单、合同负债和续费趋势是否改善",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价在9.5-11.5元",
-      "price_range": "9.5-11.5",
-      "action": "观察或持有，不主动加仓",
-      "position": "0-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-01-31"
+      },
+      "reason": "行业需求是估值折扣的主要来源，需要定期复核",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "股价在7.5-9.5元",
-      "price_range": "7.5-9.5",
-      "action": "若中报确认收入企稳，可建1%-2%",
-      "position": "0-3%",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "年报和一季报可验证AI、施工和海外业务是否贡献增量",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
     },
     {
-      "condition": "股价在6.3-7.5元",
-      "price_range": "6.3-7.5",
-      "action": "分批买入",
-      "position": "3-5%",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "低于合理价值下沿约20%，开始具备安全边际",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
     },
     {
-      "condition": "股价低于6.3元",
-      "price_range": "<6.3",
-      "action": "逻辑未坏时积极加仓",
-      "position": "5-8%",
-      "max_weight": 0.08
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.3
+      },
+      "reason": "接近悲观情景估值，若核心业务未坏则赔率改善",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 13.0
+      },
+      "reason": "超过当前合理价值区间上沿，需等待更强增长证据",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "condition": "股价低于7.5元且2026年收入/现金流未恶化",
-      "price": 7.5,
-      "action": "转入可买区",
-      "reason": "低于合理价值下沿约20%，开始具备安全边际"
-    },
-    {
-      "type": "price_below",
-      "condition": "股价低于6.3元且数字成本续费率稳定",
-      "price": 6.3,
-      "action": "转入强吸引区",
-      "reason": "接近悲观情景估值，若核心业务未坏则赔率改善"
-    },
-    {
-      "type": "price_above",
-      "condition": "股价高于13.0元",
-      "price": 13.0,
-      "action": "停止买入并评估减仓",
-      "reason": "超过当前合理价值区间上沿，需等待更强增长证据"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露",
-      "focus": "复查收入是否转正、数字施工毛利率和经营现金流",
-      "reason": "半年报是验证2026年收入拐点和现金流恢复的第一份关键报告"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "公司披露数字成本续费率、云合同、合同负债等关键经营指标",
-      "focus": "复查核心业务续费和订单质量",
-      "reason": "三季报可观察全年订单、合同负债和续费趋势是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2027-01-31",
-      "condition": "房地产开发投资或建筑业利润连续改善两个季度",
-      "focus": "复查行业假设",
-      "reason": "行业需求是估值折扣的主要来源，需要定期复核"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "AI产品商业化收入或重要客户案例披露",
-      "focus": "复查增长假设",
-      "reason": "年报和一季报可验证AI、施工和海外业务是否贡献增量"
-    }
-  ],
-  "key_tracking_metrics": [
-    "数字成本收入增速和续费率",
-    "数字施工收入增速和毛利率",
-    "经营活动现金流净额/归母净利润",
-    "合同负债和云合同变化",
-    "海外业务收入增速",
-    "AI产品付费客户数或收入贡献",
-    "房地产开发投资和建筑业利润增速"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

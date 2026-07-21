@@ -1,83 +1,95 @@
 {
-  "symbol": "CN:600785",
-  "ticker": "600785",
-  "name": "新华百货",
-  "market": "CN",
-  "exchange": "SSE",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "宁夏区域零售龙头，现金流和分红具备底部价值，但2025年利润下滑、2026Q1利润继续承压，且7月异常波动后价格已接近乐观情景，当前缺少安全边际，维持观察。",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "fair_value_range": [
-    6.8,
-    8.6
-  ],
-  "buy_zone": [
-    6.2,
-    7.2
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.5
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "新华百货",
+    "security_status": "active",
+    "symbol": "CN:600785",
+    "ticker": "600785"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "df5d3d3da0b425c9a8b658d7d845270deae5ab04faf7e842753777ff37ffde71"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "仅在股价回落至7.2元以下且2026半年报显示收入、扣非净利和经营现金流未继续恶化时建立观察仓。",
-      "action": "watchlist_entry",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查Q2利润、毛利率、现金流和诉讼会计处理。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "若诉讼再审出现有利结果且全年常态化净利中枢上修至1.3亿元以上，可在估值不高于1.1倍PB时加至小仓位。",
-      "action": "small_position",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断全年利润中枢是否可高于2025年。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "若股价高于10.5元且无利润上修或资产重估公告支撑，不追高并减持已有交易仓。",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报和分红政策，更新常态化估值锚。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入买入观察区间，需要复核半年报和诉讼进展后再决定是否建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过估值上沿，若缺少基本面上修证据，应降低风险暴露。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入买入观察区间，需要复核半年报和诉讼进展后再决定是否建仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过估值上沿，若缺少基本面上修证据，应降低风险暴露。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查Q2利润、毛利率、现金流和诉讼会计处理。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断全年利润中枢是否可高于2025年。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报和分红政策，更新常态化估值锚。"
-    }
-  ],
-  "key_metrics": {
-    "last_price": 9.32,
-    "last_price_date": "2026-07-16",
-    "shares_after_capitalization": 315883792,
-    "market_cap_cny_billion": 2.944,
-    "pb_q1_2026": 1.27,
-    "pe_2025": 39.5
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
   }
 }

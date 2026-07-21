@@ -1,79 +1,105 @@
 {
-  "symbol": "CN:600251",
-  "ticker": "600251",
-  "name": "冠农股份",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-16",
-  "status": "active",
-  "current_thesis": "冠农股份是新疆农产品加工资产叠加国投罗钾权益收益的混合资产。2026H1预增验证钾肥权益利润弹性，但本部番茄、棉花、糖等业务仍呈周期性和低稳定性；当前约8.8元附近价格处于合理价值区间中部，缺少足够安全边际，适合观察而非追高买入。",
-  "rating": "hold",
-  "current_rating": "hold",
-  "fair_value_range": [
-    7.8,
-    9.8
-  ],
-  "buy_zone": [
-    6.6,
-    7.3
-  ],
-  "sell_or_reduce_zone": [
-    10.5,
-    12.0
-  ],
-  "latest_report": "reports/2026-07-16-initial.md",
-  "report_history": [
-    "reports/2026-07-16-initial.md"
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "冠农股份",
+    "security_status": "active",
+    "symbol": "CN:600251",
+    "ticker": "600251"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-16-initial.md",
+        "sha256": "ceecb7829ed12d4e2bd5bfad084a744bdf7a1b078f82354cca8f08727de7699b"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价回落至7.3元以下，且半年报确认国投罗钾权益收益维持高位、经营现金流未明显恶化",
-      "action": "begin_small_position",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点检查国投罗钾权益收益、经营现金流、存货和各业务毛利率",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价处于7.3元至10.5元之间，等待半年报和三季报验证钾肥权益收益与本部业务毛利率",
-      "action": "watch_only",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，判断H1高利润是否可持续以及全年业绩中枢",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.5元且未出现本部业务ROE持续改善或更高分红承诺",
-      "action": "avoid_chasing_or_reduce",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，更新分部估值、分红和长期资本配置判断",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.3
+      },
+      "reason": "进入初步买入观察区，需复核国投罗钾利润和经营现金流后决定是否建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.6
+      },
+      "reason": "进入较有吸引力的安全边际区，若基本面未恶化可提高研究优先级",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.5
+      },
+      "reason": "超过基准合理价值上沿，需警惕市场过度外推钾肥高景气",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.3,
-      "reason": "进入初步买入观察区，需复核国投罗钾利润和经营现金流后决定是否建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.6,
-      "reason": "进入较有吸引力的安全边际区，若基本面未恶化可提高研究优先级"
-    },
-    {
-      "type": "price_above",
-      "price": 10.5,
-      "reason": "超过基准合理价值上沿，需警惕市场过度外推钾肥高景气"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点检查国投罗钾权益收益、经营现金流、存货和各业务毛利率"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，判断H1高利润是否可持续以及全年业绩中枢"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，更新分部估值、分红和长期资本配置判断"
-    }
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

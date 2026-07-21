@@ -1,93 +1,96 @@
 {
-  "symbol": "CN:000027",
-  "market": "CN",
-  "ticker": "000027",
-  "name": "深圳能源",
-  "company_name": "深圳能源",
-  "status": "active",
-  "updated_at": "2026-07-10",
-  "latest_report": "reports/2026-07-10-initial.md",
-  "report_history": [
-    "reports/2026-07-10-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "深圳能源具备深圳国资平台、综合能源资产和稳定经营现金流优势，但2025年ROE仅4.66%、资本开支仍高，当前更适合等待5.20-5.60元安全边际后分批配置。",
-  "quality_rating": "中等偏稳",
-  "valuation_rating": "合理偏便宜",
-  "fair_value_range": [
-    6.2,
-    7.2
-  ],
-  "buy_zone": [
-    5.2,
-    5.6
-  ],
-  "sell_or_reduce_zone": [
-    7.3,
-    8.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "深圳能源",
+    "security_status": "active",
+    "symbol": "CN:000027",
+    "ticker": "000027"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "3bb2332412eaf8ca64d7178dfa5a8298aa9f8d4286e19025b06bda8d63a4b660"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于5.60元且煤价、电价、经营现金流未出现恶化",
-      "action": "建立0.5%-1.0%首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "PB折价扩大，股息率接近3%，具备公用事业防守属性"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查2026年半年报，重点验证扣非利润、经营现金流、燃料成本和资本开支",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于5.20元且2026半年报经营现金流稳定、资产负债率不升",
-      "action": "加仓至2%-3%",
-      "max_weight": 0.03,
-      "reason": "价格进入基准估值安全边际区，现金流可覆盖更高分红预期"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查2026年三季报，判断全年利润和现金流趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于7.30元或PB接近/超过1.05倍而ROE仍低于6%",
-      "action": "停止买入并逐步减仓",
-      "max_weight": 0.015,
-      "reason": "估值已反映较多改善预期，资产回报未验证时风险收益转弱"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.6
+      },
+      "reason": "进入首笔观察仓买入区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.2
+      },
+      "reason": "进入更有安全边际的加仓区间",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.3
+      },
+      "reason": "进入估值兑现和减仓观察区间",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.6,
-      "reason": "进入首笔观察仓买入区间"
-    },
-    {
-      "type": "price_below",
-      "price": 5.2,
-      "reason": "进入更有安全边际的加仓区间"
-    },
-    {
-      "type": "price_above",
-      "price": 7.3,
-      "reason": "进入估值兑现和减仓观察区间"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查2026年半年报，重点验证扣非利润、经营现金流、燃料成本和资本开支"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查2026年三季报，判断全年利润和现金流趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度营业收入和归母净利润同比增速",
-    "扣非归母净利润",
-    "经营现金流净额",
-    "资本开支和投资现金流",
-    "资产负债率",
-    "燃煤和燃气采购成本",
-    "平均上网电价",
-    "火电与新能源利用小时",
-    "毛利率",
-    "分红率和每股股利"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

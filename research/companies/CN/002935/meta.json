@@ -1,122 +1,132 @@
 {
-  "symbol": "CN:002935",
-  "market": "CN",
-  "ticker": "002935",
-  "name": "天奥电子",
-  "company_name": "成都天奥电子股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "公司是国内时间频率、原子钟、时间同步和北斗应用领域的稀缺军工电子配套商，技术和客户壁垒明确；但2025年收入仅增长1.65%、ROE仅4.03%、营运资本占用重，当前19.48元约对应127倍2025年PE和5倍PB，价格明显高于8.0-11.5元的基本面合理区间。",
-  "quality_rating": "中等",
-  "valuation_rating": "明显高估",
-  "fair_value_range": [
-    8.0,
-    11.5
-  ],
-  "buy_zone": [
-    7.0,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    15.0,
-    19.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "天奥电子",
+    "security_status": "active",
+    "symbol": "CN:002935",
+    "ticker": "002935"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "bea1793ac32d1a63a6814975697e058ce59f55781010455e7562d532554230c7"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "价格高于15元且未看到ROE提升至7%以上、经营现金流显著改善",
-      "action": "不买或减仓",
-      "target_position": "0%-0.5%",
-      "max_weight": 0.005
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "核验收入、毛利率和回款是否改善",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格回到8.5-11.5元，且收入恢复双位数增长、毛利率企稳",
-      "action": "观察性建仓",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "判断利润弹性是否开始兑现",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格低于7元，且客户订单、回款、存货没有出现基本面破坏",
-      "action": "提高仓位",
-      "target_position": "3%-4%",
-      "max_weight": 0.04
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "确认账面利润能否转化为现金",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "跟踪营运资本占用是否缓解",
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "判断客户集中风险是否下降",
+      "trigger_id": "legacy-review-5",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-12-31"
+      },
+      "reason": "重大订单可能改变未来两年收入和估值假设",
+      "trigger_id": "legacy-review-6",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入可分批买入观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "进入较强安全边际区",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 15.0
+      },
+      "reason": "若基本面无明显改善，应减仓或回避",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "currency": "CNY",
-      "reason": "进入可分批买入观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 7.0,
-      "currency": "CNY",
-      "reason": "进入较强安全边际区"
-    },
-    {
-      "type": "price_above",
-      "price": 15.0,
-      "currency": "CNY",
-      "reason": "若基本面无明显改善，应减仓或回避"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "披露2026年半年报或年报",
-      "reason": "核验收入、毛利率和回款是否改善"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "单季度收入同比超过20%且毛利率回到25%以上",
-      "reason": "判断利润弹性是否开始兑现"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "经营现金流/归母净利润连续两个报告期高于1",
-      "reason": "确认账面利润能否转化为现金"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "应收账款、应收票据、存货合计/收入明显下降",
-      "reason": "跟踪营运资本占用是否缓解"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "中国电科以外客户收入占比显著提升",
-      "reason": "判断客户集中风险是否下降"
-    },
-    {
-      "type": "date",
-      "date": "2026-12-31",
-      "condition": "出现重大军品、星网低轨卫星、铁路或电力时频订单公告",
-      "reason": "重大订单可能改变未来两年收入和估值假设"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "频率系列产品收入和毛利率",
-    "时间同步系列产品收入和毛利率",
-    "北斗卫星应用产品收入",
-    "归母净利润和扣非净利润",
-    "ROE",
-    "经营现金流/归母净利润",
-    "应收账款+应收票据+存货/营业收入",
-    "前五大客户收入占比",
-    "中国电科集团收入占比"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

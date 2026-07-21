@@ -1,90 +1,105 @@
 {
-  "symbol": "CN:300582",
-  "ticker": "300582",
-  "name": "英飞特",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "英飞特具备中大功率LED驱动电源、海外客户和欧司朗相关业务整合带来的修复弹性，但2025年大额亏损、负债率偏高和2026Q1仅微利，尚不足以证明稳定自由现金流；当前价格大致处于合理区间中部，需等待更厚安全边际或连续季度改善。",
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ],
-  "fair_value_range": [
-    9.0,
-    12.0
-  ],
-  "buy_zone": [
-    7.5,
-    8.5
-  ],
-  "sell_or_reduce_zone": [
-    14.0,
-    16.0
-  ],
-  "position_plan": [
-    {
-      "condition": "股价进入7.5-8.5元且2026H1扣非净利润为正、经营现金流为正",
-      "action": "start_position",
-      "max_weight": 0.03
-    },
-    {
-      "condition": "股价在8.5-10.0元且连续两个季度扣非盈利、毛利率不低于26%",
-      "action": "small_position_only",
-      "max_weight": 0.02
-    },
-    {
-      "condition": "股价高于14.0元但利润率和降杠杆未明显超预期",
-      "action": "reduce_or_avoid",
-      "max_weight": 0.0
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.5,
-      "reason": "进入买入区间上沿，若基本面未恶化可复核建仓。"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入更有吸引力的安全边际区间，应复核是否存在新增风险。"
-    },
-    {
-      "type": "price_above",
-      "price": 14.0,
-      "reason": "进入减持区间下沿，若盈利质量未超预期则风险收益转弱。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、毛利率和资产负债率。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认扭亏是否具备连续性。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估欧司朗业务整合、减值和自由现金流。"
-    }
-  ],
-  "key_metrics": {
-    "revenue_2025_cny_billion": 2.311,
-    "net_profit_2025_cny_billion": -0.497,
-    "operating_cash_flow_2025_cny_billion": 0.048,
-    "revenue_2026_q1_cny_billion": 0.630,
-    "net_profit_2026_q1_cny_billion": 0.0084,
-    "gross_margin_2026_q1": 0.265,
-    "source_date": "2026-04-25"
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "英飞特",
+    "security_status": "active",
+    "symbol": "CN:300582",
+    "ticker": "300582"
   },
-  "decision": "观察",
-  "confidence": "中"
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "6e91a613fb6e9efaaa7aacee513c67ca40704fd652ead84aa3e250cfae3ac760"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报，重点看扣非净利润、经营现金流、毛利率和资产负债率。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认扭亏是否具备连续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估欧司朗业务整合、减值和自由现金流。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.5
+      },
+      "reason": "进入买入区间上沿，若基本面未恶化可复核建仓。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入更有吸引力的安全边际区间，应复核是否存在新增风险。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 14.0
+      },
+      "reason": "进入减持区间下沿，若盈利质量未超预期则风险收益转弱。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    }
+  ],
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

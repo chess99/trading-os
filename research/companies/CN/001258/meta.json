@@ -1,107 +1,106 @@
 {
-  "symbol": "CN:001258",
-  "market": "CN",
-  "ticker": "001258",
-  "name": "立新能源",
-  "company_name": "立新能源",
-  "status": "active",
-  "updated_at": "2026-07-11",
-  "latest_report": "reports/2026-07-11-initial.md",
-  "report_history": [
-    "reports/2026-07-11-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "quality_rating": "medium",
-  "valuation_rating": "expensive",
-  "current_thesis": "新疆国资新能源平台具备资源、外送通道和装机扩张优势，但当前价格已高于基础公允价值区间；在低 ROE、高杠杆、应收补贴、限电和市场化电价风险未明显改善前，不建立仓位。",
-  "fair_value_range": [
-    4.2,
-    5.4
-  ],
-  "buy_zone": [
-    3.6,
-    4.4
-  ],
-  "sell_or_reduce_zone": [
-    6.2,
-    7.2
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "立新能源",
+    "security_status": "active",
+    "symbol": "CN:001258",
+    "ticker": "001258"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-11-initial.md",
+        "sha256": "8c6f35c6cb5921c661bcede138b520bdbcc7de6322206d2fe9afde98bb460376"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "price <= 4.40 and 2026 interim results confirm stable utilization hours, no subsidy deterioration, and operating cash flow improvement",
-      "action": "start_watch_position",
-      "max_weight": 0.01,
-      "reason": "进入基础买入区上沿后，估值对新疆消纳、电价和补贴回款风险留出一定安全边际。"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复查 2026 半年报，重点看利用小时、平均电价、补贴回款、应收账款、经营现金流和新增项目并网。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "price <= 3.60 and no new project compliance, subsidy, or refinancing dilution shock",
-      "action": "add_to_core_watch",
-      "max_weight": 0.03,
-      "reason": "跌入深度安全边际区后，可用小仓位买入国资新能源平台和外送通道装机兑现期权。"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复查 2026 三季报，确认疆电外送投资收益和储能转商运利润是否具有持续性。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "price >= 6.20 and trailing profitability or ROE has not materially improved",
-      "action": "avoid_or_reduce",
-      "max_weight": 0,
-      "reason": "当前价格已高于基础公允价值区间，低 ROE 和高杠杆资产不应支付过高成长溢价。"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.4
+      },
+      "reason": "进入首笔观察仓买入区，需复核半年报利用小时、电价、补贴回款和经营现金流。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.6
+      },
+      "reason": "进入深度买入区，可在基本面未恶化时提高至小仓位上限。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 6.2
+      },
+      "reason": "高于减仓观察区下沿，若利润和 ROE 未兑现，应维持空仓或减仓。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 7.2
+      },
+      "reason": "接近乐观情景上沿，需重新核验新增装机、电价、储能盈利和股权融资摊薄。",
+      "trigger_id": "legacy-price-4",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 4.4,
-      "reason": "进入首笔观察仓买入区，需复核半年报利用小时、电价、补贴回款和经营现金流。"
-    },
-    {
-      "type": "price_below",
-      "price": 3.6,
-      "reason": "进入深度买入区，可在基本面未恶化时提高至小仓位上限。"
-    },
-    {
-      "type": "price_above",
-      "price": 6.2,
-      "reason": "高于减仓观察区下沿，若利润和 ROE 未兑现，应维持空仓或减仓。"
-    },
-    {
-      "type": "price_above",
-      "price": 7.2,
-      "reason": "接近乐观情景上沿，需重新核验新增装机、电价、储能盈利和股权融资摊薄。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复查 2026 半年报，重点看利用小时、平均电价、补贴回款、应收账款、经营现金流和新增项目并网。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复查 2026 三季报，确认疆电外送投资收益和储能转商运利润是否具有持续性。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "total_installed_capacity_mw",
-    "wind_installed_capacity_mw",
-    "solar_installed_capacity_mw",
-    "storage_capacity_mw_mwh",
-    "generation_kwh",
-    "on_grid_power_kwh",
-    "average_tariff_cny_per_kwh",
-    "utilization_hours",
-    "curtailment_rate",
-    "wind_gross_margin",
-    "solar_gross_margin",
-    "renewable_subsidy_cash_received",
-    "accounts_receivable",
-    "operating_cash_flow",
-    "capital_expenditure",
-    "asset_liability_ratio",
-    "interest_bearing_debt",
-    "xinjiang_outbound_power_investment_income",
-    "private_placement_issue_price_and_dilution"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

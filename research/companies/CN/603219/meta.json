@@ -1,81 +1,105 @@
 {
-  "symbol": "CN:603219",
-  "market": "CN",
-  "ticker": "603219",
-  "name": "富佳股份",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ],
-  "status": "active",
-  "current_thesis": "富佳股份是 SharkNinja 深度绑定的清洁电器 ODM，2025 年收入增长但利润率下滑，2026H1 扣非利润预告接近盈亏平衡；客户集中、成本传导和汇率压力使当前 13 元附近缺少安全边际，需等待毛利率与扣非利润修复后再评估买入。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    7.5,
-    10.5
-  ],
-  "buy_zone": [
-    6.5,
-    8.0
-  ],
-  "sell_or_reduce_zone": [
-    12.0,
-    15.0
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "富佳股份",
+    "security_status": "active",
+    "symbol": "CN:603219",
+    "ticker": "603219"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "6d6d1c5a7ad30417b67f5c7e22df13204e8de3ac9890dd8b2b68fbdef25cbe29"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入 6.5-8.0 元且半年报或三季报显示经营现金流为正、客户订单未断崖、毛利率开始修复",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核 2026 年半年报正式数据、毛利率、汇兑损失、应收账款和储能业务回款",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于 6.0 元且单季扣非净利润恢复到 3000 万元以上、应收账款和存货未恶化",
-      "action": "提高至小仓位",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核 2026 年三季报单季扣非利润是否恢复，以及 SharkNinja 订单趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 12.0 元且扣非利润仍未修复至正常化水平",
-      "action": "不买入或减持已有仓位",
-      "max_weight": 0.0
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核 2026 年年报，重新评估正常化利润中枢和估值区间",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.0
+      },
+      "reason": "进入初步买入观察区，需同步复核半年报或三季报毛利率与现金流",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.5
+      },
+      "reason": "进入较有安全边际区间，可评估小仓位配置",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 12.0
+      },
+      "reason": "高于基准公允价值上沿且接近乐观情景，若利润未修复应回避或减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.0,
-      "reason": "进入初步买入观察区，需同步复核半年报或三季报毛利率与现金流"
-    },
-    {
-      "type": "price_below",
-      "price": 6.5,
-      "reason": "进入较有安全边际区间，可评估小仓位配置"
-    },
-    {
-      "type": "price_above",
-      "price": 12.0,
-      "reason": "高于基准公允价值上沿且接近乐观情景，若利润未修复应回避或减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核 2026 年半年报正式数据、毛利率、汇兑损失、应收账款和储能业务回款"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核 2026 年三季报单季扣非利润是否恢复，以及 SharkNinja 订单趋势"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核 2026 年年报，重新评估正常化利润中枢和估值区间"
-    }
-  ],
-  "decision": "观察",
-  "confidence": "中"
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

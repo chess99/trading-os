@@ -1,70 +1,105 @@
 {
-  "symbol": "CN:603167",
-  "ticker": "603167",
-  "name": "渤海轮渡",
-  "market": "CN",
-  "currency": "CNY",
-  "updated_at": "2026-07-17",
-  "status": "active",
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "渤海轮渡是渤海湾区域客滚运输现金流资产，2025年利润和经营现金流修复、分红意愿强，但2026Q1扣非亏损且非经常性损益贡献较大，高股息持续性需要继续验证；当前约8.4-8.5元价格大致处于合理区间，等待7元附近或扣非利润连续修复再提高仓位。",
-  "fair_value_range": [7.8, 10.2],
-  "buy_zone": [6.8, 7.4],
-  "sell_or_reduce_zone": [10.8, 12.0],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "渤海轮渡",
+    "security_status": "active",
+    "symbol": "CN:603167",
+    "ticker": "603167"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-17-initial.md",
+        "sha256": "b219027f6671b08f6cd8c0104eef73305cd769697f9e1f90b6c8eb914e12b635"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于7.2元，未来两个季度扣非归母净利润转正，经营活动现金流持续为正，且未发生重大安全事故",
-      "action": "建立观察仓",
-      "max_weight": 0.03
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报的扣非利润、现金流、运输毛利率和分红安排",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于6.8元，年度分红政策仍清晰，运输业务毛利率未明显恶化",
-      "action": "提高至价值仓上限",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认Q1非经常性损益后主业盈利是否恢复",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于10.8元但扣非利润、经营现金流或客滚运量未同步超预期",
-      "action": "减持或仅保留跟踪仓",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报及年度分红可持续性",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.2
+      },
+      "reason": "进入初始买入区间，需要复核扣非利润、现金流和安全事件后考虑建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 6.8
+      },
+      "reason": "接近悲观情景资产价值，若分红和现金流未恶化，可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 10.8
+      },
+      "reason": "超过基准合理价值上沿，若基本面未超预期应减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 7.2,
-      "reason": "进入初始买入区间，需要复核扣非利润、现金流和安全事件后考虑建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 6.8,
-      "reason": "接近悲观情景资产价值，若分红和现金流未恶化，可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 10.8,
-      "reason": "超过基准合理价值上沿，若基本面未超预期应减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报的扣非利润、现金流、运输毛利率和分红安排"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认Q1非经常性损益后主业盈利是否恢复"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报及年度分红可持续性"
-    }
-  ],
-  "latest_report": "reports/2026-07-17-initial.md",
-  "report_history": [
-    "reports/2026-07-17-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

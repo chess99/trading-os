@@ -1,129 +1,114 @@
 {
-  "symbol": "CN:002358",
-  "market": "CN",
-  "ticker": "002358",
-  "name": "森源电气",
-  "company_name": "河南森源电气股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "电网设备景气和公司利润修复存在弹性，但当前约5.31元股价已预支改善；应收账款、经营现金流和有息负债仍是核心约束。等待4.0元以下或半年报证明回款与降债改善后再考虑买入。",
-  "quality_rating": "B-",
-  "valuation_rating": "偏贵",
-  "fair_value_range": [
-    4.0,
-    4.8
-  ],
-  "buy_zone": [
-    3.2,
-    3.8
-  ],
-  "sell_or_reduce_zone": [
-    5.2,
-    999.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "森源电气",
+    "security_status": "active",
+    "symbol": "CN:002358",
+    "ticker": "002358"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "fa56442097efcd98e07291ed2d62b2c2ca3894d01cfa94fef53cb197265d1bbd"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "<3.2",
-      "position": "4%-5%",
-      "max_weight": 0.05,
-      "action": "强安全边际，前提是基本面未恶化"
-    },
-    {
-      "condition": "3.2-3.8",
-      "position": "2%-4%",
-      "max_weight": 0.04,
-      "action": "有安全边际，可结合中报回款改善分批建仓"
-    },
-    {
-      "condition": "3.8-4.8",
-      "position": "0%-2%",
-      "max_weight": 0.02,
-      "action": "合理区间，仅适合观察仓"
-    },
-    {
-      "condition": "4.8-5.2",
-      "position": "0%",
-      "max_weight": 0.0,
-      "action": "改善预期较充分，不买"
-    },
-    {
-      "condition": ">5.2",
-      "position": "0%",
-      "max_weight": 0.0,
-      "action": "不追高，除非利润、回款和降债同时确认"
-    }
-  ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 3.8,
-      "reason": "进入有安全边际买入价以下",
-      "action": "进入可买区，复核半年报或最新季报的经营现金流和应收账款后开观察仓"
-    },
-    {
-      "type": "price_below",
-      "price": 3.2,
-      "reason": "进入强吸引力买入价以下",
-      "action": "进入强吸引力区，若无治理或资产质量恶化，可提高至4%-5%仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 5.2,
-      "reason": "超过不应追高价，当前估值已接近乐观情景",
-      "action": "不追高；若已有仓位且现金流未验证，考虑减仓"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "condition": "2026年半年报披露后或最迟2026-08-31",
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "半年报是验证利润修复和回款改善的最近关键节点",
-      "action": "复查收入、扣非净利润、经营现金流、应收账款和有息负债"
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2026-10-31",
-      "condition": "2026年三季报披露后或最迟2026-10-31",
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
       "reason": "三季报可验证全年利润中枢和订单交付节奏",
-      "action": "复查订单质量、交付节奏、毛利率和现金流"
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-04-30",
-      "condition": "2026年年报披露后或最迟2027-04-30",
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
       "reason": "年报可完整检验经营现金流、降债和治理风险",
-      "action": "复查全年盈利中枢、回款、降债和治理风险"
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "type": "date",
-      "date": "2027-08-31",
-      "condition": "2027年半年报披露后或最迟2027-08-31",
+      "active": true,
+      "condition": {
+        "date": "2027-08-31"
+      },
       "reason": "跟踪修复能否持续到第二年并重估合理价格区间",
-      "action": "复查估值、竞争地位和仓位计划"
+      "trigger_id": "legacy-review-4",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.8
+      },
+      "reason": "进入有安全边际买入价以下",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.2
+      },
+      "reason": "进入强吸引力买入价以下",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 5.2
+      },
+      "reason": "超过不应追高价，当前估值已接近乐观情景",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "key_tracking_metrics": [
-    "营业收入",
-    "归母净利润",
-    "扣非归母净利润",
-    "经营活动现金流量净额",
-    "应收账款",
-    "应收账款/营业收入",
-    "输变电产品毛利率",
-    "短期借款",
-    "一年内到期的非流动负债",
-    "长期应付款",
-    "财务费用率",
-    "前五大客户销售占比",
-    "国网和南网中标情况"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

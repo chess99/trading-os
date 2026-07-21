@@ -1,74 +1,95 @@
 {
-  "symbol": "CN:300741",
-  "ticker": "300741",
-  "market": "CN",
-  "currency": "CNY",
-  "name": "华宝股份",
-  "updated_at": "2026-07-15",
-  "status": "active",
-  "current_thesis": "国内烟用香精龙头之一，现金类资产厚、负债率低，2026Q1 利润修复；但主营恢复尚需连续验证，客户集中与控股股东治理折价要求更高安全边际。当前价格接近合理区间下半段，暂列观察。",
-  "rating": "watch",
-  "current_rating": "watch",
-  "fair_value_range": [
-    11.5,
-    15.5
-  ],
-  "buy_zone": [
-    0,
-    10.5
-  ],
-  "sell_or_reduce_zone": [
-    16.5,
-    999
-  ],
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "华宝股份",
+    "security_status": "active",
+    "symbol": "CN:300741",
+    "ticker": "300741"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-15-initial.md",
+        "sha256": "73c25d56bae68231172b56b6663aae93fa1ac3479578b19d6fc6790759f9747c"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于 10.5 元，且最新季度扣非归母净利同比为正、经营现金流未明显背离净利润",
-      "action": "建立观察仓",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复盘 2026 年半年报，确认收入、扣非利润和现金流是否延续修复",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "连续两个季度收入同比高于 10%，扣非净利率恢复至 15% 以上，且无新增重大治理风险",
-      "action": "提高至中等仓位",
-      "max_weight": 0.05
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复盘 2026 年三季报，验证主营恢复是否具有连续性",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于 16.5 元，或出现重大关联交易/现金低效消耗/主业恢复证伪",
-      "action": "减仓或退出",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2027-03-31"
+      },
+      "reason": "复盘 2026 年年报和分红方案，重新评估治理折价与现金价值",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 10.5
+      },
+      "reason": "进入具备现金资产保护和 20% 以上折价的买入复盘区间",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 16.5
+      },
+      "reason": "超过基准合理价值上沿并压缩安全边际，需要减仓或重新估值",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 10.5,
-      "reason": "进入具备现金资产保护和 20% 以上折价的买入复盘区间"
-    },
-    {
-      "type": "price_above",
-      "price": 16.5,
-      "reason": "超过基准合理价值上沿并压缩安全边际，需要减仓或重新估值"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复盘 2026 年半年报，确认收入、扣非利润和现金流是否延续修复"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复盘 2026 年三季报，验证主营恢复是否具有连续性"
-    },
-    {
-      "type": "date",
-      "date": "2027-03-31",
-      "reason": "复盘 2026 年年报和分红方案，重新评估治理折价与现金价值"
-    }
-  ],
-  "latest_report": "reports/2026-07-15-initial.md",
-  "report_history": [
-    "reports/2026-07-15-initial.md"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

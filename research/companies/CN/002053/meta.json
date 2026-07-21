@@ -1,98 +1,96 @@
 {
-  "symbol": "CN:002053",
-  "market": "CN",
-  "ticker": "002053",
-  "name": "云南能投",
-  "company_name": "云南能投",
-  "status": "active",
-  "updated_at": "2026-07-12",
-  "latest_report": "reports/2026-07-12-initial.md",
-  "report_history": [
-    "reports/2026-07-12-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "云南能投在天然气业务出表后，估值主线转为新能源发电和盐业稳定现金流。当前价格约处合理价值中枢，需等待股价进入8.3元以下或2026年中报验证发电量、电价、现金流和负债改善后再提高仓位。",
-  "quality_rating": "medium_plus",
-  "valuation_rating": "fair_to_slightly_expensive",
-  "fair_value_range": [
-    8.4,
-    10.5
-  ],
-  "buy_zone": [
-    7.5,
-    8.3
-  ],
-  "sell_or_reduce_zone": [
-    11.3,
-    12.5
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "云南能投",
+    "security_status": "active",
+    "symbol": "CN:002053",
+    "ticker": "002053"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-12-initial.md",
+        "sha256": "9311a7bbe3924aceda2fa9a825ac126d65d6ec45f2294ff9a4e152c21d715fe0"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价进入7.5-8.3元买入区，且2026年中报验证发电量、电价和经营现金流未恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.01,
-      "reason": "现价缺少安全边际，需等待价格或基本面验证"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报发电量、电价、现金流、负债和盐业吨盈利",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于7.5元且核心假设未破坏",
-      "action": "可分批加仓",
-      "max_weight": 0.03,
-      "reason": "进入悲观情景估值附近，具备更好赔率"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报及全年发电计划兑现进度",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于11.3元且无明确电价、发电量或项目收益上修",
-      "action": "减仓或不再加仓",
-      "max_weight": 0.0,
-      "reason": "价格进入乐观预期区间，安全边际不足"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 8.3
+      },
+      "reason": "进入首笔买入观察区",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 7.5
+      },
+      "reason": "进入较高赔率加仓区，但需复核基本面是否破坏",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 11.3
+      },
+      "reason": "进入减仓区，需要重新核验乐观情景是否成立",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 8.3,
-      "reason": "进入首笔买入观察区"
-    },
-    {
-      "type": "price_below",
-      "price": 7.5,
-      "reason": "进入较高赔率加仓区，但需复核基本面是否破坏"
-    },
-    {
-      "type": "price_above",
-      "price": 11.3,
-      "reason": "进入减仓区，需要重新核验乐观情景是否成立"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报发电量、电价、现金流、负债和盐业吨盈利"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报及全年发电计划兑现进度"
-    }
-  ],
-  "key_tracking_metrics": [
-    "季度上网电量",
-    "平均上网电价",
-    "新能源利用小时",
-    "弃风弃光率",
-    "已投产装机",
-    "在建和核准装机",
-    "经营现金流",
-    "资本开支",
-    "资产负债率",
-    "有息负债",
-    "财务费用",
-    "盐产品销量",
-    "盐业吨毛利",
-    "天然气售气量",
-    "储能项目收益机制"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

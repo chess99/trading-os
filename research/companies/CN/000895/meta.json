@@ -1,92 +1,101 @@
 {
-  "symbol": "CN:000895",
-  "market": "CN",
-  "ticker": "000895",
-  "name": "双汇发展",
-  "company_name": "河南双汇投资发展股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "watch",
-  "current_rating": "watch",
-  "current_thesis": "双汇发展是A股肉制品与屠宰龙头，品牌、渠道、规模制造、现金流和高分红构成防御价值；但主业成熟、增长中枢有限，2026年食品安全事件和屠宰竞争需要折价。23.64元附近位于合理价值区间中部，缺少足够安全边际，等待20.5元以下或中报确认后再考虑建仓。",
-  "quality_rating": "high",
-  "valuation_rating": "fair",
-  "fair_value_range": [
-    21.0,
-    27.0
-  ],
-  "buy_zone": [
-    18.5,
-    20.5
-  ],
-  "sell_or_reduce_zone": [
-    29.0,
-    32.0
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "双汇发展",
+    "security_status": "active",
+    "symbol": "CN:000895",
+    "ticker": "000895"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-10-initial.md",
+        "sha256": "b25b951a6e2443b354a0bf24fcece951cd016cdab5e722febc81ba1cbcef8071"
+      },
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "c8f0fb0a67a7aae2713fcb1fe58f5ae6b1783b78b8a1279a856c87c2b3daacf3"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "股价低于20.5元，且没有新增重大食品安全处罚、全国性召回或经营现金流明显恶化",
-      "action": "建立首笔观察仓",
-      "max_weight": 0.02,
-      "reason": "进入买入区上沿，约7%股息率与14倍以下PE开始提供安全边际"
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年中报，重点检查肉制品销量、吨利、经营现金流、分红政策和食品安全整改",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "股价低于18.5元，且2026中报显示肉制品吨利未恶化、经营现金流仍覆盖净利润",
-      "action": "提高至核心防御仓",
-      "max_weight": 0.05,
-      "reason": "接近悲观情景估值上沿，品牌现金流和分红提供较好本金保护"
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认渠道改革、猪价变化和屠宰业务盈利趋势",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "股价高于29.0元，且净利润中枢未上修至58亿元以上或肉制品销量未连续改善",
-      "action": "停止加仓并分批减持",
-      "max_weight": 0.015,
-      "reason": "进入乐观估值区，若增长证据不足则赔率下降"
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 20.5
+      },
+      "reason": "进入初始买入区，需复核食品安全处置和2026中报现金流后建仓",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 18.5
+      },
+      "reason": "进入深度价值区，若基本面未破坏可提高仓位",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 29.0
+      },
+      "reason": "接近乐观情景估值，若利润和销量未同步上修应减持",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 20.5,
-      "reason": "进入初始买入区，需复核食品安全处置和2026中报现金流后建仓"
-    },
-    {
-      "type": "price_below",
-      "price": 18.5,
-      "reason": "进入深度价值区，若基本面未破坏可提高仓位"
-    },
-    {
-      "type": "price_above",
-      "price": 29.0,
-      "reason": "接近乐观情景估值，若利润和销量未同步上修应减持"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年中报，重点检查肉制品销量、吨利、经营现金流、分红政策和食品安全整改"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认渠道改革、猪价变化和屠宰业务盈利趋势"
-    }
-  ],
-  "key_tracking_metrics": [
-    "肉类产品总外销量同比",
-    "包装肉制品销量和吨利",
-    "生鲜品销量、屠宰量和屠宰毛利率",
-    "经营现金流/归母净利润",
-    "存货周转和渠道库存",
-    "生猪价格、猪肉价格和能繁母猪存栏",
-    "现金分红率和股息率",
-    "食品安全抽检、处罚、召回和舆情",
-    "关联交易规模和毛利率变化"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }

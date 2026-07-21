@@ -1,107 +1,105 @@
 {
-  "symbol": "CN:300550",
-  "market": "CN",
-  "ticker": "300550",
-  "name": "和仁科技",
-  "company_name": "浙江和仁科技股份有限公司",
-  "status": "active",
-  "updated_at": "2026-07-13",
-  "latest_report": "reports/2026-07-13-initial.md",
-  "report_history": [
-    "reports/2026-07-13-initial.md"
-  ],
-  "rating": "avoid",
-  "current_rating": "avoid",
-  "current_thesis": "医疗信息化项目制公司，现金和低负债是优点，但收入停滞、2026Q1亏损、应收账款和合同资产占用高，当前价格对应估值明显高于财务质量可支撑水平。",
-  "quality_rating": "中等偏弱",
-  "valuation_rating": "显著高估",
-  "fair_value_range": [
-    5.5,
-    7.5
-  ],
-  "buy_zone": [
-    4.5,
-    5.5
-  ],
-  "sell_or_reduce_zone": [
-    9.0,
-    13.6
-  ],
-  "currency": "CNY",
-  "base_currency": "CNY",
-  "position_plan": [
+  "identity": {
+    "currency": "CNY",
+    "market": "CN",
+    "name": "和仁科技",
+    "security_status": "active",
+    "symbol": "CN:300550",
+    "ticker": "300550"
+  },
+  "reports": {
+    "historical_artifacts": [
+      {
+        "format": "legacy_v1",
+        "path": "reports/2026-07-13-initial.md",
+        "sha256": "a6b18ffe10d2d8eb40d310b34fcc6f1738a1b1af74d0287ef15bee0eeed2b14f"
+      }
+    ],
+    "history": [],
+    "latest": null,
+    "latest_by_type": {}
+  },
+  "research": {
+    "coverage_status": "requires_rebaseline",
+    "information_cutoff": null,
+    "rebaseline_required": true
+  },
+  "schema_version": 2,
+  "triggers": [
     {
-      "condition": "当前价格约13.63元/股，显著高于5.5-7.5元/股合理价值区间，且2026Q1收入下滑、归母净利润亏损扩大。",
-      "action": "不建仓",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和合同资产变化。",
+      "trigger_id": "legacy-review-1",
+      "type": "date"
     },
     {
-      "condition": "价格跌至5.5元/股以下，且最新报告期经营现金流改善、应收账款加合同资产未继续恶化。",
-      "action": "重新评估0.5%-1.0%观察仓",
-      "target_position": "0.5%-1.0%",
-      "max_weight": 0.01
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "复核2026年三季报，确认亏损是否收窄以及全年订单验收节奏。",
+      "trigger_id": "legacy-review-2",
+      "type": "date"
     },
     {
-      "condition": "价格跌至4.5-5.0元/股，同时扣非净利润恢复增长、毛利率维持48%以上、经营现金流连续为正。",
-      "action": "可考虑提升至1%-2%仓位",
-      "target_position": "1%-2%",
-      "max_weight": 0.02
+      "active": true,
+      "condition": {
+        "date": "2027-04-30"
+      },
+      "reason": "复核2026年年报，重新评估医疗AI商业化、回款质量和合理价值区间。",
+      "trigger_id": "legacy-review-3",
+      "type": "date"
     },
     {
-      "condition": "价格高于9元/股但未来12个月净利润无法证明进入8000万元以上台阶。",
-      "action": "不追高；若已有持仓则减仓或退出",
-      "target_position": "0%",
-      "max_weight": 0
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "进入可重新评估的安全边际区间。",
+      "trigger_id": "legacy-price-1",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 4.8
+      },
+      "reason": "接近净资产和DCF保守估值，可检查是否具备观察仓条件。",
+      "trigger_id": "legacy-price-2",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 9.0
+      },
+      "reason": "超过合理价值上沿后风险收益比偏差。",
+      "trigger_id": "legacy-price-3",
+      "type": "price"
     }
   ],
-  "price_triggers": [
-    {
-      "type": "price_below",
-      "price": 5.5,
-      "unit": "CNY/share",
-      "reason": "进入可重新评估的安全边际区间。"
-    },
-    {
-      "type": "price_below",
-      "price": 4.8,
-      "unit": "CNY/share",
-      "reason": "接近净资产和DCF保守估值，可检查是否具备观察仓条件。"
-    },
-    {
-      "type": "price_above",
-      "price": 9.0,
-      "unit": "CNY/share",
-      "reason": "超过合理价值上沿后风险收益比偏差。"
-    }
-  ],
-  "review_triggers": [
-    {
-      "type": "date",
-      "date": "2026-08-31",
-      "reason": "复核2026年半年报收入、扣非利润、经营现金流、应收账款和合同资产变化。"
-    },
-    {
-      "type": "date",
-      "date": "2026-10-31",
-      "reason": "复核2026年三季报，确认亏损是否收窄以及全年订单验收节奏。"
-    },
-    {
-      "type": "date",
-      "date": "2027-04-30",
-      "reason": "复核2026年年报，重新评估医疗AI商业化、回款质量和合理价值区间。"
-    }
-  ],
-  "key_tracking_metrics": [
-    "营业收入增速",
-    "扣非归母净利润",
-    "综合毛利率",
-    "经营活动现金流净额",
-    "应收账款加合同资产占年度收入比例",
-    "研发投入资本化比例",
-    "医疗AI产品合同额和收入确认",
-    "前五大客户收入占比",
-    "通策医疗相关协同订单",
-    "股东质押和控制权事项"
-  ]
+  "underwriting": {
+    "confidence": null,
+    "evidence_valid_until": null,
+    "reason_codes": [
+      "legacy_reports_require_structured_rebaseline"
+    ],
+    "review_id": null,
+    "status": null
+  },
+  "updated_at": "2026-07-21T21:15:00+08:00",
+  "valuation": {
+    "bear_value": null,
+    "buy_zone": null,
+    "currency": null,
+    "fair_value_range": null,
+    "price_as_of": null,
+    "reduce_zone": null
+  }
 }
