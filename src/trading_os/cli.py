@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import datetime as dt
 import json
 import sys
 from typing import TextIO
@@ -10,11 +11,8 @@ from .research_assets.alerts import (
     load_json,
     write_price_alerts,
 )
-from .research_assets.company import (
-    AssetValidationError,
-    audit_research_assets,
-    validate_company_dir,
-)
+from .research_assets.claims import ClaimPacketError
+from .research_assets.company import AssetValidationError
 from .research_assets.coverage_store import (
     CoverageValidationError,
     coverage_status,
@@ -26,7 +24,23 @@ from .research_assets.coverage_store import (
     validate_coverage_root,
 )
 from .research_assets.index import write_index
+from .research_assets.models import PolicyValidationError
+from .research_assets.portfolio import PortfolioValidationError
+from .research_assets.review_store import ReviewStoreError
+from .research_assets.review_workflow import (
+    ReviewWorkflowError,
+    create_review,
+    load_candidates,
+    prepare_review,
+    review_status,
+    run_review,
+    synthesize_review,
+    validate_all_assets,
+    validate_review,
+    write_review_report,
+)
 from .research_assets.schedule import write_review_schedule
+from .research_assets.sealing import SealingError
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -36,15 +50,76 @@ def build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="cmd", required=True)
 
-    company = sub.add_parser("company", help="Validate company research assets")
-    company_sub = company.add_subparsers(dest="company_cmd", required=True)
-    validate = company_sub.add_parser("validate", help="Validate one company directory")
-    validate.add_argument("path")
-    validate.add_argument("--strict", action="store_true")
-    validate.set_defaults(func=cmd_company_validate)
-    audit = company_sub.add_parser("audit", help="Audit company research asset standards")
-    audit.add_argument("--research-root", default="research")
-    audit.set_defaults(func=cmd_company_audit)
+    assets = sub.add_parser("assets", help="Validate v2 research assets")
+    assets_sub = assets.add_subparsers(dest="assets_cmd", required=True)
+    assets_validate = assets_sub.add_parser(
+        "validate", help="Validate every v2 company asset"
+    )
+    assets_validate.add_argument("--research-root", default="research")
+    assets_validate.set_defaults(func=cmd_assets_validate)
+
+    review = sub.add_parser("review", help="Run independent underwriting reviews")
+    review_sub = review.add_subparsers(dest="review_cmd", required=True)
+
+    review_create = review_sub.add_parser(
+        "create", help="Create a review and freeze its candidate set"
+    )
+    review_create.add_argument("run_id")
+    review_create.add_argument("--scope-type", required=True)
+    review_create.add_argument("--market", required=True)
+    review_create.add_argument("--description", required=True)
+    review_create.add_argument("--candidates", required=True)
+    review_create.add_argument("--parent-run-id")
+    _add_review_roots(review_create, policies=True)
+    _add_timestamp(review_create)
+    review_create.set_defaults(func=cmd_review_create)
+
+    review_prepare = review_sub.add_parser(
+        "prepare", help="Build and seal blind claim packets"
+    )
+    review_prepare.add_argument("run_id")
+    _add_review_roots(review_prepare)
+    _add_timestamp(review_prepare)
+    review_prepare.set_defaults(func=cmd_review_prepare)
+
+    review_status_cmd = review_sub.add_parser("status", help="Show review run state")
+    review_status_cmd.add_argument("run_id")
+    _add_review_roots(review_status_cmd)
+    review_status_cmd.set_defaults(func=cmd_review_status)
+
+    review_validate = review_sub.add_parser(
+        "validate", help="Validate review state and sealed artifacts"
+    )
+    review_validate.add_argument("run_id")
+    review_validate.add_argument("--strict", action="store_true")
+    _add_review_roots(review_validate)
+    review_validate.set_defaults(func=cmd_review_validate)
+
+    review_synthesize = review_sub.add_parser(
+        "synthesize", help="Build a constrained model portfolio"
+    )
+    review_synthesize.add_argument("run_id")
+    review_synthesize.add_argument("--quotes", required=True)
+    _add_review_roots(review_synthesize, research=True, policies=True)
+    _add_timestamp(review_synthesize)
+    review_synthesize.set_defaults(func=cmd_review_synthesize)
+
+    review_report = review_sub.add_parser(
+        "report", help="Write the immutable portfolio synthesis report"
+    )
+    review_report.add_argument("run_id")
+    _add_review_roots(review_report, research=True)
+    _add_timestamp(review_report)
+    review_report.set_defaults(func=cmd_review_report)
+
+    review_run = review_sub.add_parser(
+        "run", help="Advance every currently executable review stage"
+    )
+    review_run.add_argument("run_id")
+    review_run.add_argument("--quotes")
+    _add_review_roots(review_run, research=True, policies=True)
+    _add_timestamp(review_run)
+    review_run.set_defaults(func=cmd_review_run)
 
     index = sub.add_parser("index", help="Build generated research indexes")
     index_sub = index.add_subparsers(dest="index_cmd", required=True)
@@ -134,16 +209,99 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def cmd_company_validate(ns: argparse.Namespace) -> int:
-    meta = validate_company_dir(ns.path, strict=ns.strict)
-    print(
-        json.dumps({"ok": True, "symbol": meta["symbol"]}, ensure_ascii=False, indent=2)
+def cmd_assets_validate(ns: argparse.Namespace) -> int:
+    payload = validate_all_assets(ns.research_root)
+    if not payload["ok"]:
+        return _write_failure(
+            {
+                **payload,
+                "error_code": "asset_validation_failed",
+                "error": f"{payload['invalid_count']} company asset(s) are invalid",
+            }
+        )
+    _write_success(payload)
+    return 0
+
+
+def cmd_review_create(ns: argparse.Namespace) -> int:
+    state = create_review(
+        runs_root=ns.runs_root,
+        run_id=ns.run_id,
+        scope_type=ns.scope_type,
+        market=ns.market,
+        description=ns.description,
+        candidates=load_candidates(ns.candidates),
+        policy_root=ns.policy_root,
+        created_at=_timestamp(ns.at),
+        parent_run_id=ns.parent_run_id,
+    )
+    _write_success({"ok": True, "run": state})
+    return 0
+
+
+def cmd_review_prepare(ns: argparse.Namespace) -> int:
+    state = prepare_review(
+        runs_root=ns.runs_root,
+        run_id=ns.run_id,
+        prepared_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, "run": state})
+    return 0
+
+
+def cmd_review_status(ns: argparse.Namespace) -> int:
+    _write_success(review_status(runs_root=ns.runs_root, run_id=ns.run_id))
+    return 0
+
+
+def cmd_review_validate(ns: argparse.Namespace) -> int:
+    _write_success(
+        validate_review(
+            runs_root=ns.runs_root,
+            run_id=ns.run_id,
+            strict=bool(ns.strict),
+        )
     )
     return 0
 
 
-def cmd_company_audit(ns: argparse.Namespace) -> int:
-    print(json.dumps(audit_research_assets(ns.research_root), ensure_ascii=False, indent=2))
+def cmd_review_synthesize(ns: argparse.Namespace) -> int:
+    _write_success(
+        synthesize_review(
+            runs_root=ns.runs_root,
+            research_root=ns.research_root,
+            policy_root=ns.policy_root,
+            run_id=ns.run_id,
+            quotes_path=ns.quotes,
+            synthesized_at=_timestamp(ns.at),
+        )
+    )
+    return 0
+
+
+def cmd_review_report(ns: argparse.Namespace) -> int:
+    _write_success(
+        write_review_report(
+            runs_root=ns.runs_root,
+            research_root=ns.research_root,
+            run_id=ns.run_id,
+            reported_at=_timestamp(ns.at),
+        )
+    )
+    return 0
+
+
+def cmd_review_run(ns: argparse.Namespace) -> int:
+    _write_success(
+        run_review(
+            runs_root=ns.runs_root,
+            research_root=ns.research_root,
+            policy_root=ns.policy_root,
+            run_id=ns.run_id,
+            quotes_path=ns.quotes,
+            now=_timestamp(ns.at),
+        )
+    )
     return 0
 
 
@@ -254,14 +412,13 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     try:
         return int(func(ns))
-    except (
-        AssetValidationError,
-        CoverageValidationError,
-        RuntimeError,
-        FileNotFoundError,
-        json.JSONDecodeError,
-    ) as exc:
-        return _write_failure({"ok": False, "error": str(exc)})
+    except Exception as exc:
+        error_code = _error_code(exc)
+        if error_code is None:
+            raise
+        return _write_failure(
+            {"ok": False, "error_code": error_code, "error": str(exc)}
+        )
 
 
 def _write_failure(payload: dict[str, object], stream: TextIO | None = None) -> int:
@@ -269,8 +426,63 @@ def _write_failure(payload: dict[str, object], stream: TextIO | None = None) -> 
     return 1
 
 
+def _write_success(payload: object) -> None:
+    print(json.dumps(payload, ensure_ascii=False, indent=2))
+
+
+def _error_code(exc: Exception) -> str | None:
+    for error_type, code in (
+        (AssetValidationError, "asset_validation_failed"),
+        (CoverageValidationError, "coverage_validation_failed"),
+        (ReviewStoreError, "review_state_error"),
+        (ReviewWorkflowError, "review_workflow_error"),
+        (ClaimPacketError, "claim_packet_error"),
+        (SealingError, "sealed_artifact_error"),
+        (PortfolioValidationError, "portfolio_validation_error"),
+        (PolicyValidationError, "policy_validation_error"),
+        (FileNotFoundError, "file_not_found"),
+        (json.JSONDecodeError, "invalid_json"),
+        (RuntimeError, "runtime_error"),
+    ):
+        if isinstance(exc, error_type):
+            return code
+    return None
+
+
 def _add_coverage_root(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--root", default="coverage/cn-a")
+
+
+def _add_review_roots(
+    parser: argparse.ArgumentParser,
+    *,
+    research: bool = False,
+    policies: bool = False,
+) -> None:
+    parser.add_argument("--runs-root", default="automation/runs")
+    if research:
+        parser.add_argument("--research-root", default="research")
+    if policies:
+        parser.add_argument("--policy-root", default="policies")
+
+
+def _add_timestamp(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "--at",
+        help="ISO 8601 timestamp with UTC offset; defaults to the current time",
+    )
+
+
+def _timestamp(value: str | None) -> dt.datetime:
+    if value is None:
+        return dt.datetime.now().astimezone()
+    try:
+        parsed = dt.datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise ReviewWorkflowError("--at must be an ISO 8601 timestamp") from exc
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise ReviewWorkflowError("--at must include a UTC offset")
+    return parsed
 
 
 if __name__ == "__main__":
