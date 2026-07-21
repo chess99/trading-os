@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trading-os.local/schemas/research-claims.schema.json",
+  "title": "Trading OS Structured Initial Research Claims",
+  "type": "object",
+  "required": ["schema_version", "report_id", "symbol", "claims", "sources", "decision"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 2},
+    "report_id": {"type": "string", "minLength": 1},
+    "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "category", "claim", "verification_metrics", "falsifiers", "source_ids"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "category": {"type": "string", "enum": ["fact", "business", "industry", "investment"]},
+          "claim": {"type": "string", "minLength": 1},
+          "verification_metrics": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "falsifiers": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "source_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+        },
+        "additionalProperties": false
+      }
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["source_id", "tier", "uri_or_path"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 1},
+          "tier": {"type": "string", "enum": ["S1", "S2", "S3", "S4"]},
+          "uri_or_path": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "decision": {
+      "type": "object",
+      "required": ["rating", "fair_value_range", "buy_zone", "reduce_zone", "position_plan", "conclusion"],
+      "properties": {
+        "rating": {"type": "string", "minLength": 1},
+        "fair_value_range": {"$ref": "#/$defs/range"},
+        "buy_zone": {"$ref": "#/$defs/range"},
+        "reduce_zone": {"$ref": "#/$defs/range"},
+        "position_plan": {"type": "array", "items": {"type": "object"}},
+        "conclusion": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "range": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    }
+  },
+  "additionalProperties": false
+}
