@@ -24,6 +24,13 @@ from .research_assets.coverage_store import (
     validate_coverage_root,
 )
 from .research_assets.index import write_index
+from .research_assets.migration import (
+    MigrationError,
+    apply_migration_plan,
+    build_migration_plan,
+    load_migration_plan,
+    write_migration_plan,
+)
 from .research_assets.models import PolicyValidationError
 from .research_assets.portfolio import PortfolioValidationError
 from .research_assets.review_store import ReviewStoreError
@@ -57,6 +64,18 @@ def build_parser() -> argparse.ArgumentParser:
     )
     assets_validate.add_argument("--research-root", default="research")
     assets_validate.set_defaults(func=cmd_assets_validate)
+    assets_migrate = assets_sub.add_parser(
+        "migrate", help="Plan or apply the one-shot v2 asset migration"
+    )
+    migration_mode = assets_migrate.add_mutually_exclusive_group(required=True)
+    migration_mode.add_argument("--dry-run", action="store_true")
+    migration_mode.add_argument("--apply", action="store_true")
+    assets_migrate.add_argument("--plan", help="Dry-run plan required by --apply")
+    assets_migrate.add_argument("--output", help="Optionally write the dry-run plan")
+    assets_migrate.add_argument("--migration-id")
+    assets_migrate.add_argument("--research-root", default="research")
+    _add_timestamp(assets_migrate)
+    assets_migrate.set_defaults(func=cmd_assets_migrate)
 
     review = sub.add_parser("review", help="Run independent underwriting reviews")
     review_sub = review.add_subparsers(dest="review_cmd", required=True)
@@ -221,6 +240,30 @@ def cmd_assets_validate(ns: argparse.Namespace) -> int:
         )
     _write_success(payload)
     return 0
+
+
+def cmd_assets_migrate(ns: argparse.Namespace) -> int:
+    if ns.dry_run:
+        created_at = _timestamp(ns.at)
+        migration_id = ns.migration_id or f"v2-reset-{created_at.date().isoformat()}"
+        plan = build_migration_plan(
+            ns.research_root,
+            migration_id=migration_id,
+            created_at=created_at,
+        )
+        if ns.output:
+            write_migration_plan(ns.output, plan)
+        _write_success(plan)
+        return 1 if plan["error_count"] else 0
+    if not ns.plan:
+        raise MigrationError("--plan is required with --apply")
+    if ns.output or ns.migration_id or ns.at:
+        raise MigrationError(
+            "--output, --migration-id, and --at are dry-run options"
+        )
+    result = apply_migration_plan(load_migration_plan(ns.plan))
+    _write_success(result)
+    return 1 if result["failed_count"] or result["blocked_count"] else 0
 
 
 def cmd_review_create(ns: argparse.Namespace) -> int:
@@ -440,6 +483,7 @@ def _error_code(exc: Exception) -> str | None:
         (SealingError, "sealed_artifact_error"),
         (PortfolioValidationError, "portfolio_validation_error"),
         (PolicyValidationError, "policy_validation_error"),
+        (MigrationError, "migration_error"),
         (FileNotFoundError, "file_not_found"),
         (json.JSONDecodeError, "invalid_json"),
         (RuntimeError, "runtime_error"),
