@@ -341,15 +341,17 @@ def test_cli_alerts_check_uses_quote_snapshot(tmp_path: Path, capsys):
     alerts_path.write_text(
         json.dumps(
             {
-                "schema_version": 1,
+                "schema_version": 2,
                 "items": [
                     {
+                        "alert_id": "CN:600519:buy-zone",
                         "symbol": "CN:600519",
                         "name": "贵州茅台",
-                        "type": "price_below",
-                        "price": 1100,
+                        "type": "underwriting_buy_zone_entry",
+                        "condition": {"operator": "price_lte", "threshold": 1100},
                         "reason": "Enter buy zone.",
                         "latest_report": "companies/CN/600519/reports/example.md",
+                        "source_ref": "review-1",
                     }
                 ],
             },

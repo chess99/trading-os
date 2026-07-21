@@ -1,117 +1,244 @@
 from __future__ import annotations
 
+import datetime as dt
+import json
 from pathlib import Path
 
 from tests.test_company_assets import write_company
 
+NOW = dt.datetime(2026, 7, 21, 15, 0, tzinfo=dt.timezone(dt.timedelta(hours=8)))
 
-def test_build_review_schedule_from_date_triggers(tmp_path: Path):
+
+def _load_meta(company_dir: Path) -> dict[str, object]:
+    return json.loads((company_dir / "meta.json").read_text(encoding="utf-8"))
+
+
+def _write_meta(company_dir: Path, meta: dict[str, object]) -> None:
+    (company_dir / "meta.json").write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
+
+
+def _underwrite(meta: dict[str, object], *, status: str = "passed") -> None:
+    meta["underwriting"] = {
+        "status": status,
+        "review_id": "review-2026-07-21",
+        "confidence": "high",
+        "evidence_valid_until": "2026-10-21T15:00:00+08:00",
+        "reason_codes": [f"underwriting_{status}"],
+    }
+    meta["valuation"] = {
+        "currency": "CNY",
+        "price_as_of": "2026-07-21T15:00:00+08:00",
+        "bear_value": 60.0,
+        "fair_value_range": [95.0, 105.0],
+        "buy_zone": [70.0, 80.0],
+        "reduce_zone": [120.0, 130.0],
+    }
+
+
+def test_review_schedule_preserves_generic_company_triggers(tmp_path: Path):
     from trading_os.research_assets.schedule import build_review_schedule
 
-    write_company(tmp_path)
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta)
+    meta["triggers"].append(
+        {
+            "trigger_id": "scheduled-review",
+            "type": "date",
+            "condition": {"date": "2026-08-31"},
+            "reason": "半年报后复核。",
+            "active": True,
+        }
+    )
+    _write_meta(company_dir, meta)
 
     schedule = build_review_schedule(tmp_path / "research")
 
-    assert schedule["schema_version"] == 1
-    assert schedule["items"][0]["symbol"] == "CN:600519"
-    assert schedule["items"][0]["date"] == "2026-08-31"
+    assert schedule["schema_version"] == 2
+    assert schedule["item_count"] == 2
+    assert {item["type"] for item in schedule["items"]} == {"date", "filing"}
+    date_item = next(item for item in schedule["items"] if item["type"] == "date")
+    assert date_item["condition"] == {"date": "2026-08-31"}
+    assert date_item["source"] == "company_trigger"
 
 
-def test_build_price_alerts_from_price_triggers(tmp_path: Path):
+def test_review_schedule_adds_structured_conclusion_invalidation(tmp_path: Path):
+    from trading_os.research_assets.schedule import build_review_schedule
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta, status="stale")
+    _write_meta(company_dir, meta)
+
+    schedule = build_review_schedule(tmp_path / "research")
+
+    invalid = next(
+        item for item in schedule["items"] if item["source"] == "conclusion_invalidation"
+    )
+    assert invalid["condition"] == {"conclusion_status": "stale"}
+    assert invalid["type"] == "thesis"
+
+
+def test_price_alerts_include_buy_zone_and_ten_percent_staleness(tmp_path: Path):
     from trading_os.research_assets.alerts import build_price_alerts
 
-    write_company(tmp_path)
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta)
+    _write_meta(company_dir, meta)
 
     alerts = build_price_alerts(tmp_path / "research")
 
-    assert alerts["schema_version"] == 1
-    assert alerts["items"][0]["symbol"] == "CN:600519"
-    assert alerts["items"][0]["price"] == 1100
+    assert alerts["schema_version"] == 2
+    assert {item["type"] for item in alerts["items"]} == {
+        "underwriting_buy_zone_entry",
+        "conclusion_price_move_stale",
+    }
+    buy = next(
+        item for item in alerts["items"] if item["type"] == "underwriting_buy_zone_entry"
+    )
+    assert buy["condition"] == {"operator": "price_lte", "threshold": 80.0}
+    stale = next(
+        item for item in alerts["items"] if item["type"] == "conclusion_price_move_stale"
+    )
+    assert stale["condition"]["threshold"] == 0.10
 
 
-def test_evaluate_price_alerts_detects_triggered_snapshot():
+def test_company_reduce_zone_does_not_create_a_reduce_alert(tmp_path: Path):
+    from trading_os.research_assets.alerts import build_price_alerts
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta)
+    _write_meta(company_dir, meta)
+
+    types = {item["type"] for item in build_price_alerts(tmp_path / "research")["items"]}
+
+    assert "portfolio_reduce_observation" not in types
+    assert "price_above" not in types
+
+
+def test_reduce_and_exit_observations_only_come_from_sealed_portfolio(tmp_path: Path):
+    from trading_os.research_assets.alerts import build_price_alerts
+    from trading_os.research_assets.sealing import seal_json
+
+    research_root = tmp_path / "research"
+    portfolio_path = research_root / "batches" / "run-1" / "portfolio.json"
+    seal_json(
+        portfolio_path,
+        {
+            "schema_version": 2,
+            "run_id": "run-1",
+            "positions": [
+                {"symbol": "CN:000001", "name": "平安银行", "action": "reduce"},
+                {"symbol": "CN:000002", "name": "万科A", "action": "exit"},
+            ],
+        },
+        artifact_type="model_portfolio",
+        sealed_at=NOW,
+    )
+
+    alerts = build_price_alerts(research_root)
+
+    assert {item["type"] for item in alerts["items"]} == {
+        "portfolio_reduce_observation",
+        "portfolio_exit_observation",
+    }
+    assert all(item["source_ref"] == "batches/run-1/portfolio.json" for item in alerts["items"])
+
+
+def test_evaluate_v2_alerts_detects_buy_zone_and_price_staleness():
     from trading_os.research_assets.alerts import evaluate_price_alerts
 
     alerts = {
-        "schema_version": 1,
+        "schema_version": 2,
         "items": [
             {
+                "alert_id": "CN:600519:buy",
                 "symbol": "CN:600519",
                 "name": "贵州茅台",
-                "type": "price_below",
-                "price": 1100,
-                "reason": "Enter buy zone.",
-                "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
-            }
-        ],
-    }
-    quotes = [{"symbol": "CN:600519", "price": 1099.5, "as_of": "2026-07-06T10:30:00+08:00"}]
-
-    triggered = evaluate_price_alerts(alerts, quotes)
-
-    assert triggered["triggered_count"] == 1
-    assert triggered["triggered"][0]["symbol"] == "CN:600519"
-    assert triggered["triggered"][0]["observed_price"] == 1099.5
-
-
-def test_evaluate_price_alerts_skips_non_dict_quote_rows():
-    from trading_os.research_assets.alerts import evaluate_price_alerts
-
-    alerts = {
-        "schema_version": 1,
-        "items": [
-            {
-                "symbol": "CN:600519",
-                "name": "Kweichow Moutai",
-                "type": "price_below",
-                "price": 1100,
-                "reason": "Enter buy zone.",
-                "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
-            }
-        ],
-    }
-    quotes = [
-        None,
-        {"symbol": "CN:600519", "price": 1099.5, "as_of": "2026-07-06T10:30:00+08:00"},
-    ]
-
-    triggered = evaluate_price_alerts(alerts, quotes)
-
-    assert triggered["triggered_count"] == 1
-    assert triggered["triggered"][0]["symbol"] == "CN:600519"
-    assert triggered["triggered"][0]["observed_price"] == 1099.5
-
-
-def test_evaluate_price_alerts_ignores_bool_price_values():
-    from trading_os.research_assets.alerts import evaluate_price_alerts
-
-    alerts = {
-        "schema_version": 1,
-        "items": [
-            {
-                "symbol": "CN:600519",
-                "name": "Kweichow Moutai",
-                "type": "price_below",
-                "price": 1100,
-                "reason": "Enter buy zone.",
-                "latest_report": "companies/CN/600519/reports/2026-07-06-initial.md",
+                "type": "underwriting_buy_zone_entry",
+                "condition": {"operator": "price_lte", "threshold": 80.0},
+                "reason": "重查后决定。",
+                "latest_report": "companies/CN/600519/reports/example.md",
+                "source_ref": "review-1",
             },
             {
-                "symbol": "CN:000001",
-                "name": "Ping An Bank",
-                "type": "price_above",
-                "price": 10,
-                "reason": "Breakout.",
-                "latest_report": "companies/CN/000001/reports/2026-07-06-initial.md",
+                "alert_id": "CN:600519:stale",
+                "symbol": "CN:600519",
+                "name": "贵州茅台",
+                "type": "conclusion_price_move_stale",
+                "condition": {
+                    "operator": "absolute_change_fraction_gte",
+                    "threshold": 0.10,
+                },
+                "reason": "价格结论过期。",
+                "latest_report": "companies/CN/600519/reports/example.md",
+                "source_ref": "review-1",
             },
         ],
     }
     quotes = [
-        {"symbol": "CN:600519", "price": True, "as_of": "2026-07-06T10:30:00+08:00"},
-        {"symbol": "CN:000001", "price": False, "as_of": "2026-07-06T10:30:00+08:00"},
+        {
+            "symbol": "CN:600519",
+            "price": 79.0,
+            "change_since_review": -0.11,
+            "as_of": "2026-07-21T15:00:00+08:00",
+        }
     ]
 
     triggered = evaluate_price_alerts(alerts, quotes)
+
+    assert triggered["schema_version"] == 2
+    assert triggered["triggered_count"] == 2
+    assert {item["type"] for item in triggered["triggered"]} == {
+        "underwriting_buy_zone_entry",
+        "conclusion_price_move_stale",
+    }
+
+
+def test_evaluate_alerts_ignores_bool_and_non_object_quotes():
+    from trading_os.research_assets.alerts import evaluate_price_alerts
+
+    alerts = {
+        "schema_version": 2,
+        "items": [
+            {
+                "alert_id": "CN:600519:buy",
+                "symbol": "CN:600519",
+                "name": "贵州茅台",
+                "type": "underwriting_buy_zone_entry",
+                "condition": {"operator": "price_lte", "threshold": 80.0},
+                "reason": "重查后决定。",
+                "latest_report": None,
+                "source_ref": "review-1",
+            }
+        ],
+    }
+
+    triggered = evaluate_price_alerts(
+        alerts,
+        [None, {"symbol": "CN:600519", "price": True}],
+    )
 
     assert triggered["triggered_count"] == 0
-    assert triggered["triggered"] == []
+
+
+def test_schedule_and_alert_writes_are_byte_stable(tmp_path: Path):
+    from trading_os.research_assets.alerts import write_price_alerts
+    from trading_os.research_assets.schedule import write_review_schedule
+
+    write_company(tmp_path)
+    research_root = tmp_path / "research"
+    schedule_path = tmp_path / "automation" / "schedule.json"
+    alerts_path = tmp_path / "automation" / "alerts.json"
+
+    write_review_schedule(research_root, schedule_path)
+    write_price_alerts(research_root, alerts_path)
+    first = (schedule_path.read_bytes(), alerts_path.read_bytes())
+    write_review_schedule(research_root, schedule_path)
+    write_price_alerts(research_root, alerts_path)
+
+    assert (schedule_path.read_bytes(), alerts_path.read_bytes()) == first

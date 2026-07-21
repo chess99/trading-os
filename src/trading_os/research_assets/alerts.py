@@ -7,6 +7,9 @@ from typing import Any
 
 from .company import validate_company_dir
 from .index import _company_dirs
+from .sealing import atomic_write_bytes, verify_sealed
+
+PRICE_STALE_FRACTION = 0.10
 
 
 def build_price_alerts(research_root: str | Path) -> dict[str, Any]:
@@ -16,32 +19,69 @@ def build_price_alerts(research_root: str | Path) -> dict[str, Any]:
     if companies_root.exists():
         for company_dir in _company_dirs(companies_root):
             meta = validate_company_dir(company_dir)
-            rel_company = company_dir.relative_to(root)
-            for trigger in meta.get("price_triggers", []):
+            identity = meta["identity"]
+            underwriting = meta["underwriting"]
+            valuation = meta["valuation"]
+            latest_report = _latest_report(root, company_dir, meta)
+            if underwriting["status"] == "passed" and valuation["buy_zone"] is not None:
                 items.append(
                     {
-                        "symbol": meta["symbol"],
-                        "name": meta["name"],
-                        "type": trigger["type"],
-                        "price": trigger["price"],
-                        "reason": trigger["reason"],
-                        "latest_report": (
-                            rel_company / meta["latest_report"]
-                        ).as_posix(),
+                        "alert_id": f"{identity['symbol']}:underwriting-buy-zone",
+                        "symbol": identity["symbol"],
+                        "name": identity["name"],
+                        "type": "underwriting_buy_zone_entry",
+                        "condition": {
+                            "operator": "price_lte",
+                            "threshold": valuation["buy_zone"][1],
+                        },
+                        "reason": "价格进入承保买入区；执行前必须重查证据有效性和核心逻辑。",
+                        "latest_report": latest_report,
+                        "source_ref": underwriting["review_id"],
                     }
                 )
-    items.sort(key=lambda item: (item["symbol"], item["type"], float(item["price"])))
-    return {"schema_version": 1, "item_count": len(items), "items": items}
+            if underwriting["review_id"] is not None:
+                items.append(
+                    {
+                        "alert_id": f"{identity['symbol']}:conclusion-price-stale",
+                        "symbol": identity["symbol"],
+                        "name": identity["name"],
+                        "type": "conclusion_price_move_stale",
+                        "condition": {
+                            "operator": "absolute_change_fraction_gte",
+                            "threshold": PRICE_STALE_FRACTION,
+                            "reference_price_as_of": valuation["price_as_of"],
+                        },
+                        "reason": "相对承保复核价变动达到 10%，原价格结论自动过期。",
+                        "latest_report": latest_report,
+                        "source_ref": underwriting["review_id"],
+                    }
+                )
+            for trigger in meta["triggers"]:
+                if trigger["active"] and trigger["type"] == "price":
+                    items.append(
+                        {
+                            "alert_id": f"{identity['symbol']}:{trigger['trigger_id']}",
+                            "symbol": identity["symbol"],
+                            "name": identity["name"],
+                            "type": "company_price_trigger",
+                            "condition": trigger["condition"],
+                            "reason": trigger["reason"],
+                            "latest_report": latest_report,
+                            "source_ref": trigger["trigger_id"],
+                        }
+                    )
+    items.extend(_portfolio_observations(root))
+    items.sort(key=lambda item: (item["symbol"], item["type"], item["alert_id"]))
+    return {"schema_version": 2, "item_count": len(items), "items": items}
 
 
 def write_price_alerts(research_root: str | Path, output_path: str | Path) -> Path:
     payload = build_price_alerts(research_root)
     target = Path(output_path)
-    target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    return target
+    content = (
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    ).encode("utf-8")
+    return atomic_write_bytes(target, content)
 
 
 def evaluate_price_alerts(
@@ -54,45 +94,118 @@ def evaluate_price_alerts(
     }
     triggered: list[dict[str, Any]] = []
     for alert in alerts.get("items", []):
+        if not isinstance(alert, Mapping):
+            continue
         quote = quote_by_symbol.get(str(alert.get("symbol")))
-        if not quote:
+        if quote is None or not _condition_met(alert.get("condition"), quote):
             continue
-        observed = _price_from_quote(quote)
-        if observed is None:
-            continue
-        target = float(alert["price"])
-        kind = alert["type"]
-        if kind == "price_below" and observed <= target:
-            triggered.append(_triggered(alert, quote, observed))
-        elif kind == "price_above" and observed >= target:
-            triggered.append(_triggered(alert, quote, observed))
-    return {"schema_version": 1, "triggered_count": len(triggered), "triggered": triggered}
+        triggered.append(_triggered(alert, quote))
+    triggered.sort(key=lambda item: (item["symbol"], item["type"], item["alert_id"]))
+    return {"schema_version": 2, "triggered_count": len(triggered), "triggered": triggered}
 
 
 def load_json(path: str | Path) -> Any:
     return json.loads(Path(path).read_text(encoding="utf-8-sig"))
 
 
-def _price_from_quote(quote: dict[str, Any]) -> float | None:
-    for key in ("price", "close", "last"):
-        value = quote.get(key)
-        if isinstance(value, bool):
+def _condition_met(condition: Any, quote: Mapping[str, Any]) -> bool:
+    if not isinstance(condition, Mapping):
+        return False
+    operator = condition.get("operator")
+    threshold = _number(condition.get("threshold"))
+    if operator in {"price_lte", "price_gte"}:
+        price = _price_from_quote(quote)
+        if price is None or threshold is None:
+            return False
+        return price <= threshold if operator == "price_lte" else price >= threshold
+    if operator == "absolute_change_fraction_gte":
+        change = _number(quote.get("change_since_review"))
+        if change is None:
+            price = _price_from_quote(quote)
+            reference = _number(quote.get("review_price"))
+            if price is None or reference is None or reference <= 0:
+                return False
+            change = price / reference - 1
+        return threshold is not None and abs(change) >= threshold
+    if operator == "observe":
+        return True
+    return False
+
+
+def _portfolio_observations(root: Path) -> list[dict[str, Any]]:
+    batches_root = root / "batches"
+    if not batches_root.is_dir():
+        return []
+    latest: dict[str, tuple[str, dict[str, Any]]] = {}
+    for portfolio_path in sorted(batches_root.glob("*/portfolio.json")):
+        try:
+            sealed = verify_sealed(portfolio_path)
+        except ValueError:
             continue
-        if isinstance(value, (int, float)):
-            return float(value)
+        if sealed.artifact_type != "model_portfolio":
+            continue
+        payload = load_json(portfolio_path)
+        if not isinstance(payload, Mapping):
+            continue
+        run_id = str(payload.get("run_id") or portfolio_path.parent.name)
+        for position in payload.get("positions", []):
+            if not isinstance(position, Mapping) or position.get("action") not in {
+                "reduce",
+                "exit",
+            }:
+                continue
+            symbol = str(position.get("symbol"))
+            if not symbol:
+                continue
+            latest[symbol] = (run_id, dict(position))
+    observations: list[dict[str, Any]] = []
+    for symbol, (run_id, position) in sorted(latest.items()):
+        action = str(position["action"])
+        observations.append(
+            {
+                "alert_id": f"{symbol}:portfolio-{action}",
+                "symbol": symbol,
+                "name": str(position.get("name") or symbol),
+                "type": f"portfolio_{action}_observation",
+                "condition": {"operator": "observe"},
+                "reason": f"封存模型组合给出 {action}，需要复核持仓处置。",
+                "latest_report": None,
+                "source_ref": f"batches/{run_id}/portfolio.json",
+            }
+        )
+    return observations
+
+
+def _price_from_quote(quote: Mapping[str, Any]) -> float | None:
+    for key in ("price", "close", "last"):
+        value = _number(quote.get(key))
+        if value is not None:
+            return value
     return None
 
 
-def _triggered(
-    alert: dict[str, Any], quote: dict[str, Any], observed: float
-) -> dict[str, Any]:
+def _number(value: Any) -> float | None:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        return None
+    return float(value)
+
+
+def _triggered(alert: Mapping[str, Any], quote: Mapping[str, Any]) -> dict[str, Any]:
     return {
+        "alert_id": alert["alert_id"],
         "symbol": alert["symbol"],
         "name": alert["name"],
         "type": alert["type"],
-        "trigger_price": alert["price"],
-        "observed_price": observed,
+        "condition": alert["condition"],
+        "observed_price": _price_from_quote(quote),
+        "change_since_review": _number(quote.get("change_since_review")),
         "reason": alert["reason"],
         "latest_report": alert["latest_report"],
+        "source_ref": alert["source_ref"],
         "quote_as_of": quote.get("as_of"),
     }
+
+
+def _latest_report(root: Path, company_dir: Path, meta: dict[str, Any]) -> str | None:
+    latest = meta["reports"]["latest"]
+    return (company_dir.relative_to(root) / latest).as_posix() if latest else None

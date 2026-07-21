@@ -3,9 +3,10 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 from .company import AssetValidationError, validate_company_dir
+from .sealing import atomic_write_bytes
 
 
 @dataclass(frozen=True, slots=True)
@@ -22,28 +23,39 @@ def build_index(research_root: str | Path) -> dict[str, Any]:
     if companies_root.exists():
         for company_dir in _company_dirs(companies_root):
             meta = validate_company_dir(company_dir)
+            identity = meta["identity"]
+            research = meta["research"]
+            reports = meta["reports"]
+            underwriting = meta["underwriting"]
+            valuation = meta["valuation"]
             rel_company = company_dir.relative_to(root)
             companies.append(
                 {
-                    "symbol": meta["symbol"],
-                    "market": meta["market"],
-                    "ticker": meta["ticker"],
-                    "name": meta["name"],
-                    "currency": meta["currency"],
-                    "status": meta["status"],
-                    "current_rating": meta["current_rating"],
-                    "current_thesis": meta["current_thesis"],
-                    "fair_value_range": meta["fair_value_range"],
-                    "buy_zone": meta["buy_zone"],
-                    "sell_or_reduce_zone": meta["sell_or_reduce_zone"],
-                    "latest_report": _posix(rel_company / meta["latest_report"]),
-                    "next_review_date": _next_review_date(meta),
-                    "active_price_triggers": len(meta.get("price_triggers", [])),
+                    "symbol": identity["symbol"],
+                    "market": identity["market"],
+                    "ticker": identity["ticker"],
+                    "name": identity["name"],
+                    "currency": identity["currency"],
+                    "security_status": identity["security_status"],
+                    "coverage_status": research["coverage_status"],
+                    "rebaseline_required": research["rebaseline_required"],
+                    "information_cutoff": research["information_cutoff"],
+                    "latest_report": _relative_report(rel_company, reports["latest"]),
+                    "latest_by_type": {
+                        report_type: _relative_report(rel_company, path)
+                        for report_type, path in sorted(reports["latest_by_type"].items())
+                    },
+                    "underwriting": dict(underwriting),
+                    "valuation": dict(valuation),
+                    "conclusion_status": _conclusion_status(meta),
+                    "active_trigger_count": sum(
+                        bool(trigger["active"]) for trigger in meta["triggers"]
+                    ),
                     "updated_at": meta["updated_at"],
                 }
             )
     companies.sort(key=lambda item: item["symbol"])
-    return {"schema_version": 1, "company_count": len(companies), "companies": companies}
+    return {"schema_version": 2, "company_count": len(companies), "companies": companies}
 
 
 def write_index(research_root: str | Path) -> WriteResult:
@@ -53,12 +65,7 @@ def write_index(research_root: str | Path) -> WriteResult:
         payload = build_index(root)
     except AssetValidationError as exc:
         return WriteResult(ok=False, path=target, errors=[str(exc)])
-    root.mkdir(parents=True, exist_ok=True)
-    temp = target.with_suffix(".json.tmp")
-    temp.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
-    temp.replace(target)
+    atomic_write_bytes(target, _pretty_json_bytes(payload))
     return WriteResult(ok=True, path=target, errors=[])
 
 
@@ -66,21 +73,29 @@ def _company_dirs(companies_root: Path) -> list[Path]:
     paths: list[Path] = []
     for market_dir in sorted(path for path in companies_root.iterdir() if path.is_dir()):
         for company_dir in sorted(path for path in market_dir.iterdir() if path.is_dir()):
-            if (company_dir / "meta.json").exists():
+            if (company_dir / "meta.json").is_file():
                 paths.append(company_dir)
     return paths
 
 
-def _next_review_date(meta: dict[str, Any]) -> str | None:
-    dates = [
-        item["date"]
-        for item in meta.get("review_triggers", [])
-        if isinstance(item, dict)
-        and item.get("type") == "date"
-        and isinstance(item.get("date"), str)
-    ]
-    return min(dates) if dates else None
+def _conclusion_status(meta: Mapping[str, Any]) -> str:
+    if meta["research"]["rebaseline_required"]:
+        return "requires_rebaseline"
+    status = meta["underwriting"]["status"]
+    if status is None:
+        return "not_underwritten"
+    if status == "passed":
+        return "valid"
+    if status == "stale":
+        return "stale"
+    return "blocked"
 
 
-def _posix(path: Path) -> str:
-    return path.as_posix()
+def _relative_report(rel_company: Path, report: str | None) -> str | None:
+    return (rel_company / report).as_posix() if report is not None else None
+
+
+def _pretty_json_bytes(payload: Any) -> bytes:
+    return (
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    ).encode("utf-8")
