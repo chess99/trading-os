@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trading-os.local/schemas/portfolio.schema.json",
+  "title": "Trading OS Model Portfolio Decision",
+  "type": "object",
+  "required": ["schema_version", "portfolio_id", "run_id", "as_of", "quote_snapshot_sha256", "policy_versions", "positions", "cash_weight", "exclusions"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 2},
+    "portfolio_id": {"type": "string", "minLength": 1},
+    "run_id": {"type": "string", "minLength": 1},
+    "as_of": {"type": "string", "format": "date-time"},
+    "quote_snapshot_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "policy_versions": {"type": "object", "additionalProperties": {"type": "string", "minLength": 1}},
+    "positions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["symbol", "action", "current_price", "fair_value_range", "buy_zone", "target_weight", "industry", "economic_risk_clusters", "reason_codes"],
+        "properties": {
+          "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
+          "action": {"type": "string", "enum": ["buy_now", "buy_on_weakness", "hold", "reduce", "exit", "watch", "reject"]},
+          "current_price": {"type": "number", "exclusiveMinimum": 0},
+          "fair_value_range": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2, "maxItems": 2},
+          "buy_zone": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2, "maxItems": 2},
+          "target_weight": {"type": "number", "minimum": 0, "maximum": 1},
+          "industry": {"type": "string", "minLength": 1},
+          "economic_risk_clusters": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+          "reason_codes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "cash_weight": {"type": "number", "minimum": 0, "maximum": 1},
+    "exclusions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["symbol", "action", "reason_codes"],
+        "properties": {
+          "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
+          "action": {"type": "string", "enum": ["buy_on_weakness", "watch", "reject"]},
+          "reason_codes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trading-os.local/schemas/claim-packet.schema.json",
+  "title": "Trading OS Blind Claim Packet",
+  "type": "object",
+  "required": ["schema_version", "packet_id", "review_id", "symbol", "source_report_sha256", "claims", "allowed_sources", "created_at"],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 2},
+    "packet_id": {"type": "string", "minLength": 1},
+    "review_id": {"type": "string", "minLength": 1},
+    "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
+    "source_report_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "category", "claim", "verification_metrics", "falsifiers", "source_ids"],
+        "properties": {
+          "claim_id": {"type": "string", "minLength": 1},
+          "category": {"type": "string", "enum": ["fact", "business", "industry", "investment"]},
+          "claim": {"type": "string", "minLength": 1},
+          "verification_metrics": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "falsifiers": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "source_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        },
+        "additionalProperties": false
+      }
+    },
+    "allowed_sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "tier", "uri_or_path"],
+        "properties": {
+          "source_id": {"type": "string", "minLength": 1},
+          "tier": {"type": "string", "enum": ["S1", "S2", "S3", "S4"]},
+          "uri_or_path": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "created_at": {"type": "string", "format": "date-time"}
+  },
+  "additionalProperties": false
+}
