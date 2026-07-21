@@ -200,6 +200,16 @@ def review_status(*, runs_root: str | Path, run_id: str) -> dict[str, Any]:
     }
 
 
+def resume_review(
+    *, runs_root: str | Path, run_id: str, resumed_at: dt.datetime
+) -> dict[str, Any]:
+    return ReviewRunStore(runs_root).resume(
+        run_id,
+        actor="cli",
+        at=resumed_at,
+    )
+
+
 def validate_review(
     *, runs_root: str | Path, run_id: str, strict: bool
 ) -> dict[str, Any]:
@@ -266,9 +276,10 @@ def synthesize_review(
     if not isinstance(quotes_raw, list):
         raise ReviewWorkflowError("quote snapshot must be a JSON array")
     quotes: dict[str, float] = {}
+    quote_times: dict[str, dt.datetime] = {}
     for item in quotes_raw:
-        if not isinstance(item, dict) or set(item) < {"symbol", "price"}:
-            raise ReviewWorkflowError("each quote must contain symbol and price")
+        if not isinstance(item, dict) or set(item) < {"symbol", "price", "as_of"}:
+            raise ReviewWorkflowError("each quote must contain symbol, price, and as_of")
         symbol = str(item["symbol"])
         price = item["price"]
         if isinstance(price, bool) or not isinstance(price, (int, float)) or price <= 0:
@@ -276,6 +287,25 @@ def synthesize_review(
         if symbol in quotes:
             raise ReviewWorkflowError(f"duplicate quote symbol: {symbol}")
         quotes[symbol] = float(price)
+        quote_times[symbol] = _parse_aware_datetime(item["as_of"], f"quote {symbol} as_of")
+
+    stale_symbols = sorted(
+        symbol
+        for symbol, quote_time in quote_times.items()
+        if synthesized_at - quote_time > dt.timedelta(days=3)
+        or quote_time - synthesized_at > dt.timedelta(minutes=5)
+    )
+    if stale_symbols:
+        store.transition(
+            run_id,
+            ReviewRunStatus.STALE_QUOTES.value,
+            actor="cli",
+            at=synthesized_at,
+            reason=f"stale quote snapshot: {','.join(stale_symbols)}",
+        )
+        raise ReviewWorkflowError(
+            f"quote snapshot is stale for: {', '.join(stale_symbols)}"
+        )
 
     candidates: list[dict[str, Any]] = []
     for item in store.read_candidates(run_id):
@@ -294,6 +324,8 @@ def synthesize_review(
         candidate = _read_json_object(candidate_path, "portfolio candidate")
         if candidate.get("symbol") != symbol:
             raise ReviewWorkflowError(f"portfolio candidate symbol mismatch: {symbol}")
+        prior_price = candidate["current_price"]
+        candidate["_previous_price"] = prior_price
         candidate["current_price"] = quotes[symbol]
         candidates.append(candidate)
 
@@ -302,6 +334,14 @@ def synthesize_review(
         key: portfolio_policy.payload[key]
         for key in POLICY_KEYS
     }
+    stale_threshold = float(portfolio_policy.payload["price_change_stale_threshold"])
+    for candidate in candidates:
+        previous = float(candidate.pop("_previous_price", candidate["current_price"]))
+        if previous > 0 and abs(candidate["current_price"] / previous - 1) >= stale_threshold:
+            candidate["evidence_stale"] = True
+            candidate["reason_codes"] = sorted(
+                {*candidate["reason_codes"], "price_change_invalidated_conclusion"}
+            )
     result = build_model_portfolio(candidates, policy=policy)
     batch_dir = Path(research_root) / "batches" / run_id
     quote_artifact = seal_json(
@@ -384,18 +424,23 @@ def write_review_report(
         "",
         f"生成时间：{reported_at.isoformat()}",
         "",
-        "| 公司 | 操作 | 现价 | 合理价值 | 买入区 | 目标仓位 | 理由代码 |",
-        "|---|---:|---:|---:|---:|---:|---|",
+        "| 公司 | 承保 | 置信度 | 操作 | 现价 | 悲观价值 | 合理价值 | "
+        "买入区 | 目标仓位 | 理由代码 |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---|",
     ]
     for item in portfolio["positions"]:
         lines.append(
             (
-                "| {symbol} | {action} | {price:g} | {fair} | {buy} | "
-                "{weight:.2%} | {reasons} |"
+                "| {name}（{symbol}） | {underwriting} | {confidence} | {action} | "
+                "{price:g} | {bear:g} | {fair} | {buy} | {weight:.2%} | {reasons} |"
             ).format(
+                name=item["name"],
                 symbol=item["symbol"],
+                underwriting=item["underwriting_status"],
+                confidence=item["confidence"],
                 action=item["action"],
                 price=item["current_price"],
+                bear=item["bear_value"],
                 fair="–".join(f"{value:g}" for value in item["fair_value_range"]),
                 buy="–".join(f"{value:g}" for value in item["buy_zone"]),
                 weight=item["target_weight"],
@@ -517,11 +562,16 @@ def _load_latest_research_claims(
 def _decision_payload(item: Any) -> dict[str, Any]:
     return {
         "symbol": item.symbol,
+        "name": item.name,
+        "underwriting_status": item.underwriting_status,
+        "confidence": item.confidence,
         "action": item.action,
         "current_price": item.current_price,
+        "bear_value": item.bear_value,
         "fair_value_range": list(item.fair_value_range),
         "buy_zone": list(item.buy_zone),
         "target_weight": item.target_weight,
+        "initial_entry_weight": item.initial_entry_weight,
         "industry": item.industry,
         "economic_risk_clusters": list(item.economic_risk_clusters),
         "reason_codes": list(item.reason_codes),
@@ -553,3 +603,15 @@ def _read_json_object(path: Path, label: str) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ReviewWorkflowError(f"{label} must be a JSON object")
     return value
+
+
+def _parse_aware_datetime(value: Any, label: str) -> dt.datetime:
+    if not isinstance(value, str):
+        raise ReviewWorkflowError(f"{label} must be an ISO 8601 datetime")
+    try:
+        parsed = dt.datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise ReviewWorkflowError(f"{label} must be an ISO 8601 datetime") from exc
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise ReviewWorkflowError(f"{label} must include a UTC offset")
+    return parsed

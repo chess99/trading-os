@@ -14,6 +14,8 @@ class PortfolioValidationError(ValueError):
 class PortfolioDecision:
     symbol: str
     name: str
+    underwriting_status: str
+    confidence: str
     action: str
     current_price: float
     bear_value: float
@@ -80,6 +82,7 @@ def build_model_portfolio(
 
     industry_weights: dict[str, float] = {}
     cluster_weights: dict[str, float] = {}
+    allocated_weights: list[float] = []
     decisions: list[PortfolioDecision] = []
     for item in normalized:
         action, gate_reasons = _preallocation_action(item)
@@ -116,6 +119,10 @@ def build_model_portfolio(
                 ),
                 default=limits["max_economic_risk_cluster_weight"],
             )
+            top_five_remaining = _top_five_candidate_cap(
+                allocated_weights,
+                limits["max_top_five_weight"],
+            )
             target_weight = max(
                 0.0,
                 min(
@@ -124,12 +131,15 @@ def build_model_portfolio(
                     risk_cap,
                     industry_remaining,
                     cluster_remaining,
+                    top_five_remaining,
                 ),
             )
             if industry_remaining <= 1e-12:
                 reasons.add("industry_limit_exhausted")
             if cluster_remaining <= 1e-12:
                 reasons.add("risk_cluster_limit_exhausted")
+            if top_five_remaining <= 1e-12:
+                reasons.add("top_five_limit_exhausted")
             if target_weight <= 1e-12:
                 action = PortfolioAction.WATCH.value
                 target_weight = 0.0
@@ -141,9 +151,12 @@ def build_model_portfolio(
                     cluster_weights[cluster] = (
                         cluster_weights.get(cluster, 0.0) + target_weight
                     )
+                allocated_weights.append(target_weight)
         decision = PortfolioDecision(
             symbol=item["symbol"],
             name=item["name"],
+            underwriting_status=item["underwriting_status"],
+            confidence=item["confidence"],
             action=action,
             current_price=item["current_price"],
             bear_value=item["bear_value"],
@@ -176,6 +189,13 @@ def build_model_portfolio(
         invested_weight=invested,
         cash_weight=cash,
     )
+
+
+def _top_five_candidate_cap(weights: list[float], limit: float) -> float:
+    ranked = sorted(weights, reverse=True)
+    if len(ranked) < 5:
+        return max(0.0, limit - sum(ranked))
+    return max(0.0, limit - sum(ranked[:4]))
 
 
 def _preallocation_action(item: Mapping[str, Any]) -> tuple[str, set[str]]:

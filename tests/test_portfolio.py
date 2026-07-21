@@ -166,6 +166,32 @@ def test_cash_is_retained_instead_of_forcing_full_investment():
     assert result.cash_weight == pytest.approx(0.95)
 
 
+def test_top_five_limit_is_enforced_independently_of_single_name_limit():
+    from trading_os.research_assets.portfolio import build_model_portfolio
+
+    policy = {**POLICY, "max_single_name_weight": 0.10}
+    candidates = [
+        _candidate(
+            f"CN:{index:06d}",
+            rank_score=100 - index,
+            industry=f"industry-{index}",
+            clusters=[f"cluster-{index}"],
+        )
+        for index in range(1, 8)
+    ]
+    for candidate in candidates:
+        candidate["allowed_loss_weight"] = 0.02
+
+    result = build_model_portfolio(candidates, policy=policy)
+    ranked = sorted(
+        (item.target_weight for item in result.decisions),
+        reverse=True,
+    )
+
+    assert sum(ranked[:5]) == pytest.approx(0.25)
+    assert any("top_five_limit_exhausted" in item.reason_codes for item in result.decisions)
+
+
 def test_every_nonbuy_decision_has_structured_exclusion_reasons():
     expensive = _candidate("CN:000100")
     expensive["current_price"] = 90.0

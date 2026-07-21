@@ -15,14 +15,19 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["symbol", "action", "current_price", "fair_value_range", "buy_zone", "target_weight", "industry", "economic_risk_clusters", "reason_codes"],
+        "required": ["symbol", "name", "underwriting_status", "confidence", "action", "current_price", "bear_value", "fair_value_range", "buy_zone", "target_weight", "initial_entry_weight", "industry", "economic_risk_clusters", "reason_codes"],
         "properties": {
           "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
+          "name": {"type": "string", "minLength": 1},
+          "underwriting_status": {"type": "string", "enum": ["passed", "failed", "insufficient_evidence", "needs_challenger", "stale"]},
+          "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
           "action": {"type": "string", "enum": ["buy_now", "buy_on_weakness", "hold", "reduce", "exit", "watch", "reject"]},
           "current_price": {"type": "number", "exclusiveMinimum": 0},
+          "bear_value": {"type": "number"},
           "fair_value_range": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2, "maxItems": 2},
           "buy_zone": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2, "maxItems": 2},
           "target_weight": {"type": "number", "minimum": 0, "maximum": 1},
+          "initial_entry_weight": {"type": "number", "minimum": 0, "maximum": 1},
           "industry": {"type": "string", "minLength": 1},
           "economic_risk_clusters": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
           "reason_codes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
@@ -38,7 +43,7 @@
         "required": ["symbol", "action", "reason_codes"],
         "properties": {
           "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
-          "action": {"type": "string", "enum": ["buy_on_weakness", "watch", "reject"]},
+          "action": {"type": "string", "enum": ["buy_on_weakness", "hold", "reduce", "exit", "watch", "reject"]},
           "reason_codes": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
         },
         "additionalProperties": false

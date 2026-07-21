@@ -39,6 +39,7 @@ from .research_assets.review_workflow import (
     create_review,
     load_candidates,
     prepare_review,
+    resume_review,
     review_status,
     run_review,
     synthesize_review,
@@ -105,6 +106,14 @@ def build_parser() -> argparse.ArgumentParser:
     review_status_cmd.add_argument("run_id")
     _add_review_roots(review_status_cmd)
     review_status_cmd.set_defaults(func=cmd_review_status)
+
+    review_resume = review_sub.add_parser(
+        "resume", help="Resume a review from its safe pre-failure state"
+    )
+    review_resume.add_argument("run_id")
+    _add_review_roots(review_resume)
+    _add_timestamp(review_resume)
+    review_resume.set_defaults(func=cmd_review_resume)
 
     review_validate = review_sub.add_parser(
         "validate", help="Validate review state and sealed artifacts"
@@ -294,6 +303,16 @@ def cmd_review_prepare(ns: argparse.Namespace) -> int:
 
 def cmd_review_status(ns: argparse.Namespace) -> int:
     _write_success(review_status(runs_root=ns.runs_root, run_id=ns.run_id))
+    return 0
+
+
+def cmd_review_resume(ns: argparse.Namespace) -> int:
+    state = resume_review(
+        runs_root=ns.runs_root,
+        run_id=ns.run_id,
+        resumed_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, "run": state})
     return 0
 
 

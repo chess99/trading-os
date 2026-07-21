@@ -270,6 +270,42 @@ class ReviewRunStore:
             events.append(event)
         return events
 
+    def resume(
+        self,
+        run_id: str,
+        *,
+        actor: str,
+        at: dt.datetime,
+    ) -> dict[str, Any]:
+        actor = _require_text(actor, "actor")
+        _require_aware(at, "at")
+        run_dir = self._run_dir(run_id)
+        with _exclusive_lock(run_dir / ".state.lock"):
+            state = self.load_run(run_id)
+            if state["status"] not in FAILURE_STATUSES:
+                raise ReviewStoreError(
+                    f"only a failed review run can resume, got {state['status']}"
+                )
+            events = self.read_events(run_id)
+            failure_event = events[-1]
+            if failure_event["to_status"] != state["status"]:
+                raise ReviewStoreError("failure event does not match current state")
+            resume_status = failure_event["from_status"]
+            if resume_status is None or resume_status in FAILURE_STATUSES:
+                raise ReviewStoreError("review run has no safe pre-failure state")
+            updated = dict(state)
+            updated["status"] = resume_status
+            self._write_state_and_event(
+                run_dir,
+                old_state=state,
+                new_state=updated,
+                event="run_resumed",
+                actor=actor,
+                at=at,
+                reason=f"resume from {state['status']}",
+            )
+            return updated
+
     def acquire_lease(
         self,
         run_id: str,

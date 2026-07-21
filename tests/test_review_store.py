@@ -274,6 +274,24 @@ def test_failure_and_cancel_states_are_terminal_until_explicit_resume(tmp_path: 
             at=T0 + dt.timedelta(minutes=3),
         )
 
+    resumed = store.resume(
+        "memory-2026-07-21",
+        actor="coordinator",
+        at=T0 + dt.timedelta(minutes=4),
+    )
+    assert resumed["status"] == "candidates_frozen"
+    assert store.read_events("memory-2026-07-21")[-1]["event"] == "run_resumed"
+
+
+def test_resume_rejects_nonfailure_state(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+
+    with pytest.raises(ReviewStoreError, match="only a failed"):
+        store.resume("memory-2026-07-21", actor="test", at=T0)
+
 
 def test_task_lease_is_exclusive_and_same_owner_is_idempotent(tmp_path: Path):
     from trading_os.research_assets.review_store import ReviewStoreError

@@ -126,7 +126,16 @@ def test_cli_review_help_lists_complete_workflow(capsys):
 
     assert exc.value.code == 0
     output = capsys.readouterr().out
-    for command in ("create", "prepare", "status", "validate", "synthesize", "report", "run"):
+    for command in (
+        "create",
+        "prepare",
+        "status",
+        "resume",
+        "validate",
+        "synthesize",
+        "report",
+        "run",
+    ):
         assert command in output
 
 
