@@ -1,0 +1,389 @@
+from __future__ import annotations
+
+import datetime as dt
+import json
+from pathlib import Path
+
+import pytest
+
+T0 = dt.datetime(2026, 7, 21, 0, 0, tzinfo=dt.timezone.utc)
+
+
+def _store(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewRunStore
+
+    return ReviewRunStore(tmp_path / "automation" / "runs")
+
+
+def _create(store, run_id: str = "memory-2026-07-21") -> dict[str, object]:
+    return store.create_run(
+        run_id,
+        scope={"type": "industry", "market": "CN", "description": "存储产业链"},
+        policy_versions={
+            "underwriting.default": "1.0.0",
+            "portfolio.default-model": "1.0.0",
+        },
+        created_at=T0,
+    )
+
+
+def _candidates() -> list[dict[str, str]]:
+    return [
+        {
+            "symbol": "CN:000100",
+            "name": "TCL科技",
+            "target_company_dir": "research/companies/CN/000100",
+        },
+        {
+            "symbol": "CN:000021",
+            "name": "深科技",
+            "target_company_dir": "research/companies/CN/000021",
+        },
+    ]
+
+
+def test_create_run_writes_v2_state_and_initial_event(tmp_path: Path):
+    store = _store(tmp_path)
+
+    state = _create(store)
+
+    assert state["schema_version"] == 2
+    assert state["status"] == "created"
+    assert state["candidate_set"] == {
+        "frozen": False,
+        "frozen_at": None,
+        "sha256": None,
+        "count": 0,
+    }
+    assert store.load_run("memory-2026-07-21") == state
+    events = store.read_events("memory-2026-07-21")
+    assert events == [
+        {
+            "sequence": 1,
+            "event": "run_created",
+            "from_status": None,
+            "to_status": "created",
+            "actor": "system",
+            "at": T0.isoformat(),
+            "reason": None,
+        }
+    ]
+
+
+def test_create_run_is_idempotent_only_for_identical_manifest(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    first = _create(store)
+
+    assert _create(store) == first
+    with pytest.raises(ReviewStoreError, match="different manifest"):
+        store.create_run(
+            "memory-2026-07-21",
+            scope={"type": "theme", "market": "CN", "description": "changed"},
+            policy_versions={"underwriting.default": "1.0.0"},
+            created_at=T0,
+        )
+
+
+def test_freeze_candidates_sorts_and_hashes_immutable_snapshot(tmp_path: Path):
+    store = _store(tmp_path)
+    _create(store)
+
+    state = store.freeze_candidates(
+        "memory-2026-07-21",
+        list(reversed(_candidates())),
+        actor="coordinator",
+        at=T0 + dt.timedelta(minutes=1),
+    )
+
+    assert state["status"] == "candidates_frozen"
+    assert state["candidate_set"]["frozen"] is True
+    assert state["candidate_set"]["count"] == 2
+    assert len(state["candidate_set"]["sha256"]) == 64
+    snapshot = store.read_candidates("memory-2026-07-21")
+    assert [item["symbol"] for item in snapshot] == ["CN:000021", "CN:000100"]
+
+
+def test_frozen_candidates_are_idempotent_but_cannot_change(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+    first = store.freeze_candidates(
+        "memory-2026-07-21",
+        _candidates(),
+        actor="coordinator",
+        at=T0 + dt.timedelta(minutes=1),
+    )
+
+    assert (
+        store.freeze_candidates(
+            "memory-2026-07-21",
+            list(reversed(_candidates())),
+            actor="coordinator",
+            at=T0 + dt.timedelta(minutes=2),
+        )
+        == first
+    )
+    changed = _candidates() + [
+        {
+            "symbol": "CN:300750",
+            "name": "宁德时代",
+            "target_company_dir": "research/companies/CN/300750",
+        }
+    ]
+    with pytest.raises(ReviewStoreError, match="frozen"):
+        store.freeze_candidates(
+            "memory-2026-07-21",
+            changed,
+            actor="coordinator",
+            at=T0 + dt.timedelta(minutes=2),
+        )
+
+
+@pytest.mark.parametrize(
+    "statuses",
+    [
+        [
+            "packets_ready",
+            "blind_reviewing",
+            "blind_sealed",
+            "revealing",
+            "company_reviews_complete",
+            "synthesizing",
+            "completed",
+        ],
+        [
+            "packets_ready",
+            "blind_reviewing",
+            "blind_sealed",
+            "revealing",
+            "challenging",
+            "company_reviews_complete",
+            "synthesizing",
+            "completed",
+        ],
+    ],
+)
+def test_legal_review_paths_reach_completed(tmp_path: Path, statuses: list[str]):
+    store = _store(tmp_path)
+    _create(store)
+    store.freeze_candidates(
+        "memory-2026-07-21",
+        _candidates(),
+        actor="coordinator",
+        at=T0 + dt.timedelta(minutes=1),
+    )
+
+    for offset, status in enumerate(statuses, start=2):
+        state = store.transition(
+            "memory-2026-07-21",
+            status,
+            actor="coordinator",
+            at=T0 + dt.timedelta(minutes=offset),
+        )
+
+    assert state["status"] == "completed"
+    events = store.read_events("memory-2026-07-21")
+    assert [event["sequence"] for event in events] == list(range(1, len(events) + 1))
+
+
+@pytest.mark.parametrize(
+    ("from_status", "to_status"),
+    [
+        ("created", "packets_ready"),
+        ("candidates_frozen", "blind_reviewing"),
+        ("packets_ready", "revealing"),
+        ("blind_reviewing", "revealing"),
+        ("blind_sealed", "completed"),
+        ("completed", "synthesizing"),
+    ],
+)
+def test_illegal_state_transitions_are_rejected(
+    tmp_path: Path, from_status: str, to_status: str
+):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+    if from_status != "created":
+        store.freeze_candidates(
+            "memory-2026-07-21",
+            _candidates(),
+            actor="coordinator",
+            at=T0 + dt.timedelta(minutes=1),
+        )
+        path = {
+            "candidates_frozen": [],
+            "packets_ready": ["packets_ready"],
+            "blind_reviewing": ["packets_ready", "blind_reviewing"],
+            "blind_sealed": ["packets_ready", "blind_reviewing", "blind_sealed"],
+            "completed": [
+                "packets_ready",
+                "blind_reviewing",
+                "blind_sealed",
+                "revealing",
+                "company_reviews_complete",
+                "synthesizing",
+                "completed",
+            ],
+        }[from_status]
+        for offset, status in enumerate(path, start=2):
+            store.transition(
+                "memory-2026-07-21",
+                status,
+                actor="coordinator",
+                at=T0 + dt.timedelta(minutes=offset),
+            )
+
+    with pytest.raises(ReviewStoreError, match="illegal review state transition"):
+        store.transition(
+            "memory-2026-07-21",
+            to_status,
+            actor="coordinator",
+            at=T0 + dt.timedelta(hours=1),
+        )
+
+
+def test_failure_and_cancel_states_are_terminal_until_explicit_resume(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+    store.freeze_candidates(
+        "memory-2026-07-21",
+        _candidates(),
+        actor="coordinator",
+        at=T0 + dt.timedelta(minutes=1),
+    )
+    failed = store.transition(
+        "memory-2026-07-21",
+        "failed_validation",
+        actor="validator",
+        at=T0 + dt.timedelta(minutes=2),
+        reason="claim packet leaked a target price",
+    )
+    assert failed["status"] == "failed_validation"
+
+    with pytest.raises(ReviewStoreError):
+        store.transition(
+            "memory-2026-07-21",
+            "packets_ready",
+            actor="coordinator",
+            at=T0 + dt.timedelta(minutes=3),
+        )
+
+
+def test_task_lease_is_exclusive_and_same_owner_is_idempotent(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+    first = store.acquire_lease(
+        "memory-2026-07-21",
+        "CN-000021-blind",
+        owner="agent-a",
+        now=T0,
+        ttl_seconds=600,
+    )
+    second = store.acquire_lease(
+        "memory-2026-07-21",
+        "CN-000021-blind",
+        owner="agent-a",
+        now=T0 + dt.timedelta(seconds=30),
+        ttl_seconds=600,
+    )
+
+    assert second == first
+    with pytest.raises(ReviewStoreError, match="leased"):
+        store.acquire_lease(
+            "memory-2026-07-21",
+            "CN-000021-blind",
+            owner="agent-b",
+            now=T0 + dt.timedelta(seconds=30),
+            ttl_seconds=600,
+        )
+
+
+def test_expired_task_lease_can_be_reclaimed(tmp_path: Path):
+    store = _store(tmp_path)
+    _create(store)
+    store.acquire_lease(
+        "memory-2026-07-21",
+        "CN-000021-blind",
+        owner="agent-a",
+        now=T0,
+        ttl_seconds=60,
+    )
+
+    reclaimed = store.acquire_lease(
+        "memory-2026-07-21",
+        "CN-000021-blind",
+        owner="agent-b",
+        now=T0 + dt.timedelta(seconds=61),
+        ttl_seconds=120,
+    )
+
+    assert reclaimed.owner == "agent-b"
+    assert reclaimed.attempt == 2
+
+
+def test_only_lease_owner_can_complete_and_completion_is_idempotent(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+    store.acquire_lease(
+        "memory-2026-07-21",
+        "CN-000021-blind",
+        owner="agent-a",
+        now=T0,
+        ttl_seconds=600,
+    )
+
+    with pytest.raises(ReviewStoreError, match="owner"):
+        store.complete_lease(
+            "memory-2026-07-21",
+            "CN-000021-blind",
+            owner="agent-b",
+            completed_at=T0 + dt.timedelta(minutes=1),
+            result_path="research/companies/CN/000021/underwriting/review/blind.json",
+        )
+
+    completed = store.complete_lease(
+        "memory-2026-07-21",
+        "CN-000021-blind",
+        owner="agent-a",
+        completed_at=T0 + dt.timedelta(minutes=1),
+        result_path="research/companies/CN/000021/underwriting/review/blind.json",
+    )
+    repeated = store.complete_lease(
+        "memory-2026-07-21",
+        "CN-000021-blind",
+        owner="agent-a",
+        completed_at=T0 + dt.timedelta(minutes=1),
+        result_path="research/companies/CN/000021/underwriting/review/blind.json",
+    )
+
+    assert completed == repeated
+    assert completed.status == "completed"
+
+
+def test_event_log_rejects_manual_sequence_corruption(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+    event_path = (
+        tmp_path
+        / "automation"
+        / "runs"
+        / "memory-2026-07-21"
+        / "events.jsonl"
+    )
+    with event_path.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps({"sequence": 99}) + "\n")
+
+    with pytest.raises(ReviewStoreError, match="event sequence"):
+        store.read_events("memory-2026-07-21")
