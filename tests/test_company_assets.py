@@ -1,74 +1,188 @@
 from __future__ import annotations
 
+import datetime as dt
+import hashlib
 import json
 from pathlib import Path
 
 import pytest
 
+REPORT_SECTIONS = {
+    "initial_research": [
+        "结论版",
+        "业务理解",
+        "行业与竞争格局",
+        "公司质量",
+        "财务质量",
+        "结构化主张",
+        "估值",
+        "市场隐含预期",
+        "情景与赔率",
+        "关键假设",
+        "跟踪触发器",
+        "风险",
+        "来源",
+    ],
+    "monitoring_update": [
+        "上一轮判断复盘",
+        "新信息",
+        "判断变化",
+        "证据更新",
+        "跟踪触发器",
+        "风险",
+        "来源",
+    ],
+    "underwriting_review": [
+        "承保结论",
+        "证据账本",
+        "盈利质量桥",
+        "现金流桥",
+        "正常化盈利",
+        "估值与敏感性",
+        "市场隐含预期",
+        "反方证据",
+        "旧主张差异审计",
+        "自动阻断检查",
+        "失效条件",
+        "来源",
+    ],
+    "challenger_review": [
+        "独立挑战结论",
+        "证据账本",
+        "盈利质量桥",
+        "现金流桥",
+        "正常化盈利",
+        "估值与敏感性",
+        "反方证据",
+        "争议点",
+        "失效条件",
+        "来源",
+    ],
+}
 
-def write_company(root: Path, *, rating: str = "watch") -> Path:
-    company_dir = root / "research" / "companies" / "CN" / "600519"
-    reports = company_dir / "reports"
-    reports.mkdir(parents=True)
-    report_path = reports / "2026-07-06-initial.md"
-    report_path.write_text(
-        "# Company Research: 贵州茅台 (CN:600519)\n\n"
-        "Date: 2026-07-06\n"
-        "Research Type: initial\n"
-        "Analyst: Test Fixture + model unknown\n\n"
-        "## One-line Conclusion\n\n"
-        "High-quality cash compounder with valuation discipline required.\n\n"
-        "## Decision\n\n"
-        "Watch.\n\n"
-        "## Business Understanding\n\n"
-        "Premium baijiu producer.\n\n"
-        "## Industry and Competitive Context\n\n"
-        "High-end baijiu remains concentrated.\n\n"
-        "## Company Quality\n\n"
-        "Wide moat.\n\n"
-        "## Financial Quality\n\n"
-        "High margins and strong cash flow.\n\n"
-        "## Valuation\n\n"
-        "Fair value range is 1150-1450 CNY.\n\n"
-        "## Price and Position Plan\n\n"
-        "Initial buy zone is 1000-1100 CNY.\n\n"
-        "## Key Assumptions\n\n"
-        "- Premium demand remains resilient.\n\n"
-        "## Follow-up Triggers\n\n"
-        "- Review after semiannual report.\n\n"
-        "## Risks\n\n"
-        "- Demand weakness.\n\n"
-        "## Previous Thesis Review\n\n"
-        "No previous report exists.\n\n"
-        "## Sources\n\n"
-        "- Company filings.\n",
+
+def _sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def _write_report(
+    company_dir: Path,
+    *,
+    report_type: str = "initial_research",
+    date: str = "2026-07-21",
+    report_id: str | None = None,
+    missing_section: str | None = None,
+    metadata_overrides: dict[str, object] | None = None,
+) -> tuple[Path, dict[str, object]]:
+    report_id = report_id or f"CN-600519-{date}-{report_type}"
+    slug = report_type.replace("_", "-")
+    report_path = company_dir / "reports" / f"{date}-{slug}.md"
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    source_manifest = company_dir / "evidence" / f"{report_id}-sources.json"
+    source_manifest.parent.mkdir(parents=True, exist_ok=True)
+    source_manifest.write_text(
+        json.dumps({"schema_version": 2, "sources": []}) + "\n",
         encoding="utf-8",
     )
-    meta = {
+    metadata: dict[str, object] = {
+        "schema_version": 2,
+        "report_id": report_id,
+        "report_type": report_type,
         "symbol": "CN:600519",
-        "market": "CN",
-        "ticker": "600519",
-        "name": "贵州茅台",
-        "currency": "CNY",
-        "status": "active",
-        "current_rating": rating,
-        "current_thesis": "High-quality cash compounder.",
-        "fair_value_range": [1150, 1450],
-        "buy_zone": [1000, 1100],
-        "sell_or_reduce_zone": [1500, 1800],
-        "position_plan": [
-            {"condition": "price <= 1150", "max_weight": 0.05},
-            {"condition": "price <= 1000", "max_weight": 0.12},
+        "as_of": date,
+        "information_cutoff": f"{date}T15:00:00+08:00",
+        "price_snapshot_id": None,
+        "policy_versions": {"underwriting": "1.0.0"},
+        "agent_id": "codex-test-fixture",
+        "predecessor_reports": [],
+        "sealed_artifacts": [],
+        "source_manifest": source_manifest.relative_to(company_dir).as_posix(),
+    }
+    metadata.update(metadata_overrides or {})
+    sections = [
+        heading
+        for heading in REPORT_SECTIONS.get(report_type, REPORT_SECTIONS["initial_research"])
+        if heading != missing_section
+    ]
+    body = "\n".join(f"## {heading}\n\n测试内容。\n" for heading in sections)
+    report_path.write_text(
+        "<!-- trading-os-report-meta\n"
+        + json.dumps(metadata, ensure_ascii=False, indent=2)
+        + "\n-->\n"
+        + "# 公司研究：贵州茅台（CN:600519）\n\n"
+        + body,
+        encoding="utf-8",
+    )
+    return report_path, metadata
+
+
+def write_company(
+    root: Path,
+    *,
+    report_type: str = "initial_research",
+    date: str = "2026-07-21",
+) -> Path:
+    company_dir = root / "research" / "companies" / "CN" / "600519"
+    report_path, report_meta = _write_report(
+        company_dir,
+        report_type=report_type,
+        date=date,
+    )
+    report_rel = report_path.relative_to(company_dir).as_posix()
+    meta = {
+        "schema_version": 2,
+        "identity": {
+            "symbol": "CN:600519",
+            "market": "CN",
+            "ticker": "600519",
+            "name": "贵州茅台",
+            "currency": "CNY",
+            "security_status": "active",
+        },
+        "research": {
+            "coverage_status": "covered",
+            "rebaseline_required": False,
+            "information_cutoff": f"{date}T15:00:00+08:00",
+        },
+        "reports": {
+            "latest": report_rel,
+            "latest_by_type": {report_type: report_rel},
+            "history": [
+                {
+                    "report_id": report_meta["report_id"],
+                    "path": report_rel,
+                    "report_type": report_type,
+                    "as_of": date,
+                    "sha256": _sha256(report_path),
+                }
+            ],
+            "historical_artifacts": [],
+        },
+        "underwriting": {
+            "status": None,
+            "review_id": None,
+            "confidence": None,
+            "evidence_valid_until": None,
+            "reason_codes": [],
+        },
+        "valuation": {
+            "currency": None,
+            "price_as_of": None,
+            "bear_value": None,
+            "fair_value_range": None,
+            "buy_zone": None,
+            "reduce_zone": None,
+        },
+        "triggers": [
+            {
+                "trigger_id": "next-filing",
+                "type": "filing",
+                "condition": {"filing_type": "interim_report"},
+                "reason": "半年报披露后重新核验证据。",
+                "active": True,
+            }
         ],
-        "latest_report": "reports/2026-07-06-initial.md",
-        "report_history": ["reports/2026-07-06-initial.md"],
-        "review_triggers": [
-            {"type": "date", "date": "2026-08-31", "reason": "Semiannual review."}
-        ],
-        "price_triggers": [
-            {"type": "price_below", "price": 1100, "reason": "Enter buy zone."}
-        ],
-        "updated_at": "2026-07-06T00:00:00+08:00",
+        "updated_at": f"{date}T15:00:00+08:00",
     }
     (company_dir / "meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
@@ -78,420 +192,287 @@ def write_company(root: Path, *, rating: str = "watch") -> Path:
 
 
 def write_strict_company(root: Path) -> Path:
-    company_dir = write_company(root)
-    report_path = company_dir / "reports" / "2026-07-06-initial.md"
-    report_path.write_text(
-        "# 公司研究：贵州茅台（CN:600519）\n"
-        "日期：2026-07-06\n"
-        "研究类型：initial\n"
-        "分析师：Codex + GPT-5\n\n"
-        "## 结论版\n\n"
-        "### 一句话结论\n\n"
-        "贵州茅台是高质量现金流资产，但买入必须等待安全边际。\n\n"
-        "## 业务理解\n\n"
-        "公司销售高端白酒，核心利润来自飞天茅台。\n\n"
-        "## 行业与竞争格局\n\n"
-        "高端白酒集中度高，品牌和渠道壁垒明显。\n\n"
-        "## 公司质量\n\n"
-        "品牌护城河强，现金转换质量高。\n\n"
-        "## 财务质量\n\n"
-        "利润率和自由现金流质量长期领先。\n\n"
-        "## 估值\n\n"
-        "合理价值区间为 1150-1450 元。\n\n"
-        "## 市场隐含预期\n\n"
-        "当前价格隐含稳健增长和利润率维持。\n\n"
-        "## 情景与赔率\n\n"
-        "基准情景赔率一般，低价区间赔率改善。\n\n"
-        "## 价格与仓位计划\n\n"
-        "买入区间为 1000-1100 元，减仓区间为 1500-1800 元。\n\n"
-        "## 关键假设\n\n"
-        "- 高端白酒需求保持韧性。\n\n"
-        "## 跟踪触发器\n\n"
-        "- 半年报后复盘收入和现金流。\n\n"
-        "## 风险\n\n"
-        "- 需求走弱或渠道库存恶化。\n\n"
-        "## 上一轮判断复盘\n\n"
-        "初始报告，无上一轮判断。\n\n"
-        "## 来源\n\n"
-        "- 公司公告。\n",
-        encoding="utf-8",
-    )
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["name"] = "贵州茅台"
-    meta["current_thesis"] = "高质量现金流资产，但需要估值纪律。"
-    meta_path.write_text(
+    return write_company(root)
+
+
+def _load_meta(company_dir: Path) -> dict[str, object]:
+    return json.loads((company_dir / "meta.json").read_text(encoding="utf-8"))
+
+
+def _write_meta(company_dir: Path, meta: dict[str, object]) -> None:
+    (company_dir / "meta.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    return company_dir
 
 
-def test_valid_company_asset_loads(tmp_path: Path):
+def test_valid_v2_company_asset_loads(tmp_path: Path):
     from trading_os.research_assets.company import validate_company_dir
 
     company_dir = write_company(tmp_path)
 
     meta = validate_company_dir(company_dir)
 
-    assert meta["symbol"] == "CN:600519"
-    assert meta["latest_report"] == "reports/2026-07-06-initial.md"
+    assert meta["schema_version"] == 2
+    assert meta["identity"]["symbol"] == "CN:600519"
 
 
-def test_strict_company_asset_accepts_standard_chinese_report(tmp_path: Path):
-    from trading_os.research_assets.company import validate_company_dir
-
-    company_dir = write_strict_company(tmp_path)
-
-    meta = validate_company_dir(company_dir, strict=True)
-
-    assert meta["symbol"] == "CN:600519"
-
-
-def test_strict_company_asset_warns_on_untraceable_analyst(tmp_path: Path):
-    from trading_os.research_assets.company import (
-        audit_research_assets,
-        validate_company_dir,
-    )
-
-    company_dir = write_strict_company(tmp_path)
-    report_path = company_dir / "reports" / "2026-07-06-initial.md"
-    report_path.write_text(
-        report_path.read_text(encoding="utf-8").replace(
-            "分析师：Codex + GPT-5",
-            "分析师：agent",
-        ),
-        encoding="utf-8",
-    )
-
-    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
-    audit = audit_research_assets(tmp_path / "research")
-    assert any("analyst" in item["error"] for item in audit["warnings"])
-
-
-def test_strict_company_asset_rejects_missing_report_type(tmp_path: Path):
+def test_v1_company_asset_is_rejected_with_migration_message(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
-
-    company_dir = write_strict_company(tmp_path)
-    report_path = company_dir / "reports" / "2026-07-06-initial.md"
-    report_path.write_text(
-        report_path.read_text(encoding="utf-8").replace("研究类型：initial\n", ""),
-        encoding="utf-8",
-    )
-
-    with pytest.raises(AssetValidationError, match="research type"):
-        validate_company_dir(company_dir, strict=True)
-
-
-def test_strict_company_asset_rejects_missing_required_section(tmp_path: Path):
-    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
-
-    company_dir = write_strict_company(tmp_path)
-    report_path = company_dir / "reports" / "2026-07-06-initial.md"
-    report_path.write_text(
-        report_path.read_text(encoding="utf-8").replace("## 市场隐含预期", "## 市场预期"),
-        encoding="utf-8",
-    )
-
-    with pytest.raises(AssetValidationError, match="section"):
-        validate_company_dir(company_dir, strict=True)
-
-
-def test_strict_company_asset_warns_on_extra_meta_keys(tmp_path: Path):
-    from trading_os.research_assets.company import (
-        audit_research_assets,
-        validate_company_dir,
-    )
-
-    company_dir = write_strict_company(tmp_path)
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["current_price"] = 1200
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-
-    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
-    audit = audit_research_assets(tmp_path / "research")
-    assert any("extra meta" in item["error"] for item in audit["warnings"])
-
-
-def test_strict_company_asset_warns_on_nonstandard_title(tmp_path: Path):
-    from trading_os.research_assets.company import (
-        audit_research_assets,
-        validate_company_dir,
-    )
-
-    company_dir = write_strict_company(tmp_path)
-    report_path = company_dir / "reports" / "2026-07-06-initial.md"
-    report_path.write_text(
-        report_path.read_text(encoding="utf-8").replace(
-            "# 公司研究：贵州茅台（CN:600519）",
-            "# 贵州茅台初始研究",
-        ),
-        encoding="utf-8",
-    )
-
-    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
-    audit = audit_research_assets(tmp_path / "research")
-    assert any("report title" in item["error"] for item in audit["warnings"])
-
-
-def _write_followup_company(tmp_path: Path, *, include_new_information: bool) -> Path:
-    company_dir = write_strict_company(tmp_path)
-    report_path = company_dir / "reports" / "2026-08-31-followup.md"
-    sections = [
-        ("上一轮判断复盘", "上一轮维持观察。"),
-        ("判断变化", "估值区间保持不变。"),
-        ("跟踪触发器", "等待三季报。"),
-        ("风险", "需求恢复慢于预期。"),
-        ("来源", "公司半年报。"),
-    ]
-    if include_new_information:
-        sections.insert(1, ("新信息", "半年报收入保持增长。"))
-    body = "".join(f"## {heading}\n\n{text}\n\n" for heading, text in sections)
-    report_path.write_text(
-        "# 公司研究：贵州茅台（CN:600519）\n"
-        "日期：2026-08-31\n"
-        "研究类型：followup\n"
-        "分析师：Codex + GPT-5\n\n"
-        + body,
-        encoding="utf-8",
-    )
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = "reports/2026-08-31-followup.md"
-    meta["report_history"].append(meta["latest_report"])
-    meta["updated_at"] = "2026-08-31T00:00:00+08:00"
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
-    return company_dir
-
-
-def test_strict_followup_uses_followup_sections(tmp_path: Path):
-    from trading_os.research_assets.company import validate_company_dir
-
-    company_dir = _write_followup_company(tmp_path, include_new_information=True)
-
-    assert validate_company_dir(company_dir, strict=True)["symbol"] == "CN:600519"
-
-
-def test_strict_followup_rejects_missing_followup_section(tmp_path: Path):
-    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
-
-    company_dir = _write_followup_company(tmp_path, include_new_information=False)
-
-    with pytest.raises(AssetValidationError, match="section"):
-        validate_company_dir(company_dir, strict=True)
-
-
-def test_meta_json_with_utf8_bom_loads(tmp_path: Path):
-    from trading_os.research_assets.company import validate_company_dir
 
     company_dir = write_company(tmp_path)
-    meta_path = company_dir / "meta.json"
-    text = meta_path.read_text(encoding="utf-8")
-    meta_path.write_text("\ufeff" + text, encoding="utf-8")
+    meta = _load_meta(company_dir)
+    meta["schema_version"] = 1
+    _write_meta(company_dir, meta)
 
-    meta = validate_company_dir(company_dir)
-
-    assert meta["symbol"] == "CN:600519"
-
-
-def test_invalid_rating_is_rejected(tmp_path: Path):
-    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
-
-    company_dir = write_company(tmp_path, rating="strong_buy")
-
-    with pytest.raises(AssetValidationError, match="current_rating"):
+    with pytest.raises(AssetValidationError, match="migrate"):
         validate_company_dir(company_dir)
 
 
-def test_symbol_must_match_market_and_ticker_fields(tmp_path: Path):
+@pytest.mark.parametrize("field", ["current_rating", "position_plan", "buy_zone"])
+def test_portfolio_decision_fields_are_forbidden_in_company_meta(
+    tmp_path: Path, field: str
+):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["symbol"] = "CN:000001"
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    meta = _load_meta(company_dir)
+    meta[field] = "forbidden"
+    _write_meta(company_dir, meta)
+
+    with pytest.raises(AssetValidationError, match="unknown meta fields"):
+        validate_company_dir(company_dir)
+
+
+def test_symbol_must_match_market_ticker_and_directory(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    meta["identity"]["symbol"] = "CN:000001"
+    _write_meta(company_dir, meta)
 
     with pytest.raises(AssetValidationError, match="symbol"):
         validate_company_dir(company_dir)
 
 
-def test_company_directory_must_match_market_and_ticker(tmp_path: Path):
+def test_report_hash_mismatch_is_rejected(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    wrong_dir = tmp_path / "research" / "companies" / "CN" / "000001"
-    wrong_dir.parent.mkdir(parents=True, exist_ok=True)
-    company_dir.rename(wrong_dir)
+    report = next((company_dir / "reports").glob("*.md"))
+    report.write_text(report.read_text(encoding="utf-8") + "\n篡改。\n", encoding="utf-8")
 
-    with pytest.raises(AssetValidationError, match="company directory"):
-        validate_company_dir(wrong_dir)
-
-
-def test_missing_latest_report_is_rejected(tmp_path: Path):
-    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
-
-    company_dir = write_company(tmp_path)
-    (company_dir / "reports" / "2026-07-06-initial.md").unlink()
-
-    with pytest.raises(AssetValidationError, match="latest_report"):
+    with pytest.raises(AssetValidationError, match="sha256"):
         validate_company_dir(company_dir)
 
 
-def test_latest_report_missing_from_report_history_is_rejected(tmp_path: Path):
+def test_latest_report_must_be_in_history(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    second_report = company_dir / "reports" / "2026-08-31-h1-review.md"
-    second_report.write_text("# H1 Review\n", encoding="utf-8")
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = "reports/2026-08-31-h1-review.md"
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    meta = _load_meta(company_dir)
+    meta["reports"]["latest"] = "reports/2026-07-22-monitoring-update.md"
+    _write_meta(company_dir, meta)
 
-    with pytest.raises(AssetValidationError, match="latest_report"):
+    with pytest.raises(AssetValidationError, match="latest"):
         validate_company_dir(company_dir)
 
 
-def test_latest_report_absolute_path_outside_company_dir_is_rejected(tmp_path: Path):
+def test_latest_by_type_must_match_report_record_type(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    outside_report = tmp_path / "outside.md"
-    outside_report.write_text("# Outside\n", encoding="utf-8")
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = str(outside_report)
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    meta = _load_meta(company_dir)
+    path = meta["reports"]["latest"]
+    meta["reports"]["latest_by_type"] = {"monitoring_update": path}
+    _write_meta(company_dir, meta)
 
-    with pytest.raises(AssetValidationError, match="latest_report"):
+    with pytest.raises(AssetValidationError, match="latest_by_type"):
         validate_company_dir(company_dir)
 
 
-def test_latest_report_outside_reports_is_rejected(tmp_path: Path):
+def test_report_metadata_type_must_match_history(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    sources = company_dir / "sources"
-    sources.mkdir()
-    (sources / "note.md").write_text("# Note\n", encoding="utf-8")
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = "sources/note.md"
-    meta["report_history"] = ["sources/note.md"]
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
+    report = next((company_dir / "reports").glob("*.md"))
+    text = report.read_text(encoding="utf-8").replace(
+        '"report_type": "initial_research"',
+        '"report_type": "monitoring_update"',
     )
+    report.write_text(text, encoding="utf-8")
+    meta = _load_meta(company_dir)
+    meta["reports"]["history"][0]["sha256"] = _sha256(report)
+    _write_meta(company_dir, meta)
 
-    with pytest.raises(AssetValidationError, match="latest_report"):
+    with pytest.raises(AssetValidationError, match="report_type"):
         validate_company_dir(company_dir)
 
 
-def test_latest_report_without_report_date_is_rejected(tmp_path: Path):
+def test_report_requires_machine_readable_front_metadata(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    (company_dir / "reports" / "not-a-date.md").write_text("# Bad\n", encoding="utf-8")
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = "reports/not-a-date.md"
-    meta["report_history"] = ["reports/not-a-date.md"]
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    report = next((company_dir / "reports").glob("*.md"))
+    report.write_text("# 无元数据报告\n", encoding="utf-8")
+    meta = _load_meta(company_dir)
+    meta["reports"]["history"][0]["sha256"] = _sha256(report)
+    _write_meta(company_dir, meta)
 
-    with pytest.raises(AssetValidationError, match="latest_report"):
+    with pytest.raises(AssetValidationError, match="front metadata"):
         validate_company_dir(company_dir)
 
 
-def test_latest_report_directory_named_markdown_is_rejected(tmp_path: Path):
+@pytest.mark.parametrize("report_type", sorted(REPORT_SECTIONS))
+def test_each_v2_report_type_accepts_its_required_sections(
+    tmp_path: Path, report_type: str
+):
+    from trading_os.research_assets.company import validate_company_dir
+
+    company_dir = write_company(tmp_path, report_type=report_type)
+
+    assert validate_company_dir(company_dir)["reports"]["history"][0][
+        "report_type"
+    ] == report_type
+
+
+@pytest.mark.parametrize("report_type", sorted(REPORT_SECTIONS))
+def test_each_v2_report_type_rejects_a_missing_required_section(
+    tmp_path: Path, report_type: str
+):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path, report_type=report_type)
+    report = next((company_dir / "reports").glob("*.md"))
+    missing = REPORT_SECTIONS[report_type][0]
+    report.write_text(
+        report.read_text(encoding="utf-8").replace(f"## {missing}\n", ""),
+        encoding="utf-8",
+    )
+    meta = _load_meta(company_dir)
+    meta["reports"]["history"][0]["sha256"] = _sha256(report)
+    _write_meta(company_dir, meta)
+
+    with pytest.raises(AssetValidationError, match="required section"):
+        validate_company_dir(company_dir)
+
+
+def test_old_report_can_be_preserved_as_unparsed_historical_artifact(tmp_path: Path):
+    from trading_os.research_assets.company import validate_company_dir
+
+    company_dir = write_company(tmp_path)
+    legacy = company_dir / "reports" / "2025-12-31-initial.md"
+    legacy.write_text("旧格式，可以没有新版章节。\n", encoding="utf-8")
+    meta = _load_meta(company_dir)
+    meta["reports"]["historical_artifacts"].append(
+        {
+            "path": legacy.relative_to(company_dir).as_posix(),
+            "format": "legacy_v1",
+            "sha256": _sha256(legacy),
+        }
+    )
+    _write_meta(company_dir, meta)
+
+    validated = validate_company_dir(company_dir)
+
+    assert validated["reports"]["historical_artifacts"][0]["format"] == "legacy_v1"
+
+
+def test_report_path_cannot_escape_company_directory(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    (company_dir / "reports" / "2026-07-06-dir.md").mkdir()
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["latest_report"] = "reports/2026-07-06-dir.md"
-    meta["report_history"] = ["reports/2026-07-06-dir.md"]
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    meta = _load_meta(company_dir)
+    meta["reports"]["history"][0]["path"] = "reports/../../outside.md"
+    _write_meta(company_dir, meta)
 
-    with pytest.raises(AssetValidationError, match="report file"):
+    with pytest.raises(AssetValidationError, match="report path"):
+        validate_company_dir(company_dir)
+
+
+def test_report_history_must_be_chronological(tmp_path: Path):
+    from trading_os.research_assets.company import AssetValidationError, validate_company_dir
+
+    company_dir = write_company(tmp_path, date="2026-07-21")
+    report, report_meta = _write_report(
+        company_dir,
+        report_type="monitoring_update",
+        date="2026-07-20",
+    )
+    meta = _load_meta(company_dir)
+    meta["reports"]["history"].append(
+        {
+            "report_id": report_meta["report_id"],
+            "path": report.relative_to(company_dir).as_posix(),
+            "report_type": "monitoring_update",
+            "as_of": "2026-07-20",
+            "sha256": _sha256(report),
+        }
+    )
+    _write_meta(company_dir, meta)
+
+    with pytest.raises(AssetValidationError, match="chronological"):
         validate_company_dir(company_dir)
 
 
 @pytest.mark.parametrize(
-    ("field", "value", "message"),
+    ("field", "value"),
     [
-        ("fair_value_range", [True, 1450], "fair_value_range"),
-        ("position_plan", [{"condition": "price <= 1150", "max_weight": True}], "max_weight"),
-        (
-            "price_triggers",
-            [{"type": "price_below", "price": True, "reason": "Enter buy zone."}],
-            "price",
-        ),
+        ("fair_value_range", [1450, 1150]),
+        ("buy_zone", [True, 1100]),
+        ("reduce_zone", [1500]),
     ],
 )
-def test_boolean_numeric_values_are_rejected(
-    tmp_path: Path, field: str, value: object, message: str
+def test_valuation_ranges_must_be_ordered_numeric_pairs(
+    tmp_path: Path, field: str, value: object
 ):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta[field] = value
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    meta = _load_meta(company_dir)
+    meta["valuation"][field] = value
+    _write_meta(company_dir, meta)
 
-    with pytest.raises(AssetValidationError, match=message):
+    with pytest.raises(AssetValidationError, match=field):
         validate_company_dir(company_dir)
 
 
-def test_impossible_review_trigger_date_is_rejected(tmp_path: Path):
+def test_datetime_fields_require_timezone_offsets(tmp_path: Path):
     from trading_os.research_assets.company import AssetValidationError, validate_company_dir
 
     company_dir = write_company(tmp_path)
-    meta_path = company_dir / "meta.json"
-    meta = json.loads(meta_path.read_text(encoding="utf-8"))
-    meta["review_triggers"] = [
-        {"type": "date", "date": "2026-99-99", "reason": "Impossible date."}
-    ]
-    meta_path.write_text(
-        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+    meta = _load_meta(company_dir)
+    meta["updated_at"] = dt.datetime(2026, 7, 21, 15, 0).isoformat()
+    _write_meta(company_dir, meta)
 
-    with pytest.raises(AssetValidationError, match="review_triggers date"):
+    with pytest.raises(AssetValidationError, match="UTC offset"):
         validate_company_dir(company_dir)
 
 
-def test_research_assets_star_import_succeeds():
+def test_validate_research_assets_reports_invalid_companies(tmp_path: Path):
+    from trading_os.research_assets.company import validate_research_assets
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    meta["schema_version"] = 1
+    _write_meta(company_dir, meta)
+
+    result = validate_research_assets(tmp_path / "research")
+
+    assert result["schema_version"] == 2
+    assert result["company_count"] == 1
+    assert result["valid_count"] == 0
+    assert result["invalid_count"] == 1
+    assert "migrate" in result["errors"][0]["error"]
+
+
+def test_research_assets_star_import_exports_v2_validation():
     namespace: dict[str, object] = {}
 
     exec("from trading_os.research_assets import *", namespace)
 
     assert "AssetValidationError" in namespace
     assert "validate_company_dir" in namespace
+    assert "validate_research_assets" in namespace
+    assert "audit_research_assets" not in namespace

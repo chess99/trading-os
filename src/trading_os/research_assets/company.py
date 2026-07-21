@@ -1,441 +1,629 @@
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
 import re
-from collections import Counter
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
-ALLOWED_RATINGS = {"buy", "watch", "hold", "avoid", "sell", "research_only"}
-ALLOWED_STATUSES = {"active", "inactive", "archived"}
+from .models import ReportType, UnderwritingStatus
+
+
+class AssetValidationError(ValueError):
+    """Raised when a v2 company research asset is invalid."""
+
+
 ALLOWED_MARKETS = {"CN", "HK", "US"}
-ALLOWED_REVIEW_TRIGGER_TYPES = {"date"}
-ALLOWED_PRICE_TRIGGER_TYPES = {"price_below", "price_above"}
+ALLOWED_SECURITY_STATUSES = {"active", "inactive", "archived"}
+ALLOWED_COVERAGE_STATUSES = {
+    "covered",
+    "researching",
+    "requires_rebaseline",
+    "inactive",
+}
+ALLOWED_CONFIDENCE = {"high", "medium", "low"}
+ALLOWED_TRIGGER_TYPES = {"date", "price", "filing", "event", "thesis"}
 SYMBOL_RE = re.compile(r"^(CN|HK|US):[A-Z0-9.]+$")
-REPORT_RE = re.compile(r"^reports/(\d{4}-\d{2}-\d{2})-[a-z0-9][a-z0-9-]*\.md$")
-STANDARD_META_KEYS = {
+REPORT_PATH_RE = re.compile(
+    r"^reports/(?P<date>[0-9]{4}-[0-9]{2}-[0-9]{2})-"
+    r"[a-z0-9][a-z0-9-]*\.md$"
+)
+SHA256_RE = re.compile(r"^[a-f0-9]{64}$")
+REPORT_META_RE = re.compile(
+    r"\A<!-- trading-os-report-meta\r?\n(?P<meta>.*?)\r?\n-->\r?\n",
+    re.DOTALL,
+)
+
+META_KEYS = {
+    "schema_version",
+    "identity",
+    "research",
+    "reports",
+    "underwriting",
+    "valuation",
+    "triggers",
+    "updated_at",
+}
+IDENTITY_KEYS = {
     "symbol",
     "market",
     "ticker",
     "name",
     "currency",
+    "security_status",
+}
+RESEARCH_KEYS = {"coverage_status", "rebaseline_required", "information_cutoff"}
+REPORTS_KEYS = {"latest", "latest_by_type", "history", "historical_artifacts"}
+REPORT_RECORD_KEYS = {"report_id", "path", "report_type", "as_of", "sha256"}
+HISTORICAL_ARTIFACT_KEYS = {"path", "format", "sha256"}
+UNDERWRITING_KEYS = {
     "status",
-    "current_rating",
-    "current_thesis",
+    "review_id",
+    "confidence",
+    "evidence_valid_until",
+    "reason_codes",
+}
+VALUATION_KEYS = {
+    "currency",
+    "price_as_of",
+    "bear_value",
     "fair_value_range",
     "buy_zone",
-    "sell_or_reduce_zone",
-    "position_plan",
-    "latest_report",
-    "report_history",
-    "review_triggers",
-    "price_triggers",
-    "updated_at",
+    "reduce_zone",
 }
-INITIAL_REQUIRED_REPORT_SECTIONS = [
-    "结论版",
-    "业务理解",
-    "行业与竞争格局",
-    "公司质量",
-    "财务质量",
-    "估值",
-    "市场隐含预期",
-    "情景与赔率",
-    "价格与仓位计划",
-    "关键假设",
-    "跟踪触发器",
-    "风险",
-    "上一轮判断复盘",
-    "来源",
-]
-FOLLOWUP_REQUIRED_REPORT_SECTIONS = [
-    "上一轮判断复盘",
-    "新信息",
-    "判断变化",
-    "跟踪触发器",
-    "风险",
-    "来源",
-]
+TRIGGER_KEYS = {"trigger_id", "type", "condition", "reason", "active"}
+REPORT_FRONT_META_KEYS = {
+    "schema_version",
+    "report_id",
+    "report_type",
+    "symbol",
+    "as_of",
+    "information_cutoff",
+    "price_snapshot_id",
+    "policy_versions",
+    "agent_id",
+    "predecessor_reports",
+    "sealed_artifacts",
+    "source_manifest",
+}
+
 REPORT_SECTION_REQUIREMENTS = {
-    "initial": INITIAL_REQUIRED_REPORT_SECTIONS,
-    "followup": FOLLOWUP_REQUIRED_REPORT_SECTIONS,
+    ReportType.INITIAL_RESEARCH.value: {
+        "结论版",
+        "业务理解",
+        "行业与竞争格局",
+        "公司质量",
+        "财务质量",
+        "结构化主张",
+        "估值",
+        "市场隐含预期",
+        "情景与赔率",
+        "关键假设",
+        "跟踪触发器",
+        "风险",
+        "来源",
+    },
+    ReportType.MONITORING_UPDATE.value: {
+        "上一轮判断复盘",
+        "新信息",
+        "判断变化",
+        "证据更新",
+        "跟踪触发器",
+        "风险",
+        "来源",
+    },
+    ReportType.UNDERWRITING_REVIEW.value: {
+        "承保结论",
+        "证据账本",
+        "盈利质量桥",
+        "现金流桥",
+        "正常化盈利",
+        "估值与敏感性",
+        "市场隐含预期",
+        "反方证据",
+        "旧主张差异审计",
+        "自动阻断检查",
+        "失效条件",
+        "来源",
+    },
+    ReportType.CHALLENGER_REVIEW.value: {
+        "独立挑战结论",
+        "证据账本",
+        "盈利质量桥",
+        "现金流桥",
+        "正常化盈利",
+        "估值与敏感性",
+        "反方证据",
+        "争议点",
+        "失效条件",
+        "来源",
+    },
 }
-REPORT_TYPE_RE = re.compile(r"^研究类型：(?P<kind>[a-z_]+)$")
-ANALYST_RE = re.compile(r"^(?:- )?(?:分析师|Analyst)\s*[:：]\s*(?P<value>.+)$", re.I)
 
 
-class AssetValidationError(ValueError):
-    """Raised when a company research asset is invalid."""
-
-
-def validate_company_dir(company_dir: str | Path, *, strict: bool = False) -> dict[str, Any]:
+def validate_company_dir(
+    company_dir: str | Path, *, strict: bool = True
+) -> dict[str, Any]:
+    del strict  # v2 validation is always strict.
     path = Path(company_dir)
     if not path.exists():
         raise AssetValidationError(f"company directory does not exist: {path}")
     if not path.is_dir():
         raise AssetValidationError(f"company path is not a directory: {path}")
     meta_path = path / "meta.json"
-    if not meta_path.exists():
+    if not meta_path.is_file():
         raise AssetValidationError(f"missing meta.json: {meta_path}")
-    meta = _read_json(meta_path)
-    _require_string(meta, "symbol")
-    _require_string(meta, "market")
-    _require_string(meta, "ticker")
-    _require_string(meta, "name")
-    _require_string(meta, "currency")
-    _require_string(meta, "status")
-    _require_string(meta, "current_rating")
-    _require_string(meta, "current_thesis")
-    _require_string(meta, "latest_report")
-    _require_string(meta, "updated_at")
-    if not SYMBOL_RE.match(meta["symbol"]):
-        raise AssetValidationError(f"symbol must match MARKET:TICKER: {meta['symbol']}")
-    if meta["market"] not in ALLOWED_MARKETS:
-        raise AssetValidationError(f"market must be one of {sorted(ALLOWED_MARKETS)}")
-    if not meta["symbol"].startswith(meta["market"] + ":"):
-        raise AssetValidationError("symbol market prefix must match market field")
-    if meta["symbol"] != f"{meta['market']}:{meta['ticker']}":
-        raise AssetValidationError("symbol must match market and ticker fields")
-    _require_company_dir_layout(path, meta)
-    if meta["status"] not in ALLOWED_STATUSES:
-        raise AssetValidationError(f"status must be one of {sorted(ALLOWED_STATUSES)}")
-    if meta["current_rating"] not in ALLOWED_RATINGS:
+
+    meta = _read_json_object(meta_path, "meta.json")
+    if meta.get("schema_version") != 2:
         raise AssetValidationError(
-            f"current_rating must be one of {sorted(ALLOWED_RATINGS)}"
+            "company asset is not schema_version 2; run assets migrate before validation"
         )
-    _require_number_range(meta, "fair_value_range")
-    _require_number_range(meta, "buy_zone")
-    _require_number_range(meta, "sell_or_reduce_zone")
-    _require_report(path, meta["latest_report"], "latest_report")
-    _require_report_list(path, meta.get("report_history"), "report_history")
-    if meta["latest_report"] not in meta["report_history"]:
-        raise AssetValidationError("latest_report must appear in report_history")
-    _require_position_plan(meta.get("position_plan"))
-    _require_review_triggers(meta.get("review_triggers"))
-    _require_price_triggers(meta.get("price_triggers"))
-    if strict:
-        _require_strict_company_asset(path, meta)
+    _require_exact_keys(meta, META_KEYS, "meta", unknown_label="unknown meta fields")
+
+    identity = _require_object(meta, "identity", "meta")
+    _validate_identity(path, identity)
+    research = _require_object(meta, "research", "meta")
+    _validate_research(research)
+    reports = _require_object(meta, "reports", "meta")
+    _validate_reports(path, identity, reports)
+    underwriting = _require_object(meta, "underwriting", "meta")
+    _validate_underwriting(underwriting)
+    valuation = _require_object(meta, "valuation", "meta")
+    _validate_valuation(valuation)
+    _validate_triggers(meta.get("triggers"))
+    _parse_datetime(meta.get("updated_at"), "updated_at")
     return meta
 
 
-def audit_research_assets(research_root: str | Path) -> dict[str, Any]:
+def validate_research_assets(research_root: str | Path) -> dict[str, Any]:
     root = Path(research_root)
     companies_root = root / "companies"
     company_dirs = _company_dirs(companies_root) if companies_root.exists() else []
-    analyst_counts: Counter[str] = Counter()
-    extra_meta_keys: Counter[str] = Counter()
-    price_like_meta_keys: Counter[str] = Counter()
-    strict_issues: list[dict[str, str]] = []
-    strict_warnings: list[dict[str, str]] = []
-    validation_errors: list[dict[str, str]] = []
-
+    errors: list[dict[str, str]] = []
+    valid_count = 0
     for company_dir in company_dirs:
-        meta_path = company_dir / "meta.json"
-        try:
-            meta = _read_json(meta_path)
-        except AssetValidationError as exc:
-            validation_errors.append({"company_dir": str(company_dir), "error": str(exc)})
-            continue
-
-        extras = sorted(set(meta) - STANDARD_META_KEYS)
-        extra_meta_keys.update(extras)
-        price_like_meta_keys.update(key for key in extras if _is_price_like_key(key))
-
-        latest_report = meta.get("latest_report")
-        report_path = company_dir / latest_report if isinstance(latest_report, str) else None
-        analyst_counts[_classify_report_analyst(report_path)] += 1
-
         try:
             validate_company_dir(company_dir)
         except AssetValidationError as exc:
-            validation_errors.append({"company_dir": str(company_dir), "error": str(exc)})
-            continue
-
-        issues, warnings = _strict_company_findings(company_dir, meta)
-        for issue in issues:
-            strict_issues.append({"company_dir": str(company_dir), "error": issue})
-        for warning in warnings:
-            strict_warnings.append(
-                {"company_dir": str(company_dir), "error": warning}
-            )
-
+            errors.append({"company_dir": str(company_dir), "error": str(exc)})
+        else:
+            valid_count += 1
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "company_count": len(company_dirs),
-        "analyst_counts": dict(sorted(analyst_counts.items())),
-        "extra_meta_keys": _counter_items(extra_meta_keys),
-        "price_like_meta_keys": _counter_items(price_like_meta_keys),
-        "strict_issue_count": len(strict_issues),
-        "strict_issues": strict_issues,
-        "warning_count": len(strict_warnings),
-        "warnings": strict_warnings,
-        "validation_errors": validation_errors,
+        "valid_count": valid_count,
+        "invalid_count": len(errors),
+        "errors": errors,
     }
 
 
-def _read_json(path: Path) -> dict[str, Any]:
+def _validate_identity(company_dir: Path, identity: Mapping[str, Any]) -> None:
+    _require_exact_keys(identity, IDENTITY_KEYS, "identity")
+    symbol = _require_string(identity, "symbol", "identity")
+    market = _require_string(identity, "market", "identity")
+    ticker = _require_string(identity, "ticker", "identity")
+    _require_string(identity, "name", "identity")
+    _require_string(identity, "currency", "identity")
+    security_status = _require_string(identity, "security_status", "identity")
+    if not SYMBOL_RE.fullmatch(symbol):
+        raise AssetValidationError(f"identity.symbol has invalid format: {symbol}")
+    if market not in ALLOWED_MARKETS:
+        raise AssetValidationError(f"identity.market must be one of {sorted(ALLOWED_MARKETS)}")
+    if symbol != f"{market}:{ticker}":
+        raise AssetValidationError("identity.symbol must match identity.market and ticker")
+    if security_status not in ALLOWED_SECURITY_STATUSES:
+        raise AssetValidationError(
+            f"identity.security_status must be one of {sorted(ALLOWED_SECURITY_STATUSES)}"
+        )
+    if company_dir.name != ticker or company_dir.parent.name != market:
+        raise AssetValidationError(
+            "company directory must end with research/companies/{market}/{ticker}"
+        )
+
+
+def _validate_research(research: Mapping[str, Any]) -> None:
+    _require_exact_keys(research, RESEARCH_KEYS, "research")
+    coverage_status = _require_string(research, "coverage_status", "research")
+    if coverage_status not in ALLOWED_COVERAGE_STATUSES:
+        raise AssetValidationError(
+            f"research.coverage_status must be one of {sorted(ALLOWED_COVERAGE_STATUSES)}"
+        )
+    if not isinstance(research.get("rebaseline_required"), bool):
+        raise AssetValidationError("research.rebaseline_required must be boolean")
+    information_cutoff = research.get("information_cutoff")
+    if information_cutoff is not None:
+        _parse_datetime(information_cutoff, "research.information_cutoff")
+
+
+def _validate_reports(
+    company_dir: Path,
+    identity: Mapping[str, Any],
+    reports: Mapping[str, Any],
+) -> None:
+    _require_exact_keys(reports, REPORTS_KEYS, "reports")
+    history = reports.get("history")
+    historical = reports.get("historical_artifacts")
+    latest_by_type = reports.get("latest_by_type")
+    if not isinstance(history, list):
+        raise AssetValidationError("reports.history must be an array")
+    if not isinstance(historical, list):
+        raise AssetValidationError("reports.historical_artifacts must be an array")
+    if not isinstance(latest_by_type, dict):
+        raise AssetValidationError("reports.latest_by_type must be an object")
+
+    records: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    seen_paths: set[str] = set()
+    dates: list[dt.date] = []
+    for index, raw_record in enumerate(history):
+        if not isinstance(raw_record, dict):
+            raise AssetValidationError(f"reports.history[{index}] must be an object")
+        record = raw_record
+        _require_exact_keys(record, REPORT_RECORD_KEYS, f"reports.history[{index}]")
+        report_id = _require_string(record, "report_id", f"reports.history[{index}]")
+        report_path_text = _require_string(record, "path", f"reports.history[{index}]")
+        report_type = _require_string(
+            record, "report_type", f"reports.history[{index}]"
+        )
+        if report_type not in REPORT_SECTION_REQUIREMENTS:
+            raise AssetValidationError(f"unsupported report_type: {report_type}")
+        as_of = _parse_date(record.get("as_of"), f"reports.history[{index}].as_of")
+        expected_hash = _require_sha256(
+            record.get("sha256"), f"reports.history[{index}].sha256"
+        )
+        match = REPORT_PATH_RE.fullmatch(report_path_text)
+        if not match:
+            raise AssetValidationError(f"invalid report path: {report_path_text}")
+        if match.group("date") != as_of.isoformat():
+            raise AssetValidationError("report path date must match report record as_of")
+        if report_id in seen_ids:
+            raise AssetValidationError(f"duplicate report_id: {report_id}")
+        if report_path_text in seen_paths:
+            raise AssetValidationError(f"duplicate report path: {report_path_text}")
+        seen_ids.add(report_id)
+        seen_paths.add(report_path_text)
+        dates.append(as_of)
+
+        report_path = _safe_file(company_dir, report_path_text, "report path")
+        _require_matching_hash(report_path, expected_hash, "report sha256")
+        _validate_report_file(
+            company_dir,
+            report_path,
+            identity=identity,
+            record=record,
+        )
+        records.append(record)
+
+    if dates != sorted(dates):
+        raise AssetValidationError("reports.history must be chronological")
+
+    latest = reports.get("latest")
+    if history:
+        if not isinstance(latest, str) or not latest:
+            raise AssetValidationError("reports.latest must reference the latest history item")
+        if latest != records[-1]["path"]:
+            raise AssetValidationError("reports.latest must equal the last history path")
+    elif latest is not None:
+        raise AssetValidationError("reports.latest must be null when history is empty")
+
+    valid_types = set(REPORT_SECTION_REQUIREMENTS)
+    if set(latest_by_type) - valid_types:
+        raise AssetValidationError("reports.latest_by_type contains unsupported report type")
+    expected_latest_by_type: dict[str, str] = {}
+    for record in records:
+        expected_latest_by_type[record["report_type"]] = record["path"]
+    if latest_by_type != expected_latest_by_type:
+        raise AssetValidationError(
+            "reports.latest_by_type must point to the latest history record of each type"
+        )
+
+    historical_paths: set[str] = set()
+    for index, raw_artifact in enumerate(historical):
+        if not isinstance(raw_artifact, dict):
+            raise AssetValidationError(
+                f"reports.historical_artifacts[{index}] must be an object"
+            )
+        artifact = raw_artifact
+        _require_exact_keys(
+            artifact,
+            HISTORICAL_ARTIFACT_KEYS,
+            f"reports.historical_artifacts[{index}]",
+        )
+        artifact_path_text = _require_string(
+            artifact, "path", f"reports.historical_artifacts[{index}]"
+        )
+        if artifact.get("format") != "legacy_v1":
+            raise AssetValidationError("historical artifact format must be legacy_v1")
+        expected_hash = _require_sha256(
+            artifact.get("sha256"),
+            f"reports.historical_artifacts[{index}].sha256",
+        )
+        if artifact_path_text in seen_paths or artifact_path_text in historical_paths:
+            raise AssetValidationError(f"duplicate historical artifact path: {artifact_path_text}")
+        artifact_path = _safe_file(company_dir, artifact_path_text, "historical artifact path")
+        _require_matching_hash(artifact_path, expected_hash, "historical artifact sha256")
+        historical_paths.add(artifact_path_text)
+
+
+def _validate_report_file(
+    company_dir: Path,
+    report_path: Path,
+    *,
+    identity: Mapping[str, Any],
+    record: Mapping[str, Any],
+) -> None:
+    try:
+        text = report_path.read_text(encoding="utf-8-sig")
+    except OSError as exc:
+        raise AssetValidationError(f"could not read report file: {report_path}") from exc
+    match = REPORT_META_RE.match(text)
+    if not match:
+        raise AssetValidationError("report must start with trading-os-report-meta front metadata")
+    try:
+        front = json.loads(match.group("meta"))
+    except json.JSONDecodeError as exc:
+        raise AssetValidationError(f"invalid report front metadata JSON: {exc}") from exc
+    if not isinstance(front, dict):
+        raise AssetValidationError("report front metadata must be an object")
+    _require_exact_keys(front, REPORT_FRONT_META_KEYS, "report front metadata")
+    if front.get("schema_version") != 2:
+        raise AssetValidationError("report front metadata schema_version must be 2")
+    for key in ("report_id", "report_type", "as_of"):
+        if front.get(key) != record.get(key):
+            raise AssetValidationError(f"report front metadata {key} must match history")
+    if front.get("symbol") != identity.get("symbol"):
+        raise AssetValidationError("report front metadata symbol must match company identity")
+    _parse_date(front.get("as_of"), "report front metadata as_of")
+    _parse_datetime(
+        front.get("information_cutoff"), "report front metadata information_cutoff"
+    )
+    price_snapshot_id = front.get("price_snapshot_id")
+    if price_snapshot_id is not None and (
+        not isinstance(price_snapshot_id, str) or not price_snapshot_id.strip()
+    ):
+        raise AssetValidationError("price_snapshot_id must be null or a non-empty string")
+    _require_string(front, "agent_id", "report front metadata")
+    _require_string(front, "source_manifest", "report front metadata")
+    policy_versions = front.get("policy_versions")
+    if not isinstance(policy_versions, dict) or not policy_versions:
+        raise AssetValidationError("report policy_versions must be a non-empty object")
+    for policy_id, version in policy_versions.items():
+        if not isinstance(policy_id, str) or not policy_id.strip():
+            raise AssetValidationError("report policy_versions keys must be non-empty strings")
+        if not isinstance(version, str) or not version.strip():
+            raise AssetValidationError("report policy_versions values must be non-empty strings")
+    _require_string_array(front.get("predecessor_reports"), "predecessor_reports")
+    sealed_artifacts = _require_string_array(
+        front.get("sealed_artifacts"), "sealed_artifacts"
+    )
+    for artifact in sealed_artifacts:
+        _safe_file(company_dir, artifact, "sealed artifact path")
+    _safe_file(company_dir, str(front["source_manifest"]), "source_manifest path")
+
+    body = text[match.end() :]
+    first_non_empty = next((line.strip() for line in body.splitlines() if line.strip()), "")
+    expected_title = f"# 公司研究：{identity['name']}（{identity['symbol']}）"
+    if first_non_empty != expected_title:
+        raise AssetValidationError(f"report title must be '{expected_title}'")
+    headings = {
+        line.removeprefix("## ").strip()
+        for line in body.splitlines()
+        if line.startswith("## ")
+    }
+    report_type = str(record["report_type"])
+    missing = sorted(REPORT_SECTION_REQUIREMENTS[report_type] - headings)
+    if missing:
+        raise AssetValidationError(
+            f"report is missing required section(s) for {report_type}: {missing}"
+        )
+
+
+def _validate_underwriting(underwriting: Mapping[str, Any]) -> None:
+    _require_exact_keys(underwriting, UNDERWRITING_KEYS, "underwriting")
+    status = underwriting.get("status")
+    allowed_statuses = {item.value for item in UnderwritingStatus}
+    if status is not None and status not in allowed_statuses:
+        raise AssetValidationError(f"unsupported underwriting.status: {status}")
+    review_id = underwriting.get("review_id")
+    if review_id is not None and (
+        not isinstance(review_id, str) or not review_id.strip()
+    ):
+        raise AssetValidationError("underwriting.review_id must be null or a string")
+    if status is not None and review_id is None:
+        raise AssetValidationError("underwriting.review_id is required when status is set")
+    confidence = underwriting.get("confidence")
+    if confidence is not None and confidence not in ALLOWED_CONFIDENCE:
+        raise AssetValidationError(
+            f"underwriting.confidence must be one of {sorted(ALLOWED_CONFIDENCE)}"
+        )
+    valid_until = underwriting.get("evidence_valid_until")
+    if valid_until is not None:
+        _parse_datetime(valid_until, "underwriting.evidence_valid_until")
+    reasons = _require_string_array(
+        underwriting.get("reason_codes"), "underwriting.reason_codes"
+    )
+    if len(reasons) != len(set(reasons)):
+        raise AssetValidationError("underwriting.reason_codes must be unique")
+
+
+def _validate_valuation(valuation: Mapping[str, Any]) -> None:
+    _require_exact_keys(valuation, VALUATION_KEYS, "valuation")
+    currency = valuation.get("currency")
+    if currency is not None and (not isinstance(currency, str) or not currency.strip()):
+        raise AssetValidationError("valuation.currency must be null or a string")
+    price_as_of = valuation.get("price_as_of")
+    if price_as_of is not None:
+        _parse_datetime(price_as_of, "valuation.price_as_of")
+    bear_value = valuation.get("bear_value")
+    if bear_value is not None:
+        _require_number(bear_value, "valuation.bear_value")
+    for field in ("fair_value_range", "buy_zone", "reduce_zone"):
+        _validate_nullable_range(valuation.get(field), field)
+    has_value = bear_value is not None or any(
+        valuation.get(field) is not None
+        for field in ("fair_value_range", "buy_zone", "reduce_zone")
+    )
+    if has_value and currency is None:
+        raise AssetValidationError("valuation.currency is required when values are present")
+
+
+def _validate_triggers(raw_triggers: Any) -> None:
+    if not isinstance(raw_triggers, list):
+        raise AssetValidationError("triggers must be an array")
+    seen: set[str] = set()
+    for index, raw_trigger in enumerate(raw_triggers):
+        if not isinstance(raw_trigger, dict):
+            raise AssetValidationError(f"triggers[{index}] must be an object")
+        trigger = raw_trigger
+        _require_exact_keys(trigger, TRIGGER_KEYS, f"triggers[{index}]")
+        trigger_id = _require_string(trigger, "trigger_id", f"triggers[{index}]")
+        if trigger_id in seen:
+            raise AssetValidationError(f"duplicate trigger_id: {trigger_id}")
+        seen.add(trigger_id)
+        trigger_type = _require_string(trigger, "type", f"triggers[{index}]")
+        if trigger_type not in ALLOWED_TRIGGER_TYPES:
+            raise AssetValidationError(f"unsupported trigger type: {trigger_type}")
+        if not isinstance(trigger.get("condition"), dict):
+            raise AssetValidationError(f"triggers[{index}].condition must be an object")
+        _require_string(trigger, "reason", f"triggers[{index}]")
+        if not isinstance(trigger.get("active"), bool):
+            raise AssetValidationError(f"triggers[{index}].active must be boolean")
+
+
+def _validate_nullable_range(value: Any, field: str) -> None:
+    if value is None:
+        return
+    if not isinstance(value, list) or len(value) != 2:
+        raise AssetValidationError(f"valuation.{field} must be null or a two-number range")
+    lower = _require_number(value[0], f"valuation.{field}[0]")
+    upper = _require_number(value[1], f"valuation.{field}[1]")
+    if lower > upper:
+        raise AssetValidationError(f"valuation.{field} lower bound must be <= upper bound")
+
+
+def _read_json_object(path: Path, label: str) -> dict[str, Any]:
     try:
         data = json.loads(path.read_text(encoding="utf-8-sig"))
     except json.JSONDecodeError as exc:
         raise AssetValidationError(f"invalid JSON in {path}: {exc}") from exc
+    except OSError as exc:
+        raise AssetValidationError(f"could not read {label}: {path}") from exc
     if not isinstance(data, dict):
-        raise AssetValidationError(f"meta.json must contain an object: {path}")
+        raise AssetValidationError(f"{label} must contain an object")
     return data
+
+
+def _require_exact_keys(
+    value: Mapping[str, Any],
+    expected: set[str],
+    label: str,
+    *,
+    unknown_label: str | None = None,
+) -> None:
+    keys = set(value)
+    unknown = sorted(keys - expected)
+    if unknown:
+        prefix = unknown_label or f"unknown {label} fields"
+        raise AssetValidationError(f"{prefix}: {unknown}")
+    missing = sorted(expected - keys)
+    if missing:
+        raise AssetValidationError(f"missing {label} fields: {missing}")
+
+
+def _require_object(
+    value: Mapping[str, Any], key: str, label: str
+) -> dict[str, Any]:
+    result = value.get(key)
+    if not isinstance(result, dict):
+        raise AssetValidationError(f"{label}.{key} must be an object")
+    return result
+
+
+def _require_string(value: Mapping[str, Any], key: str, label: str) -> str:
+    result = value.get(key)
+    if not isinstance(result, str) or not result.strip():
+        raise AssetValidationError(f"{label}.{key} must be a non-empty string")
+    return result.strip()
+
+
+def _require_string_array(value: Any, label: str) -> list[str]:
+    if not isinstance(value, list):
+        raise AssetValidationError(f"{label} must be an array")
+    result: list[str] = []
+    for item in value:
+        if not isinstance(item, str) or not item.strip():
+            raise AssetValidationError(f"{label} items must be non-empty strings")
+        result.append(item.strip())
+    return result
+
+
+def _require_number(value: Any, label: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise AssetValidationError(f"{label} must be numeric")
+    return float(value)
+
+
+def _require_sha256(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not SHA256_RE.fullmatch(value):
+        raise AssetValidationError(f"{label} must be a lowercase SHA-256 digest")
+    return value
+
+
+def _parse_date(value: Any, label: str) -> dt.date:
+    if not isinstance(value, str):
+        raise AssetValidationError(f"{label} must be an ISO date")
+    try:
+        return dt.date.fromisoformat(value)
+    except ValueError as exc:
+        raise AssetValidationError(f"{label} must be a real ISO date") from exc
+
+
+def _parse_datetime(value: Any, label: str) -> dt.datetime:
+    if not isinstance(value, str):
+        raise AssetValidationError(f"{label} must be an ISO 8601 datetime")
+    try:
+        parsed = dt.datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise AssetValidationError(f"{label} must be an ISO 8601 datetime") from exc
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        raise AssetValidationError(f"{label} must include a UTC offset")
+    return parsed
+
+
+def _safe_file(company_dir: Path, relative_path: str, label: str) -> Path:
+    candidate_text = relative_path.replace("\\", "/")
+    if (
+        not candidate_text
+        or candidate_text.startswith("/")
+        or re.match(r"^[A-Za-z]:", candidate_text)
+        or any(part in {"", ".", ".."} for part in candidate_text.split("/"))
+    ):
+        raise AssetValidationError(f"invalid {label}: {relative_path}")
+    company_root = company_dir.resolve()
+    candidate = (company_dir / candidate_text).resolve()
+    try:
+        candidate.relative_to(company_root)
+    except ValueError as exc:
+        raise AssetValidationError(f"invalid {label}: {relative_path}") from exc
+    if not candidate.is_file():
+        raise AssetValidationError(f"missing file for {label}: {relative_path}")
+    return candidate
+
+
+def _require_matching_hash(path: Path, expected: str, label: str) -> None:
+    actual = hashlib.sha256(path.read_bytes()).hexdigest()
+    if actual != expected:
+        raise AssetValidationError(
+            f"{label} mismatch for {path}: expected {expected}, got {actual}"
+        )
 
 
 def _company_dirs(companies_root: Path) -> list[Path]:
     paths: list[Path] = []
     for market_dir in sorted(path for path in companies_root.iterdir() if path.is_dir()):
         for company_dir in sorted(path for path in market_dir.iterdir() if path.is_dir()):
-            if (company_dir / "meta.json").exists():
+            if (company_dir / "meta.json").is_file():
                 paths.append(company_dir)
     return paths
-
-
-def _require_strict_company_asset(company_dir: Path, meta: dict[str, Any]) -> None:
-    issues, _ = _strict_company_findings(company_dir, meta)
-    if issues:
-        raise AssetValidationError(issues[0])
-
-
-def _strict_company_findings(
-    company_dir: Path, meta: dict[str, Any]
-) -> tuple[list[str], list[str]]:
-    issues: list[str] = []
-    warnings: list[str] = []
-    extra_keys = sorted(set(meta) - STANDARD_META_KEYS)
-    if extra_keys:
-        warnings.append(f"extra meta keys are not part of the standard schema: {extra_keys}")
-
-    report_path = company_dir / meta["latest_report"]
-    try:
-        text = report_path.read_text(encoding="utf-8-sig")
-    except OSError as exc:
-        return [f"latest report could not be read: {exc}"], warnings
-
-    lines = [line.strip() for line in text.splitlines()]
-    first_non_empty = next((line for line in lines if line), "")
-    if first_non_empty != f"# 公司研究：{meta['name']}（{meta['symbol']}）":
-        warnings.append(
-            "report title must be '# 公司研究：{name}（MARKET:TICKER）' "
-            f"for {meta['symbol']}"
-        )
-
-    date_line = _find_prefixed_line(lines[:10], "日期：")
-    if date_line is None:
-        issues.append("report date line must be '日期：YYYY-MM-DD'")
-    else:
-        date_text = date_line.removeprefix("日期：")
-        try:
-            dt.date.fromisoformat(date_text)
-        except ValueError:
-            issues.append("report date line must contain a real YYYY-MM-DD date")
-
-    report_type_line = _find_prefixed_line(lines[:10], "研究类型：")
-    report_type_match = (
-        REPORT_TYPE_RE.match(report_type_line) if report_type_line is not None else None
-    )
-    research_type = report_type_match.group("kind") if report_type_match else None
-    if research_type is None:
-        issues.append("report research type line must be '研究类型：initial|followup|...'")
-    elif research_type not in REPORT_SECTION_REQUIREMENTS:
-        issues.append(f"unsupported report research type: {research_type}")
-
-    analyst_line = _find_analyst_line(lines[:20])
-    if analyst_line is None:
-        warnings.append("report analyst line must be '分析师：具体工具 + 模型'")
-    else:
-        analyst = ANALYST_RE.match(analyst_line)
-        analyst_value = analyst.group("value").strip() if analyst else ""
-        analyst_problem = _analyst_problem(analyst_value)
-        if analyst_problem:
-            warnings.append(analyst_problem)
-
-    headings = {
-        line.removeprefix("## ").strip()
-        for line in lines
-        if line.startswith("## ")
-    }
-    required_sections = REPORT_SECTION_REQUIREMENTS.get(research_type, [])
-    missing_sections = [section for section in required_sections if section not in headings]
-    if missing_sections:
-        issues.append(f"report section missing: {missing_sections[0]}")
-
-    return issues, warnings
-
-
-def _find_prefixed_line(lines: list[str], prefix: str) -> str | None:
-    return next((line for line in lines if line.startswith(prefix)), None)
-
-
-def _find_analyst_line(lines: list[str]) -> str | None:
-    return next((line for line in lines if ANALYST_RE.match(line)), None)
-
-
-def _analyst_problem(value: str) -> str | None:
-    normalized = value.strip().lower()
-    if not normalized:
-        return "report analyst line must name the actual tool and model"
-    if normalized == "agent" or normalized.startswith("agent "):
-        return "report analyst line must not use generic analyst label 'agent'"
-    if normalized.startswith("codex-subagent"):
-        return "report analyst line must not use opaque codex-subagent labels"
-    if "unknown" in normalized:
-        return "report analyst line must not use unknown model labels in strict mode"
-    if "+" not in value:
-        return "report analyst line must include actual tool + model"
-    return None
-
-
-def _classify_report_analyst(report_path: Path | None) -> str:
-    if report_path is None or not report_path.exists():
-        return "missing"
-    try:
-        text = report_path.read_text(encoding="utf-8-sig", errors="replace")
-    except OSError:
-        return "missing"
-    analyst_line = _find_analyst_line([line.strip() for line in text.splitlines()[:40]])
-    if analyst_line is None:
-        return "missing"
-    match = ANALYST_RE.match(analyst_line)
-    value = match.group("value").strip().lower() if match else ""
-    if "codex" in value:
-        return "codex"
-    if "claude" in value:
-        return "claude"
-    if value == "agent" or "unknown" in value:
-        return "generic_or_unknown"
-    return "other"
-
-
-def _is_price_like_key(key: str) -> bool:
-    lowered = key.lower()
-    return "price" in lowered or "现价" in key or "价格" in key
-
-
-def _counter_items(counter: Counter[str]) -> list[dict[str, int | str]]:
-    return [
-        {"key": key, "count": count}
-        for key, count in sorted(counter.items(), key=lambda item: (-item[1], item[0]))
-    ]
-
-
-def _require_string(meta: dict[str, Any], key: str) -> None:
-    value = meta.get(key)
-    if not isinstance(value, str) or not value.strip():
-        raise AssetValidationError(f"{key} must be a non-empty string")
-
-
-def _require_company_dir_layout(company_dir: Path, meta: dict[str, Any]) -> None:
-    if company_dir.parent.name != meta["market"] or company_dir.name != meta["ticker"]:
-        raise AssetValidationError(
-            "company directory must match research/companies/{MARKET}/{TICKER}"
-        )
-
-
-def _require_number_range(meta: dict[str, Any], key: str) -> None:
-    value = meta.get(key)
-    if not isinstance(value, list) or len(value) != 2:
-        raise AssetValidationError(f"{key} must be a two-item number list")
-    low, high = value
-    if not _is_number(low) or not _is_number(high):
-        raise AssetValidationError(f"{key} values must be numbers")
-    if low > high:
-        raise AssetValidationError(f"{key} lower bound must be <= upper bound")
-
-
-def _is_number(value: Any) -> bool:
-    return isinstance(value, (int, float)) and not isinstance(value, bool)
-
-
-def _require_report(company_dir: Path, rel_path: str, field: str) -> None:
-    normalized = rel_path.replace("\\", "/")
-    match = REPORT_RE.match(normalized)
-    if not match:
-        raise AssetValidationError(
-            f"{field} must match reports/YYYY-MM-DD-slug.md"
-        )
-    try:
-        dt.date.fromisoformat(match.group(1))
-    except ValueError as exc:
-        raise AssetValidationError(
-            f"{field} must match reports/YYYY-MM-DD-slug.md"
-        ) from exc
-    report_path = Path(rel_path)
-    if report_path.is_absolute():
-        raise AssetValidationError(f"{field} must be a relative path inside company dir")
-    company_root = company_dir.resolve()
-    target = (company_root / report_path).resolve()
-    try:
-        target.relative_to(company_root)
-    except ValueError as exc:
-        raise AssetValidationError(
-            f"{field} must be a relative path inside company dir"
-        ) from exc
-    if not target.exists():
-        raise AssetValidationError(f"{field} points to missing report: {rel_path}")
-    if not target.is_file():
-        raise AssetValidationError(f"{field} must point to a report file")
-    if target.suffix.lower() != ".md":
-        raise AssetValidationError(f"{field} must point to a Markdown report")
-
-
-def _require_report_list(company_dir: Path, value: Any, field: str) -> None:
-    if not isinstance(value, list) or not value:
-        raise AssetValidationError(f"{field} must be a non-empty list")
-    for item in value:
-        if not isinstance(item, str):
-            raise AssetValidationError(f"{field} entries must be strings")
-        _require_report(company_dir, item, field)
-
-
-def _require_position_plan(value: Any) -> None:
-    if not isinstance(value, list) or not value:
-        raise AssetValidationError("position_plan must be a non-empty list")
-    for item in value:
-        if not isinstance(item, dict):
-            raise AssetValidationError("position_plan entries must be objects")
-        condition = item.get("condition")
-        max_weight = item.get("max_weight")
-        if not isinstance(condition, str) or not condition.strip():
-            raise AssetValidationError("position_plan condition must be a non-empty string")
-        if not _is_number(max_weight) or max_weight < 0 or max_weight > 1:
-            raise AssetValidationError("position_plan max_weight must be between 0 and 1")
-
-
-def _require_review_triggers(value: Any) -> None:
-    if not isinstance(value, list):
-        raise AssetValidationError("review_triggers must be a list")
-    for item in value:
-        if not isinstance(item, dict):
-            raise AssetValidationError("review_triggers entries must be objects")
-        if item.get("type") not in ALLOWED_REVIEW_TRIGGER_TYPES:
-            raise AssetValidationError("review_triggers type must be date")
-        date = item.get("date")
-        if not isinstance(date, str) or not re.match(r"^\d{4}-\d{2}-\d{2}$", date):
-            raise AssetValidationError("review_triggers date must use YYYY-MM-DD")
-        try:
-            dt.date.fromisoformat(date)
-        except ValueError as exc:
-            raise AssetValidationError(
-                "review_triggers date must be a real YYYY-MM-DD date"
-            ) from exc
-        if not isinstance(item.get("reason"), str) or not item["reason"].strip():
-            raise AssetValidationError("review_triggers reason must be a non-empty string")
-
-
-def _require_price_triggers(value: Any) -> None:
-    if not isinstance(value, list):
-        raise AssetValidationError("price_triggers must be a list")
-    for item in value:
-        if not isinstance(item, dict):
-            raise AssetValidationError("price_triggers entries must be objects")
-        if item.get("type") not in ALLOWED_PRICE_TRIGGER_TYPES:
-            raise AssetValidationError(
-                "price_triggers type must be price_below or price_above"
-            )
-        if not _is_number(item.get("price")):
-            raise AssetValidationError("price_triggers price must be numeric")
-        if not isinstance(item.get("reason"), str) or not item["reason"].strip():
-            raise AssetValidationError("price_triggers reason must be a non-empty string")
