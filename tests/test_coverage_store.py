@@ -210,7 +210,7 @@ def test_reconcile_research_queue_finds_valid_completed_asset_without_writing(
             "symbol": "CN:600519",
             "from_status": "pending",
             "to_status": "completed",
-            "result_path": "reports/2026-07-06-initial.md",
+                "result_path": "reports/2026-07-21-initial-research.md",
         }
     ]
     assert read_jsonl(queue_path) == [original]
@@ -272,7 +272,7 @@ def test_reconcile_research_queue_applies_allowed_changes_and_is_idempotent(
     assert second["change_count"] == 0
     assert queue[0]["status"] == "needs_review"
     assert queue[1]["status"] == "completed"
-    assert queue[1]["result_path"] == "reports/2026-07-06-initial.md"
+    assert queue[1]["result_path"] == "reports/2026-07-21-initial-research.md"
     assert queue[1]["failure_reason"] is None
     assert queue[1]["started_at"] == "2026-07-05T00:00:00+08:00"
 
@@ -313,5 +313,5 @@ def test_reconcile_research_queue_reports_invalid_asset_without_completing_it(
     assert result["change_count"] == 0
     assert result["blocked_count"] == 1
     assert result["blocked"][0]["symbol"] == "CN:600519"
-    assert "symbol" in result["blocked"][0]["error"]
+    assert "schema_version 2" in result["blocked"][0]["error"]
     assert read_jsonl(queue_path) == [record]

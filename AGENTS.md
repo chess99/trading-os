@@ -1,62 +1,48 @@
 # Trading OS Agent Guide
 
-This repository is a research asset repository. The source of truth is the company
-research timeline under `research/companies/`.
+本仓库的事实源是 `research/companies/` 下的单公司不可变时间线；跨公司操作事实源是 `research/batches/` 下的封存模型组合。
 
-## Core Model
+## 核心规则
 
-- Every research run creates a new immutable Markdown report.
-- Existing reports must not be overwritten to change a past judgment.
-- `meta.json` is the only mutable company state file.
-- `research/index.json`, `automation/review_schedule.json`, and `automation/price_alerts.json`
-  are generated files.
-- `coverage/` is the pre-research coverage layer. It records universe snapshots,
-  screening decisions, research queues, skipped-company reasons, and long-running
-  batch state before any company receives a full research report.
+- 每次研究新增报告，不覆盖历史判断；`meta.json` 是唯一可变公司状态。
+- 报告默认使用中文，并在头部记录真实工具和模型。
+- 一个 agent 只研究或复核一家公司；跨公司综合由单独的组合 agent 完成。
+- 初研必须同时生成结构化主张和来源清单；封存后才能进入独立承保。
+- 半盲 agent 不能读取此前结论性答案；独立评估封存验证通过后才能揭示。
+- 重大分歧、高风险或潜在前五大仓位触发完全独立的 challenger；没有可靠共识时不通过。
+- 单公司结果只表示承保状态。只有组合层可给 `buy_now`、其他操作和仓位。
+- 验证通过后才更新公司状态和 coverage 队列；批次末尾运行 reconcile 检查漂移。
+- 跳过公司必须给结构化硬理由，不得因规模小、流动性低或暂时亏损静默丢弃。
 
-## Company Directory
+## 目录
 
 ```text
 research/companies/{MARKET}/{TICKER}/
   meta.json
   reports/
-    YYYY-MM-DD-slug.md
-  sources/
+  evidence/
+  underwriting/{REVIEW_ID}/
+
+research/batches/{RUN_ID}/
+automation/runs/{RUN_ID}/
+coverage/
+policies/
 ```
 
-## Agent Rules
+## 大批量研究
 
-- For broad A-share work, screen through `coverage/` first to assign priority,
-  risk labels, and resumable queue state. The default policy is to research as
-  many ordinary A-share companies as practical; do not use small size, low
-  liquidity, or temporary losses as hard skip reasons.
-- Follow `playbooks/screening.md` before creating large research queues.
-- Research one company per agent unless the user explicitly asks for synthesis.
-- Read the previous `latest_report` before writing a follow-up.
-- Write a new report for every new research run.
-- Write company research reports in Chinese unless the user explicitly asks for another language.
-- Update `meta.json` only after the report is complete.
-- After a company asset passes validation, update its matching coverage queue item
-  to `completed` and set `result_path` to `meta.json.latest_report`.
-- At the end of a parallel research batch, run `coverage reconcile --check`.
-  Review any drift before using `coverage reconcile --apply`; reconciliation is a
-  batch safety net, not a replacement for updating the queue in the worker.
-- Run validation and rebuild generated files before committing.
-- Record skipped companies with structured reasons instead of silently dropping them.
-  Use `skip_*` sparingly for hard exclusions such as delisting or out-of-scope
-  securities.
-- Do not revive old recipe, DataHub, CANSLIM, Elder, Value, backtest, or paper-trading workflows.
+全 A 股工作先按 `playbooks/screening.md` 经过四层漏斗。行业或主题批次也必须冻结候选，然后一家公司一个 agent 独立承保。调度遵循 `playbooks/batch-dispatch.md`，组合综合遵循 `playbooks/portfolio-synthesis.md`。
 
-## Commands
+## 验证命令
 
 ```bash
-python -m trading_os company validate <company-dir>
-python -m trading_os index rebuild
-python -m trading_os schedule build
-python -m trading_os alerts build
-python -m trading_os alerts check --quotes <quote-snapshot.json>
+python -m trading_os assets validate
+python -m trading_os review status <run-id>
+python -m trading_os review validate <run-id> --strict
 python -m trading_os coverage status
 python -m trading_os coverage validate
 python -m trading_os coverage reconcile --check
-python -m trading_os coverage reconcile --apply
+python -m trading_os index rebuild
+python -m trading_os schedule build
+python -m trading_os alerts build
 ```

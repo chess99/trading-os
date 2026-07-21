@@ -1,60 +1,42 @@
 # Trading OS
 
-Trading OS is a research asset repository.
+Trading OS 是一个以证据、不可变时间线和独立承保为核心的投资研究资产仓库。
 
-The primary asset is the company research timeline under `research/companies/`.
-Each research run creates a new immutable Markdown report. Each company also has one
-mutable `meta.json` file for current rating, valuation range, buy zone, position plan,
-follow-up triggers, and price alerts.
-
-## Structure
+## 资产分层
 
 ```text
-research/
-  companies/
-    {MARKET}/{TICKER}/
-      meta.json
-      reports/
-  index.json
-
-coverage/
-playbooks/
-templates/
-automation/
-src/trading_os/research_assets/
+coverage/                         全市场覆盖、筛选和可恢复队列
+research/companies/{市场}/{代码}/ 单公司报告、证据和承保封存产物
+research/batches/{批次}/          跨公司模型组合、排除记录和综合报告
+automation/runs/{批次}/           可恢复状态、事件日志和 agent 租约
+policies/                         版本化承保、行业和组合政策
 ```
 
-## Rules
+公司 `meta.json` 只保存身份、覆盖、报告时间线、承保状态、价值快照和复核触发器。最终操作和仓位只存在于批次模型组合中。
 
-- Do not overwrite historical reports.
-- Write company research reports in Chinese unless explicitly requested otherwise.
-- For broad A-share work, use `coverage/` to assign research priority, risk labels,
-  and resumable queue state. The default A-share policy is to research as many
-  ordinary companies as practical.
-- Update `meta.json` after each accepted research report.
-- Rebuild `research/index.json` from metadata.
-- Use price alerts as review triggers, not automatic trades.
-- Old recipe workflows, provider pipelines, backtests, and artifacts are not part of this reset.
+## 研究机制
 
-## Commands
+1. 全市场或行业候选先经过 coverage 层并冻结。
+2. 初研生成不可变中文报告、来源清单和结构化主张。
+3. 独立 agent 在半盲状态下重建证据、三张桥和三情景价值；结果先封存，再揭示差异。
+4. 重大分歧触发完全独立的 challenger 和仲裁。
+5. 单公司只能承保通过；跨公司组合层才决定 `buy_now`、其他操作和仓位。
+
+## 命令
 
 ```bash
-python -m trading_os company validate <company-dir>
+python -m trading_os assets validate
+python -m trading_os review create <run-id> --scope-type industry --market CN --description "行业" --candidates <candidates.json>
+python -m trading_os review prepare <run-id>
+python -m trading_os review status <run-id>
+python -m trading_os review validate <run-id> --strict
+python -m trading_os review synthesize <run-id> --quotes <quotes.json>
+python -m trading_os review report <run-id>
+python -m trading_os coverage validate
+python -m trading_os coverage reconcile --check
 python -m trading_os index rebuild
 python -m trading_os schedule build
 python -m trading_os alerts build
-python -m trading_os alerts check --quotes <quote-snapshot.json>
-python -m trading_os coverage status
-python -m trading_os coverage validate
 ```
 
-## Research Workflow
-
-For a new company, follow `playbooks/company-research.md`.
-
-For a follow-up review, follow `playbooks/followup-review.md`.
-
-For batch research, follow `playbooks/batch-dispatch.md`.
-
-For full-market screening before research, follow `playbooks/screening.md` and the
-schemas under `coverage/cn-a/`.
+详细流程见 `playbooks/`。价格提醒是复核触发器，不是自动交易指令。

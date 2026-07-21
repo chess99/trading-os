@@ -83,6 +83,14 @@ def test_docs_route_full_market_work_through_coverage():
     assert "coverage/" in claude
     assert "coverage status" in agents
     assert "coverage validate" in readme
+    assert "四层漏斗" in screening
+    assert "约 5000 家" in screening
+    assert "数百家公司" in screening
+    assert "数十家公司" in screening
+    assert "少数公司" in screening
     assert "deep_research" in screening
     assert "skip_not_in_scope" in screening
     assert "JSONL" in screening
+    assert "小市值、低流动性、暂时亏损" in screening
+    assert "一家公司一个 agent" in agents
+    assert "组合层可给 `buy_now`" in agents

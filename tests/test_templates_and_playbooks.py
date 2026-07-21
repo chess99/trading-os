@@ -3,143 +3,147 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from tests.test_company_assets import write_company
+from tests.test_company_assets import REPORT_SECTIONS, write_company
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
-def test_company_report_template_contains_required_sections():
-    root = Path(__file__).resolve().parents[1]
-    text = (root / "templates" / "company-report.md").read_text(encoding="utf-8")
-
-    for heading in [
-        "## 结论版",
-        "## 业务理解",
-        "## 行业与竞争格局",
-        "## 公司质量",
-        "## 财务质量",
-        "## 估值",
-        "## 市场隐含预期",
-        "## 情景与赔率",
-        "## 价格与仓位计划",
-        "## 关键假设",
-        "## 跟踪触发器",
-        "## 风险",
-        "## 上一轮判断复盘",
-        "## 来源",
-    ]:
-        assert heading in text
-    assert "分析师：agent" not in text
-    assert "具体工具 + 模型" in text
+def _read(relative: str) -> str:
+    return (ROOT / relative).read_text(encoding="utf-8")
 
 
-def test_playbooks_state_immutable_report_rule():
-    root = Path(__file__).resolve().parents[1]
-    company = (root / "playbooks" / "company-research.md").read_text(encoding="utf-8")
-    followup = (root / "playbooks" / "followup-review.md").read_text(encoding="utf-8")
-
-    assert "Do not overwrite existing reports" in company
-    assert "Read the previous latest_report" in followup
-    assert "Previous Thesis Review" in followup
-    assert "Write the report in Chinese" in company
-    assert "Write the report in Chinese" in followup
-    assert "actual tool and model" in company
+def test_old_company_template_is_removed_and_four_v2_templates_exist():
+    assert not (ROOT / "templates" / "company-report.md").exists()
+    for name in (
+        "initial-research-v2.md",
+        "underwriting-review.md",
+        "challenger-review.md",
+        "portfolio-synthesis.md",
+    ):
+        assert (ROOT / "templates" / name).is_file()
 
 
-def test_research_prompts_include_miller_style_value_discipline():
-    root = Path(__file__).resolve().parents[1]
-    template = (root / "templates" / "company-report.md").read_text(encoding="utf-8")
-    worker = (root / "automation" / "scripts" / "_worker_prompt.md").read_text(
-        encoding="utf-8"
+def test_company_report_templates_cover_validator_sections():
+    mapping = {
+        "initial_research": "initial-research-v2.md",
+        "underwriting_review": "underwriting-review.md",
+        "challenger_review": "challenger-review.md",
+    }
+    for report_type, template_name in mapping.items():
+        text = _read(f"templates/{template_name}")
+        for heading in REPORT_SECTIONS[report_type]:
+            assert f"## {heading}" in text
+
+
+def test_initial_research_produces_structured_claims_without_portfolio_decision():
+    text = _read("templates/initial-research-v2.md")
+
+    assert "research-claims.json" in text
+    assert "claim_id" in text
+    assert "验证指标" in text
+    assert "证伪条件" in text
+    assert "不得给组合操作或仓位" in text
+    assert "最大仓位" not in text
+    assert "建仓计划" not in text
+
+
+def test_underwriting_template_locks_evidence_bridges_scenarios_and_blind_audit():
+    text = _read("templates/underwriting-review.md")
+
+    for phrase in (
+        "证据账本",
+        "盈利质量桥",
+        "现金流桥",
+        "正常化盈利",
+        "悲观/基准/乐观三情景",
+        "反方证据",
+        "旧主张差异审计",
+        "自动阻断检查",
+        "盲态结果封存后才揭示",
+    ):
+        assert phrase in text
+
+
+def test_portfolio_template_lists_every_required_user_decision_field():
+    text = _read("templates/portfolio-synthesis.md")
+
+    for phrase in (
+        "当前价",
+        "悲观价值",
+        "合理价值区间",
+        "买入区",
+        "承保状态",
+        "最终操作",
+        "目标仓位",
+        "全部落选理由",
+    ):
+        assert phrase in text
+
+
+def test_docs_lock_four_layer_funnel_half_blind_sealing_and_two_level_decisions():
+    screening = _read("playbooks/screening.md")
+    underwriting = _read("playbooks/underwriting-review.md")
+    batch = _read("playbooks/batch-dispatch.md")
+    portfolio = _read("playbooks/portfolio-synthesis.md")
+
+    for phrase in ("约 5000 家", "数百家公司", "数十家公司", "少数公司"):
+        assert phrase in screening
+    assert "半盲两阶段" in underwriting
+    assert "SHA-256 封存" in underwriting
+    assert "challenger 不能读取此前研究和第一份评估" in underwriting
+    assert "一家公司一个独立 agent" in batch
+    assert "公司之间并行，公司内阶段串行" in batch
+    assert "单公司只能承保通过或不通过" in portfolio
+    assert "组合层才能给 `buy_now`" in portfolio
+
+
+def test_readme_and_agents_only_document_v2_boundaries_and_commands():
+    combined = _read("README.md") + "\n" + _read("AGENTS.md")
+
+    for phrase in (
+        "research/companies/",
+        "research/batches/",
+        "automation/runs/",
+        "python -m trading_os assets validate",
+        "python -m trading_os review create",
+        "python -m trading_os review validate",
+        "python -m trading_os coverage reconcile --check",
+    ):
+        assert phrase in combined
+    assert "company validate" not in combined
+    assert "company audit" not in combined
+    assert "batch_research.py" not in combined
+    assert "_worker_prompt.md" not in combined
+
+
+def test_v2_company_schema_matches_fixture_and_validator(tmp_path: Path):
+    from trading_os.research_assets.company import validate_company_dir
+
+    schema = json.loads(_read("templates/company-meta-v2.schema.json"))
+    company_dir = write_company(tmp_path)
+    meta = json.loads((company_dir / "meta.json").read_text(encoding="utf-8"))
+
+    assert set(schema["required"]) == set(meta)
+    validated = validate_company_dir(company_dir)
+    assert validated["identity"]["symbol"] == "CN:600519"
+
+
+def test_miller_value_discipline_survives_v2_research_docs():
+    combined = "\n".join(
+        _read(path)
+        for path in (
+            "templates/initial-research-v2.md",
+            "templates/underwriting-review.md",
+            "playbooks/company-research.md",
+            "playbooks/followup-review.md",
+        )
     )
-    company = (root / "playbooks" / "company-research.md").read_text(encoding="utf-8")
-    followup = (root / "playbooks" / "followup-review.md").read_text(encoding="utf-8")
-    combined = "\n".join([template, worker, company, followup])
-
-    for phrase in [
+    for phrase in (
         "自由现金流",
         "市场隐含预期",
         "资本回报",
         "永久资本损失",
-        "情景与赔率",
-        "多因素估值中心倾向",
-        "低估值指标",
-    ]:
+        "三情景",
+        "低估值",
+    ):
         assert phrase in combined
-
-    assert "低估值指标" in worker
-    assert "Miller-Style Value Discipline" in company
-    assert "Miller-Style Follow-up Discipline" in followup
-
-
-def test_batch_worker_validation_uses_strict_company_check():
-    root = Path(__file__).resolve().parents[1]
-    batch = (root / "automation" / "scripts" / "batch_research.py").read_text(
-        encoding="utf-8"
-    )
-    worker = (root / "automation" / "scripts" / "_worker_prompt.md").read_text(
-        encoding="utf-8"
-    )
-
-    assert '"--strict"' in batch
-    assert "# 公司研究：{{COMPANY_NAME}}（{{SYMBOL}}）" in worker
-    assert "python -m trading_os company validate {{COMPANY_DIR}} --strict" in worker
-
-
-def test_meta_schema_is_valid_json_and_has_validator_aligned_constraints():
-    root = Path(__file__).resolve().parents[1]
-    schema = json.loads(
-        (root / "templates" / "meta.schema.json").read_text(encoding="utf-8")
-    )
-    properties = schema["properties"]
-
-    for field in [
-        "symbol",
-        "market",
-        "ticker",
-        "name",
-        "currency",
-        "status",
-        "current_rating",
-        "current_thesis",
-        "latest_report",
-        "updated_at",
-    ]:
-        assert field in schema["required"]
-        assert properties[field]["minLength"] == 1
-
-    assert properties["position_plan"]["minItems"] == 1
-    assert properties["position_plan"]["items"]["properties"]["condition"][
-        "minLength"
-    ] == 1
-    assert properties["report_history"]["minItems"] == 1
-    assert properties["report_history"]["items"]["minLength"] == 1
-
-    review_trigger = properties["review_triggers"]["items"]["properties"]
-    assert review_trigger["type"]["minLength"] == 1
-    assert review_trigger["date"]["minLength"] == 1
-    assert review_trigger["reason"]["minLength"] == 1
-
-    price_trigger = properties["price_triggers"]["items"]["properties"]
-    assert price_trigger["type"]["minLength"] == 1
-    assert price_trigger["reason"]["minLength"] == 1
-
-    for field in ["fair_value_range", "buy_zone", "sell_or_reduce_zone"]:
-        description = properties[field]["description"]
-        assert "lower bound" in description
-        assert "<= upper bound" in description
-
-
-def test_company_fixture_matches_schema_required_fields_and_validator(tmp_path: Path):
-    from trading_os.research_assets.company import validate_company_dir
-
-    root = Path(__file__).resolve().parents[1]
-    schema = json.loads(
-        (root / "templates" / "meta.schema.json").read_text(encoding="utf-8")
-    )
-    company_dir = write_company(tmp_path)
-    meta = json.loads((company_dir / "meta.json").read_text(encoding="utf-8"))
-
-    for field in schema["required"]:
-        assert field in meta
-
-    validated = validate_company_dir(company_dir)
-    assert validated["symbol"] == "CN:600519"

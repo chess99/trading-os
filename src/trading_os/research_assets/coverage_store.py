@@ -125,10 +125,16 @@ def reconcile_research_queue(
 
         try:
             meta = validate_company_dir(company_dir)
-            if meta["symbol"] != record.get("symbol"):
+            symbol = meta["identity"]["symbol"]
+            latest_report = meta["reports"]["latest"]
+            if symbol != record.get("symbol"):
                 raise AssetValidationError(
-                    f"company asset symbol {meta['symbol']} does not match queue symbol "
+                    f"company asset symbol {symbol} does not match queue symbol "
                     f"{record.get('symbol')}"
+                )
+            if latest_report is None:
+                raise AssetValidationError(
+                    f"company asset has no structured latest report: {symbol}"
                 )
         except AssetValidationError as exc:
             blocked.append(
@@ -144,7 +150,7 @@ def reconcile_research_queue(
         updated.update(
             {
                 "status": "completed",
-                "result_path": meta["latest_report"],
+                "result_path": latest_report,
                 "failure_reason": None,
                 "next_action": "查看 reports/ 下最新报告。",
             }
@@ -153,10 +159,10 @@ def reconcile_research_queue(
             updated["finished_at"] = meta["updated_at"]
         changes.append(
             {
-                "symbol": meta["symbol"],
+                "symbol": symbol,
                 "from_status": record["status"],
                 "to_status": "completed",
-                "result_path": meta["latest_report"],
+                "result_path": latest_report,
             }
         )
         reconciled.append(updated)
