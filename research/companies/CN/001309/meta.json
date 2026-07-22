@@ -25,85 +25,96 @@
         "sha256": "a961f777a2ccc022141ba36a63ada4d7f3222ac0cf68d49cf5db46e59108877b"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+        "report_id": "2026-07-22-initial-research-value-rebaseline-003",
+        "report_type": "initial_research",
+        "sha256": "1872d0e0e283a67ee56f319a4e41ae9a5bd0d10d2e91223c319ea274aedbf818"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-value-rebaseline-003.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T18:40:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复核2026年半年报，重点验证Q2毛利率、经营现金流、存货金额和企业级/嵌入式业务质量。",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后核验业绩预告、Q2毛利率、存货、经营现金流、企业级收入与客户回款。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "metric": "inventory_cny",
+        "operator": "gte",
+        "threshold": 15000000000.0
       },
-      "reason": "复核2026年三季报，判断存储涨价周期是否延续以及库存减值风险是否上升。",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "存货达到150亿元且经营现金流未改善时，重做减值与流动性压力测试。",
+      "trigger_id": "inventory-risk-threshold",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "date": "2027-03-31"
+        "event": "private_placement_approved_priced_or_completed"
       },
-      "reason": "复核2026年年报，重估周期高点利润的可持续性和中周期估值。",
-      "trigger_id": "legacy-review-3",
-      "type": "date"
+      "reason": "按实际发行价、股数和募集净额重算完全摊薄价值。",
+      "trigger_id": "private-placement-dilution",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "quarterly_gross_margin_pct",
+        "operator": "lte",
+        "threshold": 18.0
+      },
+      "reason": "单季毛利率低于正常化区间下沿时，下修中周期盈利。",
+      "trigger_id": "gross-margin-normalization",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 520.0
+        "threshold": 300.0
       },
-      "reason": "进入重点跟踪区间，需要结合半年报验证经营现金流和存货风险。",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 480.0
-      },
-      "reason": "进入有安全边际买入区间，可在基本面未恶化时评估1%-2%试探仓位。",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格进入研究买入区上沿，只触发一手证据和安全边际复核，不构成自动操作。",
+      "trigger_id": "valuation-review-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 850.0
+        "threshold": 520.0
       },
-      "reason": "高于合理价值上沿且缺少新增利润和现金流证据时，赔率恶化。",
-      "trigger_id": "legacy-price-3",
+      "reason": "价格进入乐观情景区间，触发高估风险和持续性假设复核。",
+      "trigger_id": "valuation-review-high",
       "type": "price"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
-    "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
-    ],
+    "reason_codes": [],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T18:40:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
