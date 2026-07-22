@@ -71,8 +71,8 @@
     {
       "active": true,
       "condition": {
-        "condition": "two_period_profit_or_cash_conversion_deterioration",
         "cash_collection_ratio_lt": 0.85,
+        "condition": "two_period_profit_or_cash_conversion_deterioration",
         "consumer_appliance_margin_drop_ppt_gt": 2.0
       },
       "reason": "连续两个报告期扣非利润下降、销售收现收入比低于85%或消费电器毛利率下降超过2个百分点时，重新正常化现金流。",
@@ -110,21 +110,35 @@
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "medium",
     "evidence_valid_until": null,
     "reason_codes": [
-      "independent_underwriting_pending"
+      "expected_return_below_minimum",
+      "governance_risk_full_pledge",
+      "no_single_company_buy_now",
+      "not_selected_in_relative_ranking",
+      "price_above_buy_zone",
+      "underwriting_passed"
     ],
-    "review_id": null,
-    "status": null
+    "review_id": "2026-07-22-value-rebaseline-002",
+    "status": "passed"
   },
-  "updated_at": "2026-07-22T19:08:31+08:00",
+  "updated_at": "2026-07-23T01:00:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 27.3,
+    "buy_zone": [
+      20.5,
+      30.0
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      27.3,
+      58.7
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      62.0,
+      70.0
+    ]
   }
 }

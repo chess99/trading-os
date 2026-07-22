@@ -17,10 +17,10 @@
     ],
     "history": [
       {
-        "report_id": "CN-600919-2026-07-22-initial-research-v2",
-        "path": "reports/2026-07-22-initial-research-v2.md",
-        "report_type": "initial_research",
         "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-600919-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
         "sha256": "fcb75c3e92270721b144c71fbada6a7a871b6045c6a34ce7bd058a45a7d922f8"
       }
     ],
@@ -61,9 +61,21 @@
       "active": true,
       "condition": {
         "any": [
-          {"metric": "special_mention_loan_ratio", "operator": "gte", "threshold": 0.0135},
-          {"metric": "overdue_loan_ratio", "operator": "gte", "threshold": 0.0125},
-          {"metric": "property_sector_npl_ratio", "operator": "gte", "threshold": 0.05}
+          {
+            "metric": "special_mention_loan_ratio",
+            "operator": "gte",
+            "threshold": 0.0135
+          },
+          {
+            "metric": "overdue_loan_ratio",
+            "operator": "gte",
+            "threshold": 0.0125
+          },
+          {
+            "metric": "property_sector_npl_ratio",
+            "operator": "gte",
+            "threshold": 0.05
+          }
         ]
       },
       "reason": "关注、逾期或房地产不良恶化时，立即重估信用成本与普通股账面价值。",
@@ -101,21 +113,36 @@
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "low",
     "evidence_valid_until": null,
     "reason_codes": [
-      "independent_underwriting_pending"
+      "capital_constraint_unresolved",
+      "challenger_book_value_anchor_invalid",
+      "credit_tail_loss_not_reproducible",
+      "governance_transition_unresolved",
+      "property_lgfv_exposure_unresolved",
+      "provision_coverage_declining",
+      "underwriting_insufficient_evidence"
     ],
-    "review_id": null,
-    "status": null
+    "review_id": "2026-07-22-value-rebaseline-002",
+    "status": "insufficient_evidence"
   },
-  "updated_at": "2026-07-22T19:40:00+08:00",
+  "updated_at": "2026-07-23T01:00:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 6.62,
+    "buy_zone": [
+      9.5,
+      10.74
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      13.28,
+      15.37
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      18.5,
+      20.63
+    ]
   }
 }

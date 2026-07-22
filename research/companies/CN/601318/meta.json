@@ -38,75 +38,118 @@
   "triggers": [
     {
       "active": true,
-      "condition": {"filing_type": "2026_interim_report"},
+      "condition": {
+        "filing_type": "2026_interim_report"
+      },
       "reason": "半年报后复核NBV、营运利润、投资收益、财险COR和银行资产质量。",
       "trigger_id": "pingan-2026-interim-filing",
       "type": "filing"
     },
     {
       "active": true,
-      "condition": {"filing_type": "2026_annual_report"},
+      "condition": {
+        "filing_type": "2026_annual_report"
+      },
       "reason": "年报后核对CSM、新业务CSM、内含价值假设及敏感性。",
       "trigger_id": "pingan-2026-annual-filing",
       "type": "filing"
     },
     {
       "active": true,
-      "condition": {"date": "2026-08-31"},
+      "condition": {
+        "date": "2026-08-31"
+      },
       "reason": "最迟在半年报披露后十日内完成证据更新。",
       "trigger_id": "pingan-interim-review-deadline",
       "type": "date"
     },
     {
       "active": true,
-      "condition": {"life_core_solvency_lte_pct": 115, "or_life_comprehensive_solvency_lte_pct": 160, "or_risk_rating_below": "A"},
+      "condition": {
+        "life_core_solvency_lte_pct": 115,
+        "or_life_comprehensive_solvency_lte_pct": 160,
+        "or_risk_rating_below": "A"
+      },
       "reason": "寿险资本或评级触阈值时重做资本、分红和内含价值。",
       "trigger_id": "pingan-solvency-falsifier",
       "type": "thesis"
     },
     {
       "active": true,
-      "condition": {"rolling_net_investment_yield_lte_pct": 3.5, "or_quarter_comprehensive_investment_yield_lt_pct": 0, "or_pc_cor_gte_pct": 99},
+      "condition": {
+        "or_pc_cor_gte_pct": 99,
+        "or_quarter_comprehensive_investment_yield_lt_pct": 0,
+        "rolling_net_investment_yield_lte_pct": 3.5
+      },
       "reason": "投资收益或财险承保质量恶化时重估正常化利润。",
       "trigger_id": "pingan-earnings-quality-falsifier",
       "type": "thesis"
     },
     {
       "active": true,
-      "condition": {"event_types": ["material_credit_impairment", "material_real_estate_impairment", "convertible_bond_conversion", "dividend_policy_change"]},
+      "condition": {
+        "event_types": [
+          "material_credit_impairment",
+          "material_real_estate_impairment",
+          "convertible_bond_conversion",
+          "dividend_policy_change"
+        ]
+      },
       "reason": "重大减值、可转债转换或分红变化时更新每股价值。",
       "trigger_id": "pingan-material-event",
       "type": "event"
     },
     {
       "active": true,
-      "condition": {"operator": "price_lte", "threshold": 48.0},
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 48.0
+      },
       "reason": "进入较深估值缓冲区，仅触发复核，不自动交易。",
       "trigger_id": "pingan-price-low-review",
       "type": "price"
     },
     {
       "active": true,
-      "condition": {"operator": "price_gte", "threshold": 79.0},
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 79.0
+      },
       "reason": "进入乐观隐含预期区，仅触发复核，不自动交易。",
       "trigger_id": "pingan-price-high-review",
       "type": "price"
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "low",
     "evidence_valid_until": null,
-    "reason_codes": ["pending_independent_underwriting"],
-    "review_id": null,
-    "status": null
+    "reason_codes": [
+      "current_price_above_conservative_buy_zone",
+      "expected_return_below_portfolio_hurdle",
+      "low_confidence_zero_weight",
+      "no_single_company_buy_now",
+      "underwriting_insufficient_evidence",
+      "valuation_consensus_absent"
+    ],
+    "review_id": "2026-07-22-value-rebaseline-002",
+    "status": "insufficient_evidence"
   },
-  "updated_at": "2026-07-22T19:05:00+08:00",
+  "updated_at": "2026-07-23T01:00:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 49.0,
+    "buy_zone": [
+      38.0,
+      44.0
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      37.1,
+      67.0
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      79.0,
+      86.0
+    ]
   }
 }

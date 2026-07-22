@@ -112,7 +112,10 @@
       "condition": {
         "metric": "a_h_premium",
         "operator": "outside",
-        "range": [25.0, 70.0]
+        "range": [
+          25.0,
+          70.0
+        ]
       },
       "reason": "A/H溢价突破25%至70%的观察带时复核市场分割、税费和资本回报预期。",
       "trigger_id": "ah-premium-regime-change",
@@ -120,21 +123,37 @@
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "medium",
     "evidence_valid_until": null,
     "reason_codes": [
-      "pending_independent_underwriting"
+      "a_h_premium_not_intrinsic_value",
+      "blind_challenger_value_ranges_overlap",
+      "current_price_above_arbitrated_bull_value",
+      "cyclical_safety_margin_applied_once",
+      "expected_return_below_minimum",
+      "no_company_layer_buy_now",
+      "portfolio_selection_required",
+      "underwriting_passed_with_medium_confidence"
     ],
-    "review_id": null,
-    "status": null
+    "review_id": "2026-07-22-value-rebaseline-002",
+    "status": "passed"
   },
-  "updated_at": "2026-07-22T20:53:00+08:00",
+  "updated_at": "2026-07-23T01:00:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 12.1,
+    "buy_zone": [
+      14.1,
+      15.75
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      18.8,
+      21.0
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      25.0,
+      29.6
+    ]
   }
 }
