@@ -15,63 +15,115 @@
         "sha256": "deb198e51e0704eb7fff3f2408a509acedb6c44814297da7f7a5ef0e8668ff1e"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+        "report_id": "CN-601963-2026-07-22-initial_research-value-rebaseline-003",
+        "report_type": "initial_research",
+        "sha256": "2868a5efb48f14db5de1c932dbf1b4de3c31b33424544afd53bc3e74630090a0"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-value-rebaseline-003.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T16:15:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复核2026年半年度报告，重点验证息差、资本充足率、房地产和零售资产质量。",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "完整中报披露后复核净息差、信用成本、资产质量迁徙、拨备、核心一级资本和平台类风险敞口。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "metric": "core_tier1_capital_adequacy_ratio_pct",
+        "operator": "lt",
+        "threshold": 8.5
       },
-      "reason": "复核2026年三季报与重庆财政、地产链条风险变化。",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "资本缓冲进一步收窄会限制增长和分红，并可能增加普通股稀释。",
+      "trigger_id": "core-tier1-buffer",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "any": [
+          {
+            "metric": "property_npl_ratio_pct",
+            "operator": "gt",
+            "threshold": 8.5
+          },
+          {
+            "metric": "retail_npl_ratio_pct",
+            "operator": "gt",
+            "threshold": 3.5
+          },
+          {
+            "metric": "special_mention_migration_ratio_pct",
+            "operator": "gt",
+            "threshold": 40.0
+          }
+        ]
+      },
+      "reason": "地产、零售或关注类迁徙恶化会推翻基准信用成本假设。",
+      "trigger_id": "credit-migration-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event_types": [
+          "lgfv_restructuring",
+          "property_credit_event",
+          "large_credit_writeoff"
+        ]
+      },
+      "reason": "区域平台重组、地产链或大额核销事件需要重新穿透区域信用风险。",
+      "trigger_id": "regional-credit-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event_types": [
+          "convertible_conversion_material",
+          "conversion_price_change"
+        ]
+      },
+      "reason": "重银转债变化会同时影响核心一级资本、股本、每股净资产与每股收益。",
+      "trigger_id": "convertible-capital-event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 9.2
+        "threshold": 9.0
       },
-      "reason": "进入初始买入区间上沿，开始复核基本面后分批建仓。",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 8.6
-      },
-      "reason": "进入更有吸引力的风险补偿区间，可考虑加至计划仓位上限。",
-      "trigger_id": "legacy-price-2",
+      "reason": "进入初步买入观察区，仅在完整中报和独立承保未削弱基本面的前提下重新评估。",
+      "trigger_id": "initial-buy-zone-upper",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 13.0
+        "threshold": 16.0
       },
-      "reason": "进入减持区间，除非中报和区域信用数据显著超预期，否则风险收益比下降。",
-      "trigger_id": "legacy-price-3",
+      "reason": "进入估值过热复核区，检查市场是否已透支10.5%以上可持续ROE。",
+      "trigger_id": "valuation-review-upper",
       "type": "price"
     }
   ],
@@ -79,12 +131,14 @@
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "awaiting_independent_underwriting",
+      "2026_interim_full_metrics_pending",
+      "lgfv_exposure_not_separately_disclosed"
     ],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T16:25:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
