@@ -15,86 +15,71 @@
         "sha256": "dd7014afa4d212d18c6ba80b402c880e24c0f822a6788e06addc4718d48379da"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "report_id": "CN-002304-2026-07-22-initial-research",
+        "path": "reports/2026-07-22-initial-research.md",
+        "report_type": "initial_research",
+        "as_of": "2026-07-22",
+        "sha256": "3f5b31442f59cb5bef26afc5561bccdc16200e8716b1588b1a1b5c009c628cb8"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T18:38:56+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
-      "condition": {
-        "date": "2026-08-31"
-      },
-      "reason": "2026年中报预计披露后复查收入、合同负债、现金流和渠道改革。",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "condition": {"filing_type": "2026_interim_report"},
+      "reason": "核对收入、销售收现、合同负债、存货、经营现金流、销售费用及分产品和分区域收入。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "三季报后验证旺季动销、库存出清和利润率修复。",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "condition": {"filing_type": "2026_third_quarter_report"},
+      "reason": "验证旺季前回款、合同负债、核心产品动销与价盘是否同步改善。",
+      "trigger_id": "2026-q3-filing",
+      "type": "filing"
     },
     {
       "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 36.0
-      },
-      "reason": "进入初始买入区间，需要复核批价、合同负债和经营现金流。",
-      "trigger_id": "legacy-price-1",
+      "condition": {"event_name": "channel_metrics_disclosed"},
+      "reason": "公司若披露开瓶、经销商出库和厂方回款绝对量或可比增速，立即重估渠道拐点。",
+      "trigger_id": "channel-metrics-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {"operator": "price_lte", "threshold": 34.0},
+      "reason": "进入初研安全边际区后，复核基本面是否进一步恶化并重新独立承保。",
+      "trigger_id": "research-zone-review",
       "type": "price"
     },
     {
       "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 32.0
-      },
-      "reason": "进入高赔率区，若基本面未进一步恶化可考虑提高仓位。",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 56.0
-      },
-      "reason": "进入减仓区下沿，若经营拐点未兑现应降低仓位。",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 65.0
-      },
-      "reason": "超过基准合理价值较多，需重新评估乐观情景是否成立。",
-      "trigger_id": "legacy-price-4",
+      "condition": {"operator": "price_gte", "threshold": 55.0},
+      "reason": "价格进入需要兑现乐观情景的区域，复核回款、份额和利润是否支持估值。",
+      "trigger_id": "optimistic-valuation-review",
       "type": "price"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
-    "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
-    ],
+    "reason_codes": [],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T20:25:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
