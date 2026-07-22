@@ -15,76 +15,74 @@
         "sha256": "9a562abec50ab883042536c550f34ac4520e9dd0a72d1c6266cbdd56a9d69ec4"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+        "report_id": "CN-000528-2026-07-22-initial-research-value-rebaseline-003",
+        "report_type": "initial_research",
+        "sha256": "6556860ba5719cfa169738da3ecfde3e2fc4dab7b371048cf6349a7663af3ec4"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-value-rebaseline-003.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing": "2026_half_year_report"
       },
-      "reason": "复查 2026 年半年报，重点验证 Q1 利润下滑、经营现金流为季节性还是趋势性",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "复查海外毛利、境内价格、应收及长期应收回收、融资租赁逾期、汇兑和经营现金流。",
+      "trigger_id": "2026-h1-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "event": "repurchase_execution_or_cancellation_update"
       },
-      "reason": "复查 2026 年三季报，确认海外增长、毛利率、应收账款和全年盈利区间",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "核对注销式回购的股东会批准、实际成交金额、均价和注销股数。",
+      "trigger_id": "repurchase-cancellation-progress",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 7.2
+        "metric": "financing_lease_overdue_rate",
+        "operator": "gte",
+        "threshold": 0.06
       },
-      "reason": "进入更有安全边际的加仓观察区，需同时确认没有新增财务质量恶化",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
+      "reason": "融资租赁逾期率上升至6%或以上时，立即复核回购义务、代垫和减值充分性。",
+      "trigger_id": "lease-overdue-deterioration",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 6.6
+        "filing": "2026_third_quarter_report"
       },
-      "reason": "触发逻辑止损复核，若下跌伴随经营现金流或应收账款恶化，应降至观察仓",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 12.5
-      },
-      "reason": "进入减仓区下沿，若基本面未显著超预期，估值修复收益应部分兑现",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "验证一季度经营现金流和汇兑影响是否为季节性，并更新正常化盈利与资本回报判断。",
+      "trigger_id": "2026-q3-filing",
+      "type": "filing"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
-    "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
-    ],
+    "reason_codes": [],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T15:45:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

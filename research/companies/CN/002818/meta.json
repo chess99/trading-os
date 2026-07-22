@@ -15,24 +15,34 @@
         "sha256": "18b3665fc746b6c1f84065a712da445ccec363444bdee62dfe55ff06877f269e"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+        "report_id": "CN-002818-2026-07-22-initial-research-value-rebaseline-003",
+        "report_type": "initial_research",
+        "sha256": "1c62af6668ab659cafbe949c593a565da5fc94f39cf95ce90ed50637f7f8cd5e"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-value-rebaseline-003.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-value-rebaseline-003.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T19:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "date": "2026-08-26"
       },
-      "reason": "半年报将验证2026年一季度扣非下滑是否延续",
-      "trigger_id": "legacy-review-1",
+      "reason": "半年报验证扣非利润、调整后经营现金流、金融资产明细、租赁收入和天府项目亏损",
+      "trigger_id": "rebaseline-003-h1-report",
       "type": "date"
     },
     {
@@ -40,8 +50,8 @@
       "condition": {
         "date": "2026-10-31"
       },
-      "reason": "三季报可判断全年分红能力和主业趋势",
-      "trigger_id": "legacy-review-2",
+      "reason": "三季报验证主业降幅是否收窄及经营现金流能否覆盖资本开支和分红",
+      "trigger_id": "rebaseline-003-q3-report",
       "type": "date"
     },
     {
@@ -49,78 +59,49 @@
       "condition": {
         "date": "2027-03-31"
       },
-      "reason": "年报是重新评估股息率估值锚的关键节点",
-      "trigger_id": "legacy-review-3",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2027-04-30"
-      },
-      "reason": "一季报可提前观察新年度经营动能",
-      "trigger_id": "legacy-review-4",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2027-08-31"
-      },
-      "reason": "治理折价是本报告安全边际要求的重要来源",
-      "trigger_id": "legacy-review-5",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2028-03-31"
-      },
-      "reason": "行业需求变化会影响租金和出租率假设",
-      "trigger_id": "legacy-review-6",
+      "reason": "年报复核完整出租经营、金融资产退出减值、关联交易、分红与治理整改",
+      "trigger_id": "rebaseline-003-annual-report",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 7.8
+        "threshold": 8.2
       },
-      "reason": "价格低于保守价值区间并提供约25%安全边际",
-      "trigger_id": "legacy-price-1",
+      "reason": "进入初研买入区上沿，需确认扣非、现金流和治理没有新增恶化",
+      "trigger_id": "rebaseline-003-price-review",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 6.8
+        "threshold": 7.0
       },
-      "reason": "在保守分红假设下股息率吸引力显著提高",
-      "trigger_id": "legacy-price-2",
+      "reason": "进入深度价值区，重点复核金融资产安全和永久资本损失风险",
+      "trigger_id": "rebaseline-003-deep-value-review",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 12.5
+        "threshold": 12.0
       },
-      "reason": "价格明显高于本报告合理价值区间上沿",
-      "trigger_id": "legacy-price-3",
+      "reason": "高于合理价值上沿，除非正常化利润或资产兑现显著上修否则估值偏高",
+      "trigger_id": "rebaseline-003-overvalue-review",
       "type": "price"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
-    "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
-    ],
+    "reason_codes": [],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T19:30:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
