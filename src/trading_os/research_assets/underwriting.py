@@ -69,7 +69,9 @@ RISK_FLAG_KEYS = {
     "permanent_loss_risk",
 }
 CLAIM_REVIEW_KEYS = {"claim_id", "category", "result"}
-CONFIDENCE_MARGIN = {"high": 0.20, "medium": 0.30, "low": None}
+MINIMUM_VALUATION_DISCOUNT_RATE = 0.085
+GOVERNMENT_BOND_SPREAD = 0.055
+CONFIDENCE_MARGIN = {"high": 0.10, "medium": 0.15, "low": None}
 
 
 def evaluate_underwriting(
@@ -101,7 +103,7 @@ def evaluate_underwriting(
     )
     margin = CONFIDENCE_MARGIN[confidence]
     if cyclical_risk and margin is not None:
-        margin = max(margin, 0.35)
+        margin = max(margin, 0.25)
     if confidence == "low":
         blockers.add("low_confidence")
 
@@ -162,7 +164,11 @@ def evaluate_underwriting(
         valuation.get("government_bond_yield"), "government_bond_yield"
     )
     equity_cost = _require_number(valuation.get("equity_cost"), "equity_cost")
-    required_return = max(0.12, bond_yield + 0.08, equity_cost)
+    required_return = max(
+        MINIMUM_VALUATION_DISCOUNT_RATE,
+        bond_yield + GOVERNMENT_BOND_SPREAD,
+        equity_cost,
+    )
     required_used = _require_number(
         valuation.get("required_return_used"), "required_return_used"
     )

@@ -159,7 +159,7 @@ def _assessment(case: dict[str, Any]) -> dict[str, Any]:
             "market_implied_assumptions_complete": True,
             "government_bond_yield": 0.03,
             "equity_cost": 0.11,
-            "required_return_used": 0.12,
+            "required_return_used": 0.11,
         },
         "counterevidence": ["需求下行", "成本上升", "竞争加剧"],
         "claim_reviews": [

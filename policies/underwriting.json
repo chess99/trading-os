@@ -1,18 +1,21 @@
 {
   "schema_version": 2,
   "policy_id": "underwriting.default",
-  "version": "1.0.0",
-  "effective_at": "2026-07-21T00:00:00+08:00",
+  "version": "1.1.0",
+  "effective_at": "2026-07-22T00:00:00+08:00",
   "kind": "underwriting",
   "payload": {
     "default_holding_period_years": [1, 3],
     "minimum_annual_return": 0.12,
-    "government_bond_spread": 0.08,
+    "minimum_valuation_discount_rate": 0.085,
+    "government_bond_spread": 0.055,
+    "valuation_principle": "intrinsic_value_uses_risk_adjusted_equity_cost; target_return_is_tested_at_portfolio_entry",
+    "safety_margin_application": "apply_once_to_intrinsic_value; do_not_discount_a_hurdle_rate_dcf_again",
     "minimum_safety_margin": {
-      "high_confidence": 0.20,
-      "medium_confidence": 0.30,
+      "high_confidence": 0.10,
+      "medium_confidence": 0.15,
       "low_confidence": null,
-      "cyclical_or_governance_risk": 0.35
+      "cyclical_or_governance_risk": 0.25
     },
     "minimum_counterevidence_items": 3,
     "minimum_valuation_methods": 2,

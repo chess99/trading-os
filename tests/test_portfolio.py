@@ -12,6 +12,7 @@ POLICY = {
     "max_medium_confidence_weight": 0.03,
     "max_low_confidence_weight": 0.0,
     "initial_entry_fraction": 1 / 3,
+    "minimum_expected_annual_return": 0.12,
     "allow_cash": True,
 }
 
@@ -80,6 +81,17 @@ def test_missing_any_buy_gate_prevents_buy_now(
 
     assert result.decisions[0].action == expected_action
     assert result.decisions[0].target_weight == 0
+
+
+def test_expected_return_below_policy_minimum_prevents_buy_now():
+    candidate = _candidate()
+    candidate["expected_annual_return"] = 0.119
+
+    decision = _build([candidate]).decisions[0]
+
+    assert decision.action == "watch"
+    assert decision.target_weight == 0
+    assert "expected_return_below_minimum" in decision.reason_codes
 
 
 @pytest.mark.parametrize(

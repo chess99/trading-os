@@ -46,7 +46,7 @@ def _assessment() -> dict[str, object]:
             "market_implied_assumptions_complete": True,
             "government_bond_yield": 0.03,
             "equity_cost": 0.11,
-            "required_return_used": 0.12,
+            "required_return_used": 0.11,
         },
         "counterevidence": ["需求下行", "成本上升", "竞争加剧"],
         "claim_reviews": [
@@ -83,15 +83,15 @@ def test_valid_assessment_passes_with_dynamic_required_return():
     result = _evaluate()
 
     assert result.status == "passed"
-    assert result.required_return == pytest.approx(0.12)
-    assert result.required_safety_margin == pytest.approx(0.20)
+    assert result.required_return == pytest.approx(0.11)
+    assert result.required_safety_margin == pytest.approx(0.10)
     assert result.blockers == ()
     assert result.challenger_triggers == ()
 
 
 @pytest.mark.parametrize(
     ("bond_yield", "equity_cost", "expected"),
-    [(0.05, 0.11, 0.13), (0.03, 0.15, 0.15)],
+    [(0.05, 0.11, 0.11), (0.03, 0.15, 0.15)],
 )
 def test_required_return_uses_highest_hurdle(
     bond_yield: float, equity_cost: float, expected: float
@@ -181,7 +181,7 @@ def test_fewer_than_three_counterevidence_items_blocks_underwriting():
 
 def test_buy_zone_must_respect_confidence_safety_margin():
     assessment = _assessment()
-    assessment["valuation"]["buy_zone"] = [80.0, 90.0]
+    assessment["valuation"]["buy_zone"] = [90.0, 95.0]
 
     result = _evaluate(assessment)
 

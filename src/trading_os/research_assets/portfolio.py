@@ -67,6 +67,7 @@ POLICY_KEYS = {
     "max_medium_confidence_weight",
     "max_low_confidence_weight",
     "initial_entry_fraction",
+    "minimum_expected_annual_return",
     "allow_cash",
 }
 CONFIDENCE_LEVELS = {"high", "medium", "low"}
@@ -87,7 +88,7 @@ def build_model_portfolio(
     allocated_weights: list[float] = []
     decisions: list[PortfolioDecision] = []
     for item in normalized:
-        action, gate_reasons = _preallocation_action(item)
+        action, gate_reasons = _preallocation_action(item, limits)
         reasons = set(item["reason_codes"])
         reasons.update(gate_reasons)
         target_weight = 0.0
@@ -202,7 +203,9 @@ def _top_five_candidate_cap(weights: list[float], limit: float) -> float:
     return max(0.0, limit - sum(ranked[:4]))
 
 
-def _preallocation_action(item: Mapping[str, Any]) -> tuple[str, set[str]]:
+def _preallocation_action(
+    item: Mapping[str, Any], limits: Mapping[str, Any]
+) -> tuple[str, set[str]]:
     reasons: set[str] = set()
     status = item["underwriting_status"]
     if item["held"]:
@@ -217,6 +220,8 @@ def _preallocation_action(item: Mapping[str, Any]) -> tuple[str, set[str]]:
         return PortfolioAction.WATCH.value, {f"underwriting_{status}"}
     if item["evidence_stale"]:
         return PortfolioAction.WATCH.value, {"evidence_stale"}
+    if item["expected_annual_return"] < limits["minimum_expected_annual_return"]:
+        return PortfolioAction.WATCH.value, {"expected_return_below_minimum"}
     if item["current_price"] > item["buy_zone"][1]:
         return PortfolioAction.BUY_ON_WEAKNESS.value, {"price_above_buy_zone"}
     if not item["portfolio_eligible"]:
