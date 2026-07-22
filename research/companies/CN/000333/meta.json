@@ -20,72 +20,115 @@
         "sha256": "9e37855c2e602e6b3ba74a8cf9ebc1c75c77ff9422951a0163df6bb0b7193790"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-000333-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "64f736223e2b7fe3a9d9e0adb1dff7c3e5409ea10d771925310bee3efcda08ef"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复查半年报扣非利润、海外增长、ToB利润率和现金转换",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后核对扣非利润、国内外收入、ToB利润、营运资金与自由现金流。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "metric": "h1_deducted_net_profit_yoy",
+        "operator": "lte",
+        "threshold": -10.0
       },
-      "reason": "复查三季报并确认Q1利润背离是否延续",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "若半年累计扣非净利润仍下降10%以上，重估正常化盈利和利润质量。",
+      "trigger_id": "deducted-profit-deterioration",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 70.0
+        "threshold": 72.0
       },
-      "reason": "进入有安全边际的买入区间上沿",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格进入估值敏感区下沿，只触发一手证据和估值复核，不构成自动操作。",
+      "trigger_id": "valuation-review-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 95.0
+        "threshold": 110.0
       },
-      "reason": "进入需要盈利上修支撑的减仓区间",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格要求更强的海外、ToB利润与现金流兑现，只触发估值复核。",
+      "trigger_id": "valuation-review-high",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "material_overseas_tariff_or_trade_restriction"
+      },
+      "reason": "主要海外市场新增实质关税或贸易限制时，重做海外收入、利润与产能迁移桥。",
+      "trigger_id": "overseas-trade-shock",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "material_buyback_conversion_or_acquisition"
+      },
+      "reason": "回购注销、H股可转债转股或重大并购改变完全摊薄股本和净现金时重算每股价值。",
+      "trigger_id": "capital-allocation-change",
+      "type": "event"
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "medium",
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "convertible_dilution_return_unverified",
+      "critical_evidence_gaps_unfilled",
+      "price_above_buy_zone",
+      "tob_profit_and_roic_unverified",
+      "underwriting_insufficient_evidence"
     ],
-    "review_id": null,
-    "status": null
+    "review_id": "2026-07-22-value-rebaseline-001",
+    "status": "insufficient_evidence"
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-23T00:41:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 56.0,
+    "buy_zone": [
+      50.0,
+      54.0
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      70.0,
+      95.0
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      102.0,
+      115.0
+    ]
   }
 }

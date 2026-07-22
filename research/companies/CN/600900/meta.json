@@ -15,34 +15,60 @@
         "sha256": "e45a1ab01d72bfd594a7eb2ea0a2e5230e146680af1975f1c6fb8ca5da6a0ee2"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-600900-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "8fd70d2ba73cfd1e285f2a0752f3974e598ec878c6212cedb74955f8b690aa88"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:00:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "2026年中报公布，关注发电量和电价变化",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后核对电量与收入桥、单位电量收入、折旧、资本开支、利息及债务期限。",
+      "trigger_id": "cypc-2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "event_types": [
+          "major_hydrology_update",
+          "tariff_or_market_rule_change",
+          "major_pumped_storage_investment",
+          "material_financing"
+        ]
       },
-      "reason": "2026年三季报，关注前三季度来水情况和全年业绩指引",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "来水、电价机制、重大抽蓄投资或融资变化会改变现金流与估值。",
+      "trigger_id": "cypc-hydrology-price-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "or_domestic_hydro_volume_yoy_gt_revenue_yoy_pct_points": 3.0,
+        "or_interest_expense_yoy_gte_pct": 10.0,
+        "or_operating_cashflow_less_capex_below_dividend": true
+      },
+      "reason": "量价错位、利息反弹或自由现金流不能覆盖分红将触发核心论点复核。",
+      "trigger_id": "cypc-cashflow-thesis-falsifier",
+      "type": "thesis"
     },
     {
       "active": true,
@@ -50,37 +76,61 @@
         "operator": "price_lte",
         "threshold": 24.0
       },
-      "reason": "进入有安全边际的买入区间",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格进入较高估值缓冲区，仅触发证据复核与重估，不自动形成交易动作。",
+      "trigger_id": "cypc-price-low-review",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 29.0
+        "threshold": 34.0
       },
-      "reason": "进入减仓或不应追高区间",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格进入高长期增长隐含预期区，仅触发证据复核与重估，不自动形成交易动作。",
+      "trigger_id": "cypc-price-high-review",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "最迟在三季报后更新全年水文、发电量、量价桥和融资成本。",
+      "trigger_id": "cypc-2026-q3-deadline",
+      "type": "date"
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "medium",
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "h1_price_and_profit_bridge_incomplete",
+      "maintenance_growth_capex_split_missing",
+      "no_margin_of_safety",
+      "normalized_hydrology_baseline_missing",
+      "price_above_arbitrated_fair_value",
+      "price_above_buy_zone",
+      "underwriting_failed"
     ],
-    "review_id": null,
-    "status": null
+    "review_id": "2026-07-22-value-rebaseline-001",
+    "status": "failed"
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-23T00:41:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 13.5,
+    "buy_zone": [
+      11.7,
+      16.0
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      18.0,
+      25.0
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      29.0,
+      32.7
+    ]
   }
 }

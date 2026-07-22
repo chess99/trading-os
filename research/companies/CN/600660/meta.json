@@ -25,82 +25,117 @@
         "sha256": "ac5e212c06acaefce05b5c6d0442aa9f46698d629a9351809afdcad5aa02e6c2"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-600660-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "410abd85c5be9c025a4fef8247670374d24daa68de42733fdfd09b365acd569c"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复查半年报汇兑前利润、经营现金流、资本开支和海外利润率",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后核对票据时点、经营现金流、资本开支、汇兑前利润和海外利润率。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "metric": "h1_cfo_to_net_profit",
+        "operator": "lt",
+        "threshold": 0.7
       },
-      "reason": "复查三季报并确认现金转换恢复",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 46.0
-      },
-      "reason": "进入更高安全边际区间",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
+      "reason": "若半年累计现金转换仍低于0.7倍，重估票据时点解释和正常化自由现金流。",
+      "trigger_id": "cash-conversion-deterioration",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 45.0
+        "threshold": 44.0
       },
-      "reason": "进入强吸引力区间，需复核海外资本回报",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格进入估值敏感区下沿，只触发一手证据和估值复核，不构成自动操作。",
+      "trigger_id": "valuation-review-low",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "fuyao_america_investigation_escalation"
+      },
+      "reason": "美国执法或法院文件将福耀美国列为目标、被告或责任主体时，重做尾部损失与治理评估。",
+      "trigger_id": "us-investigation-escalation",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 68.0
+        "threshold": 70.0
       },
-      "reason": "超过当前合理价值上沿，评估减仓",
-      "trigger_id": "legacy-price-3",
+      "reason": "价格要求更强的现金流、ASP和海外回报兑现，只触发估值复核。",
+      "trigger_id": "valuation-review-high",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "automotive_glass_or_key_input_new_us_tariff"
+      },
+      "reason": "汽车玻璃或关键进口材料被纳入新增美国高额关税时，重做美国利润桥。",
+      "trigger_id": "us-tariff-expansion",
+      "type": "event"
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "low",
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "capex_roic_unverified",
+      "h1_cash_conversion_unverified",
+      "no_margin_of_safety",
+      "price_above_arbitrated_buy_zone",
+      "tariff_scope_and_cost_unquantified",
+      "underwriting_failed",
+      "us_labor_investigation_unresolved"
     ],
-    "review_id": null,
-    "status": null
+    "review_id": "2026-07-22-value-rebaseline-001",
+    "status": "failed"
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-23T00:41:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 25.0,
+    "buy_zone": [
+      26.3,
+      30.5
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      40.46,
+      53.45
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      71.0,
+      82.0
+    ]
   }
 }

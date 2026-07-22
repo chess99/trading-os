@@ -30,82 +30,155 @@
         "sha256": "786b3e03922fff6a9dfff8c3398aaea0ee2823f78c888d813612a24e083979f0"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research.md",
+        "report_id": "CN-600036-2026-07-22-initial_research",
+        "report_type": "initial_research",
+        "sha256": "44b138eef1f3f5fe64c955a50b9a769484743e5895d032c892b5d7c340cd2ad3"
+      },
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-successor.md",
+        "report_id": "CN-600036-2026-07-22-initial_research-successor",
+        "report_type": "initial_research",
+        "sha256": "acbd5516dd59e6acfbc0925362e767c991ef63298080de03f7bf412c57a50ac5"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-successor.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-successor.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:00:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-30"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复查2026年半年报净息差、零售关注率、信用卡不良率、拨备覆盖率和核心一级资本充足率",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后重算净息差、关注率、信用卡不良生成、房地产不良和资本充足率。",
+      "trigger_id": "cmb-2026-interim",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-30"
+        "filing_type": "2026_third_quarter_report"
       },
-      "reason": "复查2026年三季报财富管理收入、零售AUM、信用卡新生成不良和ROE趋势",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "三季报披露后复核财富管理手续费、银行卡手续费和客户存款成本。",
+      "trigger_id": "cmb-2026-q3",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "credit_card_npl_ratio",
+        "operator": "gte",
+        "threshold": 2.2
+      },
+      "reason": "信用卡不良率达到2.20%触发零售风险与信用成本重估。",
+      "trigger_id": "cmb-credit-card-risk",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "provision_coverage_ratio",
+        "operator": "lt",
+        "threshold": 350.0
+      },
+      "reason": "拨备覆盖率跌破350%触发资本损失情景。",
+      "trigger_id": "cmb-provision-buffer",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "core_tier1_capital_ratio",
+        "operator": "lt",
+        "threshold": 13.5
+      },
+      "reason": "核心一级资本充足率跌破13.50%触发资本与分红约束重估。",
+      "trigger_id": "cmb-core-tier1",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "net_interest_margin",
+        "operator": "lt",
+        "threshold": 1.75
+      },
+      "reason": "净息差低于1.75%触发可持续ROE下修。",
+      "trigger_id": "cmb-nim-floor",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event_name": "president_or_ceo_appointment"
+      },
+      "reason": "新任行长或首席执行官正式任命后复核治理和战略连续性。",
+      "trigger_id": "cmb-management-succession",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 34.0
+        "threshold": 40.0
       },
-      "reason": "进入更高安全边际区间，若资产质量未恶化可提高仓位",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 32.0
-      },
-      "reason": "进入强安全边际区间，需重做信用风险和资本充足率检查",
-      "trigger_id": "legacy-price-2",
+      "reason": "进入初研悲观至基准估值交界，仅触发估值和基本面复核，不自动形成组合动作。",
+      "trigger_id": "cmb-price-review-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 55.0
+        "threshold": 65.0
       },
-      "reason": "超过当前估值上沿，若内在价值未上修应评估减仓",
-      "trigger_id": "legacy-price-3",
+      "reason": "接近乐观估值区，仅触发估值复核，不自动形成组合动作。",
+      "trigger_id": "cmb-price-review-high",
       "type": "price"
     }
   ],
   "underwriting": {
-    "confidence": null,
+    "confidence": "medium",
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "credit_card_risk_requires_monitoring",
+      "medium_confidence_30pct_safety_margin_enforced",
+      "price_above_buy_zone",
+      "q2_operating_data_unavailable_at_cutoff",
+      "underwriting_passed"
     ],
-    "review_id": null,
-    "status": null
+    "review_id": "2026-07-22-value-rebaseline-001",
+    "status": "passed"
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-23T00:41:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
-    "currency": null,
-    "fair_value_range": null,
-    "price_as_of": null,
-    "reduce_zone": null
+    "bear_value": 29.2,
+    "buy_zone": [
+      29.0,
+      34.5
+    ],
+    "currency": "CNY",
+    "fair_value_range": [
+      49.3,
+      52.7
+    ],
+    "price_as_of": "2026-07-22T15:00:00+08:00",
+    "reduce_zone": [
+      64.8,
+      67.5
+    ]
   }
 }
