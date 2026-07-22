@@ -315,3 +315,54 @@ def test_reconcile_research_queue_reports_invalid_asset_without_completing_it(
     assert result["blocked"][0]["symbol"] == "CN:600519"
     assert "schema_version 2" in result["blocked"][0]["error"]
     assert read_jsonl(queue_path) == [record]
+
+
+def test_reconcile_resets_completed_legacy_asset_that_requires_rebaseline(
+    tmp_path: Path,
+):
+    from tests.test_company_assets import write_company
+    from trading_os.research_assets.coverage_store import (
+        read_jsonl,
+        reconcile_research_queue,
+        write_jsonl,
+    )
+
+    company_dir = write_company(tmp_path)
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["research"]["rebaseline_required"] = True
+    meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    root = tmp_path / "coverage" / "cn-a"
+    queue_path = root / "research_queue.jsonl"
+    write_jsonl(
+        queue_path,
+        [
+            {
+                "symbol": "CN:600519",
+                "name": "贵州茅台",
+                "task_type": "initial_research",
+                "priority": 1,
+                "status": "completed",
+                "reason": "旧系统研究已完成。",
+                "target_company_dir": str(company_dir),
+                "assigned_agent": "legacy-worker",
+                "started_at": "2026-07-05T00:00:00+08:00",
+                "finished_at": "2026-07-05T01:00:00+08:00",
+                "result_path": "reports/legacy.md",
+                "failure_reason": None,
+                "next_action": "查看旧报告。",
+            }
+        ],
+    )
+
+    result = reconcile_research_queue(root, tmp_path / "research", apply=True)
+    queue_item = read_jsonl(queue_path)[0]
+
+    assert result["change_count"] == 1
+    assert result["changes"][0]["to_status"] == "requires_rebaseline"
+    assert queue_item["status"] == "requires_rebaseline"
+    assert queue_item["result_path"] is None
+    assert queue_item["assigned_agent"] is None
+    assert queue_item["started_at"] is None
+    assert queue_item["finished_at"] is None
+    assert reconcile_research_queue(root, tmp_path / "research")["change_count"] == 0

@@ -18,6 +18,22 @@ def build_review_schedule(research_root: str | Path) -> dict[str, Any]:
             meta = validate_company_dir(company_dir)
             identity = meta["identity"]
             latest_report = _latest_report(root, company_dir, meta)
+            if meta["research"]["rebaseline_required"]:
+                items.append(
+                    {
+                        "trigger_id": "research-rebaseline",
+                        "symbol": identity["symbol"],
+                        "name": identity["name"],
+                        "type": "rebaseline",
+                        "condition": {"rebaseline_required": True},
+                        "reason": (
+                            "历史证据可作线索，但旧评级和估值不可执行；须按 v2 协议重建并重新承保。"
+                        ),
+                        "latest_report": latest_report,
+                        "source": "research_rebaseline",
+                    }
+                )
+                continue
             for trigger in meta["triggers"]:
                 if not trigger["active"]:
                     continue

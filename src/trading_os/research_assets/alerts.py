@@ -15,11 +15,15 @@ PRICE_STALE_FRACTION = 0.10
 def build_price_alerts(research_root: str | Path) -> dict[str, Any]:
     root = Path(research_root)
     items: list[dict[str, Any]] = []
+    rebaseline_symbols: set[str] = set()
     companies_root = root / "companies"
     if companies_root.exists():
         for company_dir in _company_dirs(companies_root):
             meta = validate_company_dir(company_dir)
             identity = meta["identity"]
+            if meta["research"]["rebaseline_required"]:
+                rebaseline_symbols.add(identity["symbol"])
+                continue
             underwriting = meta["underwriting"]
             valuation = meta["valuation"]
             latest_report = _latest_report(root, company_dir, meta)
@@ -70,7 +74,7 @@ def build_price_alerts(research_root: str | Path) -> dict[str, Any]:
                             "source_ref": trigger["trigger_id"],
                         }
                     )
-    items.extend(_portfolio_observations(root))
+    items.extend(_portfolio_observations(root, excluded_symbols=rebaseline_symbols))
     items.sort(key=lambda item: (item["symbol"], item["type"], item["alert_id"]))
     return {"schema_version": 2, "item_count": len(items), "items": items}
 
@@ -132,7 +136,9 @@ def _condition_met(condition: Any, quote: Mapping[str, Any]) -> bool:
     return False
 
 
-def _portfolio_observations(root: Path) -> list[dict[str, Any]]:
+def _portfolio_observations(
+    root: Path, *, excluded_symbols: set[str] | None = None
+) -> list[dict[str, Any]]:
     batches_root = root / "batches"
     if not batches_root.is_dir():
         return []
@@ -155,7 +161,7 @@ def _portfolio_observations(root: Path) -> list[dict[str, Any]]:
             }:
                 continue
             symbol = str(position.get("symbol"))
-            if not symbol:
+            if not symbol or symbol in (excluded_symbols or set()):
                 continue
             latest[symbol] = (run_id, dict(position))
     observations: list[dict[str, Any]] = []

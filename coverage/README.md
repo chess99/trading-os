@@ -81,12 +81,13 @@ python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1
 - `pending`
 - `running`
 - `completed`
+- `requires_rebaseline`（已有历史材料，但旧结论不可执行；等待按当前协议重建）
 - `failed`
 - `skipped`
 - `needs_review`
 
 下一个 agent 接手时，读取 `coverage/cn-a/runs.jsonl` 和相关队列，优先处理
-`pending`、`failed` 和 `needs_review`，不要重新开始整轮任务。
+`pending`、`requires_rebaseline`、`failed` 和 `needs_review`，不要重新开始整轮任务。
 
 ## 与研究资产的关系
 

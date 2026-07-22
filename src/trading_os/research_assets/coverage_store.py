@@ -20,6 +20,7 @@ QUEUE_STATUSES = {
     "pending",
     "running",
     "completed",
+    "requires_rebaseline",
     "failed",
     "skipped",
     "needs_review",
@@ -110,14 +111,13 @@ def reconcile_research_queue(
     reconciled: list[dict[str, Any]] = []
     changes: list[dict[str, Any]] = []
     blocked: list[dict[str, str]] = []
-    eligible_statuses = {"pending", "running", "failed"}
+    eligible_statuses = {"pending", "running", "failed", "requires_rebaseline"}
 
     for record in records:
         updated = dict(record)
-        if record.get("status") not in eligible_statuses:
+        if record.get("status") not in eligible_statuses | {"completed"}:
             reconciled.append(updated)
             continue
-
         company_dir = _resolve_company_dir(record, research_base)
         if not (company_dir / "meta.json").exists():
             reconciled.append(updated)
@@ -132,7 +132,8 @@ def reconcile_research_queue(
                     f"company asset symbol {symbol} does not match queue symbol "
                     f"{record.get('symbol')}"
                 )
-            if latest_report is None:
+            rebaseline_required = meta["research"]["rebaseline_required"]
+            if latest_report is None and not rebaseline_required:
                 raise AssetValidationError(
                     f"company asset has no structured latest report: {symbol}"
                 )
@@ -144,6 +145,38 @@ def reconcile_research_queue(
                     "error": str(exc),
                 }
             )
+            reconciled.append(updated)
+            continue
+
+        if rebaseline_required:
+            if record.get("status") == "requires_rebaseline":
+                reconciled.append(updated)
+                continue
+            updated.update(
+                {
+                    "status": "requires_rebaseline",
+                    "assigned_agent": None,
+                    "started_at": None,
+                    "finished_at": None,
+                    "result_path": None,
+                    "failure_reason": None,
+                    "next_action": (
+                        "按 v2 研究协议重建初研，并在结构化报告验证通过后重新承保。"
+                    ),
+                }
+            )
+            changes.append(
+                {
+                    "symbol": symbol,
+                    "from_status": record.get("status"),
+                    "to_status": "requires_rebaseline",
+                    "result_path": None,
+                }
+            )
+            reconciled.append(updated)
+            continue
+
+        if record.get("status") not in eligible_statuses:
             reconciled.append(updated)
             continue
 

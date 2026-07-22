@@ -81,6 +81,32 @@ def test_review_schedule_adds_structured_conclusion_invalidation(tmp_path: Path)
     assert invalid["type"] == "thesis"
 
 
+def test_rebaseline_company_has_one_rebuild_task_and_no_legacy_triggers(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.schedule import build_review_schedule
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    meta["research"]["rebaseline_required"] = True
+    meta["triggers"].append(
+        {
+            "trigger_id": "legacy-price",
+            "type": "price",
+            "condition": {"operator": "price_lte", "threshold": 100.0},
+            "reason": "旧估值触发器。",
+            "active": True,
+        }
+    )
+    _write_meta(company_dir, meta)
+
+    schedule = build_review_schedule(tmp_path / "research")
+
+    assert schedule["item_count"] == 1
+    assert schedule["items"][0]["type"] == "rebaseline"
+    assert schedule["items"][0]["source"] == "research_rebaseline"
+
+
 def test_price_alerts_include_buy_zone_and_ten_percent_staleness(tmp_path: Path):
     from trading_os.research_assets.alerts import build_price_alerts
 
@@ -118,6 +144,29 @@ def test_company_reduce_zone_does_not_create_a_reduce_alert(tmp_path: Path):
 
     assert "portfolio_reduce_observation" not in types
     assert "price_above" not in types
+
+
+def test_rebaseline_company_suppresses_all_company_price_alerts(tmp_path: Path):
+    from trading_os.research_assets.alerts import build_price_alerts
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta)
+    meta["research"]["rebaseline_required"] = True
+    meta["triggers"].append(
+        {
+            "trigger_id": "legacy-price",
+            "type": "price",
+            "condition": {"operator": "price_lte", "threshold": 100.0},
+            "reason": "旧估值触发器。",
+            "active": True,
+        }
+    )
+    _write_meta(company_dir, meta)
+
+    alerts = build_price_alerts(tmp_path / "research")
+
+    assert alerts["item_count"] == 0
 
 
 def test_reduce_and_exit_observations_only_come_from_sealed_portfolio(tmp_path: Path):
