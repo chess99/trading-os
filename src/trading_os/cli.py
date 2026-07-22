@@ -4,6 +4,7 @@ import argparse
 import datetime as dt
 import json
 import sys
+from pathlib import Path
 from typing import TextIO
 
 from .research_assets.alerts import (
@@ -33,6 +34,11 @@ from .research_assets.migration import (
 )
 from .research_assets.models import PolicyValidationError
 from .research_assets.portfolio import PortfolioValidationError
+from .research_assets.rebaseline_ranking import (
+    RebaselineRankingError,
+    build_rebaseline_ranking,
+    write_rebaseline_ranking,
+)
 from .research_assets.review_store import ReviewStoreError
 from .research_assets.review_workflow import (
     ReviewWorkflowError,
@@ -211,6 +217,17 @@ def build_parser() -> argparse.ArgumentParser:
     _add_coverage_root(coverage_list)
     coverage_list.add_argument("--decision")
     coverage_list.set_defaults(func=cmd_coverage_list)
+
+    rank_rebaseline = coverage_sub.add_parser(
+        "rank-rebaseline", help="Rank companies requiring research rebaseline"
+    )
+    _add_coverage_root(rank_rebaseline)
+    rank_rebaseline.add_argument("--companies")
+    rank_rebaseline.add_argument("--research-root", default="research")
+    rank_rebaseline.add_argument("--output", default="automation/rebaseline_ranking.json")
+    rank_rebaseline.add_argument("--max-snapshot-age-days", type=int, default=7)
+    _add_timestamp(rank_rebaseline)
+    rank_rebaseline.set_defaults(func=cmd_coverage_rank_rebaseline)
 
     set_cmd = coverage_sub.add_parser("set-screening", help="Upsert one screening result")
     set_cmd.add_argument("symbol")
@@ -445,6 +462,27 @@ def cmd_coverage_list(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_rank_rebaseline(ns: argparse.Namespace) -> int:
+    root = Path(ns.root)
+    payload = build_rebaseline_ranking(
+        companies_path=ns.companies or root / "companies.jsonl",
+        queue_path=root / "research_queue.jsonl",
+        research_root=ns.research_root,
+        generated_at=_timestamp(ns.at),
+        max_snapshot_age_days=ns.max_snapshot_age_days,
+    )
+    path = write_rebaseline_ranking(ns.output, payload)
+    _write_success(
+        {
+            "ok": True,
+            "path": str(path),
+            "ranked_count": payload["ranked_count"],
+            "excluded_count": payload["excluded_count"],
+        }
+    )
+    return 0
+
+
 def cmd_coverage_set_screening(ns: argparse.Namespace) -> int:
     path = set_screening(
         ns.root,
@@ -519,6 +557,7 @@ def _error_code(exc: Exception) -> str | None:
         (CoverageValidationError, "coverage_validation_failed"),
         (ReviewStoreError, "review_state_error"),
         (ReviewWorkflowError, "review_workflow_error"),
+        (RebaselineRankingError, "rebaseline_ranking_error"),
         (ClaimPacketError, "claim_packet_error"),
         (SealingError, "sealed_artifact_error"),
         (PortfolioValidationError, "portfolio_validation_error"),
