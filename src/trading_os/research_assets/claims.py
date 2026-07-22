@@ -59,6 +59,14 @@ FORBIDDEN_FIELD_FRAGMENTS = {
     "recommendation",
     "action",
 }
+DECISION_VALUE_EXEMPT_FIELDS = {
+    "packet_id",
+    "review_id",
+    "symbol",
+    "source_report_sha256",
+    "created_at",
+    "uri_or_path",
+}
 
 
 def build_claim_packet(
@@ -136,10 +144,11 @@ def scan_claim_packet_for_leaks(
                         detail="text contains rating, action, valuation, or position language",
                     )
                 )
-            # Source locators routinely contain long numeric identifiers that can
-            # accidentally equal a valuation boundary.  They are evidence
-            # addresses, not claim text, so numeric collision is not a leak.
-            if key != "uri_or_path" and _text_contains_decision_value(
+            # Workflow metadata and source locators routinely contain dates,
+            # tickers, hashes, or document identifiers that can accidentally
+            # equal a valuation boundary. They are machine-generated addresses,
+            # not research content, so numeric collision is not a leak.
+            if key not in DECISION_VALUE_EXEMPT_FIELDS and _text_contains_decision_value(
                 value, decision_values
             ):
                 findings.append(

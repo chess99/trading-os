@@ -135,6 +135,21 @@ def test_source_uri_numeric_identifiers_do_not_count_as_decision_leaks():
     )
 
 
+def test_workflow_metadata_numeric_identifiers_do_not_count_as_decision_leaks():
+    from trading_os.research_assets.claims import build_claim_packet
+
+    packet = build_claim_packet(
+        _research_claims(),
+        review_id="review-2026-07-31.5",
+        packet_id="packet-2026-07-31.5",
+        source_report_sha256=SOURCE_HASH,
+        created_at=CREATED_AT,
+    )
+
+    assert packet["review_id"] == "review-2026-07-31.5"
+    assert packet["packet_id"] == "packet-2026-07-31.5"
+
+
 def test_credit_rating_language_is_not_treated_as_an_investment_rating():
     payload = _research_claims()
     payload["claims"][0]["falsifiers"] = ["发行人信用评级下调会提高融资成本"]

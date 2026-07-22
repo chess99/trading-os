@@ -1,115 +1,130 @@
 {
+  "schema_version": 2,
   "identity": {
-    "currency": "CNY",
-    "market": "CN",
-    "name": "万华化学",
-    "security_status": "active",
     "symbol": "CN:600309",
-    "ticker": "600309"
-  },
-  "reports": {
-    "historical_artifacts": [
-      {
-        "format": "legacy_v1",
-        "path": "reports/2026-07-09-initial.md",
-        "sha256": "831f557b904f92e39fb10e3ce88c68b1004149e714396d5cb09b1b9c9a5e881d"
-      }
-    ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "market": "CN",
+    "ticker": "600309",
+    "name": "万华化学",
+    "currency": "CNY",
+    "security_status": "active"
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "rebaseline_required": false,
+    "information_cutoff": "2026-07-22T15:30:00+08:00"
   },
-  "schema_version": 2,
-  "triggers": [
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-08-31"
-      },
-      "reason": "复核2026半年报正式数据，拆分利润、现金流和三大板块毛利率",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+  "reports": {
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
     },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026三季报，验证H2景气延续性和资本开支压力",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2027-04-30"
-      },
-      "reason": "复核2026年报、分红和2027年资本配置计划",
-      "trigger_id": "legacy-review-3",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 66.0
-      },
-      "reason": "进入有安全边际的买入区间，可开始分批建仓",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 55.0
-      },
-      "reason": "进入强吸引力区间，若基本面未破坏应提高仓位",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 90.0
-      },
-      "reason": "进入不应追高区间，需要盈利继续上修才可支撑",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 95.0
-      },
-      "reason": "进入减仓观察区，周期股估值风险上升",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
-    }
-  ],
+    "history": [
+      {
+        "report_id": "CN-600309-2026-07-22-initial-research-v2",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_type": "initial_research",
+        "as_of": "2026-07-22",
+        "sha256": "19e42833e52c7f3cff85907be3b254571c7ef44efd977477ed7c9d1cfef6ee75"
+      }
+    ],
+    "historical_artifacts": [
+      {
+        "path": "reports/2026-07-09-initial.md",
+        "format": "legacy_v1",
+        "sha256": "831f557b904f92e39fb10e3ce88c68b1004149e714396d5cb09b1b9c9a5e881d"
+      }
+    ]
+  },
   "underwriting": {
+    "status": null,
+    "review_id": null,
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
-    ],
-    "review_id": null,
-    "status": null
+      "awaiting_independent_underwriting"
+    ]
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
   "valuation": {
-    "bear_value": null,
-    "buy_zone": null,
     "currency": null,
-    "fair_value_range": null,
     "price_as_of": null,
+    "bear_value": null,
+    "fair_value_range": null,
+    "buy_zone": null,
     "reduce_zone": null
-  }
+  },
+  "triggers": [
+    {
+      "trigger_id": "2026-interim-filing",
+      "type": "filing",
+      "condition": {
+        "filing_type": "2026_interim_report",
+        "expected_date": "2026-08-11"
+      },
+      "reason": "核对分系列毛利、Q2现金流、资本开支、在建工程转固、净债务与少数股东损益。",
+      "active": true
+    },
+    {
+      "trigger_id": "polyurethane-margin-deterioration",
+      "type": "thesis",
+      "condition": {
+        "metric": "polyurethane_gross_margin",
+        "operator": "lt",
+        "threshold": 22.0,
+        "consecutive_quarters": 2
+      },
+      "reason": "聚氨酯毛利率连续两个季度低于22%时重估MDI/TDI正常化利润。",
+      "active": true
+    },
+    {
+      "trigger_id": "petrochemical-low-return",
+      "type": "thesis",
+      "condition": {
+        "metric": "petrochemical_gross_margin",
+        "operator": "lt",
+        "threshold": 3.0,
+        "consecutive_quarters": 4
+      },
+      "reason": "石化毛利率长期低于3%说明新增烯烃资产可能无法覆盖折旧与资本成本。",
+      "active": true
+    },
+    {
+      "trigger_id": "cashflow-debt-deterioration",
+      "type": "thesis",
+      "condition": {
+        "event": "ttm_free_cash_flow_negative_and_net_debt_increase_over_20bn"
+      },
+      "reason": "报告口径自由现金流为负且净债务增加超过200亿元时重做现金流估值。",
+      "active": true
+    },
+    {
+      "trigger_id": "core-plant-unplanned-outage",
+      "type": "event",
+      "condition": {
+        "event": "core_mdi_tdi_unplanned_outage_over_30_days_or_major_safety_incident"
+      },
+      "reason": "核心装置长期非计划停产或重大安全环保事故会同时改变供给、成本与估值。",
+      "active": true
+    },
+    {
+      "trigger_id": "valuation-review-low",
+      "type": "price",
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 57.0
+      },
+      "reason": "价格进入初研观察买入区，只触发一手证据与独立估值复核，不构成自动操作。",
+      "active": true
+    },
+    {
+      "trigger_id": "valuation-review-high",
+      "type": "price",
+      "condition": {
+        "operator": "price_gte",
+        "threshold": 88.0
+      },
+      "reason": "价格要求乐观情景兑现，只触发一手证据与估值复核。",
+      "active": true
+    }
+  ],
+  "updated_at": "2026-07-22T23:15:00+08:00"
 }

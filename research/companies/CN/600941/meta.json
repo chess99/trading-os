@@ -15,63 +15,105 @@
         "sha256": "59984a82e9254127c1cbc8019697964879d7c74f33978de0717caeae3936edcf"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-600941-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "465224ebaad4fa933e682934c27189f6f779e92900b3bc8c2cb680d9b2b08161"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-20"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "2026年半年报披露（预计8月），更新FY2026H1数据，重新评估增长趋势",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后重建三项主业收入利润、税率影响、应收账款、资本开支和自由现金流。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-28"
+        "metric": "mobile_arpu_yoy",
+        "operator": "lte",
+        "threshold": -4.0
       },
-      "reason": "2026年三季报披露（预计10月），跟踪ARPU、云增速和FCF恢复情况",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "移动ARPU同比下降超过4%时，降低通信主业增长和股息假设。",
+      "trigger_id": "mobile-arpu-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "h1_ebitda_yoy",
+        "operator": "lte",
+        "threshold": -3.0
+      },
+      "reason": "若H1 EBITDA下降超过3%，重估正常化盈利和资本回报。",
+      "trigger_id": "ebitda-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "h1_free_cash_flow_cny_bn",
+        "operator": "lt",
+        "threshold": 45.0
+      },
+      "reason": "若H1自由现金流低于450亿元，降低正常化现金流起点和派息覆盖判断。",
+      "trigger_id": "cashflow-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "capex_guidance_increase_over_10pct"
+      },
+      "reason": "资本开支指引上调超过10%时，复核算力和智能网络投资回报。",
+      "trigger_id": "capex-guidance-change",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "payout_related_party_or_financial_asset_deterioration"
+      },
+      "reason": "派息率、关联交易、财务公司指标或战略金融资产发生重大不利变化时复核治理与资产折价。",
+      "trigger_id": "capital-allocation-risk-change",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 80.0
+        "threshold": 82.0
       },
-      "reason": "进入有安全边际的买入区间（PE<12.6x，股息率>6%）",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格进入初研估值敏感观察区，只触发一手证据和独立估值复核，不构成自动操作。",
+      "trigger_id": "valuation-review-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 100.0
+        "threshold": 112.0
       },
-      "reason": "进入减仓区间（PE>15.7x，股息率<4.8%）",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 70.0
-      },
-      "reason": "强吸引力买入区间（PE<11x，股息率>7%）",
-      "trigger_id": "legacy-price-3",
+      "reason": "价格进入过热复核区，需要云利润、自由现金流和股息增长显著兑现。",
+      "trigger_id": "valuation-review-high",
       "type": "price"
     }
   ],
@@ -79,12 +121,12 @@
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "awaiting_independent_underwriting"
     ],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T20:01:02+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

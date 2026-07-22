@@ -15,63 +15,88 @@
         "sha256": "ecd8205919feca44f73577363774e3e8d2516e15d04071d046e1833c990b21cb"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "report_id": "CN-600919-2026-07-22-initial-research-v2",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_type": "initial_research",
+        "as_of": "2026-07-22",
+        "sha256": "fcb75c3e92270721b144c71fbada6a7a871b6045c6a34ce7bd058a45a7d922f8"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T19:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-22"
+        "expected_date": "2026-08-20",
+        "filing_type": "2026_half_year_report"
       },
-      "reason": "预期接近2026年半年报披露窗口，重点复查息差、拨备、不良与中期分红。",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报后复核净息差、贷款与存款增速、关注逾期、核销拨备及资本充足率。",
+      "trigger_id": "600919-2026h1-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "metric": "core_tier_1_capital_adequacy_ratio",
+        "operator": "lte",
+        "threshold": 0.083
       },
-      "reason": "三季报后复核扩表节奏、ROE可持续性和全年分红能力。",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "核心一级资本缓冲进一步收窄时，重做增长、分红和潜在稀释假设。",
+      "trigger_id": "600919-core-tier1-floor",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "any": [
+          {"metric": "special_mention_loan_ratio", "operator": "gte", "threshold": 0.0135},
+          {"metric": "overdue_loan_ratio", "operator": "gte", "threshold": 0.0125},
+          {"metric": "property_sector_npl_ratio", "operator": "gte", "threshold": 0.05}
+        ]
+      },
+      "reason": "关注、逾期或房地产不良恶化时，立即重估信用成本与普通股账面价值。",
+      "trigger_id": "600919-credit-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "president_or_chief_compliance_officer_appointment"
+      },
+      "reason": "关键管理岗位明确后，复核治理、风险偏好和高速扩表责任安排。",
+      "trigger_id": "600919-management-appointment",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 11.0
+        "threshold": 10.0
       },
-      "reason": "进入有安全边际的常规买入区间。",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 9.8
-      },
-      "reason": "进入强吸引力买入区间，可提高组合权重。",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格进入初研敏感区下沿，只触发重新承保，不自动产生组合动作。",
+      "trigger_id": "600919-price-reunderwrite-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 13.8
+        "threshold": 17.5
       },
-      "reason": "接近高估值区间，需要检查是否出现超预期基本面兑现。",
-      "trigger_id": "legacy-price-3",
+      "reason": "价格达到初研合理价值上沿，触发估值更新，不自动产生组合动作。",
+      "trigger_id": "600919-price-revalue-high",
       "type": "price"
     }
   ],
@@ -79,12 +104,12 @@
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "independent_underwriting_pending"
     ],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T19:40:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

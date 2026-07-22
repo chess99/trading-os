@@ -15,34 +15,108 @@
         "sha256": "edf20dff80e2fc50a4347d95704707860a5a62037c82a5084968c480dc4a7272"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "report_id": "CN-601166-2026-07-22-initial-research-v2",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_type": "initial_research",
+        "as_of": "2026-07-22",
+        "sha256": "ccb8f4c71b664576f24e1a659f3b54e32fe5310ce4ea71a46f027cb25a266824"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:00:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复核2026年半年报的净息差、资产质量、核心一级资本充足率和分红假设",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后重算净息差、存款成本、关注逾期重组、新生不良、拨备、资本和每股账面价值。",
+      "trigger_id": "cib-2026-interim",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "filing_type": "next_pillar3_report"
       },
-      "reason": "复核2026年三季报及全年盈利趋势",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "下一份第三支柱报告披露后复核风险加权资产、资本要求、杠杆率和流动性指标。",
+      "trigger_id": "cib-next-pillar3",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "watch_loan_ratio",
+        "operator": "gte",
+        "threshold": 1.9
+      },
+      "reason": "关注率达到1.90%触发信用损失与可持续ROE重估。",
+      "trigger_id": "cib-watch-loan-risk",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "restructured_loan_ratio",
+        "operator": "gte",
+        "threshold": 0.8
+      },
+      "reason": "重组贷款占比达到0.80%触发迁徙与拨备复核。",
+      "trigger_id": "cib-restructured-loan-risk",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "core_tier1_capital_ratio",
+        "operator": "lt",
+        "threshold": 9.2
+      },
+      "reason": "核心一级资本充足率低于9.20%触发资本、扩表和分红约束重估。",
+      "trigger_id": "cib-core-tier1",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "provision_coverage_ratio",
+        "operator": "lt",
+        "threshold": 210.0
+      },
+      "reason": "拨备覆盖率低于210%触发资产损失缓冲重估。",
+      "trigger_id": "cib-provision-buffer",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "net_interest_margin",
+        "operator": "lt",
+        "threshold": 1.5
+      },
+      "reason": "净息差低于1.50%触发可持续ROE下修。",
+      "trigger_id": "cib-nim-floor",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event_name": "quantified_lgfv_or_structured_asset_update"
+      },
+      "reason": "城投或信托资管计划底层敞口出现量化更新时重评证据置信度。",
+      "trigger_id": "cib-credit-transparency",
+      "type": "event"
     },
     {
       "active": true,
@@ -50,18 +124,18 @@
         "operator": "price_lte",
         "threshold": 18.0
       },
-      "reason": "进入有安全边际的买入区间",
-      "trigger_id": "legacy-price-1",
+      "reason": "进入初研观察区下沿，仅触发估值与信用证据复核，不自动形成组合动作。",
+      "trigger_id": "cib-price-review-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 24.0
+        "threshold": 34.0
       },
-      "reason": "进入减仓或不应追高区间",
-      "trigger_id": "legacy-price-2",
+      "reason": "进入初研乐观估值区，仅触发估值复核，不自动形成组合动作。",
+      "trigger_id": "cib-price-review-high",
       "type": "price"
     }
   ],
@@ -69,12 +143,14 @@
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "initial_research_v2_complete",
+      "independent_underwriting_pending",
+      "lgfv_and_structured_asset_transparency_gaps"
     ],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T20:31:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

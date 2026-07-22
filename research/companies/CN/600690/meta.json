@@ -15,76 +15,107 @@
         "sha256": "262ee3eec79c580516ec8d5420c09bb92fc02cc23b32c87f9398e7a7ef1f7ce5"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-600690-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "65c04bd22d217849d409a1d3db0aea5ad5d4330b21e9aaf1a5b01cd6efc02dd3"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复核2026年中报，重点确认北美修复、卡萨帝表现与现金流质量",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后重建北美、欧洲和新兴市场收入利润桥，并核对库存、合同负债与自由现金流。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "metric": "h1_deducted_net_profit_yoy",
+        "operator": "lte",
+        "threshold": -15.0
       },
-      "reason": "复核2026年三季报，观察全年利润兑现度和回购注销进度",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "若2026H1扣非归母净利润仍下降15%以上，重估北美修复和正常化盈利。",
+      "trigger_id": "deducted-profit-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "h1_free_cash_flow_yoy",
+        "operator": "lt",
+        "threshold": 0.0
+      },
+      "reason": "若半年自由现金流仍低于上年同期，降低正常化现金流和资本回报假设。",
+      "trigger_id": "cashflow-deterioration",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 19.5
+        "threshold": 21.0
       },
-      "reason": "进入有安全边际的买入区，适合由观察仓向常规仓位过渡",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 17.5
-      },
-      "reason": "接近悲观情景估值，若基本面未恶化可考虑显著加仓",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格进入初研估值敏感区，只触发一手证据和独立估值复核，不构成自动操作。",
+      "trigger_id": "valuation-review-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 27.0
+        "threshold": 33.0
       },
-      "reason": "接近或超过合理价值上沿，除非业绩超预期否则不应追高",
-      "trigger_id": "legacy-price-3",
+      "reason": "价格要求北美修复、暖通和区域现金流显著兑现，只触发估值复核。",
+      "trigger_id": "valuation-review-high",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "material_finance_company_exposure_change"
+      },
+      "reason": "财务公司存款额度、关联借款或金融服务框架发生重大变化时，复核现金折价和治理风险。",
+      "trigger_id": "finance-company-exposure-change",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "material_buyback_incentive_or_acquisition_change"
+      },
+      "reason": "回购注销、员工计划归属或重大并购改变完全摊薄股本、商誉或净现金时重算每股价值。",
+      "trigger_id": "capital-allocation-change",
+      "type": "event"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "awaiting_independent_underwriting"
     ],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T20:43:34+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

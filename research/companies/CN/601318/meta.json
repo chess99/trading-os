@@ -15,76 +15,92 @@
         "sha256": "0e133035e1087503f74eb304db9124599cb8158e8aa62bd7d21231f3f758be91"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-601318-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "e5178ae92adb7eb8343bff2b0fb02a746c717a1f9c22cc1369e79c78c6348ef7"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T19:05:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
-      "condition": {
-        "date": "2026-08-31"
-      },
-      "reason": "复查2026年中报，重点验证寿险新业务价值、财险综合成本率、投资收益率、地产敞口和平安银行资产质量",
-      "trigger_id": "legacy-review-1",
+      "condition": {"filing_type": "2026_interim_report"},
+      "reason": "半年报后复核NBV、营运利润、投资收益、财险COR和银行资产质量。",
+      "trigger_id": "pingan-2026-interim-filing",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {"filing_type": "2026_annual_report"},
+      "reason": "年报后核对CSM、新业务CSM、内含价值假设及敏感性。",
+      "trigger_id": "pingan-2026-annual-filing",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {"date": "2026-08-31"},
+      "reason": "最迟在半年报披露后十日内完成证据更新。",
+      "trigger_id": "pingan-interim-review-deadline",
       "type": "date"
     },
     {
       "active": true,
-      "condition": {
-        "date": "2026-11-15"
-      },
-      "reason": "复查2026年三季报和分红/资本充足趋势",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "condition": {"life_core_solvency_lte_pct": 115, "or_life_comprehensive_solvency_lte_pct": 160, "or_risk_rating_below": "A"},
+      "reason": "寿险资本或评级触阈值时重做资本、分红和内含价值。",
+      "trigger_id": "pingan-solvency-falsifier",
+      "type": "thesis"
     },
     {
       "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 49.0
-      },
-      "reason": "进入有安全边际的买入区间上沿",
-      "trigger_id": "legacy-price-1",
+      "condition": {"rolling_net_investment_yield_lte_pct": 3.5, "or_quarter_comprehensive_investment_yield_lt_pct": 0, "or_pc_cor_gte_pct": 99},
+      "reason": "投资收益或财险承保质量恶化时重估正常化利润。",
+      "trigger_id": "pingan-earnings-quality-falsifier",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {"event_types": ["material_credit_impairment", "material_real_estate_impairment", "convertible_bond_conversion", "dividend_policy_change"]},
+      "reason": "重大减值、可转债转换或分红变化时更新每股价值。",
+      "trigger_id": "pingan-material-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {"operator": "price_lte", "threshold": 48.0},
+      "reason": "进入较深估值缓冲区，仅触发复核，不自动交易。",
+      "trigger_id": "pingan-price-low-review",
       "type": "price"
     },
     {
       "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 43.0
-      },
-      "reason": "进入强吸引力买入区间，需要复核是否为基本面恶化导致",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 62.0
-      },
-      "reason": "进入减仓或不应追高区间",
-      "trigger_id": "legacy-price-3",
+      "condition": {"operator": "price_gte", "threshold": 79.0},
+      "reason": "进入乐观隐含预期区，仅触发复核，不自动交易。",
+      "trigger_id": "pingan-price-high-review",
       "type": "price"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
-    "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
-    ],
+    "reason_codes": ["pending_independent_underwriting"],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T19:05:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

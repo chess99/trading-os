@@ -15,66 +15,120 @@
         "sha256": "a129b29b7564022d6ccc0656efb1501463c5f77312cf19fcceb8db1d6e38e2ff"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-600938-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "7a07837620dc10b670b4c84f6367e2891e35fb9b17178025013c7cf882fe8445"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:30:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing_type": "2026_interim_report"
       },
-      "reason": "复查2026年中报、分红和上半年产量/成本数据",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后核对产量、实现价、桶油成本、经营现金流、资本支出和分红覆盖。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2027-04-30"
+        "metric": "ttm_operating_cash_flow_less_capex_cny_bn",
+        "operator": "lte",
+        "threshold": 70.0
       },
-      "reason": "复查2026年年报和2027年经营目标",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "滚动经营现金流减资本支出低于700亿元时重估中周期股东现金流。",
+      "trigger_id": "fcf-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "proved_reserve_life_years",
+        "operator": "lt",
+        "threshold": 9.0
+      },
+      "reason": "储采比低于9年时下调证实储量续存价值。",
+      "trigger_id": "reserve-life-deterioration",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "material_overseas_fiscal_sanction_contract_or_hsse_change"
+      },
+      "reason": "重大海外税制、制裁、合同或安全事件发生时重做项目级NAV。",
+      "trigger_id": "overseas-project-shock",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "dismantlement_provision_yoy",
+        "operator": "gte",
+        "threshold": 20.0
+      },
+      "reason": "弃置准备同比上升20%以上且非由新增高回报资产解释时重估净资产和终值。",
+      "trigger_id": "dismantlement-remeasurement",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 25.0
+        "threshold": 21.0
       },
-      "reason": "进入有安全边际的买入区间",
-      "trigger_id": "legacy-price-1",
+      "reason": "A股价格进入初研买入观察区上沿，仅触发一手证据和估值复核，不构成自动操作。",
+      "trigger_id": "valuation-review-low",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 33.0
+        "threshold": 36.0
       },
-      "reason": "进入减仓或不应追高区间",
-      "trigger_id": "legacy-price-2",
+      "reason": "A股价格进入乐观情景上沿，只触发估值复核。",
+      "trigger_id": "valuation-review-high",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "metric": "a_h_premium",
+        "operator": "outside",
+        "range": [25.0, 70.0]
+      },
+      "reason": "A/H溢价突破25%至70%的观察带时复核市场分割、税费和资本回报预期。",
+      "trigger_id": "ah-premium-regime-change",
+      "type": "thesis"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "pending_independent_underwriting"
     ],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T20:53:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

@@ -20,76 +20,105 @@
         "sha256": "b8abe9917729e038bfeaf40e3bcb0c5058ff2e4a695f739cc34b5cfaee884474"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-22",
+        "path": "reports/2026-07-22-initial-research-v2.md",
+        "report_id": "CN-000651-2026-07-22-initial-research-v2",
+        "report_type": "initial_research",
+        "sha256": "6ea654850a3688e3f9c8f8ebcf7cba46d5b159db4dd41cdfbd0dadeb99c4f9ef"
+      }
+    ],
+    "latest": "reports/2026-07-22-initial-research-v2.md",
+    "latest_by_type": {
+      "initial_research": "reports/2026-07-22-initial-research-v2.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-22T15:00:00+08:00",
+    "rebaseline_required": false
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "filing": "2026_half_year_report"
       },
-      "reason": "复查半年报扣非利润、现金流、毛利率和回购注销",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报披露后核对扣非利润、销售收现、应收款项融资、合同负债、消费电器毛利率和分部增长。",
+      "trigger_id": "filing-2026-half-year",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "event": "buyback_execution_or_cancellation"
       },
-      "reason": "复查三季报旺季经营和分红预期",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "披露首次回购、累计回购或注销时，按实际金额、均价和用途重算每股价值。",
+      "trigger_id": "event-buyback-execution",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "event": "major_shareholder_pledge_or_disposal_change"
+      },
+      "reason": "珠海明骏解除质押、新增质押、出售股份或发生被动处置时，重做治理风险评价。",
+      "trigger_id": "event-major-shareholder-pledge",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "condition": "two_period_profit_or_cash_conversion_deterioration",
+        "cash_collection_ratio_lt": 0.85,
+        "consumer_appliance_margin_drop_ppt_gt": 2.0
+      },
+      "reason": "连续两个报告期扣非利润下降、销售收现收入比低于85%或消费电器毛利率下降超过2个百分点时，重新正常化现金流。",
+      "trigger_id": "thesis-cash-profit-deterioration",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 35.0
+        "threshold": 42.0
       },
-      "reason": "进入有安全边际的买入区间",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 31.0
-      },
-      "reason": "进入强吸引力区间，复核分红与回购",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格进入初研缓冲区上沿，仅触发证据复核，不自动形成交易动作。",
+      "trigger_id": "price-research-buffer",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_gte",
-        "threshold": 49.0
+        "threshold": 62.0
       },
-      "reason": "超过合理价值上沿，评估减仓",
-      "trigger_id": "legacy-price-3",
+      "reason": "价格进入需要明显盈利恢复支撑的重估区，若利润未上修则重新估值。",
+      "trigger_id": "price-revaluation",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-10-31"
+      },
+      "reason": "最迟结合2026年三季报更新盈利、现金流、分红与回购证据。",
+      "trigger_id": "date-2026-q3-update",
+      "type": "date"
     }
   ],
   "underwriting": {
     "confidence": null,
     "evidence_valid_until": null,
     "reason_codes": [
-      "legacy_reports_require_structured_rebaseline"
+      "independent_underwriting_pending"
     ],
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-22T19:08:31+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
