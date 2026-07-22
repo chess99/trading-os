@@ -61,7 +61,11 @@ def build_price_alerts(research_root: str | Path) -> dict[str, Any]:
                     }
                 )
             for trigger in meta["triggers"]:
-                if trigger["active"] and trigger["type"] == "price":
+                if (
+                    underwriting["status"] == "passed"
+                    and trigger["active"]
+                    and trigger["type"] == "price"
+                ):
                     items.append(
                         {
                             "alert_id": f"{identity['symbol']}:{trigger['trigger_id']}",

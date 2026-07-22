@@ -15,12 +15,14 @@ class PortfolioDecision:
     symbol: str
     name: str
     underwriting_status: str
+    evidence_stale: bool
     confidence: str
     action: str
     current_price: float
     bear_value: float
     fair_value_range: tuple[float, float]
     buy_zone: tuple[float, float]
+    reduce_zone: tuple[float, float]
     target_weight: float
     initial_entry_weight: float
     industry: str
@@ -156,12 +158,14 @@ def build_model_portfolio(
             symbol=item["symbol"],
             name=item["name"],
             underwriting_status=item["underwriting_status"],
+            evidence_stale=item["evidence_stale"],
             confidence=item["confidence"],
             action=action,
             current_price=item["current_price"],
             bear_value=item["bear_value"],
             fair_value_range=item["fair_value_range"],
             buy_zone=item["buy_zone"],
+            reduce_zone=item["reduce_zone"],
             target_weight=target_weight,
             initial_entry_weight=(
                 target_weight * limits["initial_entry_fraction"]

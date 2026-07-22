@@ -169,6 +169,27 @@ def test_rebaseline_company_suppresses_all_company_price_alerts(tmp_path: Path):
     assert alerts["item_count"] == 0
 
 
+def test_price_trigger_waits_for_independent_underwriting(tmp_path: Path):
+    from trading_os.research_assets.alerts import build_price_alerts
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    meta["triggers"].append(
+        {
+            "trigger_id": "initial-research-price",
+            "type": "price",
+            "condition": {"operator": "price_lte", "threshold": 100.0},
+            "reason": "初研价格线索，尚未经独立承保。",
+            "active": True,
+        }
+    )
+    _write_meta(company_dir, meta)
+
+    alerts = build_price_alerts(tmp_path / "research")
+
+    assert alerts["item_count"] == 0
+
+
 def test_reduce_and_exit_observations_only_come_from_sealed_portfolio(tmp_path: Path):
     from trading_os.research_assets.alerts import build_price_alerts
     from trading_os.research_assets.sealing import seal_json

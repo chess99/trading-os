@@ -468,9 +468,37 @@ def test_conflicting_seven_complete_half_blind_underwriting_and_portfolio(tmp_pa
         reported_at=synthesis_time + dt.timedelta(seconds=1),
     )
     assert report["status"] == "completed"
+    assert report["company_finalization"]["synced_count"] == len(cases)
     report_text = Path(report["path"]).read_text(encoding="utf-8")
     assert "匿名案例 F（CN:000006）" in report_text
     assert "置信度" in report_text
+
+    for case, candidate in zip(cases, candidates, strict=True):
+        meta = json.loads(
+            (Path(candidate["target_company_dir"]) / "meta.json").read_text(
+                encoding="utf-8"
+            )
+        )
+        decision = positions[case["symbol"]]
+        expected_status = (
+            "stale"
+            if decision["underwriting_status"] == "passed"
+            and decision["evidence_stale"]
+            else decision["underwriting_status"]
+        )
+        assert meta["underwriting"]["status"] == expected_status
+        assert meta["underwriting"]["review_id"] == run_id
+        assert meta["valuation"]["fair_value_range"] == decision["fair_value_range"]
+        assert meta["valuation"]["buy_zone"] == decision["buy_zone"]
+        assert meta["valuation"]["price_as_of"] == synthesis_time.isoformat()
+
+    repeated = write_review_report(
+        runs_root=runs_root,
+        research_root=tmp_path / "research-output",
+        run_id=run_id,
+        reported_at=synthesis_time + dt.timedelta(minutes=2),
+    )
+    assert repeated["company_finalization"]["already_finalized"] is True
 
 
 def test_tampered_blind_artifact_cannot_reach_reveal_or_buy(tmp_path: Path):

@@ -133,6 +133,7 @@ def test_cli_review_help_lists_complete_workflow(capsys):
         "validate",
         "synthesize",
         "report",
+        "finalize",
         "run",
     ):
         assert command in output

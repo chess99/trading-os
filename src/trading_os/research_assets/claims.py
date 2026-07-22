@@ -41,7 +41,7 @@ SYMBOL_RE = re.compile(r"^(CN|HK|US):[A-Z0-9.]+$")
 SHA256_RE = re.compile(r"^[a-f0-9]{64}$")
 NUMBER_RE = re.compile(r"(?<![A-Za-z0-9.])(-?[0-9]+(?:\.[0-9]+)?)(\s*%)?")
 DECISION_LANGUAGE_RE = re.compile(
-    r"买入|卖出|减持|回避|强烈推荐|推荐|合理价|目标价|仓位|评级|"
+    r"买入|卖出|减持|回避|强烈推荐|推荐|合理价|目标价|仓位|(?<!信用)评级|"
     r"\b(?:buy|sell|avoid|rating|recommend(?:ation)?|position)\b|"
     r"\b(?:fair\s+value|target\s+price)\b",
     re.IGNORECASE,
@@ -136,7 +136,12 @@ def scan_claim_packet_for_leaks(
                         detail="text contains rating, action, valuation, or position language",
                     )
                 )
-            if _text_contains_decision_value(value, decision_values):
+            # Source locators routinely contain long numeric identifiers that can
+            # accidentally equal a valuation boundary.  They are evidence
+            # addresses, not claim text, so numeric collision is not a leak.
+            if key != "uri_or_path" and _text_contains_decision_value(
+                value, decision_values
+            ):
                 findings.append(
                     LeakFinding(
                         kind="decision_value",

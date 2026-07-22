@@ -122,6 +122,28 @@ def test_operating_numbers_are_allowed_when_they_are_not_decision_answers():
     assert "12万片" in packet["claims"][0]["claim"]
 
 
+def test_source_uri_numeric_identifiers_do_not_count_as_decision_leaks():
+    payload = _research_claims()
+    payload["sources"][0]["uri_or_path"] = (
+        "https://example.com/filings/31.5/report-38-24-27.pdf"
+    )
+
+    packet = _build(payload)
+
+    assert packet["allowed_sources"][0]["uri_or_path"].endswith(
+        "report-38-24-27.pdf"
+    )
+
+
+def test_credit_rating_language_is_not_treated_as_an_investment_rating():
+    payload = _research_claims()
+    payload["claims"][0]["falsifiers"] = ["发行人信用评级下调会提高融资成本"]
+
+    packet = _build(payload)
+
+    assert "信用评级" in packet["claims"][0]["falsifiers"][0]
+
+
 @pytest.mark.parametrize(
     "leaking_claim",
     [

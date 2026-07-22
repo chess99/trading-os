@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import datetime as dt
 import hashlib
 import json
@@ -404,11 +405,18 @@ def write_review_report(
         path = Path(research_root) / "batches" / run_id / "synthesis.md"
         if not path.is_file():
             raise ReviewWorkflowError("completed review is missing synthesis.md")
+        finalization = finalize_review_companies(
+            runs_root=runs_root,
+            research_root=research_root,
+            run_id=run_id,
+            finalized_at=reported_at,
+        )
         return {
             "schema_version": 2,
             "run_id": run_id,
             "status": "completed",
             "path": path.as_posix(),
+            "company_finalization": finalization,
         }
     if state["status"] != ReviewRunStatus.SYNTHESIZING.value:
         raise ReviewWorkflowError(
@@ -472,12 +480,247 @@ def write_review_report(
         actor="cli",
         at=reported_at,
     )
+    finalization = finalize_review_companies(
+        runs_root=runs_root,
+        research_root=research_root,
+        run_id=run_id,
+        finalized_at=reported_at,
+    )
     return {
         "schema_version": 2,
         "run_id": run_id,
         "status": ReviewRunStatus.COMPLETED.value,
         "path": path.as_posix(),
         "sha256": digest,
+        "company_finalization": finalization,
+    }
+
+
+def finalize_review_companies(
+    *,
+    runs_root: str | Path,
+    research_root: str | Path,
+    run_id: str,
+    finalized_at: dt.datetime,
+) -> dict[str, Any]:
+    """Publish a completed batch's final underwriting state to company metadata.
+
+    The sealed batch remains the decision source of truth.  Company ``meta.json``
+    files are mutable projections used by indexes, schedules, and alerts.  A
+    sealed finalization receipt makes the projection idempotent and auditable.
+    """
+    if finalized_at.tzinfo is None or finalized_at.utcoffset() is None:
+        raise ReviewWorkflowError("finalized_at must include a UTC offset")
+
+    store = ReviewRunStore(runs_root)
+    state = store.load_run(run_id)
+    if state["status"] != ReviewRunStatus.COMPLETED.value:
+        raise ReviewWorkflowError(
+            f"review finalization requires completed, got {state['status']}"
+        )
+
+    batch_dir = Path(research_root) / "batches" / run_id
+    portfolio_path = batch_dir / "portfolio.json"
+    portfolio_seal = verify_sealed(portfolio_path)
+    if portfolio_seal.artifact_type != "model_portfolio":
+        raise ReviewWorkflowError("portfolio artifact type is invalid")
+    portfolio = _read_json_object(portfolio_path, "portfolio")
+    if portfolio.get("run_id") != run_id:
+        raise ReviewWorkflowError("portfolio run_id does not match review run")
+
+    receipt_path = batch_dir / "company-finalization.json"
+    candidates = store.read_candidates(run_id)
+    if receipt_path.exists():
+        return _validate_finalization_receipt(
+            receipt_path=receipt_path,
+            run_id=run_id,
+            candidates=candidates,
+        )
+
+    quote_path = batch_dir / "quotes.json"
+    quote_seal = verify_sealed(quote_path)
+    if quote_seal.artifact_type != "quote_snapshot":
+        raise ReviewWorkflowError("quote snapshot artifact type is invalid")
+    quotes_raw = _read_json(quote_path, "quote snapshot")
+    if not isinstance(quotes_raw, list):
+        raise ReviewWorkflowError("quote snapshot must be an array")
+    quote_times: dict[str, str] = {}
+    for item in quotes_raw:
+        if not isinstance(item, dict):
+            raise ReviewWorkflowError("quote snapshot item must be an object")
+        symbol = str(item.get("symbol"))
+        if symbol in quote_times:
+            raise ReviewWorkflowError(f"duplicate quote symbol: {symbol}")
+        quote_time = _parse_aware_datetime(
+            item.get("as_of"), f"quote {symbol} as_of"
+        )
+        quote_times[symbol] = quote_time.isoformat()
+
+    positions_raw = portfolio.get("positions")
+    if not isinstance(positions_raw, list):
+        raise ReviewWorkflowError("portfolio positions must be an array")
+    positions: dict[str, dict[str, Any]] = {}
+    for item in positions_raw:
+        if not isinstance(item, dict):
+            raise ReviewWorkflowError("portfolio position must be an object")
+        symbol = str(item.get("symbol"))
+        if symbol in positions:
+            raise ReviewWorkflowError(f"duplicate portfolio symbol: {symbol}")
+        positions[symbol] = item
+
+    candidate_symbols = {str(item["symbol"]) for item in candidates}
+    if set(positions) != candidate_symbols:
+        raise ReviewWorkflowError("portfolio does not cover the frozen candidate set")
+    if set(quote_times) != candidate_symbols:
+        raise ReviewWorkflowError("quote snapshot does not cover the frozen candidate set")
+
+    planned: list[tuple[Path, dict[str, Any]]] = []
+    portfolio_as_of = _parse_aware_datetime(portfolio.get("as_of"), "portfolio as_of")
+    for candidate in candidates:
+        symbol = str(candidate["symbol"])
+        company_dir = Path(candidate["target_company_dir"])
+        meta = validate_company_dir(company_dir)
+        if meta["identity"]["symbol"] != symbol:
+            raise ReviewWorkflowError(f"company symbol mismatch: {symbol}")
+
+        source_candidate_path = (
+            company_dir / "underwriting" / run_id / "portfolio-candidate.json"
+        )
+        source_seal = verify_sealed(source_candidate_path)
+        if source_seal.artifact_type != "portfolio_candidate":
+            raise ReviewWorkflowError(f"portfolio candidate type is invalid: {symbol}")
+        source_candidate = _read_json_object(
+            source_candidate_path, "portfolio candidate"
+        )
+        decision = positions[symbol]
+        if source_candidate.get("symbol") != symbol:
+            raise ReviewWorkflowError(f"portfolio candidate symbol mismatch: {symbol}")
+        if source_candidate.get("underwriting_status") != decision.get(
+            "underwriting_status"
+        ):
+            raise ReviewWorkflowError(
+                f"portfolio underwriting status diverges from candidate: {symbol}"
+            )
+
+        prior_review_id = meta["underwriting"]["review_id"]
+        meta_updated_at = _parse_aware_datetime(
+            meta.get("updated_at"), f"{symbol} meta.updated_at"
+        )
+        if (
+            prior_review_id not in {None, run_id}
+            and meta_updated_at > portfolio_as_of
+        ):
+            raise ReviewWorkflowError(
+                f"refusing to replace newer underwriting state for {symbol}: "
+                f"{prior_review_id}"
+            )
+
+        underwriting_status = str(decision.get("underwriting_status"))
+        reason_codes = [str(value) for value in decision.get("reason_codes", [])]
+        if bool(decision.get("evidence_stale", source_candidate["evidence_stale"])):
+            if underwriting_status == "passed":
+                underwriting_status = "stale"
+            reason_codes.append("evidence_stale_at_finalization")
+
+        updated = copy.deepcopy(meta)
+        updated["research"].update(
+            {"coverage_status": "covered", "rebaseline_required": False}
+        )
+        updated["underwriting"] = {
+            "status": underwriting_status,
+            "review_id": run_id,
+            "confidence": decision.get("confidence"),
+            "evidence_valid_until": None,
+            "reason_codes": sorted(set(reason_codes)),
+        }
+        updated["valuation"] = {
+            "currency": meta["identity"]["currency"],
+            "price_as_of": quote_times[symbol],
+            "bear_value": decision.get("bear_value"),
+            "fair_value_range": decision.get("fair_value_range"),
+            "buy_zone": decision.get("buy_zone"),
+            "reduce_zone": decision.get("reduce_zone", source_candidate["reduce_zone"]),
+        }
+        updated["updated_at"] = finalized_at.isoformat()
+        planned.append((company_dir / "meta.json", updated))
+
+    records: list[dict[str, Any]] = []
+    for meta_path, updated in planned:
+        content = _pretty_json_bytes(updated)
+        atomic_write_bytes(meta_path, content)
+        validated = validate_company_dir(meta_path.parent)
+        records.append(
+            {
+                "symbol": validated["identity"]["symbol"],
+                "meta_path": meta_path.as_posix(),
+                "meta_sha256": hashlib.sha256(content).hexdigest(),
+                "underwriting_status": validated["underwriting"]["status"],
+            }
+        )
+
+    receipt = {
+        "schema_version": 2,
+        "run_id": run_id,
+        "finalized_at": finalized_at.isoformat(),
+        "portfolio_sha256": portfolio_seal.sha256,
+        "quote_snapshot_sha256": quote_seal.sha256,
+        "companies": sorted(records, key=lambda item: item["symbol"]),
+    }
+    seal_json(
+        receipt_path,
+        receipt,
+        artifact_type="company_finalization",
+        sealed_at=finalized_at,
+    )
+    return {
+        "run_id": run_id,
+        "synced_count": len(records),
+        "already_finalized": False,
+        "receipt_path": receipt_path.as_posix(),
+    }
+
+
+def _validate_finalization_receipt(
+    *,
+    receipt_path: Path,
+    run_id: str,
+    candidates: list[dict[str, Any]],
+) -> dict[str, Any]:
+    receipt_seal = verify_sealed(receipt_path)
+    if receipt_seal.artifact_type != "company_finalization":
+        raise ReviewWorkflowError("company finalization receipt type is invalid")
+    receipt = _read_json_object(receipt_path, "company finalization receipt")
+    if receipt.get("run_id") != run_id:
+        raise ReviewWorkflowError("company finalization receipt run_id mismatch")
+    records = receipt.get("companies")
+    if not isinstance(records, list):
+        raise ReviewWorkflowError("company finalization companies must be an array")
+    expected_paths = {
+        str(item["symbol"]): Path(item["target_company_dir"]) / "meta.json"
+        for item in candidates
+    }
+    if {str(item.get("symbol")) for item in records if isinstance(item, dict)} != set(
+        expected_paths
+    ):
+        raise ReviewWorkflowError("company finalization candidate coverage mismatch")
+    for item in records:
+        if not isinstance(item, dict):
+            raise ReviewWorkflowError("company finalization record must be an object")
+        symbol = str(item["symbol"])
+        meta_path = expected_paths[symbol]
+        if not meta_path.is_file():
+            raise ReviewWorkflowError(f"finalized company meta is missing: {symbol}")
+        actual_hash = hashlib.sha256(meta_path.read_bytes()).hexdigest()
+        if actual_hash != item.get("meta_sha256"):
+            raise ReviewWorkflowError(f"finalized company meta drifted: {symbol}")
+        meta = validate_company_dir(meta_path.parent)
+        if meta["underwriting"]["review_id"] != run_id:
+            raise ReviewWorkflowError(f"company review_id drifted: {symbol}")
+    return {
+        "run_id": run_id,
+        "synced_count": len(records),
+        "already_finalized": True,
+        "receipt_path": receipt_path.as_posix(),
     }
 
 
@@ -564,12 +807,14 @@ def _decision_payload(item: Any) -> dict[str, Any]:
         "symbol": item.symbol,
         "name": item.name,
         "underwriting_status": item.underwriting_status,
+        "evidence_stale": item.evidence_stale,
         "confidence": item.confidence,
         "action": item.action,
         "current_price": item.current_price,
         "bear_value": item.bear_value,
         "fair_value_range": list(item.fair_value_range),
         "buy_zone": list(item.buy_zone),
+        "reduce_zone": list(item.reduce_zone),
         "target_weight": item.target_weight,
         "initial_entry_weight": item.initial_entry_weight,
         "industry": item.industry,
@@ -615,3 +860,9 @@ def _parse_aware_datetime(value: Any, label: str) -> dt.datetime:
     if parsed.tzinfo is None or parsed.utcoffset() is None:
         raise ReviewWorkflowError(f"{label} must include a UTC offset")
     return parsed
+
+
+def _pretty_json_bytes(payload: Any) -> bytes:
+    return (
+        json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+    ).encode("utf-8")

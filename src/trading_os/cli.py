@@ -37,6 +37,7 @@ from .research_assets.review_store import ReviewStoreError
 from .research_assets.review_workflow import (
     ReviewWorkflowError,
     create_review,
+    finalize_review_companies,
     load_candidates,
     prepare_review,
     resume_review,
@@ -139,6 +140,14 @@ def build_parser() -> argparse.ArgumentParser:
     _add_review_roots(review_report, research=True)
     _add_timestamp(review_report)
     review_report.set_defaults(func=cmd_review_report)
+
+    review_finalize = review_sub.add_parser(
+        "finalize", help="Sync a completed batch into mutable company metadata"
+    )
+    review_finalize.add_argument("run_id")
+    _add_review_roots(review_finalize, research=True)
+    _add_timestamp(review_finalize)
+    review_finalize.set_defaults(func=cmd_review_finalize)
 
     review_run = review_sub.add_parser(
         "run", help="Advance every currently executable review stage"
@@ -348,6 +357,18 @@ def cmd_review_report(ns: argparse.Namespace) -> int:
             research_root=ns.research_root,
             run_id=ns.run_id,
             reported_at=_timestamp(ns.at),
+        )
+    )
+    return 0
+
+
+def cmd_review_finalize(ns: argparse.Namespace) -> int:
+    _write_success(
+        finalize_review_companies(
+            runs_root=ns.runs_root,
+            research_root=ns.research_root,
+            run_id=ns.run_id,
+            finalized_at=_timestamp(ns.at),
         )
     )
     return 0
