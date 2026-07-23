@@ -60,6 +60,7 @@ def test_underwriting_template_locks_evidence_bridges_scenarios_and_blind_audit(
         "旧主张差异审计",
         "自动阻断检查",
         "盲态结果封存后才揭示",
+        "safety_margin_tier",
     ):
         assert phrase in text
 
@@ -95,6 +96,9 @@ def test_docs_lock_four_layer_funnel_half_blind_sealing_and_two_level_decisions(
     assert "公司之间并行，公司内阶段串行" in batch
     assert "单公司只能承保通过或不通过" in portfolio
     assert "组合层才能给 `buy_now`" in portfolio
+    assert "事件性冲击与危机错杀" in screening
+    assert "不得无说明地同时" in underwriting
+    assert "高优先级近门槛观察" in portfolio
 
 
 def test_readme_and_agents_only_document_v2_boundaries_and_commands():

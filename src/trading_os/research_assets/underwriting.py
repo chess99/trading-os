@@ -22,7 +22,7 @@ class UnderwritingEvaluation:
 
 ASSESSMENT_KEYS = {
     "confidence",
-    "cyclical_or_governance_risk",
+    "safety_margin_tier",
     "normalization",
     "accounting_checks",
     "bridges",
@@ -72,6 +72,11 @@ CLAIM_REVIEW_KEYS = {"claim_id", "category", "result"}
 MINIMUM_VALUATION_DISCOUNT_RATE = 0.085
 GOVERNMENT_BOND_SPREAD = 0.055
 CONFIDENCE_MARGIN = {"high": 0.10, "medium": 0.15, "low": None}
+SAFETY_MARGIN_TIER_OVERLAY = {
+    "standard": None,
+    "elevated": 0.20,
+    "severe": 0.25,
+}
 
 
 def evaluate_underwriting(
@@ -97,13 +102,18 @@ def evaluate_underwriting(
     confidence = _require_text(assessment.get("confidence"), "confidence")
     if confidence not in CONFIDENCE_MARGIN:
         raise UnderwritingValidationError(f"unsupported confidence: {confidence}")
-    cyclical_risk = _require_bool(
-        assessment.get("cyclical_or_governance_risk"),
-        "cyclical_or_governance_risk",
+    safety_margin_tier = _require_text(
+        assessment.get("safety_margin_tier"),
+        "safety_margin_tier",
     )
+    if safety_margin_tier not in SAFETY_MARGIN_TIER_OVERLAY:
+        raise UnderwritingValidationError(
+            f"unsupported safety_margin_tier: {safety_margin_tier}"
+        )
     margin = CONFIDENCE_MARGIN[confidence]
-    if cyclical_risk and margin is not None:
-        margin = max(margin, 0.25)
+    risk_overlay = SAFETY_MARGIN_TIER_OVERLAY[safety_margin_tier]
+    if margin is not None and risk_overlay is not None:
+        margin = max(margin, risk_overlay)
     if confidence == "low":
         blockers.add("low_confidence")
 
@@ -202,9 +212,21 @@ def evaluate_underwriting(
 
     risk_flags = _require_object(assessment, "risk_flags")
     _require_exact_keys(risk_flags, RISK_FLAG_KEYS, "risk_flags")
+    active_risk_flags: set[str] = set()
     for flag in RISK_FLAG_KEYS:
         if _require_bool(risk_flags.get(flag), flag):
+            active_risk_flags.add(flag)
             challenger.add(flag)
+    if (
+        active_risk_flags & {"governance_material_doubt", "cycle_position_uncertain"}
+        and safety_margin_tier == "standard"
+    ):
+        blockers.add("safety_margin_tier_below_material_risk")
+    if (
+        "permanent_loss_risk" in active_risk_flags
+        and safety_margin_tier != "severe"
+    ):
+        blockers.add("safety_margin_tier_below_permanent_loss_risk")
     if proposed_top_five:
         challenger.add("proposed_top_five_position")
     if prior_fair_value_range is not None:

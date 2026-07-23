@@ -12,7 +12,7 @@ VALID_EVIDENCE = EvidenceValidationResult(True, False, (), ())
 def _assessment() -> dict[str, object]:
     return {
         "confidence": "high",
-        "cyclical_or_governance_risk": False,
+        "safety_margin_tier": "standard",
         "normalization": {
             "method": "five_year_mid_cycle",
             "years_used": 5,
@@ -189,6 +189,59 @@ def test_buy_zone_must_respect_confidence_safety_margin():
     assert "buy_zone_lacks_required_safety_margin" in result.blockers
 
 
+@pytest.mark.parametrize(
+    ("tier", "expected"),
+    [("elevated", 0.20), ("severe", 0.25)],
+)
+def test_risk_tier_raises_required_safety_margin(tier: str, expected: float):
+    assessment = _assessment()
+    assessment["safety_margin_tier"] = tier
+    assessment["valuation"]["buy_zone"] = [70.0, 75.0]
+
+    result = _evaluate(assessment)
+
+    assert result.required_safety_margin == pytest.approx(expected)
+    assert "buy_zone_lacks_required_safety_margin" not in result.blockers
+
+
+@pytest.mark.parametrize(
+    "risk_flag",
+    ["governance_material_doubt", "cycle_position_uncertain"],
+)
+def test_material_risk_requires_at_least_elevated_margin(risk_flag: str):
+    assessment = _assessment()
+    assessment["risk_flags"][risk_flag] = True
+
+    result = _evaluate(assessment)
+
+    assert result.status == "failed"
+    assert "safety_margin_tier_below_material_risk" in result.blockers
+
+
+def test_permanent_loss_risk_requires_severe_margin():
+    assessment = _assessment()
+    assessment["safety_margin_tier"] = "elevated"
+    assessment["risk_flags"]["permanent_loss_risk"] = True
+
+    result = _evaluate(assessment)
+
+    assert result.status == "failed"
+    assert "safety_margin_tier_below_permanent_loss_risk" in result.blockers
+
+
+def test_severe_margin_with_permanent_loss_risk_reaches_challenger():
+    assessment = _assessment()
+    assessment["safety_margin_tier"] = "severe"
+    assessment["risk_flags"]["permanent_loss_risk"] = True
+    assessment["valuation"]["buy_zone"] = [70.0, 75.0]
+
+    result = _evaluate(assessment)
+
+    assert result.status == "needs_challenger"
+    assert result.required_safety_margin == pytest.approx(0.25)
+    assert "permanent_loss_risk" in result.challenger_triggers
+
+
 def test_low_confidence_cannot_pass_underwriting():
     assessment = _assessment()
     assessment["confidence"] = "low"
@@ -235,14 +288,27 @@ def test_missing_evidence_makes_underwriting_insufficient():
             "core_investment_claim_disproven",
         ),
         (
-            lambda value: value["risk_flags"].update(governance_material_doubt=True),
+            lambda value: (
+                value.update(safety_margin_tier="elevated"),
+                value["risk_flags"].update(governance_material_doubt=True),
+            ),
             "governance_material_doubt",
         ),
         (
-            lambda value: value["risk_flags"].update(cycle_position_uncertain=True),
+            lambda value: (
+                value.update(safety_margin_tier="elevated"),
+                value["risk_flags"].update(cycle_position_uncertain=True),
+            ),
             "cycle_position_uncertain",
         ),
-        (lambda value: value["risk_flags"].update(permanent_loss_risk=True), "permanent_loss_risk"),
+        (
+            lambda value: (
+                value.update(safety_margin_tier="severe"),
+                value["risk_flags"].update(permanent_loss_risk=True),
+                value["valuation"].update(buy_zone=[70.0, 75.0]),
+            ),
+            "permanent_loss_risk",
+        ),
     ],
 )
 def test_material_disagreement_triggers_independent_challenger(mutator, trigger: str):

@@ -121,7 +121,7 @@ def _assessment(case: dict[str, Any]) -> dict[str, Any]:
     fair_midpoint = sum(fair) / 2
     assessment: dict[str, Any] = {
         "confidence": "high",
-        "cyclical_or_governance_risk": False,
+        "safety_margin_tier": "standard",
         "normalization": {
             "method": "five_year_mid_cycle",
             "years_used": 5,

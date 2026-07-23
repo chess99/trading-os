@@ -107,7 +107,7 @@ def test_policy_files_have_versioned_closed_metadata(relative_path: str):
     assert policy.policy_id
     assert policy.version
     expected_effective_at = (
-        "2026-07-22T00:00:00+08:00"
+        "2026-07-23T00:00:00+08:00"
         if relative_path in {"policies/underwriting.json", "policies/portfolio.json"}
         else "2026-07-21T00:00:00+08:00"
     )
@@ -127,6 +127,27 @@ def test_portfolio_policy_matches_confirmed_default_limits():
     assert policy.payload["max_medium_confidence_weight"] == 0.03
     assert policy.payload["max_low_confidence_weight"] == 0.0
     assert policy.payload["initial_entry_fraction"] == pytest.approx(1 / 3)
+    assert policy.payload["minimum_expected_annual_return"] == 0.12
+    assert policy.payload["near_miss_expected_annual_return"] == 0.10
+
+
+def test_underwriting_policy_uses_risk_tiers_without_repeated_charges():
+    from trading_os.research_assets.models import load_policy
+
+    policy = load_policy(ROOT / "policies" / "underwriting.json")
+
+    assert policy.payload["minimum_safety_margin"] == {
+        "high_confidence": 0.10,
+        "medium_confidence": 0.15,
+        "low_confidence": None,
+    }
+    assert policy.payload["risk_overlay_safety_margin"] == {
+        "elevated": 0.20,
+        "severe": 0.25,
+    }
+    assert "cannot be cured by a lower price" in policy.payload[
+        "evidence_gap_principle"
+    ]
 
 
 def test_policy_rejects_unknown_top_level_fields(tmp_path: Path):

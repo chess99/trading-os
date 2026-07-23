@@ -68,6 +68,7 @@ POLICY_KEYS = {
     "max_low_confidence_weight",
     "initial_entry_fraction",
     "minimum_expected_annual_return",
+    "near_miss_expected_annual_return",
     "allow_cash",
 }
 CONFIDENCE_LEVELS = {"high", "medium", "low"}
@@ -221,7 +222,13 @@ def _preallocation_action(
     if item["evidence_stale"]:
         return PortfolioAction.WATCH.value, {"evidence_stale"}
     if item["expected_annual_return"] < limits["minimum_expected_annual_return"]:
-        return PortfolioAction.WATCH.value, {"expected_return_below_minimum"}
+        reasons = {"expected_return_below_minimum"}
+        if (
+            item["expected_annual_return"]
+            >= limits["near_miss_expected_annual_return"]
+        ):
+            reasons.add("expected_return_near_miss")
+        return PortfolioAction.WATCH.value, reasons
     if item["current_price"] > item["buy_zone"][1]:
         return PortfolioAction.BUY_ON_WEAKNESS.value, {"price_above_buy_zone"}
     if not item["portfolio_eligible"]:
@@ -295,6 +302,14 @@ def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
             raise PortfolioValidationError(f"policy.{field} must be between 0 and 1")
     if not isinstance(policy.get("allow_cash"), bool):
         raise PortfolioValidationError("policy.allow_cash must be boolean")
+    if (
+        result["near_miss_expected_annual_return"]
+        > result["minimum_expected_annual_return"]
+    ):
+        raise PortfolioValidationError(
+            "policy.near_miss_expected_annual_return must not exceed "
+            "policy.minimum_expected_annual_return"
+        )
     return result
 
 

@@ -1,5 +1,5 @@
 <!-- trading-os-report-meta
-{"schema_version":2,"report_id":"{REPORT_ID}","report_type":"underwriting_review","symbol":"{MARKET:TICKER}","as_of":"YYYY-MM-DD","information_cutoff":"ISO8601_WITH_OFFSET","price_snapshot_id":"{SNAPSHOT_ID}","policy_versions":{"underwriting.default":"1.0.0"},"agent_id":"{TOOL_AND_MODEL}","predecessor_reports":["{REPORT_ID}"],"sealed_artifacts":["underwriting/{REVIEW_ID}/blind-assessment.json","underwriting/{REVIEW_ID}/reveal-assessment.json"],"source_manifest":"evidence/{REVIEW_ID}-sources.json"}
+{"schema_version":2,"report_id":"{REPORT_ID}","report_type":"underwriting_review","symbol":"{MARKET:TICKER}","as_of":"YYYY-MM-DD","information_cutoff":"ISO8601_WITH_OFFSET","price_snapshot_id":"{SNAPSHOT_ID}","policy_versions":{"underwriting.default":"1.2.0"},"agent_id":"{TOOL_AND_MODEL}","predecessor_reports":["{REPORT_ID}"],"sealed_artifacts":["underwriting/{REVIEW_ID}/blind-assessment.json","underwriting/{REVIEW_ID}/reveal-assessment.json"],"source_manifest":"evidence/{REVIEW_ID}-sources.json"}
 -->
 # 公司研究：{名称}（{MARKET:TICKER}）
 
@@ -21,7 +21,7 @@
 
 ## 估值与敏感性
 
-至少两种方法、悲观/基准/乐观三情景、可复算公式、必要回报率和安全边际。
+至少两种方法、悲观/基准/乐观三情景、可复算公式、必要回报率和安全边际。明确 `safety_margin_tier`，并说明风险进入正常化盈利、情景、折现率或风险覆层的具体位置，避免重复折价。
 
 ## 市场隐含预期
 

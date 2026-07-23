@@ -13,6 +13,7 @@ POLICY = {
     "max_low_confidence_weight": 0.0,
     "initial_entry_fraction": 1 / 3,
     "minimum_expected_annual_return": 0.12,
+    "near_miss_expected_annual_return": 0.10,
     "allow_cash": True,
 }
 
@@ -92,6 +93,40 @@ def test_expected_return_below_policy_minimum_prevents_buy_now():
     assert decision.action == "watch"
     assert decision.target_weight == 0
     assert "expected_return_below_minimum" in decision.reason_codes
+    assert "expected_return_near_miss" in decision.reason_codes
+
+
+def test_expected_return_below_near_miss_is_plain_watch():
+    candidate = _candidate()
+    candidate["expected_annual_return"] = 0.099
+
+    decision = _build([candidate]).decisions[0]
+
+    assert decision.action == "watch"
+    assert "expected_return_below_minimum" in decision.reason_codes
+    assert "expected_return_near_miss" not in decision.reason_codes
+
+
+def test_expected_return_at_minimum_remains_buyable():
+    candidate = _candidate()
+    candidate["expected_annual_return"] = 0.12
+
+    decision = _build([candidate]).decisions[0]
+
+    assert decision.action == "buy_now"
+    assert "expected_return_near_miss" not in decision.reason_codes
+
+
+def test_near_miss_threshold_cannot_exceed_buy_threshold():
+    from trading_os.research_assets.portfolio import (
+        PortfolioValidationError,
+        build_model_portfolio,
+    )
+
+    policy = {**POLICY, "near_miss_expected_annual_return": 0.13}
+
+    with pytest.raises(PortfolioValidationError, match="must not exceed"):
+        build_model_portfolio([_candidate()], policy=policy)
 
 
 @pytest.mark.parametrize(

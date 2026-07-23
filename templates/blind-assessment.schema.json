@@ -3,7 +3,7 @@
   "$id": "https://trading-os.local/schemas/blind-assessment.schema.json",
   "title": "Trading OS Sealed Blind Assessment",
   "type": "object",
-  "required": ["schema_version", "assessment_id", "review_id", "packet_sha256", "symbol", "information_cutoff", "price_snapshot", "evidence_ledger", "earnings_bridge", "cash_flow_bridge", "valuation", "counterevidence", "provisional_status", "created_at"],
+  "required": ["schema_version", "assessment_id", "review_id", "packet_sha256", "symbol", "information_cutoff", "price_snapshot", "evidence_ledger", "earnings_bridge", "cash_flow_bridge", "safety_margin_tier", "valuation", "counterevidence", "provisional_status", "created_at"],
   "properties": {
     "schema_version": {"type": "integer", "const": 2},
     "assessment_id": {"type": "string", "minLength": 1},
@@ -15,6 +15,7 @@
     "evidence_ledger": {"type": "array", "minItems": 1, "items": {"type": "object"}},
     "earnings_bridge": {"type": "object"},
     "cash_flow_bridge": {"type": "object"},
+    "safety_margin_tier": {"type": "string", "enum": ["standard", "elevated", "severe"]},
     "valuation": {
       "type": "object",
       "required": ["bear", "base", "bull", "methods", "fair_value_range", "buy_zone", "required_return"],
