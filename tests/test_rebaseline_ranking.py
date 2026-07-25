@@ -155,13 +155,34 @@ def test_negative_pe_requires_normalization_instead_of_cheapness_bonus(tmp_path:
     assert negative["dimensions"]["value_dislocation"] < 15
 
 
-def test_cyclical_industry_has_explicit_peak_uncertainty_penalty(tmp_path: Path):
+def test_cyclical_industry_is_routed_to_normalization_without_blanket_penalty(
+    tmp_path: Path,
+):
     item = _build(tmp_path, [_record(industry="煤炭开采")])["items"][0]
 
     assert {penalty["code"] for penalty in item["penalties"]} == {
-        "cyclical_peak_uncertainty"
+        "cyclical_normalization_required"
     }
+    assert sum(penalty["points"] for penalty in item["penalties"]) == 0
     assert item["economic_risk_cluster"] == "commodity_cycle"
+
+
+def test_single_period_outliers_trigger_verification_instead_of_maximum_scores(
+    tmp_path: Path,
+):
+    item = _build(
+        tmp_path,
+        [_record(pe_ttm=0.9, roe=80.0, profit_growth_pct=2600.0)],
+    )["items"][0]
+
+    assert {
+        "extreme_low_pe_requires_one_off_verification",
+        "single_period_roe_outlier_requires_verification",
+        "single_period_growth_outlier_requires_verification",
+    } <= set(item["reason_codes"])
+    assert item["dimensions"]["value_dislocation"] < 20
+    assert item["dimensions"]["operating_capital_quality"] < 19
+    assert item["dimensions"]["verifiable_catalyst_odds"] == 4
 
 
 @pytest.mark.parametrize(

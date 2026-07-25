@@ -9,8 +9,12 @@ from typing import Any
 from .company import AssetValidationError, validate_company_dir
 
 DECISIONS = {
+    "quick_profile",
+    "scoped_research",
     "deep_research",
     "watch_only",
+    "conditional_stop",
+    "hard_exclusion",
     "skip_risk",
     "skip_too_small",
     "skip_not_in_scope",
@@ -25,7 +29,15 @@ QUEUE_STATUSES = {
     "skipped",
     "needs_review",
 }
-TASK_TYPES = {"initial_research", "followup_review"}
+TASK_TYPES = {
+    "quick_profile",
+    "scoped_research",
+    "deep_research",
+    "monitoring_update",
+    "initial_research",
+    "followup_review",
+}
+BUDGETED_TASK_TYPES = {"quick_profile", "scoped_research", "deep_research"}
 SYMBOL_RE = re.compile(r"^CN:[0-9]{6}$")
 
 COMPANIES_FILE = "companies.jsonl"
@@ -260,9 +272,25 @@ def enqueue_research(
     task_type: str = "initial_research",
     status: str = "pending",
     target_company_dir: str | None = None,
+    effort_budget_hours: float | None = None,
+    preceding_stage: str | None = None,
+    stop_conditions: list[str] | None = None,
 ) -> Path:
     ticker = _ticker_from_symbol(symbol)
-    record = {
+    next_actions = {
+        "quick_profile": (
+            "按 playbooks/research-capital-allocation.md 完成快速投资画像；"
+            "只能晋级范围研究、定向补证或结构化停止。"
+        ),
+        "scoped_research": (
+            "只解决快速画像列出的决定性问题，完成正常化盈利和粗估值后决定是否深研。"
+        ),
+        "deep_research": "按 playbooks/company-research.md 写完整中文初始研究报告。",
+        "monitoring_update": "只更新触发器命中的价格、证据或论点，不重复完整研究。",
+        "initial_research": "按 playbooks/company-research.md 写中文初始研究报告。",
+        "followup_review": "按最新触发器更新公司研究，不覆盖历史报告。",
+    }
+    record: dict[str, Any] = {
         "symbol": symbol,
         "name": name,
         "task_type": task_type,
@@ -275,8 +303,14 @@ def enqueue_research(
         "finished_at": None,
         "result_path": None,
         "failure_reason": None,
-        "next_action": "按 playbooks/company-research.md 写中文初始研究报告。",
+        "next_action": next_actions.get(task_type, ""),
     }
+    if effort_budget_hours is not None:
+        record["effort_budget_hours"] = effort_budget_hours
+    if preceding_stage is not None:
+        record["preceding_stage"] = preceding_stage
+    if stop_conditions is not None:
+        record["stop_conditions"] = stop_conditions
     _validate_queue_record(record, Path(root) / RESEARCH_QUEUE_FILE)
     return upsert_jsonl(Path(root) / RESEARCH_QUEUE_FILE, "symbol", record)
 
@@ -342,6 +376,31 @@ def _validate_queue_record(record: dict[str, Any], path: Path) -> None:
         raise CoverageValidationError(f"invalid status in {path}: {record.get('status')}")
     _require_non_empty_string(record, "reason", path)
     _require_non_empty_string(record, "target_company_dir", path)
+    task_type = record["task_type"]
+    effort = record.get("effort_budget_hours")
+    if effort is not None and (
+        isinstance(effort, bool)
+        or not isinstance(effort, (int, float))
+        or effort <= 0
+    ):
+        raise CoverageValidationError(
+            f"effort_budget_hours must be positive in {path}"
+        )
+    if task_type in BUDGETED_TASK_TYPES:
+        if effort is None:
+            raise CoverageValidationError(
+                f"effort_budget_hours is required for {task_type} in {path}"
+            )
+        _require_non_empty_string(record, "preceding_stage", path)
+        stops = record.get("stop_conditions")
+        if (
+            not isinstance(stops, list)
+            or not stops
+            or not all(isinstance(item, str) and item.strip() for item in stops)
+        ):
+            raise CoverageValidationError(
+                f"stop_conditions must be a non-empty string array for {task_type} in {path}"
+            )
 
 
 def _require_symbol(record: dict[str, Any], path: Path) -> None:

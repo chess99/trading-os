@@ -1,17 +1,20 @@
 # A 股覆盖与筛选 Playbook
 
-## 四层漏斗
+## 自适应研究漏斗
 
-全市场工作固定经过四层：
+全市场工作按研究的信息价值逐层购买更多证据：
 
 ```text
 约 5000 家普通 A 股覆盖
-→ 数百家公司证据筛查
-→ 数十家公司初始深研
-→ 少数公司独立承保与组合比较
+→ 全市场多视角便宜地图
+→ 数百家公司快速投资画像
+→ 数十家公司范围研究
+→ 少数公司完整深研、独立承保与组合比较
 ```
 
-筛选只决定研究顺序，不是投资结论。默认尽可能覆盖普通 A 股；小市值、低流动性、暂时亏损或负倍数不能成为硬跳过理由。
+覆盖不等于每家公司都获得完整初研。筛选只决定是否值得购买下一阶段研究预算，不是投资结论；小市值、低流动性、暂时亏损或负倍数不能成为硬跳过理由。
+
+公开数据排名只能作为便宜地图，不能直接晋级深研、承保或买入。必须经过 `playbooks/research-capital-allocation.md` 的快速画像和范围研究；不同类型机会分别选样，并为危机错杀与假阴性抽查保留容量。
 
 ## 事件性冲击与危机错杀
 
@@ -23,8 +26,12 @@
 
 ## 分流
 
+- `quick_profile`：一小时级快速投资画像。
+- `scoped_research`：只解决决定性未知数的范围研究。
 - `deep_research`：进入初研队列。
 - `watch_only`：已有资产或等待触发器。
+- `conditional_stop`：当前停止投入，但保留结构化重启条件。
+- `hard_exclusion`：不构成可执行普通股票投资对象。
 - `needs_manual_review`：证券状态、数据或重大风险需人工判断。
 - `skip_not_in_scope`：基金、债券、B 股等不在普通 A 股范围。
 - 其他 `skip_*` 仅用于退市或确实无法形成研究对象的硬排除，必须写结构化理由。
@@ -38,7 +45,9 @@
 ```bash
 python -m trading_os coverage validate
 python -m trading_os coverage status
-python -m trading_os coverage list --decision deep_research
+python -m trading_os coverage rank-rebaseline
+python -m trading_os coverage allocate-research
+python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage reconcile --check
 ```
 

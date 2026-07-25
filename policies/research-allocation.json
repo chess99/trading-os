@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "policy_id": "research-allocation.default",
+  "version": "1.0.0",
+  "effective_at": "2026-07-25T00:00:00+08:00",
+  "kind": "research_allocation",
+  "payload": {
+    "quick_profile_capacity_per_cycle": 200,
+    "stage_capacity_per_cycle": {
+      "scoped_research": 60,
+      "deep_research": 24,
+      "underwriting": 8
+    },
+    "effort_budget_hours": {
+      "quick_profile": 1.0,
+      "targeted_followup": 2.0,
+      "scoped_research": 4.0,
+      "deep_research": 24.0,
+      "underwriting": 12.0
+    },
+    "selection_slots": {
+      "balanced": 40,
+      "value_income": 30,
+      "quality_compounder": 30,
+      "financial_specialist": 20,
+      "cyclical_specialist": 20,
+      "crisis_mispricing": 30,
+      "information_change": 20,
+      "false_negative_audit": 10
+    },
+    "minimum_s1_sources_for_deep_research": 2,
+    "minimum_counterevidence_for_quick_profile": 2,
+    "minimum_base_expected_annual_return_for_deep_research": 0.10,
+    "minimum_base_expected_annual_return_for_underwriting": 0.12,
+    "structural_stop_reason_codes": [
+      "minority_shareholder_claim_unreliable",
+      "financial_statements_unreliable_without_alternative_verification",
+      "cannot_survive_24_months_without_forced_dilution",
+      "capital_structure_precludes_equity_value",
+      "core_economics_persistently_below_cost_of_capital_without_remedy",
+      "core_thesis_disproven"
+    ],
+    "reactivation_trigger_types": [
+      "filing",
+      "price",
+      "event",
+      "thesis"
+    ],
+    "ranking_principle": "public screening scores are a cheap map for buying more information and must never directly promote a company to deep research, underwriting or buy_now",
+    "research_value_principle": "allocate the next research hour where it is most likely to change a portfolio decision; uncertainty that is expensive or unresolvable lowers priority",
+    "stop_principle": "a stop is an auditable research-capital decision, not a permanent investment verdict; every non-structural stop requires a reactivation trigger"
+  }
+}

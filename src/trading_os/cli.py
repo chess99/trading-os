@@ -32,12 +32,18 @@ from .research_assets.migration import (
     load_migration_plan,
     write_migration_plan,
 )
-from .research_assets.models import PolicyValidationError
+from .research_assets.models import PolicyValidationError, load_policy
 from .research_assets.portfolio import PortfolioValidationError
 from .research_assets.rebaseline_ranking import (
     RebaselineRankingError,
     build_rebaseline_ranking,
     write_rebaseline_ranking,
+)
+from .research_assets.research_allocation import (
+    ResearchAllocationError,
+    allocate_research_capacity,
+    evaluate_quick_profile,
+    write_research_allocation,
 )
 from .research_assets.review_store import ReviewStoreError
 from .research_assets.review_workflow import (
@@ -229,6 +235,36 @@ def build_parser() -> argparse.ArgumentParser:
     _add_timestamp(rank_rebaseline)
     rank_rebaseline.set_defaults(func=cmd_coverage_rank_rebaseline)
 
+    allocate_research = coverage_sub.add_parser(
+        "allocate-research",
+        help="Allocate finite research capacity across a public ranking",
+    )
+    allocate_research.add_argument(
+        "--ranking",
+        default="automation/rebaseline_ranking.json",
+    )
+    allocate_research.add_argument(
+        "--policy",
+        default="policies/research-allocation.json",
+    )
+    allocate_research.add_argument(
+        "--output",
+        default="automation/research_allocation.json",
+    )
+    allocate_research.set_defaults(func=cmd_coverage_allocate_research)
+
+    evaluate_profile = coverage_sub.add_parser(
+        "evaluate-profile",
+        help="Evaluate whether a quick or scoped profile deserves more research",
+    )
+    evaluate_profile.add_argument("--input", required=True)
+    evaluate_profile.add_argument(
+        "--policy",
+        default="policies/research-allocation.json",
+    )
+    evaluate_profile.add_argument("--output")
+    evaluate_profile.set_defaults(func=cmd_coverage_evaluate_profile)
+
     set_cmd = coverage_sub.add_parser("set-screening", help="Upsert one screening result")
     set_cmd.add_argument("symbol")
     _add_coverage_root(set_cmd)
@@ -249,6 +285,9 @@ def build_parser() -> argparse.ArgumentParser:
     enqueue.add_argument("--task-type", default="initial_research")
     enqueue.add_argument("--status", default="pending")
     enqueue.add_argument("--target-company-dir")
+    enqueue.add_argument("--effort-budget-hours", type=float)
+    enqueue.add_argument("--preceding-stage")
+    enqueue.add_argument("--stop-condition", action="append")
     enqueue.set_defaults(func=cmd_coverage_enqueue)
 
     reconcile = coverage_sub.add_parser(
@@ -483,6 +522,37 @@ def cmd_coverage_rank_rebaseline(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_allocate_research(ns: argparse.Namespace) -> int:
+    ranking = json.loads(Path(ns.ranking).read_text(encoding="utf-8"))
+    policy = load_policy(ns.policy)
+    payload = allocate_research_capacity(
+        ranking,
+        policy=policy.payload,
+        policy_version=f"{policy.policy_id}@{policy.version}",
+    )
+    path = write_research_allocation(ns.output, payload)
+    _write_success(
+        {
+            "ok": True,
+            "path": str(path),
+            "selected_count": payload["selected_count"],
+            "deferred_count": payload["deferred_count"],
+            "warnings": payload["warnings"],
+        }
+    )
+    return 0
+
+
+def cmd_coverage_evaluate_profile(ns: argparse.Namespace) -> int:
+    profile = json.loads(Path(ns.input).read_text(encoding="utf-8"))
+    policy = load_policy(ns.policy)
+    payload = evaluate_quick_profile(profile, policy=policy.payload)
+    if ns.output:
+        write_research_allocation(ns.output, payload)
+    _write_success(payload)
+    return 0
+
+
 def cmd_coverage_set_screening(ns: argparse.Namespace) -> int:
     path = set_screening(
         ns.root,
@@ -508,6 +578,9 @@ def cmd_coverage_enqueue(ns: argparse.Namespace) -> int:
         task_type=ns.task_type,
         status=ns.status,
         target_company_dir=ns.target_company_dir,
+        effort_budget_hours=ns.effort_budget_hours,
+        preceding_stage=ns.preceding_stage,
+        stop_conditions=ns.stop_condition,
     )
     print(json.dumps({"ok": True, "path": str(path)}, ensure_ascii=False, indent=2))
     return 0
@@ -558,6 +631,7 @@ def _error_code(exc: Exception) -> str | None:
         (ReviewStoreError, "review_state_error"),
         (ReviewWorkflowError, "review_workflow_error"),
         (RebaselineRankingError, "rebaseline_ranking_error"),
+        (ResearchAllocationError, "research_allocation_error"),
         (ClaimPacketError, "claim_packet_error"),
         (SealingError, "sealed_artifact_error"),
         (PortfolioValidationError, "portfolio_validation_error"),

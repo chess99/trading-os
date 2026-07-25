@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trading-os.local/schemas/quick-profile.schema.json",
+  "title": "Trading OS Quick or Scoped Investment Profile",
+  "type": "object",
+  "required": [
+    "research_stage",
+    "symbol",
+    "as_of",
+    "information_cutoff",
+    "s1_source_count",
+    "circle_of_competence",
+    "business_model_understood",
+    "survival_status",
+    "governance_status",
+    "normalized_earnings_status",
+    "valuation",
+    "variant_perception",
+    "decisive_unknowns",
+    "counterevidence",
+    "structural_stop_reasons",
+    "revisit_triggers"
+  ],
+  "properties": {
+    "research_stage": {
+      "type": "string",
+      "enum": ["quick_profile", "scoped_research"]
+    },
+    "symbol": {"type": "string", "pattern": "^CN:[0-9]{6}$"},
+    "as_of": {"type": "string", "format": "date"},
+    "information_cutoff": {"type": "string", "format": "date-time"},
+    "s1_source_count": {"type": "integer", "minimum": 0},
+    "circle_of_competence": {
+      "type": "string",
+      "enum": ["inside", "outside", "uncertain"]
+    },
+    "business_model_understood": {"type": "boolean"},
+    "survival_status": {
+      "type": "string",
+      "enum": ["pass", "uncertain", "fail"]
+    },
+    "governance_status": {
+      "type": "string",
+      "enum": ["acceptable", "uncertain", "uninvestable"]
+    },
+    "normalized_earnings_status": {
+      "type": "string",
+      "enum": ["plausible", "uncertain", "unavailable"]
+    },
+    "valuation": {
+      "type": "object",
+      "required": [
+        "current_price",
+        "rough_fair_value_range",
+        "base_expected_annual_return",
+        "bull_expected_annual_return",
+        "market_implied_assumptions_tested"
+      ],
+      "properties": {
+        "current_price": {"type": "number", "exclusiveMinimum": 0},
+        "rough_fair_value_range": {
+          "type": "array",
+          "prefixItems": [{"type": "number"}, {"type": "number"}],
+          "items": false,
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "base_expected_annual_return": {"type": "number"},
+        "bull_expected_annual_return": {"type": "number"},
+        "market_implied_assumptions_tested": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "variant_perception": {"type": ["string", "null"], "minLength": 1},
+    "decisive_unknowns": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "counterevidence": {
+      "type": "array",
+      "minItems": 2,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "structural_stop_reasons": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "revisit_triggers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "condition", "reason"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["filing", "price", "event", "thesis"]
+          },
+          "condition": {"type": "string", "minLength": 1},
+          "reason": {"type": "string", "minLength": 1}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

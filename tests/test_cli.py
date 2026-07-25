@@ -427,3 +427,69 @@ def test_cli_coverage_set_screening_and_validate(tmp_path: Path, capsys):
 
     assert main(["coverage", "validate", "--root", str(root)]) == 0
     assert json.loads(capsys.readouterr().out)["ok"] is True
+
+
+def test_cli_allocates_research_capacity_and_evaluates_profile(
+    tmp_path: Path,
+    capsys,
+):
+    from trading_os.cli import main
+    from tests.test_research_allocation import (
+        _profile,
+        _ranking,
+        _small_policy,
+    )
+
+    ranking_path = tmp_path / "ranking.json"
+    policy_path = tmp_path / "policy.json"
+    allocation_path = tmp_path / "allocation.json"
+    profile_path = tmp_path / "profile.json"
+    policy = json.loads(
+        Path("policies/research-allocation.json").read_text(encoding="utf-8")
+    )
+    policy["payload"] = _small_policy()
+    ranking_path.write_text(
+        json.dumps(_ranking(), ensure_ascii=False),
+        encoding="utf-8",
+    )
+    policy_path.write_text(
+        json.dumps(policy, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+    code = main(
+        [
+            "coverage",
+            "allocate-research",
+            "--ranking",
+            str(ranking_path),
+            "--policy",
+            str(policy_path),
+            "--output",
+            str(allocation_path),
+        ]
+    )
+
+    assert code == 0
+    assert json.loads(capsys.readouterr().out)["selected_count"] == 4
+    assert json.loads(allocation_path.read_text(encoding="utf-8"))[
+        "selected_count"
+    ] == 4
+
+    profile_path.write_text(
+        json.dumps(_profile(), ensure_ascii=False),
+        encoding="utf-8",
+    )
+    code = main(
+        [
+            "coverage",
+            "evaluate-profile",
+            "--input",
+            str(profile_path),
+            "--policy",
+            str(policy_path),
+        ]
+    )
+
+    assert code == 0
+    assert json.loads(capsys.readouterr().out)["next_stage"] == "scoped_research"

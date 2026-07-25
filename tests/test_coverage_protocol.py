@@ -4,8 +4,12 @@ import json
 from pathlib import Path
 
 DECISIONS = {
+    "quick_profile",
+    "scoped_research",
     "deep_research",
     "watch_only",
+    "conditional_stop",
+    "hard_exclusion",
     "skip_risk",
     "skip_too_small",
     "skip_not_in_scope",
@@ -48,7 +52,7 @@ def test_screening_example_uses_fixed_decision_protocol():
 
     decisions = {item["decision"] for item in payload["results"]}
     assert decisions <= DECISIONS
-    assert {"deep_research", "skip_not_in_scope"} <= decisions
+    assert {"quick_profile", "skip_not_in_scope"} <= decisions
     for item in payload["results"]:
         assert item["reason"].strip()
         assert item["evidence"]
@@ -67,6 +71,10 @@ def test_research_queue_example_is_resumable():
         assert item["status"] in QUEUE_STATUSES
         assert item["target_company_dir"].startswith("research/companies/CN/")
         assert item["next_action"].strip()
+        if item["task_type"] == "quick_profile":
+            assert item["effort_budget_hours"] > 0
+            assert item["preceding_stage"]
+            assert item["stop_conditions"]
 
 
 def test_docs_route_full_market_work_through_coverage():
@@ -83,12 +91,14 @@ def test_docs_route_full_market_work_through_coverage():
     assert "coverage/" in claude
     assert "coverage status" in agents
     assert "coverage validate" in readme
-    assert "四层漏斗" in screening
+    assert "自适应研究漏斗" in screening
     assert "约 5000 家" in screening
     assert "数百家公司" in screening
     assert "数十家公司" in screening
     assert "少数公司" in screening
     assert "deep_research" in screening
+    assert "quick_profile" in screening
+    assert "公开数据排名只能作为便宜地图" in screening
     assert "skip_not_in_scope" in screening
     assert "JSONL" in screening
     assert "小市值、低流动性、暂时亏损" in screening

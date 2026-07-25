@@ -7,7 +7,10 @@
   "as_of": "YYYY-MM-DD",
   "information_cutoff": "ISO8601_WITH_OFFSET",
   "price_snapshot_id": null,
-  "policy_versions": {"underwriting.default": "1.2.0"},
+  "policy_versions": {
+    "research-allocation.default": "1.0.0",
+    "underwriting.default": "1.2.0"
+  },
   "agent_id": "{TOOL_AND_MODEL}",
   "predecessor_reports": [],
   "sealed_artifacts": ["evidence/{REPORT_ID}-research-claims.json"],

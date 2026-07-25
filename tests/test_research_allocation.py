@@ -1,0 +1,264 @@
+from __future__ import annotations
+
+import copy
+import json
+from pathlib import Path
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def _policy() -> dict[str, object]:
+    return json.loads(
+        (ROOT / "policies" / "research-allocation.json").read_text(encoding="utf-8")
+    )["payload"]
+
+
+def _small_policy() -> dict[str, object]:
+    policy = copy.deepcopy(_policy())
+    policy["quick_profile_capacity_per_cycle"] = 4
+    policy["selection_slots"] = {
+        "balanced": 1,
+        "value_income": 1,
+        "quality_compounder": 0,
+        "financial_specialist": 0,
+        "cyclical_specialist": 0,
+        "crisis_mispricing": 1,
+        "information_change": 0,
+        "false_negative_audit": 1,
+    }
+    return policy
+
+
+def _ranking_item(
+    index: int,
+    *,
+    total: float = 50.0,
+    cluster: str = "consumer_demand",
+    reasons: list[str] | None = None,
+    value: float = 10.0,
+) -> dict[str, object]:
+    return {
+        "symbol": f"CN:{index:06d}",
+        "name": f"公司{index}",
+        "total_score": total,
+        "score_confidence": "low",
+        "economic_risk_cluster": cluster,
+        "dimensions": {
+            "value_dislocation": value,
+            "operating_capital_quality": 10.0,
+            "permanent_loss_protection": 10.0,
+            "information_update_urgency": 5.0,
+            "verifiable_catalyst_odds": 5.0,
+            "evidence_availability": 5.0,
+        },
+        "penalties": [],
+        "reason_codes": reasons or ["public_prefilter_evidence_available"],
+        "public_snapshot": {"dividend_yield_pct": 2.0},
+    }
+
+
+def _ranking() -> dict[str, object]:
+    return {
+        "generated_at": "2026-07-25T10:00:00+08:00",
+        "items": [
+            _ranking_item(1, total=90),
+            _ranking_item(2, value=25),
+            _ranking_item(
+                3,
+                total=20,
+                reasons=["negative_pe_requires_normalization"],
+            ),
+            _ranking_item(4, cluster="credit_cycle"),
+            _ranking_item(5, cluster="commodity_cycle"),
+            _ranking_item(6, total=10),
+        ],
+        "excluded": [{"symbol": "CN:000007", "reason_code": "not_common_stock"}],
+    }
+
+
+def _profile(**changes) -> dict[str, object]:
+    value: dict[str, object] = {
+        "research_stage": "quick_profile",
+        "symbol": "CN:600519",
+        "as_of": "2026-07-25",
+        "information_cutoff": "2026-07-25T10:00:00+08:00",
+        "s1_source_count": 2,
+        "circle_of_competence": "inside",
+        "business_model_understood": True,
+        "survival_status": "pass",
+        "governance_status": "acceptable",
+        "normalized_earnings_status": "plausible",
+        "valuation": {
+            "current_price": 80.0,
+            "rough_fair_value_range": [95.0, 110.0],
+            "base_expected_annual_return": 0.11,
+            "bull_expected_annual_return": 0.16,
+            "market_implied_assumptions_tested": True,
+        },
+        "variant_perception": "市场低估了正常化现金流的持续性",
+        "decisive_unknowns": ["下一份财报的自由现金流能否确认"],
+        "counterevidence": ["行业需求可能恶化", "竞争可能压低利润率"],
+        "structural_stop_reasons": [],
+        "revisit_triggers": [
+            {
+                "type": "price",
+                "condition": "预期年化回报达到12%",
+                "reason": "重新评估是否值得承保",
+            }
+        ],
+    }
+    value.update(changes)
+    return value
+
+
+def test_multi_lens_allocation_is_capacity_bounded_and_never_promotes_to_deep():
+    from trading_os.research_assets.research_allocation import (
+        allocate_research_capacity,
+    )
+
+    result = allocate_research_capacity(
+        _ranking(),
+        policy=_small_policy(),
+        policy_version="research-allocation.default@1.0.0",
+    )
+
+    assert result["selected_count"] == 4
+    assert result["deferred_count"] == 2
+    assert len(result["ranking_content_sha256"]) == 64
+    assert len(result["policy_payload_sha256"]) == 64
+    assert all(item["stage"] == "quick_profile" for item in result["selected"])
+    assert all("deep_research" not in item["stage"] for item in result["selected"])
+    assert result["lens_counts"]["crisis_mispricing"] == 1
+    assert any(item["symbol"] == "CN:000003" for item in result["selected"])
+    assert result["hard_excluded"] == [
+        {"symbol": "CN:000007", "reason_code": "not_common_stock"}
+    ]
+
+
+def test_low_confidence_ranking_emits_warning_instead_of_false_precision():
+    from trading_os.research_assets.research_allocation import (
+        allocate_research_capacity,
+    )
+
+    result = allocate_research_capacity(
+        _ranking(),
+        policy=_small_policy(),
+        policy_version="research-allocation.default@1.0.0",
+    )
+
+    assert result["confidence_counts"] == {"low": 6}
+    assert result["warnings"] == [
+        "ranking_confidence_too_low_for_score_led_promotion"
+    ]
+
+
+def test_quick_profile_can_only_advance_to_scoped_research():
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+
+    result = evaluate_quick_profile(_profile(), policy=_policy())
+
+    assert result["next_stage"] == "scoped_research"
+    assert result["maximum_additional_effort_hours"] == 4.0
+    assert result["portfolio_action"] is None
+
+
+def test_scoped_research_can_advance_to_full_deep_research():
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+
+    profile = _profile(research_stage="scoped_research")
+
+    result = evaluate_quick_profile(profile, policy=_policy())
+
+    assert result["next_stage"] == "deep_research"
+    assert result["maximum_additional_effort_hours"] == 24.0
+
+
+def test_high_return_cannot_cure_scoped_research_evidence_gap():
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+
+    profile = _profile(
+        research_stage="scoped_research",
+        s1_source_count=1,
+    )
+    profile["valuation"]["base_expected_annual_return"] = 0.30
+
+    result = evaluate_quick_profile(profile, policy=_policy())
+
+    assert result["next_stage"] == "targeted_followup"
+    assert "scoped_research_not_ready_for_deep_research" in result["reason_codes"]
+
+
+def test_primary_evidence_can_support_auditable_conditional_stop():
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+
+    profile = _profile(
+        structural_stop_reasons=[
+            "financial_statements_unreliable_without_alternative_verification"
+        ]
+    )
+
+    result = evaluate_quick_profile(profile, policy=_policy())
+
+    assert result["next_stage"] == "conditional_stop"
+    assert result["maximum_additional_effort_hours"] == 0
+
+
+def test_structural_stop_without_primary_evidence_only_gets_targeted_followup():
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+
+    profile = _profile(
+        s1_source_count=0,
+        structural_stop_reasons=[
+            "financial_statements_unreliable_without_alternative_verification"
+        ],
+    )
+
+    result = evaluate_quick_profile(profile, policy=_policy())
+
+    assert result["next_stage"] == "targeted_followup"
+    assert "structural_stop_requires_primary_evidence" in result["reason_codes"]
+
+
+def test_price_watch_requires_an_explicit_reactivation_trigger():
+    from trading_os.research_assets.research_allocation import (
+        ResearchAllocationError,
+        evaluate_quick_profile,
+    )
+
+    profile = _profile(revisit_triggers=[])
+    profile["valuation"]["base_expected_annual_return"] = 0.08
+    profile["valuation"]["bull_expected_annual_return"] = 0.09
+
+    with pytest.raises(ResearchAllocationError, match="revisit trigger"):
+        evaluate_quick_profile(profile, policy=_policy())
+
+
+def test_outside_circle_is_reassigned_not_declared_a_bad_company():
+    from trading_os.research_assets.research_allocation import evaluate_quick_profile
+
+    result = evaluate_quick_profile(
+        _profile(circle_of_competence="outside"),
+        policy=_policy(),
+    )
+
+    assert result["next_stage"] == "reassign_or_stop"
+    assert result["portfolio_action"] is None
+
+
+def test_selection_slots_must_equal_cycle_capacity():
+    from trading_os.research_assets.research_allocation import (
+        ResearchAllocationError,
+        allocate_research_capacity,
+    )
+
+    policy = _small_policy()
+    policy["quick_profile_capacity_per_cycle"] = 5
+
+    with pytest.raises(ResearchAllocationError, match="must sum"):
+        allocate_research_capacity(
+            _ranking(),
+            policy=policy,
+            policy_version="research-allocation.default@1.0.0",
+        )

@@ -12,6 +12,7 @@ def test_domain_enums_are_closed_and_match_the_design():
     from trading_os.research_assets.models import (
         ClaimReviewStatus,
         PortfolioAction,
+        PolicyKind,
         ReportType,
         ReviewRunStatus,
         SourceTier,
@@ -47,6 +48,12 @@ def test_domain_enums_are_closed_and_match_the_design():
         "disproven",
         "untested",
     }
+    assert {item.value for item in PolicyKind} == {
+        "underwriting",
+        "portfolio",
+        "industry",
+        "research_allocation",
+    }
     assert {item.value for item in ReviewRunStatus} == {
         "created",
         "candidates_frozen",
@@ -74,6 +81,8 @@ def test_domain_enums_are_closed_and_match_the_design():
         "templates/claim-packet.schema.json",
         "templates/blind-assessment.schema.json",
         "templates/portfolio.schema.json",
+        "templates/quick-profile.schema.json",
+        "templates/research-allocation.schema.json",
     ],
 )
 def test_v2_schemas_are_closed_json_objects(relative_path: str):
@@ -90,6 +99,7 @@ def test_v2_schemas_are_closed_json_objects(relative_path: str):
     [
         "policies/underwriting.json",
         "policies/portfolio.json",
+        "policies/research-allocation.json",
         "policies/industries/memory.json",
         "policies/industries/manufacturing.json",
         "policies/industries/software.json",
@@ -106,11 +116,12 @@ def test_policy_files_have_versioned_closed_metadata(relative_path: str):
     assert policy.schema_version == 2
     assert policy.policy_id
     assert policy.version
-    expected_effective_at = (
-        "2026-07-23T00:00:00+08:00"
-        if relative_path in {"policies/underwriting.json", "policies/portfolio.json"}
-        else "2026-07-21T00:00:00+08:00"
-    )
+    if relative_path == "policies/research-allocation.json":
+        expected_effective_at = "2026-07-25T00:00:00+08:00"
+    elif relative_path in {"policies/underwriting.json", "policies/portfolio.json"}:
+        expected_effective_at = "2026-07-23T00:00:00+08:00"
+    else:
+        expected_effective_at = "2026-07-21T00:00:00+08:00"
     assert policy.effective_at.isoformat() == expected_effective_at
     assert policy.payload
 
@@ -148,6 +159,23 @@ def test_underwriting_policy_uses_risk_tiers_without_repeated_charges():
     assert "cannot be cured by a lower price" in policy.payload[
         "evidence_gap_principle"
     ]
+
+
+def test_research_allocation_policy_reserves_capacity_before_deep_research():
+    from trading_os.research_assets.models import load_policy
+
+    policy = load_policy(ROOT / "policies" / "research-allocation.json")
+    payload = policy.payload
+
+    assert payload["quick_profile_capacity_per_cycle"] == 200
+    assert sum(payload["selection_slots"].values()) == 200
+    assert payload["selection_slots"]["crisis_mispricing"] == 30
+    assert payload["selection_slots"]["false_negative_audit"] == 10
+    assert payload["stage_capacity_per_cycle"] == {
+        "scoped_research": 60,
+        "deep_research": 24,
+        "underwriting": 8,
+    }
 
 
 def test_policy_rejects_unknown_top_level_fields(tmp_path: Path):

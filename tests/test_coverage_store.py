@@ -170,6 +170,45 @@ def test_set_screening_and_enqueue_write_agent_safe_jsonl(tmp_path: Path):
     }
 
 
+def test_budgeted_quick_profile_queue_requires_budget_and_stop_conditions(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import (
+        CoverageValidationError,
+        enqueue_research,
+        read_jsonl,
+    )
+
+    root = tmp_path / "coverage" / "cn-a"
+    with pytest.raises(CoverageValidationError, match="effort_budget_hours"):
+        enqueue_research(
+            root,
+            symbol="CN:300750",
+            name="宁德时代",
+            priority=1,
+            reason="进入快速投资画像。",
+            task_type="quick_profile",
+        )
+
+    enqueue_research(
+        root,
+        symbol="CN:300750",
+        name="宁德时代",
+        priority=1,
+        reason="进入快速投资画像。",
+        task_type="quick_profile",
+        effort_budget_hours=1.0,
+        preceding_stage="machine_triage",
+        stop_conditions=["不存在可信投资路径"],
+    )
+
+    item = read_jsonl(root / "research_queue.jsonl")[0]
+    assert item["task_type"] == "quick_profile"
+    assert item["effort_budget_hours"] == 1.0
+    assert item["preceding_stage"] == "machine_triage"
+    assert item["stop_conditions"] == ["不存在可信投资路径"]
+
+
 def test_reconcile_research_queue_finds_valid_completed_asset_without_writing(
     tmp_path: Path,
 ):

@@ -11,7 +11,7 @@ from .company import validate_company_dir
 from .coverage_store import CoverageValidationError, read_jsonl
 from .sealing import atomic_write_bytes
 
-ALGORITHM_VERSION = "1.0.0"
+ALGORITHM_VERSION = "1.1.0"
 PRIVATE_FIELD_FRAGMENTS = {
     "actual_weight",
     "cost_basis",
@@ -247,6 +247,9 @@ def _value_score(
         elif pe <= 0:
             reasons.add("negative_pe_requires_normalization")
             score = 6.0
+        elif pe < 2:
+            reasons.add("extreme_low_pe_requires_one_off_verification")
+            score = 10.0
         elif pe <= 8:
             score = 19.0
         elif pe <= 15:
@@ -284,7 +287,10 @@ def _quality_score(
         missing.append("roe")
         return 8.0
     reasons.add("latest_period_roe_requires_normalization")
-    if roe >= 8:
+    if roe > 50:
+        score = 10.0
+        reasons.add("single_period_roe_outlier_requires_verification")
+    elif roe >= 8:
         score = 19.0
     elif roe >= 5:
         score = 17.0
@@ -366,6 +372,9 @@ def _catalyst_score(
     if revenue is None and profit is None:
         return 4.0
     values = [value for value in (revenue, profit) if value is not None]
+    if any(abs(value) > 200 for value in values):
+        reasons.add("single_period_growth_outlier_requires_verification")
+        return 4.0
     average = sum(values) / len(values)
     if average >= 20:
         reasons.add("strong_reported_growth_requires_verification")
@@ -394,7 +403,9 @@ def _evidence_score(
 def _penalties(company: Mapping[str, Any], industry: str) -> list[dict[str, Any]]:
     penalties: list[dict[str, Any]] = []
     if any(keyword in industry for keyword in CYCLICAL_KEYWORDS):
-        penalties.append({"code": "cyclical_peak_uncertainty", "points": 5.0})
+        penalties.append(
+            {"code": "cyclical_normalization_required", "points": 0.0}
+        )
     name = str(company.get("name") or "").replace(" ", "").upper()
     if name.startswith("*ST") or name.startswith("ST"):
         penalties.append({"code": "special_treatment_risk", "points": 12.0})

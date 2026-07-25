@@ -71,6 +71,7 @@ class PolicyKind(str, Enum):
     UNDERWRITING = "underwriting"
     PORTFOLIO = "portfolio"
     INDUSTRY = "industry"
+    RESEARCH_ALLOCATION = "research_allocation"
 
 
 class PolicyValidationError(ValueError):

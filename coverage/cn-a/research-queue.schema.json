@@ -23,7 +23,17 @@
         "properties": {
           "symbol": {"type": "string", "pattern": "^CN:[0-9]{6}$"},
           "name": {"type": "string", "minLength": 1},
-          "task_type": {"type": "string", "enum": ["initial_research", "followup_review"]},
+          "task_type": {
+            "type": "string",
+            "enum": [
+              "quick_profile",
+              "scoped_research",
+              "deep_research",
+              "monitoring_update",
+              "initial_research",
+              "followup_review"
+            ]
+          },
           "priority": {"type": "integer", "minimum": 1, "maximum": 5},
           "status": {
             "type": "string",
@@ -44,7 +54,13 @@
           "finished_at": {"type": ["string", "null"]},
           "result_path": {"type": ["string", "null"]},
           "failure_reason": {"type": ["string", "null"]},
-          "next_action": {"type": ["string", "null"]}
+          "next_action": {"type": ["string", "null"]},
+          "effort_budget_hours": {"type": ["number", "null"], "exclusiveMinimum": 0},
+          "preceding_stage": {"type": ["string", "null"]},
+          "stop_conditions": {
+            "type": ["array", "null"],
+            "items": {"type": "string", "minLength": 1}
+          }
         },
         "additionalProperties": true
       }
