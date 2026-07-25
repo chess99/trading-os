@@ -58,6 +58,7 @@ class ReviewRunStatus(str, Enum):
     REVEALING = "revealing"
     CHALLENGING = "challenging"
     COMPANY_REVIEWS_COMPLETE = "company_reviews_complete"
+    PORTFOLIO_CHALLENGING = "portfolio_challenging"
     SYNTHESIZING = "synthesizing"
     COMPLETED = "completed"
     BLOCKED_MISSING_EVIDENCE = "blocked_missing_evidence"

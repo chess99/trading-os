@@ -48,7 +48,11 @@ def _create_args(tmp_path: Path, candidates: Path) -> list[str]:
     ]
 
 
-def _attach_research_claims(company_dir: Path) -> None:
+def _attach_research_claims(
+    company_dir: Path,
+    *,
+    claim_category: str = "business",
+) -> None:
     from trading_os.research_assets.sealing import seal_json
 
     claims_path = company_dir / "evidence" / "research-claims.json"
@@ -59,7 +63,7 @@ def _attach_research_claims(company_dir: Path) -> None:
         "claims": [
             {
                 "claim_id": "claim-business-quality",
-                "category": "business",
+                "category": claim_category,
                 "claim": "公司具有可验证的品牌和渠道优势。",
                 "verification_metrics": ["渠道库存", "批价与出厂价关系"],
                 "falsifiers": ["渠道库存持续恶化"],

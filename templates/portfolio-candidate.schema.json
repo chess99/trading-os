@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trading-os.local/schemas/portfolio-candidate.schema.json",
+  "title": "Trading OS Machine Portfolio Candidate v3",
+  "type": "object",
+  "required": [
+    "symbol",
+    "name",
+    "underwriting_status",
+    "evidence_stale",
+    "independent_challenger_completed",
+    "source_machine_decision_sha256",
+    "policy_snapshot_sha256",
+    "current_price",
+    "price_as_of",
+    "bear_value",
+    "fair_value_range",
+    "buy_zone",
+    "reduce_zone",
+    "confidence",
+    "industry",
+    "economic_risk_clusters",
+    "return_model",
+    "bear_case_loss_fraction",
+    "allowed_loss_weight",
+    "held",
+    "reason_codes"
+  ],
+  "properties": {
+    "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
+    "name": {"type": "string", "minLength": 1},
+    "underwriting_status": {
+      "type": "string",
+      "enum": ["passed", "failed", "insufficient_evidence", "needs_challenger", "stale"]
+    },
+    "evidence_stale": {"type": "boolean"},
+    "independent_challenger_completed": {"type": "boolean"},
+    "source_machine_decision_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "current_price": {"type": "number", "exclusiveMinimum": 0},
+    "price_as_of": {"type": "string", "format": "date-time"},
+    "bear_value": {"type": "number"},
+    "fair_value_range": {"$ref": "#/$defs/range"},
+    "buy_zone": {"$ref": "#/$defs/range"},
+    "reduce_zone": {"$ref": "#/$defs/range"},
+    "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+    "industry": {"type": "string", "minLength": 1},
+    "economic_risk_clusters": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "return_model": {"$ref": "#/$defs/returnModel"},
+    "bear_case_loss_fraction": {"type": "number", "minimum": 0},
+    "allowed_loss_weight": {"type": "number", "minimum": 0, "maximum": 1},
+    "held": {"type": "boolean"},
+    "reason_codes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "range": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "returnModel": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "method",
+        "currency",
+        "model_as_of",
+        "base_case_distributions_per_share",
+        "base_case_terminal_value_per_share"
+      ],
+      "properties": {
+        "schema_version": {"type": "integer", "const": 1},
+        "method": {"type": "string", "const": "annual_cashflow_irr_v1"},
+        "currency": {"type": "string", "minLength": 1},
+        "model_as_of": {"type": "string", "format": "date-time"},
+        "base_case_distributions_per_share": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 30,
+          "items": {"type": "number", "minimum": 0}
+        },
+        "base_case_terminal_value_per_share": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

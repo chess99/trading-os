@@ -1,5 +1,5 @@
 <!-- trading-os-report-meta
-{"schema_version":2,"report_id":"{REPORT_ID}","report_type":"challenger_review","symbol":"{MARKET:TICKER}","as_of":"YYYY-MM-DD","information_cutoff":"ISO8601_WITH_OFFSET","price_snapshot_id":"{SNAPSHOT_ID}","policy_versions":{"underwriting.default":"1.0.0"},"agent_id":"{TOOL_AND_MODEL}","predecessor_reports":[],"sealed_artifacts":["underwriting/{REVIEW_ID}/challenger-assessment.json"],"source_manifest":"evidence/{REVIEW_ID}-challenger-sources.json"}
+{"schema_version":2,"report_id":"{REPORT_ID}","report_type":"challenger_review","symbol":"{MARKET:TICKER}","as_of":"YYYY-MM-DD","information_cutoff":"ISO8601_WITH_OFFSET","price_snapshot_id":"{SNAPSHOT_ID}","policy_versions":{"underwriting.default":"2.0.0"},"agent_id":"{TOOL_AND_MODEL}","predecessor_reports":[],"sealed_artifacts":["underwriting/{REVIEW_ID}/challenger-assessment.json"],"source_manifest":"evidence/{REVIEW_ID}-challenger-sources.json"}
 -->
 # 公司研究：{名称}（{MARKET:TICKER}）
 

@@ -59,7 +59,11 @@ ALLOWED_TRANSITIONS = {
         ReviewRunStatus.COMPANY_REVIEWS_COMPLETE.value
     },
     ReviewRunStatus.COMPANY_REVIEWS_COMPLETE.value: {
-        ReviewRunStatus.SYNTHESIZING.value
+        ReviewRunStatus.PORTFOLIO_CHALLENGING.value,
+        ReviewRunStatus.SYNTHESIZING.value,
+    },
+    ReviewRunStatus.PORTFOLIO_CHALLENGING.value: {
+        ReviewRunStatus.COMPANY_REVIEWS_COMPLETE.value
     },
     ReviewRunStatus.SYNTHESIZING.value: {ReviewRunStatus.COMPLETED.value},
 }
@@ -75,6 +79,7 @@ class ReviewRunStore:
         *,
         scope: Mapping[str, Any],
         policy_versions: Mapping[str, str],
+        policy_snapshot_sha256: str,
         created_at: dt.datetime,
         parent_run_id: str | None = None,
     ) -> dict[str, Any]:
@@ -82,6 +87,10 @@ class ReviewRunStore:
         _require_aware(created_at, "created_at")
         normalized_scope = _validate_scope(scope)
         normalized_policies = _validate_policy_versions(policy_versions)
+        policy_snapshot_sha256 = _validate_sha256(
+            policy_snapshot_sha256,
+            "policy_snapshot_sha256",
+        )
         if parent_run_id is not None:
             _validate_run_id(parent_run_id)
         state = {
@@ -91,6 +100,7 @@ class ReviewRunStore:
             "status": ReviewRunStatus.CREATED.value,
             "created_at": created_at.isoformat(),
             "policy_versions": normalized_policies,
+            "policy_snapshot_sha256": policy_snapshot_sha256,
             "candidate_set": {
                 "frozen": False,
                 "frozen_at": None,
@@ -507,6 +517,16 @@ def _validate_policy_versions(policy_versions: Mapping[str, str]) -> dict[str, s
             version, "policy version"
         )
     return dict(sorted(normalized.items()))
+
+
+def _validate_sha256(value: Any, label: str) -> str:
+    if (
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(char not in "0123456789abcdef" for char in value)
+    ):
+        raise ReviewStoreError(f"{label} must be a lowercase SHA-256 digest")
+    return value
 
 
 def _read_json_object(path: Path, label: str) -> dict[str, Any]:

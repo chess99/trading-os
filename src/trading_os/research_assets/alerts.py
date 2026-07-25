@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import datetime as dt
 import json
 from collections.abc import Mapping
 from pathlib import Path
@@ -38,7 +39,10 @@ def build_price_alerts(research_root: str | Path) -> dict[str, Any]:
                             "operator": "price_lte",
                             "threshold": valuation["buy_zone"][1],
                         },
-                        "reason": "价格进入承保买入区；执行前必须重查证据有效性和核心逻辑。",
+                        "reason": (
+                            "价格进入承保买入区；执行前必须重查证据有效性、"
+                            "最新预期回报和核心逻辑。"
+                        ),
                         "latest_report": latest_report,
                         "source_ref": underwriting["review_id"],
                     }
@@ -55,7 +59,9 @@ def build_price_alerts(research_root: str | Path) -> dict[str, Any]:
                             "threshold": PRICE_STALE_FRACTION,
                             "reference_price_as_of": valuation["price_as_of"],
                         },
-                        "reason": "相对承保复核价变动达到 10%，原价格结论自动过期。",
+                        "reason": (
+                            "相对承保复核价变动达到10%，原价格结论自动过期。"
+                        ),
                         "latest_report": latest_report,
                         "source_ref": underwriting["review_id"],
                     }
@@ -146,7 +152,7 @@ def _portfolio_observations(
     batches_root = root / "batches"
     if not batches_root.is_dir():
         return []
-    latest: dict[str, tuple[str, dict[str, Any]]] = {}
+    latest: dict[str, tuple[dt.datetime, str, dict[str, Any]]] = {}
     for portfolio_path in sorted(batches_root.glob("*/portfolio.json")):
         try:
             sealed = verify_sealed(portfolio_path)
@@ -157,32 +163,71 @@ def _portfolio_observations(
         payload = load_json(portfolio_path)
         if not isinstance(payload, Mapping):
             continue
+        try:
+            portfolio_as_of = dt.datetime.fromisoformat(str(payload.get("as_of")))
+        except ValueError:
+            continue
+        if portfolio_as_of.tzinfo is None or portfolio_as_of.utcoffset() is None:
+            continue
         run_id = str(payload.get("run_id") or portfolio_path.parent.name)
         for position in payload.get("positions", []):
-            if not isinstance(position, Mapping) or position.get("action") not in {
-                "reduce",
-                "exit",
-            }:
+            if not isinstance(position, Mapping):
                 continue
             symbol = str(position.get("symbol"))
             if not symbol or symbol in (excluded_symbols or set()):
                 continue
-            latest[symbol] = (run_id, dict(position))
+            prior = latest.get(symbol)
+            if prior is None or portfolio_as_of > prior[0]:
+                latest[symbol] = (portfolio_as_of, run_id, dict(position))
+
     observations: list[dict[str, Any]] = []
-    for symbol, (run_id, position) in sorted(latest.items()):
-        action = str(position["action"])
-        observations.append(
-            {
-                "alert_id": f"{symbol}:portfolio-{action}",
-                "symbol": symbol,
-                "name": str(position.get("name") or symbol),
-                "type": f"portfolio_{action}_observation",
-                "condition": {"operator": "observe"},
-                "reason": f"封存模型组合给出 {action}，需要复核持仓处置。",
-                "latest_report": None,
-                "source_ref": f"batches/{run_id}/portfolio.json",
-            }
-        )
+    for symbol, (_, run_id, position) in sorted(latest.items()):
+        action = str(position.get("action"))
+        if action in {"reduce", "exit"}:
+            observations.append(
+                {
+                    "alert_id": f"{symbol}:portfolio-{action}",
+                    "symbol": symbol,
+                    "name": str(position.get("name") or symbol),
+                    "type": f"portfolio_{action}_observation",
+                    "condition": {"operator": "observe"},
+                    "reason": f"封存模型组合给出 {action}，需要复核持仓处置。",
+                    "latest_report": None,
+                    "source_ref": f"batches/{run_id}/portfolio.json",
+                }
+            )
+        reasons = {
+            str(value) for value in position.get("reason_codes", []) if value
+        }
+        threshold = _number(position.get("buy_now_price_ceiling"))
+        if (
+            position.get("underwriting_status") == "passed"
+            and not bool(position.get("evidence_stale"))
+            and action in {"watch", "buy_on_weakness"}
+            and reasons.intersection(
+                {"expected_return_below_minimum", "price_above_buy_zone"}
+            )
+            and threshold is not None
+            and threshold > 0
+        ):
+            observations.append(
+                {
+                    "alert_id": f"{symbol}:portfolio-buy-threshold",
+                    "symbol": symbol,
+                    "name": str(position.get("name") or symbol),
+                    "type": "portfolio_buy_threshold_entry",
+                    "condition": {
+                        "operator": "price_lte",
+                        "threshold": threshold,
+                    },
+                    "reason": (
+                        "价格进入同时满足安全边际与组合最低回报的区间；"
+                        "执行前必须按最新证据重新运行组合决策。"
+                    ),
+                    "latest_report": None,
+                    "source_ref": f"batches/{run_id}/portfolio.json",
+                }
+            )
     return observations
 
 

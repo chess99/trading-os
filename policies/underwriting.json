@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "policy_id": "underwriting.default",
-  "version": "1.2.0",
-  "effective_at": "2026-07-23T00:00:00+08:00",
+  "version": "2.0.0",
+  "effective_at": "2026-07-25T00:00:00+08:00",
   "kind": "underwriting",
   "payload": {
     "default_holding_period_years": [1, 3],
@@ -26,6 +26,7 @@
     "minimum_valuation_methods": 2,
     "required_scenarios": ["bear", "base", "bull"],
     "critical_financial_source_tier": "S1",
+    "market_price_freshness_days": 3,
     "freshness_days": {
       "cyclical_price_and_inventory": 30,
       "general_industry_operating_data": 90

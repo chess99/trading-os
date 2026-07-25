@@ -23,6 +23,7 @@ def _create(store, run_id: str = "memory-2026-07-21") -> dict[str, object]:
             "underwriting.default": "1.0.0",
             "portfolio.default-model": "1.0.0",
         },
+        policy_snapshot_sha256="f" * 64,
         created_at=T0,
     )
 
@@ -70,6 +71,19 @@ def test_create_run_writes_v2_state_and_initial_event(tmp_path: Path):
     ]
 
 
+def test_create_run_rejects_null_policy_snapshot_hash(tmp_path: Path):
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    with pytest.raises(ReviewStoreError, match="policy_snapshot_sha256"):
+        _store(tmp_path).create_run(
+            "null-policy-snapshot",
+            scope={"type": "custom", "market": "CN", "description": "invalid"},
+            policy_versions={"underwriting.default": "2.0.0"},
+            policy_snapshot_sha256=None,
+            created_at=T0,
+        )
+
+
 def test_create_run_is_idempotent_only_for_identical_manifest(tmp_path: Path):
     from trading_os.research_assets.review_store import ReviewStoreError
 
@@ -82,6 +96,7 @@ def test_create_run_is_idempotent_only_for_identical_manifest(tmp_path: Path):
             "memory-2026-07-21",
             scope={"type": "theme", "market": "CN", "description": "changed"},
             policy_versions={"underwriting.default": "1.0.0"},
+            policy_snapshot_sha256="f" * 64,
             created_at=T0,
         )
 

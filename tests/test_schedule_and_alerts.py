@@ -4,6 +4,8 @@ import datetime as dt
 import json
 from pathlib import Path
 
+import pytest
+
 from tests.test_company_assets import write_company
 
 NOW = dt.datetime(2026, 7, 21, 15, 0, tzinfo=dt.timezone(dt.timedelta(hours=8)))
@@ -199,8 +201,9 @@ def test_reduce_and_exit_observations_only_come_from_sealed_portfolio(tmp_path: 
     seal_json(
         portfolio_path,
         {
-            "schema_version": 2,
+            "schema_version": 3,
             "run_id": "run-1",
+            "as_of": NOW.isoformat(),
             "positions": [
                 {"symbol": "CN:000001", "name": "平安银行", "action": "reduce"},
                 {"symbol": "CN:000002", "name": "万科A", "action": "exit"},
@@ -217,6 +220,65 @@ def test_reduce_and_exit_observations_only_come_from_sealed_portfolio(tmp_path: 
         "portfolio_exit_observation",
     }
     assert all(item["source_ref"] == "batches/run-1/portfolio.json" for item in alerts["items"])
+
+
+def test_near_miss_alert_uses_combined_return_and_buy_zone_ceiling(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.alerts import (
+        build_price_alerts,
+        evaluate_price_alerts,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    research_root = tmp_path / "research"
+    seal_json(
+        research_root / "batches" / "run-1" / "portfolio.json",
+        {
+            "schema_version": 3,
+            "run_id": "run-1",
+            "as_of": NOW.isoformat(),
+            "positions": [
+                {
+                    "symbol": "CN:000001",
+                    "name": "测试公司",
+                    "underwriting_status": "passed",
+                    "evidence_stale": False,
+                    "action": "watch",
+                    "buy_now_price_ceiling": 71.1780247813411,
+                    "reason_codes": [
+                        "expected_return_below_minimum",
+                        "expected_return_near_miss",
+                    ],
+                }
+            ],
+        },
+        artifact_type="model_portfolio",
+        sealed_at=NOW,
+    )
+
+    alerts = build_price_alerts(research_root)
+    threshold_alert = next(
+        item
+        for item in alerts["items"]
+        if item["type"] == "portfolio_buy_threshold_entry"
+    )
+    assert threshold_alert["condition"]["threshold"] == pytest.approx(
+        71.1780247813411
+    )
+    assert (
+        evaluate_price_alerts(
+            alerts,
+            [{"symbol": "CN:000001", "price": 72.0, "as_of": NOW.isoformat()}],
+        )["triggered_count"]
+        == 0
+    )
+    triggered = evaluate_price_alerts(
+        alerts,
+        [{"symbol": "CN:000001", "price": 71.0, "as_of": NOW.isoformat()}],
+    )
+    assert triggered["triggered_count"] == 1
+    assert triggered["triggered"][0]["type"] == "portfolio_buy_threshold_entry"
 
 
 def test_evaluate_v2_alerts_detects_buy_zone_and_price_staleness():

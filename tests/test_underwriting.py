@@ -1,12 +1,19 @@
 from __future__ import annotations
 
+import json
 from dataclasses import replace
+from pathlib import Path
 
 import pytest
 
 from trading_os.research_assets.evidence import EvidenceValidationResult
 
 VALID_EVIDENCE = EvidenceValidationResult(True, False, (), ())
+POLICY = json.loads(
+    (Path(__file__).parents[1] / "policies" / "underwriting.json").read_text(
+        encoding="utf-8"
+    )
+)["payload"]
 
 
 def _assessment() -> dict[str, object]:
@@ -50,8 +57,8 @@ def _assessment() -> dict[str, object]:
         },
         "counterevidence": ["需求下行", "成本上升", "竞争加剧"],
         "claim_reviews": [
-            {"claim_id": "C1", "category": "investment", "result": "confirmed"},
-            {"claim_id": "C2", "category": "fact", "result": "weakened"},
+            {"claim_id": "C1", "result": "confirmed"},
+            {"claim_id": "C2", "result": "weakened"},
         ],
         "risk_flags": {
             "governance_material_doubt": False,
@@ -73,7 +80,8 @@ def _evaluate(
     return evaluate_underwriting(
         assessment or _assessment(),
         evidence=evidence,
-        prior_claim_ids={"C1", "C2"},
+        prior_claims={"C1": "investment", "C2": "fact"},
+        policy=POLICY,
         prior_fair_value_range=prior_fair_value_range,
         proposed_top_five=proposed_top_five,
     )
@@ -87,6 +95,18 @@ def test_valid_assessment_passes_with_dynamic_required_return():
     assert result.required_safety_margin == pytest.approx(0.10)
     assert result.blockers == ()
     assert result.challenger_triggers == ()
+
+
+def test_nonfinite_valuation_input_is_rejected():
+    from trading_os.research_assets.underwriting import (
+        UnderwritingValidationError,
+    )
+
+    assessment = _assessment()
+    assessment["valuation"]["methods"][0]["value"] = float("nan")
+
+    with pytest.raises(UnderwritingValidationError, match="finite"):
+        _evaluate(assessment)
 
 
 @pytest.mark.parametrize(

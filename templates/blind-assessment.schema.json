@@ -1,38 +1,346 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://trading-os.local/schemas/blind-assessment.schema.json",
-  "title": "Trading OS Sealed Blind Assessment",
+  "title": "Trading OS Independent Assessment Envelope v3",
   "type": "object",
-  "required": ["schema_version", "assessment_id", "review_id", "packet_sha256", "symbol", "information_cutoff", "price_snapshot", "evidence_ledger", "earnings_bridge", "cash_flow_bridge", "safety_margin_tier", "valuation", "counterevidence", "provisional_status", "created_at"],
+  "required": [
+    "schema_version",
+    "assessment_id",
+    "review_id",
+    "packet_sha256",
+    "symbol",
+    "information_cutoff",
+    "assessment",
+    "evidence",
+    "portfolio_inputs"
+  ],
   "properties": {
-    "schema_version": {"type": "integer", "const": 2},
+    "schema_version": {"type": "integer", "const": 3},
     "assessment_id": {"type": "string", "minLength": 1},
     "review_id": {"type": "string", "minLength": 1},
     "packet_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
     "symbol": {"type": "string", "pattern": "^(CN|HK|US):[A-Z0-9.]+$"},
     "information_cutoff": {"type": "string", "format": "date-time"},
-    "price_snapshot": {"type": "object"},
-    "evidence_ledger": {"type": "array", "minItems": 1, "items": {"type": "object"}},
-    "earnings_bridge": {"type": "object"},
-    "cash_flow_bridge": {"type": "object"},
-    "safety_margin_tier": {"type": "string", "enum": ["standard", "elevated", "severe"]},
-    "valuation": {
+    "assessment": {"$ref": "#/$defs/assessment"},
+    "evidence": {"$ref": "#/$defs/evidence"},
+    "portfolio_inputs": {"$ref": "#/$defs/portfolioInputs"}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "range": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "assessment": {
       "type": "object",
-      "required": ["bear", "base", "bull", "methods", "fair_value_range", "buy_zone", "required_return"],
+      "required": [
+        "confidence",
+        "safety_margin_tier",
+        "normalization",
+        "accounting_checks",
+        "bridges",
+        "valuation",
+        "counterevidence",
+        "claim_reviews",
+        "risk_flags"
+      ],
       "properties": {
-        "bear": {"type": "number"},
-        "base": {"type": "number"},
-        "bull": {"type": "number"},
-        "methods": {"type": "array", "minItems": 2, "items": {"type": "object"}},
-        "fair_value_range": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2, "maxItems": 2},
-        "buy_zone": {"type": "array", "prefixItems": [{"type": "number"}, {"type": "number"}], "items": false, "minItems": 2, "maxItems": 2},
-        "required_return": {"type": "number", "minimum": 0}
+        "confidence": {"type": "string", "enum": ["high", "medium", "low"]},
+        "safety_margin_tier": {
+          "type": "string",
+          "enum": ["standard", "elevated", "severe"]
+        },
+        "normalization": {
+          "type": "object",
+          "required": [
+            "method",
+            "years_used",
+            "single_quarter_annualized",
+            "peak_profit_used",
+            "normalized_profit"
+          ],
+          "properties": {
+            "method": {"type": "string", "minLength": 1},
+            "years_used": {"type": "integer", "minimum": 1},
+            "single_quarter_annualized": {"type": "boolean"},
+            "peak_profit_used": {"type": "boolean"},
+            "normalized_profit": {"type": "number"}
+          },
+          "additionalProperties": false
+        },
+        "accounting_checks": {
+          "type": "object",
+          "required": [
+            "nonrecurring_items_handled",
+            "net_debt_handled",
+            "minority_interests_handled",
+            "dilution_handled",
+            "cash_flow_divergence_explained",
+            "working_capital_anomalies_explained"
+          ],
+          "properties": {
+            "nonrecurring_items_handled": {"type": "boolean"},
+            "net_debt_handled": {"type": "boolean"},
+            "minority_interests_handled": {"type": "boolean"},
+            "dilution_handled": {"type": "boolean"},
+            "cash_flow_divergence_explained": {"type": "boolean"},
+            "working_capital_anomalies_explained": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "bridges": {
+          "type": "object",
+          "required": [
+            "earnings_quality_complete",
+            "cash_flow_complete",
+            "normalized_earnings_complete"
+          ],
+          "properties": {
+            "earnings_quality_complete": {"type": "boolean"},
+            "cash_flow_complete": {"type": "boolean"},
+            "normalized_earnings_complete": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        },
+        "valuation": {
+          "type": "object",
+          "required": [
+            "methods",
+            "scenarios",
+            "fair_value_range",
+            "buy_zone",
+            "formulas_reproducible",
+            "sensitivity_complete",
+            "market_implied_assumptions_complete",
+            "government_bond_yield",
+            "equity_cost",
+            "required_return_used"
+          ],
+          "properties": {
+            "methods": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["name", "value"],
+                "properties": {
+                  "name": {"type": "string", "minLength": 1},
+                  "value": {"type": "number"}
+                },
+                "additionalProperties": false
+              }
+            },
+            "scenarios": {
+              "type": "object",
+              "required": ["bear", "base", "bull"],
+              "properties": {
+                "bear": {"type": "number"},
+                "base": {"type": "number"},
+                "bull": {"type": "number"}
+              },
+              "additionalProperties": false
+            },
+            "fair_value_range": {"$ref": "#/$defs/range"},
+            "buy_zone": {"$ref": "#/$defs/range"},
+            "formulas_reproducible": {"type": "boolean"},
+            "sensitivity_complete": {"type": "boolean"},
+            "market_implied_assumptions_complete": {"type": "boolean"},
+            "government_bond_yield": {"type": "number"},
+            "equity_cost": {"type": "number"},
+            "required_return_used": {"type": "number"}
+          },
+          "additionalProperties": false
+        },
+        "counterevidence": {
+          "type": "array",
+          "minItems": 3,
+          "items": {"type": "string", "minLength": 1},
+          "uniqueItems": true
+        },
+        "claim_reviews": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["claim_id", "result"],
+            "properties": {
+              "claim_id": {"type": "string", "minLength": 1},
+              "result": {
+                "type": "string",
+                "enum": ["confirmed", "weakened", "disproven", "untested"]
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "risk_flags": {
+          "type": "object",
+          "required": [
+            "governance_material_doubt",
+            "cycle_position_uncertain",
+            "permanent_loss_risk"
+          ],
+          "properties": {
+            "governance_material_doubt": {"type": "boolean"},
+            "cycle_position_uncertain": {"type": "boolean"},
+            "permanent_loss_risk": {"type": "boolean"}
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
     },
-    "counterevidence": {"type": "array", "minItems": 3, "items": {"type": "object"}},
-    "provisional_status": {"type": "string", "enum": ["passed", "failed", "insufficient_evidence", "needs_challenger", "stale"]},
-    "created_at": {"type": "string", "format": "date-time"}
-  },
-  "additionalProperties": false
+    "evidence": {
+      "type": "object",
+      "required": ["ledger", "share_count_bridge"],
+      "properties": {
+        "ledger": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/evidenceEntry"}
+        },
+        "share_count_bridge": {"$ref": "#/$defs/shareCountBridge"}
+      },
+      "additionalProperties": false
+    },
+    "evidenceEntry": {
+      "type": "object",
+      "required": [
+        "evidence_id",
+        "claim_id",
+        "source_id",
+        "fact_type",
+        "claim_role",
+        "value",
+        "period",
+        "original_basis",
+        "adjusted_basis",
+        "source_tier",
+        "source_uri_or_path",
+        "source_locator",
+        "observed_at",
+        "retrieved_at",
+        "cross_checked",
+        "review_result"
+      ],
+      "properties": {
+        "evidence_id": {"type": "string", "minLength": 1},
+        "claim_id": {"type": "string", "minLength": 1},
+        "source_id": {"type": "string", "minLength": 1},
+        "fact_type": {
+          "type": "string",
+          "enum": [
+            "critical_financial",
+            "market_price",
+            "general_industry",
+            "cyclical_price_inventory",
+            "share_count",
+            "governance",
+            "other"
+          ]
+        },
+        "claim_role": {
+          "type": "string",
+          "enum": ["fact", "purchase_reason", "risk", "context"]
+        },
+        "value": {},
+        "period": {"type": "string", "minLength": 1},
+        "original_basis": {"type": "string", "minLength": 1},
+        "adjusted_basis": {"type": "string", "minLength": 1},
+        "source_tier": {"type": "string", "enum": ["S1", "S2", "S3", "S4"]},
+        "source_uri_or_path": {"type": "string", "minLength": 1},
+        "source_locator": {"type": "string", "minLength": 1},
+        "observed_at": {"type": "string", "format": "date-time"},
+        "retrieved_at": {"type": "string", "format": "date-time"},
+        "cross_checked": {"type": "boolean"},
+        "review_result": {
+          "type": "string",
+          "enum": ["confirmed", "weakened", "disproven", "untested"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "shareCountBridge": {
+      "type": "object",
+      "required": ["base_shares", "events", "diluted_shares"],
+      "properties": {
+        "base_shares": {"type": "number", "exclusiveMinimum": 0},
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["event_id", "type", "share_delta", "handled"],
+            "properties": {
+              "event_id": {"type": "string", "minLength": 1},
+              "type": {
+                "type": "string",
+                "enum": ["issuance", "repurchase", "convertible", "split", "option"]
+              },
+              "share_delta": {"type": "number"},
+              "handled": {"type": "boolean"}
+            },
+            "additionalProperties": false
+          }
+        },
+        "diluted_shares": {"type": "number", "exclusiveMinimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "returnModel": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "method",
+        "currency",
+        "model_as_of",
+        "base_case_distributions_per_share",
+        "base_case_terminal_value_per_share"
+      ],
+      "properties": {
+        "schema_version": {"type": "integer", "const": 1},
+        "method": {"type": "string", "const": "annual_cashflow_irr_v1"},
+        "currency": {"type": "string", "minLength": 1},
+        "model_as_of": {"type": "string", "format": "date-time"},
+        "base_case_distributions_per_share": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 30,
+          "items": {"type": "number", "minimum": 0}
+        },
+        "base_case_terminal_value_per_share": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "portfolioInputs": {
+      "type": "object",
+      "required": [
+        "current_price",
+        "price_as_of",
+        "reduce_zone",
+        "industry",
+        "economic_risk_clusters",
+        "return_model"
+      ],
+      "properties": {
+        "current_price": {"type": "number", "exclusiveMinimum": 0},
+        "price_as_of": {"type": "string", "format": "date-time"},
+        "reduce_zone": {"$ref": "#/$defs/range"},
+        "industry": {"type": "string", "minLength": 1},
+        "economic_risk_clusters": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "return_model": {"$ref": "#/$defs/returnModel"}
+      },
+      "additionalProperties": false
+    }
+  }
 }

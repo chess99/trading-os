@@ -4,17 +4,32 @@ import copy
 import datetime as dt
 import hashlib
 import json
+import math
 import re
 from pathlib import Path
 from typing import Any, Mapping
 
 from .claims import build_claim_packet
 from .company import validate_company_dir, validate_research_assets
-from .models import ReviewRunStatus, load_policy
-from .portfolio import POLICY_KEYS, build_model_portfolio
+from .models import PolicyKind, ReviewRunStatus
+from .policy_snapshot import (
+    PolicySnapshotError,
+    ReviewPolicySnapshot,
+    build_policy_snapshot,
+    load_review_policy_snapshot,
+    policy_versions_from_snapshot,
+    seal_review_policy_snapshot,
+)
+from .portfolio import (
+    POLICY_KEYS,
+    PortfolioValidationError,
+    build_model_portfolio,
+    portfolio_candidate_core_sha256,
+)
 from .review_store import ReviewRunStore
 from .sealing import (
     atomic_write_bytes,
+    canonical_json_bytes,
     seal_json,
     verify_sealed,
 )
@@ -42,6 +57,7 @@ _PACKET_REQUIRED_STATUSES = {
     ReviewRunStatus.REVEALING.value,
     ReviewRunStatus.CHALLENGING.value,
     ReviewRunStatus.COMPANY_REVIEWS_COMPLETE.value,
+    ReviewRunStatus.PORTFOLIO_CHALLENGING.value,
     ReviewRunStatus.SYNTHESIZING.value,
     ReviewRunStatus.COMPLETED.value,
 }
@@ -74,18 +90,11 @@ def load_candidates(path: str | Path) -> list[dict[str, Any]]:
 
 
 def load_policy_versions(policy_root: str | Path) -> dict[str, str]:
-    root = Path(policy_root)
-    if not root.is_dir():
-        raise ReviewWorkflowError(f"policy directory does not exist: {root}")
-    versions: dict[str, str] = {}
-    for path in sorted(root.rglob("*.json")):
-        policy = load_policy(path)
-        if policy.policy_id in versions:
-            raise ReviewWorkflowError(f"duplicate policy_id: {policy.policy_id}")
-        versions[policy.policy_id] = policy.version
-    if not versions:
-        raise ReviewWorkflowError(f"no policies found under: {root}")
-    return versions
+    try:
+        payload = build_policy_snapshot(policy_root, run_id="policy-version-scan")
+        return policy_versions_from_snapshot(payload)
+    except PolicySnapshotError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
 
 
 def create_review(
@@ -101,14 +110,36 @@ def create_review(
     parent_run_id: str | None = None,
 ) -> dict[str, Any]:
     store = ReviewRunStore(runs_root)
-    policy_versions = load_policy_versions(policy_root)
-    store.create_run(
+    try:
+        snapshot_payload = build_policy_snapshot(policy_root, run_id=run_id)
+        policy_versions = policy_versions_from_snapshot(snapshot_payload)
+    except PolicySnapshotError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+    policy_snapshot_sha256 = hashlib.sha256(
+        canonical_json_bytes(snapshot_payload)
+    ).hexdigest()
+    state = store.create_run(
         run_id,
         scope={"type": scope_type, "market": market, "description": description},
         policy_versions=policy_versions,
+        policy_snapshot_sha256=policy_snapshot_sha256,
         created_at=created_at,
         parent_run_id=parent_run_id,
     )
+    try:
+        seal_review_policy_snapshot(
+            runs_root=runs_root,
+            run_id=run_id,
+            payload=snapshot_payload,
+            sealed_at=created_at,
+        )
+        load_review_policy_snapshot(
+            runs_root=runs_root,
+            run_id=run_id,
+            state=state,
+        )
+    except PolicySnapshotError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
     return store.freeze_candidates(
         run_id,
         list(candidates),
@@ -122,6 +153,7 @@ def prepare_review(
 ) -> dict[str, Any]:
     store = ReviewRunStore(runs_root)
     state = store.load_run(run_id)
+    _validated_policy_snapshot(runs_root=runs_root, run_id=run_id, state=state)
     if state["status"] in _TERMINAL_FAILURES:
         raise ReviewWorkflowError(f"review run is terminal: {state['status']}")
     if state["status"] in _PACKET_REQUIRED_STATUSES:
@@ -216,6 +248,11 @@ def validate_review(
 ) -> dict[str, Any]:
     store = ReviewRunStore(runs_root)
     state = store.load_run(run_id)
+    policy_snapshot = _validated_policy_snapshot(
+        runs_root=runs_root,
+        run_id=run_id,
+        state=state,
+    )
     candidates = store.read_candidates(run_id)
     events = store.read_events(run_id)
     if not events or events[-1]["to_status"] != state["status"]:
@@ -253,6 +290,7 @@ def validate_review(
         "strict": strict,
         "candidate_count": len(candidates),
         "event_count": len(events),
+        "policy_snapshot_sha256": policy_snapshot.sha256,
     }
 
 
@@ -267,6 +305,11 @@ def synthesize_review(
 ) -> dict[str, Any]:
     store = ReviewRunStore(runs_root)
     state = store.load_run(run_id)
+    policy_snapshot = _validated_policy_snapshot(
+        runs_root=runs_root,
+        run_id=run_id,
+        state=state,
+    )
     if state["status"] != ReviewRunStatus.COMPANY_REVIEWS_COMPLETE.value:
         raise ReviewWorkflowError(
             "review synthesize requires company_reviews_complete, "
@@ -283,7 +326,12 @@ def synthesize_review(
             raise ReviewWorkflowError("each quote must contain symbol, price, and as_of")
         symbol = str(item["symbol"])
         price = item["price"]
-        if isinstance(price, bool) or not isinstance(price, (int, float)) or price <= 0:
+        if (
+            isinstance(price, bool)
+            or not isinstance(price, (int, float))
+            or not math.isfinite(float(price))
+            or price <= 0
+        ):
             raise ReviewWorkflowError(f"invalid quote price for {symbol}")
         if symbol in quotes:
             raise ReviewWorkflowError(f"duplicate quote symbol: {symbol}")
@@ -308,34 +356,82 @@ def synthesize_review(
             f"quote snapshot is stale for: {', '.join(stale_symbols)}"
         )
 
+    try:
+        portfolio_policy = policy_snapshot.require_kind(PolicyKind.PORTFOLIO)
+    except PolicySnapshotError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+    policy = {
+        key: portfolio_policy["payload"][key]
+        for key in POLICY_KEYS
+    }
+    stale_threshold = float(
+        portfolio_policy["payload"]["price_change_stale_threshold"]
+    )
+
     candidates: list[dict[str, Any]] = []
+    candidate_hashes: dict[str, str] = {}
     for item in store.read_candidates(run_id):
         symbol = item["symbol"]
         if symbol not in quotes:
             raise ReviewWorkflowError(f"quote snapshot is missing candidate: {symbol}")
-        candidate_path = (
-            Path(item["target_company_dir"])
-            / "underwriting"
-            / run_id
-            / "portfolio-candidate.json"
+        candidate_path = _active_portfolio_candidate_path(
+            Path(item["target_company_dir"]),
+            run_id,
         )
         sealed = verify_sealed(candidate_path)
         if sealed.artifact_type != "portfolio_candidate":
             raise ReviewWorkflowError(f"invalid portfolio candidate type: {symbol}")
+        candidate_hashes[symbol] = sealed.sha256
         candidate = _read_json_object(candidate_path, "portfolio candidate")
         if candidate.get("symbol") != symbol:
             raise ReviewWorkflowError(f"portfolio candidate symbol mismatch: {symbol}")
+        if candidate.get("policy_snapshot_sha256") != policy_snapshot.sha256:
+            raise ReviewWorkflowError(
+                f"portfolio candidate policy snapshot mismatch: {symbol}"
+            )
+        decision_filename = (
+            "final-underwriting-decision.json"
+            if candidate_path.name == "portfolio-candidate.final.json"
+            else "primary-evaluation.json"
+        )
+        decision_path = candidate_path.with_name(decision_filename)
+        decision_seal = verify_sealed(decision_path)
+        if (
+            decision_seal.artifact_type
+            != "machine_underwriting_evaluation"
+            or decision_seal.sha256
+            != candidate.get("source_machine_decision_sha256")
+        ):
+            raise ReviewWorkflowError(
+                f"portfolio candidate machine decision mismatch: {symbol}"
+            )
+        machine_decision = _read_json_object(
+            decision_path,
+            "machine underwriting decision",
+        )
+        if (
+            machine_decision.get("symbol") != symbol
+            or machine_decision.get("status")
+            != candidate.get("underwriting_status")
+            or machine_decision.get("policy_snapshot_sha256")
+            != policy_snapshot.sha256
+        ):
+            raise ReviewWorkflowError(
+                f"portfolio candidate decision fields diverge: {symbol}"
+            )
+        _validate_candidate_binding(
+            run_id=run_id,
+            candidate_path=candidate_path,
+            candidate=candidate,
+            machine_decision=machine_decision,
+            policy_snapshot_sha256=policy_snapshot.sha256,
+        )
         prior_price = candidate["current_price"]
         candidate["_previous_price"] = prior_price
         candidate["current_price"] = quotes[symbol]
+        candidate["price_as_of"] = quote_times[symbol].isoformat()
         candidates.append(candidate)
 
-    portfolio_policy = load_policy(Path(policy_root) / "portfolio.json")
-    policy = {
-        key: portfolio_policy.payload[key]
-        for key in POLICY_KEYS
-    }
-    stale_threshold = float(portfolio_policy.payload["price_change_stale_threshold"])
     for candidate in candidates:
         previous = float(candidate.pop("_previous_price", candidate["current_price"]))
         if previous > 0 and abs(candidate["current_price"] / previous - 1) >= stale_threshold:
@@ -344,6 +440,53 @@ def synthesize_review(
                 {*candidate["reason_codes"], "price_change_invalidated_conclusion"}
             )
     result = build_model_portfolio(candidates, policy=policy)
+    if result.challenger_required_symbols:
+        request_payload = {
+            "schema_version": 3,
+            "run_id": run_id,
+            "requested_at": synthesized_at.isoformat(),
+            "quote_snapshot_sha256": hashlib.sha256(
+                canonical_json_bytes(quotes_raw)
+            ).hexdigest(),
+            "policy_snapshot_sha256": policy_snapshot.sha256,
+            "candidates": [
+                {
+                    "symbol": symbol,
+                    "primary_candidate_sha256": candidate_hashes[symbol],
+                }
+                for symbol in result.challenger_required_symbols
+            ],
+        }
+        request_id = hashlib.sha256(
+            canonical_json_bytes(request_payload)
+        ).hexdigest()
+        request_artifact = seal_json(
+            Path(runs_root)
+            / run_id
+            / "portfolio_challenger_requests"
+            / f"{request_id}.json",
+            request_payload,
+            artifact_type="portfolio_challenger_request",
+            sealed_at=synthesized_at,
+        )
+        store.transition(
+            run_id,
+            ReviewRunStatus.PORTFOLIO_CHALLENGING.value,
+            actor="cli",
+            at=synthesized_at,
+            reason=(
+                "actual top-five allocation requires independent challenger: "
+                + ",".join(result.challenger_required_symbols)
+            ),
+        )
+        return {
+            "schema_version": 2,
+            "run_id": run_id,
+            "status": ReviewRunStatus.PORTFOLIO_CHALLENGING.value,
+            "challenger_request_path": request_artifact.path.as_posix(),
+            "challenger_request_sha256": request_artifact.sha256,
+            "symbols": list(result.challenger_required_symbols),
+        }
     batch_dir = Path(research_root) / "batches" / run_id
     quote_artifact = seal_json(
         batch_dir / "quotes.json",
@@ -352,13 +495,20 @@ def synthesize_review(
         sealed_at=synthesized_at,
     )
     portfolio = {
-        "schema_version": 2,
+        "schema_version": 3,
         "portfolio_id": f"model-{run_id}",
         "run_id": run_id,
         "as_of": synthesized_at.isoformat(),
         "quote_snapshot_sha256": quote_artifact.sha256,
+        "policy_snapshot_sha256": policy_snapshot.sha256,
         "policy_versions": state["policy_versions"],
-        "positions": [_decision_payload(item) for item in result.decisions],
+        "positions": [
+            {
+                **_decision_payload(item),
+                "portfolio_candidate_sha256": candidate_hashes[item.symbol],
+            }
+            for item in result.decisions
+        ],
         "cash_weight": result.cash_weight,
         "exclusions": [
             {
@@ -369,6 +519,10 @@ def synthesize_review(
             for item in result.exclusions
         ],
     }
+    _validate_portfolio_payload(
+        portfolio,
+        expected_policy_snapshot_sha256=policy_snapshot.sha256,
+    )
     sealed_portfolio = seal_json(
         batch_dir / "portfolio.json",
         portfolio,
@@ -427,35 +581,20 @@ def write_review_report(
     if portfolio_seal.artifact_type != "model_portfolio":
         raise ReviewWorkflowError("portfolio artifact type is invalid")
     portfolio = _read_json_object(batch_dir / "portfolio.json", "portfolio")
-    lines = [
-        f"# 独立承保复核综合：{run_id}",
-        "",
-        f"生成时间：{reported_at.isoformat()}",
-        "",
-        "| 公司 | 承保 | 置信度 | 操作 | 现价 | 悲观价值 | 合理价值 | "
-        "买入区 | 目标仓位 | 理由代码 |",
-        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---|",
-    ]
-    for item in portfolio["positions"]:
-        lines.append(
-            (
-                "| {name}（{symbol}） | {underwriting} | {confidence} | {action} | "
-                "{price:g} | {bear:g} | {fair} | {buy} | {weight:.2%} | {reasons} |"
-            ).format(
-                name=item["name"],
-                symbol=item["symbol"],
-                underwriting=item["underwriting_status"],
-                confidence=item["confidence"],
-                action=item["action"],
-                price=item["current_price"],
-                bear=item["bear_value"],
-                fair="–".join(f"{value:g}" for value in item["fair_value_range"]),
-                buy="–".join(f"{value:g}" for value in item["buy_zone"]),
-                weight=item["target_weight"],
-                reasons=", ".join(item["reason_codes"]),
-            )
-        )
-    lines.extend(["", f"现金权重：{portfolio['cash_weight']:.2%}", ""])
+    policy_snapshot = _validated_policy_snapshot(
+        runs_root=runs_root,
+        run_id=run_id,
+        state=state,
+    )
+    _validate_portfolio_payload(
+        portfolio,
+        expected_policy_snapshot_sha256=policy_snapshot.sha256,
+    )
+    lines = _portfolio_report_lines(
+        portfolio,
+        run_id=run_id,
+        reported_at=reported_at,
+    )
     content = "\n".join(lines).encode("utf-8")
     path = batch_dir / "synthesis.md"
     if path.exists() and path.read_bytes() != content:
@@ -527,6 +666,15 @@ def finalize_review_companies(
     portfolio = _read_json_object(portfolio_path, "portfolio")
     if portfolio.get("run_id") != run_id:
         raise ReviewWorkflowError("portfolio run_id does not match review run")
+    policy_snapshot = _validated_policy_snapshot(
+        runs_root=runs_root,
+        run_id=run_id,
+        state=state,
+    )
+    _validate_portfolio_payload(
+        portfolio,
+        expected_policy_snapshot_sha256=policy_snapshot.sha256,
+    )
 
     receipt_path = batch_dir / "company-finalization.json"
     candidates = store.read_candidates(run_id)
@@ -583,8 +731,9 @@ def finalize_review_companies(
         if meta["identity"]["symbol"] != symbol:
             raise ReviewWorkflowError(f"company symbol mismatch: {symbol}")
 
-        source_candidate_path = (
-            company_dir / "underwriting" / run_id / "portfolio-candidate.json"
+        source_candidate_path = _active_portfolio_candidate_path(
+            company_dir,
+            run_id,
         )
         source_seal = verify_sealed(source_candidate_path)
         if source_seal.artifact_type != "portfolio_candidate":
@@ -600,6 +749,14 @@ def finalize_review_companies(
         ):
             raise ReviewWorkflowError(
                 f"portfolio underwriting status diverges from candidate: {symbol}"
+            )
+        if source_seal.sha256 != decision.get("portfolio_candidate_sha256"):
+            raise ReviewWorkflowError(
+                f"portfolio candidate SHA-256 diverges: {symbol}"
+            )
+        if source_candidate.get("policy_snapshot_sha256") != policy_snapshot.sha256:
+            raise ReviewWorkflowError(
+                f"portfolio candidate policy snapshot diverges: {symbol}"
             )
 
         prior_review_id = meta["underwriting"]["review_id"]
@@ -769,6 +926,145 @@ def validate_all_assets(research_root: str | Path) -> dict[str, Any]:
     return {"ok": result["invalid_count"] == 0, **result}
 
 
+def _validated_policy_snapshot(
+    *,
+    runs_root: str | Path,
+    run_id: str,
+    state: Mapping[str, Any],
+) -> ReviewPolicySnapshot:
+    try:
+        return load_review_policy_snapshot(
+            runs_root=runs_root,
+            run_id=run_id,
+            state=state,
+        )
+    except PolicySnapshotError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+
+
+def _active_portfolio_candidate_path(
+    company_dir: Path,
+    run_id: str,
+) -> Path:
+    review_dir = company_dir / "underwriting" / run_id
+    final_path = review_dir / "portfolio-candidate.final.json"
+    if final_path.is_file():
+        return final_path
+    primary_path = review_dir / "portfolio-candidate.primary.json"
+    if primary_path.is_file():
+        return primary_path
+    raise ReviewWorkflowError(
+        f"portfolio candidate is missing: {company_dir.name}"
+    )
+
+
+def _validate_candidate_binding(
+    *,
+    run_id: str,
+    candidate_path: Path,
+    candidate: Mapping[str, Any],
+    machine_decision: Mapping[str, Any],
+    policy_snapshot_sha256: str,
+) -> None:
+    symbol = str(candidate.get("symbol"))
+    expected_decision_source_stage = (
+        "arbitration"
+        if candidate_path.name == "portfolio-candidate.final.json"
+        else "blind"
+    )
+    expected_challenger_completed = expected_decision_source_stage == "arbitration"
+    if (
+        machine_decision.get("review_id") != run_id
+        or machine_decision.get("source_stage")
+        != expected_decision_source_stage
+        or machine_decision.get("challenger_completed")
+        is not expected_challenger_completed
+        or candidate.get("independent_challenger_completed")
+        is not expected_challenger_completed
+        or candidate.get("evidence_stale")
+        is not (machine_decision.get("status") == "stale")
+    ):
+        raise ReviewWorkflowError(
+            f"portfolio candidate decision state diverges: {symbol}"
+        )
+
+    assessment_filenames = {
+        "blind": "blind-assessment.json",
+        "challenger": "challenger-assessment.json",
+        "arbitration": "arbitration.json",
+    }
+    decision_source_stage = str(machine_decision.get("source_stage"))
+    decision_source_path = candidate_path.with_name(
+        assessment_filenames[decision_source_stage]
+    )
+    decision_source_seal = verify_sealed(decision_source_path)
+    if (
+        decision_source_seal.artifact_type
+        != f"{decision_source_stage}_assessment"
+        or machine_decision.get("source_assessment_sha256")
+        != decision_source_seal.sha256
+    ):
+        raise ReviewWorkflowError(
+            f"machine decision source assessment mismatch: {symbol}"
+        )
+
+    candidate_source_stage = machine_decision.get("candidate_source_stage")
+    allowed_candidate_sources = (
+        {"blind", "challenger"}
+        if expected_challenger_completed
+        else {"blind"}
+    )
+    if candidate_source_stage not in allowed_candidate_sources:
+        raise ReviewWorkflowError(
+            f"portfolio candidate source stage mismatch: {symbol}"
+        )
+    candidate_source_path = candidate_path.with_name(
+        assessment_filenames[str(candidate_source_stage)]
+    )
+    candidate_source_seal = verify_sealed(candidate_source_path)
+    if (
+        candidate_source_seal.artifact_type
+        != f"{candidate_source_stage}_assessment"
+        or machine_decision.get("candidate_source_assessment_sha256")
+        != candidate_source_seal.sha256
+    ):
+        raise ReviewWorkflowError(
+            f"portfolio candidate source assessment mismatch: {symbol}"
+        )
+    candidate_source = _read_json_object(
+        candidate_source_path,
+        "portfolio candidate source assessment",
+    )
+    if (
+        candidate_source.get("review_id") != run_id
+        or candidate_source.get("symbol") != symbol
+    ):
+        raise ReviewWorkflowError(
+            f"portfolio candidate source identity mismatch: {symbol}"
+        )
+
+    if (
+        machine_decision.get("policy_snapshot_sha256")
+        != policy_snapshot_sha256
+    ):
+        raise ReviewWorkflowError(
+            f"portfolio candidate policy decision mismatch: {symbol}"
+        )
+    try:
+        actual_core_sha256 = portfolio_candidate_core_sha256(candidate)
+    except (PortfolioValidationError, ValueError) as exc:
+        raise ReviewWorkflowError(
+            f"portfolio candidate core is invalid: {symbol}"
+        ) from exc
+    if (
+        machine_decision.get("portfolio_candidate_core_sha256")
+        != actual_core_sha256
+    ):
+        raise ReviewWorkflowError(
+            f"portfolio candidate core SHA-256 mismatch: {symbol}"
+        )
+
+
 def _load_latest_research_claims(
     company_dir: Path, meta: Mapping[str, Any]
 ) -> tuple[dict[str, Any], str]:
@@ -811,16 +1107,144 @@ def _decision_payload(item: Any) -> dict[str, Any]:
         "confidence": item.confidence,
         "action": item.action,
         "current_price": item.current_price,
+        "price_as_of": item.price_as_of,
+        "expected_annual_return": item.expected_annual_return,
+        "minimum_expected_annual_return": item.minimum_expected_annual_return,
+        "expected_return_gap": item.expected_return_gap,
+        "minimum_return_activation_price": item.minimum_return_activation_price,
+        "near_miss_return_activation_price": item.near_miss_return_activation_price,
+        "buy_now_price_ceiling": item.buy_now_price_ceiling,
         "bear_value": item.bear_value,
         "fair_value_range": list(item.fair_value_range),
         "buy_zone": list(item.buy_zone),
         "reduce_zone": list(item.reduce_zone),
+        "return_model": {
+            "schema_version": 1,
+            "method": item.return_model_method,
+            "currency": item.return_model_currency,
+            "model_as_of": item.return_model_as_of,
+            "base_case_distributions_per_share": list(
+                item.annual_cash_distributions
+            ),
+            "base_case_terminal_value_per_share": item.terminal_value,
+        },
         "target_weight": item.target_weight,
         "initial_entry_weight": item.initial_entry_weight,
         "industry": item.industry,
         "economic_risk_clusters": list(item.economic_risk_clusters),
         "reason_codes": list(item.reason_codes),
     }
+
+
+def _portfolio_report_lines(
+    portfolio: Mapping[str, Any],
+    *,
+    run_id: str,
+    reported_at: dt.datetime,
+) -> list[str]:
+    lines = [
+        f"# 独立承保复核综合：{run_id}",
+        "",
+        f"生成时间：{reported_at.isoformat()}",
+        "",
+        "| 公司 | 承保 | 置信度 | 操作 | 现价 | 预期年化 | 距12%门槛 | "
+        "12%激活价 | 实际买入上限 | 合理价值 | 目标仓位 | 理由代码 |",
+        "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|",
+    ]
+    for item in portfolio["positions"]:
+        lines.append(
+            (
+                "| {name}（{symbol}） | {underwriting} | {confidence} | {action} | "
+                "{price:g} | {expected:.2%} | {gap:+.2%} | {activation:g} | "
+                "{ceiling:g} | {fair} | {weight:.2%} | {reasons} |"
+            ).format(
+                name=item["name"],
+                symbol=item["symbol"],
+                underwriting=item["underwriting_status"],
+                confidence=item["confidence"],
+                action=item["action"],
+                price=item["current_price"],
+                expected=item["expected_annual_return"],
+                gap=item["expected_return_gap"],
+                activation=item["minimum_return_activation_price"],
+                ceiling=item["buy_now_price_ceiling"],
+                fair="–".join(f"{value:g}" for value in item["fair_value_range"]),
+                weight=item["target_weight"],
+                reasons=", ".join(item["reason_codes"]),
+            )
+        )
+    lines.extend(["", f"现金权重：{portfolio['cash_weight']:.2%}", ""])
+    return lines
+
+
+def _validate_portfolio_payload(
+    payload: Mapping[str, Any],
+    *,
+    expected_policy_snapshot_sha256: str | None = None,
+) -> None:
+    top_level = {
+        "schema_version",
+        "portfolio_id",
+        "run_id",
+        "as_of",
+        "quote_snapshot_sha256",
+        "policy_snapshot_sha256",
+        "policy_versions",
+        "positions",
+        "cash_weight",
+        "exclusions",
+    }
+    position_fields = {
+        "symbol",
+        "name",
+        "underwriting_status",
+        "evidence_stale",
+        "confidence",
+        "action",
+        "current_price",
+        "price_as_of",
+        "expected_annual_return",
+        "minimum_expected_annual_return",
+        "expected_return_gap",
+        "minimum_return_activation_price",
+        "near_miss_return_activation_price",
+        "buy_now_price_ceiling",
+        "bear_value",
+        "fair_value_range",
+        "buy_zone",
+        "reduce_zone",
+        "return_model",
+        "portfolio_candidate_sha256",
+        "target_weight",
+        "initial_entry_weight",
+        "industry",
+        "economic_risk_clusters",
+        "reason_codes",
+    }
+    if set(payload) != top_level or payload.get("schema_version") != 3:
+        raise ReviewWorkflowError("portfolio payload does not match the v3 contract")
+    snapshot_hash = payload.get("policy_snapshot_sha256")
+    if (
+        not isinstance(snapshot_hash, str)
+        or len(snapshot_hash) != 64
+        or any(char not in "0123456789abcdef" for char in snapshot_hash)
+    ):
+        raise ReviewWorkflowError("portfolio policy_snapshot_sha256 is invalid")
+    if (
+        expected_policy_snapshot_sha256 is not None
+        and snapshot_hash != expected_policy_snapshot_sha256
+    ):
+        raise ReviewWorkflowError(
+            "portfolio policy_snapshot_sha256 does not match the review snapshot"
+        )
+    positions = payload.get("positions")
+    if not isinstance(positions, list):
+        raise ReviewWorkflowError("portfolio positions must be an array")
+    for item in positions:
+        if not isinstance(item, Mapping) or set(item) != position_fields:
+            raise ReviewWorkflowError(
+                "portfolio position does not match the v3 contract"
+            )
 
 
 def _next_action(status: str) -> str:
@@ -830,6 +1254,9 @@ def _next_action(status: str) -> str:
         ReviewRunStatus.BLIND_SEALED.value: "dispatch_reveal_reviews",
         ReviewRunStatus.REVEALING.value: "complete_reveal_or_dispatch_challenger",
         ReviewRunStatus.CHALLENGING.value: "complete_challenger_and_arbitration",
+        ReviewRunStatus.PORTFOLIO_CHALLENGING.value: (
+            "complete_top_five_challenger_and_arbitration"
+        ),
         ReviewRunStatus.COMPLETED.value: "none",
     }.get(status, "inspect_status")
 

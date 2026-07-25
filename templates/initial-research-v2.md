@@ -9,7 +9,7 @@
   "price_snapshot_id": null,
   "policy_versions": {
     "research-allocation.default": "1.0.0",
-    "underwriting.default": "1.2.0"
+    "underwriting.default": "2.0.0"
   },
   "agent_id": "{TOOL_AND_MODEL}",
   "predecessor_reports": [],
