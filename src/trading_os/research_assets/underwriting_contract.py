@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import math
+import re
 from dataclasses import dataclass
 from typing import Any, Mapping
 
@@ -72,6 +73,7 @@ def evaluate_assessment_envelope(
         expected_symbol=expected_symbol,
         expected_review_id=expected_review_id,
     )
+    packet_quality_blockers = _claim_packet_quality_blockers(claim_packet)
     evidence = _evaluate_evidence(
         envelope,
         prior_claims=prior_claims,
@@ -79,6 +81,15 @@ def evaluate_assessment_envelope(
         policy=underwriting_policy,
         evaluated_at=evaluated_at,
     )
+    if packet_quality_blockers:
+        evidence = EvidenceValidationResult(
+            is_valid=False,
+            is_stale=False,
+            blockers=tuple(
+                sorted(set(evidence.blockers) | packet_quality_blockers)
+            ),
+            warnings=evidence.warnings,
+        )
     _validate_portfolio_inputs(envelope["portfolio_inputs"])
     evaluation = evaluate_underwriting(
         envelope["assessment"],
@@ -177,6 +188,33 @@ def _packet_authorities(
             )
         allowed_sources[source_id] = tier
     return prior_claims, allowed_sources
+
+
+def _claim_packet_quality_blockers(packet: Mapping[str, Any]) -> set[str]:
+    """Reject obvious encoding damage without rewriting sealed research history."""
+
+    claims = packet.get("claims")
+    if not isinstance(claims, list):
+        return {"corrupt_claim_packet_text"}
+    for claim in claims:
+        if not isinstance(claim, Mapping):
+            return {"corrupt_claim_packet_text"}
+        for field in ("claim", "falsifiers", "verification_metrics"):
+            value = claim.get(field)
+            texts = [value] if isinstance(value, str) else value
+            if (
+                not isinstance(texts, list)
+                or not texts
+                or any(
+                    not isinstance(text, str)
+                    or not text.strip()
+                    or "\ufffd" in text
+                    or re.search(r"\?{3,}", text) is not None
+                    for text in texts
+                )
+            ):
+                return {"corrupt_claim_packet_text"}
+    return set()
 
 
 def _evaluate_evidence(

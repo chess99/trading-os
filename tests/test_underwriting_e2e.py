@@ -4,6 +4,7 @@ import copy
 import datetime as dt
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -12,12 +13,68 @@ from tests.test_review_dispatch import (
     NOW,
     MachineContractRunner,
     _dispatcher,
+    _envelope,
     _prepared_review,
 )
 
 
 def _activation_price() -> float:
     return 180.0 / (1.12**5)
+
+
+def test_corrupt_claim_packet_text_forces_insufficient_evidence():
+    from trading_os.research_assets.underwriting_contract import (
+        evaluate_assessment_envelope,
+    )
+
+    packet_sha256 = "a" * 64
+    payload = _envelope(
+        SimpleNamespace(
+            task_id="corrupt-claim-packet",
+            run_id="memory-2026-07-21",
+            symbol="CN:600519",
+        ),
+        packet_sha256=packet_sha256,
+    )
+    claim_packet = {
+        "schema_version": 2,
+        "review_id": "memory-2026-07-21",
+        "symbol": "CN:600519",
+        "claims": [
+            {
+                "claim_id": "claim-business-quality",
+                "category": "business",
+                "claim": "????????????",
+                "verification_metrics": ["渠道库存"],
+                "falsifiers": ["渠道库存持续恶化"],
+            }
+        ],
+        "allowed_sources": [
+            {
+                "source_id": "annual-report",
+                "tier": "S1",
+                "uri_or_path": "sources/annual-report.pdf",
+            }
+        ],
+    }
+    policy = json.loads(
+        Path("policies/underwriting.json").read_text(encoding="utf-8")
+    )["payload"]
+
+    result = evaluate_assessment_envelope(
+        payload,
+        expected_symbol="CN:600519",
+        expected_review_id="memory-2026-07-21",
+        expected_packet_sha256=packet_sha256,
+        claim_packet=claim_packet,
+        underwriting_policy=policy,
+        evaluated_at=NOW,
+        prior_fair_value_range=None,
+    )
+
+    assert result.evidence.blockers == ("corrupt_claim_packet_text",)
+    assert result.evidence.is_stale is False
+    assert result.evaluation.status == "insufficient_evidence"
 
 
 class RepricingRunner(MachineContractRunner):

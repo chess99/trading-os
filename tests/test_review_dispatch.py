@@ -15,6 +15,7 @@ from automation.scripts.build_review_prompt import (
 )
 from automation.scripts.review_dispatch import (
     AgentResult,
+    DraftDirectoryRunner,
     DispatchError,
     ReviewDispatcher,
     SubprocessRunner,
@@ -344,6 +345,25 @@ def test_blind_prompt_contains_packet_but_not_prior_decision(tmp_path: Path):
     assert '"portfolio_eligible"' not in prompt
 
 
+def test_draft_directory_runner_reads_only_the_task_draft(tmp_path: Path):
+    task = type(
+        "Task",
+        (),
+        {"stage": "blind", "symbol": "CN:600519"},
+    )()
+    expected = {"schema_version": 3, "symbol": "CN:600519"}
+    (
+        tmp_path / "blind-CN-600519.draft.json"
+    ).write_text(json.dumps(expected), encoding="utf-8")
+    (
+        tmp_path / "challenger-CN-600519.draft.json"
+    ).write_text(json.dumps({"wrong": True}), encoding="utf-8")
+
+    result = DraftDirectoryRunner(tmp_path).run(task)
+
+    assert result == AgentResult(ok=True, payload=expected)
+
+
 def test_malformed_blind_payload_cannot_enter_production_chain(tmp_path: Path):
     runs_root, policy_root, _, run_id = _prepared_review(tmp_path)
 
@@ -510,6 +530,72 @@ def test_machine_overrides_accounting_failure_even_without_agent_status(
     )
     assert candidate["underwriting_status"] == "failed"
     assert "nonrecurring_items_unhandled" in candidate["reason_codes"]
+
+
+@pytest.mark.parametrize(
+    ("evidence_failure", "expected_status", "expected_blocker"),
+    [
+        ("stale", "stale", "stale_cyclical_data"),
+        (
+            "insufficient",
+            "insufficient_evidence",
+            "critical_financial_not_s1",
+        ),
+    ],
+)
+def test_evidence_failure_is_not_sent_to_challenger(
+    tmp_path: Path,
+    evidence_failure: str,
+    expected_status: str,
+    expected_blocker: str,
+):
+    runs_root, policy_root, company_dir, run_id = _prepared_review(tmp_path)
+
+    class EvidenceFailureRunner(MachineContractRunner):
+        def run(self, task):
+            result = super().run(task)
+            if not result.ok or task.stage != "blind":
+                return result
+            payload = copy.deepcopy(result.payload)
+            filing = next(
+                item
+                for item in payload["evidence"]["ledger"]
+                if item["evidence_id"] == "E-FILING"
+            )
+            if evidence_failure == "stale":
+                filing["fact_type"] = "cyclical_price_inventory"
+                filing["observed_at"] = (
+                    NOW - dt.timedelta(days=31)
+                ).isoformat()
+            else:
+                filing["source_tier"] = "S2"
+            return AgentResult(ok=True, payload=payload)
+
+    runner = EvidenceFailureRunner(
+        company_dir=company_dir,
+        run_id=run_id,
+        risk_flag="cycle_position_uncertain",
+    )
+    dispatcher = _dispatcher(runs_root, policy_root, runner)
+
+    assert dispatcher.dispatch(run_id, now=NOW).status == "blind_sealed"
+    assert dispatcher.dispatch(run_id, now=NOW).status == (
+        "company_reviews_complete"
+    )
+
+    primary = json.loads(
+        (
+            company_dir
+            / "underwriting"
+            / run_id
+            / "primary-evaluation.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert primary["status"] == expected_status
+    assert expected_blocker in primary["blockers"]
+    assert "cycle_position_uncertain" in primary["challenger_triggers"]
+    assert primary["challenger_required"] is False
+    assert [task.stage for task in runner.tasks] == ["blind", "reveal"]
 
 
 @pytest.mark.parametrize(
