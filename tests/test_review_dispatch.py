@@ -899,6 +899,49 @@ def test_consensus_adverse_finding_cannot_be_cleared_by_arbitration(
     assert expected_blocker in candidate["reason_codes"]
 
 
+def test_consensus_cycle_uncertainty_can_pass_after_independent_challenge(
+    tmp_path: Path,
+):
+    runs_root, policy_root, company_dir, run_id = _prepared_review(tmp_path)
+
+    class ConsensusCycleRunner(MachineContractRunner):
+        def run(self, task):
+            result = super().run(task)
+            if not result.ok or task.stage not in {"blind", "challenger"}:
+                return result
+            payload = copy.deepcopy(result.payload)
+            payload["assessment"]["risk_flags"][
+                "cycle_position_uncertain"
+            ] = True
+            payload["assessment"]["safety_margin_tier"] = "elevated"
+            return AgentResult(ok=True, payload=payload)
+
+    runner = ConsensusCycleRunner(company_dir=company_dir, run_id=run_id)
+    dispatcher = _dispatcher(runs_root, policy_root, runner)
+
+    assert dispatcher.dispatch(run_id, now=NOW).status == "blind_sealed"
+    assert dispatcher.dispatch(run_id, now=NOW).status == "challenging"
+    assert (
+        dispatcher.dispatch(run_id, now=NOW).status
+        == "company_reviews_complete"
+    )
+
+    candidate = json.loads(
+        (
+            company_dir
+            / "underwriting"
+            / run_id
+            / "portfolio-candidate.final.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert candidate["underwriting_status"] == "passed"
+    assert "cycle_position_uncertain" in candidate["reason_codes"]
+    assert (
+        "consensus_risk_flag:cycle_position_uncertain"
+        not in candidate["reason_codes"]
+    )
+
+
 def test_arbitration_can_degrade_but_never_upgrade_independent_consensus(
     tmp_path: Path,
 ):
