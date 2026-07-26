@@ -39,6 +39,13 @@ CYCLICAL_KEYWORDS = (
     "化工",
 )
 FINANCIAL_KEYWORDS = ("银行", "保险", "证券", "多元金融")
+MANUAL_SCREENING_DECISIONS = {"needs_manual_review"}
+HARD_SCREENING_DECISIONS = {
+    "hard_exclusion",
+    "skip_risk",
+    "skip_too_small",
+    "skip_not_in_scope",
+}
 
 
 class RebaselineRankingError(ValueError):
@@ -49,6 +56,7 @@ def build_rebaseline_ranking(
     *,
     companies_path: str | Path,
     queue_path: str | Path,
+    screening_path: str | Path,
     research_root: str | Path,
     generated_at: dt.datetime,
     max_snapshot_age_days: int = 7,
@@ -59,10 +67,13 @@ def build_rebaseline_ranking(
 
     companies_file = Path(companies_path)
     queue_file = Path(queue_path)
+    screening_file = Path(screening_path)
     companies = read_jsonl(companies_file)
     queue = read_jsonl(queue_file)
+    screening = read_jsonl(screening_file)
     _reject_private_fields(companies, "companies snapshot")
     _reject_private_fields(queue, "research queue")
+    _reject_private_fields(screening, "screening snapshot")
     if not companies:
         raise RebaselineRankingError("companies snapshot is empty")
 
@@ -86,6 +97,12 @@ def build_rebaseline_ranking(
 
     items: list[dict[str, Any]] = []
     excluded: list[dict[str, str]] = []
+    screening_by_symbol: dict[str, dict[str, Any]] = {}
+    for record in screening:
+        symbol = _text(record.get("symbol"), "screening.symbol")
+        if symbol in screening_by_symbol:
+            raise RebaselineRankingError(f"duplicate screening symbol: {symbol}")
+        screening_by_symbol[symbol] = record
     seen_queue: set[str] = set()
     for task in queue:
         symbol = _text(task.get("symbol"), "queue.symbol")
@@ -96,11 +113,55 @@ def build_rebaseline_ranking(
             continue
         company = by_symbol.get(symbol)
         if company is None:
-            excluded.append({"symbol": symbol, "reason_code": "snapshot_missing"})
+            excluded.append(
+                {
+                    "symbol": symbol,
+                    "reason_code": "snapshot_missing",
+                    "category": "data_error",
+                }
+            )
+            continue
+        screening_record = screening_by_symbol.get(symbol)
+        if screening_record is None:
+            excluded.append(
+                {
+                    "symbol": symbol,
+                    "reason_code": "screening_missing",
+                    "category": "data_error",
+                }
+            )
+            continue
+        screening_decision = _text(
+            screening_record.get("decision"),
+            f"{symbol} screening decision",
+        )
+        if screening_decision in MANUAL_SCREENING_DECISIONS:
+            excluded.append(
+                {
+                    "symbol": symbol,
+                    "reason_code": "manual_review_required",
+                    "category": "manual_review",
+                }
+            )
+            continue
+        if screening_decision in HARD_SCREENING_DECISIONS:
+            excluded.append(
+                {
+                    "symbol": symbol,
+                    "reason_code": f"screening_{screening_decision}",
+                    "category": "hard_exclusion",
+                }
+            )
             continue
         hard_reason = _hard_exclusion(company)
         if hard_reason is not None:
-            excluded.append({"symbol": symbol, "reason_code": hard_reason})
+            excluded.append(
+                {
+                    "symbol": symbol,
+                    "reason_code": hard_reason,
+                    "category": "hard_exclusion",
+                }
+            )
             continue
         company_dir = _resolve_company_dir(task, Path(research_root))
         meta = validate_company_dir(company_dir)
@@ -128,6 +189,8 @@ def build_rebaseline_ranking(
             "companies_sha256": _sha256(companies_file),
             "queue_path": queue_file.as_posix(),
             "queue_sha256": _sha256(queue_file),
+            "screening_path": screening_file.as_posix(),
+            "screening_sha256": _sha256(screening_file),
         },
         "snapshot": {
             "as_of": snapshot_as_of.isoformat(),

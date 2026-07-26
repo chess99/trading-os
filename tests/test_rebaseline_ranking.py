@@ -42,12 +42,14 @@ def _company_dir(tmp_path: Path, ticker: str, name: str) -> Path:
     return target
 
 
-def _inputs(tmp_path: Path, records: list[dict]) -> tuple[Path, Path, Path]:
+def _inputs(tmp_path: Path, records: list[dict]) -> tuple[Path, Path, Path, Path]:
     from trading_os.research_assets.coverage_store import write_jsonl
 
     companies_path = tmp_path / "coverage" / "cn-a" / "companies.jsonl"
     queue_path = tmp_path / "coverage" / "cn-a" / "research_queue.jsonl"
+    screening_path = tmp_path / "coverage" / "cn-a" / "screening.jsonl"
     queue = []
+    screening = []
     for record in records:
         ticker = record["symbol"].split(":", 1)[1]
         company_dir = _company_dir(tmp_path, ticker, record["name"])
@@ -59,9 +61,17 @@ def _inputs(tmp_path: Path, records: list[dict]) -> tuple[Path, Path, Path]:
                 "target_company_dir": str(company_dir),
             }
         )
+        screening.append(
+            {
+                "symbol": record["symbol"],
+                "name": record["name"],
+                "decision": "deep_research",
+            }
+        )
     write_jsonl(companies_path, records)
     write_jsonl(queue_path, queue)
-    return companies_path, queue_path, tmp_path / "research"
+    write_jsonl(screening_path, screening)
+    return companies_path, queue_path, screening_path, tmp_path / "research"
 
 
 def _record(symbol: str = "CN:600519", name: str = "样本公司", **changes) -> dict:
@@ -91,10 +101,11 @@ def _record(symbol: str = "CN:600519", name: str = "样本公司", **changes) ->
 def _build(tmp_path: Path, records: list[dict], **kwargs):
     from trading_os.research_assets.rebaseline_ranking import build_rebaseline_ranking
 
-    companies, queue, research = _inputs(tmp_path, records)
+    companies, queue, screening, research = _inputs(tmp_path, records)
     return build_rebaseline_ranking(
         companies_path=companies,
         queue_path=queue,
+        screening_path=screening,
         research_root=research,
         generated_at=NOW,
         **kwargs,
@@ -108,10 +119,11 @@ def test_ranking_is_stable_and_ties_break_by_symbol(tmp_path: Path):
         _record("CN:600002", "乙公司"),
         _record("CN:000001", "甲公司"),
     ]
-    companies, queue, research = _inputs(tmp_path, records)
+    companies, queue, screening, research = _inputs(tmp_path, records)
     kwargs = {
         "companies_path": companies,
         "queue_path": queue,
+        "screening_path": screening,
         "research_root": research,
         "generated_at": NOW,
     }
@@ -202,7 +214,41 @@ def test_delisting_security_is_hard_excluded_with_reason(tmp_path: Path):
 
     assert payload["ranked_count"] == 0
     assert payload["excluded"] == [
-        {"symbol": "CN:600519", "reason_code": "delisting_name_signal"}
+        {
+            "symbol": "CN:600519",
+            "reason_code": "delisting_name_signal",
+            "category": "hard_exclusion",
+        }
+    ]
+
+
+def test_manual_review_company_is_not_promoted_by_public_ranking(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.rebaseline_ranking import build_rebaseline_ranking
+
+    companies, queue, screening, research = _inputs(
+        tmp_path,
+        [_record(name="*ST样本")],
+    )
+    records = read_jsonl(screening)
+    records[0]["decision"] = "needs_manual_review"
+    write_jsonl(screening, records)
+
+    payload = build_rebaseline_ranking(
+        companies_path=companies,
+        queue_path=queue,
+        screening_path=screening,
+        research_root=research,
+        generated_at=NOW,
+    )
+
+    assert payload["ranked_count"] == 0
+    assert payload["excluded"] == [
+        {
+            "symbol": "CN:600519",
+            "reason_code": "manual_review_required",
+            "category": "manual_review",
+        }
     ]
 
 

@@ -39,9 +39,13 @@ coverage/
 
 ## 分流结果
 
+- `catalog`：已进入全市场可审计目录，但本周期未获得进一步研究预算。
 - `quick_profile`：获得一小时级快速投资画像预算。
 - `scoped_research`：只解决一至三个决定性未知数。
+- `targeted_followup`：只补齐一个或少数决定性证据。
 - `deep_research`：进入完整公司研究队列。
+- `price_watch`：公司可能可投，但当前价格不支持继续购买研究预算。
+- `reassign_or_stop`：超出当前 agent 能力圈，转派或暂停。
 - `watch_only`：已有研究档案或等待既定复查，不重复创建初始研究任务。
 - `conditional_stop`：继续研究的信息价值不足或存在经证据确认的阻断项；必须记录重新激活条件。
 - `hard_exclusion`：非普通股、退市或法律上不能形成投资对象。
@@ -72,6 +76,7 @@ python -m trading_os coverage status
 python -m trading_os coverage get CN:600519
 python -m trading_os coverage rank-rebaseline
 python -m trading_os coverage allocate-research
+python -m trading_os coverage apply-allocation
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1 --reason "多视角选样进入快速画像" --task-type quick_profile --effort-budget-hours 1 --preceding-stage machine_triage --stop-condition "不存在可信的10%回报路径"
 ```

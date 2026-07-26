@@ -209,6 +209,47 @@ def test_budgeted_quick_profile_queue_requires_budget_and_stop_conditions(
     assert item["stop_conditions"] == ["不存在可信投资路径"]
 
 
+def test_reconcile_does_not_erase_pending_pre_report_stage(tmp_path: Path):
+    from tests.test_company_assets import write_company
+    from trading_os.research_assets.coverage_store import (
+        read_jsonl,
+        reconcile_research_queue,
+        write_jsonl,
+    )
+
+    company_dir = write_company(tmp_path)
+    meta_path = company_dir / "meta.json"
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    meta["research"]["rebaseline_required"] = True
+    meta_path.write_text(
+        json.dumps(meta, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    root = tmp_path / "coverage" / "cn-a"
+    write_jsonl(
+        root / "research_queue.jsonl",
+        [
+            {
+                "symbol": "CN:600519",
+                "name": "贵州茅台",
+                "task_type": "quick_profile",
+                "priority": 1,
+                "status": "pending",
+                "reason": "本周期快速画像",
+                "target_company_dir": str(company_dir),
+                "effort_budget_hours": 1.0,
+                "preceding_stage": "machine_triage",
+                "stop_conditions": ["不存在可信投资路径"],
+            }
+        ],
+    )
+
+    result = reconcile_research_queue(root, tmp_path, apply=False)
+
+    assert result["change_count"] == 0
+    assert read_jsonl(root / "research_queue.jsonl")[0]["status"] == "pending"
+
+
 def test_reconcile_research_queue_finds_valid_completed_asset_without_writing(
     tmp_path: Path,
 ):

@@ -4,9 +4,13 @@ import json
 from pathlib import Path
 
 DECISIONS = {
+    "catalog",
     "quick_profile",
     "scoped_research",
+    "targeted_followup",
     "deep_research",
+    "price_watch",
+    "reassign_or_stop",
     "watch_only",
     "conditional_stop",
     "hard_exclusion",

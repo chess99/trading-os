@@ -41,6 +41,7 @@ from .research_assets.rebaseline_ranking import (
 )
 from .research_assets.research_allocation import (
     ResearchAllocationError,
+    apply_research_allocation,
     allocate_research_capacity,
     evaluate_quick_profile,
     write_research_allocation,
@@ -229,6 +230,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_coverage_root(rank_rebaseline)
     rank_rebaseline.add_argument("--companies")
+    rank_rebaseline.add_argument("--screening")
     rank_rebaseline.add_argument("--research-root", default="research")
     rank_rebaseline.add_argument("--output", default="automation/rebaseline_ranking.json")
     rank_rebaseline.add_argument("--max-snapshot-age-days", type=int, default=7)
@@ -252,6 +254,22 @@ def build_parser() -> argparse.ArgumentParser:
         default="automation/research_allocation.json",
     )
     allocate_research.set_defaults(func=cmd_coverage_allocate_research)
+
+    apply_allocation = coverage_sub.add_parser(
+        "apply-allocation",
+        help="Apply a sealed research-capacity decision to coverage queues",
+    )
+    _add_coverage_root(apply_allocation)
+    apply_allocation.add_argument(
+        "--ranking",
+        default="automation/rebaseline_ranking.json",
+    )
+    apply_allocation.add_argument(
+        "--allocation",
+        default="automation/research_allocation.json",
+    )
+    _add_timestamp(apply_allocation)
+    apply_allocation.set_defaults(func=cmd_coverage_apply_allocation)
 
     evaluate_profile = coverage_sub.add_parser(
         "evaluate-profile",
@@ -506,6 +524,7 @@ def cmd_coverage_rank_rebaseline(ns: argparse.Namespace) -> int:
     payload = build_rebaseline_ranking(
         companies_path=ns.companies or root / "companies.jsonl",
         queue_path=root / "research_queue.jsonl",
+        screening_path=ns.screening or root / "screening.jsonl",
         research_root=ns.research_root,
         generated_at=_timestamp(ns.at),
         max_snapshot_age_days=ns.max_snapshot_age_days,
@@ -540,6 +559,19 @@ def cmd_coverage_allocate_research(ns: argparse.Namespace) -> int:
             "warnings": payload["warnings"],
         }
     )
+    return 0
+
+
+def cmd_coverage_apply_allocation(ns: argparse.Namespace) -> int:
+    ranking = json.loads(Path(ns.ranking).read_text(encoding="utf-8"))
+    allocation = json.loads(Path(ns.allocation).read_text(encoding="utf-8"))
+    payload = apply_research_allocation(
+        allocation,
+        ranking=ranking,
+        root=ns.root,
+        applied_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
     return 0
 
 

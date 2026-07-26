@@ -8,6 +8,13 @@ import re
 from pathlib import Path
 from typing import Any, Callable, Mapping
 
+from .coverage_store import (
+    COMPANIES_FILE,
+    RESEARCH_QUEUE_FILE,
+    SCREENING_FILE,
+    read_jsonl,
+    write_jsonl,
+)
 from .sealing import atomic_write_bytes
 
 
@@ -203,7 +210,238 @@ def allocate_research_capacity(
         "deferred_count": len(deferred),
         "selected": selected,
         "deferred": deferred,
-        "hard_excluded": raw_excluded,
+        "excluded": raw_excluded,
+    }
+
+
+def apply_research_allocation(
+    allocation: Mapping[str, Any],
+    *,
+    ranking: Mapping[str, Any],
+    root: str | Path,
+    applied_at: dt.datetime,
+) -> dict[str, Any]:
+    """Materialize one finite-capacity cycle into screening and queue JSONL.
+
+    The public ranking remains only a map. Selected companies receive a
+    one-hour quick-profile budget; ordinary deferred companies remain in the
+    auditable catalog, and manual/hard exclusions retain their separate gates.
+    """
+
+    if applied_at.tzinfo is None or applied_at.utcoffset() is None:
+        raise ResearchAllocationError("applied_at must include a UTC offset")
+    if not isinstance(allocation, Mapping) or not isinstance(ranking, Mapping):
+        raise ResearchAllocationError("allocation and ranking must be objects")
+    if allocation.get("ranking_content_sha256") != _mapping_sha256(ranking):
+        raise ResearchAllocationError("allocation ranking SHA-256 mismatch")
+
+    raw_items = ranking.get("items")
+    selected = allocation.get("selected")
+    deferred = allocation.get("deferred")
+    excluded = allocation.get("excluded")
+    if not all(isinstance(value, list) for value in (raw_items, selected, deferred, excluded)):
+        raise ResearchAllocationError("allocation partitions must be arrays")
+
+    ranking_items = {
+        _symbol(item.get("symbol")): item
+        for item in raw_items
+        if isinstance(item, Mapping)
+    }
+    if len(ranking_items) != len(raw_items):
+        raise ResearchAllocationError("ranking items must be unique objects")
+    selected_items = _allocation_partition(selected, "quick_profile")
+    deferred_items = _allocation_partition(deferred, "catalog")
+    if set(selected_items) & set(deferred_items):
+        raise ResearchAllocationError("selected and deferred symbols overlap")
+    if set(selected_items) | set(deferred_items) != set(ranking_items):
+        raise ResearchAllocationError(
+            "selected and deferred symbols must partition ranking items"
+        )
+
+    base = Path(root)
+    companies = {
+        _symbol(item.get("symbol")): item
+        for item in read_jsonl(base / COMPANIES_FILE)
+    }
+    screening_records = read_jsonl(base / SCREENING_FILE)
+    queue_records = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    screening_by_symbol = {
+        _symbol(item.get("symbol")): dict(item) for item in screening_records
+    }
+    queue_by_symbol = {
+        _symbol(item.get("symbol")): dict(item) for item in queue_records
+    }
+    allocation_sha = _mapping_sha256(allocation)
+    applied_iso = applied_at.isoformat()
+
+    for symbol, allocation_item in selected_items.items():
+        company = _required_company(companies, symbol)
+        ranking_item = ranking_items[symbol]
+        selected_by = _text_list(
+            allocation_item.get("selected_by"),
+            f"{symbol}.selected_by",
+        )
+        priority = _selected_priority(selected_by)
+        screening_by_symbol[symbol] = _screening_record(
+            screening_by_symbol.get(symbol),
+            company=company,
+            decision="quick_profile",
+            priority=priority,
+            reason="多视角全市场分配获得本周期快速画像预算。",
+            evidence=[
+                f"ranking_sha256:{allocation['ranking_content_sha256']}",
+                f"allocation_sha256:{allocation_sha}",
+                f"selected_by:{','.join(selected_by)}",
+                f"ranking_confidence:{ranking_item['score_confidence']}",
+            ],
+            next_action=(
+                "在1小时预算内完成快速投资画像；只能进入范围研究、定向补证、"
+                "观察或结构化停止。"
+            ),
+            allocation_at=applied_iso,
+        )
+        queue_by_symbol[symbol] = _quick_profile_queue_record(
+            queue_by_symbol.get(symbol),
+            company=company,
+            priority=priority,
+            status="pending",
+            reason="多视角全市场分配获得本周期快速画像预算。",
+            next_action="完成快速投资画像并提交结构化分流结果。",
+            allocation_sha=allocation_sha,
+            selected_by=selected_by,
+        )
+
+    for symbol in deferred_items:
+        company = _required_company(companies, symbol)
+        screening_by_symbol[symbol] = _screening_record(
+            screening_by_symbol.get(symbol),
+            company=company,
+            decision="catalog",
+            priority=None,
+            reason="本周期研究容量分配给信息价值更高的候选，保留在全市场目录。",
+            evidence=[
+                f"ranking_sha256:{allocation['ranking_content_sha256']}",
+                f"allocation_sha256:{allocation_sha}",
+                "reactivation:filing,price,event,thesis",
+            ],
+            next_action="等待下一研究周期或财报、价格、事件、论点触发后重新竞争预算。",
+            allocation_at=applied_iso,
+        )
+        existing = queue_by_symbol.get(symbol)
+        priority = (
+            int(existing["priority"])
+            if existing is not None and isinstance(existing.get("priority"), int)
+            else 5
+        )
+        queue_by_symbol[symbol] = _quick_profile_queue_record(
+            existing,
+            company=company,
+            priority=priority,
+            status="requires_rebaseline",
+            reason="本周期未获得快速画像容量，保留可恢复候选状态。",
+            next_action="等待下一研究周期或结构化重启触发器。",
+            allocation_sha=allocation_sha,
+            selected_by=[],
+        )
+
+    manual_count = 0
+    hard_exclusion_count = 0
+    for item in excluded:
+        if not isinstance(item, Mapping):
+            raise ResearchAllocationError("excluded items must be objects")
+        symbol = _symbol(item.get("symbol"))
+        category = _require_text(item.get("category"), f"{symbol}.category")
+        reason_code = _require_text(
+            item.get("reason_code"),
+            f"{symbol}.reason_code",
+        )
+        company = _required_company(companies, symbol)
+        existing = queue_by_symbol.get(symbol)
+        priority = (
+            int(existing["priority"])
+            if existing is not None and isinstance(existing.get("priority"), int)
+            else 3
+        )
+        if category in {"manual_review", "data_error"}:
+            manual_count += 1
+            screening_by_symbol[symbol] = _screening_record(
+                screening_by_symbol.get(symbol),
+                company=company,
+                decision="needs_manual_review",
+                priority=priority,
+                reason=f"机器分配前必须人工解决：{reason_code}",
+                evidence=[reason_code, f"allocation_sha256:{allocation_sha}"],
+                next_action="主 agent 先确定证券状态、数据冲突或特殊风险的研究路径。",
+                allocation_at=applied_iso,
+            )
+            queue_by_symbol[symbol] = _quick_profile_queue_record(
+                existing,
+                company=company,
+                priority=priority,
+                status="needs_review",
+                reason=f"机器分配前必须人工解决：{reason_code}",
+                next_action="人工复核后再决定是否进入快速画像。",
+                allocation_sha=allocation_sha,
+                selected_by=[],
+            )
+        elif category == "hard_exclusion":
+            hard_exclusion_count += 1
+            screening_by_symbol[symbol] = _screening_record(
+                screening_by_symbol.get(symbol),
+                company=company,
+                decision="hard_exclusion",
+                priority=None,
+                reason=f"不构成当前普通A股投资对象：{reason_code}",
+                evidence=[reason_code, f"allocation_sha256:{allocation_sha}"],
+                next_action="仅在证券状态或法律投资属性改变时重新纳入。",
+                allocation_at=applied_iso,
+            )
+            queue_by_symbol[symbol] = _quick_profile_queue_record(
+                existing,
+                company=company,
+                priority=priority,
+                status="skipped",
+                reason=f"不构成当前普通A股投资对象：{reason_code}",
+                next_action="证券状态改变后重新筛选。",
+                allocation_sha=allocation_sha,
+                selected_by=[],
+            )
+        else:
+            raise ResearchAllocationError(
+                f"unsupported excluded category for {symbol}: {category}"
+            )
+
+    completed_count = 0
+    for symbol, queue_item in queue_by_symbol.items():
+        if queue_item.get("status") != "completed" or symbol not in companies:
+            continue
+        completed_count += 1
+        company = companies[symbol]
+        screening_by_symbol[symbol] = _screening_record(
+            screening_by_symbol.get(symbol),
+            company=company,
+            decision="watch_only",
+            priority=None,
+            reason="已有结构化研究结果，不重复购买快速画像预算。",
+            evidence=[
+                f"result_path:{queue_item.get('result_path')}",
+                f"allocation_sha256:{allocation_sha}",
+            ],
+            next_action="按财报、价格和论点触发器复核。",
+            allocation_at=applied_iso,
+        )
+
+    write_jsonl(base / SCREENING_FILE, list(screening_by_symbol.values()))
+    write_jsonl(base / RESEARCH_QUEUE_FILE, list(queue_by_symbol.values()))
+    return {
+        "schema_version": 1,
+        "allocation_sha256": allocation_sha,
+        "applied_at": applied_iso,
+        "selected_quick_profile_count": len(selected_items),
+        "deferred_catalog_count": len(deferred_items),
+        "manual_review_count": manual_count,
+        "hard_exclusion_count": hard_exclusion_count,
+        "completed_watch_count": completed_count,
     }
 
 
@@ -303,6 +541,121 @@ def write_research_allocation(
         json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
     ).encode("utf-8")
     return atomic_write_bytes(target, content)
+
+
+def _allocation_partition(
+    items: list[Any],
+    expected_stage: str,
+) -> dict[str, Mapping[str, Any]]:
+    result: dict[str, Mapping[str, Any]] = {}
+    for item in items:
+        if not isinstance(item, Mapping):
+            raise ResearchAllocationError("allocation items must be objects")
+        symbol = _symbol(item.get("symbol"))
+        if item.get("stage") != expected_stage:
+            raise ResearchAllocationError(
+                f"{symbol} allocation stage must be {expected_stage}"
+            )
+        if symbol in result:
+            raise ResearchAllocationError(f"duplicate allocation symbol: {symbol}")
+        result[symbol] = item
+    return result
+
+
+def _required_company(
+    companies: Mapping[str, Mapping[str, Any]],
+    symbol: str,
+) -> Mapping[str, Any]:
+    company = companies.get(symbol)
+    if company is None:
+        raise ResearchAllocationError(f"company snapshot missing: {symbol}")
+    return company
+
+
+def _selected_priority(selected_by: list[str]) -> int:
+    lenses = set(selected_by)
+    if "balanced" in lenses:
+        return 1
+    if lenses & {
+        "value_income",
+        "quality_compounder",
+        "financial_specialist",
+        "cyclical_specialist",
+    }:
+        return 2
+    if lenses & {"crisis_mispricing", "information_change"}:
+        return 3
+    return 4
+
+
+def _screening_record(
+    existing: Mapping[str, Any] | None,
+    *,
+    company: Mapping[str, Any],
+    decision: str,
+    priority: int | None,
+    reason: str,
+    evidence: list[str],
+    next_action: str,
+    allocation_at: str,
+) -> dict[str, Any]:
+    record = dict(existing or {})
+    record.update(
+        {
+            "symbol": _symbol(company.get("symbol")),
+            "name": _require_text(company.get("name"), "company.name"),
+            "decision": decision,
+            "priority": priority,
+            "reason": reason,
+            "evidence": evidence,
+            "next_action": next_action,
+            "allocation_at": allocation_at,
+        }
+    )
+    return record
+
+
+def _quick_profile_queue_record(
+    existing: Mapping[str, Any] | None,
+    *,
+    company: Mapping[str, Any],
+    priority: int,
+    status: str,
+    reason: str,
+    next_action: str,
+    allocation_sha: str,
+    selected_by: list[str],
+) -> dict[str, Any]:
+    symbol = _symbol(company.get("symbol"))
+    ticker = symbol.split(":", 1)[1]
+    record = dict(existing or {})
+    record.update(
+        {
+            "symbol": symbol,
+            "name": _require_text(company.get("name"), f"{symbol}.name"),
+            "task_type": "quick_profile",
+            "priority": priority,
+            "status": status,
+            "reason": reason,
+            "target_company_dir": f"research/companies/CN/{ticker}",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "result_path": None,
+            "failure_reason": None,
+            "next_action": next_action,
+            "effort_budget_hours": 1.0,
+            "preceding_stage": "machine_triage",
+            "stop_conditions": [
+                "快速画像未发现可信的10%回报路径",
+                "生存、治理或正常化盈利无法建立",
+                "决定性未知数无法由公开证据解决",
+            ],
+            "allocation_sha256": allocation_sha,
+            "selected_by": selected_by,
+        }
+    )
+    return record
 
 
 def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:

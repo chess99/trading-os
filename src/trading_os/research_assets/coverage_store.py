@@ -9,9 +9,13 @@ from typing import Any
 from .company import AssetValidationError, validate_company_dir
 
 DECISIONS = {
+    "catalog",
     "quick_profile",
     "scoped_research",
+    "targeted_followup",
     "deep_research",
+    "price_watch",
+    "reassign_or_stop",
     "watch_only",
     "conditional_stop",
     "hard_exclusion",
@@ -38,6 +42,7 @@ TASK_TYPES = {
     "followup_review",
 }
 BUDGETED_TASK_TYPES = {"quick_profile", "scoped_research", "deep_research"}
+PRE_REPORT_TASK_TYPES = {"quick_profile", "scoped_research"}
 SYMBOL_RE = re.compile(r"^CN:[0-9]{6}$")
 
 COMPANIES_FILE = "companies.jsonl"
@@ -127,6 +132,12 @@ def reconcile_research_queue(
 
     for record in records:
         updated = dict(record)
+        if record.get("task_type") in PRE_REPORT_TASK_TYPES:
+            # Quick profiles and scoped research deliberately precede a full
+            # company report. Company-level rebaseline state must not erase
+            # their finite-capacity queue status.
+            reconciled.append(updated)
+            continue
         if record.get("status") not in eligible_statuses | {"completed"}:
             reconciled.append(updated)
             continue

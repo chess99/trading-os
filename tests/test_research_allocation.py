@@ -132,7 +132,7 @@ def test_multi_lens_allocation_is_capacity_bounded_and_never_promotes_to_deep():
     assert all("deep_research" not in item["stage"] for item in result["selected"])
     assert result["lens_counts"]["crisis_mispricing"] == 1
     assert any(item["symbol"] == "CN:000003" for item in result["selected"])
-    assert result["hard_excluded"] == [
+    assert result["excluded"] == [
         {"symbol": "CN:000007", "reason_code": "not_common_stock"}
     ]
 
@@ -262,3 +262,85 @@ def test_selection_slots_must_equal_cycle_capacity():
             policy=policy,
             policy_version="research-allocation.default@1.0.0",
         )
+
+
+def test_apply_allocation_replaces_legacy_deep_queue_with_bounded_funnel(
+    tmp_path: Path,
+):
+    import datetime as dt
+
+    from trading_os.research_assets.coverage_store import (
+        coverage_status,
+        read_jsonl,
+        validate_coverage_root,
+        write_jsonl,
+    )
+    from trading_os.research_assets.research_allocation import (
+        allocate_research_capacity,
+        apply_research_allocation,
+    )
+
+    ranking = _ranking()
+    ranking["excluded"] = []
+    allocation = allocate_research_capacity(
+        ranking,
+        policy=_small_policy(),
+        policy_version="research-allocation.default@1.0.0",
+    )
+    root = tmp_path / "coverage" / "cn-a"
+    companies = []
+    screening = []
+    queue = []
+    for item in ranking["items"]:
+        symbol = item["symbol"]
+        ticker = symbol.split(":", 1)[1]
+        companies.append({"symbol": symbol, "name": item["name"]})
+        screening.append(
+            {
+                "symbol": symbol,
+                "name": item["name"],
+                "decision": "deep_research",
+                "priority": 1,
+                "reason": "legacy blanket promotion",
+                "evidence": ["legacy"],
+                "next_action": "legacy",
+            }
+        )
+        queue.append(
+            {
+                "symbol": symbol,
+                "name": item["name"],
+                "task_type": "initial_research",
+                "priority": 1,
+                "status": "requires_rebaseline",
+                "reason": "legacy blanket promotion",
+                "target_company_dir": f"research/companies/CN/{ticker}",
+            }
+        )
+    write_jsonl(root / "companies.jsonl", companies)
+    write_jsonl(root / "screening.jsonl", screening)
+    write_jsonl(root / "research_queue.jsonl", queue)
+    write_jsonl(root / "runs.jsonl", [], sort_key="run_id")
+
+    result = apply_research_allocation(
+        allocation,
+        ranking=ranking,
+        root=root,
+        applied_at=dt.datetime.fromisoformat("2026-07-26T20:30:00+08:00"),
+    )
+
+    assert result["selected_quick_profile_count"] == 4
+    assert result["deferred_catalog_count"] == 2
+    status = coverage_status(root)
+    assert status["screening"]["by_decision"] == {
+        "catalog": 2,
+        "quick_profile": 4,
+    }
+    assert status["research_queue"]["by_status"] == {
+        "pending": 4,
+        "requires_rebaseline": 2,
+    }
+    queue_records = read_jsonl(root / "research_queue.jsonl")
+    assert all(item["task_type"] == "quick_profile" for item in queue_records)
+    assert all(item["effort_budget_hours"] == 1.0 for item in queue_records)
+    validate_coverage_root(root)
