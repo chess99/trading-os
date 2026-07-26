@@ -203,6 +203,38 @@ def test_record_profile_seals_artifacts_and_advances_only_to_scoped(tmp_path: Pa
     assert status["invalid_artifact_count"] == 0
 
 
+def test_profile_status_uses_stage_history_after_deep_research_reconcile(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        profile_cycle_status,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    record_profile_package(
+        _package(),
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+
+    queue = read_jsonl(coverage_root / "research_queue.jsonl")
+    queue[0]["status"] = "completed"
+    queue[0]["result_path"] = "reports/2026-07-26-initial-research-v2.md"
+    write_jsonl(coverage_root / "research_queue.jsonl", queue)
+
+    status = profile_cycle_status(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+    )
+    assert status["recorded_count"] == 1
+    assert status["invalid_artifact_count"] == 0
+
+
 def test_record_profile_rejects_self_asserted_s1_count(tmp_path: Path):
     from trading_os.research_assets.profile_workflow import record_profile_package
     from trading_os.research_assets.research_allocation import ResearchAllocationError

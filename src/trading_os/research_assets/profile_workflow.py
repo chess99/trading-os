@@ -381,7 +381,7 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
         stage_counts[stage] = stage_counts.get(stage, 0) + 1
         for label, relative_path in (
             ("profile", _latest_history_path(item, "result_path")),
-            ("evaluation", item.get("result_path")),
+            ("evaluation", _latest_history_path(item, "evaluation_path")),
         ):
             if not isinstance(relative_path, str) or not relative_path:
                 invalid.append({"symbol": item["symbol"], "error": f"{label}_path_missing"})
