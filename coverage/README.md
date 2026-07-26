@@ -80,6 +80,7 @@ python -m trading_os coverage apply-allocation
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
+python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1 --reason "多视角选样进入快速画像" --task-type quick_profile --effort-budget-hours 1 --preceding-stage machine_triage --stop-condition "不存在可信的10%回报路径"
 ```
 

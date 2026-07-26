@@ -40,6 +40,7 @@ python -m trading_os coverage apply-allocation
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
+python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage reconcile --check
 python -m trading_os index rebuild
 python -m trading_os schedule build

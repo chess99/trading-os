@@ -34,7 +34,11 @@ from .research_assets.migration import (
 )
 from .research_assets.models import PolicyValidationError, load_policy
 from .research_assets.portfolio import PortfolioValidationError
-from .research_assets.profile_workflow import profile_cycle_status, record_profile_package
+from .research_assets.profile_workflow import (
+    claim_profile_task,
+    profile_cycle_status,
+    record_profile_package,
+)
 from .research_assets.rebaseline_ranking import (
     RebaselineRankingError,
     build_rebaseline_ranking,
@@ -304,6 +308,17 @@ def build_parser() -> argparse.ArgumentParser:
     _add_coverage_root(profile_status)
     profile_status.add_argument("cycle_id")
     profile_status.set_defaults(func=cmd_coverage_profile_status)
+
+    profile_claim = coverage_sub.add_parser(
+        "profile-claim",
+        help="Claim one pending profile task for exactly one agent",
+    )
+    _add_coverage_root(profile_claim)
+    profile_claim.add_argument("--agent", required=True)
+    profile_claim.add_argument("--symbol")
+    profile_claim.add_argument("--lens")
+    _add_timestamp(profile_claim)
+    profile_claim.set_defaults(func=cmd_coverage_profile_claim)
 
     set_cmd = coverage_sub.add_parser("set-screening", help="Upsert one screening result")
     set_cmd.add_argument("symbol")
@@ -624,6 +639,18 @@ def cmd_coverage_record_profile(ns: argparse.Namespace) -> int:
 def cmd_coverage_profile_status(ns: argparse.Namespace) -> int:
     payload = profile_cycle_status(root=ns.root, cycle_id=ns.cycle_id)
     _write_success({"ok": payload["invalid_artifact_count"] == 0, **payload})
+    return 0
+
+
+def cmd_coverage_profile_claim(ns: argparse.Namespace) -> int:
+    payload = claim_profile_task(
+        root=ns.root,
+        agent=ns.agent,
+        claimed_at=_timestamp(ns.at),
+        symbol=ns.symbol,
+        lens=ns.lens,
+    )
+    _write_success({"ok": True, **payload})
     return 0
 
 

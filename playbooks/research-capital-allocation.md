@@ -85,6 +85,7 @@ python -m trading_os coverage allocate-research
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
+python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
 ```
 
 `record-profile` 是生产入口：它校验来源清单和 agent provenance，封存画像与确定性评估，随后更新 screening 与 research queue。画像保存在

@@ -316,3 +316,121 @@ def test_cli_record_profile_is_the_production_entrypoint(
     output = json.loads(capsys.readouterr().out)
     assert output["ok"] is True
     assert output["next_stage"] == "scoped_research"
+
+
+def test_claim_profile_task_prevents_duplicate_company_assignment(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    first = claim_profile_task(
+        root=coverage_root,
+        agent="/root/qp_600519",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+
+    assert first["symbol"] == "CN:600519"
+    assert first["idempotent"] is False
+    again = claim_profile_task(
+        root=coverage_root,
+        agent="/root/qp_600519",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+    assert again["idempotent"] is True
+    with pytest.raises(ResearchAllocationError, match="no eligible"):
+        claim_profile_task(
+            root=coverage_root,
+            agent="/root/another",
+            claimed_at=RECORDED_AT,
+            symbol="CN:600519",
+        )
+    queue = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    assert queue["status"] == "running"
+    assert queue["assigned_agent"] == "/root/qp_600519"
+
+
+def test_record_profile_rejects_wrong_assigned_agent(tmp_path: Path):
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        record_profile_package,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    claim_profile_task(
+        root=coverage_root,
+        agent="/root/assigned",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+
+    with pytest.raises(ResearchAllocationError, match="does not match queue assignment"):
+        record_profile_package(
+            _package(),
+            root=coverage_root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@1.0.0",
+            recorded_at=RECORDED_AT,
+        )
+
+
+def test_targeted_followup_reuses_preceding_profile_stage_and_can_resolve_gap(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    first_package = _package()
+    first_package["profile"]["governance_status"] = "uncertain"
+    first_package["profile"]["normalized_earnings_status"] = "uncertain"
+    first_package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    first_package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    first = record_profile_package(
+        first_package,
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert first["next_stage"] == "targeted_followup"
+
+    claimed_at = dt.datetime.fromisoformat("2026-07-26T10:01:00+08:00")
+    claim = claim_profile_task(
+        root=coverage_root,
+        agent="/root/followup_600519",
+        claimed_at=claimed_at,
+        symbol="CN:600519",
+    )
+    assert claim["task_type"] == "targeted_followup"
+
+    resolved = _package()
+    resolved["profile"]["information_cutoff"] = "2026-07-26T10:03:00+08:00"
+    resolved["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    resolved["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    resolved["provenance"]["agent"] = "/root/followup_600519"
+    resolved["provenance"]["generated_at"] = "2026-07-26T10:04:00+08:00"
+    second = record_profile_package(
+        resolved,
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=dt.datetime.fromisoformat("2026-07-26T10:05:00+08:00"),
+    )
+
+    assert second["next_stage"] == "price_watch"
+    queue = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    assert queue["status"] == "completed"
+    assert [item["stage"] for item in queue["stage_history"]] == [
+        "quick_profile",
+        "targeted_followup",
+    ]

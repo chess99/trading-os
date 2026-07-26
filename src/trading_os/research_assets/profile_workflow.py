@@ -60,6 +60,81 @@ CYCLE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SOURCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 
 
+def claim_profile_task(
+    *,
+    root: str | Path,
+    agent: str,
+    claimed_at: dt.datetime,
+    symbol: str | None = None,
+    lens: str | None = None,
+) -> dict[str, Any]:
+    """Atomically claim one unassigned L2/L3 profile task for one agent."""
+
+    _require_aware_datetime(claimed_at, "claimed_at")
+    agent_name = _text(agent, "agent")
+    base = Path(root)
+    queue_path = base / RESEARCH_QUEUE_FILE
+    queue = read_jsonl(queue_path)
+    running = [
+        item
+        for item in queue
+        if item.get("assigned_agent") == agent_name and item.get("status") == "running"
+    ]
+    if len(running) > 1:
+        raise ResearchAllocationError(f"agent has multiple running tasks: {agent_name}")
+    if running:
+        current = running[0]
+        if symbol is not None and current.get("symbol") != symbol:
+            raise ResearchAllocationError(
+                f"agent already has a different running task: {current.get('symbol')}"
+            )
+        return _claimed_task_payload(current, idempotent=True)
+
+    candidates = [
+        item
+        for item in queue
+        if item.get("task_type")
+        in {"quick_profile", "targeted_followup", "scoped_research"}
+        and item.get("status") == "pending"
+        and item.get("assigned_agent") is None
+    ]
+    if symbol is not None:
+        if not re.fullmatch(r"CN:[0-9]{6}", symbol):
+            raise ResearchAllocationError("claim symbol is invalid")
+        candidates = [item for item in candidates if item.get("symbol") == symbol]
+    if lens is not None:
+        lens_name = _text(lens, "lens")
+        candidates = [
+            item for item in candidates if lens_name in (item.get("selected_by") or [])
+        ]
+    if not candidates:
+        raise ResearchAllocationError("no eligible profile task is available")
+    candidates.sort(
+        key=lambda item: (
+            int(item.get("priority", 5)),
+            {"scoped_research": 0, "targeted_followup": 1}.get(
+                str(item.get("task_type")), 2
+            ),
+            str(item.get("symbol")),
+        )
+    )
+    selected = dict(candidates[0])
+    selected.update(
+        {
+            "status": "running",
+            "assigned_agent": agent_name,
+            "started_at": claimed_at.isoformat(),
+            "finished_at": None,
+            "failure_reason": None,
+        }
+    )
+    write_jsonl(
+        queue_path,
+        [selected if item.get("symbol") == selected["symbol"] else item for item in queue],
+    )
+    return _claimed_task_payload(selected, idempotent=False)
+
+
 def record_profile_package(
     package: Mapping[str, Any],
     *,
@@ -85,10 +160,17 @@ def record_profile_package(
     screening_record = _one_record(screening_records, symbol, "screening")
     _validate_local_sources(normalized["sources"], repository_root=base.parent.parent)
 
-    if queue_record.get("task_type") != profile["research_stage"]:
+    queued_stage = str(queue_record.get("task_type"))
+    expected_profile_stage = (
+        queue_record.get("preceding_stage")
+        if queued_stage == "targeted_followup"
+        else queued_stage
+    )
+    if expected_profile_stage != profile["research_stage"]:
         raise ResearchAllocationError(
             f"queued stage does not match profile for {symbol}: "
-            f"{queue_record.get('task_type')} != {profile['research_stage']}"
+            f"{queued_stage} expects {expected_profile_stage}, got "
+            f"{profile['research_stage']}"
         )
     if queue_record.get("status") not in {"pending", "running"}:
         raise ResearchAllocationError(
@@ -97,6 +179,11 @@ def record_profile_package(
         )
     if normalized["company_name"] != queue_record.get("name"):
         raise ResearchAllocationError(f"company name does not match queue: {symbol}")
+    assigned_agent = queue_record.get("assigned_agent")
+    if assigned_agent is not None and assigned_agent != normalized["provenance"]["agent"]:
+        raise ResearchAllocationError(
+            f"profile provenance agent does not match queue assignment: {symbol}"
+        )
     allocation_sha = queue_record.get("allocation_sha256")
     if allocation_sha is not None:
         bound_cycles = {
@@ -121,7 +208,15 @@ def record_profile_package(
     )
     policy_sha = hashlib.sha256(canonical_json_bytes(dict(policy))).hexdigest()
     relative_profile = profile_path.relative_to(base.parent.parent).as_posix()
+    evaluation = dict(evaluation)
     next_stage = evaluation["next_stage"]
+    if queued_stage == "targeted_followup" and next_stage == "targeted_followup":
+        next_stage = "reassign_or_stop"
+        evaluation["next_stage"] = next_stage
+        evaluation["maximum_additional_effort_hours"] = 0.0
+        evaluation["reason_codes"] = sorted(
+            set(evaluation["reason_codes"]) | {"targeted_followup_exhausted"}
+        )
     if next_stage not in RESEARCH_STAGES | TERMINAL_STAGES:
         raise ResearchAllocationError(f"unsupported profile next stage: {next_stage}")
 
@@ -190,7 +285,7 @@ def record_profile_package(
     history = list(queue_record.get("stage_history") or [])
     history.append(
         {
-            "stage": profile["research_stage"],
+            "stage": queued_stage,
             "status": "completed",
             "finished_at": recorded_at.isoformat(),
             "agent": normalized["provenance"]["agent"],
@@ -202,9 +297,7 @@ def record_profile_package(
     updated_queue = dict(queue_record)
     updated_queue.update(
         {
-            "task_type": (
-                next_stage if next_stage in RESEARCH_STAGES else profile["research_stage"]
-            ),
+            "task_type": next_stage if next_stage in RESEARCH_STAGES else queued_stage,
             "status": next_status,
             "reason": _screening_reason(next_stage, capacity_wait),
             "assigned_agent": (
@@ -215,7 +308,7 @@ def record_profile_package(
             "result_path": relative_evaluation,
             "failure_reason": None,
             "next_action": _next_action(next_stage, capacity_wait),
-            "preceding_stage": profile["research_stage"],
+            "preceding_stage": queued_stage,
             "stage_history": history,
             "profile_cycle_id": normalized["cycle_id"],
         }
@@ -410,6 +503,24 @@ def _validate_package(
         "provenance": normalized_provenance,
         "analysis": normalized_analysis,
         "sources": normalized_sources,
+    }
+
+
+def _claimed_task_payload(record: Mapping[str, Any], *, idempotent: bool) -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "symbol": record.get("symbol"),
+        "name": record.get("name"),
+        "task_type": record.get("task_type"),
+        "assigned_agent": record.get("assigned_agent"),
+        "started_at": record.get("started_at"),
+        "effort_budget_hours": record.get("effort_budget_hours"),
+        "selected_by": record.get("selected_by") or [],
+        "target_company_dir": record.get("target_company_dir"),
+        "stop_conditions": record.get("stop_conditions") or [],
+        "result_path": record.get("result_path"),
+        "idempotent": idempotent,
+        "portfolio_action": None,
     }
 
 
