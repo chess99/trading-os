@@ -22,11 +22,12 @@
 | 层级 | 默认单周期容量 | 单家公司预算 | 只回答什么 |
 |---|---:|---:|---|
 | L0 市场清洗 | 全市场 | 机器秒级 | 是否为可识别的普通上市股票 |
-| L1 多视角便宜地图 | 全市场 | 机器分钟级 | 从哪些独立视角值得购买一份快速画像 |
-| L2 快速投资画像 | 200 | 1 小时 | 是否存在一条可信投资路径 |
-| L3 范围研究 | 60 | 4 小时 | 决定性未知数能否被证据解决 |
-| L4 完整深研 | 24 | 24 小时 | 完整重建业务、会计、正常化盈利和估值 |
-| L5 独立承保 | 8 | 12 小时起 | 深研主张能否经半盲复核通过 |
+| L1 多视角便宜地图 | 全市场 | 机器分钟级 | 哪些公司值得进入动态候选池 |
+| L1.5 快速甄别 | 200 | 15 分钟 | 是否值得竞争正式画像预算 |
+| L2 正式投资画像 | 40 | 1 小时 | 是否存在一条可信投资路径 |
+| L3 范围研究 | 15 | 4 小时 | 决定性未知数能否被证据解决 |
+| L4 完整深研 | 6 | 24 小时 | 完整重建业务、会计、正常化盈利和估值 |
+| L5 独立承保 | 3 | 12 小时起 | 深研主张能否经半盲复核通过 |
 | L6 组合决策 | 所有有效 passed 公司 | 组合层 | 最新价格下是否优于其他机会、如何配置 |
 
 容量是上限，不是配额。没有足够候选时保留研究预算和现金，不为填满队列降级标准。
@@ -44,9 +45,18 @@
 - 新财报或重大信息变化；
 - 从未入选公司的当前时点假阴性抽查。
 
-危机错杀和假阴性抽查合计至少占快速画像容量的 15%。这不是历史回测，而是防止筛选形成风格盲区。
+危机错杀和假阴性抽查合计至少占快速甄别候选池的 15%。这不是历史回测，而是防止筛选形成风格盲区。
 
-## 快速画像的八个问题
+## L1.5 快速甄别
+
+200 家是动态候选池，不是 200 份一小时报告。每家公司只获得最多 15 分钟，读取最新
+定期报告、近期价格和必要风险信息，回答业务能否快速理解、是否存在生存/治理阻断、
+正常化盈利是否可粗判、现价是否至少可能有赔率，以及再投入一小时能否改变决策。
+
+输出必须符合 `templates/rapid-triage.schema.json` 并封存。结果只能是等待横向比较、
+价格观察、结构化停止、能力圈转派或返回目录。单家公司完成后不得立即晋级。
+
+## 正式画像的八个问题
 
 1. 公司靠什么赚钱，是否处于当前能力圈？
 2. 穿越周期的所有者收益大致是多少？
@@ -71,25 +81,40 @@
 
 ## 升级纪律
 
-- L1 不能直接晋级 L4 或 L5。
-- L2 只能进入范围研究、定向补证、观察、转派或停止。
+- L1 不能直接晋级正式画像、深研、承保或买入。
+- L1.5 只有完整候选批次封存并横向比较后，最多 40 家进入 L2。
+- L2 只能进入范围研究候选、定向补证、观察、转派或停止；范围研究候选必须等完整
+  L2 同层批次封存后统一竞争容量。
 - L3 只有在业务可理解、生存与治理基本通过、正常化盈利可建立、粗估值存在至少 10%基准回报路径时才能进入完整深研。
+- L3 的深研候选也必须等完整同层批次封存后统一竞争容量。
 - L4 只有证据和估值完整、基准回报达到 12%承保参考门槛、且相对全市场仍有竞争力时才购买独立承保预算。
 - 单公司任何层级都不得给最终买入与仓位；只有组合层可以。
+
+完成顺序不是投资质量。`triage-finalize` 和 `profile-finalize` 是生产强制闸门：
+候选未全部终态时拒绝晋级，从机制上消除 first-in bias。
 
 ## 命令
 
 ```bash
 python -m trading_os coverage rank-rebaseline
 python -m trading_os coverage allocate-research
+python -m trading_os coverage apply-allocation
+python -m trading_os coverage triage-claim --agent <agent-id> [--symbol CN:000000]
+python -m trading_os coverage triage-record --input <rapid-triage.json>
+python -m trading_os coverage triage-status <cycle-id>
+python -m trading_os coverage triage-finalize <cycle-id>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
 python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage profile-release --agent <agent-id> --symbol CN:000000 --failure-reason <reason>
+python -m trading_os coverage profile-finalize <cycle-id> --stage quick_profile
+python -m trading_os coverage profile-finalize <cycle-id> --stage scoped_research
 ```
 
-`record-profile` 是生产入口：它校验来源清单和 agent provenance，封存画像与确定性评估，随后更新 screening 与 research queue。画像保存在
+`triage-record` 和 `record-profile` 是生产入口：它们校验来源清单和 agent provenance，
+封存单公司判断，但不按完成顺序自动晋级。快速甄别保存在 `coverage/cn-a/triage/`，
+画像保存在
 `coverage/cn-a/profiles/{CYCLE_ID}/{TICKER}/`；单公司 agent 只提交自己的 package，不能直接修改共享队列。
 
 agent 因工具、来源或运行环境失败且尚未产出 package 时，必须先用 `profile-release` 释放认领。命令会把失败原因和原 agent 写入不可覆盖的 `attempt_history`，再允许其他 agent 重试；不得手工改写 `assigned_agent`。

@@ -97,9 +97,11 @@ def test_docs_route_full_market_work_through_coverage():
     assert "coverage validate" in readme
     assert "自适应研究漏斗" in screening
     assert "约 5000 家" in screening
-    assert "数百家公司" in screening
-    assert "数十家公司" in screening
-    assert "少数公司" in screening
+    assert "约 200 家" in screening
+    assert "约 40 家" in screening
+    assert "约 15 家" in screening
+    assert "约 6 家" in screening
+    assert "约 3 家" in screening
     assert "deep_research" in screening
     assert "quick_profile" in screening
     assert "公开数据排名只能作为便宜地图" in screening

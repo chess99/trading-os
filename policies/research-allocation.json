@@ -1,17 +1,19 @@
 {
   "schema_version": 2,
   "policy_id": "research-allocation.default",
-  "version": "1.0.0",
-  "effective_at": "2026-07-25T00:00:00+08:00",
+  "version": "2.0.0",
+  "effective_at": "2026-07-27T00:00:00+08:00",
   "kind": "research_allocation",
   "payload": {
-    "quick_profile_capacity_per_cycle": 200,
+    "candidate_pool_capacity_per_cycle": 200,
+    "quick_profile_capacity_per_cycle": 40,
     "stage_capacity_per_cycle": {
-      "scoped_research": 60,
-      "deep_research": 24,
-      "underwriting": 8
+      "scoped_research": 15,
+      "deep_research": 6,
+      "underwriting": 3
     },
     "effort_budget_hours": {
+      "rapid_triage": 0.25,
       "quick_profile": 1.0,
       "targeted_followup": 2.0,
       "scoped_research": 4.0,
@@ -46,8 +48,9 @@
       "event",
       "thesis"
     ],
-    "ranking_principle": "public screening scores are a cheap map for buying more information and must never directly promote a company to deep research, underwriting or buy_now",
+    "ranking_principle": "public screening scores are a cheap map for selecting a dynamic rapid-triage candidate pool and must never directly promote a company to a formal profile, deep research, underwriting or buy_now",
     "research_value_principle": "allocate the next research hour where it is most likely to change a portfolio decision; uncertainty that is expensive or unresolvable lowers priority",
-    "stop_principle": "a stop is an auditable research-capital decision, not a permanent investment verdict; every non-structural stop requires a reactivation trigger"
+    "stop_principle": "a stop is an auditable research-capital decision, not a permanent investment verdict; every non-structural stop requires a reactivation trigger",
+    "comparison_principle": "formal-profile capacity is allocated only after the complete rapid-triage cohort is sealed and compared cross-sectionally; completion order must not affect promotion"
   }
 }

@@ -23,6 +23,7 @@ class ResearchAllocationError(ValueError):
 
 
 POLICY_KEYS = {
+    "candidate_pool_capacity_per_cycle",
     "quick_profile_capacity_per_cycle",
     "stage_capacity_per_cycle",
     "effort_budget_hours",
@@ -36,9 +37,11 @@ POLICY_KEYS = {
     "ranking_principle",
     "research_value_principle",
     "stop_principle",
+    "comparison_principle",
 }
 STAGE_CAPACITY_KEYS = {"scoped_research", "deep_research", "underwriting"}
 EFFORT_BUDGET_KEYS = {
+    "rapid_triage",
     "quick_profile",
     "targeted_followup",
     "scoped_research",
@@ -110,7 +113,7 @@ def allocate_research_capacity(
     if len(symbols) != len(set(symbols)):
         raise ResearchAllocationError("ranking symbols must be unique")
 
-    capacity = min(limits["quick_profile_capacity_per_cycle"], len(items))
+    capacity = min(limits["candidate_pool_capacity_per_cycle"], len(items))
     selected_symbols: set[str] = set()
     selected_by: dict[str, list[str]] = {}
     lens_counts: dict[str, int] = {}
@@ -152,15 +155,15 @@ def allocate_research_capacity(
                 {
                     "symbol": item["symbol"],
                     "name": item["name"],
-                    "stage": "quick_profile",
+                    "stage": "rapid_triage",
                     "effort_budget_hours": limits["effort_budget_hours"][
-                        "quick_profile"
+                        "rapid_triage"
                     ],
                     "selected_by": selected_by[item["symbol"]],
                     "ranking_confidence": item["score_confidence"],
                     "reason_codes": [
-                        "cheap_map_selected_for_human_judgment",
-                        "no_direct_deep_research_from_public_score",
+                        "cheap_map_selected_for_rapid_triage",
+                        "no_direct_formal_profile_from_public_score",
                     ],
                 }
             )
@@ -192,14 +195,18 @@ def allocate_research_capacity(
     if not isinstance(raw_excluded, list):
         raise ResearchAllocationError("ranking.excluded must be an array")
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "ranking_generated_at": generated_at,
         "ranking_content_sha256": _mapping_sha256(ranking),
         "policy_version": policy_ref,
         "policy_payload_sha256": _mapping_sha256(policy),
         "principle": limits["ranking_principle"],
         "capacity": {
-            "quick_profile": capacity,
+            "rapid_triage": capacity,
+            "quick_profile": min(
+                limits["quick_profile_capacity_per_cycle"],
+                capacity,
+            ),
             **limits["stage_capacity_per_cycle"],
         },
         "effort_budget_hours": limits["effort_budget_hours"],
@@ -224,7 +231,7 @@ def apply_research_allocation(
     """Materialize one finite-capacity cycle into screening and queue JSONL.
 
     The public ranking remains only a map. Selected companies receive a
-    one-hour quick-profile budget; ordinary deferred companies remain in the
+    fifteen-minute rapid-triage budget; ordinary deferred companies remain in the
     auditable catalog, and manual/hard exclusions retain their separate gates.
     """
 
@@ -249,7 +256,7 @@ def apply_research_allocation(
     }
     if len(ranking_items) != len(raw_items):
         raise ResearchAllocationError("ranking items must be unique objects")
-    selected_items = _allocation_partition(selected, "quick_profile")
+    selected_items = _allocation_partition(selected, "rapid_triage")
     deferred_items = _allocation_partition(deferred, "catalog")
     if set(selected_items) & set(deferred_items):
         raise ResearchAllocationError("selected and deferred symbols overlap")
@@ -273,10 +280,15 @@ def apply_research_allocation(
     }
     allocation_sha = _mapping_sha256(allocation)
     applied_iso = applied_at.isoformat()
+    preserved_formal_symbols: set[str] = set()
 
     for symbol, allocation_item in selected_items.items():
         company = _required_company(companies, symbol)
         ranking_item = ranking_items[symbol]
+        existing_queue = queue_by_symbol.get(symbol)
+        if _has_formal_research_progress(existing_queue):
+            preserved_formal_symbols.add(symbol)
+            continue
         selected_by = _text_list(
             allocation_item.get("selected_by"),
             f"{symbol}.selected_by",
@@ -285,9 +297,9 @@ def apply_research_allocation(
         screening_by_symbol[symbol] = _screening_record(
             screening_by_symbol.get(symbol),
             company=company,
-            decision="quick_profile",
+            decision="rapid_triage",
             priority=priority,
-            reason="多视角全市场分配获得本周期快速画像预算。",
+            reason="多视角全市场分配获得本周期快速甄别预算。",
             evidence=[
                 f"ranking_sha256:{allocation['ranking_content_sha256']}",
                 f"allocation_sha256:{allocation_sha}",
@@ -295,24 +307,29 @@ def apply_research_allocation(
                 f"ranking_confidence:{ranking_item['score_confidence']}",
             ],
             next_action=(
-                "在1小时预算内完成快速投资画像；只能进入范围研究、定向补证、"
-                "观察或结构化停止。"
+                "在15分钟预算内完成快速甄别并封存；待完整候选批次横向比较后，"
+                "少数公司才能进入正式画像。"
             ),
             allocation_at=applied_iso,
         )
-        queue_by_symbol[symbol] = _quick_profile_queue_record(
+        queue_by_symbol[symbol] = _rapid_triage_queue_record(
             queue_by_symbol.get(symbol),
             company=company,
             priority=priority,
             status="pending",
-            reason="多视角全市场分配获得本周期快速画像预算。",
-            next_action="完成快速投资画像并提交结构化分流结果。",
+            reason="多视角全市场分配获得本周期快速甄别预算。",
+            next_action="完成快速甄别并等待全批次横向比较。",
             allocation_sha=allocation_sha,
             selected_by=selected_by,
+            effort_budget_hours=allocation_item["effort_budget_hours"],
         )
 
     for symbol in deferred_items:
         company = _required_company(companies, symbol)
+        existing_queue = queue_by_symbol.get(symbol)
+        if _has_formal_research_progress(existing_queue):
+            preserved_formal_symbols.add(symbol)
+            continue
         screening_by_symbol[symbol] = _screening_record(
             screening_by_symbol.get(symbol),
             company=company,
@@ -327,13 +344,13 @@ def apply_research_allocation(
             next_action="等待下一研究周期或财报、价格、事件、论点触发后重新竞争预算。",
             allocation_at=applied_iso,
         )
-        existing = queue_by_symbol.get(symbol)
+        existing = existing_queue
         priority = (
             int(existing["priority"])
             if existing is not None and isinstance(existing.get("priority"), int)
             else 5
         )
-        queue_by_symbol[symbol] = _quick_profile_queue_record(
+        queue_by_symbol[symbol] = _rapid_triage_queue_record(
             existing,
             company=company,
             priority=priority,
@@ -342,6 +359,7 @@ def apply_research_allocation(
             next_action="等待下一研究周期或结构化重启触发器。",
             allocation_sha=allocation_sha,
             selected_by=[],
+            effort_budget_hours=allocation["effort_budget_hours"]["rapid_triage"],
         )
 
     manual_count = 0
@@ -374,15 +392,16 @@ def apply_research_allocation(
                 next_action="主 agent 先确定证券状态、数据冲突或特殊风险的研究路径。",
                 allocation_at=applied_iso,
             )
-            queue_by_symbol[symbol] = _quick_profile_queue_record(
+            queue_by_symbol[symbol] = _rapid_triage_queue_record(
                 existing,
                 company=company,
                 priority=priority,
                 status="needs_review",
                 reason=f"机器分配前必须人工解决：{reason_code}",
-                next_action="人工复核后再决定是否进入快速画像。",
+                next_action="人工复核后再决定是否进入快速甄别。",
                 allocation_sha=allocation_sha,
                 selected_by=[],
+                effort_budget_hours=allocation["effort_budget_hours"]["rapid_triage"],
             )
         elif category == "hard_exclusion":
             hard_exclusion_count += 1
@@ -396,7 +415,7 @@ def apply_research_allocation(
                 next_action="仅在证券状态或法律投资属性改变时重新纳入。",
                 allocation_at=applied_iso,
             )
-            queue_by_symbol[symbol] = _quick_profile_queue_record(
+            queue_by_symbol[symbol] = _rapid_triage_queue_record(
                 existing,
                 company=company,
                 priority=priority,
@@ -405,6 +424,7 @@ def apply_research_allocation(
                 next_action="证券状态改变后重新筛选。",
                 allocation_sha=allocation_sha,
                 selected_by=[],
+                effort_budget_hours=allocation["effort_budget_hours"]["rapid_triage"],
             )
         else:
             raise ResearchAllocationError(
@@ -415,6 +435,13 @@ def apply_research_allocation(
     for symbol, queue_item in queue_by_symbol.items():
         if queue_item.get("status") != "completed" or symbol not in companies:
             continue
+        if queue_item.get("task_type") in {
+            "rapid_triage",
+            "quick_profile",
+            "targeted_followup",
+            "scoped_research",
+        }:
+            continue
         completed_count += 1
         company = companies[symbol]
         screening_by_symbol[symbol] = _screening_record(
@@ -422,7 +449,7 @@ def apply_research_allocation(
             company=company,
             decision="watch_only",
             priority=None,
-            reason="已有结构化研究结果，不重复购买快速画像预算。",
+            reason="已有结构化研究结果，不重复购买快速甄别预算。",
             evidence=[
                 f"result_path:{queue_item.get('result_path')}",
                 f"allocation_sha256:{allocation_sha}",
@@ -437,11 +464,12 @@ def apply_research_allocation(
         "schema_version": 1,
         "allocation_sha256": allocation_sha,
         "applied_at": applied_iso,
-        "selected_quick_profile_count": len(selected_items),
+        "selected_rapid_triage_count": len(selected_items),
         "deferred_catalog_count": len(deferred_items),
         "manual_review_count": manual_count,
         "hard_exclusion_count": hard_exclusion_count,
         "completed_watch_count": completed_count,
+        "preserved_formal_research_count": len(preserved_formal_symbols),
     }
 
 
@@ -588,6 +616,31 @@ def _selected_priority(selected_by: list[str]) -> int:
     return 4
 
 
+def _has_formal_research_progress(
+    record: Mapping[str, Any] | None,
+) -> bool:
+    if not isinstance(record, Mapping):
+        return False
+    if (
+        record.get("task_type") == "quick_profile"
+        and record.get("status") == "running"
+    ):
+        return True
+    if record.get("task_type") in {"scoped_research", "deep_research"}:
+        return True
+    if (
+        record.get("task_type") in {"initial_research", "followup_review"}
+        and record.get("status") in {"running", "completed"}
+    ):
+        return True
+    return any(
+        isinstance(item, Mapping)
+        and item.get("stage") in {"quick_profile", "scoped_research"}
+        and item.get("status") == "completed"
+        for item in (record.get("stage_history") or [])
+    )
+
+
 def _screening_record(
     existing: Mapping[str, Any] | None,
     *,
@@ -615,7 +668,7 @@ def _screening_record(
     return record
 
 
-def _quick_profile_queue_record(
+def _rapid_triage_queue_record(
     existing: Mapping[str, Any] | None,
     *,
     company: Mapping[str, Any],
@@ -625,6 +678,7 @@ def _quick_profile_queue_record(
     next_action: str,
     allocation_sha: str,
     selected_by: list[str],
+    effort_budget_hours: float,
 ) -> dict[str, Any]:
     symbol = _symbol(company.get("symbol"))
     ticker = symbol.split(":", 1)[1]
@@ -633,7 +687,7 @@ def _quick_profile_queue_record(
         {
             "symbol": symbol,
             "name": _require_text(company.get("name"), f"{symbol}.name"),
-            "task_type": "quick_profile",
+            "task_type": "rapid_triage",
             "priority": priority,
             "status": status,
             "reason": reason,
@@ -644,12 +698,12 @@ def _quick_profile_queue_record(
             "result_path": None,
             "failure_reason": None,
             "next_action": next_action,
-            "effort_budget_hours": 1.0,
+            "effort_budget_hours": float(effort_budget_hours),
             "preceding_stage": "machine_triage",
             "stop_conditions": [
-                "快速画像未发现可信的10%回报路径",
-                "生存、治理或正常化盈利无法建立",
-                "决定性未知数无法由公开证据解决",
+                "快速甄别发现明确生存、治理或财务可信度阻断项",
+                "当前价格明显不具备进一步研究赔率",
+                "继续研究不太可能改变组合决策",
             ],
             "allocation_sha256": allocation_sha,
             "selected_by": selected_by,
@@ -666,6 +720,10 @@ def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
             "research allocation policy fields do not match contract"
         )
     result = dict(policy)
+    result["candidate_pool_capacity_per_cycle"] = _positive_int(
+        policy.get("candidate_pool_capacity_per_cycle"),
+        "candidate_pool_capacity_per_cycle",
+    )
     result["quick_profile_capacity_per_cycle"] = _positive_int(
         policy.get("quick_profile_capacity_per_cycle"),
         "quick_profile_capacity_per_cycle",
@@ -688,10 +746,18 @@ def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
         integer=True,
     )
     if sum(result["selection_slots"].values()) != result[
-        "quick_profile_capacity_per_cycle"
+        "candidate_pool_capacity_per_cycle"
     ]:
         raise ResearchAllocationError(
-            "selection_slots must sum to quick_profile_capacity_per_cycle"
+            "selection_slots must sum to candidate_pool_capacity_per_cycle"
+        )
+    if (
+        result["quick_profile_capacity_per_cycle"]
+        > result["candidate_pool_capacity_per_cycle"]
+    ):
+        raise ResearchAllocationError(
+            "quick_profile_capacity_per_cycle must not exceed "
+            "candidate_pool_capacity_per_cycle"
         )
     result["minimum_s1_sources_for_deep_research"] = _positive_int(
         policy.get("minimum_s1_sources_for_deep_research"),
@@ -727,6 +793,7 @@ def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
         "ranking_principle",
         "research_value_principle",
         "stop_principle",
+        "comparison_principle",
     ):
         result[field] = _require_text(policy.get(field), field)
     return result

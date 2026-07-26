@@ -24,6 +24,8 @@ def test_old_company_template_is_removed_and_four_v2_templates_exist():
     assert (ROOT / "templates" / "quick-profile.md").is_file()
     assert (ROOT / "templates" / "quick-profile.schema.json").is_file()
     assert (ROOT / "templates" / "quick-profile-package.schema.json").is_file()
+    assert (ROOT / "templates" / "rapid-triage.md").is_file()
+    assert (ROOT / "templates" / "rapid-triage.schema.json").is_file()
 
 
 def test_company_report_templates_cover_validator_sections():
@@ -91,7 +93,14 @@ def test_docs_lock_adaptive_funnel_half_blind_sealing_and_two_level_decisions():
     batch = _read("playbooks/batch-dispatch.md")
     portfolio = _read("playbooks/portfolio-synthesis.md")
 
-    for phrase in ("约 5000 家", "数百家公司", "数十家公司", "少数公司"):
+    for phrase in (
+        "约 5000 家",
+        "约 200 家",
+        "约 40 家",
+        "约 15 家",
+        "约 6 家",
+        "约 3 家",
+    ):
         assert phrase in screening
     assert "半盲两阶段" in underwriting
     assert "SHA-256 封存" in underwriting
@@ -107,6 +116,7 @@ def test_docs_lock_adaptive_funnel_half_blind_sealing_and_two_level_decisions():
     assert "不能直接把公司晋级为深研" in allocation
     assert "假阴性抽查" in allocation
     assert "L2 只能进入范围研究" in allocation
+    assert "完成顺序不是投资质量" in allocation
 
 
 def test_readme_and_agents_only_document_v2_boundaries_and_commands():

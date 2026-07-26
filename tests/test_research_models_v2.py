@@ -84,6 +84,7 @@ def test_domain_enums_are_closed_and_match_the_design():
         "templates/portfolio.schema.json",
         "templates/quick-profile.schema.json",
         "templates/quick-profile-package.schema.json",
+        "templates/rapid-triage.schema.json",
         "templates/research-allocation.schema.json",
     ],
 )
@@ -119,7 +120,7 @@ def test_policy_files_have_versioned_closed_metadata(relative_path: str):
     assert policy.policy_id
     assert policy.version
     if relative_path == "policies/research-allocation.json":
-        expected_effective_at = "2026-07-25T00:00:00+08:00"
+        expected_effective_at = "2026-07-27T00:00:00+08:00"
     elif relative_path in {"policies/underwriting.json", "policies/portfolio.json"}:
         expected_effective_at = "2026-07-25T00:00:00+08:00"
     else:
@@ -169,14 +170,16 @@ def test_research_allocation_policy_reserves_capacity_before_deep_research():
     policy = load_policy(ROOT / "policies" / "research-allocation.json")
     payload = policy.payload
 
-    assert payload["quick_profile_capacity_per_cycle"] == 200
+    assert payload["candidate_pool_capacity_per_cycle"] == 200
+    assert payload["quick_profile_capacity_per_cycle"] == 40
+    assert payload["effort_budget_hours"]["rapid_triage"] == 0.25
     assert sum(payload["selection_slots"].values()) == 200
     assert payload["selection_slots"]["crisis_mispricing"] == 30
     assert payload["selection_slots"]["false_negative_audit"] == 10
     assert payload["stage_capacity_per_cycle"] == {
-        "scoped_research": 60,
-        "deep_research": 24,
-        "underwriting": 8,
+        "scoped_research": 15,
+        "deep_research": 6,
+        "underwriting": 3,
     }
 
 

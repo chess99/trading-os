@@ -11,8 +11,12 @@ from .sealing import atomic_write_bytes
 
 DECISIONS = {
     "catalog",
+    "rapid_triage",
+    "triage_candidate",
     "quick_profile",
+    "profile_candidate",
     "scoped_research",
+    "deep_candidate",
     "targeted_followup",
     "deep_research",
     "price_watch",
@@ -35,6 +39,7 @@ QUEUE_STATUSES = {
     "needs_review",
 }
 TASK_TYPES = {
+    "rapid_triage",
     "quick_profile",
     "targeted_followup",
     "scoped_research",
@@ -44,12 +49,18 @@ TASK_TYPES = {
     "followup_review",
 }
 BUDGETED_TASK_TYPES = {
+    "rapid_triage",
     "quick_profile",
     "targeted_followup",
     "scoped_research",
     "deep_research",
 }
-PRE_REPORT_TASK_TYPES = {"quick_profile", "targeted_followup", "scoped_research"}
+PRE_REPORT_TASK_TYPES = {
+    "rapid_triage",
+    "quick_profile",
+    "targeted_followup",
+    "scoped_research",
+}
 SYMBOL_RE = re.compile(r"^CN:[0-9]{6}$")
 
 COMPANIES_FILE = "companies.jsonl"
@@ -296,6 +307,10 @@ def enqueue_research(
 ) -> Path:
     ticker = _ticker_from_symbol(symbol)
     next_actions = {
+        "rapid_triage": (
+            "在15分钟预算内完成快速甄别；封存后等待全批次横向比较，"
+            "不得按完成顺序直接晋级正式画像。"
+        ),
         "quick_profile": (
             "按 playbooks/research-capital-allocation.md 完成快速投资画像；"
             "只能晋级范围研究、定向补证或结构化停止。"

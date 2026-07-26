@@ -7,9 +7,11 @@
 ```text
 约 5000 家普通 A 股覆盖
 → 全市场多视角便宜地图
-→ 数百家公司快速投资画像
-→ 数十家公司范围研究
-→ 少数公司完整深研、独立承保与组合比较
+→ 约 200 家动态快速甄别候选
+→ 约 40 家正式投资画像
+→ 约 15 家范围研究
+→ 约 6 家完整深研
+→ 约 3 家独立承保与组合比较
 ```
 
 覆盖不等于每家公司都获得完整初研。筛选只决定是否值得购买下一阶段研究预算，不是投资结论；小市值、低流动性、暂时亏损或负倍数不能成为硬跳过理由。
@@ -27,8 +29,12 @@
 ## 分流
 
 - `catalog`：已完成全市场机器清洗，但本周期未获得快速画像预算；保留结构化重启触发器。
-- `quick_profile`：一小时级快速投资画像。
+- `rapid_triage`：15分钟级快速甄别；完成后等待全批次横向比较。
+- `triage_candidate`：快速甄别通过，尚未获得正式画像预算。
+- `quick_profile`：一小时级正式投资画像。
+- `profile_candidate`：画像通过，等待同层横向比较范围研究预算。
 - `scoped_research`：只解决决定性未知数的范围研究。
+- `deep_candidate`：范围研究通过，等待同层横向比较完整深研预算。
 - `deep_research`：进入初研队列。
 - `watch_only`：已有资产或等待触发器。
 - `conditional_stop`：当前停止投入，但保留结构化重启条件。
@@ -48,8 +54,12 @@ python -m trading_os coverage validate
 python -m trading_os coverage status
 python -m trading_os coverage rank-rebaseline
 python -m trading_os coverage allocate-research
+python -m trading_os coverage triage-status <cycle-id>
+python -m trading_os coverage triage-finalize <cycle-id>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
+python -m trading_os coverage profile-finalize <cycle-id> --stage quick_profile
+python -m trading_os coverage profile-finalize <cycle-id> --stage scoped_research
 python -m trading_os coverage reconcile --check
 ```
 

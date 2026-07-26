@@ -36,6 +36,7 @@ from .research_assets.models import PolicyValidationError, load_policy
 from .research_assets.portfolio import PortfolioValidationError
 from .research_assets.profile_workflow import (
     claim_profile_task,
+    finalize_profile_stage,
     profile_cycle_status,
     record_profile_package,
     release_profile_task,
@@ -69,6 +70,13 @@ from .research_assets.review_workflow import (
 )
 from .research_assets.schedule import write_review_schedule
 from .research_assets.sealing import SealingError
+from .research_assets.triage_workflow import (
+    claim_rapid_triage_task,
+    finalize_rapid_triage_cycle,
+    rapid_triage_cycle_status,
+    record_rapid_triage_package,
+    release_rapid_triage_task,
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -277,6 +285,58 @@ def build_parser() -> argparse.ArgumentParser:
     _add_timestamp(apply_allocation)
     apply_allocation.set_defaults(func=cmd_coverage_apply_allocation)
 
+    triage_claim = coverage_sub.add_parser(
+        "triage-claim",
+        help="Claim one 15-minute rapid-triage task for exactly one agent",
+    )
+    _add_coverage_root(triage_claim)
+    triage_claim.add_argument("--agent", required=True)
+    triage_claim.add_argument("--symbol")
+    triage_claim.add_argument("--lens")
+    _add_timestamp(triage_claim)
+    triage_claim.set_defaults(func=cmd_coverage_triage_claim)
+
+    triage_release = coverage_sub.add_parser(
+        "triage-release",
+        help="Release one failed rapid-triage claim and preserve its attempt audit",
+    )
+    _add_coverage_root(triage_release)
+    triage_release.add_argument("--agent", required=True)
+    triage_release.add_argument("--symbol", required=True)
+    triage_release.add_argument("--failure-reason", required=True)
+    _add_timestamp(triage_release)
+    triage_release.set_defaults(func=cmd_coverage_triage_release)
+
+    triage_record = coverage_sub.add_parser(
+        "triage-record",
+        help="Seal one rapid-triage result without completion-order promotion",
+    )
+    _add_coverage_root(triage_record)
+    triage_record.add_argument("--input", required=True)
+    _add_timestamp(triage_record)
+    triage_record.set_defaults(func=cmd_coverage_triage_record)
+
+    triage_status = coverage_sub.add_parser(
+        "triage-status",
+        help="Verify one rapid-triage cohort and its sealed artifacts",
+    )
+    _add_coverage_root(triage_status)
+    triage_status.add_argument("cycle_id")
+    triage_status.set_defaults(func=cmd_coverage_triage_status)
+
+    triage_finalize = coverage_sub.add_parser(
+        "triage-finalize",
+        help="Compare a complete rapid-triage cohort and grant formal-profile budget",
+    )
+    _add_coverage_root(triage_finalize)
+    triage_finalize.add_argument("cycle_id")
+    triage_finalize.add_argument(
+        "--policy",
+        default="policies/research-allocation.json",
+    )
+    _add_timestamp(triage_finalize)
+    triage_finalize.set_defaults(func=cmd_coverage_triage_finalize)
+
     evaluate_profile = coverage_sub.add_parser(
         "evaluate-profile",
         help="Evaluate whether a quick or scoped profile deserves more research",
@@ -331,6 +391,24 @@ def build_parser() -> argparse.ArgumentParser:
     profile_release.add_argument("--failure-reason", required=True)
     _add_timestamp(profile_release)
     profile_release.set_defaults(func=cmd_coverage_profile_release)
+
+    profile_finalize = coverage_sub.add_parser(
+        "profile-finalize",
+        help="Compare a complete quick/scoped cohort before promoting research",
+    )
+    _add_coverage_root(profile_finalize)
+    profile_finalize.add_argument("cycle_id")
+    profile_finalize.add_argument(
+        "--stage",
+        required=True,
+        choices=["quick_profile", "scoped_research"],
+    )
+    profile_finalize.add_argument(
+        "--policy",
+        default="policies/research-allocation.json",
+    )
+    _add_timestamp(profile_finalize)
+    profile_finalize.set_defaults(func=cmd_coverage_profile_finalize)
 
     set_cmd = coverage_sub.add_parser("set-screening", help="Upsert one screening result")
     set_cmd.add_argument("symbol")
@@ -624,6 +702,59 @@ def cmd_coverage_apply_allocation(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_triage_claim(ns: argparse.Namespace) -> int:
+    payload = claim_rapid_triage_task(
+        root=ns.root,
+        agent=ns.agent,
+        claimed_at=_timestamp(ns.at),
+        symbol=ns.symbol,
+        lens=ns.lens,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_triage_release(ns: argparse.Namespace) -> int:
+    payload = release_rapid_triage_task(
+        root=ns.root,
+        agent=ns.agent,
+        symbol=ns.symbol,
+        failure_reason=ns.failure_reason,
+        released_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_triage_record(ns: argparse.Namespace) -> int:
+    package = json.loads(Path(ns.input).read_text(encoding="utf-8"))
+    payload = record_rapid_triage_package(
+        package,
+        root=ns.root,
+        recorded_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_triage_status(ns: argparse.Namespace) -> int:
+    payload = rapid_triage_cycle_status(root=ns.root, cycle_id=ns.cycle_id)
+    _write_success({"ok": payload["invalid_artifact_count"] == 0, **payload})
+    return 0
+
+
+def cmd_coverage_triage_finalize(ns: argparse.Namespace) -> int:
+    policy = load_policy(ns.policy)
+    payload = finalize_rapid_triage_cycle(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        policy=policy.payload,
+        finalized_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
 def cmd_coverage_evaluate_profile(ns: argparse.Namespace) -> int:
     profile = json.loads(Path(ns.input).read_text(encoding="utf-8"))
     policy = load_policy(ns.policy)
@@ -673,6 +804,19 @@ def cmd_coverage_profile_release(ns: argparse.Namespace) -> int:
         symbol=ns.symbol,
         failure_reason=ns.failure_reason,
         released_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_finalize(ns: argparse.Namespace) -> int:
+    policy = load_policy(ns.policy)
+    payload = finalize_profile_stage(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        stage=ns.stage,
+        policy=policy.payload,
+        finalized_at=_timestamp(ns.at),
     )
     _write_success({"ok": True, **payload})
     return 0

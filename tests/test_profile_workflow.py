@@ -156,6 +156,9 @@ def _coverage(root: Path, *, extra_queue: list[dict] | None = None) -> None:
             "stop_conditions": ["不存在可信路径"],
             "allocation_sha256": "a" * 64,
             "selected_by": ["balanced"],
+            "triage_selection_path": (
+                "coverage/cn-a/triage/test/selection.json"
+            ),
         }
     ]
     queue.extend(extra_queue or [])
@@ -163,12 +166,13 @@ def _coverage(root: Path, *, extra_queue: list[dict] | None = None) -> None:
     write_jsonl(coverage_root / "runs.jsonl", [], sort_key="run_id")
 
 
-def test_record_profile_seals_artifacts_and_advances_only_to_scoped(tmp_path: Path):
+def test_record_profile_waits_for_comparison_then_advances_to_scoped(tmp_path: Path):
     from trading_os.research_assets.coverage_store import (
         read_jsonl,
         validate_coverage_root,
     )
     from trading_os.research_assets.profile_workflow import (
+        finalize_profile_stage,
         profile_cycle_status,
         record_profile_package,
     )
@@ -183,15 +187,37 @@ def test_record_profile_seals_artifacts_and_advances_only_to_scoped(tmp_path: Pa
         recorded_at=RECORDED_AT,
     )
 
-    assert result["next_stage"] == "scoped_research"
+    assert result["next_stage"] == "profile_candidate"
     assert result["portfolio_action"] is None
     assert verify_sealed(tmp_path / result["profile_path"]).sha256 == result["profile_sha256"]
     assert verify_sealed(tmp_path / result["evaluation_path"]).sha256 == result["evaluation_sha256"]
     queue = read_jsonl(tmp_path / "coverage" / "cn-a" / "research_queue.jsonl")[0]
+    assert queue["task_type"] == "quick_profile"
+    assert queue["status"] == "completed"
+    assert queue["stage_history"][0]["stage"] == "quick_profile"
+    promoted = finalize_profile_stage(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    assert promoted["selected_symbols"] == ["CN:600519"]
+    queue = read_jsonl(
+        tmp_path / "coverage" / "cn-a" / "research_queue.jsonl"
+    )[0]
     assert queue["task_type"] == "scoped_research"
     assert queue["status"] == "pending"
     assert queue["effort_budget_hours"] == 4.0
-    assert queue["stage_history"][0]["stage"] == "quick_profile"
+    repeated = finalize_profile_stage(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=2),
+    )
+    assert repeated["selected_symbols"] == ["CN:600519"]
+    assert repeated["idempotent"] is True
     validate_coverage_root(tmp_path / "coverage" / "cn-a")
     status = profile_cycle_status(
         root=tmp_path / "coverage" / "cn-a",
@@ -233,6 +259,65 @@ def test_profile_status_uses_stage_history_after_deep_research_reconcile(
     )
     assert status["recorded_count"] == 1
     assert status["invalid_artifact_count"] == 0
+
+
+def test_scoped_research_also_waits_for_peer_comparison_before_deep_research(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        finalize_profile_stage,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    policy = _policy()
+    record_profile_package(
+        _package(),
+        root=root,
+        policy=policy,
+        policy_reference="research-allocation.default@2.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+
+    scoped_package = _package()
+    scoped_package["profile"]["research_stage"] = "scoped_research"
+    scoped_package["provenance"]["generated_at"] = (
+        RECORDED_AT + dt.timedelta(minutes=2)
+    ).isoformat()
+    result = record_profile_package(
+        scoped_package,
+        root=root,
+        policy=policy,
+        policy_reference="research-allocation.default@2.0.0",
+        recorded_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    assert result["next_stage"] == "deep_candidate"
+    queued = read_jsonl(root / "research_queue.jsonl")[0]
+    assert queued["task_type"] == "scoped_research"
+    assert queued["status"] == "completed"
+
+    promoted = finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="scoped_research",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=4),
+    )
+    assert promoted["selected_symbols"] == ["CN:600519"]
+    queued = read_jsonl(root / "research_queue.jsonl")[0]
+    assert queued["task_type"] == "deep_research"
+    assert queued["status"] == "pending"
+    assert queued["preceding_stage"] == "scoped_research"
+    assert queued["effort_budget_hours"] == 24.0
 
 
 def test_record_profile_rejects_self_asserted_s1_count(tmp_path: Path):
@@ -279,7 +364,9 @@ def test_price_watch_is_completed_with_a_reactivation_path(tmp_path: Path):
     assert "价格" in screening["next_action"]
 
 
-def test_scoped_capacity_creates_auditable_waitlist(tmp_path: Path):
+def test_profile_completion_does_not_consume_scoped_capacity_before_comparison(
+    tmp_path: Path,
+):
     from trading_os.research_assets.coverage_store import read_jsonl
     from trading_os.research_assets.profile_workflow import record_profile_package
 
@@ -307,14 +394,14 @@ def test_scoped_capacity_creates_auditable_waitlist(tmp_path: Path):
         recorded_at=RECORDED_AT,
     )
 
-    assert result["capacity_wait"] is True
-    assert result["queue_status"] == "requires_rebaseline"
+    assert result["capacity_wait"] is False
+    assert result["queue_status"] == "completed"
     queue = {
         item["symbol"]: item
         for item in read_jsonl(tmp_path / "coverage" / "cn-a" / "research_queue.jsonl")
     }
-    assert queue["CN:600519"]["task_type"] == "scoped_research"
-    assert "容量" in queue["CN:600519"]["reason"]
+    assert queue["CN:600519"]["task_type"] == "quick_profile"
+    assert "横向比较" in queue["CN:600519"]["reason"]
 
 
 def test_cli_record_profile_is_the_production_entrypoint(
@@ -347,7 +434,7 @@ def test_cli_record_profile_is_the_production_entrypoint(
     assert code == 0
     output = json.loads(capsys.readouterr().out)
     assert output["ok"] is True
-    assert output["next_stage"] == "scoped_research"
+    assert output["next_stage"] == "profile_candidate"
 
 
 def test_claim_profile_task_prevents_duplicate_company_assignment(tmp_path: Path):

@@ -7,7 +7,7 @@
 ## 核心原则
 
 - 默认全覆盖，但绝不平均投入。每家公司都可被找到、每次停止都可审计，只有最可能改变组合决策的少数公司获得完整深研。
-- 筛选的任务是逐层购买信息：机器地图、快速画像、范围研究、完整深研、独立承保。
+- 筛选的任务是逐层购买信息：机器地图、15分钟快速甄别、正式画像、范围研究、完整深研、独立承保。
 - 公开快照总分不能直接晋级完整深研；按综合赔率、现金价值、复利质量、金融、周期、危机、新信息和假阴性抽查多视角选样。
 - 小市值、低流动性、亏损、PE 为负、行业冷门，都不能作为硬跳过理由。
 - ST、*ST、重大异常公司进入 `needs_manual_review`，不要直接排除。
@@ -40,8 +40,12 @@ coverage/
 ## 分流结果
 
 - `catalog`：已进入全市场可审计目录，但本周期未获得进一步研究预算。
-- `quick_profile`：获得一小时级快速投资画像预算。
+- `rapid_triage`：获得15分钟级快速甄别预算。
+- `triage_candidate`：快速甄别通过，等待完整批次横向比较。
+- `quick_profile`：获得一小时级正式投资画像预算。
+- `profile_candidate`：正式画像通过，等待完整同层批次横向比较。
 - `scoped_research`：只解决一至三个决定性未知数。
+- `deep_candidate`：范围研究通过，等待完整同层批次横向比较。
 - `targeted_followup`：只补齐一个或少数决定性证据。
 - `deep_research`：进入完整公司研究队列。
 - `price_watch`：公司可能可投，但当前价格不支持继续购买研究预算。
@@ -61,10 +65,11 @@ coverage/
 1. 排除非普通 A 股和退市整理类硬排除项。
 2. 将 ST、*ST、重大异常和数据冲突标为 `needs_manual_review`。
 3. 其余普通 A 股进入机器画像，但不默认获得完整初研预算。
-4. 使用 `policies/research-allocation.json` 的多视角容量选出快速画像名单。
-5. 快速画像只能晋级范围研究；范围研究通过后才能进入完整初研。
-6. 已有有效研究且价格远离买入区的公司转为 `watch_only`，仅跟踪价格与关键假设。
-7. 所有非硬排除结果记录停止原因、研究预算和重启触发器。
+4. 使用 `policies/research-allocation.json` 的多视角容量选出约200家动态快速甄别池。
+5. 完整甄别批次统一比较后，最多约40家进入正式画像；完成顺序不能影响晋级。
+6. 正式画像和范围研究同样必须先完成同层批次，再分别统一竞争范围研究和深研容量。
+7. 已有有效研究且价格远离买入区的公司转为 `watch_only`，仅跟踪价格与关键假设。
+8. 所有非硬排除结果记录停止原因、研究预算和重启触发器。
 
 ## Agent 辅助工具
 
@@ -77,11 +82,16 @@ python -m trading_os coverage get CN:600519
 python -m trading_os coverage rank-rebaseline
 python -m trading_os coverage allocate-research
 python -m trading_os coverage apply-allocation
+python -m trading_os coverage triage-claim --agent <agent-id> [--symbol CN:000000]
+python -m trading_os coverage triage-record --input <rapid-triage.json>
+python -m trading_os coverage triage-status <cycle-id>
+python -m trading_os coverage triage-finalize <cycle-id>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
 python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
-python -m trading_os coverage enqueue CN:300750 --name 宁德时代 --priority 1 --reason "多视角选样进入快速画像" --task-type quick_profile --effort-budget-hours 1 --preceding-stage machine_triage --stop-condition "不存在可信的10%回报路径"
+python -m trading_os coverage profile-finalize <cycle-id> --stage quick_profile
+python -m trading_os coverage profile-finalize <cycle-id> --stage scoped_research
 ```
 
 这些命令是给 Codex、Claude 或其他 agent 用的安全编辑器，不要要求用户手动执行。

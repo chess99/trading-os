@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import json
 import re
 from pathlib import Path
 from typing import Any, Mapping
@@ -55,7 +56,13 @@ SOURCE_KEYS = {
 }
 SOURCE_TIERS = {"S1", "S2", "S3"}
 RESEARCH_STAGES = {"targeted_followup", "scoped_research", "deep_research"}
-TERMINAL_STAGES = {"price_watch", "reassign_or_stop", "conditional_stop"}
+TERMINAL_STAGES = {
+    "profile_candidate",
+    "deep_candidate",
+    "price_watch",
+    "reassign_or_stop",
+    "conditional_stop",
+}
 CYCLE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SOURCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 
@@ -281,6 +288,22 @@ def record_profile_package(
     relative_profile = profile_path.relative_to(base.parent.parent).as_posix()
     evaluation = dict(evaluation)
     next_stage = evaluation["next_stage"]
+    if queued_stage == "quick_profile" and next_stage == "scoped_research":
+        next_stage = "profile_candidate"
+        evaluation["next_stage"] = next_stage
+        evaluation["maximum_additional_effort_hours"] = 0.0
+        evaluation["reason_codes"] = sorted(
+            set(evaluation["reason_codes"])
+            | {"awaiting_cross_company_profile_comparison"}
+        )
+    elif queued_stage == "scoped_research" and next_stage == "deep_research":
+        next_stage = "deep_candidate"
+        evaluation["next_stage"] = next_stage
+        evaluation["maximum_additional_effort_hours"] = 0.0
+        evaluation["reason_codes"] = sorted(
+            set(evaluation["reason_codes"])
+            | {"awaiting_cross_company_deep_research_comparison"}
+        )
     if queued_stage == "targeted_followup" and next_stage == "targeted_followup":
         next_stage = "reassign_or_stop"
         evaluation["next_stage"] = next_stage
@@ -382,6 +405,10 @@ def record_profile_package(
             "preceding_stage": queued_stage,
             "stage_history": history,
             "profile_cycle_id": normalized["cycle_id"],
+            "profile_priority_score": _profile_priority_score(
+                profile,
+                priority=int(queue_record.get("priority", 5)),
+            ),
         }
     )
     if next_stage in RESEARCH_STAGES:
@@ -410,6 +437,270 @@ def record_profile_package(
     }
 
 
+def finalize_profile_stage(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    stage: str,
+    policy: Mapping[str, Any],
+    finalized_at: dt.datetime,
+) -> dict[str, Any]:
+    """Allocate the next research layer only after a complete peer cohort."""
+
+    _require_aware_datetime(finalized_at, "finalized_at")
+    cycle = _text(cycle_id, "cycle_id")
+    if not CYCLE_RE.fullmatch(cycle):
+        raise ResearchAllocationError("cycle_id is invalid")
+    if stage not in {"quick_profile", "scoped_research"}:
+        raise ResearchAllocationError(
+            "profile comparison stage must be quick_profile or scoped_research"
+        )
+    base = Path(root)
+    repository_root = base.parent.parent
+    queue_path = base / RESEARCH_QUEUE_FILE
+    screening_path = base / SCREENING_FILE
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+
+    if stage == "quick_profile":
+        binding_field = "triage_selection_path"
+        candidate_decision = "profile_candidate"
+        next_stage = "scoped_research"
+        selection_name = "quick-profile-selection.json"
+    else:
+        binding_field = "profile_quick_selection_path"
+        candidate_decision = "deep_candidate"
+        next_stage = "deep_research"
+        selection_name = "scoped-research-selection.json"
+
+    selection_path = base / "profiles" / cycle / selection_name
+    if selection_path.exists():
+        verified = verify_sealed(selection_path)
+        payload = json.loads(selection_path.read_text(encoding="utf-8"))
+        relative = selection_path.relative_to(repository_root).as_posix()
+        selected_symbols = [
+            item["symbol"] for item in payload["ranking"] if item["selected"]
+        ]
+        next_binding_field = (
+            "profile_quick_selection_path"
+            if stage == "quick_profile"
+            else "profile_scoped_selection_path"
+        )
+        queue_by_symbol = {item["symbol"]: item for item in queue}
+        if not all(
+            queue_by_symbol.get(symbol, {}).get("task_type") == next_stage
+            and queue_by_symbol[symbol].get(next_binding_field) == relative
+            for symbol in selected_symbols
+        ):
+            raise ResearchAllocationError(
+                f"sealed {stage} selection exists but queue materialization "
+                "is incomplete"
+            )
+        return {
+            "schema_version": 1,
+            "cycle_id": cycle,
+            "evaluated_stage": stage,
+            "next_stage": next_stage,
+            "cohort_count": payload["cohort_count"],
+            "eligible_count": payload["eligible_count"],
+            "selected_count": payload["selected_count"],
+            "selected_symbols": selected_symbols,
+            "selection_path": relative,
+            "selection_sha256": verified.sha256,
+            "idempotent": True,
+            "portfolio_action": None,
+        }
+
+    anchors = [
+        item
+        for item in queue
+        if item.get("profile_cycle_id") == cycle
+        and _history_completed(item, stage)
+        and isinstance(item.get(binding_field), str)
+    ]
+    if not anchors:
+        raise ResearchAllocationError(
+            f"no recorded {stage} cohort is available for cycle: {cycle}"
+        )
+    bindings = {item[binding_field] for item in anchors}
+    if len(bindings) != 1:
+        raise ResearchAllocationError(
+            f"{stage} cycle spans multiple predecessor selections"
+        )
+    binding = next(iter(bindings))
+    cohort = [
+        item
+        for item in queue
+        if item.get(binding_field) == binding
+        and (
+            item.get("task_type") == stage
+            or any(
+                isinstance(history, Mapping) and history.get("stage") == stage
+                for history in (item.get("stage_history") or [])
+            )
+        )
+    ]
+    incomplete = [
+        item["symbol"]
+        for item in cohort
+        if item.get("profile_cycle_id") != cycle
+        or not _history_completed(item, stage)
+        or (
+            item.get("task_type") == "targeted_followup"
+            and item.get("preceding_stage") == stage
+            and item.get("status") in {"pending", "running"}
+        )
+    ]
+    if incomplete:
+        raise ResearchAllocationError(
+            "completion-order promotion is forbidden; "
+            f"{stage} cohort is incomplete: {incomplete[:10]}"
+        )
+    screen_by_symbol = {item["symbol"]: dict(item) for item in screening}
+    eligible = [
+        item
+        for item in cohort
+        if screen_by_symbol[item["symbol"]].get("decision") == candidate_decision
+    ]
+    ranked = sorted(
+        eligible,
+        key=lambda item: (
+            -int(item.get("profile_priority_score", 0)),
+            int(item.get("priority", 5)),
+            str(item["symbol"]),
+        ),
+    )
+    capacities = policy.get("stage_capacity_per_cycle")
+    if not isinstance(capacities, Mapping):
+        raise ResearchAllocationError("stage capacity policy is invalid")
+    capacity = capacities.get(next_stage)
+    if isinstance(capacity, bool) or not isinstance(capacity, int) or capacity <= 0:
+        raise ResearchAllocationError(f"stage capacity is invalid: {next_stage}")
+    budgets = policy.get("effort_budget_hours")
+    if not isinstance(budgets, Mapping):
+        raise ResearchAllocationError("effort budget policy is invalid")
+    budget = budgets.get(next_stage)
+    if (
+        isinstance(budget, bool)
+        or not isinstance(budget, (int, float))
+        or budget <= 0
+    ):
+        raise ResearchAllocationError(f"effort budget is invalid: {next_stage}")
+    selected = ranked[:capacity]
+    selected_symbols = {item["symbol"] for item in selected}
+    rows = [
+        {
+            "rank": rank,
+            "symbol": item["symbol"],
+            "name": item["name"],
+            "research_priority_score": item.get("profile_priority_score", 0),
+            "selected": item["symbol"] in selected_symbols,
+        }
+        for rank, item in enumerate(ranked, 1)
+    ]
+    selection_payload = {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "evaluated_stage": stage,
+        "next_stage": next_stage,
+        "predecessor_selection_path": binding,
+        "finalized_at": finalized_at.isoformat(),
+        "cohort_count": len(cohort),
+        "eligible_count": len(eligible),
+        "capacity": capacity,
+        "selected_count": len(selected),
+        "principle": policy.get("comparison_principle"),
+        "ranking": rows,
+        "portfolio_action": None,
+    }
+    sealed = seal_json(
+        selection_path,
+        selection_payload,
+        artifact_type=f"{stage}_cross_company_selection",
+        sealed_at=finalized_at,
+    )
+    relative_selection = selection_path.relative_to(repository_root).as_posix()
+    queue_by_symbol = {item["symbol"]: dict(item) for item in queue}
+    next_binding_field = (
+        "profile_quick_selection_path"
+        if stage == "quick_profile"
+        else "profile_scoped_selection_path"
+    )
+    for item in ranked:
+        symbol = item["symbol"]
+        queued = queue_by_symbol[symbol]
+        screen = screen_by_symbol[symbol]
+        if symbol in selected_symbols:
+            screen.update(
+                {
+                    "decision": next_stage,
+                    "reason": (
+                        f"完整{stage}批次横向比较后获得{next_stage}预算。"
+                    ),
+                    "evidence": list(screen.get("evidence") or [])
+                    + [
+                        f"stage_selection:{relative_selection}",
+                        f"stage_selection_sha256:{sealed.sha256}",
+                    ],
+                    "next_action": _next_action(next_stage, False),
+                }
+            )
+            queued.update(
+                {
+                    "task_type": next_stage,
+                    "status": "pending",
+                    "assigned_agent": None,
+                    "started_at": None,
+                    "finished_at": None,
+                    "failure_reason": None,
+                    "reason": (
+                        f"完整{stage}批次横向比较后获得{next_stage}预算。"
+                    ),
+                    "next_action": _next_action(next_stage, False),
+                    "effort_budget_hours": float(budget),
+                    "preceding_stage": stage,
+                    "stop_conditions": _stop_conditions(next_stage),
+                    next_binding_field: relative_selection,
+                }
+            )
+        else:
+            screen.update(
+                {
+                    "decision": "catalog",
+                    "reason": (
+                        f"{stage}支持继续研究，但横向比较后未获得本周期"
+                        f"{next_stage}容量。"
+                    ),
+                    "evidence": list(screen.get("evidence") or [])
+                    + [
+                        f"stage_selection:{relative_selection}",
+                        f"stage_selection_sha256:{sealed.sha256}",
+                    ],
+                    "next_action": "等待结构化触发器或下一周期重新竞争研究预算。",
+                }
+            )
+            queued["next_action"] = (
+                "等待结构化触发器或下一周期重新竞争研究预算。"
+            )
+            queued[next_binding_field] = relative_selection
+    write_jsonl(screening_path, list(screen_by_symbol.values()))
+    write_jsonl(queue_path, list(queue_by_symbol.values()))
+    return {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "evaluated_stage": stage,
+        "next_stage": next_stage,
+        "cohort_count": len(cohort),
+        "eligible_count": len(eligible),
+        "selected_count": len(selected),
+        "selected_symbols": [item["symbol"] for item in selected],
+        "selection_path": relative_selection,
+        "selection_sha256": sealed.sha256,
+        "idempotent": False,
+        "portfolio_action": None,
+    }
+
+
 def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     """Return a verified progress snapshot for one profile allocation cycle."""
 
@@ -428,16 +719,33 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     if len(allocation_shas) > 1:
         raise ResearchAllocationError("profile cycle spans multiple allocations")
     allocation_sha = next(iter(allocation_shas), None)
-    cohort = (
-        [
+    triage_selection_paths = {
+        item.get("triage_selection_path")
+        for item in recorded
+        if isinstance(item.get("triage_selection_path"), str)
+    }
+    if len(triage_selection_paths) == 1:
+        triage_selection_path = next(iter(triage_selection_paths))
+        cohort = [
             item
             for item in queue
-            if item.get("allocation_sha256") == allocation_sha
-            and bool(item.get("selected_by"))
+            if item.get("triage_selection_path") == triage_selection_path
+            and (
+                item.get("task_type") == "quick_profile"
+                or _history_completed(item, "quick_profile")
+            )
         ]
-        if allocation_sha is not None
-        else recorded
-    )
+    else:
+        cohort = (
+            [
+                item
+                for item in queue
+                if item.get("allocation_sha256") == allocation_sha
+                and bool(item.get("selected_by"))
+            ]
+            if allocation_sha is not None
+            else recorded
+        )
     recorded_symbols = {item["symbol"] for item in recorded}
     screening_by_symbol = {item.get("symbol"): item for item in screening}
     stage_counts: dict[str, int] = {}
@@ -704,6 +1012,12 @@ def _screening_reason(stage: str, capacity_wait: bool) -> str:
     if capacity_wait:
         return f"画像支持进入{stage}，但本周期容量已满，进入可恢复等待队列。"
     reasons = {
+        "profile_candidate": (
+            "正式画像发现可信投资路径，等待完整同层批次横向比较范围研究预算。"
+        ),
+        "deep_candidate": (
+            "范围研究通过证据与粗估值门槛，等待完整同层批次横向比较深研预算。"
+        ),
         "targeted_followup": "画像只支持补齐少数决定性证据，暂不扩张研究范围。",
         "scoped_research": "画像发现可信投资路径，追加有限范围研究预算。",
         "deep_research": "范围研究通过证据与粗估值门槛，追加完整深研预算。",
@@ -718,6 +1032,12 @@ def _next_action(stage: str, capacity_wait: bool) -> str:
     if capacity_wait:
         return "下一研究周期释放容量后，按画像价值排序重新竞争预算。"
     actions = {
+        "profile_candidate": (
+            "等待完整正式画像批次封存后统一比较，不得按完成顺序晋级。"
+        ),
+        "deep_candidate": (
+            "等待完整范围研究批次封存后统一比较，不得按完成顺序晋级。"
+        ),
         "targeted_followup": "只补画像列出的一个或少数决定性证据缺口。",
         "scoped_research": "在4小时预算内解决一至三个决定性未知数。",
         "deep_research": "按完整公司研究协议重建业务、会计、正常化盈利和估值。",
@@ -735,6 +1055,43 @@ def _stop_conditions(stage: str) -> list[str]:
         "deep_research": ["完整证据无法支持12%承保参考回报", "会计、治理或永久损失风险不可承保"],
     }
     return values[stage]
+
+
+def _history_completed(record: Mapping[str, Any], stage: str) -> bool:
+    return any(
+        isinstance(item, Mapping)
+        and item.get("stage") == stage
+        and item.get("status") == "completed"
+        for item in (record.get("stage_history") or [])
+    )
+
+
+def _profile_priority_score(
+    profile: Mapping[str, Any], *, priority: int
+) -> int:
+    """Use coarse buckets to rank research value without fake valuation precision."""
+
+    base_return = float(profile["valuation"]["base_expected_annual_return"])
+    if base_return >= 0.15:
+        return_bucket = 3
+    elif base_return >= 0.12:
+        return_bucket = 2
+    elif base_return >= 0.10:
+        return_bucket = 1
+    else:
+        return_bucket = 0
+    source_bucket = 2 if int(profile["s1_source_count"]) >= 3 else 1
+    unknown_count = len(profile["decisive_unknowns"])
+    resolvability_bucket = (
+        2 if unknown_count == 1 else 1 if unknown_count <= 3 else 0
+    )
+    priority_bucket = max(0, 6 - priority)
+    return (
+        return_bucket * 100
+        + source_bucket * 10
+        + resolvability_bucket * 3
+        + priority_bucket
+    )
 
 
 def _text(value: Any, label: str) -> str:

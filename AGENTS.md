@@ -31,7 +31,7 @@ policies/
 
 ## 大批量研究
 
-全 A 股工作先按 `playbooks/research-capital-allocation.md` 和 `playbooks/screening.md` 逐层配置研究预算；公开快照排名不能直接晋级深研或承保。行业或主题批次也必须冻结候选，然后一家公司一个 agent 独立承保。调度遵循 `playbooks/batch-dispatch.md`，组合综合遵循 `playbooks/portfolio-synthesis.md`。
+全 A 股长程工作先读 `playbooks/all-a-goal-execution.md`，再按 `playbooks/research-capital-allocation.md` 和 `playbooks/screening.md` 逐层配置研究预算；公开快照排名不能直接晋级正式画像、深研或承保。行业或主题批次也必须冻结候选，然后一家公司一个 agent 独立承保。调度遵循 `playbooks/batch-dispatch.md`，组合综合遵循 `playbooks/portfolio-synthesis.md`。
 
 ## 验证命令
 

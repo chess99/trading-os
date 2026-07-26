@@ -17,7 +17,8 @@ def _policy() -> dict[str, object]:
 
 def _small_policy() -> dict[str, object]:
     policy = copy.deepcopy(_policy())
-    policy["quick_profile_capacity_per_cycle"] = 4
+    policy["candidate_pool_capacity_per_cycle"] = 4
+    policy["quick_profile_capacity_per_cycle"] = 2
     policy["selection_slots"] = {
         "balanced": 1,
         "value_income": 1,
@@ -128,7 +129,7 @@ def test_multi_lens_allocation_is_capacity_bounded_and_never_promotes_to_deep():
     assert result["deferred_count"] == 2
     assert len(result["ranking_content_sha256"]) == 64
     assert len(result["policy_payload_sha256"]) == 64
-    assert all(item["stage"] == "quick_profile" for item in result["selected"])
+    assert all(item["stage"] == "rapid_triage" for item in result["selected"])
     assert all("deep_research" not in item["stage"] for item in result["selected"])
     assert result["lens_counts"]["crisis_mispricing"] == 1
     assert any(item["symbol"] == "CN:000003" for item in result["selected"])
@@ -254,7 +255,7 @@ def test_selection_slots_must_equal_cycle_capacity():
     )
 
     policy = _small_policy()
-    policy["quick_profile_capacity_per_cycle"] = 5
+    policy["candidate_pool_capacity_per_cycle"] = 5
 
     with pytest.raises(ResearchAllocationError, match="must sum"):
         allocate_research_capacity(
@@ -329,18 +330,102 @@ def test_apply_allocation_replaces_legacy_deep_queue_with_bounded_funnel(
         applied_at=dt.datetime.fromisoformat("2026-07-26T20:30:00+08:00"),
     )
 
-    assert result["selected_quick_profile_count"] == 4
+    assert result["selected_rapid_triage_count"] == 4
     assert result["deferred_catalog_count"] == 2
     status = coverage_status(root)
     assert status["screening"]["by_decision"] == {
         "catalog": 2,
-        "quick_profile": 4,
+        "rapid_triage": 4,
     }
     assert status["research_queue"]["by_status"] == {
         "pending": 4,
         "requires_rebaseline": 2,
     }
     queue_records = read_jsonl(root / "research_queue.jsonl")
-    assert all(item["task_type"] == "quick_profile" for item in queue_records)
-    assert all(item["effort_budget_hours"] == 1.0 for item in queue_records)
+    assert all(item["task_type"] == "rapid_triage" for item in queue_records)
+    assert all(item["effort_budget_hours"] == 0.25 for item in queue_records)
     validate_coverage_root(root)
+
+
+def test_apply_allocation_preserves_completed_formal_profile_progress(
+    tmp_path: Path,
+):
+    import datetime as dt
+
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.research_allocation import (
+        allocate_research_capacity,
+        apply_research_allocation,
+    )
+
+    ranking = _ranking()
+    ranking["excluded"] = []
+    allocation = allocate_research_capacity(
+        ranking,
+        policy=_small_policy(),
+        policy_version="research-allocation.default@2.0.0",
+    )
+    root = tmp_path / "coverage" / "cn-a"
+    write_jsonl(
+        root / "companies.jsonl",
+        [
+            {"symbol": item["symbol"], "name": item["name"]}
+            for item in ranking["items"]
+        ],
+    )
+    write_jsonl(
+        root / "screening.jsonl",
+        [
+            {
+                "symbol": item["symbol"],
+                "name": item["name"],
+                "decision": "catalog",
+                "priority": 3,
+                "reason": "测试",
+                "evidence": ["test"],
+                "next_action": "测试",
+            }
+            for item in ranking["items"]
+        ],
+    )
+    queue = []
+    for item in ranking["items"]:
+        record = {
+            "symbol": item["symbol"],
+            "name": item["name"],
+            "task_type": "rapid_triage",
+            "priority": 3,
+            "status": "requires_rebaseline",
+            "reason": "测试",
+            "target_company_dir": f"research/companies/CN/{item['symbol'][-6:]}",
+            "effort_budget_hours": 0.25,
+            "preceding_stage": "machine_triage",
+            "stop_conditions": ["测试停止"],
+        }
+        queue.append(record)
+    preserved_symbol = ranking["items"][0]["symbol"]
+    queue[0].update(
+        {
+            "task_type": "scoped_research",
+            "status": "pending",
+            "effort_budget_hours": 4.0,
+            "preceding_stage": "quick_profile",
+            "reason": "已有正式画像进度",
+        }
+    )
+    write_jsonl(root / "research_queue.jsonl", queue)
+    write_jsonl(root / "runs.jsonl", [], sort_key="run_id")
+
+    result = apply_research_allocation(
+        allocation,
+        ranking=ranking,
+        root=root,
+        applied_at=dt.datetime.fromisoformat("2026-07-27T10:00:00+08:00"),
+    )
+
+    assert result["preserved_formal_research_count"] == 1
+    stored = {
+        item["symbol"]: item for item in read_jsonl(root / "research_queue.jsonl")
+    }
+    assert stored[preserved_symbol]["task_type"] == "scoped_research"
+    assert stored[preserved_symbol]["status"] == "pending"
