@@ -10,6 +10,7 @@ import pytest
 
 from automation.scripts.build_review_prompt import (
     PromptBuildError,
+    build_run_prompt,
     build_synthesis_prompt,
     render_prompt,
 )
@@ -343,6 +344,32 @@ def test_blind_prompt_contains_packet_but_not_prior_decision(tmp_path: Path):
     assert "claim-business-quality" in prompt
     assert "2026-07-21-initial-research.md" not in prompt
     assert '"portfolio_eligible"' not in prompt
+
+
+def test_reveal_prompt_rejects_prior_report_drift(tmp_path: Path):
+    runs_root, policy_root, company_dir, run_id = _prepared_review(tmp_path)
+    runner = MachineContractRunner(company_dir=company_dir, run_id=run_id)
+    assert _dispatcher(runs_root, policy_root, runner).dispatch(
+        run_id,
+        now=NOW,
+    ).status == "blind_sealed"
+    meta = json.loads(
+        (company_dir / "meta.json").read_text(encoding="utf-8")
+    )
+    report_path = company_dir / meta["reports"]["latest"]
+    report_path.write_text(
+        report_path.read_text(encoding="utf-8") + "\nmaterial drift\n",
+        encoding="utf-8",
+    )
+
+    with pytest.raises(PromptBuildError, match="frozen claim packet"):
+        build_run_prompt(
+            stage="reveal",
+            run_id=run_id,
+            symbol="CN:600519",
+            runs_root=runs_root,
+            policy_root=policy_root,
+        )
 
 
 def test_draft_directory_runner_reads_only_the_task_draft(tmp_path: Path):
