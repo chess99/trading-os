@@ -1180,7 +1180,7 @@ def _portfolio_report_lines(
 def _validate_portfolio_payload(
     payload: Mapping[str, Any],
     *,
-    expected_policy_snapshot_sha256: str | None = None,
+    expected_policy_snapshot_sha256: str,
 ) -> None:
     top_level = {
         "schema_version",
@@ -1231,9 +1231,17 @@ def _validate_portfolio_payload(
     ):
         raise ReviewWorkflowError("portfolio policy_snapshot_sha256 is invalid")
     if (
-        expected_policy_snapshot_sha256 is not None
-        and snapshot_hash != expected_policy_snapshot_sha256
+        not isinstance(expected_policy_snapshot_sha256, str)
+        or len(expected_policy_snapshot_sha256) != 64
+        or any(
+            char not in "0123456789abcdef"
+            for char in expected_policy_snapshot_sha256
+        )
     ):
+        raise ReviewWorkflowError(
+            "expected policy_snapshot_sha256 is invalid"
+        )
+    if snapshot_hash != expected_policy_snapshot_sha256:
         raise ReviewWorkflowError(
             "portfolio policy_snapshot_sha256 does not match the review snapshot"
         )

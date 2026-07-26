@@ -143,6 +143,23 @@ def test_synthesis_uses_snapshot_and_links_portfolio_to_its_hash(tmp_path: Path)
             expected_policy_snapshot_sha256=snapshot.sha256,
         )
 
+    null_snapshot = dict(portfolio)
+    null_snapshot["policy_snapshot_sha256"] = None
+    with pytest.raises(ReviewWorkflowError, match="is invalid"):
+        _validate_portfolio_payload(
+            null_snapshot,
+            expected_policy_snapshot_sha256=snapshot.sha256,
+        )
+
+    with pytest.raises(
+        ReviewWorkflowError,
+        match="expected policy_snapshot_sha256 is invalid",
+    ):
+        _validate_portfolio_payload(
+            portfolio,
+            expected_policy_snapshot_sha256=None,  # type: ignore[arg-type]
+        )
+
 
 @pytest.mark.parametrize("legacy_hash", ["missing", None])
 def test_old_run_without_valid_policy_snapshot_hash_fails_explicitly(

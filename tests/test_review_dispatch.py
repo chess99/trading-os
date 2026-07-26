@@ -696,7 +696,7 @@ def test_full_dispatch_machine_selects_top_five_and_arbitrates(tmp_path: Path):
     assert "expected_annual_return" not in candidate
 
 
-def test_arbitrator_cannot_replace_independent_candidate_economics(
+def test_arbitrator_economic_rewrite_cannot_pass_or_replace_independent_economics(
     tmp_path: Path,
 ):
     from trading_os.research_assets.portfolio import (
@@ -765,7 +765,11 @@ def test_arbitrator_cannot_replace_independent_candidate_economics(
             encoding="utf-8"
         )
     )
-    assert candidate["underwriting_status"] == "passed"
+    assert candidate["underwriting_status"] == "failed"
+    assert (
+        "arbitration_economics_outside_independent_bounds"
+        in candidate["reason_codes"]
+    )
     assert candidate["fair_value_range"] == [90.0, 110.0]
     assert candidate["bear_value"] == 55.0
     assert candidate["reduce_zone"] == [115.0, 125.0]
