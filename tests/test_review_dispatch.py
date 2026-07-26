@@ -899,6 +899,146 @@ def test_consensus_adverse_finding_cannot_be_cleared_by_arbitration(
     assert expected_blocker in candidate["reason_codes"]
 
 
+def test_arbitration_can_conservatively_resolve_investment_claim_disagreement(
+    tmp_path: Path,
+):
+    runs_root, policy_root, company_dir, run_id = _prepared_review(
+        tmp_path,
+        claim_category="investment",
+    )
+
+    class ConservativeClaimResolutionRunner(MachineContractRunner):
+        def run(self, task):
+            result = super().run(task)
+            if not result.ok or task.stage not in {"challenger", "arbitration"}:
+                return result
+            payload = copy.deepcopy(result.payload)
+            payload["assessment"]["claim_reviews"][0]["result"] = "weakened"
+            return AgentResult(ok=True, payload=payload)
+
+    runner = ConservativeClaimResolutionRunner(
+        company_dir=company_dir,
+        run_id=run_id,
+    )
+    dispatcher = _dispatcher(runs_root, policy_root, runner)
+
+    assert dispatcher.dispatch(run_id, now=NOW).status == "blind_sealed"
+    assert dispatcher.dispatch(run_id, now=NOW).status == "challenging"
+    assert (
+        dispatcher.dispatch(run_id, now=NOW).status
+        == "company_reviews_complete"
+    )
+
+    candidate = json.loads(
+        (
+            company_dir
+            / "underwriting"
+            / run_id
+            / "portfolio-candidate.final.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert candidate["underwriting_status"] == "passed"
+    assert (
+        "unresolved_investment_claim:claim-business-quality"
+        not in candidate["reason_codes"]
+    )
+
+
+def test_optimistic_arbitration_cannot_erase_weaker_independent_claim(
+    tmp_path: Path,
+):
+    runs_root, policy_root, company_dir, run_id = _prepared_review(
+        tmp_path,
+        claim_category="investment",
+    )
+
+    class OptimisticClaimArbitrationRunner(MachineContractRunner):
+        def run(self, task):
+            result = super().run(task)
+            if not result.ok or task.stage != "challenger":
+                return result
+            payload = copy.deepcopy(result.payload)
+            payload["assessment"]["claim_reviews"][0]["result"] = "weakened"
+            return AgentResult(ok=True, payload=payload)
+
+    runner = OptimisticClaimArbitrationRunner(
+        company_dir=company_dir,
+        run_id=run_id,
+    )
+    dispatcher = _dispatcher(runs_root, policy_root, runner)
+
+    assert dispatcher.dispatch(run_id, now=NOW).status == "blind_sealed"
+    assert dispatcher.dispatch(run_id, now=NOW).status == "challenging"
+    assert (
+        dispatcher.dispatch(run_id, now=NOW).status
+        == "company_reviews_complete"
+    )
+
+    candidate = json.loads(
+        (
+            company_dir
+            / "underwriting"
+            / run_id
+            / "portfolio-candidate.final.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert candidate["underwriting_status"] == "failed"
+    assert (
+        "unresolved_investment_claim:claim-business-quality"
+        in candidate["reason_codes"]
+    )
+
+
+def test_conservative_claim_resolution_cannot_clear_new_arbitration_risk(
+    tmp_path: Path,
+):
+    runs_root, policy_root, company_dir, run_id = _prepared_review(
+        tmp_path,
+        claim_category="investment",
+    )
+
+    class AdverseClaimResolutionRunner(MachineContractRunner):
+        def run(self, task):
+            result = super().run(task)
+            if not result.ok or task.stage not in {"challenger", "arbitration"}:
+                return result
+            payload = copy.deepcopy(result.payload)
+            payload["assessment"]["claim_reviews"][0]["result"] = "weakened"
+            if task.stage == "arbitration":
+                payload["assessment"]["risk_flags"][
+                    "permanent_loss_risk"
+                ] = True
+                payload["assessment"]["safety_margin_tier"] = "severe"
+            return AgentResult(ok=True, payload=payload)
+
+    runner = AdverseClaimResolutionRunner(
+        company_dir=company_dir,
+        run_id=run_id,
+    )
+    dispatcher = _dispatcher(runs_root, policy_root, runner)
+
+    assert dispatcher.dispatch(run_id, now=NOW).status == "blind_sealed"
+    assert dispatcher.dispatch(run_id, now=NOW).status == "challenging"
+    assert (
+        dispatcher.dispatch(run_id, now=NOW).status
+        == "company_reviews_complete"
+    )
+
+    candidate = json.loads(
+        (
+            company_dir
+            / "underwriting"
+            / run_id
+            / "portfolio-candidate.final.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert candidate["underwriting_status"] == "failed"
+    assert (
+        "arbitration_risk_flag:permanent_loss_risk"
+        in candidate["reason_codes"]
+    )
+
+
 def test_consensus_cycle_uncertainty_can_pass_after_independent_challenge(
     tmp_path: Path,
 ):
