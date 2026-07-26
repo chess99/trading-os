@@ -1,0 +1,597 @@
+from __future__ import annotations
+
+import datetime as dt
+import hashlib
+import re
+from pathlib import Path
+from typing import Any, Mapping
+from urllib.parse import urlparse
+
+from .coverage_store import (
+    RESEARCH_QUEUE_FILE,
+    SCREENING_FILE,
+    read_jsonl,
+    write_jsonl,
+)
+from .research_allocation import (
+    ResearchAllocationError,
+    evaluate_quick_profile,
+)
+from .sealing import canonical_json_bytes, seal_json, verify_sealed
+
+
+PACKAGE_KEYS = {
+    "schema_version",
+    "cycle_id",
+    "company_name",
+    "profile",
+    "price_as_of",
+    "price_source_id",
+    "provenance",
+    "analysis",
+    "sources",
+}
+PROVENANCE_KEYS = {"agent", "model", "tools", "generated_at"}
+ANALYSIS_KEYS = {
+    "business_summary",
+    "owner_earnings_and_cycle",
+    "survival",
+    "governance",
+    "valuation_basis",
+    "market_mispricing",
+    "decisive_unknowns",
+}
+ANALYSIS_ITEM_KEYS = {"conclusion", "source_ids"}
+SOURCE_KEYS = {
+    "source_id",
+    "tier",
+    "title",
+    "publisher",
+    "published_at",
+    "accessed_at",
+    "url",
+    "local_path",
+    "supports",
+}
+SOURCE_TIERS = {"S1", "S2", "S3"}
+RESEARCH_STAGES = {"targeted_followup", "scoped_research", "deep_research"}
+TERMINAL_STAGES = {"price_watch", "reassign_or_stop", "conditional_stop"}
+CYCLE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
+SOURCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
+
+
+def record_profile_package(
+    package: Mapping[str, Any],
+    *,
+    root: str | Path,
+    policy: Mapping[str, Any],
+    policy_reference: str,
+    recorded_at: dt.datetime,
+) -> dict[str, Any]:
+    """Seal one company profile and materialize its deterministic next stage."""
+
+    _require_aware_datetime(recorded_at, "recorded_at")
+    normalized = _validate_package(package, recorded_at=recorded_at)
+    profile = normalized["profile"]
+    evaluation = evaluate_quick_profile(profile, policy=policy)
+    symbol = profile["symbol"]
+    ticker = symbol.split(":", 1)[1]
+    base = Path(root)
+    queue_path = base / RESEARCH_QUEUE_FILE
+    screening_path = base / SCREENING_FILE
+    queue_records = read_jsonl(queue_path)
+    screening_records = read_jsonl(screening_path)
+    queue_record = _one_record(queue_records, symbol, "research queue")
+    screening_record = _one_record(screening_records, symbol, "screening")
+    _validate_local_sources(normalized["sources"], repository_root=base.parent.parent)
+
+    if queue_record.get("task_type") != profile["research_stage"]:
+        raise ResearchAllocationError(
+            f"queued stage does not match profile for {symbol}: "
+            f"{queue_record.get('task_type')} != {profile['research_stage']}"
+        )
+    if queue_record.get("status") not in {"pending", "running"}:
+        raise ResearchAllocationError(
+            f"profile cannot be recorded from queue status "
+            f"{queue_record.get('status')}: {symbol}"
+        )
+    if normalized["company_name"] != queue_record.get("name"):
+        raise ResearchAllocationError(f"company name does not match queue: {symbol}")
+    allocation_sha = queue_record.get("allocation_sha256")
+    if allocation_sha is not None:
+        bound_cycles = {
+            item.get("profile_cycle_id")
+            for item in queue_records
+            if item.get("allocation_sha256") == allocation_sha
+            and item.get("profile_cycle_id") is not None
+        }
+        if bound_cycles and bound_cycles != {normalized["cycle_id"]}:
+            raise ResearchAllocationError(
+                f"allocation is already bound to another profile cycle: {sorted(bound_cycles)}"
+            )
+
+    timestamp = recorded_at.strftime("%Y%m%dT%H%M%S%z")
+    artifact_dir = base / "profiles" / normalized["cycle_id"] / ticker
+    profile_path = artifact_dir / f"{timestamp}.profile.json"
+    sealed_profile = seal_json(
+        profile_path,
+        normalized,
+        artifact_type="quick_profile_package",
+        sealed_at=recorded_at,
+    )
+    policy_sha = hashlib.sha256(canonical_json_bytes(dict(policy))).hexdigest()
+    relative_profile = profile_path.relative_to(base.parent.parent).as_posix()
+    next_stage = evaluation["next_stage"]
+    if next_stage not in RESEARCH_STAGES | TERMINAL_STAGES:
+        raise ResearchAllocationError(f"unsupported profile next stage: {next_stage}")
+
+    next_status = "completed"
+    capacity_wait = False
+    if next_stage in RESEARCH_STAGES:
+        next_status = "pending"
+        capacity = _stage_capacity(policy, next_stage)
+        if capacity is not None:
+            active_count = sum(
+                1
+                for item in queue_records
+                if item.get("symbol") != symbol
+                and item.get("task_type") == next_stage
+                and item.get("status") in {"pending", "running"}
+            )
+            if active_count >= capacity:
+                next_status = "requires_rebaseline"
+                capacity_wait = True
+
+    evaluation_payload = {
+        "schema_version": 2,
+        "cycle_id": normalized["cycle_id"],
+        "symbol": symbol,
+        "company_name": normalized["company_name"],
+        "recorded_at": recorded_at.isoformat(),
+        "profile_path": relative_profile,
+        "profile_sha256": sealed_profile.sha256,
+        "policy_reference": _text(policy_reference, "policy_reference"),
+        "policy_payload_sha256": policy_sha,
+        "allocation_sha256": allocation_sha,
+        "evaluation": evaluation,
+        "queue_status": next_status,
+        "capacity_wait": capacity_wait,
+        "portfolio_action": None,
+    }
+    evaluation_path = artifact_dir / f"{timestamp}.evaluation.json"
+    sealed_evaluation = seal_json(
+        evaluation_path,
+        evaluation_payload,
+        artifact_type="quick_profile_evaluation",
+        sealed_at=recorded_at,
+    )
+    relative_evaluation = evaluation_path.relative_to(base.parent.parent).as_posix()
+
+    updated_screening = dict(screening_record)
+    updated_screening.update(
+        {
+            "decision": next_stage,
+            "reason": _screening_reason(next_stage, capacity_wait),
+            "evidence": [
+                f"profile:{relative_profile}",
+                f"profile_sha256:{sealed_profile.sha256}",
+                f"evaluation:{relative_evaluation}",
+                f"evaluation_sha256:{sealed_evaluation.sha256}",
+                f"policy:{policy_reference}",
+                f"s1_sources:{profile['s1_source_count']}",
+            ],
+            "next_action": _next_action(next_stage, capacity_wait),
+            "profile_cycle_id": normalized["cycle_id"],
+            "profile_evaluation_path": relative_evaluation,
+            "profile_recorded_at": recorded_at.isoformat(),
+        }
+    )
+
+    history = list(queue_record.get("stage_history") or [])
+    history.append(
+        {
+            "stage": profile["research_stage"],
+            "status": "completed",
+            "finished_at": recorded_at.isoformat(),
+            "agent": normalized["provenance"]["agent"],
+            "result_path": relative_profile,
+            "evaluation_path": relative_evaluation,
+            "next_stage": next_stage,
+        }
+    )
+    updated_queue = dict(queue_record)
+    updated_queue.update(
+        {
+            "task_type": (
+                next_stage if next_stage in RESEARCH_STAGES else profile["research_stage"]
+            ),
+            "status": next_status,
+            "reason": _screening_reason(next_stage, capacity_wait),
+            "assigned_agent": (
+                None if next_stage in RESEARCH_STAGES else normalized["provenance"]["agent"]
+            ),
+            "started_at": None if next_stage in RESEARCH_STAGES else queue_record.get("started_at"),
+            "finished_at": None if next_stage in RESEARCH_STAGES else recorded_at.isoformat(),
+            "result_path": relative_evaluation,
+            "failure_reason": None,
+            "next_action": _next_action(next_stage, capacity_wait),
+            "preceding_stage": profile["research_stage"],
+            "stage_history": history,
+            "profile_cycle_id": normalized["cycle_id"],
+        }
+    )
+    if next_stage in RESEARCH_STAGES:
+        updated_queue["effort_budget_hours"] = _effort_budget(policy, next_stage)
+        updated_queue["stop_conditions"] = _stop_conditions(next_stage)
+
+    write_jsonl(
+        screening_path,
+        [updated_screening if item.get("symbol") == symbol else item for item in screening_records],
+    )
+    write_jsonl(
+        queue_path,
+        [updated_queue if item.get("symbol") == symbol else item for item in queue_records],
+    )
+    return {
+        "schema_version": 2,
+        "symbol": symbol,
+        "next_stage": next_stage,
+        "queue_status": next_status,
+        "capacity_wait": capacity_wait,
+        "profile_path": relative_profile,
+        "profile_sha256": sealed_profile.sha256,
+        "evaluation_path": relative_evaluation,
+        "evaluation_sha256": sealed_evaluation.sha256,
+        "portfolio_action": None,
+    }
+
+
+def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
+    """Return a verified progress snapshot for one profile allocation cycle."""
+
+    cycle = _text(cycle_id, "cycle_id")
+    if not CYCLE_RE.fullmatch(cycle):
+        raise ResearchAllocationError("cycle_id is invalid")
+    base = Path(root)
+    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    screening = read_jsonl(base / SCREENING_FILE)
+    recorded = [item for item in queue if item.get("profile_cycle_id") == cycle]
+    allocation_shas = {
+        item.get("allocation_sha256")
+        for item in recorded
+        if item.get("allocation_sha256") is not None
+    }
+    if len(allocation_shas) > 1:
+        raise ResearchAllocationError("profile cycle spans multiple allocations")
+    allocation_sha = next(iter(allocation_shas), None)
+    cohort = (
+        [
+            item
+            for item in queue
+            if item.get("allocation_sha256") == allocation_sha
+            and bool(item.get("selected_by"))
+        ]
+        if allocation_sha is not None
+        else recorded
+    )
+    recorded_symbols = {item["symbol"] for item in recorded}
+    screening_by_symbol = {item.get("symbol"): item for item in screening}
+    stage_counts: dict[str, int] = {}
+    status_counts: dict[str, int] = {}
+    invalid: list[dict[str, str]] = []
+    repository_root = base.parent.parent
+    for item in recorded:
+        status = str(item.get("status"))
+        status_counts[status] = status_counts.get(status, 0) + 1
+        screen = screening_by_symbol.get(item["symbol"])
+        stage = str(screen.get("decision")) if isinstance(screen, Mapping) else "missing"
+        stage_counts[stage] = stage_counts.get(stage, 0) + 1
+        for label, relative_path in (
+            ("profile", _latest_history_path(item, "result_path")),
+            ("evaluation", item.get("result_path")),
+        ):
+            if not isinstance(relative_path, str) or not relative_path:
+                invalid.append({"symbol": item["symbol"], "error": f"{label}_path_missing"})
+                continue
+            try:
+                verify_sealed(repository_root / relative_path)
+            except ValueError as exc:
+                invalid.append({"symbol": item["symbol"], "error": f"{label}:{exc}"})
+    return {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "allocation_sha256": allocation_sha,
+        "cohort_count": len(cohort),
+        "recorded_count": len(recorded),
+        "remaining_count": len({item["symbol"] for item in cohort} - recorded_symbols),
+        "by_next_stage": dict(sorted(stage_counts.items())),
+        "by_queue_status": dict(sorted(status_counts.items())),
+        "invalid_artifact_count": len(invalid),
+        "invalid_artifacts": invalid,
+    }
+
+
+def _validate_package(
+    package: Mapping[str, Any], *, recorded_at: dt.datetime
+) -> dict[str, Any]:
+    if not isinstance(package, Mapping) or set(package) != PACKAGE_KEYS:
+        raise ResearchAllocationError("profile package fields do not match contract")
+    if package.get("schema_version") != 2:
+        raise ResearchAllocationError("profile package schema_version must be 2")
+    cycle_id = _text(package.get("cycle_id"), "cycle_id")
+    if not CYCLE_RE.fullmatch(cycle_id):
+        raise ResearchAllocationError("cycle_id is invalid")
+    company_name = _text(package.get("company_name"), "company_name")
+    profile = package.get("profile")
+    if not isinstance(profile, Mapping):
+        raise ResearchAllocationError("profile must be an object")
+
+    provenance = package.get("provenance")
+    if not isinstance(provenance, Mapping) or set(provenance) != PROVENANCE_KEYS:
+        raise ResearchAllocationError("profile provenance fields do not match contract")
+    generated_at = _datetime(provenance.get("generated_at"), "generated_at")
+    if generated_at > recorded_at:
+        raise ResearchAllocationError("profile generated_at cannot be after recorded_at")
+    tools = _text_array(provenance.get("tools"), "tools", allow_empty=False)
+    normalized_provenance = {
+        "agent": _text(provenance.get("agent"), "agent"),
+        "model": _text(provenance.get("model"), "model"),
+        "tools": tools,
+        "generated_at": generated_at.isoformat(),
+    }
+
+    sources = package.get("sources")
+    if not isinstance(sources, list) or not sources:
+        raise ResearchAllocationError("profile sources must be a non-empty array")
+    normalized_sources: list[dict[str, Any]] = []
+    source_ids: set[str] = set()
+    for raw in sources:
+        source = _validate_source(raw, recorded_at=recorded_at)
+        source_id = source["source_id"]
+        if source_id in source_ids:
+            raise ResearchAllocationError(f"duplicate profile source_id: {source_id}")
+        source_ids.add(source_id)
+        normalized_sources.append(source)
+    s1_count = sum(1 for source in normalized_sources if source["tier"] == "S1")
+    if profile.get("s1_source_count") != s1_count:
+        raise ResearchAllocationError("profile s1_source_count does not match sources")
+
+    analysis = package.get("analysis")
+    if not isinstance(analysis, Mapping) or set(analysis) != ANALYSIS_KEYS:
+        raise ResearchAllocationError("profile analysis fields do not match contract")
+    normalized_analysis: dict[str, Any] = {}
+    for section in sorted(ANALYSIS_KEYS):
+        raw = analysis.get(section)
+        if not isinstance(raw, Mapping) or set(raw) != ANALYSIS_ITEM_KEYS:
+            raise ResearchAllocationError(f"analysis.{section} fields do not match contract")
+        referenced = _text_array(
+            raw.get("source_ids"),
+            f"analysis.{section}.source_ids",
+            allow_empty=False,
+        )
+        unknown = set(referenced) - source_ids
+        if unknown:
+            raise ResearchAllocationError(
+                f"analysis.{section} references unknown sources: {sorted(unknown)}"
+            )
+        normalized_analysis[section] = {
+            "conclusion": _text(raw.get("conclusion"), f"analysis.{section}.conclusion"),
+            "source_ids": referenced,
+        }
+
+    price_as_of = _datetime(package.get("price_as_of"), "price_as_of")
+    if price_as_of > recorded_at:
+        raise ResearchAllocationError("price_as_of cannot be after recorded_at")
+    if recorded_at - price_as_of > dt.timedelta(days=7):
+        raise ResearchAllocationError("profile price is older than seven days")
+    price_source_id = _text(package.get("price_source_id"), "price_source_id")
+    if price_source_id not in source_ids:
+        raise ResearchAllocationError("price_source_id does not reference a source")
+    information_cutoff = _datetime(profile.get("information_cutoff"), "information_cutoff")
+    if information_cutoff > recorded_at:
+        raise ResearchAllocationError("information_cutoff cannot be after recorded_at")
+    as_of = _date(profile.get("as_of"), "as_of")
+    if as_of > recorded_at.date():
+        raise ResearchAllocationError("profile as_of cannot be after recorded_at")
+    if information_cutoff.date() > as_of:
+        raise ResearchAllocationError("information_cutoff date cannot be after profile as_of")
+    if price_as_of > information_cutoff:
+        raise ResearchAllocationError("price_as_of cannot be after information_cutoff")
+    if generated_at < information_cutoff:
+        raise ResearchAllocationError("profile generated_at cannot precede information_cutoff")
+
+    return {
+        "schema_version": 2,
+        "cycle_id": cycle_id,
+        "company_name": company_name,
+        "profile": dict(profile),
+        "price_as_of": price_as_of.isoformat(),
+        "price_source_id": price_source_id,
+        "provenance": normalized_provenance,
+        "analysis": normalized_analysis,
+        "sources": normalized_sources,
+    }
+
+
+def _validate_source(raw: Any, *, recorded_at: dt.datetime) -> dict[str, Any]:
+    if not isinstance(raw, Mapping) or set(raw) != SOURCE_KEYS:
+        raise ResearchAllocationError("profile source fields do not match contract")
+    source_id = _text(raw.get("source_id"), "source_id")
+    if not SOURCE_ID_RE.fullmatch(source_id):
+        raise ResearchAllocationError(f"invalid source_id: {source_id}")
+    tier = _text(raw.get("tier"), f"{source_id}.tier")
+    if tier not in SOURCE_TIERS:
+        raise ResearchAllocationError(f"invalid source tier: {tier}")
+    accessed_at = _datetime(raw.get("accessed_at"), f"{source_id}.accessed_at")
+    if accessed_at > recorded_at:
+        raise ResearchAllocationError(f"source accessed_at is after recorded_at: {source_id}")
+    url = raw.get("url")
+    local_path = raw.get("local_path")
+    if url is not None:
+        url = _text(url, f"{source_id}.url")
+        parsed = urlparse(url)
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            raise ResearchAllocationError(f"source URL is invalid: {source_id}")
+    if local_path is not None:
+        local_path = _text(local_path, f"{source_id}.local_path")
+    if url is None and local_path is None:
+        raise ResearchAllocationError(f"source requires url or local_path: {source_id}")
+    published_at = raw.get("published_at")
+    if published_at is not None:
+        published_at = _text(published_at, f"{source_id}.published_at")
+    return {
+        "source_id": source_id,
+        "tier": tier,
+        "title": _text(raw.get("title"), f"{source_id}.title"),
+        "publisher": _text(raw.get("publisher"), f"{source_id}.publisher"),
+        "published_at": published_at,
+        "accessed_at": accessed_at.isoformat(),
+        "url": url,
+        "local_path": local_path,
+        "supports": _text_array(raw.get("supports"), f"{source_id}.supports", allow_empty=False),
+    }
+
+
+def _one_record(records: list[dict[str, Any]], symbol: str, label: str) -> dict[str, Any]:
+    matches = [item for item in records if item.get("symbol") == symbol]
+    if len(matches) != 1:
+        raise ResearchAllocationError(f"expected exactly one {label} record: {symbol}")
+    return matches[0]
+
+
+def _latest_history_path(record: Mapping[str, Any], key: str) -> str | None:
+    history = record.get("stage_history")
+    if not isinstance(history, list) or not history:
+        return None
+    latest = history[-1]
+    if not isinstance(latest, Mapping):
+        return None
+    value = latest.get(key)
+    return value if isinstance(value, str) else None
+
+
+def _validate_local_sources(
+    sources: list[dict[str, Any]], *, repository_root: Path
+) -> None:
+    root = repository_root.resolve()
+    for source in sources:
+        local_path = source.get("local_path")
+        if local_path is None:
+            continue
+        candidate = Path(local_path)
+        if candidate.is_absolute():
+            raise ResearchAllocationError(
+                f"local source paths must be repository-relative: {source['source_id']}"
+            )
+        resolved = (root / candidate).resolve()
+        try:
+            resolved.relative_to(root)
+        except ValueError as exc:
+            raise ResearchAllocationError(
+                f"local source path escapes repository: {source['source_id']}"
+            ) from exc
+        if not resolved.is_file():
+            raise ResearchAllocationError(
+                f"local source file does not exist: {source['source_id']}"
+            )
+
+
+def _stage_capacity(policy: Mapping[str, Any], stage: str) -> int | None:
+    if stage == "targeted_followup":
+        return None
+    capacities = policy.get("stage_capacity_per_cycle")
+    if not isinstance(capacities, Mapping):
+        raise ResearchAllocationError("stage capacity policy is invalid")
+    value = capacities.get(stage)
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise ResearchAllocationError(f"stage capacity is invalid: {stage}")
+    return value
+
+
+def _effort_budget(policy: Mapping[str, Any], stage: str) -> float:
+    budgets = policy.get("effort_budget_hours")
+    if not isinstance(budgets, Mapping):
+        raise ResearchAllocationError("effort budget policy is invalid")
+    value = budgets.get(stage)
+    if isinstance(value, bool) or not isinstance(value, (int, float)) or value <= 0:
+        raise ResearchAllocationError(f"effort budget is invalid: {stage}")
+    return float(value)
+
+
+def _screening_reason(stage: str, capacity_wait: bool) -> str:
+    if capacity_wait:
+        return f"画像支持进入{stage}，但本周期容量已满，进入可恢复等待队列。"
+    reasons = {
+        "targeted_followup": "画像只支持补齐少数决定性证据，暂不扩张研究范围。",
+        "scoped_research": "画像发现可信投资路径，追加有限范围研究预算。",
+        "deep_research": "范围研究通过证据与粗估值门槛，追加完整深研预算。",
+        "price_watch": "公司可能可投，但当前价格不支持继续购买研究预算。",
+        "reassign_or_stop": "当前 agent 能力圈不足，转派专门能力或暂停。",
+        "conditional_stop": "可靠证据触发结构化停止条件。",
+    }
+    return reasons[stage]
+
+
+def _next_action(stage: str, capacity_wait: bool) -> str:
+    if capacity_wait:
+        return "下一研究周期释放容量后，按画像价值排序重新竞争预算。"
+    actions = {
+        "targeted_followup": "只补画像列出的一个或少数决定性证据缺口。",
+        "scoped_research": "在4小时预算内解决一至三个决定性未知数。",
+        "deep_research": "按完整公司研究协议重建业务、会计、正常化盈利和估值。",
+        "price_watch": "按价格、财报、事件或论点触发器重新评估。",
+        "reassign_or_stop": "转派具备相应行业能力的独立 agent；无法转派则暂停。",
+        "conditional_stop": "仅在结构化重启条件发生时恢复研究。",
+    }
+    return actions[stage]
+
+
+def _stop_conditions(stage: str) -> list[str]:
+    values = {
+        "targeted_followup": ["决定性证据无法由公开来源补齐", "补证后投资路径不成立"],
+        "scoped_research": ["正常化盈利无法建立", "基准回报低于10%", "治理或生存测试不通过"],
+        "deep_research": ["完整证据无法支持12%承保参考回报", "会计、治理或永久损失风险不可承保"],
+    }
+    return values[stage]
+
+
+def _text(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not value.strip():
+        raise ResearchAllocationError(f"{label} must be a non-empty string")
+    return value.strip()
+
+
+def _text_array(value: Any, label: str, *, allow_empty: bool = True) -> list[str]:
+    if not isinstance(value, list) or not all(
+        isinstance(item, str) and item.strip() for item in value
+    ):
+        raise ResearchAllocationError(f"{label} must be a string array")
+    result = [item.strip() for item in value]
+    if not allow_empty and not result:
+        raise ResearchAllocationError(f"{label} must not be empty")
+    if len(result) != len(set(result)):
+        raise ResearchAllocationError(f"{label} must not contain duplicates")
+    return result
+
+
+def _datetime(value: Any, label: str) -> dt.datetime:
+    text = _text(value, label)
+    try:
+        parsed = dt.datetime.fromisoformat(text)
+    except ValueError as exc:
+        raise ResearchAllocationError(f"{label} must be an ISO datetime") from exc
+    _require_aware_datetime(parsed, label)
+    return parsed
+
+
+def _date(value: Any, label: str) -> dt.date:
+    text = _text(value, label)
+    try:
+        return dt.date.fromisoformat(text)
+    except ValueError as exc:
+        raise ResearchAllocationError(f"{label} must be an ISO date") from exc
+
+
+def _require_aware_datetime(value: dt.datetime, label: str) -> None:
+    if not isinstance(value, dt.datetime) or value.tzinfo is None or value.utcoffset() is None:
+        raise ResearchAllocationError(f"{label} must include timezone information")

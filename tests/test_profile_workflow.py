@@ -1,0 +1,318 @@
+from __future__ import annotations
+
+import copy
+import datetime as dt
+import json
+from pathlib import Path
+
+import pytest
+
+
+ROOT = Path(__file__).resolve().parents[1]
+RECORDED_AT = dt.datetime.fromisoformat("2026-07-26T10:00:00+08:00")
+
+
+def _policy() -> dict:
+    return json.loads(
+        (ROOT / "policies" / "research-allocation.json").read_text(encoding="utf-8")
+    )["payload"]
+
+
+def _profile(**changes) -> dict:
+    profile = {
+        "research_stage": "quick_profile",
+        "symbol": "CN:600519",
+        "as_of": "2026-07-26",
+        "information_cutoff": "2026-07-26T09:00:00+08:00",
+        "s1_source_count": 2,
+        "circle_of_competence": "inside",
+        "business_model_understood": True,
+        "survival_status": "pass",
+        "governance_status": "acceptable",
+        "normalized_earnings_status": "plausible",
+        "valuation": {
+            "current_price": 80.0,
+            "rough_fair_value_range": [95.0, 110.0],
+            "base_expected_annual_return": 0.11,
+            "bull_expected_annual_return": 0.16,
+            "market_implied_assumptions_tested": True,
+        },
+        "variant_perception": "市场低估正常化现金流",
+        "decisive_unknowns": ["下一期自由现金流能否确认"],
+        "counterevidence": ["需求可能恶化", "竞争可能压低利润率"],
+        "structural_stop_reasons": [],
+        "revisit_triggers": [
+            {
+                "type": "price",
+                "condition": "预期年化回报达到12%",
+                "reason": "重新评估是否值得承保",
+            }
+        ],
+    }
+    profile.update(changes)
+    return profile
+
+
+def _package(**changes) -> dict:
+    sections = {
+        section: {"conclusion": f"{section}结论", "source_ids": ["annual", "quote"]}
+        for section in (
+            "business_summary",
+            "owner_earnings_and_cycle",
+            "survival",
+            "governance",
+            "valuation_basis",
+            "market_mispricing",
+            "decisive_unknowns",
+        )
+    }
+    package = {
+        "schema_version": 2,
+        "cycle_id": "2026-07-26-test-cycle",
+        "company_name": "贵州茅台",
+        "profile": _profile(),
+        "price_as_of": "2026-07-24T15:00:00+08:00",
+        "price_source_id": "quote",
+        "provenance": {
+            "agent": "/root/test-company",
+            "model": "test-model",
+            "tools": ["repository", "browser"],
+            "generated_at": "2026-07-26T09:30:00+08:00",
+        },
+        "analysis": sections,
+        "sources": [
+            {
+                "source_id": "annual",
+                "tier": "S1",
+                "title": "2025年年度报告",
+                "publisher": "贵州茅台",
+                "published_at": "2026-03-31",
+                "accessed_at": "2026-07-26T09:00:00+08:00",
+                "url": "https://example.com/annual",
+                "local_path": None,
+                "supports": ["业务", "盈利", "治理"],
+            },
+            {
+                "source_id": "q1",
+                "tier": "S1",
+                "title": "2026年一季度报告",
+                "publisher": "贵州茅台",
+                "published_at": "2026-04-30",
+                "accessed_at": "2026-07-26T09:00:00+08:00",
+                "url": "https://example.com/q1",
+                "local_path": None,
+                "supports": ["最新经营"],
+            },
+            {
+                "source_id": "quote",
+                "tier": "S2",
+                "title": "收盘行情",
+                "publisher": "交易所行情聚合",
+                "published_at": "2026-07-24",
+                "accessed_at": "2026-07-26T09:00:00+08:00",
+                "url": "https://example.com/quote",
+                "local_path": None,
+                "supports": ["最新价格"],
+            },
+        ],
+    }
+    package.update(changes)
+    return package
+
+
+def _coverage(root: Path, *, extra_queue: list[dict] | None = None) -> None:
+    from trading_os.research_assets.coverage_store import write_jsonl
+
+    coverage_root = root / "coverage" / "cn-a"
+    write_jsonl(
+        coverage_root / "companies.jsonl",
+        [{"symbol": "CN:600519", "name": "贵州茅台"}],
+    )
+    write_jsonl(
+        coverage_root / "screening.jsonl",
+        [
+            {
+                "symbol": "CN:600519",
+                "name": "贵州茅台",
+                "decision": "quick_profile",
+                "priority": 1,
+                "reason": "测试画像",
+                "evidence": ["allocation:test"],
+                "next_action": "完成画像",
+            }
+        ],
+    )
+    queue = [
+        {
+            "symbol": "CN:600519",
+            "name": "贵州茅台",
+            "task_type": "quick_profile",
+            "priority": 1,
+            "status": "pending",
+            "reason": "测试画像",
+            "target_company_dir": "research/companies/CN/600519",
+            "effort_budget_hours": 1.0,
+            "preceding_stage": "machine_triage",
+            "stop_conditions": ["不存在可信路径"],
+            "allocation_sha256": "a" * 64,
+            "selected_by": ["balanced"],
+        }
+    ]
+    queue.extend(extra_queue or [])
+    write_jsonl(coverage_root / "research_queue.jsonl", queue)
+    write_jsonl(coverage_root / "runs.jsonl", [], sort_key="run_id")
+
+
+def test_record_profile_seals_artifacts_and_advances_only_to_scoped(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import (
+        read_jsonl,
+        validate_coverage_root,
+    )
+    from trading_os.research_assets.profile_workflow import (
+        profile_cycle_status,
+        record_profile_package,
+    )
+    from trading_os.research_assets.sealing import verify_sealed
+
+    _coverage(tmp_path)
+    result = record_profile_package(
+        _package(),
+        root=tmp_path / "coverage" / "cn-a",
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+
+    assert result["next_stage"] == "scoped_research"
+    assert result["portfolio_action"] is None
+    assert verify_sealed(tmp_path / result["profile_path"]).sha256 == result["profile_sha256"]
+    assert verify_sealed(tmp_path / result["evaluation_path"]).sha256 == result["evaluation_sha256"]
+    queue = read_jsonl(tmp_path / "coverage" / "cn-a" / "research_queue.jsonl")[0]
+    assert queue["task_type"] == "scoped_research"
+    assert queue["status"] == "pending"
+    assert queue["effort_budget_hours"] == 4.0
+    assert queue["stage_history"][0]["stage"] == "quick_profile"
+    validate_coverage_root(tmp_path / "coverage" / "cn-a")
+    status = profile_cycle_status(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+    )
+    assert status["cohort_count"] == 1
+    assert status["recorded_count"] == 1
+    assert status["remaining_count"] == 0
+    assert status["invalid_artifact_count"] == 0
+
+
+def test_record_profile_rejects_self_asserted_s1_count(tmp_path: Path):
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    package = _package()
+    package["profile"]["s1_source_count"] = 3
+
+    with pytest.raises(ResearchAllocationError, match="s1_source_count"):
+        record_profile_package(
+            package,
+            root=tmp_path / "coverage" / "cn-a",
+            policy=_policy(),
+            policy_reference="research-allocation.default@1.0.0",
+            recorded_at=RECORDED_AT,
+        )
+    assert not (tmp_path / "coverage" / "cn-a" / "profiles").exists()
+
+
+def test_price_watch_is_completed_with_a_reactivation_path(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+
+    _coverage(tmp_path)
+    package = _package()
+    package["profile"]["valuation"]["base_expected_annual_return"] = 0.04
+    package["profile"]["valuation"]["bull_expected_annual_return"] = 0.08
+
+    result = record_profile_package(
+        package,
+        root=tmp_path / "coverage" / "cn-a",
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+
+    assert result["next_stage"] == "price_watch"
+    queue = read_jsonl(tmp_path / "coverage" / "cn-a" / "research_queue.jsonl")[0]
+    assert queue["status"] == "completed"
+    screening = read_jsonl(tmp_path / "coverage" / "cn-a" / "screening.jsonl")[0]
+    assert screening["decision"] == "price_watch"
+    assert "价格" in screening["next_action"]
+
+
+def test_scoped_capacity_creates_auditable_waitlist(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+
+    other = {
+        "symbol": "CN:000001",
+        "name": "其他银行",
+        "task_type": "scoped_research",
+        "priority": 1,
+        "status": "pending",
+        "reason": "已占用容量",
+        "target_company_dir": "research/companies/CN/000001",
+        "effort_budget_hours": 4.0,
+        "preceding_stage": "quick_profile",
+        "stop_conditions": ["投资路径不成立"],
+    }
+    _coverage(tmp_path, extra_queue=[other])
+    policy = copy.deepcopy(_policy())
+    policy["stage_capacity_per_cycle"]["scoped_research"] = 1
+
+    result = record_profile_package(
+        _package(),
+        root=tmp_path / "coverage" / "cn-a",
+        policy=policy,
+        policy_reference="research-allocation.default@test",
+        recorded_at=RECORDED_AT,
+    )
+
+    assert result["capacity_wait"] is True
+    assert result["queue_status"] == "requires_rebaseline"
+    queue = {
+        item["symbol"]: item
+        for item in read_jsonl(tmp_path / "coverage" / "cn-a" / "research_queue.jsonl")
+    }
+    assert queue["CN:600519"]["task_type"] == "scoped_research"
+    assert "容量" in queue["CN:600519"]["reason"]
+
+
+def test_cli_record_profile_is_the_production_entrypoint(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+):
+    from trading_os.cli import main
+
+    _coverage(tmp_path)
+    input_path = tmp_path / "profile-package.json"
+    input_path.write_text(
+        json.dumps(_package(), ensure_ascii=False),
+        encoding="utf-8",
+    )
+
+    code = main(
+        [
+            "coverage",
+            "record-profile",
+            "--root",
+            str(tmp_path / "coverage" / "cn-a"),
+            "--input",
+            str(input_path),
+            "--policy",
+            str(ROOT / "policies" / "research-allocation.json"),
+            "--at",
+            RECORDED_AT.isoformat(),
+        ]
+    )
+
+    assert code == 0
+    output = json.loads(capsys.readouterr().out)
+    assert output["ok"] is True
+    assert output["next_stage"] == "scoped_research"

@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from .company import AssetValidationError, validate_company_dir
+from .sealing import atomic_write_bytes
 
 DECISIONS = {
     "catalog",
@@ -35,14 +36,20 @@ QUEUE_STATUSES = {
 }
 TASK_TYPES = {
     "quick_profile",
+    "targeted_followup",
     "scoped_research",
     "deep_research",
     "monitoring_update",
     "initial_research",
     "followup_review",
 }
-BUDGETED_TASK_TYPES = {"quick_profile", "scoped_research", "deep_research"}
-PRE_REPORT_TASK_TYPES = {"quick_profile", "scoped_research"}
+BUDGETED_TASK_TYPES = {
+    "quick_profile",
+    "targeted_followup",
+    "scoped_research",
+    "deep_research",
+}
+PRE_REPORT_TASK_TYPES = {"quick_profile", "targeted_followup", "scoped_research"}
 SYMBOL_RE = re.compile(r"^CN:[0-9]{6}$")
 
 COMPANIES_FILE = "companies.jsonl"
@@ -81,7 +88,7 @@ def write_jsonl(path: str | Path, records: list[dict[str, Any]], sort_key: str =
         json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n"
         for item in sorted_records
     )
-    file_path.write_text(payload, encoding="utf-8")
+    atomic_write_bytes(file_path, payload.encode("utf-8"))
     return file_path
 
 
@@ -296,6 +303,7 @@ def enqueue_research(
         "scoped_research": (
             "只解决快速画像列出的决定性问题，完成正常化盈利和粗估值后决定是否深研。"
         ),
+        "targeted_followup": "只补齐快速画像列出的一个或少数决定性证据缺口。",
         "deep_research": "按 playbooks/company-research.md 写完整中文初始研究报告。",
         "monitoring_update": "只更新触发器命中的价格、证据或论点，不重复完整研究。",
         "initial_research": "按 playbooks/company-research.md 写中文初始研究报告。",

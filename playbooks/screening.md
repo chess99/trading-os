@@ -49,6 +49,7 @@ python -m trading_os coverage status
 python -m trading_os coverage rank-rebaseline
 python -m trading_os coverage allocate-research
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
+python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage reconcile --check
 ```
 

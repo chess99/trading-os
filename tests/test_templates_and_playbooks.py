@@ -23,6 +23,7 @@ def test_old_company_template_is_removed_and_four_v2_templates_exist():
         assert (ROOT / "templates" / name).is_file()
     assert (ROOT / "templates" / "quick-profile.md").is_file()
     assert (ROOT / "templates" / "quick-profile.schema.json").is_file()
+    assert (ROOT / "templates" / "quick-profile-package.schema.json").is_file()
 
 
 def test_company_report_templates_cover_validator_sections():

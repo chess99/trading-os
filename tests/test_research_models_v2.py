@@ -83,6 +83,7 @@ def test_domain_enums_are_closed_and_match_the_design():
         "templates/blind-assessment.schema.json",
         "templates/portfolio.schema.json",
         "templates/quick-profile.schema.json",
+        "templates/quick-profile-package.schema.json",
         "templates/research-allocation.schema.json",
     ],
 )

@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://trading-os.local/schemas/quick-profile-package.schema.json",
+  "title": "Trading OS Auditable Quick Profile Package",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "cycle_id",
+    "company_name",
+    "profile",
+    "price_as_of",
+    "price_source_id",
+    "provenance",
+    "analysis",
+    "sources"
+  ],
+  "properties": {
+    "schema_version": {"type": "integer", "const": 2},
+    "cycle_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "company_name": {"type": "string", "minLength": 1},
+    "profile": {"$ref": "quick-profile.schema.json"},
+    "price_as_of": {"type": "string", "format": "date-time"},
+    "price_source_id": {"type": "string", "minLength": 1},
+    "provenance": {
+      "type": "object",
+      "required": ["agent", "model", "tools", "generated_at"],
+      "properties": {
+        "agent": {"type": "string", "minLength": 1},
+        "model": {"type": "string", "minLength": 1},
+        "tools": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "generated_at": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    },
+    "analysis": {
+      "type": "object",
+      "required": [
+        "business_summary",
+        "owner_earnings_and_cycle",
+        "survival",
+        "governance",
+        "valuation_basis",
+        "market_mispricing",
+        "decisive_unknowns"
+      ],
+      "properties": {
+        "business_summary": {"$ref": "#/$defs/analysisItem"},
+        "owner_earnings_and_cycle": {"$ref": "#/$defs/analysisItem"},
+        "survival": {"$ref": "#/$defs/analysisItem"},
+        "governance": {"$ref": "#/$defs/analysisItem"},
+        "valuation_basis": {"$ref": "#/$defs/analysisItem"},
+        "market_mispricing": {"$ref": "#/$defs/analysisItem"},
+        "decisive_unknowns": {"$ref": "#/$defs/analysisItem"}
+      },
+      "additionalProperties": false
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/source"}
+    }
+  },
+  "$defs": {
+    "analysisItem": {
+      "type": "object",
+      "required": ["conclusion", "source_ids"],
+      "properties": {
+        "conclusion": {"type": "string", "minLength": 1},
+        "source_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      },
+      "additionalProperties": false
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "source_id",
+        "tier",
+        "title",
+        "publisher",
+        "published_at",
+        "accessed_at",
+        "url",
+        "local_path",
+        "supports"
+      ],
+      "properties": {
+        "source_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+        },
+        "tier": {"type": "string", "enum": ["S1", "S2", "S3"]},
+        "title": {"type": "string", "minLength": 1},
+        "publisher": {"type": "string", "minLength": 1},
+        "published_at": {"type": ["string", "null"]},
+        "accessed_at": {"type": "string", "format": "date-time"},
+        "url": {"type": ["string", "null"]},
+        "local_path": {"type": ["string", "null"]},
+        "supports": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      },
+      "anyOf": [
+        {"properties": {"url": {"type": "string", "minLength": 1}}},
+        {"properties": {"local_path": {"type": "string", "minLength": 1}}}
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

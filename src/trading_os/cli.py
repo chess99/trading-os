@@ -34,6 +34,7 @@ from .research_assets.migration import (
 )
 from .research_assets.models import PolicyValidationError, load_policy
 from .research_assets.portfolio import PortfolioValidationError
+from .research_assets.profile_workflow import profile_cycle_status, record_profile_package
 from .research_assets.rebaseline_ranking import (
     RebaselineRankingError,
     build_rebaseline_ranking,
@@ -282,6 +283,27 @@ def build_parser() -> argparse.ArgumentParser:
     )
     evaluate_profile.add_argument("--output")
     evaluate_profile.set_defaults(func=cmd_coverage_evaluate_profile)
+
+    record_profile = coverage_sub.add_parser(
+        "record-profile",
+        help="Seal one quick/scoped profile and apply its deterministic next stage",
+    )
+    _add_coverage_root(record_profile)
+    record_profile.add_argument("--input", required=True)
+    record_profile.add_argument(
+        "--policy",
+        default="policies/research-allocation.json",
+    )
+    _add_timestamp(record_profile)
+    record_profile.set_defaults(func=cmd_coverage_record_profile)
+
+    profile_status = coverage_sub.add_parser(
+        "profile-status",
+        help="Verify progress and sealed artifacts for one profile cycle",
+    )
+    _add_coverage_root(profile_status)
+    profile_status.add_argument("cycle_id")
+    profile_status.set_defaults(func=cmd_coverage_profile_status)
 
     set_cmd = coverage_sub.add_parser("set-screening", help="Upsert one screening result")
     set_cmd.add_argument("symbol")
@@ -582,6 +604,26 @@ def cmd_coverage_evaluate_profile(ns: argparse.Namespace) -> int:
     if ns.output:
         write_research_allocation(ns.output, payload)
     _write_success(payload)
+    return 0
+
+
+def cmd_coverage_record_profile(ns: argparse.Namespace) -> int:
+    package = json.loads(Path(ns.input).read_text(encoding="utf-8"))
+    policy = load_policy(ns.policy)
+    payload = record_profile_package(
+        package,
+        root=ns.root,
+        policy=policy.payload,
+        policy_reference=f"{policy.policy_id}@{policy.version}",
+        recorded_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_status(ns: argparse.Namespace) -> int:
+    payload = profile_cycle_status(root=ns.root, cycle_id=ns.cycle_id)
+    _write_success({"ok": payload["invalid_artifact_count"] == 0, **payload})
     return 0
 
 
