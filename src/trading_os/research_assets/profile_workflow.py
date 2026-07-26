@@ -135,6 +135,77 @@ def claim_profile_task(
     return _claimed_task_payload(selected, idempotent=False)
 
 
+def release_profile_task(
+    *,
+    root: str | Path,
+    agent: str,
+    symbol: str,
+    failure_reason: str,
+    released_at: dt.datetime,
+) -> dict[str, Any]:
+    """Release one failed L2/L3 claim while preserving an auditable attempt."""
+
+    _require_aware_datetime(released_at, "released_at")
+    agent_name = _text(agent, "agent")
+    reason = _text(failure_reason, "failure_reason")
+    if not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        raise ResearchAllocationError("release symbol is invalid")
+    base = Path(root)
+    queue_path = base / RESEARCH_QUEUE_FILE
+    queue = read_jsonl(queue_path)
+    record = _one_record(queue, symbol, "research queue")
+    if record.get("status") != "running":
+        raise ResearchAllocationError(f"profile task is not running: {symbol}")
+    if record.get("assigned_agent") != agent_name:
+        raise ResearchAllocationError(
+            f"only the assigned agent can release profile task: {symbol}"
+        )
+    if record.get("task_type") not in {
+        "quick_profile",
+        "targeted_followup",
+        "scoped_research",
+    }:
+        raise ResearchAllocationError(
+            f"task type cannot be released by profile workflow: {record.get('task_type')}"
+        )
+
+    attempts = list(record.get("attempt_history") or [])
+    attempts.append(
+        {
+            "agent": agent_name,
+            "started_at": record.get("started_at"),
+            "finished_at": released_at.isoformat(),
+            "status": "failed",
+            "failure_reason": reason,
+        }
+    )
+    released = dict(record)
+    released.update(
+        {
+            "status": "pending",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "failure_reason": None,
+            "attempt_history": attempts,
+        }
+    )
+    write_jsonl(
+        queue_path,
+        [released if item.get("symbol") == symbol else item for item in queue],
+    )
+    return {
+        "schema_version": 1,
+        "symbol": symbol,
+        "released_agent": agent_name,
+        "failure_reason": reason,
+        "released_at": released_at.isoformat(),
+        "attempt_count": len(attempts),
+        "status": "pending",
+        "portfolio_action": None,
+    }
+
+
 def record_profile_package(
     package: Mapping[str, Any],
     *,

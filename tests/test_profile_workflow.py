@@ -385,6 +385,82 @@ def test_claim_profile_task_prevents_duplicate_company_assignment(tmp_path: Path
     assert queue["assigned_agent"] == "/root/qp_600519"
 
 
+def test_release_profile_task_preserves_failure_and_allows_reassignment(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        release_profile_task,
+    )
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    claim_profile_task(
+        root=coverage_root,
+        agent="/root/first",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+    released_at = dt.datetime.fromisoformat("2026-07-26T10:05:00+08:00")
+    released = release_profile_task(
+        root=coverage_root,
+        agent="/root/first",
+        symbol="CN:600519",
+        failure_reason="official PDF extraction timed out",
+        released_at=released_at,
+    )
+
+    assert released["attempt_count"] == 1
+    queue = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    assert queue["status"] == "pending"
+    assert queue["assigned_agent"] is None
+    assert queue["attempt_history"] == [
+        {
+            "agent": "/root/first",
+            "started_at": RECORDED_AT.isoformat(),
+            "finished_at": released_at.isoformat(),
+            "status": "failed",
+            "failure_reason": "official PDF extraction timed out",
+        }
+    ]
+
+    reassigned = claim_profile_task(
+        root=coverage_root,
+        agent="/root/retry",
+        claimed_at=dt.datetime.fromisoformat("2026-07-26T10:06:00+08:00"),
+        symbol="CN:600519",
+    )
+    assert reassigned["assigned_agent"] == "/root/retry"
+    queue = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    assert len(queue["attempt_history"]) == 1
+
+
+def test_release_profile_task_rejects_non_owner(tmp_path: Path):
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        release_profile_task,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    claim_profile_task(
+        root=coverage_root,
+        agent="/root/owner",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+    with pytest.raises(ResearchAllocationError, match="only the assigned agent"):
+        release_profile_task(
+            root=coverage_root,
+            agent="/root/other",
+            symbol="CN:600519",
+            failure_reason="not mine",
+            released_at=dt.datetime.fromisoformat("2026-07-26T10:05:00+08:00"),
+        )
+
+
 def test_record_profile_rejects_wrong_assigned_agent(tmp_path: Path):
     from trading_os.research_assets.profile_workflow import (
         claim_profile_task,

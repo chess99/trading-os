@@ -86,7 +86,10 @@ python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
 python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
+python -m trading_os coverage profile-release --agent <agent-id> --symbol CN:000000 --failure-reason <reason>
 ```
 
 `record-profile` 是生产入口：它校验来源清单和 agent provenance，封存画像与确定性评估，随后更新 screening 与 research queue。画像保存在
 `coverage/cn-a/profiles/{CYCLE_ID}/{TICKER}/`；单公司 agent 只提交自己的 package，不能直接修改共享队列。
+
+agent 因工具、来源或运行环境失败且尚未产出 package 时，必须先用 `profile-release` 释放认领。命令会把失败原因和原 agent 写入不可覆盖的 `attempt_history`，再允许其他 agent 重试；不得手工改写 `assigned_agent`。

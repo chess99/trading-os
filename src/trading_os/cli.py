@@ -38,6 +38,7 @@ from .research_assets.profile_workflow import (
     claim_profile_task,
     profile_cycle_status,
     record_profile_package,
+    release_profile_task,
 )
 from .research_assets.rebaseline_ranking import (
     RebaselineRankingError,
@@ -319,6 +320,17 @@ def build_parser() -> argparse.ArgumentParser:
     profile_claim.add_argument("--lens")
     _add_timestamp(profile_claim)
     profile_claim.set_defaults(func=cmd_coverage_profile_claim)
+
+    profile_release = coverage_sub.add_parser(
+        "profile-release",
+        help="Release one failed profile claim and preserve its attempt audit",
+    )
+    _add_coverage_root(profile_release)
+    profile_release.add_argument("--agent", required=True)
+    profile_release.add_argument("--symbol", required=True)
+    profile_release.add_argument("--failure-reason", required=True)
+    _add_timestamp(profile_release)
+    profile_release.set_defaults(func=cmd_coverage_profile_release)
 
     set_cmd = coverage_sub.add_parser("set-screening", help="Upsert one screening result")
     set_cmd.add_argument("symbol")
@@ -649,6 +661,18 @@ def cmd_coverage_profile_claim(ns: argparse.Namespace) -> int:
         claimed_at=_timestamp(ns.at),
         symbol=ns.symbol,
         lens=ns.lens,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_release(ns: argparse.Namespace) -> int:
+    payload = release_profile_task(
+        root=ns.root,
+        agent=ns.agent,
+        symbol=ns.symbol,
+        failure_reason=ns.failure_reason,
+        released_at=_timestamp(ns.at),
     )
     _write_success({"ok": True, **payload})
     return 0
