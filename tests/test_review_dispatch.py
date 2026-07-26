@@ -1041,6 +1041,54 @@ def test_challenger_hard_blocker_cannot_be_erased_by_clean_arbitration(
     )
 
 
+def test_challenger_stale_evidence_remains_stale_instead_of_failed(
+    tmp_path: Path,
+):
+    runs_root, policy_root, company_dir, run_id = _prepared_review(tmp_path)
+
+    class StaleChallengerRunner(MachineContractRunner):
+        def run(self, task):
+            result = super().run(task)
+            if not result.ok or task.stage != "challenger":
+                return result
+            payload = copy.deepcopy(result.payload)
+            filing = next(
+                item
+                for item in payload["evidence"]["ledger"]
+                if item["evidence_id"] == "E-FILING"
+            )
+            filing["fact_type"] = "cyclical_price_inventory"
+            filing["observed_at"] = (
+                NOW - dt.timedelta(days=31)
+            ).isoformat()
+            return AgentResult(ok=True, payload=payload)
+
+    runner = StaleChallengerRunner(company_dir=company_dir, run_id=run_id)
+    dispatcher = _dispatcher(runs_root, policy_root, runner)
+
+    assert dispatcher.dispatch(run_id, now=NOW).status == "blind_sealed"
+    assert dispatcher.dispatch(run_id, now=NOW).status == "challenging"
+    assert (
+        dispatcher.dispatch(run_id, now=NOW).status
+        == "company_reviews_complete"
+    )
+
+    candidate = json.loads(
+        (
+            company_dir
+            / "underwriting"
+            / run_id
+            / "portfolio-candidate.final.json"
+        ).read_text(encoding="utf-8")
+    )
+    assert candidate["underwriting_status"] == "stale"
+    assert "independent_evidence_invalid" in candidate["reason_codes"]
+    assert "stale_cyclical_data" in candidate["reason_codes"]
+    assert "independent_machine_validation_failed" not in candidate[
+        "reason_codes"
+    ]
+
+
 def test_agent_failure_is_isolated_and_resume_retries_only_failed_work(
     tmp_path: Path,
 ):
