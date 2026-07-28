@@ -807,6 +807,15 @@ def _rapid_triage_queue_record(
             "selected_by": selected_by,
             "matched_lenses": matched_lenses,
             "economic_risk_cluster": economic_risk_cluster,
+            "triage_cycle_id": None,
+            "triage_disposition": None,
+            "triage_priority_score": None,
+            "triage_selection_path": None,
+            "profile_cycle_id": None,
+            "profile_evaluation_path": None,
+            "profile_recorded_at": None,
+            "profile_quick_selection_path": None,
+            "profile_scoped_selection_path": None,
         }
     )
     return record

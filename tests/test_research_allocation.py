@@ -554,6 +554,10 @@ def test_explicit_retriage_mode_reopens_completed_work_and_preserves_history(
                 "assigned_agent": "legacy-agent",
                 "finished_at": "2026-07-27T12:00:00+08:00",
                 "result_path": f"legacy/{item['symbol'][-6:]}.json",
+                "triage_cycle_id": "legacy-cycle",
+                "triage_disposition": "price_watch",
+                "triage_selection_path": "legacy/selection.json",
+                "profile_cycle_id": "legacy-profile-cycle",
             }
         )
     write_jsonl(root / "research_queue.jsonl", queue)
@@ -572,3 +576,7 @@ def test_explicit_retriage_mode_reopens_completed_work_and_preserves_history(
     assert stored[selected]["task_type"] == "rapid_triage"
     assert stored[selected]["status"] == "pending"
     assert stored[selected]["stage_history"][-1]["result_path"].startswith("legacy/")
+    assert stored[selected]["triage_cycle_id"] is None
+    assert stored[selected]["triage_disposition"] is None
+    assert stored[selected]["triage_selection_path"] is None
+    assert stored[selected]["profile_cycle_id"] is None
