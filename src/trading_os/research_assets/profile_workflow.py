@@ -532,18 +532,13 @@ def finalize_profile_stage(
             f"{stage} cycle spans multiple predecessor selections"
         )
     binding = next(iter(bindings))
-    cohort = [
-        item
-        for item in queue
-        if item.get(binding_field) == binding
-        and (
-            item.get("task_type") == stage
-            or any(
-                isinstance(history, Mapping) and history.get("stage") == stage
-                for history in (item.get("stage_history") or [])
-            )
-        )
-    ]
+    cohort = _bound_profile_cohort(
+        queue,
+        repository_root=repository_root,
+        binding_field=binding_field,
+        binding=binding,
+        stage=stage,
+    )
     incomplete = [
         item["symbol"]
         for item in cohort
@@ -726,6 +721,7 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     if not CYCLE_RE.fullmatch(cycle):
         raise ResearchAllocationError("cycle_id is invalid")
     base = Path(root)
+    repository_root = base.parent.parent
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
     screening = read_jsonl(base / SCREENING_FILE)
     recorded = [item for item in queue if item.get("profile_cycle_id") == cycle]
@@ -744,15 +740,13 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     }
     if len(triage_selection_paths) == 1:
         triage_selection_path = next(iter(triage_selection_paths))
-        cohort = [
-            item
-            for item in queue
-            if item.get("triage_selection_path") == triage_selection_path
-            and (
-                item.get("task_type") == "quick_profile"
-                or _history_completed(item, "quick_profile")
-            )
-        ]
+        cohort = _bound_profile_cohort(
+            queue,
+            repository_root=repository_root,
+            binding_field="triage_selection_path",
+            binding=triage_selection_path,
+            stage="quick_profile",
+        )
     else:
         cohort = (
             [
@@ -769,7 +763,6 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     stage_counts: dict[str, int] = {}
     status_counts: dict[str, int] = {}
     invalid: list[dict[str, str]] = []
-    repository_root = base.parent.parent
     for item in recorded:
         status = str(item.get("status"))
         status_counts[status] = status_counts.get(status, 0) + 1
@@ -799,6 +792,55 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
         "invalid_artifact_count": len(invalid),
         "invalid_artifacts": invalid,
     }
+
+
+def _bound_profile_cohort(
+    queue: list[dict[str, Any]],
+    *,
+    repository_root: Path,
+    binding_field: str,
+    binding: str,
+    stage: str,
+) -> list[dict[str, Any]]:
+    """Return only companies selected by the sealed predecessor decision.
+
+    Historical stage records are useful for determining whether a selected
+    company has completed the current layer, but they must not pull a company
+    that lost the current predecessor comparison back into the cohort.
+    """
+
+    cohort = [
+        item
+        for item in queue
+        if item.get(binding_field) == binding
+        and (
+            item.get("task_type") == stage
+            or _history_completed(item, stage)
+        )
+    ]
+    selection_path = repository_root / binding
+    if not selection_path.exists():
+        # Backward compatibility for legacy queues whose predecessor selection
+        # was not stored as a sealed repository asset.
+        return cohort
+    verify_sealed(selection_path)
+    payload = json.loads(selection_path.read_text(encoding="utf-8"))
+    ranking = payload.get("ranking")
+    if not isinstance(ranking, list):
+        raise ResearchAllocationError("predecessor selection ranking is invalid")
+    selected_key = (
+        "selected_for_quick_profile" if stage == "quick_profile" else "selected"
+    )
+    selected_symbols = {
+        item.get("symbol")
+        for item in ranking
+        if isinstance(item, Mapping) and item.get(selected_key) is True
+    }
+    if not selected_symbols:
+        raise ResearchAllocationError(
+            f"predecessor selection has no selected companies for {stage}"
+        )
+    return [item for item in cohort if item.get("symbol") in selected_symbols]
 
 
 def _validate_package(

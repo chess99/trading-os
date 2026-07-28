@@ -228,6 +228,89 @@ def test_record_profile_waits_for_comparison_then_advances_to_scoped(tmp_path: P
     assert status["invalid_artifact_count"] == 0
 
 
+def test_current_triage_selection_excludes_old_unselected_profile_history(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.profile_workflow import (
+        finalize_profile_stage,
+        profile_cycle_status,
+        record_profile_package,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    binding = "coverage/cn-a/triage/test/selection.json"
+    old_unselected = {
+        "symbol": "CN:000002",
+        "name": "万科A",
+        "task_type": "rapid_triage",
+        "priority": 1,
+        "status": "completed",
+        "reason": "本轮快速甄别未获得正式画像预算",
+        "target_company_dir": "research/companies/CN/000002",
+        "effort_budget_hours": 0.25,
+        "preceding_stage": "machine_triage",
+        "stop_conditions": ["不存在可信路径"],
+        "allocation_sha256": "b" * 64,
+        "selected_by": ["crisis_mispricing"],
+        "triage_selection_path": binding,
+        "profile_cycle_id": "2026-07-25-old-cycle",
+        "stage_history": [
+            {
+                "stage": "quick_profile",
+                "status": "completed",
+                "result_path": "legacy/000002.profile.json",
+                "evaluation_path": "legacy/000002.evaluation.json",
+            }
+        ],
+    }
+    _coverage(tmp_path, extra_queue=[old_unselected])
+    selection_path = tmp_path / binding
+    seal_json(
+        selection_path,
+        {
+            "schema_version": 1,
+            "cycle_id": "2026-07-26-test-cycle",
+            "ranking": [
+                {
+                    "symbol": "CN:600519",
+                    "selected_for_quick_profile": True,
+                },
+                {
+                    "symbol": "CN:000002",
+                    "selected_for_quick_profile": False,
+                },
+            ],
+        },
+        artifact_type="rapid_triage_cross_company_selection",
+        sealed_at=RECORDED_AT,
+    )
+    record_profile_package(
+        _package(),
+        root=tmp_path / "coverage" / "cn-a",
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+
+    status = profile_cycle_status(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+    )
+    assert status["cohort_count"] == 1
+    assert status["recorded_count"] == 1
+    assert status["remaining_count"] == 0
+
+    promoted = finalize_profile_stage(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    assert promoted["cohort_count"] == 1
+    assert promoted["selected_symbols"] == ["CN:600519"]
+
+
 def test_profile_status_uses_stage_history_after_deep_research_reconcile(
     tmp_path: Path,
 ):
