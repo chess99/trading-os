@@ -9,9 +9,9 @@ from typing import Any, Mapping
 
 from .company import validate_company_dir
 from .coverage_store import CoverageValidationError, read_jsonl
-from .sealing import atomic_write_bytes
+from .sealing import atomic_write_bytes, verify_sealed
 
-ALGORITHM_VERSION = "1.1.0"
+ALGORITHM_VERSION = "1.2.0"
 PRIVATE_FIELD_FRAGMENTS = {
     "actual_weight",
     "cost_basis",
@@ -60,6 +60,7 @@ def build_rebaseline_ranking(
     research_root: str | Path,
     generated_at: dt.datetime,
     max_snapshot_age_days: int = 7,
+    magic_formula_path: str | Path | None = None,
 ) -> dict[str, Any]:
     _require_aware_datetime(generated_at, "generated_at")
     if isinstance(max_snapshot_age_days, bool) or max_snapshot_age_days < 0:
@@ -95,6 +96,11 @@ def build_rebaseline_ranking(
             f"companies snapshot is stale: {snapshot_as_of.isoformat()}"
         )
 
+    magic_by_symbol, magic_input = _load_magic_formula(
+        magic_formula_path,
+        companies_file=companies_file,
+        generated_at=generated_at,
+    )
     items: list[dict[str, Any]] = []
     excluded: list[dict[str, str]] = []
     screening_by_symbol: dict[str, dict[str, Any]] = {}
@@ -167,7 +173,15 @@ def build_rebaseline_ranking(
         meta = validate_company_dir(company_dir)
         if meta["identity"]["symbol"] != symbol:
             raise RebaselineRankingError(f"company meta symbol mismatch: {symbol}")
-        items.append(_score_company(company, task, meta, generated_at))
+        items.append(
+            _score_company(
+                company,
+                task,
+                meta,
+                generated_at,
+                magic_formula=magic_by_symbol.get(symbol),
+            )
+        )
 
     items.sort(
         key=lambda item: (
@@ -191,6 +205,7 @@ def build_rebaseline_ranking(
             "queue_sha256": _sha256(queue_file),
             "screening_path": screening_file.as_posix(),
             "screening_sha256": _sha256(screening_file),
+            **magic_input,
         },
         "snapshot": {
             "as_of": snapshot_as_of.isoformat(),
@@ -219,6 +234,7 @@ def _score_company(
     task: Mapping[str, Any],
     meta: Mapping[str, Any],
     generated_at: dt.datetime,
+    magic_formula: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     symbol = str(company["symbol"])
     industry = _industry(company.get("industry"))
@@ -241,7 +257,7 @@ def _score_company(
     if missing:
         reasons.add("public_data_gaps_recorded")
     confidence = "high" if len(missing) <= 1 else "medium" if len(missing) <= 4 else "low"
-    return {
+    result = {
         "rank": 0,
         "symbol": symbol,
         "name": _text(company.get("name"), f"{symbol} name"),
@@ -277,6 +293,91 @@ def _score_company(
                 "source",
             )
         },
+    }
+    result["magic_formula"] = (
+        _normalize_magic_formula(magic_formula) if magic_formula is not None else None
+    )
+    if magic_formula is not None:
+        reasons.add("auditable_magic_formula_available")
+        result["reason_codes"] = sorted(reasons)
+    return result
+
+
+def _load_magic_formula(
+    path: str | Path | None,
+    *,
+    companies_file: Path,
+    generated_at: dt.datetime,
+) -> tuple[dict[str, Mapping[str, Any]], dict[str, Any]]:
+    if path is None:
+        return {}, {
+            "magic_formula_path": None,
+            "magic_formula_sha256": None,
+        }
+    target = Path(path)
+    sealed = verify_sealed(target)
+    try:
+        payload = json.loads(target.read_text(encoding="utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise RebaselineRankingError("magic formula snapshot is invalid JSON") from exc
+    if payload.get("schema_version") != 1 or not isinstance(payload.get("items"), list):
+        raise RebaselineRankingError("magic formula snapshot contract is invalid")
+    market_sha = payload.get("market_snapshot_sha256")
+    if market_sha != _sha256(companies_file):
+        raise RebaselineRankingError("magic formula market snapshot SHA-256 mismatch")
+    generated_text = payload.get("generated_at")
+    if not isinstance(generated_text, str):
+        raise RebaselineRankingError("magic formula generated_at is missing")
+    magic_generated = dt.datetime.fromisoformat(generated_text)
+    if magic_generated.tzinfo is None or magic_generated.utcoffset() is None:
+        raise RebaselineRankingError("magic formula generated_at must include timezone")
+    if magic_generated > generated_at:
+        raise RebaselineRankingError("magic formula snapshot is dated in the future")
+    result: dict[str, Mapping[str, Any]] = {}
+    for item in payload["items"]:
+        if not isinstance(item, Mapping):
+            raise RebaselineRankingError("magic formula item must be an object")
+        symbol = _text(item.get("symbol"), "magic_formula.symbol")
+        if symbol in result:
+            raise RebaselineRankingError(f"duplicate magic formula symbol: {symbol}")
+        result[symbol] = item
+    return result, {
+        "magic_formula_path": target.as_posix(),
+        "magic_formula_sha256": sealed.sha256,
+    }
+
+
+def _normalize_magic_formula(value: Mapping[str, Any]) -> dict[str, Any]:
+    required_numbers = {
+        "normalized_ebit_cny",
+        "enterprise_value_cny",
+        "earnings_yield",
+        "return_on_tangible_capital",
+        "combined_score",
+        "combined_rank",
+    }
+    result: dict[str, Any] = {
+        key: _optional_number(value.get(key), f"magic_formula.{key}")
+        for key in required_numbers
+    }
+    if any(result[key] is None for key in required_numbers):
+        raise RebaselineRankingError("magic formula numeric fields are incomplete")
+    confidence = _text(value.get("confidence"), "magic_formula.confidence")
+    if confidence not in {"high", "medium", "low"}:
+        raise RebaselineRankingError("magic formula confidence is invalid")
+    eligible = value.get("eligible_for_nonfinancial_lens")
+    if not isinstance(eligible, bool):
+        raise RebaselineRankingError("magic formula eligibility must be boolean")
+    reasons = value.get("reason_codes")
+    if not isinstance(reasons, list) or not all(
+        isinstance(item, str) and item.strip() for item in reasons
+    ):
+        raise RebaselineRankingError("magic formula reason_codes are invalid")
+    return {
+        **result,
+        "confidence": confidence,
+        "eligible_for_nonfinancial_lens": eligible,
+        "reason_codes": list(reasons),
     }
 
 

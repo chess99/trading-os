@@ -7,7 +7,6 @@ from pathlib import Path
 
 import pytest
 
-
 ROOT = Path(__file__).resolve().parents[1]
 RECORDED_AT = dt.datetime.fromisoformat("2026-07-26T10:00:00+08:00")
 
@@ -629,3 +628,45 @@ def test_targeted_followup_reuses_preceding_profile_stage_and_can_resolve_gap(
         "quick_profile",
         "targeted_followup",
     ]
+
+
+def test_credit_cycle_profile_requires_stage_specific_s1_evidence():
+    from trading_os.research_assets.profile_workflow import (
+        _validate_industry_evidence,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    package = {
+        "profile": {"research_stage": "quick_profile"},
+        "sources": [
+            {
+                "tier": "S1",
+                "supports": ["bank_latest_s1_filing", "bank_capital_adequacy"],
+            }
+        ],
+    }
+    with pytest.raises(ResearchAllocationError, match="bank_asset_quality_migration"):
+        _validate_industry_evidence(
+            package,
+            queue_record={"economic_risk_cluster": "credit_cycle"},
+            policy=_policy(),
+        )
+
+    package["sources"][0]["supports"].append("bank_asset_quality_migration")
+    _validate_industry_evidence(
+        package,
+        queue_record={"economic_risk_cluster": "credit_cycle"},
+        policy=_policy(),
+    )
+
+
+def test_nonfinancial_profile_is_not_subject_to_bank_evidence_gate():
+    from trading_os.research_assets.profile_workflow import (
+        _validate_industry_evidence,
+    )
+
+    _validate_industry_evidence(
+        {"profile": {"research_stage": "quick_profile"}, "sources": []},
+        queue_record={"economic_risk_cluster": "consumer_demand"},
+        policy=_policy(),
+    )

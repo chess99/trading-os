@@ -11,8 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def test_domain_enums_are_closed_and_match_the_design():
     from trading_os.research_assets.models import (
         ClaimReviewStatus,
-        PortfolioAction,
         PolicyKind,
+        PortfolioAction,
         ReportType,
         ReviewRunStatus,
         SourceTier,
@@ -120,7 +120,7 @@ def test_policy_files_have_versioned_closed_metadata(relative_path: str):
     assert policy.policy_id
     assert policy.version
     if relative_path == "policies/research-allocation.json":
-        expected_effective_at = "2026-07-27T00:00:00+08:00"
+        expected_effective_at = "2026-07-28T00:00:00+08:00"
     elif relative_path in {"policies/underwriting.json", "policies/portfolio.json"}:
         expected_effective_at = "2026-07-25T00:00:00+08:00"
     else:

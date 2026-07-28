@@ -16,7 +16,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["rank", "symbol", "name", "industry", "economic_risk_cluster", "total_score", "score_confidence", "dimensions", "penalties", "reason_codes", "missing_fields", "public_snapshot", "target_company_dir"],
+        "required": ["rank", "symbol", "name", "industry", "economic_risk_cluster", "total_score", "score_confidence", "dimensions", "penalties", "reason_codes", "missing_fields", "public_snapshot", "magic_formula", "target_company_dir"],
         "properties": {
           "rank": {"type": "integer", "minimum": 1},
           "symbol": {"type": "string", "pattern": "^CN:[0-9]{6}$"},
@@ -30,6 +30,7 @@
           "reason_codes": {"type": "array", "items": {"type": "string"}},
           "missing_fields": {"type": "array", "items": {"type": "string"}},
           "public_snapshot": {"type": "object"},
+          "magic_formula": {"type": ["object", "null"]},
           "target_company_dir": {"type": "string", "minLength": 1}
         },
         "additionalProperties": false

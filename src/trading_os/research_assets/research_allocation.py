@@ -28,6 +28,8 @@ POLICY_KEYS = {
     "stage_capacity_per_cycle",
     "effort_budget_hours",
     "selection_slots",
+    "risk_cluster_caps",
+    "industry_evidence_requirements",
     "minimum_s1_sources_for_deep_research",
     "minimum_counterevidence_for_quick_profile",
     "minimum_base_expected_annual_return_for_deep_research",
@@ -52,6 +54,7 @@ SELECTION_LENSES = (
     "balanced",
     "value_income",
     "quality_compounder",
+    "magic_formula_nonfinancial",
     "financial_specialist",
     "cyclical_specialist",
     "crisis_mispricing",
@@ -116,22 +119,48 @@ def allocate_research_capacity(
     capacity = min(limits["candidate_pool_capacity_per_cycle"], len(items))
     selected_symbols: set[str] = set()
     selected_by: dict[str, list[str]] = {}
+    selected_cluster_counts: dict[str, int] = {}
     lens_counts: dict[str, int] = {}
     generated_at = _require_text(ranking.get("generated_at"), "ranking.generated_at")
+
+    lens_pools = {
+        lens: _lens_pool(lens, items, generated_at) for lens in SELECTION_LENSES
+    }
+    lens_shortlists = {
+        lens: {
+            item["symbol"]
+            for item in pool[: limits["selection_slots"][lens]]
+        }
+        for lens, pool in lens_pools.items()
+    }
+    matched_lenses = {
+        item["symbol"]: [
+            lens for lens in SELECTION_LENSES if item["symbol"] in lens_shortlists[lens]
+        ]
+        for item in items
+    }
+    rapid_cap = limits["risk_cluster_caps"]["rapid_triage"]
 
     for lens in SELECTION_LENSES:
         quota = min(limits["selection_slots"][lens], capacity - len(selected_symbols))
         if quota <= 0:
             lens_counts[lens] = 0
             continue
-        pool = _lens_pool(lens, items, generated_at)
+        pool = lens_pools[lens]
         added = 0
         for item in pool:
             symbol = item["symbol"]
             if symbol in selected_symbols:
                 continue
+            if not _cluster_has_capacity(
+                item["economic_risk_cluster"],
+                counts=selected_cluster_counts,
+                cap=rapid_cap,
+            ):
+                continue
             selected_symbols.add(symbol)
             selected_by.setdefault(symbol, []).append(lens)
+            _increment_cluster(item["economic_risk_cluster"], selected_cluster_counts)
             added += 1
             if added >= quota:
                 break
@@ -142,8 +171,15 @@ def allocate_research_capacity(
             symbol = item["symbol"]
             if symbol in selected_symbols:
                 continue
+            if not _cluster_has_capacity(
+                item["economic_risk_cluster"],
+                counts=selected_cluster_counts,
+                cap=rapid_cap,
+            ):
+                continue
             selected_symbols.add(symbol)
             selected_by.setdefault(symbol, []).append("capacity_fill")
+            _increment_cluster(item["economic_risk_cluster"], selected_cluster_counts)
             if len(selected_symbols) >= capacity:
                 break
 
@@ -160,6 +196,8 @@ def allocate_research_capacity(
                         "rapid_triage"
                     ],
                     "selected_by": selected_by[item["symbol"]],
+                    "matched_lenses": matched_lenses[item["symbol"]],
+                    "economic_risk_cluster": item["economic_risk_cluster"],
                     "ranking_confidence": item["score_confidence"],
                     "reason_codes": [
                         "cheap_map_selected_for_rapid_triage",
@@ -213,6 +251,7 @@ def allocate_research_capacity(
         "confidence_counts": dict(sorted(confidence_counts.items())),
         "warnings": warnings,
         "lens_counts": lens_counts,
+        "risk_cluster_counts": dict(sorted(selected_cluster_counts.items())),
         "selected_count": len(selected),
         "deferred_count": len(deferred),
         "selected": selected,
@@ -293,6 +332,15 @@ def apply_research_allocation(
             allocation_item.get("selected_by"),
             f"{symbol}.selected_by",
         )
+        matched_lenses = _text_list(
+            allocation_item.get("matched_lenses"),
+            f"{symbol}.matched_lenses",
+            allow_empty=True,
+        )
+        risk_cluster = _require_text(
+            allocation_item.get("economic_risk_cluster"),
+            f"{symbol}.economic_risk_cluster",
+        )
         priority = _selected_priority(selected_by)
         screening_by_symbol[symbol] = _screening_record(
             screening_by_symbol.get(symbol),
@@ -321,6 +369,8 @@ def apply_research_allocation(
             next_action="完成快速甄别并等待全批次横向比较。",
             allocation_sha=allocation_sha,
             selected_by=selected_by,
+            matched_lenses=matched_lenses,
+            economic_risk_cluster=risk_cluster,
             effort_budget_hours=allocation_item["effort_budget_hours"],
         )
 
@@ -359,6 +409,10 @@ def apply_research_allocation(
             next_action="等待下一研究周期或结构化重启触发器。",
             allocation_sha=allocation_sha,
             selected_by=[],
+            matched_lenses=[],
+            economic_risk_cluster=str(
+                ranking_items[symbol].get("economic_risk_cluster") or "unclassified"
+            ),
             effort_budget_hours=allocation["effort_budget_hours"]["rapid_triage"],
         )
 
@@ -401,6 +455,10 @@ def apply_research_allocation(
                 next_action="人工复核后再决定是否进入快速甄别。",
                 allocation_sha=allocation_sha,
                 selected_by=[],
+                matched_lenses=[],
+                economic_risk_cluster=str(
+                    (existing or {}).get("economic_risk_cluster") or "unclassified"
+                ),
                 effort_budget_hours=allocation["effort_budget_hours"]["rapid_triage"],
             )
         elif category == "hard_exclusion":
@@ -424,6 +482,10 @@ def apply_research_allocation(
                 next_action="证券状态改变后重新筛选。",
                 allocation_sha=allocation_sha,
                 selected_by=[],
+                matched_lenses=[],
+                economic_risk_cluster=str(
+                    (existing or {}).get("economic_risk_cluster") or "unclassified"
+                ),
                 effort_budget_hours=allocation["effort_budget_hours"]["rapid_triage"],
             )
         else:
@@ -678,6 +740,8 @@ def _rapid_triage_queue_record(
     next_action: str,
     allocation_sha: str,
     selected_by: list[str],
+    matched_lenses: list[str],
+    economic_risk_cluster: str,
     effort_budget_hours: float,
 ) -> dict[str, Any]:
     symbol = _symbol(company.get("symbol"))
@@ -707,6 +771,8 @@ def _rapid_triage_queue_record(
             ],
             "allocation_sha256": allocation_sha,
             "selected_by": selected_by,
+            "matched_lenses": matched_lenses,
+            "economic_risk_cluster": economic_risk_cluster,
         }
     )
     return record
@@ -745,6 +811,22 @@ def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
         "selection_slots",
         integer=True,
     )
+    result["risk_cluster_caps"] = _exact_numeric_mapping(
+        policy.get("risk_cluster_caps"),
+        {
+            "rapid_triage",
+            "quick_profile",
+            "scoped_research",
+            "deep_research",
+            "underwriting",
+        },
+        "risk_cluster_caps",
+        integer=True,
+    )
+    raw_requirements = policy.get("industry_evidence_requirements")
+    if not isinstance(raw_requirements, Mapping):
+        raise ResearchAllocationError("industry_evidence_requirements must be an object")
+    result["industry_evidence_requirements"] = dict(raw_requirements)
     if sum(result["selection_slots"].values()) != result[
         "candidate_pool_capacity_per_cycle"
     ]:
@@ -841,6 +923,9 @@ def _normalize_ranking_item(item: Any) -> dict[str, Any]:
         },
         "reason_codes": reasons,
         "public_snapshot": dict(public),
+        "magic_formula": _normalize_magic_formula_item(
+            item.get("magic_formula"), symbol=symbol
+        ),
     }
 
 
@@ -849,19 +934,7 @@ def _lens_pool(
     items: list[dict[str, Any]],
     generated_at: str,
 ) -> list[dict[str, Any]]:
-    eligible: Callable[[dict[str, Any]], bool] = lambda item: True
-    if lens == "financial_specialist":
-        eligible = lambda item: item["economic_risk_cluster"] in {
-            "credit_cycle",
-            "insurance_rates",
-        }
-    elif lens == "cyclical_specialist":
-        eligible = lambda item: item["economic_risk_cluster"] == "commodity_cycle"
-    elif lens == "crisis_mispricing":
-        eligible = lambda item: bool(
-            set(item["reason_codes"]) & CRISIS_REASON_CODES
-        )
-    elif lens == "false_negative_audit":
+    if lens == "false_negative_audit":
         return sorted(
             items,
             key=lambda item: (
@@ -869,6 +942,28 @@ def _lens_pool(
                 item["symbol"],
             ),
         )
+
+    def eligible(item: dict[str, Any]) -> bool:
+        if lens == "financial_specialist":
+            return item["economic_risk_cluster"] in {
+                "credit_cycle",
+                "insurance_rates",
+            }
+        if lens == "cyclical_specialist":
+            return item["economic_risk_cluster"] == "commodity_cycle"
+        if lens == "magic_formula_nonfinancial":
+            return bool(
+                item["magic_formula"]
+                and item["magic_formula"]["eligible_for_nonfinancial_lens"]
+            )
+        if lens == "value_income":
+            return item["economic_risk_cluster"] not in {
+                "credit_cycle",
+                "insurance_rates",
+            }
+        if lens == "crisis_mispricing":
+            return bool(set(item["reason_codes"]) & CRISIS_REASON_CODES)
+        return True
 
     score_functions: dict[str, Callable[[dict[str, Any]], float]] = {
         "balanced": lambda item: item["total_score"],
@@ -881,6 +976,11 @@ def _lens_pool(
             item["dimensions"]["operating_capital_quality"]
             + item["dimensions"]["permanent_loss_protection"]
             + item["dimensions"]["verifiable_catalyst_odds"]
+        ),
+        "magic_formula_nonfinancial": lambda item: (
+            float(item["magic_formula"]["combined_score"])
+            if item["magic_formula"] is not None
+            else float("-inf")
         ),
         "financial_specialist": lambda item: (
             item["dimensions"]["value_dislocation"]
@@ -905,6 +1005,29 @@ def _lens_pool(
         (item for item in items if eligible(item)),
         key=lambda item: (-score(item), item["symbol"]),
     )
+
+
+def _normalize_magic_formula_item(value: Any, *, symbol: str) -> dict[str, Any] | None:
+    if value is None:
+        return None
+    if not isinstance(value, Mapping):
+        raise ResearchAllocationError(f"{symbol}.magic_formula must be an object or null")
+    eligible = value.get("eligible_for_nonfinancial_lens")
+    score = value.get("combined_score")
+    if not isinstance(eligible, bool):
+        raise ResearchAllocationError(f"{symbol}.magic_formula eligibility is invalid")
+    return {
+        "eligible_for_nonfinancial_lens": eligible,
+        "combined_score": _number(score, f"{symbol}.magic_formula.combined_score"),
+    }
+
+
+def _cluster_has_capacity(cluster: str, *, counts: Mapping[str, int], cap: int) -> bool:
+    return cluster == "diversified" or counts.get(cluster, 0) < cap
+
+
+def _increment_cluster(cluster: str, counts: dict[str, int]) -> None:
+    counts[cluster] = counts.get(cluster, 0) + 1
 
 
 def _normalize_profile(
@@ -1055,7 +1178,8 @@ def _profile_has_basic_gaps(profile: Mapping[str, Any]) -> bool:
             not profile["business_model_understood"],
             profile["survival_status"] == "uncertain",
             profile["governance_status"] == "uncertain",
-            profile["normalized_earnings_status"] == "unavailable",
+            profile["normalized_earnings_status"] != "plausible",
+            len(profile["decisive_unknowns"]) > 3,
             not profile["valuation"]["market_implied_assumptions_tested"],
             profile["variant_perception"] is None,
         )

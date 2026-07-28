@@ -17,7 +17,6 @@ from .coverage_store import (
 from .research_allocation import ResearchAllocationError
 from .sealing import seal_json, verify_sealed
 
-
 PACKAGE_KEYS = {
     "schema_version",
     "cycle_id",
@@ -467,7 +466,12 @@ def finalize_rapid_triage_cycle(
             str(item["symbol"]),
         ),
     )
-    selected = ranked[:capacity]
+    risk_cap = _policy_risk_cluster_cap(policy, "quick_profile")
+    selected, capped_symbols = _select_with_risk_cluster_cap(
+        ranked,
+        capacity=capacity,
+        cap=risk_cap,
+    )
     selected_symbols = {item["symbol"] for item in selected}
     comparison_rows = []
     for rank, item in enumerate(ranked, 1):
@@ -480,6 +484,15 @@ def finalize_rapid_triage_cycle(
                 "comparison_score": _comparison_score(item),
                 "selected_for_quick_profile": item["symbol"] in selected_symbols,
                 "selected_by": item.get("selected_by") or [],
+                "matched_lenses": item.get("matched_lenses") or [],
+                "economic_risk_cluster": item.get("economic_risk_cluster"),
+                "selection_reason": (
+                    "selected_within_risk_cluster_cap"
+                    if item["symbol"] in selected_symbols
+                    else "risk_cluster_cap_reached"
+                    if item["symbol"] in capped_symbols
+                    else "lower_cross_company_priority"
+                ),
             }
         )
     selection_payload = {
@@ -490,6 +503,7 @@ def finalize_rapid_triage_cycle(
         "cohort_count": len(cohort),
         "eligible_count": len(eligible),
         "quick_profile_capacity": capacity,
+        "risk_cluster_cap": risk_cap,
         "selected_count": len(selected),
         "principle": _policy_text(policy, "comparison_principle"),
         "ranking": comparison_rows,
@@ -764,8 +778,38 @@ def _normalize_package(
 
 def _comparison_score(item: Mapping[str, Any]) -> int:
     priority = int(item.get("priority", 5))
-    lens_count = min(len(item.get("selected_by") or []), 3)
+    lens_count = min(
+        len(item.get("matched_lenses") or item.get("selected_by") or []), 3
+    )
     return int(item["triage_priority_score"]) + (6 - priority) + lens_count
+
+
+def _policy_risk_cluster_cap(policy: Mapping[str, Any], stage: str) -> int:
+    caps = policy.get("risk_cluster_caps")
+    if not isinstance(caps, Mapping):
+        raise ResearchAllocationError("risk cluster cap policy is invalid")
+    value = caps.get(stage)
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise ResearchAllocationError(f"risk cluster cap is invalid: {stage}")
+    return value
+
+
+def _select_with_risk_cluster_cap(
+    ranked: list[Mapping[str, Any]], *, capacity: int, cap: int
+) -> tuple[list[Mapping[str, Any]], set[str]]:
+    selected: list[Mapping[str, Any]] = []
+    counts: dict[str, int] = {}
+    capped: set[str] = set()
+    for item in ranked:
+        cluster = str(item.get("economic_risk_cluster") or "diversified")
+        if cluster != "diversified" and counts.get(cluster, 0) >= cap:
+            capped.add(str(item["symbol"]))
+            continue
+        selected.append(item)
+        counts[cluster] = counts.get(cluster, 0) + 1
+        if len(selected) >= capacity:
+            break
+    return selected, capped
 
 
 def _claim_payload(record: Mapping[str, Any], *, idempotent: bool) -> dict[str, Any]:

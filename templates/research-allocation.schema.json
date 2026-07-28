@@ -15,6 +15,7 @@
     "confidence_counts",
     "warnings",
     "lens_counts",
+    "risk_cluster_counts",
     "selected_count",
     "deferred_count",
     "selected",
@@ -39,6 +40,7 @@
     "confidence_counts": {"type": "object"},
     "warnings": {"type": "array", "items": {"type": "string"}},
     "lens_counts": {"type": "object"},
+    "risk_cluster_counts": {"type": "object"},
     "selected_count": {"type": "integer", "minimum": 0},
     "deferred_count": {"type": "integer", "minimum": 0},
     "selected": {
@@ -51,6 +53,8 @@
           "stage",
           "effort_budget_hours",
           "selected_by",
+          "matched_lenses",
+          "economic_risk_cluster",
           "ranking_confidence",
           "reason_codes"
         ],
@@ -64,6 +68,11 @@
             "minItems": 1,
             "items": {"type": "string", "minLength": 1}
           },
+          "matched_lenses": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1}
+          },
+          "economic_risk_cluster": {"type": "string", "minLength": 1},
           "ranking_confidence": {
             "type": "string",
             "enum": ["high", "medium", "low"]

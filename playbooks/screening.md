@@ -18,6 +18,14 @@
 
 公开数据排名只能作为便宜地图，不能直接晋级深研、承保或买入。必须经过 `playbooks/research-capital-allocation.md` 的快速画像和范围研究；不同类型机会分别选样，并为危机错杀与假阴性抽查保留容量。
 
+非金融公司额外运行可复算的神奇公式镜头。其原始财报抓取必须绑定 universe SHA、真实
+抓取时间、公告/更新时间和来源；今天下载的重述数据不得伪装成历史点时数据。东方财富等
+未文档化公开接口只可用于内部预筛，不代表再分发许可；晋级公司必须回到交易所或巨潮
+法定报告核验。通用价值镜头排除银行与保险，避免金融企业同时占用通用和专用低估值容量。
+
+每层横向比较都执行风险簇上限而非行业配额。小市值、亏损、低流动性、负 PE 仍可通过
+危机错杀、信息变化或假阴性镜头竞争预算，不因风格约束而被静默排除。
+
 ## 事件性冲击与危机错杀
 
 - 当期亏损、利润骤降或 PE 失真不能降低研究资格；这类公司应优先判断冲击是需求延后、周期波动还是永久损失。
@@ -52,7 +60,7 @@
 ```bash
 python -m trading_os coverage validate
 python -m trading_os coverage status
-python -m trading_os coverage rank-rebaseline
+python -m trading_os coverage rank-rebaseline --magic-formula automation/magic_formula_snapshot.json
 python -m trading_os coverage allocate-research
 python -m trading_os coverage triage-status <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id>

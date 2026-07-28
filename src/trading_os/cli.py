@@ -48,8 +48,8 @@ from .research_assets.rebaseline_ranking import (
 )
 from .research_assets.research_allocation import (
     ResearchAllocationError,
-    apply_research_allocation,
     allocate_research_capacity,
+    apply_research_allocation,
     evaluate_quick_profile,
     write_research_allocation,
 )
@@ -247,6 +247,10 @@ def build_parser() -> argparse.ArgumentParser:
     rank_rebaseline.add_argument("--screening")
     rank_rebaseline.add_argument("--research-root", default="research")
     rank_rebaseline.add_argument("--output", default="automation/rebaseline_ranking.json")
+    rank_rebaseline.add_argument(
+        "--magic-formula",
+        help="Sealed non-financial Magic Formula snapshot",
+    )
     rank_rebaseline.add_argument("--max-snapshot-age-days", type=int, default=7)
     _add_timestamp(rank_rebaseline)
     rank_rebaseline.set_defaults(func=cmd_coverage_rank_rebaseline)
@@ -655,6 +659,7 @@ def cmd_coverage_rank_rebaseline(ns: argparse.Namespace) -> int:
         research_root=ns.research_root,
         generated_at=_timestamp(ns.at),
         max_snapshot_age_days=ns.max_snapshot_age_days,
+        magic_formula_path=ns.magic_formula,
     )
     path = write_rebaseline_ranking(ns.output, payload)
     _write_success(

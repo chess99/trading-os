@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "policy_id": "research-allocation.default",
-  "version": "2.0.0",
-  "effective_at": "2026-07-27T00:00:00+08:00",
+  "version": "3.0.0",
+  "effective_at": "2026-07-28T00:00:00+08:00",
   "kind": "research_allocation",
   "payload": {
     "candidate_pool_capacity_per_cycle": 200,
@@ -21,14 +21,39 @@
       "underwriting": 12.0
     },
     "selection_slots": {
-      "balanced": 40,
-      "value_income": 30,
-      "quality_compounder": 30,
+      "balanced": 30,
+      "value_income": 20,
+      "quality_compounder": 20,
+      "magic_formula_nonfinancial": 30,
       "financial_specialist": 20,
       "cyclical_specialist": 20,
       "crisis_mispricing": 30,
       "information_change": 20,
       "false_negative_audit": 10
+    },
+    "risk_cluster_caps": {
+      "rapid_triage": 25,
+      "quick_profile": 10,
+      "scoped_research": 5,
+      "deep_research": 2,
+      "underwriting": 1
+    },
+    "industry_evidence_requirements": {
+      "credit_cycle": {
+        "quick_profile": [
+          "bank_latest_s1_filing",
+          "bank_asset_quality_migration",
+          "bank_capital_adequacy"
+        ],
+        "scoped_research": [
+          "bank_latest_s1_filing",
+          "bank_asset_quality_migration",
+          "bank_normalized_credit_cost_and_nim",
+          "bank_common_equity_earnings_after_capital_instruments",
+          "bank_capital_adequacy",
+          "bank_property_lgf_exposure"
+        ]
+      }
     },
     "minimum_s1_sources_for_deep_research": 2,
     "minimum_counterevidence_for_quick_profile": 2,

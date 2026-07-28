@@ -209,6 +209,50 @@ def test_industry_aliases_map_to_stable_risk_clusters(
     assert item["economic_risk_cluster"] == cluster
 
 
+def test_sealed_magic_formula_snapshot_is_sha_bound_to_market_universe(tmp_path: Path):
+    from trading_os.research_assets.rebaseline_ranking import build_rebaseline_ranking
+    from trading_os.research_assets.sealing import seal_json
+
+    companies, queue, screening, research = _inputs(tmp_path, [_record()])
+    magic_path = tmp_path / "automation" / "magic.json"
+    seal_json(
+        magic_path,
+        {
+            "schema_version": 1,
+            "generated_at": NOW.isoformat(),
+            "market_snapshot_sha256": hashlib.sha256(companies.read_bytes()).hexdigest(),
+            "items": [
+                {
+                    "symbol": "CN:600519",
+                    "normalized_ebit_cny": 100.0,
+                    "enterprise_value_cny": 1000.0,
+                    "earnings_yield": 0.1,
+                    "return_on_tangible_capital": 0.2,
+                    "combined_score": 88.0,
+                    "combined_rank": 1,
+                    "confidence": "high",
+                    "eligible_for_nonfinancial_lens": True,
+                    "reason_codes": ["three_year_median_core_operating_ebit"],
+                }
+            ],
+        },
+        artifact_type="magic_formula_snapshot",
+        sealed_at=NOW,
+    )
+
+    result = build_rebaseline_ranking(
+        companies_path=companies,
+        queue_path=queue,
+        screening_path=screening,
+        research_root=research,
+        generated_at=NOW,
+        magic_formula_path=magic_path,
+    )
+
+    assert result["items"][0]["magic_formula"]["combined_rank"] == 1.0
+    assert result["inputs"]["magic_formula_sha256"]
+
+
 def test_delisting_security_is_hard_excluded_with_reason(tmp_path: Path):
     payload = _build(tmp_path, [_record(name="样本退")])
 

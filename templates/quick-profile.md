@@ -38,3 +38,8 @@
 
 单公司 agent 输出符合 `templates/quick-profile-package.schema.json` 的 package，其中
 `profile` 必须符合 `templates/quick-profile.schema.json`。package 必须记录真实 agent、模型、工具、最新价格时点和逐节来源引用；`profile.s1_source_count` 必须等于来源清单中的唯一 S1 数量。可选结果仅限范围研究候选、定向补证、价格观察、能力圈转派或结构化停止；范围研究候选必须等完整同层批次横向比较后才能晋级，本阶段不得直接进入深研或承保。
+
+若队列中的 `economic_risk_cluster` 为 `credit_cycle`，来源清单必须按
+`playbooks/research-capital-allocation.md` 的银行专用证据标签填写 `supports`。标签只是机器
+闸门，不替代正文：必须在分析中说明资产质量迁徙、正常化信用成本与息差、资本工具后的
+普通股利润、资本充足率，以及房地产、城投和投资资产风险。

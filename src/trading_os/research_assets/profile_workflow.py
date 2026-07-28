@@ -20,7 +20,6 @@ from .research_allocation import (
 )
 from .sealing import canonical_json_bytes, seal_json, verify_sealed
 
-
 PACKAGE_KEYS = {
     "schema_version",
     "cycle_id",
@@ -237,6 +236,11 @@ def record_profile_package(
     queue_record = _one_record(queue_records, symbol, "research queue")
     screening_record = _one_record(screening_records, symbol, "screening")
     _validate_local_sources(normalized["sources"], repository_root=base.parent.parent)
+    _validate_industry_evidence(
+        normalized,
+        queue_record=queue_record,
+        policy=policy,
+    )
 
     queued_stage = str(queue_record.get("task_type"))
     expected_profile_stage = (
@@ -586,7 +590,12 @@ def finalize_profile_stage(
         or budget <= 0
     ):
         raise ResearchAllocationError(f"effort budget is invalid: {next_stage}")
-    selected = ranked[:capacity]
+    risk_cap = _risk_cluster_cap(policy, next_stage)
+    selected, capped_symbols = _select_with_risk_cluster_cap(
+        ranked,
+        capacity=capacity,
+        cap=risk_cap,
+    )
     selected_symbols = {item["symbol"] for item in selected}
     rows = [
         {
@@ -595,6 +604,14 @@ def finalize_profile_stage(
             "name": item["name"],
             "research_priority_score": item.get("profile_priority_score", 0),
             "selected": item["symbol"] in selected_symbols,
+            "economic_risk_cluster": item.get("economic_risk_cluster"),
+            "selection_reason": (
+                "selected_within_risk_cluster_cap"
+                if item["symbol"] in selected_symbols
+                else "risk_cluster_cap_reached"
+                if item["symbol"] in capped_symbols
+                else "lower_cross_company_priority"
+            ),
         }
         for rank, item in enumerate(ranked, 1)
     ]
@@ -608,6 +625,7 @@ def finalize_profile_stage(
         "cohort_count": len(cohort),
         "eligible_count": len(eligible),
         "capacity": capacity,
+        "risk_cluster_cap": risk_cap,
         "selected_count": len(selected),
         "principle": policy.get("comparison_principle"),
         "ranking": rows,
@@ -1072,7 +1090,10 @@ def _profile_priority_score(
     """Use coarse buckets to rank research value without fake valuation precision."""
 
     base_return = float(profile["valuation"]["base_expected_annual_return"])
-    if base_return >= 0.15:
+    earnings_plausible = profile["normalized_earnings_status"] == "plausible"
+    if not earnings_plausible:
+        return_bucket = 0
+    elif base_return >= 0.15:
         return_bucket = 3
     elif base_return >= 0.12:
         return_bucket = 2
@@ -1092,6 +1113,72 @@ def _profile_priority_score(
         + resolvability_bucket * 3
         + priority_bucket
     )
+
+
+def _validate_industry_evidence(
+    package: Mapping[str, Any],
+    *,
+    queue_record: Mapping[str, Any],
+    policy: Mapping[str, Any],
+) -> None:
+    requirements = policy.get("industry_evidence_requirements")
+    if not isinstance(requirements, Mapping):
+        raise ResearchAllocationError("industry evidence policy is invalid")
+    cluster = str(queue_record.get("economic_risk_cluster") or "")
+    cluster_requirements = requirements.get(cluster)
+    if cluster_requirements is None:
+        return
+    if not isinstance(cluster_requirements, Mapping):
+        raise ResearchAllocationError(
+            f"industry evidence policy is invalid for {cluster}"
+        )
+    stage = str(package["profile"]["research_stage"])
+    required = cluster_requirements.get(stage, [])
+    if not isinstance(required, list) or not all(
+        isinstance(item, str) and item.strip() for item in required
+    ):
+        raise ResearchAllocationError(
+            f"industry evidence requirements are invalid for {cluster}.{stage}"
+        )
+    supported = {
+        support
+        for source in package["sources"]
+        if source.get("tier") == "S1"
+        for support in source.get("supports", [])
+    }
+    missing = sorted(set(required) - supported)
+    if missing:
+        raise ResearchAllocationError(
+            f"{cluster} profile lacks required S1 specialist evidence: {missing}"
+        )
+
+
+def _risk_cluster_cap(policy: Mapping[str, Any], stage: str) -> int:
+    caps = policy.get("risk_cluster_caps")
+    if not isinstance(caps, Mapping):
+        raise ResearchAllocationError("risk cluster cap policy is invalid")
+    value = caps.get(stage)
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise ResearchAllocationError(f"risk cluster cap is invalid: {stage}")
+    return value
+
+
+def _select_with_risk_cluster_cap(
+    ranked: list[Mapping[str, Any]], *, capacity: int, cap: int
+) -> tuple[list[Mapping[str, Any]], set[str]]:
+    selected: list[Mapping[str, Any]] = []
+    counts: dict[str, int] = {}
+    capped: set[str] = set()
+    for item in ranked:
+        cluster = str(item.get("economic_risk_cluster") or "diversified")
+        if cluster != "diversified" and counts.get(cluster, 0) >= cap:
+            capped.add(str(item["symbol"]))
+            continue
+        selected.append(item)
+        counts[cluster] = counts.get(cluster, 0) + 1
+        if len(selected) >= capacity:
+            break
+    return selected, capped
 
 
 def _text(value: Any, label: str) -> str:

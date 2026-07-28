@@ -23,6 +23,7 @@ def _small_policy() -> dict[str, object]:
         "balanced": 1,
         "value_income": 1,
         "quality_compounder": 0,
+        "magic_formula_nonfinancial": 0,
         "financial_specialist": 0,
         "cyclical_specialist": 0,
         "crisis_mispricing": 1,
@@ -153,6 +154,72 @@ def test_low_confidence_ranking_emits_warning_instead_of_false_precision():
     assert result["warnings"] == [
         "ranking_confidence_too_low_for_score_led_promotion"
     ]
+
+
+def test_value_income_excludes_credit_cycle_and_preserves_multi_lens_matches():
+    from trading_os.research_assets.research_allocation import allocate_research_capacity
+
+    policy = _small_policy()
+    policy["candidate_pool_capacity_per_cycle"] = 2
+    policy["quick_profile_capacity_per_cycle"] = 2
+    policy["selection_slots"] = {
+        lens: 0 for lens in policy["selection_slots"]
+    }
+    policy["selection_slots"].update({"balanced": 1, "value_income": 1})
+    ranking = {
+        "generated_at": "2026-07-28T10:00:00+08:00",
+        "items": [
+            _ranking_item(1, total=99, cluster="credit_cycle", value=99),
+            _ranking_item(2, total=90, cluster="consumer_demand", value=50),
+            _ranking_item(3, total=80, cluster="consumer_demand", value=40),
+        ],
+        "excluded": [],
+    }
+
+    result = allocate_research_capacity(
+        ranking, policy=policy, policy_version="test@3.0.0"
+    )
+    selected = {item["symbol"]: item for item in result["selected"]}
+    assert selected["CN:000001"]["selected_by"] == ["balanced"]
+    assert "value_income" not in selected["CN:000001"]["matched_lenses"]
+    assert selected["CN:000002"]["selected_by"] == ["value_income"]
+
+
+def test_rapid_triage_allocation_respects_risk_cluster_cap_without_quota_fill():
+    from trading_os.research_assets.research_allocation import allocate_research_capacity
+
+    policy = _small_policy()
+    policy["candidate_pool_capacity_per_cycle"] = 4
+    policy["quick_profile_capacity_per_cycle"] = 4
+    policy["risk_cluster_caps"]["rapid_triage"] = 2
+    policy["selection_slots"] = {
+        lens: 0 for lens in policy["selection_slots"]
+    }
+    policy["selection_slots"]["balanced"] = 4
+    ranking = {
+        "generated_at": "2026-07-28T10:00:00+08:00",
+        "items": [
+            _ranking_item(index, total=100 - index, cluster="credit_cycle")
+            for index in range(1, 5)
+        ]
+        + [
+            _ranking_item(5, total=50, cluster="consumer_demand"),
+            _ranking_item(6, total=40, cluster="commodity_cycle"),
+        ],
+        "excluded": [],
+    }
+
+    result = allocate_research_capacity(
+        ranking, policy=policy, policy_version="test@3.0.0"
+    )
+    assert result["selected_count"] == 4
+    assert result["risk_cluster_counts"]["credit_cycle"] == 2
+    assert {item["symbol"] for item in result["selected"]} == {
+        "CN:000001",
+        "CN:000002",
+        "CN:000005",
+        "CN:000006",
+    }
 
 
 def test_quick_profile_can_only_advance_to_scoped_research():

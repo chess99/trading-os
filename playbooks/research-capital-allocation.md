@@ -39,11 +39,34 @@
 - 综合赔率；
 - 现金回报与资产折价；
 - 高质量复利；
+- 非金融神奇公式：同时看 EBIT/EV 与 EBIT/有形经营资本；
 - 银行、保险等专用模型；
 - 周期成本曲线与中周期盈利；
 - 危机错杀和负 PE 正常化；
 - 新财报或重大信息变化；
 - 从未入选公司的当前时点假阴性抽查。
+
+神奇公式只是一条独立预算镜头，不替代公司研究。生产口径同时保留两套排名：经典版把
+盈利收益率和资本回报率的全市场名次等权相加；A 股适配版用三年核心经营 EBIT 中位数、
+当前市值和最近统一报告期资产负债表，并以 70% 全市场、30% 同行业分位降低行业会计
+口径偏差。银行、保险、券商、地产、公用事业不适用；周期股转入中周期盈利专用镜头；
+投入资本非正的轻资产公司转入质量镜头，不能获得无限资本回报率。全额扣除货币资金只
+用于便宜地图，进入正式画像后必须核验受限资金与最低经营现金。
+
+不同镜头的实际槽位来源记为 `selected_by`，进入多个镜头短名单的事实另记为
+`matched_lenses`。多镜头共识只能读取后者，不能因去重而失效。
+
+## 风险簇上限与行业证据闸门
+
+不设必须填满的行业配额，但对单一明确经济风险簇设置上限：快速甄别 25、正式画像 10、
+范围研究 5、完整深研 2、独立承保原则上 1。`diversified` 分类过粗，暂不应用同一硬上限。
+达到上限后选择下一名不同风险簇公司；没有合格替代者时容量留空。
+
+银行不得仅凭低 PB、低 PE 或静态 ROE 晋级。正式画像的 S1 来源 `supports` 至少覆盖
+`bank_latest_s1_filing`、`bank_asset_quality_migration`、`bank_capital_adequacy`；范围研究
+还必须覆盖 `bank_normalized_credit_cost_and_nim`、
+`bank_common_equity_earnings_after_capital_instruments`、`bank_property_lgf_exposure`。
+这些标签必须由法定定期报告等 S1 来源支持，缺任一项即不能竞争下一层预算。
 
 危机错杀和假阴性抽查合计至少占快速甄别候选池的 15%。这不是历史回测，而是防止筛选形成风格盲区。
 
@@ -96,7 +119,7 @@
 ## 命令
 
 ```bash
-python -m trading_os coverage rank-rebaseline
+python -m trading_os coverage rank-rebaseline --magic-formula automation/magic_formula_snapshot.json
 python -m trading_os coverage allocate-research
 python -m trading_os coverage apply-allocation
 python -m trading_os coverage triage-claim --agent <agent-id> [--symbol CN:000000]
