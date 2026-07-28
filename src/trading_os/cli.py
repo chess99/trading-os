@@ -251,6 +251,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--magic-formula",
         help="Sealed non-financial Magic Formula snapshot",
     )
+    rank_rebaseline.add_argument(
+        "--include-completed",
+        action="store_true",
+        help="Re-rank completed legacy work for a new light re-triage cycle",
+    )
     rank_rebaseline.add_argument("--max-snapshot-age-days", type=int, default=7)
     _add_timestamp(rank_rebaseline)
     rank_rebaseline.set_defaults(func=cmd_coverage_rank_rebaseline)
@@ -660,6 +665,7 @@ def cmd_coverage_rank_rebaseline(ns: argparse.Namespace) -> int:
         generated_at=_timestamp(ns.at),
         max_snapshot_age_days=ns.max_snapshot_age_days,
         magic_formula_path=ns.magic_formula,
+        include_completed=ns.include_completed,
     )
     path = write_rebaseline_ranking(ns.output, payload)
     _write_success(

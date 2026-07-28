@@ -4,6 +4,7 @@ import datetime as dt
 import hashlib
 import json
 import math
+import re
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -61,6 +62,7 @@ def build_rebaseline_ranking(
     generated_at: dt.datetime,
     max_snapshot_age_days: int = 7,
     magic_formula_path: str | Path | None = None,
+    include_completed: bool = False,
 ) -> dict[str, Any]:
     _require_aware_datetime(generated_at, "generated_at")
     if isinstance(max_snapshot_age_days, bool) or max_snapshot_age_days < 0:
@@ -115,7 +117,12 @@ def build_rebaseline_ranking(
         if symbol in seen_queue:
             raise RebaselineRankingError(f"duplicate queue symbol: {symbol}")
         seen_queue.add(symbol)
-        if task.get("status") != "requires_rebaseline":
+        accepted_statuses = (
+            {"requires_rebaseline", "completed"}
+            if include_completed
+            else {"requires_rebaseline"}
+        )
+        if task.get("status") not in accepted_statuses:
             continue
         company = by_symbol.get(symbol)
         if company is None:
@@ -198,6 +205,7 @@ def build_rebaseline_ranking(
         "schema_version": 2,
         "algorithm_version": ALGORITHM_VERSION,
         "generated_at": generated_at.isoformat(),
+        "retriage_completed": include_completed,
         "inputs": {
             "companies_path": companies_file.as_posix(),
             "companies_sha256": _sha256(companies_file),
@@ -611,6 +619,10 @@ def _risk_cluster(industry: str) -> str:
         return "credit_cycle"
     if "保险" in industry:
         return "insurance_rates"
+    if any(keyword in industry for keyword in ("证券", "多元金融")):
+        return "capital_markets"
+    if "房地产" in industry:
+        return "property_credit_cycle"
     if any(keyword in industry for keyword in CYCLICAL_KEYWORDS):
         return "commodity_cycle"
     if any(keyword in industry for keyword in ("半导体", "电子", "通信", "计算机")):
@@ -650,8 +662,11 @@ def _resolve_company_dir(task: Mapping[str, Any], research_root: Path) -> Path:
 def _reject_private_fields(value: Any, label: str, path: str = "$") -> None:
     if isinstance(value, Mapping):
         for key, nested in value.items():
-            normalized = str(key).lower()
-            if any(fragment in normalized for fragment in PRIVATE_FIELD_FRAGMENTS):
+            normalized = re.sub(r"[^a-z0-9]+", "_", str(key).lower()).strip("_")
+            if any(
+                re.search(rf"(^|_){re.escape(fragment)}(_|$)", normalized)
+                for fragment in PRIVATE_FIELD_FRAGMENTS
+            ):
                 raise RebaselineRankingError(
                     f"private field is forbidden in {label}: {path}.{key}"
                 )

@@ -60,7 +60,7 @@
 ```bash
 python -m trading_os coverage validate
 python -m trading_os coverage status
-python -m trading_os coverage rank-rebaseline --magic-formula automation/magic_formula_snapshot.json
+python -m trading_os coverage rank-rebaseline --magic-formula <sealed-snapshot> --include-completed
 python -m trading_os coverage allocate-research
 python -m trading_os coverage triage-status <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id>

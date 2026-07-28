@@ -496,3 +496,79 @@ def test_apply_allocation_preserves_completed_formal_profile_progress(
     }
     assert stored[preserved_symbol]["task_type"] == "scoped_research"
     assert stored[preserved_symbol]["status"] == "pending"
+
+
+def test_explicit_retriage_mode_reopens_completed_work_and_preserves_history(
+    tmp_path: Path,
+):
+    import datetime as dt
+
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.research_allocation import (
+        allocate_research_capacity,
+        apply_research_allocation,
+    )
+
+    ranking = _ranking()
+    ranking["excluded"] = []
+    ranking["retriage_completed"] = True
+    allocation = allocate_research_capacity(
+        ranking,
+        policy=_small_policy(),
+        policy_version="research-allocation.default@3.0.0",
+    )
+    root = tmp_path / "coverage" / "cn-a"
+    write_jsonl(
+        root / "companies.jsonl",
+        [
+            {"symbol": item["symbol"], "name": item["name"]}
+            for item in ranking["items"]
+        ],
+    )
+    write_jsonl(
+        root / "screening.jsonl",
+        [
+            {
+                "symbol": item["symbol"],
+                "name": item["name"],
+                "decision": "price_watch",
+                "priority": 3,
+                "reason": "旧结论",
+                "evidence": ["legacy"],
+                "next_action": "等待",
+            }
+            for item in ranking["items"]
+        ],
+    )
+    queue = []
+    for item in ranking["items"]:
+        queue.append(
+            {
+                "symbol": item["symbol"],
+                "name": item["name"],
+                "task_type": "quick_profile",
+                "priority": 3,
+                "status": "completed",
+                "reason": "旧画像",
+                "target_company_dir": f"research/companies/CN/{item['symbol'][-6:]}",
+                "assigned_agent": "legacy-agent",
+                "finished_at": "2026-07-27T12:00:00+08:00",
+                "result_path": f"legacy/{item['symbol'][-6:]}.json",
+            }
+        )
+    write_jsonl(root / "research_queue.jsonl", queue)
+    write_jsonl(root / "runs.jsonl", [], sort_key="run_id")
+
+    result = apply_research_allocation(
+        allocation,
+        ranking=ranking,
+        root=root,
+        applied_at=dt.datetime.fromisoformat("2026-07-28T19:00:00+08:00"),
+    )
+
+    assert result["preserved_formal_research_count"] == 0
+    stored = {item["symbol"]: item for item in read_jsonl(root / "research_queue.jsonl")}
+    selected = allocation["selected"][0]["symbol"]
+    assert stored[selected]["task_type"] == "rapid_triage"
+    assert stored[selected]["status"] == "pending"
+    assert stored[selected]["stage_history"][-1]["result_path"].startswith("legacy/")

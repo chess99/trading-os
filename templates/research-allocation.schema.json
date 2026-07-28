@@ -6,6 +6,7 @@
   "required": [
     "schema_version",
     "ranking_generated_at",
+    "retriage_completed",
     "ranking_content_sha256",
     "policy_version",
     "policy_payload_sha256",
@@ -25,6 +26,7 @@
   "properties": {
     "schema_version": {"type": "integer", "const": 2},
     "ranking_generated_at": {"type": "string", "format": "date-time"},
+    "retriage_completed": {"type": "boolean"},
     "ranking_content_sha256": {
       "type": "string",
       "pattern": "^[a-f0-9]{64}$"

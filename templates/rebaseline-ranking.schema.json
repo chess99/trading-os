@@ -3,11 +3,12 @@
   "$id": "https://trading-os.local/schemas/rebaseline-ranking.schema.json",
   "title": "Trading OS Rebaseline Research Priority Ranking",
   "type": "object",
-  "required": ["schema_version", "algorithm_version", "generated_at", "inputs", "snapshot", "ranked_count", "excluded_count", "items", "excluded"],
+  "required": ["schema_version", "algorithm_version", "generated_at", "retriage_completed", "inputs", "snapshot", "ranked_count", "excluded_count", "items", "excluded"],
   "properties": {
     "schema_version": {"type": "integer", "const": 2},
     "algorithm_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "generated_at": {"type": "string", "format": "date-time"},
+    "retriage_completed": {"type": "boolean"},
     "inputs": {"type": "object"},
     "snapshot": {"type": "object"},
     "ranked_count": {"type": "integer", "minimum": 0},

@@ -48,7 +48,7 @@ def build_magic_formula_snapshot(
     """Build a non-financial, cycle-aware Magic Formula research lens.
 
     Earnings yield uses median three-year EBIT divided by current enterprise
-    value. Return on capital uses the median of annual EBIT divided by
+    value. Return on capital divides median annual EBIT by median annual
     non-cash, non-interest-bearing working capital plus net fixed assets and
     construction in progress. The output remains a research-budget map; it
     is never an investment recommendation.
@@ -174,9 +174,11 @@ def build_magic_formula_snapshot(
             continue
 
         normalized_ebit = statistics.median(row["ebit"] for row in yearly)
-        normalized_roc = statistics.median(
-            row["return_on_capital"] for row in yearly
+        normalized_capital = statistics.median(
+            row["tangible_operating_capital"] for row in yearly
         )
+        normalized_roc = normalized_ebit / normalized_capital
+        capital_to_market_cap = normalized_capital / market_cap
         earnings_yield = normalized_ebit / enterprise_value
         if not all(
             math.isfinite(value) and value > 0
@@ -192,6 +194,7 @@ def build_magic_formula_snapshot(
             continue
 
         is_cyclical = any(keyword in industry for keyword in CYCLICAL_KEYWORDS)
+        near_zero_capital = capital_to_market_cap < 0.02
         confidence = (
             "high"
             if len(yearly) >= 3 and fallback_interest_years == 0
@@ -208,8 +211,16 @@ def build_magic_formula_snapshot(
                 "enterprise_value_cny": round(enterprise_value, 2),
                 "earnings_yield": round(earnings_yield, 8),
                 "return_on_tangible_capital": round(normalized_roc, 8),
+                "ranking_return_on_tangible_capital": round(
+                    min(normalized_roc, 2.0), 8
+                ),
+                "normalized_tangible_operating_capital_cny": round(
+                    normalized_capital, 2
+                ),
+                "capital_to_market_cap": round(capital_to_market_cap, 8),
                 "confidence": confidence,
-                "eligible_for_nonfinancial_lens": not is_cyclical,
+                "eligible_for_nonfinancial_lens": not is_cyclical
+                and not near_zero_capital,
                 "reason_codes": (
                     [
                         "three_year_median_core_operating_ebit",
@@ -218,6 +229,11 @@ def build_magic_formula_snapshot(
                     ]
                     + (["finance_expense_interest_proxy"] if fallback_interest_years else [])
                     + (["cyclical_requires_specialist"] if is_cyclical else [])
+                    + (
+                        ["near_zero_operating_capital_requires_quality_lens"]
+                        if near_zero_capital
+                        else []
+                    )
                 ),
             }
         )
@@ -235,13 +251,17 @@ def build_magic_formula_snapshot(
         "method": {
             "earnings_yield": "median_annual_ebit/current_enterprise_value",
             "return_on_capital": (
-                "median(annual_ebit/"
-                "(noncash_noninterest_working_capital+net_fixed_assets+cip))"
+                "median_annual_ebit/median_annual_"
+                "(noncash_noninterest_working_capital+net_fixed_assets+cip)"
             ),
             "rank_blend": "70% global percentile + 30% exact-industry percentile",
             "classic_rank": "global earnings-yield rank + global return-on-capital rank",
             "financials_and_incompatible_businesses": "excluded",
             "cyclicals": "measured_but_routed_to_specialist_lens",
+            "near_zero_operating_capital": (
+                "capital_below_2%_of_market_cap_routed_to_quality_lens"
+            ),
+            "roc_ranking_winsorization": "raw_roc_capped_at_200%_for_ranking_only",
         },
         "eligible_count": sum(
             bool(item["eligible_for_nonfinancial_lens"]) for item in items
@@ -368,7 +388,7 @@ def _attach_ranks(items: list[dict[str, Any]]) -> None:
     if not items:
         return
     yield_rank = _rank(items, "earnings_yield")
-    roc_rank = _rank(items, "return_on_tangible_capital")
+    roc_rank = _rank(items, "ranking_return_on_tangible_capital")
     industry_groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for item in items:
         industry_groups[item["industry"]].append(item)
@@ -382,7 +402,7 @@ def _attach_ranks(items: list[dict[str, Any]]) -> None:
         )
         peers = industry_groups[item["industry"]]
         peer_yield = _rank(peers, "earnings_yield")
-        peer_roc = _rank(peers, "return_on_tangible_capital")
+        peer_roc = _rank(peers, "ranking_return_on_tangible_capital")
         industry_percentile = _rank_percentile(
             peer_yield[item["symbol"]] + peer_roc[item["symbol"]],
             2,

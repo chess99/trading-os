@@ -50,7 +50,8 @@
 盈利收益率和资本回报率的全市场名次等权相加；A 股适配版用三年核心经营 EBIT 中位数、
 当前市值和最近统一报告期资产负债表，并以 70% 全市场、30% 同行业分位降低行业会计
 口径偏差。银行、保险、券商、地产、公用事业不适用；周期股转入中周期盈利专用镜头；
-投入资本非正的轻资产公司转入质量镜头，不能获得无限资本回报率。全额扣除货币资金只
+投入资本低于市值 2% 的轻资产公司转入质量镜头，资本回报排名封顶 200%，不能凭近零
+分母获得无限资本回报率。全额扣除货币资金只
 用于便宜地图，进入正式画像后必须核验受限资金与最低经营现金。
 
 不同镜头的实际槽位来源记为 `selected_by`，进入多个镜头短名单的事实另记为
@@ -119,7 +120,7 @@
 ## 命令
 
 ```bash
-python -m trading_os coverage rank-rebaseline --magic-formula automation/magic_formula_snapshot.json
+python -m trading_os coverage rank-rebaseline --magic-formula <sealed-snapshot> --include-completed
 python -m trading_os coverage allocate-research
 python -m trading_os coverage apply-allocation
 python -m trading_os coverage triage-claim --agent <agent-id> [--symbol CN:000000]

@@ -122,6 +122,9 @@ def allocate_research_capacity(
     selected_cluster_counts: dict[str, int] = {}
     lens_counts: dict[str, int] = {}
     generated_at = _require_text(ranking.get("generated_at"), "ranking.generated_at")
+    retriage_completed = ranking.get("retriage_completed", False)
+    if not isinstance(retriage_completed, bool):
+        raise ResearchAllocationError("ranking.retriage_completed must be boolean")
 
     lens_pools = {
         lens: _lens_pool(lens, items, generated_at) for lens in SELECTION_LENSES
@@ -235,6 +238,7 @@ def allocate_research_capacity(
     return {
         "schema_version": 2,
         "ranking_generated_at": generated_at,
+        "retriage_completed": retriage_completed,
         "ranking_content_sha256": _mapping_sha256(ranking),
         "policy_version": policy_ref,
         "policy_payload_sha256": _mapping_sha256(policy),
@@ -318,6 +322,9 @@ def apply_research_allocation(
         _symbol(item.get("symbol")): dict(item) for item in queue_records
     }
     allocation_sha = _mapping_sha256(allocation)
+    retriage_completed = allocation.get("retriage_completed", False)
+    if not isinstance(retriage_completed, bool):
+        raise ResearchAllocationError("allocation.retriage_completed must be boolean")
     applied_iso = applied_at.isoformat()
     preserved_formal_symbols: set[str] = set()
 
@@ -325,9 +332,14 @@ def apply_research_allocation(
         company = _required_company(companies, symbol)
         ranking_item = ranking_items[symbol]
         existing_queue = queue_by_symbol.get(symbol)
-        if _has_formal_research_progress(existing_queue):
+        if _has_formal_research_progress(existing_queue) and not retriage_completed:
             preserved_formal_symbols.add(symbol)
             continue
+        if retriage_completed:
+            existing_queue = _preserve_prior_queue_state(
+                existing_queue,
+                reallocated_at=applied_iso,
+            )
         selected_by = _text_list(
             allocation_item.get("selected_by"),
             f"{symbol}.selected_by",
@@ -361,7 +373,7 @@ def apply_research_allocation(
             allocation_at=applied_iso,
         )
         queue_by_symbol[symbol] = _rapid_triage_queue_record(
-            queue_by_symbol.get(symbol),
+            existing_queue,
             company=company,
             priority=priority,
             status="pending",
@@ -703,6 +715,28 @@ def _has_formal_research_progress(
     )
 
 
+def _preserve_prior_queue_state(
+    existing: Mapping[str, Any] | None, *, reallocated_at: str
+) -> dict[str, Any] | None:
+    if existing is None or existing.get("status") != "completed":
+        return dict(existing) if existing is not None else None
+    history = list(existing.get("stage_history") or [])
+    snapshot = {
+        "stage": str(existing.get("task_type") or "legacy_research"),
+        "status": "completed",
+        "finished_at": existing.get("finished_at") or reallocated_at,
+        "agent": existing.get("assigned_agent"),
+        "result_path": existing.get("result_path"),
+        "evaluation_path": existing.get("profile_evaluation_path"),
+        "next_stage": "rapid_triage_recheck",
+    }
+    if not history or history[-1] != snapshot:
+        history.append(snapshot)
+    result = dict(existing)
+    result["stage_history"] = history
+    return result
+
+
 def _screening_record(
     existing: Mapping[str, Any] | None,
     *,
@@ -948,6 +982,7 @@ def _lens_pool(
             return item["economic_risk_cluster"] in {
                 "credit_cycle",
                 "insurance_rates",
+                "capital_markets",
             }
         if lens == "cyclical_specialist":
             return item["economic_risk_cluster"] == "commodity_cycle"
@@ -960,6 +995,8 @@ def _lens_pool(
             return item["economic_risk_cluster"] not in {
                 "credit_cycle",
                 "insurance_rates",
+                "capital_markets",
+                "property_credit_cycle",
             }
         if lens == "crisis_mispricing":
             return bool(set(item["reason_codes"]) & CRISIS_REASON_CODES)

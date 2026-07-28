@@ -179,3 +179,45 @@ def test_future_restatement_is_not_used_and_symbol_breaks_ties_stably():
 
     assert [item["symbol"] for item in result["items"]] == ["CN:000001", "CN:000002"]
     assert all(item["normalized_ebit_cny"] == pytest.approx(110.0) for item in result["items"])
+
+
+def test_unknown_exchange_uses_a_share_ticker_prefix_without_silent_drop():
+    from automation.scripts.build_magic_formula_snapshot import _secucode
+
+    assert _secucode({"ticker": "302132", "exchange": "UNKNOWN"}) == "302132.SZ"
+
+
+def test_near_zero_capital_is_routed_to_quality_lens_and_roc_is_winsorized():
+    company = _company("000001")
+    years = (2023, 2024, 2025)
+    from trading_os.research_assets.magic_formula import build_magic_formula_snapshot
+
+    tiny_capital = {
+        year: [
+            _balance(
+                "000001",
+                year,
+                TOTAL_CURRENT_ASSETS=100.5,
+                MONETARYFUNDS=20.0,
+                TOTAL_CURRENT_LIAB=100.0,
+                SHORT_LOAN=10.0,
+                FIXED_ASSET=9.6,
+                CIP=0.0,
+            )
+        ]
+        for year in years
+    }
+    result = build_magic_formula_snapshot(
+        companies=[company],
+        income_records_by_year={year: [_income("000001", year)] for year in years},
+        balance_records_by_year=tiny_capital,
+        generated_at=CUTOFF,
+        market_snapshot_sha256="d" * 64,
+        source="test",
+    )
+
+    item = result["items"][0]
+    assert item["return_on_tangible_capital"] > 10
+    assert item["ranking_return_on_tangible_capital"] == 2.0
+    assert item["eligible_for_nonfinancial_lens"] is False
+    assert "near_zero_operating_capital_requires_quality_lens" in item["reason_codes"]

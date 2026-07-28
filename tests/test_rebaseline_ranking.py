@@ -199,7 +199,12 @@ def test_single_period_outliers_trigger_verification_instead_of_maximum_scores(
 
 @pytest.mark.parametrize(
     ("industry", "cluster"),
-    [("化学制药", "healthcare_policy"), ("白酒Ⅱ", "consumer_demand")],
+    [
+        ("化学制药", "healthcare_policy"),
+        ("白酒Ⅱ", "consumer_demand"),
+        ("房地产开发", "property_credit_cycle"),
+        ("证券Ⅱ", "capital_markets"),
+    ],
 )
 def test_industry_aliases_map_to_stable_risk_clusters(
     tmp_path: Path, industry: str, cluster: str
@@ -251,6 +256,48 @@ def test_sealed_magic_formula_snapshot_is_sha_bound_to_market_universe(tmp_path:
 
     assert result["items"][0]["magic_formula"]["combined_rank"] == 1.0
     assert result["inputs"]["magic_formula_sha256"]
+
+
+def test_include_completed_explicitly_reopens_legacy_work_for_light_retriage(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.rebaseline_ranking import build_rebaseline_ranking
+
+    companies, queue, screening, research = _inputs(tmp_path, [_record()])
+    records = read_jsonl(queue)
+    records[0]["status"] = "completed"
+    records[0]["task_type"] = "quick_profile"
+    write_jsonl(queue, records)
+
+    default = build_rebaseline_ranking(
+        companies_path=companies,
+        queue_path=queue,
+        screening_path=screening,
+        research_root=research,
+        generated_at=NOW,
+    )
+    reopened = build_rebaseline_ranking(
+        companies_path=companies,
+        queue_path=queue,
+        screening_path=screening,
+        research_root=research,
+        generated_at=NOW,
+        include_completed=True,
+    )
+
+    assert default["ranked_count"] == 0
+    assert reopened["ranked_count"] == 1
+    assert reopened["retriage_completed"] is True
+
+
+def test_disposition_is_not_misclassified_as_private_position_data():
+    from trading_os.research_assets.rebaseline_ranking import _reject_private_fields
+
+    _reject_private_fields(
+        {"stage_history": [{"disposition": "price_watch"}]},
+        "research queue",
+    )
 
 
 def test_delisting_security_is_hard_excluded_with_reason(tmp_path: Path):
