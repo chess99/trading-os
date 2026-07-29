@@ -15,64 +15,92 @@
         "sha256": "3bb2332412eaf8ca64d7178dfa5a8298aa9f8d4286e19025b06bda8d63a4b660"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-bfbc84ed9501.md",
+        "report_id": "CN-000027-2026-07-30-rapid-triage-bfbc84ed9501",
+        "report_type": "rapid_triage",
+        "sha256": "f765ff12668100db405eade06da99df45e74ede8b2ad930dedd176b02438c8ce"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-bfbc84ed9501.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-bfbc84ed9501.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T06:16:00+08:00",
+      "report_id": "CN-000027-2026-07-30-rapid-triage-bfbc84ed9501",
+      "report_path": "reports/2026-07-30-rapid-triage-bfbc84ed9501.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000027/20260730T061600+0800.triage.json",
+      "source_package_sha256": "bfbc84ed950184f1169c37d6adc9f8bcf33823051a2a80475a04f24f5dc25853"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "披露2026年半年度报告，包含分业务收入利润、燃料与电价、利用小时、应收补贴、经营现金流、资本开支、永续债利息和少数股东损益。"
       },
-      "reason": "复查2026年半年报，重点验证扣非利润、经营现金流、燃料成本和资本开支",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复查2026年三季报，判断全年利润和现金流趋势",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "半年报是检验Q1利润及现金流回落是否持续、重算普通股所有者收益的最近决定性证据。",
+      "trigger_id": "000027-2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 5.6
+        "threshold": 5.0
       },
-      "reason": "进入首笔观察仓买入区间",
-      "trigger_id": "legacy-price-1",
+      "reason": "股价降至5元或以下会把普通股市值压缩至约238亿元，足以在基本面未同步恶化时重新核验所有者收益与资产回报。",
+      "trigger_id": "000027-price-lte-5",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 5.2
+        "description": "阿斯塔纳或加纳项目获批、开工、融资条件或回款协议发生重大变化，类REITs获批发行或披露最终估值、利率和回表安排，或境外电费出现重大拖欠。"
       },
-      "reason": "进入更有安全边际的加仓区间",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事件直接改变新增资本风险、资产回收速度、普通股现金流和潜在减值。",
+      "trigger_id": "000027-overseas-or-reit-event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 7.3
+        "description": "连续两个报告期普通股可得年化收益达到25亿元以上，经营现金流覆盖维护资本开支、利息及永续债分配，且应收账款、净债务和少数股东分流不恶化。"
       },
-      "reason": "进入估值兑现和减仓观察区间",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "该组合证据才能证明当前低市净率对应的是普通股回报改善，而非资本密集与优先权分流的价值陷阱。",
+      "trigger_id": "000027-common-owner-earnings-thesis",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "可再生能源补贴、垃圾处理费或境外电费出现大额回收或逾期，固定资产、商誉或项目资产发生重大减值，审计或内控意见变化。"
+      },
+      "reason": "回款和资产减值是正常化所有者收益及账面价值可靠性的关键反证。",
+      "trigger_id": "000027-receivable-or-impairment-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "若财报、价格和重大事件均未先触发，九十天后刷新行情、公告、资本结构与证据有效性。",
+      "trigger_id": "000027-routine-refresh-90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +112,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T06:16:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
