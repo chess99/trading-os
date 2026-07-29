@@ -15,64 +15,92 @@
         "sha256": "30e0a399dc7e27f377d192a6406a29f5470bb847c15a1c484c1a6f9382047f6b"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-f79bbfde9f50.md",
+        "report_id": "CN-000025-2026-07-30-rapid-triage-f79bbfde9f50",
+        "report_type": "rapid_triage",
+        "sha256": "e349fbee75acffdd02d891c618dc7db9f4a8df792568a55e9f92d17cc6ef32fd"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-f79bbfde9f50.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-f79bbfde9f50.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T06:01:00+08:00",
+      "report_id": "CN-000025-2026-07-30-rapid-triage-f79bbfde9f50",
+      "report_path": "reports/2026-07-30-rapid-triage-f79bbfde9f50.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000025/20260730T060100+0800.triage.json",
+      "source_package_sha256": "f79bbfde9f5058648458dcf1a1204a5a73174a5977096350bfd1d2a5eccd34ac"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2027-01-26T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
-      },
-      "reason": "复核2026年中报，重点确认收入增长、利润转化、现金流和物业租赁情况",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026年三季报和国资改革公告进展",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
         "operator": "price_lte",
-        "threshold": 10.2
+        "threshold": 10.0
       },
-      "reason": "进入买入观察区，需要复核中报经营和现金流后决定首笔仓位",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格降至10元或以下时，即使按目前每年1.2亿至1.5亿元粗略正常化收益，估值压缩也足以重新核验物业价值与回报率。",
+      "trigger_id": "000025-price-10",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 8.8
+        "description": "披露2026年半年度报告或业绩预告，提供租赁及服务分部收入、毛利、出租率，珠宝套保后利润及经营现金流信息"
       },
-      "reason": "进入深度价值区，若基本面未恶化可提高仓位上限",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "可检验Q1利润韧性和现金回收是否持续，并缩小正常化所有者收益误差。",
+      "trigger_id": "000025-2026-interim",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 15.5
+        "description": "披露核心物业独立评估、重大出售、资产证券化、改造重估、出租率或租金单价发生重大变化"
       },
-      "reason": "进入主题溢价较高区间，若无公告级基本面兑现应减仓或回避追高",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "物业真实净值和持续租赁现金流是当前估值最关键的反方证据。",
+      "trigger_id": "000025-property-nav",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期显示扣除营运资金波动和套保公允价值影响后的年化所有者收益达到2亿元以上，且珠宝业务资本回报转正"
+      },
+      "reason": "若成立，当前高估值所要求的盈利台阶将获得实际经营证据。",
+      "trigger_id": "000025-owner-earnings",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "新任董事会秘书就任，或出现重大关联交易、套保损失、资产权属争议、审计或内控意见变化"
+      },
+      "reason": "可消除近期治理交接不确定性，或反向暴露新的治理和资产可靠性风险。",
+      "trigger_id": "000025-governance-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2027-01-26T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使无显著事件，也应在180天后更新价格、财报和物业运营证据。",
+      "trigger_id": "000025-ttl-180",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +112,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T06:01:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
