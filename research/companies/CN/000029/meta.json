@@ -15,64 +15,83 @@
         "sha256": "d7800beb66473a0bf510dc0f7a700a55cde36f97e5651e4ee8b746c414a100b2"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-424407533a3c.md",
+        "report_id": "CN-000029-2026-07-30-rapid-triage-424407533a3c",
+        "report_type": "rapid_triage",
+        "sha256": "246431cc6f90c0e8e884d0aa9275f94e004444acc88267a68ad35f90fd5ad906"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-424407533a3c.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-424407533a3c.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T06:26:00+08:00",
+      "report_id": "CN-000029-2026-07-30-rapid-triage-424407533a3c",
+      "report_path": "reports/2026-07-30-rapid-triage-424407533a3c.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000029/20260730T062600+0800.triage.json",
+      "source_package_sha256": "424407533a3c06477e87fbcdbb94b4dc7a917b1eec16f55bafd96a09c0856c18"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
-      },
-      "reason": "复查2026年半年报的合同负债、存货、其他应收款和现金资产",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复查三季报经营结转、销售回款和是否出现国资资产整合进展",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
         "operator": "price_lte",
-        "threshold": 5.2
-      },
-      "reason": "进入观察买入区上沿，需复核PB、现金和存货风险",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 4.2
-      },
-      "reason": "接近基准NAV折价区，可能具备小仓位资产赔率",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
         "threshold": 12.0
       },
-      "reason": "若无资产注入或重组公告，高估值应回避或减仓",
-      "trigger_id": "legacy-price-3",
+      "reason": "A股价格降至12元或以下时，估值溢价显著收窄，重新核算资产价值与正常化收益。",
+      "trigger_id": "price-reset-12",
       "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "date": "2026-08-31"
+      },
+      "reason": "最迟在2026年8月底复核正式半年报中的存货、其他应收款、投资性房地产、合同负债与现金流。",
+      "trigger_id": "2026-interim-report",
+      "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "公司或控股股东正式披露资产注入、重大资产重组、城市更新权益获批或新增重大土地项目"
+      },
+      "reason": "可量化的新资产或项目可能改变当前薄项目管线和估值判断。",
+      "trigger_id": "formal-asset-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "建邦破产清算或其他公告给出大额其他应收款的明确清偿方案、回款或重大减值"
+      },
+      "reason": "约7.54亿元其他应收款的可收回金额是资产价值的重要不确定项。",
+      "trigger_id": "receivable-recovery-evidence",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使未触发其他条件，90天后重新检查项目销售、出租、控股股东减持与公告变化。",
+      "trigger_id": "routine-90d-refresh",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T06:26:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
