@@ -15,74 +15,83 @@
         "sha256": "2a75f58e97e877deec5b78d0d44910845e53eb2f1682d471e8500e7cb6f6844f"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-6e5795930ef1.md",
+        "report_id": "CN-000002-2026-07-30-rapid-triage-6e5795930ef1",
+        "report_type": "rapid_triage",
+        "sha256": "8c6e49849adb453c2b4fa7f035fe4904c88578f6e80bccee9b37afecbd3409f4"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-6e5795930ef1.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-6e5795930ef1.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T04:53:00+08:00",
+      "report_id": "CN-000002-2026-07-30-rapid-triage-6e5795930ef1",
+      "report_path": "reports/2026-07-30-rapid-triage-6e5795930ef1.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000002/20260730T045300+0800.triage.json",
+      "source_package_sha256": "6e5795930ef1f6f0317b183fce28b87b128d2cf9aae3a9435badd1231d3cc988"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-09-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "披露2026年半年度报告或更晚的定期报告"
       },
-      "reason": "复核2026年半年报，重点检查亏损、现金流、债务展期和归母净资产变化",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "重建现金、受限资金、债务到期、经营现金流、减值和归母权益。",
+      "trigger_id": "000002-next-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "description": "任何公开债偿付或展期失败、重大非公开债重组、深铁支持条款重大变化，或新增大额资产质押融资"
       },
-      "reason": "复核2026年三季报和销售去化，判断是否调整评级和价格区间",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "这些事件会直接改变生存概率与普通股债后剩余价值。",
+      "trigger_id": "000002-debt-support-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "可动用现金继续显著下降、经营现金流未改善且未来12个月刚性偿付缺口扩大，或新增减值使归母权益快速收缩"
+      },
+      "reason": "核心的化险与剩余价值假设失效。",
+      "trigger_id": "000002-liquidity-thesis-break",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 2.4
+        "threshold": 2.5
       },
-      "reason": "进入初步买入观察区，需要复核债务展期、现金流和最新销售",
-      "trigger_id": "legacy-price-1",
+      "reason": "更低价格可能显著改变压力情景下的残值赔率，但必须同时复核信用与减值。",
+      "trigger_id": "000002-distress-price",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 2.0
+        "due_at": "2026-09-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "进入深度困境折价区，需要判断是否为信用恶化导致的价值陷阱",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 4.2
-      },
-      "reason": "达到合理价值上沿，需要复核基本面是否足以支撑继续持有",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 5.2
-      },
-      "reason": "超过减仓区上沿，除非现金流和债务风险显著改善，否则应降低仓位",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
+      "reason": "即使无显性事件，也需在60天后更新偿债与中报事实。",
+      "trigger_id": "000002-triage-ttl",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -94,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T04:53:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

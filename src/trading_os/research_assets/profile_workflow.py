@@ -15,6 +15,7 @@ from .coverage_store import (
     serialized_coverage_write,
     write_jsonl,
 )
+from .models import canonical_company_name
 from .research_allocation import (
     ResearchAllocationError,
     evaluate_quick_profile,
@@ -287,7 +288,9 @@ def record_profile_package(
             f"profile cannot be recorded from queue status "
             f"{queue_record.get('status')}: {symbol}"
         )
-    if normalized["company_name"] != queue_record.get("name"):
+    if canonical_company_name(normalized["company_name"]) != canonical_company_name(
+        str(queue_record.get("name"))
+    ):
         raise ResearchAllocationError(f"company name does not match queue: {symbol}")
     assigned_agent = queue_record.get("assigned_agent")
     if assigned_agent is not None and assigned_agent != normalized["provenance"]["agent"]:

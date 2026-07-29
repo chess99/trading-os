@@ -15,83 +15,101 @@
         "sha256": "394d1d8b1582dbe2a7d3ffa3f995ffb3c0034bf14e6a648ee58885018a221c9b"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-355823dc0715.md",
+        "report_id": "CN-000008-2026-07-30-rapid-triage-355823dc0715",
+        "report_type": "rapid_triage",
+        "sha256": "726d6db68d911516abe661f9cf0e5b5e54e6bfb8f625d4bd917117c9fced5744"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-355823dc0715.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-355823dc0715.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:00:00+08:00",
+      "report_id": "CN-000008-2026-07-30-rapid-triage-355823dc0715",
+      "report_path": "reports/2026-07-30-rapid-triage-355823dc0715.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000008/20260730T050000+0800.triage.json",
+      "source_package_sha256": "355823dc0715299ed25cf1eff9f3ff89023cb6b08e132d42b9478c11a24c2e54"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-07-15"
+        "description": "公司披露2026年半年度报告，包含分业务收入与毛利、扣非利润、经营现金流、应收账款账龄、合同资产、商誉、减值及债务期限。"
       },
-      "reason": "复查控制权变更复牌公告、交易对手、审批条件、交易价格和是否继续停牌",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "正式半年报将验证预告减亏是否来自可重复经营改善，以及回款和减值风险是否同步下降。",
+      "trigger_id": "cn-000008-2026-half-year-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "date": "2026-08-31"
       },
-      "reason": "复查2026年中报收入、扣非亏损、经营现金流、应收账款和合同资产",
-      "trigger_id": "legacy-review-2",
+      "reason": "若公告观察器未提前命中，最迟在法定半年报窗口结束时主动复核。",
+      "trigger_id": "cn-000008-half-year-review-date",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "description": "公司公告控制权交易取得全部审批并完成6亿股过户，或公告交易终止、延期、条件重大变更。"
       },
-      "reason": "复查2026年三季报是否延续亏损收窄和回款改善",
-      "trigger_id": "legacy-review-3",
+      "reason": "交割决定浙江交投订单协同、治理改组和后续财务支持能否成为可执行事实。",
+      "trigger_id": "cn-000008-control-change-closing",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "公司披露浙江智新股东借款的实际金额、利率、期限和用途，或披露向新股东方定向发行股票的数量、价格、募投与摊薄安排。"
+      },
+      "reason": "融资条款决定债务置换收益、资本结构和每股价值，不能仅凭框架承诺估计。",
+      "trigger_id": "cn-000008-shareholder-loan-or-placement",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期扣非盈利且经营现金流为正，同时应收账款与合同资产不快于收入增长，并披露浙江交投协同订单的定价、验收与回款。"
+      },
+      "reason": "该组合证据才足以确认控制权变化已转化为可持续所有者收益，而非单纯主题溢价。",
+      "trigger_id": "cn-000008-order-cash-conversion",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 1.8
+      },
+      "reason": "价格较2.37元下降约24%后重新核验控制权、资产减值、债务和每股摊薄；触发只代表重开研究。",
+      "trigger_id": "cn-000008-price-lte-1-80",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "若审批、半年报或融资事项均未先触发，90天后检查交易进展与新增公告。",
+      "trigger_id": "cn-000008-routine-90d-refresh",
       "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 1.65
-      },
-      "reason": "进入买入区上沿，检查控制权变更方案和最新回款指标后可考虑首笔研究仓",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 1.35
-      },
-      "reason": "进入深度折价区，若无新增减值或交易失败风险，可重新评估安全边际",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 2.6
-      },
-      "reason": "超过减仓区下沿，若缺乏订单、回款和扭亏证据，事件溢价可能透支",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 3.1
-      },
-      "reason": "超过乐观情景上沿，亏损状态下估值风险显著增加",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
     }
   ],
   "underwriting": {
@@ -103,7 +121,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T05:00:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

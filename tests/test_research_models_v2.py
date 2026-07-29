@@ -241,3 +241,10 @@ def test_policy_rejects_invalid_required_values(
 
     with pytest.raises(PolicyValidationError):
         load_policy(path)
+
+
+def test_company_name_canonicalization_only_collapses_whitespace():
+    from trading_os.research_assets.models import canonical_company_name
+
+    assert canonical_company_name("万  科Ａ") == canonical_company_name(" 万 科Ａ ")
+    assert canonical_company_name("万科Ａ") != canonical_company_name("万 科Ａ")

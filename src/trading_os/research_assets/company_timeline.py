@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from .company import _read_report_front, validate_company_dir
+from .models import canonical_company_name
 from .sealing import atomic_write_bytes, seal_json, verify_sealed
 
 
@@ -99,7 +100,9 @@ def publish_rapid_triage_to_company_timeline(
         if meta["identity"]["symbol"] != symbol:
             raise CompanyTimelineError("package symbol does not match company identity")
         package_name = package.get("company_name")
-        if package_name is not None and str(package_name).strip() != meta["identity"]["name"]:
+        if package_name is not None and canonical_company_name(
+            str(package_name)
+        ) != canonical_company_name(meta["identity"]["name"]):
             raise CompanyTimelineError("package company_name does not match company identity")
         existing_state = meta["research"].get("latest_rapid_triage")
         if (

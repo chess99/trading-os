@@ -15,74 +15,73 @@
         "sha256": "541a8fdf3998ec5163239d2b1612da86a61cbf1f52789f3551dd2786ca6779a8"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-243905d9c47c.md",
+        "report_id": "CN-000006-2026-07-30-rapid-triage-243905d9c47c",
+        "report_type": "rapid_triage",
+        "sha256": "1ca8bdfb83ded91e79ad39fb3eca5bf0eafd10ec5d732b5ea79880e9a2a3cf50"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-243905d9c47c.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-243905d9c47c.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T04:50:00+08:00",
+      "report_id": "CN-000006-2026-07-30-rapid-triage-243905d9c47c",
+      "report_path": "reports/2026-07-30-rapid-triage-243905d9c47c.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000006/20260730T045000+0800.triage.json",
+      "source_package_sha256": "243905d9c47cf4f96edefc47bf9b2f2d2e09b85b0514595874a085565dbe6883"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
+        "description": "公司披露2026年半年度报告，可核验实际归母及扣非亏损、存货跌价准备、主要项目毛利与结转、合同负债、销售回款、经营现金流和债务期限结构。"
+      },
+      "reason": "半年报是判断Q1微利是否仅为时点波动、减值是否继续侵蚀净资产的最近决定性证据。",
+      "trigger_id": "cn-000006-2026-half-year-filing",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
         "date": "2026-08-31"
       },
-      "reason": "复查2026年半年报，重点核验经营现金流、销售回款、存货减值和资产盘活进展",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复查2026年三季报，判断Q1盈利改善是否具备持续性",
-      "trigger_id": "legacy-review-2",
+      "reason": "若公告观察器未提前命中，最迟在法定半年报窗口结束时主动复核。",
+      "trigger_id": "cn-000006-half-year-review-date",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 4.8
+        "threshold": 4.5
       },
-      "reason": "进入初始买入区间，可评估0.5%-1.0%观察仓",
-      "trigger_id": "legacy-price-1",
+      "reason": "4.50元约对应最新归母净资产的1.13倍；仅触发重新核验减值后净资产、现金流和资产盘活，不代表自动晋级。",
+      "trigger_id": "cn-000006-price-lte-4-50",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 4.2
+        "description": "公司公告5项深圳自有物业公开挂牌成交、终止挂牌或调整底价，并披露成交价、账面价值、税费、现金回笼及当期损益影响。"
       },
-      "reason": "接近每股净资产附近，若现金流改善可考虑加仓",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 7.2
-      },
-      "reason": "高于减仓区间下沿，若缺少基本面验证应降低仓位",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 8.5
-      },
-      "reason": "高于减仓区间上沿，除非有重大资产重估兑现否则应基本退出",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
+      "reason": "该事件能直接检验市场为深圳存量资产支付账面溢价的核心论点。",
+      "trigger_id": "cn-000006-shenzhen-property-sale",
+      "type": "event"
     }
   ],
   "underwriting": {
@@ -94,7 +93,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T04:50:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

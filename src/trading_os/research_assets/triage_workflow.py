@@ -17,6 +17,7 @@ from .coverage_store import (
     serialized_coverage_write,
     write_jsonl,
 )
+from .models import canonical_company_name
 from .research_allocation import ResearchAllocationError
 from .sealing import seal_json, verify_sealed
 from .triage_cohort import load_rapid_triage_cohort
@@ -314,7 +315,9 @@ def _record_rapid_triage_package_locked(
         raise ResearchAllocationError(
             f"rapid triage cannot be recorded from status {queue_record.get('status')}: {symbol}"
         )
-    if normalized["company_name"] != queue_record.get("name"):
+    if canonical_company_name(normalized["company_name"]) != canonical_company_name(
+        str(queue_record.get("name"))
+    ):
         raise ResearchAllocationError(f"company name does not match queue: {symbol}")
     assigned = queue_record.get("assigned_agent")
     if assigned is not None and assigned != normalized["provenance"]["agent"]:

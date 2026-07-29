@@ -10,6 +10,12 @@ from types import MappingProxyType
 from typing import Any, Mapping
 
 
+def canonical_company_name(value: str) -> str:
+    """Normalize presentation-only whitespace without changing identity characters."""
+
+    return " ".join(value.split())
+
+
 class ReportType(str, Enum):
     RAPID_TRIAGE = "rapid_triage"
     INITIAL_RESEARCH = "initial_research"
