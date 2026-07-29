@@ -1075,6 +1075,48 @@ def test_finalized_terminal_company_can_enter_a_new_trigger_cycle(tmp_path: Path
     assert new_status["remaining_count"] == 1
 
 
+def test_schema_v3_does_not_reuse_unscoped_legacy_triage_history():
+    from trading_os.research_assets.triage_workflow import (
+        _allow_unscoped_history,
+        _rapid_triage_completed,
+        _rapid_triage_result_path,
+    )
+
+    cycle = "2026-07-30-schema-v3-cycle"
+    record = {
+        "stage_history": [
+            {
+                "stage": "rapid_triage",
+                "status": "completed",
+                "result_path": "coverage/cn-a/triage/legacy/000001/result.json",
+            }
+        ]
+    }
+    binding = {"type": "cohort", "schema_version": 3}
+
+    allow_unscoped_history = _allow_unscoped_history(binding)
+    assert allow_unscoped_history is False
+    assert (
+        _rapid_triage_completed(
+            record,
+            cycle,
+            allow_unscoped_history=allow_unscoped_history,
+        )
+        is False
+    )
+    assert (
+        _rapid_triage_result_path(
+            record,
+            cycle,
+            allow_unscoped_history=allow_unscoped_history,
+        )
+        is None
+    )
+
+    assert _allow_unscoped_history({"type": "cohort", "schema_version": 2}) is True
+    assert _rapid_triage_completed(record, cycle) is True
+
+
 def test_record_replay_of_older_package_survives_a_later_triage_cycle(
     tmp_path: Path,
 ):

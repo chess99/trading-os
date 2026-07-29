@@ -673,8 +673,12 @@ def build_rapid_triage_comparison_packet(
             "portfolio_action": None,
         }
 
+    allow_unscoped_history = _allow_unscoped_history(binding)
     packages = _completed_cohort_packages(
-        binding["members"], cycle=cycle, repository_root=repository_root
+        binding["members"],
+        cycle=cycle,
+        repository_root=repository_root,
+        allow_unscoped_history=allow_unscoped_history,
     )
     rows: list[dict[str, Any]] = []
     for ordinal, (queued, package, sealed) in enumerate(packages, 1):
@@ -697,7 +701,11 @@ def build_rapid_triage_comparison_packet(
                 "decisive_question": package.get("decisive_question"),
                 "reason_codes": package.get("reason_codes") or [],
                 "revisit_triggers": package.get("revisit_triggers") or [],
-                "triage_path": _rapid_triage_result_path(queued, cycle),
+                "triage_path": _rapid_triage_result_path(
+                    queued,
+                    cycle,
+                    allow_unscoped_history=allow_unscoped_history,
+                ),
                 "triage_sha256": sealed.sha256,
                 "research_agent": (package.get("provenance") or {}).get("agent"),
             }
@@ -759,7 +767,12 @@ def finalize_rapid_triage_cycle(
     screening = read_jsonl(screening_path)
     binding = _resolve_cycle_cohort(base, queue, cycle)
     quality_gate = _require_cycle_quality_gate(base=base, cycle=cycle, binding=binding)
-    _completed_cohort_packages(binding["members"], cycle=cycle, repository_root=repository_root)
+    _completed_cohort_packages(
+        binding["members"],
+        cycle=cycle,
+        repository_root=repository_root,
+        allow_unscoped_history=_allow_unscoped_history(binding),
+    )
     comparison_path = base / "triage" / cycle / "comparison.json"
     if not comparison_path.exists():
         raise ResearchAllocationError(
@@ -946,10 +959,23 @@ def rapid_triage_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, A
     repository_root = base.parent.parent
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
     binding = _resolve_cycle_cohort(base, queue, cycle)
-    completed = [item for item in binding["members"] if _rapid_triage_completed(item, cycle)]
+    allow_unscoped_history = _allow_unscoped_history(binding)
+    completed = [
+        item
+        for item in binding["members"]
+        if _rapid_triage_completed(
+            item,
+            cycle,
+            allow_unscoped_history=allow_unscoped_history,
+        )
+    ]
     invalid: list[dict[str, str]] = []
     for item in completed:
-        path = _rapid_triage_result_path(item, cycle)
+        path = _rapid_triage_result_path(
+            item,
+            cycle,
+            allow_unscoped_history=allow_unscoped_history,
+        )
         if not isinstance(path, str):
             invalid.append({"symbol": item["symbol"], "error": "result_path_missing"})
             continue
@@ -1478,6 +1504,7 @@ def _resolve_cycle_cohort(base: Path, queue: list[dict[str, Any]], cycle: str) -
             "type": "cohort",
             "path": relative,
             "sha256": cohort_sha,
+            "schema_version": payload.get("schema_version", 1),
             "members": members,
         }
 
@@ -1506,6 +1533,7 @@ def _resolve_cycle_cohort(base: Path, queue: list[dict[str, Any]], cycle: str) -
         "type": "legacy_allocation",
         "path": None,
         "sha256": allocation_sha,
+        "schema_version": 0,
         "members": members,
     }
 
@@ -1546,12 +1574,28 @@ def _historical_member_for_cycle(
     return historical
 
 
-def _rapid_triage_completed(record: Mapping[str, Any], cycle: str) -> bool:
+def _allow_unscoped_history(binding: Mapping[str, Any]) -> bool:
+    """Keep legacy cycle recovery without letting old results satisfy schema-v3 work."""
+
+    return binding.get("type") == "legacy_allocation" or binding.get(
+        "schema_version", 1
+    ) < 3
+
+
+def _rapid_triage_completed(
+    record: Mapping[str, Any],
+    cycle: str,
+    *,
+    allow_unscoped_history: bool = True,
+) -> bool:
     history_completed = any(
         isinstance(item, Mapping)
         and item.get("stage") == "rapid_triage"
         and item.get("status") == "completed"
-        and item.get("cycle_id") in {None, cycle}
+        and (
+            item.get("cycle_id") == cycle
+            or (allow_unscoped_history and item.get("cycle_id") is None)
+        )
         and isinstance(item.get("result_path"), str)
         for item in record.get("stage_history") or []
     )
@@ -1560,19 +1604,31 @@ def _rapid_triage_completed(record: Mapping[str, Any], cycle: str) -> bool:
     return bool(
         record.get("triage_cycle_id") == cycle
         and isinstance(record.get("triage_disposition"), str)
-        and _rapid_triage_result_path(record, cycle) is not None
+        and _rapid_triage_result_path(
+            record,
+            cycle,
+            allow_unscoped_history=allow_unscoped_history,
+        )
         and record.get("task_type") == "rapid_triage"
         and record.get("status") == "completed"
     )
 
 
-def _rapid_triage_result_path(record: Mapping[str, Any], cycle: str) -> str | None:
+def _rapid_triage_result_path(
+    record: Mapping[str, Any],
+    cycle: str,
+    *,
+    allow_unscoped_history: bool = True,
+) -> str | None:
     for item in reversed(record.get("stage_history") or []):
         if (
             isinstance(item, Mapping)
             and item.get("stage") == "rapid_triage"
             and item.get("status") == "completed"
-            and item.get("cycle_id") in {None, cycle}
+            and (
+                item.get("cycle_id") == cycle
+                or (allow_unscoped_history and item.get("cycle_id") is None)
+            )
             and isinstance(item.get("result_path"), str)
         ):
             return str(item["result_path"])
@@ -1590,8 +1646,17 @@ def _completed_cohort_packages(
     *,
     cycle: str,
     repository_root: Path,
+    allow_unscoped_history: bool = True,
 ) -> list[tuple[dict[str, Any], dict[str, Any], Any]]:
-    incomplete = [item["symbol"] for item in members if not _rapid_triage_completed(item, cycle)]
+    incomplete = [
+        item["symbol"]
+        for item in members
+        if not _rapid_triage_completed(
+            item,
+            cycle,
+            allow_unscoped_history=allow_unscoped_history,
+        )
+    ]
     if incomplete:
         raise ResearchAllocationError(
             "completion-order promotion is forbidden; rapid-triage cohort is "
@@ -1599,7 +1664,11 @@ def _completed_cohort_packages(
         )
     result = []
     for item in members:
-        result_path = _rapid_triage_result_path(item, cycle)
+        result_path = _rapid_triage_result_path(
+            item,
+            cycle,
+            allow_unscoped_history=allow_unscoped_history,
+        )
         if result_path is None:
             raise ResearchAllocationError(f"rapid-triage result path is missing: {item['symbol']}")
         path = repository_root / result_path
