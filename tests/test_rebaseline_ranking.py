@@ -291,6 +291,56 @@ def test_include_completed_explicitly_reopens_legacy_work_for_light_retriage(
     assert reopened["retriage_completed"] is True
 
 
+def test_include_completed_partitions_unqueued_current_research(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import write_jsonl
+    from trading_os.research_assets.rebaseline_ranking import build_rebaseline_ranking
+
+    companies, queue, screening, research = _inputs(tmp_path, [_record()])
+    write_jsonl(queue, [])
+
+    payload = build_rebaseline_ranking(
+        companies_path=companies,
+        queue_path=queue,
+        screening_path=screening,
+        research_root=research,
+        generated_at=NOW,
+        include_completed=True,
+    )
+
+    assert payload["ranked_count"] == 1
+    assert payload["excluded_count"] == 0
+    assert payload["partition_count"] == 1
+    assert payload["items"][0]["symbol"] == "CN:600519"
+
+
+def test_ranking_partitions_unqueued_hard_exclusions(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.rebaseline_ranking import build_rebaseline_ranking
+
+    companies, queue, screening, research = _inputs(
+        tmp_path,
+        [_record(name="样本退")],
+    )
+    write_jsonl(queue, [])
+    screening_records = read_jsonl(screening)
+    screening_records[0]["decision"] = "hard_exclusion"
+    write_jsonl(screening, screening_records)
+
+    payload = build_rebaseline_ranking(
+        companies_path=companies,
+        queue_path=queue,
+        screening_path=screening,
+        research_root=research,
+        generated_at=NOW,
+        include_completed=True,
+    )
+
+    assert payload["ranked_count"] == 0
+    assert payload["excluded_count"] == 1
+    assert payload["partition_count"] == 1
+    assert payload["excluded"][0]["category"] == "hard_exclusion"
+
+
 def test_disposition_is_not_misclassified_as_private_position_data():
     from trading_os.research_assets.rebaseline_ranking import _reject_private_fields
 

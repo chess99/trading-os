@@ -12,7 +12,7 @@ from .company import validate_company_dir
 from .coverage_store import CoverageValidationError, read_jsonl
 from .sealing import atomic_write_bytes, verify_sealed
 
-ALGORITHM_VERSION = "1.2.0"
+ALGORITHM_VERSION = "1.3.0"
 PRIVATE_FIELD_FRAGMENTS = {
     "actual_weight",
     "cost_basis",
@@ -111,29 +111,20 @@ def build_rebaseline_ranking(
         if symbol in screening_by_symbol:
             raise RebaselineRankingError(f"duplicate screening symbol: {symbol}")
         screening_by_symbol[symbol] = record
-    seen_queue: set[str] = set()
+    queue_by_symbol: dict[str, dict[str, Any]] = {}
     for task in queue:
         symbol = _text(task.get("symbol"), "queue.symbol")
-        if symbol in seen_queue:
+        if symbol in queue_by_symbol:
             raise RebaselineRankingError(f"duplicate queue symbol: {symbol}")
-        seen_queue.add(symbol)
-        accepted_statuses = (
-            {"requires_rebaseline", "completed"}
-            if include_completed
-            else {"requires_rebaseline"}
-        )
-        if task.get("status") not in accepted_statuses:
-            continue
-        company = by_symbol.get(symbol)
-        if company is None:
-            excluded.append(
-                {
-                    "symbol": symbol,
-                    "reason_code": "snapshot_missing",
-                    "category": "data_error",
-                }
-            )
-            continue
+        queue_by_symbol[symbol] = task
+
+    accepted_statuses = (
+        {"requires_rebaseline", "completed"}
+        if include_completed
+        else {"requires_rebaseline"}
+    )
+    for symbol, company in sorted(by_symbol.items()):
+        task = queue_by_symbol.get(symbol)
         screening_record = screening_by_symbol.get(symbol)
         if screening_record is None:
             excluded.append(
@@ -176,8 +167,44 @@ def build_rebaseline_ranking(
                 }
             )
             continue
+
+        if task is None:
+            if not include_completed:
+                excluded.append(
+                    {
+                        "symbol": symbol,
+                        "reason_code": "research_queue_missing_not_reopened",
+                        "category": "workflow_state",
+                    }
+                )
+                continue
+            ticker = symbol.split(":", 1)[1]
+            task = {
+                "symbol": symbol,
+                "target_company_dir": f"research/companies/CN/{ticker}",
+            }
+        elif task.get("status") not in accepted_statuses:
+            excluded.append(
+                {
+                    "symbol": symbol,
+                    "reason_code": f"queue_status_{task.get('status')}_not_ranked",
+                    "category": "workflow_state",
+                }
+            )
+            continue
+
         company_dir = _resolve_company_dir(task, Path(research_root))
-        meta = validate_company_dir(company_dir)
+        try:
+            meta = validate_company_dir(company_dir)
+        except (OSError, ValueError) as exc:
+            excluded.append(
+                {
+                    "symbol": symbol,
+                    "reason_code": "company_asset_missing_or_invalid",
+                    "category": "data_error",
+                }
+            )
+            continue
         if meta["identity"]["symbol"] != symbol:
             raise RebaselineRankingError(f"company meta symbol mismatch: {symbol}")
         items.append(
@@ -190,6 +217,15 @@ def build_rebaseline_ranking(
             )
         )
 
+    for symbol in sorted(set(queue_by_symbol) - set(by_symbol)):
+        excluded.append(
+            {
+                "symbol": symbol,
+                "reason_code": "snapshot_missing",
+                "category": "data_error",
+            }
+        )
+
     items.sort(
         key=lambda item: (
             -item["total_score"],
@@ -200,6 +236,11 @@ def build_rebaseline_ranking(
     )
     for rank, item in enumerate(items, start=1):
         item["rank"] = rank
+
+    if len(items) + len(excluded) != len(companies) + len(
+        set(queue_by_symbol) - set(by_symbol)
+    ):
+        raise RebaselineRankingError("ranking universe partition is incomplete")
 
     return {
         "schema_version": 2,
@@ -224,6 +265,7 @@ def build_rebaseline_ranking(
         },
         "ranked_count": len(items),
         "excluded_count": len(excluded),
+        "partition_count": len(items) + len(excluded),
         "items": items,
         "excluded": sorted(excluded, key=lambda item: item["symbol"]),
     }
