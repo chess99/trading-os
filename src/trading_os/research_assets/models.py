@@ -74,6 +74,7 @@ class PolicyKind(str, Enum):
     PORTFOLIO = "portfolio"
     INDUSTRY = "industry"
     RESEARCH_ALLOCATION = "research_allocation"
+    TRIAGE_QUALITY_AUDIT = "triage_quality_audit"
 
 
 class PolicyValidationError(ValueError):

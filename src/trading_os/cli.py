@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -9,6 +10,7 @@ from typing import TextIO
 
 from .research_assets.alerts import (
     PriceAlertError,
+    evaluate_price_alert_observations,
     evaluate_price_alerts,
     load_json,
     write_price_alerts,
@@ -26,6 +28,11 @@ from .research_assets.coverage_store import (
     validate_coverage_root,
 )
 from .research_assets.index import write_index
+from .research_assets.lane_arbitration import (
+    LaneArbitrationError,
+    freeze_lane_arbitration,
+    verify_lane_arbitration,
+)
 from .research_assets.migration import (
     MigrationError,
     apply_migration_plan,
@@ -41,6 +48,20 @@ from .research_assets.profile_workflow import (
     profile_cycle_status,
     record_profile_package,
     release_profile_task,
+)
+from .research_assets.quality_audit import (
+    QualityAuditError,
+    seal_cycle_quality_audit_result,
+    seal_scope_identity_audit_result,
+)
+from .research_assets.quality_workflow import (
+    QualityWorkflowError,
+    cycle_quality_status,
+    load_quality_policy_snapshot,
+    materialize_cycle_quality_reopens,
+    prepare_cycle_quality_audit,
+    prepare_scope_identity_quality_audit,
+    scope_quality_status,
 )
 from .research_assets.research_allocation import (
     ResearchAllocationError,
@@ -82,6 +103,15 @@ from .research_assets.triage_workflow import (
     rapid_triage_cycle_status,
     record_rapid_triage_package,
     release_rapid_triage_task,
+)
+from .research_assets.trigger_hits import (
+    TriggerHitError,
+    create_trigger_hit_checkpoint,
+    observe_fact_hit,
+    observe_price_condition,
+    observe_schedule_hit,
+    rebuild_trigger_hit_state,
+    verify_trigger_hit_ledger,
 )
 
 
@@ -212,6 +242,13 @@ def build_parser() -> argparse.ArgumentParser:
     )
     alerts_check.add_argument("--alerts", default="automation/price_alerts.json")
     alerts_check.add_argument("--quotes", required=True)
+    alerts_check.add_argument(
+        "--record-hits",
+        action="store_true",
+        help="Append true edges and false rearms to the canonical trigger ledger",
+    )
+    alerts_check.add_argument("--coverage-root", default="coverage/cn-a")
+    alerts_check.add_argument("--actor", default="price-alert-observer")
     _add_timestamp(alerts_check)
     alerts_check.set_defaults(func=cmd_alerts_check)
 
@@ -227,6 +264,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--as-of",
         help="ISO datetime used to mark date and evidence-expiry items due",
     )
+    schedule_build.add_argument(
+        "--record-hits",
+        action="store_true",
+        help="Record due date/TTL rows in the canonical trigger ledger",
+    )
+    schedule_build.add_argument("--coverage-root", default="coverage/cn-a")
+    schedule_build.add_argument("--actor", default="schedule-observer")
+    _add_timestamp(schedule_build)
     schedule_build.set_defaults(func=cmd_schedule_build)
 
     coverage = sub.add_parser("coverage", help="Manage coverage screening JSONL files")
@@ -278,6 +323,109 @@ def build_parser() -> argparse.ArgumentParser:
     _add_coverage_root(scope_status)
     scope_status.add_argument("run_id")
     scope_status.set_defaults(func=cmd_coverage_scope_status)
+
+    trigger_observe = coverage_sub.add_parser(
+        "trigger-observe",
+        help="Record one evidenced filing, event, thesis, date, or TTL occurrence",
+    )
+    _add_coverage_root(trigger_observe)
+    trigger_observe.add_argument("--input", required=True)
+    _add_timestamp(trigger_observe)
+    trigger_observe.set_defaults(func=cmd_coverage_trigger_observe)
+
+    trigger_status = coverage_sub.add_parser(
+        "trigger-status", help="Verify the canonical trigger-hit hash chain and projection"
+    )
+    _add_coverage_root(trigger_status)
+    trigger_status.set_defaults(func=cmd_coverage_trigger_status)
+
+    trigger_rebuild = coverage_sub.add_parser(
+        "trigger-rebuild", help="Rebuild the trigger-hit projection from the canonical ledger"
+    )
+    _add_coverage_root(trigger_rebuild)
+    trigger_rebuild.set_defaults(func=cmd_coverage_trigger_rebuild)
+
+    trigger_checkpoint = coverage_sub.add_parser(
+        "trigger-checkpoint", help="Seal the trigger-ledger prefix visible to one frozen run"
+    )
+    _add_coverage_root(trigger_checkpoint)
+    trigger_checkpoint.add_argument("run_id")
+    trigger_checkpoint.add_argument("--scope-manifest")
+    _add_timestamp(trigger_checkpoint)
+    trigger_checkpoint.set_defaults(func=cmd_coverage_trigger_checkpoint)
+
+    lane_freeze = coverage_sub.add_parser(
+        "lane-freeze", help="Seal incremental intake and baseline/incremental arbitration"
+    )
+    _add_coverage_root(lane_freeze)
+    lane_freeze.add_argument("run_id")
+    lane_freeze.add_argument("--baseline-minimum-slots", type=int, default=1)
+    lane_freeze.add_argument("--no-apply", action="store_true")
+    _add_timestamp(lane_freeze)
+    lane_freeze.set_defaults(func=cmd_coverage_lane_freeze)
+
+    lane_status = coverage_sub.add_parser(
+        "lane-status", help="Verify sealed lane inputs, decisions, and queue bindings"
+    )
+    _add_coverage_root(lane_status)
+    lane_status.add_argument("run_id")
+    lane_status.set_defaults(func=cmd_coverage_lane_status)
+
+    quality_scope_prepare = coverage_sub.add_parser(
+        "quality-scope-prepare",
+        help="Seal the policy snapshot and 100% hard-exclusion identity audit plan",
+    )
+    _add_coverage_root(quality_scope_prepare)
+    quality_scope_prepare.add_argument("run_id")
+    quality_scope_prepare.add_argument(
+        "--policy", default="policies/triage-quality-audit.json"
+    )
+    _add_timestamp(quality_scope_prepare)
+    quality_scope_prepare.set_defaults(func=cmd_coverage_quality_scope_prepare)
+
+    quality_scope_record = coverage_sub.add_parser(
+        "quality-scope-record", help="Seal independent hard-exclusion identity reviews"
+    )
+    _add_coverage_root(quality_scope_record)
+    quality_scope_record.add_argument("run_id")
+    quality_scope_record.add_argument("--reviews", required=True)
+    _add_timestamp(quality_scope_record)
+    quality_scope_record.set_defaults(func=cmd_coverage_quality_scope_record)
+
+    quality_scope_status_cmd = coverage_sub.add_parser(
+        "quality-scope-status", help="Verify scope quality bindings and result status"
+    )
+    _add_coverage_root(quality_scope_status_cmd)
+    quality_scope_status_cmd.add_argument("run_id")
+    quality_scope_status_cmd.set_defaults(func=cmd_coverage_quality_scope_status)
+
+    quality_triage_prepare = coverage_sub.add_parser(
+        "quality-triage-prepare",
+        help="Seal a deterministic half-blind false-negative audit plan",
+    )
+    _add_coverage_root(quality_triage_prepare)
+    quality_triage_prepare.add_argument("cycle_id")
+    quality_triage_prepare.add_argument(
+        "--policy", default="policies/triage-quality-audit.json"
+    )
+    _add_timestamp(quality_triage_prepare)
+    quality_triage_prepare.set_defaults(func=cmd_coverage_quality_triage_prepare)
+
+    quality_triage_record = coverage_sub.add_parser(
+        "quality-triage-record", help="Seal independent triage quality reviews"
+    )
+    _add_coverage_root(quality_triage_record)
+    quality_triage_record.add_argument("cycle_id")
+    quality_triage_record.add_argument("--reviews", required=True)
+    _add_timestamp(quality_triage_record)
+    quality_triage_record.set_defaults(func=cmd_coverage_quality_triage_record)
+
+    quality_triage_status_cmd = coverage_sub.add_parser(
+        "quality-triage-status", help="Verify cycle quality bindings and result status"
+    )
+    _add_coverage_root(quality_triage_status_cmd)
+    quality_triage_status_cmd.add_argument("cycle_id")
+    quality_triage_status_cmd.set_defaults(func=cmd_coverage_quality_triage_status)
 
     allocate_research = coverage_sub.add_parser(
         "allocate-research",
@@ -333,6 +481,14 @@ def build_parser() -> argparse.ArgumentParser:
     triage_freeze.add_argument(
         "--scope-run-id",
         help="Bind the cohort to a sealed all-A scope and baseline intake",
+    )
+    triage_freeze.add_argument(
+        "--quality-policy-snapshot",
+        help="Canonical passed scope identity audit policy snapshot for schema-v3 production",
+    )
+    triage_freeze.add_argument(
+        "--scope-identity-result",
+        help="Canonical passed 100% hard-exclusion identity audit result",
     )
     _add_timestamp(triage_freeze)
     triage_freeze.set_defaults(func=cmd_coverage_triage_freeze)
@@ -682,17 +838,102 @@ def cmd_alerts_check(ns: argparse.Namespace) -> int:
         quotes,
         evaluated_at=_timestamp(ns.at),
     )
+    if ns.record_hits:
+        evaluated_at = _timestamp(ns.at)
+        alerts_sha = hashlib.sha256(Path(ns.alerts).read_bytes()).hexdigest()
+        quotes_sha = hashlib.sha256(Path(ns.quotes).read_bytes()).hexdigest()
+        ledger_results = []
+        for observation in evaluate_price_alert_observations(
+            alerts, quotes, evaluated_at=evaluated_at
+        ):
+            alert = observation["alert"]
+            quote = observation["quote"]
+            observed_price = next(
+                (
+                    float(quote[key])
+                    for key in ("price", "close", "last")
+                    if isinstance(quote.get(key), (int, float))
+                    and not isinstance(quote.get(key), bool)
+                ),
+                None,
+            )
+            ledger_results.append(
+                observe_price_condition(
+                    root=ns.coverage_root,
+                    trigger={
+                        "trigger_id": alert["alert_id"],
+                        "type": "price",
+                        "source_kind": str(alert.get("type") or "price_alert"),
+                        "definition_ref": str(ns.alerts),
+                        "definition_source_sha256": alerts_sha,
+                        "definition": {
+                            "condition": alert["condition"],
+                            "reason": alert.get("reason"),
+                            "source_ref": alert.get("source_ref"),
+                        },
+                    },
+                    quote_evidence={
+                        "symbol": alert["symbol"],
+                        "quote_as_of": quote["as_of"],
+                        "observed_price": observed_price,
+                        "source_ref": str(ns.quotes),
+                        "source_sha256": quotes_sha,
+                    },
+                    condition_met=observation["condition_met"],
+                    actor=ns.actor,
+                    recorded_at=evaluated_at,
+                    workflow_target=(
+                        "portfolio_refresh"
+                        if str(alert.get("type", "")).startswith("portfolio_")
+                        else "company_research"
+                    ),
+                )
+            )
+        result["trigger_ledger_observations"] = ledger_results
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 
 def cmd_schedule_build(ns: argparse.Namespace) -> int:
+    requested_as_of = (
+        _timestamp(ns.as_of)
+        if ns.as_of
+        else _timestamp(ns.at)
+        if ns.record_hits
+        else None
+    )
     path = write_review_schedule(
         ns.research_root,
         ns.output,
-        as_of=_timestamp(ns.as_of) if ns.as_of else None,
+        as_of=requested_as_of,
     )
-    print(json.dumps({"ok": True, "path": str(path)}, ensure_ascii=False, indent=2))
+    result: dict[str, object] = {"ok": True, "path": str(path)}
+    if ns.record_hits:
+        payload = load_json(path)
+        schedule_sha = hashlib.sha256(path.read_bytes()).hexdigest()
+        schedule_as_of = dt.datetime.fromisoformat(payload["as_of"])
+        recorded_at = _timestamp(ns.at)
+        ledger_results = []
+        for item in payload.get("items", []):
+            if (
+                isinstance(item, dict)
+                and item.get("state") == "due"
+                and item.get("type") in {"date", "ttl"}
+                and item.get("trigger_id") != "research-rebaseline"
+            ):
+                ledger_results.append(
+                    observe_schedule_hit(
+                        root=ns.coverage_root,
+                        item=item,
+                        schedule_as_of=schedule_as_of,
+                        schedule_ref=str(path),
+                        schedule_sha256=schedule_sha,
+                        actor=ns.actor,
+                        recorded_at=recorded_at,
+                    )
+                )
+        result["trigger_ledger_observations"] = ledger_results
+    print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 
@@ -741,6 +982,177 @@ def cmd_coverage_scope_status(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_trigger_observe(ns: argparse.Namespace) -> int:
+    observation = load_json(ns.input)
+    if not isinstance(observation, dict):
+        raise TriggerHitError("trigger observation input must be an object")
+    _write_success(
+        {
+            "ok": True,
+            **observe_fact_hit(
+                root=ns.root,
+                observation=observation,
+                recorded_at=_timestamp(ns.at),
+            ),
+        }
+    )
+    return 0
+
+
+def cmd_coverage_trigger_status(ns: argparse.Namespace) -> int:
+    _write_success(verify_trigger_hit_ledger(root=ns.root))
+    return 0
+
+
+def cmd_coverage_trigger_rebuild(ns: argparse.Namespace) -> int:
+    _write_success({"ok": True, **rebuild_trigger_hit_state(root=ns.root)})
+    return 0
+
+
+def cmd_coverage_trigger_checkpoint(ns: argparse.Namespace) -> int:
+    manifest = ns.scope_manifest or str(
+        Path(ns.root) / "scopes" / ns.run_id / "manifest.json"
+    )
+    _write_success(
+        {
+            "ok": True,
+            **create_trigger_hit_checkpoint(
+                root=ns.root,
+                run_id=ns.run_id,
+                scope_manifest_path=manifest,
+                checkpointed_at=_timestamp(ns.at),
+            ),
+        }
+    )
+    return 0
+
+
+def cmd_coverage_lane_freeze(ns: argparse.Namespace) -> int:
+    _write_success(
+        {
+            "ok": True,
+            **freeze_lane_arbitration(
+                root=ns.root,
+                run_id=ns.run_id,
+                frozen_at=_timestamp(ns.at),
+                baseline_minimum_slots=ns.baseline_minimum_slots,
+                apply_coverage=not ns.no_apply,
+            ),
+        }
+    )
+    return 0
+
+
+def cmd_coverage_lane_status(ns: argparse.Namespace) -> int:
+    _write_success(verify_lane_arbitration(root=ns.root, run_id=ns.run_id))
+    return 0
+
+
+def cmd_coverage_quality_scope_prepare(ns: argparse.Namespace) -> int:
+    _write_success(
+        {
+            "ok": True,
+            **prepare_scope_identity_quality_audit(
+                root=ns.root,
+                run_id=ns.run_id,
+                policy_path=ns.policy,
+                created_at=_timestamp(ns.at),
+            ),
+        }
+    )
+    return 0
+
+
+def cmd_coverage_quality_scope_record(ns: argparse.Namespace) -> int:
+    status = scope_quality_status(root=ns.root, run_id=ns.run_id)
+    if status["status"] != "pending_reviews":
+        _write_success({"ok": status["status"] == "passed", **status})
+        return 0
+    seal_scope_identity_audit_result(
+        plan_path=status["canonical_paths"]["plan"],
+        reviews=_load_review_rows(ns.reviews),
+        completed_at=_timestamp(ns.at),
+    )
+    status = scope_quality_status(root=ns.root, run_id=ns.run_id)
+    _write_success({"ok": status["status"] == "passed", **status})
+    return 0
+
+
+def cmd_coverage_quality_scope_status(ns: argparse.Namespace) -> int:
+    status = scope_quality_status(root=ns.root, run_id=ns.run_id)
+    _write_success({"ok": status["status"] == "passed", **status})
+    return 0
+
+
+def cmd_coverage_quality_triage_prepare(ns: argparse.Namespace) -> int:
+    _write_success(
+        {
+            "ok": True,
+            **prepare_cycle_quality_audit(
+                root=ns.root,
+                cycle_id=ns.cycle_id,
+                policy_path=ns.policy,
+                created_at=_timestamp(ns.at),
+            ),
+        }
+    )
+    return 0
+
+
+def cmd_coverage_quality_triage_record(ns: argparse.Namespace) -> int:
+    status = cycle_quality_status(root=ns.root, cycle_id=ns.cycle_id)
+    if status["status"] != "pending_reviews":
+        materialization = materialize_cycle_quality_reopens(
+            root=ns.root, cycle_id=ns.cycle_id
+        )
+        _write_success(
+            {
+                "ok": status["status"] == "passed",
+                **status,
+                "reopen_materialization": materialization,
+            }
+        )
+        return 0
+    snapshot = load_quality_policy_snapshot(
+        snapshot_path=status["canonical_paths"]["policy_snapshot"],
+        expected_subject_kind="triage_false_negative",
+        expected_subject_id=ns.cycle_id,
+    )
+    seal_cycle_quality_audit_result(
+        plan_path=status["canonical_paths"]["plan"],
+        reviews=_load_review_rows(ns.reviews),
+        policy=snapshot["policy"],
+        completed_at=_timestamp(ns.at),
+    )
+    status = cycle_quality_status(root=ns.root, cycle_id=ns.cycle_id)
+    materialization = materialize_cycle_quality_reopens(
+        root=ns.root, cycle_id=ns.cycle_id
+    )
+    _write_success(
+        {
+            "ok": status["status"] == "passed",
+            **status,
+            "reopen_materialization": materialization,
+        }
+    )
+    return 0
+
+
+def cmd_coverage_quality_triage_status(ns: argparse.Namespace) -> int:
+    status = cycle_quality_status(root=ns.root, cycle_id=ns.cycle_id)
+    _write_success({"ok": status["status"] == "passed", **status})
+    return 0
+
+
+def _load_review_rows(path: str | Path) -> list[dict[str, object]]:
+    payload = load_json(path)
+    if isinstance(payload, dict):
+        payload = payload.get("reviews")
+    if not isinstance(payload, list) or not all(isinstance(row, dict) for row in payload):
+        raise QualityWorkflowError("quality reviews must be a list or {reviews: [...]} object")
+    return payload
+
+
 def cmd_coverage_allocate_research(ns: argparse.Namespace) -> int:
     ranking = json.loads(Path(ns.ranking).read_text(encoding="utf-8"))
     policy = load_policy(ns.policy)
@@ -786,6 +1198,8 @@ def cmd_coverage_triage_freeze(ns: argparse.Namespace) -> int:
         after_symbol=ns.after_symbol,
         symbols=symbols,
         scope_run_id=ns.scope_run_id,
+        quality_policy_snapshot_path=ns.quality_policy_snapshot,
+        scope_identity_audit_result_path=ns.scope_identity_result,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -1001,6 +1415,10 @@ def _error_code(exc: Exception) -> str | None:
         (PriceAlertError, "price_alert_error"),
         (CoverageValidationError, "coverage_validation_failed"),
         (ScopeWorkflowError, "scope_workflow_error"),
+        (TriggerHitError, "trigger_hit_error"),
+        (LaneArbitrationError, "lane_arbitration_error"),
+        (QualityAuditError, "quality_audit_error"),
+        (QualityWorkflowError, "quality_workflow_error"),
         (ReviewStoreError, "review_state_error"),
         (ReviewWorkflowError, "review_workflow_error"),
         (ResearchAllocationError, "research_allocation_error"),

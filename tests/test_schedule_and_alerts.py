@@ -611,3 +611,36 @@ def test_schedule_and_alert_writes_are_byte_stable(tmp_path: Path):
     write_price_alerts(research_root, alerts_path)
 
     assert (schedule_path.read_bytes(), alerts_path.read_bytes()) == first
+
+
+def test_price_alert_observations_include_false_edges_for_rearming():
+    from trading_os.research_assets.alerts import evaluate_price_alert_observations
+
+    alerts = {
+        "schema_version": 2,
+        "items": [
+            {
+                "alert_id": "CN:000001:low",
+                "symbol": "CN:000001",
+                "condition": {"operator": "price_lte", "threshold": 10.0},
+            },
+            {
+                "alert_id": "CN:000002:high",
+                "symbol": "CN:000002",
+                "condition": {"operator": "price_gte", "threshold": 20.0},
+            },
+            {
+                "alert_id": "CN:000001:observe-only",
+                "symbol": "CN:000001",
+                "condition": {"operator": "observe"},
+            },
+        ],
+    }
+    quotes = [
+        {"symbol": "CN:000001", "price": 9.0, "as_of": NOW.isoformat()},
+        {"symbol": "CN:000002", "price": 19.0, "as_of": NOW.isoformat()},
+    ]
+    observations = evaluate_price_alert_observations(
+        alerts, quotes, evaluated_at=NOW
+    )
+    assert [row["condition_met"] for row in observations] == [True, False]

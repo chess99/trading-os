@@ -91,10 +91,16 @@ cohort 大小只是可恢复的执行边界，不是投资容量。建议使用 
 ```bash
 python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
 python -m trading_os coverage scope-status <run-id>
-python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
+python -m trading_os coverage trigger-checkpoint <run-id>
+python -m trading_os coverage lane-freeze <run-id> --baseline-minimum-slots 1
+python -m trading_os coverage quality-scope-prepare <run-id>
+python -m trading_os coverage quality-scope-record <run-id> --reviews <identity-reviews.json>
+python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> --quality-policy-snapshot <policy-snapshot.json> --scope-identity-result <identity-result.json> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
 python -m trading_os coverage triage-claim <cycle-id> --agent <agent-id>
 python -m trading_os coverage triage-record --input <rapid-triage.json>
 python -m trading_os coverage triage-status <cycle-id>
+python -m trading_os coverage quality-triage-prepare <cycle-id>
+python -m trading_os coverage quality-triage-record <cycle-id> --reviews <quality-reviews.json>
 python -m trading_os coverage triage-compare <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 
@@ -111,6 +117,17 @@ python -m trading_os alerts build
 ```
 
 上面的 `triage-freeze` 只能在 scope-to-queue intake 已经把该小批次归一为兼容状态后使用。历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 不得用于新 Goal；L2/L3 的独立 decisions 新入口尚未建设，必须先完成迁移与试运行。
+
+新 Goal 的生产 cohort 使用 schema v3：必须同时绑定已通过的 scope identity audit
+result 和该审计的 policy snapshot。schema v1/v2 仍可读取历史，但不能作为新 Goal 的
+横向晋级证明。`triage-compare` 与 `triage-finalize` 会验证 cycle quality result 已通过，
+并验证 allocation Agent 不属于单公司研究 Agent 或质量 reviewer。
+
+触发事件事实源是 `coverage/cn-a/trigger-hits/events.jsonl` 的全局哈希链；state 只是可重建
+投影。每个 run 的 checkpoint 冻结账本前缀，随后才生成 incremental intake 与 lane
+arbitration。price 采用 true edge / false rearm；date/TTL 只消费真正 due 的 schedule 行；
+filing/event/thesis 必须通过 `coverage trigger-observe` 写入真实 occurrence evidence。结果发布
+到公司时间线且 coverage 已物化后，`triage-record` 才消费 package 中显式绑定的 hit IDs。
 
 ## 完成定义与交付
 

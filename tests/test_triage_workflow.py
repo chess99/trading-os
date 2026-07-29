@@ -1262,3 +1262,74 @@ def test_cli_freezes_explicit_symbol_file(tmp_path: Path, capsys):
     payload = json.loads(capsys.readouterr().out)
     assert payload["symbols"] == ["CN:000001", "CN:000003"]
     assert payload["cohort_count"] == 2
+
+
+def test_record_replay_repairs_trigger_consumption_after_publish_failure(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+):
+    from trading_os.research_assets import triage_workflow
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.trigger_hits import (
+        observe_fact_hit,
+        verify_trigger_hit_ledger,
+    )
+
+    root = _coverage(tmp_path)
+    _freeze(root, symbols=["CN:000001"])
+    source_sha = "a" * 64
+    occurrence_sha = "b" * 64
+    observed = observe_fact_hit(
+        root=root,
+        observation={
+            "schema_version": 1,
+            "symbol": "CN:000001",
+            "workflow_target": "company_research",
+            "trigger_ref": {
+                "trigger_id": "filing-update",
+                "type": "filing",
+                "source_kind": "company_trigger",
+                "definition_ref": "research/companies/CN/000001/meta.json",
+                "definition_source_sha256": source_sha,
+                "definition": {"condition": {"filing": "annual_report"}},
+            },
+            "effective_at": "2026-07-27T07:00:00+08:00",
+            "observed_at": "2026-07-27T08:00:00+08:00",
+            "occurrence_evidence": {
+                "kind": "filing",
+                "occurrence_key": "annual-report-2026",
+                "source_id": "annual-report-2026",
+                "source_ref": "https://example.test/annual-report",
+                "source_sha256": occurrence_sha,
+                "published_at": "2026-07-27T07:00:00+08:00",
+            },
+            "actor": "filing-observer",
+            "idempotency_key": "filing:annual-report-2026",
+        },
+        recorded_at=RECORDED_AT,
+    )
+    queue = read_jsonl(root / "research_queue.jsonl")
+    queue[0]["bound_trigger_hit_ids"] = [observed["hit_id"]]
+    write_jsonl(root / "research_queue.jsonl", queue)
+    package = _package("CN:000001", "公司一", "/root/company-1")
+    package["review_mode"] = "triggered_update"
+    package["handled_hit_ids"] = [observed["hit_id"]]
+
+    real_consume = triage_workflow.consume_trigger_hits
+
+    def fail_after_publish(**kwargs):
+        raise RuntimeError("injected ledger append failure")
+
+    monkeypatch.setattr(triage_workflow, "consume_trigger_hits", fail_after_publish)
+    with pytest.raises(RuntimeError, match="injected ledger append"):
+        triage_workflow.record_rapid_triage_package(
+            package, root=root, recorded_at=RECORDED_AT
+        )
+    assert verify_trigger_hit_ledger(root=root)["open_hit_count"] == 1
+
+    monkeypatch.setattr(triage_workflow, "consume_trigger_hits", real_consume)
+    repaired = triage_workflow.record_rapid_triage_package(
+        package, root=root, recorded_at=RECORDED_AT
+    )
+    assert repaired["idempotent"] is True
+    assert repaired["trigger_consumption"]["newly_consumed_count"] == 1
+    assert verify_trigger_hit_ledger(root=root)["open_hit_count"] == 0

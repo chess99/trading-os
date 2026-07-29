@@ -12,6 +12,7 @@ from .company_timeline import publish_rapid_triage_to_company_timeline
 from .coverage_store import (
     RESEARCH_QUEUE_FILE,
     SCREENING_FILE,
+    coverage_write_lock,
     read_jsonl,
     serialized_coverage_write,
     write_jsonl,
@@ -19,6 +20,7 @@ from .coverage_store import (
 from .research_allocation import ResearchAllocationError
 from .sealing import seal_json, verify_sealed
 from .triage_cohort import load_rapid_triage_cohort
+from .trigger_hits import consume_trigger_hits
 
 PACKAGE_KEYS = {
     "schema_version",
@@ -50,6 +52,7 @@ PACKAGE_KEYS = {
     "sources",
     "provenance",
 }
+OPTIONAL_PACKAGE_KEYS = {"handled_hit_ids"}
 PROVENANCE_KEYS = {"agent", "model", "tools", "generated_at"}
 SOURCE_KEYS = {
     "source_id",
@@ -226,14 +229,52 @@ def release_rapid_triage_task(
     }
 
 
-@serialized_coverage_write
 def record_rapid_triage_package(
     package: Mapping[str, Any],
     *,
     root: str | Path,
     recorded_at: dt.datetime,
 ) -> dict[str, Any]:
-    """Seal one L1.5 result; never promote before cohort comparison."""
+    """Publish one result, then consume any bound trigger hits.
+
+    Trigger consumption deliberately happens after the package, company
+    timeline, and coverage materialization commit.  If that final append fails,
+    replaying this function repairs the ledger without rewriting the immutable
+    research result.
+    """
+
+    with coverage_write_lock(root):
+        normalized = _normalize_package(package, recorded_at=recorded_at)
+        result = _record_rapid_triage_package_locked(
+            normalized,
+            root=root,
+            recorded_at=recorded_at,
+        )
+    handled_hit_ids = normalized["handled_hit_ids"]
+    if handled_hit_ids:
+        ticker = normalized["symbol"].split(":", 1)[1]
+        result["trigger_consumption"] = consume_trigger_hits(
+            root=root,
+            package_path=result["triage_path"],
+            handled_hit_ids=handled_hit_ids,
+            timeline_evidence={
+                "meta_path": f"research/companies/CN/{ticker}/meta.json"
+            },
+            consumed_at=recorded_at,
+            actor=normalized["provenance"]["agent"],
+        )
+    else:
+        result["trigger_consumption"] = None
+    return result
+
+
+def _record_rapid_triage_package_locked(
+    package: Mapping[str, Any],
+    *,
+    root: str | Path,
+    recorded_at: dt.datetime,
+) -> dict[str, Any]:
+    """Materialize one result while the caller owns the coverage write lock."""
 
     _aware(recorded_at, "recorded_at")
     normalized = _normalize_package(package, recorded_at=recorded_at)
@@ -279,6 +320,19 @@ def record_rapid_triage_package(
     if assigned is not None and assigned != normalized["provenance"]["agent"]:
         raise ResearchAllocationError(
             f"rapid-triage provenance agent does not match assignment: {symbol}"
+        )
+    expected_hit_ids = (
+        queue_record.get("bound_trigger_hit_ids")
+        if queue_record.get("bound_trigger_hit_ids") is not None
+        else queue_record.get("trigger_hit_ids")
+    ) or []
+    if not isinstance(expected_hit_ids, list) or not all(
+        isinstance(value, str) for value in expected_hit_ids
+    ):
+        raise ResearchAllocationError(f"queue trigger_hit_ids are invalid: {symbol}")
+    if expected_hit_ids and normalized["handled_hit_ids"] != expected_hit_ids:
+        raise ResearchAllocationError(
+            f"rapid-triage handled_hit_ids do not match lane intake: {symbol}"
         )
     binding = _resolve_triage_binding(
         base,
@@ -346,6 +400,7 @@ def record_rapid_triage_package(
             "triage_cycle_id": normalized["cycle_id"],
             "triage_disposition": evaluation["disposition"],
             "triage_review_mode": normalized["review_mode"],
+            "handled_hit_ids": normalized["handled_hit_ids"],
             "revisit_triggers": normalized["revisit_triggers"],
             "company_timeline_report_path": timeline_result["company_report_path"],
         }
@@ -593,6 +648,7 @@ def build_rapid_triage_comparison_packet(
     repository_root = base.parent.parent
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
     binding = _resolve_cycle_cohort(base, queue, cycle)
+    quality_gate = _require_cycle_quality_gate(base=base, cycle=cycle, binding=binding)
     comparison_path = base / "triage" / cycle / "comparison.json"
     relative = comparison_path.relative_to(repository_root).as_posix()
     if comparison_path.exists():
@@ -601,6 +657,10 @@ def build_rapid_triage_comparison_packet(
         if payload.get("cycle_id") != cycle or payload.get("binding_sha256") != binding["sha256"]:
             raise ResearchAllocationError(
                 f"sealed comparison packet conflicts with cycle binding: {cycle}"
+            )
+        if payload.get("quality_audit") != quality_gate:
+            raise ResearchAllocationError(
+                f"sealed comparison quality binding conflicts with cycle: {cycle}"
             )
         return {
             "schema_version": 1,
@@ -658,6 +718,8 @@ def build_rapid_triage_comparison_packet(
         "rows": rows,
         "portfolio_action": None,
     }
+    if quality_gate is not None:
+        payload["quality_audit"] = quality_gate
     sealed = seal_json(
         comparison_path,
         payload,
@@ -696,6 +758,7 @@ def finalize_rapid_triage_cycle(
     queue = read_jsonl(queue_path)
     screening = read_jsonl(screening_path)
     binding = _resolve_cycle_cohort(base, queue, cycle)
+    quality_gate = _require_cycle_quality_gate(base=base, cycle=cycle, binding=binding)
     _completed_cohort_packages(binding["members"], cycle=cycle, repository_root=repository_root)
     comparison_path = base / "triage" / cycle / "comparison.json"
     if not comparison_path.exists():
@@ -706,6 +769,8 @@ def finalize_rapid_triage_cycle(
     comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
     if comparison.get("cycle_id") != cycle or comparison.get("binding_sha256") != binding["sha256"]:
         raise ResearchAllocationError("comparison packet does not match cohort binding")
+    if comparison.get("quality_audit") != quality_gate:
+        raise ResearchAllocationError("comparison packet quality audit binding is invalid")
     comparison_rows = comparison.get("rows", [])
     if not isinstance(comparison_rows, list) or not all(
         isinstance(row, Mapping) for row in comparison_rows
@@ -734,6 +799,12 @@ def finalize_rapid_triage_cycle(
     if normalized_decision["provenance"]["agent"] in research_agents:
         raise ResearchAllocationError(
             "cross-company allocation Agent must be independent of company triage Agents"
+        )
+    if quality_gate is not None and normalized_decision["provenance"]["agent"] in set(
+        quality_gate["reviewer_agents"]
+    ):
+        raise ResearchAllocationError(
+            "cross-company allocation Agent must differ from quality-audit reviewers"
         )
 
     capacity = _policy_positive_int(policy, "quick_profile_capacity_per_cycle")
@@ -801,6 +872,8 @@ def finalize_rapid_triage_cycle(
         "ranking": decision_rows,
         "portfolio_action": None,
     }
+    if quality_gate is not None:
+        selection_payload["quality_audit"] = quality_gate
     selection_existed = selection_path.exists()
     legacy_policy_unbound = False
     if selection_existed:
@@ -900,6 +973,7 @@ def rapid_triage_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, A
         invalid=invalid,
     )
     audit_status = "not_configured"
+    quality_status = _cycle_quality_status_view(base=base, cycle=cycle, binding=binding)
     if selection_valid:
         selection_payload = json.loads(
             (base / "triage" / cycle / "selection.json").read_text(encoding="utf-8")
@@ -940,14 +1014,99 @@ def rapid_triage_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, A
         "comparison_ready": comparison_valid,
         "selection_finalized": selection_valid,
         "audit_status": audit_status,
+        "quality_audit_status": quality_status,
         "invalid_artifact_count": len(invalid),
         "invalid_artifacts": invalid,
         "portfolio_action": None,
     }
 
 
+def _cycle_quality_status_view(
+    *, base: Path, cycle: str, binding: Mapping[str, Any]
+) -> str:
+    if binding.get("type") != "cohort":
+        return "legacy_not_bound"
+    cohort, _, _ = load_rapid_triage_cohort(root=base, cycle_id=cycle)
+    schema_version = cohort.get("schema_version")
+    if schema_version == 1:
+        return "legacy_not_bound"
+    if schema_version == 2:
+        return "missing_production_quality_contract"
+    try:
+        from .quality_workflow import cycle_quality_status
+
+        return str(cycle_quality_status(root=base, cycle_id=cycle)["status"])
+    except ValueError:
+        return "not_prepared"
+
+
+def _require_cycle_quality_gate(
+    *, base: Path, cycle: str, binding: Mapping[str, Any]
+) -> dict[str, Any] | None:
+    if binding.get("type") != "cohort":
+        return None
+    cohort, cohort_sha, _ = load_rapid_triage_cohort(root=base, cycle_id=cycle)
+    schema_version = cohort.get("schema_version")
+    if schema_version == 1:
+        return None
+    if schema_version == 2:
+        raise ResearchAllocationError(
+            "schema-v2 parent-scope cohort is legacy and cannot prove new Goal production; "
+            "freeze a schema-v3 cohort bound to the passed scope identity audit"
+        )
+    from .quality_workflow import QualityWorkflowError, cycle_quality_status
+
+    try:
+        status = cycle_quality_status(root=base, cycle_id=cycle)
+    except QualityWorkflowError as exc:
+        raise ResearchAllocationError(
+            f"triage quality audit is missing or invalid: {cycle}: {exc}"
+        ) from exc
+    if status.get("status") != "passed":
+        raise ResearchAllocationError(
+            f"triage quality audit has not passed: {cycle}: {status.get('status')}"
+        )
+    if status.get("source_sha256") != cohort_sha:
+        raise ResearchAllocationError("triage quality audit does not bind the cohort")
+    repository_root = base.parent.parent.resolve()
+    canonical = status["canonical_paths"]
+    result_path = Path(canonical["result"]).resolve()
+    binding_path = Path(canonical["binding"]).resolve()
+    snapshot_path = Path(canonical["policy_snapshot"]).resolve()
+    try:
+        result_seal = verify_sealed(result_path)
+        binding_seal = verify_sealed(binding_path)
+        snapshot_seal = verify_sealed(snapshot_path)
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError("triage quality audit result is invalid") from exc
+    reviewer_agents = sorted(
+        {
+            agent
+            for row in result.get("rows", [])
+            if isinstance(row, Mapping)
+            and isinstance((review := row.get("review")), Mapping)
+            and isinstance((provenance := review.get("provenance")), Mapping)
+            and isinstance((agent := provenance.get("agent")), str)
+        }
+    )
+    return {
+        "binding_path": binding_path.relative_to(repository_root).as_posix(),
+        "binding_sha256": binding_seal.sha256,
+        "policy_snapshot_path": snapshot_path.relative_to(repository_root).as_posix(),
+        "policy_snapshot_sha256": snapshot_seal.sha256,
+        "result_path": result_path.relative_to(repository_root).as_posix(),
+        "result_sha256": result_seal.sha256,
+        "reviewer_agents": reviewer_agents,
+        "status": "passed",
+    }
+
+
 def _normalize_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -> dict[str, Any]:
-    if not isinstance(package, Mapping) or set(package) != PACKAGE_KEYS:
+    if not isinstance(package, Mapping) or set(package) not in {
+        frozenset(PACKAGE_KEYS),
+        frozenset(PACKAGE_KEYS | OPTIONAL_PACKAGE_KEYS),
+    }:
         raise ResearchAllocationError("rapid-triage package fields do not match contract")
     if package.get("schema_version") != 2:
         raise ResearchAllocationError("rapid-triage schema_version must be 2")
@@ -1022,6 +1181,12 @@ def _normalize_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) 
     prior_research_path = package.get("prior_research_path")
     if prior_research_path is not None:
         prior_research_path = _repository_relative_path(prior_research_path, "prior_research_path")
+    raw_handled_hit_ids = package.get("handled_hit_ids", [])
+    if not isinstance(raw_handled_hit_ids, list):
+        raise ResearchAllocationError("handled_hit_ids must be an array")
+    handled_hit_ids = [_sha256(value, "handled_hit_ids") for value in raw_handled_hit_ids]
+    if len(handled_hit_ids) != len(set(handled_hit_ids)):
+        raise ResearchAllocationError("handled_hit_ids must be unique")
     result = {
         "schema_version": 2,
         "cycle_id": cycle,
@@ -1035,6 +1200,7 @@ def _normalize_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) 
         "review_mode": _enum(package.get("review_mode"), REVIEW_MODES, "review_mode"),
         "prior_research_path": prior_research_path,
         "trigger_context": _text(package.get("trigger_context"), "trigger_context"),
+        "handled_hit_ids": handled_hit_ids,
         "business_summary": _text(package.get("business_summary"), "business_summary"),
         "change_summary": _text(package.get("change_summary"), "change_summary"),
         "normalized_earnings_view": _text(
@@ -1979,6 +2145,13 @@ def _symbol(value: Any) -> str:
     result = _text(value, "symbol")
     if not SYMBOL_RE.fullmatch(result):
         raise ResearchAllocationError("symbol must match CN:000000")
+    return result
+
+
+def _sha256(value: Any, label: str) -> str:
+    result = _text(value, label)
+    if len(result) != 64 or any(char not in "0123456789abcdef" for char in result):
+        raise ResearchAllocationError(f"{label} must be a lowercase SHA-256")
     return result
 
 

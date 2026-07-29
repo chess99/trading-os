@@ -142,6 +142,47 @@ def evaluate_price_alerts(
     }
 
 
+def evaluate_price_alert_observations(
+    alerts: dict[str, Any],
+    quotes: list[Any],
+    *,
+    evaluated_at: dt.datetime,
+) -> list[dict[str, Any]]:
+    """Return all observable price conditions, including false rearms."""
+
+    _require_aware_datetime(evaluated_at, "evaluated_at")
+    quote_by_symbol = _validated_quote_snapshot(quotes, evaluated_at=evaluated_at)
+    observations: list[dict[str, Any]] = []
+    for alert in alerts.get("items", []):
+        if not isinstance(alert, Mapping):
+            continue
+        symbol = str(alert.get("symbol"))
+        quote = quote_by_symbol.get(symbol)
+        condition = alert.get("condition")
+        if quote is None or not isinstance(condition, Mapping):
+            continue
+        if condition.get("operator") not in {
+            "price_lte",
+            "price_gte",
+            "absolute_change_fraction_gte",
+        }:
+            continue
+        observations.append(
+            {
+                "alert": dict(alert),
+                "condition_met": _condition_met(condition, quote),
+                "quote": dict(quote),
+            }
+        )
+    observations.sort(
+        key=lambda item: (
+            str(item["alert"].get("symbol")),
+            str(item["alert"].get("alert_id")),
+        )
+    )
+    return observations
+
+
 def load_json(path: str | Path) -> Any:
     return json.loads(Path(path).read_text(encoding="utf-8-sig"))
 

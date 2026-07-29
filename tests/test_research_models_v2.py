@@ -54,6 +54,7 @@ def test_domain_enums_are_closed_and_match_the_design():
         "portfolio",
         "industry",
         "research_allocation",
+        "triage_quality_audit",
     }
     assert {item.value for item in ReviewRunStatus} == {
         "created",

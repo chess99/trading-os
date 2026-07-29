@@ -328,7 +328,68 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
     ]
     for file_name, validator in files:
         _validate_file(base / file_name, validator)
-    return coverage_status(base)
+    status = coverage_status(base)
+    trigger_root = base / "trigger-hits"
+    if trigger_root.exists():
+        from .trigger_hits import TriggerHitError, verify_trigger_hit_ledger
+
+        try:
+            status["trigger_hits"] = verify_trigger_hit_ledger(root=base)
+        except TriggerHitError as exc:
+            raise CoverageValidationError(
+                f"trigger-hit ledger validation failed: {exc}"
+            ) from exc
+    lane_runs = []
+    scopes_root = base / "scopes"
+    if scopes_root.is_dir():
+        from .lane_arbitration import LaneArbitrationError, verify_lane_arbitration
+
+        for scope_dir in sorted(path for path in scopes_root.iterdir() if path.is_dir()):
+            if not (scope_dir / "lane-arbitration.json").exists():
+                continue
+            try:
+                lane_runs.append(
+                    verify_lane_arbitration(root=base, run_id=scope_dir.name)
+                )
+            except LaneArbitrationError as exc:
+                raise CoverageValidationError(
+                    f"lane arbitration validation failed for {scope_dir.name}: {exc}"
+                ) from exc
+    status["lane_arbitration_runs"] = lane_runs
+    quality_scopes = []
+    quality_cycles = []
+    from .quality_workflow import (
+        QualityWorkflowError,
+        cycle_quality_status,
+        scope_quality_status,
+    )
+
+    if scopes_root.is_dir():
+        for scope_dir in sorted(path for path in scopes_root.iterdir() if path.is_dir()):
+            if not (scope_dir / "quality" / "identity" / "binding.json").exists():
+                continue
+            try:
+                quality_scopes.append(scope_quality_status(root=base, run_id=scope_dir.name))
+            except QualityWorkflowError as exc:
+                raise CoverageValidationError(
+                    f"scope quality validation failed for {scope_dir.name}: {exc}"
+                ) from exc
+    triage_root = base / "triage"
+    if triage_root.is_dir():
+        for cycle_dir in sorted(path for path in triage_root.iterdir() if path.is_dir()):
+            if not (cycle_dir / "quality" / "binding.json").exists():
+                continue
+            try:
+                quality_cycles.append(
+                    cycle_quality_status(root=base, cycle_id=cycle_dir.name)
+                )
+            except QualityWorkflowError as exc:
+                raise CoverageValidationError(
+                    f"triage quality validation failed for {cycle_dir.name}: {exc}"
+                ) from exc
+    status["scope_quality_audits"] = quality_scopes
+    status["triage_quality_audits"] = quality_cycles
+    return status
 
 
 @serialized_coverage_write

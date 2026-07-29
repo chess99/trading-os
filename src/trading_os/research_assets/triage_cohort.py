@@ -28,6 +28,7 @@ COHORT_KEYS = {
     "portfolio_action",
 }
 COHORT_V2_KEYS = COHORT_KEYS | {"parent_scope"}
+COHORT_V3_KEYS = COHORT_V2_KEYS | {"quality_contract"}
 PARENT_SCOPE_KEYS = {
     "run_id",
     "scope_cutoff",
@@ -35,6 +36,16 @@ PARENT_SCOPE_KEYS = {
     "manifest_sha256",
     "baseline_intake_path",
     "baseline_intake_sha256",
+}
+QUALITY_CONTRACT_KEYS = {
+    "policy_snapshot_path",
+    "policy_snapshot_sha256",
+    "policy_file_sha256",
+    "policy_sha256",
+    "scope_identity_binding_path",
+    "scope_identity_binding_sha256",
+    "scope_identity_result_path",
+    "scope_identity_result_sha256",
 }
 REQUEST_KEYS = {
     "mode",
@@ -78,6 +89,8 @@ def freeze_rapid_triage_cohort(
     after_symbol: str | None = None,
     symbols: Sequence[str] | None = None,
     scope_run_id: str | None = None,
+    quality_policy_snapshot_path: str | Path | None = None,
+    scope_identity_audit_result_path: str | Path | None = None,
 ) -> dict[str, Any]:
     """Freeze an administrative rapid-triage cohort without investment ranking.
 
@@ -128,6 +141,29 @@ def freeze_rapid_triage_cohort(
     parent_scope_symbols: set[str] = set()
     if parent_scope is not None:
         parent_scope_symbols = parent_scope.pop("_symbols")
+    quality_contract = None
+    if (
+        quality_policy_snapshot_path is not None
+        or scope_identity_audit_result_path is not None
+    ):
+        if parent_scope is None:
+            raise ResearchAllocationError(
+                "quality-bound rapid-triage cohort requires a parent scope"
+            )
+        if (
+            quality_policy_snapshot_path is None
+            or scope_identity_audit_result_path is None
+        ):
+            raise ResearchAllocationError(
+                "quality policy snapshot and scope identity result must be supplied together"
+            )
+        quality_contract = _load_scope_quality_contract(
+            base=base,
+            repository_root=repository_root,
+            run_id=str(parent_scope["run_id"]),
+            policy_snapshot_path=quality_policy_snapshot_path,
+            identity_result_path=scope_identity_audit_result_path,
+        )
     cohort_path = base / "triage" / cycle / "cohort.json"
     relative_path = cohort_path.relative_to(repository_root).as_posix()
     queue_path = base / RESEARCH_QUEUE_FILE
@@ -146,6 +182,7 @@ def freeze_rapid_triage_cohort(
             payload["cycle_id"] != cycle
             or payload["request"] != request
             or payload.get("parent_scope") != parent_scope
+            or payload.get("quality_contract") != quality_contract
         ):
             raise ResearchAllocationError(
                 f"sealed rapid-triage cohort conflicts with freeze request: {cycle}"
@@ -254,7 +291,13 @@ def freeze_rapid_triage_cohort(
         for index, item in enumerate(candidates, 1)
     ]
     payload = {
-        "schema_version": 2 if parent_scope is not None else 1,
+        "schema_version": (
+            3
+            if quality_contract is not None
+            else 2
+            if parent_scope is not None
+            else 1
+        ),
         "cycle_id": cycle,
         "frozen_at": frozen_at.isoformat(),
         "selection_basis": (
@@ -268,6 +311,8 @@ def freeze_rapid_triage_cohort(
     }
     if parent_scope is not None:
         payload["parent_scope"] = parent_scope
+    if quality_contract is not None:
+        payload["quality_contract"] = quality_contract
     sealed = seal_json(
         cohort_path,
         payload,
@@ -311,6 +356,8 @@ def load_rapid_triage_cohort(
     payload = _load_and_validate_cohort(path)
     if payload["cycle_id"] != cycle:
         raise ResearchAllocationError("cohort cycle_id does not match path")
+    if payload.get("schema_version") == 3:
+        _verify_scope_quality_contract(base=base, payload=payload)
     relative = path.relative_to(base.parent.parent).as_posix()
     return payload, sealed.sha256, relative
 
@@ -508,15 +555,17 @@ def _materialize_cohort(
 def _load_and_validate_cohort(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict) or (
-        set(payload) != COHORT_KEYS and set(payload) != COHORT_V2_KEYS
+        set(payload) != COHORT_KEYS
+        and set(payload) != COHORT_V2_KEYS
+        and set(payload) != COHORT_V3_KEYS
     ):
         raise ResearchAllocationError("rapid-triage cohort fields do not match contract")
     schema_version = payload.get("schema_version")
-    if schema_version not in {1, 2}:
-        raise ResearchAllocationError("rapid-triage cohort schema_version must be 1 or 2")
+    if schema_version not in {1, 2, 3}:
+        raise ResearchAllocationError("rapid-triage cohort schema_version must be 1, 2, or 3")
     if schema_version == 1 and set(payload) != COHORT_KEYS:
         raise ResearchAllocationError("v1 rapid-triage cohort cannot bind a parent scope")
-    if schema_version == 2:
+    if schema_version in {2, 3}:
         parent_scope = payload.get("parent_scope")
         if not isinstance(parent_scope, dict) or set(parent_scope) != PARENT_SCOPE_KEYS:
             raise ResearchAllocationError("rapid-triage cohort parent scope is invalid")
@@ -532,6 +581,22 @@ def _load_and_validate_cohort(path: Path) -> dict[str, Any]:
                 or any(char not in "0123456789abcdef" for char in value)
             ):
                 raise ResearchAllocationError(f"parent_scope.{field} is invalid")
+    if schema_version == 2 and set(payload) != COHORT_V2_KEYS:
+        raise ResearchAllocationError("v2 rapid-triage cohort fields are invalid")
+    if schema_version == 3:
+        contract = payload.get("quality_contract")
+        if not isinstance(contract, dict) or set(contract) != QUALITY_CONTRACT_KEYS:
+            raise ResearchAllocationError("rapid-triage quality contract is invalid")
+        for field in QUALITY_CONTRACT_KEYS:
+            value = contract.get(field)
+            if field.endswith("_path"):
+                _text(value, f"quality_contract.{field}")
+            elif (
+                not isinstance(value, str)
+                or len(value) != 64
+                or any(char not in "0123456789abcdef" for char in value)
+            ):
+                raise ResearchAllocationError(f"quality_contract.{field} is invalid")
     _cycle(payload.get("cycle_id"))
     _datetime(payload.get("frozen_at"), "frozen_at")
     _text(payload.get("selection_basis"), "selection_basis")
@@ -631,6 +696,107 @@ def _load_parent_scope(
         "baseline_intake_sha256": intake_seal.sha256,
         "_symbols": allowed_symbols,
     }
+
+
+def _load_scope_quality_contract(
+    *,
+    base: Path,
+    repository_root: Path,
+    run_id: str,
+    policy_snapshot_path: str | Path,
+    identity_result_path: str | Path,
+) -> dict[str, Any]:
+    from .quality_workflow import load_quality_policy_snapshot, scope_quality_status
+
+    repository_root = repository_root.resolve()
+
+    try:
+        status = scope_quality_status(root=base, run_id=run_id)
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"scope identity quality audit is invalid: {run_id}: {exc}"
+        ) from exc
+    if status.get("status") != "passed":
+        raise ResearchAllocationError(
+            f"scope identity quality audit has not passed: {run_id}"
+        )
+    snapshot_path = _resolve_repository_path(
+        policy_snapshot_path, repository_root, "quality policy snapshot"
+    )
+    result_path = _resolve_repository_path(
+        identity_result_path, repository_root, "scope identity result"
+    )
+    canonical = status["canonical_paths"]
+    if snapshot_path != Path(canonical["policy_snapshot"]).resolve():
+        raise ResearchAllocationError(
+            "quality policy snapshot is not the canonical scope audit snapshot"
+        )
+    if result_path != Path(canonical["result"]).resolve():
+        raise ResearchAllocationError(
+            "scope identity result is not the canonical scope audit result"
+        )
+    snapshot = load_quality_policy_snapshot(
+        snapshot_path=snapshot_path,
+        expected_subject_kind="scope_identity",
+        expected_subject_id=run_id,
+    )
+    binding_path = Path(canonical["binding"]).resolve()
+    try:
+        snapshot_seal = verify_sealed(snapshot_path)
+        binding_seal = verify_sealed(binding_path)
+        result_seal = verify_sealed(result_path)
+        result = json.loads(result_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError("scope quality contract artifacts are invalid") from exc
+    if (
+        snapshot_seal.artifact_type != "triage_quality_audit_policy_snapshot"
+        or binding_seal.artifact_type != "quality_audit_workflow_binding"
+        or result_seal.artifact_type != "scope_identity_audit_result"
+        or result.get("status") != "passed"
+    ):
+        raise ResearchAllocationError("scope quality contract has not passed")
+    return {
+        "policy_snapshot_path": snapshot_path.relative_to(repository_root).as_posix(),
+        "policy_snapshot_sha256": snapshot_seal.sha256,
+        "policy_file_sha256": snapshot["policy_file_sha256"],
+        "policy_sha256": snapshot["policy_sha256"],
+        "scope_identity_binding_path": binding_path.relative_to(
+            repository_root
+        ).as_posix(),
+        "scope_identity_binding_sha256": binding_seal.sha256,
+        "scope_identity_result_path": result_path.relative_to(repository_root).as_posix(),
+        "scope_identity_result_sha256": result_seal.sha256,
+    }
+
+
+def _verify_scope_quality_contract(*, base: Path, payload: Mapping[str, Any]) -> None:
+    repository_root = base.parent.parent.resolve()
+    contract = payload["quality_contract"]
+    rebuilt = _load_scope_quality_contract(
+        base=base,
+        repository_root=repository_root,
+        run_id=str(payload["parent_scope"]["run_id"]),
+        policy_snapshot_path=contract["policy_snapshot_path"],
+        identity_result_path=contract["scope_identity_result_path"],
+    )
+    if rebuilt != contract:
+        raise ResearchAllocationError(
+            "rapid-triage cohort quality contract does not match sealed scope audit"
+        )
+
+
+def _resolve_repository_path(
+    value: str | Path, repository_root: Path, label: str
+) -> Path:
+    path = Path(value)
+    if not path.is_absolute():
+        path = repository_root / path
+    resolved = path.resolve()
+    try:
+        resolved.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(f"{label} escapes repository") from exc
+    return resolved
 
 
 def _verify_terminal_cycle_can_be_rebound(

@@ -76,8 +76,14 @@ python -m trading_os coverage validate
 python -m trading_os coverage status
 python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
 python -m trading_os coverage scope-status <run-id>
-python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
+python -m trading_os coverage trigger-checkpoint <run-id>
+python -m trading_os coverage lane-freeze <run-id>
+python -m trading_os coverage quality-scope-prepare <run-id>
+python -m trading_os coverage quality-scope-record <run-id> --reviews <identity-reviews.json>
+python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> --quality-policy-snapshot <policy-snapshot.json> --scope-identity-result <identity-result.json> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
 python -m trading_os coverage triage-status <cycle-id>
+python -m trading_os coverage quality-triage-prepare <cycle-id>
+python -m trading_os coverage quality-triage-record <cycle-id> --reviews <quality-reviews.json>
 python -m trading_os coverage triage-compare <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>

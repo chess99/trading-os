@@ -357,6 +357,24 @@ def all_a_scope_status(*, root: str | Path, run_id: str) -> dict[str, Any]:
     current_source_sha256 = (
         hashlib.sha256(source_path.read_bytes()).hexdigest() if source_path.is_file() else None
     )
+    trigger_checkpoint_status: dict[str, Any] | None = None
+    if (scope_dir / "trigger-hit-checkpoint.json").exists():
+        from .trigger_hits import verify_trigger_hit_checkpoint
+
+        trigger_checkpoint_status = verify_trigger_hit_checkpoint(
+            root=base,
+            checkpoint_path=scope_dir / "trigger-hit-checkpoint.json",
+        )
+    lane_status: dict[str, Any] | None = None
+    if (scope_dir / "lane-arbitration.json").exists():
+        from .lane_arbitration import verify_lane_arbitration
+
+        lane_status = verify_lane_arbitration(root=base, run_id=run)
+    quality_status: dict[str, Any] | None = None
+    if (scope_dir / "quality" / "identity" / "binding.json").exists():
+        from .quality_workflow import scope_quality_status
+
+        quality_status = scope_quality_status(root=base, run_id=run)
     return {
         "schema_version": 1,
         "run_id": run,
@@ -372,6 +390,9 @@ def all_a_scope_status(*, root: str | Path, run_id: str) -> dict[str, Any]:
         "queue_materialization_drift_count": len(drift),
         "queue_materialization_drift_sample": drift[:50],
         "queue_materialization_drift_sample_truncated": len(drift) > 50,
+        "trigger_checkpoint": trigger_checkpoint_status,
+        "lane_arbitration": lane_status,
+        "scope_identity_quality_audit": quality_status,
         "ok": manifest["conservation"]["satisfied"] and not drift,
         "portfolio_action": None,
     }
