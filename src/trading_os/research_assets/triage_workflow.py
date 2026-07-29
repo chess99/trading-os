@@ -1089,6 +1089,14 @@ def _normalize_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) 
     return result
 
 
+def validate_rapid_triage_package(
+    package: Mapping[str, Any], *, recorded_at: dt.datetime
+) -> dict[str, Any]:
+    """Validate and normalize one schema-v2 rapid-triage package."""
+
+    return _normalize_package(package, recorded_at=recorded_at)
+
+
 def _has_cohort_binding(record: Mapping[str, Any]) -> bool:
     return (
         isinstance(record.get("cohort_sha256"), str)

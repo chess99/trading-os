@@ -108,7 +108,9 @@ packet、独立 Agent 全量 decisions 和可恢复物化，并完成故障注�
 ## 命令
 
 ```bash
-python -m trading_os coverage triage-freeze <cycle-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage scope-status <run-id>
+python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
 python -m trading_os coverage triage-claim <cycle-id> --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage triage-record --input <rapid-triage.json>
 python -m trading_os coverage triage-status <cycle-id>

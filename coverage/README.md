@@ -74,8 +74,9 @@ coverage/
 
 ## 当前实现边界
 
-- cohort seal 能证明一个小批次的成员与处理守恒，但当前还没有把普通 A 股 universe、`scope_cutoff`、纳入、硬排除和异常绑定在一起的全市场 scope manifest。启动全 A 长程 Goal 时必须先补这一层，不能从若干 JSONL 的近似行数推断全覆盖。
-- baseline 不能等同于旧队列的 `requires_rebaseline`。scope 内缺少当前 rapid-triage 协议有效终态的 legacy `completed`、watch 状态或缺失 queue 的公司也必须进入 baseline；当前 `triage-freeze` 还不能独自完成这类 intake 归一化，长程 Goal 必须先建立 scope-to-queue 守恒物化与恢复契约。
+- `scope-freeze` 现可把普通 A 股 universe 原始来源与 SHA-256、`scope_cutoff`、逐证券纳入/硬排除/异常分区、当前协议终态和数量守恒封存到 `coverage/cn-a/scopes/{run-id}/manifest.json`；同一 run 重放只读取已有 seal，不会按变化后的队列重冻范围。
+- `scope-freeze` 同时封存 `baseline-intake.json`，以“冻结范围减去已经发布到公司不可变时间线的有效 schema-v2 rapid-triage 终态”计算 baseline，并在 coverage 写锁内幂等物化 legacy completed/watch 与缺失 queue。活动或更深层任务不会被回退，异常证券保留人工身份复核动作。
+- 新 cohort 可通过 `triage-freeze --scope-run-id <run-id>` 绑定 parent scope 与 baseline-intake 的路径和 SHA-256；不属于该封存 intake 的 symbol 会被拒绝。未提供该参数的旧 cohort 继续按 v1 兼容读取，但不得用于新增长程 Goal。
 - `date/TTL` 与 price trigger 已可派生到 schedule/alerts；`filing/event/thesis` 目前只有 watching 定义，还没有 canonical hit ledger、消费状态和去重闭环。
 - baseline 与 incremental 是两条逻辑 lane，但每个 symbol 当前只有一个可变 queue row。长程 Goal 必须先定义事件与活动任务的合并、抢占、延后和消费规则，不能用“互不阻塞”掩盖同一公司的任务所有权冲突。
 - rapid-triage 的独立 allocation 已封存；面向 catalog、price-watch、conditional-stop 等分层的正式半盲质量抽查仍需建立独立封存契约。
@@ -90,7 +91,9 @@ coverage/
 python -m trading_os coverage validate
 python -m trading_os coverage status
 python -m trading_os coverage get CN:600519
-python -m trading_os coverage triage-freeze <cycle-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage scope-status <run-id>
+python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
 python -m trading_os coverage triage-claim <cycle-id> --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage triage-record --input <rapid-triage.json>
 python -m trading_os coverage triage-status <cycle-id>

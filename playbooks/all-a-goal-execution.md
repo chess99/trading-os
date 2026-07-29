@@ -89,7 +89,9 @@ cohort 大小只是可恢复的执行边界，不是投资容量。建议使用 
 ## 关键命令
 
 ```bash
-python -m trading_os coverage triage-freeze <cycle-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage scope-status <run-id>
+python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
 python -m trading_os coverage triage-claim <cycle-id> --agent <agent-id>
 python -m trading_os coverage triage-record --input <rapid-triage.json>
 python -m trading_os coverage triage-status <cycle-id>

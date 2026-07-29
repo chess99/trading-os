@@ -65,6 +65,11 @@ from .research_assets.review_workflow import (
     write_review_report,
 )
 from .research_assets.schedule import write_review_schedule
+from .research_assets.scope_workflow import (
+    ScopeWorkflowError,
+    all_a_scope_status,
+    freeze_all_a_scope,
+)
 from .research_assets.sealing import SealingError
 from .research_assets.triage_cohort import (
     freeze_rapid_triage_cohort,
@@ -245,6 +250,35 @@ def build_parser() -> argparse.ArgumentParser:
     coverage_list.add_argument("--decision")
     coverage_list.set_defaults(func=cmd_coverage_list)
 
+    scope_freeze = coverage_sub.add_parser(
+        "scope-freeze",
+        help="Freeze a conserved all-A scope and materialize its baseline intake",
+    )
+    _add_coverage_root(scope_freeze)
+    scope_freeze.add_argument("run_id")
+    scope_freeze.add_argument("--mode", choices=["auto", "baseline", "incremental"], default="auto")
+    scope_freeze.add_argument(
+        "--scope-cutoff",
+        required=True,
+        help="Frozen information cutoff as an ISO 8601 timestamp with UTC offset",
+    )
+    scope_freeze.add_argument("--universe-file")
+    scope_freeze.add_argument(
+        "--no-apply-intake",
+        action="store_true",
+        help="Seal scope and intake without materializing coverage queue rows",
+    )
+    _add_timestamp(scope_freeze)
+    scope_freeze.set_defaults(func=cmd_coverage_scope_freeze)
+
+    scope_status = coverage_sub.add_parser(
+        "scope-status",
+        help="Verify a frozen all-A scope, baseline intake, and queue materialization",
+    )
+    _add_coverage_root(scope_status)
+    scope_status.add_argument("run_id")
+    scope_status.set_defaults(func=cmd_coverage_scope_status)
+
     allocate_research = coverage_sub.add_parser(
         "allocate-research",
         help="Allocate finite research capacity across an explicit frozen input",
@@ -296,6 +330,10 @@ def build_parser() -> argparse.ArgumentParser:
     freeze_source.add_argument("--limit", type=int)
     freeze_source.add_argument("--symbols-file")
     triage_freeze.add_argument("--after-symbol")
+    triage_freeze.add_argument(
+        "--scope-run-id",
+        help="Bind the cohort to a sealed all-A scope and baseline intake",
+    )
     _add_timestamp(triage_freeze)
     triage_freeze.set_defaults(func=cmd_coverage_triage_freeze)
 
@@ -683,6 +721,26 @@ def cmd_coverage_list(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_scope_freeze(ns: argparse.Namespace) -> int:
+    payload = freeze_all_a_scope(
+        root=ns.root,
+        run_id=ns.run_id,
+        scope_cutoff=_timestamp(ns.scope_cutoff),
+        frozen_at=_timestamp(ns.at),
+        mode=ns.mode,
+        universe_path=ns.universe_file,
+        apply_intake=not ns.no_apply_intake,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_scope_status(ns: argparse.Namespace) -> int:
+    payload = all_a_scope_status(root=ns.root, run_id=ns.run_id)
+    _write_success(payload)
+    return 0
+
+
 def cmd_coverage_allocate_research(ns: argparse.Namespace) -> int:
     ranking = json.loads(Path(ns.ranking).read_text(encoding="utf-8"))
     policy = load_policy(ns.policy)
@@ -727,6 +785,7 @@ def cmd_coverage_triage_freeze(ns: argparse.Namespace) -> int:
         limit=ns.limit,
         after_symbol=ns.after_symbol,
         symbols=symbols,
+        scope_run_id=ns.scope_run_id,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -941,6 +1000,7 @@ def _error_code(exc: Exception) -> str | None:
         (AssetValidationError, "asset_validation_failed"),
         (PriceAlertError, "price_alert_error"),
         (CoverageValidationError, "coverage_validation_failed"),
+        (ScopeWorkflowError, "scope_workflow_error"),
         (ReviewStoreError, "review_state_error"),
         (ReviewWorkflowError, "review_workflow_error"),
         (ResearchAllocationError, "research_allocation_error"),

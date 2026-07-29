@@ -27,6 +27,15 @@ COHORT_KEYS = {
     "members",
     "portfolio_action",
 }
+COHORT_V2_KEYS = COHORT_KEYS | {"parent_scope"}
+PARENT_SCOPE_KEYS = {
+    "run_id",
+    "scope_cutoff",
+    "manifest_path",
+    "manifest_sha256",
+    "baseline_intake_path",
+    "baseline_intake_sha256",
+}
 REQUEST_KEYS = {
     "mode",
     "queue_status",
@@ -68,6 +77,7 @@ def freeze_rapid_triage_cohort(
     limit: int | None = None,
     after_symbol: str | None = None,
     symbols: Sequence[str] | None = None,
+    scope_run_id: str | None = None,
 ) -> dict[str, Any]:
     """Freeze an administrative rapid-triage cohort without investment ranking.
 
@@ -110,6 +120,14 @@ def freeze_rapid_triage_cohort(
 
     base = Path(root)
     repository_root = base.parent.parent
+    parent_scope = (
+        _load_parent_scope(base, repository_root, _cycle(scope_run_id))
+        if scope_run_id is not None
+        else None
+    )
+    parent_scope_symbols: set[str] = set()
+    if parent_scope is not None:
+        parent_scope_symbols = parent_scope.pop("_symbols")
     cohort_path = base / "triage" / cycle / "cohort.json"
     relative_path = cohort_path.relative_to(repository_root).as_posix()
     queue_path = base / RESEARCH_QUEUE_FILE
@@ -124,7 +142,11 @@ def freeze_rapid_triage_cohort(
                 f"unexpected sealed artifact type for cohort: {sealed.artifact_type}"
             )
         payload = _load_and_validate_cohort(cohort_path)
-        if payload["cycle_id"] != cycle or payload["request"] != request:
+        if (
+            payload["cycle_id"] != cycle
+            or payload["request"] != request
+            or payload.get("parent_scope") != parent_scope
+        ):
             raise ResearchAllocationError(
                 f"sealed rapid-triage cohort conflicts with freeze request: {cycle}"
             )
@@ -209,6 +231,13 @@ def freeze_rapid_triage_cohort(
                 record,
                 symbol=symbol,
             )
+    if parent_scope is not None:
+        missing = sorted(set(candidate_symbols) - parent_scope_symbols)
+        if missing:
+            raise ResearchAllocationError(
+                "rapid-triage cohort contains symbols outside the sealed baseline intake: "
+                + ", ".join(missing)
+            )
 
     reason_code = _queue_status_reason_code(queue_status)
     members = [
@@ -225,7 +254,7 @@ def freeze_rapid_triage_cohort(
         for index, item in enumerate(candidates, 1)
     ]
     payload = {
-        "schema_version": 1,
+        "schema_version": 2 if parent_scope is not None else 1,
         "cycle_id": cycle,
         "frozen_at": frozen_at.isoformat(),
         "selection_basis": (
@@ -237,6 +266,8 @@ def freeze_rapid_triage_cohort(
         "members": members,
         "portfolio_action": None,
     }
+    if parent_scope is not None:
+        payload["parent_scope"] = parent_scope
     sealed = seal_json(
         cohort_path,
         payload,
@@ -476,10 +507,31 @@ def _materialize_cohort(
 
 def _load_and_validate_cohort(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if not isinstance(payload, dict) or set(payload) != COHORT_KEYS:
+    if not isinstance(payload, dict) or (
+        set(payload) != COHORT_KEYS and set(payload) != COHORT_V2_KEYS
+    ):
         raise ResearchAllocationError("rapid-triage cohort fields do not match contract")
-    if payload.get("schema_version") != 1:
-        raise ResearchAllocationError("rapid-triage cohort schema_version must be 1")
+    schema_version = payload.get("schema_version")
+    if schema_version not in {1, 2}:
+        raise ResearchAllocationError("rapid-triage cohort schema_version must be 1 or 2")
+    if schema_version == 1 and set(payload) != COHORT_KEYS:
+        raise ResearchAllocationError("v1 rapid-triage cohort cannot bind a parent scope")
+    if schema_version == 2:
+        parent_scope = payload.get("parent_scope")
+        if not isinstance(parent_scope, dict) or set(parent_scope) != PARENT_SCOPE_KEYS:
+            raise ResearchAllocationError("rapid-triage cohort parent scope is invalid")
+        _cycle(parent_scope.get("run_id"))
+        _datetime(parent_scope.get("scope_cutoff"), "parent_scope.scope_cutoff")
+        for field in ("manifest_path", "baseline_intake_path"):
+            _text(parent_scope.get(field), f"parent_scope.{field}")
+        for field in ("manifest_sha256", "baseline_intake_sha256"):
+            value = parent_scope.get(field)
+            if (
+                not isinstance(value, str)
+                or len(value) != 64
+                or any(char not in "0123456789abcdef" for char in value)
+            ):
+                raise ResearchAllocationError(f"parent_scope.{field} is invalid")
     _cycle(payload.get("cycle_id"))
     _datetime(payload.get("frozen_at"), "frozen_at")
     _text(payload.get("selection_basis"), "selection_basis")
@@ -535,6 +587,50 @@ def _load_and_validate_cohort(path: Path) -> dict[str, Any]:
     if request["mode"] == "explicit_symbols" and expected_symbols != symbols:
         raise ResearchAllocationError("explicit cohort symbols do not match members")
     return payload
+
+
+def _load_parent_scope(
+    base: Path,
+    repository_root: Path,
+    run_id: str,
+) -> dict[str, Any]:
+    scope_dir = base / "scopes" / run_id
+    manifest_path = scope_dir / "manifest.json"
+    intake_path = scope_dir / "baseline-intake.json"
+    try:
+        manifest_seal = verify_sealed(manifest_path)
+        intake_seal = verify_sealed(intake_path)
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        intake = json.loads(intake_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError(
+            f"parent all-A scope is not validly sealed: {run_id}"
+        ) from exc
+    if (
+        manifest_seal.artifact_type != "all_a_scope_manifest"
+        or intake_seal.artifact_type != "all_a_baseline_intake"
+        or manifest.get("run_id") != run_id
+        or intake.get("run_id") != run_id
+        or intake.get("scope_manifest_sha256") != manifest_seal.sha256
+    ):
+        raise ResearchAllocationError(f"parent all-A scope binding is invalid: {run_id}")
+    intake_members = intake.get("members")
+    if not isinstance(intake_members, list):
+        raise ResearchAllocationError("parent baseline intake members are invalid")
+    allowed_symbols = {
+        item.get("symbol")
+        for item in intake_members
+        if isinstance(item, Mapping) and item.get("materialization_action") == "normalize_queue"
+    }
+    return {
+        "run_id": run_id,
+        "scope_cutoff": manifest["scope_cutoff"],
+        "manifest_path": manifest_path.relative_to(repository_root).as_posix(),
+        "manifest_sha256": manifest_seal.sha256,
+        "baseline_intake_path": intake_path.relative_to(repository_root).as_posix(),
+        "baseline_intake_sha256": intake_seal.sha256,
+        "_symbols": allowed_symbols,
+    }
 
 
 def _verify_terminal_cycle_can_be_rebound(
