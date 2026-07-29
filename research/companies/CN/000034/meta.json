@@ -20,14 +20,34 @@
         "sha256": "06f780c0d6a3a01f07b144f1bd1574bcb0717667ab5a0dd6fe84023766cafd62"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-f5add65d8e2f.md",
+        "report_id": "CN-000034-2026-07-30-rapid-triage-f5add65d8e2f",
+        "report_type": "rapid_triage",
+        "sha256": "671bb9dc7fae140d00ab0940959af6a265ad34e0c36157015357d1c5e6369607"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-f5add65d8e2f.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-f5add65d8e2f.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T07:00:00+08:00",
+      "report_id": "CN-000034-2026-07-30-rapid-triage-f5add65d8e2f",
+      "report_path": "reports/2026-07-30-rapid-triage-f5add65d8e2f.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000034/20260730T070000+0800.triage.json",
+      "source_package_sha256": "f5add65d8e2fca36c3cc57bd1ce5c1d02f26580d87606c67f6122d1a7f361925"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
@@ -36,18 +56,45 @@
       "condition": {
         "date": "2026-08-31"
       },
-      "reason": "2026年半年报发布后复查收入、扣非净利润、现金流、应收和存货",
-      "trigger_id": "legacy-review-1",
+      "reason": "复核2026年半年报的分业务收入与毛利、存货和应收账款、短期借款、经营现金流、资产减值及中国移动和银行项目执行进度。",
+      "trigger_id": "000034-h1-report-2026",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "description": "公司披露中国移动框架协议或国有大型商业银行智算服务器项目的具体采购订单、正式合同、执行收入、项目毛利、交付验收或回款情况"
       },
-      "reason": "2026年三季报后复查AI服务器/信创订单兑现情况",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "实际订单与项目现金毛利是判断AI基础设施增长能否转化为普通股所有者收益的决定性证据。",
+      "trigger_id": "000034-server-order-conversion",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期经营现金流覆盖归母净利润、利息及必要资本开支，同时存货和应收账款周转未继续恶化，且自有品牌与数云服务毛利贡献上升"
+      },
+      "reason": "该组合证据可推翻当前正常化所有者收益uncertain和增长依赖融资的判断。",
+      "trigger_id": "000034-cash-conversion-proof",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "出现债务融资工具注册或发行失败、授信收缩、债务展期、担保代偿或逾期、供应商信用收紧，或货币资金低于一年内有息债务且无明确再融资安排"
+      },
+      "reason": "高营运资本占用和高集团担保下，信用事件会把24至36个月生存判断由concern进一步下调。",
+      "trigger_id": "000034-credit-risk-escalation",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "实际控制人婚姻财产分割案件作出后续裁判、和解或执行安排，并明确郭为持股、表决权或上市公司实际控制权是否变化"
+      },
+      "reason": "消除或确认当前控制权与治理不确定性。",
+      "trigger_id": "000034-control-litigation-resolution",
+      "type": "event"
     },
     {
       "active": true,
@@ -55,29 +102,19 @@
         "operator": "price_lte",
         "threshold": 18.0
       },
-      "reason": "进入合理偏低区间，开始密切观察",
-      "trigger_id": "legacy-price-1",
+      "reason": "18元对应市值约183亿元，若现金流和订单质量未恶化，估值对7亿至10亿元粗略正常化收益的要求明显下降，值得重算赔率。",
+      "trigger_id": "000034-price-recheck-18",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 14.0
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "进入有安全边际的买入区间",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 28.0
-      },
-      "reason": "进入高估区间，不应追高",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "若财报、订单、信用或控制权事件未先命中，90天后重新核验服务器订单兑现、营运资本、融资与担保变化。",
+      "trigger_id": "000034-routine-90d-refresh",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -89,7 +126,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T07:00:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
