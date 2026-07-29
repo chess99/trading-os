@@ -15,44 +15,72 @@
         "sha256": "4921cc4d45e7af2ede3150eae16f0efc29db73c041cf80272318950a080b4fb5"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-39618283f6ee.md",
+        "report_id": "CN-000009-2026-07-30-rapid-triage-39618283f6ee",
+        "report_type": "rapid_triage",
+        "sha256": "99efbbdaaa2d5b0d8a9208268efcaa21a926362164da54779ed83f28adec9ccc"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-39618283f6ee.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-39618283f6ee.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:08:00+08:00",
+      "report_id": "CN-000009-2026-07-30-rapid-triage-39618283f6ee",
+      "report_path": "reports/2026-07-30-rapid-triage-39618283f6ee.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000009/20260730T050800+0800.triage.json",
+      "source_package_sha256": "39618283f6ee89aa108124695b319a02f295aed741966bf55cdbd993d0ec0d3c"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "中国宝安披露2026年半年度报告"
       },
-      "reason": "复核2026年半年报，重点确认贝特瑞负极盈利、中国宝安扣非和现金流",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "核验实际归母及扣非亏损、贝特瑞分部毛利与汇兑损失、地产存货减值、母公司单体债务、经营现金流、资本开支和少数股东分配。",
+      "trigger_id": "cn-000009-2026h1-report",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "description": "承兴投资及一致行动人披露增持实施结果、持股比例继续显著上升、控制权安排、董事高管调整或与中国宝安有关的正式资产重组及资本运作方案"
       },
-      "reason": "复核2026年三季报及资产处置、分红或资本配置变化",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "深圳国资影响能否转化为资本纪律和价值释放，是控股折价能否收敛的关键；传闻或最低100万股增持本身不足以验证。",
+      "trigger_id": "cn-000009-state-shareholder-change",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 6.2
+        "description": "中国宝安连续两个报告期扣非归母盈利且经营现金流覆盖维护性资本开支，同时财务费用、地产减值、母公司净债务和实际担保余额不恶化"
       },
-      "reason": "进入初始买入区间，需要复核贝特瑞毛利率和中国宝安扣非趋势",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
+      "reason": "该组合证据可否定当前归母所有者收益低且依赖投资波动的判断。",
+      "trigger_id": "cn-000009-owner-earnings-recovery",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "贝特瑞连续两个报告期负极材料单位盈利或毛利率企稳回升，海外产能贡献正现金回报，且中国宝安收到的分红增加"
+      },
+      "reason": "贝特瑞规模增长只有转化为母公司可上收现金，上市资产价值锚才更接近普通股股东可兑现价值。",
+      "trigger_id": "cn-000009-btr-margin-recovery",
+      "type": "thesis"
     },
     {
       "active": true,
@@ -60,19 +88,19 @@
         "operator": "price_lte",
         "threshold": 5.5
       },
-      "reason": "进入深度折价区间，若基本面未恶化可评估加仓",
-      "trigger_id": "legacy-price-2",
+      "reason": "5.50元对应约142亿元市值，可扩大相对两项上市股权毛值的缓冲；触发后仍须扣除母公司净债务和平台折价，不代表自动晋级或买入。",
+      "trigger_id": "cn-000009-price-lte-5-50",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 9.5
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "进入减持区间，若无新增价值释放事件应降低仓位",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "若财报、股东增持或论点事件未先命中，90天后复核三季报窗口、深圳国资持股、贝特瑞盈利和资产处置进展。",
+      "trigger_id": "cn-000009-routine-90d-refresh",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +112,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T05:08:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

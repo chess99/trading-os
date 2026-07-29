@@ -15,54 +15,110 @@
         "sha256": "c105f398335f1559ea5f954dbc4639af515d191dec3f171251f52e4f969c1ff7"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-7e3ade998c45.md",
+        "report_id": "CN-000014-2026-07-30-rapid-triage-7e3ade998c45",
+        "report_type": "rapid_triage",
+        "sha256": "68adfee204b91c8430a7c2f95b33e58c550448a4057a4e71fd5aae8c8ba3b1a0"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-7e3ade998c45.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-7e3ade998c45.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:14:00+08:00",
+      "report_id": "CN-000014-2026-07-30-rapid-triage-7e3ade998c45",
+      "report_path": "reports/2026-07-30-rapid-triage-7e3ade998c45.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000014/20260730T051400+0800.triage.json",
+      "source_package_sha256": "7e3ade998c45848872d3f6bb235dd092680c445d1e11db50d12b40d2d8f9ed28"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
+        "operator": "price_lte",
+        "threshold": 7.0
+      },
+      "reason": "价格降至约1.23倍2026Q1归母账面净资产后，若资产质量未恶化，地产与国资整合期权的安全边际可能重新成立。",
+      "trigger_id": "price-nav-margin",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "披露2026年半年度报告，并分别列示房地产项目与晶华电子的收入、毛利、扣非利润、经营现金流、应收账款、存货和减值。"
+      },
+      "reason": "首份较完整并表报告可检验半年度亏损来源、晶华电子承诺利润质量及地产项目净回收能力。",
+      "trigger_id": "h1-report-2026",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "披露深圳、长沙及新乡各项目的权益比例、账面成本、已售未结、可售货值、实际售价、回款率、剩余投入、税费和项目级跌价准备。"
+      },
+      "reason": "地产存货占总资产约63%，项目级可变现净值而非存货总额决定普通股资产安全边际。",
+      "trigger_id": "project-nav-disclosure",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "审计或专项审核确认晶华电子年度实际扣非归母净利润与2026年3720.22万元承诺的完成情况，并披露是否触发现金补偿。"
+      },
+      "reason": "兑现利润承诺且现金回收良好可增强收购价值；未兑现或依赖营运资金扩张则削弱估值。",
+      "trigger_id": "jinghua-commitment-test",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "发生新的关联收购、资产注入、资产出售、担保、资金占用或同业整合安排。"
+      },
+      "reason": "国资整合可能释放价值，也可能因交易定价、资产质量和利益排序改变中小股东风险。",
+      "trigger_id": "governance-capital-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续四个季度扣非归母盈利且累计经营现金流为正，同时地产存货与晶华电子未新增重大减值。"
+      },
+      "reason": "该事实组合可证明公司已从项目结转和重组期权平台转为具有可读正常化盈利的经营资产。",
+      "trigger_id": "earnings-thesis-reset",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
         "date": "2026-08-31"
       },
-      "reason": "复核2026年中报，重点确认晶华电子并表、存货减值、现金流和项目去化",
-      "trigger_id": "legacy-review-1",
+      "reason": "若半年报未被更早的filing观察器捕获，最迟在法定披露窗口结束时复核。",
+      "trigger_id": "h1-review-date",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "复核2026年三季报和地产政策对深圳、长沙项目销售的影响",
-      "trigger_id": "legacy-review-2",
+      "reason": "即使没有重大事件，也应重新核对价格、项目去化、晶华电子经营与资产减值。",
+      "trigger_id": "routine-90d-refresh",
       "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 6.5
-      },
-      "reason": "进入买入观察区，需要复核中报资产质量和项目去化",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 9.5
-      },
-      "reason": "高于基本面合理区间，若无明确资产注入或盈利改善应减仓或避免追高",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
     }
   ],
   "underwriting": {
@@ -74,7 +130,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T05:14:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

@@ -15,34 +15,72 @@
         "sha256": "8f508ea4b638b8db7985dabdb4df0237553c96f38e159710e6e6a034c242bad9"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-3e34480fb55a.md",
+        "report_id": "CN-000010-2026-07-30-rapid-triage-3e34480fb55a",
+        "report_type": "rapid_triage",
+        "sha256": "8129d8d6bb190556baac2ea7b7165f154d0b857dd6ae291cd0379f01e72c18ec"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-3e34480fb55a.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-3e34480fb55a.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:04:00+08:00",
+      "report_id": "CN-000010-2026-07-30-rapid-triage-3e34480fb55a",
+      "report_path": "reports/2026-07-30-rapid-triage-3e34480fb55a.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000010/20260730T050400+0800.triage.json",
+      "source_package_sha256": "3e34480fb55a38a2bf892269f9e4e72a642e38fc85365539362bc4b47cbbf3c1"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-29"
+        "date": "2026-08-31"
       },
-      "reason": "复核2026年半年报现金流、应收回收和庭外重组进展",
-      "trigger_id": "legacy-review-1",
+      "reason": "复核正式半年报的现金、经营现金流、应收回收、减值转回和庭外重组进展。",
+      "trigger_id": "2026-interim-report",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
-        "date": "2027-04-30"
+        "description": "公司披露2.75亿元第三方代客户付款专项核查、追溯重述或监管结论，并明确该事项对财务报表的影响。"
       },
-      "reason": "复核2026年年度财务及内部控制审计意见与退市风险",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "该事项是财务及内控无法表示意见的直接根源，可靠结论可能解除或加重治理阻断。",
+      "trigger_id": "audit-remediation-filing",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "法院正式受理预重整或重整，或公司披露可核验的债权总额、清偿比例、投资人、债转股及资本公积转增稀释条款。"
+      },
+      "reason": "只有明确重组路径和普通股稀释后，才能评估剩余权益价值与生存概率。",
+      "trigger_id": "restructuring-terms-event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "2026年度财务和内控审计均不再为保留、无法表示或否定意见，且连续两个报告期经营现金流转正。"
+      },
+      "reason": "同时满足财务可信度与现金生存条件后，当前条件停止逻辑才可能失效。",
+      "trigger_id": "2026-audit-and-cashflow-thesis",
+      "type": "thesis"
     },
     {
       "active": true,
@@ -50,19 +88,19 @@
         "operator": "price_lte",
         "threshold": 0.6
       },
-      "reason": "仅触发重新研究；审计和重组条件未改善前不代表进入买入区间",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格跌至明显更低水平时重新评估概率价值；价格本身不解除审计、重组或退市阻断，也不构成买入结论。",
+      "trigger_id": "distress-price-recheck",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 1.0
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "高于条件概率价值区间，进入减仓或不应追高区间",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "即使没有已观察事件，九十天后也应复核重组、审计整改、诉讼和现金消耗。",
+      "trigger_id": "conditional-stop-ttl",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -74,7 +112,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T05:04:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
