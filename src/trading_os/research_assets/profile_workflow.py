@@ -74,7 +74,7 @@ def claim_profile_task(
     symbol: str | None = None,
     lens: str | None = None,
 ) -> dict[str, Any]:
-    """Atomically claim one unassigned L2/L3 profile task for one agent."""
+    """Atomically claim one unassigned profile or deep-research task."""
 
     _require_aware_datetime(claimed_at, "claimed_at")
     agent_name = _text(agent, "agent")
@@ -100,7 +100,7 @@ def claim_profile_task(
         item
         for item in queue
         if item.get("task_type")
-        in {"quick_profile", "targeted_followup", "scoped_research"}
+        in {"quick_profile", "targeted_followup", "scoped_research", "deep_research"}
         and item.get("status") == "pending"
         and item.get("assigned_agent") is None
     ]
@@ -170,6 +170,7 @@ def release_profile_task(
         "quick_profile",
         "targeted_followup",
         "scoped_research",
+        "deep_research",
     }:
         raise ResearchAllocationError(
             f"task type cannot be released by profile workflow: {record.get('task_type')}"

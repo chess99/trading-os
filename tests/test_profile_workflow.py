@@ -554,6 +554,49 @@ def test_claim_profile_task_prevents_duplicate_company_assignment(tmp_path: Path
     assert queue["assigned_agent"] == "/root/qp_600519"
 
 
+def test_deep_research_task_can_be_claimed_and_released(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        release_profile_task,
+    )
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    queue_path = coverage_root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "deep_research",
+            "preceding_stage": "scoped_research",
+            "effort_budget_hours": 24.0,
+        }
+    )
+    write_jsonl(queue_path, queue)
+
+    claimed = claim_profile_task(
+        root=coverage_root,
+        agent="/root/deep_600519",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+    assert claimed["task_type"] == "deep_research"
+    assert claimed["assigned_agent"] == "/root/deep_600519"
+
+    released = release_profile_task(
+        root=coverage_root,
+        agent="/root/deep_600519",
+        symbol="CN:600519",
+        failure_reason="issuer filing unavailable",
+        released_at=RECORDED_AT + dt.timedelta(minutes=5),
+    )
+    assert released["status"] == "pending"
+    queue = read_jsonl(queue_path)[0]
+    assert queue["task_type"] == "deep_research"
+    assert queue["assigned_agent"] is None
+    assert queue["attempt_history"][0]["status"] == "failed"
+
+
 def test_release_profile_task_preserves_failure_and_allows_reassignment(
     tmp_path: Path,
 ):
