@@ -34,7 +34,14 @@
       "properties": {
         "coverage_status": {"type": "string", "enum": ["covered", "researching", "requires_rebaseline", "inactive"]},
         "rebaseline_required": {"type": "boolean"},
-        "information_cutoff": {"type": ["string", "null"], "format": "date-time"}
+        "information_cutoff": {"type": ["string", "null"], "format": "date-time"},
+        "refresh_due_at": {"type": ["string", "null"], "format": "date-time"},
+        "latest_rapid_triage": {
+          "oneOf": [
+            {"type": "null"},
+            {"$ref": "#/$defs/latest_rapid_triage"}
+          ]
+        }
       },
       "additionalProperties": false
     },
@@ -45,7 +52,7 @@
         "latest": {"type": ["string", "null"]},
         "latest_by_type": {
           "type": "object",
-          "propertyNames": {"enum": ["initial_research", "monitoring_update", "underwriting_review", "challenger_review"]},
+          "propertyNames": {"enum": ["rapid_triage", "initial_research", "monitoring_update", "underwriting_review", "challenger_review"]},
           "additionalProperties": {"type": "string", "pattern": "^reports/[0-9]{4}-[0-9]{2}-[0-9]{2}-[a-z0-9][a-z0-9-]*\\.md$"}
         },
         "history": {
@@ -102,7 +109,21 @@
     "updated_at": {"type": "string", "format": "date-time"}
   },
   "$defs": {
-    "report_type": {"type": "string", "enum": ["initial_research", "monitoring_update", "underwriting_review", "challenger_review"]},
+    "report_type": {"type": "string", "enum": ["rapid_triage", "initial_research", "monitoring_update", "underwriting_review", "challenger_review"]},
+    "latest_rapid_triage": {
+      "type": "object",
+      "required": ["report_id", "report_path", "source_package_path", "source_package_sha256", "information_cutoff", "review_mode", "published_at"],
+      "properties": {
+        "report_id": {"type": "string", "minLength": 1},
+        "report_path": {"type": "string", "pattern": "^reports/[0-9]{4}-[0-9]{2}-[0-9]{2}-rapid-triage-[a-f0-9]{12}\\.md$"},
+        "source_package_path": {"type": "string", "minLength": 1},
+        "source_package_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "information_cutoff": {"type": "string", "format": "date-time"},
+        "review_mode": {"type": "string", "enum": ["baseline_recheck", "triggered_update"]},
+        "published_at": {"type": "string", "format": "date-time"}
+      },
+      "additionalProperties": false
+    },
     "report_record": {
       "type": "object",
       "required": ["report_id", "path", "report_type", "as_of", "sha256"],

@@ -2,134 +2,130 @@
 
 ## 核心原则
 
-研究时间本身也是资本。下一小时应投向最可能改变组合决策、且关键不确定性能够被公开证据解决的公司，而不是平均分给全市场。
+研究时间本身也是资本，但“节约研究时间”不能变成“先用机械指标决定哪些公司不值得被看”。冻结范围内每家公司先获得一次独立 Agent 的 rapid triage；只有 Agent 看过以后，才竞争更多研究预算。
 
-研究优先级使用方向性判断，不伪装成精确概率：
+下一小时优先投向：最可能改变组合决策、关键未知能够被公开证据解决、当前或近期可能形成赔率，而且相对其他候选更值得购买信息的公司。这个判断必须写成可读理由，不伪装成精确分数。
 
-```text
-承保通过可能性
-× 当前或近期进入买入区的可能性
-× 对组合的潜在贡献
-× 新信息改变结论的可能性
-× 不确定性的可解决程度
-÷ 预计研究成本
-```
+外部程序化选股可以提供线索和材料，但不得：
 
-候选优先级输入只是购买更多信息的便宜地图，不能直接把公司晋级为深研、承保或 `buy_now`。
-本仓库消费显式给定的冻结输入，但不负责生成因子排名，也暂不定义新的跨仓库候选契约。
+- 决定公司是否获得 rapid triage；
+- 直接晋级正式画像、深研或承保；
+- 成为买入、仓位或永久停止结论。
 
-## 自适应漏斗
+换句话说，它不能直接把公司晋级为深研，也不能让任何范围内公司失去被快速查看的资格。
+
+## 自适应研究漏斗
 
 | 层级 | 默认单周期容量 | 单家公司预算 | 只回答什么 |
 |---|---:|---:|---|
-| L0 候选接入 | 显式冻结集合 | 外部清单或人工整理 | 哪些公司进入本轮研究竞争 |
-| L1 研究预算分配 | 候选集合 | 批次级 | 哪些公司值得进入动态候选池 |
-| L1.5 快速甄别 | 200 | 15 分钟 | 是否值得竞争正式画像预算 |
-| L2 正式投资画像 | 40 | 1 小时 | 是否存在一条可信投资路径 |
-| L3 范围研究 | 15 | 4 小时 | 决定性未知数能否被证据解决 |
-| L4 完整深研 | 6 | 24 小时 | 完整重建业务、会计、正常化盈利和估值 |
-| L5 独立承保 | 3 | 12 小时起 | 深研主张能否经半盲复核通过 |
+| L0 范围冻结 | 冻结 universe 全量 | 批次级 | 哪些证券在范围内，哪些是硬排除或异常 |
+| L1 快速甄别 | 全量；行政小批次 | 约 15 分钟 | 当前是否值得购买下一小时研究信息 |
+| L2 正式投资画像 | 最多 40 | 约 1 小时 | 是否存在一条可信投资路径 |
+| L3 范围研究 | 最多 15 | 约 4 小时 | 决定性未知能否由证据解决 |
+| L4 完整深研 | 最多 6 | 约 24 小时 | 重建业务、会计、正常化盈利和估值 |
+| L5 独立承保 | 最多 3 | 12 小时起 | 深研主张能否经半盲复核通过 |
 | L6 组合决策 | 所有有效 passed 公司 | 组合层 | 最新价格下是否优于其他机会、如何配置 |
 
-容量是上限，不是配额。没有足够候选时保留研究预算和现金，不为填满队列降级标准。
+容量是上限，不是配额。L1 的“全量”不表示一次冻结约 5500 家；按 20—50 家稳定切批，保证每个 cohort 可完成、可封存、可恢复。
 
-## 多视角选样
+## L1 快速甄别
 
-不得用一张 PE、ROE、增长率加总榜包办全市场。每个周期分别为以下视角保留研究容量：
+快速甄别读取最新定期报告、必要公告、旧研究和近期价格，但必须形成新的 Agent 判断，而不是复述旧评级。结构化 package 至少包含：
 
-- 综合赔率；
-- 现金回报与资产折价；
-- 高质量复利；
-- 银行、保险等专用模型；
-- 周期成本曲线与中周期盈利；
-- 危机错杀和负 PE 正常化；
-- 新财报或重大信息变化；
-- 从未入选公司的当前时点假阴性抽查。
+- `review_mode`、prior research 和触发上下文；
+- 两三句话的业务简述与变化摘要；
+- 生存、治理和资本结构判断；
+- 正常化盈利粗判及其依据；
+- 当前价格隐含预期；
+- 最强反方证据与决定性问题；
+- 结构化重启触发器；
+- S1/价格来源和真实 provenance。
 
-不同镜头的实际槽位来源记为 `selected_by`，进入多个镜头短名单的事实另记为
-`matched_lenses`。多镜头共识只能读取后者，不能因去重而失效。
+结果只能表示当前研究资本去向：等待横向比较、价格观察、条件停止、能力圈转派或返回目录。单家公司完成后不得立即晋级，也不得给组合操作。
 
-## 风险簇上限与行业证据闸门
+## 横向分配正式画像预算
 
-不设必须填满的行业配额，但对单一明确经济风险簇设置上限：快速甄别 25、正式画像 10、
-范围研究 5、完整深研 2、独立承保原则上 1。`diversified` 分类过粗，暂不应用同一硬上限。
-达到上限后选择下一名不同风险簇公司；没有合格替代者时容量留空。
+同一 cohort 全部简报封存且发布到公司时间线后，生成 comparison packet。独立 allocation Agent 必须逐项审阅并为每家公司提交：
 
-银行不得仅凭低 PB、低 PE 或静态 ROE 晋级。正式画像的 S1 来源 `supports` 至少覆盖
-`bank_latest_s1_filing`、`bank_asset_quality_migration`、`bank_capital_adequacy`；范围研究
-还必须覆盖 `bank_normalized_credit_cost_and_nim`、
-`bank_common_equity_earnings_after_capital_instruments`、`bank_property_lgf_exposure`。
-这些标签必须由法定定期报告等 S1 来源支持，缺任一项即不能竞争下一层预算。
+- `select_quick_profile` 或 `defer`；
+- 为什么下一小时值得或不值得购买；
+- 最可能改变判断的决定性问题；
+- 已考虑的反证；
+- 风险簇与相对机会成本。
 
-危机错杀和假阴性抽查合计至少占快速甄别候选池的 15%。这不是历史回测，而是防止筛选形成风格盲区。
+程序只执行形式和约束验证，不根据旧 priority、lens 数量、PE、完成顺序或固定加权公式代替 Agent 排序。多个视角仍可用于 Agent 检查盲区和分配风险簇容量，但不能变回 L1 前置筛选器。
 
-## L1.5 快速甄别
+## 风险簇与行业证据
 
-200 家是动态候选池，不是 200 份一小时报告。每家公司只获得最多 15 分钟，读取最新
-定期报告、近期价格和必要风险信息，回答业务能否快速理解、是否存在生存/治理阻断、
-正常化盈利是否可粗判、现价是否至少可能有赔率，以及再投入一小时能否改变决策。
+不设必须填满的行业配额。正式画像以后按 policy 限制同一经济风险簇的集中度；没有合格替代者时容量留空。
 
-输出必须符合 `templates/rapid-triage.schema.json` 并封存。结果只能是等待横向比较、
-价格观察、结构化停止、能力圈转派或返回目录。单家公司完成后不得立即晋级。
+在可信、可审计的经济风险簇分类机制建立以前，程序把所有待晋级公司保守视为同一个
+`unclassified` 风险簇。因此 L1 横向配置即使总容量为 40，也最多只能选择 policy 中
+`risk_cluster_caps.quick_profile` 允许的数量；当前默认是 10。要使用剩余容量，必须先封存
+逐公司的风险簇分类、依据和校验结果，再由程序按簇执行上限。Agent 不得用未经证据支持的
+`diversified` 标签绕过限制。
 
-## 正式画像的八个问题
-
-1. 公司靠什么赚钱，是否处于当前能力圈？
-2. 穿越周期的所有者收益大致是多少？
-3. 悲观情况下能否在不被迫大幅稀释的前提下活过 24—36 个月？
-4. 控股股东、管理层、审计和关联交易是否基本可信？
-5. 当前利润是常态、峰值、谷底还是会计假象？
-6. 宽区间估值下，现价是否存在达到 10%—12%回报的可信路径？
-7. 市场可能错在哪里？
-8. 下一阶段最关键的一至三个问题是什么，能否被证据解决？
+银行、保险、资源、周期制造等行业使用各自证据要求。银行不能仅凭低 PB、低 PE 或静态 ROE 晋级；必须核验最新 S1 财报、资产质量迁徙、资本充足、正常化信用成本与少数股东可得收益等 policy 要求。
 
 ## 停止、停放与重启
 
-快速停止不是把公司永久贴成“垃圾”，而是停止购买低价值信息：
+快速停止不是把公司永久贴成“垃圾”，而是当前停止购买低价值信息：
 
-- `hard_exclusion`：非普通股、退市或法律上不可形成投资对象。
-- `conditional_stop`：已由可靠证据确认少数股东权益不可承保、财务不可核验、无法生存、资本结构吞噬权益价值或核心论点已证伪。
-- `price_watch`：公司可能可投，但当前价格没有达到深研回报门槛。
-- `targeted_followup`：只补一个或少数决定性证据，不扩张成完整报告。
-- `reassign_or_stop`：超出当前 agent 能力圈，先尝试交给具备相应行业能力的 agent。
+- `hard_exclusion`：证券身份不在范围、退市或法律上不能形成投资对象；
+- `conditional_stop`：可靠证据显示少数股东权益不可承保、财务不可核验、无法生存、资本结构吞噬权益价值或核心论点已证伪；
+- `price_watch`：业务可能可投，但当前价格隐含预期过高；
+- `targeted_followup`：只补一项或少数决定性证据；
+- `reassign_or_stop`：超出当前 Agent 能力圈，先转给对应行业 Agent；
+- `catalog`：当前没有足够研究信息价值，等待明确变化。
 
-除真正硬排除外，每次停止或停放必须记录证据、原因、重启条件和复查时间。亏损、负 PE、小市值、低流动性或行业冷门不能单独构成停止理由。
+除真正硬排除外，每次停止或停放都必须记录事实理由、反证、未知数以及至少一个可执行的 filing、price、date/TTL、event 或 thesis 重启条件。亏损、负 PE、小市值、低流动性或行业冷门不能单独构成停止理由。
 
-## 升级纪律
+## 假阴性控制
 
-- L1 不能直接晋级正式画像、深研、承保或买入。
-- L1.5 只有完整候选批次封存并横向比较后，最多 40 家进入 L2。
-- L2 只能进入范围研究候选、定向补证、观察、转派或停止；范围研究候选必须等完整
-  L2 同层批次封存后统一竞争容量。
-- L3 只有在业务可理解、生存与治理基本通过、正常化盈利可建立、粗估值存在至少 10%基准回报路径时才能进入完整深研。
-- L3 的深研候选也必须等完整同层批次封存后统一竞争容量。
-- L4 只有证据和估值完整、基准回报达到 12%承保参考门槛、且相对全市场仍有竞争力时才购买独立承保预算。
+独立 allocation Agent 会二次阅读整个 cohort，而不是只读 selected symbols。除此之外，按长程 Goal 第一阶段新增并封存的质量审计 policy，对 `catalog`、`price_watch`、`conditional_stop` 和 `reassign_or_stop` 做确定性的分层假阴性抽查。该 policy 必须明确样本率、稳定选样种子、错误阈值和扩样规则；旧排名中的 `false_negative_audit` selection slot 不是质量审计 policy：
+
+- 硬排除的证券身份 100% 复核；
+- 抽查 Agent 尽量不读取原结论措辞，只读事实包与来源；
+- 重大分歧直接重开公司；
+- 某一分层错误率超阈值时扩样或重做该层；
+- 抽查结果与 provenance 必须封存，不能只在对话里口头确认。
+
+## 后续升级纪律
+
+完成顺序不是投资质量，任何同层结果都不能因为先完成而先晋级。
+
+- L1 只有完整 cohort 封存、抽查和独立横向决策后，才能进入 L2。
+- L2、L3 同样先完成同层 cohort，再由独立 Agent 统一竞争下一层容量。
+- L3 只有在业务可理解、生存与治理基本通过、正常化盈利可建立且粗估值存在可信回报路径时，才能进入 L4。
+- L4 只有证据、估值与反证完整，且相对其他机会仍有竞争力时，才购买独立承保预算。
 - 单公司任何层级都不得给最终买入与仓位；只有组合层可以。
 
-完成顺序不是投资质量。`triage-finalize` 和 `profile-finalize` 是生产强制闸门：
-候选未全部终态时拒绝晋级，从机制上消除 first-in bias。
+当前代码只在 rapid-triage → quick-profile 层实现了上述独立 decisions 契约；历史
+`profile-finalize` 仍使用 score/priority 机械选择。它只可用于兼容旧资产，不符合新增长程
+Goal 的晋级要求。长程执行在跨过 L2 或 L3 前，必须先把对应层迁移为 sealed comparison
+packet、独立 Agent 全量 decisions 和可恢复物化，并完成故障注入试运行。
 
 ## 命令
 
 ```bash
-python -m trading_os coverage allocate-research --ranking <frozen-input.json>
-python -m trading_os coverage apply-allocation --ranking <frozen-input.json>
-python -m trading_os coverage triage-claim --agent <agent-id> [--symbol CN:000000]
+python -m trading_os coverage triage-freeze <cycle-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
+python -m trading_os coverage triage-claim <cycle-id> --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage triage-record --input <rapid-triage.json>
 python -m trading_os coverage triage-status <cycle-id>
-python -m trading_os coverage triage-finalize <cycle-id>
+python -m trading_os coverage triage-compare <cycle-id>
+python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
 python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage profile-release --agent <agent-id> --symbol CN:000000 --failure-reason <reason>
-python -m trading_os coverage profile-finalize <cycle-id> --stage quick_profile
-python -m trading_os coverage profile-finalize <cycle-id> --stage scoped_research
 ```
 
-`triage-record` 和 `record-profile` 是生产入口：它们校验来源清单和 agent provenance，
-封存单公司判断，但不按完成顺序自动晋级。快速甄别保存在 `coverage/cn-a/triage/`，
-画像保存在
-`coverage/cn-a/profiles/{CYCLE_ID}/{TICKER}/`；单公司 agent 只提交自己的 package，不能直接修改共享队列。
+历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 只为旧资产兼容保留，不得用于新增长程 Goal。
 
-agent 因工具、来源或运行环境失败且尚未产出 package 时，必须先用 `profile-release` 释放认领。命令会把失败原因和原 agent 写入不可覆盖的 `attempt_history`，再允许其他 agent 重试；不得手工改写 `assigned_agent`。
+单公司 Agent 只提交自己的 package，不能手工编辑共享队列。`triage-record` 验证并封存 package，再幂等发布到公司时间线；`triage-finalize` 只应用独立 Agent 的显式全量决策，不生成机械投资排名。
+
+所有会改写 `screening.jsonl` 或 `research_queue.jsonl` 的正式 workflow 共用 coverage 写锁。
+根 Agent 仍是共享状态的唯一写入者；遇到 `coverage state is busy` 时应等待当前写入结束后重试，
+不得绕过锁手工改 JSONL。`.coverage-write.lock` 是持久哨兵文件，真正的占用状态由操作系统锁
+管理；进程退出后会自动释放，不要根据文件是否存在手工判断或删除活锁。

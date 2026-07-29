@@ -1,71 +1,88 @@
-# A 股覆盖与筛选 Playbook
+# A 股覆盖、接入与分流 Playbook
 
-## 自适应研究漏斗
+文件名保留 `screening.md` 以兼容历史链接；当前机制不是用机器筛掉“不值得看”的公司，而是管理全覆盖接入、行政分批和 Agent 看过之后的研究分流。
 
-全市场工作按研究的信息价值逐层购买更多证据：
+## 全覆盖漏斗
 
 ```text
-约 5000 家普通 A 股覆盖
-→ 全市场多视角便宜地图
-→ 约 200 家动态快速甄别候选
-→ 约 40 家正式投资画像
-→ 约 15 家范围研究
-→ 约 6 家完整深研
-→ 约 3 家独立承保与组合比较
+冻结普通 A 股 universe
+→ 每家公司独立 rapid triage
+→ 全批次封存与独立抽查
+→ 跨公司 Agent 配置正式画像预算
+→ 正式画像 → 范围研究 → 深研 → 独立承保 → 组合比较
 ```
 
-覆盖不等于每家公司都获得完整初研。筛选只决定是否值得购买下一阶段研究预算，不是投资结论；小市值、低流动性、暂时亏损或负倍数不能成为硬跳过理由。
+覆盖不等于每家公司都获得完整初研，但等于每家范围内公司至少获得一次可审计的 Agent 快速查看。小市值、低流动性、暂时亏损、负倍数、冷门行业或不符合某种投资风格，都不能成为静默跳过理由。
 
-任何外部筛选、已有清单或人工提名都只能形成研究候选，不能直接晋级深研、承保或买入。
-候选必须经过 `playbooks/research-capital-allocation.md` 的快速画像和范围研究；不同类型机会
-分别选样，并为危机错杀与假阴性抽查保留容量。本仓库不负责生产因子排名或回测结果。
+程序化选股、人工提名和外部清单可以补充差异材料或形成紧急 trigger，但不能替代全覆盖，也不能直接晋级深研、承保或买入。
 
-每层横向比较都执行风险簇上限而非行业配额。小市值、亏损、低流动性、负 PE 仍可通过
-危机错杀、信息变化或假阴性镜头竞争预算，不因风格约束而被静默排除。
+## Intake 只做行政排序
+
+机器可以根据以下字段安排处理顺序：
+
+- 已观察到的结论失效或重大事件；
+- 已命中的财报、公告、价格和 date/TTL trigger；
+- 逾期程度、等待时间；
+- 缺少当前 rapid-triage 协议有效终态；`requires_rebaseline` 只是其中一个旧状态提示；
+- symbol 稳定顺序。
+
+机器不得使用市场估值、质量因子、利润正负、市值、流动性、行业偏好或旧评级决定是否纳入。容量不足时，`deferred_capacity` 只能作为 scope manifest 的调度分区字段并保留下一批次的稳定顺序，不能写成现有 screening decision 或 queue status。
+
+baseline backlog 与 incremental trigger 使用独立逻辑 lane。critical trigger 可以提高行政紧急度，但同一 symbol 只能有一个活动任务；生产运行前必须定义事件合并、抢占、延后和 consumed 规则。policy 还应给 baseline 保留最低通道，防止存量公司永远排不到。
 
 ## 事件性冲击与危机错杀
 
-- 当期亏损、利润骤降或 PE 失真不能降低研究资格；这类公司应优先判断冲击是需求延后、周期波动还是永久损失。
-- 估值使用 3—5 年正常化盈利和多情景现金流，不把危机期亏损机械外推，也不把危机前峰值直接当作常态。
-- 必须核验现金消耗、债务到期、再融资能力、潜在稀释和维持经营所需资本，先回答公司能否活到需求恢复。
-- 反推当前价格隐含的恢复时间、恢复幅度和长期回报，寻找“市场按永久受损定价、但资产负债表足以穿越周期”的错配。
-- 不要求把研究流程改造成历史时点量化回测。历史案例和经验用于构造当前情景、基准率与反证，最终判断仍基于当下可得事实。
+- 当期亏损、利润骤降或 PE 失真不能降低 rapid-triage 资格；先判断冲击是需求延后、周期波动还是永久损失。
+- 正常化盈利用 3—5 年中枢和多情景现金流粗判，不机械外推危机期亏损或历史峰值。
+- 先核验现金消耗、债务到期、再融资、潜在稀释和维持经营资本，回答能否活到需求恢复。
+- 反推当前价格要求的恢复时间、幅度和长期回报，寻找或否定“市场按永久受损定价”的错配。
 
-## 分流
+## 分流状态
 
-- `catalog`：已进入覆盖目录，但本周期未获得快速画像预算；保留结构化重启触发器。
-- `rapid_triage`：15分钟级快速甄别；完成后等待全批次横向比较。
-- `triage_candidate`：快速甄别通过，尚未获得正式画像预算。
-- `quick_profile`：一小时级正式投资画像。
-- `profile_candidate`：画像通过，等待同层横向比较范围研究预算。
-- `scoped_research`：只解决决定性未知数的范围研究。
-- `deep_candidate`：范围研究通过，等待同层横向比较完整深研预算。
-- `deep_research`：进入初研队列。
-- `watch_only`：已有资产或等待触发器。
-- `conditional_stop`：当前停止投入，但保留结构化重启条件。
-- `hard_exclusion`：不构成可执行普通股票投资对象。
-- `needs_manual_review`：证券状态、数据或重大风险需人工判断。
-- `skip_not_in_scope`：基金、债券、B 股等不在普通 A 股范围。
-- 其他 `skip_*` 仅用于退市或确实无法形成研究对象的硬排除，必须写结构化理由。
+- `rapid_triage`：正在或等待 Agent 快速甄别；
+- `triage_candidate`：快速甄别认为值得竞争正式画像预算；
+- `quick_profile`：获得一小时级正式画像预算；
+- `profile_candidate`：画像通过，等待同层比较；
+- `scoped_research`：只解决决定性未知；
+- `deep_candidate`：范围研究通过，等待深研预算；
+- `deep_research`：进入完整初研；
+- `price_watch`：等待价格触发后复核；
+- `catalog`：当前停止购买更多信息，等待明确变化；
+- `conditional_stop`：存在结构性风险，但保留证据化重启条件；
+- `reassign_or_stop`：需要对应行业能力的独立 Agent；
+- `hard_exclusion`：证券身份不构成范围内普通股投资对象；
+- `needs_manual_review`：证券状态、数据或重大风险需要人工判断。
 
-## 可恢复文件
+任何停止都不是永久投资标签。除 `hard_exclusion` 外必须有理由、反证和可执行重启条件。
 
-`coverage/cn-a/companies.jsonl`、`screening.jsonl`、`research_queue.jsonl` 和 `runs.jsonl` 都是可审计 JSONL，并使用稳定 symbol 排序。任务必须记录优先级、理由、证据、状态、目标公司目录、结果路径和下一步。
+## 可恢复与守恒
+
+每个 intake cohort 在 `coverage/cn-a/triage/{cycle-id}/cohort.json` 冻结并封存。当前 cohort 记录完整成员、稳定顺序、纳入理由、行政请求和自身 seal，不含投资分数；它尚未绑定全市场 universe 来源。scope manifest 契约建立后，cohort 还必须保存 parent scope 的路径与 SHA-256，来源与范围哈希由 parent manifest 提供。`research_queue.jsonl` 是可恢复物化状态，不取代 cohort、scope manifest 或公司时间线事实源。
+
+冻结必须幂等：同 ID、同内容可以修复半完成物化；同 ID、不同内容必须失败。正在运行或已进入更深研究的公司不得被新 cohort 静默覆盖。
+
+批次守恒至少验证：
+
+```text
+冻结成员 = 有效终态 + pending + running + 明确失败
+comparison decisions = cohort 全部成员
+selected + deferred = cohort 全部成员
+```
 
 ## 命令
 
 ```bash
 python -m trading_os coverage validate
 python -m trading_os coverage status
-python -m trading_os coverage allocate-research --ranking <frozen-input.json>
-python -m trading_os coverage apply-allocation --ranking <frozen-input.json>
+python -m trading_os coverage triage-freeze <cycle-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
 python -m trading_os coverage triage-status <cycle-id>
-python -m trading_os coverage triage-finalize <cycle-id>
+python -m trading_os coverage triage-compare <cycle-id>
+python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
-python -m trading_os coverage profile-finalize <cycle-id> --stage quick_profile
-python -m trading_os coverage profile-finalize <cycle-id> --stage scoped_research
 python -m trading_os coverage reconcile --check
 ```
 
-每个公司资产验证通过后立即更新对应队列项；批次末尾的 reconcile 只是漂移安全网。
+历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 只用于兼容旧资产，禁止作为新 Goal 的生产晋级入口。
+
+每个快速简报验证通过后立即发布到对应公司不可变时间线，再更新队列；批次末尾的 reconcile 是漂移安全网，不是正常状态传播机制。

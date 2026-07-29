@@ -39,6 +39,30 @@ def _underwrite(meta: dict[str, object], *, status: str = "passed") -> None:
     }
 
 
+def _seal_underwriting_reference(
+    company_dir: Path,
+    *,
+    price: float = 75.0,
+    price_as_of: dt.datetime = NOW,
+    symbol: str = "CN:600519",
+) -> None:
+    from trading_os.research_assets.sealing import seal_json
+
+    seal_json(
+        company_dir
+        / "underwriting"
+        / "review-2026-07-21"
+        / "portfolio-candidate.primary.json",
+        {
+            "symbol": symbol,
+            "current_price": price,
+            "price_as_of": price_as_of.isoformat(),
+        },
+        artifact_type="portfolio_candidate",
+        sealed_at=NOW,
+    )
+
+
 def test_review_schedule_preserves_generic_company_triggers(tmp_path: Path):
     from trading_os.research_assets.schedule import build_review_schedule
 
@@ -59,11 +83,48 @@ def test_review_schedule_preserves_generic_company_triggers(tmp_path: Path):
     schedule = build_review_schedule(tmp_path / "research")
 
     assert schedule["schema_version"] == 2
-    assert schedule["item_count"] == 2
+    assert schedule["item_count"] == 3
     assert {item["type"] for item in schedule["items"]} == {"date", "filing"}
     date_item = next(item for item in schedule["items"] if item["type"] == "date")
     assert date_item["condition"] == {"date": "2026-08-31"}
     assert date_item["source"] == "company_trigger"
+    evidence_expiry = next(
+        item for item in schedule["items"] if item["source"] == "evidence_expiry"
+    )
+    assert evidence_expiry["condition"] == {
+        "due_at": "2026-10-21T15:00:00+08:00"
+    }
+
+
+def test_review_schedule_marks_elapsed_date_and_evidence_expiry_due(tmp_path: Path):
+    from trading_os.research_assets.schedule import build_review_schedule
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta)
+    meta["underwriting"]["evidence_valid_until"] = "2026-07-20T15:00:00+08:00"
+    meta["triggers"].append(
+        {
+            "trigger_id": "elapsed-review",
+            "type": "date",
+            "condition": {"date": "2026-07-20"},
+            "reason": "到期复核。",
+            "active": True,
+        }
+    )
+    _write_meta(company_dir, meta)
+
+    schedule = build_review_schedule(tmp_path / "research", as_of=NOW)
+
+    assert schedule["as_of"] == NOW.isoformat()
+    elapsed = next(
+        item for item in schedule["items"] if item["trigger_id"] == "elapsed-review"
+    )
+    expiry = next(
+        item for item in schedule["items"] if item["source"] == "evidence_expiry"
+    )
+    assert elapsed["state"] == "due"
+    assert expiry["state"] == "due"
 
 
 def test_review_schedule_adds_structured_conclusion_invalidation(tmp_path: Path):
@@ -116,6 +177,7 @@ def test_price_alerts_include_buy_zone_and_ten_percent_staleness(tmp_path: Path)
     meta = _load_meta(company_dir)
     _underwrite(meta)
     _write_meta(company_dir, meta)
+    _seal_underwriting_reference(company_dir)
 
     alerts = build_price_alerts(tmp_path / "research")
 
@@ -132,6 +194,42 @@ def test_price_alerts_include_buy_zone_and_ten_percent_staleness(tmp_path: Path)
         item for item in alerts["items"] if item["type"] == "conclusion_price_move_stale"
     )
     assert stale["condition"]["threshold"] == 0.10
+    assert stale["condition"]["reference_price"] == 75.0
+    assert stale["condition"]["reference_price_as_of"] == NOW.isoformat()
+    assert len(stale["condition"]["reference_source_sha256"]) == 64
+
+
+def test_legacy_underwriting_without_sealed_reference_skips_change_alert(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.alerts import build_price_alerts
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta)
+    _write_meta(company_dir, meta)
+
+    alerts = build_price_alerts(tmp_path / "research")
+
+    assert {item["type"] for item in alerts["items"]} == {
+        "underwriting_buy_zone_entry"
+    }
+
+
+def test_underwriting_reference_must_match_company_symbol(tmp_path: Path):
+    from trading_os.research_assets.alerts import (
+        PriceAlertError,
+        build_price_alerts,
+    )
+
+    company_dir = write_company(tmp_path)
+    meta = _load_meta(company_dir)
+    _underwrite(meta)
+    _write_meta(company_dir, meta)
+    _seal_underwriting_reference(company_dir, symbol="CN:000001")
+
+    with pytest.raises(PriceAlertError, match="symbol mismatch"):
+        build_price_alerts(tmp_path / "research")
 
 
 def test_company_reduce_zone_does_not_create_a_reduce_alert(tmp_path: Path):
@@ -270,12 +368,14 @@ def test_near_miss_alert_uses_combined_return_and_buy_zone_ceiling(
         evaluate_price_alerts(
             alerts,
             [{"symbol": "CN:000001", "price": 72.0, "as_of": NOW.isoformat()}],
+            evaluated_at=NOW,
         )["triggered_count"]
         == 0
     )
     triggered = evaluate_price_alerts(
         alerts,
         [{"symbol": "CN:000001", "price": 71.0, "as_of": NOW.isoformat()}],
+        evaluated_at=NOW,
     )
     assert triggered["triggered_count"] == 1
     assert triggered["triggered"][0]["type"] == "portfolio_buy_threshold_entry"
@@ -305,6 +405,8 @@ def test_evaluate_v2_alerts_detects_buy_zone_and_price_staleness():
                 "condition": {
                     "operator": "absolute_change_fraction_gte",
                     "threshold": 0.10,
+                    "reference_price": 90.0,
+                    "reference_price_as_of": NOW.isoformat(),
                 },
                 "reason": "价格结论过期。",
                 "latest_report": "companies/CN/600519/reports/example.md",
@@ -316,12 +418,13 @@ def test_evaluate_v2_alerts_detects_buy_zone_and_price_staleness():
         {
             "symbol": "CN:600519",
             "price": 79.0,
-            "change_since_review": -0.11,
+            "change_since_review": 0.0,
+            "review_price": 79.0,
             "as_of": "2026-07-21T15:00:00+08:00",
         }
     ]
 
-    triggered = evaluate_price_alerts(alerts, quotes)
+    triggered = evaluate_price_alerts(alerts, quotes, evaluated_at=NOW)
 
     assert triggered["schema_version"] == 2
     assert triggered["triggered_count"] == 2
@@ -329,10 +432,37 @@ def test_evaluate_v2_alerts_detects_buy_zone_and_price_staleness():
         "underwriting_buy_zone_entry",
         "conclusion_price_move_stale",
     }
+    stale = next(
+        item
+        for item in triggered["triggered"]
+        if item["type"] == "conclusion_price_move_stale"
+    )
+    assert stale["change_since_review"] == pytest.approx(79.0 / 90.0 - 1)
 
 
-def test_evaluate_alerts_ignores_bool_and_non_object_quotes():
-    from trading_os.research_assets.alerts import evaluate_price_alerts
+@pytest.mark.parametrize(
+    ("quotes", "message"),
+    [
+        ([None], "must be an object"),
+        (
+            [
+                {
+                    "symbol": "CN:600519",
+                    "price": True,
+                    "as_of": NOW.isoformat(),
+                }
+            ],
+            "invalid quote price",
+        ),
+    ],
+)
+def test_evaluate_alerts_rejects_invalid_quote_rows(
+    quotes: list[object], message: str
+):
+    from trading_os.research_assets.alerts import (
+        PriceAlertError,
+        evaluate_price_alerts,
+    )
 
     alerts = {
         "schema_version": 2,
@@ -350,12 +480,119 @@ def test_evaluate_alerts_ignores_bool_and_non_object_quotes():
         ],
     }
 
-    triggered = evaluate_price_alerts(
-        alerts,
-        [None, {"symbol": "CN:600519", "price": True}],
+    with pytest.raises(PriceAlertError, match=message):
+        evaluate_price_alerts(alerts, quotes, evaluated_at=NOW)
+
+
+def test_evaluate_alerts_rejects_duplicate_symbols_regardless_of_order():
+    from trading_os.research_assets.alerts import (
+        PriceAlertError,
+        evaluate_price_alerts,
     )
 
-    assert triggered["triggered_count"] == 0
+    alerts = {"schema_version": 2, "items": []}
+    quotes = [
+        {"symbol": "CN:600519", "price": 80.0, "as_of": NOW.isoformat()},
+        {
+            "symbol": "CN:600519",
+            "price": 70.0,
+            "as_of": (NOW - dt.timedelta(days=1)).isoformat(),
+        },
+    ]
+
+    with pytest.raises(PriceAlertError, match="duplicate quote symbol"):
+        evaluate_price_alerts(alerts, quotes, evaluated_at=NOW)
+    with pytest.raises(PriceAlertError, match="duplicate quote symbol"):
+        evaluate_price_alerts(alerts, list(reversed(quotes)), evaluated_at=NOW)
+
+
+@pytest.mark.parametrize(
+    ("quote_as_of", "message"),
+    [
+        ("not-a-time", "ISO 8601"),
+        ("2026-07-21T15:00:00", "timezone"),
+        (
+            (NOW - dt.timedelta(days=7, seconds=1)).isoformat(),
+            "stale quote",
+        ),
+        (
+            (NOW + dt.timedelta(minutes=5, seconds=1)).isoformat(),
+            "too far in the future",
+        ),
+    ],
+)
+def test_evaluate_alerts_rejects_invalid_or_stale_quote_times(
+    quote_as_of: str, message: str
+):
+    from trading_os.research_assets.alerts import (
+        PriceAlertError,
+        evaluate_price_alerts,
+    )
+
+    with pytest.raises(PriceAlertError, match=message):
+        evaluate_price_alerts(
+            {"schema_version": 2, "items": []},
+            [{"symbol": "CN:600519", "price": 80.0, "as_of": quote_as_of}],
+            evaluated_at=NOW,
+        )
+
+
+def test_conclusion_change_ignores_quote_supplied_reference_fields():
+    from trading_os.research_assets.alerts import evaluate_price_alerts
+
+    alerts = {
+        "schema_version": 2,
+        "items": [
+            {
+                "alert_id": "CN:600519:stale",
+                "symbol": "CN:600519",
+                "name": "贵州茅台",
+                "type": "conclusion_price_move_stale",
+                "condition": {
+                    "operator": "absolute_change_fraction_gte",
+                    "threshold": 0.10,
+                    "reference_price": 100.0,
+                    "reference_price_as_of": NOW.isoformat(),
+                },
+                "reason": "价格结论过期。",
+                "latest_report": None,
+                "source_ref": "review-1",
+            }
+        ],
+    }
+    forged_change = {
+        "symbol": "CN:600519",
+        "price": 109.0,
+        "change_since_review": 0.50,
+        "review_price": 1.0,
+        "as_of": NOW.isoformat(),
+    }
+
+    assert (
+        evaluate_price_alerts(
+            alerts, [forged_change], evaluated_at=NOW
+        )["triggered_count"]
+        == 0
+    )
+    forged_change["price"] = 111.0
+    forged_change["change_since_review"] = 0.0
+    forged_change["review_price"] = 1_000.0
+    triggered = evaluate_price_alerts(
+        alerts, [forged_change], evaluated_at=NOW
+    )
+    assert triggered["triggered_count"] == 1
+    assert triggered["triggered"][0]["change_since_review"] == pytest.approx(0.11)
+
+    legacy_alerts = json.loads(json.dumps(alerts))
+    legacy_alerts["items"][0]["condition"].pop("reference_price")
+    forged_change["change_since_review"] = 0.50
+    forged_change["review_price"] = 1.0
+    assert (
+        evaluate_price_alerts(
+            legacy_alerts, [forged_change], evaluated_at=NOW
+        )["triggered_count"]
+        == 0
+    )
 
 
 def test_schedule_and_alert_writes_are_byte_stable(tmp_path: Path):

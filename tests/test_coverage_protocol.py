@@ -95,18 +95,15 @@ def test_docs_route_full_market_work_through_coverage():
     assert "coverage/" in claude
     assert "coverage status" in agents
     assert "coverage validate" in readme
-    assert "自适应研究漏斗" in screening
-    assert "约 5000 家" in screening
-    assert "约 200 家" in screening
-    assert "约 40 家" in screening
-    assert "约 15 家" in screening
-    assert "约 6 家" in screening
-    assert "约 3 家" in screening
+    assert "全覆盖漏斗" in screening
+    assert "每家公司独立 rapid triage" in screening
+    assert "机器不得使用市场估值" in screening
     assert "deep_research" in screening
     assert "quick_profile" in screening
-    assert "任何外部筛选、已有清单或人工提名都只能形成研究候选" in screening
-    assert "skip_not_in_scope" in screening
-    assert "JSONL" in screening
+    assert "程序化选股、人工提名和外部清单" in screening
+    assert "hard_exclusion" in screening
+    assert "research_queue.jsonl" in screening
     assert "小市值、低流动性、暂时亏损" in screening
-    assert "一家公司一个 agent" in agents
+    assert "单公司研究或单公司复核 agent 一次只处理一家公司" in agents
+    assert "跨公司 allocation、质量统计和组合综合是独立角色" in agents
     assert "组合层可给 `buy_now`" in agents

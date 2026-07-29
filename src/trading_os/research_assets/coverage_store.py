@@ -1,8 +1,13 @@
 from __future__ import annotations
 
 import json
+import os
 import re
 from collections import Counter
+from collections.abc import Iterator
+from contextlib import contextmanager
+from functools import wraps
+from inspect import signature
 from pathlib import Path
 from typing import Any
 
@@ -73,6 +78,64 @@ class CoverageValidationError(ValueError):
     """Raised when coverage JSONL files are invalid."""
 
 
+@contextmanager
+def coverage_write_lock(root: str | Path) -> Iterator[None]:
+    """Serialize read-modify-write operations across the shared coverage files."""
+
+    lock_path = Path(root) / ".coverage-write.lock"
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    handle = lock_path.open("a+b")
+    handle.seek(0, os.SEEK_END)
+    if handle.tell() == 0:
+        handle.write(b"\0")
+        handle.flush()
+        os.fsync(handle.fileno())
+    handle.seek(0)
+    try:
+        if os.name == "nt":
+            import msvcrt
+
+            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError as exc:
+        handle.close()
+        raise CoverageValidationError(f"coverage state is busy: {lock_path}") from exc
+    try:
+        yield
+    finally:
+        try:
+            handle.seek(0)
+            if os.name == "nt":
+                import msvcrt
+
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        finally:
+            handle.close()
+
+
+def serialized_coverage_write(function: Any) -> Any:
+    """Run a coverage read-modify-write function under the repository lock."""
+
+    function_signature = signature(function)
+
+    @wraps(function)
+    def locked(*args: Any, **kwargs: Any) -> Any:
+        root = function_signature.bind(*args, **kwargs).arguments.get("root")
+        if root is None:
+            raise TypeError("serialized coverage writes require a root argument")
+        with coverage_write_lock(root):
+            return function(*args, **kwargs)
+
+    return locked
+
+
 def read_jsonl(path: str | Path) -> list[dict[str, Any]]:
     file_path = Path(path)
     if not file_path.exists():
@@ -133,6 +196,7 @@ def coverage_status(root: str | Path) -> dict[str, Any]:
     }
 
 
+@serialized_coverage_write
 def reconcile_research_queue(
     root: str | Path,
     research_root: str | Path,
@@ -267,6 +331,7 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
     return coverage_status(base)
 
 
+@serialized_coverage_write
 def set_screening(
     root: str | Path,
     *,
@@ -291,6 +356,7 @@ def set_screening(
     return upsert_jsonl(Path(root) / SCREENING_FILE, "symbol", record)
 
 
+@serialized_coverage_write
 def enqueue_research(
     root: str | Path,
     *,

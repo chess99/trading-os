@@ -1,21 +1,22 @@
-# Price Alert Playbook
+# 价格触发复核
 
-Use this playbook when price reaches a level defined in company metadata.
+价格告警只触发研究复核，不是交易指令。
 
-## Rule
+## 行情快照契约
 
-Price alerts are review triggers, not trade instructions.
+- 每个 symbol 只能出现一次，必须提供正数有限价格和带时区的 `as_of`。
+- `alerts check --at <timestamp>` 以显式检查时间判断新鲜度；未指定时使用本地当前时间。
+- 行情最多可早于检查时间七天，最多可晚于检查时间五分钟。整份快照中任一行不合格时拒绝求值，不按输入顺序挑选重复行情。
+- `absolute_change_fraction_gte` 必须使用告警 condition 中由已封存承保候选绑定的 `reference_price` 独立重算。行情文件中的 `change_since_review` 和 `review_price` 不参与判断。
+- 旧公司若只有 `meta.json` 承保状态、没有可验证的封存 portfolio candidate，仍可生成绝对价格阈值告警，但不生成百分比变动失效告警；下一次独立承保完成后自动恢复该能力。
 
-## Process
+## 处理步骤
 
-1. Read the triggered alert.
-2. Read the company's `meta.json`.
-3. Read the report referenced by `meta.json.reports.latest`.
-4. Verify the current price from a reliable market source.
-5. Check whether the business thesis changed since the prior report.
-6. Write a new price-trigger review report when the trigger is material.
-7. Update `meta.json` only after the new research judgment is complete.
+1. 阅读命中的告警。
+2. 阅读公司的 `meta.json` 和其中引用的最新报告。
+3. 从可靠市场来源再次核对当前价格。
+4. 检查自上次研究以来业务事实和核心论点是否变化。
+5. 触发具有实质影响时新增一份中文价格复核报告，不覆盖历史报告。
+6. 新判断验证完成后才更新 `meta.json`。
 
-## Output
-
-The output is a new Chinese research report and updated metadata. It is not an automatic order.
+最终产物是新的研究报告和状态更新，不是自动订单。

@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import TextIO
 
 from .research_assets.alerts import (
+    PriceAlertError,
     evaluate_price_alerts,
     load_json,
     write_price_alerts,
@@ -65,7 +66,12 @@ from .research_assets.review_workflow import (
 )
 from .research_assets.schedule import write_review_schedule
 from .research_assets.sealing import SealingError
+from .research_assets.triage_cohort import (
+    freeze_rapid_triage_cohort,
+    read_symbol_file,
+)
 from .research_assets.triage_workflow import (
+    build_rapid_triage_comparison_packet,
     claim_rapid_triage_task,
     finalize_rapid_triage_cycle,
     rapid_triage_cycle_status,
@@ -201,6 +207,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     alerts_check.add_argument("--alerts", default="automation/price_alerts.json")
     alerts_check.add_argument("--quotes", required=True)
+    _add_timestamp(alerts_check)
     alerts_check.set_defaults(func=cmd_alerts_check)
 
     schedule = sub.add_parser("schedule", help="Build review schedules")
@@ -211,6 +218,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     schedule_build.add_argument("--research-root", default="research")
     schedule_build.add_argument("--output", default="automation/review_schedule.json")
+    schedule_build.add_argument(
+        "--as-of",
+        help="ISO datetime used to mark date and evidence-expiry items due",
+    )
     schedule_build.set_defaults(func=cmd_schedule_build)
 
     coverage = sub.add_parser("coverage", help="Manage coverage screening JSONL files")
@@ -270,11 +281,30 @@ def build_parser() -> argparse.ArgumentParser:
     _add_timestamp(apply_allocation)
     apply_allocation.set_defaults(func=cmd_coverage_apply_allocation)
 
+    triage_freeze = coverage_sub.add_parser(
+        "triage-freeze",
+        help="Freeze an administrative rapid-triage cohort without investment ranking",
+    )
+    _add_coverage_root(triage_freeze)
+    triage_freeze.add_argument("cycle_id")
+    triage_freeze.add_argument(
+        "--queue-status",
+        default="requires_rebaseline",
+        help="Queue status used for administrative intake",
+    )
+    freeze_source = triage_freeze.add_mutually_exclusive_group(required=True)
+    freeze_source.add_argument("--limit", type=int)
+    freeze_source.add_argument("--symbols-file")
+    triage_freeze.add_argument("--after-symbol")
+    _add_timestamp(triage_freeze)
+    triage_freeze.set_defaults(func=cmd_coverage_triage_freeze)
+
     triage_claim = coverage_sub.add_parser(
         "triage-claim",
         help="Claim one 15-minute rapid-triage task for exactly one agent",
     )
     _add_coverage_root(triage_claim)
+    triage_claim.add_argument("cycle_id", nargs="?")
     triage_claim.add_argument("--agent", required=True)
     triage_claim.add_argument("--symbol")
     triage_claim.add_argument("--lens")
@@ -309,12 +339,26 @@ def build_parser() -> argparse.ArgumentParser:
     triage_status.add_argument("cycle_id")
     triage_status.set_defaults(func=cmd_coverage_triage_status)
 
+    triage_compare = coverage_sub.add_parser(
+        "triage-compare",
+        help="Seal a score-free comparison packet for an independent Agent",
+    )
+    _add_coverage_root(triage_compare)
+    triage_compare.add_argument("cycle_id")
+    _add_timestamp(triage_compare)
+    triage_compare.set_defaults(func=cmd_coverage_triage_compare)
+
     triage_finalize = coverage_sub.add_parser(
         "triage-finalize",
         help="Compare a complete rapid-triage cohort and grant formal-profile budget",
     )
     _add_coverage_root(triage_finalize)
     triage_finalize.add_argument("cycle_id")
+    triage_finalize.add_argument(
+        "--decisions",
+        required=True,
+        help="Independent Agent decision package bound to comparison_sha256",
+    )
     triage_finalize.add_argument(
         "--policy",
         default="policies/research-allocation.json",
@@ -595,13 +639,21 @@ def cmd_alerts_check(ns: argparse.Namespace) -> int:
         raise RuntimeError("alerts file must be a JSON object")
     if not isinstance(quotes, list):
         raise RuntimeError("quote snapshot must be a JSON list")
-    result = evaluate_price_alerts(alerts, quotes)
+    result = evaluate_price_alerts(
+        alerts,
+        quotes,
+        evaluated_at=_timestamp(ns.at),
+    )
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 
 def cmd_schedule_build(ns: argparse.Namespace) -> int:
-    path = write_review_schedule(ns.research_root, ns.output)
+    path = write_review_schedule(
+        ns.research_root,
+        ns.output,
+        as_of=_timestamp(ns.as_of) if ns.as_of else None,
+    )
     print(json.dumps({"ok": True, "path": str(path)}, ensure_ascii=False, indent=2))
     return 0
 
@@ -665,6 +717,21 @@ def cmd_coverage_apply_allocation(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_triage_freeze(ns: argparse.Namespace) -> int:
+    symbols = read_symbol_file(ns.symbols_file) if ns.symbols_file else None
+    payload = freeze_rapid_triage_cohort(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        frozen_at=_timestamp(ns.at),
+        queue_status=ns.queue_status,
+        limit=ns.limit,
+        after_symbol=ns.after_symbol,
+        symbols=symbols,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
 def cmd_coverage_triage_claim(ns: argparse.Namespace) -> int:
     payload = claim_rapid_triage_task(
         root=ns.root,
@@ -672,6 +739,7 @@ def cmd_coverage_triage_claim(ns: argparse.Namespace) -> int:
         claimed_at=_timestamp(ns.at),
         symbol=ns.symbol,
         lens=ns.lens,
+        cycle_id=ns.cycle_id,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -706,12 +774,24 @@ def cmd_coverage_triage_status(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_triage_compare(ns: argparse.Namespace) -> int:
+    payload = build_rapid_triage_comparison_packet(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        created_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
 def cmd_coverage_triage_finalize(ns: argparse.Namespace) -> int:
     policy = load_policy(ns.policy)
+    decisions = json.loads(Path(ns.decisions).read_text(encoding="utf-8"))
     payload = finalize_rapid_triage_cycle(
         root=ns.root,
         cycle_id=ns.cycle_id,
         policy=policy.payload,
+        decisions=decisions,
         finalized_at=_timestamp(ns.at),
     )
     _write_success({"ok": True, **payload})
@@ -859,6 +939,7 @@ def _write_success(payload: object) -> None:
 def _error_code(exc: Exception) -> str | None:
     for error_type, code in (
         (AssetValidationError, "asset_validation_failed"),
+        (PriceAlertError, "price_alert_error"),
         (CoverageValidationError, "coverage_validation_failed"),
         (ReviewStoreError, "review_state_error"),
         (ReviewWorkflowError, "review_workflow_error"),

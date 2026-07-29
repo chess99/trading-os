@@ -15,64 +15,73 @@
         "sha256": "8fc2cc78997d4bc961f76c8957c3aa3817f6bf05ade0078a8110c5bf6bb871f1"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-29",
+        "path": "reports/2026-07-29-rapid-triage-63f758602e6a.md",
+        "report_id": "CN-000042-2026-07-29-rapid-triage-63f758602e6a",
+        "report_type": "rapid_triage",
+        "sha256": "bc66b9380e677d1edaa9e12d349fadfe9bc607226428d542e001cbdf03cbc81a"
+      }
+    ],
+    "latest": "reports/2026-07-29-rapid-triage-63f758602e6a.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-29-rapid-triage-63f758602e6a.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-29T17:50:00+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-29T17:50:00+08:00",
+      "published_at": "2026-07-29T18:00:00+08:00",
+      "report_id": "CN-000042-2026-07-29-rapid-triage-63f758602e6a",
+      "report_path": "reports/2026-07-29-rapid-triage-63f758602e6a.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-29-agent-first-pilot-001/000042/20260729T180000+0800.triage.json",
+      "source_package_sha256": "63f758602e6ab32f09ac2d165602150c5e1e7a336630a2d650a6bc452779b094"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-09-01T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露 2026 年半年度报告，可核验归母与扣非利润、主要结转项目及毛利率、经营现金流、货币资金受限情况、合同负债、一年内到期非流动负债、存货及减值。"
       },
-      "reason": "复核2026年半年报的销售回款、短债、合同负债、存货减值和经营现金流",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "半年报是判断 9.90 亿元预告利润属于可重复经营改善还是单季交付峰值的最短证据路径。",
+      "trigger_id": "000042-h1-2026-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "description": "控股股东质押或冻结股份数量发生变化、冻结股份进入司法处置、控制权安排改变，或公司披露相关债务和解。"
       },
-      "reason": "复核2026年三季报及地产政策、深圳和惠州项目去化变化",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 3.8
-      },
-      "reason": "进入初始买入区，复核回款、短债和减值后可考虑试探仓",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
+      "reason": "控股股东大额质押与冻结是独立于项目经营的治理尾部风险，变化会直接改变所需治理折价。",
+      "trigger_id": "000042-controller-equity-event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 3.2
+        "threshold": 5.5
       },
-      "reason": "进入深度折价区，若基本面未恶化可复核加仓",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格较 7.78 元下降约三成会明显改变赔率，届时应在基本面未同步恶化的前提下重算经调整净资产与正常化收益。",
+      "trigger_id": "000042-price-recheck-5p50",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 8.0
+        "date": "2026-09-01"
       },
-      "reason": "高于乐观估值上沿附近，若无资产处置或盈利改善应继续回避或减仓",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "若届时尚未完成半年报复核，应主动检查披露状态，避免预告利润长期脱离正式报表与现金流验证。",
+      "trigger_id": "000042-h1-deadline-20260901",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +93,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-29T18:00:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

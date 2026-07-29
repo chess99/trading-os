@@ -373,11 +373,29 @@ def test_cli_alerts_check_uses_quote_snapshot(tmp_path: Path, capsys):
         encoding="utf-8",
     )
     quotes_path.write_text(
-        json.dumps([{"symbol": "CN:600519", "price": 1090}]), encoding="utf-8"
+        json.dumps(
+            [
+                {
+                    "symbol": "CN:600519",
+                    "price": 1090,
+                    "as_of": "2026-07-21T15:00:00+08:00",
+                }
+            ]
+        ),
+        encoding="utf-8",
     )
 
     code = main(
-        ["alerts", "check", "--alerts", str(alerts_path), "--quotes", str(quotes_path)]
+        [
+            "alerts",
+            "check",
+            "--alerts",
+            str(alerts_path),
+            "--quotes",
+            str(quotes_path),
+            "--at",
+            "2026-07-21T15:00:00+08:00",
+        ]
     )
 
     assert code == 0
@@ -437,12 +455,12 @@ def test_cli_allocates_research_capacity_and_evaluates_profile(
     tmp_path: Path,
     capsys,
 ):
-    from trading_os.cli import main
     from tests.test_research_allocation import (
         _profile,
         _ranking,
         _small_policy,
     )
+    from trading_os.cli import main
 
     ranking_path = tmp_path / "ranking.json"
     policy_path = tmp_path / "policy.json"

@@ -1,74 +1,104 @@
 # 全 A 股 Goal 长程执行 Playbook
 
-## 目标与完成定义
+## 目标与边界
 
-目标是在有限研究预算下找到当下真正可执行的投资机会，并输出最新价、合理价值、
-买入上限、预期回报、风险和仓位。完成全 A 股研究不等于给约 5500 家公司各写一份
-报告，而是同时满足：
+目标不是用机械指标挑出一小批公司供 Agent 阅读，而是让冻结范围内的每家普通 A 股都先被独立 Agent 快速看一眼，再把有限研究时间集中到最可能改变组合决策的少数公司。
 
-1. 本轮候选集合被显式冻结，来源、范围、异常和硬排除均有结构化记录；
-2. 最新财报、价格和重大事件能够触发重新竞争研究预算；
-3. 当前动态候选池完成 L1.5 快速甄别；
-4. 各研究层都先完成同层批次，再横向比较晋级；
-5. 最终承保候选按最新价格重新计算，并由组合层给实际买入结论；
-6. 所有封存资产、coverage、索引、调度和提醒通过严格验证。
+一次 Goal 必须在启动时冻结：
 
-## 长程顺序
+- 普通 A 股 universe 及来源哈希；
+- `scope_cutoff`；
+- baseline 与 incremental 两条 lane 的输入；
+- 纳入、硬排除、异常和延后项的完整分区。
+
+截止时间后的上市、财报、公告和价格变化进入下一轮，不能令当前 Goal 无限增长。可直接引用 `prompts/goals/cn-all-a-continuous-research.md` 启动长期任务。
+
+## 生产流程
 
 ```text
-显式冻结候选集合
-→ 分配最多约200家动态快速甄别预算
-→ 每家独立agent做15分钟快速甄别
-→ 完整候选批次横向比较，最多约40家正式画像
-→ 完整画像批次横向比较，最多约15家范围研究
-→ 完整范围研究批次横向比较，最多约6家完整深研
-→ 最多约3家独立承保
-→ 最新行情下的组合综合与实际买入结论
+冻结全覆盖或已命中触发的范围
+→ 按行政规则切成小 cohort
+→ 每家公司一个独立 Agent 做 rapid triage
+→ 封存并发布到公司不可变时间线
+→ 独立质量抽查
+→ 生成全量 comparison packet
+→ 独立 allocation Agent 显式配置下一层预算
+→ quick profile → scoped research → deep research
+→ 半盲独立承保 / challenger
+→ 最新行情下的组合综合
 ```
 
-容量全部是上限，不是配额。没有合格公司时允许少于上限，最终也允许没有
-`buy_now`。
+行政规则可以使用触发紧急度、逾期时间、等待时间和 symbol 稳定顺序，但不得使用因子、PE、市值、流动性、利润正负或旧投资评级决定谁有资格进入 rapid triage。
+
+cohort 大小只是可恢复的执行边界，不是投资容量。建议使用 20—50 家的小批次；同一 cohort 的全部公司达到有效终态前，不得进行横向晋级。
+
+## 两条研究 lane
+
+### Baseline
+
+处理冻结 universe 中缺少“当前 rapid-triage 协议有效终态”的全部公司。`requires_rebaseline` 只是一个 intake 提示，不是 baseline 的集合定义；legacy `completed`、watch 状态以及缺失 queue 的范围内公司，只要没有当前协议终态，也必须纳入 scope-to-queue 守恒。旧报告只能作为 prior research 和线索；Agent 必须核验足以支持本轮判断的最新 S1 信息与近期价格。有效快速甄别进入公司时间线后，才能清除已有的 `rebaseline_required`。
+
+### Incremental
+
+处理截止日前真实命中的增量事件：新财报、重大公告、价格阈值、论点失效、固定日期或证据 TTL 到期。触发器定义不是 trigger hit；filing、event、thesis 必须有可追溯观察记录，价格和日期必须由程序按结构化条件判断。
+
+紧急增量 cohort 不必等待全市场 baseline backlog 清空，但两条 lane 只是逻辑上并行。每个 symbol 同时只能有一个可变任务所有者；启动生产执行前必须封存 arbitration 契约，规定新事件如何合并到活动任务、何时可抢占、何时延后，以及 hit 何时标记 consumed。容量政策需给 baseline 保留最低处理通道，避免长期被事件任务饿死。
+
+## Rapid triage 的最低标准
+
+每家公司最多投入轻量预算，但不是只看一个倍数。必须形成可审计简报，至少覆盖：
+
+1. 业务如何赚钱；
+2. 相对旧研究出现的变化；
+3. 生存、强制稀释、资本结构和治理红旗；
+4. 正常化盈利粗判及依据；
+5. 当前价格隐含的要求；
+6. 最强反方证据；
+7. 再投入下一小时能解决的决定性问题；
+8. 当前停止时的结构化重启条件；
+9. 真实来源、工具、模型和信息截止时间。
+
+快速简报也是公司不可变时间线的一部分。`meta.json` 只在简报、来源和 seal 全部验证后更新；coverage 队列不得先行声称完成。
+
+## 横向预算配置与抽查
+
+完整 cohort 封存后，程序生成包含全部条目的 comparison packet。未参与单公司甄别的独立 Agent 必须逐家公司给出 `select_quick_profile` 或 `defer`，并说明理由、决定性问题、已考虑的反证和相对研究成本。程序只校验全量覆盖、容量、风险簇、provenance 和禁止字段，不自动计算投资排名。
+
+硬排除做 100% 身份复核。对 `catalog`、`price_watch`、`conditional_stop` 和 `reassign_or_stop`，按本 Goal 第一阶段新增并封存的质量审计 policy 做确定性分层抽查；该 policy 必须明确定义样本率、稳定选样种子、错误阈值和扩样规则，不得复用旧排名的 `false_negative_audit` selection slot。重大分歧重开该公司，某一分层错误率超限时扩大抽样或重做该层。抽查完成前不得宣告整个 cycle 完成。
 
 ## 启动与恢复
 
-1. 先读取 `AGENTS.md`、本文件、`playbooks/research-capital-allocation.md`、
-   `playbooks/batch-dispatch.md` 和 `playbooks/portfolio-synthesis.md`。
-2. 检查 `git status`、当前运行 agent、coverage 状态和已有封存资产。
-3. 已完成且验证通过的单公司结果必须复用；正在运行的旧任务先安全收口或释放，
-   不得由新分配静默覆盖。
-4. 对显式给定的冻结输入执行研究分配并应用；新分配会保留已有正式研究进度。
-5. 每家公司只允许一个独立 agent；单公司 agent 只提交 package 或公司资产，
-   不直接编辑共享队列。
-6. 每完成一个小批次就验证、封存、回写和只提交本批次文件。失败任务记录原因并释放，
-   不阻塞其他公司。
+1. 读取 `AGENTS.md`、本文件、`research-capital-allocation.md`、`screening.md`、`batch-dispatch.md`、`portfolio-synthesis.md` 和当前 policy。
+2. 检查 Goal、Git、运行中 Agent、冻结 scope、coverage、公司时间线与已有 seal。保留用户和其他 Agent 的改动。
+3. 同一 `run_id` 只冻结一次；续跑时以“冻结范围减去已验证的当前协议终态”重建工作清单，并先把 legacy 状态与缺失 queue 的范围成员守恒物化到 baseline intake。
+4. 已有有效产物但状态未物化时做幂等发布或 reconcile，不重做公司。
+5. 运行中任务只在租约失效后释放，并保留 `attempt_history`；失败后换独立 Agent。
+6. 每个小批次完成即验证、封存、回写并只提交该批次自己的文件。
 
 ## 强制闸门
 
-- 外部筛选、已有清单或人工提名只能进入 `rapid_triage`。
-- `triage-finalize` 在完整候选池终态前必须失败。
-- `profile-finalize --stage quick_profile` 在完整正式画像批次终态前必须失败。
-- `profile-finalize --stage scoped_research` 在完整范围研究批次终态前必须失败。
-- 单公司层不得输出 `buy_now` 或仓位。
-- 深研必须生成结构化主张与来源并验证后，才能冻结独立承保批次。
-- 独立承保遵循半盲、揭示和必要 challenger；组合层必须使用最新行情重新计算，
-  不能复述旧报告价格。
+- 范围内每家公司必须有 rapid-triage 终态或结构化硬排除。
+- 单家公司一个 Agent；跨公司预算配置必须由另一个 Agent 完成。
+- 单公司完成顺序不得影响晋级。
+- 非硬停止必须有 schedule/alerts 可消费的重启触发器。
+- 单公司层不得给 `buy_now`、组合操作或仓位。
+- 深研必须生成结构化主张和来源，封存后才能进入独立承保。
+- 重大分歧、高风险或潜在核心仓位按 policy 触发 challenger；无可靠共识时不通过。
+- 组合层必须以最新行情重新计算，不能复述旧报告价格。
 
 ## 关键命令
 
 ```bash
-python -m trading_os coverage allocate-research --ranking <frozen-input.json>
-python -m trading_os coverage apply-allocation --ranking <frozen-input.json>
-
-python -m trading_os coverage triage-claim --agent <agent-id>
+python -m trading_os coverage triage-freeze <cycle-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
+python -m trading_os coverage triage-claim <cycle-id> --agent <agent-id>
 python -m trading_os coverage triage-record --input <rapid-triage.json>
 python -m trading_os coverage triage-status <cycle-id>
-python -m trading_os coverage triage-finalize <cycle-id>
+python -m trading_os coverage triage-compare <cycle-id>
+python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 
 python -m trading_os coverage profile-claim --agent <agent-id>
 python -m trading_os coverage record-profile --input <profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
-python -m trading_os coverage profile-finalize <cycle-id> --stage quick_profile
-python -m trading_os coverage profile-finalize <cycle-id> --stage scoped_research
 
 python -m trading_os assets validate
 python -m trading_os coverage validate
@@ -78,17 +108,10 @@ python -m trading_os schedule build
 python -m trading_os alerts build
 ```
 
-## 对用户的最终交付
+上面的 `triage-freeze` 只能在 scope-to-queue intake 已经把该小批次归一为兼容状态后使用。历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 不得用于新 Goal；L2/L3 的独立 decisions 新入口尚未建设，必须先完成迁移与试运行。
 
-最终报告至少列出：
+## 完成定义与交付
 
-- 全市场覆盖数、候选数和每层实际晋级/停止数量；
-- 所有进入承保或高优先观察公司的当前价格和价格时点；
-- 悲观价值、合理价值区间、买入上限、基准预期年化回报；
-- `buy_now`、`buy_on_weakness`、`watch`、`reject` 等组合操作；
-- 建议初始仓位、目标仓位及组合约束；
-- 主要投资逻辑、反方证据、证伪条件和重启触发器；
-- 为什么其他最终候选没有被买入；
-- 数据局限和仍需人工确认的事项。
+完成不是“队列跑过一遍”，而是冻结范围数量守恒、所有公司有有效终态、公司时间线与 coverage 一致、抽查闭环、每层先完整封存再晋级、触发器能被调度消费、承保与组合产物有效、全部验证通过。
 
-持仓截图、个人成本、仓位等隐私只可用于本地研究优先级，禁止写入或提交公开仓库。
+最终向用户列出 scope 与 cutoff、覆盖和各层数量、抽查及分歧、承保与组合结论、增量触发闭环、数据局限、验证和提交。持仓截图、个人成本和实际仓位等隐私只可用于本地判断，不得写入公开仓库。

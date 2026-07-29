@@ -94,14 +94,15 @@ def test_docs_lock_adaptive_funnel_half_blind_sealing_and_two_level_decisions():
     portfolio = _read("playbooks/portfolio-synthesis.md")
 
     for phrase in (
-        "约 5000 家",
-        "约 200 家",
-        "约 40 家",
-        "约 15 家",
-        "约 6 家",
-        "约 3 家",
+        "冻结普通 A 股 universe",
+        "每家公司独立 rapid triage",
+        "跨公司 Agent 配置正式画像预算",
+        "行政排序",
+        "不得使用市场估值",
     ):
         assert phrase in screening
+    for phrase in ("最多 40", "最多 15", "最多 6", "最多 3"):
+        assert phrase in allocation
     assert "半盲两阶段" in underwriting
     assert "SHA-256 封存" in underwriting
     assert "challenger 不能读取此前研究和第一份评估" in underwriting
@@ -115,7 +116,7 @@ def test_docs_lock_adaptive_funnel_half_blind_sealing_and_two_level_decisions():
     assert "研究时间本身也是资本" in allocation
     assert "不能直接把公司晋级为深研" in allocation
     assert "假阴性抽查" in allocation
-    assert "L2 只能进入范围研究" in allocation
+    assert "L2、L3 同样先完成同层 cohort" in allocation
     assert "完成顺序不是投资质量" in allocation
 
 

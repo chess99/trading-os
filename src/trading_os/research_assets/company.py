@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Mapping
 
 from .models import ReportType, UnderwritingStatus
+from .sealing import verify_sealed
 
 
 class AssetValidationError(ValueError):
@@ -53,7 +54,13 @@ IDENTITY_KEYS = {
     "currency",
     "security_status",
 }
-RESEARCH_KEYS = {"coverage_status", "rebaseline_required", "information_cutoff"}
+RESEARCH_REQUIRED_KEYS = {
+    "coverage_status",
+    "rebaseline_required",
+    "information_cutoff",
+}
+RESEARCH_OPTIONAL_KEYS = {"refresh_due_at", "latest_rapid_triage"}
+RESEARCH_KEYS = RESEARCH_REQUIRED_KEYS | RESEARCH_OPTIONAL_KEYS
 REPORTS_KEYS = {"latest", "latest_by_type", "history", "historical_artifacts"}
 REPORT_RECORD_KEYS = {"report_id", "path", "report_type", "as_of", "sha256"}
 HISTORICAL_ARTIFACT_KEYS = {"path", "format", "sha256"}
@@ -73,6 +80,31 @@ VALUATION_KEYS = {
     "reduce_zone",
 }
 TRIGGER_KEYS = {"trigger_id", "type", "condition", "reason", "active"}
+LATEST_RAPID_TRIAGE_KEYS = {
+    "report_id",
+    "report_path",
+    "source_package_path",
+    "source_package_sha256",
+    "information_cutoff",
+    "review_mode",
+    "published_at",
+}
+RAPID_TRIAGE_SOURCE_MANIFEST_KEYS = {
+    "schema_version",
+    "artifact_type",
+    "report_id",
+    "symbol",
+    "information_cutoff",
+    "source_package",
+    "sources",
+}
+RAPID_TRIAGE_SOURCE_PACKAGE_KEYS = {
+    "repository_path",
+    "seal_manifest_path",
+    "artifact_type",
+    "sha256",
+    "sealed_at",
+}
 REPORT_FRONT_META_KEYS = {
     "schema_version",
     "report_id",
@@ -89,6 +121,16 @@ REPORT_FRONT_META_KEYS = {
 }
 
 REPORT_SECTION_REQUIREMENTS = {
+    ReportType.RAPID_TRIAGE.value: {
+        "快速结论",
+        "业务速览",
+        "变化摘要",
+        "正常化盈利粗判",
+        "市场隐含预期",
+        "反方证据",
+        "重启触发器",
+        "来源",
+    },
     ReportType.INITIAL_RESEARCH.value: {
         "结论版",
         "业务理解",
@@ -168,6 +210,7 @@ def validate_company_dir(
     _validate_research(research)
     reports = _require_object(meta, "reports", "meta")
     _validate_reports(path, identity, reports)
+    _validate_rapid_triage_state(path, research, reports)
     underwriting = _require_object(meta, "underwriting", "meta")
     _validate_underwriting(underwriting)
     valuation = _require_object(meta, "valuation", "meta")
@@ -224,7 +267,12 @@ def _validate_identity(company_dir: Path, identity: Mapping[str, Any]) -> None:
 
 
 def _validate_research(research: Mapping[str, Any]) -> None:
-    _require_exact_keys(research, RESEARCH_KEYS, "research")
+    unknown = sorted(set(research) - RESEARCH_KEYS)
+    if unknown:
+        raise AssetValidationError(f"unknown research fields: {unknown}")
+    missing = sorted(RESEARCH_REQUIRED_KEYS - set(research))
+    if missing:
+        raise AssetValidationError(f"missing research fields: {missing}")
     coverage_status = _require_string(research, "coverage_status", "research")
     if coverage_status not in ALLOWED_COVERAGE_STATUSES:
         raise AssetValidationError(
@@ -235,6 +283,12 @@ def _validate_research(research: Mapping[str, Any]) -> None:
     information_cutoff = research.get("information_cutoff")
     if information_cutoff is not None:
         _parse_datetime(information_cutoff, "research.information_cutoff")
+    refresh_due_at = research.get("refresh_due_at")
+    if refresh_due_at is not None:
+        _parse_datetime(refresh_due_at, "research.refresh_due_at")
+    latest_triage = research.get("latest_rapid_triage")
+    if latest_triage is not None:
+        _validate_latest_rapid_triage(latest_triage)
 
 
 def _validate_reports(
@@ -294,6 +348,13 @@ def _validate_reports(
             identity=identity,
             record=record,
         )
+        if report_type == ReportType.RAPID_TRIAGE.value:
+            _validate_rapid_triage_report_linkage(
+                company_dir,
+                report_path,
+                identity=identity,
+                record=record,
+            )
         records.append(record)
 
     if dates != sorted(dates):
@@ -345,6 +406,179 @@ def _validate_reports(
         artifact_path = _safe_file(company_dir, artifact_path_text, "historical artifact path")
         _require_matching_hash(artifact_path, expected_hash, "historical artifact sha256")
         historical_paths.add(artifact_path_text)
+
+
+def _validate_latest_rapid_triage(value: Any) -> None:
+    if not isinstance(value, Mapping):
+        raise AssetValidationError("research.latest_rapid_triage must be an object")
+    _require_exact_keys(value, LATEST_RAPID_TRIAGE_KEYS, "latest_rapid_triage")
+    _require_string(value, "report_id", "latest_rapid_triage")
+    report_path = _require_string(value, "report_path", "latest_rapid_triage")
+    if not REPORT_PATH_RE.fullmatch(report_path):
+        raise AssetValidationError("latest_rapid_triage.report_path is invalid")
+    _require_string(value, "source_package_path", "latest_rapid_triage")
+    _require_sha256(
+        value.get("source_package_sha256"),
+        "latest_rapid_triage.source_package_sha256",
+    )
+    _parse_datetime(
+        value.get("information_cutoff"),
+        "latest_rapid_triage.information_cutoff",
+    )
+    if value.get("review_mode") not in {"baseline_recheck", "triggered_update"}:
+        raise AssetValidationError("latest_rapid_triage.review_mode is invalid")
+    _parse_datetime(value.get("published_at"), "latest_rapid_triage.published_at")
+
+
+def _validate_rapid_triage_state(
+    company_dir: Path,
+    research: Mapping[str, Any],
+    reports: Mapping[str, Any],
+) -> None:
+    state = research.get("latest_rapid_triage")
+    rapid_path = reports.get("latest_by_type", {}).get(ReportType.RAPID_TRIAGE.value)
+    if state is None:
+        if rapid_path is not None:
+            raise AssetValidationError(
+                "rapid_triage history requires research.latest_rapid_triage"
+            )
+        return
+    if rapid_path != state["report_path"]:
+        raise AssetValidationError(
+            "latest_rapid_triage.report_path must match reports.latest_by_type"
+        )
+    matching = [
+        item
+        for item in reports["history"]
+        if item["path"] == state["report_path"]
+        and item["report_type"] == ReportType.RAPID_TRIAGE.value
+    ]
+    if len(matching) != 1 or matching[0]["report_id"] != state["report_id"]:
+        raise AssetValidationError("latest_rapid_triage does not match report history")
+    research_cutoff = research.get("information_cutoff")
+    if research_cutoff is None or _parse_datetime(
+        research_cutoff, "research.information_cutoff"
+    ) < _parse_datetime(
+        state["information_cutoff"],
+        "latest_rapid_triage.information_cutoff",
+    ):
+        raise AssetValidationError(
+            "research.information_cutoff cannot precede latest rapid triage"
+        )
+    package_path = _safe_repository_file(
+        company_dir,
+        state["source_package_path"],
+        "latest rapid-triage source package",
+    )
+    try:
+        sealed = verify_sealed(package_path)
+    except ValueError as exc:
+        raise AssetValidationError(
+            f"invalid latest rapid-triage source package: {exc}"
+        ) from exc
+    if sealed.artifact_type != "rapid_triage_package":
+        raise AssetValidationError("latest rapid-triage source artifact type is invalid")
+    if sealed.sha256 != state["source_package_sha256"]:
+        raise AssetValidationError("latest rapid-triage source sha256 does not match")
+
+
+def _validate_rapid_triage_report_linkage(
+    company_dir: Path,
+    report_path: Path,
+    *,
+    identity: Mapping[str, Any],
+    record: Mapping[str, Any],
+) -> None:
+    front = _read_report_front(report_path)
+    manifest_path = _safe_file(
+        company_dir, str(front["source_manifest"]), "source_manifest path"
+    )
+    try:
+        manifest_seal = verify_sealed(manifest_path)
+    except ValueError as exc:
+        raise AssetValidationError(
+            f"rapid-triage source manifest is not validly sealed: {exc}"
+        ) from exc
+    if manifest_seal.artifact_type != "rapid_triage_source_manifest":
+        raise AssetValidationError("rapid-triage source manifest artifact type is invalid")
+    manifest = _read_json_object(manifest_path, "rapid-triage source manifest")
+    _require_exact_keys(
+        manifest,
+        RAPID_TRIAGE_SOURCE_MANIFEST_KEYS,
+        "rapid-triage source manifest",
+    )
+    if manifest.get("schema_version") != 1:
+        raise AssetValidationError("rapid-triage source manifest schema_version must be 1")
+    if manifest.get("artifact_type") != "rapid_triage_source_manifest":
+        raise AssetValidationError("rapid-triage source manifest type does not match")
+    if manifest.get("report_id") != record["report_id"]:
+        raise AssetValidationError("rapid-triage source manifest report_id does not match")
+    if manifest.get("symbol") != identity["symbol"]:
+        raise AssetValidationError("rapid-triage source manifest symbol does not match")
+    if manifest.get("information_cutoff") != front["information_cutoff"]:
+        raise AssetValidationError(
+            "rapid-triage source manifest information_cutoff does not match"
+        )
+    if not isinstance(manifest.get("sources"), list):
+        raise AssetValidationError("rapid-triage source manifest sources must be an array")
+    package_ref = manifest.get("source_package")
+    if not isinstance(package_ref, Mapping):
+        raise AssetValidationError("rapid-triage source_package must be an object")
+    _require_exact_keys(
+        package_ref,
+        RAPID_TRIAGE_SOURCE_PACKAGE_KEYS,
+        "rapid-triage source_package",
+    )
+    package_path = _safe_repository_file(
+        company_dir,
+        _require_string(package_ref, "repository_path", "source_package"),
+        "rapid-triage source package",
+    )
+    seal_path = _safe_repository_file(
+        company_dir,
+        _require_string(package_ref, "seal_manifest_path", "source_package"),
+        "rapid-triage source seal manifest",
+    )
+    try:
+        package_seal = verify_sealed(package_path)
+    except ValueError as exc:
+        raise AssetValidationError(
+            f"rapid-triage source package seal is invalid: {exc}"
+        ) from exc
+    if seal_path != package_seal.manifest_path.resolve():
+        raise AssetValidationError("rapid-triage source seal path does not match")
+    if package_ref.get("artifact_type") != package_seal.artifact_type:
+        raise AssetValidationError("rapid-triage source artifact type does not match")
+    if package_seal.artifact_type != "rapid_triage_package":
+        raise AssetValidationError("rapid-triage source artifact has wrong type")
+    if package_ref.get("sha256") != package_seal.sha256:
+        raise AssetValidationError("rapid-triage source sha256 does not match seal")
+    if package_ref.get("sealed_at") != package_seal.sealed_at.isoformat():
+        raise AssetValidationError("rapid-triage source sealed_at does not match seal")
+    package = _read_json_object(package_path, "rapid-triage source package")
+    if package.get("symbol") != identity["symbol"]:
+        raise AssetValidationError("rapid-triage source package symbol does not match")
+    if package.get("information_cutoff") != front["information_cutoff"]:
+        raise AssetValidationError(
+            "rapid-triage source package information_cutoff does not match"
+        )
+
+
+def _read_report_front(report_path: Path) -> dict[str, Any]:
+    try:
+        text = report_path.read_text(encoding="utf-8-sig")
+    except OSError as exc:
+        raise AssetValidationError(f"could not read report file: {report_path}") from exc
+    match = REPORT_META_RE.match(text)
+    if not match:
+        raise AssetValidationError("report must start with trading-os-report-meta front metadata")
+    try:
+        front = json.loads(match.group("meta"))
+    except json.JSONDecodeError as exc:
+        raise AssetValidationError(f"invalid report front metadata JSON: {exc}") from exc
+    if not isinstance(front, dict):
+        raise AssetValidationError("report front metadata must be an object")
+    return front
 
 
 def _validate_report_file(
@@ -605,6 +839,26 @@ def _safe_file(company_dir: Path, relative_path: str, label: str) -> Path:
     candidate = (company_dir / candidate_text).resolve()
     try:
         candidate.relative_to(company_root)
+    except ValueError as exc:
+        raise AssetValidationError(f"invalid {label}: {relative_path}") from exc
+    if not candidate.is_file():
+        raise AssetValidationError(f"missing file for {label}: {relative_path}")
+    return candidate
+
+
+def _safe_repository_file(company_dir: Path, relative_path: str, label: str) -> Path:
+    candidate_text = relative_path.replace("\\", "/")
+    if (
+        not candidate_text
+        or candidate_text.startswith("/")
+        or re.match(r"^[A-Za-z]:", candidate_text)
+        or any(part in {"", ".", ".."} for part in candidate_text.split("/"))
+    ):
+        raise AssetValidationError(f"invalid {label}: {relative_path}")
+    repository_root = company_dir.resolve().parents[3]
+    candidate = (repository_root / candidate_text).resolve()
+    try:
+        candidate.relative_to(repository_root)
     except ValueError as exc:
         raise AssetValidationError(f"invalid {label}: {relative_path}") from exc
     if not candidate.is_file():

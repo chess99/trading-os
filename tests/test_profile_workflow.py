@@ -796,3 +796,382 @@ def test_nonfinancial_profile_is_not_subject_to_bank_evidence_gate():
         queue_record={"economic_risk_cluster": "consumer_demand"},
         policy=_policy(),
     )
+
+
+def test_record_profile_replay_is_read_only_and_conflicts_fail(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    package = _package()
+    first = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert first["idempotent"] is False
+    queue_before = read_jsonl(root / "research_queue.jsonl")
+    screening_before = read_jsonl(root / "screening.jsonl")
+
+    replayed = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert replayed == {**first, "idempotent": True}
+    assert read_jsonl(root / "research_queue.jsonl") == queue_before
+    assert read_jsonl(root / "screening.jsonl") == screening_before
+
+    conflicting = copy.deepcopy(package)
+    conflicting["analysis"]["business_summary"]["conclusion"] += "但内容被修改。"
+    with pytest.raises(ResearchAllocationError, match="conflicts with the sealed package"):
+        record_profile_package(
+            conflicting,
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@1.0.0",
+            recorded_at=RECORDED_AT,
+        )
+
+    changed_policy = copy.deepcopy(_policy())
+    changed_policy["minimum_base_expected_annual_return_for_deep_research"] = 0.105
+    with pytest.raises(ResearchAllocationError, match="sealed evaluation"):
+        record_profile_package(
+            package,
+            root=root,
+            policy=changed_policy,
+            policy_reference="research-allocation.default@changed",
+            recorded_at=RECORDED_AT,
+        )
+
+
+def test_record_profile_replay_after_promotion_preserves_running_queue(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        finalize_profile_stage,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    package = _package()
+    first = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    finalize_profile_stage(
+        root=root,
+        cycle_id=package["cycle_id"],
+        stage="quick_profile",
+        policy=_policy(),
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    claim_profile_task(
+        root=root,
+        agent="/root/scoped-agent",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=2),
+        symbol="CN:600519",
+    )
+    queue_before = read_jsonl(root / "research_queue.jsonl")
+    screening_before = read_jsonl(root / "screening.jsonl")
+    assert queue_before[0]["task_type"] == "scoped_research"
+    assert queue_before[0]["status"] == "running"
+
+    replayed = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert replayed == {**first, "idempotent": True}
+    assert read_jsonl(root / "research_queue.jsonl") == queue_before
+    assert read_jsonl(root / "screening.jsonl") == screening_before
+
+
+@pytest.mark.parametrize("failed_write", [1, 2])
+def test_finalize_profile_repairs_zero_or_half_written_coverage(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, failed_write: int
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.sealing import verify_sealed
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    record_profile_package = workflow.record_profile_package
+    record_profile_package(
+        _package(),
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    original_write = workflow.write_jsonl
+    write_count = 0
+
+    def fail_selected_write(path, records, sort_key="symbol"):
+        nonlocal write_count
+        write_count += 1
+        if write_count == failed_write:
+            raise RuntimeError("simulated profile materialization crash")
+        return original_write(path, records, sort_key)
+
+    monkeypatch.setattr(workflow, "write_jsonl", fail_selected_write)
+    with pytest.raises(RuntimeError, match="simulated profile materialization crash"):
+        workflow.finalize_profile_stage(
+            root=root,
+            cycle_id="2026-07-26-test-cycle",
+            stage="quick_profile",
+            policy=_policy(),
+            finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+    selection_path = (
+        root / "profiles" / "2026-07-26-test-cycle" / "quick-profile-selection.json"
+    )
+    assert verify_sealed(selection_path).artifact_type == (
+        "quick_profile_cross_company_selection"
+    )
+
+    monkeypatch.setattr(workflow, "write_jsonl", original_write)
+    recovered = workflow.finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=2),
+    )
+    assert recovered["idempotent"] is True
+    queue = read_jsonl(root / "research_queue.jsonl")[0]
+    screening = read_jsonl(root / "screening.jsonl")[0]
+    assert queue["task_type"] == "scoped_research"
+    assert queue["status"] == "pending"
+    assert queue["profile_quick_selection_path"] == recovered["selection_path"]
+    assert queue["effort_budget_hours"] == 4.0
+    assert screening["decision"] == "scoped_research"
+    assert f"stage_selection:{recovered['selection_path']}" in screening["evidence"]
+
+
+def test_finalize_profile_replay_never_regresses_later_progress(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        finalize_profile_stage,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    policy = _policy()
+    record_profile_package(
+        _package(),
+        root=root,
+        policy=policy,
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    claim_profile_task(
+        root=root,
+        agent="/root/scoped-agent",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=2),
+        symbol="CN:600519",
+    )
+    running_queue = read_jsonl(root / "research_queue.jsonl")
+    running_screening = read_jsonl(root / "screening.jsonl")
+    finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    assert read_jsonl(root / "research_queue.jsonl") == running_queue
+    assert read_jsonl(root / "screening.jsonl") == running_screening
+
+    scoped_package = _package()
+    scoped_package["profile"]["research_stage"] = "scoped_research"
+    scoped_package["provenance"]["agent"] = "/root/scoped-agent"
+    scoped_package["provenance"]["generated_at"] = (
+        RECORDED_AT + dt.timedelta(minutes=4)
+    ).isoformat()
+    record_profile_package(
+        scoped_package,
+        root=root,
+        policy=policy,
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT + dt.timedelta(minutes=5),
+    )
+    completed_queue = read_jsonl(root / "research_queue.jsonl")
+    completed_screening = read_jsonl(root / "screening.jsonl")
+    finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=6),
+    )
+    assert read_jsonl(root / "research_queue.jsonl") == completed_queue
+    assert read_jsonl(root / "screening.jsonl") == completed_screening
+
+    finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="scoped_research",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=7),
+    )
+    deeper_queue = read_jsonl(root / "research_queue.jsonl")
+    deeper_screening = read_jsonl(root / "screening.jsonl")
+    assert deeper_queue[0]["task_type"] == "deep_research"
+    finalize_profile_stage(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=8),
+    )
+    assert read_jsonl(root / "research_queue.jsonl") == deeper_queue
+    assert read_jsonl(root / "screening.jsonl") == deeper_screening
+
+
+@pytest.mark.parametrize(
+    ("stage", "candidate_decision", "next_stage", "binding_field", "binding_path"),
+    [
+        (
+            "quick_profile",
+            "profile_candidate",
+            "scoped_research",
+            "triage_selection_path",
+            "coverage/cn-a/triage/risk-cap/selection.json",
+        ),
+        (
+            "scoped_research",
+            "deep_candidate",
+            "deep_research",
+            "profile_quick_selection_path",
+            "coverage/cn-a/profiles/risk-cap/quick-profile-selection.json",
+        ),
+    ],
+)
+def test_profile_selection_caps_missing_risk_cluster_as_unclassified(
+    tmp_path: Path,
+    stage: str,
+    candidate_decision: str,
+    next_stage: str,
+    binding_field: str,
+    binding_path: str,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import finalize_profile_stage
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    symbols = [("CN:600519", "贵州茅台"), ("CN:000001", "平安银行")]
+    queue = []
+    screening = []
+    for rank, (symbol, name) in enumerate(symbols, 1):
+        queue.append(
+            {
+                "symbol": symbol,
+                "name": name,
+                "task_type": stage,
+                "priority": rank,
+                "status": "completed",
+                "reason": "等待同层比较",
+                "target_company_dir": f"research/companies/CN/{symbol[-6:]}",
+                "effort_budget_hours": 1.0 if stage == "quick_profile" else 4.0,
+                "preceding_stage": "rapid_triage" if stage == "quick_profile" else "quick_profile",
+                "stop_conditions": ["投资路径不成立"],
+                "profile_cycle_id": "risk-cap-cycle",
+                "profile_priority_score": 300 - rank,
+                binding_field: binding_path,
+                "stage_history": [{"stage": stage, "status": "completed"}],
+            }
+        )
+        screening.append(
+            {
+                "symbol": symbol,
+                "name": name,
+                "decision": candidate_decision,
+                "priority": rank,
+                "reason": "等待同层比较",
+                "evidence": ["profile:test"],
+                "next_action": "等待比较",
+            }
+        )
+    write_jsonl(root / "research_queue.jsonl", queue)
+    write_jsonl(root / "screening.jsonl", screening)
+    predecessor_path = tmp_path / binding_path
+    if stage == "quick_profile":
+        predecessor_payload = {
+            "schema_version": 1,
+            "cycle_id": "risk-cap-cycle",
+            "ranking": [
+                {"symbol": symbol, "selected_for_quick_profile": True}
+                for symbol, _ in symbols
+            ],
+        }
+        artifact_type = "rapid_triage_cross_company_selection"
+    else:
+        predecessor_payload = {
+            "schema_version": 1,
+            "cycle_id": "risk-cap-cycle",
+            "ranking": [
+                {"symbol": symbol, "selected": True} for symbol, _ in symbols
+            ],
+        }
+        artifact_type = "quick_profile_cross_company_selection"
+    seal_json(
+        predecessor_path,
+        predecessor_payload,
+        artifact_type=artifact_type,
+        sealed_at=RECORDED_AT,
+    )
+    policy = copy.deepcopy(_policy())
+    policy["stage_capacity_per_cycle"][next_stage] = 2
+    policy["risk_cluster_caps"][next_stage] = 1
+
+    result = finalize_profile_stage(
+        root=root,
+        cycle_id="risk-cap-cycle",
+        stage=stage,
+        policy=policy,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    assert result["selected_count"] == 1
+    assert result["selected_symbols"] == ["CN:600519"]
+    stored = {item["symbol"]: item for item in read_jsonl(root / "research_queue.jsonl")}
+    assert stored["CN:600519"]["task_type"] == next_stage
+    assert stored["CN:000001"]["task_type"] == stage
+
+
+def test_diversified_risk_cluster_is_also_capped():
+    from trading_os.research_assets.profile_workflow import (
+        _select_with_risk_cluster_cap,
+    )
+
+    ranked = [
+        {"symbol": "CN:000001", "economic_risk_cluster": "diversified"},
+        {"symbol": "CN:000002", "economic_risk_cluster": "diversified"},
+    ]
+    selected, capped = _select_with_risk_cluster_cap(ranked, capacity=2, cap=1)
+    assert [item["symbol"] for item in selected] == ["CN:000001"]
+    assert capped == {"CN:000002"}

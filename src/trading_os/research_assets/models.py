@@ -11,6 +11,7 @@ from typing import Any, Mapping
 
 
 class ReportType(str, Enum):
+    RAPID_TRIAGE = "rapid_triage"
     INITIAL_RESEARCH = "initial_research"
     MONITORING_UPDATE = "monitoring_update"
     UNDERWRITING_REVIEW = "underwriting_review"

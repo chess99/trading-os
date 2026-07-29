@@ -1,10 +1,11 @@
 {
   "schema_version": 2,
   "policy_id": "research-allocation.default",
-  "version": "3.1.0",
-  "effective_at": "2026-07-29T22:00:00+08:00",
+  "version": "4.0.0",
+  "effective_at": "2026-07-29T23:30:00+08:00",
   "kind": "research_allocation",
   "payload": {
+    "triage_administrative_batch_size": 25,
     "candidate_pool_capacity_per_cycle": 200,
     "quick_profile_capacity_per_cycle": 40,
     "stage_capacity_per_cycle": {
@@ -69,12 +70,14 @@
     "reactivation_trigger_types": [
       "filing",
       "price",
+      "date",
+      "ttl",
       "event",
       "thesis"
     ],
-    "ranking_principle": "explicit frozen candidate-priority inputs are only a cheap map for allocating rapid-triage capacity and must never directly promote a company to a formal profile, deep research, underwriting or buy_now",
+    "ranking_principle": "machine rankings and factor maps may prepare context but must never decide whether an in-scope company receives rapid triage; intake ordering is administrative only and no ranking may directly promote a company to a formal profile, deep research, underwriting or buy_now",
     "research_value_principle": "allocate the next research hour where it is most likely to change a portfolio decision; uncertainty that is expensive or unresolvable lowers priority",
     "stop_principle": "a stop is an auditable research-capital decision, not a permanent investment verdict; every non-structural stop requires a reactivation trigger",
-    "comparison_principle": "formal-profile capacity is allocated only after the complete rapid-triage cohort is sealed and compared cross-sectionally; completion order must not affect promotion"
+    "comparison_principle": "formal-profile capacity is allocated only after the complete rapid-triage cohort is sealed; an independent cross-company agent must review every cohort member and submit an explicit decision for each one, including companies whose first-pass disposition did not recommend promotion, and completion order or deterministic score must not affect promotion"
   }
 }

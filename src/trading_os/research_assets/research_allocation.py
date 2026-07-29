@@ -13,6 +13,7 @@ from .coverage_store import (
     RESEARCH_QUEUE_FILE,
     SCREENING_FILE,
     read_jsonl,
+    serialized_coverage_write,
     write_jsonl,
 )
 from .sealing import atomic_write_bytes
@@ -23,6 +24,7 @@ class ResearchAllocationError(ValueError):
 
 
 POLICY_KEYS = {
+    "triage_administrative_batch_size",
     "candidate_pool_capacity_per_cycle",
     "quick_profile_capacity_per_cycle",
     "stage_capacity_per_cycle",
@@ -263,6 +265,7 @@ def allocate_research_capacity(
     }
 
 
+@serialized_coverage_write
 def apply_research_allocation(
     allocation: Mapping[str, Any],
     *,
@@ -828,6 +831,10 @@ def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
             "research allocation policy fields do not match contract"
         )
     result = dict(policy)
+    result["triage_administrative_batch_size"] = _positive_int(
+        policy.get("triage_administrative_batch_size"),
+        "triage_administrative_batch_size",
+    )
     result["candidate_pool_capacity_per_cycle"] = _positive_int(
         policy.get("candidate_pool_capacity_per_cycle"),
         "candidate_pool_capacity_per_cycle",

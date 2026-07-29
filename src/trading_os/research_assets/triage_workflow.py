@@ -8,14 +8,17 @@ from pathlib import Path
 from typing import Any, Mapping
 from urllib.parse import urlparse
 
+from .company_timeline import publish_rapid_triage_to_company_timeline
 from .coverage_store import (
     RESEARCH_QUEUE_FILE,
     SCREENING_FILE,
     read_jsonl,
+    serialized_coverage_write,
     write_jsonl,
 )
 from .research_allocation import ResearchAllocationError
 from .sealing import seal_json, verify_sealed
+from .triage_cohort import load_rapid_triage_cohort
 
 PACKAGE_KEYS = {
     "schema_version",
@@ -27,6 +30,14 @@ PACKAGE_KEYS = {
     "price_as_of",
     "price_source_id",
     "current_price",
+    "review_mode",
+    "prior_research_path",
+    "trigger_context",
+    "business_summary",
+    "change_summary",
+    "normalized_earnings_view",
+    "expectations_view",
+    "counterevidence",
     "business_legibility",
     "survival_status",
     "governance_status",
@@ -49,14 +60,31 @@ SOURCE_KEYS = {
     "local_path",
     "supports",
 }
-TRIGGER_KEYS = {"type", "condition", "reason"}
+TRIGGER_KEYS = {"trigger_id", "type", "condition", "reason"}
 SOURCE_TIERS = {"S1", "S2", "S3"}
-TRIGGER_TYPES = {"filing", "price", "event", "thesis"}
+TRIGGER_TYPES = {"filing", "price", "date", "event", "thesis", "ttl"}
+REVIEW_MODES = {"baseline_recheck", "triggered_update"}
+DECISION_PACKAGE_KEYS = {
+    "schema_version",
+    "cycle_id",
+    "comparison_sha256",
+    "decisions",
+    "provenance",
+}
+DECISION_KEYS = {
+    "symbol",
+    "decision",
+    "reason",
+    "decisive_question",
+    "counterevidence_considered",
+}
+DECISIONS = {"select_quick_profile", "defer"}
 SYMBOL_RE = re.compile(r"^CN:[0-9]{6}$")
 CYCLE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SOURCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 
 
+@serialized_coverage_write
 def claim_rapid_triage_task(
     *,
     root: str | Path,
@@ -64,11 +92,13 @@ def claim_rapid_triage_task(
     claimed_at: dt.datetime,
     symbol: str | None = None,
     lens: str | None = None,
+    cycle_id: str | None = None,
 ) -> dict[str, Any]:
     """Claim one L1.5 task while binding one agent to one company."""
 
     _aware(claimed_at, "claimed_at")
     agent_name = _text(agent, "agent")
+    cycle = _cycle(cycle_id) if cycle_id is not None else None
     base = Path(root)
     queue_path = base / RESEARCH_QUEUE_FILE
     queue = read_jsonl(queue_path)
@@ -87,8 +117,12 @@ def claim_rapid_triage_task(
         current = running[0]
         if symbol is not None and current.get("symbol") != symbol:
             raise ResearchAllocationError(
-                f"agent already has a different rapid-triage task: "
-                f"{current.get('symbol')}"
+                f"agent already has a different rapid-triage task: {current.get('symbol')}"
+            )
+        if cycle is not None and current.get("triage_cycle_id") != cycle:
+            raise ResearchAllocationError(
+                f"agent already has a rapid-triage task in another cycle: "
+                f"{current.get('triage_cycle_id')}"
             )
         return _claim_payload(current, idempotent=True)
 
@@ -98,24 +132,22 @@ def claim_rapid_triage_task(
         if item.get("task_type") == "rapid_triage"
         and item.get("status") == "pending"
         and item.get("assigned_agent") is None
-        and bool(item.get("selected_by"))
+        and (_has_cohort_binding(item) or bool(item.get("selected_by")))
     ]
+    if cycle is not None:
+        candidates = [item for item in candidates if item.get("triage_cycle_id") == cycle]
     if symbol is not None:
         _symbol(symbol)
         candidates = [item for item in candidates if item.get("symbol") == symbol]
     if lens is not None:
         lens_name = _text(lens, "lens")
-        candidates = [
-            item
-            for item in candidates
-            if lens_name in (item.get("selected_by") or [])
-        ]
+        candidates = [item for item in candidates if lens_name in (item.get("selected_by") or [])]
     if not candidates:
         raise ResearchAllocationError("no eligible rapid-triage task is available")
-    candidates.sort(
-        key=lambda item: (int(item.get("priority", 5)), str(item.get("symbol")))
-    )
+    candidates.sort(key=_claim_order)
     selected = dict(candidates[0])
+    if _has_cohort_binding(selected):
+        _verify_queue_cohort_binding(base, selected, expected_cycle=cycle)
     selected.update(
         {
             "status": "running",
@@ -127,14 +159,12 @@ def claim_rapid_triage_task(
     )
     write_jsonl(
         queue_path,
-        [
-            selected if item.get("symbol") == selected["symbol"] else item
-            for item in queue
-        ],
+        [selected if item.get("symbol") == selected["symbol"] else item for item in queue],
     )
     return _claim_payload(selected, idempotent=False)
 
 
+@serialized_coverage_write
 def release_rapid_triage_task(
     *,
     root: str | Path,
@@ -156,9 +186,7 @@ def release_rapid_triage_task(
     if record.get("task_type") != "rapid_triage":
         raise ResearchAllocationError(f"task is not rapid triage: {ticker_symbol}")
     if record.get("status") != "running":
-        raise ResearchAllocationError(
-            f"rapid-triage task is not running: {ticker_symbol}"
-        )
+        raise ResearchAllocationError(f"rapid-triage task is not running: {ticker_symbol}")
     if record.get("assigned_agent") != agent_name:
         raise ResearchAllocationError(
             f"only the assigned agent can release rapid triage: {ticker_symbol}"
@@ -198,6 +226,7 @@ def release_rapid_triage_task(
     }
 
 
+@serialized_coverage_write
 def record_rapid_triage_package(
     package: Mapping[str, Any],
     *,
@@ -217,12 +246,32 @@ def record_rapid_triage_package(
     screening = read_jsonl(screening_path)
     queue_record = _one(queue, symbol, "research queue")
     screening_record = _one(screening, symbol, "screening")
+    evaluation = evaluate_rapid_triage(normalized)
+    timestamp = recorded_at.strftime("%Y%m%dT%H%M%S%z")
+    artifact_dir = base / "triage" / normalized["cycle_id"] / ticker
+    package_path = artifact_dir / f"{timestamp}.triage.json"
+    repository_root = base.parent.parent
+    relative_path = package_path.relative_to(repository_root).as_posix()
+
+    repeated = _verify_rapid_triage_record_replay(
+        base=base,
+        queue=queue,
+        queue_record=queue_record,
+        screening_record=screening_record,
+        normalized=normalized,
+        evaluation=evaluation,
+        package_path=package_path,
+        relative_path=relative_path,
+        recorded_at=recorded_at,
+    )
+    if repeated is not None:
+        return repeated
+
     if queue_record.get("task_type") != "rapid_triage":
         raise ResearchAllocationError(f"task is not rapid triage: {symbol}")
     if queue_record.get("status") not in {"pending", "running"}:
         raise ResearchAllocationError(
-            f"rapid triage cannot be recorded from status "
-            f"{queue_record.get('status')}: {symbol}"
+            f"rapid triage cannot be recorded from status {queue_record.get('status')}: {symbol}"
         )
     if normalized["company_name"] != queue_record.get("name"):
         raise ResearchAllocationError(f"company name does not match queue: {symbol}")
@@ -231,34 +280,29 @@ def record_rapid_triage_package(
         raise ResearchAllocationError(
             f"rapid-triage provenance agent does not match assignment: {symbol}"
         )
-    allocation_sha = queue_record.get("allocation_sha256")
-    if not isinstance(allocation_sha, str) or len(allocation_sha) != 64:
-        raise ResearchAllocationError(f"rapid triage lacks allocation binding: {symbol}")
-    bound_cycles = {
-        item.get("triage_cycle_id")
-        for item in queue
-        if item.get("allocation_sha256") == allocation_sha
-        and item.get("triage_cycle_id") is not None
-    }
-    if bound_cycles and bound_cycles != {normalized["cycle_id"]}:
-        raise ResearchAllocationError(
-            f"allocation is already bound to another triage cycle: "
-            f"{sorted(bound_cycles)}"
-        )
+    binding = _resolve_triage_binding(
+        base,
+        queue,
+        queue_record,
+        expected_cycle=normalized["cycle_id"],
+    )
     _validate_local_sources(normalized["sources"], repository_root=base.parent.parent)
+    _validate_prior_research_path(
+        normalized["prior_research_path"], repository_root=base.parent.parent
+    )
 
-    evaluation = evaluate_rapid_triage(normalized)
-    timestamp = recorded_at.strftime("%Y%m%dT%H%M%S%z")
-    artifact_dir = base / "triage" / normalized["cycle_id"] / ticker
-    package_path = artifact_dir / f"{timestamp}.triage.json"
     sealed = seal_json(
         package_path,
         normalized,
         artifact_type="rapid_triage_package",
         sealed_at=recorded_at,
     )
-    repository_root = base.parent.parent
-    relative_path = package_path.relative_to(repository_root).as_posix()
+    timeline_result = publish_rapid_triage_to_company_timeline(
+        repository_root=repository_root,
+        package_path=package_path,
+        published_at=recorded_at,
+        review_mode=normalized["review_mode"],
+    )
 
     updated_screening = dict(screening_record)
     updated_screening.update(
@@ -268,7 +312,7 @@ def record_rapid_triage_package(
             "evidence": [
                 f"rapid_triage:{relative_path}",
                 f"rapid_triage_sha256:{sealed.sha256}",
-                f"allocation_sha256:{allocation_sha}",
+                f"{binding['evidence_prefix']}:{binding['sha256']}",
                 f"triage_reason_codes:{','.join(normalized['reason_codes'])}",
             ],
             "next_action": _disposition_action(evaluation["disposition"]),
@@ -286,9 +330,11 @@ def record_rapid_triage_package(
             "agent": normalized["provenance"]["agent"],
             "result_path": relative_path,
             "disposition": evaluation["disposition"],
+            "cycle_id": normalized["cycle_id"],
         }
     )
     updated_queue = dict(queue_record)
+    updated_queue.pop("triage_priority_score", None)
     updated_queue.update(
         {
             "status": "completed",
@@ -299,16 +345,14 @@ def record_rapid_triage_package(
             "stage_history": history,
             "triage_cycle_id": normalized["cycle_id"],
             "triage_disposition": evaluation["disposition"],
-            "triage_priority_score": evaluation["research_priority_score"],
+            "triage_review_mode": normalized["review_mode"],
             "revisit_triggers": normalized["revisit_triggers"],
+            "company_timeline_report_path": timeline_result["company_report_path"],
         }
     )
     write_jsonl(
         screening_path,
-        [
-            updated_screening if item.get("symbol") == symbol else item
-            for item in screening
-        ],
+        [updated_screening if item.get("symbol") == symbol else item for item in screening],
     )
     write_jsonl(
         queue_path,
@@ -318,25 +362,205 @@ def record_rapid_triage_package(
         "schema_version": 1,
         "symbol": symbol,
         "disposition": evaluation["disposition"],
-        "research_priority_score": evaluation["research_priority_score"],
         "triage_path": relative_path,
         "triage_sha256": sealed.sha256,
+        "company_timeline_report_path": timeline_result["company_report_path"],
+        "awaiting_cohort_comparison": (evaluation["disposition"] == "triage_candidate"),
+        "idempotent": False,
+        "portfolio_action": None,
+    }
+
+
+def _verify_rapid_triage_record_replay(
+    *,
+    base: Path,
+    queue: list[dict[str, Any]],
+    queue_record: Mapping[str, Any],
+    screening_record: Mapping[str, Any],
+    normalized: Mapping[str, Any],
+    evaluation: Mapping[str, Any],
+    package_path: Path,
+    relative_path: str,
+    recorded_at: dt.datetime,
+) -> dict[str, Any] | None:
+    """Verify a completed record without rematerializing mutable coverage state."""
+
+    cycle = str(normalized["cycle_id"])
+    completed = [
+        item
+        for item in queue_record.get("stage_history") or []
+        if isinstance(item, Mapping)
+        and item.get("stage") == "rapid_triage"
+        and item.get("status") == "completed"
+        and item.get("cycle_id") == cycle
+    ]
+    if not completed:
+        if (
+            queue_record.get("task_type") == "rapid_triage"
+            and queue_record.get("status") == "completed"
+            and queue_record.get("triage_cycle_id") == cycle
+        ):
+            raise ResearchAllocationError(
+                f"completed rapid triage lacks a unique stage-history record: "
+                f"{normalized['symbol']}"
+            )
+        return None
+    if len(completed) != 1:
+        raise ResearchAllocationError(
+            f"rapid triage has duplicate completed stage-history records: {normalized['symbol']}"
+        )
+
+    history = completed[0]
+    expected_history = {
+        "finished_at": recorded_at.isoformat(),
+        "agent": normalized["provenance"]["agent"],
+        "result_path": relative_path,
+        "disposition": evaluation["disposition"],
+        "cycle_id": cycle,
+    }
+    mismatched_history = [
+        field for field, expected in expected_history.items() if history.get(field) != expected
+    ]
+    if mismatched_history:
+        raise ResearchAllocationError(
+            "rapid-triage replay conflicts with completed stage history "
+            f"({', '.join(mismatched_history)}): {normalized['symbol']}"
+        )
+
+    try:
+        sealed = verify_sealed(package_path)
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"completed rapid-triage package is not validly sealed: {normalized['symbol']}"
+        ) from exc
+    if sealed.artifact_type != "rapid_triage_package":
+        raise ResearchAllocationError(
+            f"completed rapid-triage package has the wrong artifact type: {normalized['symbol']}"
+        )
+    if sealed.sealed_at != recorded_at:
+        raise ResearchAllocationError(
+            f"rapid-triage replay recorded_at conflicts with the package seal: "
+            f"{normalized['symbol']}"
+        )
+    try:
+        existing_package = json.loads(package_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError(
+            f"completed rapid-triage package cannot be read: {normalized['symbol']}"
+        ) from exc
+    if existing_package != normalized:
+        raise ResearchAllocationError(
+            f"rapid-triage replay conflicts with the sealed package: {normalized['symbol']}"
+        )
+
+    binding = _resolve_cycle_cohort(base, queue, cycle)
+    if normalized["symbol"] not in {item.get("symbol") for item in binding["members"]}:
+        raise ResearchAllocationError(
+            f"rapid-triage replay is not a member of its sealed cycle: {normalized['symbol']}"
+        )
+    binding["evidence_prefix"] = (
+        "triage_cohort_sha256"
+        if binding["type"] == "cohort"
+        else "allocation_sha256"
+    )
+    coverage_advanced = _rapid_triage_coverage_has_verified_successor(
+        base,
+        queue_record,
+        cycle=cycle,
+        symbol=str(normalized["symbol"]),
+    )
+    if not coverage_advanced:
+        expected_queue = {
+            "triage_cycle_id": cycle,
+            "triage_disposition": evaluation["disposition"],
+            "triage_review_mode": normalized["review_mode"],
+            "revisit_triggers": normalized["revisit_triggers"],
+        }
+        mismatched_queue = [
+            field
+            for field, expected in expected_queue.items()
+            if queue_record.get(field) != expected
+        ]
+        if mismatched_queue:
+            raise ResearchAllocationError(
+                "rapid-triage queue materialization is inconsistent "
+                f"({', '.join(mismatched_queue)}): {normalized['symbol']}"
+            )
+
+        expected_screening = {
+            "triage_cycle_id": cycle,
+            "triage_result_path": relative_path,
+            "triage_recorded_at": recorded_at.isoformat(),
+        }
+        mismatched_screening = [
+            field
+            for field, expected in expected_screening.items()
+            if screening_record.get(field) != expected
+        ]
+        evidence = screening_record.get("evidence")
+        expected_evidence = {
+            f"rapid_triage:{relative_path}",
+            f"rapid_triage_sha256:{sealed.sha256}",
+            f"{binding['evidence_prefix']}:{binding['sha256']}",
+            f"triage_reason_codes:{','.join(normalized['reason_codes'])}",
+        }
+        if not isinstance(evidence, list) or not expected_evidence.issubset(set(evidence)):
+            mismatched_screening.append("evidence")
+        if mismatched_screening:
+            raise ResearchAllocationError(
+                "rapid-triage screening materialization is inconsistent "
+                f"({', '.join(mismatched_screening)}): {normalized['symbol']}"
+            )
+
+    repository_root = base.parent.parent
+
+    timeline_result = publish_rapid_triage_to_company_timeline(
+        repository_root=repository_root,
+        package_path=package_path,
+        published_at=recorded_at,
+        review_mode=str(normalized["review_mode"]),
+    )
+    company_report_path = timeline_result.get("company_report_path")
+    if (
+        timeline_result.get("idempotent") is not True
+        or not isinstance(company_report_path, str)
+        or timeline_result.get("source_package_sha256") != sealed.sha256
+    ):
+        raise ResearchAllocationError(
+            f"rapid-triage company timeline replay was not idempotent: {normalized['symbol']}"
+        )
+    if (
+        not coverage_advanced
+        and queue_record.get("company_timeline_report_path") != company_report_path
+    ):
+        raise ResearchAllocationError(
+            f"rapid-triage queue and company timeline paths disagree: {normalized['symbol']}"
+        )
+    return {
+        "schema_version": 1,
+        "symbol": normalized["symbol"],
+        "disposition": evaluation["disposition"],
+        "triage_path": relative_path,
+        "triage_sha256": sealed.sha256,
+        "company_timeline_report_path": company_report_path,
         "awaiting_cohort_comparison": (
             evaluation["disposition"] == "triage_candidate"
+            and not coverage_advanced
+            and not isinstance(queue_record.get("triage_selection_path"), str)
         ),
+        "idempotent": True,
         "portfolio_action": None,
     }
 
 
 def evaluate_rapid_triage(package: Mapping[str, Any]) -> dict[str, Any]:
-    """Derive a stop/candidate result and a research-priority score."""
+    """Derive a stop/candidate disposition from one Agent's explicit findings."""
 
     survival = package["survival_status"]
     governance = package["governance_status"]
     legibility = package["business_legibility"]
     valuation = package["valuation_signal"]
     research_value = package["research_value"]
-    earnings = package["earnings_legibility"]
     if survival == "fail" or governance == "uninvestable":
         disposition = "conditional_stop"
     elif legibility == "opaque":
@@ -348,320 +572,385 @@ def evaluate_rapid_triage(package: Mapping[str, Any]) -> dict[str, Any]:
     else:
         disposition = "triage_candidate"
     if disposition != "triage_candidate" and not package["revisit_triggers"]:
-        raise ResearchAllocationError(
-            f"{disposition} rapid triage requires a revisit trigger"
-        )
+        raise ResearchAllocationError(f"{disposition} rapid triage requires a revisit trigger")
 
-    score = (
-        {"high": 6, "medium": 3, "low": 0}[research_value]
-        + {"attractive": 6, "possible": 3, "unknown": 0, "unattractive": -10}[
-            valuation
-        ]
-        + {"clear": 3, "uncertain": 1, "opaque": -10}[legibility]
-        + {"pass": 2, "concern": 0, "fail": -10}[survival]
-        + {"acceptable": 2, "concern": 0, "uninvestable": -10}[governance]
-        + {"plausible": 2, "uncertain": 0, "unavailable": -3}[earnings]
-    )
     return {
         "schema_version": 1,
         "symbol": package["symbol"],
         "disposition": disposition,
-        "research_priority_score": score,
         "portfolio_action": None,
     }
 
 
-def finalize_rapid_triage_cycle(
-    *,
-    root: str | Path,
-    cycle_id: str,
-    policy: Mapping[str, Any],
-    finalized_at: dt.datetime,
+def build_rapid_triage_comparison_packet(
+    *, root: str | Path, cycle_id: str, created_at: dt.datetime
 ) -> dict[str, Any]:
-    """Compare the complete sealed cohort before granting formal-profile budget."""
+    """Seal a score-free packet for an independent cross-company Agent."""
 
-    _aware(finalized_at, "finalized_at")
+    _aware(created_at, "created_at")
     cycle = _cycle(cycle_id)
     base = Path(root)
-    queue_path = base / RESEARCH_QUEUE_FILE
-    screening_path = base / SCREENING_FILE
-    queue = read_jsonl(queue_path)
-    screening = read_jsonl(screening_path)
-    selection_path = base / "triage" / cycle / "selection.json"
-    if selection_path.exists():
-        verified = verify_sealed(selection_path)
-        payload = json.loads(selection_path.read_text(encoding="utf-8"))
-        relative = selection_path.relative_to(base.parent.parent).as_posix()
-        selected_symbols = [
-            item["symbol"]
-            for item in payload["ranking"]
-            if item["selected_for_quick_profile"]
-        ]
-        queue_by_symbol = {item["symbol"]: item for item in queue}
-        if not all(
-            queue_by_symbol.get(symbol, {}).get("task_type") == "quick_profile"
-            and queue_by_symbol[symbol].get("triage_selection_path") == relative
-            for symbol in selected_symbols
-        ):
+    repository_root = base.parent.parent
+    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    binding = _resolve_cycle_cohort(base, queue, cycle)
+    comparison_path = base / "triage" / cycle / "comparison.json"
+    relative = comparison_path.relative_to(repository_root).as_posix()
+    if comparison_path.exists():
+        sealed = verify_sealed(comparison_path)
+        payload = json.loads(comparison_path.read_text(encoding="utf-8"))
+        if payload.get("cycle_id") != cycle or payload.get("binding_sha256") != binding["sha256"]:
             raise ResearchAllocationError(
-                "sealed rapid-triage selection exists but queue materialization "
-                "is incomplete"
+                f"sealed comparison packet conflicts with cycle binding: {cycle}"
             )
         return {
             "schema_version": 1,
             "cycle_id": cycle,
             "cohort_count": payload["cohort_count"],
             "eligible_count": payload["eligible_count"],
-            "selected_count": payload["selected_count"],
-            "selected_symbols": selected_symbols,
-            "selection_path": relative,
-            "selection_sha256": verified.sha256,
+            "comparison_path": relative,
+            "comparison_sha256": sealed.sha256,
             "idempotent": True,
             "portfolio_action": None,
         }
-    recorded = [item for item in queue if item.get("triage_cycle_id") == cycle]
-    if not recorded:
-        raise ResearchAllocationError(f"rapid-triage cycle is empty: {cycle}")
-    allocation_shas = {item.get("allocation_sha256") for item in recorded}
-    if len(allocation_shas) != 1:
-        raise ResearchAllocationError("rapid-triage cycle spans multiple allocations")
-    allocation_sha = next(iter(allocation_shas))
-    cohort = [
-        item
-        for item in queue
-        if item.get("allocation_sha256") == allocation_sha
-        and bool(item.get("selected_by"))
-    ]
-    incomplete = [
-        item["symbol"]
-        for item in cohort
-        if item.get("task_type") != "rapid_triage"
-        or item.get("status") != "completed"
-        or item.get("triage_cycle_id") != cycle
-        or not item.get("triage_disposition")
-    ]
-    if incomplete:
-        raise ResearchAllocationError(
-            "completion-order promotion is forbidden; rapid-triage cohort is "
-            f"incomplete: {incomplete[:10]}"
-        )
-    for item in cohort:
-        result_path = item.get("result_path")
-        if not isinstance(result_path, str):
-            raise ResearchAllocationError(
-                f"rapid-triage result path missing: {item['symbol']}"
-            )
-        verify_sealed(base.parent.parent / result_path)
 
-    capacity = _policy_positive_int(policy, "quick_profile_capacity_per_cycle")
-    quick_budget = _policy_budget(policy, "quick_profile")
-    eligible = [
-        item for item in cohort if item.get("triage_disposition") == "triage_candidate"
-    ]
-    ranked = sorted(
-        eligible,
-        key=lambda item: (
-            -_comparison_score(item),
-            int(item.get("priority", 5)),
-            str(item["symbol"]),
-        ),
+    packages = _completed_cohort_packages(
+        binding["members"], cycle=cycle, repository_root=repository_root
     )
-    risk_cap = _policy_risk_cluster_cap(policy, "quick_profile")
-    selected, capped_symbols = _select_with_risk_cluster_cap(
-        ranked,
-        capacity=capacity,
-        cap=risk_cap,
-    )
-    selected_symbols = {item["symbol"] for item in selected}
-    comparison_rows = []
-    for rank, item in enumerate(ranked, 1):
-        comparison_rows.append(
+    rows: list[dict[str, Any]] = []
+    for ordinal, (queued, package, sealed) in enumerate(packages, 1):
+        disposition = queued["triage_disposition"]
+        rows.append(
             {
-                "rank": rank,
-                "symbol": item["symbol"],
-                "name": item["name"],
-                "research_priority_score": item["triage_priority_score"],
-                "comparison_score": _comparison_score(item),
-                "selected_for_quick_profile": item["symbol"] in selected_symbols,
-                "selected_by": item.get("selected_by") or [],
-                "matched_lenses": item.get("matched_lenses") or [],
-                "economic_risk_cluster": item.get("economic_risk_cluster"),
-                "selection_reason": (
-                    "selected_within_risk_cluster_cap"
-                    if item["symbol"] in selected_symbols
-                    else "risk_cluster_cap_reached"
-                    if item["symbol"] in capped_symbols
-                    else "lower_cross_company_priority"
-                ),
+                "ordinal": ordinal,
+                "symbol": queued["symbol"],
+                "name": queued["name"],
+                "triage_disposition": disposition,
+                "eligible_for_quick_profile": disposition == "triage_candidate",
+                "review_mode": package.get("review_mode"),
+                "prior_research_path": package.get("prior_research_path"),
+                "trigger_context": package.get("trigger_context"),
+                "business_summary": package.get("business_summary"),
+                "change_summary": package.get("change_summary"),
+                "normalized_earnings_view": package.get("normalized_earnings_view"),
+                "expectations_view": package.get("expectations_view"),
+                "counterevidence": package.get("counterevidence") or [],
+                "decisive_question": package.get("decisive_question"),
+                "reason_codes": package.get("reason_codes") or [],
+                "revisit_triggers": package.get("revisit_triggers") or [],
+                "triage_path": _rapid_triage_result_path(queued, cycle),
+                "triage_sha256": sealed.sha256,
+                "research_agent": (package.get("provenance") or {}).get("agent"),
             }
         )
-    selection_payload = {
+    payload = {
         "schema_version": 1,
         "cycle_id": cycle,
-        "allocation_sha256": allocation_sha,
-        "finalized_at": finalized_at.isoformat(),
-        "cohort_count": len(cohort),
-        "eligible_count": len(eligible),
-        "quick_profile_capacity": capacity,
-        "risk_cluster_cap": risk_cap,
-        "selected_count": len(selected),
-        "principle": _policy_text(policy, "comparison_principle"),
-        "ranking": comparison_rows,
+        "binding_type": binding["type"],
+        "binding_path": binding["path"],
+        "binding_sha256": binding["sha256"],
+        "created_at": created_at.isoformat(),
+        "cohort_count": len(rows),
+        "eligible_count": sum(row["eligible_for_quick_profile"] for row in rows),
+        "principle": (
+            "Every company was reviewed before allocation. The packet is in frozen "
+            "cohort order and contains no programmatic investment score or ranking."
+        ),
+        "rows": rows,
         "portfolio_action": None,
     }
-    sealed_selection = seal_json(
-        selection_path,
-        selection_payload,
-        artifact_type="rapid_triage_cross_company_selection",
-        sealed_at=finalized_at,
+    sealed = seal_json(
+        comparison_path,
+        payload,
+        artifact_type="rapid_triage_comparison_packet",
+        sealed_at=created_at,
     )
-    relative_selection = selection_path.relative_to(base.parent.parent).as_posix()
-
-    screen_by_symbol = {item["symbol"]: dict(item) for item in screening}
-    queue_by_symbol = {item["symbol"]: dict(item) for item in queue}
-    for item in ranked:
-        symbol = item["symbol"]
-        screen = screen_by_symbol[symbol]
-        queued = queue_by_symbol[symbol]
-        if symbol in selected_symbols:
-            screen.update(
-                {
-                    "decision": "quick_profile",
-                    "reason": "完整快速甄别批次横向比较后获得正式画像预算。",
-                    "evidence": list(screen.get("evidence") or [])
-                    + [
-                        f"triage_selection:{relative_selection}",
-                        f"triage_selection_sha256:{sealed_selection.sha256}",
-                    ],
-                    "next_action": "完成一小时级正式投资画像。",
-                    "triage_comparison_rank": next(
-                        row["rank"]
-                        for row in comparison_rows
-                        if row["symbol"] == symbol
-                    ),
-                }
-            )
-            queued.update(
-                {
-                    "task_type": "quick_profile",
-                    "status": "pending",
-                    "assigned_agent": None,
-                    "started_at": None,
-                    "finished_at": None,
-                    "failure_reason": None,
-                    "reason": "完整快速甄别批次横向比较后获得正式画像预算。",
-                    "next_action": "完成正式画像；不得直接给买入或仓位。",
-                    "effort_budget_hours": quick_budget,
-                    "preceding_stage": "rapid_triage",
-                    "stop_conditions": [
-                        "不存在可信的10%回报路径",
-                        "生存、治理或正常化盈利无法建立",
-                        "决定性未知数无法由公开证据解决",
-                    ],
-                    "triage_selection_path": relative_selection,
-                }
-            )
-        else:
-            screen.update(
-                {
-                    "decision": "catalog",
-                    "reason": "快速甄别存在研究路径，但横向比较后未获得本周期正式画像容量。",
-                    "evidence": list(screen.get("evidence") or [])
-                    + [
-                        f"triage_selection:{relative_selection}",
-                        f"triage_selection_sha256:{sealed_selection.sha256}",
-                    ],
-                    "next_action": "等待价格、财报、事件、论点变化或下一周期重新竞争。",
-                }
-            )
-            queued.update(
-                {
-                    "next_action": "等待结构化触发器或下一周期重新竞争正式画像预算。",
-                    "triage_selection_path": relative_selection,
-                }
-            )
-    write_jsonl(screening_path, list(screen_by_symbol.values()))
-    write_jsonl(queue_path, list(queue_by_symbol.values()))
     return {
         "schema_version": 1,
         "cycle_id": cycle,
-        "cohort_count": len(cohort),
-        "eligible_count": len(eligible),
-        "selected_count": len(selected),
-        "selected_symbols": [item["symbol"] for item in selected],
-        "selection_path": relative_selection,
-        "selection_sha256": sealed_selection.sha256,
+        "cohort_count": len(rows),
+        "eligible_count": payload["eligible_count"],
+        "comparison_path": relative,
+        "comparison_sha256": sealed.sha256,
         "idempotent": False,
         "portfolio_action": None,
     }
 
 
-def rapid_triage_cycle_status(
-    *, root: str | Path, cycle_id: str
+@serialized_coverage_write
+def finalize_rapid_triage_cycle(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    policy: Mapping[str, Any],
+    decisions: Mapping[str, Any],
+    finalized_at: dt.datetime,
 ) -> dict[str, Any]:
+    """Apply an independent Agent's explicit decisions to a complete cohort."""
+
+    _aware(finalized_at, "finalized_at")
     cycle = _cycle(cycle_id)
     base = Path(root)
-    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
-    recorded = [item for item in queue if item.get("triage_cycle_id") == cycle]
-    allocation_shas = {item.get("allocation_sha256") for item in recorded}
-    allocation_sha = next(iter(allocation_shas), None) if len(allocation_shas) == 1 else None
-    cohort = (
-        [
-            item
-            for item in queue
-            if item.get("allocation_sha256") == allocation_sha
-            and bool(item.get("selected_by"))
-        ]
-        if allocation_sha is not None
-        else recorded
+    repository_root = base.parent.parent
+    queue_path = base / RESEARCH_QUEUE_FILE
+    screening_path = base / SCREENING_FILE
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+    binding = _resolve_cycle_cohort(base, queue, cycle)
+    _completed_cohort_packages(binding["members"], cycle=cycle, repository_root=repository_root)
+    comparison_path = base / "triage" / cycle / "comparison.json"
+    if not comparison_path.exists():
+        raise ResearchAllocationError(
+            "rapid-triage comparison packet is missing; run triage-compare first"
+        )
+    sealed_comparison = verify_sealed(comparison_path)
+    comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+    if comparison.get("cycle_id") != cycle or comparison.get("binding_sha256") != binding["sha256"]:
+        raise ResearchAllocationError("comparison packet does not match cohort binding")
+    comparison_rows = comparison.get("rows", [])
+    if not isinstance(comparison_rows, list) or not all(
+        isinstance(row, Mapping) for row in comparison_rows
+    ):
+        raise ResearchAllocationError("comparison packet rows are invalid")
+    eligible_rows = [
+        row for row in comparison_rows if row.get("eligible_for_quick_profile") is True
+    ]
+    normalized_decision = _normalize_decision_package(
+        decisions,
+        cycle=cycle,
+        comparison_sha256=sealed_comparison.sha256,
+        comparison_rows=comparison_rows,
+        finalized_at=finalized_at,
     )
-    recorded_symbols = {item["symbol"] for item in recorded}
+    if _datetime(
+        normalized_decision["provenance"]["generated_at"],
+        "decision.provenance.generated_at",
+    ) < _datetime(comparison.get("created_at"), "comparison.created_at"):
+        raise ResearchAllocationError("Agent decisions cannot predate the sealed comparison packet")
+    research_agents = {
+        row.get("research_agent")
+        for row in comparison.get("rows", [])
+        if isinstance(row.get("research_agent"), str)
+    }
+    if normalized_decision["provenance"]["agent"] in research_agents:
+        raise ResearchAllocationError(
+            "cross-company allocation Agent must be independent of company triage Agents"
+        )
+
+    capacity = _policy_positive_int(policy, "quick_profile_capacity_per_cycle")
+    quick_budget = _policy_budget(policy, "quick_profile")
+    selected_symbols = [
+        item["symbol"]
+        for item in normalized_decision["decisions"]
+        if item["decision"] == "select_quick_profile"
+    ]
+    if len(selected_symbols) > capacity:
+        raise ResearchAllocationError(
+            f"Agent decisions exceed quick-profile capacity: {len(selected_symbols)} > {capacity}"
+        )
+    risk_cluster_cap = _policy_stage_cap(
+        policy,
+        mapping_field="risk_cluster_caps",
+        stage="quick_profile",
+    )
+    if len(selected_symbols) > risk_cluster_cap:
+        raise ResearchAllocationError(
+            "Agent decisions exceed the conservative unclassified risk-cluster cap: "
+            f"{len(selected_symbols)} > {risk_cluster_cap}; establish auditable "
+            "economic-risk clusters before using the remaining quick-profile capacity"
+        )
+    selected_set = set(selected_symbols)
+    decisions_by_symbol = {item["symbol"]: item for item in normalized_decision["decisions"]}
+    decision_rows = [
+        {
+            "ordinal": row["ordinal"],
+            "symbol": row["symbol"],
+            "name": row["name"],
+            "selected_for_quick_profile": row["symbol"] in selected_set,
+            "selection_reason": decisions_by_symbol[row["symbol"]]["reason"],
+            "decisive_question": decisions_by_symbol[row["symbol"]]["decisive_question"],
+            "counterevidence_considered": decisions_by_symbol[row["symbol"]][
+                "counterevidence_considered"
+            ],
+        }
+        for row in comparison_rows
+    ]
+    selection_path = base / "triage" / cycle / "selection.json"
+    relative_selection = selection_path.relative_to(repository_root).as_posix()
+    selection_payload = {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "binding_type": binding["type"],
+        "binding_path": binding["path"],
+        "binding_sha256": binding["sha256"],
+        "comparison_path": comparison_path.relative_to(repository_root).as_posix(),
+        "comparison_sha256": sealed_comparison.sha256,
+        "finalized_at": finalized_at.isoformat(),
+        "cohort_count": len(binding["members"]),
+        "eligible_count": len(eligible_rows),
+        "reviewed_count": len(decision_rows),
+        "quick_profile_capacity": capacity,
+        "quick_profile_effort_budget_hours": quick_budget,
+        "quick_profile_risk_cluster_cap": risk_cluster_cap,
+        "risk_cluster_mode": "conservative_unclassified",
+        "selected_count": len(selected_symbols),
+        "principle": _policy_text(policy, "comparison_principle"),
+        "agent_decision": normalized_decision,
+        "decisions": decision_rows,
+        # Retained as a compatibility view for the downstream profile workflow.
+        # Its order is the frozen cohort order, not an investment ranking.
+        "ranking": decision_rows,
+        "portfolio_action": None,
+    }
+    selection_existed = selection_path.exists()
+    legacy_policy_unbound = False
+    if selection_existed:
+        sealed_selection = verify_sealed(selection_path)
+        if sealed_selection.artifact_type != "rapid_triage_cross_company_selection":
+            raise ResearchAllocationError(
+                f"sealed rapid-triage selection has the wrong artifact type: {cycle}"
+            )
+        existing = json.loads(selection_path.read_text(encoding="utf-8"))
+        expected_replay = {
+            key: value for key, value in selection_payload.items() if key != "finalized_at"
+        }
+        actual_replay = {key: value for key, value in existing.items() if key != "finalized_at"}
+        legacy_policy_unbound = "quick_profile_effort_budget_hours" not in actual_replay
+        for legacy_field in (
+            "quick_profile_effort_budget_hours",
+            "quick_profile_risk_cluster_cap",
+            "risk_cluster_mode",
+        ):
+            if legacy_field not in actual_replay:
+                expected_replay.pop(legacy_field)
+        if actual_replay != expected_replay:
+            raise ResearchAllocationError(
+                f"sealed rapid-triage selection conflicts with Agent decisions: {cycle}"
+            )
+        materialization_payload = existing
+    else:
+        sealed_selection = seal_json(
+            selection_path,
+            selection_payload,
+            artifact_type="rapid_triage_cross_company_selection",
+            sealed_at=finalized_at,
+        )
+        materialization_payload = selection_payload
+
+    updated_screening, updated_queue, screening_changed, queue_changed = (
+        _materialize_rapid_triage_selection(
+            screening=screening,
+            queue=queue,
+            cycle=cycle,
+            decision_rows=materialization_payload["decisions"],
+            decisions_by_symbol=decisions_by_symbol,
+            comparison_path=materialization_payload["comparison_path"],
+            comparison_sha256=sealed_comparison.sha256,
+            selection_path=relative_selection,
+            selection_sha256=sealed_selection.sha256,
+            quick_budget=quick_budget,
+        )
+    )
+    if selection_existed and legacy_policy_unbound and queue_changed:
+        raise ResearchAllocationError(
+            "sealed rapid-triage selection predates recoverable policy binding; "
+            f"refusing to guess queue budget: {cycle}"
+        )
+    if screening_changed:
+        write_jsonl(screening_path, updated_screening)
+    if queue_changed:
+        write_jsonl(queue_path, updated_queue)
+    return _selection_result(
+        materialization_payload,
+        selection_path=relative_selection,
+        selection_sha256=sealed_selection.sha256,
+        idempotent=selection_existed,
+    )
+
+
+def rapid_triage_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
+    cycle = _cycle(cycle_id)
+    base = Path(root)
+    repository_root = base.parent.parent
+    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    binding = _resolve_cycle_cohort(base, queue, cycle)
+    completed = [item for item in binding["members"] if _rapid_triage_completed(item, cycle)]
     invalid: list[dict[str, str]] = []
-    for item in recorded:
-        path = item.get("result_path")
+    for item in completed:
+        path = _rapid_triage_result_path(item, cycle)
         if not isinstance(path, str):
             invalid.append({"symbol": item["symbol"], "error": "result_path_missing"})
             continue
         try:
-            verify_sealed(base.parent.parent / path)
+            verify_sealed(repository_root / path)
         except ValueError as exc:
             invalid.append({"symbol": item["symbol"], "error": str(exc)})
     disposition_counts: dict[str, int] = {}
-    for item in recorded:
+    for item in completed:
         disposition = str(item.get("triage_disposition"))
         disposition_counts[disposition] = disposition_counts.get(disposition, 0) + 1
-    selection_path = base / "triage" / cycle / "selection.json"
-    selection_valid = False
-    if selection_path.exists():
-        try:
-            verify_sealed(selection_path)
-            selection_valid = True
-        except ValueError as exc:
-            invalid.append({"symbol": "*selection*", "error": str(exc)})
+
+    comparison_valid = _verify_optional_cycle_artifact(
+        base / "triage" / cycle / "comparison.json",
+        label="*comparison*",
+        invalid=invalid,
+    )
+    selection_valid = _verify_optional_cycle_artifact(
+        base / "triage" / cycle / "selection.json",
+        label="*selection*",
+        invalid=invalid,
+    )
+    audit_status = "not_configured"
+    if selection_valid:
+        selection_payload = json.loads(
+            (base / "triage" / cycle / "selection.json").read_text(encoding="utf-8")
+        )
+        decision_rows = selection_payload.get("decisions")
+        reviewed_symbols = (
+            {
+                row.get("symbol")
+                for row in decision_rows
+                if isinstance(row, Mapping) and isinstance(row.get("symbol"), str)
+            }
+            if isinstance(decision_rows, list)
+            else set()
+        )
+        cohort_symbols = {item["symbol"] for item in binding["members"]}
+        if (
+            selection_payload.get("reviewed_count") == len(binding["members"])
+            and isinstance(decision_rows, list)
+            and len(decision_rows) == len(binding["members"])
+            and reviewed_symbols == cohort_symbols
+        ):
+            audit_status = "completed_full_cross_company_review"
+        else:
+            audit_status = "incomplete_cross_company_review"
     return {
         "schema_version": 1,
         "cycle_id": cycle,
-        "allocation_sha256": allocation_sha,
-        "cohort_count": len(cohort),
-        "recorded_count": len(recorded_symbols),
-        "remaining_count": len({item["symbol"] for item in cohort} - recorded_symbols),
+        "binding_type": binding["type"],
+        "cohort_path": binding["path"] if binding["type"] == "cohort" else None,
+        "cohort_sha256": binding["sha256"] if binding["type"] == "cohort" else None,
+        "allocation_sha256": (
+            binding["sha256"] if binding["type"] == "legacy_allocation" else None
+        ),
+        "cohort_count": len(binding["members"]),
+        "recorded_count": len(completed),
+        "remaining_count": len(binding["members"]) - len(completed),
         "by_disposition": dict(sorted(disposition_counts.items())),
+        "comparison_ready": comparison_valid,
         "selection_finalized": selection_valid,
+        "audit_status": audit_status,
         "invalid_artifact_count": len(invalid),
         "invalid_artifacts": invalid,
         "portfolio_action": None,
     }
 
 
-def _normalize_package(
-    package: Mapping[str, Any], *, recorded_at: dt.datetime
-) -> dict[str, Any]:
+def _normalize_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -> dict[str, Any]:
     if not isinstance(package, Mapping) or set(package) != PACKAGE_KEYS:
-        raise ResearchAllocationError(
-            "rapid-triage package fields do not match contract"
-        )
-    if package.get("schema_version") != 1:
-        raise ResearchAllocationError("rapid-triage schema_version must be 1")
+        raise ResearchAllocationError("rapid-triage package fields do not match contract")
+    if package.get("schema_version") != 2:
+        raise ResearchAllocationError("rapid-triage schema_version must be 2")
     cycle = _cycle(package.get("cycle_id"))
     symbol = _symbol(package.get("symbol"))
     as_of = _date(package.get("as_of"), "as_of")
@@ -689,38 +978,52 @@ def _normalize_package(
     price_source_id = _text(package.get("price_source_id"), "price_source_id")
     if price_source_id not in source_ids:
         raise ResearchAllocationError("price_source_id does not reference a source")
+    price_source = next(item for item in sources if item["source_id"] == price_source_id)
+    if "current_price" not in price_source["supports"]:
+        raise ResearchAllocationError(
+            "price_source_id must reference a source supporting current_price"
+        )
 
     provenance_raw = package.get("provenance")
     if not isinstance(provenance_raw, Mapping) or set(provenance_raw) != PROVENANCE_KEYS:
-        raise ResearchAllocationError(
-            "rapid-triage provenance fields do not match contract"
-        )
+        raise ResearchAllocationError("rapid-triage provenance fields do not match contract")
     generated_at = _datetime(provenance_raw.get("generated_at"), "generated_at")
     if generated_at < cutoff or generated_at > recorded_at:
         raise ResearchAllocationError("rapid-triage generated_at is invalid")
     tools = _text_array(provenance_raw.get("tools"), "tools", allow_empty=False)
 
     triggers_raw = package.get("revisit_triggers")
-    if not isinstance(triggers_raw, list):
-        raise ResearchAllocationError("revisit_triggers must be an array")
+    if not isinstance(triggers_raw, list) or not triggers_raw:
+        raise ResearchAllocationError(
+            "v2 rapid triage requires at least one executable revisit trigger"
+        )
     triggers = []
     for raw in triggers_raw:
         if not isinstance(raw, Mapping) or set(raw) != TRIGGER_KEYS:
             raise ResearchAllocationError(
                 "rapid-triage revisit trigger fields do not match contract"
             )
-        triggers.append(
-            {
-                "type": _enum(raw.get("type"), TRIGGER_TYPES, "trigger.type"),
-                "condition": _text(raw.get("condition"), "trigger.condition"),
-                "reason": _text(raw.get("reason"), "trigger.reason"),
-            }
-        )
-    decisive = package.get("decisive_question")
-    if decisive is not None:
-        decisive = _text(decisive, "decisive_question")
+        triggers.append(_trigger(raw))
+    trigger_ids = [item["trigger_id"] for item in triggers]
+    if len(trigger_ids) != len(set(trigger_ids)):
+        raise ResearchAllocationError("revisit trigger IDs must be unique")
+    for trigger in triggers:
+        if (
+            trigger["type"] == "date"
+            and _date(trigger["condition"]["date"], "trigger.condition.date") <= cutoff.date()
+        ):
+            raise ResearchAllocationError("date revisit trigger must be after information_cutoff")
+        if (
+            trigger["type"] == "ttl"
+            and "due_at" in trigger["condition"]
+            and _datetime(trigger["condition"]["due_at"], "trigger.condition.due_at") <= cutoff
+        ):
+            raise ResearchAllocationError("ttl revisit trigger must be after information_cutoff")
+    prior_research_path = package.get("prior_research_path")
+    if prior_research_path is not None:
+        prior_research_path = _repository_relative_path(prior_research_path, "prior_research_path")
     result = {
-        "schema_version": 1,
+        "schema_version": 2,
         "cycle_id": cycle,
         "symbol": symbol,
         "company_name": _text(package.get("company_name"), "company_name"),
@@ -729,6 +1032,18 @@ def _normalize_package(
         "price_as_of": price_as_of.isoformat(),
         "price_source_id": price_source_id,
         "current_price": current_price,
+        "review_mode": _enum(package.get("review_mode"), REVIEW_MODES, "review_mode"),
+        "prior_research_path": prior_research_path,
+        "trigger_context": _text(package.get("trigger_context"), "trigger_context"),
+        "business_summary": _text(package.get("business_summary"), "business_summary"),
+        "change_summary": _text(package.get("change_summary"), "change_summary"),
+        "normalized_earnings_view": _text(
+            package.get("normalized_earnings_view"), "normalized_earnings_view"
+        ),
+        "expectations_view": _text(package.get("expectations_view"), "expectations_view"),
+        "counterevidence": _text_array(
+            package.get("counterevidence"), "counterevidence", allow_empty=False
+        ),
         "business_legibility": _enum(
             package.get("business_legibility"),
             {"clear", "uncertain", "opaque"},
@@ -759,10 +1074,8 @@ def _normalize_package(
             {"high", "medium", "low"},
             "research_value",
         ),
-        "decisive_question": decisive,
-        "reason_codes": _text_array(
-            package.get("reason_codes"), "reason_codes", allow_empty=False
-        ),
+        "decisive_question": _text(package.get("decisive_question"), "decisive_question"),
+        "reason_codes": _text_array(package.get("reason_codes"), "reason_codes", allow_empty=False),
         "revisit_triggers": triggers,
         "sources": sources,
         "provenance": {
@@ -776,40 +1089,656 @@ def _normalize_package(
     return result
 
 
-def _comparison_score(item: Mapping[str, Any]) -> int:
-    priority = int(item.get("priority", 5))
-    lens_count = min(
-        len(item.get("matched_lenses") or item.get("selected_by") or []), 3
+def _has_cohort_binding(record: Mapping[str, Any]) -> bool:
+    return (
+        isinstance(record.get("cohort_sha256"), str)
+        and len(record["cohort_sha256"]) == 64
+        and isinstance(record.get("cohort_path"), str)
+        and bool(record["cohort_path"])
+        and isinstance(record.get("triage_cycle_id"), str)
     )
-    return int(item["triage_priority_score"]) + (6 - priority) + lens_count
 
 
-def _policy_risk_cluster_cap(policy: Mapping[str, Any], stage: str) -> int:
-    caps = policy.get("risk_cluster_caps")
-    if not isinstance(caps, Mapping):
-        raise ResearchAllocationError("risk cluster cap policy is invalid")
-    value = caps.get(stage)
-    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
-        raise ResearchAllocationError(f"risk cluster cap is invalid: {stage}")
-    return value
+def _claim_order(item: Mapping[str, Any]) -> tuple[int, int, str]:
+    ordinal = item.get("cohort_ordinal")
+    if isinstance(ordinal, int) and not isinstance(ordinal, bool) and ordinal > 0:
+        return (0, ordinal, str(item.get("symbol")))
+    return (1, int(item.get("priority", 5)), str(item.get("symbol")))
 
 
-def _select_with_risk_cluster_cap(
-    ranked: list[Mapping[str, Any]], *, capacity: int, cap: int
-) -> tuple[list[Mapping[str, Any]], set[str]]:
-    selected: list[Mapping[str, Any]] = []
-    counts: dict[str, int] = {}
-    capped: set[str] = set()
-    for item in ranked:
-        cluster = str(item.get("economic_risk_cluster") or "diversified")
-        if cluster != "diversified" and counts.get(cluster, 0) >= cap:
-            capped.add(str(item["symbol"]))
+def _verify_queue_cohort_binding(
+    base: Path,
+    record: Mapping[str, Any],
+    *,
+    expected_cycle: str | None,
+) -> dict[str, Any]:
+    cycle = _cycle(record.get("triage_cycle_id"))
+    if expected_cycle is not None and cycle != expected_cycle:
+        raise ResearchAllocationError(
+            f"rapid-triage task is bound to another cycle: {record.get('symbol')}"
+        )
+    payload, cohort_sha, cohort_path = load_rapid_triage_cohort(root=base, cycle_id=cycle)
+    if record.get("cohort_sha256") != cohort_sha or record.get("cohort_path") != cohort_path:
+        raise ResearchAllocationError(
+            f"rapid-triage queue binding does not match sealed cohort: {record.get('symbol')}"
+        )
+    members = {item["symbol"] for item in payload["members"]}
+    if record.get("symbol") not in members:
+        raise ResearchAllocationError(
+            f"rapid-triage symbol is not a sealed cohort member: {record.get('symbol')}"
+        )
+    return {
+        "type": "cohort",
+        "path": cohort_path,
+        "sha256": cohort_sha,
+        "payload": payload,
+    }
+
+
+def _rapid_triage_coverage_has_verified_successor(
+    base: Path,
+    record: Mapping[str, Any],
+    *,
+    cycle: str,
+    symbol: str,
+) -> bool:
+    """Distinguish legitimate later work from mutable coverage drift on replay."""
+
+    current_cycle = record.get("triage_cycle_id")
+    if (
+        current_cycle == cycle
+        and record.get("task_type") == "rapid_triage"
+        and record.get("status") == "completed"
+    ):
+        return False
+
+    if isinstance(current_cycle, str) and current_cycle != cycle:
+        if not _has_cohort_binding(record):
+            raise ResearchAllocationError(
+                f"later rapid-triage coverage lacks a sealed cohort binding: {symbol}"
+            )
+        _verify_queue_cohort_binding(base, record, expected_cycle=current_cycle)
+        return True
+
+    successor_task_types = {
+        "quick_profile",
+        "targeted_followup",
+        "scoped_research",
+        "deep_research",
+        "monitoring_update",
+        "followup_review",
+    }
+    if current_cycle == cycle and record.get("task_type") in successor_task_types:
+        selection_path_text = record.get("triage_selection_path")
+        selection_sha = record.get("triage_selection_sha256")
+        if not isinstance(selection_path_text, str) or not isinstance(selection_sha, str):
+            raise ResearchAllocationError(
+                f"rapid-triage successor lacks a sealed selection binding: {symbol}"
+            )
+        repository_root = base.parent.parent.resolve()
+        selection_path = (repository_root / selection_path_text).resolve()
+        try:
+            selection_path.relative_to(repository_root)
+            sealed = verify_sealed(selection_path)
+            selection = json.loads(selection_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            raise ResearchAllocationError(
+                f"rapid-triage successor selection is invalid: {symbol}"
+            ) from exc
+        if not isinstance(selection, Mapping):
+            raise ResearchAllocationError(
+                f"rapid-triage successor selection is not an object: {symbol}"
+            )
+        binding_type = selection.get("binding_type")
+        if binding_type == "cohort":
+            expected_binding_sha = record.get("cohort_sha256")
+            expected_binding_path = record.get("cohort_path")
+        elif binding_type == "legacy_allocation":
+            expected_binding_sha = record.get("allocation_sha256")
+            expected_binding_path = None
+        else:
+            raise ResearchAllocationError(
+                f"rapid-triage successor selection has an unknown binding: {symbol}"
+            )
+        rows = selection.get("decisions")
+        selected = [
+            item
+            for item in rows or []
+            if isinstance(item, Mapping)
+            and item.get("symbol") == symbol
+            and item.get("selected_for_quick_profile") is True
+        ]
+        if (
+            sealed.artifact_type != "rapid_triage_cross_company_selection"
+            or sealed.sha256 != selection_sha
+            or selection.get("cycle_id") != cycle
+            or selection.get("binding_sha256") != expected_binding_sha
+            or selection.get("binding_path") != expected_binding_path
+            or len(selected) != 1
+            or record.get("triage_allocation_decision") != "select_quick_profile"
+        ):
+            raise ResearchAllocationError(
+                f"rapid-triage successor selection does not match coverage: {symbol}"
+            )
+        return True
+
+    raise ResearchAllocationError(
+        f"rapid-triage replay found unexpected coverage state: {symbol} "
+        f"({current_cycle}, {record.get('task_type')}, {record.get('status')})"
+    )
+
+
+def _resolve_triage_binding(
+    base: Path,
+    queue: list[dict[str, Any]],
+    record: Mapping[str, Any],
+    *,
+    expected_cycle: str,
+) -> dict[str, Any]:
+    if _has_cohort_binding(record):
+        binding = _verify_queue_cohort_binding(base, record, expected_cycle=expected_cycle)
+        binding["evidence_prefix"] = "triage_cohort_sha256"
+        return binding
+
+    allocation_sha = record.get("allocation_sha256")
+    if not isinstance(allocation_sha, str) or len(allocation_sha) != 64:
+        raise ResearchAllocationError(
+            f"rapid triage lacks a sealed cohort or legacy allocation binding: "
+            f"{record.get('symbol')}"
+        )
+    bound_cycles = {
+        item.get("triage_cycle_id")
+        for item in queue
+        if item.get("allocation_sha256") == allocation_sha
+        and item.get("triage_cycle_id") is not None
+    }
+    if bound_cycles and bound_cycles != {expected_cycle}:
+        raise ResearchAllocationError(
+            f"legacy allocation is already bound to another triage cycle: {sorted(bound_cycles)}"
+        )
+    return {
+        "type": "legacy_allocation",
+        "path": None,
+        "sha256": allocation_sha,
+        "evidence_prefix": "allocation_sha256",
+    }
+
+
+def _resolve_cycle_cohort(base: Path, queue: list[dict[str, Any]], cycle: str) -> dict[str, Any]:
+    cohort_path = base / "triage" / cycle / "cohort.json"
+    queue_by_symbol = {item.get("symbol"): item for item in queue}
+    if cohort_path.exists():
+        payload, cohort_sha, relative = load_rapid_triage_cohort(root=base, cycle_id=cycle)
+        members: list[dict[str, Any]] = []
+        expected_symbols = {item["symbol"] for item in payload["members"]}
+        for member in payload["members"]:
+            queued = queue_by_symbol.get(member["symbol"])
+            if not isinstance(queued, dict):
+                raise ResearchAllocationError(
+                    f"sealed cohort member is absent from queue: {member['symbol']}"
+                )
+            if queued.get("triage_cycle_id") == cycle and queued.get("cohort_sha256") == cohort_sha:
+                _verify_queue_cohort_binding(base, queued, expected_cycle=cycle)
+                members.append(queued)
+                continue
+            historical = _historical_member_for_cycle(
+                queued,
+                cycle=cycle,
+                cohort_path=relative,
+                cohort_sha256=cohort_sha,
+            )
+            if historical is None:
+                raise ResearchAllocationError(
+                    f"sealed cohort member no longer has a verifiable queue history: "
+                    f"{member['symbol']}"
+                )
+            members.append(historical)
+        extras = {
+            item.get("symbol") for item in queue if item.get("cohort_sha256") == cohort_sha
+        } - expected_symbols
+        if extras:
+            raise ResearchAllocationError(
+                f"queue contains symbols outside the sealed cohort: {sorted(extras)}"
+            )
+        return {
+            "type": "cohort",
+            "path": relative,
+            "sha256": cohort_sha,
+            "members": members,
+        }
+
+    recorded = [item for item in queue if item.get("triage_cycle_id") == cycle]
+    if not recorded:
+        raise ResearchAllocationError(f"rapid-triage cycle is empty: {cycle}")
+    allocation_shas = {
+        item.get("allocation_sha256")
+        for item in recorded
+        if isinstance(item.get("allocation_sha256"), str)
+    }
+    if len(allocation_shas) != 1:
+        raise ResearchAllocationError(
+            "rapid-triage cycle has no cohort and spans multiple legacy allocations"
+        )
+    allocation_sha = next(iter(allocation_shas))
+    members = [
+        item
+        for item in queue
+        if item.get("allocation_sha256") == allocation_sha and bool(item.get("selected_by"))
+    ]
+    if not members:
+        raise ResearchAllocationError("legacy rapid-triage allocation cohort is empty")
+    members.sort(key=lambda item: str(item.get("symbol")))
+    return {
+        "type": "legacy_allocation",
+        "path": None,
+        "sha256": allocation_sha,
+        "members": members,
+    }
+
+
+def _historical_member_for_cycle(
+    record: Mapping[str, Any],
+    *,
+    cycle: str,
+    cohort_path: str,
+    cohort_sha256: str,
+) -> dict[str, Any] | None:
+    completion = next(
+        (
+            item
+            for item in reversed(record.get("stage_history") or [])
+            if isinstance(item, Mapping)
+            and item.get("stage") == "rapid_triage"
+            and item.get("status") == "completed"
+            and item.get("cycle_id") == cycle
+            and isinstance(item.get("result_path"), str)
+        ),
+        None,
+    )
+    if completion is None:
+        return None
+    historical = dict(record)
+    historical.update(
+        {
+            "task_type": "rapid_triage",
+            "status": "completed",
+            "triage_cycle_id": cycle,
+            "cohort_path": cohort_path,
+            "cohort_sha256": cohort_sha256,
+            "result_path": completion["result_path"],
+            "triage_disposition": completion.get("disposition"),
+        }
+    )
+    return historical
+
+
+def _rapid_triage_completed(record: Mapping[str, Any], cycle: str) -> bool:
+    history_completed = any(
+        isinstance(item, Mapping)
+        and item.get("stage") == "rapid_triage"
+        and item.get("status") == "completed"
+        and item.get("cycle_id") in {None, cycle}
+        and isinstance(item.get("result_path"), str)
+        for item in record.get("stage_history") or []
+    )
+    if history_completed:
+        return True
+    return bool(
+        record.get("triage_cycle_id") == cycle
+        and isinstance(record.get("triage_disposition"), str)
+        and _rapid_triage_result_path(record, cycle) is not None
+        and record.get("task_type") == "rapid_triage"
+        and record.get("status") == "completed"
+    )
+
+
+def _rapid_triage_result_path(record: Mapping[str, Any], cycle: str) -> str | None:
+    for item in reversed(record.get("stage_history") or []):
+        if (
+            isinstance(item, Mapping)
+            and item.get("stage") == "rapid_triage"
+            and item.get("status") == "completed"
+            and item.get("cycle_id") in {None, cycle}
+            and isinstance(item.get("result_path"), str)
+        ):
+            return str(item["result_path"])
+    if (
+        record.get("task_type") == "rapid_triage"
+        and record.get("triage_cycle_id") == cycle
+        and isinstance(record.get("result_path"), str)
+    ):
+        return str(record["result_path"])
+    return None
+
+
+def _completed_cohort_packages(
+    members: list[dict[str, Any]],
+    *,
+    cycle: str,
+    repository_root: Path,
+) -> list[tuple[dict[str, Any], dict[str, Any], Any]]:
+    incomplete = [item["symbol"] for item in members if not _rapid_triage_completed(item, cycle)]
+    if incomplete:
+        raise ResearchAllocationError(
+            "completion-order promotion is forbidden; rapid-triage cohort is "
+            f"incomplete: {incomplete[:10]}"
+        )
+    result = []
+    for item in members:
+        result_path = _rapid_triage_result_path(item, cycle)
+        if result_path is None:
+            raise ResearchAllocationError(f"rapid-triage result path is missing: {item['symbol']}")
+        path = repository_root / result_path
+        sealed = verify_sealed(path)
+        package = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(package, dict):
+            raise ResearchAllocationError(
+                f"rapid-triage result must be an object: {item['symbol']}"
+            )
+        if package.get("cycle_id") != cycle or package.get("symbol") != item["symbol"]:
+            raise ResearchAllocationError(
+                f"rapid-triage result identity does not match cohort: {item['symbol']}"
+            )
+        result.append((item, package, sealed))
+    return result
+
+
+def _normalize_decision_package(
+    package: Mapping[str, Any],
+    *,
+    cycle: str,
+    comparison_sha256: str,
+    comparison_rows: list[Mapping[str, Any]],
+    finalized_at: dt.datetime,
+) -> dict[str, Any]:
+    if not isinstance(package, Mapping) or set(package) != DECISION_PACKAGE_KEYS:
+        raise ResearchAllocationError("rapid-triage Agent decision fields do not match contract")
+    if package.get("schema_version") != 1:
+        raise ResearchAllocationError("rapid-triage Agent decision schema_version must be 1")
+    if _cycle(package.get("cycle_id")) != cycle:
+        raise ResearchAllocationError("Agent decisions target the wrong triage cycle")
+    if package.get("comparison_sha256") != comparison_sha256:
+        raise ResearchAllocationError(
+            "Agent decisions are not bound to the sealed comparison packet"
+        )
+    provenance_raw = package.get("provenance")
+    if not isinstance(provenance_raw, Mapping) or set(provenance_raw) != PROVENANCE_KEYS:
+        raise ResearchAllocationError("Agent decision provenance is invalid")
+    generated_at = _datetime(provenance_raw.get("generated_at"), "decision.provenance.generated_at")
+    if generated_at > finalized_at:
+        raise ResearchAllocationError("Agent decisions cannot be generated in the future")
+
+    decisions_raw = package.get("decisions")
+    if not isinstance(decisions_raw, list):
+        raise ResearchAllocationError("Agent decisions must be an array")
+    normalized_by_symbol: dict[str, dict[str, Any]] = {}
+    for raw in decisions_raw:
+        if not isinstance(raw, Mapping) or set(raw) != DECISION_KEYS:
+            raise ResearchAllocationError("one Agent decision does not match contract")
+        symbol = _symbol(raw.get("symbol"))
+        if symbol in normalized_by_symbol:
+            raise ResearchAllocationError(f"duplicate Agent decision: {symbol}")
+        normalized_by_symbol[symbol] = {
+            "symbol": symbol,
+            "decision": _enum(raw.get("decision"), DECISIONS, "decision"),
+            "reason": _text(raw.get("reason"), "decision.reason"),
+            "decisive_question": _text(raw.get("decisive_question"), "decision.decisive_question"),
+            "counterevidence_considered": _text_array(
+                raw.get("counterevidence_considered"),
+                "decision.counterevidence_considered",
+                allow_empty=False,
+            ),
+        }
+    comparison_symbols = [_symbol(row.get("symbol")) for row in comparison_rows]
+    if len(comparison_symbols) != len(set(comparison_symbols)):
+        raise ResearchAllocationError("comparison packet rows contain duplicate symbols")
+    if set(normalized_by_symbol) != set(comparison_symbols):
+        missing = sorted(set(comparison_symbols) - set(normalized_by_symbol))
+        extra = sorted(set(normalized_by_symbol) - set(comparison_symbols))
+        raise ResearchAllocationError(
+            "Agent decisions must cover every comparison row exactly once; "
+            f"missing={missing}, extra={extra}"
+        )
+    return {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "comparison_sha256": comparison_sha256,
+        "decisions": [normalized_by_symbol[symbol] for symbol in comparison_symbols],
+        "provenance": {
+            "agent": _text(provenance_raw.get("agent"), "decision.provenance.agent"),
+            "model": _text(provenance_raw.get("model"), "decision.provenance.model"),
+            "tools": _text_array(
+                provenance_raw.get("tools"),
+                "decision.provenance.tools",
+                allow_empty=False,
+            ),
+            "generated_at": generated_at.isoformat(),
+        },
+    }
+
+
+def _materialize_rapid_triage_selection(
+    *,
+    screening: list[dict[str, Any]],
+    queue: list[dict[str, Any]],
+    cycle: str,
+    decision_rows: list[Mapping[str, Any]],
+    decisions_by_symbol: Mapping[str, Mapping[str, Any]],
+    comparison_path: str,
+    comparison_sha256: str,
+    selection_path: str,
+    selection_sha256: str,
+    quick_budget: float,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], bool, bool]:
+    """Apply one sealed selection, repairing only absent materialization state."""
+
+    screen_by_symbol = {item.get("symbol"): dict(item) for item in screening}
+    queue_by_symbol = {item.get("symbol"): dict(item) for item in queue}
+    screening_changed = False
+    queue_changed = False
+    expected_evidence = [
+        f"triage_comparison:{comparison_path}",
+        f"triage_comparison_sha256:{comparison_sha256}",
+        f"triage_selection:{selection_path}",
+        f"triage_selection_sha256:{selection_sha256}",
+    ]
+    evidence_proof = set(expected_evidence[-2:])
+
+    for row in decision_rows:
+        symbol = _symbol(row.get("symbol"))
+        if symbol not in screen_by_symbol or symbol not in queue_by_symbol:
+            raise ResearchAllocationError(
+                f"sealed rapid-triage selection references a missing coverage row: {symbol}"
+            )
+        decision = decisions_by_symbol.get(symbol)
+        if not isinstance(decision, Mapping):
+            raise ResearchAllocationError(
+                f"sealed rapid-triage selection lacks an Agent decision: {symbol}"
+            )
+        expected_decision = (
+            "select_quick_profile" if row.get("selected_for_quick_profile") is True else "defer"
+        )
+        if decision.get("decision") != expected_decision:
+            raise ResearchAllocationError(
+                f"sealed rapid-triage selection decision is inconsistent: {symbol}"
+            )
+
+        original_queue = queue_by_symbol[symbol]
+        queued = dict(original_queue)
+        original_screen = screen_by_symbol[symbol]
+        screen = dict(original_screen)
+        queue_markers = {
+            "triage_selection_path": selection_path,
+            "triage_selection_sha256": selection_sha256,
+            "triage_allocation_decision": expected_decision,
+        }
+        marker_present = False
+        for field, expected in queue_markers.items():
+            actual = queued.get(field)
+            if actual is not None:
+                marker_present = True
+                if actual != expected:
+                    raise ResearchAllocationError(
+                        f"rapid-triage selection materialization conflicts at {field}: {symbol}"
+                    )
+
+        screen_evidence = screen.get("evidence")
+        screen_evidence_set = set(screen_evidence) if isinstance(screen_evidence, list) else set()
+        screen_proves_selection = evidence_proof.issubset(screen_evidence_set)
+        has_completed_triage = any(
+            isinstance(item, Mapping)
+            and item.get("stage") == "rapid_triage"
+            and item.get("status") == "completed"
+            and item.get("cycle_id") == cycle
+            for item in queued.get("stage_history") or []
+        )
+        moved_to_later_cycle = queued.get("triage_cycle_id") != cycle and has_completed_triage
+        if moved_to_later_cycle:
             continue
-        selected.append(item)
-        counts[cluster] = counts.get(cluster, 0) + 1
-        if len(selected) >= capacity:
-            break
-    return selected, capped
+
+        is_unmaterialized = bool(
+            queued.get("triage_cycle_id") == cycle
+            and queued.get("task_type") == "rapid_triage"
+            and queued.get("status") == "completed"
+            and has_completed_triage
+        )
+        quick_profile_advanced = bool(
+            queued.get("task_type") == "quick_profile" and queued.get("status") != "pending"
+        )
+        completed_quick_profile = any(
+            isinstance(item, Mapping)
+            and item.get("stage") == "quick_profile"
+            and item.get("status") == "completed"
+            for item in queued.get("stage_history") or []
+        )
+        deeper_progress = bool(
+            queued.get("task_type") not in {"rapid_triage", "quick_profile"}
+            and completed_quick_profile
+        )
+        preserve_progress = quick_profile_advanced or deeper_progress
+        initial_quick_profile = bool(
+            queued.get("task_type") == "quick_profile" and queued.get("status") == "pending"
+        )
+
+        if expected_decision == "select_quick_profile":
+            if preserve_progress or initial_quick_profile:
+                if not marker_present and not screen_proves_selection:
+                    raise ResearchAllocationError(
+                        "sealed rapid-triage selection cannot be attributed to existing "
+                        f"quick-profile progress: {symbol}"
+                    )
+                queued.update(queue_markers)
+            elif is_unmaterialized:
+                queued.update(
+                    {
+                        **queue_markers,
+                        "task_type": "quick_profile",
+                        "status": "pending",
+                        "assigned_agent": None,
+                        "started_at": None,
+                        "finished_at": None,
+                        "failure_reason": None,
+                        "reason": decision["reason"],
+                        "next_action": (
+                            "Complete a formal quick profile; do not assign a position."
+                        ),
+                        "effort_budget_hours": quick_budget,
+                        "preceding_stage": "rapid_triage",
+                        "stop_conditions": [
+                            "no credible path to the required return",
+                            ("survival, governance, or normalized earnings cannot be established"),
+                            ("the decisive uncertainty cannot be resolved with public evidence"),
+                        ],
+                    }
+                )
+            else:
+                raise ResearchAllocationError(
+                    f"sealed rapid-triage selection cannot safely repair queue state: {symbol}"
+                )
+        elif is_unmaterialized or marker_present or screen_proves_selection:
+            queued.update(queue_markers)
+            if is_unmaterialized:
+                queued["next_action"] = "Wait for a structured revisit trigger."
+        else:
+            raise ResearchAllocationError(
+                f"sealed rapid-triage defer decision cannot safely repair queue state: {symbol}"
+            )
+
+        if not preserve_progress:
+            evidence = list(screen_evidence) if isinstance(screen_evidence, list) else []
+            screen["evidence"] = list(dict.fromkeys(evidence + expected_evidence))
+            if expected_decision == "select_quick_profile":
+                screen.update(
+                    {
+                        "decision": "quick_profile",
+                        "reason": decision["reason"],
+                        "next_action": (
+                            "Complete a formal quick profile; do not make a portfolio action."
+                        ),
+                    }
+                )
+            else:
+                screen.update(
+                    {
+                        "decision": "catalog",
+                        "reason": decision["reason"],
+                        "next_action": (
+                            "Wait for a structured trigger or a later research-budget cycle."
+                        ),
+                    }
+                )
+
+        if queued != original_queue:
+            queue_by_symbol[symbol] = queued
+            queue_changed = True
+        if screen != original_screen:
+            screen_by_symbol[symbol] = screen
+            screening_changed = True
+
+    return (
+        [screen_by_symbol[item.get("symbol")] for item in screening],
+        [queue_by_symbol[item.get("symbol")] for item in queue],
+        screening_changed,
+        queue_changed,
+    )
+
+
+def _selection_result(
+    payload: Mapping[str, Any],
+    *,
+    selection_path: str,
+    selection_sha256: str,
+    idempotent: bool,
+) -> dict[str, Any]:
+    selected_symbols = [
+        item["symbol"] for item in payload["ranking"] if item["selected_for_quick_profile"]
+    ]
+    return {
+        "schema_version": 1,
+        "cycle_id": payload["cycle_id"],
+        "cohort_count": payload["cohort_count"],
+        "eligible_count": payload["eligible_count"],
+        "reviewed_count": payload.get("reviewed_count", len(payload["ranking"])),
+        "selected_count": len(selected_symbols),
+        "selected_symbols": selected_symbols,
+        "selection_path": selection_path,
+        "selection_sha256": selection_sha256,
+        "idempotent": idempotent,
+        "portfolio_action": None,
+    }
+
+
+def _verify_optional_cycle_artifact(
+    path: Path, *, label: str, invalid: list[dict[str, str]]
+) -> bool:
+    if not path.exists():
+        return False
+    try:
+        verify_sealed(path)
+        return True
+    except ValueError as exc:
+        invalid.append({"symbol": label, "error": str(exc)})
+        return False
 
 
 def _claim_payload(record: Mapping[str, Any], *, idempotent: bool) -> dict[str, Any]:
@@ -821,6 +1750,11 @@ def _claim_payload(record: Mapping[str, Any], *, idempotent: bool) -> dict[str, 
         "assigned_agent": record.get("assigned_agent"),
         "started_at": record.get("started_at"),
         "effort_budget_hours": record.get("effort_budget_hours"),
+        "cycle_id": record.get("triage_cycle_id"),
+        "cohort_path": record.get("cohort_path"),
+        "cohort_sha256": record.get("cohort_sha256"),
+        "cohort_ordinal": record.get("cohort_ordinal"),
+        "intake_reason_codes": record.get("intake_reason_codes") or [],
         "selected_by": record.get("selected_by") or [],
         "stop_conditions": record.get("stop_conditions") or [],
         "idempotent": idempotent,
@@ -848,6 +1782,75 @@ def _disposition_action(disposition: str) -> str:
     }[disposition]
 
 
+def _trigger(raw: Mapping[str, Any]) -> dict[str, Any]:
+    trigger_id = _text(raw.get("trigger_id"), "trigger.trigger_id")
+    if not SOURCE_ID_RE.fullmatch(trigger_id):
+        raise ResearchAllocationError(f"invalid trigger_id: {trigger_id}")
+    trigger_type = _enum(raw.get("type"), TRIGGER_TYPES, "trigger.type")
+    condition = raw.get("condition")
+    if not isinstance(condition, Mapping):
+        raise ResearchAllocationError("trigger.condition must be an object")
+    if trigger_type == "price":
+        if set(condition) != {"operator", "threshold"}:
+            raise ResearchAllocationError(
+                "price trigger condition must contain operator and threshold"
+            )
+        operator = _enum(
+            condition.get("operator"),
+            {"price_lte", "price_gte"},
+            "trigger.condition.operator",
+        )
+        threshold = _positive_number(condition.get("threshold"), "trigger.condition.threshold")
+        normalized_condition: dict[str, Any] = {
+            "operator": operator,
+            "threshold": threshold,
+        }
+    elif trigger_type == "date":
+        if set(condition) != {"date"}:
+            raise ResearchAllocationError("date trigger condition must contain date")
+        normalized_condition = {
+            "date": _date(condition.get("date"), "trigger.condition.date").isoformat()
+        }
+    elif trigger_type == "ttl":
+        if set(condition) == {"days"}:
+            days = condition.get("days")
+            if isinstance(days, bool) or not isinstance(days, int) or days <= 0:
+                raise ResearchAllocationError(
+                    "ttl trigger condition.days must be a positive integer"
+                )
+            normalized_condition = {"days": days}
+        elif set(condition) == {"due_at"}:
+            normalized_condition = {
+                "due_at": _datetime(condition.get("due_at"), "trigger.condition.due_at").isoformat()
+            }
+        else:
+            raise ResearchAllocationError(
+                "ttl trigger condition must contain exactly one of days or due_at"
+            )
+    else:
+        if set(condition) != {"description"}:
+            raise ResearchAllocationError(
+                f"{trigger_type} trigger condition must contain description"
+            )
+        normalized_condition = {
+            "description": _text(condition.get("description"), "trigger.condition.description")
+        }
+    return {
+        "trigger_id": trigger_id,
+        "type": trigger_type,
+        "condition": normalized_condition,
+        "reason": _text(raw.get("reason"), "trigger.reason"),
+    }
+
+
+def _repository_relative_path(value: Any, label: str) -> str:
+    text = _text(value, label)
+    path = Path(text)
+    if path.is_absolute() or any(part == ".." for part in path.parts):
+        raise ResearchAllocationError(f"{label} must be repository-relative")
+    return path.as_posix()
+
+
 def _source(raw: Any, *, recorded_at: dt.datetime) -> dict[str, Any]:
     if not isinstance(raw, Mapping) or set(raw) != SOURCE_KEYS:
         raise ResearchAllocationError("rapid-triage source fields do not match contract")
@@ -867,9 +1870,7 @@ def _source(raw: Any, *, recorded_at: dt.datetime) -> dict[str, Any]:
     if local_path is not None:
         local_path = _text(local_path, f"{source_id}.local_path")
     if url is None and local_path is None:
-        raise ResearchAllocationError(
-            f"source requires URL or local path: {source_id}"
-        )
+        raise ResearchAllocationError(f"source requires URL or local path: {source_id}")
     return {
         "source_id": source_id,
         "tier": _enum(raw.get("tier"), SOURCE_TIERS, f"{source_id}.tier"),
@@ -877,15 +1878,11 @@ def _source(raw: Any, *, recorded_at: dt.datetime) -> dict[str, Any]:
         "accessed_at": accessed_at.isoformat(),
         "url": url,
         "local_path": local_path,
-        "supports": _text_array(
-            raw.get("supports"), f"{source_id}.supports", allow_empty=False
-        ),
+        "supports": _text_array(raw.get("supports"), f"{source_id}.supports", allow_empty=False),
     }
 
 
-def _validate_local_sources(
-    sources: list[dict[str, Any]], *, repository_root: Path
-) -> None:
+def _validate_local_sources(sources: list[dict[str, Any]], *, repository_root: Path) -> None:
     root = repository_root.resolve()
     for source in sources:
         local_path = source["local_path"]
@@ -894,8 +1891,7 @@ def _validate_local_sources(
         candidate = Path(local_path)
         if candidate.is_absolute():
             raise ResearchAllocationError(
-                f"local source paths must be repository-relative: "
-                f"{source['source_id']}"
+                f"local source paths must be repository-relative: {source['source_id']}"
             )
         resolved = (root / candidate).resolve()
         try:
@@ -908,6 +1904,21 @@ def _validate_local_sources(
             raise ResearchAllocationError(
                 f"local source file does not exist: {source['source_id']}"
             )
+
+
+def _validate_prior_research_path(
+    prior_research_path: str | None, *, repository_root: Path
+) -> None:
+    if prior_research_path is None:
+        return
+    root = repository_root.resolve()
+    candidate = (root / prior_research_path).resolve()
+    try:
+        candidate.relative_to(root)
+    except ValueError as exc:
+        raise ResearchAllocationError("prior_research_path escapes repository") from exc
+    if not candidate.is_file():
+        raise ResearchAllocationError(f"prior research file does not exist: {prior_research_path}")
 
 
 def _policy_budget(policy: Mapping[str, Any], stage: str) -> float:
@@ -924,13 +1935,25 @@ def _policy_positive_int(policy: Mapping[str, Any], field: str) -> int:
     return value
 
 
+def _policy_stage_cap(
+    policy: Mapping[str, Any], *, mapping_field: str, stage: str
+) -> int:
+    values = policy.get(mapping_field)
+    if not isinstance(values, Mapping):
+        raise ResearchAllocationError(f"policy mapping is invalid: {mapping_field}")
+    value = values.get(stage)
+    if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+        raise ResearchAllocationError(
+            f"policy field must be positive integer: {mapping_field}.{stage}"
+        )
+    return value
+
+
 def _policy_text(policy: Mapping[str, Any], field: str) -> str:
     return _text(policy.get(field), field)
 
 
-def _one(
-    records: list[dict[str, Any]], symbol: str, label: str
-) -> dict[str, Any]:
+def _one(records: list[dict[str, Any]], symbol: str, label: str) -> dict[str, Any]:
     matches = [item for item in records if item.get("symbol") == symbol]
     if len(matches) != 1:
         raise ResearchAllocationError(f"expected exactly one {label}: {symbol}")
@@ -996,11 +2019,7 @@ def _date(value: Any, label: str) -> dt.date:
 
 
 def _aware(value: dt.datetime, label: str) -> None:
-    if (
-        not isinstance(value, dt.datetime)
-        or value.tzinfo is None
-        or value.utcoffset() is None
-    ):
+    if not isinstance(value, dt.datetime) or value.tzinfo is None or value.utcoffset() is None:
         raise ResearchAllocationError(f"{label} must include timezone information")
 
 

@@ -12,6 +12,7 @@ from .coverage_store import (
     RESEARCH_QUEUE_FILE,
     SCREENING_FILE,
     read_jsonl,
+    serialized_coverage_write,
     write_jsonl,
 )
 from .research_allocation import (
@@ -66,6 +67,7 @@ CYCLE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SOURCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 
 
+@serialized_coverage_write
 def claim_profile_task(
     *,
     root: str | Path,
@@ -141,6 +143,7 @@ def claim_profile_task(
     return _claimed_task_payload(selected, idempotent=False)
 
 
+@serialized_coverage_write
 def release_profile_task(
     *,
     root: str | Path,
@@ -213,6 +216,7 @@ def release_profile_task(
     }
 
 
+@serialized_coverage_write
 def record_profile_package(
     package: Mapping[str, Any],
     *,
@@ -236,7 +240,30 @@ def record_profile_package(
     screening_records = read_jsonl(screening_path)
     queue_record = _one_record(queue_records, symbol, "research queue")
     screening_record = _one_record(screening_records, symbol, "screening")
-    _validate_local_sources(normalized["sources"], repository_root=base.parent.parent)
+
+    timestamp = recorded_at.strftime("%Y%m%dT%H%M%S%z")
+    artifact_dir = base / "profiles" / normalized["cycle_id"] / ticker
+    profile_path = artifact_dir / f"{timestamp}.profile.json"
+    evaluation_path = artifact_dir / f"{timestamp}.evaluation.json"
+    repository_root = base.parent.parent
+    relative_profile = profile_path.relative_to(repository_root).as_posix()
+    relative_evaluation = evaluation_path.relative_to(repository_root).as_posix()
+    policy_sha = hashlib.sha256(canonical_json_bytes(dict(policy))).hexdigest()
+    replayed = _verify_profile_record_replay(
+        normalized=normalized,
+        raw_evaluation=evaluation,
+        queue_record=queue_record,
+        profile_path=profile_path,
+        evaluation_path=evaluation_path,
+        relative_profile=relative_profile,
+        relative_evaluation=relative_evaluation,
+        policy_reference=_text(policy_reference, "policy_reference"),
+        policy_sha256=policy_sha,
+        recorded_at=recorded_at,
+    )
+    if replayed is not None:
+        return replayed
+    _validate_local_sources(normalized["sources"], repository_root=repository_root)
     _validate_industry_evidence(
         normalized,
         queue_record=queue_record,
@@ -280,42 +307,13 @@ def record_profile_package(
                 f"allocation is already bound to another profile cycle: {sorted(bound_cycles)}"
             )
 
-    timestamp = recorded_at.strftime("%Y%m%dT%H%M%S%z")
-    artifact_dir = base / "profiles" / normalized["cycle_id"] / ticker
-    profile_path = artifact_dir / f"{timestamp}.profile.json"
     sealed_profile = seal_json(
         profile_path,
         normalized,
         artifact_type="quick_profile_package",
         sealed_at=recorded_at,
     )
-    policy_sha = hashlib.sha256(canonical_json_bytes(dict(policy))).hexdigest()
-    relative_profile = profile_path.relative_to(base.parent.parent).as_posix()
-    evaluation = dict(evaluation)
-    next_stage = evaluation["next_stage"]
-    if queued_stage == "quick_profile" and next_stage == "scoped_research":
-        next_stage = "profile_candidate"
-        evaluation["next_stage"] = next_stage
-        evaluation["maximum_additional_effort_hours"] = 0.0
-        evaluation["reason_codes"] = sorted(
-            set(evaluation["reason_codes"])
-            | {"awaiting_cross_company_profile_comparison"}
-        )
-    elif queued_stage == "scoped_research" and next_stage == "deep_research":
-        next_stage = "deep_candidate"
-        evaluation["next_stage"] = next_stage
-        evaluation["maximum_additional_effort_hours"] = 0.0
-        evaluation["reason_codes"] = sorted(
-            set(evaluation["reason_codes"])
-            | {"awaiting_cross_company_deep_research_comparison"}
-        )
-    if queued_stage == "targeted_followup" and next_stage == "targeted_followup":
-        next_stage = "reassign_or_stop"
-        evaluation["next_stage"] = next_stage
-        evaluation["maximum_additional_effort_hours"] = 0.0
-        evaluation["reason_codes"] = sorted(
-            set(evaluation["reason_codes"]) | {"targeted_followup_exhausted"}
-        )
+    evaluation, next_stage = _adjust_profile_evaluation(evaluation, queued_stage=queued_stage)
     if next_stage not in RESEARCH_STAGES | TERMINAL_STAGES:
         raise ResearchAllocationError(f"unsupported profile next stage: {next_stage}")
 
@@ -352,14 +350,12 @@ def record_profile_package(
         "capacity_wait": capacity_wait,
         "portfolio_action": None,
     }
-    evaluation_path = artifact_dir / f"{timestamp}.evaluation.json"
     sealed_evaluation = seal_json(
         evaluation_path,
         evaluation_payload,
         artifact_type="quick_profile_evaluation",
         sealed_at=recorded_at,
     )
-    relative_evaluation = evaluation_path.relative_to(base.parent.parent).as_posix()
 
     updated_screening = dict(screening_record)
     updated_screening.update(
@@ -428,20 +424,248 @@ def record_profile_package(
         queue_path,
         [updated_queue if item.get("symbol") == symbol else item for item in queue_records],
     )
-    return {
-        "schema_version": 2,
-        "symbol": symbol,
+    return _profile_record_result(
+        evaluation_payload,
+        profile_sha256=sealed_profile.sha256,
+        evaluation_path=relative_evaluation,
+        evaluation_sha256=sealed_evaluation.sha256,
+        idempotent=False,
+    )
+
+
+def _adjust_profile_evaluation(
+    evaluation: Mapping[str, Any], *, queued_stage: str
+) -> tuple[dict[str, Any], str]:
+    """Apply the queue-stage gates that precede cross-company promotion."""
+
+    adjusted = dict(evaluation)
+    next_stage = str(adjusted.get("next_stage"))
+    if queued_stage == "quick_profile" and next_stage == "scoped_research":
+        next_stage = "profile_candidate"
+        adjusted["next_stage"] = next_stage
+        adjusted["maximum_additional_effort_hours"] = 0.0
+        adjusted["reason_codes"] = sorted(
+            set(adjusted["reason_codes"])
+            | {"awaiting_cross_company_profile_comparison"}
+        )
+    elif queued_stage == "scoped_research" and next_stage == "deep_research":
+        next_stage = "deep_candidate"
+        adjusted["next_stage"] = next_stage
+        adjusted["maximum_additional_effort_hours"] = 0.0
+        adjusted["reason_codes"] = sorted(
+            set(adjusted["reason_codes"])
+            | {"awaiting_cross_company_deep_research_comparison"}
+        )
+    if queued_stage == "targeted_followup" and next_stage == "targeted_followup":
+        next_stage = "reassign_or_stop"
+        adjusted["next_stage"] = next_stage
+        adjusted["maximum_additional_effort_hours"] = 0.0
+        adjusted["reason_codes"] = sorted(
+            set(adjusted["reason_codes"]) | {"targeted_followup_exhausted"}
+        )
+    return adjusted, next_stage
+
+
+def _verify_profile_record_replay(
+    *,
+    normalized: Mapping[str, Any],
+    raw_evaluation: Mapping[str, Any],
+    queue_record: Mapping[str, Any],
+    profile_path: Path,
+    evaluation_path: Path,
+    relative_profile: str,
+    relative_evaluation: str,
+    policy_reference: str,
+    policy_sha256: str,
+    recorded_at: dt.datetime,
+) -> dict[str, Any] | None:
+    """Return a read-only result for one fully materialized sealed profile."""
+
+    matches = [
+        item
+        for item in queue_record.get("stage_history") or []
+        if isinstance(item, Mapping)
+        and item.get("status") == "completed"
+        and item.get("result_path") == relative_profile
+        and item.get("evaluation_path") == relative_evaluation
+    ]
+    if not matches:
+        return None
+    if len(matches) != 1:
+        raise ResearchAllocationError(
+            f"profile replay has duplicate completed history: {normalized['profile']['symbol']}"
+        )
+    history = matches[0]
+    recorded_stage = _text(history.get("stage"), "profile history stage")
+    profile_stage = str(normalized["profile"].get("research_stage"))
+    if recorded_stage != "targeted_followup" and recorded_stage != profile_stage:
+        raise ResearchAllocationError(
+            f"profile replay stage conflicts with completed history: "
+            f"{normalized['profile']['symbol']}"
+        )
+    adjusted_evaluation, next_stage = _adjust_profile_evaluation(
+        raw_evaluation,
+        queued_stage=recorded_stage,
+    )
+    expected_history = {
+        "finished_at": recorded_at.isoformat(),
+        "agent": normalized["provenance"]["agent"],
+        "result_path": relative_profile,
+        "evaluation_path": relative_evaluation,
         "next_stage": next_stage,
-        "queue_status": next_status,
-        "capacity_wait": capacity_wait,
+    }
+    mismatched_history = [
+        field
+        for field, expected in expected_history.items()
+        if history.get(field) != expected
+    ]
+    if mismatched_history:
+        raise ResearchAllocationError(
+            "profile replay conflicts with completed history "
+            f"({', '.join(mismatched_history)}): {normalized['profile']['symbol']}"
+        )
+
+    try:
+        sealed_profile = verify_sealed(profile_path)
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"completed profile package is not validly sealed: "
+            f"{normalized['profile']['symbol']}"
+        ) from exc
+    if sealed_profile.artifact_type != "quick_profile_package":
+        raise ResearchAllocationError(
+            f"completed profile package has the wrong artifact type: "
+            f"{normalized['profile']['symbol']}"
+        )
+    if sealed_profile.sealed_at != recorded_at:
+        raise ResearchAllocationError(
+            f"profile replay recorded_at conflicts with the package seal: "
+            f"{normalized['profile']['symbol']}"
+        )
+    try:
+        existing_profile = json.loads(profile_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError(
+            f"completed profile package cannot be read: {normalized['profile']['symbol']}"
+        ) from exc
+    if existing_profile != normalized:
+        raise ResearchAllocationError(
+            f"profile replay conflicts with the sealed package: "
+            f"{normalized['profile']['symbol']}"
+        )
+
+    try:
+        sealed_evaluation = verify_sealed(evaluation_path)
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"completed profile evaluation is not validly sealed: "
+            f"{normalized['profile']['symbol']}"
+        ) from exc
+    if sealed_evaluation.artifact_type != "quick_profile_evaluation":
+        raise ResearchAllocationError(
+            f"completed profile evaluation has the wrong artifact type: "
+            f"{normalized['profile']['symbol']}"
+        )
+    if sealed_evaluation.sealed_at != recorded_at:
+        raise ResearchAllocationError(
+            f"profile replay recorded_at conflicts with the evaluation seal: "
+            f"{normalized['profile']['symbol']}"
+        )
+    try:
+        evaluation_payload = json.loads(evaluation_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ResearchAllocationError(
+            f"completed profile evaluation cannot be read: "
+            f"{normalized['profile']['symbol']}"
+        ) from exc
+    expected_fields = {
+        "schema_version",
+        "cycle_id",
+        "symbol",
+        "company_name",
+        "recorded_at",
+        "profile_path",
+        "profile_sha256",
+        "policy_reference",
+        "policy_payload_sha256",
+        "allocation_sha256",
+        "evaluation",
+        "queue_status",
+        "capacity_wait",
+        "portfolio_action",
+    }
+    if not isinstance(evaluation_payload, dict) or set(evaluation_payload) != expected_fields:
+        raise ResearchAllocationError(
+            f"completed profile evaluation fields do not match contract: "
+            f"{normalized['profile']['symbol']}"
+        )
+    expected_values = {
+        "schema_version": 2,
+        "cycle_id": normalized["cycle_id"],
+        "symbol": normalized["profile"]["symbol"],
+        "company_name": normalized["company_name"],
+        "recorded_at": recorded_at.isoformat(),
         "profile_path": relative_profile,
         "profile_sha256": sealed_profile.sha256,
-        "evaluation_path": relative_evaluation,
-        "evaluation_sha256": sealed_evaluation.sha256,
+        "policy_reference": policy_reference,
+        "policy_payload_sha256": policy_sha256,
+        "evaluation": adjusted_evaluation,
+        "portfolio_action": None,
+    }
+    mismatched_evaluation = [
+        field
+        for field, expected in expected_values.items()
+        if evaluation_payload.get(field) != expected
+    ]
+    queue_status = evaluation_payload.get("queue_status")
+    capacity_wait = evaluation_payload.get("capacity_wait")
+    if next_stage in RESEARCH_STAGES:
+        if queue_status not in {"pending", "requires_rebaseline"}:
+            mismatched_evaluation.append("queue_status")
+        if capacity_wait is not (queue_status == "requires_rebaseline"):
+            mismatched_evaluation.append("capacity_wait")
+    elif queue_status != "completed" or capacity_wait is not False:
+        mismatched_evaluation.extend(["queue_status", "capacity_wait"])
+    if mismatched_evaluation:
+        raise ResearchAllocationError(
+            "profile replay conflicts with the sealed evaluation "
+            f"({', '.join(sorted(set(mismatched_evaluation)))}): "
+            f"{normalized['profile']['symbol']}"
+        )
+    return _profile_record_result(
+        evaluation_payload,
+        profile_sha256=sealed_profile.sha256,
+        evaluation_path=relative_evaluation,
+        evaluation_sha256=sealed_evaluation.sha256,
+        idempotent=True,
+    )
+
+
+def _profile_record_result(
+    evaluation_payload: Mapping[str, Any],
+    *,
+    profile_sha256: str,
+    evaluation_path: str,
+    evaluation_sha256: str,
+    idempotent: bool,
+) -> dict[str, Any]:
+    evaluation = evaluation_payload["evaluation"]
+    return {
+        "schema_version": 2,
+        "symbol": evaluation_payload["symbol"],
+        "next_stage": evaluation["next_stage"],
+        "queue_status": evaluation_payload["queue_status"],
+        "capacity_wait": evaluation_payload["capacity_wait"],
+        "profile_path": evaluation_payload["profile_path"],
+        "profile_sha256": profile_sha256,
+        "evaluation_path": evaluation_path,
+        "evaluation_sha256": evaluation_sha256,
+        "idempotent": idempotent,
         "portfolio_action": None,
     }
 
 
+@serialized_coverage_write
 def finalize_profile_stage(
     *,
     root: str | Path,
@@ -477,44 +701,49 @@ def finalize_profile_stage(
         candidate_decision = "deep_candidate"
         next_stage = "deep_research"
         selection_name = "scoped-research-selection.json"
+    next_binding_field = (
+        "profile_quick_selection_path"
+        if stage == "quick_profile"
+        else "profile_scoped_selection_path"
+    )
 
     selection_path = base / "profiles" / cycle / selection_name
     if selection_path.exists():
         verified = verify_sealed(selection_path)
         payload = json.loads(selection_path.read_text(encoding="utf-8"))
         relative = selection_path.relative_to(repository_root).as_posix()
-        selected_symbols = [
-            item["symbol"] for item in payload["ranking"] if item["selected"]
-        ]
-        next_binding_field = (
-            "profile_quick_selection_path"
-            if stage == "quick_profile"
-            else "profile_scoped_selection_path"
+        _validate_profile_selection_payload(
+            payload,
+            artifact_type=verified.artifact_type,
+            cycle=cycle,
+            stage=stage,
+            next_stage=next_stage,
         )
-        queue_by_symbol = {item["symbol"]: item for item in queue}
-        if not all(
-            queue_by_symbol.get(symbol, {}).get("task_type") == next_stage
-            and queue_by_symbol[symbol].get(next_binding_field) == relative
-            for symbol in selected_symbols
-        ):
-            raise ResearchAllocationError(
-                f"sealed {stage} selection exists but queue materialization "
-                "is incomplete"
+        bound_budget = payload.get("next_stage_effort_budget_hours")
+        updated_screening, updated_queue, screening_changed, queue_changed = (
+            _materialize_profile_selection(
+                screening=screening,
+                queue=queue,
+                payload=payload,
+                cycle=cycle,
+                stage=stage,
+                next_stage=next_stage,
+                next_binding_field=next_binding_field,
+                selection_path=relative,
+                selection_sha256=verified.sha256,
+                budget=float(bound_budget) if bound_budget is not None else None,
             )
-        return {
-            "schema_version": 1,
-            "cycle_id": cycle,
-            "evaluated_stage": stage,
-            "next_stage": next_stage,
-            "cohort_count": payload["cohort_count"],
-            "eligible_count": payload["eligible_count"],
-            "selected_count": payload["selected_count"],
-            "selected_symbols": selected_symbols,
-            "selection_path": relative,
-            "selection_sha256": verified.sha256,
-            "idempotent": True,
-            "portfolio_action": None,
-        }
+        )
+        if screening_changed:
+            write_jsonl(screening_path, updated_screening)
+        if queue_changed:
+            write_jsonl(queue_path, updated_queue)
+        return _profile_selection_result(
+            payload,
+            selection_path=relative,
+            selection_sha256=verified.sha256,
+            idempotent=True,
+        )
 
     anchors = [
         item
@@ -622,6 +851,7 @@ def finalize_profile_stage(
         "eligible_count": len(eligible),
         "capacity": capacity,
         "risk_cluster_cap": risk_cap,
+        "next_stage_effort_budget_hours": float(budget),
         "selected_count": len(selected),
         "principle": policy.get("comparison_principle"),
         "ranking": rows,
@@ -634,83 +864,295 @@ def finalize_profile_stage(
         sealed_at=finalized_at,
     )
     relative_selection = selection_path.relative_to(repository_root).as_posix()
-    queue_by_symbol = {item["symbol"]: dict(item) for item in queue}
-    next_binding_field = (
-        "profile_quick_selection_path"
-        if stage == "quick_profile"
-        else "profile_scoped_selection_path"
+    updated_screening, updated_queue, screening_changed, queue_changed = (
+        _materialize_profile_selection(
+            screening=screening,
+            queue=queue,
+            payload=selection_payload,
+            cycle=cycle,
+            stage=stage,
+            next_stage=next_stage,
+            next_binding_field=next_binding_field,
+            selection_path=relative_selection,
+            selection_sha256=sealed.sha256,
+            budget=float(budget),
+        )
     )
-    for item in ranked:
-        symbol = item["symbol"]
-        queued = queue_by_symbol[symbol]
-        screen = screen_by_symbol[symbol]
-        if symbol in selected_symbols:
-            screen.update(
-                {
-                    "decision": next_stage,
-                    "reason": (
-                        f"完整{stage}批次横向比较后获得{next_stage}预算。"
-                    ),
-                    "evidence": list(screen.get("evidence") or [])
-                    + [
-                        f"stage_selection:{relative_selection}",
-                        f"stage_selection_sha256:{sealed.sha256}",
-                    ],
-                    "next_action": _next_action(next_stage, False),
-                }
-            )
-            queued.update(
-                {
-                    "task_type": next_stage,
-                    "status": "pending",
-                    "assigned_agent": None,
-                    "started_at": None,
-                    "finished_at": None,
-                    "failure_reason": None,
-                    "reason": (
-                        f"完整{stage}批次横向比较后获得{next_stage}预算。"
-                    ),
-                    "next_action": _next_action(next_stage, False),
-                    "effort_budget_hours": float(budget),
-                    "preceding_stage": stage,
-                    "stop_conditions": _stop_conditions(next_stage),
-                    next_binding_field: relative_selection,
-                }
-            )
-        else:
-            screen.update(
-                {
-                    "decision": "catalog",
-                    "reason": (
-                        f"{stage}支持继续研究，但横向比较后未获得本周期"
-                        f"{next_stage}容量。"
-                    ),
-                    "evidence": list(screen.get("evidence") or [])
-                    + [
-                        f"stage_selection:{relative_selection}",
-                        f"stage_selection_sha256:{sealed.sha256}",
-                    ],
-                    "next_action": "等待结构化触发器或下一周期重新竞争研究预算。",
-                }
-            )
-            queued["next_action"] = (
-                "等待结构化触发器或下一周期重新竞争研究预算。"
-            )
-            queued[next_binding_field] = relative_selection
-    write_jsonl(screening_path, list(screen_by_symbol.values()))
-    write_jsonl(queue_path, list(queue_by_symbol.values()))
-    return {
-        "schema_version": 1,
+    if screening_changed:
+        write_jsonl(screening_path, updated_screening)
+    if queue_changed:
+        write_jsonl(queue_path, updated_queue)
+    return _profile_selection_result(
+        selection_payload,
+        selection_path=relative_selection,
+        selection_sha256=sealed.sha256,
+        idempotent=False,
+    )
+
+
+def _validate_profile_selection_payload(
+    payload: Any,
+    *,
+    artifact_type: str,
+    cycle: str,
+    stage: str,
+    next_stage: str,
+) -> None:
+    expected_artifact_type = f"{stage}_cross_company_selection"
+    if artifact_type != expected_artifact_type:
+        raise ResearchAllocationError(
+            f"sealed {stage} selection has the wrong artifact type: {artifact_type}"
+        )
+    if not isinstance(payload, Mapping):
+        raise ResearchAllocationError(f"sealed {stage} selection must be an object")
+    if payload.get("schema_version") != 1:
+        raise ResearchAllocationError(f"sealed {stage} selection schema_version must be 1")
+    expected_values = {
         "cycle_id": cycle,
         "evaluated_stage": stage,
         "next_stage": next_stage,
-        "cohort_count": len(cohort),
-        "eligible_count": len(eligible),
-        "selected_count": len(selected),
-        "selected_symbols": [item["symbol"] for item in selected],
-        "selection_path": relative_selection,
-        "selection_sha256": sealed.sha256,
-        "idempotent": False,
+        "portfolio_action": None,
+    }
+    mismatched = [
+        field for field, expected in expected_values.items() if payload.get(field) != expected
+    ]
+    if mismatched:
+        raise ResearchAllocationError(
+            f"sealed {stage} selection conflicts at {', '.join(mismatched)}"
+        )
+    for field in ("cohort_count", "eligible_count", "selected_count"):
+        value = payload.get(field)
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection {field} must be a non-negative integer"
+            )
+    ranking = payload.get("ranking")
+    if not isinstance(ranking, list):
+        raise ResearchAllocationError(f"sealed {stage} selection ranking is invalid")
+    symbols: set[str] = set()
+    selected_count = 0
+    for row in ranking:
+        if not isinstance(row, Mapping):
+            raise ResearchAllocationError(f"sealed {stage} selection row is invalid")
+        symbol = row.get("symbol")
+        if not isinstance(symbol, str) or not re.fullmatch(r"CN:[0-9]{6}", symbol):
+            raise ResearchAllocationError(f"sealed {stage} selection symbol is invalid")
+        if symbol in symbols:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection has duplicate symbol: {symbol}"
+            )
+        symbols.add(symbol)
+        if not isinstance(row.get("selected"), bool):
+            raise ResearchAllocationError(
+                f"sealed {stage} selection selected flag is invalid: {symbol}"
+            )
+        selected_count += int(row["selected"])
+    if len(ranking) != payload["eligible_count"]:
+        raise ResearchAllocationError(
+            f"sealed {stage} selection ranking does not match eligible_count"
+        )
+    if selected_count != payload["selected_count"]:
+        raise ResearchAllocationError(
+            f"sealed {stage} selection ranking does not match selected_count"
+        )
+    budget = payload.get("next_stage_effort_budget_hours")
+    if budget is not None and (
+        isinstance(budget, bool) or not isinstance(budget, (int, float)) or budget <= 0
+    ):
+        raise ResearchAllocationError(
+            f"sealed {stage} selection next-stage budget is invalid"
+        )
+
+
+def _materialize_profile_selection(
+    *,
+    screening: list[dict[str, Any]],
+    queue: list[dict[str, Any]],
+    payload: Mapping[str, Any],
+    cycle: str,
+    stage: str,
+    next_stage: str,
+    next_binding_field: str,
+    selection_path: str,
+    selection_sha256: str,
+    budget: float | None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], bool, bool]:
+    """Repair only absent selection materialization without regressing later work."""
+
+    screen_by_symbol = {item.get("symbol"): dict(item) for item in screening}
+    queue_by_symbol = {item.get("symbol"): dict(item) for item in queue}
+    screening_changed = False
+    queue_changed = False
+    expected_evidence = [
+        f"stage_selection:{selection_path}",
+        f"stage_selection_sha256:{selection_sha256}",
+    ]
+    evidence_proof = set(expected_evidence)
+
+    for row in payload["ranking"]:
+        symbol = str(row["symbol"])
+        if symbol not in screen_by_symbol or symbol not in queue_by_symbol:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection references a missing coverage row: {symbol}"
+            )
+        original_queue = queue_by_symbol[symbol]
+        original_screen = screen_by_symbol[symbol]
+        queued = dict(original_queue)
+        screen = dict(original_screen)
+        completed_stage = _history_completed(queued, stage)
+        if not completed_stage:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection lacks completed stage history: {symbol}"
+            )
+        current_cycle = queued.get("profile_cycle_id")
+        if isinstance(current_cycle, str) and current_cycle != cycle:
+            # A later cycle owns the mutable queue and screening rows now.
+            continue
+
+        existing_binding = queued.get(next_binding_field)
+        if existing_binding is not None and existing_binding != selection_path:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection conflicts at {next_binding_field}: {symbol}"
+            )
+        screen_evidence = screen.get("evidence")
+        evidence = list(screen_evidence) if isinstance(screen_evidence, list) else []
+        screen_proves_selection = evidence_proof.issubset(set(evidence))
+        base_state = bool(
+            current_cycle == cycle
+            and queued.get("task_type") == stage
+            and queued.get("status") == "completed"
+        )
+        next_stage_state = queued.get("task_type") == next_stage
+        later_progress = bool(
+            _history_completed(queued, next_stage)
+            or (
+                queued.get("task_type") not in {stage, next_stage}
+                and queued.get("task_type") in RESEARCH_STAGES
+            )
+        )
+        selected = row["selected"] is True
+
+        if selected:
+            if base_state:
+                if budget is None:
+                    raise ResearchAllocationError(
+                        f"sealed {stage} selection predates recoverable budget binding: "
+                        f"{symbol}"
+                    )
+                queued.update(
+                    {
+                        "task_type": next_stage,
+                        "status": "pending",
+                        "assigned_agent": None,
+                        "started_at": None,
+                        "finished_at": None,
+                        "failure_reason": None,
+                        "reason": (
+                            f"完整{stage}批次横向比较后获得{next_stage}预算。"
+                        ),
+                        "next_action": _next_action(next_stage, False),
+                        "effort_budget_hours": budget,
+                        "preceding_stage": stage,
+                        "stop_conditions": _stop_conditions(next_stage),
+                        next_binding_field: selection_path,
+                    }
+                )
+                if not screen_proves_selection:
+                    screen.update(
+                        {
+                            "decision": next_stage,
+                            "reason": (
+                                f"完整{stage}批次横向比较后获得{next_stage}预算。"
+                            ),
+                            "evidence": list(dict.fromkeys(evidence + expected_evidence)),
+                            "next_action": _next_action(next_stage, False),
+                        }
+                    )
+            elif next_stage_state or later_progress:
+                # Only add the immutable selection binding. Claim, completion,
+                # or deeper-stage fields and conclusions belong to later work.
+                queued[next_binding_field] = selection_path
+                safe_pending_state = bool(
+                    next_stage_state
+                    and queued.get("status") == "pending"
+                    and queued.get("assigned_agent") is None
+                    and not _history_completed(queued, next_stage)
+                )
+                if safe_pending_state and not screen_proves_selection:
+                    screen.update(
+                        {
+                            "decision": next_stage,
+                            "reason": (
+                                f"完整{stage}批次横向比较后获得{next_stage}预算。"
+                            ),
+                            "evidence": list(dict.fromkeys(evidence + expected_evidence)),
+                            "next_action": _next_action(next_stage, False),
+                        }
+                    )
+            else:
+                raise ResearchAllocationError(
+                    f"sealed {stage} selection cannot safely repair queue state: {symbol}"
+                )
+        elif base_state or existing_binding == selection_path:
+            queued[next_binding_field] = selection_path
+            if base_state:
+                queued["next_action"] = (
+                    "等待结构化触发器或下一周期重新竞争研究预算。"
+                )
+            if not screen_proves_selection:
+                screen.update(
+                    {
+                        "decision": "catalog",
+                        "reason": (
+                            f"{stage}支持继续研究，但横向比较后未获得本周期"
+                            f"{next_stage}容量。"
+                        ),
+                        "evidence": list(dict.fromkeys(evidence + expected_evidence)),
+                        "next_action": "等待结构化触发器或下一周期重新竞争研究预算。",
+                    }
+                )
+        else:
+            raise ResearchAllocationError(
+                f"sealed {stage} defer decision cannot safely repair queue state: {symbol}"
+            )
+
+        if queued != original_queue:
+            queue_by_symbol[symbol] = queued
+            queue_changed = True
+        if screen != original_screen:
+            screen_by_symbol[symbol] = screen
+            screening_changed = True
+
+    return (
+        [screen_by_symbol[item.get("symbol")] for item in screening],
+        [queue_by_symbol[item.get("symbol")] for item in queue],
+        screening_changed,
+        queue_changed,
+    )
+
+
+def _profile_selection_result(
+    payload: Mapping[str, Any],
+    *,
+    selection_path: str,
+    selection_sha256: str,
+    idempotent: bool,
+) -> dict[str, Any]:
+    selected_symbols = [
+        item["symbol"] for item in payload["ranking"] if item["selected"] is True
+    ]
+    return {
+        "schema_version": 1,
+        "cycle_id": payload["cycle_id"],
+        "evaluated_stage": payload["evaluated_stage"],
+        "next_stage": payload["next_stage"],
+        "cohort_count": payload["cohort_count"],
+        "eligible_count": payload["eligible_count"],
+        "selected_count": payload["selected_count"],
+        "selected_symbols": selected_symbols,
+        "selection_path": selection_path,
+        "selection_sha256": selection_sha256,
+        "idempotent": idempotent,
         "portfolio_action": None,
     }
 
@@ -1213,8 +1655,8 @@ def _select_with_risk_cluster_cap(
     counts: dict[str, int] = {}
     capped: set[str] = set()
     for item in ranked:
-        cluster = str(item.get("economic_risk_cluster") or "diversified")
-        if cluster != "diversified" and counts.get(cluster, 0) >= cap:
+        cluster = str(item.get("economic_risk_cluster") or "unclassified")
+        if counts.get(cluster, 0) >= cap:
             capped.add(str(item["symbol"]))
             continue
         selected.append(item)
