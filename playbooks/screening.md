@@ -16,12 +16,9 @@
 
 覆盖不等于每家公司都获得完整初研。筛选只决定是否值得购买下一阶段研究预算，不是投资结论；小市值、低流动性、暂时亏损或负倍数不能成为硬跳过理由。
 
-公开数据排名只能作为便宜地图，不能直接晋级深研、承保或买入。必须经过 `playbooks/research-capital-allocation.md` 的快速画像和范围研究；不同类型机会分别选样，并为危机错杀与假阴性抽查保留容量。
-
-非金融公司额外运行可复算的神奇公式镜头。其原始财报抓取必须绑定 universe SHA、真实
-抓取时间、公告/更新时间和来源；今天下载的重述数据不得伪装成历史点时数据。东方财富等
-未文档化公开接口只可用于内部预筛，不代表再分发许可；晋级公司必须回到交易所或巨潮
-法定报告核验。通用价值镜头排除银行与保险，避免金融企业同时占用通用和专用低估值容量。
+任何外部筛选、已有清单或人工提名都只能形成研究候选，不能直接晋级深研、承保或买入。
+候选必须经过 `playbooks/research-capital-allocation.md` 的快速画像和范围研究；不同类型机会
+分别选样，并为危机错杀与假阴性抽查保留容量。本仓库不负责生产因子排名或回测结果。
 
 每层横向比较都执行风险簇上限而非行业配额。小市值、亏损、低流动性、负 PE 仍可通过
 危机错杀、信息变化或假阴性镜头竞争预算，不因风格约束而被静默排除。
@@ -36,7 +33,7 @@
 
 ## 分流
 
-- `catalog`：已完成全市场机器清洗，但本周期未获得快速画像预算；保留结构化重启触发器。
+- `catalog`：已进入覆盖目录，但本周期未获得快速画像预算；保留结构化重启触发器。
 - `rapid_triage`：15分钟级快速甄别；完成后等待全批次横向比较。
 - `triage_candidate`：快速甄别通过，尚未获得正式画像预算。
 - `quick_profile`：一小时级正式投资画像。
@@ -60,8 +57,8 @@
 ```bash
 python -m trading_os coverage validate
 python -m trading_os coverage status
-python -m trading_os coverage rank-rebaseline --magic-formula <sealed-snapshot> --include-completed
-python -m trading_os coverage allocate-research
+python -m trading_os coverage allocate-research --ranking <frozen-input.json>
+python -m trading_os coverage apply-allocation --ranking <frozen-input.json>
 python -m trading_os coverage triage-status <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>

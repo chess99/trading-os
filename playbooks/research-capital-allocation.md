@@ -15,14 +15,15 @@
 ÷ 预计研究成本
 ```
 
-公开快照总分只是购买更多信息的便宜地图，不能直接把公司晋级为深研、承保或 `buy_now`。
+候选优先级输入只是购买更多信息的便宜地图，不能直接把公司晋级为深研、承保或 `buy_now`。
+本仓库消费显式给定的冻结输入，但不负责生成因子排名，也暂不定义新的跨仓库候选契约。
 
 ## 自适应漏斗
 
 | 层级 | 默认单周期容量 | 单家公司预算 | 只回答什么 |
 |---|---:|---:|---|
-| L0 市场清洗 | 全市场 | 机器秒级 | 是否为可识别的普通上市股票 |
-| L1 多视角便宜地图 | 全市场 | 机器分钟级 | 哪些公司值得进入动态候选池 |
+| L0 候选接入 | 显式冻结集合 | 外部清单或人工整理 | 哪些公司进入本轮研究竞争 |
+| L1 研究预算分配 | 候选集合 | 批次级 | 哪些公司值得进入动态候选池 |
 | L1.5 快速甄别 | 200 | 15 分钟 | 是否值得竞争正式画像预算 |
 | L2 正式投资画像 | 40 | 1 小时 | 是否存在一条可信投资路径 |
 | L3 范围研究 | 15 | 4 小时 | 决定性未知数能否被证据解决 |
@@ -39,20 +40,11 @@
 - 综合赔率；
 - 现金回报与资产折价；
 - 高质量复利；
-- 非金融神奇公式：同时看 EBIT/EV 与 EBIT/有形经营资本；
 - 银行、保险等专用模型；
 - 周期成本曲线与中周期盈利；
 - 危机错杀和负 PE 正常化；
 - 新财报或重大信息变化；
 - 从未入选公司的当前时点假阴性抽查。
-
-神奇公式只是一条独立预算镜头，不替代公司研究。生产口径同时保留两套排名：经典版把
-盈利收益率和资本回报率的全市场名次等权相加；A 股适配版用三年核心经营 EBIT 中位数、
-当前市值和最近统一报告期资产负债表，并以 70% 全市场、30% 同行业分位降低行业会计
-口径偏差。银行、保险、券商、地产、公用事业不适用；周期股转入中周期盈利专用镜头；
-投入资本低于市值 2% 的轻资产公司转入质量镜头，资本回报排名封顶 200%，不能凭近零
-分母获得无限资本回报率。全额扣除货币资金只
-用于便宜地图，进入正式画像后必须核验受限资金与最低经营现金。
 
 不同镜头的实际槽位来源记为 `selected_by`，进入多个镜头短名单的事实另记为
 `matched_lenses`。多镜头共识只能读取后者，不能因去重而失效。
@@ -120,9 +112,8 @@
 ## 命令
 
 ```bash
-python -m trading_os coverage rank-rebaseline --magic-formula <sealed-snapshot> --include-completed
-python -m trading_os coverage allocate-research
-python -m trading_os coverage apply-allocation
+python -m trading_os coverage allocate-research --ranking <frozen-input.json>
+python -m trading_os coverage apply-allocation --ranking <frozen-input.json>
 python -m trading_os coverage triage-claim --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage triage-record --input <rapid-triage.json>
 python -m trading_os coverage triage-status <cycle-id>

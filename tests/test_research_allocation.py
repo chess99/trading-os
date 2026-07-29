@@ -23,7 +23,6 @@ def _small_policy() -> dict[str, object]:
         "balanced": 1,
         "value_income": 1,
         "quality_compounder": 0,
-        "magic_formula_nonfinancial": 0,
         "financial_specialist": 0,
         "cyclical_specialist": 0,
         "crisis_mispricing": 1,

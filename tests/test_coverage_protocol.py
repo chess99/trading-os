@@ -104,7 +104,7 @@ def test_docs_route_full_market_work_through_coverage():
     assert "约 3 家" in screening
     assert "deep_research" in screening
     assert "quick_profile" in screening
-    assert "公开数据排名只能作为便宜地图" in screening
+    assert "任何外部筛选、已有清单或人工提名都只能形成研究候选" in screening
     assert "skip_not_in_scope" in screening
     assert "JSONL" in screening
     assert "小市值、低流动性、暂时亏损" in screening

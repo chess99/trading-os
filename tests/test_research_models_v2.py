@@ -120,7 +120,7 @@ def test_policy_files_have_versioned_closed_metadata(relative_path: str):
     assert policy.policy_id
     assert policy.version
     if relative_path == "policies/research-allocation.json":
-        expected_effective_at = "2026-07-28T00:00:00+08:00"
+        expected_effective_at = "2026-07-29T22:00:00+08:00"
     elif relative_path in {"policies/underwriting.json", "policies/portfolio.json"}:
         expected_effective_at = "2026-07-25T00:00:00+08:00"
     else:

@@ -41,11 +41,6 @@ from .research_assets.profile_workflow import (
     record_profile_package,
     release_profile_task,
 )
-from .research_assets.rebaseline_ranking import (
-    RebaselineRankingError,
-    build_rebaseline_ranking,
-    write_rebaseline_ranking,
-)
 from .research_assets.research_allocation import (
     ResearchAllocationError,
     allocate_research_capacity,
@@ -239,34 +234,14 @@ def build_parser() -> argparse.ArgumentParser:
     coverage_list.add_argument("--decision")
     coverage_list.set_defaults(func=cmd_coverage_list)
 
-    rank_rebaseline = coverage_sub.add_parser(
-        "rank-rebaseline", help="Rank companies requiring research rebaseline"
-    )
-    _add_coverage_root(rank_rebaseline)
-    rank_rebaseline.add_argument("--companies")
-    rank_rebaseline.add_argument("--screening")
-    rank_rebaseline.add_argument("--research-root", default="research")
-    rank_rebaseline.add_argument("--output", default="automation/rebaseline_ranking.json")
-    rank_rebaseline.add_argument(
-        "--magic-formula",
-        help="Sealed non-financial Magic Formula snapshot",
-    )
-    rank_rebaseline.add_argument(
-        "--include-completed",
-        action="store_true",
-        help="Re-rank completed legacy work for a new light re-triage cycle",
-    )
-    rank_rebaseline.add_argument("--max-snapshot-age-days", type=int, default=7)
-    _add_timestamp(rank_rebaseline)
-    rank_rebaseline.set_defaults(func=cmd_coverage_rank_rebaseline)
-
     allocate_research = coverage_sub.add_parser(
         "allocate-research",
-        help="Allocate finite research capacity across a public ranking",
+        help="Allocate finite research capacity across an explicit frozen input",
     )
     allocate_research.add_argument(
         "--ranking",
-        default="automation/rebaseline_ranking.json",
+        required=True,
+        help="Existing frozen research-priority input",
     )
     allocate_research.add_argument(
         "--policy",
@@ -285,7 +260,8 @@ def build_parser() -> argparse.ArgumentParser:
     _add_coverage_root(apply_allocation)
     apply_allocation.add_argument(
         "--ranking",
-        default="automation/rebaseline_ranking.json",
+        required=True,
+        help="Frozen input used to produce the allocation",
     )
     apply_allocation.add_argument(
         "--allocation",
@@ -655,30 +631,6 @@ def cmd_coverage_list(ns: argparse.Namespace) -> int:
     return 0
 
 
-def cmd_coverage_rank_rebaseline(ns: argparse.Namespace) -> int:
-    root = Path(ns.root)
-    payload = build_rebaseline_ranking(
-        companies_path=ns.companies or root / "companies.jsonl",
-        queue_path=root / "research_queue.jsonl",
-        screening_path=ns.screening or root / "screening.jsonl",
-        research_root=ns.research_root,
-        generated_at=_timestamp(ns.at),
-        max_snapshot_age_days=ns.max_snapshot_age_days,
-        magic_formula_path=ns.magic_formula,
-        include_completed=ns.include_completed,
-    )
-    path = write_rebaseline_ranking(ns.output, payload)
-    _write_success(
-        {
-            "ok": True,
-            "path": str(path),
-            "ranked_count": payload["ranked_count"],
-            "excluded_count": payload["excluded_count"],
-        }
-    )
-    return 0
-
-
 def cmd_coverage_allocate_research(ns: argparse.Namespace) -> int:
     ranking = json.loads(Path(ns.ranking).read_text(encoding="utf-8"))
     policy = load_policy(ns.policy)
@@ -910,7 +862,6 @@ def _error_code(exc: Exception) -> str | None:
         (CoverageValidationError, "coverage_validation_failed"),
         (ReviewStoreError, "review_state_error"),
         (ReviewWorkflowError, "review_workflow_error"),
-        (RebaselineRankingError, "rebaseline_ranking_error"),
         (ResearchAllocationError, "research_allocation_error"),
         (ClaimPacketError, "claim_packet_error"),
         (SealingError, "sealed_artifact_error"),

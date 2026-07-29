@@ -54,7 +54,6 @@ SELECTION_LENSES = (
     "balanced",
     "value_income",
     "quality_compounder",
-    "magic_formula_nonfinancial",
     "financial_specialist",
     "cyclical_specialist",
     "crisis_mispricing",
@@ -966,9 +965,6 @@ def _normalize_ranking_item(item: Any) -> dict[str, Any]:
         },
         "reason_codes": reasons,
         "public_snapshot": dict(public),
-        "magic_formula": _normalize_magic_formula_item(
-            item.get("magic_formula"), symbol=symbol
-        ),
     }
 
 
@@ -995,11 +991,6 @@ def _lens_pool(
             }
         if lens == "cyclical_specialist":
             return item["economic_risk_cluster"] == "commodity_cycle"
-        if lens == "magic_formula_nonfinancial":
-            return bool(
-                item["magic_formula"]
-                and item["magic_formula"]["eligible_for_nonfinancial_lens"]
-            )
         if lens == "value_income":
             return item["economic_risk_cluster"] not in {
                 "credit_cycle",
@@ -1022,11 +1013,6 @@ def _lens_pool(
             item["dimensions"]["operating_capital_quality"]
             + item["dimensions"]["permanent_loss_protection"]
             + item["dimensions"]["verifiable_catalyst_odds"]
-        ),
-        "magic_formula_nonfinancial": lambda item: (
-            float(item["magic_formula"]["combined_score"])
-            if item["magic_formula"] is not None
-            else float("-inf")
         ),
         "financial_specialist": lambda item: (
             item["dimensions"]["value_dislocation"]
@@ -1051,21 +1037,6 @@ def _lens_pool(
         (item for item in items if eligible(item)),
         key=lambda item: (-score(item), item["symbol"]),
     )
-
-
-def _normalize_magic_formula_item(value: Any, *, symbol: str) -> dict[str, Any] | None:
-    if value is None:
-        return None
-    if not isinstance(value, Mapping):
-        raise ResearchAllocationError(f"{symbol}.magic_formula must be an object or null")
-    eligible = value.get("eligible_for_nonfinancial_lens")
-    score = value.get("combined_score")
-    if not isinstance(eligible, bool):
-        raise ResearchAllocationError(f"{symbol}.magic_formula eligibility is invalid")
-    return {
-        "eligible_for_nonfinancial_lens": eligible,
-        "combined_score": _number(score, f"{symbol}.magic_formula.combined_score"),
-    }
 
 
 def _cluster_has_capacity(cluster: str, *, counts: Mapping[str, int], cap: int) -> bool:

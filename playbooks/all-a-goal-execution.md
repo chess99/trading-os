@@ -6,7 +6,7 @@
 买入上限、预期回报、风险和仓位。完成全 A 股研究不等于给约 5500 家公司各写一份
 报告，而是同时满足：
 
-1. 全市场普通 A 股均进入可审计机器目录，异常和硬排除有结构化理由；
+1. 本轮候选集合被显式冻结，来源、范围、异常和硬排除均有结构化记录；
 2. 最新财报、价格和重大事件能够触发重新竞争研究预算；
 3. 当前动态候选池完成 L1.5 快速甄别；
 4. 各研究层都先完成同层批次，再横向比较晋级；
@@ -16,8 +16,8 @@
 ## 长程顺序
 
 ```text
-全市场机器扫描
-→ 多视角选出约200家动态候选
+显式冻结候选集合
+→ 分配最多约200家动态快速甄别预算
 → 每家独立agent做15分钟快速甄别
 → 完整候选批次横向比较，最多约40家正式画像
 → 完整画像批次横向比较，最多约15家范围研究
@@ -36,7 +36,7 @@
 2. 检查 `git status`、当前运行 agent、coverage 状态和已有封存资产。
 3. 已完成且验证通过的单公司结果必须复用；正在运行的旧任务先安全收口或释放，
    不得由新分配静默覆盖。
-4. 重新生成排名、研究分配并应用。新分配会保留已有正式研究进度。
+4. 对显式给定的冻结输入执行研究分配并应用；新分配会保留已有正式研究进度。
 5. 每家公司只允许一个独立 agent；单公司 agent 只提交 package 或公司资产，
    不直接编辑共享队列。
 6. 每完成一个小批次就验证、封存、回写和只提交本批次文件。失败任务记录原因并释放，
@@ -44,7 +44,7 @@
 
 ## 强制闸门
 
-- L1 公开排名只能进入 `rapid_triage`。
+- 外部筛选、已有清单或人工提名只能进入 `rapid_triage`。
 - `triage-finalize` 在完整候选池终态前必须失败。
 - `profile-finalize --stage quick_profile` 在完整正式画像批次终态前必须失败。
 - `profile-finalize --stage scoped_research` 在完整范围研究批次终态前必须失败。
@@ -56,9 +56,8 @@
 ## 关键命令
 
 ```bash
-python -m trading_os coverage rank-rebaseline
-python -m trading_os coverage allocate-research
-python -m trading_os coverage apply-allocation
+python -m trading_os coverage allocate-research --ranking <frozen-input.json>
+python -m trading_os coverage apply-allocation --ranking <frozen-input.json>
 
 python -m trading_os coverage triage-claim --agent <agent-id>
 python -m trading_os coverage triage-record --input <rapid-triage.json>
