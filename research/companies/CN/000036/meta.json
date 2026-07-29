@@ -15,43 +15,72 @@
         "sha256": "401033afc16d070cddb047a3ad0565e1b9942161803259f485939556fb79d615"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-7225d6db5eeb.md",
+        "report_id": "CN-000036-2026-07-30-rapid-triage-7225d6db5eeb",
+        "report_type": "rapid_triage",
+        "sha256": "051ed4931d855bf96ec24be98d8b0839e88c2f44e910cc06a5b04b10d9857536"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-7225d6db5eeb.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-7225d6db5eeb.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T07:29:00+08:00",
+      "report_id": "CN-000036-2026-07-30-rapid-triage-7225d6db5eeb",
+      "report_path": "reports/2026-07-30-rapid-triage-7225d6db5eeb.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000036/20260730T072900+0800.triage.json",
+      "source_package_sha256": "7225d6db5eeb50879a8477718686b5213fda6dcbdbc062305471d0ac8242beba"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露2026年半年度报告，或正式数据超出/低于扣非归母净利润2,200万至3,000万元预告区间。"
       },
-      "reason": "复查2026年半年报，重点验证销售回款、现金理财、存货和御品峦山去化",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "核验钱塘公馆结转、租赁酒店底盘、现金流和存货变化，更新正常化所有者收益。",
+      "trigger_id": "000036-h1-2026-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "date": "2026-10-31"
+        "description": "Arizaro交易获批、提交股东会、交割、终止，或披露审计评估、可研、环评、融资及建设资本开支。"
       },
-      "reason": "复查2026年三季报和地产项目进度，更新NAV折价参数",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "该交易约占归母净资产四分之一且后续资本开支未知，足以改变治理、流动性和估值判断。",
+      "trigger_id": "000036-arizaro-decision",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "date": "2027-04-30"
+        "description": "杭州华联置业21.4149%少数股权完成交割、终止或交易条件发生重大变化。"
       },
-      "reason": "复查2026年年报、分红政策、存货减值和非主业投资进展",
-      "trigger_id": "legacy-review-3",
-      "type": "date"
+      "reason": "2.2亿元现金支出和母公司权益占比提升会改变净现金与归母收益口径。",
+      "trigger_id": "000036-hangzhou-minority-close",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "华联A区专项规划指标调整获批、土地实施方案明确、项目延期或被调出更新计划。"
+      },
+      "reason": "城市更新的开发权益和时间表是账面资产价值能否兑现的关键变量。",
+      "trigger_id": "000036-hualian-a-plan",
+      "type": "event"
     },
     {
       "active": true,
@@ -59,39 +88,19 @@
         "operator": "price_lte",
         "threshold": 3.6
       },
-      "reason": "进入初始买入区，可用小仓位验证资产折价逻辑",
-      "trigger_id": "legacy-price-1",
+      "reason": "股价跌至约2026Q1每股归母净资产以下时，应以最新负债和资本承诺重新核验资产折价是否形成。",
+      "trigger_id": "000036-price-below-book",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 3.3
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "接近悲观NAV区间，若基本面未恶化可考虑加仓",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 5.2
-      },
-      "reason": "超过基础合理价上沿，若缺少分红和项目超预期应减仓",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 6.0
-      },
-      "reason": "接近乐观情景估值上沿，资产折价收益已明显兑现",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
+      "reason": "即使重大事项未触发，也应在三季报窗口复核地产结转、现金和Arizaro审批进度。",
+      "trigger_id": "000036-routine-refresh",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -103,7 +112,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T07:29:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

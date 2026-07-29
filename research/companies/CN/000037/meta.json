@@ -15,64 +15,83 @@
         "sha256": "0af63f0783dc2f5636b5e57dc792314c68782138d0da745f2721511a7a99ef56"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-7c5c918a4a43.md",
+        "report_id": "CN-000037-2026-07-30-rapid-triage-7c5c918a4a43",
+        "report_type": "rapid_triage",
+        "sha256": "09d1db78dc01e2c0bad8d6b3fb6c8410e0a8cb1a98d763f8a34d2767ffb88d37"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-7c5c918a4a43.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-7c5c918a4a43.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T07:22:00+08:00",
+      "report_id": "CN-000037-2026-07-30-rapid-triage-7c5c918a4a43",
+      "report_path": "reports/2026-07-30-rapid-triage-7c5c918a4a43.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000037/20260730T072200+0800.triage.json",
+      "source_package_sha256": "7c5c918a4a433f93f8135ab71facb96ae49ffb7fd802efc8a9f72ad5568a9f3d"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2027-01-26T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
-      },
-      "reason": "复核2026年半年报，重点看扣非利润、经营现金流、储能收益和燃机利用小时",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026年三季报，判断Q1改善是否具有持续性",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
         "operator": "price_lte",
-        "threshold": 5.6
+        "threshold": 5.5
       },
-      "reason": "进入首笔观察仓买入区间，复核扣非利润、经营现金流和容量收益",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格降至5.50元或以下时，市值与净资产及初步正常化收益的错配明显收窄，值得重算储能和燃机的赔率。",
+      "trigger_id": "cn000037_price_5_50",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 4.8
+        "description": "公司披露2026年半年度报告，能够核验电力生产销售、独立储能、EPC及运维的分部收入、毛利、折旧、融资费用和经营现金流。"
       },
-      "reason": "进入较有吸引力的资产折价区间，若基本面未恶化可评估加仓",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "正式半年报是验证扣非盈利质量和储能一期完整经营贡献的最近关键证据。",
+      "trigger_id": "cn000037_2026_h1_filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 7.6
+        "description": "广东燃气机组容量电价、变动成本补偿、天然气供应价格或电力现货及辅助服务规则发生足以显著改变燃机或储能单位经济性的调整。"
       },
-      "reason": "超过减仓区间下沿，估值对主题和重估期权反映较充分",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "燃机与储能盈利对容量补偿、气价、节点电价和辅助服务价格高度敏感。",
+      "trigger_id": "cn000037_capacity_gas_policy",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期扣非归母利润及经营现金流同步改善，按年度口径显示可持续扣非归母收益达到1亿元以上，且并非主要依赖资产处置或公允价值变动。"
+      },
+      "reason": "达到该条件将实质改变当前关于盈利规模不足以支撑估值的判断。",
+      "trigger_id": "cn000037_normalized_profit_scale",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2027-01-26T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使价格与事件未触发，也应在半年内复核燃机调度、储能辅助服务收益和新平台资本投入。",
+      "trigger_id": "cn000037_review_ttl_180d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T07:22:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
