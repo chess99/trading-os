@@ -15,64 +15,64 @@
         "sha256": "7010314c5555987096bb473be49fdd32541db4539fb5b63929c8ae495c7e645f"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-2eb2b7b150b7.md",
+        "report_id": "CN-000011-2026-07-30-rapid-triage-2eb2b7b150b7",
+        "report_type": "rapid_triage",
+        "sha256": "b09d1615ba41e8b622f1ee7058f145d4fefb8c0e90d1950ae2a06aa3a523a29a"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-2eb2b7b150b7.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-2eb2b7b150b7.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:24:00+08:00",
+      "report_id": "CN-000011-2026-07-30-rapid-triage-2eb2b7b150b7",
+      "report_path": "reports/2026-07-30-rapid-triage-2eb2b7b150b7.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000011/20260730T052400+0800.triage.json",
+      "source_package_sha256": "2eb2b7b150b7e8f19e948d22a9299757190c3f732a9e0feb2f74f4a9c90ec726"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-29T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "date": "2026-08-29"
       },
-      "reason": "复核2026中报的现金流、存货、合同负债、利润和分红可持续性",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026三季报及深圳地产销售、城市更新项目进展",
-      "trigger_id": "legacy-review-2",
+      "reason": "公司公告预计在2026年8月29日披露半年报；届时核验业绩预告、分部毛利、存货减值、项目去化、经营现金流和一年内到期债务。",
+      "trigger_id": "2026-h1-report-review",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 5.8
+        "threshold": 5.7
       },
-      "reason": "进入首笔观察仓买入区间，需要复核中报现金流和存货减值",
-      "trigger_id": "legacy-price-1",
+      "reason": "A股价格回落至接近2026年一季末每股归母净资产约5.65元时，资产折价赔率可能重新成立，但仍需同步复核存货可变现净值和融资。",
+      "trigger_id": "price-at-or-below-q1-book",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 5.2
+        "description": "控股股东或公司披露城建集团、深深房同业竞争解决的资产注入、出售、托管、股权划转方案，或再次变更承诺期限。"
       },
-      "reason": "进入更有吸引力的资产折价区间，可评估加仓至最高3%",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 8.8
-      },
-      "reason": "接近减持区间，除非有实质催化，否则应降低仓位",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "同业竞争解决方式会直接改变少数股东可归属资产、治理判断和潜在NAV。",
+      "trigger_id": "controller-competition-resolution",
+      "type": "event"
     }
   ],
   "underwriting": {
@@ -84,7 +84,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T05:24:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

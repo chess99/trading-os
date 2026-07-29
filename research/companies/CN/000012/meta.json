@@ -15,14 +15,34 @@
         "sha256": "571352c810c91cfdd7056330b3585be0b3f8f6de904119d90260e4ef81aeb442"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-29c146d33742.md",
+        "report_id": "CN-000012-2026-07-30-rapid-triage-29c146d33742",
+        "report_type": "rapid_triage",
+        "sha256": "059f3249ca003be228d864c5338646a3245058a6d993d4d59abda31964b7bd60"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-29c146d33742.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-29c146d33742.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T05:26:00+08:00",
+      "report_id": "CN-000012-2026-07-30-rapid-triage-29c146d33742",
+      "report_path": "reports/2026-07-30-rapid-triage-29c146d33742.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000012/20260730T052600+0800.triage.json",
+      "source_package_sha256": "29c146d33742363ebea632b3917c5015e63d6f4a056bc6a21cb39d3e2b9934c6"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-08-31T00:00:00+08:00"
   },
   "schema_version": 2,
   "triggers": [
@@ -31,58 +51,55 @@
       "condition": {
         "date": "2026-08-31"
       },
-      "reason": "复查2026年半年报，重点核验扣非利润、经营现金流、存货和光伏玻璃/硅料资产",
-      "trigger_id": "legacy-review-1",
+      "reason": "复核2026年半年报，重点验证业绩预告区间、分部收入与毛利、经营现金流、存货跌价及新增资本开支。",
+      "trigger_id": "000012-h1-report-2026",
       "type": "date"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "公司披露浮法、工程、光伏、电子玻璃及硅料的销量、售价、单位成本、产能利用率、存货和分部现金流"
+      },
+      "reason": "决定亏损是局部周期冲击还是集团正常化所有者收益已永久受损。",
+      "trigger_id": "000012-segment-economics-filing",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个披露期存货余额下降、跌价准备不再增加，且光伏玻璃及硅料售价与现金成本价差持续改善"
+      },
+      "reason": "验证资产减值接近尾声并开始释放营运资金。",
+      "trigger_id": "000012-inventory-reversal-thesis",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 3.5
+      },
+      "reason": "更深账面折价可能提高研究赔率，但仍须同时核验扣非亏损收窄和存货下降。",
+      "trigger_id": "000012-price-margin-of-safety",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "公司完成董事会整体换届并披露稳定管理层、资本纪律和绩效约束，或股东会决议诉讼出现上诉或终审变化"
+      },
+      "reason": "延期换届和股东纠纷是当前治理折价的主要来源。",
+      "trigger_id": "000012-governance-reset",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
         "date": "2026-10-31"
       },
-      "reason": "复查2026年三季报和玻璃旺季价格走势，判断是否从观察转为可买",
-      "trigger_id": "legacy-review-2",
+      "reason": "用三季报检验半年度亏损是否见底、现金流能否覆盖利息和资本开支。",
+      "trigger_id": "000012-q3-review-2026",
       "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 4.0
-      },
-      "reason": "进入初始买入区，若同时出现玻璃价格止跌和库存下降，可建立观察仓",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 3.6
-      },
-      "reason": "跌至净资产深折价区，适合重新评估悲观情景是否已充分反映",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 5.6
-      },
-      "reason": "进入减仓区，若基本面未右侧确认，应降低仓位",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_gte",
-        "threshold": 6.2
-      },
-      "reason": "高于当前合理区间上沿较多，除非扣非利润明显修复，否则风险收益比不佳",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
     }
   ],
   "underwriting": {
@@ -94,7 +111,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T05:26:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
