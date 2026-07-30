@@ -15,34 +15,45 @@
         "sha256": "ac92fbeb5a88a3f7138e4d33a323b771e3d7c89adc5822fc2bcf00021d9c99be"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-d40846addcc4.md",
+        "report_id": "CN-000099-2026-07-30-rapid-triage-d40846addcc4",
+        "report_type": "rapid_triage",
+        "sha256": "086a3a6ef16b2ff5df12717b74d6f68109063180805e4fd6a53c1496d8947597"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-d40846addcc4.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-d40846addcc4.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T15:55:30+08:00",
+      "report_id": "CN-000099-2026-07-30-rapid-triage-d40846addcc4",
+      "report_path": "reports/2026-07-30-rapid-triage-d40846addcc4.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000099/20260730T155530+0800.triage.json",
+      "source_package_sha256": "d40846addcc4a859ecd78e577c7bacdacc57d5439260c09f280190d29a439175"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "披露2026年半年度报告或第三季度报告，核验海上油服收入与毛利、低空及应急业务收入、政府补助、经营现金流、资本开支、使用权资产和租赁负债、维修与陆上通航子公司损益及中国海油应收账款。"
       },
-      "reason": "复核2026年半年报，重点看收入恢复、现金流、资本开支和低空经济订单",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026年三季报，判断全年利润趋势和估值是否需要重估",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "下一份定期报告是区分稳定核心现金流、补贴贡献和机队扩张前置成本的最低证据集。",
+      "trigger_id": "cn000099_2026_h1_or_q3_filing",
+      "type": "filing"
     },
     {
       "active": true,
@@ -50,39 +61,37 @@
         "operator": "price_lte",
         "threshold": 11.5
       },
-      "reason": "进入初始买入区间上沿，需要复核半年报和现金流后分批建仓",
-      "trigger_id": "legacy-price-1",
+      "reason": "在基本面未恶化时，11.50元对应市值约89.2亿元和2025年归母约28.9倍PE，值得重新核验正常化所有者收益；价格本身不构成组合操作结论。",
+      "trigger_id": "cn000099_price_lte_11_50",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 10.0
+        "description": "披露中国海油五年期协议的金额、最低飞行小时或费率，签署重大海上油服、应急救援、低空商业合同，实际执行华融金租飞机租赁或融资租赁，确定樟坑径机场租赁条款，发生重大航空安全事故、供应链停飞或大额关联交易。"
       },
-      "reason": "接近保守估值区间，若主业未恶化可提高配置优先级",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事件会直接改变机队利用率、租赁固定负担、普通股现金归属和经营许可风险。",
+      "trigger_id": "cn000099_contract_lease_airport_or_safety_event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 16.0
+        "description": "连续两个报告期剔除补贴、养老金变更、资产处置和营运资金释放后，年化普通股所有者现金收益达到至少5亿元，新增飞机租金与维持性资本开支被对应合同现金覆盖，且低空、应急或维修业务在不依赖补贴下合计贡献至少1亿元年化税后收益。"
       },
-      "reason": "进入减仓观察区，需确认是否由订单和利润驱动而非纯主题交易",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "只有核心现金收益、扩张回报和第二利润支柱同时成立，当前约36倍静态PE中的成长预期才开始具备可承保基础。",
+      "trigger_id": "cn000099_owner_earnings_and_low_altitude_thesis",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 18.0
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "明显高于基准合理价值，若缺少业绩验证应主动降低仓位",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
+      "reason": "即使显性事件未先发生，也应在90天内用半年度报告或三季报、新合同、租赁执行、机队利用率和新价格重做快速复核。",
+      "trigger_id": "cn000099_review_ttl_90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -94,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T15:55:30+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
