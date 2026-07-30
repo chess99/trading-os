@@ -894,6 +894,82 @@ def test_finalize_recovers_when_only_screening_was_materialized(tmp_path: Path, 
     assert queue["triage_allocation_decision"] == "select_quick_profile"
 
 
+def test_selection_materializes_quality_correction_cycle_as_current_result() -> None:
+    from trading_os.research_assets.triage_workflow import (
+        _materialize_rapid_triage_selection,
+    )
+
+    symbol = "CN:000001"
+    correction_cycle = f"{CYCLE}-correction-001"
+    screening = [
+        {
+            "symbol": symbol,
+            "decision": "triage_candidate",
+            "evidence": ["triage:correction-package"],
+        }
+    ]
+    queue = [
+        {
+            "symbol": symbol,
+            "task_type": "rapid_triage",
+            "status": "completed",
+            "triage_cycle_id": correction_cycle,
+            "stage_history": [
+                {
+                    "stage": "rapid_triage",
+                    "status": "completed",
+                    "cycle_id": CYCLE,
+                },
+                {
+                    "stage": "coverage_refresh",
+                    "status": "frozen_for_rapid_triage",
+                    "replaces_cycle_id": CYCLE,
+                },
+                {
+                    "stage": "rapid_triage",
+                    "status": "completed",
+                    "cycle_id": correction_cycle,
+                },
+            ],
+        }
+    ]
+    decision = {
+        "symbol": symbol,
+        "decision": "select_quick_profile",
+        "reason": "纠正包已通过质量门，购买下一小时研究。",
+        "decisive_question": "纠正后的关键问题能否被正式画像解决？",
+        "counterevidence_considered": ["纠正前路由与纠正后证据存在分歧"],
+    }
+
+    updated_screening, updated_queue, screening_changed, queue_changed = (
+        _materialize_rapid_triage_selection(
+            screening=screening,
+            queue=queue,
+            cycle=CYCLE,
+            decision_rows=[
+                {
+                    "symbol": symbol,
+                    "selected_for_quick_profile": True,
+                }
+            ],
+            decisions_by_symbol={symbol: decision},
+            comparison_path="coverage/cn-a/triage/source/comparison.json",
+            comparison_sha256="a" * 64,
+            selection_path="coverage/cn-a/triage/source/selection.json",
+            selection_sha256="b" * 64,
+            quick_budget=1.0,
+            resolved_cycles_by_symbol={symbol: correction_cycle},
+        )
+    )
+
+    assert screening_changed is True
+    assert queue_changed is True
+    assert updated_screening[0]["decision"] == "quick_profile"
+    assert updated_queue[0]["task_type"] == "quick_profile"
+    assert updated_queue[0]["status"] == "pending"
+    assert updated_queue[0]["triage_allocation_decision"] == "select_quick_profile"
+
+
 def test_finalize_replay_never_regresses_valid_quick_profile_progress(tmp_path: Path):
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
     from trading_os.research_assets.triage_workflow import finalize_rapid_triage_cycle

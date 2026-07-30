@@ -708,11 +708,10 @@ def build_rapid_triage_comparison_packet(
                 "decisive_question": package.get("decisive_question"),
                 "reason_codes": package.get("reason_codes") or [],
                 "revisit_triggers": package.get("revisit_triggers") or [],
-                "triage_path": _rapid_triage_result_path(
-                    queued,
-                    cycle,
-                    allow_unscoped_history=allow_unscoped_history,
-                ),
+                # The quality gate may replace the cohort package with a sealed
+                # correction package.  Bind the comparison row to the artifact
+                # that was actually verified, not the superseded history path.
+                "triage_path": sealed.path.relative_to(repository_root).as_posix(),
                 "triage_sha256": sealed.sha256,
                 "research_agent": (package.get("provenance") or {}).get("agent"),
             }
@@ -941,6 +940,10 @@ def finalize_rapid_triage_cycle(
             selection_path=relative_selection,
             selection_sha256=sealed_selection.sha256,
             quick_budget=quick_budget,
+            resolved_cycles_by_symbol={
+                row["symbol"]: row["cycle_id"]
+                for row in (quality_gate or {}).get("resolved_packages", [])
+            },
         )
     )
     if selection_existed and legacy_policy_unbound and queue_changed:
@@ -1793,6 +1796,7 @@ def _materialize_rapid_triage_selection(
     selection_path: str,
     selection_sha256: str,
     quick_budget: float,
+    resolved_cycles_by_symbol: Mapping[str, str],
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], bool, bool]:
     """Apply one sealed selection, repairing only absent materialization state."""
 
@@ -1849,19 +1853,22 @@ def _materialize_rapid_triage_selection(
         screen_evidence = screen.get("evidence")
         screen_evidence_set = set(screen_evidence) if isinstance(screen_evidence, list) else set()
         screen_proves_selection = evidence_proof.issubset(screen_evidence_set)
+        effective_triage_cycle = resolved_cycles_by_symbol.get(symbol, cycle)
         has_completed_triage = any(
             isinstance(item, Mapping)
             and item.get("stage") == "rapid_triage"
             and item.get("status") == "completed"
-            and item.get("cycle_id") == cycle
+            and item.get("cycle_id") == effective_triage_cycle
             for item in queued.get("stage_history") or []
         )
-        moved_to_later_cycle = queued.get("triage_cycle_id") != cycle and has_completed_triage
+        moved_to_later_cycle = (
+            queued.get("triage_cycle_id") != effective_triage_cycle and has_completed_triage
+        )
         if moved_to_later_cycle:
             continue
 
         is_unmaterialized = bool(
-            queued.get("triage_cycle_id") == cycle
+            queued.get("triage_cycle_id") == effective_triage_cycle
             and queued.get("task_type") == "rapid_triage"
             and queued.get("status") == "completed"
             and has_completed_triage
