@@ -139,7 +139,7 @@ def test_stratified_sample_is_order_independent_and_expands_stably():
     assert set(expanded["selected_symbols"]).isdisjoint(first["selected_symbols"])
 
 
-def test_scope_identity_plan_samples_every_exclusion_and_seals_result(tmp_path: Path):
+def test_scope_identity_allows_one_manager_to_review_every_exclusion(tmp_path: Path):
     from trading_os.research_assets.quality_audit import (
         quality_audit_status,
         seal_scope_identity_audit_plan,
@@ -185,7 +185,7 @@ def test_scope_identity_plan_samples_every_exclusion_and_seals_result(tmp_path: 
                 "reason": "交易所身份来源确认证券已经退市。",
                 "source_ids": [f"source-{int(item['symbol'][-6:])}"],
                 "provenance": {
-                    "agent": f"/root/identity-{item['symbol'][-6:]}",
+                    "agent": "/root/identity-manager",
                     "model": "test-model",
                     "tools": ["source-reader"],
                     "generated_at": NOW.isoformat(),

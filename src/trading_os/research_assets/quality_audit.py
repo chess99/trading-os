@@ -328,13 +328,11 @@ def seal_scope_identity_audit_result(
     _exact_review_coverage(review_by_id, expected)
     rows = []
     reopen = []
-    reviewer_agents: set[str] = set()
     for item in plan["items"]:
         packet = _load_bound_packet(base, item, "scope_identity_audit_fact_packet")
         review = _validate_identity_review(
             review_by_id[item["audit_item_id"]], item=item, packet=packet, completed_at=completed_at
         )
-        _require_unique_reviewer(review, reviewer_agents)
         major = review["identity_verdict"] != "hard_exclusion"
         if major:
             reopen.append(item["symbol"])
