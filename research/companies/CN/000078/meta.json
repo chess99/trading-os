@@ -20,45 +20,83 @@
         "sha256": "5c49e1e7f4aa5d9a5a7090390234eb75d564f3f60a98208de8cb5bb3722921c5"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-53a76169e35b.md",
+        "report_id": "CN-000078-2026-07-30-rapid-triage-53a76169e35b",
+        "report_type": "rapid_triage",
+        "sha256": "8a351953ac7ab567e495548e4c07e8a8dc974b092005323cee974f185e1c05fe"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-53a76169e35b.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-53a76169e35b.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T15:21:30+08:00",
+      "report_id": "CN-000078-2026-07-30-rapid-triage-53a76169e35b",
+      "report_path": "reports/2026-07-30-rapid-triage-53a76169e35b.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000078/20260730T152130+0800.triage.json",
+      "source_package_sha256": "53a76169e35b71f0980aaa1b7433fa919941df229175fc99696832e95704b5ea"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露2026年半年度报告或2026年年度报告及审计报告，可核验应收减值、受限资金、短债滚续、经营现金流、异常财务资助商业实质和内控审计意见。"
       },
-      "reason": "复核2026年半年度报告、短债滚续、应收回款和内控整改进展",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
+      "reason": "正式财报和年审是判断所有者收益、持续经营与撤销风险警示的最近决定性证据。",
+      "trigger_id": "cn000078_2026_h1_or_annual_audit_filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 1.2
+        "threshold": 0.45
       },
-      "reason": "触发面值退市与流动性风险复核，不得因价格下跌机械买入",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格降至0.45元或以下时市值约11.84亿元、接近2026Q1账面归母权益，值得在不把价格下跌等同买点的前提下重算困境期权；治理阻断仍须另行解除。",
+      "trigger_id": "cn000078_price_0_45",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 1.5
+        "description": "独立专项核查或监管机构明确排除或确认资金占用；异常财务资助利息全部收回；发生新的未授权资助、担保或资金占用；主要银行收缩授信、债务展期、外部注资、控制权变更或有约束力的重组方案。"
       },
-      "reason": "在非标审计和ST未消除前进入减仓或不应追高区间",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事件会直接改变少数股东权利可信度、24至36个月生存概率或资本结构。",
+      "trigger_id": "cn000078_audit_regulatory_or_financing_event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期扣非归母利润与经营现金流均为正，扣除正常信用损失、维持性资本开支和融资成本后年化普通股所有者现金收益至少3亿元；同时专项核查和审计均确认不存在资金占用、财务资助及担保审批内控有效。"
+      },
+      "reason": "只有盈利、现金和治理同时验证，当前结构性停止条件才真正失效。",
+      "trigger_id": "cn000078_owner_earnings_and_governance_thesis",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使其他触发器未发生，也应在90天内复核半年报、内控专项核查、银行授信、剥离子公司遗留资助与担保。",
+      "trigger_id": "cn000078_review_ttl_90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -70,7 +108,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T15:21:30+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
