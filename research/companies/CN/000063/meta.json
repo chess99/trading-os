@@ -20,64 +20,83 @@
         "sha256": "c02dff630b4e82391e70889262072bbac192a93b385d0f35f00a3db4a53e6287"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-863d26f451c5.md",
+        "report_id": "CN-000063-2026-07-30-rapid-triage-863d26f451c5",
+        "report_type": "rapid_triage",
+        "sha256": "b04c77d1bb25a4a9e7a366e1664f9ca61cab87236691ab581d010d6aeb1d4f5c"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-863d26f451c5.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-863d26f451c5.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T14:50:20+08:00",
+      "report_id": "CN-000063-2026-07-30-rapid-triage-863d26f451c5",
+      "report_path": "reports/2026-07-30-rapid-triage-863d26f451c5.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000063/20260730T145020+0800.triage.json",
+      "source_package_sha256": "863d26f451c57a4f03622820c5abeddc496dc3512cf25a27ae451f7eb568dfe7"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-29"
+        "description": "公司披露2026年半年度报告或业绩快报，可核验运营商网络、政企业务和消费者业务的收入、毛利率、扣非利润、经营现金流、应收、存货、预付款及资本开支。"
       },
-      "reason": "2026年中报发布后复查毛利率和扣非利润趋势，判断盈利是否企稳",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-28"
-      },
-      "reason": "2026年三季报发布后复查趋势",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "正式半年报是判断低毛利算力硬件放量是否开始转化为可持续所有者收益的最高价值证据。",
+      "trigger_id": "cn000063_2026_h1_filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 24.0
+        "threshold": 28.0
       },
-      "reason": "进入合理估值区间下限，可开始关注并评估基本面",
-      "trigger_id": "legacy-price-1",
+      "reason": "价格降至28元或以下时，映射权益市值降至约1,340亿元，正常化所有者收益的预期负担明显下降，值得结合最新报表重新核算估值。",
+      "trigger_id": "cn000063_price_28",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 20.0
+        "description": "发生新的出口管制、制裁、合规调查、核心器件供应限制，或新增重大股权融资、可转债转股、债务融资及回购股份用途变化。"
       },
-      "reason": "进入有安全边际的买入区间",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "此类事件可直接改变供应链连续性、融资能力、治理折价和普通股稀释。",
+      "trigger_id": "cn000063_export_control_or_large_financing_event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 33.0
+        "description": "连续两个报告期满足或显著背离以下组合：运营商网络收入止跌、综合毛利率回到33%以上、政企业务毛利率升至15%以上、年度化扣非归母达到60亿元以上，且经营现金流扣除长期资产购建支出后持续为正。"
       },
-      "reason": "进入减仓或不应追高区间",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "该组合直接验证或否定现价所要求的利润结构和所有者现金收益修复。",
+      "trigger_id": "cn000063_owner_earnings_thesis",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使其他触发器未命中，也应在90天内结合半年报或三季报复核毛利率、现金流、债务到期、减值和稀释情况。",
+      "trigger_id": "cn000063_review_ttl_90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -89,7 +108,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T14:50:20+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

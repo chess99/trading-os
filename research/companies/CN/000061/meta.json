@@ -15,64 +15,83 @@
         "sha256": "a97505768d8bf837da85137a876b9abeb46715e52381c004f661b2f6256cda7e"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-ff619d7b0ecb.md",
+        "report_id": "CN-000061-2026-07-30-rapid-triage-ff619d7b0ecb",
+        "report_type": "rapid_triage",
+        "sha256": "a320327f2eab03bdba80fa9e51f2e6a0dbbdf65712c7e8ccc4c9d946841d21df"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-ff619d7b0ecb.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-ff619d7b0ecb.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T14:50:10+08:00",
+      "report_id": "CN-000061-2026-07-30-rapid-triage-ff619d7b0ecb",
+      "report_path": "reports/2026-07-30-rapid-triage-ff619d7b0ecb.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000061/20260730T145010+0800.triage.json",
+      "source_package_sha256": "ff619d7b0ecb38c9c3a5e87288aef358148dabe7bf3610578431c5f6ea3f4cf9"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "披露2026年半年度报告或业绩预告，能够核验核心市场利润、信用减值、项目资本开支和净债务。"
       },
-      "reason": "复核2026年中报的现金流、分红、项目培育和资产明细",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2027-04-30"
-      },
-      "reason": "复核2026年年报和年度分红方案",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "半年度数据可判断一季度扣非改善是否可持续，并拆分土地收益后的盈利中枢。",
+      "trigger_id": "2026-interim-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 5.0
+        "threshold": 4.8
       },
-      "reason": "进入首笔买入区间，复核现金流和分红后可建立仓位",
-      "trigger_id": "legacy-price-1",
+      "reason": "在基本面未恶化时，4.80元以下对应市值约95.28亿元，正常化收益与账面资产的安全边际开始改善。",
+      "trigger_id": "price-below-4-80",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 4.4
+        "description": "武汉海吉星清偿到期借款、追加重大减值，或公司披露重大项目投资及资产盘活现金回收。"
       },
-      "reason": "进入深度折价区间，若基本面未恶化可考虑加仓",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事件直接检验资本配置纪律、参股项目尾部风险和资产价值的可兑现性。",
+      "trigger_id": "wuhan-loan-or-capex-event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 6.4
+        "description": "可靠证据显示剔除非经常损益、少数股东和维持性资本开支后，年化普通股所有者现金收益达到或超过4亿元。"
       },
-      "reason": "高于合理价值上沿，需复核是否存在足够基本面上修",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "若达到该门槛，当前价格的隐含回报和后续研究价值将显著改善。",
+      "trigger_id": "owner-earnings-thesis",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使无重大事件，也应在90天后用新财报、债务与价格重新快速复核。",
+      "trigger_id": "routine-90-day-refresh",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T14:50:10+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

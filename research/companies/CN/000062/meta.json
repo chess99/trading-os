@@ -15,64 +15,83 @@
         "sha256": "95073a43825f85355c17523a524b174325a11ff4f6c5917a1ff141a52b01c261"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-be1bf1c8da77.md",
+        "report_id": "CN-000062-2026-07-30-rapid-triage-be1bf1c8da77",
+        "report_type": "rapid_triage",
+        "sha256": "34f71e9ad9190865730b05083e4cc2c5d3e60c7ea70447f1efac1c595d948e00"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-be1bf1c8da77.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-be1bf1c8da77.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T14:51:00+08:00",
+      "report_id": "CN-000062-2026-07-30-rapid-triage-be1bf1c8da77",
+      "report_path": "reports/2026-07-30-rapid-triage-be1bf1c8da77.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000062/20260730T145100+0800.triage.json",
+      "source_package_sha256": "be1bf1c8da77c43059987d790e8cf50afe9237242b5ff608fc266dc9bc1a3dab"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露2026年半年度报告，可核验收入及毛利拆分、经营现金流、应收账款、预付款项、存货及跌价准备、净债务、融资成本和商誉情况。"
       },
-      "reason": "复核2026年半年报，重点看收入增长、扣非净利、经营现金流、应收账款、预付款项和存货。",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026年三季报，确认AI/存储/国产替代增长是否延续且现金流是否改善。",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "半年度业绩预告只验证利润区间，正式报表是判断增长能否转化为所有者现金收益的最高价值证据。",
+      "trigger_id": "cn000062_2026_h1_filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 20.0
+        "threshold": 18.0
       },
-      "reason": "进入基础买入区，重新评估建仓。",
-      "trigger_id": "legacy-price-1",
+      "reason": "股价降至18元或以下时权益市值约188亿元，预期负担较当前明显降低，值得结合最新现金转化重新核算估值，但该触发器本身不代表操作建议。",
+      "trigger_id": "cn000062_price_18",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 34.0
+        "description": "控股股东可交换债发生新一轮大额换股、换股价调整、追加担保股份、提前兑付或控股股东持股接近控制权敏感区间；或关联财务公司存款、贷款额度及风险评估出现重大变化。"
       },
-      "reason": "进入牛市情景估值区，已有仓位应减持或退出。",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事件会改变股份供给、控制权缓冲、关联资金安全和治理风险判断。",
+      "trigger_id": "cn000062_exchangeable_bond_event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 24.0
+        "description": "连续两个报告期经营现金流扣除购建长期资产支出后为正，且应收账款、预付款和存货增速不高于收入增速，同时年度化扣非归母维持6亿至8亿元以上；或上述条件明显反转。"
       },
-      "reason": "若基本面未改善但跌破该位，不自动补仓，等待现金流拐点或更高安全边际。",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "该条件直接验证或否定当前最关键的利润质量与正常化所有者收益假设。",
+      "trigger_id": "cn000062_owner_cash_thesis",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使其他触发器未命中，也应在90天内结合半年报或三季报复核存储景气、毛利率、现金流、信用减值和杠杆。",
+      "trigger_id": "cn000062_review_ttl_90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T14:51:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
