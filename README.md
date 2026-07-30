@@ -42,7 +42,9 @@ python -m trading_os review validate <run-id> --strict
 python -m trading_os review synthesize <run-id> --quotes <quotes.json>
 python -m trading_os review report <run-id>
 python -m trading_os coverage validate
-python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage manager-screen-snapshot <run-id> --information-cutoff <timestamp>
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp> \
+  --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
 python -m trading_os coverage scope-status <run-id>
 python -m trading_os coverage manager-screen-freeze <run-id> <batch-id> --batch-size 150
 python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>

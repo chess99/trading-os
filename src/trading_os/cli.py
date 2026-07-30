@@ -33,6 +33,10 @@ from .research_assets.lane_arbitration import (
     freeze_lane_arbitration,
     verify_lane_arbitration,
 )
+from .research_assets.manager_screen_snapshot import (
+    ManagerScreenSnapshotError,
+    prepare_manager_screen_snapshot,
+)
 from .research_assets.manager_screening import (
     ManagerScreeningError,
     freeze_manager_screen_batch,
@@ -336,6 +340,26 @@ def build_parser() -> argparse.ArgumentParser:
     _add_coverage_root(scope_status)
     scope_status.add_argument("run_id")
     scope_status.set_defaults(func=cmd_coverage_scope_status)
+
+    manager_screen_snapshot = coverage_sub.add_parser(
+        "manager-screen-snapshot",
+        help="Build one compact fact-only company snapshot for manager screening",
+    )
+    _add_coverage_root(manager_screen_snapshot)
+    manager_screen_snapshot.add_argument("run_id")
+    manager_screen_snapshot.add_argument(
+        "--information-cutoff",
+        required=True,
+        help="Information cutoff as an ISO 8601 timestamp with UTC offset",
+    )
+    manager_screen_snapshot.add_argument("--output")
+    manager_screen_snapshot.add_argument(
+        "--endpoint",
+        default="https://datacenter.eastmoney.com/securities/api/data/v1/get",
+    )
+    manager_screen_snapshot.add_argument("--page-size", type=int, default=500)
+    _add_timestamp(manager_screen_snapshot)
+    manager_screen_snapshot.set_defaults(func=cmd_coverage_manager_screen_snapshot)
 
     manager_screen_freeze = coverage_sub.add_parser(
         "manager-screen-freeze",
@@ -1112,6 +1136,20 @@ def cmd_coverage_scope_status(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_manager_screen_snapshot(ns: argparse.Namespace) -> int:
+    payload = prepare_manager_screen_snapshot(
+        root=ns.root,
+        run_id=ns.run_id,
+        information_cutoff=_timestamp(ns.information_cutoff),
+        fetched_at=_timestamp(ns.at),
+        output_path=ns.output,
+        endpoint=ns.endpoint,
+        page_size=ns.page_size,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
 def cmd_coverage_manager_screen_freeze(ns: argparse.Namespace) -> int:
     payload = freeze_manager_screen_batch(
         root=ns.root,
@@ -1663,6 +1701,7 @@ def _error_code(exc: Exception) -> str | None:
         (TriggerHitError, "trigger_hit_error"),
         (LaneArbitrationError, "lane_arbitration_error"),
         (ManagerScreeningError, "manager_screening_error"),
+        (ManagerScreenSnapshotError, "manager_screen_snapshot_error"),
         (QualityAuditError, "quality_audit_error"),
         (QualityWorkflowError, "quality_workflow_error"),
         (ReviewStoreError, "review_state_error"),

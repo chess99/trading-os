@@ -5,6 +5,7 @@
 当前协议有两类事实源：
 
 - `coverage/cn-a/scopes/`：冻结的普通 A 股范围、截止时间和 baseline intake；
+- `coverage/cn-a/snapshots/`：每个 run 一份事实型压缩公司快照；
 - `coverage/cn-a/manager-screen/`：投资经理整批初筛的不可变 `batch / packet / result`。
 
 `companies.jsonl` 是全市场快照；`screening.jsonl` 与 `research_queue.jsonl` 是可恢复的共享状态投影，不取代上述封存事实源。
@@ -26,6 +27,8 @@ coverage/cn-a/
   screening.jsonl
   research_queue.jsonl
   runs.jsonl
+  snapshots/{RUN_ID}/
+    companies.jsonl
   scopes/{RUN_ID}/
     manifest.json + seal
     baseline-intake.json + seal
@@ -51,13 +54,14 @@ coverage/cn-a/
 
 ## 生产流程
 
-1. `scope-freeze` 冻结 universe、`scope_cutoff`、身份分区和 baseline intake。
-2. `manager-screen-freeze` 按 intake ordinal 生成一批压缩 dossier；行政顺序不使用投资吸引力字段。
-3. 同一个主 Agent 完整读取 packet，一次提交整批 `pass/watch/send_to_analyst`。
-4. `manager-screen-record` 校验、封存 result，并在 coverage 写锁内物化状态。
-5. runner 只派发 `send_to_analyst` 产生的少数 quick profile。
-6. 主 Agent 根据研究员结果决定停止、定向补证或继续 scoped/deep research。
-7. 深研完成后才进入半盲独立承保、必要 challenger 和组合综合。
+1. `manager-screen-snapshot` 生成只含事实、不含机器路由的压缩公司快照。
+2. `scope-freeze --universe-file ...` 绑定该快照并冻结 `scope_cutoff`、身份分区和 baseline intake。
+3. `manager-screen-freeze` 按 intake ordinal 生成一批压缩 dossier；行政顺序不使用投资吸引力字段。
+4. 同一个主 Agent 完整读取 packet，一次提交整批 `pass/watch/send_to_analyst`。
+5. `manager-screen-record` 校验、封存 result，并在 coverage 写锁内物化状态。
+6. runner 只派发 `send_to_analyst` 产生的少数 quick profile。
+7. 主 Agent 根据研究员结果决定停止、定向补证或继续 scoped/deep research。
+8. 深研完成后才进入半盲独立承保、必要 challenger 和组合综合。
 
 路由观点差异是校准信号，不自动算作 material error。只有证券身份错误、可核验事实错误、重大风险遗漏或 decision contract 违规才需要显式更正；同一公司最多一次裁决，禁止 correction 套 correction。
 
@@ -79,7 +83,9 @@ python -m trading_os coverage validate
 python -m trading_os coverage status
 python -m trading_os coverage get CN:600519
 
-python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage manager-screen-snapshot <run-id> --information-cutoff <timestamp>
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp> \
+  --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
 python -m trading_os coverage scope-status <run-id>
 python -m trading_os coverage manager-screen-freeze <run-id> <batch-id> --batch-size 150
 python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>

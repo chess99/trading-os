@@ -10,7 +10,6 @@ from pathlib import Path
 from typing import Any
 
 from .coverage_store import (
-    COMPANIES_FILE,
     RESEARCH_QUEUE_FILE,
     SCREENING_FILE,
     read_jsonl,
@@ -64,6 +63,8 @@ POLICY_REF_KEYS = {
     "default_batch_size",
     "minimum_batch_size",
     "maximum_batch_size",
+    "fact_snapshot_required",
+    "minimum_annual_periods",
     "quick_profile_effort_budget_hours",
     "quick_profile_stop_conditions",
     "pass_and_watch_require_revisit_trigger",
@@ -158,6 +159,7 @@ MARKET_FIELDS = (
     "dividend_yield_pct",
     "turnover_cny",
     "turnover_rate_pct",
+    "manager_screen_facts",
     "source",
     "fetched_at",
 )
@@ -243,7 +245,10 @@ def freeze_manager_screen_batch(
             )
         return _freeze_summary(verified, repository_root=repository_root)
 
-    _require_frozen_universe_snapshot(base=base, manifest=manifest)
+    company_snapshot_path = _require_frozen_universe_snapshot(
+        base=base,
+        manifest=manifest,
+    )
 
     already_batched: set[str] = set()
     if run_dir.is_dir():
@@ -259,13 +264,15 @@ def freeze_manager_screen_batch(
                     )
                 already_batched.add(symbol)
 
-    companies = _unique_by_symbol(read_jsonl(base / COMPANIES_FILE), "companies")
+    companies = _unique_by_symbol(read_jsonl(company_snapshot_path), "companies")
     screening = _unique_by_symbol(read_jsonl(base / SCREENING_FILE), "screening")
     queue = _unique_by_symbol(read_jsonl(base / RESEARCH_QUEUE_FILE), "research queue")
     candidates, _ = _candidate_members(
+        base=base,
         intake=intake,
         queue_by_symbol=queue,
         already_batched=already_batched,
+        scope_cutoff=information_cutoff,
     )
     selected = candidates[:requested_size]
     if not selected:
@@ -324,6 +331,9 @@ def freeze_manager_screen_batch(
             company=companies.get(member["symbol"]),
             screening=screening.get(member["symbol"]),
             queue=queue.get(member["symbol"]),
+            company_snapshot_path=company_snapshot_path,
+            require_fact_snapshot=policy["fact_snapshot_required"],
+            minimum_annual_periods=policy["minimum_annual_periods"],
             repository_root=repository_root,
         )
         for member in members
@@ -563,9 +573,14 @@ def manager_screen_status(
 
     queue = _unique_by_symbol(read_jsonl(base / RESEARCH_QUEUE_FILE), "research queue")
     remaining, deferred = _candidate_members(
+        base=base,
         intake=intake,
         queue_by_symbol=queue,
         already_batched=seen,
+        scope_cutoff=_parse_datetime(
+            intake.get("scope_cutoff"),
+            "baseline intake scope cutoff",
+        ),
     )
     displayed = [
         item
@@ -601,6 +616,12 @@ def manager_screen_status(
         for member in intake.get("members", [])
         if member.get("materialization_action") == "normalize_queue"
     )
+    screenable_accounted = len(seen) + len(remaining) + sum(deferred.values())
+    if screenable_accounted != screenable_total:
+        raise ManagerScreeningError(
+            "manager-screen status does not conserve the frozen screenable intake: "
+            f"{screenable_accounted} != {screenable_total}"
+        )
     return {
         "schema_version": 1,
         "run_id": run,
@@ -615,6 +636,7 @@ def manager_screen_status(
         "remaining_unbatched_count": len(remaining),
         "deferred_current_state_count": sum(deferred.values()),
         "deferred_current_state": dict(sorted(deferred.items())),
+        "screenable_conservation_satisfied": True,
         "by_route": dict(sorted(by_route.items())),
         "completed_manager_wall_clock_seconds": sum(
             (
@@ -750,6 +772,12 @@ def _load_policy_contract(
         payload.get("decisive_question_max_chars"),
         "decisive_question_max_chars",
     )
+    if not isinstance(payload.get("fact_snapshot_required"), bool):
+        raise ManagerScreeningError("fact_snapshot_required must be boolean")
+    minimum_annual_periods = _positive_int(
+        payload.get("minimum_annual_periods"),
+        "minimum_annual_periods",
+    )
     raw = path.read_bytes()
     return {
         "policy_id": policy.policy_id,
@@ -760,6 +788,8 @@ def _load_policy_contract(
         "default_batch_size": default_size,
         "minimum_batch_size": minimum_size,
         "maximum_batch_size": maximum_size,
+        "fact_snapshot_required": payload["fact_snapshot_required"],
+        "minimum_annual_periods": minimum_annual_periods,
         "quick_profile_effort_budget_hours": effort,
         "quick_profile_stop_conditions": [item.strip() for item in stops],
         "pass_and_watch_require_revisit_trigger": True,
@@ -800,7 +830,7 @@ def _require_frozen_universe_snapshot(
     *,
     base: Path,
     manifest: Mapping[str, Any],
-) -> None:
+) -> Path:
     universe_source = manifest.get("universe_source")
     if not isinstance(universe_source, Mapping):
         raise ManagerScreeningError("scope manifest universe source is invalid")
@@ -810,11 +840,14 @@ def _require_frozen_universe_snapshot(
     source_path = Path(source_path_value)
     if not source_path.is_absolute():
         source_path = base.parent.parent / source_path
-    expected_source_path = base / COMPANIES_FILE
-    if source_path.resolve() != expected_source_path.resolve():
+    source_path = source_path.resolve()
+    repository_root = base.parent.parent.resolve()
+    try:
+        source_path.relative_to(repository_root)
+    except ValueError as exc:
         raise ManagerScreeningError(
-            "scope manifest does not bind the manager-screen company snapshot"
-        )
+            "scope universe snapshot must be stored inside the repository"
+        ) from exc
     try:
         source_sha256 = hashlib.sha256(source_path.read_bytes()).hexdigest()
     except OSError as exc:
@@ -825,6 +858,7 @@ def _require_frozen_universe_snapshot(
         raise ManagerScreeningError(
             "company snapshot changed after scope freeze; create a new scope"
         )
+    return source_path
 
 
 def _require_scope_binding(
@@ -850,9 +884,11 @@ def _require_scope_binding(
 
 def _candidate_members(
     *,
+    base: Path,
     intake: Mapping[str, Any],
     queue_by_symbol: Mapping[str, Mapping[str, Any]],
     already_batched: set[str],
+    scope_cutoff: dt.datetime,
 ) -> tuple[list[dict[str, Any]], Counter[str]]:
     candidates = []
     deferred: Counter[str] = Counter()
@@ -867,7 +903,12 @@ def _candidate_members(
         if symbol in already_batched:
             continue
         queued = queue_by_symbol.get(symbol)
-        reason = _queue_defer_reason(queued)
+        reason = _queue_defer_reason(
+            base=base,
+            queued=queued,
+            symbol=symbol,
+            scope_cutoff=scope_cutoff,
+        )
         if reason is not None:
             deferred[reason] += 1
             continue
@@ -876,17 +917,43 @@ def _candidate_members(
     return candidates, deferred
 
 
-def _queue_defer_reason(queued: Mapping[str, Any] | None) -> str | None:
+def _queue_defer_reason(
+    *,
+    base: Path,
+    queued: Mapping[str, Any] | None,
+    symbol: str,
+    scope_cutoff: dt.datetime,
+) -> str | None:
     if queued is None:
         return None
-    if queued.get("manager_screen_result_path"):
+    if (
+        verify_manager_screen_terminal(
+            root=base,
+            queued=queued,
+            symbol=symbol,
+            scope_cutoff=scope_cutoff,
+        )
+        is not None
+    ):
         return "manager_screen_terminal"
     if queued.get("task_type") in PROTECTED_TASK_TYPES:
         return "analyst_or_deeper_stage"
     if queued.get("status") == "running":
         return "running"
-    if queued.get("status") in {"completed", "skipped", "needs_review"}:
-        return f"status:{queued.get('status')}"
+    if queued.get("task_type") == "rapid_triage" and queued.get("status") == "completed":
+        from .scope_workflow import _verified_rapid_triage_terminal
+
+        repository_root = base.parent.parent
+        if (
+            _verified_rapid_triage_terminal(
+                queued,
+                repository_root=repository_root,
+                symbol=symbol,
+                scope_cutoff=scope_cutoff,
+            )
+            is not None
+        ):
+            return "legacy_rapid_triage_terminal"
     return None
 
 
@@ -896,6 +963,9 @@ def _build_dossier(
     company: Mapping[str, Any] | None,
     screening: Mapping[str, Any] | None,
     queue: Mapping[str, Any] | None,
+    company_snapshot_path: Path,
+    require_fact_snapshot: bool,
+    minimum_annual_periods: int,
     repository_root: Path,
 ) -> dict[str, Any]:
     symbol = _symbol(member.get("symbol"))
@@ -903,7 +973,22 @@ def _build_dossier(
         raise ManagerScreeningError(f"company snapshot is missing: {symbol}")
     if company.get("symbol") != symbol:
         raise ManagerScreeningError(f"company snapshot identity mismatch: {symbol}")
+    facts = company.get("manager_screen_facts")
+    if require_fact_snapshot:
+        if not isinstance(facts, Mapping):
+            raise ManagerScreeningError(
+                f"manager-screen fact snapshot is missing: {symbol}"
+            )
+        annuals = facts.get("annuals")
+        if not isinstance(annuals, list):
+            raise ManagerScreeningError(
+                f"manager-screen annual facts are invalid: {symbol}"
+            )
+        facts = dict(facts)
+        facts["annual_history_complete"] = len(annuals) >= minimum_annual_periods
     market_snapshot = {key: company.get(key) for key in MARKET_FIELDS}
+    if isinstance(facts, Mapping):
+        market_snapshot["manager_screen_facts"] = facts
     prior_screening = (
         {key: screening.get(key) for key in SCREEN_FIELDS} if screening is not None else None
     )
@@ -915,7 +1000,7 @@ def _build_dossier(
         {
             "evidence_id": f"snapshot:{symbol}",
             "kind": "market_snapshot",
-            "path": "coverage/cn-a/companies.jsonl",
+            "path": _relative(company_snapshot_path, repository_root),
             "as_of": company.get("as_of"),
         }
     ]

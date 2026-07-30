@@ -53,7 +53,11 @@
 ### 1. 冻结范围
 
 ```bash
-python -m trading_os coverage scope-freeze <run-id> --mode <mode> --scope-cutoff <timestamp>
+python -m trading_os coverage manager-screen-snapshot <run-id> \
+  --information-cutoff <timestamp>
+python -m trading_os coverage scope-freeze <run-id> --mode <mode> \
+  --scope-cutoff <timestamp> \
+  --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
 python -m trading_os coverage scope-status <run-id>
 ```
 
@@ -62,6 +66,11 @@ python -m trading_os coverage scope-status <run-id>
 ```text
 eligible + hard_excluded + exception = universe
 ```
+
+snapshot 只压缩事实，不输出评分或路由。至少提供主营摘要、近三年收入/归母与扣非利润/
+经营现金流、现金与有息债务、应收/存货/商誉/合同资产、审计意见、最新可得中期数据
+以及明确的数据缺口。scope 必须绑定该 run 自己的 snapshot，不能依赖以后会变化的
+`companies.jsonl`。
 
 证券身份硬排除做 100% 程序或人工身份校验。baseline 是缺少 manager-screen 或兼容 legacy terminal 的公司集合，不按旧 priority 推断。
 

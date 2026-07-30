@@ -62,7 +62,9 @@ policies/
 可引用 `prompts/goals/cn-all-a-continuous-research.md` 启动长期 Goal。初筛命令：
 
 ```bash
-python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage manager-screen-snapshot <run-id> --information-cutoff <timestamp>
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp> \
+  --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
 python -m trading_os coverage manager-screen-freeze <run-id> <batch-id>
 python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
 python -m trading_os coverage manager-screen-status <run-id>

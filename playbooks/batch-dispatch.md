@@ -20,6 +20,8 @@
 ## 调度顺序
 
 1. 主 Agent冻结 scope 和 manager-screen batch。
+   冻结 scope 前先生成该 run 的事实型 manager-screen snapshot，并用 `--universe-file`
+   让 scope 绑定它。
 2. 主 Agent亲自完成整批初筛并物化 coverage。
 3. runner 只派发 `quick_profile,status=pending` 的少数候选。
 4. 研究员失败只重试该公司；已封存结果不得重写。

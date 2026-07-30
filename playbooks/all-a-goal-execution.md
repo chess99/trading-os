@@ -8,6 +8,7 @@
 
 ```text
 冻结普通 A 股 scope
+→ 程序封存全市场事实快照
 → 程序生成每批 100—200 家压缩 dossier
 → 同一投资经理 Agent 完整浏览一批
 → pass / watch / send_to_analyst
@@ -26,6 +27,17 @@ Baseline 处理冻结 universe 中缺少 manager-screen terminal 的公司。已
 Incremental 只处理截止日前真实命中的财报、公告、价格、论点、date/TTL 或证据过期事件。触发器定义不是 hit。两条 lane 可交错，但同一 symbol 只能有一个活动写入者。
 
 ## 初筛事实源
+
+每个 run 先创建：
+
+```text
+coverage/cn-a/snapshots/{RUN_ID}/companies.jsonl
+```
+
+它是该 run 的事实型压缩快照，包含主营摘要、三年财务与现金流、资产负债表风险字段、
+审计意见、最新中期数据和数据缺口。它不包含 rank、score 或机器路由。scope manifest
+绑定该文件的路径与 SHA-256，因此后续更新 `coverage/cn-a/companies.jsonl` 不会改变
+已冻结 run。
 
 每批仅创建：
 
@@ -69,7 +81,11 @@ Material error 只包括：
 ## 命令
 
 ```bash
-python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage manager-screen-snapshot <run-id> \
+  --information-cutoff <timestamp>
+python -m trading_os coverage scope-freeze <run-id> --mode auto \
+  --scope-cutoff <timestamp> \
+  --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
 python -m trading_os coverage scope-status <run-id>
 
 python -m trading_os coverage manager-screen-freeze <run-id> <batch-id> --batch-size 150

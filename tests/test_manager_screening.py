@@ -29,6 +29,8 @@ def _policy(path: Path) -> Path:
             "default_batch_size": 2,
             "minimum_batch_size": 1,
             "maximum_batch_size": 3,
+            "fact_snapshot_required": False,
+            "minimum_annual_periods": 3,
             "routes": ["pass", "watch", "send_to_analyst"],
             "quick_profile_effort_budget_hours": 1.5,
             "quick_profile_stop_conditions": [
@@ -220,6 +222,106 @@ def test_manager_freeze_rejects_company_snapshot_changed_after_scope(tmp_path: P
             frozen_at=CUTOFF + dt.timedelta(minutes=1),
             policy_path=policy_path,
         )
+
+
+def test_manager_freeze_reads_the_scope_bound_custom_company_snapshot(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.manager_screening import (
+        freeze_manager_screen_batch,
+    )
+    from trading_os.research_assets.scope_workflow import freeze_all_a_scope
+
+    root, policy_path = _root(tmp_path)
+    run_id = "2026-07-31-manager-screen-custom"
+    custom_path = root / "snapshots" / run_id / "companies.jsonl"
+    companies = read_jsonl(root / "companies.jsonl")
+    for company in companies:
+        company["manager_screen_facts"] = {
+            "schema_version": 1,
+            "business": {"main_business": "封存主营业务摘要。"},
+            "annuals": [],
+            "latest_interim": None,
+            "data_gaps": ["three_year_annual_history_incomplete"],
+        }
+    _write_jsonl(custom_path, companies)
+    freeze_all_a_scope(
+        root=root,
+        run_id=run_id,
+        scope_cutoff=CUTOFF,
+        frozen_at=CUTOFF,
+        universe_path=custom_path,
+    )
+
+    freeze_manager_screen_batch(
+        root=root,
+        run_id=run_id,
+        batch_id="batch-001",
+        frozen_at=CUTOFF + dt.timedelta(minutes=1),
+        policy_path=policy_path,
+    )
+    packet_path = root / "manager-screen" / run_id / "batch-001" / "packet.json"
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    assert (
+        packet["dossiers"][0]["market_snapshot"]["manager_screen_facts"]["business"][
+            "main_business"
+        ]
+        == "封存主营业务摘要。"
+    )
+    assert (
+        packet["dossiers"][0]["evidence_catalog"][0]["path"]
+        == f"coverage/cn-a/snapshots/{run_id}/companies.jsonl"
+    )
+
+
+def test_manager_freeze_does_not_trust_unverified_completed_queue_state(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.manager_screening import (
+        freeze_manager_screen_batch,
+    )
+
+    root, policy_path = _root(tmp_path)
+    _write_jsonl(
+        root / "research_queue.jsonl",
+        [
+            {
+                "symbol": "CN:000001",
+                "name": "甲公司",
+                "task_type": "rapid_triage",
+                "status": "completed",
+                "result_path": "missing/package.json",
+                "triage_disposition": "catalog",
+            },
+            {
+                "symbol": "CN:000002",
+                "name": "乙公司",
+                "task_type": "manager_screen",
+                "status": "completed",
+                "result_path": "missing/result.json",
+                "manager_screen_result_path": "missing/result.json",
+                "manager_screen_result_sha256": "0" * 64,
+                "manager_screen_route": "pass",
+                "manager_screen_run_id": RUN_ID,
+                "manager_screen_batch_id": "missing",
+            },
+        ],
+    )
+
+    freeze_manager_screen_batch(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        frozen_at=CUTOFF + dt.timedelta(minutes=1),
+        policy_path=policy_path,
+    )
+    batch_path = root / "manager-screen" / RUN_ID / "batch-001" / "batch.json"
+    batch = json.loads(batch_path.read_text(encoding="utf-8"))
+    assert [item["symbol"] for item in batch["members"]] == [
+        "CN:000001",
+        "CN:000002",
+    ]
 
 
 def test_record_routes_only_selected_companies_to_analyst_and_status(tmp_path: Path):
