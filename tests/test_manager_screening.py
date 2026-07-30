@@ -325,7 +325,7 @@ def test_manager_freeze_does_not_trust_unverified_completed_queue_state(
 
 
 def test_record_routes_only_selected_companies_to_analyst_and_status(tmp_path: Path):
-    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
     from trading_os.research_assets.manager_screening import (
         freeze_manager_screen_batch,
         manager_screen_status,
@@ -340,6 +340,20 @@ def test_record_routes_only_selected_companies_to_analyst_and_status(tmp_path: P
         frozen_at=CUTOFF + dt.timedelta(minutes=1),
         policy_path=policy_path,
     )
+    queue_path = root / "research_queue.jsonl"
+    queue_before = read_jsonl(queue_path)
+    candidate = next(item for item in queue_before if item["symbol"] == "CN:000002")
+    candidate.update(
+        {
+            "allocation_sha256": "a" * 64,
+            "selected_by": ["legacy_lens"],
+            "profile_cycle_id": "2026-07-28-legacy-cycle",
+            "profile_evaluation_path": "legacy/evaluation.json",
+            "profile_quick_selection_path": "legacy/selection.json",
+            "triage_priority_score": 99,
+        }
+    )
+    write_jsonl(queue_path, queue_before)
     recorded = record_manager_screen_decisions(
         root=root,
         run_id=RUN_ID,
@@ -355,6 +369,15 @@ def test_record_routes_only_selected_companies_to_analyst_and_status(tmp_path: P
     assert queue["CN:000002"]["status"] == "pending"
     assert queue["CN:000002"]["effort_budget_hours"] == 1.5
     assert queue["CN:000002"]["preceding_stage"] == "manager_screen"
+    for stale in (
+        "allocation_sha256",
+        "selected_by",
+        "profile_cycle_id",
+        "profile_evaluation_path",
+        "profile_quick_selection_path",
+        "triage_priority_score",
+    ):
+        assert stale not in queue["CN:000002"]
     screening = {item["symbol"]: item for item in read_jsonl(root / "screening.jsonl")}
     assert screening["CN:000001"]["decision"] == "catalog"
     assert screening["CN:000002"]["decision"] == "quick_profile"

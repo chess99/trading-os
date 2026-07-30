@@ -1420,6 +1420,18 @@ def _materialize_decisions(
                 ):
                     updated.pop(stale, None)
             for stale in (
+                "allocation_sha256",
+                "selected_by",
+                "profile_cycle_id",
+                "profile_evaluation_path",
+                "profile_recorded_at",
+                "profile_quick_selection_path",
+                "profile_scoped_selection_path",
+                "profile_priority_score",
+                "triage_priority_score",
+                "triage_allocation_decision",
+                "triage_selection_reason",
+                "triage_review_mode",
                 "triage_cycle_id",
                 "triage_disposition",
                 "triage_selection_path",

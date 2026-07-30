@@ -354,6 +354,85 @@ def test_agent_profile_comparison_is_score_free_and_controls_budget(tmp_path: Pa
     assert repeated["idempotent"] is True
 
 
+def test_manager_screen_profile_cohort_supersedes_legacy_allocation(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        build_profile_comparison_packet,
+        record_profile_package,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    predecessor_path = (
+        coverage_root / "manager-screen" / "current" / "batch-001" / "result.json"
+    )
+    sealed = seal_json(
+        predecessor_path,
+        {
+            "schema_version": 1,
+            "decisions": [
+                {"symbol": "CN:600519", "route": "send_to_analyst"},
+                {"symbol": "CN:000001", "route": "pass"},
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="manager_screen_result",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=2),
+    )
+    queue_path = coverage_root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "preceding_stage": "manager_screen",
+            "manager_screen_result_path": predecessor_path.relative_to(
+                tmp_path
+            ).as_posix(),
+            "manager_screen_result_sha256": sealed.sha256,
+            "triage_selection_path": "coverage/cn-a/triage/legacy/selection.json",
+        }
+    )
+    queue.append(
+        {
+            "symbol": "CN:000001",
+            "name": "legacy",
+            "task_type": "quick_profile",
+            "status": "completed",
+            "allocation_sha256": "a" * 64,
+            "profile_cycle_id": "2026-07-25-legacy-cycle",
+        }
+    )
+    write_jsonl(queue_path, queue)
+
+    recorded = record_profile_package(
+        _package(),
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert recorded["next_stage"] == "profile_candidate"
+    evaluation = json.loads(
+        (tmp_path / recorded["evaluation_path"]).read_text(encoding="utf-8")
+    )
+    assert evaluation["allocation_sha256"] is None
+    current = read_jsonl(queue_path)[1]
+    assert current["symbol"] == "CN:600519"
+    assert "allocation_sha256" not in current
+    assert "triage_selection_path" not in current
+
+    comparison = build_profile_comparison_packet(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        created_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    packet = json.loads(
+        (tmp_path / comparison["comparison_path"]).read_text(encoding="utf-8")
+    )
+    assert [row["symbol"] for row in packet["rows"]] == ["CN:600519"]
+
+
 def test_current_triage_selection_excludes_old_unselected_profile_history(
     tmp_path: Path,
 ):

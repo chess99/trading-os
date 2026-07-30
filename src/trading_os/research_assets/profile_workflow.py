@@ -312,7 +312,14 @@ def record_profile_package(
         raise ResearchAllocationError(
             f"profile provenance agent does not match queue assignment: {symbol}"
         )
-    allocation_sha = queue_record.get("allocation_sha256")
+    manager_screen_binding = (
+        queued_stage == "quick_profile"
+        and queue_record.get("preceding_stage") == "manager_screen"
+        and isinstance(queue_record.get("manager_screen_result_path"), str)
+    )
+    allocation_sha = (
+        None if manager_screen_binding else queue_record.get("allocation_sha256")
+    )
     if allocation_sha is not None:
         bound_cycles = {
             item.get("profile_cycle_id")
@@ -408,6 +415,23 @@ def record_profile_package(
         }
     )
     updated_queue = dict(queue_record)
+    if manager_screen_binding:
+        for stale in (
+            "allocation_sha256",
+            "selected_by",
+            "triage_selection_path",
+            "triage_selection_sha256",
+            "triage_allocation_decision",
+            "triage_selection_reason",
+            "triage_review_mode",
+            "profile_cycle_id",
+            "profile_evaluation_path",
+            "profile_recorded_at",
+            "profile_quick_selection_path",
+            "profile_scoped_selection_path",
+            "profile_priority_score",
+        ):
+            updated_queue.pop(stale, None)
     updated_queue.update(
         {
             "task_type": next_stage if next_stage in RESEARCH_STAGES else queued_stage,
@@ -700,12 +724,11 @@ def build_profile_comparison_packet(
     base = Path(root)
     repository_root = base.parent.parent
     queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
-    binding, binding_sha, cohort = _complete_profile_cohort(
+    _, binding, binding_sha, cohort = _complete_profile_cohort(
         queue,
         repository_root=repository_root,
         cycle=cycle,
         stage=stage,
-        binding_field=config["binding_field"],
     )
     comparison_path = base / "profiles" / cycle / config["comparison_name"]
     relative = comparison_path.relative_to(repository_root).as_posix()
@@ -797,12 +820,11 @@ def finalize_profile_stage_with_agent_decisions(
     screening_path = base / SCREENING_FILE
     queue = read_jsonl(queue_path)
     screening = read_jsonl(screening_path)
-    binding, binding_sha, cohort = _complete_profile_cohort(
+    _, binding, binding_sha, cohort = _complete_profile_cohort(
         queue,
         repository_root=repository_root,
         cycle=cycle,
         stage=stage,
-        binding_field=config["binding_field"],
     )
     comparison_path = base / "profiles" / cycle / config["comparison_name"]
     if not comparison_path.exists():
@@ -1509,25 +1531,24 @@ def _complete_profile_cohort(
     repository_root: Path,
     cycle: str,
     stage: str,
-    binding_field: str,
-) -> tuple[str, str, list[dict[str, Any]]]:
-    anchors = [
-        item
-        for item in queue
-        if item.get("profile_cycle_id") == cycle
-        and _history_completed(item, stage)
-        and isinstance(item.get(binding_field), str)
-    ]
+) -> tuple[str, str, str, list[dict[str, Any]]]:
+    anchors = []
+    for item in queue:
+        if item.get("profile_cycle_id") != cycle or not _history_completed(item, stage):
+            continue
+        binding = _profile_predecessor_binding(item, stage=stage)
+        if binding is not None:
+            anchors.append(binding)
     if not anchors:
         raise ResearchAllocationError(
             f"no recorded {stage} cohort is available for cycle: {cycle}"
         )
-    bindings = {str(item[binding_field]) for item in anchors}
+    bindings = set(anchors)
     if len(bindings) != 1:
         raise ResearchAllocationError(
             f"{stage} cycle spans multiple predecessor selections"
         )
-    binding = next(iter(bindings))
+    binding_field, binding = next(iter(bindings))
     binding_path = repository_root / binding
     if not binding_path.exists():
         raise ResearchAllocationError(
@@ -1558,27 +1579,67 @@ def _complete_profile_cohort(
             f"{stage} cohort is incomplete: {incomplete[:10]}"
         )
     predecessor = json.loads(binding_path.read_text(encoding="utf-8"))
-    predecessor_rows = predecessor.get("ranking")
-    if not isinstance(predecessor_rows, list):
-        raise ResearchAllocationError("predecessor selection ranking is invalid")
-    selected_key = (
-        "selected_for_quick_profile" if stage == "quick_profile" else "selected"
+    order = _profile_predecessor_order(
+        predecessor,
+        artifact_type=sealed_binding.artifact_type,
+        stage=stage,
     )
-    order = [
-        row.get("symbol")
-        for row in predecessor_rows
-        if isinstance(row, Mapping) and row.get(selected_key) is True
-    ]
     by_symbol = {item["symbol"]: item for item in cohort}
     if len(order) != len(set(order)) or set(order) != set(by_symbol):
         raise ResearchAllocationError(
             f"{stage} cohort does not match sealed predecessor selection"
         )
     return (
+        binding_field,
         binding,
         sealed_binding.sha256,
         [by_symbol[str(symbol)] for symbol in order],
     )
+
+
+def _profile_predecessor_binding(
+    item: Mapping[str, Any], *, stage: str
+) -> tuple[str, str] | None:
+    fields = (
+        ("manager_screen_result_path", "triage_selection_path")
+        if stage == "quick_profile"
+        else ("profile_quick_selection_path",)
+    )
+    for field in fields:
+        value = item.get(field)
+        if isinstance(value, str) and value:
+            return field, value
+    return None
+
+
+def _profile_predecessor_order(
+    payload: Mapping[str, Any], *, artifact_type: str, stage: str
+) -> list[str]:
+    if stage == "quick_profile" and artifact_type == "manager_screen_result":
+        decisions = payload.get("decisions")
+        if not isinstance(decisions, list):
+            raise ResearchAllocationError("manager-screen predecessor decisions are invalid")
+        return [
+            str(row["symbol"])
+            for row in decisions
+            if isinstance(row, Mapping)
+            and row.get("route") == "send_to_analyst"
+            and isinstance(row.get("symbol"), str)
+        ]
+
+    ranking = payload.get("ranking")
+    if not isinstance(ranking, list):
+        raise ResearchAllocationError("predecessor selection ranking is invalid")
+    selected_key = (
+        "selected_for_quick_profile" if stage == "quick_profile" else "selected"
+    )
+    return [
+        str(row["symbol"])
+        for row in ranking
+        if isinstance(row, Mapping)
+        and row.get(selected_key) is True
+        and isinstance(row.get("symbol"), str)
+    ]
 
 
 def _profile_comparison_row(
@@ -1814,18 +1875,19 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     if len(allocation_shas) > 1:
         raise ResearchAllocationError("profile cycle spans multiple allocations")
     allocation_sha = next(iter(allocation_shas), None)
-    triage_selection_paths = {
-        item.get("triage_selection_path")
+    quick_profile_bindings = {
+        binding
         for item in recorded
-        if isinstance(item.get("triage_selection_path"), str)
+        if (binding := _profile_predecessor_binding(item, stage="quick_profile"))
+        is not None
     }
-    if len(triage_selection_paths) == 1:
-        triage_selection_path = next(iter(triage_selection_paths))
+    if len(quick_profile_bindings) == 1:
+        binding_field, binding_path = next(iter(quick_profile_bindings))
         cohort = _bound_profile_cohort(
             queue,
             repository_root=repository_root,
-            binding_field="triage_selection_path",
-            binding=triage_selection_path,
+            binding_field=binding_field,
+            binding=binding_path,
             stage="quick_profile",
         )
     else:
@@ -1950,19 +2012,15 @@ def _bound_profile_cohort(
         # Backward compatibility for legacy queues whose predecessor selection
         # was not stored as a sealed repository asset.
         return cohort
-    verify_sealed(selection_path)
+    sealed = verify_sealed(selection_path)
     payload = json.loads(selection_path.read_text(encoding="utf-8"))
-    ranking = payload.get("ranking")
-    if not isinstance(ranking, list):
-        raise ResearchAllocationError("predecessor selection ranking is invalid")
-    selected_key = (
-        "selected_for_quick_profile" if stage == "quick_profile" else "selected"
+    selected_symbols = set(
+        _profile_predecessor_order(
+            payload,
+            artifact_type=sealed.artifact_type,
+            stage=stage,
+        )
     )
-    selected_symbols = {
-        item.get("symbol")
-        for item in ranking
-        if isinstance(item, Mapping) and item.get(selected_key) is True
-    }
     if not selected_symbols:
         raise ResearchAllocationError(
             f"predecessor selection has no selected companies for {stage}"

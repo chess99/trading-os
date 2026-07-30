@@ -131,13 +131,27 @@ def _coverage(tmp_path: Path) -> Path:
 def test_scope_freeze_conserves_universe_and_materializes_missing_baseline(
     tmp_path: Path,
 ) -> None:
-    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
     from trading_os.research_assets.scope_workflow import (
         all_a_scope_status,
         freeze_all_a_scope,
     )
 
     root = _coverage(tmp_path)
+    queue_path = root / "research_queue.jsonl"
+    queue_before = read_jsonl(queue_path)
+    stale = next(item for item in queue_before if item["symbol"] == "CN:000001")
+    stale.update(
+        {
+            "allocation_sha256": "a" * 64,
+            "selected_by": ["legacy_lens"],
+            "profile_cycle_id": "2026-07-28-legacy-cycle",
+            "profile_evaluation_path": "legacy/evaluation.json",
+            "profile_quick_selection_path": "legacy/selection.json",
+            "triage_priority_score": 99,
+        }
+    )
+    write_jsonl(queue_path, queue_before)
     result = freeze_all_a_scope(
         root=root,
         run_id="2026-07-30-cn-all-a-auto-001",
@@ -164,6 +178,15 @@ def test_scope_freeze_conserves_universe_and_materializes_missing_baseline(
     assert queue["CN:000001"]["status"] == "requires_rebaseline"
     assert queue["CN:000001"]["task_type"] == "manager_screen"
     assert queue["CN:000001"]["scope_run_id"] == result["run_id"]
+    for stale_field in (
+        "allocation_sha256",
+        "selected_by",
+        "profile_cycle_id",
+        "profile_evaluation_path",
+        "profile_quick_selection_path",
+        "triage_priority_score",
+    ):
+        assert stale_field not in queue["CN:000001"]
     assert queue["CN:000002"]["task_type"] == "quick_profile"
     assert "CN:000004" not in queue
 
