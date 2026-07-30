@@ -77,8 +77,18 @@ def test_research_queue_example_is_resumable():
         assert item["next_action"].strip()
         if item["task_type"] == "quick_profile":
             assert item["effort_budget_hours"] > 0
-            assert item["preceding_stage"]
+            assert item["preceding_stage"] == "manager_screen"
             assert item["stop_conditions"]
+
+    schema = json.loads(
+        (root / "coverage" / "cn-a" / "research-queue.schema.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    task_types = schema["properties"]["items"]["items"]["properties"]["task_type"][
+        "enum"
+    ]
+    assert "manager_screen" in task_types
 
 
 def test_docs_route_full_market_work_through_coverage():
@@ -95,15 +105,13 @@ def test_docs_route_full_market_work_through_coverage():
     assert "coverage/" in claude
     assert "coverage status" in agents
     assert "coverage validate" in readme
-    assert "全覆盖漏斗" in screening
-    assert "每家公司独立 rapid triage" in screening
-    assert "机器不得使用市场估值" in screening
-    assert "deep_research" in screening
-    assert "quick_profile" in screening
-    assert "程序化选股、人工提名和外部清单" in screening
-    assert "hard_exclusion" in screening
-    assert "research_queue.jsonl" in screening
-    assert "小市值、低流动性、暂时亏损" in screening
-    assert "单公司研究或单公司复核 agent 一次只处理一家公司" in agents
-    assert "跨公司 allocation、质量统计和组合综合是独立角色" in agents
-    assert "组合层可给 `buy_now`" in agents
+    assert "全市场初筛由同一投资经理 Agent 批量完成" in screening
+    assert "不得用于剥夺初筛资格" in screening
+    assert "send_to_analyst" in screening
+    assert "pass" in screening
+    assert "watch" in screening
+    assert "禁止 correction 套 correction" in screening
+    assert "小市值、低流动性、利润正负" in screening
+    assert "初筛每批默认 150 家" in agents
+    assert "研究员一次只处理一家公司" in agents
+    assert "只有组合层可以" in agents

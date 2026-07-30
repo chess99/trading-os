@@ -162,7 +162,7 @@ def test_scope_freeze_conserves_universe_and_materializes_missing_baseline(
     }
     queue = {row["symbol"]: row for row in read_jsonl(root / "research_queue.jsonl")}
     assert queue["CN:000001"]["status"] == "requires_rebaseline"
-    assert queue["CN:000001"]["task_type"] == "rapid_triage"
+    assert queue["CN:000001"]["task_type"] == "manager_screen"
     assert queue["CN:000001"]["scope_run_id"] == result["run_id"]
     assert queue["CN:000002"]["task_type"] == "quick_profile"
     assert "CN:000004" not in queue
@@ -315,6 +315,22 @@ def test_triage_cohort_binds_parent_scope_and_rejects_non_intake_symbol(
         scope_cutoff=CUTOFF,
         frozen_at=CUTOFF,
     )
+    # Legacy rapid-triage compatibility is tested with an explicit legacy
+    # intake row. New scope freezes intentionally materialize manager_screen.
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    legacy = next(item for item in queue if item["symbol"] == "CN:000001")
+    legacy.update(
+        {
+            "task_type": "rapid_triage",
+            "effort_budget_hours": 0.25,
+            "preceding_stage": "scope_to_queue_intake",
+            "stop_conditions": ["legacy compatibility fixture"],
+        }
+    )
+    write_jsonl(queue_path, queue)
     cohort = freeze_rapid_triage_cohort(
         root=root,
         cycle_id="2026-07-30-baseline-001",
@@ -328,9 +344,6 @@ def test_triage_cohort_binds_parent_scope_and_rejects_non_intake_symbol(
     assert payload["parent_scope"]["run_id"] == run_id
     assert payload["parent_scope"]["manifest_sha256"] == frozen["scope_manifest_sha256"]
 
-    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
-
-    queue_path = root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
     queue.append(
         {

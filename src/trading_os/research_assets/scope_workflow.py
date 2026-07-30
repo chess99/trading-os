@@ -131,8 +131,9 @@ def freeze_all_a_scope(
             company = company_by_symbol[symbol]
             screen = screening_by_symbol.get(symbol)
             partition, reason_codes = _partition(company, screen)
-            terminal = _verified_rapid_triage_terminal(
+            terminal = _verified_current_screening_terminal(
                 queue_by_symbol.get(symbol),
+                root=base,
                 repository_root=repository_root,
                 symbol=symbol,
                 scope_cutoff=cutoff,
@@ -183,10 +184,11 @@ def freeze_all_a_scope(
                 "sources": sources,
             },
             "protocol": {
-                "rapid_triage": "rapid_triage.schema_v2",
+                "manager_screen": "manager_screen.schema_v1",
+                "legacy_rapid_triage": "rapid_triage.schema_v2.read_only",
                 "baseline_definition": (
-                    "eligible or exception member without a validly sealed schema-v2 "
-                    "rapid-triage package at scope freeze"
+                    "eligible or exception member without a validly sealed manager-screen "
+                    "terminal or a legacy schema-v2 rapid-triage terminal at scope freeze"
                 ),
             },
             "counts": counts,
@@ -232,7 +234,7 @@ def freeze_all_a_scope(
             "scope_manifest_path": manifest_relative,
             "scope_manifest_sha256": manifest_seal.sha256,
             "selection_basis": (
-                "scope membership minus valid current-protocol rapid-triage terminals; "
+                "scope membership minus valid manager-screen or legacy rapid-triage terminals; "
                 "no investment score, factor rank, valuation, market cap, liquidity, "
                 "profit sign, industry preference, or completion order was used"
             ),
@@ -423,7 +425,7 @@ def _build_baseline_intake_members(
                 "name": member["name"],
                 "partition": member["partition"],
                 "intake_reason_codes": [
-                    "missing_current_rapid_triage_terminal",
+                    "missing_current_manager_screen_terminal",
                     (
                         "missing_queue_row"
                         if queued is None
@@ -478,12 +480,12 @@ def _materialize_baseline_intake(
             {
                 "symbol": symbol,
                 "name": member["name"],
-                "task_type": "rapid_triage",
+                "task_type": "manager_screen",
                 "priority": 3,
                 "status": "requires_rebaseline",
                 "reason": (
                     "Frozen baseline intake: the company lacks a valid current-protocol "
-                    "rapid-triage terminal. No investment ranking was applied."
+                    "manager-screen terminal. No investment ranking was applied."
                 ),
                 "target_company_dir": f"research/companies/CN/{symbol.split(':', 1)[1]}",
                 "assigned_agent": None,
@@ -492,19 +494,9 @@ def _materialize_baseline_intake(
                 "result_path": None,
                 "failure_reason": None,
                 "next_action": (
-                    "Freeze into an administrative cohort and assign exactly one independent "
-                    "Agent for rapid triage."
+                    "Freeze into a 100-200 company manager-screen batch; the same investment "
+                    "manager Agent must judge the whole batch."
                 ),
-                "effort_budget_hours": 0.25,
-                "preceding_stage": "scope_to_queue_intake",
-                "stop_conditions": [
-                    "current research value is low and an executable revisit trigger is recorded",
-                    (
-                        "survival, governance, capital structure, or evidence reliability "
-                        "blocks further work"
-                    ),
-                    "the company requires reassignment to an Agent with the relevant competence",
-                ],
                 "scope_run_id": intake["run_id"],
                 "scope_manifest_path": intake["scope_manifest_path"],
                 "scope_manifest_sha256": manifest_sha256,
@@ -518,6 +510,9 @@ def _materialize_baseline_intake(
             }
         )
         for stale in (
+            "effort_budget_hours",
+            "preceding_stage",
+            "stop_conditions",
             "triage_cycle_id",
             "triage_disposition",
             "triage_selection_path",
@@ -526,6 +521,13 @@ def _materialize_baseline_intake(
             "cohort_sha256",
             "cohort_ordinal",
             "revisit_triggers",
+            "manager_screen_run_id",
+            "manager_screen_batch_id",
+            "manager_screen_route",
+            "manager_screen_result_path",
+            "manager_screen_result_sha256",
+            "decisive_question",
+            "evidence_ids",
         ):
             normalized.pop(stale, None)
         queue_by_symbol[symbol] = normalized
@@ -533,6 +535,32 @@ def _materialize_baseline_intake(
     if changed:
         write_jsonl(queue_path, list(queue_by_symbol.values()))
     return changed
+
+
+def _verified_current_screening_terminal(
+    queued: Mapping[str, Any] | None,
+    *,
+    root: Path,
+    repository_root: Path,
+    symbol: str,
+    scope_cutoff: dt.datetime,
+) -> tuple[str, str] | None:
+    from .manager_screening import verify_manager_screen_terminal
+
+    manager_terminal = verify_manager_screen_terminal(
+        root=root,
+        queued=queued,
+        symbol=symbol,
+        scope_cutoff=scope_cutoff,
+    )
+    if manager_terminal is not None:
+        return manager_terminal
+    return _verified_rapid_triage_terminal(
+        queued,
+        repository_root=repository_root,
+        symbol=symbol,
+        scope_cutoff=scope_cutoff,
+    )
 
 
 def _verified_rapid_triage_terminal(

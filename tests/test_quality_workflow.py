@@ -165,6 +165,27 @@ def _repo(
         frozen_at=CUTOFF,
         mode="auto",
     )
+    # This module verifies the legacy rapid-triage audit chain. New scope
+    # production materializes manager_screen, so make the legacy fixture
+    # explicit instead of weakening the production intake guard.
+    queue_path = root / "research_queue.jsonl"
+    legacy_queue = [
+        json.loads(line)
+        for line in queue_path.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    for item in legacy_queue:
+        if item.get("status") != "requires_rebaseline":
+            continue
+        item.update(
+            {
+                "task_type": "rapid_triage",
+                "effort_budget_hours": 0.25,
+                "preceding_stage": "scope_to_queue_intake",
+                "stop_conditions": ["legacy quality-workflow fixture"],
+            }
+        )
+    _write_jsonl(queue_path, legacy_queue)
     return root, policy_path
 
 

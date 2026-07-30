@@ -1,148 +1,198 @@
 # 全 A 股持续研究 Goal 启动提示词
 
-> 用法：在新的 Codex 对话中引用本文件，并补充本次参数（如有）。本文件负责长期任务编排；研究口径、容量和闸门仍以仓库内 `AGENTS.md`、`playbooks/` 与 `policies/` 的当前版本为事实源。
+> 用法：在新的 Codex 对话中引用本文件，并补充本次参数。本文件负责长期编排；仓库内 `AGENTS.md`、playbook 和 policy 是执行事实源。
 
-请创建并持续执行一个 Goal，不设置 `token_budget`，除非我在本次调用中另有明确指定。目标是：以启动时冻结的普通 A 股范围和信息截止时间为边界，让范围内每家公司先经独立 Agent 快速甄别，再把有限研究预算分配给最值得继续看的公司；完成必要的正式画像、范围研究、深研、独立承保和组合综合，并使公司时间线、coverage、触发器和派生资产全部通过验证。
+请创建并持续执行一个 Goal。除非本次调用明确指定，不设置 `token_budget`。
 
-## 本次参数
+目标是：冻结普通 A 股范围和信息截止时间，由主 Agent 作为投资经理快速浏览全市场；只有少数值得继续购买研究信息的公司才交给单公司研究员，之后按证据质量进入范围研究、深研、独立承保和组合综合。保持 coverage、公司时间线、触发器和仓库文件整洁可验证。
+
+## 参数
 
 - `mode`：`auto`（默认）、`baseline` 或 `incremental`。
-- `run_id`：未指定时，以启动日期和用途生成稳定 ID。
-- `scope_cutoff`：未指定时，使用 Goal 创建时的带时区时间；此后发生的新事件留给下一轮。
-- `universe_ref`：未指定时，冻结当时仓库中可验证的普通 A 股 universe，并记录来源、哈希、纳入、排除和异常。
-- `triage_batch_size`：未指定时读取当前 research-allocation policy 的 `triage_administrative_batch_size`；它只是行政分批上限，不是投资筛选容量。
+- `run_id`：未指定时按启动日期与用途生成稳定 ID。
+- `scope_cutoff`：未指定时使用 Goal 创建时的带时区时间。
+- `universe_ref`：未指定时冻结仓库内可验证的普通 A 股 universe。
+- `manager_batch_size`：未指定时读取 `policies/manager-screening.json`，默认 150；允许 50—250。
 
-`auto` 模式同时建立两条逻辑 lane：
+`auto` 同时维护 baseline 与 incremental 两条逻辑 lane。截止时间之后的新上市、新财报、新公告和价格变化留给下一轮，不让当前 Goal 无限扩张。
 
-1. `baseline`：处理冻结范围内缺少当前 rapid-triage 协议有效终态的全部公司，包括 legacy completed/watch 状态和缺失 queue 的范围成员；`requires_rebaseline` 只是一个 intake 提示；
-2. `incremental`：处理 `scope_cutoff` 以前已经实际命中的财报、公告、价格、论点失效或证据过期事件。
+## 角色
 
-两条 lane 可以交错推进，但同一 symbol 同时只能有一个可变任务所有者。第一阶段必须封存 lane arbitration 契约，定义新事件如何合并到活动研究、何时抢占、何时延后及何时消费 hit。不得把触发器定义本身冒充已经发生的事件。截止时间之后的新触发写入下一轮输入，不得令当前 Goal 无限扩张。
+把主 Agent 当作巴菲特式投资经理，而不是任务转发器：
+
+- 主 Agent亲自读取每个 manager-screen packet，并对整批公司使用同一把尺子判断。
+- 初筛不派发子 Agent，不生成每家公司一份 Markdown，不做半盲 reviewer 递归纠错。
+- 主 Agent 可以用程序生成压缩 dossier，也可对少数信息不足项补查一手来源；新增来源在整批提交中统一记录 provenance。
+- 只有 `send_to_analyst` 才派发研究员；研究员一次一家公司，只解决决定性问题。
+- 主 Agent 阅读研究员结果后配置下一层预算；深研以后再调用独立承保与 challenger。
 
 ## 不可违背的原则
 
-1. 全覆盖、先看后筛。每个纳入范围的普通 A 股都必须由 Agent 至少快速看一眼，或有经验证的证券身份硬排除；因子排名、PE、市值、流动性、当期亏损或行业偏好不得决定谁有资格被看。
-2. 机器只做材料准备、触发检测、行政排序、冻结、调度、封存、校验和状态回写；业务理解、正常化盈利、价格隐含预期、反证与继续研究价值必须由 Agent 判断。
-3. 一家公司一个独立单公司 Agent；不得让同一个子 Agent 同时研究多家公司。跨公司 allocation、质量统计和组合 Agent 是独立角色，只读取已封存的单公司产物，不代写单公司研究。
-4. 同层完整后再晋级。rapid triage 结果全部封存后，必须由未参与单公司甄别的独立跨公司 Agent 显式分配下一层预算；程序不得按数值分数、旧 priority、完成先后或 lens 数量自动晋级。
-5. 历史不可覆盖。每次有效快速甄别或更新都进入单公司不可变时间线；只有验证通过后才能原子更新 `meta.json` 和 coverage 队列。
-6. 快速停止只是“当前不再购买更多研究信息”，不是永久贴标签。除真正硬排除外，必须记录事实理由、反方证据、未知数和可执行的重启触发器。
-7. 单公司层不得输出 `buy_now`、组合操作或仓位。只有最新行情下的组合综合可以给操作与仓位。
+1. 全覆盖、先看后筛。范围内每家公司必须出现在一次 manager-screen 决策中，或有经验证的证券身份硬排除。
+2. 初筛行政顺序只使用冻结 intake ordinal、等待时间和已命中事件，不使用估值、因子、市值、流动性、利润正负、行业偏好或旧评级。
+3. 每批必须由同一个主 Agent 完整覆盖，并严格按 packet 顺序提交 `pass | watch | send_to_analyst`。
+4. `pass` 表示当前不值得继续买研究时间；`watch` 表示等待价格、财报、事件或证据；两者都必须有重启触发器。
+5. `send_to_analyst` 同时完成初筛预算配置，不再增加独立 L1 allocation 层。
+6. 初筛只做 contract 的 100% 程序校验。路由观点差异不是 material error，不触发 correction；禁止 correction 套 correction。
+7. 历史不可覆盖。manager-screen 批次和后续单公司研究均封存；旧 Cycle 001/002 只读保留。
+8. 单公司层不得输出组合操作或仓位。
 
 ## 启动与恢复
 
-每次启动或续跑都执行：
+每次启动或续跑：
 
-1. 完整读取根 `AGENTS.md`、`playbooks/all-a-goal-execution.md`、`playbooks/research-capital-allocation.md`、`playbooks/screening.md`、`playbooks/batch-dispatch.md`、`playbooks/portfolio-synthesis.md` 和当前 policy。
-2. 读取当前 Goal、Git 状态、运行中 Agent、冻结 scope、coverage、公司时间线和封存资产。保留用户及其他 Agent 的改动，不切分支，除非用户明确要求。
-3. 若已有同一 `run_id`，不得重新冻结范围。验证已有 seal 后再复用，以“冻结范围减去已验证终态”重建工作清单，不能只相信队列状态。
-4. 已有封存产物但队列或 `meta.json` 未回写时，使用幂等发布或 reconcile 修复；不得重做已经有效完成的公司。
-5. `running` 任务只有在租约确实失效后才能释放；保留 `attempt_history`，失败后换独立 Agent 重试。
-6. 机制缺陷可以先修代码、测试与文档，再恢复同一个 run；不能因此改动原始 scope 或 information cutoff。
-7. 小批次完成即验证、封存、回写并提交本批自己修改的文件，确保任务可恢复。
-8. 启动时先做基础设施就绪检查。若尚无全市场 scope 守恒 manifest、scope-to-queue baseline intake、正式质量抽查 policy 与封存、canonical trigger-hit ledger、lane arbitration，或 quick-profile/scoped-research 仍使用机械 score/priority 自动晋级，先建设并试运行对应的新契约；不得用现有 `companies.jsonl`、`screening.jsonl` 和队列行数大致接近来冒充范围或增量闭环已经成立，也不得让历史 `allocate-research`、`apply-allocation` 或 `profile-finalize` 替代独立 Agent 的同层全量 decisions。
+1. 完整读取根 `AGENTS.md`、本 Goal、相关 playbook、`policies/manager-screening.json`、Git 状态、冻结 scope 和当前 manager-screen status。
+2. 若同一 `run_id` 已存在，不重新冻结范围；验证 seal 后从“冻结 intake 减去已冻结批次和已验证终态”恢复。
+3. 已封存 result 但 coverage 未完整物化时，重放同一 `manager-screen-record` 修复；不得重做整批。
+4. 保留用户和其他工作的改动，不切分支，除非用户要求。
+5. 机制缺陷可以先修代码、测试和文档，再继续同一 scope；不得改变原始 cutoff。
+6. 每个完整迭代验证后提交本轮自己修改的文件。
 
 ## 执行阶段
 
-### 1. 冻结范围与输入
+### 1. 冻结范围
 
-- 冻结普通 A 股 universe、`scope_cutoff`、数据来源与哈希。
-- 对冻结范围做数量守恒：`eligible + hard_excluded + exception = universe`，不得静默遗漏。
-- baseline 以“缺少当前协议有效终态”计算，不按旧 queue status 计算；先把 legacy completed/watch 和缺失 queue 的 eligible 成员通过封存 intake 契约守恒物化，再调用 cohort freeze。当前 `triage-freeze` 不能单独证明这一步已经完成。
-- baseline backlog 按等待时间和 symbol 等行政字段稳定分批；incremental 只按已观察触发的紧急程度、过期程度和稳定顺序分批。任何投资吸引力数据不得参与本阶段排序。
-- 为每家公司准备最小差异包：旧状态、最新有效报告、截止日前新增 S1 财报/公告、近期价格、已观察触发和关键证据缺口。
+```bash
+python -m trading_os coverage scope-freeze <run-id> --mode <mode> --scope-cutoff <timestamp>
+python -m trading_os coverage scope-status <run-id>
+```
 
-### 2. 每家公司独立快速甄别
+验证：
 
-每个 Agent 在限定预算内至少回答：
+```text
+eligible + hard_excluded + exception = universe
+```
 
-- 公司靠什么赚钱，能否快速理解；
-- 24—36 个月生存、强制稀释、资本结构或治理是否出现阻断项；
-- 相对上一轮研究真正发生了什么变化；
-- 正常化所有者收益能否粗判，依据和最大误差是什么；
-- 当前价格要求市场相信什么，赔率是否至少可能成立；
-- 最强反方证据是什么；
-- 再投入下一小时最可能解决什么，是否足以改变组合决策；
-- 若当前停止，什么财报、价格、事件、论点变化或 TTL 到期会重启研究。
+证券身份硬排除做 100% 程序或人工身份校验。baseline 是缺少 manager-screen 或兼容 legacy terminal 的公司集合，不按旧 priority 推断。
 
-快速甄别必须使用真实来源和真实 provenance。不得照抄旧结论，也不得把旧报告当作新的一手证据。完成后封存，并发布到公司不可变时间线。
+### 2. 投资经理批量初筛
 
-### 3. 独立质量抽查
+循环执行：
 
-- 对硬排除和不在范围内的证券身份做 100% 校验。
-- 对 `catalog`、`price_watch`、`conditional_stop`、`reassign_or_stop` 按第一阶段新增并封存的质量审计 policy 做确定性、分层、独立且尽量盲态的假阴性抽查；该 policy 必须定义样本率、稳定选样种子、错误阈值和扩样规则，不得复用旧排名 selection slot。
-- 抽查 Agent 不读取原 Agent 的结论性措辞，只读取事实包和来源。重大分歧必须重开该公司；某一分层错误率超过阈值时扩大样本或重做该层。
-- 抽查完成前不得封存整个 triage cycle。
+```bash
+python -m trading_os coverage manager-screen-freeze <run-id> <batch-id> \
+  --batch-size <manager_batch_size>
+```
 
-### 4. 横向配置研究预算
+读取生成的 `packet.json`。同一个主 Agent 对每家公司回答：
 
-- 同一个 cohort 的所有公司均有有效终态并完成抽查后，生成不含旧排名和机械分数的 comparison packet。
-- 由未参与单公司研究的独立 allocation Agent 逐项给出 `select_quick_profile` 或 `defer`，写清预期信息价值、决定性问题、研究成本、相对机会成本和风险簇约束。
-- 程序只验证全量覆盖、容量上限、风险簇约束、provenance 与禁止字段；不替 Agent 生成投资排序。
-- 若还没有封存且可复核的逐公司经济风险簇，所有 selected rows 必须保守归入同一 `unclassified` 簇并受该簇上限约束；只有先建立可信分类契约和校验器，才能使用超过这一保守上限的正式画像容量。
-- 未晋级公司保留快速简报和重启触发器，未来事件发生时重新竞争预算。
+- 公司大致靠什么赚钱，普通股股东现金路径是否可理解；
+- 是否存在明显生存、治理、资本结构或会计阻断；
+- 正常化盈利和现金转换有没有可验证轮廓；
+- 当前价格大致隐含什么；
+- 下一小时最决定性的问题是什么；
+- 当前应该 `pass`、`watch` 还是 `send_to_analyst`；
+- 若不送研究员，什么条件会重启。
 
-### 5. 更深研究与组合综合
+提交文件 contract：
 
-按 playbook 继续执行：
+```json
+{
+  "schema_version": 1,
+  "manager": {
+    "agent": "/root",
+    "model": "真实模型",
+    "tools": ["真实工具"]
+  },
+  "additional_evidence": [],
+  "decisions": [
+    {
+      "symbol": "CN:000001",
+      "route": "pass",
+      "one_line_reason": "一句话理由",
+      "decisive_question": "最可能改变判断的问题",
+      "revisit_triggers": [
+        {
+          "type": "filing",
+          "condition": "下一份定期报告",
+          "reason": "核验盈利和现金转换"
+        }
+      ],
+      "confidence": "medium",
+      "evidence_ids": ["snapshot:CN:000001"]
+    }
+  ]
+}
+```
+
+```bash
+python -m trading_os coverage manager-screen-record <run-id> <batch-id> \
+  --input <decisions.json>
+python -m trading_os coverage manager-screen-status <run-id>
+```
+
+程序必须验证整批完整覆盖、顺序、合法路由、证据引用、provenance、禁止字段和 seal。不得包含 rank、score、priority、`buy_now` 或仓位。
+
+### 3. 单公司研究员
+
+只派发 coverage 中 `task_type=quick_profile,status=pending,preceding_stage=manager_screen` 的公司。
+
+研究员一次只处理一家公司，在 policy 的 1.5 小时默认预算内：
+
+- 解决 manager-screen 的决定性问题；
+- 优先核验 S1 财报、公告和价格；
+- 建立业务、会计、正常化所有者收益与估值的最小桥接；
+- 写明反证、剩余未知和停止条件；
+- 只提交自己的封存 package，不编辑共享 coverage。
+
+主 Agent 阅读同层研究员结果后决定停止、定向补证或进入 scoped/deep research。不要为了填满容量而晋级。
+
+### 4. 深研、承保与组合
 
 ```text
 quick profile
-→ scoped research
+→ scoped research（只解决定性未知）
 → deep research + 结构化主张与来源
 → 半盲独立承保
 → 必要 challenger / 仲裁
-→ 最新行情下的组合综合
+→ 最新价格下的组合综合
 ```
 
-每层都先封存完整 cohort，再由独立跨公司 Agent 配置下一层预算。没有合格公司时允许留空；不得为填配额降低标准。
+独立承保只购买给已完成深研的少数公司。重大事实分歧、高风险或潜在前五大仓位才触发 challenger。
 
-### 6. 增量研究闭环
+### 5. 增量闭环
 
-- 快速简报和后续研究留下的 `date/TTL` 触发器必须能进入 schedule；价格触发器必须能进入 alerts。
-- `filing/event/thesis` 只有被可靠观察器或人工证据账本记录为 hit 后，才进入 incremental cohort。
-- 同一 hit 必须可去重、可消费和可追溯；研究完成后不得反复入队。
-- 重建索引、schedule 和 alerts，确认已完成 baseline 的 symbol 不再出现通用 `research-rebaseline`。
+- filing/event/thesis 必须先有真实 hit，不能把触发器定义冒充事件已经发生。
+- 同一 hit 可去重、可消费、可追溯。
+- pass/watch 的重启条件保存在 manager-screen result 与 coverage；正式研究触发器继续进入 schedule/alerts。
+- 截止时间之后的 hit 进入下一轮。
+
+## 初筛质量机制
+
+- 证券身份、schema、全量覆盖、顺序、证据 ID 和禁止字段：100% 程序校验。
+- 可选校准抽样只估计事实错误和重大遗漏，不阻塞正常批次，不按 reviewer 路由差异计算错误率。
+- 研究员若发现 material error，在其正式研究中显式指出并由主 Agent 一次裁决；不创建 correction cohort。
+- 同一公司初筛不得出现 correction 套 correction。
 
 ## 完成判定
 
-只有同时满足以下条件，才可把 Goal 标为完成：
+只有同时满足以下条件，Goal 才可完成：
 
-1. 冻结 scope 数量守恒，每个 symbol 都有有效 rapid-triage 终态或经验证的硬排除；
-2. 没有本轮遗留的 pending、running、失效租约或未解释失败；
-3. 每个 baseline 结果已进入公司不可变时间线，并正确清除 `requires_rebaseline`；
-4. 每个非硬停止项都有 schedule/alerts 实际可消费的重启条件；
-5. 独立抽查完成，重大分歧和 policy 要求的扩样全部处理；
-6. 各层均满足“完整 cohort 先封存、后横向晋级”，没有完成顺序偏差；
-7. 所有获得预算的候选完成相应深研、承保和必要 challenger；无合格候选时可为空；
-8. 组合层使用最新行情重新计算，或明确封存“当前无可买机会”；
-9. 截止时间后的事件已留给下一轮，不属于当前未完成项；
-10. 全部验证通过，提交只含本 Goal 自己修改的文件。
+1. scope 数量守恒；
+2. 每个范围内 symbol 有 manager-screen terminal、兼容 legacy terminal 或硬排除；
+3. 没有未解释的 pending/running/failed manager-screen 批次；
+4. 所有 `send_to_analyst` 都得到明确终态，或如实列为 blocked；
+5. 获得更深预算的公司完成相应研究、承保和必要 challenger；
+6. 组合层使用最新行情，或明确给出当前无可买机会；
+7. 截止时间后的事件已留给下一轮；
+8. 验证通过，提交只含本 Goal 自己修改的文件。
 
-其中 scope manifest、scope-to-queue baseline intake、质量抽查 policy 与封存、trigger-hit ledger 和 lane arbitration 是完成条件，不是可在最终报告中口头豁免的“后续优化”。若任一机制尚未建立或无法验证，只能继续执行或如实标记 Goal blocked，不能标记 complete。
-
-至少执行当前仓库支持的以下验证；若 playbook 或 CLI 已更新，以更新后的命令为准：
+至少执行：
 
 ```bash
+python -m trading_os coverage manager-screen-status <run-id>
 python -m trading_os coverage status
-python -m trading_os coverage triage-status <cycle-id>
-python -m trading_os coverage profile-status <cycle-id>
-python -m trading_os review status <run-id>
-python -m trading_os review validate <run-id> --strict
-
-python -m trading_os assets validate
 python -m trading_os coverage validate
+python -m trading_os assets validate
 python -m trading_os coverage reconcile --check
 python -m trading_os index rebuild
 python -m trading_os schedule build
 python -m trading_os alerts build
-
 ruff check <本次涉及的 Python 文件>
 python -m pytest -q
 git diff --check
-git diff --staged
 ```
 
 ## 最终交付
 
-向用户报告冻结范围与截止时间、覆盖守恒、各层数量、抽查与分歧、承保和组合结果、未完成或证据不足事项、增量触发闭环、验证结果及提交。不得只说“跑完了”；必须给出能从封存资产和公司时间线复核的证据路径。
+向用户报告 scope/cutoff、全市场初筛完成数与三条路由数量、送研究员比例、各层产出、主要阻断、承保/组合结果、耗时分布、验证和提交。不要只说“跑完了”，必须给出封存路径。

@@ -33,6 +33,12 @@ from .research_assets.lane_arbitration import (
     freeze_lane_arbitration,
     verify_lane_arbitration,
 )
+from .research_assets.manager_screening import (
+    ManagerScreeningError,
+    freeze_manager_screen_batch,
+    manager_screen_status,
+    record_manager_screen_decisions,
+)
 from .research_assets.migration import (
     MigrationError,
     apply_migration_plan,
@@ -330,6 +336,41 @@ def build_parser() -> argparse.ArgumentParser:
     _add_coverage_root(scope_status)
     scope_status.add_argument("run_id")
     scope_status.set_defaults(func=cmd_coverage_scope_status)
+
+    manager_screen_freeze = coverage_sub.add_parser(
+        "manager-screen-freeze",
+        help="Freeze one 100-200 company packet for a single investment-manager Agent",
+    )
+    _add_coverage_root(manager_screen_freeze)
+    manager_screen_freeze.add_argument("run_id")
+    manager_screen_freeze.add_argument("batch_id")
+    manager_screen_freeze.add_argument("--batch-size", type=int)
+    manager_screen_freeze.add_argument(
+        "--policy",
+        default="policies/manager-screening.json",
+    )
+    _add_timestamp(manager_screen_freeze)
+    manager_screen_freeze.set_defaults(func=cmd_coverage_manager_screen_freeze)
+
+    manager_screen_record = coverage_sub.add_parser(
+        "manager-screen-record",
+        help="Seal one complete manager decision and route only selected analyst work",
+    )
+    _add_coverage_root(manager_screen_record)
+    manager_screen_record.add_argument("run_id")
+    manager_screen_record.add_argument("batch_id")
+    manager_screen_record.add_argument("--input", required=True)
+    _add_timestamp(manager_screen_record)
+    manager_screen_record.set_defaults(func=cmd_coverage_manager_screen_record)
+
+    manager_screen_status_cmd = coverage_sub.add_parser(
+        "manager-screen-status",
+        help="Verify manager-screen batches and report scope progress",
+    )
+    _add_coverage_root(manager_screen_status_cmd)
+    manager_screen_status_cmd.add_argument("run_id")
+    manager_screen_status_cmd.add_argument("--batch-id")
+    manager_screen_status_cmd.set_defaults(func=cmd_coverage_manager_screen_status)
 
     trigger_observe = coverage_sub.add_parser(
         "trigger-observe",
@@ -1071,6 +1112,42 @@ def cmd_coverage_scope_status(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_manager_screen_freeze(ns: argparse.Namespace) -> int:
+    payload = freeze_manager_screen_batch(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+        frozen_at=_timestamp(ns.at),
+        batch_size=ns.batch_size,
+        policy_path=ns.policy,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_record(ns: argparse.Namespace) -> int:
+    submission = json.loads(Path(ns.input).read_text(encoding="utf-8"))
+    payload = record_manager_screen_decisions(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+        submission=submission,
+        recorded_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_status(ns: argparse.Namespace) -> int:
+    payload = manager_screen_status(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+    )
+    _write_success(payload)
+    return 0
+
+
 def cmd_coverage_trigger_observe(ns: argparse.Namespace) -> int:
     observation = load_json(ns.input)
     if not isinstance(observation, dict):
@@ -1585,6 +1662,7 @@ def _error_code(exc: Exception) -> str | None:
         (ScopeWorkflowError, "scope_workflow_error"),
         (TriggerHitError, "trigger_hit_error"),
         (LaneArbitrationError, "lane_arbitration_error"),
+        (ManagerScreeningError, "manager_screening_error"),
         (QualityAuditError, "quality_audit_error"),
         (QualityWorkflowError, "quality_workflow_error"),
         (ReviewStoreError, "review_state_error"),

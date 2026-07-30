@@ -1,33 +1,58 @@
-# 批量独立复核调度 Playbook
+# 批量研究与独立复核调度 Playbook
 
-## 运行模型
+## 两种批次
 
-- 一家公司一个独立 agent；公司之间并行，公司内阶段串行。
-- 全市场前置漏斗先按 `playbooks/all-a-goal-execution.md` 执行；范围内每家公司都必须先由 Agent 快速甄别，机器不得先按投资吸引力缩小阅读范围。
-- 快速甄别、正式画像和范围研究均须完整同层批次封存后，再由未参与单公司研究的独立 Agent 横向配置下一层预算；runner 不得按完成顺序继续派发。
-- coverage 或已命中 trigger 的范围先冻结；新增公司或截止时间后的新事件必须创建新批次。
-- runner 只负责执行 JSON 任务，不拥有承保结论权。
-- 每个任务使用带超时的租约。失败公司单独重试，已封存结果不得重写。
-- 盲评、揭示、challenger、仲裁和组合综合使用不同提示词与最小可读范围。
-- v2 旧产物只保留为历史；新生产批次只接受 schema v3，不猜测迁移。
+### Manager screen
 
-## 生产顺序
+- 一批 100—200 家，默认 150。
+- 同一个主 Agent完整浏览 packet，不派发单公司 Agent。
+- 一次提交全批 `pass/watch/send_to_analyst`。
+- 批次只创建 batch、packet、result 及各自 seal。
+- 不设半盲路由 reviewer，不创建 correction cohort。
 
-1. 只有完成深研、结构化主张和证据封存的公司才能进入候选批次。
-2. 程序冻结候选并从旧主张生成不含评级、合理价和仓位的脱敏包。
-3. 独立 agent 提交 v3 盲评：只含事实、会计处理、风险、估值、证据账本和可复算回报模型，不得提交承保状态、排名或预期回报结论。
-4. 程序验证证据账本并执行会计、正常化盈利、估值、安全边际和风险升级规则；揭示 agent 只记录与旧研究的差异。
-5. 程序做一次临时跨公司排序，把当前可能进入前五大仓位的候选与其他规则触发项送入完全独立 challenger。
-6. 仲裁 agent 只重建最终事实和假设。程序再次执行全部规则；无可靠共识时不通过。
-7. 程序生成单公司候选；单公司 agent 不得提供 `portfolio_eligible`、`rank_score`、`expected_annual_return` 或操作。
-8. 公司全部终态后封存最新行情。程序根据未来逐年每股现金分配和终值，按每一个最新价格重算 IRR、距12%门槛差值和12%激活价，再构建组合。
-9. 严格验证批次、公司资产、coverage 和派生文件后才发布结果。
+### 单公司研究与承保
+
+- 只有 `send_to_analyst` 后才一家公司一个研究员 Agent。
+- 公司之间可并行，公司内阶段串行。
+- 研究员只解决决定性问题并提交自己的 package，不写共享 coverage。
+- 深研后的 blind review、reveal、challenger、仲裁和组合综合使用不同角色与最小可读范围。
+
+## 调度顺序
+
+1. 主 Agent冻结 scope 和 manager-screen batch。
+2. 主 Agent亲自完成整批初筛并物化 coverage。
+3. runner 只派发 `quick_profile,status=pending` 的少数候选。
+4. 研究员失败只重试该公司；已封存结果不得重写。
+5. 主 Agent比较同层结果，决定停止、补证或深研。
+6. 深研完成后程序冻结承保候选并生成脱敏包。
+7. 独立 reviewer 重建事实、会计、风险、估值和证据账本。
+8. 重大分歧、高风险或潜在大仓位进入 challenger；无可靠共识不通过。
+9. 公司承保终态后封存最新行情并进行组合综合。
+
+## 租约与恢复
+
+- 单公司任务使用带超时租约；只有确实失效后才释放。
+- 同一 symbol 同时只能有一个可变任务所有者。
+- result 已封存但 coverage 未写回时，主 Agent重放正式命令修复。
+- runner 不拥有承保、晋级或组合结论权。
+
+## 命令
 
 ```bash
-python -m trading_os review create <run-id> --scope-type custom --market CN --description "批次" --candidates <candidates.json>
-python -m trading_os review prepare <run-id>
-python automation/scripts/review_dispatch.py <run-id> --runner <agent-runner> --concurrency 4
-python -m trading_os review validate <run-id> --strict
-python -m trading_os review synthesize <run-id> --quotes <quotes.json>
-python -m trading_os review report <run-id>
+python -m trading_os coverage manager-screen-freeze <run-id> <batch-id>
+python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
+python -m trading_os coverage manager-screen-status <run-id>
+
+python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
+python -m trading_os coverage profile-release --agent <agent-id> --symbol CN:000000 --failure-reason <reason>
+python -m trading_os coverage profile-status <cycle-id>
+
+python -m trading_os review create <review-id> --scope-type custom --market CN --description "批次" --candidates <candidates.json>
+python -m trading_os review prepare <review-id>
+python automation/scripts/review_dispatch.py <review-id> --runner <agent-runner> --concurrency 4
+python -m trading_os review validate <review-id> --strict
+python -m trading_os review synthesize <review-id> --quotes <quotes.json>
+python -m trading_os review report <review-id>
 ```
+
+旧 `triage-claim/record` 与 `quality-triage-*` 只读兼容，不用于新生产。

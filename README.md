@@ -7,8 +7,8 @@ Trading OS 是一个 Agent 驱动的公司研究、证据管理、独立承保�
 ## 项目边界
 
 - `quant-strategies` 负责因子计算、量化排名、交易策略和回测；它可以提供研究线索，但不是公司获得研究资格的入口闸门。
-- 本项目负责全覆盖接入、Agent 快速甄别、研究预算分配、研究队列、公司深研、封存验证、独立承保和跨公司组合综合。
-- 每家纳入范围的公司都必须先由独立 Agent 看一眼。机器只负责材料准备、触发检测、行政分批、调度和验证，不根据因子、PE、市值或流动性替 Agent 作投资判断。
+- 本项目负责全覆盖接入、投资经理批量初筛、研究预算分配、研究队列、公司深研、封存验证、独立承保和跨公司组合综合。
+- 每家纳入范围的公司都必须由主 Agent 在 manager-screen 批次中看一眼。机器只负责材料准备、触发检测、行政分批、调度和验证，不根据因子、PE、市值或流动性替 Agent 作投资判断。
 
 ## 资产分层
 
@@ -24,9 +24,9 @@ policies/                         版本化研究配置、承保、行业和组�
 
 ## 研究机制
 
-1. 冻结全覆盖或真实触发的 cohort，按稳定行政顺序分批；每家公司由一个独立 Agent 形成可审计的快速简报。
-2. 同一 cohort 全部封存后，由另一个跨公司 Agent 显式配置正式画像预算；程序只校验守恒、容量和约束，不自动做投资排名。
-3. 大多数公司在留下理由、反证和重启触发器后停止购买更多研究信息；少数公司依次获得正式画像、范围研究和完整深研预算。
+1. 冻结全覆盖或真实触发的 scope，按稳定行政顺序生成每批默认 150 家的压缩 dossier。
+2. 同一个主 Agent 作为投资经理完整浏览一批，并逐项提交 `pass`、`watch` 或 `send_to_analyst`；程序只校验守恒、证据和 contract。
+3. 大多数公司在留下理由和重启触发器后停止购买更多研究信息；只有 `send_to_analyst` 的少数公司获得单公司研究员预算。
 4. 完整初研生成不可变中文报告、来源清单和结构化主张。
 5. 独立 Agent 在半盲状态下重建证据、三张桥和三情景价值；结果先封存，再揭示差异。重大分歧触发完全独立的 challenger 和仲裁。
 6. 单公司只能给承保状态；跨公司组合层才决定 `buy_now`、其他操作和仓位。
@@ -42,12 +42,11 @@ python -m trading_os review validate <run-id> --strict
 python -m trading_os review synthesize <run-id> --quotes <quotes.json>
 python -m trading_os review report <run-id>
 python -m trading_os coverage validate
-python -m trading_os coverage triage-freeze <cycle-id> --queue-status requires_rebaseline --symbols-file <scope-derived-symbols.json>
-python -m trading_os coverage triage-claim <cycle-id> --agent <agent-id>
-python -m trading_os coverage triage-record --input <rapid-triage.json>
-python -m trading_os coverage triage-status <cycle-id>
-python -m trading_os coverage triage-compare <cycle-id>
-python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage scope-status <run-id>
+python -m trading_os coverage manager-screen-freeze <run-id> <batch-id> --batch-size 150
+python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
+python -m trading_os coverage manager-screen-status <run-id>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>
 python -m trading_os coverage record-profile --input <quick-profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
@@ -58,4 +57,4 @@ python -m trading_os schedule build
 python -m trading_os alerts build
 ```
 
-`triage-freeze` 示例假定 scope-to-queue intake 已把本批公司守恒归一为兼容状态；它本身不证明全市场范围完整。详细流程见 `playbooks/`。价格提醒是复核触发器，不是自动交易指令。
+旧 `triage-*` 与 `quality-triage-*` 命令仅为已封存历史资产兼容保留，不用于新 Goal。详细流程见 `playbooks/`。价格提醒是复核触发器，不是自动交易指令。

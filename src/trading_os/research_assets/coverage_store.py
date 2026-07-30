@@ -44,6 +44,7 @@ QUEUE_STATUSES = {
     "needs_review",
 }
 TASK_TYPES = {
+    "manager_screen",
     "rapid_triage",
     "quick_profile",
     "targeted_followup",
@@ -61,6 +62,7 @@ BUDGETED_TASK_TYPES = {
     "deep_research",
 }
 PRE_REPORT_TASK_TYPES = {
+    "manager_screen",
     "rapid_triage",
     "quick_profile",
     "targeted_followup",
@@ -389,6 +391,21 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
                 ) from exc
     status["scope_quality_audits"] = quality_scopes
     status["triage_quality_audits"] = quality_cycles
+    manager_screen_runs = []
+    manager_screen_root = base / "manager-screen"
+    if manager_screen_root.is_dir():
+        from .manager_screening import ManagerScreeningError, manager_screen_status
+
+        for run_dir in sorted(path for path in manager_screen_root.iterdir() if path.is_dir()):
+            try:
+                manager_screen_runs.append(
+                    manager_screen_status(root=base, run_id=run_dir.name)
+                )
+            except ManagerScreeningError as exc:
+                raise CoverageValidationError(
+                    f"manager-screen validation failed for {run_dir.name}: {exc}"
+                ) from exc
+    status["manager_screen_runs"] = manager_screen_runs
     return status
 
 
@@ -434,6 +451,10 @@ def enqueue_research(
 ) -> Path:
     ticker = _ticker_from_symbol(symbol)
     next_actions = {
+        "manager_screen": (
+            "等待同一投资经理 Agent 在批次内统一完成 pass、watch 或 "
+            "send_to_analyst 判断；不得启动单公司初筛 Agent。"
+        ),
         "rapid_triage": (
             "在15分钟预算内完成快速甄别；封存后等待全批次横向比较，"
             "不得按完成顺序直接晋级正式画像。"

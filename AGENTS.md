@@ -1,41 +1,72 @@
 # Trading OS Agent Guide
 
-本仓库的事实源是 `research/companies/` 下的单公司不可变时间线；跨公司操作事实源是 `research/batches/` 下的封存模型组合。
+本仓库有两类事实源：
+
+- 单公司正式研究从研究员阶段开始，写入 `research/companies/` 的不可变时间线；`meta.json` 是唯一可变公司状态。
+- 全市场初筛写入 `coverage/cn-a/manager-screen/` 的不可变批次。初筛不为每家公司制造 Markdown 报告。
+
+跨公司承保与组合事实源仍位于 `research/batches/` 和 `automation/runs/`。
+
+## 角色模型
+
+- 主 Agent 是投资经理：冻结范围、浏览整批压缩 dossier、统一判断研究价值、配置研究预算并维护共享状态。
+- 初筛每批默认 150 家，由同一个主 Agent 完整判断；不得为初筛派发“一家公司一个 Agent”。
+- 只有 `send_to_analyst` 才交给单公司研究员。研究员一次只处理一家公司，只回答投资经理列出的决定性问题。
+- 深研完成后才购买独立承保、challenger 和组合综合预算。承保 reviewer 不代写研究。
+- 单公司层不得输出 `buy_now`、组合操作或仓位；只有组合层可以。
 
 ## 核心规则
 
-- 每次研究新增报告，不覆盖历史判断；`meta.json` 是唯一可变公司状态。
-- 报告默认使用中文，并在头部记录真实工具和模型。
-- 单公司研究或单公司复核 agent 一次只处理一家公司。跨公司 allocation、质量统计和组合综合是独立角色，只读取已封存的单公司产物，不代写单公司研究。
-- 初研必须同时生成结构化主张和来源清单；封存后才能进入独立承保。
-- 半盲 agent 不能读取此前结论性答案；独立评估封存验证通过后才能揭示。
-- 重大分歧、高风险或潜在前五大仓位触发完全独立的 challenger；没有可靠共识时不通过。
-- 单公司结果只表示承保状态。只有组合层可给 `buy_now`、其他操作和仓位。
-- 验证通过后才更新公司状态和 coverage 队列；批次末尾运行 reconcile 检查漂移。
-- 跳过公司必须给结构化硬理由，不得因规模小、流动性低或暂时亏损静默丢弃。
-- 全覆盖工作必须让范围内每家公司先经独立 agent 快速甄别；机器排序只能决定行政处理顺序，不能决定谁有资格被看。
-- 快速甄别也是公司不可变时间线的一部分。当前停止继续研究必须记录证据、反证和 schedule/alerts 可消费的重启触发器。
-- 同一层完整封存后，才由未参与单公司研究的独立 agent 横向配置下一层预算；程序不得按旧 priority、完成顺序或机械分数自动晋级。
-- 单公司 agent 只产出自己的封存 package，不直接改共享 coverage JSONL；根 agent 通过正式 workflow 串行回写，遇到 coverage 写锁占用时等待并重试。
+- 每次正式研究新增报告，不覆盖历史判断；报告默认中文，并记录真实工具和模型。
+- 初研必须同时生成结构化主张和来源清单，封存后才能进入独立承保。
+- 半盲 reviewer 不能读取此前结论性答案；完全独立 challenger 用于重大风险、重大分歧或潜在前五大仓位。
+- 验证通过后才更新公司状态和 coverage；批次末尾运行 reconcile。
+- 不得因市值小、流动性低、暂时亏损、负 PE 或行业冷门静默丢弃公司。
+- 程序化快照只能准备材料和确定行政顺序，不得直接决定 `pass`、`watch`、`send_to_analyst` 或组合操作。
+- 初筛的 `pass` / `watch` 必须记录理由、决定性问题、证据引用和可执行重启条件。
+- 路由观点差异是校准信号，不自动视为错误。初筛 material error 仅包括证券身份错误、可核验事实错误、重大风险遗漏和 contract 违规。
+- 初筛禁止 correction 套 correction。研究员发现 material error 时，由投资经理在后续正式研究或一次显式裁决中更正，不重启递归 reviewer 链。
+- 旧 rapid-triage、quality-triage、triage-compare/finalize 代码和 Cycle 001/002 资产仅为历史验证兼容保留；新 Goal 不得使用。
+- 所有共享 coverage 写入必须走正式 workflow 和 coverage 写锁；单公司 Agent 不直接编辑 JSONL。
 
 ## 目录
 
 ```text
+coverage/cn-a/manager-screen/{RUN_ID}/{BATCH_ID}/
+  batch.json
+  packet.json
+  result.json
+
 research/companies/{MARKET}/{TICKER}/
   meta.json
   reports/
   evidence/
   underwriting/{REVIEW_ID}/
 
+research/archives/
 research/batches/{RUN_ID}/
 automation/runs/{RUN_ID}/
-coverage/
 policies/
 ```
 
-## 大批量研究
+## 全 A 股长程工作
 
-全 A 股长程工作先读 `playbooks/all-a-goal-execution.md`，再按 `playbooks/research-capital-allocation.md` 和 `playbooks/screening.md` 逐层配置研究预算；可直接引用 `prompts/goals/cn-all-a-continuous-research.md` 启动长期 Goal。程序化快照只能准备材料，不能剥夺公司被 Agent 快速查看的资格，也不能直接晋级正式画像、深研或承保。行业或主题批次同样先冻结范围，再一家公司一个 Agent 独立研究。调度遵循 `playbooks/batch-dispatch.md`，组合综合遵循 `playbooks/portfolio-synthesis.md`。
+先读：
+
+1. `playbooks/all-a-goal-execution.md`
+2. `playbooks/screening.md`
+3. `playbooks/research-capital-allocation.md`
+4. `playbooks/batch-dispatch.md`
+5. `playbooks/portfolio-synthesis.md`
+
+可引用 `prompts/goals/cn-all-a-continuous-research.md` 启动长期 Goal。初筛命令：
+
+```bash
+python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp>
+python -m trading_os coverage manager-screen-freeze <run-id> <batch-id>
+python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
+python -m trading_os coverage manager-screen-status <run-id>
+```
 
 ## 验证命令
 

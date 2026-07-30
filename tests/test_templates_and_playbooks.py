@@ -86,7 +86,7 @@ def test_portfolio_template_lists_every_required_user_decision_field():
         assert phrase in text
 
 
-def test_docs_lock_adaptive_funnel_half_blind_sealing_and_two_level_decisions():
+def test_docs_lock_manager_screen_funnel_and_half_blind_underwriting():
     screening = _read("playbooks/screening.md")
     allocation = _read("playbooks/research-capital-allocation.md")
     underwriting = _read("playbooks/underwriting-review.md")
@@ -94,30 +94,30 @@ def test_docs_lock_adaptive_funnel_half_blind_sealing_and_two_level_decisions():
     portfolio = _read("playbooks/portfolio-synthesis.md")
 
     for phrase in (
-        "冻结普通 A 股 universe",
-        "每家公司独立 rapid triage",
-        "跨公司 Agent 配置正式画像预算",
-        "行政排序",
-        "不得使用市场估值",
+        "同一投资经理 Agent",
+        "行政 intake",
+        "不得用于剥夺初筛资格",
+        "send_to_analyst",
+        "禁止 correction 套 correction",
     ):
         assert phrase in screening
-    for phrase in ("最多 40", "最多 15", "最多 6", "最多 3"):
+    for phrase in ("默认每批 150", "约 1.5 小时", "约 4 小时", "约 24 小时"):
         assert phrase in allocation
     assert "半盲两阶段" in underwriting
     assert "SHA-256 封存" in underwriting
     assert "challenger 不能读取此前研究和第一份评估" in underwriting
-    assert "一家公司一个独立 agent" in batch
-    assert "公司之间并行，公司内阶段串行" in batch
+    assert "同一个主 Agent完整浏览 packet" in batch
+    assert "只有 `send_to_analyst` 后才一家公司一个研究员 Agent" in batch
     assert "单公司只能承保通过或不通过" in portfolio
     assert "组合层才能给 `buy_now`" in portfolio
-    assert "事件性冲击与危机错杀" in screening
+    assert "正常化盈利与现金转换" in screening
     assert "不得无说明地同时" in underwriting
     assert "高优先级近门槛观察" in portfolio
-    assert "研究时间本身也是资本" in allocation
-    assert "不能直接把公司晋级为深研" in allocation
-    assert "假阴性抽查" in allocation
-    assert "L2、L3 同样先完成同层 cohort" in allocation
-    assert "完成顺序不是投资质量" in allocation
+    assert "研究时间本身是资本" in allocation
+    assert "初筛不使用机械分数" in allocation
+    assert "路由分歧不自动等于事实错误" in screening
+    assert "研究员不自行决定深研或组合操作" in allocation
+    assert "容量是上限，不是配额" in allocation
 
 
 def test_readme_and_agents_only_document_v2_boundaries_and_commands():
