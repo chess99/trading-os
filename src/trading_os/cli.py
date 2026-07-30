@@ -43,8 +43,10 @@ from .research_assets.migration import (
 from .research_assets.models import PolicyValidationError, load_policy
 from .research_assets.portfolio import PortfolioValidationError
 from .research_assets.profile_workflow import (
+    build_profile_comparison_packet,
     claim_profile_task,
     finalize_profile_stage,
+    finalize_profile_stage_with_agent_decisions,
     profile_cycle_status,
     record_profile_package,
     release_profile_task,
@@ -665,9 +667,46 @@ def build_parser() -> argparse.ArgumentParser:
     _add_timestamp(profile_release)
     profile_release.set_defaults(func=cmd_coverage_profile_release)
 
+    profile_compare = coverage_sub.add_parser(
+        "profile-compare",
+        help="Seal a score-free L2/L3 packet for an independent Agent",
+    )
+    _add_coverage_root(profile_compare)
+    profile_compare.add_argument("cycle_id")
+    profile_compare.add_argument(
+        "--stage",
+        required=True,
+        choices=["quick_profile", "scoped_research"],
+    )
+    _add_timestamp(profile_compare)
+    profile_compare.set_defaults(func=cmd_coverage_profile_compare)
+
+    profile_select = coverage_sub.add_parser(
+        "profile-select",
+        help="Apply an independent Agent's full L2/L3 allocation decisions",
+    )
+    _add_coverage_root(profile_select)
+    profile_select.add_argument("cycle_id")
+    profile_select.add_argument(
+        "--stage",
+        required=True,
+        choices=["quick_profile", "scoped_research"],
+    )
+    profile_select.add_argument(
+        "--decisions",
+        required=True,
+        help="Independent Agent decision package bound to comparison_sha256",
+    )
+    profile_select.add_argument(
+        "--policy",
+        default="policies/research-allocation.json",
+    )
+    _add_timestamp(profile_select)
+    profile_select.set_defaults(func=cmd_coverage_profile_select)
+
     profile_finalize = coverage_sub.add_parser(
         "profile-finalize",
-        help="Compare a complete quick/scoped cohort before promoting research",
+        help="Legacy score-based profile allocation; do not use for new Goals",
     )
     _add_coverage_root(profile_finalize)
     profile_finalize.add_argument("cycle_id")
@@ -1423,6 +1462,32 @@ def cmd_coverage_profile_release(ns: argparse.Namespace) -> int:
         symbol=ns.symbol,
         failure_reason=ns.failure_reason,
         released_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_compare(ns: argparse.Namespace) -> int:
+    payload = build_profile_comparison_packet(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        stage=ns.stage,
+        created_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_select(ns: argparse.Namespace) -> int:
+    policy = load_policy(ns.policy)
+    decisions = json.loads(Path(ns.decisions).read_text(encoding="utf-8"))
+    payload = finalize_profile_stage_with_agent_decisions(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        stage=ns.stage,
+        policy=policy.payload,
+        decisions=decisions,
+        finalized_at=_timestamp(ns.at),
     )
     _write_success({"ok": True, **payload})
     return 0

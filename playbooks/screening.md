@@ -96,5 +96,6 @@ python -m trading_os coverage reconcile --check
 ```
 
 历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 只用于兼容旧资产，禁止作为新 Goal 的生产晋级入口。
+正式画像与范围研究层使用 `profile-compare` 生成不含 score/priority/rank 的封存 packet，独立横向 Agent 对完整 cohort 逐项提交 decisions，再由 `profile-select` 校验容量、风险簇、独立 provenance 并幂等物化下一层预算。
 
 每个快速简报验证通过后立即发布到对应公司不可变时间线，再更新队列；批次末尾的 reconcile 是漂移安全网，不是正常状态传播机制。

@@ -104,10 +104,10 @@
 - L4 只有证据、估值与反证完整，且相对其他机会仍有竞争力时，才购买独立承保预算。
 - 单公司任何层级都不得给最终买入与仓位；只有组合层可以。
 
-当前代码只在 rapid-triage → quick-profile 层实现了上述独立 decisions 契约；历史
-`profile-finalize` 仍使用 score/priority 机械选择。它只可用于兼容旧资产，不符合新增长程
-Goal 的晋级要求。长程执行在跨过 L2 或 L3 前，必须先把对应层迁移为 sealed comparison
-packet、独立 Agent 全量 decisions 和可恢复物化，并完成故障注入试运行。
+rapid-triage → quick-profile 使用 `triage-compare` / `triage-finalize`；L2/L3 使用
+`profile-compare` / `profile-select`。两组入口都先封存无评分 comparison packet，再校验
+独立 Agent 对完整 cohort 的逐公司 decisions、容量、保守未分类风险簇上限和 provenance，
+最后幂等物化下一层预算。历史 `profile-finalize` 仍只用于兼容旧资产。
 
 ## 命令
 
@@ -133,6 +133,8 @@ python -m trading_os coverage record-profile --input <quick-profile-package.json
 python -m trading_os coverage profile-status <cycle-id>
 python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage profile-release --agent <agent-id> --symbol CN:000000 --failure-reason <reason>
+python -m trading_os coverage profile-compare <cycle-id> --stage quick_profile|scoped_research
+python -m trading_os coverage profile-select <cycle-id> --stage quick_profile|scoped_research --decisions <agent-decisions.json>
 ```
 
 历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 只为旧资产兼容保留，不得用于新增长程 Goal。

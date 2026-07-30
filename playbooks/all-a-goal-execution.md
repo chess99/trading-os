@@ -111,6 +111,8 @@ python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-deci
 python -m trading_os coverage profile-claim --agent <agent-id>
 python -m trading_os coverage record-profile --input <profile-package.json>
 python -m trading_os coverage profile-status <cycle-id>
+python -m trading_os coverage profile-compare <cycle-id> --stage quick_profile|scoped_research
+python -m trading_os coverage profile-select <cycle-id> --stage quick_profile|scoped_research --decisions <agent-decisions.json>
 
 python -m trading_os assets validate
 python -m trading_os coverage validate
@@ -120,7 +122,7 @@ python -m trading_os schedule build
 python -m trading_os alerts build
 ```
 
-上面的 `triage-freeze` 只能在 scope-to-queue intake 已经把该小批次归一为兼容状态后使用。历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 不得用于新 Goal；L2/L3 的独立 decisions 新入口尚未建设，必须先完成迁移与试运行。
+上面的 `triage-freeze` 只能在 scope-to-queue intake 已经把该小批次归一为兼容状态后使用。历史 `allocate-research`、`apply-allocation` 和 `profile-finalize` 不得用于新 Goal；L2/L3 必须使用 `profile-compare` 封存无评分 packet，再由未参与单公司研究的独立 Agent 提交全量 decisions，最后通过 `profile-select` 校验并可恢复物化。
 
 新 Goal 的生产 cohort 使用 schema v3：必须同时绑定已通过的 scope identity audit
 result 和该审计的 policy snapshot。schema v1/v2 仍可读取历史，但不能作为新 Goal 的

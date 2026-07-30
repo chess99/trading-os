@@ -34,6 +34,21 @@ PACKAGE_KEYS = {
     "sources",
 }
 PROVENANCE_KEYS = {"agent", "model", "tools", "generated_at"}
+PROFILE_DECISION_PACKAGE_KEYS = {
+    "schema_version",
+    "cycle_id",
+    "evaluated_stage",
+    "comparison_sha256",
+    "decisions",
+    "provenance",
+}
+PROFILE_DECISION_KEYS = {
+    "symbol",
+    "decision",
+    "reason",
+    "decisive_question",
+    "counterevidence_considered",
+}
 ANALYSIS_KEYS = {
     "business_summary",
     "owner_earnings_and_cycle",
@@ -668,6 +683,301 @@ def _profile_record_result(
     }
 
 
+def build_profile_comparison_packet(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    stage: str,
+    created_at: dt.datetime,
+) -> dict[str, Any]:
+    """Seal a score-free L2/L3 packet for an independent allocation Agent."""
+
+    _require_aware_datetime(created_at, "created_at")
+    cycle = _text(cycle_id, "cycle_id")
+    if not CYCLE_RE.fullmatch(cycle):
+        raise ResearchAllocationError("cycle_id is invalid")
+    config = _profile_stage_config(stage)
+    base = Path(root)
+    repository_root = base.parent.parent
+    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    binding, binding_sha, cohort = _complete_profile_cohort(
+        queue,
+        repository_root=repository_root,
+        cycle=cycle,
+        stage=stage,
+        binding_field=config["binding_field"],
+    )
+    comparison_path = base / "profiles" / cycle / config["comparison_name"]
+    relative = comparison_path.relative_to(repository_root).as_posix()
+    if comparison_path.exists():
+        sealed = verify_sealed(comparison_path)
+        if sealed.artifact_type != f"{stage}_comparison_packet":
+            raise ResearchAllocationError(
+                f"sealed {stage} comparison has the wrong artifact type"
+            )
+        payload = json.loads(comparison_path.read_text(encoding="utf-8"))
+        expected = {
+            "cycle_id": cycle,
+            "evaluated_stage": stage,
+            "predecessor_selection_path": binding,
+            "predecessor_selection_sha256": binding_sha,
+        }
+        if any(payload.get(key) != value for key, value in expected.items()):
+            raise ResearchAllocationError(
+                f"sealed {stage} comparison conflicts with cycle binding"
+            )
+        return _profile_comparison_result(
+            payload,
+            comparison_path=relative,
+            comparison_sha256=sealed.sha256,
+            idempotent=True,
+        )
+
+    rows = [
+        _profile_comparison_row(
+            item,
+            ordinal=ordinal,
+            cycle=cycle,
+            stage=stage,
+            repository_root=repository_root,
+        )
+        for ordinal, item in enumerate(cohort, 1)
+    ]
+    payload = {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "evaluated_stage": stage,
+        "next_stage": config["next_stage"],
+        "predecessor_selection_path": binding,
+        "predecessor_selection_sha256": binding_sha,
+        "created_at": created_at.isoformat(),
+        "cohort_count": len(rows),
+        "principle": (
+            "Every company in the complete sealed stage cohort is shown in frozen "
+            "predecessor order. The packet contains no programmatic investment "
+            "score, priority, or ranking."
+        ),
+        "rows": rows,
+        "portfolio_action": None,
+    }
+    sealed = seal_json(
+        comparison_path,
+        payload,
+        artifact_type=f"{stage}_comparison_packet",
+        sealed_at=created_at,
+    )
+    return _profile_comparison_result(
+        payload,
+        comparison_path=relative,
+        comparison_sha256=sealed.sha256,
+        idempotent=False,
+    )
+
+
+@serialized_coverage_write
+def finalize_profile_stage_with_agent_decisions(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    stage: str,
+    policy: Mapping[str, Any],
+    decisions: Mapping[str, Any],
+    finalized_at: dt.datetime,
+) -> dict[str, Any]:
+    """Grant L3/L4 budget from an independent Agent's explicit full decisions."""
+
+    _require_aware_datetime(finalized_at, "finalized_at")
+    cycle = _text(cycle_id, "cycle_id")
+    if not CYCLE_RE.fullmatch(cycle):
+        raise ResearchAllocationError("cycle_id is invalid")
+    config = _profile_stage_config(stage)
+    base = Path(root)
+    repository_root = base.parent.parent
+    queue_path = base / RESEARCH_QUEUE_FILE
+    screening_path = base / SCREENING_FILE
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+    binding, binding_sha, cohort = _complete_profile_cohort(
+        queue,
+        repository_root=repository_root,
+        cycle=cycle,
+        stage=stage,
+        binding_field=config["binding_field"],
+    )
+    comparison_path = base / "profiles" / cycle / config["comparison_name"]
+    if not comparison_path.exists():
+        raise ResearchAllocationError(
+            f"{stage} comparison packet is missing; run profile-compare first"
+        )
+    sealed_comparison = verify_sealed(comparison_path)
+    if sealed_comparison.artifact_type != f"{stage}_comparison_packet":
+        raise ResearchAllocationError(
+            f"sealed {stage} comparison has the wrong artifact type"
+        )
+    comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+    if (
+        comparison.get("cycle_id") != cycle
+        or comparison.get("evaluated_stage") != stage
+        or comparison.get("predecessor_selection_path") != binding
+        or comparison.get("predecessor_selection_sha256") != binding_sha
+    ):
+        raise ResearchAllocationError(
+            f"{stage} comparison packet does not match cohort binding"
+        )
+    comparison_rows = comparison.get("rows")
+    if not isinstance(comparison_rows, list) or not all(
+        isinstance(row, Mapping) for row in comparison_rows
+    ):
+        raise ResearchAllocationError(f"{stage} comparison rows are invalid")
+    if len(comparison_rows) != len(cohort):
+        raise ResearchAllocationError(f"{stage} comparison cohort count is invalid")
+    normalized = _normalize_profile_decision_package(
+        decisions,
+        cycle=cycle,
+        stage=stage,
+        comparison_sha256=sealed_comparison.sha256,
+        comparison_rows=comparison_rows,
+        finalized_at=finalized_at,
+    )
+    if _datetime(
+        normalized["provenance"]["generated_at"],
+        "decision.provenance.generated_at",
+    ) < _datetime(comparison.get("created_at"), "comparison.created_at"):
+        raise ResearchAllocationError(
+            "profile allocation decisions cannot predate the sealed comparison"
+        )
+    research_agents = {
+        row.get("research_agent")
+        for row in comparison_rows
+        if isinstance(row.get("research_agent"), str)
+    }
+    if normalized["provenance"]["agent"] in research_agents:
+        raise ResearchAllocationError(
+            "cross-company profile allocation Agent must be independent of "
+            "company research Agents"
+        )
+
+    next_stage = config["next_stage"]
+    select_decision = config["select_decision"]
+    selected_symbols = [
+        row["symbol"]
+        for row in normalized["decisions"]
+        if row["decision"] == select_decision
+    ]
+    capacity = _stage_capacity(policy, next_stage)
+    if capacity is None:
+        raise ResearchAllocationError(f"stage capacity is invalid: {next_stage}")
+    if len(selected_symbols) > capacity:
+        raise ResearchAllocationError(
+            f"Agent decisions exceed {next_stage} capacity: "
+            f"{len(selected_symbols)} > {capacity}"
+        )
+    risk_cap = _risk_cluster_cap(policy, next_stage)
+    if len(selected_symbols) > risk_cap:
+        raise ResearchAllocationError(
+            "Agent decisions exceed the conservative unclassified risk-cluster "
+            f"cap for {next_stage}: {len(selected_symbols)} > {risk_cap}"
+        )
+    budget = _effort_budget(policy, next_stage)
+    selected_set = set(selected_symbols)
+    decisions_by_symbol = {
+        row["symbol"]: row for row in normalized["decisions"]
+    }
+    decision_rows = [
+        {
+            "ordinal": row["ordinal"],
+            "symbol": row["symbol"],
+            "name": row["name"],
+            "selected": row["symbol"] in selected_set,
+            "selection_reason": decisions_by_symbol[row["symbol"]]["reason"],
+            "decisive_question": decisions_by_symbol[row["symbol"]][
+                "decisive_question"
+            ],
+            "counterevidence_considered": decisions_by_symbol[row["symbol"]][
+                "counterevidence_considered"
+            ],
+        }
+        for row in comparison_rows
+    ]
+    selection_path = base / "profiles" / cycle / config["selection_name"]
+    relative_selection = selection_path.relative_to(repository_root).as_posix()
+    payload = {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "evaluated_stage": stage,
+        "next_stage": next_stage,
+        "predecessor_selection_path": binding,
+        "predecessor_selection_sha256": binding_sha,
+        "comparison_path": comparison_path.relative_to(repository_root).as_posix(),
+        "comparison_sha256": sealed_comparison.sha256,
+        "finalized_at": finalized_at.isoformat(),
+        "cohort_count": len(cohort),
+        "eligible_count": len(cohort),
+        "reviewed_count": len(decision_rows),
+        "capacity": capacity,
+        "risk_cluster_cap": risk_cap,
+        "risk_cluster_mode": "conservative_unclassified",
+        "next_stage_effort_budget_hours": budget,
+        "selected_count": len(selected_symbols),
+        "principle": policy.get("comparison_principle"),
+        "agent_decision": normalized,
+        "decisions": decision_rows,
+        # Compatibility view for the existing crash-safe materializer. This is
+        # frozen cohort order and deliberately is not an investment ranking.
+        "ranking": decision_rows,
+        "portfolio_action": None,
+    }
+    existed = selection_path.exists()
+    if existed:
+        sealed_selection = verify_sealed(selection_path)
+        if sealed_selection.artifact_type != f"{stage}_cross_company_selection":
+            raise ResearchAllocationError(
+                f"sealed {stage} selection has the wrong artifact type"
+            )
+        existing = json.loads(selection_path.read_text(encoding="utf-8"))
+        expected_replay = {k: v for k, v in payload.items() if k != "finalized_at"}
+        actual_replay = {
+            k: v for k, v in existing.items() if k != "finalized_at"
+        }
+        if actual_replay != expected_replay:
+            raise ResearchAllocationError(
+                f"sealed {stage} selection conflicts with Agent decisions"
+            )
+        materialization_payload = existing
+    else:
+        sealed_selection = seal_json(
+            selection_path,
+            payload,
+            artifact_type=f"{stage}_cross_company_selection",
+            sealed_at=finalized_at,
+        )
+        materialization_payload = payload
+    updated_screening, updated_queue, screening_changed, queue_changed = (
+        _materialize_profile_selection(
+            screening=screening,
+            queue=queue,
+            payload=materialization_payload,
+            cycle=cycle,
+            stage=stage,
+            next_stage=next_stage,
+            next_binding_field=config["next_binding_field"],
+            selection_path=relative_selection,
+            selection_sha256=sealed_selection.sha256,
+            budget=budget,
+        )
+    )
+    if screening_changed:
+        write_jsonl(screening_path, updated_screening)
+    if queue_changed:
+        write_jsonl(queue_path, updated_queue)
+    return _profile_selection_result(
+        materialization_payload,
+        selection_path=relative_selection,
+        selection_sha256=sealed_selection.sha256,
+        idempotent=existed,
+    )
+
+
 @serialized_coverage_write
 def finalize_profile_stage(
     *,
@@ -1134,6 +1444,298 @@ def _materialize_profile_selection(
     )
 
 
+def _profile_stage_config(stage: str) -> dict[str, str]:
+    configs = {
+        "quick_profile": {
+            "binding_field": "triage_selection_path",
+            "next_stage": "scoped_research",
+            "next_binding_field": "profile_quick_selection_path",
+            "select_decision": "select_scoped_research",
+            "comparison_name": "quick-profile-comparison.json",
+            "selection_name": "quick-profile-selection.json",
+        },
+        "scoped_research": {
+            "binding_field": "profile_quick_selection_path",
+            "next_stage": "deep_research",
+            "next_binding_field": "profile_scoped_selection_path",
+            "select_decision": "select_deep_research",
+            "comparison_name": "scoped-research-comparison.json",
+            "selection_name": "scoped-research-selection.json",
+        },
+    }
+    if stage not in configs:
+        raise ResearchAllocationError(
+            "profile comparison stage must be quick_profile or scoped_research"
+        )
+    return configs[stage]
+
+
+def _complete_profile_cohort(
+    queue: list[dict[str, Any]],
+    *,
+    repository_root: Path,
+    cycle: str,
+    stage: str,
+    binding_field: str,
+) -> tuple[str, str, list[dict[str, Any]]]:
+    anchors = [
+        item
+        for item in queue
+        if item.get("profile_cycle_id") == cycle
+        and _history_completed(item, stage)
+        and isinstance(item.get(binding_field), str)
+    ]
+    if not anchors:
+        raise ResearchAllocationError(
+            f"no recorded {stage} cohort is available for cycle: {cycle}"
+        )
+    bindings = {str(item[binding_field]) for item in anchors}
+    if len(bindings) != 1:
+        raise ResearchAllocationError(
+            f"{stage} cycle spans multiple predecessor selections"
+        )
+    binding = next(iter(bindings))
+    binding_path = repository_root / binding
+    if not binding_path.exists():
+        raise ResearchAllocationError(
+            f"sealed predecessor selection is required for {stage}: {binding}"
+        )
+    sealed_binding = verify_sealed(binding_path)
+    cohort = _bound_profile_cohort(
+        queue,
+        repository_root=repository_root,
+        binding_field=binding_field,
+        binding=binding,
+        stage=stage,
+    )
+    incomplete = [
+        item["symbol"]
+        for item in cohort
+        if item.get("profile_cycle_id") != cycle
+        or not _history_completed(item, stage)
+        or (
+            item.get("task_type") == "targeted_followup"
+            and item.get("preceding_stage") == stage
+            and item.get("status") in {"pending", "running"}
+        )
+    ]
+    if incomplete:
+        raise ResearchAllocationError(
+            "completion-order promotion is forbidden; "
+            f"{stage} cohort is incomplete: {incomplete[:10]}"
+        )
+    predecessor = json.loads(binding_path.read_text(encoding="utf-8"))
+    predecessor_rows = predecessor.get("ranking")
+    if not isinstance(predecessor_rows, list):
+        raise ResearchAllocationError("predecessor selection ranking is invalid")
+    selected_key = (
+        "selected_for_quick_profile" if stage == "quick_profile" else "selected"
+    )
+    order = [
+        row.get("symbol")
+        for row in predecessor_rows
+        if isinstance(row, Mapping) and row.get(selected_key) is True
+    ]
+    by_symbol = {item["symbol"]: item for item in cohort}
+    if len(order) != len(set(order)) or set(order) != set(by_symbol):
+        raise ResearchAllocationError(
+            f"{stage} cohort does not match sealed predecessor selection"
+        )
+    return (
+        binding,
+        sealed_binding.sha256,
+        [by_symbol[str(symbol)] for symbol in order],
+    )
+
+
+def _profile_comparison_row(
+    item: Mapping[str, Any],
+    *,
+    ordinal: int,
+    cycle: str,
+    stage: str,
+    repository_root: Path,
+) -> dict[str, Any]:
+    symbol = str(item["symbol"])
+    profile_relative = _latest_history_path(item, "result_path")
+    evaluation_relative = _latest_history_path(item, "evaluation_path")
+    if not profile_relative or not evaluation_relative:
+        raise ResearchAllocationError(f"profile stage artifacts are missing: {symbol}")
+    profile_path = repository_root / profile_relative
+    evaluation_path = repository_root / evaluation_relative
+    sealed_profile = verify_sealed(profile_path)
+    sealed_evaluation = verify_sealed(evaluation_path)
+    if sealed_profile.artifact_type != "quick_profile_package":
+        raise ResearchAllocationError(f"profile package type is invalid: {symbol}")
+    if sealed_evaluation.artifact_type != "quick_profile_evaluation":
+        raise ResearchAllocationError(f"profile evaluation type is invalid: {symbol}")
+    package = json.loads(profile_path.read_text(encoding="utf-8"))
+    evaluation = json.loads(evaluation_path.read_text(encoding="utf-8"))
+    profile = package.get("profile")
+    analysis = package.get("analysis")
+    evaluated = evaluation.get("evaluation")
+    if (
+        package.get("cycle_id") != cycle
+        or not isinstance(profile, Mapping)
+        or profile.get("symbol") != symbol
+        or profile.get("research_stage") != stage
+        or evaluation.get("cycle_id") != cycle
+        or evaluation.get("symbol") != symbol
+        or not isinstance(analysis, Mapping)
+        or not isinstance(evaluated, Mapping)
+    ):
+        raise ResearchAllocationError(
+            f"profile comparison artifact identity is invalid: {symbol}"
+        )
+    provenance = package.get("provenance")
+    sources = package.get("sources")
+    return {
+        "ordinal": ordinal,
+        "symbol": symbol,
+        "name": item.get("name"),
+        "evaluated_stage": stage,
+        "current_next_stage": evaluated.get("next_stage"),
+        "evaluation_reason_codes": evaluated.get("reason_codes") or [],
+        "profile": dict(profile),
+        "analysis": dict(analysis),
+        "source_count": len(sources) if isinstance(sources, list) else 0,
+        "profile_path": profile_relative,
+        "profile_sha256": sealed_profile.sha256,
+        "evaluation_path": evaluation_relative,
+        "evaluation_sha256": sealed_evaluation.sha256,
+        "research_agent": (
+            provenance.get("agent") if isinstance(provenance, Mapping) else None
+        ),
+    }
+
+
+def _normalize_profile_decision_package(
+    package: Mapping[str, Any],
+    *,
+    cycle: str,
+    stage: str,
+    comparison_sha256: str,
+    comparison_rows: list[Mapping[str, Any]],
+    finalized_at: dt.datetime,
+) -> dict[str, Any]:
+    if (
+        not isinstance(package, Mapping)
+        or set(package) != PROFILE_DECISION_PACKAGE_KEYS
+    ):
+        raise ResearchAllocationError(
+            "profile allocation Agent decision fields do not match contract"
+        )
+    if package.get("schema_version") != 1:
+        raise ResearchAllocationError(
+            "profile allocation Agent decision schema_version must be 1"
+        )
+    if package.get("cycle_id") != cycle or package.get("evaluated_stage") != stage:
+        raise ResearchAllocationError(
+            "profile allocation Agent decisions target the wrong cohort"
+        )
+    if package.get("comparison_sha256") != comparison_sha256:
+        raise ResearchAllocationError(
+            "profile allocation Agent decisions are not bound to the comparison"
+        )
+    provenance = package.get("provenance")
+    if not isinstance(provenance, Mapping) or set(provenance) != PROVENANCE_KEYS:
+        raise ResearchAllocationError(
+            "profile allocation Agent decision provenance is invalid"
+        )
+    generated_at = _datetime(
+        provenance.get("generated_at"), "decision.provenance.generated_at"
+    )
+    if generated_at > finalized_at:
+        raise ResearchAllocationError(
+            "profile allocation Agent decisions cannot be generated in the future"
+        )
+    config = _profile_stage_config(stage)
+    allowed = {config["select_decision"], "defer"}
+    decisions = package.get("decisions")
+    if not isinstance(decisions, list):
+        raise ResearchAllocationError(
+            "profile allocation Agent decisions must be an array"
+        )
+    by_symbol: dict[str, dict[str, Any]] = {}
+    for raw in decisions:
+        if not isinstance(raw, Mapping) or set(raw) != PROFILE_DECISION_KEYS:
+            raise ResearchAllocationError(
+                "one profile allocation Agent decision does not match contract"
+            )
+        symbol = _text(raw.get("symbol"), "decision.symbol")
+        if not re.fullmatch(r"CN:[0-9]{6}", symbol):
+            raise ResearchAllocationError("profile allocation decision symbol is invalid")
+        if symbol in by_symbol:
+            raise ResearchAllocationError(
+                f"duplicate profile allocation Agent decision: {symbol}"
+            )
+        decision = _text(raw.get("decision"), "decision.decision")
+        if decision not in allowed:
+            raise ResearchAllocationError(
+                f"unsupported profile allocation decision: {decision}"
+            )
+        by_symbol[symbol] = {
+            "symbol": symbol,
+            "decision": decision,
+            "reason": _text(raw.get("reason"), "decision.reason"),
+            "decisive_question": _text(
+                raw.get("decisive_question"), "decision.decisive_question"
+            ),
+            "counterevidence_considered": _text_array(
+                raw.get("counterevidence_considered"),
+                "decision.counterevidence_considered",
+                allow_empty=False,
+            ),
+        }
+    symbols = [_text(row.get("symbol"), "comparison.symbol") for row in comparison_rows]
+    if len(symbols) != len(set(symbols)):
+        raise ResearchAllocationError("profile comparison rows contain duplicates")
+    if set(by_symbol) != set(symbols):
+        missing = sorted(set(symbols) - set(by_symbol))
+        extra = sorted(set(by_symbol) - set(symbols))
+        raise ResearchAllocationError(
+            "profile allocation Agent decisions must cover every comparison row "
+            f"exactly once; missing={missing}, extra={extra}"
+        )
+    return {
+        "schema_version": 1,
+        "cycle_id": cycle,
+        "evaluated_stage": stage,
+        "comparison_sha256": comparison_sha256,
+        "decisions": [by_symbol[symbol] for symbol in symbols],
+        "provenance": {
+            "agent": _text(provenance.get("agent"), "decision.provenance.agent"),
+            "model": _text(provenance.get("model"), "decision.provenance.model"),
+            "tools": _text_array(
+                provenance.get("tools"),
+                "decision.provenance.tools",
+                allow_empty=False,
+            ),
+            "generated_at": generated_at.isoformat(),
+        },
+    }
+
+
+def _profile_comparison_result(
+    payload: Mapping[str, Any],
+    *,
+    comparison_path: str,
+    comparison_sha256: str,
+    idempotent: bool,
+) -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "cycle_id": payload["cycle_id"],
+        "evaluated_stage": payload["evaluated_stage"],
+        "next_stage": payload["next_stage"],
+        "cohort_count": payload["cohort_count"],
+        "comparison_path": comparison_path,
+        "comparison_sha256": comparison_sha256,
+        "idempotent": idempotent,
+        "portfolio_action": None,
+    }
+
+
 def _profile_selection_result(
     payload: Mapping[str, Any],
     *,
@@ -1226,15 +1828,61 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
                 verify_sealed(repository_root / relative_path)
             except ValueError as exc:
                 invalid.append({"symbol": item["symbol"], "error": f"{label}:{exc}"})
+    stage_gates: dict[str, dict[str, Any]] = {}
+    for stage in ("quick_profile", "scoped_research"):
+        config = _profile_stage_config(stage)
+        comparison_path = base / "profiles" / cycle / config["comparison_name"]
+        selection_path = base / "profiles" / cycle / config["selection_name"]
+        comparison_sealed = False
+        selection_finalized = False
+        if comparison_path.exists():
+            try:
+                sealed = verify_sealed(comparison_path)
+                comparison_sealed = sealed.artifact_type == f"{stage}_comparison_packet"
+                if not comparison_sealed:
+                    invalid.append(
+                        {
+                            "symbol": "__cycle__",
+                            "error": f"{stage}_comparison_artifact_type",
+                        }
+                    )
+            except ValueError as exc:
+                invalid.append(
+                    {"symbol": "__cycle__", "error": f"{stage}_comparison:{exc}"}
+                )
+        if selection_path.exists():
+            try:
+                sealed = verify_sealed(selection_path)
+                selection_finalized = (
+                    sealed.artifact_type == f"{stage}_cross_company_selection"
+                )
+                if not selection_finalized:
+                    invalid.append(
+                        {
+                            "symbol": "__cycle__",
+                            "error": f"{stage}_selection_artifact_type",
+                        }
+                    )
+            except ValueError as exc:
+                invalid.append(
+                    {"symbol": "__cycle__", "error": f"{stage}_selection:{exc}"}
+                )
+        stage_gates[stage] = {
+            "comparison_sealed": comparison_sealed,
+            "selection_finalized": selection_finalized,
+        }
+    remaining_count = len({item["symbol"] for item in cohort} - recorded_symbols)
     return {
         "schema_version": 1,
         "cycle_id": cycle,
         "allocation_sha256": allocation_sha,
         "cohort_count": len(cohort),
         "recorded_count": len(recorded),
-        "remaining_count": len({item["symbol"] for item in cohort} - recorded_symbols),
+        "remaining_count": remaining_count,
         "by_next_stage": dict(sorted(stage_counts.items())),
         "by_queue_status": dict(sorted(status_counts.items())),
+        "comparison_ready": remaining_count == 0 and not invalid,
+        "stage_gates": stage_gates,
         "invalid_artifact_count": len(invalid),
         "invalid_artifacts": invalid,
     }

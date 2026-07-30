@@ -228,6 +228,132 @@ def test_record_profile_waits_for_comparison_then_advances_to_scoped(tmp_path: P
     assert status["invalid_artifact_count"] == 0
 
 
+def test_agent_profile_comparison_is_score_free_and_controls_budget(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        build_profile_comparison_packet,
+        finalize_profile_stage_with_agent_decisions,
+        record_profile_package,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import seal_json, verify_sealed
+
+    _coverage(tmp_path)
+    predecessor_path = (
+        tmp_path / "coverage" / "cn-a" / "triage" / "test" / "selection.json"
+    )
+    seal_json(
+        predecessor_path,
+        {
+            "schema_version": 1,
+            "cycle_id": "test",
+            "ranking": [
+                {
+                    "ordinal": 1,
+                    "symbol": "CN:600519",
+                    "selected_for_quick_profile": True,
+                }
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="rapid_triage_cross_company_selection",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=2),
+    )
+    record_profile_package(
+        _package(),
+        root=tmp_path / "coverage" / "cn-a",
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    comparison = build_profile_comparison_packet(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        created_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    packet_path = tmp_path / comparison["comparison_path"]
+    assert verify_sealed(packet_path).artifact_type == "quick_profile_comparison_packet"
+    packet = json.loads(packet_path.read_text(encoding="utf-8"))
+    assert packet["cohort_count"] == 1
+    assert packet["rows"][0]["symbol"] == "CN:600519"
+    assert "rank" not in packet["rows"][0]
+    assert "priority" not in packet["rows"][0]
+    assert "profile_priority_score" not in packet["rows"][0]
+
+    decisions = {
+        "schema_version": 1,
+        "cycle_id": "2026-07-26-test-cycle",
+        "evaluated_stage": "quick_profile",
+        "comparison_sha256": comparison["comparison_sha256"],
+        "decisions": [
+            {
+                "symbol": "CN:600519",
+                "decision": "select_scoped_research",
+                "reason": "增量研究可解决现金收益归属并改变组合候选判断。",
+                "decisive_question": "普通股正常化现金收益能否支撑目标回报？",
+                "counterevidence_considered": ["需求恶化可能压低利润。"],
+            }
+        ],
+        "provenance": {
+            "agent": "/root/profile-allocation",
+            "model": "test-model",
+            "tools": ["sealed comparison packet"],
+            "generated_at": (RECORDED_AT + dt.timedelta(minutes=2)).isoformat(),
+        },
+    }
+    not_independent = copy.deepcopy(decisions)
+    not_independent["provenance"]["agent"] = "/root/test-company"
+    missing = copy.deepcopy(decisions)
+    missing["decisions"] = []
+    with pytest.raises(ResearchAllocationError, match="cover every comparison row"):
+        finalize_profile_stage_with_agent_decisions(
+            root=tmp_path / "coverage" / "cn-a",
+            cycle_id="2026-07-26-test-cycle",
+            stage="quick_profile",
+            policy=_policy(),
+            decisions=missing,
+            finalized_at=RECORDED_AT + dt.timedelta(minutes=3),
+        )
+    with pytest.raises(ResearchAllocationError, match="must be independent"):
+        finalize_profile_stage_with_agent_decisions(
+            root=tmp_path / "coverage" / "cn-a",
+            cycle_id="2026-07-26-test-cycle",
+            stage="quick_profile",
+            policy=_policy(),
+            decisions=not_independent,
+            finalized_at=RECORDED_AT + dt.timedelta(minutes=3),
+        )
+    selected = finalize_profile_stage_with_agent_decisions(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        decisions=decisions,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+    assert selected["selected_symbols"] == ["CN:600519"]
+    selection = json.loads(
+        (tmp_path / selected["selection_path"]).read_text(encoding="utf-8")
+    )
+    assert selection["reviewed_count"] == 1
+    assert selection["risk_cluster_mode"] == "conservative_unclassified"
+    assert selection["agent_decision"] == decisions
+    queue = read_jsonl(tmp_path / "coverage" / "cn-a" / "research_queue.jsonl")
+    assert queue[0]["task_type"] == "scoped_research"
+    assert queue[0]["status"] == "pending"
+    assert queue[0]["effort_budget_hours"] == 4.0
+    repeated = finalize_profile_stage_with_agent_decisions(
+        root=tmp_path / "coverage" / "cn-a",
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        decisions=decisions,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=4),
+    )
+    assert repeated["idempotent"] is True
+
+
 def test_current_triage_selection_excludes_old_unselected_profile_history(
     tmp_path: Path,
 ):
