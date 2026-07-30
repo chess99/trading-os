@@ -349,6 +349,109 @@ def test_major_disagreement_reopens_and_over_threshold_requests_expansion(tmp_pa
     assert payload["reopen_symbols"] == [plan["items"][0]["symbol"]]
 
 
+def test_continuation_expansion_uses_cumulative_sample_without_repeats(
+    tmp_path: Path,
+) -> None:
+    from trading_os.research_assets.quality_audit import (
+        seal_cycle_quality_audit_plan,
+        seal_cycle_quality_audit_result,
+    )
+
+    records = [_cycle_record(index) for index in range(1, 13)]
+    initial = seal_cycle_quality_audit_plan(
+        output_dir=tmp_path / "cycle-quality-initial",
+        audit_id="cycle-audit-cumulative-initial",
+        cycle_id="cycle-cumulative",
+        cohort_path="coverage/cn-a/triage/cycle-cumulative/cohort.json",
+        cohort_sha256="d" * 64,
+        records=records,
+        policy=_policy(),
+        created_at=NOW,
+    )
+    initial_plan = _load_plan(initial["plan_path"])
+    initial_symbols = [item["symbol"] for item in initial_plan["items"]]
+    assert len(initial_symbols) == 2
+
+    continuation = seal_cycle_quality_audit_plan(
+        output_dir=tmp_path / "cycle-quality-continuation",
+        audit_id="cycle-audit-cumulative-round-0002",
+        cycle_id="cycle-cumulative",
+        cohort_path="coverage/cn-a/triage/cycle-cumulative/cohort.json",
+        cohort_sha256="d" * 64,
+        records=records,
+        policy=_policy(),
+        created_at=NOW + dt.timedelta(minutes=1),
+        already_sampled_symbols={"catalog": initial_symbols},
+    )
+    continuation_plan = _load_plan(continuation["plan_path"])
+    continuation_symbols = [item["symbol"] for item in continuation_plan["items"]]
+    assert len(continuation_symbols) == 2
+    assert set(continuation_symbols).isdisjoint(initial_symbols)
+
+    reviews = [
+        _cycle_review(
+            item,
+            disposition="triage_candidate" if index == 0 else "catalog",
+        )
+        for index, item in enumerate(continuation_plan["items"])
+    ]
+    for review in reviews:
+        review["provenance"]["generated_at"] = (
+            NOW + dt.timedelta(minutes=2)
+        ).isoformat()
+    result = seal_cycle_quality_audit_result(
+        plan_path=continuation["plan_path"],
+        reviews=reviews,
+        policy=_policy(),
+        completed_at=NOW + dt.timedelta(minutes=2),
+    )
+    payload = json.loads(Path(result["result_path"]).read_text(encoding="utf-8"))
+    next_symbols = payload["expansion_symbols"]["catalog"]
+    assert len(next_symbols) == 4
+    assert set(next_symbols).isdisjoint(initial_symbols)
+    assert set(next_symbols).isdisjoint(continuation_symbols)
+
+
+def test_full_census_redo_does_not_request_another_redo(tmp_path: Path) -> None:
+    from trading_os.research_assets.quality_audit import (
+        seal_cycle_quality_audit_plan,
+        seal_cycle_quality_audit_result,
+    )
+
+    created = seal_cycle_quality_audit_plan(
+        output_dir=tmp_path / "cycle-quality-full-redo",
+        audit_id="cycle-audit-full-redo",
+        cycle_id="cycle-full-redo",
+        cohort_path="coverage/cn-a/triage/cycle-full-redo/cohort.json",
+        cohort_sha256="e" * 64,
+        records=[_cycle_record(index) for index in range(1, 4)],
+        policy=_policy(),
+        created_at=NOW,
+        force_full_census_strata=["catalog"],
+    )
+    plan = _load_plan(created["plan_path"])
+    reviews = [
+        _cycle_review(item, disposition="triage_candidate")
+        for item in plan["items"]
+    ]
+    result = seal_cycle_quality_audit_result(
+        plan_path=created["plan_path"],
+        reviews=reviews,
+        policy=_policy(),
+        completed_at=NOW + dt.timedelta(minutes=1),
+    )
+    payload = json.loads(Path(result["result_path"]).read_text(encoding="utf-8"))
+    assert payload["status"] == "reopen_required"
+    assert payload["reopen_symbols"] == [
+        "CN:000001",
+        "CN:000002",
+        "CN:000003",
+    ]
+    assert payload["redo_required"] is False
+    assert payload["redo_strata"] == []
+    assert payload["expansion_required"] is False
+
+
 def test_routing_error_semantics_do_not_treat_issuer_risk_as_audit_error(
     tmp_path: Path,
 ) -> None:

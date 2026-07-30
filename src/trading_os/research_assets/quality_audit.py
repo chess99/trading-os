@@ -576,6 +576,10 @@ def seal_cycle_quality_audit_result(
 
     expansion_symbols: dict[str, list[str]] = {}
     redo_strata: list[str] = []
+    plan_strata = {
+        _text(row.get("stratum"), "plan stratum"): row
+        for row in (_mapping(value, "plan stratum") for value in plan["strata"])
+    }
     for stratum, stat in stats.items():
         reviewed = stat["reviewed_count"]
         rate = stat["material_error_count"] / reviewed if reviewed else 0.0
@@ -586,22 +590,53 @@ def seal_cycle_quality_audit_result(
         if not stat["over_threshold"]:
             stat["next_sample_symbols"] = []
             continue
-        ranked = next(row["ranked_symbols"] for row in plan["strata"] if row["stratum"] == stratum)
-        reviewed_symbols = {row["symbol"] for row in rows if row["original_disposition"] == stratum}
-        if len(reviewed_symbols) >= stat["population_count"]:
+        plan_stratum = plan_strata[stratum]
+        if plan_stratum.get("full_census_redo") is True:
+            stat["next_sample_symbols"] = []
+            continue
+        ranked_raw = plan_stratum.get("ranked_symbols")
+        if not isinstance(ranked_raw, Sequence) or isinstance(
+            ranked_raw, (str, bytes)
+        ):
+            raise QualityAuditError(
+                f"plan stratum {stratum} ranked_symbols must be an array"
+            )
+        ranked = [
+            _symbol(value)
+            for value in ranked_raw
+        ]
+        already_sampled_count = _non_negative_int(
+            plan_stratum.get("already_sampled_count", 0),
+            f"plan stratum {stratum} already_sampled_count",
+        )
+        if already_sampled_count > len(ranked):
+            raise QualityAuditError(
+                f"plan stratum {stratum} already_sampled_count exceeds population"
+            )
+        current_reviewed_symbols = {
+            row["symbol"] for row in rows if row["original_disposition"] == stratum
+        }
+        cumulative_reviewed_symbols = set(ranked[:already_sampled_count])
+        cumulative_reviewed_symbols.update(current_reviewed_symbols)
+        if len(cumulative_reviewed_symbols) >= stat["population_count"]:
             redo_strata.append(stratum)
             next_symbols: list[str] = []
         else:
             expansion = normalized_policy["payload"]["expansion"]
+            cumulative_reviewed_count = len(cumulative_reviewed_symbols)
             target = min(
                 stat["population_count"],
                 max(
-                    len(reviewed_symbols) + expansion["minimum_increment"],
-                    len(reviewed_symbols) * expansion["multiplier"],
+                    cumulative_reviewed_count + expansion["minimum_increment"],
+                    cumulative_reviewed_count * expansion["multiplier"],
                 ),
             )
-            next_symbols = [symbol for symbol in ranked if symbol not in reviewed_symbols][
-                : target - len(reviewed_symbols)
+            next_symbols = [
+                symbol
+                for symbol in ranked
+                if symbol not in cumulative_reviewed_symbols
+            ][
+                : target - cumulative_reviewed_count
             ]
             expansion_symbols[stratum] = next_symbols
         stat["next_sample_symbols"] = next_symbols
