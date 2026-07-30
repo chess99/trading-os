@@ -15,54 +15,83 @@
         "sha256": "70103257b29c5316f1cb2eef454915df800fcdbb15719cfcbf51a60351ac5e3e"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-6ee579897c5e.md",
+        "report_id": "CN-000068-2026-07-30-rapid-triage-6ee579897c5e",
+        "report_type": "rapid_triage",
+        "sha256": "964b545aeefce60b3466d4e4e1c15f1b9379c6fad963817fa1d8b99a192bffa4"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-6ee579897c5e.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-6ee579897c5e.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T15:06:10+08:00",
+      "report_id": "CN-000068-2026-07-30-rapid-triage-6ee579897c5e",
+      "report_path": "reports/2026-07-30-rapid-triage-6ee579897c5e.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000068/20260730T150610+0800.triage.json",
+      "source_package_sha256": "6ee579897c5e501917925ea84836b13b737f70e95136f3d904741303a484f303"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
-      },
-      "reason": "复核 2026 半年报的扣非利润、经营现金流、应收账款和合同资产",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核 2026 三季报和全年业绩趋势",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
         "operator": "price_lte",
-        "threshold": 1.5
+        "threshold": 2.0
       },
-      "reason": "进入买入观察区，需要复核现金流、应收账款和新增风险事项",
-      "trigger_id": "legacy-price-1",
+      "reason": "相对2.76元下跌约27.5%将显著降低市场对土地及重组可选性的隐含定价，值得按届时最新净资产、债务和土地进度重新核验。",
+      "trigger_id": "000068-price-material-reset",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 2.6
+        "description": "2026年半年度报告正式披露，可核验扣非归母利润、经营现金流、货币资金、有息负债、应收账款、合同资产和长期应收款。"
       },
-      "reason": "进入减仓或回避区，主题溢价高于基准合理价值",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "正式中报将验证业绩预告区间，并判断一季度现金流压力和工程回款是否持续。",
+      "trigger_id": "000068-2026-h1-filing",
+      "type": "filing"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "坪山区实际支付184082093元补偿尾款，或留用地选址、权益容积、用途、开发义务及审批结果获得正式文件确认。"
+      },
+      "reason": "坪山现金与土地权利是当前价格最重要的非经营性价值支柱，任何正式落地都可能 materially 改变资产净值判断。",
+      "trigger_id": "000068-pingshan-cash-or-land-approval",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期在剔除政府补偿、资产处置、资金池归集及重大营运资金摆动后，普通股所有者收益转正，且应收账款、合同资产和长期应收款合计未继续恶化。"
+      },
+      "reason": "该条件可证伪当前核心业务无法产生持续普通股所有者收益的判断。",
+      "trigger_id": "000068-core-owner-earnings-proof",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使无单一重大事件，也应在90天后复核三季报、坪山项目、关联交易、债务和回款进展。",
+      "trigger_id": "000068-routine-refresh",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -74,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T15:06:10+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

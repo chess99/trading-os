@@ -15,83 +15,83 @@
         "sha256": "fb6d56c7542a02ea277fd30789cc69349d282e5efae1d00a4338f886215f227c"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-29",
+        "path": "reports/2026-07-29-rapid-triage-3ddcfeda2e7c.md",
+        "report_id": "CN-000065-2026-07-29-rapid-triage-3ddcfeda2e7c",
+        "report_type": "rapid_triage",
+        "sha256": "72db5a41c793b556e35e5e47931858d1e8e682fe3f5207b89330ac700deb6003"
+      }
+    ],
+    "latest": "reports/2026-07-29-rapid-triage-3ddcfeda2e7c.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-29-rapid-triage-3ddcfeda2e7c.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T15:06:00+08:00",
+      "report_id": "CN-000065-2026-07-29-rapid-triage-3ddcfeda2e7c",
+      "report_path": "reports/2026-07-29-rapid-triage-3ddcfeda2e7c.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000065/20260730T150600+0800.triage.json",
+      "source_package_sha256": "3ddcfeda2e7c14d62c4006ee29e2f96d0e32ac730df2171191d1e652e1afb215"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露2026年半年度报告或业绩预告，能够核验工程建设与服务收入、归母利润、经营现金流、应收账款、合同资产、长期应收款、净债务及RNPL投资收益。"
       },
-      "reason": "复核2026半年报收入、利润、经营现金流、应收账款和重大项目进度",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026三季报工程收入是否止跌、财务费用和汇兑损益是否缓和",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2027-04-30"
-      },
-      "reason": "复核2026年报及2027一季报，判断投建营项目是否形成稳定利润贡献",
-      "trigger_id": "legacy-review-3",
-      "type": "date"
+      "reason": "半年报是判断工程下滑是否见底、回款是否真实改善以及RNPL收益能否抵消EPC收缩的最近硬证据。",
+      "trigger_id": "h1-2026-filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 8.2
+        "threshold": 8.0
       },
-      "reason": "进入纪律买入区间上沿，复核现金流与应收后可加仓",
-      "trigger_id": "legacy-price-1",
+      "reason": "跌至8元或以下时，按当前保守正常化所有者收益计算的现金收益率明显改善，值得在基本面未恶化前提下重新承保，但该触发本身不构成操作建议。",
+      "trigger_id": "price-reunderwrite-800",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 7.4
+        "description": "RNPL取得BPDB正式商业运营确认并首次向股东实际分配现金，或公司披露重大担保代偿、主权客户逾期、项目索赔、债务重组、制裁或外汇管制事件。"
       },
-      "reason": "低于买入区间下沿，若基本面未恶化则风险收益明显改善",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事件会直接改变RNPL价值兑现概率或大额表外风险的损失分布。",
+      "trigger_id": "rnpl-or-guarantee-event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 10.8
+        "description": "公司披露蒙古重载公路实现实质性累计回款且孟加拉EPC应收明显下降，或相反对上述项目及其他重大应收、长期应收确认单项减值或展期。"
       },
-      "reason": "接近减仓区间，若无订单和利润上修应降低仓位",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "重大项目回款能否由账面应收转化为现金，是7亿元以上正常化所有者收益假设的决定性条件。",
+      "trigger_id": "major-receivable-thesis",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 12.2
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "超过基准估值上沿较多，需兑现或等待乐观情景验证",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
+      "reason": "海外项目、汇率、煤价和应收回款变化较快，即使无单一重大事件也应在九十天内刷新。",
+      "trigger_id": "routine-refresh-90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -103,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T15:06:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
