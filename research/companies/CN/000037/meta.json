@@ -22,11 +22,18 @@
         "report_id": "CN-000037-2026-07-30-rapid-triage-7c5c918a4a43",
         "report_type": "rapid_triage",
         "sha256": "09d1db78dc01e2c0bad8d6b3fb6c8410e0a8cb1a98d763f8a34d2767ffb88d37"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-a9a49e48f05d.md",
+        "report_id": "CN-000037-2026-07-30-rapid-triage-a9a49e48f05d",
+        "report_type": "rapid_triage",
+        "sha256": "52d625a7942bcb4bc01c6bc18fc93124d21666064b759337500037bf61c70fbf"
       }
     ],
-    "latest": "reports/2026-07-30-rapid-triage-7c5c918a4a43.md",
+    "latest": "reports/2026-07-30-rapid-triage-a9a49e48f05d.md",
     "latest_by_type": {
-      "rapid_triage": "reports/2026-07-30-rapid-triage-7c5c918a4a43.md"
+      "rapid_triage": "reports/2026-07-30-rapid-triage-a9a49e48f05d.md"
     }
   },
   "research": {
@@ -34,63 +41,72 @@
     "information_cutoff": "2026-07-30T03:03:20+08:00",
     "latest_rapid_triage": {
       "information_cutoff": "2026-07-30T03:03:20+08:00",
-      "published_at": "2026-07-30T07:22:00+08:00",
-      "report_id": "CN-000037-2026-07-30-rapid-triage-7c5c918a4a43",
-      "report_path": "reports/2026-07-30-rapid-triage-7c5c918a4a43.md",
+      "published_at": "2026-07-30T09:17:00+08:00",
+      "report_id": "CN-000037-2026-07-30-rapid-triage-a9a49e48f05d",
+      "report_path": "reports/2026-07-30-rapid-triage-a9a49e48f05d.md",
       "review_mode": "baseline_recheck",
-      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000037/20260730T072200+0800.triage.json",
-      "source_package_sha256": "7c5c918a4a433f93f8135ab71facb96ae49ffb7fd802efc8a9f72ad5568a9f3d"
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001-correction-001/000037/20260730T091700+0800.triage.json",
+      "source_package_sha256": "a9a49e48f05d67cd48442ea5fab38765f88b21961d9eec7a8bafacceaa1926cb"
     },
     "rebaseline_required": false,
-    "refresh_due_at": "2027-01-26T03:03:20+08:00"
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 5.5
+        "description": "公司披露2026年半年度报告，可拆分电力生产销售、独立储能、EPC及运维的收入、毛利、折旧、融资费用、经营现金流与资本开支。"
       },
-      "reason": "价格降至5.50元或以下时，市值与净资产及初步正常化收益的错配明显收窄，值得重算储能和燃机的赔率。",
-      "trigger_id": "cn000037_price_5_50",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "description": "公司披露2026年半年度报告，能够核验电力生产销售、独立储能、EPC及运维的分部收入、毛利、折旧、融资费用和经营现金流。"
-      },
-      "reason": "正式半年报是验证扣非盈利质量和储能一期完整经营贡献的最近关键证据。",
-      "trigger_id": "cn000037_2026_h1_filing",
+      "reason": "正式半年报是核验H1预告、储能完整经营贡献及现金含量的最近关键证据。",
+      "trigger_id": "cn000037_2026_h1_full_report",
       "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "description": "广东燃气机组容量电价、变动成本补偿、天然气供应价格或电力现货及辅助服务规则发生足以显著改变燃机或储能单位经济性的调整。"
+        "description": "公司披露中山独立储能一期的容量、利用率、电能量及辅助服务收入、毛利、折旧、融资费用、电池衰减和维护资本开支，足以复算项目自由现金流与资本回报。"
       },
-      "reason": "燃机与储能盈利对容量补偿、气价、节点电价和辅助服务价格高度敏感。",
-      "trigger_id": "cn000037_capacity_gas_policy",
-      "type": "event"
-    },
-    {
-      "active": true,
-      "condition": {
-        "description": "连续两个报告期扣非归母利润及经营现金流同步改善，按年度口径显示可持续扣非归母收益达到1亿元以上，且并非主要依赖资产处置或公允价值变动。"
-      },
-      "reason": "达到该条件将实质改变当前关于盈利规模不足以支撑估值的判断。",
-      "trigger_id": "cn000037_normalized_profit_scale",
+      "reason": "储能单位经济性决定当前扣非扭亏能否形成可持续所有者收益。",
+      "trigger_id": "cn000037_storage_unit_economics",
       "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "due_at": "2027-01-26T03:03:20+08:00",
+        "description": "广东燃机容量电价、变动成本补偿、天然气价格、电力现货或辅助服务规则发生足以显著改变燃机或储能单位经济性的调整。"
+      },
+      "reason": "燃机和储能盈利对政策、燃料及市场结算规则高度敏感。",
+      "trigger_id": "cn000037_energy_market_policy",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期扣非归母利润与经营现金流同步为正，且盈利不主要依赖资产处置、公允价值变动或新增高杠杆投入。"
+      },
+      "reason": "该条件可验证当前低基数扭亏已转化为持续现金盈利。",
+      "trigger_id": "cn000037_normalized_cash_profit",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "operator": "price_lte",
+        "threshold": 5.5
+      },
+      "reason": "若基本面未恶化，价格降至5.50元或以下会显著收窄市值相对净资产和初步正常化收益的溢价，应重算价值区间。",
+      "trigger_id": "cn000037_price_reset_5_50",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
         "origin": "ttl"
       },
-      "reason": "即使价格与事件未触发，也应在半年内复核燃机调度、储能辅助服务收益和新平台资本投入。",
-      "trigger_id": "cn000037_review_ttl_180d",
+      "reason": "即使没有专项公告，也应在90天内复核燃机调度、储能收益、新平台投入和价格预期。",
+      "trigger_id": "cn000037_ttl_90d",
       "type": "date"
     }
   ],
@@ -103,7 +119,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-30T07:22:00+08:00",
+  "updated_at": "2026-07-30T09:17:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

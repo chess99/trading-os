@@ -22,11 +22,18 @@
         "report_id": "CN-000016-2026-07-30-rapid-triage-285ac4029e1f",
         "report_type": "rapid_triage",
         "sha256": "9f5d8284420b0fde07a99d01404be82421288fc72e1b35fb37f579a6c03f03c7"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-fe51d60fff18.md",
+        "report_id": "CN-000016-2026-07-30-rapid-triage-fe51d60fff18",
+        "report_type": "rapid_triage",
+        "sha256": "727ef90aa3cec021dfd8e802d8bdc3e9382afcec1d23836838c3b4472c773297"
       }
     ],
-    "latest": "reports/2026-07-30-rapid-triage-285ac4029e1f.md",
+    "latest": "reports/2026-07-30-rapid-triage-fe51d60fff18.md",
     "latest_by_type": {
-      "rapid_triage": "reports/2026-07-30-rapid-triage-285ac4029e1f.md"
+      "rapid_triage": "reports/2026-07-30-rapid-triage-fe51d60fff18.md"
     }
   },
   "research": {
@@ -34,12 +41,12 @@
     "information_cutoff": "2026-07-30T03:03:20+08:00",
     "latest_rapid_triage": {
       "information_cutoff": "2026-07-30T03:03:20+08:00",
-      "published_at": "2026-07-30T05:25:00+08:00",
-      "report_id": "CN-000016-2026-07-30-rapid-triage-285ac4029e1f",
-      "report_path": "reports/2026-07-30-rapid-triage-285ac4029e1f.md",
+      "published_at": "2026-07-30T09:12:00+08:00",
+      "report_id": "CN-000016-2026-07-30-rapid-triage-fe51d60fff18",
+      "report_path": "reports/2026-07-30-rapid-triage-fe51d60fff18.md",
       "review_mode": "baseline_recheck",
-      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001/000016/20260730T052500+0800.triage.json",
-      "source_package_sha256": "285ac4029e1fcb5714d28bafb68be18ce4b557cb1fc25619bcb2380adc5f1e87"
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-001-correction-001/000016/20260730T091200+0800.triage.json",
+      "source_package_sha256": "fe51d60fff18107a3c03070c70ec7859c9eab803a9828d937e75bd028b4c66a1"
     },
     "rebaseline_required": false,
     "refresh_due_at": "2026-08-31T00:00:00+08:00"
@@ -49,10 +56,10 @@
     {
       "active": true,
       "condition": {
-        "description": "公司披露2026年半年度报告，列明归母净资产、受限货币资金、债务期限、经营现金流、财务费用及分部毛利"
+        "description": "公司披露2026年半年度报告，列明归母净资产、受限货币资金、债务期限、经营现金流、财务费用、投资收益和分部毛利"
       },
-      "reason": "半年度数据可检验净资产缺口和自我造血能力是否开始实质改善。",
-      "trigger_id": "000016-2026-h1-filing",
+      "reason": "正式半年报可检验预告减亏是否来自可持续主营改善，并量化净资产缺口和流动性变化。",
+      "trigger_id": "000016-correction-2026-h1-filing",
       "type": "filing"
     },
     {
@@ -60,35 +67,35 @@
       "condition": {
         "date": "2026-08-31"
       },
-      "reason": "若此前未触发，届时复核法定半年度报告及保壳进度。",
-      "trigger_id": "000016-h1-deadline",
+      "reason": "若此前未触发，届时复核法定半年度报告、净资产修复进度和退市风险。",
+      "trigger_id": "000016-correction-h1-deadline",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
-        "description": "易平方11家投资方的受偿权诉讼、和解或执行出现终局条款，并披露总现金义务、付款顺序和会计影响"
+        "description": "控股股东或其他主体披露增资、债转股、债务展期、资产注入或重大资产处置的完整金额、定价、优先顺序和普通股稀释条款"
+      },
+      "reason": "只有可量化且可执行的条款才能判断支持是否足以填补净资产缺口并保留普通股残余价值。",
+      "trigger_id": "000016-correction-capital-repair-terms",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "易平方11家投资方的受偿权诉讼、和解或执行形成终局条款，并披露总现金义务、付款顺序和会计影响"
       },
       "reason": "终局现金义务可能显著改变母公司流动性和普通股残余价值。",
-      "trigger_id": "000016-yifang-resolution",
+      "trigger_id": "000016-correction-yifang-resolution",
       "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "description": "控股股东或其他主体披露增资、债转股、债务展期、资产注入或重大资产处置的完整定价、优先顺序和稀释条款"
-      },
-      "reason": "只有可量化条款才能判断支持是否真正修复普通股价值。",
-      "trigger_id": "000016-capital-repair-terms",
-      "type": "event"
-    },
-    {
-      "active": true,
-      "condition": {
-        "description": "连续两个季度经营现金流为正且主营毛利足以覆盖销售、管理、研发和财务费用，不依赖新增股东融资或大额资产出售"
+        "description": "连续两个季度主营经营现金流为正且主营毛利覆盖销售、管理、研发和财务费用，不依赖新增股东融资、参股投资收益或大额资产出售"
       },
       "reason": "这将把判断从外部救助期权转向可持续经营价值。",
-      "trigger_id": "000016-cashflow-thesis",
+      "trigger_id": "000016-correction-cashflow-thesis",
       "type": "thesis"
     },
     {
@@ -97,16 +104,16 @@
         "date": "2027-04-30"
       },
       "reason": "复核2026年经审计归母净资产、审计意见、内控意见及是否触发终止上市。",
-      "trigger_id": "000016-2026-audit-deadline",
+      "trigger_id": "000016-correction-2026-audit-deadline",
       "type": "date"
     },
     {
       "active": true,
       "condition": {
-        "description": "新增重大债务逾期、会计差错、监管处罚、非标审计意见或交易所终止上市风险升级"
+        "description": "出现新增重大债务逾期、会计差错、监管处罚、非标审计意见或交易所终止上市风险升级"
       },
       "reason": "任一事件都可能进一步降低普通股残余价值并缩短可处置时间。",
-      "trigger_id": "000016-risk-escalation",
+      "trigger_id": "000016-correction-risk-escalation",
       "type": "event"
     }
   ],
@@ -119,7 +126,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-30T05:25:00+08:00",
+  "updated_at": "2026-07-30T09:12:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
