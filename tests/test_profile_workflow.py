@@ -433,6 +433,25 @@ def test_manager_screen_profile_cohort_supersedes_legacy_allocation(tmp_path: Pa
     assert [row["symbol"] for row in packet["rows"]] == ["CN:600519"]
 
 
+def test_profile_package_rejects_probable_gbk_latin1_mojibake(tmp_path: Path):
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    package = _package()
+    package["profile"]["variant_perception"] = (
+        "市场可能低估正常化现金流".encode("gbk").decode("latin-1")
+    )
+    with pytest.raises(ResearchAllocationError, match="probable GBK/Latin-1 mojibake"):
+        record_profile_package(
+            package,
+            root=tmp_path / "coverage" / "cn-a",
+            policy=_policy(),
+            policy_reference="research-allocation.default@1.0.0",
+            recorded_at=RECORDED_AT,
+        )
+
+
 def test_current_triage_selection_excludes_old_unselected_profile_history(
     tmp_path: Path,
 ):

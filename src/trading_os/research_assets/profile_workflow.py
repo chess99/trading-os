@@ -2031,6 +2031,7 @@ def _bound_profile_cohort(
 def _validate_package(
     package: Mapping[str, Any], *, recorded_at: dt.datetime
 ) -> dict[str, Any]:
+    _reject_probable_gbk_mojibake(package)
     if not isinstance(package, Mapping) or set(package) != PACKAGE_KEYS:
         raise ResearchAllocationError("profile package fields do not match contract")
     if package.get("schema_version") != 2:
@@ -2128,6 +2129,34 @@ def _validate_package(
         "analysis": normalized_analysis,
         "sources": normalized_sources,
     }
+
+
+def _reject_probable_gbk_mojibake(value: Any, *, path: str = "package") -> None:
+    """Reject GBK bytes accidentally decoded as Latin-1 before sealing a package."""
+
+    if isinstance(value, Mapping):
+        for key, child in value.items():
+            _reject_probable_gbk_mojibake(child, path=f"{path}.{key}")
+        return
+    if isinstance(value, list):
+        for index, child in enumerate(value):
+            _reject_probable_gbk_mojibake(child, path=f"{path}[{index}]")
+        return
+    if not isinstance(value, str):
+        return
+
+    latin1_count = sum(0x80 <= ord(char) <= 0xFF for char in value)
+    if latin1_count < 4:
+        return
+    try:
+        decoded = value.encode("latin-1").decode("gb18030")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return
+    cjk_count = sum("\u4e00" <= char <= "\u9fff" for char in decoded)
+    if cjk_count >= 2 and cjk_count >= len(decoded) // 5:
+        raise ResearchAllocationError(
+            f"profile package contains probable GBK/Latin-1 mojibake at {path}"
+        )
 
 
 def _claimed_task_payload(record: Mapping[str, Any], *, idempotent: bool) -> dict[str, Any]:
