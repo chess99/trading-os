@@ -15,44 +15,45 @@
         "sha256": "774e8bf1b8f425a9cdc52305d9420bfc7f70c7232da3001345196a09edd71e14"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-a937053eacf9.md",
+        "report_id": "CN-000089-2026-07-30-rapid-triage-a937053eacf9",
+        "report_type": "rapid_triage",
+        "sha256": "0038fdfab5a4647e4f4bcc50d60a2c2a7d33b2f8eaad62a2a632ba5d090af563"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-a937053eacf9.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-a937053eacf9.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T15:39:00+08:00",
+      "report_id": "CN-000089-2026-07-30-rapid-triage-a937053eacf9",
+      "report_path": "reports/2026-07-30-rapid-triage-a937053eacf9.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000089/20260730T153900+0800.triage.json",
+      "source_package_sha256": "a937053eacf933c841cb8b55f91dd348ba8132c23a4de8a5ab334699495b65cf"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露2026年半年度报告，能够核验土地补偿与股权重估的精确金额、经营现金流、折旧、购建支出、租赁现金流、关联交易和分部利润。"
       },
-      "reason": "复查2026年半年报，重点确认扣非净利润、折旧、经营现金流和资本开支",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复查三季度经营数据和国际航线恢复情况",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "operator": "price_lte",
-        "threshold": 6.2
-      },
-      "reason": "进入第一买入区，需要复核月度吞吐和半年报扣非利润后可建观察仓",
-      "trigger_id": "legacy-price-1",
-      "type": "price"
+      "reason": "H1正式报表是区分一次性利润与可持续所有者现金收益的最近决定性证据。",
+      "trigger_id": "cn000089_2026_h1_filing",
+      "type": "filing"
     },
     {
       "active": true,
@@ -60,19 +61,37 @@
         "operator": "price_lte",
         "threshold": 5.6
       },
-      "reason": "进入深度价值买入区，若基本面未恶化可提高仓位",
-      "trigger_id": "legacy-price-2",
+      "reason": "价格降至5.60元或以下时市值约115亿元、接近Q1账面归母权益，核心利润收益率和困境保护改善，值得在不把下跌等同买点的前提下重算。",
+      "trigger_id": "cn000089_price_5_60",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 8.5
+        "description": "机场集团与上市公司签署或调整T2、三跑道、航站楼、停机坪、土地或货站的资产注入、代建、租赁、收费、财务资助或补偿协议，或公司宣布土地补偿现金用途和特别分红。"
       },
-      "reason": "超过合理价值上沿，需要用国际客流、非航收入和分红上修来证明估值",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "资产归属、租金和补偿现金去向会直接改变治理风险、净债务和每股所有者收益。",
+      "trigger_id": "cn000089_group_asset_or_lease_event",
+      "type": "event"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "连续两个报告期扣非利润与经营现金流均增长，且披露证据支持扣除维持性capex、租赁本金利息和少数股东权益后年化普通股所有者现金收益至少8亿元；或相反跌破5亿元。"
+      },
+      "reason": "该区间将把当前约136亿元市值从低回报定价转为可承保现金收益，或证伪恢复逻辑。",
+      "trigger_id": "cn000089_owner_earnings_thesis",
+      "type": "thesis"
+    },
+    {
+      "active": true,
+      "condition": {
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
+      },
+      "reason": "即使其余触发器未命中，也应在90天内结合H1正式报告、三季报和月度客货数据复核恢复斜率及资本负担。",
+      "trigger_id": "cn000089_review_ttl_90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -84,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T15:39:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
