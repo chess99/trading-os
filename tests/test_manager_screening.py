@@ -382,6 +382,35 @@ def test_record_routes_only_selected_companies_to_analyst_and_status(tmp_path: P
     ]
 
 
+def test_status_conserves_intake_members_deferred_at_scope_freeze(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.manager_screening import manager_screen_status
+    from trading_os.research_assets.scope_workflow import freeze_all_a_scope
+
+    root, _ = _root(tmp_path)
+    queue = read_jsonl(root / "research_queue.jsonl")
+    queued = next(item for item in queue if item["symbol"] == "CN:000001")
+    queued["task_type"] = "quick_profile"
+    queued["status"] = "pending"
+    queued["reason"] = "existing analyst work"
+    write_jsonl(root / "research_queue.jsonl", queue)
+    run_id = "2026-08-01-manager-screen-deferred"
+    freeze_all_a_scope(
+        root=root,
+        run_id=run_id,
+        scope_cutoff=CUTOFF + dt.timedelta(days=1),
+        frozen_at=CUTOFF + dt.timedelta(days=1),
+    )
+
+    status = manager_screen_status(root=root, run_id=run_id)
+
+    assert status["screenable_intake_count"] == 4
+    assert status["remaining_unbatched_count"] == 3
+    assert status["deferred_current_state_count"] == 1
+    assert status["deferred_current_state"] == {"defer_active_or_deeper_stage": 1}
+    assert status["screenable_conservation_satisfied"] is True
+
+
 def test_watch_materializes_as_general_watch_only(tmp_path: Path):
     from trading_os.research_assets.coverage_store import read_jsonl
     from trading_os.research_assets.manager_screening import (

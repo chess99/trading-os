@@ -611,11 +611,7 @@ def manager_screen_status(
                 "manager_wall_clock_seconds": wall_clock_seconds,
             }
         )
-    screenable_total = sum(
-        1
-        for member in intake.get("members", [])
-        if member.get("materialization_action") == "normalize_queue"
-    )
+    screenable_total = len(intake.get("members", []))
     screenable_accounted = len(seen) + len(remaining) + sum(deferred.values())
     if screenable_accounted != screenable_total:
         raise ManagerScreeningError(
