@@ -882,6 +882,216 @@ def test_targeted_followup_reuses_preceding_profile_stage_and_can_resolve_gap(
     ]
 
 
+def test_agent_defer_preserves_completed_targeted_followup_state(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        build_profile_comparison_packet,
+        claim_profile_task,
+        finalize_profile_stage_with_agent_decisions,
+        record_profile_package,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    predecessor_path = coverage_root / "triage" / "test" / "selection.json"
+    seal_json(
+        predecessor_path,
+        {
+            "schema_version": 1,
+            "cycle_id": "test",
+            "ranking": [
+                {
+                    "ordinal": 1,
+                    "symbol": "CN:600519",
+                    "selected_for_quick_profile": True,
+                }
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="rapid_triage_cross_company_selection",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=2),
+    )
+    first_package = _package()
+    first_package["profile"]["governance_status"] = "uncertain"
+    first_package["profile"]["normalized_earnings_status"] = "uncertain"
+    first_package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    first_package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    first = record_profile_package(
+        first_package,
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert first["next_stage"] == "targeted_followup"
+    claim_profile_task(
+        root=coverage_root,
+        agent="/root/followup_600519",
+        claimed_at=RECORDED_AT + dt.timedelta(minutes=1),
+        symbol="CN:600519",
+    )
+    resolved = _package()
+    resolved["profile"]["information_cutoff"] = "2026-07-26T10:03:00+08:00"
+    resolved["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    resolved["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    resolved["provenance"]["agent"] = "/root/followup_600519"
+    resolved["provenance"]["generated_at"] = "2026-07-26T10:04:00+08:00"
+    second = record_profile_package(
+        resolved,
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT + dt.timedelta(minutes=5),
+    )
+    assert second["next_stage"] == "price_watch"
+    queue_before = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    screening_before = read_jsonl(coverage_root / "screening.jsonl")[0]
+
+    comparison = build_profile_comparison_packet(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        created_at=RECORDED_AT + dt.timedelta(minutes=6),
+    )
+    decisions = {
+        "schema_version": 1,
+        "cycle_id": "2026-07-26-test-cycle",
+        "evaluated_stage": "quick_profile",
+        "comparison_sha256": comparison["comparison_sha256"],
+        "decisions": [
+            {
+                "symbol": "CN:600519",
+                "decision": "defer",
+                "reason": "补证已经收口，新增信息必须等待结构化触发器。",
+                "decisive_question": "下一份正式披露能否改变现有现金收益判断？",
+                "counterevidence_considered": ["现有业务仍具备生存能力。"],
+            }
+        ],
+        "provenance": {
+            "agent": "/root/profile-allocation",
+            "model": "test-model",
+            "tools": ["sealed comparison packet"],
+            "generated_at": (RECORDED_AT + dt.timedelta(minutes=7)).isoformat(),
+        },
+    }
+    finalized = finalize_profile_stage_with_agent_decisions(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        decisions=decisions,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=8),
+    )
+
+    assert finalized["selected_symbols"] == []
+    queue_after = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    screening_after = read_jsonl(coverage_root / "screening.jsonl")[0]
+    assert queue_after["task_type"] == "targeted_followup"
+    assert queue_after["status"] == "completed"
+    assert queue_after["result_path"] == queue_before["result_path"]
+    assert queue_after["next_action"] == queue_before["next_action"]
+    assert queue_after["profile_quick_selection_path"] == finalized["selection_path"]
+    assert screening_after["decision"] == screening_before["decision"]
+    assert screening_after["reason"] == screening_before["reason"]
+    assert screening_after["next_action"] == screening_before["next_action"]
+    assert set(screening_before["evidence"]).issubset(screening_after["evidence"])
+    assert f"stage_selection:{finalized['selection_path']}" in screening_after[
+        "evidence"
+    ]
+
+
+def test_agent_defer_preserves_direct_terminal_profile_state(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        build_profile_comparison_packet,
+        finalize_profile_stage_with_agent_decisions,
+        record_profile_package,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    coverage_root = tmp_path / "coverage" / "cn-a"
+    seal_json(
+        coverage_root / "triage" / "test" / "selection.json",
+        {
+            "schema_version": 1,
+            "cycle_id": "test",
+            "ranking": [
+                {
+                    "ordinal": 1,
+                    "symbol": "CN:600519",
+                    "selected_for_quick_profile": True,
+                }
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="rapid_triage_cross_company_selection",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=2),
+    )
+    package = _package()
+    package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    recorded = record_profile_package(
+        package,
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert recorded["next_stage"] == "price_watch"
+    queue_before = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    screening_before = read_jsonl(coverage_root / "screening.jsonl")[0]
+    comparison = build_profile_comparison_packet(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        created_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+    decisions = {
+        "schema_version": 1,
+        "cycle_id": "2026-07-26-test-cycle",
+        "evaluated_stage": "quick_profile",
+        "comparison_sha256": comparison["comparison_sha256"],
+        "decisions": [
+            {
+                "symbol": "CN:600519",
+                "decision": "defer",
+                "reason": "当前价格不支持继续购买研究预算。",
+                "decisive_question": "价格或现金收益何时形成足够安全边际？",
+                "counterevidence_considered": ["正常化盈利仍为正。"],
+            }
+        ],
+        "provenance": {
+            "agent": "/root/profile-allocation",
+            "model": "test-model",
+            "tools": ["sealed comparison packet"],
+            "generated_at": (RECORDED_AT + dt.timedelta(minutes=2)).isoformat(),
+        },
+    }
+    finalized = finalize_profile_stage_with_agent_decisions(
+        root=coverage_root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        policy=_policy(),
+        decisions=decisions,
+        finalized_at=RECORDED_AT + dt.timedelta(minutes=3),
+    )
+
+    assert finalized["selected_symbols"] == []
+    queue_after = read_jsonl(coverage_root / "research_queue.jsonl")[0]
+    screening_after = read_jsonl(coverage_root / "screening.jsonl")[0]
+    assert queue_after["task_type"] == "quick_profile"
+    assert queue_after["status"] == "completed"
+    assert queue_after["result_path"] == queue_before["result_path"]
+    assert queue_after["next_action"] == queue_before["next_action"]
+    assert queue_after["profile_quick_selection_path"] == finalized["selection_path"]
+    assert screening_after["decision"] == screening_before["decision"]
+    assert screening_after["reason"] == screening_before["reason"]
+    assert screening_after["next_action"] == screening_before["next_action"]
+    assert set(screening_before["evidence"]).issubset(screening_after["evidence"])
+
+
 def test_credit_cycle_profile_requires_stage_specific_s1_evidence():
     from trading_os.research_assets.profile_workflow import (
         _validate_industry_evidence,

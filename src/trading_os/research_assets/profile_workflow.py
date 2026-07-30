@@ -1336,6 +1336,21 @@ def _materialize_profile_selection(
             and queued.get("status") == "completed"
         )
         next_stage_state = queued.get("task_type") == next_stage
+        completed_followup = bool(
+            queued.get("task_type") == "targeted_followup"
+            and queued.get("status") == "completed"
+            and _history_completed(queued, "targeted_followup")
+        )
+        candidate_outcome = (
+            "profile_candidate" if stage == "quick_profile" else "deep_candidate"
+        )
+        completed_outcome = _history_completed_outcome(
+            queued, "targeted_followup" if completed_followup else stage
+        )
+        preserve_outcome = bool(
+            completed_outcome in TERMINAL_STAGES
+            and completed_outcome != candidate_outcome
+        )
         later_progress = bool(
             _history_completed(queued, next_stage)
             or (
@@ -1406,24 +1421,42 @@ def _materialize_profile_selection(
                 raise ResearchAllocationError(
                     f"sealed {stage} selection cannot safely repair queue state: {symbol}"
                 )
-        elif base_state or existing_binding == selection_path:
+        elif base_state or completed_followup or existing_binding == selection_path:
             queued[next_binding_field] = selection_path
-            if base_state:
-                queued["next_action"] = (
-                    "等待结构化触发器或下一周期重新竞争研究预算。"
-                )
-            if not screen_proves_selection:
+            if preserve_outcome:
+                # A profile or follow-up may already have produced a stronger
+                # terminal conclusion such as price_watch or conditional_stop.
+                # Bind the allocation decision without regressing that result.
+                queued["next_action"] = _next_action(completed_outcome, False)
                 screen.update(
                     {
-                        "decision": "catalog",
-                        "reason": (
-                            f"{stage}支持继续研究，但横向比较后未获得本周期"
-                            f"{next_stage}容量。"
+                        "decision": completed_outcome,
+                        "reason": _screening_reason(completed_outcome, False),
+                        "evidence": list(
+                            dict.fromkeys(evidence + expected_evidence)
                         ),
-                        "evidence": list(dict.fromkeys(evidence + expected_evidence)),
-                        "next_action": "等待结构化触发器或下一周期重新竞争研究预算。",
+                        "next_action": _next_action(completed_outcome, False),
                     }
                 )
+            else:
+                if base_state:
+                    queued["next_action"] = (
+                        "等待结构化触发器或下一周期重新竞争研究预算。"
+                    )
+                if not screen_proves_selection:
+                    screen.update(
+                        {
+                            "decision": "catalog",
+                            "reason": (
+                                f"{stage}支持继续研究，但横向比较后未获得本周期"
+                                f"{next_stage}容量。"
+                            ),
+                            "evidence": list(
+                                dict.fromkeys(evidence + expected_evidence)
+                            ),
+                            "next_action": "等待结构化触发器或下一周期重新竞争研究预算。",
+                        }
+                    )
         else:
             raise ResearchAllocationError(
                 f"sealed {stage} defer decision cannot safely repair queue state: {symbol}"
@@ -2218,6 +2251,20 @@ def _history_completed(record: Mapping[str, Any], stage: str) -> bool:
         and item.get("status") == "completed"
         for item in (record.get("stage_history") or [])
     )
+
+
+def _history_completed_outcome(
+    record: Mapping[str, Any], stage: str
+) -> str | None:
+    for item in reversed(record.get("stage_history") or []):
+        if (
+            isinstance(item, Mapping)
+            and item.get("stage") == stage
+            and item.get("status") == "completed"
+            and isinstance(item.get("next_stage"), str)
+        ):
+            return str(item["next_stage"])
+    return None
 
 
 def _profile_priority_score(
