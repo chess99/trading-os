@@ -27,11 +27,18 @@
         "report_id": "CN-000066-2026-07-30-rapid-triage-0b4d28f5f26e",
         "report_type": "rapid_triage",
         "sha256": "f7c6257bef5946ce9fdbaa3724f3d4c9973062c8f502338782d1fcf03bcfa5e3"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-56586b1957eb.md",
+        "report_id": "CN-000066-2026-07-30-rapid-triage-56586b1957eb",
+        "report_type": "rapid_triage",
+        "sha256": "3bede38f2cd49372fecb9ad0a25a13a0faae480d0dd5ddbb19e95566f994787c"
       }
     ],
-    "latest": "reports/2026-07-30-rapid-triage-0b4d28f5f26e.md",
+    "latest": "reports/2026-07-30-rapid-triage-56586b1957eb.md",
     "latest_by_type": {
-      "rapid_triage": "reports/2026-07-30-rapid-triage-0b4d28f5f26e.md"
+      "rapid_triage": "reports/2026-07-30-rapid-triage-56586b1957eb.md"
     }
   },
   "research": {
@@ -39,12 +46,12 @@
     "information_cutoff": "2026-07-30T03:03:20+08:00",
     "latest_rapid_triage": {
       "information_cutoff": "2026-07-30T03:03:20+08:00",
-      "published_at": "2026-07-30T15:06:20+08:00",
-      "report_id": "CN-000066-2026-07-30-rapid-triage-0b4d28f5f26e",
-      "report_path": "reports/2026-07-30-rapid-triage-0b4d28f5f26e.md",
+      "published_at": "2026-07-30T19:33:50+08:00",
+      "report_id": "CN-000066-2026-07-30-rapid-triage-56586b1957eb",
+      "report_path": "reports/2026-07-30-rapid-triage-56586b1957eb.md",
       "review_mode": "baseline_recheck",
-      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000066/20260730T150620+0800.triage.json",
-      "source_package_sha256": "0b4d28f5f26ec009abed6a95aac5b1c0ec2e649517e61c2aa8fc087d9ee47e7c"
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002-correction-001/000066/20260730T193350+0800.triage.json",
+      "source_package_sha256": "56586b1957eb4c1d8f46c9c404214c7a91c7838b237aadb55e3a748fd7ec5b96"
     },
     "rebaseline_required": false,
     "refresh_due_at": "2026-11-27T03:03:20+08:00"
@@ -54,9 +61,9 @@
     {
       "active": true,
       "condition": {
-        "description": "公司披露2026年半年度报告，能够拆分城市更新回迁房产收益、政府补助、计算产业和系统装备收入毛利、扣非利润、存货及跌价、应收回款、经营现金流、资本开支和净债务。"
+        "description": "公司披露2026年半年度报告，可拆分回迁房产收益、政府补助、计算产业和系统装备收入毛利、扣非利润、存货及跌价、应收回款、经营现金流、资本开支和净债务。"
       },
-      "reason": "正式半年报是验证预告中2.30亿至3.30亿元归母利润是否伴随主业和现金流改善的最高价值证据。",
+      "reason": "正式半年报是判断归母转正是否伴随主营盈利和现金转换改善的最高价值证据；披露后重新评估 conditional_stop。",
       "trigger_id": "cn000066_2026_h1_filing",
       "type": "filing"
     },
@@ -66,26 +73,26 @@
         "operator": "price_lte",
         "threshold": 10.0
       },
-      "reason": "价格降至10元或以下时市值约322.58亿元、约2.95倍Q1归母净资产，虽然仍需盈利验证，但预期负担较当前明显下降，值得重算赔率。",
-      "trigger_id": "cn000066_price_10",
+      "reason": "10元对应约323亿元市值和约2.95倍Q1末归母净资产，虽仍需盈利验证，但相较当前明显降低预期负担，足以触发一次赔率重算。",
+      "trigger_id": "cn000066_price_reset_10",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "description": "尚未明确用途的约13.74亿元募集资金出现正式投向，或公司披露重大资产注入/剥离、集团内关联交易、财务公司资金风险、显著新增有息债务、股权融资、担保或募投项目再次终止和延期。"
+        "description": "约13.74亿元尚未明确用途的募集资金出现正式投向，或公司披露重大资产注入或剥离、财务公司资金风险、显著新增有息债务、股权融资、重大担保，或募投项目再次终止、延期。"
       },
-      "reason": "资本投向、关联资金独立性和融资结构可显著改变净资产质量、所有者现金流与潜在稀释。",
+      "reason": "资本投向、关联资金独立性和融资结构可能显著改变资产质量、现金流、稀释与生存韧性。",
       "trigger_id": "cn000066_capital_financing_event",
       "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "description": "连续两个报告期扣非归母为正，存货较2026Q1末下降至少20%，经营现金流扣除长期资产购建支出后持续为正，并显示年化所有者收益向15亿至20亿元靠近；或上述任一指标显著恶化、出现大额新减值。"
+        "description": "连续两个报告期扣非归母为正且经营现金流扣除长期资产购建支出后为正，同时存货和应收账款增速低于收入增速；或任一指标显著恶化并出现大额新增减值。"
       },
-      "reason": "该组合直接验证或否定现价所需的主业扭亏、库存转化和现金收益跃迁，而不是依赖一次性收益。",
-      "trigger_id": "cn000066_owner_earnings_thesis",
+      "reason": "该组合直接验证或否定主营扭亏、库存与应收转化及所有者现金收益，而不是依赖一次性收益。",
+      "trigger_id": "cn000066_core_profit_cash_thesis",
       "type": "thesis"
     },
     {
@@ -94,7 +101,7 @@
         "due_at": "2026-11-27T03:03:20+08:00",
         "origin": "ttl"
       },
-      "reason": "即使其他触发器未命中，也应在120天内结合半年报或三季报复核扣非利润、库存、现金流、净债务和募投资金投向。",
+      "reason": "即使其他触发器未命中，也在120天内结合半年报或三季报复核扣非利润、库存、应收、现金流、净债务与募投资金投向。",
       "trigger_id": "cn000066_review_ttl_120d",
       "type": "date"
     }
@@ -108,7 +115,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-30T15:06:20+08:00",
+  "updated_at": "2026-07-30T19:33:50+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

@@ -22,11 +22,18 @@
         "report_id": "CN-000058-2026-07-30-rapid-triage-80a26507c383",
         "report_type": "rapid_triage",
         "sha256": "85500f17f63c696eaa0b7231e374a8cdc8274123657a92233255766d0a41e13b"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md",
+        "report_id": "CN-000058-2026-07-30-rapid-triage-63a496ff2dcc",
+        "report_type": "rapid_triage",
+        "sha256": "cc0149f9f9253e92d00f7fe2692fd3f9c75b8aad234d09a2d22a4f34cf2a5825"
       }
     ],
-    "latest": "reports/2026-07-30-rapid-triage-80a26507c383.md",
+    "latest": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md",
     "latest_by_type": {
-      "rapid_triage": "reports/2026-07-30-rapid-triage-80a26507c383.md"
+      "rapid_triage": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md"
     }
   },
   "research": {
@@ -34,63 +41,63 @@
     "information_cutoff": "2026-07-30T03:03:20+08:00",
     "latest_rapid_triage": {
       "information_cutoff": "2026-07-30T03:03:20+08:00",
-      "published_at": "2026-07-30T14:15:15+08:00",
-      "report_id": "CN-000058-2026-07-30-rapid-triage-80a26507c383",
-      "report_path": "reports/2026-07-30-rapid-triage-80a26507c383.md",
+      "published_at": "2026-07-30T19:05:00+08:00",
+      "report_id": "CN-000058-2026-07-30-rapid-triage-63a496ff2dcc",
+      "report_path": "reports/2026-07-30-rapid-triage-63a496ff2dcc.md",
       "review_mode": "baseline_recheck",
-      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000058/20260730T141515+0800.triage.json",
-      "source_package_sha256": "80a26507c38388890f787666dd3853f84a2bd3ba34f45590ffa4d74e2265b3ec"
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002-correction-001/000058/20260730T190500+0800.triage.json",
+      "source_package_sha256": "63a496ff2dcc3875195e831fe800248c4459a4fc11afb468ffdea056b71380cd"
     },
     "rebaseline_required": false,
-    "refresh_due_at": "2026-11-27T03:03:20+08:00"
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 4.2
+        "description": "公司披露2026年半年度报告，可核验电子市场、物业服务、检验检测、新能源和地产开发的分部收入与毛利、扣非利润、资产减值、经营现金流及资本开支。"
       },
-      "reason": "A股价格降至4.20元或以下时，市净率和正常化收益倍数明显收缩，值得结合最新法拍回收和分部现金流重新核算赔率；该阈值仅触发复核，不构成操作建议。",
-      "trigger_id": "cn000058_price_4_20",
-      "type": "price"
-    },
-    {
-      "active": true,
-      "condition": {
-        "description": "公司披露2026年半年度报告，能够核验电子市场、物业服务、检验检测、新能源和地产开发的收入、毛利、减值、经营现金流及资本开支。"
-      },
-      "reason": "半年报是区分2026Q1利润修复与全年可持续收益的最近关键S1证据。",
+      "reason": "正式半年报是判断Q1利润韧性是否可持续、以及地产风险是否继续吞噬核心经营成果的最近关键S1证据。",
       "trigger_id": "cn000058_2026_h1_filing",
       "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "description": "公司披露赛格新城市52套房产司法拍卖成交、流拍或重整结果，或惠州群星累计担保代偿超过5,000万元、完成清偿/再融资。"
+        "operator": "price_lte",
+        "threshold": 4.2
       },
-      "reason": "法拍回收率和代偿上限直接决定地产存货、债权和净资产是否继续受损。",
-      "trigger_id": "cn000058_property_auction_and_guarantee_resolution",
+      "reason": "A股价格降至4.20元或以下时，市净率和正常化收益倍数明显收缩，可结合最新法拍回收和分部现金流重估研究价值；阈值仅触发复核，不构成操作建议。",
+      "trigger_id": "cn000058_price_4_20",
+      "type": "price"
+    },
+    {
+      "active": true,
+      "condition": {
+        "description": "公司披露赛格新城市52套房产司法拍卖成交、流拍或其他处置结果，或惠州群星完成清偿/再融资、累计担保代偿超过5,000万元。"
+      },
+      "reason": "司法处置回收率和担保代偿终值直接决定地产存货、应收追偿权及净资产是否继续受损。",
+      "trigger_id": "cn000058_property_and_guarantee_resolution",
       "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "description": "连续两个报告期扣非归母利润和经营现金流同步改善，年度化均达到2亿元以上，且地产及商誉减值年度化低于5,000万元，改善并非依靠出售金融资产。"
+        "description": "连续两个报告期扣非归母利润和经营现金流同步改善，年度化均达到2亿元以上，且地产存货、商誉及司法处置相关新增损失年度化低于5,000万元，改善不依赖出售金融资产。"
       },
-      "reason": "该条件将实质改变当前“高估值对应低且不稳定所有者收益”的核心判断。",
-      "trigger_id": "cn000058_normalized_earnings_rebase",
+      "reason": "只有核心盈利、现金转换和地产损失三项同时得到验证，当前条件停止继续研究的依据才会实质失效。",
+      "trigger_id": "cn000058_conditional_stop_reversal",
       "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "due_at": "2026-11-27T03:03:20+08:00",
+        "due_at": "2026-10-28T03:03:20+08:00",
         "origin": "ttl"
       },
-      "reason": "即使价格、公告和盈利条件均未触发，也应在120天内复核商业物业租金、法拍回收、项目代偿和新能源资本开支。",
-      "trigger_id": "cn000058_review_ttl_120d",
+      "reason": "即使价格、公告和盈利条件均未触发，也应在90天内复核商业物业租金、法拍回收、担保代偿和新能源资本开支。",
+      "trigger_id": "cn000058_conditional_stop_ttl_90d",
       "type": "date"
     }
   ],
@@ -103,7 +110,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-30T14:15:15+08:00",
+  "updated_at": "2026-07-30T19:05:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

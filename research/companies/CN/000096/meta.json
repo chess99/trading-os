@@ -22,11 +22,18 @@
         "report_id": "CN-000096-2026-07-30-rapid-triage-7f8fb5cca54a",
         "report_type": "rapid_triage",
         "sha256": "8306746f1787c91187f9a7003ee2f4965b2b9380cdc8db948ce0b012f027dede"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-b7e027738efe.md",
+        "report_id": "CN-000096-2026-07-30-rapid-triage-b7e027738efe",
+        "report_type": "rapid_triage",
+        "sha256": "9a92f0d108fce72952a320845bce39146c1a84c5a046e452344cf83b6f93d9c8"
       }
     ],
-    "latest": "reports/2026-07-30-rapid-triage-7f8fb5cca54a.md",
+    "latest": "reports/2026-07-30-rapid-triage-b7e027738efe.md",
     "latest_by_type": {
-      "rapid_triage": "reports/2026-07-30-rapid-triage-7f8fb5cca54a.md"
+      "rapid_triage": "reports/2026-07-30-rapid-triage-b7e027738efe.md"
     }
   },
   "research": {
@@ -34,12 +41,12 @@
     "information_cutoff": "2026-07-30T03:03:20+08:00",
     "latest_rapid_triage": {
       "information_cutoff": "2026-07-30T03:03:20+08:00",
-      "published_at": "2026-07-30T15:55:20+08:00",
-      "report_id": "CN-000096-2026-07-30-rapid-triage-7f8fb5cca54a",
-      "report_path": "reports/2026-07-30-rapid-triage-7f8fb5cca54a.md",
+      "published_at": "2026-07-30T19:43:00+08:00",
+      "report_id": "CN-000096-2026-07-30-rapid-triage-b7e027738efe",
+      "report_path": "reports/2026-07-30-rapid-triage-b7e027738efe.md",
       "review_mode": "baseline_recheck",
-      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000096/20260730T155520+0800.triage.json",
-      "source_package_sha256": "7f8fb5cca54a423bef064780e9ea370886ced0675c3040ad253a86db7e1fd17b"
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002-correction-001/000096/20260730T194300+0800.triage.json",
+      "source_package_sha256": "b7e027738efe1217851247ce59ebfe7bd78464ab823ee6cf08251985b01c6bc0"
     },
     "rebaseline_required": false,
     "refresh_due_at": "2026-10-28T03:03:20+08:00"
@@ -51,8 +58,8 @@
       "condition": {
         "description": "披露2026年半年度正式报告，核验航天欧华风险款项减值、预付款和其他应收款、银行承兑汇票责任、分部毛利、经营现金流、短期借款、妈湾电力股利及新站初始贡献。"
       },
-      "reason": "正式中报将决定H1预告利润是否需要回撤，并提供重建普通股所有者现金收益所需的最低完整报表。",
-      "trigger_id": "2026-interim-filing",
+      "reason": "正式中报将决定H1预告利润是否需要回撤，并提供重建普通股所有者现金收益所需的完整报表。",
+      "trigger_id": "cn000096_2026_interim_filing",
       "type": "filing"
     },
     {
@@ -61,26 +68,26 @@
         "operator": "price_lte",
         "threshold": 6.2
       },
-      "reason": "在基本面未进一步恶化时，6.20元对应市值约32.74亿元和约1.19倍Q1归母净资产，值得重新检验资产折价是否开始覆盖低ROE、信用损失及资本配置风险。",
-      "trigger_id": "price-below-6-20",
+      "reason": "在基本面未进一步恶化时，6.20元对应市值约32.74亿元和约1.19倍Q1归母净资产，值得重新检验价格折让是否开始覆盖低ROE、信用损失及资本配置风险。",
+      "trigger_id": "cn000096_price_6_20",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "description": "航天欧华专项调查、公安或司法程序、上游退款或交货、下游回款、银行承兑追索、补充减值、重大授信担保变化；或妈湾电力分红、横岭新站经营、风电项目核准增资、重大关联交易及新增资本投入出现可量化进展。"
+        "description": "航天欧华专项调查、公安或司法程序、上游退款或交货、下游回款、银行承兑追索、补充减值或重大授信担保发生可量化变化；或者妈湾电力分红、横岭新站经营、风电项目核准增资及新增重大资本投入出现实质进展。"
       },
-      "reason": "这些事件会直接改变风险款项回收率、净债务、普通股资产归属和新增资本的预期回报。",
-      "trigger_id": "trade-fraud-or-capital-event",
+      "reason": "这些事件会直接改变风险款项回收率、净债务、治理判断和新增资本的预期回报。",
+      "trigger_id": "cn000096_trade_fraud_or_capital_event",
       "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "description": "连续四个季度剔除低价库存释放、证券交易、公允价值变动和异常信用损失，并扣除维持性资本开支、净利息、少数股东损益后，普通股所有者现金收益达到至少1亿元；同时航天欧华风险款项回收或可靠覆盖比例达到90%，妈湾电力现金分红未下降。"
+        "description": "连续四个季度剔除低价库存释放、证券交易、公允价值变动和异常信用损失，并扣除维持性资本开支、净利息及少数股东损益后，普通股所有者现金收益达到至少1亿元；同时航天欧华风险款项回收或可靠覆盖比例达到90%，妈湾电力现金分红未下降。"
       },
-      "reason": "达到该门槛才说明账面资产开始转化为可持续普通股现金收益，足以重新评估当前估值与资本配置。",
-      "trigger_id": "owner-earnings-thesis",
+      "reason": "达到该组合门槛才说明账面资产开始稳定转化为普通股所有者现金收益，并足以重新评估当前估值和资本配置。",
+      "trigger_id": "cn000096_owner_earnings_thesis",
       "type": "thesis"
     },
     {
@@ -89,8 +96,8 @@
         "due_at": "2026-10-28T03:03:20+08:00",
         "origin": "ttl"
       },
-      "reason": "即使没有单项重大事件，也应在90天后用三季报、调查进展、新站经营、油品价差、电力分红、债务和新价格重做快速复核。",
-      "trigger_id": "routine-90-day-refresh",
+      "reason": "即使没有单项重大事件，也应在90天后结合三季报、调查进展、新站经营、油品价差、电力分红、债务和最新价格重做快速复核。",
+      "trigger_id": "cn000096_review_ttl_90d",
       "type": "date"
     }
   ],
@@ -103,7 +110,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-30T15:55:20+08:00",
+  "updated_at": "2026-07-30T19:43:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,

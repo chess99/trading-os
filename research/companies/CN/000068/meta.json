@@ -22,11 +22,18 @@
         "report_id": "CN-000068-2026-07-30-rapid-triage-6ee579897c5e",
         "report_type": "rapid_triage",
         "sha256": "964b545aeefce60b3466d4e4e1c15f1b9379c6fad963817fa1d8b99a192bffa4"
+      },
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-314df8a77dc2.md",
+        "report_id": "CN-000068-2026-07-30-rapid-triage-314df8a77dc2",
+        "report_type": "rapid_triage",
+        "sha256": "386d5e921f204f4b751c1166b1dcbb442ed3449ac5193ed4a160df5342697b64"
       }
     ],
-    "latest": "reports/2026-07-30-rapid-triage-6ee579897c5e.md",
+    "latest": "reports/2026-07-30-rapid-triage-314df8a77dc2.md",
     "latest_by_type": {
-      "rapid_triage": "reports/2026-07-30-rapid-triage-6ee579897c5e.md"
+      "rapid_triage": "reports/2026-07-30-rapid-triage-314df8a77dc2.md"
     }
   },
   "research": {
@@ -34,12 +41,12 @@
     "information_cutoff": "2026-07-30T03:03:20+08:00",
     "latest_rapid_triage": {
       "information_cutoff": "2026-07-30T03:03:20+08:00",
-      "published_at": "2026-07-30T15:06:10+08:00",
-      "report_id": "CN-000068-2026-07-30-rapid-triage-6ee579897c5e",
-      "report_path": "reports/2026-07-30-rapid-triage-6ee579897c5e.md",
+      "published_at": "2026-07-30T19:34:00+08:00",
+      "report_id": "CN-000068-2026-07-30-rapid-triage-314df8a77dc2",
+      "report_path": "reports/2026-07-30-rapid-triage-314df8a77dc2.md",
       "review_mode": "baseline_recheck",
-      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000068/20260730T150610+0800.triage.json",
-      "source_package_sha256": "6ee579897c5e501917925ea84836b13b737f70e95136f3d904741303a484f303"
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002-correction-001/000068/20260730T193400+0800.triage.json",
+      "source_package_sha256": "314df8a77dc23422c04e73ecac996ac6d5fbaa5a6dc52f1e4aa9ab036731992f"
     },
     "rebaseline_required": false,
     "refresh_due_at": "2026-10-28T03:03:20+08:00"
@@ -52,35 +59,35 @@
         "operator": "price_lte",
         "threshold": 2.0
       },
-      "reason": "相对2.76元下跌约27.5%将显著降低市场对土地及重组可选性的隐含定价，值得按届时最新净资产、债务和土地进度重新核验。",
-      "trigger_id": "000068-price-material-reset",
+      "reason": "较2.76元下跌约27.5%会降低土地与重组可选性的隐含定价，应按届时净资产、净债务和土地进度重新核验，但价格触发不能替代当前正式甄别。",
+      "trigger_id": "000068-price-reset",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "description": "2026年半年度报告正式披露，可核验扣非归母利润、经营现金流、货币资金、有息负债、应收账款、合同资产和长期应收款。"
+        "description": "2026年半年度报告正式披露，能够核验业绩预告、扣非归母利润、经营现金流、货币资金、有息负债、应收账款、合同资产和长期应收款。"
       },
-      "reason": "正式中报将验证业绩预告区间，并判断一季度现金流压力和工程回款是否持续。",
+      "reason": "正式中报是判断核心亏损、现金缓冲和工程回款是否继续恶化的最近一手证据。",
       "trigger_id": "000068-2026-h1-filing",
       "type": "filing"
     },
     {
       "active": true,
       "condition": {
-        "description": "坪山区实际支付184082093元补偿尾款，或留用地选址、权益容积、用途、开发义务及审批结果获得正式文件确认。"
+        "description": "坪山区实际支付184082093元剩余补偿款，或留用地选址、权益容积、用途、开发义务及审批结果获得正式文件确认。"
       },
-      "reason": "坪山现金与土地权利是当前价格最重要的非经营性价值支柱，任何正式落地都可能 materially 改变资产净值判断。",
-      "trigger_id": "000068-pingshan-cash-or-land-approval",
+      "reason": "坪山现金与土地权利是当前价值判断的最大变量，任何正式落地均可能实质改变风险调整后资产净值。",
+      "trigger_id": "000068-pingshan-settlement-or-approval",
       "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "description": "连续两个报告期在剔除政府补偿、资产处置、资金池归集及重大营运资金摆动后，普通股所有者收益转正，且应收账款、合同资产和长期应收款合计未继续恶化。"
+        "description": "连续两个报告期在剔除政府补偿、资产处置、资金归集及重大营运资金摆动后，普通股所有者收益转正，且应收账款、合同资产和长期应收款合计不再恶化。"
       },
-      "reason": "该条件可证伪当前核心业务无法产生持续普通股所有者收益的判断。",
-      "trigger_id": "000068-core-owner-earnings-proof",
+      "reason": "该条件可证伪持续经营业务尚不能产生稳定普通股所有者收益的核心判断。",
+      "trigger_id": "000068-owner-earnings-proof",
       "type": "thesis"
     },
     {
@@ -89,8 +96,8 @@
         "due_at": "2026-10-28T03:03:20+08:00",
         "origin": "ttl"
       },
-      "reason": "即使无单一重大事件，也应在90天后复核三季报、坪山项目、关联交易、债务和回款进展。",
-      "trigger_id": "000068-routine-refresh",
+      "reason": "即使无单一重大事件，也应在90天后复核三季报、坪山审批、关联交易、债务和回款进展。",
+      "trigger_id": "000068-correction-refresh",
       "type": "date"
     }
   ],
@@ -103,7 +110,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-30T15:06:10+08:00",
+  "updated_at": "2026-07-30T19:34:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
