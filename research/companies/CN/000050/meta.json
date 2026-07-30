@@ -20,74 +20,83 @@
         "sha256": "01766555770183d13e13f263c69831c8d6a9be22f26821823985973c5af3b175"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-845eb00ae9e8.md",
+        "report_id": "CN-000050-2026-07-30-rapid-triage-845eb00ae9e8",
+        "report_type": "rapid_triage",
+        "sha256": "3d568c83885ad7604a643af7441d386142461d71deb8adb256bfe267b588a0aa"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-845eb00ae9e8.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-845eb00ae9e8.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T12:51:00+08:00",
+      "report_id": "CN-000050-2026-07-30-rapid-triage-845eb00ae9e8",
+      "report_path": "reports/2026-07-30-rapid-triage-845eb00ae9e8.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000050/20260730T125100+0800.triage.json",
+      "source_package_sha256": "845eb00ae9e810b0fac4645c4722be389fe35a8ecb75603d760f5cedc316d1ae"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露2026年半年度报告及减值、投资收益或债务附注。"
       },
-      "reason": "复核2026年中报，重点拆分Q2亏损、投资损失、资产减值、经营现金流和车载专业显示毛利率",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复核2026年三季报，判断行业修复和产能利用率是否延续",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "用正式收入、分业务毛利、经营现金流、资本开支、联营AMOLED损失、减值和债务数据替代预告，重算正常化所有者收益与24至36个月偿债缓冲。",
+      "trigger_id": "000050-2026h1-formal-report",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 6.0
+        "threshold": 5.5
       },
-      "reason": "进入调整后买入区上沿，仅触发中报现金流和资产负债表复核，不自动买入",
-      "trigger_id": "legacy-price-1",
+      "reason": "5.50元对应约134亿元市值和约0.51倍粗略H1账面价值；仅触发以最新现金、债务和经济折旧重新核验资产折价，不代表自动晋级。",
+      "trigger_id": "000050-price-lte-5-50",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 5.4
+        "description": "公司披露增发、可转债、重大新增资本开支、债务展期或违约、评级下调、重大关联交易，或新的大额回购注销与现金分红安排。"
       },
-      "reason": "进入强资产折价区，需Q3证明AMOLED和投资损失环比收窄后再提高仓位",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事项会直接改变股权稀释、24至36个月生存和普通股东资本回报判断。",
+      "trigger_id": "000050-financing-capex-governance-event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 8.2
+        "description": "连续两个报告期扣非归母利润转正，经营现金流覆盖接近经济折旧的维持性资本开支及利息，联营AMOLED投资损失环比收窄，且车载专业显示毛利和净债务不恶化。"
       },
-      "reason": "达到调整后合理价值上沿，若利润未兑现应降低仓位",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "该组合证据可证明当前低PB开始转化为可持续普通股所有者收益，而非仅由低资本开支和营运资金释放形成现金流。",
+      "trigger_id": "000050-owner-earnings-recovery-thesis",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 9.5
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "进入乐观情景上沿，除非ROE和现金流显著改善否则卖出",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
+      "reason": "若上述财报、价格、事件和论点触发器均未命中，90天后复核三季报窗口、AMOLED亏损、债务滚续和资本开支。",
+      "trigger_id": "000050-routine-90d-refresh",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -99,7 +108,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T12:51:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
