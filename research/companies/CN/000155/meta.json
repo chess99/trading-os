@@ -15,74 +15,83 @@
         "sha256": "62d8db884e2e28dbb5fe20a0ed8a1e91e1245dde515f2289812ec2bf1fbfa01f"
       }
     ],
-    "history": [],
-    "latest": null,
-    "latest_by_type": {}
+    "history": [
+      {
+        "as_of": "2026-07-30",
+        "path": "reports/2026-07-30-rapid-triage-470dabe1e673.md",
+        "report_id": "CN-000155-2026-07-30-rapid-triage-470dabe1e673",
+        "report_type": "rapid_triage",
+        "sha256": "0d87b560f9e628f2ca73ab97893dc7b4ba01f92f0296ae83b2da31486027c007"
+      }
+    ],
+    "latest": "reports/2026-07-30-rapid-triage-470dabe1e673.md",
+    "latest_by_type": {
+      "rapid_triage": "reports/2026-07-30-rapid-triage-470dabe1e673.md"
+    }
   },
   "research": {
-    "coverage_status": "requires_rebaseline",
-    "information_cutoff": null,
-    "rebaseline_required": true
+    "coverage_status": "covered",
+    "information_cutoff": "2026-07-30T03:03:20+08:00",
+    "latest_rapid_triage": {
+      "information_cutoff": "2026-07-30T03:03:20+08:00",
+      "published_at": "2026-07-30T16:25:00+08:00",
+      "report_id": "CN-000155-2026-07-30-rapid-triage-470dabe1e673",
+      "report_path": "reports/2026-07-30-rapid-triage-470dabe1e673.md",
+      "review_mode": "baseline_recheck",
+      "source_package_path": "coverage/cn-a/triage/2026-07-30-all-a-continuous-triage-002/000155/20260730T162500+0800.triage.json",
+      "source_package_sha256": "470dabe1e6734811e0da9061da173b284756595284ea17540c3371cc0bb49faf"
+    },
+    "rebaseline_required": false,
+    "refresh_due_at": "2026-10-28T03:03:20+08:00"
   },
   "schema_version": 2,
   "triggers": [
     {
       "active": true,
       "condition": {
-        "date": "2026-08-31"
+        "description": "公司披露2026年半年度正式报告，可核验风光、锂矿、锂盐、垃圾发电分部利润，李家沟及锂盐产能利用率、锂产品售价与库存、经营现金流、资本开支、净债务和少数股东损益。"
       },
-      "reason": "复查2026年半年报，验证利润、现金流、资本开支和锂业务进展",
-      "trigger_id": "legacy-review-1",
-      "type": "date"
-    },
-    {
-      "active": true,
-      "condition": {
-        "date": "2026-10-31"
-      },
-      "reason": "复查2026年三季报，判断一季度改善是否延续",
-      "trigger_id": "legacy-review-2",
-      "type": "date"
+      "reason": "正式半年报是把利润预告转换为普通股所有者现金收益、区分锂价周期和可持续运营改善的最近决定性证据。",
+      "trigger_id": "cn000155_2026_h1_filing",
+      "type": "filing"
     },
     {
       "active": true,
       "condition": {
         "operator": "price_lte",
-        "threshold": 9.5
+        "threshold": 10.0
       },
-      "reason": "进入初始买入区，可建立观察仓",
-      "trigger_id": "legacy-price-1",
+      "reason": "在基本面未同步恶化时，10.00元对应市值约184.62亿元，可明显改善相对4亿至9亿元粗略正常化所有者收益和高资本开支风险的赔率，值得重算。",
+      "trigger_id": "cn000155_price_10_00",
       "type": "price"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_lte",
-        "threshold": 8.5
+        "description": "四川能源发展集团披露同业竞争解决方案、资产注入或出售条款，或公司披露单项10亿元以上关联采购、风光投资、融资、担保、股权融资、锂矿扩产或锂盐重大停产安排。"
       },
-      "reason": "若基本面未恶化且锂价企稳，可考虑加仓",
-      "trigger_id": "legacy-price-2",
-      "type": "price"
+      "reason": "这些事项会直接改变项目回报、关联定价、净债务、少数股东归属和每股稀释边界。",
+      "trigger_id": "cn000155_parent_or_project_event",
+      "type": "event"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 14.5
+        "description": "连续两个正式报告期证明李家沟及锂盐产能利用率稳定、锂产品利润未依赖短期价格尖峰，风光结算电量和电价企稳，且扣除少数股东后经营现金流减维持性资本开支按年化达到12亿元以上；或相反跌破6亿元。"
       },
-      "reason": "若基本面未同步验证，需降低仓位",
-      "trigger_id": "legacy-price-3",
-      "type": "price"
+      "reason": "该区间的上、下穿越将分别验证或否定当前价格隐含的中周期普通股所有者收益。",
+      "trigger_id": "cn000155_owner_earnings_thesis",
+      "type": "thesis"
     },
     {
       "active": true,
       "condition": {
-        "operator": "price_gte",
-        "threshold": 17.0
+        "due_at": "2026-10-28T03:03:20+08:00",
+        "origin": "ttl"
       },
-      "reason": "估值显著透支乐观情景，建议大幅减仓",
-      "trigger_id": "legacy-price-4",
-      "type": "price"
+      "reason": "锂价、库存、风电送出、控股股东整合和资本开支变化较快，即使其他触发器未命中，也应在90天内结合半年报或三季报复核。",
+      "trigger_id": "cn000155_review_ttl_90d",
+      "type": "date"
     }
   ],
   "underwriting": {
@@ -94,7 +103,7 @@
     "review_id": null,
     "status": null
   },
-  "updated_at": "2026-07-21T21:15:00+08:00",
+  "updated_at": "2026-07-30T16:25:00+08:00",
   "valuation": {
     "bear_value": null,
     "buy_zone": null,
