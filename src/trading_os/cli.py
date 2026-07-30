@@ -60,7 +60,9 @@ from .research_assets.quality_workflow import (
     load_quality_policy_snapshot,
     materialize_cycle_quality_reopens,
     prepare_cycle_quality_audit,
+    prepare_cycle_quality_audit_continuation,
     prepare_scope_identity_quality_audit,
+    record_cycle_quality_audit_continuation,
     scope_quality_status,
 )
 from .research_assets.research_allocation import (
@@ -419,6 +421,27 @@ def build_parser() -> argparse.ArgumentParser:
     quality_triage_record.add_argument("--reviews", required=True)
     _add_timestamp(quality_triage_record)
     quality_triage_record.set_defaults(func=cmd_coverage_quality_triage_record)
+
+    quality_triage_continue = coverage_sub.add_parser(
+        "quality-triage-continue",
+        help="Seal the next deterministic expansion or full-census redo round",
+    )
+    _add_coverage_root(quality_triage_continue)
+    quality_triage_continue.add_argument("cycle_id")
+    _add_timestamp(quality_triage_continue)
+    quality_triage_continue.set_defaults(func=cmd_coverage_quality_triage_continue)
+
+    quality_triage_record_continuation = coverage_sub.add_parser(
+        "quality-triage-record-continuation",
+        help="Seal independent reviews for the latest quality continuation round",
+    )
+    _add_coverage_root(quality_triage_record_continuation)
+    quality_triage_record_continuation.add_argument("cycle_id")
+    quality_triage_record_continuation.add_argument("--reviews", required=True)
+    _add_timestamp(quality_triage_record_continuation)
+    quality_triage_record_continuation.set_defaults(
+        func=cmd_coverage_quality_triage_record_continuation
+    )
 
     quality_triage_status_cmd = coverage_sub.add_parser(
         "quality-triage-status", help="Verify cycle quality bindings and result status"
@@ -1131,6 +1154,37 @@ def cmd_coverage_quality_triage_record(ns: argparse.Namespace) -> int:
     _write_success(
         {
             "ok": status["status"] == "passed",
+            **status,
+            "reopen_materialization": materialization,
+        }
+    )
+    return 0
+
+
+def cmd_coverage_quality_triage_continue(ns: argparse.Namespace) -> int:
+    status = prepare_cycle_quality_audit_continuation(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        created_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **status})
+    return 0
+
+
+def cmd_coverage_quality_triage_record_continuation(ns: argparse.Namespace) -> int:
+    status = record_cycle_quality_audit_continuation(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        reviews=_load_review_rows(ns.reviews),
+        completed_at=_timestamp(ns.at),
+    )
+    materialization = materialize_cycle_quality_reopens(
+        root=ns.root, cycle_id=ns.cycle_id
+    )
+    _write_success(
+        {
+            "ok": status["status"] == "passed"
+            and materialization["reopen_count"] == 0,
             **status,
             "reopen_materialization": materialization,
         }

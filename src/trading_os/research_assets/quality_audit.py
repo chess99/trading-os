@@ -26,6 +26,10 @@ ALL_STRATA = ("hard_exclusion", *STOP_STRATA)
 STOP_DISPOSITIONS = set(STOP_STRATA)
 ALL_DISPOSITIONS = STOP_DISPOSITIONS | {"triage_candidate"}
 FINDING_SEVERITIES = {"minor", "material", "major"}
+ERROR_SEMANTICS = {
+    "finding_severity_v1",
+    "routing_disagreement_v1",
+}
 IDENTITY_VERDICTS = {"hard_exclusion", "eligible", "exception"}
 PROVENANCE_FIELDS = {"agent", "model", "tools", "generated_at"}
 SOURCE_FIELDS = {"source_id", "tier", "title", "accessed_at", "url", "local_path"}
@@ -372,6 +376,8 @@ def seal_cycle_quality_audit_plan(
     policy: Mapping[str, Any],
     created_at: dt.datetime,
     already_sampled_symbols: Mapping[str, Sequence[str]] | None = None,
+    force_full_census_strata: Sequence[str] = (),
+    error_semantics: str = "routing_disagreement_v1",
 ) -> dict[str, Any]:
     """Seal a stratified half-blind cycle plan and per-company fact packets."""
 
@@ -379,21 +385,43 @@ def seal_cycle_quality_audit_plan(
     normalized_policy = validate_quality_audit_policy(policy)
     audit = _identifier(audit_id, "audit_id")
     cycle = _identifier(cycle_id, "cycle_id")
+    if error_semantics not in ERROR_SEMANTICS:
+        raise QualityAuditError(
+            f"unsupported quality-audit error semantics: {error_semantics}"
+        )
     binding_sha = _sha256(cohort_sha256, "cohort_sha256")
     population = _normalize_cycle_population(records)
     base = Path(output_dir)
     items = []
     strata_rows = []
     sampled_map = already_sampled_symbols or {}
+    forced_strata = set(force_full_census_strata)
+    unknown_forced = forced_strata - set(STOP_STRATA)
+    if unknown_forced:
+        raise QualityAuditError(
+            f"unsupported forced full-census strata: {sorted(unknown_forced)}"
+        )
     for stratum in STOP_STRATA:
         stratum_population = [item for item in population if item["disposition"] == stratum]
-        sample = deterministic_stratified_sample(
-            stratum_population,
-            stratum=stratum,
-            subject_binding_sha256=binding_sha,
-            policy=normalized_policy,
-            already_sampled_symbols=sampled_map.get(stratum, ()),
-        )
+        if stratum in forced_strata:
+            ranked = deterministic_stratified_sample(
+                stratum_population,
+                stratum=stratum,
+                subject_binding_sha256=binding_sha,
+                policy=normalized_policy,
+            )["ranked_symbols"]
+            sample = {
+                "selected_symbols": ranked,
+                "ranked_symbols": ranked,
+            }
+        else:
+            sample = deterministic_stratified_sample(
+                stratum_population,
+                stratum=stratum,
+                subject_binding_sha256=binding_sha,
+                policy=normalized_policy,
+                already_sampled_symbols=sampled_map.get(stratum, ()),
+            )
         selected = set(sample["selected_symbols"])
         selected_records = [item for item in stratum_population if item["symbol"] in selected]
         selected_records.sort(key=lambda item: sample["selected_symbols"].index(item["symbol"]))
@@ -424,15 +452,19 @@ def seal_cycle_quality_audit_plan(
             {
                 "stratum": stratum,
                 "population_count": len(stratum_population),
-                "already_sampled_count": len(sampled_map.get(stratum, ())),
+                "already_sampled_count": (
+                    0 if stratum in forced_strata else len(sampled_map.get(stratum, ()))
+                ),
                 "sampled_count": len(selected_records),
+                "full_census_redo": stratum in forced_strata,
                 "ranked_symbols": sample["ranked_symbols"],
             }
         )
     plan = {
-        "schema_version": 1,
+        "schema_version": 2,
         "audit_id": audit,
         "subject_kind": "triage_false_negative",
+        "error_semantics": error_semantics,
         "cycle_id": cycle,
         "cohort_path": _text(cohort_path, "cohort_path"),
         "cohort_sha256": binding_sha,
@@ -502,12 +534,28 @@ def seal_cycle_quality_audit_result(
         original = item["stratum"]
         recommended = review["recommended_disposition"]
         finding_severities = {finding["severity"] for finding in review["findings"]}
-        major = bool(
-            recommended == "triage_candidate"
-            or (original == "conditional_stop") != (recommended == "conditional_stop")
-            or "major" in finding_severities
-        )
-        material = bool(major or recommended != original or "material" in finding_severities)
+        error_semantics = plan.get("error_semantics", "finding_severity_v1")
+        if error_semantics not in ERROR_SEMANTICS:
+            raise QualityAuditError(
+                f"unsupported quality-audit error semantics: {error_semantics}"
+            )
+        if error_semantics == "routing_disagreement_v1":
+            major = bool(
+                recommended == "triage_candidate"
+                or (original == "conditional_stop")
+                != (recommended == "conditional_stop")
+            )
+            material = bool(major or recommended != original)
+        else:
+            major = bool(
+                recommended == "triage_candidate"
+                or (original == "conditional_stop")
+                != (recommended == "conditional_stop")
+                or "major" in finding_severities
+            )
+            material = bool(
+                major or recommended != original or "material" in finding_severities
+            )
         if major:
             reopen_symbols.append(item["symbol"])
         stat = stats[original]
@@ -574,6 +622,7 @@ def seal_cycle_quality_audit_result(
         "audit_id": plan["audit_id"],
         "subject_kind": "triage_false_negative",
         "cycle_id": plan["cycle_id"],
+        "error_semantics": plan.get("error_semantics", "finding_severity_v1"),
         "plan_sha256": verify_sealed(path).sha256,
         "policy": _policy_reference(normalized_policy),
         "completed_at": completed_at.isoformat(),

@@ -349,6 +349,73 @@ def test_major_disagreement_reopens_and_over_threshold_requests_expansion(tmp_pa
     assert payload["reopen_symbols"] == [plan["items"][0]["symbol"]]
 
 
+def test_routing_error_semantics_do_not_treat_issuer_risk_as_audit_error(
+    tmp_path: Path,
+) -> None:
+    from trading_os.research_assets.quality_audit import (
+        seal_cycle_quality_audit_plan,
+        seal_cycle_quality_audit_result,
+    )
+
+    records = [
+        _cycle_record(index, "conditional_stop") for index in range(1, 3)
+    ]
+    created = seal_cycle_quality_audit_plan(
+        output_dir=tmp_path / "cycle-quality",
+        audit_id="cycle-audit-routing-semantics",
+        cycle_id="cycle-routing-semantics",
+        cohort_path="coverage/cn-a/triage/cycle-routing-semantics/cohort.json",
+        cohort_sha256="9" * 64,
+        records=records,
+        policy=_policy(),
+        created_at=NOW,
+    )
+    plan = _load_plan(created["plan_path"])
+    reviews = [
+        _cycle_review(item, disposition="conditional_stop", severity="major")
+        for item in plan["items"]
+    ]
+    result = seal_cycle_quality_audit_result(
+        plan_path=created["plan_path"],
+        reviews=reviews,
+        policy=_policy(),
+        completed_at=NOW + dt.timedelta(minutes=1),
+    )
+    payload = json.loads(Path(result["result_path"]).read_text(encoding="utf-8"))
+    assert payload["error_semantics"] == "routing_disagreement_v1"
+    assert payload["material_error_count"] == 0
+    assert payload["major_disagreement_count"] == 0
+    assert payload["redo_required"] is False
+    assert payload["status"] == "passed"
+
+
+def test_forced_full_census_plan_is_stable_and_explicit(tmp_path: Path) -> None:
+    from trading_os.research_assets.quality_audit import seal_cycle_quality_audit_plan
+
+    records = [_cycle_record(index, "conditional_stop") for index in range(1, 5)]
+    created = seal_cycle_quality_audit_plan(
+        output_dir=tmp_path / "cycle-quality",
+        audit_id="cycle-audit-full-census",
+        cycle_id="cycle-full-census",
+        cohort_path="coverage/cn-a/triage/cycle-full-census/cohort.json",
+        cohort_sha256="8" * 64,
+        records=records,
+        policy=_policy(),
+        created_at=NOW,
+        already_sampled_symbols={
+            "conditional_stop": [record["symbol"] for record in records]
+        },
+        force_full_census_strata=["conditional_stop"],
+    )
+    plan = _load_plan(created["plan_path"])
+    row = next(
+        value for value in plan["strata"] if value["stratum"] == "conditional_stop"
+    )
+    assert row["full_census_redo"] is True
+    assert row["already_sampled_count"] == 0
+    assert [item["symbol"] for item in plan["items"]] == row["ranked_symbols"]
+
+
 def test_error_rate_equal_to_threshold_does_not_expand(tmp_path: Path):
     from trading_os.research_assets.quality_audit import (
         seal_cycle_quality_audit_plan,

@@ -515,3 +515,61 @@ def test_cli_allocates_research_capacity_and_evaluates_profile(
 
     assert code == 0
     assert json.loads(capsys.readouterr().out)["next_stage"] == "scoped_research"
+
+
+def test_cli_quality_triage_continuation_commands(monkeypatch, tmp_path: Path, capsys):
+    import trading_os.cli as cli
+
+    reviews_path = tmp_path / "reviews.json"
+    reviews_path.write_text('{"reviews": []}', encoding="utf-8")
+    monkeypatch.setattr(
+        cli,
+        "prepare_cycle_quality_audit_continuation",
+        lambda **_: {
+            "status": "pending_reviews",
+            "round_number": 2,
+            "idempotent": False,
+        },
+    )
+    monkeypatch.setattr(
+        cli,
+        "record_cycle_quality_audit_continuation",
+        lambda **_: {"status": "passed", "round_number": 2},
+    )
+    monkeypatch.setattr(
+        cli,
+        "materialize_cycle_quality_reopens",
+        lambda **_: {"reopen_count": 0},
+    )
+
+    code = cli.main(
+        [
+            "coverage",
+            "quality-triage-continue",
+            "cycle-id",
+            "--root",
+            str(tmp_path / "coverage" / "cn-a"),
+            "--at",
+            T0,
+        ]
+    )
+    assert code == 0
+    assert json.loads(capsys.readouterr().out)["round_number"] == 2
+
+    code = cli.main(
+        [
+            "coverage",
+            "quality-triage-record-continuation",
+            "cycle-id",
+            "--root",
+            str(tmp_path / "coverage" / "cn-a"),
+            "--reviews",
+            str(reviews_path),
+            "--at",
+            T1,
+        ]
+    )
+    assert code == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["ok"] is True
+    assert payload["status"] == "passed"

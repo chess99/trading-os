@@ -16,11 +16,14 @@ from .coverage_store import (
     write_jsonl,
 )
 from .quality_audit import (
+    STOP_STRATA,
     QualityAuditError,
+    deterministic_stratified_sample,
     load_quality_audit_policy,
     quality_audit_status,
     quality_policy_sha256,
     seal_cycle_quality_audit_plan,
+    seal_cycle_quality_audit_result,
     seal_scope_identity_audit_plan,
     validate_quality_audit_policy,
 )
@@ -55,6 +58,10 @@ def scope_quality_root(root: str | Path, run_id: str) -> Path:
 
 def cycle_quality_root(root: str | Path, cycle_id: str) -> Path:
     return Path(root) / "triage" / _identifier(cycle_id, "cycle_id") / "quality"
+
+
+def cycle_quality_continuations_root(root: str | Path, cycle_id: str) -> Path:
+    return cycle_quality_root(root, cycle_id) / "continuations"
 
 
 def seal_quality_policy_snapshot(
@@ -382,6 +389,230 @@ def prepare_cycle_quality_audit(
     return cycle_quality_status(root=base, cycle_id=cycle)
 
 
+def prepare_cycle_quality_audit_continuation(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    created_at: dt.datetime,
+) -> dict[str, Any]:
+    """Seal the next deterministic expansion or full-census redo round."""
+
+    _aware(created_at, "created_at")
+    base = Path(root)
+    repository = base.parent.parent.resolve()
+    cycle = _identifier(cycle_id, "cycle_id")
+    quality_root = cycle_quality_root(base, cycle)
+    base_status = cycle_quality_status(root=base, cycle_id=cycle)
+    if base_status["status"] == "pending_reviews":
+        raise QualityWorkflowError("initial cycle quality reviews are still pending")
+
+    existing = _cycle_quality_continuation_dirs(base, cycle)
+    if existing:
+        latest_status = _cycle_quality_output_status(
+            root=base,
+            output=existing[-1],
+            cycle_id=cycle,
+        )
+        if latest_status["status"] == "pending_reviews":
+            return {
+                **latest_status,
+                "round_number": len(existing) + 1,
+                "idempotent": True,
+            }
+        previous_output = existing[-1]
+    else:
+        previous_output = quality_root
+
+    previous_result_path = previous_output / "result.json"
+    previous_result_seal, previous_result = _load_sealed_json(
+        previous_result_path,
+        artifact_type="triage_quality_audit_result",
+        label="previous quality audit result",
+    )
+    expansion = {
+        _text(name, "expansion stratum"): [
+            _symbol(symbol) for symbol in _sequence(symbols, "expansion symbols")
+        ]
+        for name, symbols in _mapping(
+            previous_result.get("expansion_symbols"), "expansion_symbols"
+        ).items()
+    }
+    redo_strata = {
+        _text(value, "redo stratum")
+        for value in _sequence(previous_result.get("redo_strata"), "redo_strata")
+    }
+    if not expansion and not redo_strata:
+        raise QualityWorkflowError(
+            "latest quality result does not require expansion or a stratum redo"
+        )
+    unknown = (set(expansion) | redo_strata) - set(STOP_STRATA)
+    if unknown:
+        raise QualityWorkflowError(f"quality continuation has invalid strata: {sorted(unknown)}")
+    overlap = set(expansion) & redo_strata
+    if overlap:
+        raise QualityWorkflowError(
+            f"quality continuation cannot expand and redo the same strata: {sorted(overlap)}"
+        )
+
+    cohort, cohort_sha, cohort_relative, records = _cycle_quality_records(
+        base=base,
+        cycle=cycle,
+    )
+    del cohort
+    population_symbols = {
+        stratum: [
+            str(record["symbol"])
+            for record in records
+            if record["disposition"] == stratum
+        ]
+        for stratum in STOP_STRATA
+    }
+    sampled = {stratum: [] for stratum in STOP_STRATA}
+    for plan_path in [
+        quality_root / "plan.json",
+        *(path / "plan.json" for path in existing),
+    ]:
+        _, plan = _load_sealed_json(
+            plan_path,
+            artifact_type="triage_quality_audit_plan",
+            label="quality audit plan",
+        )
+        for item in _sequence(plan.get("items"), "plan.items"):
+            row = _mapping(item, "plan item")
+            sampled[_text(row.get("stratum"), "plan item stratum")].append(
+                _symbol(row.get("symbol"))
+            )
+
+    already_sampled: dict[str, Sequence[str]] = {}
+    for stratum in STOP_STRATA:
+        if stratum in redo_strata:
+            already_sampled[stratum] = ()
+        elif stratum in expansion:
+            expected = set(expansion[stratum])
+            current = set(sampled[stratum])
+            if expected & current:
+                raise QualityWorkflowError(
+                    f"quality expansion repeats sampled symbols in {stratum}"
+                )
+            already_sampled[stratum] = sorted(current)
+        else:
+            already_sampled[stratum] = population_symbols[stratum]
+
+    snapshot = load_quality_policy_snapshot(
+        snapshot_path=base_status["canonical_paths"]["policy_snapshot"],
+        expected_subject_kind="triage_false_negative",
+        expected_subject_id=cycle,
+    )
+    for stratum, expected_symbols in expansion.items():
+        stratum_population = [
+            record for record in records if record["disposition"] == stratum
+        ]
+        try:
+            deterministic = deterministic_stratified_sample(
+                stratum_population,
+                stratum=stratum,
+                subject_binding_sha256=cohort_sha,
+                policy=snapshot["policy"],
+                already_sampled_symbols=already_sampled[stratum],
+            )
+        except QualityAuditError as exc:
+            raise QualityWorkflowError(
+                f"quality continuation expansion is invalid for {stratum}: {exc}"
+            ) from exc
+        if deterministic["selected_symbols"] != expected_symbols:
+            raise QualityWorkflowError(
+                f"quality continuation expansion does not match policy for {stratum}"
+            )
+    round_number = len(existing) + 2
+    output = (
+        cycle_quality_continuations_root(base, cycle)
+        / f"round-{round_number:04d}"
+    )
+    try:
+        plan = seal_cycle_quality_audit_plan(
+            output_dir=output,
+            audit_id=f"{cycle}:false-negative:round-{round_number:04d}",
+            cycle_id=cycle,
+            cohort_path=cohort_relative,
+            cohort_sha256=cohort_sha,
+            records=records,
+            policy=snapshot["policy"],
+            created_at=created_at,
+            already_sampled_symbols=already_sampled,
+            force_full_census_strata=sorted(redo_strata),
+        )
+    except QualityAuditError as exc:
+        raise QualityWorkflowError(f"cannot prepare quality continuation: {exc}") from exc
+    _seal_workflow_binding(
+        output=output,
+        repository=repository,
+        subject_kind="triage_false_negative",
+        subject_id=cycle,
+        source_path=base / "triage" / cycle / "cohort.json",
+        source_sha256=cohort_sha,
+        source_artifact_type="rapid_triage_cohort",
+        snapshot=snapshot,
+        plan_path=Path(plan["plan_path"]),
+        plan_sha256=plan["plan_sha256"],
+        plan_artifact_type="triage_quality_audit_plan",
+        created_at=created_at,
+        predecessor_result_path=previous_result_path,
+        predecessor_result_sha256=previous_result_seal.sha256,
+    )
+    status = _cycle_quality_output_status(root=base, output=output, cycle_id=cycle)
+    return {
+        **status,
+        "round_number": round_number,
+        "previous_result_sha256": previous_result_seal.sha256,
+        "idempotent": False,
+    }
+
+
+def record_cycle_quality_audit_continuation(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    reviews: Sequence[Mapping[str, Any]],
+    completed_at: dt.datetime,
+) -> dict[str, Any]:
+    """Seal reviews for the latest pending quality continuation round."""
+
+    _aware(completed_at, "completed_at")
+    base = Path(root)
+    cycle = _identifier(cycle_id, "cycle_id")
+    rounds = _cycle_quality_continuation_dirs(base, cycle)
+    if not rounds:
+        raise QualityWorkflowError("no quality continuation round is prepared")
+    output = rounds[-1]
+    status = _cycle_quality_output_status(root=base, output=output, cycle_id=cycle)
+    if status["status"] != "pending_reviews":
+        return {
+            **status,
+            "round_number": len(rounds) + 1,
+            "idempotent": True,
+        }
+    root_status = cycle_quality_status(root=base, cycle_id=cycle)
+    snapshot = load_quality_policy_snapshot(
+        snapshot_path=root_status["canonical_paths"]["policy_snapshot"],
+        expected_subject_kind="triage_false_negative",
+        expected_subject_id=cycle,
+    )
+    try:
+        seal_cycle_quality_audit_result(
+            plan_path=status["canonical_paths"]["plan"],
+            reviews=reviews,
+            policy=snapshot["policy"],
+            completed_at=completed_at,
+        )
+    except QualityAuditError as exc:
+        raise QualityWorkflowError(f"cannot record quality continuation: {exc}") from exc
+    return {
+        **_cycle_quality_output_status(root=base, output=output, cycle_id=cycle),
+        "round_number": len(rounds) + 1,
+        "idempotent": False,
+    }
+
+
 def scope_quality_status(*, root: str | Path, run_id: str) -> dict[str, Any]:
     return _workflow_status(
         root=Path(root),
@@ -406,6 +637,81 @@ def cycle_quality_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     )
 
 
+def _cycle_quality_output_status(
+    *, root: Path, output: Path, cycle_id: str
+) -> dict[str, Any]:
+    return _workflow_status(
+        root=root,
+        output=output,
+        subject_kind="triage_false_negative",
+        subject_id=_identifier(cycle_id, "cycle_id"),
+        source_artifact_type="rapid_triage_cohort",
+        plan_artifact_type="triage_quality_audit_plan",
+        result_artifact_type="triage_quality_audit_result",
+    )
+
+
+def _cycle_quality_continuation_dirs(root: Path, cycle_id: str) -> list[Path]:
+    parent = cycle_quality_continuations_root(root, cycle_id)
+    if not parent.is_dir():
+        return []
+    result = [
+        path
+        for path in parent.iterdir()
+        if path.is_dir() and re.fullmatch(r"round-[0-9]{4}", path.name)
+    ]
+    return sorted(result, key=lambda path: path.name)
+
+
+def _cycle_quality_records(
+    *, base: Path, cycle: str
+) -> tuple[dict[str, Any], str, str, list[dict[str, Any]]]:
+    repository = base.parent.parent.resolve()
+    try:
+        cohort, cohort_sha, cohort_relative = load_rapid_triage_cohort(
+            root=base, cycle_id=cycle
+        )
+    except (OSError, ValueError, ResearchAllocationError, SealingError) as exc:
+        raise QualityWorkflowError(f"rapid-triage cohort is invalid: {exc}") from exc
+    if cohort.get("schema_version") not in {2, 3}:
+        raise QualityWorkflowError(
+            "legacy rapid-triage cohort is not valid production proof for a new Goal"
+        )
+    _validate_parent_scope_binding(
+        base=base,
+        repository=repository,
+        cohort=cohort,
+    )
+    records: list[dict[str, Any]] = []
+    for member in cohort["members"]:
+        symbol = _symbol(member.get("symbol"))
+        package, package_seal = _load_cycle_package(
+            base=base,
+            cycle_id=cycle,
+            symbol=symbol,
+        )
+        disposition = evaluate_rapid_triage(package)["disposition"]
+        if disposition not in STOP_DISPOSITIONS:
+            continue
+        records.append(
+            {
+                "symbol": symbol,
+                "name": package["company_name"],
+                "disposition": disposition,
+                "source_subject_sha256": package_seal.sha256,
+                "original_agent": package["provenance"]["agent"],
+                "information_cutoff": package["information_cutoff"],
+                "price_snapshot": {
+                    "price": package["current_price"],
+                    "price_as_of": package["price_as_of"],
+                    "source_id": package["price_source_id"],
+                },
+                "sources": package["sources"],
+            }
+        )
+    return cohort, cohort_sha, cohort_relative, records
+
+
 @serialized_coverage_write
 def materialize_cycle_quality_reopens(
     *, root: str | Path, cycle_id: str
@@ -415,15 +721,30 @@ def materialize_cycle_quality_reopens(
     base = Path(root)
     cycle = _identifier(cycle_id, "cycle_id")
     status = cycle_quality_status(root=base, cycle_id=cycle)
-    result_path = Path(status["canonical_paths"]["result"])
-    result_seal, result = _load_sealed_json(
-        result_path,
-        artifact_type="triage_quality_audit_result",
-        label="quality audit result",
+    result_paths = [Path(status["canonical_paths"]["result"])]
+    result_paths.extend(
+        path / "result.json"
+        for path in _cycle_quality_continuation_dirs(base, cycle)
+        if (path / "result.json").exists()
     )
-    reopen_symbols = {
-        _symbol(value) for value in _sequence(result.get("reopen_symbols"), "reopen_symbols")
-    }
+    reopen_refs: dict[str, dict[str, Any]] = {}
+    latest_result_seal = None
+    for result_path in result_paths:
+        result_seal, result = _load_sealed_json(
+            result_path,
+            artifact_type="triage_quality_audit_result",
+            label="quality audit result",
+        )
+        latest_result_seal = result_seal
+        for value in _sequence(result.get("reopen_symbols"), "reopen_symbols"):
+            reopen_refs[_symbol(value)] = {
+                "path": result_path,
+                "seal": result_seal,
+                "result": result,
+            }
+    reopen_symbols = set(reopen_refs)
+    if latest_result_seal is None:
+        raise QualityWorkflowError("quality audit result is missing")
     queue_path = base / RESEARCH_QUEUE_FILE
     screening_path = base / SCREENING_FILE
     queue = read_jsonl(queue_path)
@@ -435,6 +756,10 @@ def materialize_cycle_quality_reopens(
             updated_queue.append(row)
             continue
         item = dict(row)
+        result_ref = reopen_refs[str(item["symbol"])]
+        result_path = Path(result_ref["path"])
+        result_seal = result_ref["seal"]
+        result = result_ref["result"]
         item["quality_reopen_required"] = True
         item["quality_audit_result_path"] = _repository_path(
             result_path, base.parent.parent.resolve()
@@ -465,6 +790,9 @@ def materialize_cycle_quality_reopens(
             updated_screening.append(row)
             continue
         item = dict(row)
+        result_ref = reopen_refs[str(item["symbol"])]
+        result_path = Path(result_ref["path"])
+        result_seal = result_ref["seal"]
         item.update(
             {
                 "decision": "needs_manual_review",
@@ -487,7 +815,8 @@ def materialize_cycle_quality_reopens(
         "reopen_count": len(reopen_symbols),
         "materialized_count": len(changed),
         "symbols": sorted(reopen_symbols),
-        "result_sha256": result_seal.sha256,
+        "result_sha256": latest_result_seal.sha256,
+        "result_count": len(result_paths),
         "portfolio_action": None,
     }
 
@@ -551,6 +880,25 @@ def _workflow_status(
     policy_ref = _mapping(plan.get("policy"), "plan.policy")
     if policy_ref.get("sha256") != snapshot["policy_sha256"]:
         raise QualityWorkflowError("quality audit plan policy binding is invalid")
+    predecessor_ref = binding.get("predecessor_result")
+    if predecessor_ref is not None:
+        predecessor_path = _resolve_path(predecessor_ref["path"], repository)
+        predecessor_seal, predecessor_result = _load_sealed_json(
+            predecessor_path,
+            artifact_type="triage_quality_audit_result",
+            label="quality continuation predecessor result",
+        )
+        if predecessor_seal.sha256 != predecessor_ref["sha256"]:
+            raise QualityWorkflowError(
+                "quality continuation predecessor sha256 does not match binding"
+            )
+        _validate_continuation_predecessor(
+            output=output,
+            cycle_id=subject_id,
+            predecessor_path=predecessor_path,
+            predecessor_result=predecessor_result,
+            plan=plan,
+        )
     packet_type = (
         "scope_identity_audit_fact_packet"
         if subject_kind == "scope_identity"
@@ -625,10 +973,16 @@ def _seal_workflow_binding(
     plan_sha256: str,
     plan_artifact_type: str,
     created_at: dt.datetime,
+    predecessor_result_path: Path | None = None,
+    predecessor_result_sha256: str | None = None,
 ) -> None:
+    if (predecessor_result_path is None) != (predecessor_result_sha256 is None):
+        raise QualityWorkflowError(
+            "quality workflow predecessor path and sha256 must be provided together"
+        )
     snapshot_path = Path(snapshot["snapshot_path"])
     payload = {
-        "schema_version": 1,
+        "schema_version": 2 if predecessor_result_path is not None else 1,
         "subject_kind": subject_kind,
         "subject_id": subject_id,
         "created_at": created_at.isoformat(),
@@ -651,13 +1005,21 @@ def _seal_workflow_binding(
         },
         "portfolio_action": None,
     }
+    if predecessor_result_path is not None:
+        payload["predecessor_result"] = {
+            "path": _repository_path(predecessor_result_path, repository),
+            "sha256": _sha256(
+                predecessor_result_sha256, "predecessor_result_sha256"
+            ),
+            "artifact_type": "triage_quality_audit_result",
+        }
     _seal(output / "binding.json", payload, WORKFLOW_BINDING_ARTIFACT_TYPE, created_at)
 
 
 def _validate_binding(
     payload: Mapping[str, Any], *, subject_kind: str, subject_id: str
 ) -> None:
-    fields = {
+    base_fields = {
         "schema_version",
         "subject_kind",
         "subject_id",
@@ -667,7 +1029,15 @@ def _validate_binding(
         "plan",
         "portfolio_action",
     }
-    if set(payload) != fields or payload.get("schema_version") != 1:
+    schema_version = payload.get("schema_version")
+    expected_fields = (
+        base_fields
+        if schema_version == 1
+        else base_fields | {"predecessor_result"}
+        if schema_version == 2
+        else set()
+    )
+    if set(payload) != expected_fields:
         raise QualityWorkflowError("quality workflow binding fields do not match contract")
     if payload.get("subject_kind") != subject_kind or payload.get("subject_id") != subject_id:
         raise QualityWorkflowError("quality workflow binding subject does not match")
@@ -677,6 +1047,11 @@ def _validate_binding(
     source = _mapping(payload.get("source"), "binding.source")
     snapshot = _mapping(payload.get("policy_snapshot"), "binding.policy_snapshot")
     plan = _mapping(payload.get("plan"), "binding.plan")
+    predecessor = None
+    if schema_version == 2:
+        predecessor = _mapping(
+            payload.get("predecessor_result"), "binding.predecessor_result"
+        )
     if set(source) != {"path", "sha256", "artifact_type"}:
         raise QualityWorkflowError("quality workflow source reference is invalid")
     if set(snapshot) != {
@@ -689,11 +1064,22 @@ def _validate_binding(
         raise QualityWorkflowError("quality workflow policy snapshot reference is invalid")
     if set(plan) != {"path", "sha256", "artifact_type"}:
         raise QualityWorkflowError("quality workflow plan reference is invalid")
+    if predecessor is not None and set(predecessor) != {
+        "path",
+        "sha256",
+        "artifact_type",
+    }:
+        raise QualityWorkflowError("quality workflow predecessor reference is invalid")
     for value, label in (
         (source.get("sha256"), "source.sha256"),
         (snapshot.get("sha256"), "policy_snapshot.sha256"),
         (snapshot.get("policy_file_sha256"), "policy_snapshot.policy_file_sha256"),
         (plan.get("sha256"), "plan.sha256"),
+        *(
+            [(predecessor.get("sha256"), "predecessor_result.sha256")]
+            if predecessor is not None
+            else []
+        ),
     ):
         _sha256(value, label)
     for value, label in (
@@ -701,8 +1087,87 @@ def _validate_binding(
         (snapshot.get("path"), "policy_snapshot.path"),
         (snapshot.get("policy_path"), "policy_snapshot.policy_path"),
         (plan.get("path"), "plan.path"),
+        *(
+            [(predecessor.get("path"), "predecessor_result.path")]
+            if predecessor is not None
+            else []
+        ),
     ):
         _text(value, label)
+
+
+def _validate_continuation_predecessor(
+    *,
+    output: Path,
+    cycle_id: str,
+    predecessor_path: Path,
+    predecessor_result: Mapping[str, Any],
+    plan: Mapping[str, Any],
+) -> None:
+    """Verify that a continuation is the exact next round requested by its predecessor."""
+
+    match = re.fullmatch(r"round-([0-9]{4})", output.name)
+    if output.parent.name != "continuations" or match is None:
+        raise QualityWorkflowError(
+            "quality continuation binding is outside the canonical round directory"
+        )
+    round_number = int(match.group(1))
+    if round_number < 2:
+        raise QualityWorkflowError("quality continuation round number must be at least 2")
+    expected_predecessor = (
+        output.parent.parent / "result.json"
+        if round_number == 2
+        else output.parent / f"round-{round_number - 1:04d}" / "result.json"
+    ).resolve()
+    if predecessor_path.resolve() != expected_predecessor:
+        raise QualityWorkflowError("quality continuation predecessor path is not canonical")
+    if predecessor_result.get("cycle_id") != cycle_id:
+        raise QualityWorkflowError("quality continuation predecessor cycle does not match")
+    if plan.get("error_semantics") != "routing_disagreement_v1":
+        raise QualityWorkflowError(
+            "quality continuation must use routing-disagreement error semantics"
+        )
+
+    expansion = {
+        _text(name, "expansion stratum"): [
+            _symbol(symbol) for symbol in _sequence(symbols, "expansion symbols")
+        ]
+        for name, symbols in _mapping(
+            predecessor_result.get("expansion_symbols"), "expansion_symbols"
+        ).items()
+    }
+    redo_strata = {
+        _text(value, "redo stratum")
+        for value in _sequence(predecessor_result.get("redo_strata"), "redo_strata")
+    }
+    expected: dict[str, list[str]] = {stratum: [] for stratum in STOP_STRATA}
+    for stratum, symbols in expansion.items():
+        expected[stratum] = symbols
+    strata = {
+        _text(row.get("stratum"), "plan stratum"): row
+        for value in _sequence(plan.get("strata"), "plan.strata")
+        for row in [_mapping(value, "plan stratum")]
+    }
+    for stratum in redo_strata:
+        row = strata.get(stratum)
+        if row is None or row.get("full_census_redo") is not True:
+            raise QualityWorkflowError(
+                f"quality continuation does not mark full-census redo: {stratum}"
+            )
+        expected[stratum] = [
+            _symbol(symbol)
+            for symbol in _sequence(row.get("ranked_symbols"), "ranked_symbols")
+        ]
+    actual = {stratum: [] for stratum in STOP_STRATA}
+    for value in _sequence(plan.get("items"), "plan.items"):
+        item = _mapping(value, "plan item")
+        actual[_text(item.get("stratum"), "plan item stratum")].append(
+            _symbol(item.get("symbol"))
+        )
+    if actual != expected:
+        raise QualityWorkflowError(
+            "quality continuation plan does not match predecessor expansion contract"
+        )
 
 
 def _validate_scope_manifest(payload: Mapping[str, Any], *, run_id: str) -> None:

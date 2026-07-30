@@ -84,6 +84,8 @@ python -m trading_os coverage triage-freeze <cycle-id> --scope-run-id <run-id> -
 python -m trading_os coverage triage-status <cycle-id>
 python -m trading_os coverage quality-triage-prepare <cycle-id>
 python -m trading_os coverage quality-triage-record <cycle-id> --reviews <quality-reviews.json>
+python -m trading_os coverage quality-triage-continue <cycle-id>
+python -m trading_os coverage quality-triage-record-continuation <cycle-id> --reviews <quality-reviews.json>
 python -m trading_os coverage triage-compare <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>

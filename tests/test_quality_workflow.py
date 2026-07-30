@@ -11,8 +11,11 @@ from trading_os.research_assets.quality_workflow import (
     QualityWorkflowError,
     cycle_quality_status,
     load_quality_policy_snapshot,
+    materialize_cycle_quality_reopens,
     prepare_cycle_quality_audit,
+    prepare_cycle_quality_audit_continuation,
     prepare_scope_identity_quality_audit,
+    record_cycle_quality_audit_continuation,
     scope_quality_status,
     seal_quality_policy_snapshot,
 )
@@ -123,10 +126,15 @@ def _screen(company: dict, decision: str = "catalog") -> dict:
     }
 
 
-def _repo(tmp_path: Path, *, all_eligible: bool = False) -> tuple[Path, Path]:
+def _repo(
+    tmp_path: Path,
+    *,
+    all_eligible: bool = False,
+    company_count: int = 5,
+) -> tuple[Path, Path]:
     repository = tmp_path / "repo"
     root = repository / "coverage" / "cn-a"
-    symbols = [f"CN:00000{index}" for index in range(1, 6)]
+    symbols = [f"CN:{index:06d}" for index in range(1, company_count + 1)]
     companies = [_company(symbol) for symbol in symbols]
     if not all_eligible:
         companies[1] = _company(symbols[1], security_type="fund")
@@ -245,13 +253,22 @@ def _cycle(
     schema_version: int = 2,
     parent_sha_override: str | None = None,
     package_overrides: dict[str, dict] | None = None,
+    dispositions: list[str] | None = None,
 ) -> None:
     repository = root.parent.parent
     scope_path = root / "scopes" / RUN / "manifest.json"
     intake_path = root / "scopes" / RUN / "baseline-intake.json"
     scope_seal = verify_sealed(scope_path)
     intake_seal = verify_sealed(intake_path)
-    symbols = [f"CN:00000{index}" for index in range(1, 6)]
+    if dispositions is None:
+        dispositions = [
+            "catalog",
+            "price_watch",
+            "conditional_stop",
+            "reassign_or_stop",
+            "triage_candidate",
+        ]
+    symbols = [f"CN:{index:06d}" for index in range(1, len(dispositions) + 1)]
     cohort = {
         "schema_version": schema_version,
         "cycle_id": CYCLE,
@@ -260,11 +277,11 @@ def _cycle(
         "request": {
             "mode": "explicit_symbols",
             "queue_status": "requires_rebaseline",
-            "limit": 5,
+            "limit": len(symbols),
             "after_symbol": None,
             "symbols": symbols,
         },
-        "cohort_count": 5,
+        "cohort_count": len(symbols),
         "members": [
             {
                 "ordinal": index,
@@ -296,13 +313,6 @@ def _cycle(
         artifact_type="rapid_triage_cohort",
         sealed_at=dt.datetime.fromisoformat("2026-07-30T09:20:00+08:00"),
     )
-    dispositions = [
-        "catalog",
-        "price_watch",
-        "conditional_stop",
-        "reassign_or_stop",
-        "triage_candidate",
-    ]
     for symbol, disposition in zip(symbols, dispositions, strict=True):
         package = _package(symbol, disposition=disposition)
         package.update((package_overrides or {}).get(symbol, {}))
@@ -319,6 +329,29 @@ def _cycle(
             artifact_type="rapid_triage_package",
             sealed_at=NOW,
         )
+
+
+def _quality_review(
+    item: dict,
+    *,
+    disposition: str | None = None,
+    minute: int = 1,
+) -> dict:
+    return {
+        "schema_version": 1,
+        "audit_item_id": item["audit_item_id"],
+        "facts_packet_sha256": item["facts_packet_sha256"],
+        "symbol": item["symbol"],
+        "recommended_disposition": disposition or item["stratum"],
+        "decisive_question": "独立事实是否支持当前研究路由？",
+        "findings": [],
+        "provenance": {
+            "agent": f"quality-{item['symbol'].replace(':', '-')}-m{minute}",
+            "model": "test-model",
+            "tools": ["source-reader"],
+            "generated_at": (NOW + dt.timedelta(minutes=minute)).isoformat(),
+        },
+    }
 
 
 def test_policy_snapshot_binds_raw_and_normalized_sha_and_rejects_tamper(
@@ -570,4 +603,100 @@ def test_schema_v3_cohort_binds_passed_scope_quality_and_blocks_compare_until_cy
             root=root,
             cycle_id=CYCLE,
             created_at=NOW + dt.timedelta(minutes=3),
+        )
+
+
+def test_cycle_quality_continuation_binds_expansion_and_full_census_redo(
+    tmp_path: Path,
+) -> None:
+    from trading_os.research_assets.quality_audit import (
+        seal_cycle_quality_audit_result,
+    )
+
+    dispositions = ["price_watch"] * 8 + ["conditional_stop"] * 2
+    root, policy_path = _repo(
+        tmp_path,
+        all_eligible=True,
+        company_count=len(dispositions),
+    )
+    _cycle(root, dispositions=dispositions)
+    initial = prepare_cycle_quality_audit(
+        root=root,
+        cycle_id=CYCLE,
+        policy_path=policy_path,
+        created_at=NOW,
+    )
+    initial_plan = json.loads(
+        Path(initial["canonical_paths"]["plan"]).read_text(encoding="utf-8")
+    )
+    reviews = [_quality_review(item) for item in initial_plan["items"]]
+    price_indexes = [
+        index
+        for index, item in enumerate(initial_plan["items"])
+        if item["stratum"] == "price_watch"
+    ]
+    conditional_indexes = [
+        index
+        for index, item in enumerate(initial_plan["items"])
+        if item["stratum"] == "conditional_stop"
+    ]
+    reviews[price_indexes[0]]["recommended_disposition"] = "catalog"
+    reviews[conditional_indexes[0]]["recommended_disposition"] = "price_watch"
+    seal_cycle_quality_audit_result(
+        plan_path=initial["canonical_paths"]["plan"],
+        reviews=reviews,
+        policy=_policy(),
+        completed_at=NOW + dt.timedelta(minutes=2),
+    )
+
+    continuation = prepare_cycle_quality_audit_continuation(
+        root=root,
+        cycle_id=CYCLE,
+        created_at=NOW + dt.timedelta(minutes=3),
+    )
+    assert continuation["round_number"] == 2
+    assert continuation["status"] == "pending_reviews"
+    assert continuation["sampled_count"] == 4
+    plan_path = Path(continuation["canonical_paths"]["plan"])
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    assert plan["error_semantics"] == "routing_disagreement_v1"
+    assert sum(item["stratum"] == "price_watch" for item in plan["items"]) == 2
+    assert sum(item["stratum"] == "conditional_stop" for item in plan["items"]) == 2
+    conditional = next(
+        row for row in plan["strata"] if row["stratum"] == "conditional_stop"
+    )
+    assert conditional["full_census_redo"] is True
+    binding = json.loads(
+        Path(continuation["canonical_paths"]["binding"]).read_text(encoding="utf-8")
+    )
+    assert binding["schema_version"] == 2
+    assert binding["predecessor_result"]["sha256"] == verify_sealed(
+        initial["canonical_paths"]["result"]
+    ).sha256
+
+    repeated = prepare_cycle_quality_audit_continuation(
+        root=root,
+        cycle_id=CYCLE,
+        created_at=NOW + dt.timedelta(minutes=4),
+    )
+    assert repeated["idempotent"] is True
+    assert repeated["round_number"] == 2
+    recorded = record_cycle_quality_audit_continuation(
+        root=root,
+        cycle_id=CYCLE,
+        reviews=[_quality_review(item, minute=4) for item in plan["items"]],
+        completed_at=NOW + dt.timedelta(minutes=5),
+    )
+    assert recorded["status"] == "passed"
+    materialized = materialize_cycle_quality_reopens(root=root, cycle_id=CYCLE)
+    assert materialized["result_count"] == 2
+    assert materialized["reopen_count"] == 1
+    assert materialized["symbols"] == [
+        initial_plan["items"][conditional_indexes[0]]["symbol"]
+    ]
+    with pytest.raises(QualityWorkflowError, match="does not require expansion"):
+        prepare_cycle_quality_audit_continuation(
+            root=root,
+            cycle_id=CYCLE,
+            created_at=NOW + dt.timedelta(minutes=6),
         )
