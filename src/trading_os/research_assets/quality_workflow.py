@@ -28,7 +28,11 @@ from .quality_audit import (
     validate_quality_audit_policy,
 )
 from .sealing import SealingError, canonical_json_bytes, seal_json, verify_sealed
-from .triage_cohort import ResearchAllocationError, load_rapid_triage_cohort
+from .triage_cohort import (
+    ResearchAllocationError,
+    freeze_rapid_triage_cohort,
+    load_rapid_triage_cohort,
+)
 from .triage_workflow import (
     evaluate_rapid_triage,
     validate_rapid_triage_package,
@@ -41,6 +45,8 @@ class QualityWorkflowError(ValueError):
 
 POLICY_SNAPSHOT_ARTIFACT_TYPE = "triage_quality_audit_policy_snapshot"
 WORKFLOW_BINDING_ARTIFACT_TYPE = "quality_audit_workflow_binding"
+CORRECTION_BINDING_ARTIFACT_TYPE = "triage_quality_correction_binding"
+CORRECTION_RESOLUTION_ARTIFACT_TYPE = "triage_quality_correction_resolution"
 SUBJECT_KINDS = {"scope_identity", "triage_false_negative"}
 STOP_DISPOSITIONS = {
     "catalog",
@@ -62,6 +68,10 @@ def cycle_quality_root(root: str | Path, cycle_id: str) -> Path:
 
 def cycle_quality_continuations_root(root: str | Path, cycle_id: str) -> Path:
     return cycle_quality_root(root, cycle_id) / "continuations"
+
+
+def cycle_quality_corrections_root(root: str | Path, cycle_id: str) -> Path:
+    return cycle_quality_root(root, cycle_id) / "corrections"
 
 
 def seal_quality_policy_snapshot(
@@ -613,6 +623,294 @@ def record_cycle_quality_audit_continuation(
     }
 
 
+def prepare_cycle_quality_correction(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    correction_cycle_id: str,
+    created_at: dt.datetime,
+) -> dict[str, Any]:
+    """Freeze a correction cohort bound to every unresolved major disagreement."""
+
+    _aware(created_at, "created_at")
+    base = Path(root)
+    repository = base.parent.parent.resolve()
+    cycle = _identifier(cycle_id, "cycle_id")
+    correction_cycle = _identifier(correction_cycle_id, "correction_cycle_id")
+    if correction_cycle == cycle:
+        raise QualityWorkflowError("correction cycle must differ from source cycle")
+    gate = cycle_quality_gate_status(root=base, cycle_id=cycle)
+    if gate["status"] != "reopen_required":
+        raise QualityWorkflowError(
+            f"source cycle does not require a correction cohort: {gate['status']}"
+        )
+    result_records = _cycle_quality_result_records(base=base, cycle=cycle)
+    latest_result = result_records[-1]["result"]
+    if latest_result.get("expansion_required") or latest_result.get("redo_required"):
+        raise QualityWorkflowError(
+            "quality continuation requirements must finish before correction freeze"
+        )
+    reopen_refs = _cycle_quality_reopen_refs(result_records)
+    symbols = sorted(reopen_refs)
+    output = cycle_quality_corrections_root(base, cycle) / correction_cycle
+    binding_path = output / "binding.json"
+    if binding_path.exists():
+        binding = _load_cycle_quality_correction_binding(
+            base=base,
+            source_cycle=cycle,
+            correction_cycle=correction_cycle,
+        )
+        return {
+            "schema_version": 1,
+            "source_cycle_id": cycle,
+            "correction_cycle_id": correction_cycle,
+            "symbol_count": len(binding["symbols"]),
+            "symbols": [row["symbol"] for row in binding["symbols"]],
+            "binding_path": _repository_path(binding_path, repository),
+            "binding_sha256": binding["binding_sha256"],
+            "correction_cohort_path": binding["correction_cohort"]["path"],
+            "correction_cohort_sha256": binding["correction_cohort"]["sha256"],
+            "idempotent": True,
+            "portfolio_action": None,
+        }
+
+    source_cohort, source_cohort_sha, source_cohort_relative = load_rapid_triage_cohort(
+        root=base,
+        cycle_id=cycle,
+    )
+    if source_cohort.get("schema_version") != 3:
+        raise QualityWorkflowError("quality correction requires a schema-v3 source cohort")
+    parent_scope = _mapping(source_cohort.get("parent_scope"), "cohort.parent_scope")
+    quality_contract = _mapping(
+        source_cohort.get("quality_contract"), "cohort.quality_contract"
+    )
+    freeze = freeze_rapid_triage_cohort(
+        root=base,
+        cycle_id=correction_cycle,
+        frozen_at=created_at,
+        queue_status="needs_review",
+        symbols=symbols,
+        scope_run_id=_text(parent_scope.get("run_id"), "parent_scope.run_id"),
+        quality_policy_snapshot_path=_resolve_path(
+            _text(
+                quality_contract.get("policy_snapshot_path"),
+                "quality_contract.policy_snapshot_path",
+            ),
+            repository,
+        ),
+        scope_identity_audit_result_path=_resolve_path(
+            _text(
+                quality_contract.get("scope_identity_result_path"),
+                "quality_contract.scope_identity_result_path",
+            ),
+            repository,
+        ),
+        allow_quality_reopen=True,
+    )
+    correction_cohort_path = _resolve_path(freeze["cohort_path"], repository)
+    correction_cohort_seal, correction_cohort = _load_sealed_json(
+        correction_cohort_path,
+        artifact_type="rapid_triage_cohort",
+        label="quality correction cohort",
+    )
+    if [row["symbol"] for row in correction_cohort["members"]] != symbols:
+        raise QualityWorkflowError("quality correction cohort does not conserve reopen symbols")
+
+    symbol_rows = []
+    for symbol in symbols:
+        result_record = reopen_refs[symbol]
+        _, plan = _load_sealed_json(
+            Path(result_record["output"]) / "plan.json",
+            artifact_type="triage_quality_audit_plan",
+            label="quality audit plan",
+        )
+        items = [row for row in plan["items"] if row.get("symbol") == symbol]
+        if len(items) != 1:
+            raise QualityWorkflowError(
+                f"quality reopen symbol is not unique in triggering plan: {symbol}"
+            )
+        item = items[0]
+        source_package = _cycle_package_reference(
+            base=base,
+            cycle_id=cycle,
+            symbol=symbol,
+            expected_sha256=_sha256(
+                item.get("source_subject_sha256"), "source_subject_sha256"
+            ),
+        )
+        symbol_rows.append(
+            {
+                "symbol": symbol,
+                "original_agent": _text(item.get("original_agent"), "original_agent"),
+                "source_package": {
+                    "path": _repository_path(source_package["path"], repository),
+                    "sha256": source_package["seal"].sha256,
+                },
+                "triggering_result": {
+                    "path": _repository_path(result_record["path"], repository),
+                    "sha256": result_record["seal"].sha256,
+                },
+            }
+        )
+    payload = {
+        "schema_version": 1,
+        "source_cycle_id": cycle,
+        "correction_cycle_id": correction_cycle,
+        "created_at": created_at.isoformat(),
+        "source_cohort": {
+            "path": source_cohort_relative,
+            "sha256": source_cohort_sha,
+        },
+        "quality_results": [
+            {
+                "path": _repository_path(record["path"], repository),
+                "sha256": record["seal"].sha256,
+            }
+            for record in result_records
+        ],
+        "correction_cohort": {
+            "path": _repository_path(correction_cohort_path, repository),
+            "sha256": correction_cohort_seal.sha256,
+        },
+        "symbols": symbol_rows,
+        "portfolio_action": None,
+    }
+    sealed = _seal(binding_path, payload, CORRECTION_BINDING_ARTIFACT_TYPE, created_at)
+    return {
+        "schema_version": 1,
+        "source_cycle_id": cycle,
+        "correction_cycle_id": correction_cycle,
+        "symbol_count": len(symbols),
+        "symbols": symbols,
+        "binding_path": _repository_path(binding_path, repository),
+        "binding_sha256": sealed.sha256,
+        "correction_cohort_path": payload["correction_cohort"]["path"],
+        "correction_cohort_sha256": payload["correction_cohort"]["sha256"],
+        "idempotent": False,
+        "portfolio_action": None,
+    }
+
+
+def record_cycle_quality_correction_resolution(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    correction_cycle_id: str,
+    completed_at: dt.datetime,
+) -> dict[str, Any]:
+    """Seal corrected packages after their correction cohort quality gate passes."""
+
+    _aware(completed_at, "completed_at")
+    base = Path(root)
+    repository = base.parent.parent.resolve()
+    cycle = _identifier(cycle_id, "cycle_id")
+    correction_cycle = _identifier(correction_cycle_id, "correction_cycle_id")
+    resolution_path = cycle_quality_root(base, cycle) / "resolution.json"
+    if resolution_path.exists():
+        status = cycle_quality_gate_status(root=base, cycle_id=cycle)
+        if status["status"] != "passed":
+            raise QualityWorkflowError("sealed correction resolution is not effective")
+        sealed = verify_sealed(resolution_path)
+        return {
+            "schema_version": 1,
+            "source_cycle_id": cycle,
+            "correction_cycle_id": correction_cycle,
+            "status": "passed",
+            "resolution_path": _repository_path(resolution_path, repository),
+            "resolution_sha256": sealed.sha256,
+            "resolved_count": len(status["resolved_packages"]),
+            "idempotent": True,
+            "portfolio_action": None,
+        }
+    binding = _load_cycle_quality_correction_binding(
+        base=base,
+        source_cycle=cycle,
+        correction_cycle=correction_cycle,
+    )
+    correction_gate = cycle_quality_gate_status(
+        root=base,
+        cycle_id=correction_cycle,
+        _visited={cycle},
+    )
+    if correction_gate["status"] != "passed":
+        raise QualityWorkflowError(
+            f"correction cohort quality gate has not passed: {correction_gate['status']}"
+        )
+    correction_agents: set[str] = set()
+    resolutions = []
+    for row in binding["symbols"]:
+        symbol = row["symbol"]
+        package_ref = _cycle_package_reference(
+            base=base,
+            cycle_id=correction_cycle,
+            symbol=symbol,
+        )
+        package = package_ref["package"]
+        agent = _text(package["provenance"].get("agent"), "correction agent")
+        if agent == row["original_agent"]:
+            raise QualityWorkflowError(
+                f"quality correction agent must differ from original agent: {symbol}"
+            )
+        if agent in correction_agents:
+            raise QualityWorkflowError(
+                f"one quality correction agent handled multiple companies: {agent}"
+            )
+        correction_agents.add(agent)
+        resolutions.append(
+            {
+                "symbol": symbol,
+                "source_package_sha256": row["source_package"]["sha256"],
+                "triggering_result_sha256": row["triggering_result"]["sha256"],
+                "correction_package_path": _repository_path(
+                    package_ref["path"], repository
+                ),
+                "correction_package_sha256": package_ref["seal"].sha256,
+                "correction_disposition": evaluate_rapid_triage(package)["disposition"],
+                "correction_agent": agent,
+            }
+        )
+    binding_path = cycle_quality_corrections_root(base, cycle) / correction_cycle / "binding.json"
+    binding_seal = verify_sealed(binding_path)
+    payload = {
+        "schema_version": 1,
+        "source_cycle_id": cycle,
+        "correction_cycle_id": correction_cycle,
+        "completed_at": completed_at.isoformat(),
+        "correction_binding": {
+            "path": _repository_path(binding_path, repository),
+            "sha256": binding_seal.sha256,
+        },
+        "correction_quality_gate": {
+            "result_path": _repository_path(
+                Path(correction_gate["gate_result_path"]), repository
+            ),
+            "result_sha256": correction_gate["gate_result_sha256"],
+        },
+        "resolutions": resolutions,
+        "portfolio_action": None,
+    }
+    sealed = _seal(
+        resolution_path,
+        payload,
+        CORRECTION_RESOLUTION_ARTIFACT_TYPE,
+        completed_at,
+    )
+    status = cycle_quality_gate_status(root=base, cycle_id=cycle)
+    if status["status"] != "passed":
+        raise QualityWorkflowError("sealed quality correction did not close the source gate")
+    return {
+        "schema_version": 1,
+        "source_cycle_id": cycle,
+        "correction_cycle_id": correction_cycle,
+        "status": "passed",
+        "resolution_path": _repository_path(resolution_path, repository),
+        "resolution_sha256": sealed.sha256,
+        "resolved_count": len(resolutions),
+        "idempotent": False,
+        "portfolio_action": None,
+    }
+
+
 def scope_quality_status(*, root: str | Path, run_id: str) -> dict[str, Any]:
     return _workflow_status(
         root=Path(root),
@@ -635,6 +933,108 @@ def cycle_quality_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
         plan_artifact_type="triage_quality_audit_plan",
         result_artifact_type="triage_quality_audit_result",
     )
+
+
+def cycle_quality_gate_status(
+    *,
+    root: str | Path,
+    cycle_id: str,
+    _visited: set[str] | None = None,
+) -> dict[str, Any]:
+    """Return the effective quality gate across continuations and corrections."""
+
+    base = Path(root)
+    repository = base.parent.parent.resolve()
+    cycle = _identifier(cycle_id, "cycle_id")
+    visited = set(_visited or ())
+    if cycle in visited:
+        raise QualityWorkflowError(f"quality correction cycle is recursive: {cycle}")
+    visited.add(cycle)
+    base_status = cycle_quality_status(root=base, cycle_id=cycle)
+    if base_status["status"] == "pending_reviews":
+        return {
+            **base_status,
+            "effective_status": "pending_reviews",
+            "quality_results": [],
+            "reviewer_agents": [],
+            "reopen_symbols": [],
+            "resolved_packages": [],
+        }
+
+    result_records = _cycle_quality_result_records(
+        base=base,
+        cycle=cycle,
+        require_complete=False,
+    )
+    expected_round_count = 1 + len(_cycle_quality_continuation_dirs(base, cycle))
+    if len(result_records) != expected_round_count:
+        effective_status = "pending_reviews"
+    else:
+        latest_result = result_records[-1]["result"]
+        if latest_result.get("expansion_required") or latest_result.get("redo_required"):
+            effective_status = str(latest_result.get("status"))
+        else:
+            effective_status = "sampling_complete"
+
+    reopen_refs = _cycle_quality_reopen_refs(result_records)
+    reviewer_agents = sorted(
+        {
+            agent
+            for record in result_records
+            for row in _sequence(record["result"].get("rows"), "quality result rows")
+            if isinstance(row, Mapping)
+            and isinstance((review := row.get("review")), Mapping)
+            and isinstance((provenance := review.get("provenance")), Mapping)
+            and isinstance((agent := provenance.get("agent")), str)
+        }
+    )
+    quality_results = [
+        {
+            "path": _repository_path(record["path"], repository),
+            "sha256": record["seal"].sha256,
+            "status": record["result"].get("status"),
+        }
+        for record in result_records
+    ]
+    resolved_packages: list[dict[str, Any]] = []
+    gate_result_path = result_records[-1]["path"] if result_records else None
+    gate_result_sha256 = result_records[-1]["seal"].sha256 if result_records else None
+    if effective_status == "sampling_complete":
+        if reopen_refs:
+            resolution_path = cycle_quality_root(base, cycle) / "resolution.json"
+            if not resolution_path.exists():
+                effective_status = "reopen_required"
+            else:
+                resolution = _load_cycle_quality_resolution(
+                    base=base,
+                    cycle=cycle,
+                    resolution_path=resolution_path,
+                    reopen_refs=reopen_refs,
+                    visited=visited,
+                )
+                resolved_packages = resolution["resolved_packages"]
+                reviewer_agents = sorted(
+                    set(reviewer_agents) | set(resolution["reviewer_agents"])
+                )
+                gate_result_path = resolution_path
+                gate_result_sha256 = resolution["resolution_sha256"]
+                effective_status = "passed"
+        else:
+            effective_status = "passed"
+
+    return {
+        **base_status,
+        "status": effective_status,
+        "effective_status": effective_status,
+        "quality_results": quality_results,
+        "reviewer_agents": reviewer_agents,
+        "reopen_symbols": sorted(reopen_refs),
+        "resolved_packages": resolved_packages,
+        "gate_result_path": (
+            str(gate_result_path.resolve()) if gate_result_path is not None else None
+        ),
+        "gate_result_sha256": gate_result_sha256,
+    }
 
 
 def _cycle_quality_output_status(
@@ -710,6 +1110,373 @@ def _cycle_quality_records(
             }
         )
     return cohort, cohort_sha, cohort_relative, records
+
+
+def _cycle_quality_result_records(
+    *, base: Path, cycle: str, require_complete: bool = True
+) -> list[dict[str, Any]]:
+    outputs = [cycle_quality_root(base, cycle), *_cycle_quality_continuation_dirs(base, cycle)]
+    records: list[dict[str, Any]] = []
+    for output in outputs:
+        status = _cycle_quality_output_status(root=base, output=output, cycle_id=cycle)
+        if status["status"] == "pending_reviews":
+            if require_complete:
+                raise QualityWorkflowError(
+                    f"quality audit round is still pending reviews: {output.name}"
+                )
+            break
+        result_path = Path(status["canonical_paths"]["result"])
+        result_seal, result = _load_sealed_json(
+            result_path,
+            artifact_type="triage_quality_audit_result",
+            label="quality audit result",
+        )
+        records.append(
+            {
+                "output": output,
+                "path": result_path,
+                "seal": result_seal,
+                "result": result,
+            }
+        )
+    return records
+
+
+def _cycle_quality_reopen_refs(
+    records: Sequence[Mapping[str, Any]],
+) -> dict[str, dict[str, Any]]:
+    refs: dict[str, dict[str, Any]] = {}
+    for record in records:
+        result = _mapping(record.get("result"), "quality result")
+        for value in _sequence(result.get("reopen_symbols"), "reopen_symbols"):
+            refs[_symbol(value)] = dict(record)
+    return refs
+
+
+def _cycle_package_reference(
+    *, base: Path, cycle_id: str, symbol: str, expected_sha256: str | None = None
+) -> dict[str, Any]:
+    package, package_seal = _load_cycle_package(
+        base=base,
+        cycle_id=cycle_id,
+        symbol=symbol,
+    )
+    if expected_sha256 is not None and package_seal.sha256 != expected_sha256:
+        raise QualityWorkflowError(
+            f"latest rapid-triage package does not match expected quality subject: {symbol}"
+        )
+    ticker = symbol.split(":", 1)[1]
+    matches = []
+    for path in (base / "triage" / cycle_id / ticker).glob("*.triage.json"):
+        try:
+            seal = verify_sealed(path)
+        except ValueError as exc:
+            raise QualityWorkflowError(
+                f"rapid-triage package is not validly sealed: {symbol}"
+            ) from exc
+        if seal.sha256 == package_seal.sha256:
+            matches.append(path)
+    if len(matches) != 1:
+        raise QualityWorkflowError(
+            f"rapid-triage package path is not unique for sealed subject: {symbol}"
+        )
+    return {
+        "path": matches[0],
+        "seal": package_seal,
+        "package": package,
+    }
+
+
+def _load_cycle_quality_correction_binding(
+    *, base: Path, source_cycle: str, correction_cycle: str
+) -> dict[str, Any]:
+    repository = base.parent.parent.resolve()
+    path = cycle_quality_corrections_root(base, source_cycle) / correction_cycle / "binding.json"
+    binding_seal, payload = _load_sealed_json(
+        path,
+        artifact_type=CORRECTION_BINDING_ARTIFACT_TYPE,
+        label="quality correction binding",
+    )
+    fields = {
+        "schema_version",
+        "source_cycle_id",
+        "correction_cycle_id",
+        "created_at",
+        "source_cohort",
+        "quality_results",
+        "correction_cohort",
+        "symbols",
+        "portfolio_action",
+    }
+    if set(payload) != fields or payload.get("schema_version") != 1:
+        raise QualityWorkflowError("quality correction binding fields do not match contract")
+    if (
+        payload.get("source_cycle_id") != source_cycle
+        or payload.get("correction_cycle_id") != correction_cycle
+    ):
+        raise QualityWorkflowError("quality correction binding cycle identity is invalid")
+    _datetime(payload.get("created_at"), "correction binding created_at")
+    if payload.get("portfolio_action") is not None:
+        raise QualityWorkflowError("quality correction binding cannot contain portfolio action")
+
+    source_ref = _mapping(payload.get("source_cohort"), "source_cohort")
+    correction_ref = _mapping(payload.get("correction_cohort"), "correction_cohort")
+    for ref, label, expected_path in (
+        (
+            source_ref,
+            "source cohort",
+            base / "triage" / source_cycle / "cohort.json",
+        ),
+        (
+            correction_ref,
+            "correction cohort",
+            base / "triage" / correction_cycle / "cohort.json",
+        ),
+    ):
+        if set(ref) != {"path", "sha256"}:
+            raise QualityWorkflowError(f"quality correction {label} reference is invalid")
+        resolved = _resolve_path(_text(ref.get("path"), f"{label} path"), repository)
+        if resolved != expected_path.resolve():
+            raise QualityWorkflowError(f"quality correction {label} path is not canonical")
+        seal, _ = _load_sealed_json(
+            resolved,
+            artifact_type="rapid_triage_cohort",
+            label=label,
+        )
+        if seal.sha256 != _sha256(ref.get("sha256"), f"{label} sha256"):
+            raise QualityWorkflowError(f"quality correction {label} sha256 does not match")
+
+    live_results = _cycle_quality_result_records(base=base, cycle=source_cycle)
+    expected_result_refs = [
+        {
+            "path": _repository_path(record["path"], repository),
+            "sha256": record["seal"].sha256,
+        }
+        for record in live_results
+    ]
+    quality_results = [
+        dict(_mapping(value, "quality result reference"))
+        for value in _sequence(payload.get("quality_results"), "quality_results")
+    ]
+    if quality_results != expected_result_refs:
+        raise QualityWorkflowError("quality correction result chain does not match live seals")
+    latest = live_results[-1]["result"]
+    if latest.get("expansion_required") or latest.get("redo_required"):
+        raise QualityWorkflowError("quality correction was frozen before sampling completed")
+    reopen_refs = _cycle_quality_reopen_refs(live_results)
+
+    correction_cohort = json.loads(
+        _resolve_path(correction_ref["path"], repository).read_text(encoding="utf-8")
+    )
+    correction_members = [row["symbol"] for row in correction_cohort["members"]]
+    symbol_rows = []
+    seen: set[str] = set()
+    for value in _sequence(payload.get("symbols"), "correction symbols"):
+        row = _mapping(value, "correction symbol")
+        if set(row) != {
+            "symbol",
+            "original_agent",
+            "source_package",
+            "triggering_result",
+        }:
+            raise QualityWorkflowError("quality correction symbol fields are invalid")
+        symbol = _symbol(row.get("symbol"))
+        if symbol in seen:
+            raise QualityWorkflowError(f"duplicate quality correction symbol: {symbol}")
+        seen.add(symbol)
+        source_package = _mapping(row.get("source_package"), "source_package")
+        trigger = _mapping(row.get("triggering_result"), "triggering_result")
+        if set(source_package) != {"path", "sha256"} or set(trigger) != {
+            "path",
+            "sha256",
+        }:
+            raise QualityWorkflowError("quality correction symbol references are invalid")
+        trigger_record = reopen_refs.get(symbol)
+        if trigger_record is None or trigger != {
+            "path": _repository_path(trigger_record["path"], repository),
+            "sha256": trigger_record["seal"].sha256,
+        }:
+            raise QualityWorkflowError(
+                f"quality correction trigger does not match reopen result: {symbol}"
+            )
+        source_path = _resolve_path(source_package["path"], repository)
+        source_seal, source_payload = _load_sealed_json(
+            source_path,
+            artifact_type="rapid_triage_package",
+            label="quality correction source package",
+        )
+        if (
+            source_seal.sha256 != source_package.get("sha256")
+            or source_payload.get("cycle_id") != source_cycle
+            or source_payload.get("symbol") != symbol
+        ):
+            raise QualityWorkflowError(
+                f"quality correction source package binding is invalid: {symbol}"
+            )
+        symbol_rows.append(
+            {
+                "symbol": symbol,
+                "original_agent": _text(row.get("original_agent"), "original_agent"),
+                "source_package": dict(source_package),
+                "triggering_result": dict(trigger),
+            }
+        )
+    if [row["symbol"] for row in symbol_rows] != sorted(reopen_refs):
+        raise QualityWorkflowError("quality correction symbols do not cover all reopens")
+    if correction_members != [row["symbol"] for row in symbol_rows]:
+        raise QualityWorkflowError("quality correction cohort members do not match binding")
+    return {
+        **payload,
+        "symbols": symbol_rows,
+        "binding_path": path,
+        "binding_sha256": binding_seal.sha256,
+    }
+
+
+def _load_cycle_quality_resolution(
+    *,
+    base: Path,
+    cycle: str,
+    resolution_path: Path,
+    reopen_refs: Mapping[str, Mapping[str, Any]],
+    visited: set[str],
+) -> dict[str, Any]:
+    repository = base.parent.parent.resolve()
+    resolution_seal, payload = _load_sealed_json(
+        resolution_path,
+        artifact_type=CORRECTION_RESOLUTION_ARTIFACT_TYPE,
+        label="quality correction resolution",
+    )
+    fields = {
+        "schema_version",
+        "source_cycle_id",
+        "correction_cycle_id",
+        "completed_at",
+        "correction_binding",
+        "correction_quality_gate",
+        "resolutions",
+        "portfolio_action",
+    }
+    if set(payload) != fields or payload.get("schema_version") != 1:
+        raise QualityWorkflowError("quality correction resolution fields do not match contract")
+    if payload.get("source_cycle_id") != cycle:
+        raise QualityWorkflowError("quality correction resolution source cycle is invalid")
+    correction_cycle = _identifier(
+        payload.get("correction_cycle_id"), "correction_cycle_id"
+    )
+    _datetime(payload.get("completed_at"), "correction resolution completed_at")
+    if payload.get("portfolio_action") is not None:
+        raise QualityWorkflowError("quality correction resolution cannot contain portfolio action")
+    binding = _load_cycle_quality_correction_binding(
+        base=base,
+        source_cycle=cycle,
+        correction_cycle=correction_cycle,
+    )
+    binding_ref = _mapping(payload.get("correction_binding"), "correction_binding")
+    expected_binding_ref = {
+        "path": _repository_path(binding["binding_path"], repository),
+        "sha256": binding["binding_sha256"],
+    }
+    if dict(binding_ref) != expected_binding_ref:
+        raise QualityWorkflowError("quality correction resolution binding is invalid")
+    correction_gate = cycle_quality_gate_status(
+        root=base,
+        cycle_id=correction_cycle,
+        _visited=visited,
+    )
+    if correction_gate["status"] != "passed":
+        raise QualityWorkflowError(
+            f"resolved correction cycle quality gate is not passed: {correction_cycle}"
+        )
+    gate_ref = _mapping(payload.get("correction_quality_gate"), "correction_quality_gate")
+    expected_gate_ref = {
+        "result_path": _repository_path(
+            Path(correction_gate["gate_result_path"]), repository
+        ),
+        "result_sha256": correction_gate["gate_result_sha256"],
+    }
+    if dict(gate_ref) != expected_gate_ref:
+        raise QualityWorkflowError("quality correction resolution gate reference is invalid")
+
+    binding_by_symbol = {row["symbol"]: row for row in binding["symbols"]}
+    resolved_packages = []
+    correction_agents: set[str] = set()
+    seen: set[str] = set()
+    for value in _sequence(payload.get("resolutions"), "resolutions"):
+        row = _mapping(value, "correction resolution row")
+        if set(row) != {
+            "symbol",
+            "source_package_sha256",
+            "triggering_result_sha256",
+            "correction_package_path",
+            "correction_package_sha256",
+            "correction_disposition",
+            "correction_agent",
+        }:
+            raise QualityWorkflowError("quality correction resolution row is invalid")
+        symbol = _symbol(row.get("symbol"))
+        if symbol in seen or symbol not in reopen_refs:
+            raise QualityWorkflowError(f"invalid resolved quality symbol: {symbol}")
+        seen.add(symbol)
+        bound = binding_by_symbol[symbol]
+        if (
+            row.get("source_package_sha256") != bound["source_package"]["sha256"]
+            or row.get("triggering_result_sha256")
+            != bound["triggering_result"]["sha256"]
+        ):
+            raise QualityWorkflowError(
+                f"quality correction resolution source references are invalid: {symbol}"
+            )
+        package_path = _resolve_path(
+            _text(row.get("correction_package_path"), "correction_package_path"),
+            repository,
+        )
+        package_seal, package = _load_sealed_json(
+            package_path,
+            artifact_type="rapid_triage_package",
+            label="quality correction package",
+        )
+        if (
+            package_seal.sha256 != row.get("correction_package_sha256")
+            or package.get("cycle_id") != correction_cycle
+            or package.get("symbol") != symbol
+        ):
+            raise QualityWorkflowError(
+                f"quality correction package binding is invalid: {symbol}"
+            )
+        agent = _text(package["provenance"].get("agent"), "correction agent")
+        if agent != row.get("correction_agent") or agent == bound["original_agent"]:
+            raise QualityWorkflowError(
+                f"quality correction agent independence is invalid: {symbol}"
+            )
+        if agent in correction_agents:
+            raise QualityWorkflowError(
+                f"one quality correction agent handled multiple companies: {agent}"
+            )
+        correction_agents.add(agent)
+        disposition = evaluate_rapid_triage(package)["disposition"]
+        if disposition != row.get("correction_disposition"):
+            raise QualityWorkflowError(
+                f"quality correction disposition does not match package: {symbol}"
+            )
+        resolved_packages.append(
+            {
+                "symbol": symbol,
+                "path": _repository_path(package_path, repository),
+                "sha256": package_seal.sha256,
+                "cycle_id": correction_cycle,
+                "disposition": disposition,
+                "research_agent": agent,
+            }
+        )
+    if seen != set(reopen_refs):
+        raise QualityWorkflowError("quality correction resolution does not cover every reopen")
+    resolved_packages.sort(key=lambda row: row["symbol"])
+    return {
+        "resolution_sha256": resolution_seal.sha256,
+        "resolved_packages": resolved_packages,
+        "reviewer_agents": correction_gate["reviewer_agents"],
+    }
 
 
 @serialized_coverage_write

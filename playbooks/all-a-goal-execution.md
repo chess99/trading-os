@@ -64,7 +64,7 @@ cohort 大小只是可恢复的执行边界，不是投资容量。建议使用 
 
 完整 cohort 封存后，程序生成包含全部条目的 comparison packet。未参与单公司甄别的独立 Agent 必须逐家公司给出 `select_quick_profile` 或 `defer`，并说明理由、决定性问题、已考虑的反证和相对研究成本。程序只校验全量覆盖、容量、风险簇、provenance 和禁止字段，不自动计算投资排名。
 
-硬排除做 100% 身份复核。对 `catalog`、`price_watch`、`conditional_stop` 和 `reassign_or_stop`，按本 Goal 第一阶段新增并封存的质量审计 policy 做确定性分层抽查；该 policy 必须明确定义样本率、稳定选样种子、错误阈值和扩样规则，不得复用旧排名的 `false_negative_audit` selection slot。重大分歧重开该公司，某一分层错误率超限时扩大抽样或重做该层。续审轮次必须绑定上一轮封存结果；review finding 的严重度描述发行人事实风险，抽样错误率只按独立 reviewer 与原路由的差异计算，避免同为 `conditional_stop` 的重大风险事实造成无限重做。抽查完成前不得宣告整个 cycle 完成。
+硬排除做 100% 身份复核。对 `catalog`、`price_watch`、`conditional_stop` 和 `reassign_or_stop`，按本 Goal 第一阶段新增并封存的质量审计 policy 做确定性分层抽查；该 policy 必须明确定义样本率、稳定选样种子、错误阈值和扩样规则，不得复用旧排名的 `false_negative_audit` selection slot。重大分歧重开该公司，某一分层错误率超限时扩大抽样或重做该层。续审轮次必须绑定上一轮封存结果；review finding 的严重度描述发行人事实风险，抽样错误率只按独立 reviewer 与原路由的差异计算，避免同为 `conditional_stop` 的重大风险事实造成无限重做。重大分歧通过专用 correction cohort 绑定原 package、触发 result 与新 package；correction cohort 自身质量门通过后才能封存 resolution，原 comparison 必须使用 resolution 指定的新 package。抽查完成前不得宣告整个 cycle 完成。
 
 ## 启动与恢复
 
@@ -103,6 +103,8 @@ python -m trading_os coverage quality-triage-prepare <cycle-id>
 python -m trading_os coverage quality-triage-record <cycle-id> --reviews <quality-reviews.json>
 python -m trading_os coverage quality-triage-continue <cycle-id>
 python -m trading_os coverage quality-triage-record-continuation <cycle-id> --reviews <quality-reviews.json>
+python -m trading_os coverage quality-triage-correction-prepare <cycle-id> <correction-cycle-id>
+python -m trading_os coverage quality-triage-correction-resolve <cycle-id> <correction-cycle-id>
 python -m trading_os coverage triage-compare <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 

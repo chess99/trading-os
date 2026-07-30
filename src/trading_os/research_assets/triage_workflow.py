@@ -682,10 +682,14 @@ def build_rapid_triage_comparison_packet(
         cycle=cycle,
         repository_root=repository_root,
         allow_unscoped_history=allow_unscoped_history,
+        package_overrides={
+            row["symbol"]: row
+            for row in (quality_gate or {}).get("resolved_packages", [])
+        },
     )
     rows: list[dict[str, Any]] = []
     for ordinal, (queued, package, sealed) in enumerate(packages, 1):
-        disposition = queued["triage_disposition"]
+        disposition = evaluate_rapid_triage(package)["disposition"]
         rows.append(
             {
                 "ordinal": ordinal,
@@ -1062,9 +1066,9 @@ def _cycle_quality_status_view(
     if schema_version == 2:
         return "missing_production_quality_contract"
     try:
-        from .quality_workflow import cycle_quality_status
+        from .quality_workflow import cycle_quality_gate_status
 
-        return str(cycle_quality_status(root=base, cycle_id=cycle)["status"])
+        return str(cycle_quality_gate_status(root=base, cycle_id=cycle)["status"])
     except ValueError:
         return "not_prepared"
 
@@ -1083,10 +1087,10 @@ def _require_cycle_quality_gate(
             "schema-v2 parent-scope cohort is legacy and cannot prove new Goal production; "
             "freeze a schema-v3 cohort bound to the passed scope identity audit"
         )
-    from .quality_workflow import QualityWorkflowError, cycle_quality_status
+    from .quality_workflow import QualityWorkflowError, cycle_quality_gate_status
 
     try:
-        status = cycle_quality_status(root=base, cycle_id=cycle)
+        status = cycle_quality_gate_status(root=base, cycle_id=cycle)
     except QualityWorkflowError as exc:
         raise ResearchAllocationError(
             f"triage quality audit is missing or invalid: {cycle}: {exc}"
@@ -1099,26 +1103,17 @@ def _require_cycle_quality_gate(
         raise ResearchAllocationError("triage quality audit does not bind the cohort")
     repository_root = base.parent.parent.resolve()
     canonical = status["canonical_paths"]
-    result_path = Path(canonical["result"]).resolve()
+    result_path = Path(status["gate_result_path"]).resolve()
     binding_path = Path(canonical["binding"]).resolve()
     snapshot_path = Path(canonical["policy_snapshot"]).resolve()
     try:
         result_seal = verify_sealed(result_path)
         binding_seal = verify_sealed(binding_path)
         snapshot_seal = verify_sealed(snapshot_path)
-        result = json.loads(result_path.read_text(encoding="utf-8"))
     except (OSError, ValueError, json.JSONDecodeError) as exc:
         raise ResearchAllocationError("triage quality audit result is invalid") from exc
-    reviewer_agents = sorted(
-        {
-            agent
-            for row in result.get("rows", [])
-            if isinstance(row, Mapping)
-            and isinstance((review := row.get("review")), Mapping)
-            and isinstance((provenance := review.get("provenance")), Mapping)
-            and isinstance((agent := provenance.get("agent")), str)
-        }
-    )
+    if result_seal.sha256 != status.get("gate_result_sha256"):
+        raise ResearchAllocationError("triage quality gate result sha256 is invalid")
     return {
         "binding_path": binding_path.relative_to(repository_root).as_posix(),
         "binding_sha256": binding_seal.sha256,
@@ -1126,7 +1121,9 @@ def _require_cycle_quality_gate(
         "policy_snapshot_sha256": snapshot_seal.sha256,
         "result_path": result_path.relative_to(repository_root).as_posix(),
         "result_sha256": result_seal.sha256,
-        "reviewer_agents": reviewer_agents,
+        "quality_results": status["quality_results"],
+        "reviewer_agents": status["reviewer_agents"],
+        "resolved_packages": status["resolved_packages"],
         "status": "passed",
     }
 
@@ -1650,6 +1647,7 @@ def _completed_cohort_packages(
     cycle: str,
     repository_root: Path,
     allow_unscoped_history: bool = True,
+    package_overrides: Mapping[str, Mapping[str, Any]] | None = None,
 ) -> list[tuple[dict[str, Any], dict[str, Any], Any]]:
     incomplete = [
         item["symbol"]
@@ -1666,7 +1664,27 @@ def _completed_cohort_packages(
             f"incomplete: {incomplete[:10]}"
         )
     result = []
+    overrides = package_overrides or {}
     for item in members:
+        override = overrides.get(item["symbol"])
+        if override is not None:
+            path = repository_root / _text(
+                override.get("path"), "quality resolution package path"
+            )
+            sealed = verify_sealed(path)
+            package = json.loads(path.read_text(encoding="utf-8"))
+            if (
+                sealed.sha256 != override.get("sha256")
+                or package.get("cycle_id") != override.get("cycle_id")
+                or package.get("symbol") != item["symbol"]
+                or evaluate_rapid_triage(package)["disposition"]
+                != override.get("disposition")
+            ):
+                raise ResearchAllocationError(
+                    f"quality resolution package is invalid: {item['symbol']}"
+                )
+            result.append((item, package, sealed))
+            continue
         result_path = _rapid_triage_result_path(
             item,
             cycle,

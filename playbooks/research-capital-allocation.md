@@ -92,6 +92,8 @@
 
 续审使用不可变轮次链：每一轮 plan 必须绑定上一轮 result 的路径与 SHA-256，并严格执行该 result 指定的扩样 symbol 或整层重做。finding 的 `severity` 表示发行人事实风险，不直接等同于原路由错误；错误率按 reviewer 建议路由与原路由的差异计算。
 
+重大分歧不得直接改旧 package 或旧 result。先冻结仅包含全部 reopen symbols 的 correction cohort；每家公司换新的独立 Agent 形成新的不可变 package，再完成 correction cohort 自身质量门。最后封存 resolution，把原 package、触发分歧的 result、新 package 和 correction quality gate 串成 SHA-256 链；原 cohort 的 comparison 只可读取 resolution 指定的新 package。
+
 ## 后续升级纪律
 
 完成顺序不是投资质量，任何同层结果都不能因为先完成而先晋级。
@@ -122,6 +124,8 @@ python -m trading_os coverage quality-triage-prepare <cycle-id>
 python -m trading_os coverage quality-triage-record <cycle-id> --reviews <quality-reviews.json>
 python -m trading_os coverage quality-triage-continue <cycle-id>
 python -m trading_os coverage quality-triage-record-continuation <cycle-id> --reviews <quality-reviews.json>
+python -m trading_os coverage quality-triage-correction-prepare <cycle-id> <correction-cycle-id>
+python -m trading_os coverage quality-triage-correction-resolve <cycle-id> <correction-cycle-id>
 python -m trading_os coverage triage-compare <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>

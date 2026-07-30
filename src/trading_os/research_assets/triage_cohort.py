@@ -91,6 +91,7 @@ def freeze_rapid_triage_cohort(
     scope_run_id: str | None = None,
     quality_policy_snapshot_path: str | Path | None = None,
     scope_identity_audit_result_path: str | Path | None = None,
+    allow_quality_reopen: bool = False,
 ) -> dict[str, Any]:
     """Freeze an administrative rapid-triage cohort without investment ranking.
 
@@ -103,6 +104,10 @@ def freeze_rapid_triage_cohort(
     cycle = _cycle(cycle_id)
     explicit = symbols is not None
     _validate_freeze_queue_status(queue_status, explicit=explicit)
+    if allow_quality_reopen and (not explicit or queue_status != "needs_review"):
+        raise ResearchAllocationError(
+            "quality-reopen intake requires explicit needs_review symbols"
+        )
     if explicit:
         if limit is not None or after_symbol is not None:
             raise ResearchAllocationError(
@@ -195,6 +200,7 @@ def freeze_rapid_triage_cohort(
             screening=screening,
             queue_path=queue_path,
             screening_path=screening_path,
+            allow_quality_reopen=allow_quality_reopen,
         )
         return _freeze_result(
             payload,
@@ -267,6 +273,7 @@ def freeze_rapid_triage_cohort(
                 repository_root,
                 record,
                 symbol=symbol,
+                allow_quality_reopen=allow_quality_reopen,
             )
     if parent_scope is not None:
         missing = sorted(set(candidate_symbols) - parent_scope_symbols)
@@ -327,6 +334,7 @@ def freeze_rapid_triage_cohort(
         screening=screening,
         queue_path=queue_path,
         screening_path=screening_path,
+        allow_quality_reopen=allow_quality_reopen,
     )
     return _freeze_result(
         payload,
@@ -394,6 +402,7 @@ def _materialize_cohort(
     screening: list[dict[str, Any]],
     queue_path: Path,
     screening_path: Path,
+    allow_quality_reopen: bool = False,
 ) -> int:
     queue_by_symbol = _unique_by_symbol(queue, "research queue")
     screening_by_symbol = _unique_by_symbol(screening, "screening")
@@ -428,6 +437,7 @@ def _materialize_cohort(
                 queue_path.parent.parent.parent,
                 queued,
                 symbol=symbol,
+                allow_quality_reopen=allow_quality_reopen,
             )
         else:
             _validate_intake_record(
@@ -804,6 +814,7 @@ def _verify_terminal_cycle_can_be_rebound(
     record: Mapping[str, Any],
     *,
     symbol: str,
+    allow_quality_reopen: bool = False,
 ) -> None:
     """Allow a new trigger cycle only after the prior cycle was fully finalized."""
 
@@ -813,6 +824,38 @@ def _verify_terminal_cycle_can_be_rebound(
         )
     prior_cycle = record.get("triage_cycle_id")
     prior_cohort_sha = record.get("cohort_sha256")
+    if allow_quality_reopen:
+        result_path_text = record.get("quality_audit_result_path")
+        result_sha = record.get("quality_audit_result_sha256")
+        if (
+            record.get("status") != "needs_review"
+            or record.get("quality_reopen_required") is not True
+            or not isinstance(prior_cycle, str)
+            or not isinstance(prior_cohort_sha, str)
+            or not isinstance(result_path_text, str)
+            or not isinstance(result_sha, str)
+        ):
+            raise ResearchAllocationError(
+                f"quality-reopen queue binding is incomplete: {symbol}"
+            )
+        result_path = repository_root / result_path_text
+        try:
+            result_seal = verify_sealed(result_path)
+            result = json.loads(result_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError, json.JSONDecodeError) as exc:
+            raise ResearchAllocationError(
+                f"quality-reopen result is invalid: {symbol}"
+            ) from exc
+        if (
+            result_seal.artifact_type != "triage_quality_audit_result"
+            or result_seal.sha256 != result_sha
+            or result.get("cycle_id") != prior_cycle
+            or symbol not in (result.get("reopen_symbols") or [])
+        ):
+            raise ResearchAllocationError(
+                f"quality-reopen result does not bind the queue record: {symbol}"
+            )
+        return
     selection_path_text = record.get("triage_selection_path")
     selection_sha = record.get("triage_selection_sha256")
     if not all(

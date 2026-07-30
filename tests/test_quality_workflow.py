@@ -9,13 +9,16 @@ import pytest
 
 from trading_os.research_assets.quality_workflow import (
     QualityWorkflowError,
+    cycle_quality_gate_status,
     cycle_quality_status,
     load_quality_policy_snapshot,
     materialize_cycle_quality_reopens,
     prepare_cycle_quality_audit,
     prepare_cycle_quality_audit_continuation,
+    prepare_cycle_quality_correction,
     prepare_scope_identity_quality_audit,
     record_cycle_quality_audit_continuation,
+    record_cycle_quality_correction_resolution,
     scope_quality_status,
     seal_quality_policy_snapshot,
 )
@@ -700,3 +703,172 @@ def test_cycle_quality_continuation_binds_expansion_and_full_census_redo(
             cycle_id=CYCLE,
             created_at=NOW + dt.timedelta(minutes=6),
         )
+
+
+def test_quality_correction_cohort_resolves_reopens_with_new_packages(
+    tmp_path: Path,
+) -> None:
+    from trading_os.research_assets.quality_audit import (
+        seal_cycle_quality_audit_result,
+        seal_scope_identity_audit_result,
+    )
+    from trading_os.research_assets.triage_cohort import freeze_rapid_triage_cohort
+
+    correction_cycle = f"{CYCLE}-correction-001"
+    root, policy_path = _repo(tmp_path, all_eligible=True, company_count=4)
+    policy = _policy()
+    policy["payload"]["strata"]["price_watch"][
+        "material_error_rate_threshold"
+    ] = 1.0
+    _write_json(policy_path, policy)
+    scope_quality = prepare_scope_identity_quality_audit(
+        root=root,
+        run_id=RUN,
+        policy_path=policy_path,
+        created_at=NOW,
+    )
+    seal_scope_identity_audit_result(
+        plan_path=scope_quality["canonical_paths"]["plan"],
+        reviews=[],
+        completed_at=NOW + dt.timedelta(minutes=1),
+    )
+    scope_quality = scope_quality_status(root=root, run_id=RUN)
+    symbols = [f"CN:{index:06d}" for index in range(1, 5)]
+    freeze_rapid_triage_cohort(
+        root=root,
+        cycle_id=CYCLE,
+        frozen_at=NOW + dt.timedelta(minutes=2),
+        queue_status="requires_rebaseline",
+        symbols=symbols,
+        scope_run_id=RUN,
+        quality_policy_snapshot_path=scope_quality["canonical_paths"]["policy_snapshot"],
+        scope_identity_audit_result_path=scope_quality["canonical_paths"]["result"],
+    )
+    for symbol in symbols:
+        path = (
+            root
+            / "triage"
+            / CYCLE
+            / symbol.split(":", 1)[1]
+            / "20260730T100300+0800.triage.json"
+        )
+        seal_json(
+            path,
+            _package(symbol, disposition="price_watch"),
+            artifact_type="rapid_triage_package",
+            sealed_at=NOW + dt.timedelta(minutes=3),
+        )
+    source_quality = prepare_cycle_quality_audit(
+        root=root,
+        cycle_id=CYCLE,
+        policy_path=policy_path,
+        created_at=NOW + dt.timedelta(minutes=4),
+    )
+    source_plan = json.loads(
+        Path(source_quality["canonical_paths"]["plan"]).read_text(encoding="utf-8")
+    )
+    reviews = [_quality_review(item, minute=5) for item in source_plan["items"]]
+    reviews[0]["recommended_disposition"] = "triage_candidate"
+    seal_cycle_quality_audit_result(
+        plan_path=source_quality["canonical_paths"]["plan"],
+        reviews=reviews,
+        policy=policy,
+        completed_at=NOW + dt.timedelta(minutes=6),
+    )
+    materialized = materialize_cycle_quality_reopens(root=root, cycle_id=CYCLE)
+    assert materialized["reopen_count"] == 1
+    reopened_symbol = source_plan["items"][0]["symbol"]
+
+    correction = prepare_cycle_quality_correction(
+        root=root,
+        cycle_id=CYCLE,
+        correction_cycle_id=correction_cycle,
+        created_at=NOW + dt.timedelta(minutes=7),
+    )
+    assert correction["symbols"] == [reopened_symbol]
+    correction_package = _package(
+        reopened_symbol,
+        disposition="triage_candidate",
+        cycle_id=correction_cycle,
+    )
+    correction_package["provenance"]["agent"] = "/root/correction-agent-000001"
+    correction_path = (
+        root
+        / "triage"
+        / correction_cycle
+        / reopened_symbol.split(":", 1)[1]
+        / "20260730T100800+0800.triage.json"
+    )
+    seal_json(
+        correction_path,
+        correction_package,
+        artifact_type="rapid_triage_package",
+        sealed_at=NOW + dt.timedelta(minutes=8),
+    )
+    correction_quality = prepare_cycle_quality_audit(
+        root=root,
+        cycle_id=correction_cycle,
+        policy_path=policy_path,
+        created_at=NOW + dt.timedelta(minutes=9),
+    )
+    correction_plan = json.loads(
+        Path(correction_quality["canonical_paths"]["plan"]).read_text(encoding="utf-8")
+    )
+    assert correction_plan["sampled_count"] == 0
+    seal_cycle_quality_audit_result(
+        plan_path=correction_quality["canonical_paths"]["plan"],
+        reviews=[],
+        policy=policy,
+        completed_at=NOW + dt.timedelta(minutes=10),
+    )
+    resolution = record_cycle_quality_correction_resolution(
+        root=root,
+        cycle_id=CYCLE,
+        correction_cycle_id=correction_cycle,
+        completed_at=NOW + dt.timedelta(minutes=11),
+    )
+    assert resolution["status"] == "passed"
+    gate = cycle_quality_gate_status(root=root, cycle_id=CYCLE)
+    assert gate["status"] == "passed"
+    assert gate["resolved_packages"] == [
+        {
+            "symbol": reopened_symbol,
+            "path": correction_path.relative_to(root.parent.parent).as_posix(),
+            "sha256": verify_sealed(correction_path).sha256,
+            "cycle_id": correction_cycle,
+            "disposition": "triage_candidate",
+            "research_agent": "/root/correction-agent-000001",
+        }
+    ]
+    from trading_os.research_assets.triage_workflow import _completed_cohort_packages
+
+    members = []
+    for symbol in symbols:
+        original_path = next((root / "triage" / CYCLE / symbol[-6:]).glob("*.triage.json"))
+        members.append(
+            {
+                "symbol": symbol,
+                "name": f"测试公司{symbol[-6:]}",
+                "stage_history": [
+                    {
+                        "stage": "rapid_triage",
+                        "status": "completed",
+                        "cycle_id": CYCLE,
+                        "result_path": original_path.relative_to(
+                            root.parent.parent
+                        ).as_posix(),
+                    }
+                ],
+            }
+        )
+    packages = _completed_cohort_packages(
+        members,
+        cycle=CYCLE,
+        repository_root=root.parent.parent,
+        allow_unscoped_history=False,
+        package_overrides={
+            row["symbol"]: row for row in gate["resolved_packages"]
+        },
+    )
+    corrected = next(package for item, package, _ in packages if item["symbol"] == reopened_symbol)
+    assert corrected["cycle_id"] == correction_cycle

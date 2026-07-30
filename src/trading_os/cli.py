@@ -56,13 +56,16 @@ from .research_assets.quality_audit import (
 )
 from .research_assets.quality_workflow import (
     QualityWorkflowError,
+    cycle_quality_gate_status,
     cycle_quality_status,
     load_quality_policy_snapshot,
     materialize_cycle_quality_reopens,
     prepare_cycle_quality_audit,
     prepare_cycle_quality_audit_continuation,
+    prepare_cycle_quality_correction,
     prepare_scope_identity_quality_audit,
     record_cycle_quality_audit_continuation,
+    record_cycle_quality_correction_resolution,
     scope_quality_status,
 )
 from .research_assets.research_allocation import (
@@ -441,6 +444,30 @@ def build_parser() -> argparse.ArgumentParser:
     _add_timestamp(quality_triage_record_continuation)
     quality_triage_record_continuation.set_defaults(
         func=cmd_coverage_quality_triage_record_continuation
+    )
+
+    quality_triage_correction_prepare = coverage_sub.add_parser(
+        "quality-triage-correction-prepare",
+        help="Freeze a correction cohort bound to unresolved quality reopens",
+    )
+    _add_coverage_root(quality_triage_correction_prepare)
+    quality_triage_correction_prepare.add_argument("cycle_id")
+    quality_triage_correction_prepare.add_argument("correction_cycle_id")
+    _add_timestamp(quality_triage_correction_prepare)
+    quality_triage_correction_prepare.set_defaults(
+        func=cmd_coverage_quality_triage_correction_prepare
+    )
+
+    quality_triage_correction_resolve = coverage_sub.add_parser(
+        "quality-triage-correction-resolve",
+        help="Seal corrected packages after the correction quality gate passes",
+    )
+    _add_coverage_root(quality_triage_correction_resolve)
+    quality_triage_correction_resolve.add_argument("cycle_id")
+    quality_triage_correction_resolve.add_argument("correction_cycle_id")
+    _add_timestamp(quality_triage_correction_resolve)
+    quality_triage_correction_resolve.set_defaults(
+        func=cmd_coverage_quality_triage_correction_resolve
     )
 
     quality_triage_status_cmd = coverage_sub.add_parser(
@@ -1192,8 +1219,30 @@ def cmd_coverage_quality_triage_record_continuation(ns: argparse.Namespace) -> i
     return 0
 
 
+def cmd_coverage_quality_triage_correction_prepare(ns: argparse.Namespace) -> int:
+    result = prepare_cycle_quality_correction(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        correction_cycle_id=ns.correction_cycle_id,
+        created_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **result})
+    return 0
+
+
+def cmd_coverage_quality_triage_correction_resolve(ns: argparse.Namespace) -> int:
+    result = record_cycle_quality_correction_resolution(
+        root=ns.root,
+        cycle_id=ns.cycle_id,
+        correction_cycle_id=ns.correction_cycle_id,
+        completed_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": result["status"] == "passed", **result})
+    return 0
+
+
 def cmd_coverage_quality_triage_status(ns: argparse.Namespace) -> int:
-    status = cycle_quality_status(root=ns.root, cycle_id=ns.cycle_id)
+    status = cycle_quality_gate_status(root=ns.root, cycle_id=ns.cycle_id)
     _write_success({"ok": status["status"] == "passed", **status})
     return 0
 

@@ -360,7 +360,7 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
     quality_cycles = []
     from .quality_workflow import (
         QualityWorkflowError,
-        cycle_quality_status,
+        cycle_quality_gate_status,
         scope_quality_status,
     )
 
@@ -381,7 +381,7 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
                 continue
             try:
                 quality_cycles.append(
-                    cycle_quality_status(root=base, cycle_id=cycle_dir.name)
+                    cycle_quality_gate_status(root=base, cycle_id=cycle_dir.name)
                 )
             except QualityWorkflowError as exc:
                 raise CoverageValidationError(

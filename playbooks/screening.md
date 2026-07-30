@@ -86,6 +86,8 @@ python -m trading_os coverage quality-triage-prepare <cycle-id>
 python -m trading_os coverage quality-triage-record <cycle-id> --reviews <quality-reviews.json>
 python -m trading_os coverage quality-triage-continue <cycle-id>
 python -m trading_os coverage quality-triage-record-continuation <cycle-id> --reviews <quality-reviews.json>
+python -m trading_os coverage quality-triage-correction-prepare <cycle-id> <correction-cycle-id>
+python -m trading_os coverage quality-triage-correction-resolve <cycle-id> <correction-cycle-id>
 python -m trading_os coverage triage-compare <cycle-id>
 python -m trading_os coverage triage-finalize <cycle-id> --decisions <agent-decisions.json>
 python -m trading_os coverage evaluate-profile --input <quick-profile.json>

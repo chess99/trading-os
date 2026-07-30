@@ -541,6 +541,23 @@ def test_cli_quality_triage_continuation_commands(monkeypatch, tmp_path: Path, c
         "materialize_cycle_quality_reopens",
         lambda **_: {"reopen_count": 0},
     )
+    monkeypatch.setattr(
+        cli,
+        "prepare_cycle_quality_correction",
+        lambda **_: {
+            "correction_cycle_id": "correction-cycle",
+            "symbol_count": 1,
+        },
+    )
+    monkeypatch.setattr(
+        cli,
+        "record_cycle_quality_correction_resolution",
+        lambda **_: {
+            "status": "passed",
+            "correction_cycle_id": "correction-cycle",
+            "resolved_count": 1,
+        },
+    )
 
     code = cli.main(
         [
@@ -573,3 +590,33 @@ def test_cli_quality_triage_continuation_commands(monkeypatch, tmp_path: Path, c
     payload = json.loads(capsys.readouterr().out)
     assert payload["ok"] is True
     assert payload["status"] == "passed"
+
+    code = cli.main(
+        [
+            "coverage",
+            "quality-triage-correction-prepare",
+            "cycle-id",
+            "correction-cycle",
+            "--root",
+            str(tmp_path / "coverage" / "cn-a"),
+            "--at",
+            T0,
+        ]
+    )
+    assert code == 0
+    assert json.loads(capsys.readouterr().out)["symbol_count"] == 1
+
+    code = cli.main(
+        [
+            "coverage",
+            "quality-triage-correction-resolve",
+            "cycle-id",
+            "correction-cycle",
+            "--root",
+            str(tmp_path / "coverage" / "cn-a"),
+            "--at",
+            T1,
+        ]
+    )
+    assert code == 0
+    assert json.loads(capsys.readouterr().out)["resolved_count"] == 1
