@@ -126,3 +126,37 @@ def test_prepare_manager_screen_snapshot_compacts_facts_and_is_idempotent(
         fetch_records=lambda **_: (_ for _ in ()).throw(AssertionError("must not fetch")),
     )
     assert replay["sha256"] == result["sha256"]
+
+
+def test_unknown_exchange_is_preserved_as_an_identity_data_gap(tmp_path: Path):
+    from trading_os.research_assets.manager_screen_snapshot import (
+        prepare_manager_screen_snapshot,
+    )
+
+    cutoff = dt.datetime.fromisoformat("2026-07-31T08:00:00+08:00")
+    root = tmp_path / "coverage" / "cn-a"
+    _write_jsonl(
+        root / "companies.jsonl",
+        [
+            {
+                "symbol": "CN:302132",
+                "ticker": "302132",
+                "name": "待核验证券",
+                "exchange": "UNKNOWN",
+                "security_type": "unknown",
+                "listing_status": "unknown",
+            }
+        ],
+    )
+
+    result = prepare_manager_screen_snapshot(
+        root=root,
+        run_id="2026-07-31-manager-unknown",
+        information_cutoff=cutoff,
+        fetched_at=cutoff + dt.timedelta(minutes=1),
+        fetch_records=lambda **_: [],
+    )
+    row = json.loads(
+        (tmp_path / result["path"]).read_text(encoding="utf-8").splitlines()[0]
+    )
+    assert "unsupported_exchange_identity" in row["manager_screen_facts"]["data_gaps"]

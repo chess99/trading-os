@@ -141,7 +141,11 @@ def prepare_manager_screen_snapshot(
     if not companies:
         raise ManagerScreenSnapshotError("coverage company snapshot is empty")
     symbols = {_symbol(item.get("symbol")) for item in companies}
-    secucodes = {_secucode(item) for item in companies}
+    secucodes = {
+        secucode
+        for item in companies
+        if (secucode := _secucode(item)) is not None
+    }
     fetch = fetch_records or _fetch_report_records
 
     profiles = fetch(
@@ -203,6 +207,8 @@ def prepare_manager_screen_snapshot(
         data_gaps = []
         if profile is None:
             data_gaps.append("business_profile_missing")
+        if _secucode(company) is None:
+            data_gaps.append("unsupported_exchange_identity")
         if len(annuals) < 3:
             data_gaps.append("three_year_annual_history_incomplete")
         if not periods or all(item["operating_cash_flow_cny"] is None for item in periods):
@@ -564,13 +570,11 @@ def _existing_summary(
     }
 
 
-def _secucode(company: Mapping[str, Any]) -> str:
+def _secucode(company: Mapping[str, Any]) -> str | None:
     ticker = str(company.get("ticker") or str(company["symbol"]).split(":", 1)[-1])
     suffix = {"SSE": "SH", "SZSE": "SZ", "BSE": "BJ"}.get(str(company.get("exchange")))
     if suffix is None:
-        raise ManagerScreenSnapshotError(
-            f"unsupported exchange for {ticker}: {company.get('exchange')}"
-        )
+        return None
     return f"{ticker}.{suffix}"
 
 
