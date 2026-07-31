@@ -15,7 +15,7 @@
 - v2 packet 的 `decision_support.canonical_fact_line` 对象由程序生成；decision 的 `one_line_reason` 必须以其中的 `.text` 加全角分号作为逐字精确前缀。后续定性判断不得手抄、重算、舍入或纠正任何数字。
 - `decision_support.mandatory_risk_flags` 是必须回应的风险候选，不是 route 指令。每个 flag 都要在 `risk_acknowledgements` 中标记 `material` 或 `not_material` 并给出理由；material 理由必须同时进入 reason 定性后缀或决定性问题。
 - v2 quote-impact 对每个受影响 symbol 调度完整 replacement decision，不调度局部 patch。replacement 必须采用新 quote amendment 的 canonical 市值事实并完整重交全部决策字段；route 可以不变。
-- 旧 sealed v1 batch/result 不重写、不升级。quote-impact replacement、calibration 和一次 adjudication 都是独立追加资产，不得串成 correction 链。
+- 旧 sealed v1 batch/result 不重写、不升级。quote-impact replacement、calibration 和一次 adjudication 都是独立追加资产，不得串成 correction 链；路由分歧只作为 calibration signal，只有 material error 才必须且允许 adjudication。
 
 本轮 manager-screen 调度仍为 `paused`，不得继续生产性冻批或 record。calibration 后只开放约 300 家受控续跑（默认约两个 batch），完成后立即再次暂停；身份错误、期间错误、强风险遗漏只有全部为 0 时，主 Agent 才考虑全面恢复，否则继续暂停并修未来机制。
 

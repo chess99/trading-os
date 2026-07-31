@@ -91,7 +91,9 @@ Material error 只包括：
 3. 重大风险遗漏；
 4. decision contract 违规。
 
-投资经理与 reviewer 对 `pass/watch/send_to_analyst` 的观点差异不是自动错误。程序对 schema、整批覆盖、顺序、证据引用和禁止字段做 100% 校验。calibration 按 policy 生成确定性样本，由独立 reviewer 完整覆盖并封存 packet/result；路由分歧单列，material error 只限上述四类，不阻塞 coverage，每家公司最多一次裁决，也不生成递归 correction。
+投资经理与 reviewer 对 `pass/watch/send_to_analyst` 的观点差异不是自动错误。程序对 schema、整批覆盖、顺序、证据引用和禁止字段做 100% 校验。calibration 按 policy 生成确定性样本，由独立 reviewer 完整覆盖并封存 packet/result；路由分歧只单列为 calibration signal，不触发裁决。material error 只限上述四类，不阻塞 coverage；只有记录 material error 时才必须且允许每家公司执行一次裁决，也不生成递归 correction。
+
+新 calibration packet 以 `reviewer_contract.adjudication_trigger=material_error_only` 固化触发规则。缺少该字段的早期 sealed result 若含纯路由分歧 adjudication，只做历史兼容读取和计数，不使结果失效；所有新 record 必须遵守新规则，兼容路径不能用于新增资产。
 
 暂停期间不得继续批量冻结或记录生产 batch。完成 calibration 后的约 300 家属于受控续跑，不代表全量恢复；完成后必须再次审计身份、事实期间和强风险覆盖。
 

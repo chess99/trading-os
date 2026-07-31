@@ -245,7 +245,7 @@ quick profile
 ## 初筛质量机制
 
 - 证券身份、schema、全量覆盖、顺序、证据 ID 和禁止字段：100% 程序校验。
-- calibration 使用 policy 的确定性样本，独立 reviewer 必须完整覆盖，并分别封存 packet/result。material error 仅限证券身份、可核验事实、重大风险遗漏和 contract 违规；路由分歧单列，不阻塞 coverage，每家公司最多一次裁决，禁止 correction 链。
+- calibration 使用 policy 的确定性样本，独立 reviewer 必须完整覆盖，并分别封存 packet/result。material error 仅限证券身份、可核验事实、重大风险遗漏和 contract 违规；路由分歧只单列为 calibration signal，不阻塞 coverage，也不得触发裁决。只有记录 material error 时才必须且允许每家公司执行一次裁决，禁止 correction 链。
 - 研究员若发现 material error，在其正式研究中显式指出并由主 Agent 一次裁决；不创建 correction cohort。
 - 同一公司初筛不得出现 correction 套 correction。
 - calibration 结束不等于全面恢复；先受控续跑约 300 家并重新审计。身份错误、期间错误和强风险遗漏必须全部为 0，才可由主 Agent 考虑解除 run 级暂停。

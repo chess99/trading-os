@@ -29,7 +29,8 @@
 - `mandatory_risk_flags` 只是必须逐项回应的风险候选，不自动决定路由；每项都要明确判断 `material` 或 `not_material`，重大风险理由必须进入正式 reason 或决定性问题。
 - 初筛的 `pass` / `watch` 必须记录理由、决定性问题、证据引用和可执行重启条件。
 - 路由观点差异是校准信号，不自动视为错误。初筛 material error 仅包括证券身份错误、可核验事实错误、重大风险遗漏和 contract 违规。
-- calibration 必须按确定性样本由独立 reviewer 完整复核并分别封存 packet/result；它不阻塞 coverage，不把路由分歧计为 material error，每家公司最多一次裁决，禁止 correction 链。
+- calibration 必须按确定性样本由独立 reviewer 完整复核并分别封存 packet/result；它不阻塞 coverage。路由分歧只作为 calibration signal 统计，不得触发裁决；只有记录 material error 时才必须且允许每家公司执行一次裁决，禁止 correction 链。
+- 已封存旧 calibration result 中的纯路由分歧裁决只读兼容并保留统计，不得借兼容路径继续生产或改写资产。
 - 初筛禁止 correction 套 correction。研究员发现 material error 时，由投资经理在后续正式研究或一次显式裁决中更正，不重启递归 reviewer 链。
 - 未记录的错误批次只能用 sealed supersession 作废；superseded 批次保留审计历史，但不占 active/open/重复证券集合，其成员回到 remaining。已记录批次不可 supersede。
 - 旧 rapid-triage、quality-triage、triage-compare/finalize 代码和 Cycle 001/002 资产仅为历史验证兼容保留；新 Goal 不得使用。旧状态只能通过一次性 sealed legacy transition 明确分类为 adoption、rescreen 或 defer_active，禁止从旧标签自动映射新路由。

@@ -101,7 +101,8 @@ run control 是 append-only sealed 时间线：`paused` 禁止新 freeze 和首�
 
 - 程序 100% 校验 schema、整批覆盖、顺序、route、trigger、证据引用、provenance 和禁止字段。
 - 路由分歧不自动等于事实错误。
-- calibration 由 policy 确定样本，独立 reviewer 必须按样本顺序完整覆盖并分别封存 packet/result。只把身份错误、可核验事实错误、重大风险遗漏和 contract 违规计为 material error；路由分歧单列，不阻塞 coverage。每家公司最多一次 adjudication，禁止 correction 链。
+- calibration 由 policy 确定样本，独立 reviewer 必须按样本顺序完整覆盖并分别封存 packet/result。只把身份错误、可核验事实错误、重大风险遗漏和 contract 违规计为 material error；路由分歧只单列为 calibration signal，不阻塞 coverage，也不得触发 adjudication。只有记录 material error 时才必须且允许每家公司执行一次 adjudication，禁止 correction 链。
+- 新 packet 在 `reviewer_contract.adjudication_trigger` 固化 `material_error_only`。已封存且缺少该字段的旧 calibration result 若按早期 contract 对纯路由分歧记录过 adjudication，validator 只读兼容并继续统计该历史；兼容分支不得用于生产新 result，也不得改写旧资产。
 - status 区分 `planned`、`missing`、`complete`、`material_error`；旧 batch 没有 calibration policy 时显示 `not_configured`。需要复核旧 batch 时，只能用当前 policy 显式冻结新的 calibration packet，不修改旧 batch/result。
 - 发现 material error 后由正式研究或一次裁决更正；禁止 correction 套 correction。
 - 暂停恢复闸门是 run 级治理决定，不由单个 calibration result 自动打开；约 300 家受控续跑结束前不得恢复全速冻结新批次。

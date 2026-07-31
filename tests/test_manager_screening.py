@@ -459,20 +459,18 @@ def _calibration_submission(
                     "evidence_ids": [evidence_id] if has_disagreement else [],
                 },
                 "adjudication": {
-                    "performed": has_disagreement or has_error,
+                    "performed": has_error,
                     "outcome": (
                         "material_error_confirmed"
                         if has_error
-                        else ("manager_upheld" if has_disagreement else "not_needed")
+                        else "not_needed"
                     ),
                     "finding": (
                         "一次性裁决已完成，不启动 correction 链。"
-                        if has_disagreement or has_error
+                        if has_error
                         else None
                     ),
-                    "evidence_ids": (
-                        [evidence_id] if has_disagreement or has_error else []
-                    ),
+                    "evidence_ids": [evidence_id] if has_error else [],
                 },
             }
         )
@@ -1881,6 +1879,7 @@ def test_calibration_review_closes_sample_without_changing_coverage(tmp_path: Pa
     packet = json.loads((tmp_path / prepared["packet_path"]).read_text(encoding="utf-8"))
     assert packet["reviewer_contract"]["recursive_correction"] == "forbidden"
     assert packet["reviewer_contract"]["route_disagreement_is_material_error"] is False
+    assert packet["reviewer_contract"]["adjudication_trigger"] == "material_error_only"
     assert packet["plan"]["planned_sample_count"] == len(packet["samples"]) == 1
 
     missing = manager_screen_calibration_status(root=root, run_id=RUN_ID)
@@ -1907,6 +1906,26 @@ def test_calibration_review_closes_sample_without_changing_coverage(tmp_path: Pa
             batch_id="batch-001",
             calibration_id="calibration-001",
             submission=same_manager,
+            recorded_at=CUTOFF + dt.timedelta(minutes=4),
+        )
+
+    route_only_adjudication = _calibration_submission(packet)
+    route_only_adjudication["reviews"][0]["adjudication"] = {
+        "performed": True,
+        "outcome": "manager_upheld",
+        "finding": "路由观点分歧不应触发裁决。",
+        "evidence_ids": [packet["samples"][0]["evidence_ids"][0]],
+    }
+    with pytest.raises(
+        ManagerScreeningError,
+        match="adjudication is allowed only for material errors",
+    ):
+        record_manager_screen_calibration(
+            root=root,
+            run_id=RUN_ID,
+            batch_id="batch-001",
+            calibration_id="calibration-001",
+            submission=route_only_adjudication,
             recorded_at=CUTOFF + dt.timedelta(minutes=4),
         )
 
@@ -1939,7 +1958,7 @@ def test_calibration_review_closes_sample_without_changing_coverage(tmp_path: Pa
     assert status["calibration"]["missing_sample_count"] == 0
     assert status["calibration"]["route_disagreement_count"] == 1
     assert status["calibration"]["material_error_count"] == 0
-    assert status["batches"][0]["calibration"]["adjudication_count"] == 1
+    assert status["batches"][0]["calibration"]["adjudication_count"] == 0
     assert (root / "research_queue.jsonl").read_bytes() == queue_before
     assert (root / "screening.jsonl").read_bytes() == screening_before
     with pytest.raises(ManagerScreeningError, match="single-shot"):
@@ -1953,10 +1972,111 @@ def test_calibration_review_closes_sample_without_changing_coverage(tmp_path: Pa
         )
 
 
+def test_legacy_sealed_calibration_route_adjudication_remains_readable(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import trading_os.research_assets.manager_screening as manager_screening
+    from trading_os.research_assets.coverage_store import validate_coverage_root
+
+    root, policy_path = _root(tmp_path)
+    manager_screening.freeze_manager_screen_batch(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        frozen_at=CUTOFF + dt.timedelta(minutes=1),
+        policy_path=policy_path,
+    )
+    manager_screening.record_manager_screen_decisions(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        submission=_submission(["CN:000001", "CN:000002"]),
+        recorded_at=CUTOFF + dt.timedelta(minutes=2),
+    )
+    reviewer_contract = manager_screening._calibration_reviewer_contract
+
+    def legacy_reviewer_contract():
+        contract = reviewer_contract()
+        contract.pop("adjudication_trigger")
+        return contract
+
+    monkeypatch.setattr(
+        manager_screening,
+        "_calibration_reviewer_contract",
+        legacy_reviewer_contract,
+    )
+    prepared = manager_screening.prepare_manager_screen_calibration(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        calibration_id="calibration-legacy",
+        prepared_at=CUTOFF + dt.timedelta(minutes=3),
+        policy_path=policy_path,
+    )
+    monkeypatch.setattr(
+        manager_screening,
+        "_calibration_reviewer_contract",
+        reviewer_contract,
+    )
+    packet = json.loads((tmp_path / prepared["packet_path"]).read_text(encoding="utf-8"))
+    assert "adjudication_trigger" not in packet["reviewer_contract"]
+    legacy_submission = _calibration_submission(packet)
+    legacy_submission["reviews"][0]["adjudication"] = {
+        "performed": True,
+        "outcome": "manager_upheld",
+        "finding": "历史 contract 曾允许对纯路由分歧执行一次裁决。",
+        "evidence_ids": [packet["samples"][0]["evidence_ids"][0]],
+    }
+
+    normalize = manager_screening._normalize_calibration_submission
+
+    def normalize_as_legacy(*args, **kwargs):
+        kwargs["legacy_contract"] = True
+        return normalize(*args, **kwargs)
+
+    monkeypatch.setattr(
+        manager_screening,
+        "_normalize_calibration_submission",
+        normalize_as_legacy,
+    )
+    recorded = manager_screening.record_manager_screen_calibration(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        calibration_id="calibration-legacy",
+        submission=legacy_submission,
+        recorded_at=CUTOFF + dt.timedelta(minutes=4),
+    )
+    monkeypatch.setattr(
+        manager_screening,
+        "_normalize_calibration_submission",
+        normalize,
+    )
+
+    status = manager_screening.manager_screen_status(root=root, run_id=RUN_ID)
+    assert status["calibration"]["route_disagreement_count"] == 1
+    assert status["calibration"]["material_error_count"] == 0
+    assert status["calibration"]["adjudication_count"] == 1
+    assert validate_coverage_root(root)["manager_screen_runs"][0]["run_id"] == RUN_ID
+    assert (
+        manager_screening.record_manager_screen_calibration(
+            root=root,
+            run_id=RUN_ID,
+            batch_id="batch-001",
+            calibration_id="calibration-legacy",
+            submission=legacy_submission,
+            recorded_at=CUTOFF + dt.timedelta(minutes=5),
+        )["result_sha256"]
+        == recorded["result_sha256"]
+    )
+
+
 def test_calibration_material_error_is_non_blocking_and_not_route_disagreement(
     tmp_path: Path,
 ):
     from trading_os.research_assets.manager_screening import (
+        ManagerScreeningError,
         freeze_manager_screen_batch,
         manager_screen_status,
         prepare_manager_screen_calibration,
@@ -1988,12 +2108,39 @@ def test_calibration_material_error_is_non_blocking_and_not_route_disagreement(
         policy_path=policy_path,
     )
     packet = json.loads((tmp_path / prepared["packet_path"]).read_text(encoding="utf-8"))
+    missing_adjudication = _calibration_submission(
+        packet,
+        material_error=True,
+        route_disagreement=False,
+    )
+    missing_adjudication["reviews"][0]["adjudication"] = {
+        "performed": False,
+        "outcome": "not_needed",
+        "finding": None,
+        "evidence_ids": [],
+    }
+    with pytest.raises(
+        ManagerScreeningError,
+        match="material errors require adjudication",
+    ):
+        record_manager_screen_calibration(
+            root=root,
+            run_id=RUN_ID,
+            batch_id="batch-001",
+            calibration_id="calibration-error",
+            submission=missing_adjudication,
+            recorded_at=CUTOFF + dt.timedelta(minutes=4),
+        )
     recorded = record_manager_screen_calibration(
         root=root,
         run_id=RUN_ID,
         batch_id="batch-001",
         calibration_id="calibration-error",
-        submission=_calibration_submission(packet, material_error=True),
+        submission=_calibration_submission(
+            packet,
+            material_error=True,
+            route_disagreement=False,
+        ),
         recorded_at=CUTOFF + dt.timedelta(minutes=4),
     )
     assert recorded["status"] == "material_error"
@@ -2001,7 +2148,7 @@ def test_calibration_material_error_is_non_blocking_and_not_route_disagreement(
     status = manager_screen_status(root=root, run_id=RUN_ID)
     assert status["calibration"]["status"] == "material_error"
     assert status["calibration"]["material_error_count"] == 1
-    assert status["calibration"]["route_disagreement_count"] == 1
+    assert status["calibration"]["route_disagreement_count"] == 0
     assert status["calibration"]["non_blocking"] is True
     assert status["by_route"] == {"pass": 1, "send_to_analyst": 1}
 

@@ -206,6 +206,7 @@ ADJUDICATION_OUTCOMES = {
     "manager_upheld",
     "material_error_confirmed",
 }
+CALIBRATION_ADJUDICATION_TRIGGER = "material_error_only"
 MEMBER_KEYS = {
     "batch_ordinal",
     "scope_ordinal",
@@ -1197,15 +1198,7 @@ def prepare_manager_screen_calibration(
         "manager_result_sha256": verified["result_seal"].sha256,
         "policy": policy,
         "plan": plan,
-        "reviewer_contract": {
-            "complete_sample_required": True,
-            "material_error_types": sorted(CALIBRATION_ERROR_TYPES),
-            "route_disagreement_is_material_error": False,
-            "independent_reviewer_required": True,
-            "adjudication_limit_per_company": 1,
-            "recursive_correction": "forbidden",
-            "coverage_write": "forbidden",
-        },
+        "reviewer_contract": _calibration_reviewer_contract(),
         "samples": samples,
         "non_blocking": True,
         "portfolio_action": None,
@@ -1272,13 +1265,6 @@ def record_manager_screen_calibration(
         raise ManagerScreeningError(
             "calibration recorded_at cannot predate packet preparation"
         )
-    normalized = _normalize_calibration_submission(
-        submission,
-        packet=packet,
-        batch=verified_batch["batch"],
-        manager_result=verified_batch["result"],
-        recorded_at=recorded,
-    )
     result_path = calibration_dir / "result.json"
     if result_path.exists():
         complete = _verify_calibration_dir(
@@ -1288,6 +1274,14 @@ def record_manager_screen_calibration(
             require_result=True,
         )
         existing = complete["result"]
+        normalized = _normalize_calibration_submission(
+            submission,
+            packet=packet,
+            batch=verified_batch["batch"],
+            manager_result=verified_batch["result"],
+            recorded_at=recorded,
+            legacy_contract=_is_legacy_calibration_packet(packet),
+        )
         if any(
             existing[key] != normalized[key]
             for key in ("reviewer", "additional_evidence", "reviews")
@@ -1299,6 +1293,14 @@ def record_manager_screen_calibration(
             complete,
             repository_root=repository_root,
         )
+    normalized = _normalize_calibration_submission(
+        submission,
+        packet=packet,
+        batch=verified_batch["batch"],
+        manager_result=verified_batch["result"],
+        recorded_at=recorded,
+        legacy_contract=False,
+    )
     material_error_count = sum(
         len(review["material_errors"])
         for review in normalized["reviews"]
@@ -1896,6 +1898,27 @@ def _has_calibration_policy(policy: Mapping[str, Any]) -> bool:
     return CALIBRATION_POLICY_REF_KEYS.issubset(policy)
 
 
+def _calibration_reviewer_contract() -> dict[str, Any]:
+    return {
+        "complete_sample_required": True,
+        "material_error_types": sorted(CALIBRATION_ERROR_TYPES),
+        "route_disagreement_is_material_error": False,
+        "independent_reviewer_required": True,
+        "adjudication_limit_per_company": 1,
+        "adjudication_trigger": CALIBRATION_ADJUDICATION_TRIGGER,
+        "recursive_correction": "forbidden",
+        "coverage_write": "forbidden",
+    }
+
+
+def _is_legacy_calibration_packet(packet: Mapping[str, Any]) -> bool:
+    reviewer_contract = packet.get("reviewer_contract")
+    return (
+        isinstance(reviewer_contract, Mapping)
+        and "adjudication_trigger" not in reviewer_contract
+    )
+
+
 def _calibration_plan(
     batch: Mapping[str, Any],
     *,
@@ -1950,6 +1973,7 @@ def _normalize_calibration_submission(
     batch: Mapping[str, Any],
     manager_result: Mapping[str, Any],
     recorded_at: dt.datetime,
+    legacy_contract: bool,
 ) -> dict[str, Any]:
     if (
         not isinstance(submission, Mapping)
@@ -2025,6 +2049,7 @@ def _normalize_calibration_submission(
             allowed_evidence=allowed_evidence,
             has_material_error=bool(material_errors),
             has_route_disagreement=route_disagreement["present"],
+            legacy_contract=legacy_contract,
         )
         normalized_reviews.append(
             {
@@ -2134,6 +2159,7 @@ def _validate_calibration_adjudication(
     allowed_evidence: set[str],
     has_material_error: bool,
     has_route_disagreement: bool,
+    legacy_contract: bool,
 ) -> dict[str, Any]:
     if not isinstance(value, Mapping) or set(value) != CALIBRATION_ADJUDICATION_KEYS:
         raise ManagerScreeningError(
@@ -2156,6 +2182,23 @@ def _validate_calibration_adjudication(
         required=performed,
     )
     finding = value.get("finding")
+    if legacy_contract and performed:
+        if not has_material_error and not has_route_disagreement:
+            raise ManagerScreeningError(
+                f"adjudication requires a recorded disagreement or error: {symbol}"
+            )
+        if outcome == "material_error_confirmed" and not has_material_error:
+            raise ManagerScreeningError(
+                f"material-error adjudication lacks a material error: {symbol}"
+            )
+    elif not legacy_contract and performed != has_material_error:
+        if has_material_error:
+            raise ManagerScreeningError(
+                f"calibration material errors require adjudication: {symbol}"
+            )
+        raise ManagerScreeningError(
+            f"calibration adjudication is allowed only for material errors: {symbol}"
+        )
     if not performed:
         if outcome != "not_needed" or finding is not None or evidence_ids:
             raise ManagerScreeningError(
@@ -2166,14 +2209,6 @@ def _validate_calibration_adjudication(
         if outcome == "not_needed":
             raise ManagerScreeningError(
                 f"performed adjudication requires an outcome: {symbol}"
-            )
-        if not has_material_error and not has_route_disagreement:
-            raise ManagerScreeningError(
-                f"adjudication requires a recorded disagreement or error: {symbol}"
-            )
-        if outcome == "material_error_confirmed" and not has_material_error:
-            raise ManagerScreeningError(
-                f"material-error adjudication lacks a material error: {symbol}"
             )
         normalized_finding = _text(
             finding,
@@ -2306,16 +2341,10 @@ def _validate_calibration_packet(
             raise ManagerScreeningError(
                 "manager-screen calibration sample is not bound to packet facts"
             )
-    expected_contract = {
-        "complete_sample_required": True,
-        "material_error_types": sorted(CALIBRATION_ERROR_TYPES),
-        "route_disagreement_is_material_error": False,
-        "independent_reviewer_required": True,
-        "adjudication_limit_per_company": 1,
-        "recursive_correction": "forbidden",
-        "coverage_write": "forbidden",
-    }
-    if packet.get("reviewer_contract") != expected_contract:
+    expected_contract = _calibration_reviewer_contract()
+    legacy_contract = dict(expected_contract)
+    legacy_contract.pop("adjudication_trigger", None)
+    if packet.get("reviewer_contract") not in (expected_contract, legacy_contract):
         raise ManagerScreeningError(
             "manager-screen calibration reviewer contract is invalid"
         )
@@ -2368,6 +2397,7 @@ def _validate_calibration_result(
         batch=verified_batch["batch"],
         manager_result=verified_batch["result"],
         recorded_at=recorded,
+        legacy_contract=_is_legacy_calibration_packet(packet),
     )
     if any(result[key] != normalized[key] for key in normalized):
         raise ManagerScreeningError(
