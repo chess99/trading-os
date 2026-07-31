@@ -96,8 +96,23 @@ TERMINAL_STAGES = {
     "targeted_followup_candidate",
     "price_watch",
     "reassign_or_stop",
+    "watch_only",
     "conditional_stop",
 }
+TARGETED_FOLLOWUP_DECLINE_OUTCOMES = {
+    "price_watch",
+    "watch_only",
+    "conditional_stop",
+}
+REACTIVATION_TRIGGER_TYPES = {
+    "filing",
+    "price",
+    "date",
+    "ttl",
+    "event",
+    "thesis",
+}
+REACTIVATION_TRIGGER_KEYS = {"type", "condition", "reason"}
 CYCLE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SOURCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$")
 
@@ -377,6 +392,22 @@ def approve_targeted_followup(
         / "targeted-followup-approvals"
         / f"{symbol.split(':', 1)[1]}.json"
     )
+    decline_path = (
+        base
+        / "profiles"
+        / cycle
+        / "targeted-followup-declines"
+        / f"{symbol.split(':', 1)[1]}.json"
+    )
+    if (
+        queued.get("targeted_followup_decline_path") is not None
+        or queued.get("targeted_followup_decline_sha256") is not None
+        or decline_path.exists()
+        or decline_path.with_name(f"{decline_path.name}.seal.json").exists()
+    ):
+        raise ResearchAllocationError(
+            f"targeted followup already has a sealed decline: {symbol}"
+        )
     if approval_path.exists() or approval_path.with_name(
         f"{approval_path.name}.seal.json"
     ).exists():
@@ -864,6 +895,792 @@ def _materialize_targeted_followup_approval(
         "idempotent": idempotent,
         "portfolio_action": None,
     }
+
+
+@serialized_coverage_write
+def decline_targeted_followup(
+    *,
+    root: str | Path,
+    symbol: str,
+    manager: str,
+    outcome: str,
+    reason: str,
+    restart_triggers: list[Mapping[str, Any]],
+    declined_at: dt.datetime,
+) -> dict[str, Any]:
+    """Seal a manager decision not to purchase targeted-followup research.
+
+    The decision is append-only and may close one legacy pending task that was
+    materialized before explicit approvals became mandatory.  It never creates
+    an approval ledger entry and therefore never consumes follow-up capacity.
+    """
+
+    _require_aware_datetime(declined_at, "declined_at")
+    if not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        raise ResearchAllocationError("decline symbol is invalid")
+    manager_name = _text(manager, "manager")
+    terminal_outcome = _targeted_followup_decline_outcome(outcome)
+    decline_reason = _text(reason, "reason")
+    triggers = _normalize_reactivation_triggers(
+        restart_triggers,
+        outcome=terminal_outcome,
+    )
+    base = Path(root)
+    repository_root = base.parent.parent
+    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    screening = read_jsonl(base / SCREENING_FILE)
+    queued = _one_record(queue, symbol, "research queue")
+    screen = _one_record(screening, symbol, "screening")
+    cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
+    ticker = symbol.split(":", 1)[1]
+    decline_path = (
+        base
+        / "profiles"
+        / cycle
+        / "targeted-followup-declines"
+        / f"{ticker}.json"
+    )
+    approval_path = (
+        base
+        / "profiles"
+        / cycle
+        / "targeted-followup-approvals"
+        / f"{ticker}.json"
+    )
+    if (
+        queued.get("targeted_followup_approval_path") is not None
+        or queued.get("targeted_followup_approval_sha256") is not None
+        or approval_path.exists()
+        or approval_path.with_name(f"{approval_path.name}.seal.json").exists()
+    ):
+        raise ResearchAllocationError(
+            f"targeted followup already has an approval commitment: {symbol}"
+        )
+    if _history_completed(queued, "targeted_followup"):
+        raise ResearchAllocationError(
+            f"completed targeted followup cannot be declined: {symbol}"
+        )
+
+    decline_exists = decline_path.exists() or decline_path.with_name(
+        f"{decline_path.name}.seal.json"
+    ).exists()
+    if decline_exists:
+        decline, decline_seal = _load_or_complete_targeted_followup_decline(
+            decline_path,
+            repository_root=repository_root,
+        )
+        if (
+            decline["symbol"] != symbol
+            or decline["profile_cycle_id"] != cycle
+            or decline["manager"] != manager_name
+            or decline["outcome"] != terminal_outcome
+            or decline["reason"] != decline_reason
+            or decline["restart_triggers"] != triggers
+        ):
+            raise ResearchAllocationError(
+                f"sealed targeted-followup decline conflicts with request: {symbol}"
+            )
+        recommendation = _targeted_followup_recommendation_binding(
+            queued,
+            repository_root=repository_root,
+            legacy_auto_materialized=decline["legacy_auto_materialized"],
+        )
+        manager_binding = _targeted_followup_manager_binding(
+            queued,
+            symbol=symbol,
+            manager=manager_name,
+            repository_root=repository_root,
+        )
+        _validate_targeted_followup_decline_bindings(
+            decline,
+            recommendation=recommendation,
+            manager_binding=manager_binding,
+        )
+        return _materialize_targeted_followup_decline(
+            base=base,
+            queue=queue,
+            screening=screening,
+            decline=decline,
+            decline_path=decline_path,
+            decline_sha256=decline_seal.sha256,
+            repository_root=repository_root,
+            idempotent=True,
+        )
+
+    state = _declinable_targeted_followup_state(queued, screen=screen)
+    legacy_auto_materialized = state == "legacy_auto_materialized_pending"
+    recommendation = _targeted_followup_recommendation_binding(
+        queued,
+        repository_root=repository_root,
+        legacy_auto_materialized=legacy_auto_materialized,
+    )
+    manager_binding = _targeted_followup_manager_binding(
+        queued,
+        symbol=symbol,
+        manager=manager_name,
+        repository_root=repository_root,
+    )
+    if recommendation["research_agent"] == manager_name:
+        raise ResearchAllocationError(
+            "targeted-followup decline manager must be independent of the research agent"
+        )
+    decline = {
+        "schema_version": 1,
+        "symbol": symbol,
+        "profile_cycle_id": cycle,
+        "declined_at": declined_at.isoformat(),
+        "manager": manager_name,
+        "budget_decision": "declined",
+        "additional_budget_hours": 0.0,
+        "outcome": terminal_outcome,
+        "reason": decline_reason,
+        "restart_triggers": triggers,
+        "legacy_auto_materialized": legacy_auto_materialized,
+        "manager_screen_binding": manager_binding,
+        "analyst_recommendation": recommendation,
+        "portfolio_action": None,
+    }
+    decline_seal = seal_json(
+        decline_path,
+        decline,
+        artifact_type="targeted_followup_decline",
+        sealed_at=declined_at,
+    )
+    return _materialize_targeted_followup_decline(
+        base=base,
+        queue=queue,
+        screening=screening,
+        decline=decline,
+        decline_path=decline_path,
+        decline_sha256=decline_seal.sha256,
+        repository_root=repository_root,
+        idempotent=False,
+    )
+
+
+def _declinable_targeted_followup_state(
+    queued: Mapping[str, Any],
+    *,
+    screen: Mapping[str, Any],
+) -> str:
+    symbol = str(queued.get("symbol"))
+    candidate = bool(
+        queued.get("task_type") in {"quick_profile", "scoped_research"}
+        and queued.get("status") == "completed"
+        and screen.get("decision") == "targeted_followup_candidate"
+    )
+    attempts = queued.get("attempt_history")
+    legacy_pending = bool(
+        queued.get("task_type") == "targeted_followup"
+        and queued.get("status") == "pending"
+        and queued.get("preceding_stage") in {"quick_profile", "scoped_research"}
+        and screen.get("decision") == "targeted_followup"
+        and queued.get("assigned_agent") is None
+        and queued.get("started_at") is None
+        and queued.get("finished_at") is None
+        and (attempts is None or attempts == [])
+    )
+    if candidate:
+        return "analyst_candidate"
+    if legacy_pending:
+        return "legacy_auto_materialized_pending"
+    raise ResearchAllocationError(
+        "targeted followup decline requires an unstarted analyst candidate or "
+        f"one unstarted legacy pending task: {symbol}"
+    )
+
+
+def _targeted_followup_recommendation_binding(
+    queued: Mapping[str, Any],
+    *,
+    repository_root: Path,
+    legacy_auto_materialized: bool,
+) -> dict[str, Any]:
+    preceding_stage = (
+        str(queued.get("preceding_stage"))
+        if queued.get("task_type") == "targeted_followup"
+        else str(queued.get("task_type"))
+    )
+    if preceding_stage not in {"quick_profile", "scoped_research"}:
+        raise ResearchAllocationError(
+            "targeted-followup recommendation has an invalid preceding stage"
+        )
+    history = queued.get("stage_history")
+    matching_history = [
+        item
+        for item in (history if isinstance(history, list) else [])
+        if isinstance(item, Mapping)
+        and item.get("stage") == preceding_stage
+        and item.get("status") == "completed"
+        and isinstance(item.get("result_path"), str)
+        and isinstance(item.get("evaluation_path"), str)
+    ]
+    if not matching_history:
+        raise ResearchAllocationError(
+            "targeted followup is not backed by a completed analyst recommendation"
+        )
+    recommendation_record = dict(queued)
+    recommendation_record["stage_history"] = [dict(matching_history[-1])]
+    row = _profile_comparison_row(
+        recommendation_record,
+        ordinal=1,
+        cycle=_text(queued.get("profile_cycle_id"), "profile_cycle_id"),
+        stage=preceding_stage,
+        repository_root=repository_root,
+    )
+    recommended_next_stage = row.get("current_next_stage")
+    if recommended_next_stage not in {
+        "targeted_followup",
+        "targeted_followup_candidate",
+    }:
+        raise ResearchAllocationError(
+            "sealed analyst evaluation does not recommend targeted followup"
+        )
+    profile_path = (repository_root / str(row["profile_path"])).resolve()
+    evaluation_path = (repository_root / str(row["evaluation_path"])).resolve()
+    for artifact_path in (profile_path, evaluation_path):
+        try:
+            artifact_path.relative_to(repository_root.resolve())
+        except ValueError as exc:
+            raise ResearchAllocationError(
+                "targeted-followup recommendation escapes repository root"
+            ) from exc
+    package = json.loads(profile_path.read_text(encoding="utf-8"))
+    evaluation = json.loads(evaluation_path.read_text(encoding="utf-8"))
+    if (
+        evaluation.get("profile_path") != row["profile_path"]
+        or evaluation.get("profile_sha256") != row["profile_sha256"]
+    ):
+        raise ResearchAllocationError(
+            "sealed analyst evaluation does not bind its profile package"
+        )
+    package_binding = package.get("manager_screen_binding")
+    expected_package_binding = {
+        "result_path": queued.get("manager_screen_result_path"),
+        "result_sha256": queued.get("manager_screen_result_sha256"),
+        "decisive_question": queued.get("decisive_question"),
+        "evidence_ids": list(queued.get("evidence_ids") or []),
+    }
+    if package_binding is None:
+        if not legacy_auto_materialized:
+            raise ResearchAllocationError(
+                "current analyst candidate is missing its manager-screen binding"
+            )
+        manager_binding_mode = "legacy_queue_sealed_result"
+    elif not isinstance(package_binding, Mapping) or dict(package_binding) != (
+        expected_package_binding
+    ):
+        raise ResearchAllocationError(
+            "sealed analyst recommendation conflicts with its manager-screen binding"
+        )
+    else:
+        if not isinstance(package.get("decisive_answer"), Mapping):
+            raise ResearchAllocationError(
+                "sealed analyst recommendation is missing its decisive answer"
+            )
+        manager_binding_mode = "manager_bound_package"
+    research_agent = _text(row.get("research_agent"), "analyst recommendation agent")
+    return {
+        "preceding_stage": preceding_stage,
+        "recommended_next_stage": recommended_next_stage,
+        "profile_path": row["profile_path"],
+        "profile_sha256": row["profile_sha256"],
+        "evaluation_path": row["evaluation_path"],
+        "evaluation_sha256": row["evaluation_sha256"],
+        "research_agent": research_agent,
+        "manager_binding_mode": manager_binding_mode,
+    }
+
+
+def _targeted_followup_manager_binding(
+    queued: Mapping[str, Any],
+    *,
+    symbol: str,
+    manager: str,
+    repository_root: Path,
+) -> dict[str, Any]:
+    run_id = _text(queued.get("manager_screen_run_id"), "manager_screen_run_id")
+    expected_manager = _investment_manager_for_cohort(
+        [queued],
+        repository_root=repository_root,
+    )
+    if expected_manager is None or manager != expected_manager:
+        raise ResearchAllocationError(
+            "targeted-followup decline must come from the original investment "
+            f"manager: expected {expected_manager}"
+        )
+    relative = _text(
+        queued.get("manager_screen_result_path"),
+        "manager_screen_result_path",
+    )
+    expected_sha256 = _text(
+        queued.get("manager_screen_result_sha256"),
+        "manager_screen_result_sha256",
+    )
+    result_path = (repository_root / relative).resolve()
+    sealed = verify_sealed(result_path)
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    decisions = result.get("decisions")
+    matches = [
+        item
+        for item in (decisions if isinstance(decisions, list) else [])
+        if isinstance(item, Mapping) and item.get("symbol") == symbol
+    ]
+    if len(matches) != 1 or matches[0].get("route") != "send_to_analyst":
+        raise ResearchAllocationError(
+            "manager-screen result does not contain one send_to_analyst decision"
+        )
+    decision = matches[0]
+    if (
+        sealed.sha256 != expected_sha256
+        or result.get("run_id") not in {None, run_id}
+        or (
+            isinstance(queued.get("manager_screen_batch_id"), str)
+            and result.get("batch_id")
+            not in {None, queued.get("manager_screen_batch_id")}
+        )
+        or (
+            isinstance(queued.get("manager_screen_route"), str)
+            and queued.get("manager_screen_route") != decision.get("route")
+        )
+    ):
+        raise ResearchAllocationError(
+            "manager-screen decision does not match the follow-up queue binding"
+        )
+    return {
+        "run_id": run_id,
+        "batch_id": queued.get("manager_screen_batch_id"),
+        "result_path": relative,
+        "result_sha256": expected_sha256,
+        "decision_sha256": hashlib.sha256(
+            canonical_json_bytes(dict(decision))
+        ).hexdigest(),
+        "route": "send_to_analyst",
+        "manager": manager,
+    }
+
+
+def _load_or_complete_targeted_followup_decline(
+    decline_path: Path,
+    *,
+    repository_root: Path,
+) -> tuple[dict[str, Any], Any]:
+    manifest_path = decline_path.with_name(f"{decline_path.name}.seal.json")
+    try:
+        if decline_path.is_file() and not manifest_path.exists():
+            raw = decline_path.read_bytes()
+            decline = json.loads(raw.decode("utf-8"))
+            if canonical_json_bytes(decline) != raw:
+                raise ResearchAllocationError(
+                    "unsealed targeted-followup decline is not canonical JSON"
+                )
+            normalized = _validate_targeted_followup_decline_payload(decline)
+            sealed = seal_json(
+                decline_path,
+                normalized,
+                artifact_type="targeted_followup_decline",
+                sealed_at=_datetime(normalized["declined_at"], "declined_at"),
+            )
+        else:
+            sealed = verify_sealed(decline_path)
+            decline = json.loads(decline_path.read_text(encoding="utf-8"))
+            normalized = _validate_targeted_followup_decline_payload(decline)
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError(
+            f"targeted-followup decline is not validly sealed: {decline_path}"
+        ) from exc
+    if sealed.artifact_type != "targeted_followup_decline":
+        raise ResearchAllocationError(
+            "targeted-followup decline has the wrong artifact type"
+        )
+    try:
+        decline_path.resolve().relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            "targeted-followup decline escapes repository root"
+        ) from exc
+    return normalized, sealed
+
+
+def _validate_targeted_followup_decline_payload(value: Any) -> dict[str, Any]:
+    expected_keys = {
+        "schema_version",
+        "symbol",
+        "profile_cycle_id",
+        "declined_at",
+        "manager",
+        "budget_decision",
+        "additional_budget_hours",
+        "outcome",
+        "reason",
+        "restart_triggers",
+        "legacy_auto_materialized",
+        "manager_screen_binding",
+        "analyst_recommendation",
+        "portfolio_action",
+    }
+    if (
+        not isinstance(value, Mapping)
+        or set(value) != expected_keys
+        or value.get("schema_version") != 1
+        or value.get("budget_decision") != "declined"
+        or not isinstance(value.get("additional_budget_hours"), float)
+        or value.get("additional_budget_hours") != 0.0
+        or not isinstance(value.get("legacy_auto_materialized"), bool)
+        or value.get("portfolio_action") is not None
+    ):
+        raise ResearchAllocationError(
+            "targeted-followup decline fields do not match v1"
+        )
+    symbol = _text(value.get("symbol"), "decline.symbol")
+    if not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        raise ResearchAllocationError("targeted-followup decline symbol is invalid")
+    outcome = _targeted_followup_decline_outcome(value.get("outcome"))
+    triggers = _normalize_reactivation_triggers(
+        value.get("restart_triggers"),
+        outcome=outcome,
+    )
+    _datetime(value.get("declined_at"), "declined_at")
+    manager_binding = value.get("manager_screen_binding")
+    recommendation = value.get("analyst_recommendation")
+    manager_keys = {
+        "run_id",
+        "batch_id",
+        "result_path",
+        "result_sha256",
+        "decision_sha256",
+        "route",
+        "manager",
+    }
+    recommendation_keys = {
+        "preceding_stage",
+        "recommended_next_stage",
+        "profile_path",
+        "profile_sha256",
+        "evaluation_path",
+        "evaluation_sha256",
+        "research_agent",
+        "manager_binding_mode",
+    }
+    if not isinstance(manager_binding, Mapping) or set(manager_binding) != manager_keys:
+        raise ResearchAllocationError("decline manager-screen binding is invalid")
+    if (
+        not isinstance(recommendation, Mapping)
+        or set(recommendation) != recommendation_keys
+    ):
+        raise ResearchAllocationError("decline analyst recommendation binding is invalid")
+    for field in ("result_sha256", "decision_sha256"):
+        if not re.fullmatch(r"[0-9a-f]{64}", str(manager_binding.get(field))):
+            raise ResearchAllocationError(f"decline {field} is invalid")
+    for field in ("profile_sha256", "evaluation_sha256"):
+        if not re.fullmatch(r"[0-9a-f]{64}", str(recommendation.get(field))):
+            raise ResearchAllocationError(f"decline {field} is invalid")
+    normalized_manager_binding = {
+        "run_id": _text(manager_binding.get("run_id"), "decline.manager.run_id"),
+        "batch_id": (
+            None
+            if manager_binding.get("batch_id") is None
+            else _text(manager_binding.get("batch_id"), "decline.manager.batch_id")
+        ),
+        "result_path": _text(
+            manager_binding.get("result_path"),
+            "decline.manager.result_path",
+        ),
+        "result_sha256": str(manager_binding["result_sha256"]),
+        "decision_sha256": str(manager_binding["decision_sha256"]),
+        "route": _text(manager_binding.get("route"), "decline.manager.route"),
+        "manager": _text(
+            manager_binding.get("manager"),
+            "decline.manager.manager",
+        ),
+    }
+    normalized_recommendation = {
+        "preceding_stage": _text(
+            recommendation.get("preceding_stage"),
+            "decline.recommendation.preceding_stage",
+        ),
+        "recommended_next_stage": _text(
+            recommendation.get("recommended_next_stage"),
+            "decline.recommendation.recommended_next_stage",
+        ),
+        "profile_path": _text(
+            recommendation.get("profile_path"),
+            "decline.recommendation.profile_path",
+        ),
+        "profile_sha256": str(recommendation["profile_sha256"]),
+        "evaluation_path": _text(
+            recommendation.get("evaluation_path"),
+            "decline.recommendation.evaluation_path",
+        ),
+        "evaluation_sha256": str(recommendation["evaluation_sha256"]),
+        "research_agent": _text(
+            recommendation.get("research_agent"),
+            "decline.recommendation.research_agent",
+        ),
+        "manager_binding_mode": _text(
+            recommendation.get("manager_binding_mode"),
+            "decline.recommendation.manager_binding_mode",
+        ),
+    }
+    if (
+        normalized_manager_binding["route"] != "send_to_analyst"
+        or normalized_manager_binding["manager"] != value.get("manager")
+        or normalized_recommendation["preceding_stage"]
+        not in {"quick_profile", "scoped_research"}
+        or normalized_recommendation["recommended_next_stage"]
+        not in {"targeted_followup", "targeted_followup_candidate"}
+        or normalized_recommendation["manager_binding_mode"]
+        not in {"manager_bound_package", "legacy_queue_sealed_result"}
+        or normalized_recommendation["research_agent"] == value.get("manager")
+    ):
+        raise ResearchAllocationError(
+            "targeted-followup decline source bindings are inconsistent"
+        )
+    return {
+        **dict(value),
+        "profile_cycle_id": _text(
+            value.get("profile_cycle_id"),
+            "decline.profile_cycle_id",
+        ),
+        "manager": _text(value.get("manager"), "decline.manager"),
+        "reason": _text(value.get("reason"), "decline.reason"),
+        "outcome": outcome,
+        "restart_triggers": triggers,
+        "manager_screen_binding": normalized_manager_binding,
+        "analyst_recommendation": normalized_recommendation,
+    }
+
+
+def _validate_targeted_followup_decline_bindings(
+    decline: Mapping[str, Any],
+    *,
+    recommendation: Mapping[str, Any],
+    manager_binding: Mapping[str, Any],
+) -> None:
+    if (
+        dict(decline["analyst_recommendation"]) != dict(recommendation)
+        or dict(decline["manager_screen_binding"]) != dict(manager_binding)
+        or recommendation.get("research_agent") == decline.get("manager")
+    ):
+        raise ResearchAllocationError(
+            "sealed targeted-followup decline no longer matches its source bindings"
+        )
+
+
+def _materialize_targeted_followup_decline(
+    *,
+    base: Path,
+    queue: list[dict[str, Any]],
+    screening: list[dict[str, Any]],
+    decline: Mapping[str, Any],
+    decline_path: Path,
+    decline_sha256: str,
+    repository_root: Path,
+    idempotent: bool,
+) -> dict[str, Any]:
+    symbol = str(decline["symbol"])
+    queued = dict(_one_record(queue, symbol, "research queue"))
+    screen = dict(_one_record(screening, symbol, "screening"))
+    relative = decline_path.relative_to(repository_root).as_posix()
+    existing_path = queued.get("targeted_followup_decline_path")
+    existing_sha256 = queued.get("targeted_followup_decline_sha256")
+    if (existing_path is None) != (existing_sha256 is None):
+        raise ResearchAllocationError(
+            f"targeted-followup decline queue binding is incomplete: {symbol}"
+        )
+    already_bound = existing_path == relative and existing_sha256 == decline_sha256
+    if existing_path is not None and not already_bound:
+        raise ResearchAllocationError(
+            f"targeted-followup decline queue binding conflicts: {symbol}"
+        )
+    legacy = bool(decline["legacy_auto_materialized"])
+    initial_queue_state = bool(
+        (
+            legacy
+            and queued.get("task_type") == "targeted_followup"
+            and queued.get("status") == "pending"
+            and queued.get("assigned_agent") is None
+            and queued.get("started_at") is None
+        )
+        or (
+            not legacy
+            and queued.get("task_type")
+            == decline["analyst_recommendation"]["preceding_stage"]
+            and queued.get("status") == "completed"
+        )
+    )
+    materialized_queue_state = bool(
+        already_bound
+        and (
+            (
+                legacy
+                and queued.get("task_type") == "targeted_followup"
+                and queued.get("status") == "skipped"
+            )
+            or (
+                not legacy
+                and queued.get("task_type")
+                == decline["analyst_recommendation"]["preceding_stage"]
+                and queued.get("status") == "completed"
+            )
+        )
+    )
+    if not initial_queue_state and not materialized_queue_state:
+        raise ResearchAllocationError(
+            f"sealed targeted-followup decline cannot repair queue state: {symbol}"
+        )
+    history = list(queued.get("stage_history") or [])
+    if not any(
+        isinstance(item, Mapping)
+        and item.get("stage") == "targeted_followup_decline"
+        and item.get("decline_sha256") == decline_sha256
+        for item in history
+    ):
+        history.append(
+            {
+                "stage": "targeted_followup_decline",
+                "status": "completed",
+                "started_at": None,
+                "finished_at": decline["declined_at"],
+                "agent": decline["manager"],
+                "reason": decline["reason"],
+                "next_stage": decline["outcome"],
+                "restart_triggers": list(decline["restart_triggers"]),
+                "decline_path": relative,
+                "decline_sha256": decline_sha256,
+                "legacy_auto_materialized": legacy,
+            }
+        )
+    next_action = _targeted_followup_decline_next_action(
+        decline["restart_triggers"]
+    )
+    queued.update(
+        {
+            "reason": decline["reason"],
+            "next_action": next_action,
+            "revisit_triggers": list(decline["restart_triggers"]),
+            "targeted_followup_decline_path": relative,
+            "targeted_followup_decline_sha256": decline_sha256,
+            "stage_history": history,
+            "failure_reason": None,
+        }
+    )
+    if legacy:
+        queued.update(
+            {
+                "status": "skipped",
+                "assigned_agent": None,
+                "started_at": None,
+                "finished_at": decline["declined_at"],
+            }
+        )
+    allowed_screen_states = {
+        "targeted_followup" if legacy else "targeted_followup_candidate",
+        decline["outcome"],
+    }
+    if screen.get("decision") not in allowed_screen_states:
+        raise ResearchAllocationError(
+            f"sealed targeted-followup decline cannot repair screening state: {symbol}"
+        )
+    evidence = list(screen.get("evidence") or [])
+    screen.update(
+        {
+            "decision": decline["outcome"],
+            "reason": decline["reason"],
+            "next_action": next_action,
+            "revisit_triggers": list(decline["restart_triggers"]),
+            "evidence": list(
+                dict.fromkeys(
+                    evidence
+                    + [
+                        f"targeted_followup_decline:{relative}",
+                        f"targeted_followup_decline_sha256:{decline_sha256}",
+                    ]
+                )
+            ),
+        }
+    )
+    write_jsonl(
+        base / RESEARCH_QUEUE_FILE,
+        [queued if item.get("symbol") == symbol else item for item in queue],
+    )
+    write_jsonl(
+        base / SCREENING_FILE,
+        [screen if item.get("symbol") == symbol else item for item in screening],
+    )
+    return {
+        "schema_version": 1,
+        "symbol": symbol,
+        "outcome": decline["outcome"],
+        "queue_status": queued["status"],
+        "additional_budget_hours": 0.0,
+        "declined_by": decline["manager"],
+        "declined_at": decline["declined_at"],
+        "decline_path": relative,
+        "decline_sha256": decline_sha256,
+        "restart_triggers": list(decline["restart_triggers"]),
+        "legacy_auto_materialized": legacy,
+        "idempotent": idempotent,
+        "portfolio_action": None,
+    }
+
+
+def _targeted_followup_decline_outcome(value: Any) -> str:
+    if value not in TARGETED_FOLLOWUP_DECLINE_OUTCOMES:
+        raise ResearchAllocationError(
+            "targeted-followup decline outcome must be price_watch, watch_only, "
+            "or conditional_stop"
+        )
+    return str(value)
+
+
+def _normalize_reactivation_triggers(
+    value: Any,
+    *,
+    outcome: str,
+) -> list[dict[str, str]]:
+    if not isinstance(value, list) or not value:
+        raise ResearchAllocationError(
+            "targeted-followup decline requires at least one restart trigger"
+        )
+    normalized: list[dict[str, str]] = []
+    seen: set[bytes] = set()
+    for raw in value:
+        if not isinstance(raw, Mapping) or set(raw) != REACTIVATION_TRIGGER_KEYS:
+            raise ResearchAllocationError(
+                "targeted-followup restart trigger fields do not match contract"
+            )
+        trigger_type = _text(raw.get("type"), "restart trigger type")
+        if trigger_type not in REACTIVATION_TRIGGER_TYPES:
+            raise ResearchAllocationError(
+                f"unsupported targeted-followup restart trigger type: {trigger_type}"
+            )
+        trigger = {
+            "type": trigger_type,
+            "condition": _text(raw.get("condition"), "restart trigger condition"),
+            "reason": _text(raw.get("reason"), "restart trigger reason"),
+        }
+        identity = canonical_json_bytes(trigger)
+        if identity in seen:
+            raise ResearchAllocationError(
+                "targeted-followup restart triggers must be unique"
+            )
+        seen.add(identity)
+        normalized.append(trigger)
+    if outcome == "price_watch" and not any(
+        trigger["type"] == "price" for trigger in normalized
+    ):
+        raise ResearchAllocationError("price_watch decline requires a price trigger")
+    return normalized
+
+
+def _targeted_followup_decline_next_action(
+    triggers: list[Mapping[str, Any]],
+) -> str:
+    conditions = "；".join(
+        f"{trigger['type']}：{trigger['condition']}" for trigger in triggers
+    )
+    return f"不购买定向补证预算；仅在以下已封存条件命中时重新评估：{conditions}"
 
 
 @serialized_coverage_write
@@ -2116,9 +2933,15 @@ def _materialize_profile_selection(
             and queued.get("status") == "completed"
             and _history_completed(queued, "targeted_followup")
         )
+        declined_followup = _history_completed(queued, "targeted_followup_decline")
         candidate_outcome = "profile_candidate" if stage == "quick_profile" else "deep_candidate"
         completed_outcome = _history_completed_outcome(
-            queued, "targeted_followup" if completed_followup else stage
+            queued,
+            (
+                "targeted_followup_decline"
+                if declined_followup
+                else "targeted_followup" if completed_followup else stage
+            ),
         )
         preserve_outcome = bool(
             completed_outcome in TERMINAL_STAGES and completed_outcome != candidate_outcome
@@ -2133,6 +2956,11 @@ def _materialize_profile_selection(
         selected = row["selected"] is True
 
         if selected:
+            if declined_followup:
+                raise ResearchAllocationError(
+                    "profile selection cannot override a sealed targeted-followup "
+                    f"decline without a new trigger workflow: {symbol}"
+                )
             if base_state:
                 if budget is None:
                     raise ResearchAllocationError(
@@ -2186,7 +3014,12 @@ def _materialize_profile_selection(
                 raise ResearchAllocationError(
                     f"sealed {stage} selection cannot safely repair queue state: {symbol}"
                 )
-        elif base_state or completed_followup or existing_binding == selection_path:
+        elif (
+            base_state
+            or completed_followup
+            or declined_followup
+            or existing_binding == selection_path
+        ):
             queued[next_binding_field] = selection_path
             if preserve_outcome:
                 # A profile or follow-up may already have produced a stronger
@@ -3169,11 +4002,13 @@ def _latest_history_path(record: Mapping[str, Any], key: str) -> str | None:
     history = record.get("stage_history")
     if not isinstance(history, list) or not history:
         return None
-    latest = history[-1]
-    if not isinstance(latest, Mapping):
-        return None
-    value = latest.get(key)
-    return value if isinstance(value, str) else None
+    for item in reversed(history):
+        if not isinstance(item, Mapping):
+            continue
+        value = item.get(key)
+        if isinstance(value, str):
+            return value
+    return None
 
 
 def _validate_local_sources(sources: list[dict[str, Any]], *, repository_root: Path) -> None:
@@ -3407,6 +4242,7 @@ def _screening_reason(stage: str, capacity_wait: bool) -> str:
         "deep_research": "范围研究通过证据与粗估值门槛，追加完整深研预算。",
         "price_watch": "公司可能可投，但当前价格不支持继续购买研究预算。",
         "reassign_or_stop": "当前 agent 能力圈不足，转派专门能力或暂停。",
+        "watch_only": "当前不购买追加研究预算，等待已定义事实触发器。",
         "conditional_stop": "可靠证据触发结构化停止条件。",
     }
     return reasons[stage]
@@ -3424,6 +4260,7 @@ def _next_action(stage: str, capacity_wait: bool) -> str:
         "deep_research": "按完整公司研究协议重建业务、会计、正常化盈利和估值。",
         "price_watch": "按价格、财报、事件或论点触发器重新评估。",
         "reassign_or_stop": "转派具备相应行业能力的独立 agent；无法转派则暂停。",
+        "watch_only": "仅在已封存的价格、财报、事件或论点触发器命中时重新评估。",
         "conditional_stop": "仅在结构化重启条件发生时恢复研究。",
     }
     return actions[stage]

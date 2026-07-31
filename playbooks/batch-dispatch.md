@@ -35,6 +35,7 @@
 3. `send_to_analyst` 按同一 manager-screen run 容量原子记账；超限整批拒绝，不改写路由。runner 只派发 `quick_profile,status=pending` 且决定性问题绑定完整的少数候选。
 4. 研究员失败只重试该公司；已封存结果不得重写。
 5. 主 Agent比较同层结果，决定停止、补证或深研。
+   - 购买定向补证使用 sealed `profile-followup-approve`；不购买则使用 sealed `profile-followup-decline`，绑定可执行重启 triggers。decline 不占 targeted 容量，也不能撤销已批准、已开始或已完成的任务。
 6. 深研完成后，由主 Agent 显式批准 underwriting 预算并占用 run 级 ledger；没有 sealed approval 不得冻结承保候选或派 reviewer。
 7. 独立 reviewer 重建事实、会计、风险、估值和证据账本。
 8. 重大分歧、高风险或潜在大仓位进入 challenger 候选；challenger 仍需主 Agent 新的显式批准，underwriting approval 不自动授权。无可靠共识不通过。
@@ -63,6 +64,9 @@ python -m trading_os coverage manager-screen-calibration-record <run-id> <batch-
 
 python -m trading_os coverage profile-claim --agent <agent-id> [--symbol CN:000000]
 python -m trading_os coverage profile-release --agent <agent-id> --symbol CN:000000 --failure-reason <reason>
+python -m trading_os coverage profile-followup-approve --symbol CN:000000 --manager <manager-agent> --reason <reason>
+python -m trading_os coverage profile-followup-decline --symbol CN:000000 --manager <manager-agent> \
+  --outcome <price_watch|watch_only|conditional_stop> --reason <reason> --triggers <triggers.json>
 python -m trading_os coverage profile-status <cycle-id>
 
 python -m trading_os review create <review-id> --scope-type custom --market CN --description "批次" --candidates <candidates.json>

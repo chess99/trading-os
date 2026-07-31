@@ -188,6 +188,88 @@ def _coverage(root: Path, *, extra_queue: list[dict] | None = None) -> None:
     write_jsonl(coverage_root / "runs.jsonl", [], sort_key="run_id")
 
 
+def _manager_bound_followup_candidate(
+    root: Path,
+    *,
+    manager: str = "/root/original-manager",
+    research_agent: str = "/root/company-researcher",
+) -> Path:
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        record_profile_package,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(root)
+    coverage_root = root / "coverage" / "cn-a"
+    result_path = (
+        coverage_root / "manager-screen" / "manager-run" / "batch-001" / "result.json"
+    )
+    decisive_question = "正常化所有者收益能否由公开证据确认？"
+    evidence_ids = ["snapshot:CN:600519"]
+    sealed = seal_json(
+        result_path,
+        {
+            "schema_version": 1,
+            "run_id": "manager-run",
+            "batch_id": "batch-001",
+            "manager": {
+                "agent": manager,
+                "model": "test-model",
+                "tools": ["sealed manager-screen result"],
+            },
+            "decisions": [
+                {
+                    "symbol": "CN:600519",
+                    "route": "send_to_analyst",
+                    "decisive_question": decisive_question,
+                    "evidence_ids": evidence_ids,
+                }
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="manager_screen_result",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=2),
+    )
+    queue_path = coverage_root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "preceding_stage": "manager_screen",
+            "manager_screen_run_id": "manager-run",
+            "manager_screen_batch_id": "batch-001",
+            "manager_screen_result_path": result_path.relative_to(root).as_posix(),
+            "manager_screen_result_sha256": sealed.sha256,
+            "manager_screen_route": "send_to_analyst",
+            "decisive_question": decisive_question,
+            "evidence_ids": evidence_ids,
+        }
+    )
+    write_jsonl(queue_path, queue)
+    claim_profile_task(
+        root=coverage_root,
+        agent=research_agent,
+        symbol="CN:600519",
+        claimed_at=RECORDED_AT - dt.timedelta(minutes=1),
+    )
+    package = _manager_bound_package(queue[0])
+    package["profile"]["governance_status"] = "uncertain"
+    package["profile"]["normalized_earnings_status"] = "uncertain"
+    package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    package["provenance"]["agent"] = research_agent
+    result = record_profile_package(
+        package,
+        root=coverage_root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@5.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert result["next_stage"] == "targeted_followup_candidate"
+    return coverage_root
+
+
 def test_record_profile_waits_for_comparison_then_advances_to_scoped(tmp_path: Path):
     from trading_os.research_assets.coverage_store import (
         read_jsonl,
@@ -1835,6 +1917,485 @@ def test_targeted_followup_claim_fails_closed_without_manager_approval(
             claimed_at=RECORDED_AT + dt.timedelta(minutes=1),
             symbol="CN:600519",
         )
+
+
+def test_original_manager_can_seal_terminal_followup_decline_via_cli(
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+):
+    from trading_os.cli import main
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        _targeted_followup_approval_ledger,
+        approve_targeted_followup,
+        decline_targeted_followup,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import verify_sealed
+
+    root = _manager_bound_followup_candidate(tmp_path)
+    triggers = [
+        {
+            "type": "price",
+            "condition": "收盘价不高于70元且基本面未恶化",
+            "reason": "价格达到重新评估研究赔率的阈值。",
+        },
+        {
+            "type": "filing",
+            "condition": "下一份定期报告披露正常化现金流",
+            "reason": "新证据可直接回答原决定性问题。",
+        },
+    ]
+    trigger_path = tmp_path / "decline-triggers.json"
+    trigger_path.write_text(
+        json.dumps(triggers, ensure_ascii=False),
+        encoding="utf-8",
+    )
+    assert (
+        main(
+            [
+                "coverage",
+                "profile-followup-decline",
+                "--root",
+                str(root),
+                "--symbol",
+                "CN:600519",
+                "--manager",
+                "/root/original-manager",
+                "--outcome",
+                "price_watch",
+                "--reason",
+                "当前不购买补证预算，等待价格或正式财报触发。",
+                "--triggers",
+                str(trigger_path),
+                "--at",
+                (RECORDED_AT + dt.timedelta(minutes=1)).isoformat(),
+            ]
+        )
+        == 0
+    )
+    output = json.loads(capsys.readouterr().out)
+    assert output["outcome"] == "price_watch"
+    assert output["additional_budget_hours"] == 0.0
+    assert output["legacy_auto_materialized"] is False
+    decline_path = tmp_path / output["decline_path"]
+    sealed = verify_sealed(decline_path)
+    assert sealed.artifact_type == "targeted_followup_decline"
+    decline = json.loads(decline_path.read_text(encoding="utf-8"))
+    assert decline["budget_decision"] == "declined"
+    assert decline["manager_screen_binding"]["manager"] == (
+        "/root/original-manager"
+    )
+    assert decline["analyst_recommendation"]["research_agent"] == (
+        "/root/company-researcher"
+    )
+
+    queue = read_jsonl(root / "research_queue.jsonl")[0]
+    screening = read_jsonl(root / "screening.jsonl")[0]
+    assert queue["task_type"] == "quick_profile"
+    assert queue["status"] == "completed"
+    assert queue["targeted_followup_decline_sha256"] == sealed.sha256
+    assert queue["stage_history"][-1]["stage"] == "targeted_followup_decline"
+    assert screening["decision"] == "price_watch"
+    assert screening["revisit_triggers"] == triggers
+    assert _targeted_followup_approval_ledger(
+        base=root,
+        repository_root=tmp_path,
+        manager_screen_run_id="manager-run",
+    ) == {}
+    replay = decline_targeted_followup(
+        root=root,
+        symbol="CN:600519",
+        manager="/root/original-manager",
+        outcome="price_watch",
+        reason="当前不购买补证预算，等待价格或正式财报触发。",
+        restart_triggers=triggers,
+        declined_at=RECORDED_AT + dt.timedelta(minutes=2),
+    )
+    assert replay["idempotent"] is True
+    assert replay["decline_sha256"] == sealed.sha256
+    queue = read_jsonl(root / "research_queue.jsonl")[0]
+    assert (
+        sum(
+            item["stage"] == "targeted_followup_decline"
+            for item in queue["stage_history"]
+        )
+        == 1
+    )
+    with pytest.raises(ResearchAllocationError, match="sealed decline"):
+        approve_targeted_followup(
+            root=root,
+            symbol="CN:600519",
+            manager="/root/original-manager",
+            reason="sealed decline 后不得再购买同一笔预算。",
+            policy=_policy(),
+            approved_at=RECORDED_AT + dt.timedelta(minutes=3),
+            policy_path=tmp_path / "policies" / "research-allocation.json",
+        )
+
+
+def test_followup_decline_closes_unapproved_legacy_pending_without_capacity(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        _committed_stage_count_for_run,
+        build_profile_comparison_packet,
+        decline_targeted_followup,
+        record_profile_package,
+    )
+    from trading_os.research_assets.sealing import seal_json
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    package = _package()
+    package["profile"]["governance_status"] = "uncertain"
+    package["profile"]["normalized_earnings_status"] = "uncertain"
+    package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    package["provenance"]["agent"] = "/root/legacy-researcher"
+    recorded = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@4.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert recorded["next_stage"] == "targeted_followup_candidate"
+
+    result_path = root / "manager-screen" / "manager-run" / "batch-001" / "result.json"
+    decisive_question = "补证是否值得继续购买预算？"
+    evidence_ids = ["snapshot:CN:600519"]
+    result_seal = seal_json(
+        result_path,
+        {
+            "schema_version": 1,
+            "run_id": "manager-run",
+            "batch_id": "batch-001",
+            "manager": {
+                "agent": "/root/original-manager",
+                "model": "test-model",
+                "tools": ["sealed manager-screen result"],
+            },
+            "decisions": [
+                {
+                    "symbol": "CN:600519",
+                    "route": "send_to_analyst",
+                    "decisive_question": decisive_question,
+                    "evidence_ids": evidence_ids,
+                }
+            ],
+            "portfolio_action": None,
+        },
+        artifact_type="manager_screen_result",
+        sealed_at=RECORDED_AT - dt.timedelta(minutes=1),
+    )
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "targeted_followup",
+            "status": "pending",
+            "preceding_stage": "quick_profile",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "manager_screen_run_id": "manager-run",
+            "manager_screen_batch_id": "batch-001",
+            "manager_screen_result_path": result_path.relative_to(tmp_path).as_posix(),
+            "manager_screen_result_sha256": result_seal.sha256,
+            "manager_screen_route": "send_to_analyst",
+            "decisive_question": decisive_question,
+            "evidence_ids": evidence_ids,
+        }
+    )
+    write_jsonl(queue_path, queue)
+    screening_path = root / "screening.jsonl"
+    screening = read_jsonl(screening_path)
+    screening[0]["decision"] = "targeted_followup"
+    write_jsonl(screening_path, screening)
+    triggers = [
+        {
+            "type": "filing",
+            "condition": "下一份定期报告披露决定性经营数据",
+            "reason": "仅正式披露足以改变当前停止决定。",
+        }
+    ]
+
+    declined = decline_targeted_followup(
+        root=root,
+        symbol="CN:600519",
+        manager="/root/original-manager",
+        outcome="watch_only",
+        reason="旧 evaluator 自动生成的任务未获 manager 预算批准，现安全收口。",
+        restart_triggers=triggers,
+        declined_at=RECORDED_AT + dt.timedelta(minutes=1),
+    )
+
+    assert declined["legacy_auto_materialized"] is True
+    assert declined["queue_status"] == "skipped"
+    queue = read_jsonl(queue_path)[0]
+    assert queue["task_type"] == "targeted_followup"
+    assert queue["status"] == "skipped"
+    assert queue["assigned_agent"] is None
+    assert queue["started_at"] is None
+    assert not any(
+        item.get("stage") == "targeted_followup"
+        and item.get("status") == "completed"
+        for item in queue["stage_history"]
+    )
+    assert (
+        _committed_stage_count_for_run(
+            [queue],
+            manager_screen_run_id="manager-run",
+            stage="targeted_followup",
+        )
+        == 0
+    )
+    screening = read_jsonl(screening_path)[0]
+    assert screening["decision"] == "watch_only"
+    comparison = build_profile_comparison_packet(
+        root=root,
+        cycle_id="2026-07-26-test-cycle",
+        stage="quick_profile",
+        created_at=RECORDED_AT + dt.timedelta(minutes=2),
+    )
+    assert comparison["cohort_count"] == 1
+
+
+def test_followup_decline_requires_original_independent_manager_and_no_approval(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.profile_workflow import (
+        approve_targeted_followup,
+        decline_targeted_followup,
+    )
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    triggers = [
+        {
+            "type": "event",
+            "condition": "公司正式披露决定性证据",
+            "reason": "届时重新评估。",
+        }
+    ]
+    root = _manager_bound_followup_candidate(tmp_path / "wrong-manager")
+    with pytest.raises(ResearchAllocationError, match="original investment manager"):
+        decline_targeted_followup(
+            root=root,
+            symbol="CN:600519",
+            manager="/root/other-manager",
+            outcome="watch_only",
+            reason="错误 manager 不得封存拒绝决定。",
+            restart_triggers=triggers,
+            declined_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+
+    same_agent_root = _manager_bound_followup_candidate(
+        tmp_path / "same-agent",
+        manager="/root/same-agent",
+        research_agent="/root/same-agent",
+    )
+    with pytest.raises(ResearchAllocationError, match="independent"):
+        decline_targeted_followup(
+            root=same_agent_root,
+            symbol="CN:600519",
+            manager="/root/same-agent",
+            outcome="watch_only",
+            reason="研究员不能批准自己的停止决定。",
+            restart_triggers=triggers,
+            declined_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+
+    approved_root = _manager_bound_followup_candidate(tmp_path / "approved")
+    approve_targeted_followup(
+        root=approved_root,
+        symbol="CN:600519",
+        manager="/root/original-manager",
+        reason="已经显式购买本次追加预算。",
+        policy=_policy(),
+        approved_at=RECORDED_AT + dt.timedelta(minutes=1),
+        policy_path=tmp_path / "approved" / "policies" / "research-allocation.json",
+    )
+    with pytest.raises(ResearchAllocationError, match="approval commitment"):
+        decline_targeted_followup(
+            root=approved_root,
+            symbol="CN:600519",
+            manager="/root/original-manager",
+            outcome="watch_only",
+            reason="已经批准后不得改写为拒绝。",
+            restart_triggers=triggers,
+            declined_at=RECORDED_AT + dt.timedelta(minutes=2),
+        )
+
+
+def test_followup_decline_rejects_non_executable_terminal_contract(tmp_path: Path):
+    from trading_os.research_assets.profile_workflow import decline_targeted_followup
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    root = _manager_bound_followup_candidate(tmp_path)
+    with pytest.raises(ResearchAllocationError, match="at least one restart trigger"):
+        decline_targeted_followup(
+            root=root,
+            symbol="CN:600519",
+            manager="/root/original-manager",
+            outcome="watch_only",
+            reason="没有触发器的停止不可执行。",
+            restart_triggers=[],
+            declined_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+    with pytest.raises(ResearchAllocationError, match="price trigger"):
+        decline_targeted_followup(
+            root=root,
+            symbol="CN:600519",
+            manager="/root/original-manager",
+            outcome="price_watch",
+            reason="价格等待必须绑定价格触发器。",
+            restart_triggers=[
+                {
+                    "type": "filing",
+                    "condition": "下一份定期报告",
+                    "reason": "刷新经营证据。",
+                }
+            ],
+            declined_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+
+
+def test_followup_decline_rejects_started_or_completed_targeted_work(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import decline_targeted_followup
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    triggers = [
+        {
+            "type": "event",
+            "condition": "决定性证据正式披露",
+            "reason": "触发后重新评估。",
+        }
+    ]
+    started_root = _manager_bound_followup_candidate(tmp_path / "started")
+    queue_path = started_root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "targeted_followup",
+            "status": "running",
+            "preceding_stage": "quick_profile",
+            "assigned_agent": "/root/followup-agent",
+            "started_at": (RECORDED_AT + dt.timedelta(seconds=30)).isoformat(),
+            "finished_at": None,
+        }
+    )
+    write_jsonl(queue_path, queue)
+    screening_path = started_root / "screening.jsonl"
+    screening = read_jsonl(screening_path)
+    screening[0]["decision"] = "targeted_followup"
+    write_jsonl(screening_path, screening)
+    with pytest.raises(ResearchAllocationError, match="unstarted"):
+        decline_targeted_followup(
+            root=started_root,
+            symbol="CN:600519",
+            manager="/root/original-manager",
+            outcome="watch_only",
+            reason="已经开始的任务不能用 decline 收口。",
+            restart_triggers=triggers,
+            declined_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+
+    completed_root = _manager_bound_followup_candidate(tmp_path / "completed")
+    queue_path = completed_root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "targeted_followup",
+            "status": "completed",
+            "preceding_stage": "quick_profile",
+        }
+    )
+    queue[0]["stage_history"].append(
+        {
+            "stage": "targeted_followup",
+            "status": "completed",
+            "finished_at": (RECORDED_AT + dt.timedelta(minutes=1)).isoformat(),
+            "next_stage": "price_watch",
+        }
+    )
+    write_jsonl(queue_path, queue)
+    with pytest.raises(ResearchAllocationError, match="completed targeted followup"):
+        decline_targeted_followup(
+            root=completed_root,
+            symbol="CN:600519",
+            manager="/root/original-manager",
+            outcome="watch_only",
+            reason="已完成补证不能再记录未购买。",
+            restart_triggers=triggers,
+            declined_at=RECORDED_AT + dt.timedelta(minutes=2),
+        )
+
+
+def test_followup_decline_journal_repairs_half_written_coverage(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import trading_os.research_assets.profile_workflow as workflow
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.sealing import verify_sealed
+
+    root = _manager_bound_followup_candidate(tmp_path)
+    original_write = workflow.write_jsonl
+    write_count = 0
+
+    def fail_screening_write(path, records, sort_key="symbol"):
+        nonlocal write_count
+        write_count += 1
+        if write_count == 2:
+            raise RuntimeError("simulated decline materialization crash")
+        return original_write(path, records, sort_key)
+
+    triggers = [
+        {
+            "type": "event",
+            "condition": "决定性证据正式披露",
+            "reason": "触发后重新评估。",
+        }
+    ]
+    monkeypatch.setattr(workflow, "write_jsonl", fail_screening_write)
+    with pytest.raises(RuntimeError, match="simulated decline materialization crash"):
+        workflow.decline_targeted_followup(
+            root=root,
+            symbol="CN:600519",
+            manager="/root/original-manager",
+            outcome="conditional_stop",
+            reason="当前证据不足，停止购买追加研究预算。",
+            restart_triggers=triggers,
+            declined_at=RECORDED_AT + dt.timedelta(minutes=1),
+        )
+    queue = read_jsonl(root / "research_queue.jsonl")[0]
+    assert queue["targeted_followup_decline_sha256"]
+    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == (
+        "targeted_followup_candidate"
+    )
+    decline_path = tmp_path / queue["targeted_followup_decline_path"]
+    decline_seal = verify_sealed(decline_path)
+
+    monkeypatch.setattr(workflow, "write_jsonl", original_write)
+    repaired = workflow.decline_targeted_followup(
+        root=root,
+        symbol="CN:600519",
+        manager="/root/original-manager",
+        outcome="conditional_stop",
+        reason="当前证据不足，停止购买追加研究预算。",
+        restart_triggers=triggers,
+        declined_at=RECORDED_AT + dt.timedelta(minutes=2),
+    )
+    assert repaired["idempotent"] is True
+    assert repaired["decline_sha256"] == decline_seal.sha256
+    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == (
+        "conditional_stop"
+    )
 
 
 def test_targeted_followup_sealed_ledger_reserves_capacity_before_materialization(

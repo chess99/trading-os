@@ -91,6 +91,7 @@ from .research_assets.profile_workflow import (
     approve_targeted_followup,
     build_profile_comparison_packet,
     claim_profile_task,
+    decline_targeted_followup,
     finalize_profile_stage,
     finalize_profile_stage_with_agent_decisions,
     profile_cycle_status,
@@ -1069,6 +1070,29 @@ def build_parser() -> argparse.ArgumentParser:
     _add_timestamp(profile_followup_approve)
     profile_followup_approve.set_defaults(
         func=cmd_coverage_profile_followup_approve
+    )
+
+    profile_followup_decline = coverage_sub.add_parser(
+        "profile-followup-decline",
+        help="Seal the original manager's decision not to buy targeted followup",
+    )
+    _add_coverage_root(profile_followup_decline)
+    profile_followup_decline.add_argument("--symbol", required=True)
+    profile_followup_decline.add_argument("--manager", required=True)
+    profile_followup_decline.add_argument(
+        "--outcome",
+        required=True,
+        choices=["price_watch", "watch_only", "conditional_stop"],
+    )
+    profile_followup_decline.add_argument("--reason", required=True)
+    profile_followup_decline.add_argument(
+        "--triggers",
+        required=True,
+        help="JSON array of executable restart triggers",
+    )
+    _add_timestamp(profile_followup_decline)
+    profile_followup_decline.set_defaults(
+        func=cmd_coverage_profile_followup_decline
     )
 
     profile_compare = coverage_sub.add_parser(
@@ -2189,6 +2213,23 @@ def cmd_coverage_profile_followup_approve(ns: argparse.Namespace) -> int:
         policy=policy.payload,
         approved_at=_timestamp(ns.at),
         policy_path=ns.policy,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_followup_decline(ns: argparse.Namespace) -> int:
+    payload = decline_targeted_followup(
+        root=ns.root,
+        symbol=ns.symbol,
+        manager=ns.manager,
+        outcome=ns.outcome,
+        reason=ns.reason,
+        restart_triggers=_load_json_array(
+            ns.triggers,
+            "targeted-followup restart triggers",
+        ),
+        declined_at=_timestamp(ns.at),
     )
     _write_success({"ok": True, **payload})
     return 0

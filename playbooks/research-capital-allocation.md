@@ -42,6 +42,10 @@
 
 可使用 `profile-compare/profile-select` 封存同层决策，但投资经理无需与最初 manager-screen 隔离；只需与提交单公司研究的研究员保持角色独立。targeted/scoped/deep 每次升级都必须是主 Agent 对同 run 可比 cohort 的显式决定，并占用对应 run 级容量。
 
+研究员建议 `targeted_followup` 后，原 manager 只有两种正式动作：用 `profile-followup-approve` 封存购买决定，或用 `profile-followup-decline` 封存不购买决定。decline 必须绑定原 manager-screen result、已封存的画像/evaluation、研究员身份和至少一个结构化重启 trigger；manager 必须与研究员独立。其终态只允许 `price_watch`、`watch_only`、`conditional_stop`，追加预算固定为 0，不进入 targeted approval ledger。
+
+修复前由 evaluator 自动生成、但没有 approval 的 `targeted_followup,status=pending`，只能在从未 claim、没有失败尝试且没有完成记录时由同一 decline 命令一次性收口为 `skipped`。原画像、evaluation 和 queue 历史全部保留；已 running、已 completed 或已经出现 sealed approval 的任务不得用 decline 回退。
+
 ## 停止与重启
 
 - `pass/catalog`：当前不买更多研究信息；
@@ -52,6 +56,8 @@
 - `hard_exclusion`：证券身份不属于范围。
 
 除硬排除外，停止必须有可执行重启条件。亏损、负 PE、小市值、低流动性或行业冷门不能单独构成停止理由。
+
+`profile-followup-decline --triggers` 接受 JSON 数组，每项字段固定为 `type/condition/reason`；type 仅允许 `filing/price/date/ttl/event/thesis`。`price_watch` 至少包含一个 `price` trigger。命令先封存 decline，再物化 queue/screening；中途失败时用完全相同的 manager、outcome、reason 和 triggers 重放，禁止手改 JSONL。
 
 ## 承保预算
 
