@@ -12,6 +12,16 @@ T0 = "2026-07-21T09:00:00+08:00"
 T1 = "2026-07-21T09:01:00+08:00"
 
 
+def test_cli_help_renders_literal_percent_signs(capsys):
+    from trading_os.cli import main
+
+    with pytest.raises(SystemExit) as exc_info:
+        main(["coverage", "--help"])
+
+    assert exc_info.value.code == 0
+    assert "100% hard-exclusion" in capsys.readouterr().out
+
+
 def _candidates_file(tmp_path: Path, company_dir: Path, *, jsonl: bool = False) -> Path:
     item = {
         "symbol": "CN:600519",

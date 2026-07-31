@@ -55,6 +55,7 @@ def test_create_run_writes_v2_state_and_initial_event(tmp_path: Path):
         "frozen_at": None,
         "sha256": None,
         "count": 0,
+        "source_binding": None,
     }
     assert store.load_run("memory-2026-07-21") == state
     events = store.read_events("memory-2026-07-21")
@@ -101,6 +102,63 @@ def test_create_run_is_idempotent_only_for_identical_manifest(tmp_path: Path):
         )
 
 
+@pytest.mark.parametrize(
+    (
+        "failpoint",
+        "state_exists",
+        "events_exists",
+        "transaction_exists",
+    ),
+    [
+        ("create_directory_ready", False, False, False),
+        ("create_tasks_ready", False, False, False),
+        ("transaction_prepared", False, False, True),
+        ("state_written", True, False, True),
+        ("events_written", True, True, True),
+        ("transaction_cleared", True, True, False),
+    ],
+)
+def test_create_run_repairs_every_crash_boundary_on_identical_replay(
+    tmp_path: Path,
+    monkeypatch,
+    failpoint: str,
+    state_exists: bool,
+    events_exists: bool,
+    transaction_exists: bool,
+) -> None:
+    from trading_os.research_assets import review_store
+
+    store = _store(tmp_path)
+
+    def crash(name: str) -> None:
+        if name == failpoint:
+            raise RuntimeError(f"simulated crash at {name}")
+
+    monkeypatch.setattr(review_store, "_crash_failpoint", crash)
+    with pytest.raises(RuntimeError, match="simulated crash"):
+        _create(store)
+
+    run_dir = (
+        tmp_path / "automation" / "runs" / "memory-2026-07-21"
+    )
+    assert (run_dir / "state.json").exists() is state_exists
+    assert (run_dir / "events.jsonl").exists() is events_exists
+    assert (
+        run_dir / review_store.STATE_TRANSACTION_FILE
+    ).exists() is transaction_exists
+
+    monkeypatch.setattr(review_store, "_crash_failpoint", lambda _: None)
+    recovered = _create(store)
+
+    assert recovered["status"] == "created"
+    assert store.load_run("memory-2026-07-21") == recovered
+    assert [event["event"] for event in store.read_events("memory-2026-07-21")] == [
+        "run_created"
+    ]
+    assert (run_dir / "agent_tasks").is_dir()
+    assert not (run_dir / review_store.STATE_TRANSACTION_FILE).exists()
+
+
 def test_freeze_candidates_sorts_and_hashes_immutable_snapshot(tmp_path: Path):
     store = _store(tmp_path)
     _create(store)
@@ -118,6 +176,139 @@ def test_freeze_candidates_sorts_and_hashes_immutable_snapshot(tmp_path: Path):
     assert len(state["candidate_set"]["sha256"]) == 64
     snapshot = store.read_candidates("memory-2026-07-21")
     assert [item["symbol"] for item in snapshot] == ["CN:000021", "CN:000100"]
+
+
+@pytest.mark.parametrize(
+    (
+        "failpoint",
+        "raw_status",
+        "event_count",
+        "transaction_exists",
+    ),
+    [
+        ("transaction_prepared", "candidates_frozen", 2, True),
+        ("state_written", "packets_ready", 2, True),
+        ("events_written", "packets_ready", 3, True),
+        ("transaction_cleared", "packets_ready", 3, False),
+    ],
+)
+def test_transition_repairs_every_two_phase_crash_boundary(
+    tmp_path: Path,
+    monkeypatch,
+    failpoint: str,
+    raw_status: str,
+    event_count: int,
+    transaction_exists: bool,
+) -> None:
+    from trading_os.research_assets import review_store
+
+    store = _store(tmp_path)
+    _create(store)
+    store.freeze_candidates(
+        "memory-2026-07-21",
+        _candidates(),
+        actor="coordinator",
+        at=T0 + dt.timedelta(minutes=1),
+    )
+
+    def crash(name: str) -> None:
+        if name == failpoint:
+            raise RuntimeError(f"simulated crash at {name}")
+
+    monkeypatch.setattr(review_store, "_crash_failpoint", crash)
+    transition_at = T0 + dt.timedelta(minutes=2)
+    with pytest.raises(RuntimeError, match="simulated crash"):
+        store.transition(
+            "memory-2026-07-21",
+            "packets_ready",
+            actor="coordinator",
+            at=transition_at,
+        )
+
+    run_dir = (
+        tmp_path / "automation" / "runs" / "memory-2026-07-21"
+    )
+    raw_state = json.loads(
+        (run_dir / "state.json").read_text(encoding="utf-8")
+    )
+    raw_events = [
+        json.loads(line)
+        for line in (run_dir / "events.jsonl").read_text(
+            encoding="utf-8"
+        ).splitlines()
+    ]
+    assert raw_state["status"] == raw_status
+    assert len(raw_events) == event_count
+    assert (
+        run_dir / review_store.STATE_TRANSACTION_FILE
+    ).exists() is transaction_exists
+
+    monkeypatch.setattr(review_store, "_crash_failpoint", lambda _: None)
+    recovered = store.transition(
+        "memory-2026-07-21",
+        "packets_ready",
+        actor="coordinator",
+        at=transition_at,
+    )
+
+    assert recovered["status"] == "packets_ready"
+    events = store.read_events("memory-2026-07-21")
+    assert len(events) == 3
+    assert events[-1] == {
+        "sequence": 3,
+        "event": "state_transition",
+        "from_status": "candidates_frozen",
+        "to_status": "packets_ready",
+        "actor": "coordinator",
+        "at": transition_at.isoformat(),
+        "reason": None,
+    }
+    assert not (run_dir / review_store.STATE_TRANSACTION_FILE).exists()
+
+
+def test_pending_transaction_recovery_fails_closed_on_conflicting_state(
+    tmp_path: Path,
+    monkeypatch,
+) -> None:
+    from trading_os.research_assets import review_store
+    from trading_os.research_assets.review_store import ReviewStoreError
+
+    store = _store(tmp_path)
+    _create(store)
+    store.freeze_candidates(
+        "memory-2026-07-21",
+        _candidates(),
+        actor="coordinator",
+        at=T0 + dt.timedelta(minutes=1),
+    )
+
+    def crash(name: str) -> None:
+        if name == "transaction_prepared":
+            raise RuntimeError("simulated crash")
+
+    monkeypatch.setattr(review_store, "_crash_failpoint", crash)
+    with pytest.raises(RuntimeError, match="simulated crash"):
+        store.transition(
+            "memory-2026-07-21",
+            "packets_ready",
+            actor="coordinator",
+            at=T0 + dt.timedelta(minutes=2),
+        )
+
+    state_path = (
+        tmp_path
+        / "automation"
+        / "runs"
+        / "memory-2026-07-21"
+        / "state.json"
+    )
+    state = json.loads(state_path.read_text(encoding="utf-8"))
+    state["status"] = "completed"
+    state_path.write_text(json.dumps(state), encoding="utf-8")
+    monkeypatch.setattr(review_store, "_crash_failpoint", lambda _: None)
+
+    with pytest.raises(ReviewStoreError, match="conflicts with pending"):
+        store.load_run("memory-2026-07-21")
 
 
 def test_frozen_candidates_are_idempotent_but_cannot_change(tmp_path: Path):

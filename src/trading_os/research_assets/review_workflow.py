@@ -11,6 +11,7 @@ from typing import Any, Mapping
 
 from .claims import build_claim_packet
 from .company import validate_company_dir, validate_research_assets
+from .coverage_store import CoverageValidationError, assert_legacy_unbound_symbols
 from .models import PolicyKind, ReviewRunStatus
 from .policy_snapshot import (
     PolicySnapshotError,
@@ -25,6 +26,11 @@ from .portfolio import (
     PortfolioValidationError,
     build_model_portfolio,
     portfolio_candidate_core_sha256,
+)
+from .review_allocation import (
+    ReviewAllocationError,
+    verify_review_budget_approval,
+    verify_underwriting_approval,
 )
 from .review_store import ReviewRunStore
 from .sealing import (
@@ -108,7 +114,32 @@ def create_review(
     policy_root: str | Path,
     created_at: dt.datetime,
     parent_run_id: str | None = None,
+    coverage_root: str | Path = "coverage/cn-a",
 ) -> dict[str, Any]:
+    """Create a legacy review with no manager-run underwriting binding."""
+
+    repository = _repository_root_for_runs(runs_root)
+    coverage = _repository_path(repository, coverage_root, "coverage_root")
+    canonical_coverage = (repository / "coverage" / "cn-a").resolve()
+    if coverage != canonical_coverage:
+        raise ReviewWorkflowError(
+            "legacy review create requires canonical coverage_root=coverage/cn-a"
+        )
+    candidate_symbols = []
+    for candidate in candidates:
+        symbol = candidate.get("symbol")
+        if not isinstance(symbol, str):
+            raise ReviewWorkflowError("legacy review candidate symbol is invalid")
+        candidate_symbols.append(symbol)
+    try:
+        assert_legacy_unbound_symbols(
+            coverage,
+            candidate_symbols,
+            operation="legacy review create",
+        )
+    except CoverageValidationError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+
     store = ReviewRunStore(runs_root)
     try:
         snapshot_payload = build_policy_snapshot(policy_root, run_id=run_id)
@@ -125,6 +156,13 @@ def create_review(
         policy_snapshot_sha256=policy_snapshot_sha256,
         created_at=created_at,
         parent_run_id=parent_run_id,
+        intake={
+            "mode": "legacy_unbound",
+            "manager_screen_run_id": None,
+            "coverage_root": coverage.relative_to(repository).as_posix(),
+            "underwriting_approval_path": None,
+            "underwriting_approval_sha256": None,
+        },
     )
     try:
         seal_review_policy_snapshot(
@@ -148,12 +186,145 @@ def create_review(
     )
 
 
+def create_review_from_underwriting_approval(
+    *,
+    runs_root: str | Path,
+    coverage_root: str | Path,
+    run_id: str,
+    scope_type: str,
+    market: str,
+    description: str,
+    approval_path: str,
+    approval_sha256: str,
+    policy_root: str | Path,
+    created_at: dt.datetime,
+    parent_run_id: str | None = None,
+) -> dict[str, Any]:
+    """Create the only manager-bound review intake from a sealed approval."""
+
+    if (
+        not isinstance(created_at, dt.datetime)
+        or created_at.tzinfo is None
+        or created_at.utcoffset() is None
+    ):
+        raise ReviewWorkflowError("created_at must include timezone information")
+    if market != "CN":
+        raise ReviewWorkflowError(
+            "manager-bound CN-A underwriting approval requires market=CN"
+        )
+    repository = _repository_root_for_runs(runs_root)
+    coverage = _repository_path(
+        repository,
+        coverage_root,
+        "coverage_root",
+    )
+    try:
+        verified = verify_underwriting_approval(
+            root=coverage,
+            repository_root=repository,
+            approval_path=approval_path,
+            approval_sha256=approval_sha256,
+        )
+    except ReviewAllocationError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+    approval = verified["approval"]
+    candidates = _approval_review_candidates(
+        approval,
+        repository=repository,
+    )
+
+    store = ReviewRunStore(runs_root)
+    try:
+        snapshot_payload = build_policy_snapshot(policy_root, run_id=run_id)
+        policy_versions = policy_versions_from_snapshot(snapshot_payload)
+    except PolicySnapshotError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+    policy_snapshot_sha256 = hashlib.sha256(
+        canonical_json_bytes(snapshot_payload)
+    ).hexdigest()
+    _verify_approval_policy_in_snapshot(
+        approval,
+        policies=snapshot_payload["policies"],
+        repository=repository,
+    )
+    intake = {
+        "mode": "underwriting_approval",
+        "manager_screen_run_id": approval["manager_screen_run_id"],
+        "coverage_root": coverage.relative_to(repository).as_posix(),
+        "underwriting_approval_path": verified["approval_path"],
+        "underwriting_approval_sha256": verified["approval_sha256"],
+    }
+    scope = {"type": scope_type, "market": market, "description": description}
+    state_path = Path(runs_root) / run_id / "state.json"
+    if state_path.exists():
+        state = store.load_run(run_id)
+        expected_manifest = {
+            "scope": scope,
+            "created_at": created_at.isoformat(),
+            "policy_versions": policy_versions,
+            "policy_snapshot_sha256": policy_snapshot_sha256,
+            "parent_run_id": parent_run_id,
+            "intake": intake,
+        }
+        mismatched = [
+            key
+            for key, expected in expected_manifest.items()
+            if state.get(key) != expected
+        ]
+        if mismatched:
+            raise ReviewWorkflowError(
+                "review run conflicts with underwriting approval replay at "
+                + ",".join(mismatched)
+            )
+    else:
+        state = store.create_run(
+            run_id,
+            scope=scope,
+            policy_versions=policy_versions,
+            policy_snapshot_sha256=policy_snapshot_sha256,
+            created_at=created_at,
+            parent_run_id=parent_run_id,
+            intake=intake,
+        )
+    try:
+        seal_review_policy_snapshot(
+            runs_root=runs_root,
+            run_id=run_id,
+            payload=snapshot_payload,
+            sealed_at=created_at,
+        )
+        load_review_policy_snapshot(
+            runs_root=runs_root,
+            run_id=run_id,
+            state=state,
+        )
+    except PolicySnapshotError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+    frozen = store.freeze_candidates(
+        run_id,
+        candidates,
+        actor="manager_underwriting_approval",
+        at=created_at,
+    )
+    _verify_review_intake(
+        runs_root=runs_root,
+        state=frozen,
+        candidates=store.read_candidates(run_id),
+    )
+    return frozen
+
+
 def prepare_review(
     *, runs_root: str | Path, run_id: str, prepared_at: dt.datetime
 ) -> dict[str, Any]:
     store = ReviewRunStore(runs_root)
     state = store.load_run(run_id)
     _validated_policy_snapshot(runs_root=runs_root, run_id=run_id, state=state)
+    _verify_review_intake(
+        runs_root=runs_root,
+        state=state,
+        candidates=store.read_candidates(run_id),
+    )
     if state["status"] in _TERMINAL_FAILURES:
         raise ReviewWorkflowError(f"review run is terminal: {state['status']}")
     if state["status"] in _PACKET_REQUIRED_STATUSES:
@@ -233,6 +404,82 @@ def review_status(*, runs_root: str | Path, run_id: str) -> dict[str, Any]:
     }
 
 
+def request_challenger_budget(
+    *,
+    runs_root: str | Path,
+    run_id: str,
+    symbols: list[str],
+    trigger: str,
+    requested_by: str,
+    requested_at: dt.datetime,
+) -> dict[str, Any]:
+    return _freeze_review_budget_request(
+        runs_root=runs_root,
+        run_id=run_id,
+        budget_stage="challenger",
+        symbols=symbols,
+        trigger=trigger,
+        requested_by=requested_by,
+        requested_at=requested_at,
+    )
+
+
+def request_portfolio_synthesis_budget(
+    *,
+    runs_root: str | Path,
+    run_id: str,
+    requested_by: str,
+    requested_at: dt.datetime,
+) -> dict[str, Any]:
+    candidates = ReviewRunStore(runs_root).read_candidates(run_id)
+    return _freeze_review_budget_request(
+        runs_root=runs_root,
+        run_id=run_id,
+        budget_stage="portfolio_synthesis",
+        symbols=[str(item["symbol"]) for item in candidates],
+        trigger="company_reviews_complete",
+        requested_by=requested_by,
+        requested_at=requested_at,
+    )
+
+
+def require_review_budget_approval(
+    *,
+    runs_root: str | Path,
+    run_id: str,
+    budget_stage: str,
+    trigger: str,
+    executor: str,
+) -> dict[str, Any]:
+    state = ReviewRunStore(runs_root).load_run(run_id)
+    if state["intake"]["mode"] == "legacy_unbound":
+        verify_review_intake(runs_root=runs_root, run_id=run_id)
+        return {"legacy_unbound": True}
+    request = _existing_review_budget_request(
+        runs_root=runs_root,
+        run_id=run_id,
+        budget_stage=budget_stage,
+        trigger=trigger,
+    )
+    repository = _repository_root_for_runs(runs_root)
+    coverage = _repository_path(
+        repository,
+        str(state["intake"]["coverage_root"]),
+        "review intake coverage_root",
+    )
+    try:
+        return verify_review_budget_approval(
+            root=coverage,
+            repository_root=repository,
+            budget_stage=budget_stage,
+            request_path=request["request_path"],
+            request_sha256=request["request_sha256"],
+            executor=executor,
+        )
+    except ReviewAllocationError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+
+
 def resume_review(
     *, runs_root: str | Path, run_id: str, resumed_at: dt.datetime
 ) -> dict[str, Any]:
@@ -254,6 +501,11 @@ def validate_review(
         state=state,
     )
     candidates = store.read_candidates(run_id)
+    _verify_review_intake(
+        runs_root=runs_root,
+        state=state,
+        candidates=candidates,
+    )
     events = store.read_events(run_id)
     if not events or events[-1]["to_status"] != state["status"]:
         raise ReviewWorkflowError("review event log does not match current state")
@@ -316,6 +568,31 @@ def synthesize_review(
             f"got {state['status']}"
         )
     validate_review(runs_root=runs_root, run_id=run_id, strict=True)
+    if state["intake"]["mode"] == "underwriting_approval":
+        request = request_portfolio_synthesis_budget(
+            runs_root=runs_root,
+            run_id=run_id,
+            requested_by="cli",
+            requested_at=synthesized_at,
+        )
+        try:
+            require_review_budget_approval(
+                runs_root=runs_root,
+                run_id=run_id,
+                budget_stage="portfolio_synthesis",
+                trigger="company_reviews_complete",
+                executor="cli",
+            )
+        except ReviewWorkflowError as exc:
+            if str(exc) != "explicit manager portfolio_synthesis approval is required":
+                raise
+            return {
+                "schema_version": 2,
+                "run_id": run_id,
+                "status": ReviewRunStatus.COMPANY_REVIEWS_COMPLETE.value,
+                "approval_required": True,
+                **request,
+            }
     quotes_raw = _read_json(Path(quotes_path), "quote snapshot")
     if not isinstance(quotes_raw, list):
         raise ReviewWorkflowError("quote snapshot must be a JSON array")
@@ -441,6 +718,33 @@ def synthesize_review(
             )
     result = build_model_portfolio(candidates, policy=policy)
     if result.challenger_required_symbols:
+        if state["intake"]["mode"] == "underwriting_approval":
+            request = request_challenger_budget(
+                runs_root=runs_root,
+                run_id=run_id,
+                symbols=list(result.challenger_required_symbols),
+                trigger="portfolio_top_five",
+                requested_by="cli",
+                requested_at=synthesized_at,
+            )
+            store.transition(
+                run_id,
+                ReviewRunStatus.PORTFOLIO_CHALLENGING.value,
+                actor="cli",
+                at=synthesized_at,
+                reason=(
+                    "actual top-five allocation requires approved independent "
+                    "challenger: "
+                    + ",".join(result.challenger_required_symbols)
+                ),
+            )
+            return {
+                "schema_version": 2,
+                "run_id": run_id,
+                "status": ReviewRunStatus.PORTFOLIO_CHALLENGING.value,
+                "approval_required": True,
+                **request,
+            }
         request_payload = {
             "schema_version": 3,
             "run_id": run_id,
@@ -924,6 +1228,471 @@ def run_review(
 def validate_all_assets(research_root: str | Path) -> dict[str, Any]:
     result = validate_research_assets(research_root)
     return {"ok": result["invalid_count"] == 0, **result}
+
+
+def _verify_review_intake(
+    *,
+    runs_root: str | Path,
+    state: Mapping[str, Any],
+    candidates: list[Mapping[str, Any]],
+) -> None:
+    intake = state.get("intake")
+    if not isinstance(intake, Mapping):
+        raise ReviewWorkflowError("review intake binding is missing")
+    mode = intake.get("mode")
+    if mode == "legacy_unbound":
+        repository = _repository_root_for_runs(runs_root)
+        coverage_root = intake.get("coverage_root") or "coverage/cn-a"
+        coverage = _repository_path(
+            repository,
+            str(coverage_root),
+            "review intake coverage_root",
+        )
+        if coverage != (repository / "coverage" / "cn-a").resolve():
+            raise ReviewWorkflowError(
+                "legacy review intake must use canonical coverage/cn-a provenance"
+            )
+        try:
+            assert_legacy_unbound_symbols(
+                coverage,
+                [str(candidate.get("symbol")) for candidate in candidates],
+                operation="legacy review",
+            )
+        except CoverageValidationError as exc:
+            raise ReviewWorkflowError(str(exc)) from exc
+        return
+    if mode != "underwriting_approval":
+        raise ReviewWorkflowError(f"unsupported review intake mode: {mode}")
+    repository = _repository_root_for_runs(runs_root)
+    coverage = _repository_path(
+        repository,
+        str(intake.get("coverage_root")),
+        "review intake coverage_root",
+    )
+    try:
+        verified = verify_underwriting_approval(
+            root=coverage,
+            repository_root=repository,
+            approval_path=str(intake.get("underwriting_approval_path")),
+            approval_sha256=str(intake.get("underwriting_approval_sha256")),
+        )
+    except ReviewAllocationError as exc:
+        raise ReviewWorkflowError(str(exc)) from exc
+    approval = verified["approval"]
+    policy_snapshot = load_review_policy_snapshot(
+        runs_root=runs_root,
+        run_id=str(state["run_id"]),
+        state=state,
+    )
+    _verify_approval_policy_in_snapshot(
+        approval,
+        policies=policy_snapshot.policies,
+        repository=repository,
+    )
+    if approval.get("manager_screen_run_id") != intake.get(
+        "manager_screen_run_id"
+    ):
+        raise ReviewWorkflowError(
+            "review intake manager_screen_run_id does not match approval"
+        )
+    expected = _approval_review_candidates(approval, repository=repository)
+    if list(candidates) != expected:
+        raise ReviewWorkflowError(
+            "review candidate snapshot does not match underwriting approval"
+        )
+
+
+def verify_review_intake(
+    *,
+    runs_root: str | Path,
+    run_id: str,
+) -> dict[str, Any]:
+    """Revalidate review provenance before external dispatch or budget bypass."""
+
+    store = ReviewRunStore(runs_root)
+    state = store.load_run(run_id)
+    _verify_review_intake(
+        runs_root=runs_root,
+        state=state,
+        candidates=store.read_candidates(run_id),
+    )
+    return state
+
+
+def _freeze_review_budget_request(
+    *,
+    runs_root: str | Path,
+    run_id: str,
+    budget_stage: str,
+    symbols: list[str],
+    trigger: str,
+    requested_by: str,
+    requested_at: dt.datetime,
+) -> dict[str, Any]:
+    if (
+        not isinstance(requested_at, dt.datetime)
+        or requested_at.tzinfo is None
+        or requested_at.utcoffset() is None
+    ):
+        raise ReviewWorkflowError("requested_at must include timezone information")
+    if budget_stage not in {"challenger", "portfolio_synthesis"}:
+        raise ReviewWorkflowError(f"unsupported review budget stage: {budget_stage}")
+    if not isinstance(trigger, str) or not re.fullmatch(
+        r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", trigger
+    ):
+        raise ReviewWorkflowError("review budget trigger is invalid")
+    if not isinstance(requested_by, str) or not requested_by.strip():
+        raise ReviewWorkflowError("review budget requested_by is required")
+
+    store = ReviewRunStore(runs_root)
+    state = store.load_run(run_id)
+    if state["intake"]["mode"] != "underwriting_approval":
+        raise ReviewWorkflowError(
+            "explicit review budget requests require manager-bound intake"
+        )
+    candidates = store.read_candidates(run_id)
+    _verify_review_intake(
+        runs_root=runs_root,
+        state=state,
+        candidates=candidates,
+    )
+    by_symbol = {str(item["symbol"]): item for item in candidates}
+    normalized_symbols = sorted(set(symbols))
+    if not normalized_symbols or len(normalized_symbols) != len(symbols):
+        raise ReviewWorkflowError(
+            "review budget request symbols must be non-empty and unique"
+        )
+    missing = sorted(set(normalized_symbols) - set(by_symbol))
+    if missing:
+        raise ReviewWorkflowError(
+            f"review budget request contains unknown symbols: {missing}"
+        )
+
+    repository = _repository_root_for_runs(runs_root)
+    items: list[dict[str, Any]] = []
+    for symbol in normalized_symbols:
+        company_dir = Path(str(by_symbol[symbol]["target_company_dir"]))
+        candidate_path = _active_portfolio_candidate_path(company_dir, run_id)
+        decision_path = candidate_path.with_name(
+            "final-underwriting-decision.json"
+            if candidate_path.name == "portfolio-candidate.final.json"
+            else "primary-evaluation.json"
+        )
+        try:
+            candidate_seal = verify_sealed(candidate_path)
+            decision_seal = verify_sealed(decision_path)
+        except Exception as exc:
+            raise ReviewWorkflowError(
+                f"review budget evidence is not validly sealed: {symbol}"
+            ) from exc
+        if candidate_seal.artifact_type != "portfolio_candidate":
+            raise ReviewWorkflowError(
+                f"review budget candidate artifact type is invalid: {symbol}"
+            )
+        if decision_seal.artifact_type != "machine_underwriting_evaluation":
+            raise ReviewWorkflowError(
+                f"review budget evaluation artifact type is invalid: {symbol}"
+            )
+        candidate_payload = _read_json_object(
+            candidate_path,
+            "review budget portfolio candidate",
+        )
+        decision_payload = _read_json_object(
+            decision_path,
+            "review budget machine evaluation",
+        )
+        if (
+            candidate_payload.get("symbol") != symbol
+            or decision_payload.get("symbol") != symbol
+            or candidate_payload.get("source_machine_decision_sha256")
+            != decision_seal.sha256
+        ):
+            raise ReviewWorkflowError(
+                f"review budget candidate/evaluation binding is invalid: {symbol}"
+            )
+        items.append(
+            {
+                "symbol": symbol,
+                "evaluation": {
+                    "path": _relative_repository_path(
+                        decision_path,
+                        repository=repository,
+                    ),
+                    "sha256": decision_seal.sha256,
+                },
+                "candidate": {
+                    "path": _relative_repository_path(
+                        candidate_path,
+                        repository=repository,
+                    ),
+                    "sha256": candidate_seal.sha256,
+                },
+            }
+        )
+
+    existing = _existing_review_budget_request(
+        runs_root=runs_root,
+        run_id=run_id,
+        budget_stage=budget_stage,
+        trigger=trigger,
+        required=False,
+    )
+    intake = state["intake"]
+    expected_binding = {
+        "path": str(intake["underwriting_approval_path"]),
+        "sha256": str(intake["underwriting_approval_sha256"]),
+    }
+    if existing is not None:
+        payload = existing["request"]
+        if (
+            payload["manager_screen_run_id"]
+            != intake["manager_screen_run_id"]
+            or payload["underwriting_approval"] != expected_binding
+            or payload["items"] != items
+        ):
+            raise ReviewWorkflowError(
+                f"existing {budget_stage} request conflicts with current evidence"
+            )
+        return {
+            key: value
+            for key, value in existing.items()
+            if key != "request"
+        }
+
+    request_core = {
+        "manager_screen_run_id": intake["manager_screen_run_id"],
+        "review_run_id": run_id,
+        "budget_stage": budget_stage,
+        "trigger": trigger,
+        "underwriting_approval": expected_binding,
+        "items": items,
+    }
+    request_id = hashlib.sha256(canonical_json_bytes(request_core)).hexdigest()[:24]
+    payload = {
+        "schema_version": 1,
+        "request_id": request_id,
+        **request_core,
+        "requested_by": requested_by.strip(),
+        "requested_at": requested_at.isoformat(),
+    }
+    artifact_type = (
+        "manager_run_challenger_request"
+        if budget_stage == "challenger"
+        else "manager_run_portfolio_synthesis_request"
+    )
+    target = (
+        Path(runs_root)
+        / run_id
+        / "budget_requests"
+        / budget_stage
+        / trigger
+        / f"{request_id}.json"
+    )
+    target.parent.mkdir(parents=True, exist_ok=True)
+    sealed = seal_json(
+        target,
+        payload,
+        artifact_type=artifact_type,
+        sealed_at=requested_at,
+    )
+    return {
+        "request_path": _relative_repository_path(
+            sealed.path,
+            repository=repository,
+        ),
+        "request_sha256": sealed.sha256,
+        "budget_stage": budget_stage,
+        "trigger": trigger,
+        "symbols": normalized_symbols,
+    }
+
+
+def _existing_review_budget_request(
+    *,
+    runs_root: str | Path,
+    run_id: str,
+    budget_stage: str,
+    trigger: str,
+    required: bool = True,
+) -> dict[str, Any] | None:
+    request_dir = (
+        Path(runs_root)
+        / run_id
+        / "budget_requests"
+        / budget_stage
+        / trigger
+    )
+    paths = (
+        sorted(
+            path
+            for path in request_dir.glob("*.json")
+            if not path.name.endswith(".seal.json")
+        )
+        if request_dir.is_dir()
+        else []
+    )
+    if not paths:
+        if required:
+            raise ReviewWorkflowError(
+                f"{budget_stage} budget request is missing for trigger {trigger}"
+            )
+        return None
+    if len(paths) != 1:
+        raise ReviewWorkflowError(
+            f"{budget_stage} budget request is ambiguous for trigger {trigger}"
+        )
+    path = paths[0]
+    expected_type = (
+        "manager_run_challenger_request"
+        if budget_stage == "challenger"
+        else "manager_run_portfolio_synthesis_request"
+    )
+    try:
+        sealed = verify_sealed(path)
+    except Exception as exc:
+        raise ReviewWorkflowError(
+            f"{budget_stage} budget request is not validly sealed"
+        ) from exc
+    if sealed.artifact_type != expected_type:
+        raise ReviewWorkflowError(
+            f"{budget_stage} budget request artifact type is invalid"
+        )
+    payload = _read_json_object(path, f"{budget_stage} budget request")
+    required_keys = {
+        "schema_version",
+        "request_id",
+        "manager_screen_run_id",
+        "review_run_id",
+        "budget_stage",
+        "trigger",
+        "requested_by",
+        "requested_at",
+        "underwriting_approval",
+        "items",
+    }
+    if (
+        set(payload) != required_keys
+        or payload.get("schema_version") != 1
+        or payload.get("review_run_id") != run_id
+        or payload.get("budget_stage") != budget_stage
+        or payload.get("trigger") != trigger
+        or _parse_aware_datetime(
+            payload.get("requested_at"),
+            "review budget request requested_at",
+        )
+        != sealed.sealed_at
+    ):
+        raise ReviewWorkflowError(
+            f"{budget_stage} budget request contract is invalid"
+        )
+    items = payload.get("items")
+    if not isinstance(items, list) or not items:
+        raise ReviewWorkflowError(
+            f"{budget_stage} budget request has no items"
+        )
+    return {
+        "request_path": _relative_repository_path(
+            path,
+            repository=_repository_root_for_runs(runs_root),
+        ),
+        "request_sha256": sealed.sha256,
+        "budget_stage": budget_stage,
+        "trigger": trigger,
+        "symbols": [str(item.get("symbol")) for item in items],
+        "request": payload,
+    }
+
+
+def _relative_repository_path(path: Path, *, repository: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(repository).as_posix()
+    except ValueError as exc:
+        raise ReviewWorkflowError("review artifact escapes repository root") from exc
+
+
+def _approval_review_candidates(
+    approval: Mapping[str, Any], *, repository: Path
+) -> list[dict[str, str]]:
+    result: list[dict[str, str]] = []
+    for item in approval["candidates"]:
+        company_dir = _repository_path(
+            repository,
+            str(item["company_dir"]),
+            f"{item['symbol']} approved company_dir",
+        )
+        meta = validate_company_dir(company_dir)
+        if meta["identity"]["symbol"] != item["symbol"]:
+            raise ReviewWorkflowError(
+                f"approved company identity mismatch: {item['symbol']}"
+            )
+        result.append(
+            {
+                "symbol": str(item["symbol"]),
+                "name": str(meta["identity"]["name"]),
+                "target_company_dir": str(company_dir),
+            }
+        )
+    return sorted(result, key=lambda item: item["symbol"])
+
+
+def _verify_approval_policy_in_snapshot(
+    approval: Mapping[str, Any],
+    *,
+    policies: Mapping[str, Mapping[str, Any]],
+    repository: Path,
+) -> None:
+    binding = approval.get("policy_binding")
+    if not isinstance(binding, Mapping):
+        raise ReviewWorkflowError(
+            "underwriting approval policy binding is missing"
+        )
+    policy_id = str(binding.get("policy_id"))
+    snapshot_policy = policies.get(policy_id)
+    if not isinstance(snapshot_policy, Mapping):
+        raise ReviewWorkflowError(
+            "review policy snapshot omits underwriting allocation policy"
+        )
+    policy_path = _repository_path(
+        repository,
+        str(binding.get("path")),
+        "underwriting allocation policy",
+    )
+    try:
+        bound_policy = json.loads(policy_path.read_text(encoding="utf-8-sig"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ReviewWorkflowError(
+            "underwriting allocation policy cannot be read"
+        ) from exc
+    if (
+        not isinstance(bound_policy, Mapping)
+        or dict(snapshot_policy) != dict(bound_policy)
+        or snapshot_policy.get("version") != binding.get("version")
+    ):
+        raise ReviewWorkflowError(
+            "review policy snapshot diverges from underwriting approval"
+        )
+
+
+def _repository_root_for_runs(runs_root: str | Path) -> Path:
+    runs = Path(runs_root).resolve()
+    if runs.name != "runs" or runs.parent.name != "automation":
+        raise ReviewWorkflowError(
+            "manager-bound review requires runs_root at <repository>/automation/runs"
+        )
+    return runs.parent.parent
+
+
+def _repository_path(repository: Path, value: str | Path, label: str) -> Path:
+    candidate = Path(value)
+    resolved = (
+        candidate if candidate.is_absolute() else repository / candidate
+    ).resolve()
+    try:
+        resolved.relative_to(repository)
+    except ValueError as exc:
+        raise ReviewWorkflowError(f"{label} escapes repository root") from exc
+    return resolved
 
 
 def _validated_policy_snapshot(

@@ -16,8 +16,8 @@ from automation.scripts.build_review_prompt import (
 )
 from automation.scripts.review_dispatch import (
     AgentResult,
-    DraftDirectoryRunner,
     DispatchError,
+    DraftDirectoryRunner,
     ReviewDispatcher,
     SubprocessRunner,
 )
@@ -331,6 +331,30 @@ def _dispatcher(runs_root, policy_root, runner):
         timeout_seconds=60,
         lease_seconds=120,
     )
+
+
+def test_dispatcher_revalidates_legacy_provenance_before_bypass(
+    tmp_path: Path,
+) -> None:
+    from trading_os.research_assets.coverage_store import write_jsonl
+
+    runs_root, policy_root, company_dir, run_id = _prepared_review(tmp_path)
+    write_jsonl(
+        tmp_path / "coverage" / "cn-a" / "research_queue.jsonl",
+        [
+            {
+                "symbol": "CN:600519",
+                "manager_screen_run_id": "current-manager-run",
+            }
+        ],
+    )
+    runner = MachineContractRunner(company_dir=company_dir, run_id=run_id)
+
+    with pytest.raises(
+        DispatchError,
+        match="cannot write manager-screen/new-protocol",
+    ):
+        _dispatcher(runs_root, policy_root, runner).dispatch(run_id, now=NOW)
 
 
 def test_blind_prompt_contains_packet_but_not_prior_decision(tmp_path: Path):

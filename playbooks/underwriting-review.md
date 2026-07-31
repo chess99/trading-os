@@ -4,14 +4,16 @@
 
 把初始研究当作待验证主张，而不是答案。agent负责核验事实与重建假设，程序负责执行规则并生成状态；公司层不得给最终组合操作与仓位。
 
+承保不是 deep research 的自动下一步。主 Agent 必须先封存 underwriting approval，绑定同一 manager-screen run、deep selection/completion、结构化 claims、policy SHA、批准人/时间/理由、单家公司预算和 run 级容量账本；批准人与 deep researcher 必须独立。没有有效 approval 不得 prepare 或 dispatch reviewer。
+
 ## 半盲两阶段
 
 1. 程序从封存的结构化主张生成脱敏包，移除旧评级、合理价、买入区和结论。
 2. 独立 agent 只接收脱敏包、允许来源与冻结政策，从零重建盈利质量、现金流、正常化盈利、三情景价值、反方证据和回报模型。
 3. 盲评必须提交标准证据账本和股本桥。关键财务来源、行情时间、行业及周期数据新鲜度由程序验证。
 4. `blind-assessment.json` 先做 SHA-256 封存；揭示阶段只记录它与旧研究的差异，不得改写盲评或自报状态。
-5. 程序执行确定性规则，并根据重大分歧、治理疑点、周期位置、永久损失风险和潜在前五大仓位决定 challenger。
-6. challenger 完全独立重建同一份 v3 契约；按调度契约，challenger 不能读取此前研究和第一份评估。仲裁完成后程序再次执行规则，两份估值仍无可靠共识时不通过。
+5. 程序执行确定性规则，并根据重大分歧、治理疑点、周期位置、永久损失风险和潜在前五大仓位标记 challenger 候选。
+6. challenger 必须由主 Agent 另行显式批准；underwriting approval 不授予 challenger 预算。批准后 challenger 完全独立重建同一份 v3 契约；按调度契约，challenger 不能读取此前研究和第一份评估。仲裁完成后程序再次执行规则，两份估值仍无可靠共识时不通过。
 
 ## 硬门槛
 
@@ -28,6 +30,10 @@
 agent只能提交基准情景未来逐年每股现金分配、持有期末每股经济价值和模型日期。程序用最新价格求 IRR，并用组合政策的12%门槛折现同一组现金流得到激活价。
 
 当前内在价值区间不是未来终值；分红、注销式回购和终值不得重复计算。12%是组合机会成本门槛，不应先塞进业务情景再重复折价。
+
+underwriting 终态也不授予 portfolio synthesis。组合层必须由主 Agent 再次显式批准，并在新的完整行情快照上重算；缺少 challenger/portfolio approval contract 时停在候选状态，不得提前合成仓位。
+
+以下 review 命令只在对应 underwriting approval 已封存并重新验证后执行：
 
 ```bash
 python -m trading_os review create <run-id> --scope-type industry --market CN --description "行业" --candidates <candidates.json>

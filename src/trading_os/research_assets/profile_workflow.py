@@ -15,12 +15,12 @@ from .coverage_store import (
     serialized_coverage_write,
     write_jsonl,
 )
-from .models import canonical_company_name
+from .models import PolicyKind, canonical_company_name, load_policy
 from .research_allocation import (
     ResearchAllocationError,
     evaluate_quick_profile,
 )
-from .sealing import canonical_json_bytes, seal_json, verify_sealed
+from .sealing import SealingError, canonical_json_bytes, seal_json, verify_sealed
 
 PACKAGE_KEYS = {
     "schema_version",
@@ -33,6 +33,24 @@ PACKAGE_KEYS = {
     "analysis",
     "sources",
 }
+MANAGER_BOUND_PACKAGE_KEYS = PACKAGE_KEYS | {
+    "manager_screen_binding",
+    "decisive_answer",
+}
+MANAGER_SCREEN_BINDING_KEYS = {
+    "result_path",
+    "result_sha256",
+    "decisive_question",
+    "evidence_ids",
+}
+RESEARCH_POLICY_BINDING_KEYS = {
+    "policy_id",
+    "version",
+    "path",
+    "file_sha256",
+    "payload_sha256",
+}
+DECISIVE_ANSWER_KEYS = {"conclusion", "source_ids", "unresolved_reason"}
 PROVENANCE_KEYS = {"agent", "model", "tools", "generated_at"}
 PROFILE_DECISION_PACKAGE_KEYS = {
     "schema_version",
@@ -75,6 +93,7 @@ RESEARCH_STAGES = {"targeted_followup", "scoped_research", "deep_research"}
 TERMINAL_STAGES = {
     "profile_candidate",
     "deep_candidate",
+    "targeted_followup_candidate",
     "price_watch",
     "reassign_or_stop",
     "conditional_stop",
@@ -91,8 +110,17 @@ def claim_profile_task(
     claimed_at: dt.datetime,
     symbol: str | None = None,
     lens: str | None = None,
+    run_id: str | None = None,
+    stage: str | None = None,
 ) -> dict[str, Any]:
-    """Atomically claim one unassigned profile or deep-research task."""
+    """Atomically claim one profile task.
+
+    A symbol-less claim is production-safe by default: it only considers
+    manager-screen-bound tasks from one run and one stage.  When ``run_id`` is
+    omitted, the lexicographically latest eligible manager-screen run is the
+    current run.  Run IDs are date-prefixed by contract, so this is stable and
+    does not mix legacy or cross-run work.
+    """
 
     _require_aware_datetime(claimed_at, "claimed_at")
     agent_name = _text(agent, "agent")
@@ -122,26 +150,54 @@ def claim_profile_task(
         and item.get("status") == "pending"
         and item.get("assigned_agent") is None
     ]
+    requested_stage = _claim_stage(stage, default_for_symbol_less=symbol is None)
+    if requested_stage is not None:
+        candidates = [item for item in candidates if item.get("task_type") == requested_stage]
+    requested_run = _optional_identifier(run_id, "run_id")
+    if symbol is None:
+        candidates = [
+            item
+            for item in candidates
+            if isinstance(item.get("manager_screen_run_id"), str)
+            and isinstance(item.get("manager_screen_result_path"), str)
+            and isinstance(item.get("manager_screen_result_sha256"), str)
+        ]
+        eligible_runs = sorted({str(item["manager_screen_run_id"]) for item in candidates})
+        if requested_run is None:
+            if not eligible_runs:
+                raise ResearchAllocationError("no eligible manager-bound profile task is available")
+            requested_run = eligible_runs[-1]
+        candidates = [
+            item for item in candidates if item.get("manager_screen_run_id") == requested_run
+        ]
+    elif requested_run is not None:
+        candidates = [
+            item for item in candidates if item.get("manager_screen_run_id") == requested_run
+        ]
     if symbol is not None:
         if not re.fullmatch(r"CN:[0-9]{6}", symbol):
             raise ResearchAllocationError("claim symbol is invalid")
         candidates = [item for item in candidates if item.get("symbol") == symbol]
     if lens is not None:
         lens_name = _text(lens, "lens")
-        candidates = [
-            item for item in candidates if lens_name in (item.get("selected_by") or [])
-        ]
+        candidates = [item for item in candidates if lens_name in (item.get("selected_by") or [])]
     if not candidates:
         raise ResearchAllocationError("no eligible profile task is available")
-    candidates.sort(
-        key=lambda item: (
-            int(item.get("priority", 5)),
-            {"scoped_research": 0, "targeted_followup": 1}.get(
-                str(item.get("task_type")), 2
-            ),
-            str(item.get("symbol")),
+    if symbol is None:
+        candidates.sort(
+            key=lambda item: (
+                str(item.get("manager_screen_batch_id") or ""),
+                str(item.get("symbol")),
+            )
         )
-    )
+    else:
+        candidates.sort(
+            key=lambda item: (
+                int(item.get("priority", 5)),
+                {"scoped_research": 0, "targeted_followup": 1}.get(str(item.get("task_type")), 2),
+                str(item.get("symbol")),
+            )
+        )
     selected = dict(candidates[0])
     selected.update(
         {
@@ -182,9 +238,7 @@ def release_profile_task(
     if record.get("status") != "running":
         raise ResearchAllocationError(f"profile task is not running: {symbol}")
     if record.get("assigned_agent") != agent_name:
-        raise ResearchAllocationError(
-            f"only the assigned agent can release profile task: {symbol}"
-        )
+        raise ResearchAllocationError(f"only the assigned agent can release profile task: {symbol}")
     if record.get("task_type") not in {
         "quick_profile",
         "targeted_followup",
@@ -228,6 +282,442 @@ def release_profile_task(
         "released_at": released_at.isoformat(),
         "attempt_count": len(attempts),
         "status": "pending",
+        "portfolio_action": None,
+    }
+
+
+@serialized_coverage_write
+def approve_targeted_followup(
+    *,
+    root: str | Path,
+    symbol: str,
+    manager: str,
+    reason: str,
+    policy: Mapping[str, Any],
+    approved_at: dt.datetime,
+    policy_path: str | Path = "policies/research-allocation.json",
+) -> dict[str, Any]:
+    """Explicitly purchase one targeted-followup budget after analyst work."""
+
+    _require_aware_datetime(approved_at, "approved_at")
+    if not re.fullmatch(r"CN:[0-9]{6}", symbol):
+        raise ResearchAllocationError("approval symbol is invalid")
+    manager_name = _text(manager, "manager")
+    approval_reason = _text(reason, "reason")
+    base = Path(root)
+    queue_path = base / RESEARCH_QUEUE_FILE
+    screening_path = base / SCREENING_FILE
+    queue = read_jsonl(queue_path)
+    screening = read_jsonl(screening_path)
+    queued = _one_record(queue, symbol, "research queue")
+    screen = _one_record(screening, symbol, "screening")
+    repository_root = base.parent.parent
+    research_agent = queued.get("assigned_agent")
+    if research_agent == manager_name:
+        raise ResearchAllocationError(
+            "targeted-followup manager must be independent of the research agent"
+        )
+    manager_screen_run_id = queued.get("manager_screen_run_id")
+    if isinstance(manager_screen_run_id, str):
+        expected_manager = _investment_manager_for_cohort(
+            [queued],
+            repository_root=repository_root,
+        )
+        if expected_manager is None or manager_name != expected_manager:
+            raise ResearchAllocationError(
+                "targeted-followup approval must come from the original "
+                f"investment manager: expected {expected_manager}"
+            )
+    cycle = _text(queued.get("profile_cycle_id"), "profile_cycle_id")
+    approval_path = (
+        base
+        / "profiles"
+        / cycle
+        / "targeted-followup-approvals"
+        / f"{symbol.split(':', 1)[1]}.json"
+    )
+    if approval_path.exists() or approval_path.with_name(
+        f"{approval_path.name}.seal.json"
+    ).exists():
+        approval, approval_seal = _load_targeted_followup_approval(
+            approval_path,
+            repository_root=repository_root,
+        )
+        if (
+            approval["symbol"] != symbol
+            or approval["manager"] != manager_name
+            or approval["reason"] != approval_reason
+        ):
+            if (
+                queued.get("status") != "completed"
+                or screen.get("decision") != "targeted_followup_candidate"
+                or queued.get("task_type") not in {"quick_profile", "scoped_research"}
+            ):
+                raise ResearchAllocationError(
+                    f"targeted followup is not awaiting manager approval: {symbol}"
+                )
+            raise ResearchAllocationError(
+                f"sealed targeted-followup approval conflicts with request: {symbol}"
+            )
+        if isinstance(manager_screen_run_id, str):
+            capacity = _stage_capacity(policy, "targeted_followup")
+            if capacity is None:
+                raise ResearchAllocationError(
+                    "targeted_followup run capacity policy is invalid"
+                )
+            _enforce_targeted_followup_approval_capacity(
+                base=base,
+                repository_root=repository_root,
+                manager_screen_run_id=manager_screen_run_id,
+                capacity=capacity,
+                symbol=symbol,
+                expected_path=approval_path,
+                expected_sha256=approval_seal.sha256,
+            )
+        return _materialize_targeted_followup_approval(
+            base=base,
+            queue=queue,
+            screening=screening,
+            approval=approval,
+            approval_path=approval_path,
+            approval_sha256=approval_seal.sha256,
+            repository_root=repository_root,
+            idempotent=True,
+        )
+    if (
+        queued.get("status") != "completed"
+        or screen.get("decision") != "targeted_followup_candidate"
+        or queued.get("task_type") not in {"quick_profile", "scoped_research"}
+    ):
+        raise ResearchAllocationError(
+            f"targeted followup is not awaiting manager approval: {symbol}"
+        )
+    if isinstance(manager_screen_run_id, str):
+        capacity = _stage_capacity(policy, "targeted_followup")
+        if capacity is None:
+            raise ResearchAllocationError("targeted_followup run capacity policy is invalid")
+        _enforce_targeted_followup_approval_capacity(
+            base=base,
+            repository_root=repository_root,
+            manager_screen_run_id=manager_screen_run_id,
+            capacity=capacity,
+            symbol=symbol,
+        )
+    policy_binding = _research_policy_binding(
+        repository_root=repository_root,
+        policy=policy,
+        policy_path=policy_path,
+    )
+    if isinstance(manager_screen_run_id, str):
+        _bind_research_policy_for_run(
+            base=base,
+            run_id=manager_screen_run_id,
+            policy_binding=policy_binding,
+            bound_at=approved_at,
+        )
+    approval = {
+        "schema_version": 1,
+        "symbol": symbol,
+        "profile_cycle_id": cycle,
+        "manager_screen_run_id": manager_screen_run_id,
+        "approved_at": approved_at.isoformat(),
+        "manager": manager_name,
+        "reason": approval_reason,
+        "preceding_stage": str(queued["task_type"]),
+        "next_stage": "targeted_followup",
+        "effort_budget_hours": _effort_budget(policy, "targeted_followup"),
+        "stop_conditions": _stop_conditions("targeted_followup"),
+        "research_policy": policy_binding,
+        "portfolio_action": None,
+    }
+    approval_seal = seal_json(
+        approval_path,
+        approval,
+        artifact_type="targeted_followup_approval",
+        sealed_at=approved_at,
+    )
+    return _materialize_targeted_followup_approval(
+        base=base,
+        queue=queue,
+        screening=screening,
+        approval=approval,
+        approval_path=approval_path,
+        approval_sha256=approval_seal.sha256,
+        repository_root=repository_root,
+        idempotent=False,
+    )
+
+
+def _load_targeted_followup_approval(
+    approval_path: Path,
+    *,
+    repository_root: Path,
+) -> tuple[dict[str, Any], Any]:
+    try:
+        sealed = verify_sealed(approval_path)
+        approval = json.loads(approval_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError(
+            f"targeted-followup approval is not validly sealed: {approval_path}"
+        ) from exc
+    if sealed.artifact_type != "targeted_followup_approval":
+        raise ResearchAllocationError(
+            "targeted-followup approval has the wrong artifact type"
+        )
+    expected_keys = {
+        "schema_version",
+        "symbol",
+        "profile_cycle_id",
+        "manager_screen_run_id",
+        "approved_at",
+        "manager",
+        "reason",
+        "preceding_stage",
+        "next_stage",
+        "effort_budget_hours",
+        "stop_conditions",
+        "research_policy",
+        "portfolio_action",
+    }
+    if (
+        not isinstance(approval, dict)
+        or set(approval) != expected_keys
+        or approval.get("schema_version") != 1
+        or approval.get("next_stage") != "targeted_followup"
+        or approval.get("portfolio_action") is not None
+    ):
+        raise ResearchAllocationError(
+            "targeted-followup approval fields do not match v1"
+        )
+    _normalize_research_policy_binding(approval.get("research_policy"))
+    try:
+        approval_path.resolve().relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            "targeted-followup approval escapes repository root"
+        ) from exc
+    return approval, sealed
+
+
+def _enforce_targeted_followup_approval_capacity(
+    *,
+    base: Path,
+    repository_root: Path,
+    manager_screen_run_id: str,
+    capacity: int,
+    symbol: str,
+    expected_path: Path | None = None,
+    expected_sha256: str | None = None,
+) -> None:
+    """Conserve purchased follow-up budgets from the immutable approval ledger."""
+
+    ledger = _targeted_followup_approval_ledger(
+        base=base,
+        repository_root=repository_root,
+        manager_screen_run_id=manager_screen_run_id,
+    )
+    existing = ledger.get(symbol)
+    if expected_path is not None or expected_sha256 is not None:
+        if (
+            expected_path is None
+            or expected_sha256 is None
+            or existing is None
+            or existing["path"] != expected_path.resolve()
+            or existing["sha256"] != expected_sha256
+        ):
+            raise ResearchAllocationError(
+                f"targeted-followup approval ledger does not bind replay: {symbol}"
+            )
+    elif existing is not None:
+        raise ResearchAllocationError(
+            f"targeted-followup approval ledger already contains symbol: {symbol}"
+        )
+    projected = len(ledger) + (0 if existing is not None else 1)
+    if projected > capacity:
+        raise ResearchAllocationError(
+            "targeted_followup run capacity is exhausted: "
+            f"{len(ledger)} sealed + {0 if existing is not None else 1} requested "
+            f"> {capacity}"
+        )
+
+
+def _targeted_followup_approval_ledger(
+    *,
+    base: Path,
+    repository_root: Path,
+    manager_screen_run_id: str,
+) -> dict[str, dict[str, Any]]:
+    profiles_root = base / "profiles"
+    if not profiles_root.is_dir():
+        return {}
+    ledger: dict[str, dict[str, Any]] = {}
+    for approval_dir in sorted(profiles_root.rglob("targeted-followup-approvals")):
+        if not approval_dir.is_dir():
+            continue
+        payload_paths = {
+            path.resolve()
+            for path in approval_dir.glob("*.json")
+            if not path.name.endswith(".seal.json")
+        }
+        sealed_payload_paths = {
+            path.with_name(path.name[: -len(".seal.json")]).resolve()
+            for path in approval_dir.glob("*.json.seal.json")
+        }
+        if payload_paths != sealed_payload_paths:
+            raise ResearchAllocationError(
+                "targeted-followup approval ledger contains a half-sealed artifact"
+            )
+        for approval_path in sorted(payload_paths):
+            approval, sealed = _load_targeted_followup_approval(
+                approval_path,
+                repository_root=repository_root,
+            )
+            approval_symbol = approval.get("symbol")
+            cycle = approval.get("profile_cycle_id")
+            run_id = approval.get("manager_screen_run_id")
+            if (
+                not isinstance(approval_symbol, str)
+                or not re.fullmatch(r"CN:[0-9]{6}", approval_symbol)
+                or not isinstance(cycle, str)
+                or not cycle
+                or (run_id is not None and (not isinstance(run_id, str) or not run_id))
+            ):
+                raise ResearchAllocationError(
+                    "targeted-followup approval ledger identity is invalid"
+                )
+            canonical_path = (
+                profiles_root
+                / cycle
+                / "targeted-followup-approvals"
+                / f"{approval_symbol.split(':', 1)[1]}.json"
+            ).resolve()
+            if approval_path != canonical_path:
+                raise ResearchAllocationError(
+                    "targeted-followup approval ledger path does not match identity"
+                )
+            if run_id != manager_screen_run_id:
+                continue
+            if approval_symbol in ledger:
+                raise ResearchAllocationError(
+                    "targeted-followup approval ledger contains duplicate run symbols"
+                )
+            ledger[approval_symbol] = {
+                "path": approval_path,
+                "sha256": sealed.sha256,
+            }
+    return ledger
+
+
+def _materialize_targeted_followup_approval(
+    *,
+    base: Path,
+    queue: list[dict[str, Any]],
+    screening: list[dict[str, Any]],
+    approval: Mapping[str, Any],
+    approval_path: Path,
+    approval_sha256: str,
+    repository_root: Path,
+    idempotent: bool,
+) -> dict[str, Any]:
+    symbol = str(approval["symbol"])
+    queued = dict(_one_record(queue, symbol, "research queue"))
+    screen = dict(_one_record(screening, symbol, "screening"))
+    relative = approval_path.relative_to(repository_root).as_posix()
+    history = list(queued.get("stage_history") or [])
+    if not any(
+        item.get("approval_sha256") == approval_sha256
+        for item in history
+        if isinstance(item, Mapping)
+    ):
+        history.append(
+            {
+                "stage": "targeted_followup_approval",
+                "status": "completed",
+                "started_at": None,
+                "finished_at": approval["approved_at"],
+                "agent": approval["manager"],
+                "reason": approval["reason"],
+                "next_stage": "targeted_followup",
+                "approval_path": relative,
+                "approval_sha256": approval_sha256,
+            }
+        )
+    base_state = bool(
+        queued.get("task_type") == approval["preceding_stage"]
+        and queued.get("status") == "completed"
+    )
+    later_state = bool(
+        queued.get("task_type") == "targeted_followup"
+        or _history_completed(queued, "targeted_followup")
+    )
+    if base_state:
+        queued.update(
+            {
+                "task_type": "targeted_followup",
+                "status": "pending",
+                "reason": approval["reason"],
+                "assigned_agent": None,
+                "started_at": None,
+                "finished_at": None,
+                "failure_reason": None,
+                "next_action": _next_action("targeted_followup", False),
+                "preceding_stage": approval["preceding_stage"],
+                "effort_budget_hours": approval["effort_budget_hours"],
+                "stop_conditions": list(approval["stop_conditions"]),
+            }
+        )
+    elif not later_state:
+        raise ResearchAllocationError(
+            f"sealed targeted-followup approval cannot repair queue state: {symbol}"
+        )
+    queued.update(
+        {
+            "targeted_followup_approval_path": relative,
+            "targeted_followup_approval_sha256": approval_sha256,
+            "research_policy_path": approval["research_policy"]["path"],
+            "research_policy_file_sha256": approval["research_policy"][
+                "file_sha256"
+            ],
+            "research_policy_payload_sha256": approval["research_policy"][
+                "payload_sha256"
+            ],
+            "stage_history": history,
+        }
+    )
+    evidence = list(screen.get("evidence") or [])
+    approval_evidence = [
+        f"targeted_followup_approval:{relative}",
+        f"targeted_followup_approval_sha256:{approval_sha256}",
+    ]
+    if screen.get("decision") == "targeted_followup_candidate":
+        screen.update(
+            {
+                "decision": "targeted_followup",
+                "reason": approval["reason"],
+                "next_action": _next_action("targeted_followup", False),
+            }
+        )
+    screen["evidence"] = list(dict.fromkeys(evidence + approval_evidence))
+    write_jsonl(
+        base / RESEARCH_QUEUE_FILE,
+        [queued if item.get("symbol") == symbol else item for item in queue],
+    )
+    write_jsonl(
+        base / SCREENING_FILE,
+        [screen if item.get("symbol") == symbol else item for item in screening],
+    )
+    return {
+        "schema_version": 1,
+        "symbol": symbol,
+        "task_type": queued["task_type"],
+        "status": queued["status"],
+        "effort_budget_hours": queued.get("effort_budget_hours"),
+        "approved_by": approval["manager"],
+        "approved_at": approval["approved_at"],
+        "approval_path": relative,
+        "approval_sha256": approval_sha256,
+        "research_policy": dict(approval["research_policy"]),
+        "idempotent": idempotent,
         "portfolio_action": None,
     }
 
@@ -279,6 +769,12 @@ def record_profile_package(
     )
     if replayed is not None:
         return replayed
+    _validate_manager_bound_submission(
+        normalized,
+        queue_record=queue_record,
+        repository_root=repository_root,
+        symbol=symbol,
+    )
     _validate_local_sources(normalized["sources"], repository_root=repository_root)
     _validate_industry_evidence(
         normalized,
@@ -288,9 +784,7 @@ def record_profile_package(
 
     queued_stage = str(queue_record.get("task_type"))
     expected_profile_stage = (
-        queue_record.get("preceding_stage")
-        if queued_stage == "targeted_followup"
-        else queued_stage
+        queue_record.get("preceding_stage") if queued_stage == "targeted_followup" else queued_stage
     )
     if expected_profile_stage != profile["research_stage"]:
         raise ResearchAllocationError(
@@ -300,8 +794,7 @@ def record_profile_package(
         )
     if queue_record.get("status") not in {"pending", "running"}:
         raise ResearchAllocationError(
-            f"profile cannot be recorded from queue status "
-            f"{queue_record.get('status')}: {symbol}"
+            f"profile cannot be recorded from queue status {queue_record.get('status')}: {symbol}"
         )
     if canonical_company_name(normalized["company_name"]) != canonical_company_name(
         str(queue_record.get("name"))
@@ -317,9 +810,7 @@ def record_profile_package(
         and queue_record.get("preceding_stage") == "manager_screen"
         and isinstance(queue_record.get("manager_screen_result_path"), str)
     )
-    allocation_sha = (
-        None if manager_screen_binding else queue_record.get("allocation_sha256")
-    )
+    allocation_sha = None if manager_screen_binding else queue_record.get("allocation_sha256")
     if allocation_sha is not None:
         bound_cycles = {
             item.get("profile_cycle_id")
@@ -348,14 +839,24 @@ def record_profile_package(
         next_status = "pending"
         capacity = _stage_capacity(policy, next_stage)
         if capacity is not None:
-            active_count = sum(
-                1
-                for item in queue_records
-                if item.get("symbol") != symbol
-                and item.get("task_type") == next_stage
-                and item.get("status") in {"pending", "running"}
+            manager_screen_run_id = queue_record.get("manager_screen_run_id")
+            consumed_count = (
+                _committed_stage_count_for_run(
+                    queue_records,
+                    manager_screen_run_id=manager_screen_run_id,
+                    stage=next_stage,
+                    exclude_symbols={symbol},
+                )
+                if isinstance(manager_screen_run_id, str)
+                else sum(
+                    1
+                    for item in queue_records
+                    if item.get("symbol") != symbol
+                    and item.get("task_type") == next_stage
+                    and item.get("status") in {"pending", "running"}
+                )
             )
-            if active_count >= capacity:
+            if consumed_count >= capacity:
                 next_status = "requires_rebaseline"
                 capacity_wait = True
 
@@ -407,6 +908,7 @@ def record_profile_package(
         {
             "stage": queued_stage,
             "status": "completed",
+            "started_at": queue_record.get("started_at"),
             "finished_at": recorded_at.isoformat(),
             "agent": normalized["provenance"]["agent"],
             "result_path": relative_profile,
@@ -482,28 +984,35 @@ def _adjust_profile_evaluation(
 
     adjusted = dict(evaluation)
     next_stage = str(adjusted.get("next_stage"))
-    if queued_stage == "quick_profile" and next_stage == "scoped_research":
+    evaluated_stage = str(adjusted.get("evaluated_stage"))
+    if next_stage == "targeted_followup":
+        exhausted = queued_stage == "targeted_followup"
+        next_stage = "reassign_or_stop" if exhausted else "targeted_followup_candidate"
+        adjusted["next_stage"] = next_stage
+        adjusted["maximum_additional_effort_hours"] = 0.0
+        adjusted["reason_codes"] = sorted(
+            set(adjusted["reason_codes"])
+            | {
+                (
+                    "targeted_followup_exhausted"
+                    if exhausted
+                    else "awaiting_manager_targeted_followup_approval"
+                )
+            }
+        )
+    elif evaluated_stage == "quick_profile" and next_stage == "scoped_research":
         next_stage = "profile_candidate"
         adjusted["next_stage"] = next_stage
         adjusted["maximum_additional_effort_hours"] = 0.0
         adjusted["reason_codes"] = sorted(
-            set(adjusted["reason_codes"])
-            | {"awaiting_cross_company_profile_comparison"}
+            set(adjusted["reason_codes"]) | {"awaiting_cross_company_profile_comparison"}
         )
-    elif queued_stage == "scoped_research" and next_stage == "deep_research":
+    elif evaluated_stage == "scoped_research" and next_stage == "deep_research":
         next_stage = "deep_candidate"
         adjusted["next_stage"] = next_stage
         adjusted["maximum_additional_effort_hours"] = 0.0
         adjusted["reason_codes"] = sorted(
-            set(adjusted["reason_codes"])
-            | {"awaiting_cross_company_deep_research_comparison"}
-        )
-    if queued_stage == "targeted_followup" and next_stage == "targeted_followup":
-        next_stage = "reassign_or_stop"
-        adjusted["next_stage"] = next_stage
-        adjusted["maximum_additional_effort_hours"] = 0.0
-        adjusted["reason_codes"] = sorted(
-            set(adjusted["reason_codes"]) | {"targeted_followup_exhausted"}
+            set(adjusted["reason_codes"]) | {"awaiting_cross_company_deep_research_comparison"}
         )
     return adjusted, next_stage
 
@@ -557,9 +1066,7 @@ def _verify_profile_record_replay(
         "next_stage": next_stage,
     }
     mismatched_history = [
-        field
-        for field, expected in expected_history.items()
-        if history.get(field) != expected
+        field for field, expected in expected_history.items() if history.get(field) != expected
     ]
     if mismatched_history:
         raise ResearchAllocationError(
@@ -571,8 +1078,7 @@ def _verify_profile_record_replay(
         sealed_profile = verify_sealed(profile_path)
     except ValueError as exc:
         raise ResearchAllocationError(
-            f"completed profile package is not validly sealed: "
-            f"{normalized['profile']['symbol']}"
+            f"completed profile package is not validly sealed: {normalized['profile']['symbol']}"
         ) from exc
     if sealed_profile.artifact_type != "quick_profile_package":
         raise ResearchAllocationError(
@@ -592,16 +1098,14 @@ def _verify_profile_record_replay(
         ) from exc
     if existing_profile != normalized:
         raise ResearchAllocationError(
-            f"profile replay conflicts with the sealed package: "
-            f"{normalized['profile']['symbol']}"
+            f"profile replay conflicts with the sealed package: {normalized['profile']['symbol']}"
         )
 
     try:
         sealed_evaluation = verify_sealed(evaluation_path)
     except ValueError as exc:
         raise ResearchAllocationError(
-            f"completed profile evaluation is not validly sealed: "
-            f"{normalized['profile']['symbol']}"
+            f"completed profile evaluation is not validly sealed: {normalized['profile']['symbol']}"
         ) from exc
     if sealed_evaluation.artifact_type != "quick_profile_evaluation":
         raise ResearchAllocationError(
@@ -617,8 +1121,7 @@ def _verify_profile_record_replay(
         evaluation_payload = json.loads(evaluation_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         raise ResearchAllocationError(
-            f"completed profile evaluation cannot be read: "
-            f"{normalized['profile']['symbol']}"
+            f"completed profile evaluation cannot be read: {normalized['profile']['symbol']}"
         ) from exc
     expected_fields = {
         "schema_version",
@@ -714,7 +1217,7 @@ def build_profile_comparison_packet(
     stage: str,
     created_at: dt.datetime,
 ) -> dict[str, Any]:
-    """Seal a score-free L2/L3 packet for an independent allocation Agent."""
+    """Seal a score-free L2/L3 packet for the investment manager."""
 
     _require_aware_datetime(created_at, "created_at")
     cycle = _text(cycle_id, "cycle_id")
@@ -730,25 +1233,26 @@ def build_profile_comparison_packet(
         cycle=cycle,
         stage=stage,
     )
+    investment_manager_agent = _investment_manager_for_cohort(
+        cohort,
+        repository_root=repository_root,
+    )
     comparison_path = base / "profiles" / cycle / config["comparison_name"]
     relative = comparison_path.relative_to(repository_root).as_posix()
     if comparison_path.exists():
         sealed = verify_sealed(comparison_path)
         if sealed.artifact_type != f"{stage}_comparison_packet":
-            raise ResearchAllocationError(
-                f"sealed {stage} comparison has the wrong artifact type"
-            )
+            raise ResearchAllocationError(f"sealed {stage} comparison has the wrong artifact type")
         payload = json.loads(comparison_path.read_text(encoding="utf-8"))
         expected = {
             "cycle_id": cycle,
             "evaluated_stage": stage,
             "predecessor_selection_path": binding,
             "predecessor_selection_sha256": binding_sha,
+            "investment_manager_agent": investment_manager_agent,
         }
         if any(payload.get(key) != value for key, value in expected.items()):
-            raise ResearchAllocationError(
-                f"sealed {stage} comparison conflicts with cycle binding"
-            )
+            raise ResearchAllocationError(f"sealed {stage} comparison conflicts with cycle binding")
         return _profile_comparison_result(
             payload,
             comparison_path=relative,
@@ -773,6 +1277,7 @@ def build_profile_comparison_packet(
         "next_stage": config["next_stage"],
         "predecessor_selection_path": binding,
         "predecessor_selection_sha256": binding_sha,
+        "investment_manager_agent": investment_manager_agent,
         "created_at": created_at.isoformat(),
         "cohort_count": len(rows),
         "principle": (
@@ -806,8 +1311,9 @@ def finalize_profile_stage_with_agent_decisions(
     policy: Mapping[str, Any],
     decisions: Mapping[str, Any],
     finalized_at: dt.datetime,
+    policy_path: str | Path = "policies/research-allocation.json",
 ) -> dict[str, Any]:
-    """Grant L3/L4 budget from an independent Agent's explicit full decisions."""
+    """Grant L3/L4 budget from the investment manager's explicit decisions."""
 
     _require_aware_datetime(finalized_at, "finalized_at")
     cycle = _text(cycle_id, "cycle_id")
@@ -833,19 +1339,20 @@ def finalize_profile_stage_with_agent_decisions(
         )
     sealed_comparison = verify_sealed(comparison_path)
     if sealed_comparison.artifact_type != f"{stage}_comparison_packet":
-        raise ResearchAllocationError(
-            f"sealed {stage} comparison has the wrong artifact type"
-        )
+        raise ResearchAllocationError(f"sealed {stage} comparison has the wrong artifact type")
     comparison = json.loads(comparison_path.read_text(encoding="utf-8"))
+    investment_manager_agent = _investment_manager_for_cohort(
+        cohort,
+        repository_root=repository_root,
+    )
     if (
         comparison.get("cycle_id") != cycle
         or comparison.get("evaluated_stage") != stage
         or comparison.get("predecessor_selection_path") != binding
         or comparison.get("predecessor_selection_sha256") != binding_sha
+        or comparison.get("investment_manager_agent") != investment_manager_agent
     ):
-        raise ResearchAllocationError(
-            f"{stage} comparison packet does not match cohort binding"
-        )
+        raise ResearchAllocationError(f"{stage} comparison packet does not match cohort binding")
     comparison_rows = comparison.get("rows")
     if not isinstance(comparison_rows, list) or not all(
         isinstance(row, Mapping) for row in comparison_rows
@@ -875,24 +1382,41 @@ def finalize_profile_stage_with_agent_decisions(
     }
     if normalized["provenance"]["agent"] in research_agents:
         raise ResearchAllocationError(
-            "cross-company profile allocation Agent must be independent of "
-            "company research Agents"
+            "cross-company investment manager must be independent of company research Agents"
+        )
+    if (
+        investment_manager_agent is not None
+        and normalized["provenance"]["agent"] != investment_manager_agent
+    ):
+        raise ResearchAllocationError(
+            "profile allocation must be approved by the original "
+            f"investment manager: expected {investment_manager_agent}"
         )
 
     next_stage = config["next_stage"]
     select_decision = config["select_decision"]
     selected_symbols = [
-        row["symbol"]
-        for row in normalized["decisions"]
-        if row["decision"] == select_decision
+        row["symbol"] for row in normalized["decisions"] if row["decision"] == select_decision
     ]
     capacity = _stage_capacity(policy, next_stage)
     if capacity is None:
         raise ResearchAllocationError(f"stage capacity is invalid: {next_stage}")
-    if len(selected_symbols) > capacity:
+    manager_screen_run_id = _manager_screen_run_id_for_cohort(cohort)
+    committed_count = (
+        _committed_stage_count_for_run(
+            queue,
+            manager_screen_run_id=manager_screen_run_id,
+            stage=next_stage,
+            exclude_symbols={str(item["symbol"]) for item in cohort},
+        )
+        if manager_screen_run_id is not None
+        else 0
+    )
+    if committed_count + len(selected_symbols) > capacity:
         raise ResearchAllocationError(
-            f"Agent decisions exceed {next_stage} capacity: "
-            f"{len(selected_symbols)} > {capacity}"
+            f"Agent decisions exceed {next_stage} run capacity: "
+            f"{committed_count} committed + {len(selected_symbols)} selected "
+            f"> {capacity}"
         )
     risk_cap = _risk_cluster_cap(policy, next_stage)
     if len(selected_symbols) > risk_cap:
@@ -901,10 +1425,20 @@ def finalize_profile_stage_with_agent_decisions(
             f"cap for {next_stage}: {len(selected_symbols)} > {risk_cap}"
         )
     budget = _effort_budget(policy, next_stage)
+    policy_binding = _research_policy_binding(
+        repository_root=repository_root,
+        policy=policy,
+        policy_path=policy_path,
+    )
+    if manager_screen_run_id is not None:
+        _bind_research_policy_for_run(
+            base=base,
+            run_id=manager_screen_run_id,
+            policy_binding=policy_binding,
+            bound_at=finalized_at,
+        )
     selected_set = set(selected_symbols)
-    decisions_by_symbol = {
-        row["symbol"]: row for row in normalized["decisions"]
-    }
+    decisions_by_symbol = {row["symbol"]: row for row in normalized["decisions"]}
     decision_rows = [
         {
             "ordinal": row["ordinal"],
@@ -912,9 +1446,7 @@ def finalize_profile_stage_with_agent_decisions(
             "name": row["name"],
             "selected": row["symbol"] in selected_set,
             "selection_reason": decisions_by_symbol[row["symbol"]]["reason"],
-            "decisive_question": decisions_by_symbol[row["symbol"]][
-                "decisive_question"
-            ],
+            "decisive_question": decisions_by_symbol[row["symbol"]]["decisive_question"],
             "counterevidence_considered": decisions_by_symbol[row["symbol"]][
                 "counterevidence_considered"
             ],
@@ -926,6 +1458,7 @@ def finalize_profile_stage_with_agent_decisions(
     payload = {
         "schema_version": 1,
         "cycle_id": cycle,
+        "manager_screen_run_id": manager_screen_run_id,
         "evaluated_stage": stage,
         "next_stage": next_stage,
         "predecessor_selection_path": binding,
@@ -942,6 +1475,7 @@ def finalize_profile_stage_with_agent_decisions(
         "next_stage_effort_budget_hours": budget,
         "selected_count": len(selected_symbols),
         "principle": policy.get("comparison_principle"),
+        "research_policy": policy_binding,
         "agent_decision": normalized,
         "decisions": decision_rows,
         # Compatibility view for the existing crash-safe materializer. This is
@@ -953,13 +1487,22 @@ def finalize_profile_stage_with_agent_decisions(
     if existed:
         sealed_selection = verify_sealed(selection_path)
         if sealed_selection.artifact_type != f"{stage}_cross_company_selection":
-            raise ResearchAllocationError(
-                f"sealed {stage} selection has the wrong artifact type"
-            )
+            raise ResearchAllocationError(f"sealed {stage} selection has the wrong artifact type")
         existing = json.loads(selection_path.read_text(encoding="utf-8"))
-        expected_replay = {k: v for k, v in payload.items() if k != "finalized_at"}
+        compatibility_omissions = (
+            {"manager_screen_run_id", "research_policy"}
+            if "research_policy" not in existing
+            else set()
+        )
+        expected_replay = {
+            k: v
+            for k, v in payload.items()
+            if k != "finalized_at" and k not in compatibility_omissions
+        }
         actual_replay = {
-            k: v for k, v in existing.items() if k != "finalized_at"
+            k: v
+            for k, v in existing.items()
+            if k != "finalized_at" and k not in compatibility_omissions
         }
         if actual_replay != expected_replay:
             raise ResearchAllocationError(
@@ -1025,6 +1568,11 @@ def finalize_profile_stage(
     screening_path = base / SCREENING_FILE
     queue = read_jsonl(queue_path)
     screening = read_jsonl(screening_path)
+    _reject_legacy_finalize_for_manager_screen(
+        queue,
+        cycle=cycle,
+        stage=stage,
+    )
 
     if stage == "quick_profile":
         binding_field = "triage_selection_path"
@@ -1053,6 +1601,16 @@ def finalize_profile_stage(
             cycle=cycle,
             stage=stage,
             next_stage=next_stage,
+        )
+        _reject_legacy_finalize_for_manager_screen(
+            queue,
+            cycle=cycle,
+            stage=stage,
+            bound_symbols={
+                str(row["symbol"])
+                for row in payload["ranking"]
+                if isinstance(row, Mapping) and isinstance(row.get("symbol"), str)
+            },
         )
         bound_budget = payload.get("next_stage_effort_budget_hours")
         updated_screening, updated_queue, screening_changed, queue_changed = (
@@ -1088,14 +1646,10 @@ def finalize_profile_stage(
         and isinstance(item.get(binding_field), str)
     ]
     if not anchors:
-        raise ResearchAllocationError(
-            f"no recorded {stage} cohort is available for cycle: {cycle}"
-        )
+        raise ResearchAllocationError(f"no recorded {stage} cohort is available for cycle: {cycle}")
     bindings = {item[binding_field] for item in anchors}
     if len(bindings) != 1:
-        raise ResearchAllocationError(
-            f"{stage} cycle spans multiple predecessor selections"
-        )
+        raise ResearchAllocationError(f"{stage} cycle spans multiple predecessor selections")
     binding = next(iter(bindings))
     cohort = _bound_profile_cohort(
         queue,
@@ -1104,6 +1658,12 @@ def finalize_profile_stage(
         binding=binding,
         stage=stage,
     )
+    if _manager_screen_run_id_for_cohort(cohort) is not None:
+        raise ResearchAllocationError(
+            "legacy score-based profile-finalize is forbidden for "
+            "manager-screen-bound cohorts; use profile-compare/profile-select "
+            "with the original investment manager"
+        )
     incomplete = [
         item["symbol"]
         for item in cohort
@@ -1134,26 +1694,36 @@ def finalize_profile_stage(
             str(item["symbol"]),
         ),
     )
-    capacities = policy.get("stage_capacity_per_cycle")
-    if not isinstance(capacities, Mapping):
-        raise ResearchAllocationError("stage capacity policy is invalid")
-    capacity = capacities.get(next_stage)
-    if isinstance(capacity, bool) or not isinstance(capacity, int) or capacity <= 0:
+    capacity = _stage_capacity(policy, next_stage)
+    if capacity is None:
         raise ResearchAllocationError(f"stage capacity is invalid: {next_stage}")
+    manager_screen_run_id = _manager_screen_run_id_for_cohort(cohort)
+    committed_count = (
+        _committed_stage_count_for_run(
+            queue,
+            manager_screen_run_id=manager_screen_run_id,
+            stage=next_stage,
+            exclude_symbols={str(item["symbol"]) for item in cohort},
+        )
+        if manager_screen_run_id is not None
+        else 0
+    )
+    remaining_capacity = capacity - committed_count
+    if remaining_capacity < 0:
+        raise ResearchAllocationError(
+            f"{next_stage} run capacity is already exceeded: "
+            f"{committed_count} committed > {capacity}"
+        )
     budgets = policy.get("effort_budget_hours")
     if not isinstance(budgets, Mapping):
         raise ResearchAllocationError("effort budget policy is invalid")
     budget = budgets.get(next_stage)
-    if (
-        isinstance(budget, bool)
-        or not isinstance(budget, (int, float))
-        or budget <= 0
-    ):
+    if isinstance(budget, bool) or not isinstance(budget, (int, float)) or budget <= 0:
         raise ResearchAllocationError(f"effort budget is invalid: {next_stage}")
     risk_cap = _risk_cluster_cap(policy, next_stage)
     selected, capped_symbols = _select_with_risk_cluster_cap(
         ranked,
-        capacity=capacity,
+        capacity=remaining_capacity,
         cap=risk_cap,
     )
     selected_symbols = {item["symbol"] for item in selected}
@@ -1225,6 +1795,33 @@ def finalize_profile_stage(
     )
 
 
+def _reject_legacy_finalize_for_manager_screen(
+    queue: list[Mapping[str, Any]],
+    *,
+    cycle: str,
+    stage: str,
+    bound_symbols: set[str] | None = None,
+) -> None:
+    if bound_symbols is None:
+        candidates = [
+            item
+            for item in queue
+            if item.get("profile_cycle_id") == cycle and _history_completed(item, stage)
+        ]
+    else:
+        candidates = [item for item in queue if item.get("symbol") in bound_symbols]
+    if any(
+        isinstance(item.get("manager_screen_run_id"), str)
+        or isinstance(item.get("manager_screen_result_path"), str)
+        for item in candidates
+    ):
+        raise ResearchAllocationError(
+            "legacy score-based profile-finalize is forbidden for "
+            "manager-screen-bound cohorts; use profile-compare/profile-select "
+            "with the original investment manager"
+        )
+
+
 def _validate_profile_selection_payload(
     payload: Any,
     *,
@@ -1254,6 +1851,15 @@ def _validate_profile_selection_payload(
     if mismatched:
         raise ResearchAllocationError(
             f"sealed {stage} selection conflicts at {', '.join(mismatched)}"
+        )
+    if "research_policy" in payload:
+        _normalize_research_policy_binding(payload.get("research_policy"))
+    manager_screen_run_id = payload.get("manager_screen_run_id")
+    if manager_screen_run_id is not None and (
+        not isinstance(manager_screen_run_id, str) or not manager_screen_run_id
+    ):
+        raise ResearchAllocationError(
+            f"sealed {stage} selection manager_screen_run_id is invalid"
         )
     for field in ("cohort_count", "eligible_count", "selected_count"):
         value = payload.get(field)
@@ -1294,9 +1900,7 @@ def _validate_profile_selection_payload(
     if budget is not None and (
         isinstance(budget, bool) or not isinstance(budget, (int, float)) or budget <= 0
     ):
-        raise ResearchAllocationError(
-            f"sealed {stage} selection next-stage budget is invalid"
-        )
+        raise ResearchAllocationError(f"sealed {stage} selection next-stage budget is invalid")
 
 
 def _materialize_profile_selection(
@@ -1363,15 +1967,12 @@ def _materialize_profile_selection(
             and queued.get("status") == "completed"
             and _history_completed(queued, "targeted_followup")
         )
-        candidate_outcome = (
-            "profile_candidate" if stage == "quick_profile" else "deep_candidate"
-        )
+        candidate_outcome = "profile_candidate" if stage == "quick_profile" else "deep_candidate"
         completed_outcome = _history_completed_outcome(
             queued, "targeted_followup" if completed_followup else stage
         )
         preserve_outcome = bool(
-            completed_outcome in TERMINAL_STAGES
-            and completed_outcome != candidate_outcome
+            completed_outcome in TERMINAL_STAGES and completed_outcome != candidate_outcome
         )
         later_progress = bool(
             _history_completed(queued, next_stage)
@@ -1386,8 +1987,7 @@ def _materialize_profile_selection(
             if base_state:
                 if budget is None:
                     raise ResearchAllocationError(
-                        f"sealed {stage} selection predates recoverable budget binding: "
-                        f"{symbol}"
+                        f"sealed {stage} selection predates recoverable budget binding: {symbol}"
                     )
                 queued.update(
                     {
@@ -1397,9 +1997,7 @@ def _materialize_profile_selection(
                         "started_at": None,
                         "finished_at": None,
                         "failure_reason": None,
-                        "reason": (
-                            f"完整{stage}批次横向比较后获得{next_stage}预算。"
-                        ),
+                        "reason": (f"完整{stage}批次横向比较后获得{next_stage}预算。"),
                         "next_action": _next_action(next_stage, False),
                         "effort_budget_hours": budget,
                         "preceding_stage": stage,
@@ -1411,9 +2009,7 @@ def _materialize_profile_selection(
                     screen.update(
                         {
                             "decision": next_stage,
-                            "reason": (
-                                f"完整{stage}批次横向比较后获得{next_stage}预算。"
-                            ),
+                            "reason": (f"完整{stage}批次横向比较后获得{next_stage}预算。"),
                             "evidence": list(dict.fromkeys(evidence + expected_evidence)),
                             "next_action": _next_action(next_stage, False),
                         }
@@ -1432,9 +2028,7 @@ def _materialize_profile_selection(
                     screen.update(
                         {
                             "decision": next_stage,
-                            "reason": (
-                                f"完整{stage}批次横向比较后获得{next_stage}预算。"
-                            ),
+                            "reason": (f"完整{stage}批次横向比较后获得{next_stage}预算。"),
                             "evidence": list(dict.fromkeys(evidence + expected_evidence)),
                             "next_action": _next_action(next_stage, False),
                         }
@@ -1454,28 +2048,21 @@ def _materialize_profile_selection(
                     {
                         "decision": completed_outcome,
                         "reason": _screening_reason(completed_outcome, False),
-                        "evidence": list(
-                            dict.fromkeys(evidence + expected_evidence)
-                        ),
+                        "evidence": list(dict.fromkeys(evidence + expected_evidence)),
                         "next_action": _next_action(completed_outcome, False),
                     }
                 )
             else:
                 if base_state:
-                    queued["next_action"] = (
-                        "等待结构化触发器或下一周期重新竞争研究预算。"
-                    )
+                    queued["next_action"] = "等待结构化触发器或下一周期重新竞争研究预算。"
                 if not screen_proves_selection:
                     screen.update(
                         {
                             "decision": "catalog",
                             "reason": (
-                                f"{stage}支持继续研究，但横向比较后未获得本周期"
-                                f"{next_stage}容量。"
+                                f"{stage}支持继续研究，但横向比较后未获得本周期{next_stage}容量。"
                             ),
-                            "evidence": list(
-                                dict.fromkeys(evidence + expected_evidence)
-                            ),
+                            "evidence": list(dict.fromkeys(evidence + expected_evidence)),
                             "next_action": "等待结构化触发器或下一周期重新竞争研究预算。",
                         }
                     )
@@ -1540,14 +2127,10 @@ def _complete_profile_cohort(
         if binding is not None:
             anchors.append(binding)
     if not anchors:
-        raise ResearchAllocationError(
-            f"no recorded {stage} cohort is available for cycle: {cycle}"
-        )
+        raise ResearchAllocationError(f"no recorded {stage} cohort is available for cycle: {cycle}")
     bindings = set(anchors)
     if len(bindings) != 1:
-        raise ResearchAllocationError(
-            f"{stage} cycle spans multiple predecessor selections"
-        )
+        raise ResearchAllocationError(f"{stage} cycle spans multiple predecessor selections")
     binding_field, binding = next(iter(bindings))
     binding_path = repository_root / binding
     if not binding_path.exists():
@@ -1586,9 +2169,7 @@ def _complete_profile_cohort(
     )
     by_symbol = {item["symbol"]: item for item in cohort}
     if len(order) != len(set(order)) or set(order) != set(by_symbol):
-        raise ResearchAllocationError(
-            f"{stage} cohort does not match sealed predecessor selection"
-        )
+        raise ResearchAllocationError(f"{stage} cohort does not match sealed predecessor selection")
     return (
         binding_field,
         binding,
@@ -1597,9 +2178,7 @@ def _complete_profile_cohort(
     )
 
 
-def _profile_predecessor_binding(
-    item: Mapping[str, Any], *, stage: str
-) -> tuple[str, str] | None:
+def _profile_predecessor_binding(item: Mapping[str, Any], *, stage: str) -> tuple[str, str] | None:
     fields = (
         ("manager_screen_result_path", "triage_selection_path")
         if stage == "quick_profile"
@@ -1615,7 +2194,11 @@ def _profile_predecessor_binding(
 def _profile_predecessor_order(
     payload: Mapping[str, Any], *, artifact_type: str, stage: str
 ) -> list[str]:
-    if stage == "quick_profile" and artifact_type == "manager_screen_result":
+    if stage == "quick_profile" and artifact_type in {
+        "manager_screen_result",
+        "manager_screen_legacy_transition_result",
+        "manager_screen_quote_impact_result",
+    }:
         decisions = payload.get("decisions")
         if not isinstance(decisions, list):
             raise ResearchAllocationError("manager-screen predecessor decisions are invalid")
@@ -1630,9 +2213,7 @@ def _profile_predecessor_order(
     ranking = payload.get("ranking")
     if not isinstance(ranking, list):
         raise ResearchAllocationError("predecessor selection ranking is invalid")
-    selected_key = (
-        "selected_for_quick_profile" if stage == "quick_profile" else "selected"
-    )
+    selected_key = "selected_for_quick_profile" if stage == "quick_profile" else "selected"
     return [
         str(row["symbol"])
         for row in ranking
@@ -1640,6 +2221,61 @@ def _profile_predecessor_order(
         and row.get(selected_key) is True
         and isinstance(row.get("symbol"), str)
     ]
+
+
+def _investment_manager_for_cohort(
+    cohort: list[Mapping[str, Any]],
+    *,
+    repository_root: Path,
+) -> str | None:
+    """Return the sealed manager identity for a manager-screen cohort."""
+
+    run_id = _manager_screen_run_id_for_cohort(cohort)
+    if run_id is None:
+        return None
+    bindings = {
+        (
+            item.get("manager_screen_result_path"),
+            item.get("manager_screen_result_sha256"),
+        )
+        for item in cohort
+    }
+    if len(bindings) != 1 or not all(
+        isinstance(value, str) and value for binding in bindings for value in binding
+    ):
+        raise ResearchAllocationError(
+            "manager-bound profile cohort has inconsistent result bindings"
+        )
+    relative, expected_sha256 = next(iter(bindings))
+    path = (repository_root / str(relative)).resolve()
+    try:
+        path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            "manager-screen result binding escapes repository root"
+        ) from exc
+    sealed = verify_sealed(path)
+    if (
+        sealed.artifact_type
+        not in {
+            "manager_screen_result",
+            "manager_screen_legacy_transition_result",
+            "manager_screen_quote_impact_result",
+        }
+        or sealed.sha256 != expected_sha256
+    ):
+        raise ResearchAllocationError(
+            "manager-screen result seal does not match the profile cohort"
+        )
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("run_id") not in {None, run_id}:
+        raise ResearchAllocationError("manager-screen result run does not match the profile cohort")
+    manager = payload.get("manager")
+    if not isinstance(manager, Mapping):
+        raise ResearchAllocationError(
+            "manager-screen result is missing investment-manager provenance"
+        )
+    return _text(manager.get("agent"), "manager_screen_result.manager.agent")
 
 
 def _profile_comparison_row(
@@ -1678,9 +2314,7 @@ def _profile_comparison_row(
         or not isinstance(analysis, Mapping)
         or not isinstance(evaluated, Mapping)
     ):
-        raise ResearchAllocationError(
-            f"profile comparison artifact identity is invalid: {symbol}"
-        )
+        raise ResearchAllocationError(f"profile comparison artifact identity is invalid: {symbol}")
     provenance = package.get("provenance")
     sources = package.get("sources")
     return {
@@ -1697,9 +2331,7 @@ def _profile_comparison_row(
         "profile_sha256": sealed_profile.sha256,
         "evaluation_path": evaluation_relative,
         "evaluation_sha256": sealed_evaluation.sha256,
-        "research_agent": (
-            provenance.get("agent") if isinstance(provenance, Mapping) else None
-        ),
+        "research_agent": (provenance.get("agent") if isinstance(provenance, Mapping) else None),
     }
 
 
@@ -1712,33 +2344,22 @@ def _normalize_profile_decision_package(
     comparison_rows: list[Mapping[str, Any]],
     finalized_at: dt.datetime,
 ) -> dict[str, Any]:
-    if (
-        not isinstance(package, Mapping)
-        or set(package) != PROFILE_DECISION_PACKAGE_KEYS
-    ):
+    if not isinstance(package, Mapping) or set(package) != PROFILE_DECISION_PACKAGE_KEYS:
         raise ResearchAllocationError(
             "profile allocation Agent decision fields do not match contract"
         )
     if package.get("schema_version") != 1:
-        raise ResearchAllocationError(
-            "profile allocation Agent decision schema_version must be 1"
-        )
+        raise ResearchAllocationError("profile allocation Agent decision schema_version must be 1")
     if package.get("cycle_id") != cycle or package.get("evaluated_stage") != stage:
-        raise ResearchAllocationError(
-            "profile allocation Agent decisions target the wrong cohort"
-        )
+        raise ResearchAllocationError("profile allocation Agent decisions target the wrong cohort")
     if package.get("comparison_sha256") != comparison_sha256:
         raise ResearchAllocationError(
             "profile allocation Agent decisions are not bound to the comparison"
         )
     provenance = package.get("provenance")
     if not isinstance(provenance, Mapping) or set(provenance) != PROVENANCE_KEYS:
-        raise ResearchAllocationError(
-            "profile allocation Agent decision provenance is invalid"
-        )
-    generated_at = _datetime(
-        provenance.get("generated_at"), "decision.provenance.generated_at"
-    )
+        raise ResearchAllocationError("profile allocation Agent decision provenance is invalid")
+    generated_at = _datetime(provenance.get("generated_at"), "decision.provenance.generated_at")
     if generated_at > finalized_at:
         raise ResearchAllocationError(
             "profile allocation Agent decisions cannot be generated in the future"
@@ -1747,9 +2368,7 @@ def _normalize_profile_decision_package(
     allowed = {config["select_decision"], "defer"}
     decisions = package.get("decisions")
     if not isinstance(decisions, list):
-        raise ResearchAllocationError(
-            "profile allocation Agent decisions must be an array"
-        )
+        raise ResearchAllocationError("profile allocation Agent decisions must be an array")
     by_symbol: dict[str, dict[str, Any]] = {}
     for raw in decisions:
         if not isinstance(raw, Mapping) or set(raw) != PROFILE_DECISION_KEYS:
@@ -1760,21 +2379,15 @@ def _normalize_profile_decision_package(
         if not re.fullmatch(r"CN:[0-9]{6}", symbol):
             raise ResearchAllocationError("profile allocation decision symbol is invalid")
         if symbol in by_symbol:
-            raise ResearchAllocationError(
-                f"duplicate profile allocation Agent decision: {symbol}"
-            )
+            raise ResearchAllocationError(f"duplicate profile allocation Agent decision: {symbol}")
         decision = _text(raw.get("decision"), "decision.decision")
         if decision not in allowed:
-            raise ResearchAllocationError(
-                f"unsupported profile allocation decision: {decision}"
-            )
+            raise ResearchAllocationError(f"unsupported profile allocation decision: {decision}")
         by_symbol[symbol] = {
             "symbol": symbol,
             "decision": decision,
             "reason": _text(raw.get("reason"), "decision.reason"),
-            "decisive_question": _text(
-                raw.get("decisive_question"), "decision.decisive_question"
-            ),
+            "decisive_question": _text(raw.get("decisive_question"), "decision.decisive_question"),
             "counterevidence_considered": _text_array(
                 raw.get("counterevidence_considered"),
                 "decision.counterevidence_considered",
@@ -1837,9 +2450,7 @@ def _profile_selection_result(
     selection_sha256: str,
     idempotent: bool,
 ) -> dict[str, Any]:
-    selected_symbols = [
-        item["symbol"] for item in payload["ranking"] if item["selected"] is True
-    ]
+    selected_symbols = [item["symbol"] for item in payload["ranking"] if item["selected"] is True]
     return {
         "schema_version": 1,
         "cycle_id": payload["cycle_id"],
@@ -1878,8 +2489,7 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
     quick_profile_bindings = {
         binding
         for item in recorded
-        if (binding := _profile_predecessor_binding(item, stage="quick_profile"))
-        is not None
+        if (binding := _profile_predecessor_binding(item, stage="quick_profile")) is not None
     }
     if len(quick_profile_bindings) == 1:
         binding_field, binding_path = next(iter(quick_profile_bindings))
@@ -1895,8 +2505,7 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
             [
                 item
                 for item in queue
-                if item.get("allocation_sha256") == allocation_sha
-                and bool(item.get("selected_by"))
+                if item.get("allocation_sha256") == allocation_sha and bool(item.get("selected_by"))
             ]
             if allocation_sha is not None
             else recorded
@@ -1942,15 +2551,11 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
                         }
                     )
             except ValueError as exc:
-                invalid.append(
-                    {"symbol": "__cycle__", "error": f"{stage}_comparison:{exc}"}
-                )
+                invalid.append({"symbol": "__cycle__", "error": f"{stage}_comparison:{exc}"})
         if selection_path.exists():
             try:
                 sealed = verify_sealed(selection_path)
-                selection_finalized = (
-                    sealed.artifact_type == f"{stage}_cross_company_selection"
-                )
+                selection_finalized = sealed.artifact_type == f"{stage}_cross_company_selection"
                 if not selection_finalized:
                     invalid.append(
                         {
@@ -1959,9 +2564,7 @@ def profile_cycle_status(*, root: str | Path, cycle_id: str) -> dict[str, Any]:
                         }
                     )
             except ValueError as exc:
-                invalid.append(
-                    {"symbol": "__cycle__", "error": f"{stage}_selection:{exc}"}
-                )
+                invalid.append({"symbol": "__cycle__", "error": f"{stage}_selection:{exc}"})
         stage_gates[stage] = {
             "comparison_sealed": comparison_sealed,
             "selection_finalized": selection_finalized,
@@ -2002,10 +2605,7 @@ def _bound_profile_cohort(
         item
         for item in queue
         if item.get(binding_field) == binding
-        and (
-            item.get("task_type") == stage
-            or _history_completed(item, stage)
-        )
+        and (item.get("task_type") == stage or _history_completed(item, stage))
     ]
     selection_path = repository_root / binding
     if not selection_path.exists():
@@ -2028,11 +2628,12 @@ def _bound_profile_cohort(
     return [item for item in cohort if item.get("symbol") in selected_symbols]
 
 
-def _validate_package(
-    package: Mapping[str, Any], *, recorded_at: dt.datetime
-) -> dict[str, Any]:
+def _validate_package(package: Mapping[str, Any], *, recorded_at: dt.datetime) -> dict[str, Any]:
     _reject_probable_gbk_mojibake(package)
-    if not isinstance(package, Mapping) or set(package) != PACKAGE_KEYS:
+    if not isinstance(package, Mapping) or set(package) not in {
+        frozenset(PACKAGE_KEYS),
+        frozenset(MANAGER_BOUND_PACKAGE_KEYS),
+    }:
         raise ResearchAllocationError("profile package fields do not match contract")
     if package.get("schema_version") != 2:
         raise ResearchAllocationError("profile package schema_version must be 2")
@@ -2070,6 +2671,14 @@ def _validate_package(
             raise ResearchAllocationError(f"duplicate profile source_id: {source_id}")
         source_ids.add(source_id)
         normalized_sources.append(source)
+    manager_binding = None
+    decisive_answer = None
+    if "manager_screen_binding" in package:
+        manager_binding = _normalize_manager_screen_binding(package.get("manager_screen_binding"))
+        decisive_answer = _normalize_decisive_answer(
+            package.get("decisive_answer"),
+            source_ids=source_ids,
+        )
     s1_count = sum(1 for source in normalized_sources if source["tier"] == "S1")
     if profile.get("s1_source_count") != s1_count:
         raise ResearchAllocationError("profile s1_source_count does not match sources")
@@ -2118,7 +2727,7 @@ def _validate_package(
     if generated_at < information_cutoff:
         raise ResearchAllocationError("profile generated_at cannot precede information_cutoff")
 
-    return {
+    normalized = {
         "schema_version": 2,
         "cycle_id": cycle_id,
         "company_name": company_name,
@@ -2129,6 +2738,160 @@ def _validate_package(
         "analysis": normalized_analysis,
         "sources": normalized_sources,
     }
+    if manager_binding is not None:
+        normalized["manager_screen_binding"] = manager_binding
+        normalized["decisive_answer"] = decisive_answer
+    return normalized
+
+
+def _normalize_manager_screen_binding(value: Any) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != MANAGER_SCREEN_BINDING_KEYS:
+        raise ResearchAllocationError("manager_screen_binding fields do not match contract")
+    result_sha256 = _text(value.get("result_sha256"), "manager_screen_binding.result_sha256")
+    if not re.fullmatch(r"[0-9a-f]{64}", result_sha256):
+        raise ResearchAllocationError(
+            "manager_screen_binding.result_sha256 must be lowercase SHA-256"
+        )
+    return {
+        "result_path": _text(value.get("result_path"), "manager_screen_binding.result_path"),
+        "result_sha256": result_sha256,
+        "decisive_question": _text(
+            value.get("decisive_question"),
+            "manager_screen_binding.decisive_question",
+        ),
+        "evidence_ids": _text_array(
+            value.get("evidence_ids"),
+            "manager_screen_binding.evidence_ids",
+            allow_empty=False,
+        ),
+    }
+
+
+def _normalize_decisive_answer(value: Any, *, source_ids: set[str]) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != DECISIVE_ANSWER_KEYS:
+        raise ResearchAllocationError("decisive_answer fields do not match contract")
+    referenced = _text_array(
+        value.get("source_ids"), "decisive_answer.source_ids", allow_empty=False
+    )
+    unknown = set(referenced) - source_ids
+    if unknown:
+        raise ResearchAllocationError(
+            f"decisive_answer references unknown sources: {sorted(unknown)}"
+        )
+    unresolved = value.get("unresolved_reason")
+    if unresolved is not None:
+        unresolved = _text(unresolved, "decisive_answer.unresolved_reason")
+    return {
+        "conclusion": _text(value.get("conclusion"), "decisive_answer.conclusion"),
+        "source_ids": referenced,
+        "unresolved_reason": unresolved,
+    }
+
+
+def _validate_manager_bound_submission(
+    package: Mapping[str, Any],
+    *,
+    queue_record: Mapping[str, Any],
+    repository_root: Path,
+    symbol: str,
+) -> None:
+    result_path = queue_record.get("manager_screen_result_path")
+    if not isinstance(result_path, str) or not result_path:
+        return
+    binding = package.get("manager_screen_binding")
+    answer = package.get("decisive_answer")
+    if not isinstance(binding, Mapping) or not isinstance(answer, Mapping):
+        raise ResearchAllocationError(
+            "manager-bound profile requires manager_screen_binding and decisive_answer"
+        )
+    expected = {
+        "result_path": result_path,
+        "result_sha256": queue_record.get("manager_screen_result_sha256"),
+        "decisive_question": queue_record.get("decisive_question"),
+        "evidence_ids": list(queue_record.get("evidence_ids") or []),
+    }
+    if dict(binding) != expected:
+        raise ResearchAllocationError(
+            "profile manager_screen_binding does not match the claimed manager decision"
+        )
+    sealed_result_path = (repository_root / result_path).resolve()
+    try:
+        sealed_result_path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            "manager-screen result binding escapes repository root"
+        ) from exc
+    try:
+        sealed = verify_sealed(sealed_result_path)
+        result = json.loads(sealed_result_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError, SealingError) as exc:
+        raise ResearchAllocationError(
+            "manager-bound profile references an invalid sealed manager result"
+        ) from exc
+    if (
+        sealed.artifact_type
+        not in {
+            "manager_screen_result",
+            "manager_screen_quote_impact_result",
+            "manager_screen_legacy_transition_result",
+        }
+        or sealed.sha256 != expected["result_sha256"]
+        or not isinstance(result, Mapping)
+    ):
+        raise ResearchAllocationError(
+            "manager-bound profile result seal does not match the claimed manager decision"
+        )
+    run_id = queue_record.get("manager_screen_run_id")
+    batch_id = queue_record.get("manager_screen_batch_id")
+    if (
+        isinstance(run_id, str)
+        and result.get("run_id") not in {None, run_id}
+    ) or (
+        isinstance(batch_id, str)
+        and result.get("batch_id") not in {None, batch_id}
+    ):
+        raise ResearchAllocationError(
+            "manager-bound profile result identity does not match the queue"
+        )
+    decisions = result.get("decisions")
+    matching = (
+        [
+            decision
+            for decision in decisions
+            if isinstance(decision, Mapping) and decision.get("symbol") == symbol
+        ]
+        if isinstance(decisions, list)
+        else []
+    )
+    if len(matching) != 1:
+        raise ResearchAllocationError(
+            "manager-bound profile result does not contain exactly one company decision"
+        )
+    sealed_decision = matching[0]
+    sealed_expected = {
+        "decisive_question": sealed_decision.get("decisive_question"),
+        "evidence_ids": list(sealed_decision.get("evidence_ids") or []),
+    }
+    if (
+        expected["decisive_question"] != sealed_expected["decisive_question"]
+        or expected["evidence_ids"] != sealed_expected["evidence_ids"]
+        or (
+            isinstance(queue_record.get("manager_screen_route"), str)
+            and queue_record.get("manager_screen_route")
+            != sealed_decision.get("route")
+        )
+    ):
+        raise ResearchAllocationError(
+            "manager-bound profile queue fields do not match the sealed manager decision"
+        )
+    if queue_record.get("status") != "running":
+        raise ResearchAllocationError(
+            "manager-bound profile must be claimed before it can be recorded"
+        )
+    if queue_record.get("assigned_agent") != package["provenance"]["agent"]:
+        raise ResearchAllocationError(
+            "manager-bound profile provenance must match the claimed agent"
+        )
 
 
 def _reject_probable_gbk_mojibake(value: Any, *, path: str = "package") -> None:
@@ -2172,9 +2935,39 @@ def _claimed_task_payload(record: Mapping[str, Any], *, idempotent: bool) -> dic
         "target_company_dir": record.get("target_company_dir"),
         "stop_conditions": record.get("stop_conditions") or [],
         "result_path": record.get("result_path"),
+        "manager_screen_run_id": record.get("manager_screen_run_id"),
+        "manager_screen_batch_id": record.get("manager_screen_batch_id"),
+        "manager_screen_result_path": record.get("manager_screen_result_path"),
+        "manager_screen_result_sha256": record.get("manager_screen_result_sha256"),
+        "decisive_question": record.get("decisive_question"),
+        "evidence_ids": record.get("evidence_ids") or [],
         "idempotent": idempotent,
         "portfolio_action": None,
     }
+
+
+def _claim_stage(value: str | None, *, default_for_symbol_less: bool) -> str | None:
+    if value is None:
+        return "quick_profile" if default_for_symbol_less else None
+    result = _text(value, "stage")
+    allowed = {
+        "quick_profile",
+        "targeted_followup",
+        "scoped_research",
+        "deep_research",
+    }
+    if result not in allowed:
+        raise ResearchAllocationError(f"unsupported profile claim stage: {result}")
+    return result
+
+
+def _optional_identifier(value: str | None, label: str) -> str | None:
+    if value is None:
+        return None
+    result = _text(value, label)
+    if not CYCLE_RE.fullmatch(result):
+        raise ResearchAllocationError(f"{label} is invalid")
+    return result
 
 
 def _validate_source(raw: Any, *, recorded_at: dt.datetime) -> dict[str, Any]:
@@ -2234,9 +3027,7 @@ def _latest_history_path(record: Mapping[str, Any], key: str) -> str | None:
     return value if isinstance(value, str) else None
 
 
-def _validate_local_sources(
-    sources: list[dict[str, Any]], *, repository_root: Path
-) -> None:
+def _validate_local_sources(sources: list[dict[str, Any]], *, repository_root: Path) -> None:
     root = repository_root.resolve()
     for source in sources:
         local_path = source.get("local_path")
@@ -2262,14 +3053,185 @@ def _validate_local_sources(
 
 def _stage_capacity(policy: Mapping[str, Any], stage: str) -> int | None:
     if stage == "targeted_followup":
-        return None
-    capacities = policy.get("stage_capacity_per_cycle")
+        per_run = policy.get("stage_capacity_per_run")
+        value = (
+            per_run.get(stage)
+            if isinstance(per_run, Mapping) and stage in per_run
+            else policy.get("quick_profile_capacity_per_cycle")
+        )
+        if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
+            raise ResearchAllocationError("stage capacity is invalid: targeted_followup")
+        return value
+    capacities = policy.get("stage_capacity_per_run")
+    if capacities is None:
+        capacities = policy.get("stage_capacity_per_cycle")
     if not isinstance(capacities, Mapping):
         raise ResearchAllocationError("stage capacity policy is invalid")
     value = capacities.get(stage)
     if isinstance(value, bool) or not isinstance(value, int) or value <= 0:
         raise ResearchAllocationError(f"stage capacity is invalid: {stage}")
     return value
+
+
+def _manager_screen_run_id_for_cohort(
+    cohort: list[Mapping[str, Any]],
+) -> str | None:
+    run_ids = {item.get("manager_screen_run_id") for item in cohort}
+    if run_ids == {None}:
+        return None
+    if len(run_ids) != 1 or not all(isinstance(run_id, str) for run_id in run_ids):
+        raise ResearchAllocationError(
+            "manager-bound profile cohort spans multiple manager-screen runs"
+        )
+    return str(next(iter(run_ids)))
+
+
+def _research_policy_binding(
+    *,
+    repository_root: Path,
+    policy: Mapping[str, Any],
+    policy_path: str | Path,
+) -> dict[str, Any]:
+    path = Path(policy_path)
+    if not path.is_absolute():
+        path = repository_root / path
+    path = path.resolve()
+    try:
+        relative = path.relative_to(repository_root.resolve()).as_posix()
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            "research-allocation policy must stay inside the repository"
+        ) from exc
+    if not path.is_file():
+        raise ResearchAllocationError(
+            f"research-allocation policy is missing: {path}"
+        )
+    loaded = load_policy(path)
+    if loaded.kind != PolicyKind.RESEARCH_ALLOCATION:
+        raise ResearchAllocationError(
+            "research-allocation policy kind must be research_allocation"
+        )
+    if dict(loaded.payload) != dict(policy):
+        raise ResearchAllocationError(
+            "research-allocation policy payload does not match the bound policy file"
+        )
+    raw = path.read_bytes()
+    return {
+        "policy_id": loaded.policy_id,
+        "version": loaded.version,
+        "path": relative,
+        "file_sha256": hashlib.sha256(raw).hexdigest(),
+        "payload_sha256": hashlib.sha256(
+            canonical_json_bytes(dict(loaded.payload))
+        ).hexdigest(),
+    }
+
+
+def _normalize_research_policy_binding(value: Any) -> dict[str, Any]:
+    if not isinstance(value, Mapping) or set(value) != RESEARCH_POLICY_BINDING_KEYS:
+        raise ResearchAllocationError(
+            "research policy binding fields do not match contract"
+        )
+    normalized = {
+        "policy_id": _text(value.get("policy_id"), "research_policy.policy_id"),
+        "version": _text(value.get("version"), "research_policy.version"),
+        "path": _text(value.get("path"), "research_policy.path"),
+        "file_sha256": _text(
+            value.get("file_sha256"), "research_policy.file_sha256"
+        ),
+        "payload_sha256": _text(
+            value.get("payload_sha256"), "research_policy.payload_sha256"
+        ),
+    }
+    for field in ("file_sha256", "payload_sha256"):
+        if not re.fullmatch(r"[0-9a-f]{64}", normalized[field]):
+            raise ResearchAllocationError(
+                f"research_policy.{field} must be lowercase SHA-256"
+            )
+    return normalized
+
+
+def _bind_research_policy_for_run(
+    *,
+    base: Path,
+    run_id: str,
+    policy_binding: Mapping[str, Any],
+    bound_at: dt.datetime,
+) -> dict[str, Any]:
+    canonical_path = "policies/research-allocation.json"
+    normalized = _normalize_research_policy_binding(policy_binding)
+    if normalized["path"] != canonical_path:
+        raise ResearchAllocationError(
+            "manager-screen research budget must use the canonical "
+            f"{canonical_path} policy"
+        )
+    contract_path = base / "manager-screen" / run_id / "research-policy.json"
+    contract = {
+        "schema_version": 1,
+        "run_id": run_id,
+        "bound_at": bound_at.isoformat(),
+        "policy": normalized,
+        "portfolio_action": None,
+    }
+    if contract_path.exists() or contract_path.with_name(
+        f"{contract_path.name}.seal.json"
+    ).exists():
+        try:
+            sealed = verify_sealed(contract_path)
+            existing = json.loads(contract_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError, SealingError) as exc:
+            raise ResearchAllocationError(
+                f"manager-screen research policy contract is invalid: {run_id}"
+            ) from exc
+        if (
+            sealed.artifact_type != "manager_screen_research_policy_contract"
+            or not isinstance(existing, Mapping)
+            or existing.get("schema_version") != 1
+            or existing.get("run_id") != run_id
+            or existing.get("portfolio_action") is not None
+        ):
+            raise ResearchAllocationError(
+                f"manager-screen research policy contract is invalid: {run_id}"
+            )
+        existing_policy = _normalize_research_policy_binding(existing.get("policy"))
+        if existing_policy != normalized:
+            raise ResearchAllocationError(
+                "research-allocation policy is already bound for manager-screen "
+                f"run {run_id}"
+            )
+        return dict(existing)
+    seal_json(
+        contract_path,
+        contract,
+        artifact_type="manager_screen_research_policy_contract",
+        sealed_at=bound_at,
+    )
+    return contract
+
+
+def _committed_stage_count_for_run(
+    queue: list[Mapping[str, Any]],
+    *,
+    manager_screen_run_id: str,
+    stage: str,
+    exclude_symbols: set[str] | None = None,
+) -> int:
+    """Count every stage budget ever purchased within one manager-screen run."""
+
+    excluded = exclude_symbols or set()
+    return sum(
+        1
+        for item in queue
+        if item.get("symbol") not in excluded
+        and item.get("manager_screen_run_id") == manager_screen_run_id
+        and (
+            (
+                item.get("task_type") == stage
+                and item.get("status") in {"pending", "running", "completed"}
+            )
+            or _history_completed(item, stage)
+        )
+    )
 
 
 def _effort_budget(policy: Mapping[str, Any], stage: str) -> float:
@@ -2286,12 +3248,11 @@ def _screening_reason(stage: str, capacity_wait: bool) -> str:
     if capacity_wait:
         return f"画像支持进入{stage}，但本周期容量已满，进入可恢复等待队列。"
     reasons = {
-        "profile_candidate": (
-            "正式画像发现可信投资路径，等待完整同层批次横向比较范围研究预算。"
+        "profile_candidate": ("正式画像发现可信投资路径，等待完整同层批次横向比较范围研究预算。"),
+        "targeted_followup_candidate": (
+            "研究员建议补齐少数决定性证据，等待投资经理显式批准追加预算。"
         ),
-        "deep_candidate": (
-            "范围研究通过证据与粗估值门槛，等待完整同层批次横向比较深研预算。"
-        ),
+        "deep_candidate": ("范围研究通过证据与粗估值门槛，等待完整同层批次横向比较深研预算。"),
         "targeted_followup": "画像只支持补齐少数决定性证据，暂不扩张研究范围。",
         "scoped_research": "画像发现可信投资路径，追加有限范围研究预算。",
         "deep_research": "范围研究通过证据与粗估值门槛，追加完整深研预算。",
@@ -2306,12 +3267,9 @@ def _next_action(stage: str, capacity_wait: bool) -> str:
     if capacity_wait:
         return "下一研究周期释放容量后，按画像价值排序重新竞争预算。"
     actions = {
-        "profile_candidate": (
-            "等待完整正式画像批次封存后统一比较，不得按完成顺序晋级。"
-        ),
-        "deep_candidate": (
-            "等待完整范围研究批次封存后统一比较，不得按完成顺序晋级。"
-        ),
+        "profile_candidate": ("等待完整正式画像批次封存后统一比较，不得按完成顺序晋级。"),
+        "targeted_followup_candidate": ("等待投资经理比较同层结果并显式批准，不自动创建补证任务。"),
+        "deep_candidate": ("等待完整范围研究批次封存后统一比较，不得按完成顺序晋级。"),
         "targeted_followup": "只补画像列出的一个或少数决定性证据缺口。",
         "scoped_research": "在4小时预算内解决一至三个决定性未知数。",
         "deep_research": "按完整公司研究协议重建业务、会计、正常化盈利和估值。",
@@ -2340,9 +3298,7 @@ def _history_completed(record: Mapping[str, Any], stage: str) -> bool:
     )
 
 
-def _history_completed_outcome(
-    record: Mapping[str, Any], stage: str
-) -> str | None:
+def _history_completed_outcome(record: Mapping[str, Any], stage: str) -> str | None:
     for item in reversed(record.get("stage_history") or []):
         if (
             isinstance(item, Mapping)
@@ -2354,9 +3310,7 @@ def _history_completed_outcome(
     return None
 
 
-def _profile_priority_score(
-    profile: Mapping[str, Any], *, priority: int
-) -> int:
+def _profile_priority_score(profile: Mapping[str, Any], *, priority: int) -> int:
     """Use coarse buckets to rank research value without fake valuation precision."""
 
     base_return = float(profile["valuation"]["base_expected_annual_return"])
@@ -2373,16 +3327,9 @@ def _profile_priority_score(
         return_bucket = 0
     source_bucket = 2 if int(profile["s1_source_count"]) >= 3 else 1
     unknown_count = len(profile["decisive_unknowns"])
-    resolvability_bucket = (
-        2 if unknown_count == 1 else 1 if unknown_count <= 3 else 0
-    )
+    resolvability_bucket = 2 if unknown_count == 1 else 1 if unknown_count <= 3 else 0
     priority_bucket = max(0, 6 - priority)
-    return (
-        return_bucket * 100
-        + source_bucket * 10
-        + resolvability_bucket * 3
-        + priority_bucket
-    )
+    return return_bucket * 100 + source_bucket * 10 + resolvability_bucket * 3 + priority_bucket
 
 
 def _validate_industry_evidence(
@@ -2399,9 +3346,7 @@ def _validate_industry_evidence(
     if cluster_requirements is None:
         return
     if not isinstance(cluster_requirements, Mapping):
-        raise ResearchAllocationError(
-            f"industry evidence policy is invalid for {cluster}"
-        )
+        raise ResearchAllocationError(f"industry evidence policy is invalid for {cluster}")
     stage = str(package["profile"]["research_stage"])
     required = cluster_requirements.get(stage, [])
     if not isinstance(required, list) or not all(
@@ -2436,6 +3381,8 @@ def _risk_cluster_cap(policy: Mapping[str, Any], stage: str) -> int:
 def _select_with_risk_cluster_cap(
     ranked: list[Mapping[str, Any]], *, capacity: int, cap: int
 ) -> tuple[list[Mapping[str, Any]], set[str]]:
+    if capacity <= 0:
+        return [], set()
     selected: list[Mapping[str, Any]] = []
     counts: dict[str, int] = {}
     capped: set[str] = set()

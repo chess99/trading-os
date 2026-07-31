@@ -20,11 +20,15 @@
 
 容量是上限，不是配额。没有合格公司时留空。
 
+所有容量以同一个 `manager_screen_run_id` 为账本边界，而不是单个 batch、cycle 或 Agent。新开 cycle/batch 不能重置容量；批准前必须把同 run 已封存承诺与本次申请相加，超限则整项/整批拒绝，不允许机器靠改写路由、评分或降低门槛来“凑容量”。
+
 ## L1：投资经理直接配置
 
 `pass`、`watch`、`send_to_analyst` 必须基于可读理由、决定性问题、证据和相对研究价值。不得生成精确总分。
 
 初筛同一批由同一个主 Agent完成，避免不同单公司 Agent 的尺度漂移。只有候选才购买单公司上下文和工具调用。
+
+`send_to_analyst` 是第一笔 analyst 预算，但仍受 manager-screen policy 的 run 级上限。记录成功后，queue 保留原 result 路径/SHA-256、决定性问题和证据 ID；quick profile 必须绑定它们，并用自身来源形成 `decisive_answer`，否则不得进入同层比较。
 
 ## L2/L3：研究员结果回到投资经理
 
@@ -36,7 +40,7 @@
 - 最大反证与永久损失风险；
 - 再投入时间相对其他公司是否更值。
 
-可使用 `profile-compare/profile-select` 封存同层决策，但投资经理无需与最初 manager-screen 隔离；只需与提交单公司研究的研究员保持角色独立。
+可使用 `profile-compare/profile-select` 封存同层决策，但投资经理无需与最初 manager-screen 隔离；只需与提交单公司研究的研究员保持角色独立。targeted/scoped/deep 每次升级都必须是主 Agent 对同 run 可比 cohort 的显式决定，并占用对应 run 级容量。
 
 ## 停止与重启
 
@@ -51,7 +55,7 @@
 
 ## 承保预算
 
-只有完成 deep research、结构化主张和来源封存的公司才能承保。以下情况触发 challenger：
+只有完成 deep research、结构化主张和来源封存的公司才能申请承保。主 Agent 必须先封存独立的 underwriting approval，绑定 deep selection、deep completion、claims、policy SHA、单家公司预算和同 run ledger；approver 还必须与 deep researcher 独立。以下情况构成 challenger 候选：
 
 - 重大事实或估值分歧；
 - 高治理、会计或永久损失风险；
@@ -60,9 +64,13 @@
 
 没有可靠共识时不通过。
 
+underwriting approval 只购买 underwriting，不授予 challenger 或 portfolio。challenger 与组合综合都必须由主 Agent 重新显式批准，并分别执行 manager-run 容量检查；相应批准 contract 尚未物化时不得提前 dispatch 或 synthesize。
+
 ## 旧机制
 
 `rapid-triage → triage-compare/finalize`、`quality-triage-*`、`allocate-research`、`apply-allocation` 和 `profile-finalize` 仅验证历史资产。新 Goal 使用 manager-screen，不得启动递归 correction。
+
+旧状态若要进入新协议，只能走一次性 sealed legacy transition：`adoption` 采用可验证正式研究，`rescreen` 释放回 manager-screen，`defer_active` 保持活动/更深阶段。旧 priority、price_watch 或 disposition 不得自动购买任何新预算。
 
 ## 共享状态
 

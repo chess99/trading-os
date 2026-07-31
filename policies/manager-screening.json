@@ -1,8 +1,8 @@
 {
   "schema_version": 2,
   "policy_id": "manager-screening.default",
-  "version": "1.0.0",
-  "effective_at": "2026-07-31T00:00:00+08:00",
+  "version": "1.2.0",
+  "effective_at": "2026-07-31T16:55:00+08:00",
   "kind": "manager_screening",
   "payload": {
     "default_batch_size": 150,
@@ -16,6 +16,13 @@
       "send_to_analyst"
     ],
     "quick_profile_effort_budget_hours": 1.5,
+    "send_to_analyst_capacity_per_run": 200,
+    "run_control_required": true,
+    "decision_contract_version": 2,
+    "mandatory_risk_acknowledgement": true,
+    "canonical_fact_line_required": true,
+    "high_liability_to_assets_pct": 90.0,
+    "quote_amendment_review_absolute_price_change_pct": 20.0,
     "quick_profile_stop_conditions": [
       "业务、股东现金路径或关键会计桥接仍不可理解",
       "生存、治理、资本结构或证据可靠性构成明确阻断",

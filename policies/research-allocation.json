@@ -1,14 +1,20 @@
 {
   "schema_version": 2,
   "policy_id": "research-allocation.default",
-  "version": "4.0.0",
-  "effective_at": "2026-07-29T23:30:00+08:00",
+  "version": "5.0.0",
+  "effective_at": "2026-07-31T14:15:00+08:00",
   "kind": "research_allocation",
   "payload": {
     "triage_administrative_batch_size": 25,
     "candidate_pool_capacity_per_cycle": 200,
     "quick_profile_capacity_per_cycle": 40,
     "stage_capacity_per_cycle": {
+      "scoped_research": 15,
+      "deep_research": 6,
+      "underwriting": 3
+    },
+    "stage_capacity_per_run": {
+      "targeted_followup": 40,
       "scoped_research": 15,
       "deep_research": 6,
       "underwriting": 3
@@ -78,6 +84,6 @@
     "ranking_principle": "machine rankings and factor maps may prepare context but must never decide whether an in-scope company receives rapid triage; intake ordering is administrative only and no ranking may directly promote a company to a formal profile, deep research, underwriting or buy_now",
     "research_value_principle": "allocate the next research hour where it is most likely to change a portfolio decision; uncertainty that is expensive or unresolvable lowers priority",
     "stop_principle": "a stop is an auditable research-capital decision, not a permanent investment verdict; every non-structural stop requires a reactivation trigger",
-    "comparison_principle": "formal-profile capacity is allocated only after the complete rapid-triage cohort is sealed; an independent cross-company agent must review every cohort member and submit an explicit decision for each one, including companies whose first-pass disposition did not recommend promotion, and completion order or deterministic score must not affect promotion"
+    "comparison_principle": "manager-screen sends only the first analyst budget; every targeted, scoped, deep, and underwriting budget is explicitly approved by the investment manager against the complete comparable cohort, is bounded across the whole manager-screen run, and cannot be expanded by opening another cycle or batch"
   }
 }

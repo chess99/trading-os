@@ -4,6 +4,7 @@ import argparse
 import datetime as dt
 import hashlib
 import json
+import math
 import sys
 from pathlib import Path
 from typing import TextIO
@@ -14,6 +15,11 @@ from .research_assets.alerts import (
     evaluate_price_alerts,
     load_json,
     write_price_alerts,
+)
+from .research_assets.asset_gc import (
+    AssetGcError,
+    build_asset_gc_plan,
+    gc_plan_summary,
 )
 from .research_assets.claims import ClaimPacketError
 from .research_assets.company import AssetValidationError
@@ -33,14 +39,43 @@ from .research_assets.lane_arbitration import (
     freeze_lane_arbitration,
     verify_lane_arbitration,
 )
+from .research_assets.legacy_transition import (
+    LegacyTransitionError,
+    freeze_legacy_transition,
+    legacy_transition_status,
+    record_legacy_transition,
+)
+from .research_assets.manager_screen_control import (
+    ManagerScreenControlError,
+    manager_screen_control_status,
+    record_manager_screen_control,
+)
+from .research_assets.manager_screen_governance import (
+    ManagerScreenGovernanceError,
+    supersede_manager_screen_batch,
+)
+from .research_assets.manager_screen_quote_impact import (
+    ManagerScreenQuoteImpactError,
+    manager_screen_quote_impact_status,
+    prepare_manager_screen_quote_impact,
+    record_manager_screen_quote_impact,
+)
 from .research_assets.manager_screen_snapshot import (
+    DEFAULT_QUOTE_ENDPOINT,
+    DEFAULT_TENCENT_QUOTE_ENDPOINT,
     ManagerScreenSnapshotError,
+    fetch_eastmoney_previous_close_quotes,
+    fetch_tencent_previous_close_quotes,
+    prepare_manager_screen_quote_amendment,
     prepare_manager_screen_snapshot,
 )
 from .research_assets.manager_screening import (
     ManagerScreeningError,
     freeze_manager_screen_batch,
+    manager_screen_calibration_status,
     manager_screen_status,
+    prepare_manager_screen_calibration,
+    record_manager_screen_calibration,
     record_manager_screen_decisions,
 )
 from .research_assets.migration import (
@@ -53,6 +88,7 @@ from .research_assets.migration import (
 from .research_assets.models import PolicyValidationError, load_policy
 from .research_assets.portfolio import PortfolioValidationError
 from .research_assets.profile_workflow import (
+    approve_targeted_followup,
     build_profile_comparison_packet,
     claim_profile_task,
     finalize_profile_stage,
@@ -91,6 +127,7 @@ from .research_assets.review_store import ReviewStoreError
 from .research_assets.review_workflow import (
     ReviewWorkflowError,
     create_review,
+    create_review_from_underwriting_approval,
     finalize_review_companies,
     load_candidates,
     prepare_review,
@@ -146,6 +183,24 @@ def build_parser() -> argparse.ArgumentParser:
     )
     assets_validate.add_argument("--research-root", default="research")
     assets_validate.set_defaults(func=cmd_assets_validate)
+    assets_gc = assets_sub.add_parser(
+        "gc",
+        help="Build a conservative reachability plan for research assets",
+    )
+    assets_gc.add_argument(
+        "--plan",
+        action="store_true",
+        help="Plan only; no files are deleted or moved",
+    )
+    assets_gc.add_argument("--repository-root", default=".")
+    assets_gc.add_argument("--output")
+    assets_gc.add_argument(
+        "--no-content-hashes",
+        action="store_true",
+        help="Skip SHA-only reachability (faster but less conservative)",
+    )
+    _add_timestamp(assets_gc)
+    assets_gc.set_defaults(func=cmd_assets_gc)
     assets_migrate = assets_sub.add_parser(
         "migrate", help="Plan or apply the one-shot v2 asset migration"
     )
@@ -171,9 +226,31 @@ def build_parser() -> argparse.ArgumentParser:
     review_create.add_argument("--description", required=True)
     review_create.add_argument("--candidates", required=True)
     review_create.add_argument("--parent-run-id")
+    review_create.add_argument("--coverage-root", default="coverage/cn-a")
     _add_review_roots(review_create, policies=True)
     _add_timestamp(review_create)
     review_create.set_defaults(func=cmd_review_create)
+
+    review_create_approved = review_sub.add_parser(
+        "create-from-underwriting-approval",
+        help="Create a manager-bound review from a sealed underwriting approval",
+    )
+    review_create_approved.add_argument("run_id")
+    review_create_approved.add_argument("--scope-type", required=True)
+    review_create_approved.add_argument("--market", required=True)
+    review_create_approved.add_argument("--description", required=True)
+    review_create_approved.add_argument("--approval-path", required=True)
+    review_create_approved.add_argument("--approval-sha256", required=True)
+    review_create_approved.add_argument("--parent-run-id")
+    review_create_approved.add_argument(
+        "--coverage-root",
+        default="coverage/cn-a",
+    )
+    _add_review_roots(review_create_approved, policies=True)
+    _add_timestamp(review_create_approved)
+    review_create_approved.set_defaults(
+        func=cmd_review_create_from_underwriting_approval
+    )
 
     review_prepare = review_sub.add_parser(
         "prepare", help="Build and seal blind claim packets"
@@ -354,12 +431,68 @@ def build_parser() -> argparse.ArgumentParser:
     )
     manager_screen_snapshot.add_argument("--output")
     manager_screen_snapshot.add_argument(
+        "--quotes",
+        help="Full-universe quote JSON array to inject into a newly created snapshot",
+    )
+    manager_screen_snapshot.add_argument(
+        "--quote-max-age-hours",
+        type=float,
+        default=72.0,
+        help="Maximum quote age at the information cutoff (default: 72 hours)",
+    )
+    manager_screen_snapshot.add_argument(
         "--endpoint",
         default="https://datacenter.eastmoney.com/securities/api/data/v1/get",
     )
     manager_screen_snapshot.add_argument("--page-size", type=int, default=500)
     _add_timestamp(manager_screen_snapshot)
     manager_screen_snapshot.set_defaults(func=cmd_coverage_manager_screen_snapshot)
+
+    manager_screen_quote_amend = coverage_sub.add_parser(
+        "manager-screen-quote-amend",
+        help="Seal a full-universe quote overlay without changing the frozen fact snapshot",
+    )
+    _add_coverage_root(manager_screen_quote_amend)
+    manager_screen_quote_amend.add_argument("run_id")
+    manager_screen_quote_amend.add_argument("amendment_id")
+    quote_amend_source = manager_screen_quote_amend.add_mutually_exclusive_group(
+        required=True
+    )
+    quote_amend_source.add_argument("--quotes")
+    quote_amend_source.add_argument(
+        "--eastmoney-previous-close-date",
+        help="Fetch Eastmoney f18 and bind it to this explicit YYYY-MM-DD close",
+    )
+    quote_amend_source.add_argument(
+        "--tencent-previous-close-date",
+        help=(
+            "Fetch Tencent field 4 and bind it to this explicit YYYY-MM-DD close"
+        ),
+    )
+    manager_screen_quote_amend.add_argument("--output")
+    manager_screen_quote_amend.add_argument(
+        "--quote-endpoint",
+        default=DEFAULT_QUOTE_ENDPOINT,
+    )
+    manager_screen_quote_amend.add_argument(
+        "--tencent-quote-endpoint",
+        default=DEFAULT_TENCENT_QUOTE_ENDPOINT,
+    )
+    manager_screen_quote_amend.add_argument(
+        "--quote-chunk-size",
+        type=int,
+        default=80,
+    )
+    manager_screen_quote_amend.add_argument(
+        "--quote-max-age-hours",
+        type=float,
+        default=72.0,
+        help="Maximum quote age at amendment effective time (default: 72 hours)",
+    )
+    _add_timestamp(manager_screen_quote_amend)
+    manager_screen_quote_amend.set_defaults(
+        func=cmd_coverage_manager_screen_quote_amend
+    )
 
     manager_screen_freeze = coverage_sub.add_parser(
         "manager-screen-freeze",
@@ -395,6 +528,178 @@ def build_parser() -> argparse.ArgumentParser:
     manager_screen_status_cmd.add_argument("run_id")
     manager_screen_status_cmd.add_argument("--batch-id")
     manager_screen_status_cmd.set_defaults(func=cmd_coverage_manager_screen_status)
+
+    manager_screen_control_record = coverage_sub.add_parser(
+        "manager-screen-control-record",
+        help="Append a sealed run-control event for manager-screen production",
+    )
+    _add_coverage_root(manager_screen_control_record)
+    manager_screen_control_record.add_argument("run_id")
+    manager_screen_control_record.add_argument("event_id")
+    manager_screen_control_record.add_argument(
+        "--state",
+        required=True,
+        choices=("paused", "controlled", "active"),
+    )
+    manager_screen_control_record.add_argument("--manager-agent", required=True)
+    manager_screen_control_record.add_argument("--manager-model", required=True)
+    manager_screen_control_record.add_argument(
+        "--manager-tool",
+        action="append",
+        required=True,
+    )
+    manager_screen_control_record.add_argument("--reason", required=True)
+    manager_screen_control_record.add_argument("--company-limit", type=int)
+    _add_timestamp(manager_screen_control_record)
+    manager_screen_control_record.set_defaults(
+        func=cmd_coverage_manager_screen_control_record
+    )
+
+    manager_screen_control_status_cmd = coverage_sub.add_parser(
+        "manager-screen-control-status",
+        help="Verify and report the effective manager-screen run control",
+    )
+    _add_coverage_root(manager_screen_control_status_cmd)
+    manager_screen_control_status_cmd.add_argument("run_id")
+    manager_screen_control_status_cmd.set_defaults(
+        func=cmd_coverage_manager_screen_control_status
+    )
+
+    manager_screen_quote_impact_prepare = coverage_sub.add_parser(
+        "manager-screen-quote-impact-prepare",
+        help="Seal administrative review candidates from a quote amendment",
+    )
+    _add_coverage_root(manager_screen_quote_impact_prepare)
+    manager_screen_quote_impact_prepare.add_argument("run_id")
+    manager_screen_quote_impact_prepare.add_argument("batch_id")
+    manager_screen_quote_impact_prepare.add_argument("review_id")
+    manager_screen_quote_impact_prepare.add_argument(
+        "--quote-amendment",
+        required=True,
+    )
+    manager_screen_quote_impact_prepare.add_argument(
+        "--policy",
+        default="policies/manager-screening.json",
+    )
+    _add_timestamp(manager_screen_quote_impact_prepare)
+    manager_screen_quote_impact_prepare.set_defaults(
+        func=cmd_coverage_manager_screen_quote_impact_prepare
+    )
+
+    manager_screen_quote_impact_record = coverage_sub.add_parser(
+        "manager-screen-quote-impact-record",
+        help="Seal original-manager keep or replacement decisions",
+    )
+    _add_coverage_root(manager_screen_quote_impact_record)
+    manager_screen_quote_impact_record.add_argument("run_id")
+    manager_screen_quote_impact_record.add_argument("batch_id")
+    manager_screen_quote_impact_record.add_argument("review_id")
+    manager_screen_quote_impact_record.add_argument("--input", required=True)
+    _add_timestamp(manager_screen_quote_impact_record)
+    manager_screen_quote_impact_record.set_defaults(
+        func=cmd_coverage_manager_screen_quote_impact_record
+    )
+
+    manager_screen_quote_impact_status_cmd = coverage_sub.add_parser(
+        "manager-screen-quote-impact-status",
+        help="Verify a sealed quote-impact review and materialization",
+    )
+    _add_coverage_root(manager_screen_quote_impact_status_cmd)
+    manager_screen_quote_impact_status_cmd.add_argument("run_id")
+    manager_screen_quote_impact_status_cmd.add_argument("batch_id")
+    manager_screen_quote_impact_status_cmd.add_argument("review_id")
+    manager_screen_quote_impact_status_cmd.set_defaults(
+        func=cmd_coverage_manager_screen_quote_impact_status
+    )
+
+    manager_screen_supersede = coverage_sub.add_parser(
+        "manager-screen-supersede",
+        help="Seal the supersession of an unrecorded batch and release its members",
+    )
+    _add_coverage_root(manager_screen_supersede)
+    manager_screen_supersede.add_argument("run_id")
+    manager_screen_supersede.add_argument("batch_id")
+    manager_screen_supersede.add_argument("--input", required=True)
+    _add_timestamp(manager_screen_supersede)
+    manager_screen_supersede.set_defaults(
+        func=cmd_coverage_manager_screen_supersede
+    )
+
+    manager_screen_calibration_prepare = coverage_sub.add_parser(
+        "manager-screen-calibration-prepare",
+        help="Seal one independent factual-calibration packet",
+    )
+    _add_coverage_root(manager_screen_calibration_prepare)
+    manager_screen_calibration_prepare.add_argument("run_id")
+    manager_screen_calibration_prepare.add_argument("batch_id")
+    manager_screen_calibration_prepare.add_argument("calibration_id")
+    manager_screen_calibration_prepare.add_argument(
+        "--policy",
+        default="policies/manager-screening.json",
+    )
+    _add_timestamp(manager_screen_calibration_prepare)
+    manager_screen_calibration_prepare.set_defaults(
+        func=cmd_coverage_manager_screen_calibration_prepare
+    )
+
+    manager_screen_calibration_record = coverage_sub.add_parser(
+        "manager-screen-calibration-record",
+        help="Seal one complete independent factual-calibration result",
+    )
+    _add_coverage_root(manager_screen_calibration_record)
+    manager_screen_calibration_record.add_argument("run_id")
+    manager_screen_calibration_record.add_argument("batch_id")
+    manager_screen_calibration_record.add_argument("calibration_id")
+    manager_screen_calibration_record.add_argument("--input", required=True)
+    _add_timestamp(manager_screen_calibration_record)
+    manager_screen_calibration_record.set_defaults(
+        func=cmd_coverage_manager_screen_calibration_record
+    )
+
+    manager_screen_calibration_status_cmd = coverage_sub.add_parser(
+        "manager-screen-calibration-status",
+        help="Verify factual-calibration coverage and results",
+    )
+    _add_coverage_root(manager_screen_calibration_status_cmd)
+    manager_screen_calibration_status_cmd.add_argument("run_id")
+    manager_screen_calibration_status_cmd.add_argument("--batch-id")
+    manager_screen_calibration_status_cmd.set_defaults(
+        func=cmd_coverage_manager_screen_calibration_status
+    )
+
+    manager_screen_transition_freeze = coverage_sub.add_parser(
+        "manager-screen-transition-freeze",
+        help="Freeze the one-time legacy adoption/rescreen transition",
+    )
+    _add_coverage_root(manager_screen_transition_freeze)
+    manager_screen_transition_freeze.add_argument("run_id")
+    manager_screen_transition_freeze.add_argument("--input", required=True)
+    _add_timestamp(manager_screen_transition_freeze)
+    manager_screen_transition_freeze.set_defaults(
+        func=cmd_coverage_manager_screen_transition_freeze
+    )
+
+    manager_screen_transition_record = coverage_sub.add_parser(
+        "manager-screen-transition-record",
+        help="Seal manager decisions for the one-time legacy transition",
+    )
+    _add_coverage_root(manager_screen_transition_record)
+    manager_screen_transition_record.add_argument("run_id")
+    manager_screen_transition_record.add_argument("--input", required=True)
+    _add_timestamp(manager_screen_transition_record)
+    manager_screen_transition_record.set_defaults(
+        func=cmd_coverage_manager_screen_transition_record
+    )
+
+    manager_screen_transition_status_cmd = coverage_sub.add_parser(
+        "manager-screen-transition-status",
+        help="Verify the one-time legacy transition and materialization",
+    )
+    _add_coverage_root(manager_screen_transition_status_cmd)
+    manager_screen_transition_status_cmd.add_argument("run_id")
+    manager_screen_transition_status_cmd.set_defaults(
+        func=cmd_coverage_manager_screen_transition_status
+    )
 
     trigger_observe = coverage_sub.add_parser(
         "trigger-observe",
@@ -445,7 +750,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     quality_scope_prepare = coverage_sub.add_parser(
         "quality-scope-prepare",
-        help="Seal the policy snapshot and 100% hard-exclusion identity audit plan",
+        help="Seal the policy snapshot and 100%% hard-exclusion identity audit plan",
     )
     _add_coverage_root(quality_scope_prepare)
     quality_scope_prepare.add_argument("run_id")
@@ -605,7 +910,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     triage_freeze.add_argument(
         "--scope-identity-result",
-        help="Canonical passed 100% hard-exclusion identity audit result",
+        help="Canonical passed 100%% hard-exclusion identity audit result",
     )
     _add_timestamp(triage_freeze)
     triage_freeze.set_defaults(func=cmd_coverage_triage_freeze)
@@ -718,6 +1023,23 @@ def build_parser() -> argparse.ArgumentParser:
     profile_claim.add_argument("--agent", required=True)
     profile_claim.add_argument("--symbol")
     profile_claim.add_argument("--lens")
+    profile_claim.add_argument(
+        "--run-id",
+        help=(
+            "Manager-screen run to claim from. Symbol-less claims otherwise use "
+            "the lexicographically latest eligible manager-bound run."
+        ),
+    )
+    profile_claim.add_argument(
+        "--stage",
+        choices=[
+            "quick_profile",
+            "targeted_followup",
+            "scoped_research",
+            "deep_research",
+        ],
+        help="Task stage to claim; defaults to quick_profile when symbol is omitted.",
+    )
     _add_timestamp(profile_claim)
     profile_claim.set_defaults(func=cmd_coverage_profile_claim)
 
@@ -731,6 +1053,23 @@ def build_parser() -> argparse.ArgumentParser:
     profile_release.add_argument("--failure-reason", required=True)
     _add_timestamp(profile_release)
     profile_release.set_defaults(func=cmd_coverage_profile_release)
+
+    profile_followup_approve = coverage_sub.add_parser(
+        "profile-followup-approve",
+        help="Explicitly approve one analyst-recommended targeted followup",
+    )
+    _add_coverage_root(profile_followup_approve)
+    profile_followup_approve.add_argument("--symbol", required=True)
+    profile_followup_approve.add_argument("--manager", required=True)
+    profile_followup_approve.add_argument("--reason", required=True)
+    profile_followup_approve.add_argument(
+        "--policy",
+        default="policies/research-allocation.json",
+    )
+    _add_timestamp(profile_followup_approve)
+    profile_followup_approve.set_defaults(
+        func=cmd_coverage_profile_followup_approve
+    )
 
     profile_compare = coverage_sub.add_parser(
         "profile-compare",
@@ -838,6 +1177,19 @@ def cmd_assets_validate(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_assets_gc(ns: argparse.Namespace) -> int:
+    if not ns.plan:
+        raise AssetGcError("assets gc is read-only and requires --plan")
+    plan = build_asset_gc_plan(
+        repository_root=ns.repository_root,
+        planned_at=_timestamp(ns.at),
+        hash_candidate_content=not ns.no_content_hashes,
+        output_path=ns.output,
+    )
+    _write_success({"ok": True, **gc_plan_summary(plan)})
+    return 0
+
+
 def cmd_assets_migrate(ns: argparse.Namespace) -> int:
     if ns.dry_run:
         created_at = _timestamp(ns.at)
@@ -870,6 +1222,25 @@ def cmd_review_create(ns: argparse.Namespace) -> int:
         market=ns.market,
         description=ns.description,
         candidates=load_candidates(ns.candidates),
+        policy_root=ns.policy_root,
+        created_at=_timestamp(ns.at),
+        parent_run_id=ns.parent_run_id,
+        coverage_root=ns.coverage_root,
+    )
+    _write_success({"ok": True, "run": state})
+    return 0
+
+
+def cmd_review_create_from_underwriting_approval(ns: argparse.Namespace) -> int:
+    state = create_review_from_underwriting_approval(
+        runs_root=ns.runs_root,
+        coverage_root=ns.coverage_root,
+        run_id=ns.run_id,
+        scope_type=ns.scope_type,
+        market=ns.market,
+        description=ns.description,
+        approval_path=ns.approval_path,
+        approval_sha256=ns.approval_sha256,
         policy_root=ns.policy_root,
         created_at=_timestamp(ns.at),
         parent_run_id=ns.parent_run_id,
@@ -1137,6 +1508,7 @@ def cmd_coverage_scope_status(ns: argparse.Namespace) -> int:
 
 
 def cmd_coverage_manager_screen_snapshot(ns: argparse.Namespace) -> int:
+    quote_snapshot = _load_json_array(ns.quotes, "quote snapshot") if ns.quotes else None
     payload = prepare_manager_screen_snapshot(
         root=ns.root,
         run_id=ns.run_id,
@@ -1145,6 +1517,61 @@ def cmd_coverage_manager_screen_snapshot(ns: argparse.Namespace) -> int:
         output_path=ns.output,
         endpoint=ns.endpoint,
         page_size=ns.page_size,
+        quote_snapshot=quote_snapshot,
+        quote_max_age=_positive_hours(
+            ns.quote_max_age_hours,
+            "quote_max_age_hours",
+        ),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_quote_amend(ns: argparse.Namespace) -> int:
+    effective_at = _timestamp(ns.at)
+    if ns.quotes:
+        quotes = _load_json_array(ns.quotes, "quote snapshot")
+    elif ns.eastmoney_previous_close_date:
+        try:
+            quote_date = dt.date.fromisoformat(ns.eastmoney_previous_close_date)
+        except ValueError as exc:
+            raise ManagerScreenSnapshotError(
+                "--eastmoney-previous-close-date must be YYYY-MM-DD"
+            ) from exc
+        quotes = fetch_eastmoney_previous_close_quotes(
+            root=ns.root,
+            run_id=ns.run_id,
+            quote_date=quote_date,
+            fetched_at=effective_at,
+            endpoint=ns.quote_endpoint,
+            chunk_size=ns.quote_chunk_size,
+        )
+    else:
+        try:
+            quote_date = dt.date.fromisoformat(ns.tencent_previous_close_date)
+        except ValueError as exc:
+            raise ManagerScreenSnapshotError(
+                "--tencent-previous-close-date must be YYYY-MM-DD"
+            ) from exc
+        quotes = fetch_tencent_previous_close_quotes(
+            root=ns.root,
+            run_id=ns.run_id,
+            quote_date=quote_date,
+            fetched_at=effective_at,
+            endpoint=ns.tencent_quote_endpoint,
+            chunk_size=ns.quote_chunk_size,
+        )
+    payload = prepare_manager_screen_quote_amendment(
+        root=ns.root,
+        run_id=ns.run_id,
+        amendment_id=ns.amendment_id,
+        effective_at=effective_at,
+        quote_snapshot=quotes,
+        quote_max_age=_positive_hours(
+            ns.quote_max_age_hours,
+            "quote_max_age_hours",
+        ),
+        output_path=ns.output,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -1183,6 +1610,174 @@ def cmd_coverage_manager_screen_status(ns: argparse.Namespace) -> int:
         batch_id=ns.batch_id,
     )
     _write_success(payload)
+    return 0
+
+
+def cmd_coverage_manager_screen_control_record(ns: argparse.Namespace) -> int:
+    payload = record_manager_screen_control(
+        root=ns.root,
+        run_id=ns.run_id,
+        event_id=ns.event_id,
+        state=ns.state,
+        manager={
+            "agent": ns.manager_agent,
+            "model": ns.manager_model,
+            "tools": ns.manager_tool,
+        },
+        reason=ns.reason,
+        recorded_at=_timestamp(ns.at),
+        company_limit=ns.company_limit,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_control_status(ns: argparse.Namespace) -> int:
+    _write_success(
+        {
+            "ok": True,
+            **manager_screen_control_status(root=ns.root, run_id=ns.run_id),
+        }
+    )
+    return 0
+
+
+def cmd_coverage_manager_screen_quote_impact_prepare(
+    ns: argparse.Namespace,
+) -> int:
+    payload = prepare_manager_screen_quote_impact(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+        review_id=ns.review_id,
+        quote_amendment_path=ns.quote_amendment,
+        prepared_at=_timestamp(ns.at),
+        policy_path=ns.policy,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_quote_impact_record(
+    ns: argparse.Namespace,
+) -> int:
+    payload = record_manager_screen_quote_impact(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+        review_id=ns.review_id,
+        submission=_load_json_object(ns.input, "manager-screen quote impact"),
+        recorded_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_quote_impact_status(
+    ns: argparse.Namespace,
+) -> int:
+    _write_success(
+        manager_screen_quote_impact_status(
+            root=ns.root,
+            run_id=ns.run_id,
+            batch_id=ns.batch_id,
+            review_id=ns.review_id,
+        )
+    )
+    return 0
+
+
+def cmd_coverage_manager_screen_supersede(ns: argparse.Namespace) -> int:
+    submission = _load_json_object(ns.input, "manager-screen supersession")
+    payload = supersede_manager_screen_batch(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+        manager=submission.get("manager"),
+        reason=submission.get("reason"),
+        superseded_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_calibration_prepare(
+    ns: argparse.Namespace,
+) -> int:
+    payload = prepare_manager_screen_calibration(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+        calibration_id=ns.calibration_id,
+        prepared_at=_timestamp(ns.at),
+        policy_path=ns.policy,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_calibration_record(
+    ns: argparse.Namespace,
+) -> int:
+    payload = record_manager_screen_calibration(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+        calibration_id=ns.calibration_id,
+        submission=_load_json_object(ns.input, "manager-screen calibration"),
+        recorded_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_calibration_status(
+    ns: argparse.Namespace,
+) -> int:
+    payload = manager_screen_calibration_status(
+        root=ns.root,
+        run_id=ns.run_id,
+        batch_id=ns.batch_id,
+    )
+    _write_success(payload)
+    return 0
+
+
+def cmd_coverage_manager_screen_transition_freeze(
+    ns: argparse.Namespace,
+) -> int:
+    payload = freeze_legacy_transition(
+        root=ns.root,
+        run_id=ns.run_id,
+        classification=_load_json_object(ns.input, "legacy transition classification"),
+        frozen_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_transition_record(
+    ns: argparse.Namespace,
+) -> int:
+    payload = record_legacy_transition(
+        root=ns.root,
+        run_id=ns.run_id,
+        submission=_load_json_object(ns.input, "legacy transition submission"),
+        recorded_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_transition_status(
+    ns: argparse.Namespace,
+) -> int:
+    _write_success(
+        legacy_transition_status(
+            root=ns.root,
+            run_id=ns.run_id,
+        )
+    )
     return 0
 
 
@@ -1565,6 +2160,8 @@ def cmd_coverage_profile_claim(ns: argparse.Namespace) -> int:
         claimed_at=_timestamp(ns.at),
         symbol=ns.symbol,
         lens=ns.lens,
+        run_id=ns.run_id,
+        stage=ns.stage,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -1577,6 +2174,21 @@ def cmd_coverage_profile_release(ns: argparse.Namespace) -> int:
         symbol=ns.symbol,
         failure_reason=ns.failure_reason,
         released_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_profile_followup_approve(ns: argparse.Namespace) -> int:
+    policy = load_policy(ns.policy)
+    payload = approve_targeted_followup(
+        root=ns.root,
+        symbol=ns.symbol,
+        manager=ns.manager,
+        reason=ns.reason,
+        policy=policy.payload,
+        approved_at=_timestamp(ns.at),
+        policy_path=ns.policy,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -1603,6 +2215,7 @@ def cmd_coverage_profile_select(ns: argparse.Namespace) -> int:
         policy=policy.payload,
         decisions=decisions,
         finalized_at=_timestamp(ns.at),
+        policy_path=ns.policy,
     )
     _write_success({"ok": True, **payload})
     return 0
@@ -1695,11 +2308,16 @@ def _write_success(payload: object) -> None:
 def _error_code(exc: Exception) -> str | None:
     for error_type, code in (
         (AssetValidationError, "asset_validation_failed"),
+        (AssetGcError, "asset_gc_error"),
         (PriceAlertError, "price_alert_error"),
         (CoverageValidationError, "coverage_validation_failed"),
         (ScopeWorkflowError, "scope_workflow_error"),
         (TriggerHitError, "trigger_hit_error"),
         (LaneArbitrationError, "lane_arbitration_error"),
+        (LegacyTransitionError, "legacy_transition_error"),
+        (ManagerScreenControlError, "manager_screen_control_error"),
+        (ManagerScreenGovernanceError, "manager_screen_governance_error"),
+        (ManagerScreenQuoteImpactError, "manager_screen_quote_impact_error"),
         (ManagerScreeningError, "manager_screening_error"),
         (ManagerScreenSnapshotError, "manager_screen_snapshot_error"),
         (QualityAuditError, "quality_audit_error"),
@@ -1743,6 +2361,37 @@ def _add_timestamp(parser: argparse.ArgumentParser) -> None:
         "--at",
         help="ISO 8601 timestamp with UTC offset; defaults to the current time",
     )
+
+
+def _load_json_array(path: str, label: str) -> list[dict[str, object]]:
+    try:
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ManagerScreenSnapshotError(f"{label} is not valid JSON: {path}") from exc
+    if not isinstance(payload, list):
+        raise ManagerScreenSnapshotError(f"{label} must be a JSON array")
+    return payload
+
+
+def _load_json_object(path: str, label: str) -> dict[str, object]:
+    try:
+        payload = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f"{label} is not valid JSON: {path}") from exc
+    if not isinstance(payload, dict):
+        raise RuntimeError(f"{label} must be a JSON object")
+    return payload
+
+
+def _positive_hours(value: float, field: str) -> dt.timedelta:
+    if (
+        isinstance(value, bool)
+        or not isinstance(value, (int, float))
+        or not math.isfinite(float(value))
+        or value <= 0
+    ):
+        raise ManagerScreenSnapshotError(f"{field} must be positive")
+    return dt.timedelta(hours=float(value))
 
 
 def _timestamp(value: str | None) -> dt.datetime:

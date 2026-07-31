@@ -12,7 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from .company import AssetValidationError, validate_company_dir
-from .sealing import atomic_write_bytes
+from .sealing import SealingError, atomic_write_bytes, verify_sealed
 
 DECISIONS = {
     "catalog",
@@ -74,6 +74,7 @@ COMPANIES_FILE = "companies.jsonl"
 SCREENING_FILE = "screening.jsonl"
 RESEARCH_QUEUE_FILE = "research_queue.jsonl"
 RUNS_FILE = "runs.jsonl"
+NEW_PROTOCOL_BINDING_PREFIXES = ("manager_screen_", "legacy_transition_")
 
 
 class CoverageValidationError(ValueError):
@@ -449,6 +450,7 @@ def enqueue_research(
     preceding_stage: str | None = None,
     stop_conditions: list[str] | None = None,
 ) -> Path:
+    assert_legacy_unbound_symbols(root, [symbol], operation="coverage enqueue")
     ticker = _ticker_from_symbol(symbol)
     next_actions = {
         "manager_screen": (
@@ -495,6 +497,96 @@ def enqueue_research(
         record["stop_conditions"] = stop_conditions
     _validate_queue_record(record, Path(root) / RESEARCH_QUEUE_FILE)
     return upsert_jsonl(Path(root) / RESEARCH_QUEUE_FILE, "symbol", record)
+
+
+def assert_legacy_unbound_symbols(
+    root: str | Path,
+    symbols: list[str],
+    *,
+    operation: str,
+) -> None:
+    """Reject legacy writes for symbols owned by the manager-screen protocol."""
+
+    base = Path(root)
+    normalized = sorted(set(symbols))
+    if not normalized or len(normalized) != len(symbols):
+        raise CoverageValidationError("legacy symbol set must be non-empty and unique")
+    for symbol in normalized:
+        _ticker_from_symbol(symbol)
+
+    requested = set(normalized)
+    bound: set[str] = set()
+    for file_name in (SCREENING_FILE, RESEARCH_QUEUE_FILE):
+        for record in read_jsonl(base / file_name):
+            symbol = record.get("symbol")
+            if symbol not in requested:
+                continue
+            if any(
+                key.startswith(NEW_PROTOCOL_BINDING_PREFIXES) and value is not None
+                for key, value in record.items()
+            ):
+                bound.add(str(symbol))
+
+    scoped = requested & _sealed_scope_symbols(base)
+    protected = sorted(bound | scoped)
+    if protected:
+        raise CoverageValidationError(
+            f"{operation} cannot write manager-screen/new-protocol symbol(s): "
+            + ", ".join(protected)
+            + "; use the formal manager-screen and underwriting workflows"
+        )
+
+
+def _sealed_scope_symbols(root: Path) -> set[str]:
+    scopes_root = root / "scopes"
+    if not scopes_root.exists():
+        return set()
+    if not scopes_root.is_dir():
+        raise CoverageValidationError(f"coverage scopes path is not a directory: {scopes_root}")
+
+    symbols: set[str] = set()
+    for scope_dir in sorted(path for path in scopes_root.iterdir() if path.is_dir()):
+        manifest_path = scope_dir / "manifest.json"
+        seal_path = manifest_path.with_name(manifest_path.name + ".seal.json")
+        if not manifest_path.exists() and not seal_path.exists():
+            continue
+        try:
+            sealed = verify_sealed(manifest_path)
+        except (OSError, SealingError) as exc:
+            raise CoverageValidationError(
+                f"cannot determine legacy ownership from scope {scope_dir.name}: {exc}"
+            ) from exc
+        if sealed.artifact_type != "all_a_scope_manifest":
+            raise CoverageValidationError(
+                f"scope manifest has invalid artifact type: {manifest_path}"
+            )
+        try:
+            manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise CoverageValidationError(
+                f"scope manifest is invalid: {manifest_path}"
+            ) from exc
+        if (
+            not isinstance(manifest, dict)
+            or manifest.get("run_id") != scope_dir.name
+            or manifest.get("market") != "CN"
+            or not isinstance(manifest.get("members"), list)
+        ):
+            raise CoverageValidationError(
+                f"scope manifest identity is invalid: {manifest_path}"
+            )
+        for member in manifest["members"]:
+            if not isinstance(member, dict):
+                raise CoverageValidationError(
+                    f"scope manifest member is invalid: {manifest_path}"
+                )
+            symbol = member.get("symbol")
+            if not isinstance(symbol, str) or not SYMBOL_RE.fullmatch(symbol):
+                raise CoverageValidationError(
+                    f"scope manifest member symbol is invalid: {manifest_path}"
+                )
+            symbols.add(symbol)
+    return symbols
 
 
 def get_symbol(root: str | Path, symbol: str) -> dict[str, Any]:

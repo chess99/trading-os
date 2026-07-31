@@ -123,7 +123,7 @@ def test_policy_files_have_versioned_closed_metadata(relative_path: str):
     assert policy.policy_id
     assert policy.version
     if relative_path == "policies/research-allocation.json":
-        expected_effective_at = "2026-07-29T23:30:00+08:00"
+        expected_effective_at = "2026-07-31T14:15:00+08:00"
     elif relative_path in {"policies/underwriting.json", "policies/portfolio.json"}:
         expected_effective_at = "2026-07-25T00:00:00+08:00"
     else:
@@ -183,6 +183,12 @@ def test_research_allocation_policy_reserves_capacity_before_deep_research():
     assert {"date", "ttl"}.issubset(payload["reactivation_trigger_types"])
     assert "must never decide whether" in payload["ranking_principle"]
     assert payload["stage_capacity_per_cycle"] == {
+        "scoped_research": 15,
+        "deep_research": 6,
+        "underwriting": 3,
+    }
+    assert payload["stage_capacity_per_run"] == {
+        "targeted_followup": 40,
         "scoped_research": 15,
         "deep_research": 6,
         "underwriting": 3,

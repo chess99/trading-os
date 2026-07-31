@@ -28,6 +28,7 @@ POLICY_KEYS = {
     "candidate_pool_capacity_per_cycle",
     "quick_profile_capacity_per_cycle",
     "stage_capacity_per_cycle",
+    "stage_capacity_per_run",
     "effort_budget_hours",
     "selection_slots",
     "risk_cluster_caps",
@@ -44,6 +45,12 @@ POLICY_KEYS = {
     "comparison_principle",
 }
 STAGE_CAPACITY_KEYS = {"scoped_research", "deep_research", "underwriting"}
+RUN_STAGE_CAPACITY_KEYS = {
+    "targeted_followup",
+    "scoped_research",
+    "deep_research",
+    "underwriting",
+}
 EFFORT_BUDGET_KEYS = {
     "rapid_triage",
     "quick_profile",
@@ -323,6 +330,17 @@ def apply_research_allocation(
     queue_by_symbol = {
         _symbol(item.get("symbol")): dict(item) for item in queue_records
     }
+    manager_bound_symbols = _manager_bound_symbols(
+        screening_by_symbol=screening_by_symbol,
+        queue_by_symbol=queue_by_symbol,
+    )
+    if manager_bound_symbols:
+        sample = ", ".join(manager_bound_symbols[:5])
+        suffix = "" if len(manager_bound_symbols) <= 5 else ", ..."
+        raise ResearchAllocationError(
+            "legacy apply-allocation cannot write manager-screen-bound coverage; "
+            f"found {len(manager_bound_symbols)} bound symbol(s): {sample}{suffix}"
+        )
     allocation_sha = _mapping_sha256(allocation)
     retriage_completed = allocation.get("retriage_completed", False)
     if not isinstance(retriage_completed, bool):
@@ -717,6 +735,51 @@ def _has_formal_research_progress(
     )
 
 
+_MANAGER_SCREEN_BINDING_KEYS = {
+    "manager_screen_run_id",
+    "manager_screen_batch_id",
+    "manager_screen_route",
+    "manager_screen_result_path",
+    "manager_screen_result_sha256",
+}
+
+
+def _manager_bound_symbols(
+    *,
+    screening_by_symbol: Mapping[str, Mapping[str, Any]],
+    queue_by_symbol: Mapping[str, Mapping[str, Any]],
+) -> list[str]:
+    """Return symbols owned by manager-screen so legacy writes can fail closed.
+
+    The legacy allocation materializer rewrites whole JSONL files and performs
+    a final pass over queue rows outside the allocation partition. Therefore a
+    per-symbol preserve branch is insufficient: once manager-screen has bound
+    any row in the coverage root, the old writer must not run at all.
+    """
+
+    bound: set[str] = set()
+    for symbol, record in screening_by_symbol.items():
+        if _has_manager_screen_binding(record):
+            bound.add(symbol)
+    for symbol, record in queue_by_symbol.items():
+        if _has_manager_screen_binding(record):
+            bound.add(symbol)
+    return sorted(bound)
+
+
+def _has_manager_screen_binding(record: Mapping[str, Any]) -> bool:
+    if record.get("preceding_stage") == "manager_screen":
+        return True
+    if record.get("task_type") == "manager_screen":
+        return True
+    if any(record.get(key) is not None for key in _MANAGER_SCREEN_BINDING_KEYS):
+        return True
+    return any(
+        isinstance(item, Mapping) and item.get("stage") == "manager_screen"
+        for item in (record.get("stage_history") or [])
+    )
+
+
 def _preserve_prior_queue_state(
     existing: Mapping[str, Any] | None, *, reallocated_at: str
 ) -> dict[str, Any] | None:
@@ -847,6 +910,12 @@ def _validate_policy(policy: Mapping[str, Any]) -> dict[str, Any]:
         policy.get("stage_capacity_per_cycle"),
         STAGE_CAPACITY_KEYS,
         "stage_capacity_per_cycle",
+        integer=True,
+    )
+    result["stage_capacity_per_run"] = _exact_numeric_mapping(
+        policy.get("stage_capacity_per_run"),
+        RUN_STAGE_CAPACITY_KEYS,
+        "stage_capacity_per_run",
         integer=True,
     )
     result["effort_budget_hours"] = _exact_numeric_mapping(

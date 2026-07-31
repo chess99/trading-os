@@ -36,6 +36,14 @@ TASK_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]+$")
 SYMBOL_RE = re.compile(r"^(CN|HK|US):[A-Z0-9.]+$")
 SCOPE_KEYS = {"type", "market", "description"}
 CANDIDATE_KEYS = {"symbol", "name", "target_company_dir"}
+INTAKE_KEYS = {
+    "mode",
+    "manager_screen_run_id",
+    "coverage_root",
+    "underwriting_approval_path",
+    "underwriting_approval_sha256",
+}
+INTAKE_MODES = {"legacy_unbound", "underwriting_approval"}
 SCOPE_TYPES = {"industry", "theme", "full_market", "custom"}
 SCOPE_MARKETS = {"CN", "HK", "US", "MULTI"}
 FAILURE_STATUSES = {
@@ -44,6 +52,16 @@ FAILURE_STATUSES = {
     ReviewRunStatus.FAILED_VALIDATION.value,
     ReviewRunStatus.STALE_QUOTES.value,
     ReviewRunStatus.CANCELLED.value,
+}
+STATE_TRANSACTION_FILE = ".state-transaction.json"
+STATE_TRANSACTION_KEYS = {
+    "schema_version",
+    "run_id",
+    "old_state",
+    "new_state",
+    "event",
+    "prior_event_count",
+    "prior_events_sha256",
 }
 ALLOWED_TRANSITIONS = {
     ReviewRunStatus.CREATED.value: {ReviewRunStatus.CANDIDATES_FROZEN.value},
@@ -82,6 +100,7 @@ class ReviewRunStore:
         policy_snapshot_sha256: str,
         created_at: dt.datetime,
         parent_run_id: str | None = None,
+        intake: Mapping[str, Any] | None = None,
     ) -> dict[str, Any]:
         _validate_run_id(run_id)
         _require_aware(created_at, "created_at")
@@ -93,6 +112,7 @@ class ReviewRunStore:
         )
         if parent_run_id is not None:
             _validate_run_id(parent_run_id)
+        normalized_intake = _validate_intake(intake)
         state = {
             "schema_version": 2,
             "run_id": run_id,
@@ -106,27 +126,12 @@ class ReviewRunStore:
                 "frozen_at": None,
                 "sha256": None,
                 "count": 0,
+                "source_binding": _candidate_source_binding(normalized_intake),
             },
             "parent_run_id": parent_run_id,
+            "intake": normalized_intake,
         }
         run_dir = self._run_dir(run_id)
-        state_path = run_dir / "state.json"
-        if run_dir.exists():
-            existing = self.load_run(run_id)
-            if existing != state:
-                raise ReviewStoreError(f"run already exists with a different manifest: {run_id}")
-            return existing
-        try:
-            run_dir.mkdir(parents=True, exist_ok=False)
-        except FileExistsError:
-            existing = self.load_run(run_id)
-            if existing != state:
-                raise ReviewStoreError(
-                    f"run already exists with a different manifest: {run_id}"
-                ) from None
-            return existing
-        (run_dir / "agent_tasks").mkdir()
-        atomic_write_bytes(state_path, canonical_json_bytes(state))
         initial_event = {
             "sequence": 1,
             "event": "run_created",
@@ -136,16 +141,56 @@ class ReviewRunStore:
             "at": created_at.isoformat(),
             "reason": None,
         }
-        atomic_write_bytes(
-            run_dir / "events.jsonl", canonical_json_bytes(initial_event) + b"\n"
-        )
-        return state
+        run_dir.mkdir(parents=True, exist_ok=True)
+        _crash_failpoint("create_directory_ready")
+        with _exclusive_lock(run_dir / ".state.lock"):
+            self._recover_state_transaction(run_dir)
+            tasks_path = run_dir / "agent_tasks"
+            if tasks_path.exists() and not tasks_path.is_dir():
+                raise ReviewStoreError(
+                    f"review agent_tasks path is not a directory: {tasks_path}"
+                )
+            tasks_path.mkdir(exist_ok=True)
+            _crash_failpoint("create_tasks_ready")
+            state_path = run_dir / "state.json"
+            event_path = run_dir / "events.jsonl"
+            if state_path.exists() and event_path.exists():
+                existing = self._load_run_unlocked(run_id)
+                events = self._read_events_unlocked(run_id)
+                if existing != state or events != [initial_event]:
+                    raise ReviewStoreError(
+                        f"run already exists with a different manifest: {run_id}"
+                    )
+                return existing
+            if state_path.exists() and self._load_run_unlocked(run_id) != state:
+                raise ReviewStoreError(
+                    f"run already exists with a different manifest: {run_id}"
+                )
+            if event_path.exists():
+                events = self._read_events_unlocked(run_id)
+                if events != [initial_event]:
+                    raise ReviewStoreError(
+                        f"run already exists with a different manifest: {run_id}"
+                    )
+            self._commit_state_and_event(
+                run_dir,
+                old_state=None,
+                new_state=state,
+                entry=initial_event,
+            )
+            return state
 
     def load_run(self, run_id: str) -> dict[str, Any]:
+        run_dir = self._run_dir(run_id)
+        if not run_dir.is_dir():
+            return self._load_run_unlocked(run_id)
+        with _exclusive_lock(run_dir / ".state.lock"):
+            self._recover_state_transaction(run_dir)
+            return self._load_run_unlocked(run_id)
+
+    def _load_run_unlocked(self, run_id: str) -> dict[str, Any]:
         state = _read_json_object(self._run_dir(run_id) / "state.json", "review state")
-        if state.get("run_id") != run_id:
-            raise ReviewStoreError("review state run_id does not match its directory")
-        return state
+        return _normalize_review_state(state, run_id=run_id)
 
     def freeze_candidates(
         self,
@@ -162,7 +207,8 @@ class ReviewRunStore:
         digest = hashlib.sha256(content).hexdigest()
         run_dir = self._run_dir(run_id)
         with _exclusive_lock(run_dir / ".state.lock"):
-            state = self.load_run(run_id)
+            self._recover_state_transaction(run_dir)
+            state = self._load_run_unlocked(run_id)
             candidate_path = run_dir / "candidates.jsonl"
             if state["candidate_set"]["frozen"]:
                 if (
@@ -181,6 +227,7 @@ class ReviewRunStore:
                 "frozen_at": at.isoformat(),
                 "sha256": digest,
                 "count": len(normalized),
+                "source_binding": _candidate_source_binding(state["intake"]),
             }
             updated["status"] = ReviewRunStatus.CANDIDATES_FROZEN.value
             self._write_state_and_event(
@@ -235,7 +282,8 @@ class ReviewRunStore:
             reason = _require_text(reason, "reason")
         run_dir = self._run_dir(run_id)
         with _exclusive_lock(run_dir / ".state.lock"):
-            state = self.load_run(run_id)
+            self._recover_state_transaction(run_dir)
+            state = self._load_run_unlocked(run_id)
             from_status = str(state["status"])
             if from_status == to_status:
                 return state
@@ -260,6 +308,14 @@ class ReviewRunStore:
             return updated
 
     def read_events(self, run_id: str) -> list[dict[str, Any]]:
+        run_dir = self._run_dir(run_id)
+        if not run_dir.is_dir():
+            return self._read_events_unlocked(run_id)
+        with _exclusive_lock(run_dir / ".state.lock"):
+            self._recover_state_transaction(run_dir)
+            return self._read_events_unlocked(run_id)
+
+    def _read_events_unlocked(self, run_id: str) -> list[dict[str, Any]]:
         path = self._run_dir(run_id) / "events.jsonl"
         if not path.is_file():
             raise ReviewStoreError(f"event log is missing for run: {run_id}")
@@ -291,12 +347,13 @@ class ReviewRunStore:
         _require_aware(at, "at")
         run_dir = self._run_dir(run_id)
         with _exclusive_lock(run_dir / ".state.lock"):
-            state = self.load_run(run_id)
+            self._recover_state_transaction(run_dir)
+            state = self._load_run_unlocked(run_id)
             if state["status"] not in FAILURE_STATUSES:
                 raise ReviewStoreError(
                     f"only a failed review run can resume, got {state['status']}"
                 )
-            events = self.read_events(run_id)
+            events = self._read_events_unlocked(run_id)
             failure_event = events[-1]
             if failure_event["to_status"] != state["status"]:
                 raise ReviewStoreError("failure event does not match current state")
@@ -437,7 +494,7 @@ class ReviewRunStore:
         at: dt.datetime,
         reason: str | None,
     ) -> None:
-        events = self.read_events(str(old_state["run_id"]))
+        events = self._read_events_unlocked(str(old_state["run_id"]))
         entry = {
             "sequence": len(events) + 1,
             "event": event,
@@ -447,11 +504,149 @@ class ReviewRunStore:
             "at": at.isoformat(),
             "reason": reason,
         }
-        atomic_write_bytes(run_dir / "state.json", canonical_json_bytes(new_state))
-        with (run_dir / "events.jsonl").open("ab") as handle:
-            handle.write(canonical_json_bytes(entry) + b"\n")
-            handle.flush()
-            os.fsync(handle.fileno())
+        self._commit_state_and_event(
+            run_dir,
+            old_state=old_state,
+            new_state=new_state,
+            entry=entry,
+        )
+
+    def _commit_state_and_event(
+        self,
+        run_dir: Path,
+        *,
+        old_state: Mapping[str, Any] | None,
+        new_state: Mapping[str, Any],
+        entry: Mapping[str, Any],
+    ) -> None:
+        event_path = run_dir / "events.jsonl"
+        if old_state is None:
+            prior_bytes = b""
+            prior_events: list[dict[str, Any]] = []
+        else:
+            prior_bytes = event_path.read_bytes() if event_path.exists() else b""
+            prior_events = (
+                self._read_events_unlocked(str(new_state["run_id"]))
+                if event_path.exists()
+                else []
+            )
+            if prior_bytes and not prior_bytes.endswith(b"\n"):
+                raise ReviewStoreError(
+                    "review event log must end with a newline"
+                )
+        if entry.get("sequence") != len(prior_events) + 1:
+            raise ReviewStoreError("review event sequence does not follow current log")
+        transaction = {
+            "schema_version": 1,
+            "run_id": str(new_state["run_id"]),
+            "old_state": dict(old_state) if old_state is not None else None,
+            "new_state": dict(new_state),
+            "event": dict(entry),
+            "prior_event_count": len(prior_events),
+            "prior_events_sha256": hashlib.sha256(prior_bytes).hexdigest(),
+        }
+        atomic_write_bytes(
+            run_dir / STATE_TRANSACTION_FILE,
+            canonical_json_bytes(transaction),
+        )
+        _crash_failpoint("transaction_prepared")
+        self._apply_state_transaction(
+            run_dir,
+            transaction,
+            failpoints=True,
+        )
+
+    def _recover_state_transaction(self, run_dir: Path) -> None:
+        transaction_path = run_dir / STATE_TRANSACTION_FILE
+        if not transaction_path.exists():
+            return
+        transaction = _read_json_object(
+            transaction_path,
+            "review state transaction",
+        )
+        self._apply_state_transaction(
+            run_dir,
+            transaction,
+            failpoints=False,
+        )
+
+    def _apply_state_transaction(
+        self,
+        run_dir: Path,
+        transaction: Mapping[str, Any],
+        *,
+        failpoints: bool,
+    ) -> None:
+        normalized = _validate_state_transaction(transaction, run_dir=run_dir)
+        run_id = normalized["run_id"]
+        old_state = normalized["old_state"]
+        new_state = normalized["new_state"]
+        state_path = run_dir / "state.json"
+        if state_path.exists():
+            current_state = self._load_run_unlocked(run_id)
+            if current_state not in tuple(
+                item for item in (old_state, new_state) if item is not None
+            ):
+                raise ReviewStoreError(
+                    "review state conflicts with pending transaction"
+                )
+        elif old_state is not None:
+            raise ReviewStoreError(
+                "review state disappeared during pending transaction"
+            )
+
+        event_path = run_dir / "events.jsonl"
+        current_bytes = event_path.read_bytes() if event_path.exists() else b""
+        current_events = (
+            self._read_events_unlocked(run_id)
+            if event_path.exists()
+            else []
+        )
+        prior_count = normalized["prior_event_count"]
+        prior_sha256 = normalized["prior_events_sha256"]
+        if len(current_events) == prior_count:
+            if hashlib.sha256(current_bytes).hexdigest() != prior_sha256:
+                raise ReviewStoreError(
+                    "review event log conflicts with pending transaction"
+                )
+            if current_bytes and not current_bytes.endswith(b"\n"):
+                raise ReviewStoreError(
+                    "review event log must end with a newline"
+                )
+            updated_bytes = (
+                current_bytes
+                + canonical_json_bytes(normalized["event"])
+                + b"\n"
+            )
+            event_needs_write = True
+        elif len(current_events) == prior_count + 1:
+            lines = current_bytes.splitlines(keepends=True)
+            prefix = b"".join(lines[:prior_count])
+            if (
+                hashlib.sha256(prefix).hexdigest() != prior_sha256
+                or current_events[-1] != normalized["event"]
+            ):
+                raise ReviewStoreError(
+                    "review event log conflicts with pending transaction"
+                )
+            updated_bytes = current_bytes
+            event_needs_write = False
+        else:
+            raise ReviewStoreError(
+                "review event count conflicts with pending transaction"
+            )
+
+        atomic_write_bytes(state_path, canonical_json_bytes(new_state))
+        if failpoints:
+            _crash_failpoint("state_written")
+        if event_needs_write:
+            atomic_write_bytes(event_path, updated_bytes)
+        if failpoints:
+            _crash_failpoint("events_written")
+
+        (run_dir / STATE_TRANSACTION_FILE).unlink(missing_ok=True)
+        if failpoints:
+            _crash_failpoint("transaction_cleared")
 
     def _run_dir(self, run_id: str) -> Path:
         _validate_run_id(run_id)
@@ -459,6 +654,142 @@ class ReviewRunStore:
 
     def _task_path(self, run_id: str, task_id: str) -> Path:
         return self._run_dir(run_id) / "agent_tasks" / f"{task_id}.json"
+
+
+def _validate_state_transaction(
+    transaction: Mapping[str, Any],
+    *,
+    run_dir: Path,
+) -> dict[str, Any]:
+    if not isinstance(transaction, Mapping) or set(transaction) != STATE_TRANSACTION_KEYS:
+        raise ReviewStoreError(
+            "review state transaction fields do not match the v1 contract"
+        )
+    if transaction.get("schema_version") != 1:
+        raise ReviewStoreError("review state transaction schema_version is invalid")
+    run_id = _require_text(transaction.get("run_id"), "transaction.run_id")
+    _validate_run_id(run_id)
+    if run_dir.name != run_id:
+        raise ReviewStoreError(
+            "review state transaction run_id does not match its directory"
+        )
+    old_raw = transaction.get("old_state")
+    if old_raw is not None and not isinstance(old_raw, Mapping):
+        raise ReviewStoreError("transaction.old_state must be an object or null")
+    new_raw = transaction.get("new_state")
+    if not isinstance(new_raw, Mapping):
+        raise ReviewStoreError("transaction.new_state must be an object")
+    old_state = (
+        _normalize_review_state(dict(old_raw), run_id=run_id)
+        if old_raw is not None
+        else None
+    )
+    new_state = _normalize_review_state(dict(new_raw), run_id=run_id)
+    event = transaction.get("event")
+    event_keys = {
+        "sequence",
+        "event",
+        "from_status",
+        "to_status",
+        "actor",
+        "at",
+        "reason",
+    }
+    if not isinstance(event, Mapping) or set(event) != event_keys:
+        raise ReviewStoreError("review state transaction event is invalid")
+    prior_count = transaction.get("prior_event_count")
+    if (
+        isinstance(prior_count, bool)
+        or not isinstance(prior_count, int)
+        or prior_count < 0
+    ):
+        raise ReviewStoreError(
+            "review state transaction prior_event_count is invalid"
+        )
+    prior_sha256 = _validate_sha256(
+        transaction.get("prior_events_sha256"),
+        "transaction.prior_events_sha256",
+    )
+    if (
+        event.get("sequence") != prior_count + 1
+        or event.get("from_status")
+        != (old_state["status"] if old_state is not None else None)
+        or event.get("to_status") != new_state["status"]
+    ):
+        raise ReviewStoreError(
+            "review state transaction event binding is invalid"
+        )
+    if old_state is None and (
+        prior_count != 0
+        or prior_sha256 != hashlib.sha256(b"").hexdigest()
+    ):
+        raise ReviewStoreError(
+            "review create transaction must start from an empty event log"
+        )
+    normalized_event = {
+        "sequence": prior_count + 1,
+        "event": _require_text(event.get("event"), "transaction.event"),
+        "from_status": event.get("from_status"),
+        "to_status": _require_text(
+            event.get("to_status"),
+            "transaction.event.to_status",
+        ),
+        "actor": _require_text(event.get("actor"), "transaction.event.actor"),
+        "at": _parse_datetime(
+            event.get("at"),
+            "transaction.event.at",
+        ).isoformat(),
+        "reason": (
+            None
+            if event.get("reason") is None
+            else _require_text(event.get("reason"), "transaction.event.reason")
+        ),
+    }
+    if dict(event) != normalized_event:
+        raise ReviewStoreError(
+            "review state transaction event is not normalized"
+        )
+    return {
+        "run_id": run_id,
+        "old_state": old_state,
+        "new_state": new_state,
+        "event": normalized_event,
+        "prior_event_count": prior_count,
+        "prior_events_sha256": prior_sha256,
+    }
+
+
+def _normalize_review_state(
+    value: Mapping[str, Any],
+    *,
+    run_id: str,
+) -> dict[str, Any]:
+    state = dict(value)
+    if state.get("run_id") != run_id:
+        raise ReviewStoreError("review state run_id does not match its directory")
+    if "intake" not in state:
+        state["intake"] = _validate_intake(None)
+    else:
+        state["intake"] = _validate_intake(state["intake"])
+    candidate_set = state.get("candidate_set")
+    if not isinstance(candidate_set, dict):
+        raise ReviewStoreError("review candidate_set is invalid")
+    candidate_set = dict(candidate_set)
+    state["candidate_set"] = candidate_set
+    expected_source = _candidate_source_binding(state["intake"])
+    if "source_binding" not in candidate_set and expected_source is None:
+        candidate_set["source_binding"] = None
+    elif candidate_set.get("source_binding") != expected_source:
+        raise ReviewStoreError(
+            "review candidate_set source binding does not match intake"
+        )
+    return state
+
+
+def _crash_failpoint(name: str) -> None:
+    """Test hook for simulating a process crash at durable write boundaries."""
+
+    del name
 
 
 def _normalize_candidates(candidates: list[Mapping[str, Any]]) -> list[dict[str, str]]:
@@ -517,6 +848,76 @@ def _validate_policy_versions(policy_versions: Mapping[str, str]) -> dict[str, s
             version, "policy version"
         )
     return dict(sorted(normalized.items()))
+
+
+def _validate_intake(value: Mapping[str, Any] | None) -> dict[str, str | None]:
+    if value is None:
+        return {
+            "mode": "legacy_unbound",
+            "manager_screen_run_id": None,
+            "coverage_root": None,
+            "underwriting_approval_path": None,
+            "underwriting_approval_sha256": None,
+        }
+    if not isinstance(value, Mapping) or set(value) != INTAKE_KEYS:
+        raise ReviewStoreError(f"intake fields must be {sorted(INTAKE_KEYS)}")
+    mode = _require_text(value.get("mode"), "intake.mode")
+    if mode not in INTAKE_MODES:
+        raise ReviewStoreError(f"unsupported review intake mode: {mode}")
+    if mode == "legacy_unbound":
+        approval_keys = {
+            "manager_screen_run_id",
+            "underwriting_approval_path",
+            "underwriting_approval_sha256",
+        }
+        if any(value.get(key) is not None for key in approval_keys):
+            raise ReviewStoreError("legacy_unbound intake cannot carry approval bindings")
+        coverage_root = value.get("coverage_root")
+        if coverage_root is not None:
+            coverage_root = _require_text(
+                coverage_root,
+                "intake.coverage_root",
+            )
+        return {
+            "mode": mode,
+            "manager_screen_run_id": None,
+            "coverage_root": coverage_root,
+            "underwriting_approval_path": None,
+            "underwriting_approval_sha256": None,
+        }
+    manager_run = _require_text(
+        value.get("manager_screen_run_id"),
+        "intake.manager_screen_run_id",
+    )
+    if not RUN_ID_RE.fullmatch(manager_run):
+        raise ReviewStoreError("intake.manager_screen_run_id is invalid")
+    return {
+        "mode": mode,
+        "manager_screen_run_id": manager_run,
+        "coverage_root": _require_text(
+            value.get("coverage_root"), "intake.coverage_root"
+        ),
+        "underwriting_approval_path": _require_text(
+            value.get("underwriting_approval_path"),
+            "intake.underwriting_approval_path",
+        ),
+        "underwriting_approval_sha256": _validate_sha256(
+            value.get("underwriting_approval_sha256"),
+            "intake.underwriting_approval_sha256",
+        ),
+    }
+
+
+def _candidate_source_binding(
+    intake: Mapping[str, Any],
+) -> dict[str, str] | None:
+    if intake.get("mode") != "underwriting_approval":
+        return None
+    return {
+        "type": "underwriting_approval",
+        "path": str(intake["underwriting_approval_path"]),
+        "sha256": str(intake["underwriting_approval_sha256"]),
+    }
 
 
 def _validate_sha256(value: Any, label: str) -> str:
@@ -585,19 +986,40 @@ def _read_lease(path: Path) -> TaskLease:
 @contextmanager
 def _exclusive_lock(path: Path) -> Iterator[None]:
     path.parent.mkdir(parents=True, exist_ok=True)
+    handle = path.open("a+b")
+    handle.seek(0, os.SEEK_END)
+    if handle.tell() == 0:
+        handle.write(b"\0")
+        handle.flush()
+        os.fsync(handle.fileno())
+    handle.seek(0)
     try:
-        descriptor = os.open(path, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
-    except FileExistsError as exc:
+        if os.name == "nt":
+            import msvcrt
+
+            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+
+            fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except OSError as exc:
+        handle.close()
         raise ReviewStoreError(f"review store is busy: {path}") from exc
     try:
-        os.write(descriptor, str(os.getpid()).encode("ascii"))
-        os.close(descriptor)
-        descriptor = -1
         yield
     finally:
-        if descriptor >= 0:
-            os.close(descriptor)
-        path.unlink(missing_ok=True)
+        try:
+            handle.seek(0)
+            if os.name == "nt":
+                import msvcrt
+
+                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+            else:
+                import fcntl
+
+                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
+        finally:
+            handle.close()
 
 
 def _validate_run_id(run_id: str) -> None:

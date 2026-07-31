@@ -4,10 +4,12 @@
 
 单公司只能承保通过或不通过，状态由程序生成，不能给买卖动作或仓位。全部公司进入终态、严格验证通过且最新行情快照封存后，组合层才能给 `buy_now`、其他操作和仓位。
 
+portfolio synthesis 是独立预算阶段，必须由主 Agent 对同一 manager-screen run 显式批准；underwriting 或 challenger approval 都不自动授权组合综合。批准需要绑定本次纳入的 underwriting 终态、policy 和 run 级容量账本；相应 sealed approval contract 尚未就绪时不得运行 synthesize。
+
 ## 买入条件
 
 1. 确定性承保通过；
-2. 证据和行情未过期；
+2. 证据和行情未过期；最新报价完整覆盖候选、带来源与时区时间，并经过与 synthesize 时间一致的新鲜度校验；
 3. 最新价格不高于独立承保的安全边际买入区；
 4. 同一组封存未来现金流按最新价格计算的预期年化回报不低于12%；
 5. 如果可能进入前五大仓位，完全独立 challenger 已完成；
@@ -36,6 +38,8 @@ min(安全边际买入区上限, 12%回报激活价)
 ```
 
 10%—12%为高优先级近门槛观察，不给仓位；价格到达实际可买上限时只触发重新运行组合与证据检查，不自动下单。
+
+行情快照不可原地覆盖。过期行情只能追加新的 sealed quote snapshot；若引用 manager-screen 行情，则使用绑定基础 snapshot 路径与 SHA-256 的 sealed quote amendment。不能靠修改 `fresh` 标志或复用盘中无时区价格绕过校验。任何价格触发只请求重新批准与重算，不自动扩容、合成或下单。
 
 ## 输出
 
