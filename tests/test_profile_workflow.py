@@ -1016,6 +1016,7 @@ def test_claim_profile_task_prevents_duplicate_company_assignment(tmp_path: Path
 def test_symbol_less_claim_isolated_to_latest_manager_run_and_stage(tmp_path: Path):
     from trading_os.research_assets.coverage_store import write_jsonl
     from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
 
     root = tmp_path / "coverage" / "cn-a"
 
@@ -1069,15 +1070,14 @@ def test_symbol_less_claim_isolated_to_latest_manager_run_and_stage(tmp_path: Pa
     assert claimed["decisive_question"] == "CN:000003 的决定性问题？"
     assert claimed["evidence_ids"] == ["snapshot:CN:000003"]
 
-    followup = claim_profile_task(
-        root=root,
-        agent="/root/current-followup",
-        claimed_at=RECORDED_AT,
-        run_id="2026-07-31-run",
-        stage="targeted_followup",
-    )
-    assert followup["symbol"] == "CN:000004"
-    assert followup["task_type"] == "targeted_followup"
+    with pytest.raises(ResearchAllocationError, match="no eligible profile task"):
+        claim_profile_task(
+            root=root,
+            agent="/root/current-followup",
+            claimed_at=RECORDED_AT,
+            run_id="2026-07-31-run",
+            stage="targeted_followup",
+        )
 
 
 def test_manager_bound_record_requires_claim_binding_and_decisive_answer(
@@ -1787,6 +1787,54 @@ def test_explicit_approval_adopts_legacy_pending_targeted_followup(
         item == f"targeted_followup_approval_sha256:{approved['approval_sha256']}"
         for item in screening["evidence"]
     )
+
+
+def test_targeted_followup_claim_fails_closed_without_manager_approval(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        claim_profile_task,
+        record_profile_package,
+    )
+    from trading_os.research_assets.research_allocation import (
+        ResearchAllocationError,
+    )
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    package = _package()
+    package["profile"]["governance_status"] = "uncertain"
+    package["profile"]["normalized_earnings_status"] = "uncertain"
+    package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "targeted_followup",
+            "status": "pending",
+            "preceding_stage": "quick_profile",
+            "assigned_agent": None,
+        }
+    )
+    write_jsonl(queue_path, queue)
+
+    with pytest.raises(ResearchAllocationError, match="no eligible profile task"):
+        claim_profile_task(
+            root=root,
+            agent="/root/followup-agent",
+            claimed_at=RECORDED_AT + dt.timedelta(minutes=1),
+            symbol="CN:600519",
+        )
 
 
 def test_targeted_followup_sealed_ledger_reserves_capacity_before_materialization(

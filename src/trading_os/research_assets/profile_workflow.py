@@ -125,6 +125,7 @@ def claim_profile_task(
     _require_aware_datetime(claimed_at, "claimed_at")
     agent_name = _text(agent, "agent")
     base = Path(root)
+    repository_root = base.parent.parent
     queue_path = base / RESEARCH_QUEUE_FILE
     queue = read_jsonl(queue_path)
     running = [
@@ -149,6 +150,15 @@ def claim_profile_task(
         in {"quick_profile", "targeted_followup", "scoped_research", "deep_research"}
         and item.get("status") == "pending"
         and item.get("assigned_agent") is None
+    ]
+    candidates = [
+        item
+        for item in candidates
+        if item.get("task_type") != "targeted_followup"
+        or _targeted_followup_task_has_valid_approval(
+            item,
+            repository_root=repository_root,
+        )
     ]
     requested_stage = _claim_stage(stage, default_for_symbol_less=symbol is None)
     if requested_stage is not None:
@@ -534,6 +544,83 @@ def _load_targeted_followup_approval(
     return approval, sealed
 
 
+def _targeted_followup_task_has_valid_approval(
+    queue_record: Mapping[str, Any],
+    *,
+    repository_root: Path,
+) -> bool:
+    try:
+        _validate_targeted_followup_task_approval(
+            queue_record,
+            repository_root=repository_root,
+        )
+    except ResearchAllocationError:
+        return False
+    return True
+
+
+def _validate_targeted_followup_task_approval(
+    queue_record: Mapping[str, Any],
+    *,
+    repository_root: Path,
+) -> None:
+    """Fail closed unless a targeted task binds one valid manager approval."""
+
+    if queue_record.get("task_type") != "targeted_followup":
+        return
+    symbol = _text(queue_record.get("symbol"), "research_queue.symbol")
+    relative_path = queue_record.get("targeted_followup_approval_path")
+    expected_sha256 = queue_record.get("targeted_followup_approval_sha256")
+    if (
+        not isinstance(relative_path, str)
+        or not relative_path
+        or not isinstance(expected_sha256, str)
+        or not re.fullmatch(r"[0-9a-f]{64}", expected_sha256)
+    ):
+        raise ResearchAllocationError(
+            f"targeted followup is missing explicit manager approval: {symbol}"
+        )
+    approval_path = (repository_root / relative_path).resolve()
+    try:
+        approval_path.relative_to(repository_root.resolve())
+    except ValueError as exc:
+        raise ResearchAllocationError(
+            f"targeted-followup approval escapes repository root: {symbol}"
+        ) from exc
+    approval, sealed = _load_targeted_followup_approval(
+        approval_path,
+        repository_root=repository_root,
+    )
+    policy = approval["research_policy"]
+    history = queue_record.get("stage_history")
+    if (
+        sealed.sha256 != expected_sha256
+        or approval["symbol"] != symbol
+        or approval["profile_cycle_id"] != queue_record.get("profile_cycle_id")
+        or approval["manager_screen_run_id"]
+        != queue_record.get("manager_screen_run_id")
+        or approval["preceding_stage"] != queue_record.get("preceding_stage")
+        or float(approval["effort_budget_hours"])
+        != float(queue_record.get("effort_budget_hours", 0.0))
+        or queue_record.get("research_policy_path") != policy["path"]
+        or queue_record.get("research_policy_file_sha256") != policy["file_sha256"]
+        or queue_record.get("research_policy_payload_sha256")
+        != policy["payload_sha256"]
+        or not isinstance(history, list)
+        or not any(
+            isinstance(item, Mapping)
+            and item.get("stage") == "targeted_followup_approval"
+            and item.get("status") == "completed"
+            and item.get("approval_path") == relative_path
+            and item.get("approval_sha256") == expected_sha256
+            for item in history
+        )
+    ):
+        raise ResearchAllocationError(
+            f"targeted-followup task does not match its sealed approval: {symbol}"
+        )
+
+
 def _enforce_targeted_followup_approval_capacity(
     *,
     base: Path,
@@ -826,6 +913,11 @@ def record_profile_package(
     )
     if replayed is not None:
         return replayed
+    if str(queue_record.get("task_type")) == "targeted_followup":
+        _validate_targeted_followup_task_approval(
+            queue_record,
+            repository_root=repository_root,
+        )
     _validate_manager_bound_submission(
         normalized,
         queue_record=queue_record,
