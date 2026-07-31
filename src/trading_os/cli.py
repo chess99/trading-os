@@ -45,6 +45,16 @@ from .research_assets.legacy_transition import (
     legacy_transition_status,
     record_legacy_transition,
 )
+from .research_assets.manager_screen_allocation_v3 import (
+    ManagerScreenAllocationV3Error,
+    freeze_manager_screen_allocation_v3_contract,
+    manager_screen_allocation_v3_activation_drift_status,
+)
+from .research_assets.manager_screen_allocation_v3_suspension import (
+    ManagerScreenAllocationV3SuspensionError,
+    suspend_manager_screen_allocation_v3_revocable_commitments,
+    verify_manager_screen_allocation_v3_suspension,
+)
 from .research_assets.manager_screen_control import (
     ManagerScreenControlError,
     manager_screen_control_status,
@@ -179,9 +189,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     assets = sub.add_parser("assets", help="Validate v2 research assets")
     assets_sub = assets.add_subparsers(dest="assets_cmd", required=True)
-    assets_validate = assets_sub.add_parser(
-        "validate", help="Validate every v2 company asset"
-    )
+    assets_validate = assets_sub.add_parser("validate", help="Validate every v2 company asset")
     assets_validate.add_argument("--research-root", default="research")
     assets_validate.set_defaults(func=cmd_assets_validate)
     assets_gc = assets_sub.add_parser(
@@ -249,13 +257,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_review_roots(review_create_approved, policies=True)
     _add_timestamp(review_create_approved)
-    review_create_approved.set_defaults(
-        func=cmd_review_create_from_underwriting_approval
-    )
+    review_create_approved.set_defaults(func=cmd_review_create_from_underwriting_approval)
 
-    review_prepare = review_sub.add_parser(
-        "prepare", help="Build and seal blind claim packets"
-    )
+    review_prepare = review_sub.add_parser("prepare", help="Build and seal blind claim packets")
     review_prepare.add_argument("run_id")
     _add_review_roots(review_prepare)
     _add_timestamp(review_prepare)
@@ -456,9 +460,7 @@ def build_parser() -> argparse.ArgumentParser:
     _add_coverage_root(manager_screen_quote_amend)
     manager_screen_quote_amend.add_argument("run_id")
     manager_screen_quote_amend.add_argument("amendment_id")
-    quote_amend_source = manager_screen_quote_amend.add_mutually_exclusive_group(
-        required=True
-    )
+    quote_amend_source = manager_screen_quote_amend.add_mutually_exclusive_group(required=True)
     quote_amend_source.add_argument("--quotes")
     quote_amend_source.add_argument(
         "--eastmoney-previous-close-date",
@@ -466,9 +468,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     quote_amend_source.add_argument(
         "--tencent-previous-close-date",
-        help=(
-            "Fetch Tencent field 4 and bind it to this explicit YYYY-MM-DD close"
-        ),
+        help=("Fetch Tencent field 4 and bind it to this explicit YYYY-MM-DD close"),
     )
     manager_screen_quote_amend.add_argument("--output")
     manager_screen_quote_amend.add_argument(
@@ -491,9 +491,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Maximum quote age at amendment effective time (default: 72 hours)",
     )
     _add_timestamp(manager_screen_quote_amend)
-    manager_screen_quote_amend.set_defaults(
-        func=cmd_coverage_manager_screen_quote_amend
-    )
+    manager_screen_quote_amend.set_defaults(func=cmd_coverage_manager_screen_quote_amend)
 
     manager_screen_freeze = coverage_sub.add_parser(
         "manager-screen-freeze",
@@ -552,9 +550,7 @@ def build_parser() -> argparse.ArgumentParser:
     manager_screen_control_record.add_argument("--reason", required=True)
     manager_screen_control_record.add_argument("--company-limit", type=int)
     _add_timestamp(manager_screen_control_record)
-    manager_screen_control_record.set_defaults(
-        func=cmd_coverage_manager_screen_control_record
-    )
+    manager_screen_control_record.set_defaults(func=cmd_coverage_manager_screen_control_record)
 
     manager_screen_control_status_cmd = coverage_sub.add_parser(
         "manager-screen-control-status",
@@ -562,8 +558,84 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_coverage_root(manager_screen_control_status_cmd)
     manager_screen_control_status_cmd.add_argument("run_id")
-    manager_screen_control_status_cmd.set_defaults(
-        func=cmd_coverage_manager_screen_control_status
+    manager_screen_control_status_cmd.set_defaults(func=cmd_coverage_manager_screen_control_status)
+
+    manager_screen_allocation_v3_freeze = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-freeze",
+        help="Seal the run-level v3 research-allocation contract",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_freeze)
+    manager_screen_allocation_v3_freeze.add_argument("run_id")
+    manager_screen_allocation_v3_freeze.add_argument(
+        "--prior-policy",
+        default="policies/manager-screening.json",
+    )
+    manager_screen_allocation_v3_freeze.add_argument(
+        "--future-policy",
+        default="policies/manager-screening-allocation-v3.json",
+    )
+    manager_screen_allocation_v3_freeze.add_argument(
+        "--manager-agent",
+        required=True,
+    )
+    manager_screen_allocation_v3_freeze.add_argument(
+        "--manager-model",
+        required=True,
+    )
+    manager_screen_allocation_v3_freeze.add_argument(
+        "--manager-tool",
+        action="append",
+        required=True,
+    )
+    manager_screen_allocation_v3_freeze.add_argument("--reason", required=True)
+    _add_timestamp(manager_screen_allocation_v3_freeze)
+    manager_screen_allocation_v3_freeze.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_freeze
+    )
+
+    manager_screen_allocation_v3_status_cmd = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-status",
+        help="Verify the v3 allocation contract and report activation-queue drift",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_status_cmd)
+    manager_screen_allocation_v3_status_cmd.add_argument("run_id")
+    manager_screen_allocation_v3_status_cmd.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_status
+    )
+
+    manager_screen_allocation_v3_suspend = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-suspend",
+        help="Seal and materialize suspension of pristine inherited commitments",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_suspend)
+    manager_screen_allocation_v3_suspend.add_argument("run_id")
+    manager_screen_allocation_v3_suspend.add_argument(
+        "--manager-agent",
+        required=True,
+    )
+    manager_screen_allocation_v3_suspend.add_argument(
+        "--manager-model",
+        required=True,
+    )
+    manager_screen_allocation_v3_suspend.add_argument(
+        "--manager-tool",
+        action="append",
+        required=True,
+    )
+    manager_screen_allocation_v3_suspend.add_argument("--reason", required=True)
+    _add_timestamp(manager_screen_allocation_v3_suspend)
+    manager_screen_allocation_v3_suspend.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_suspend
+    )
+
+    manager_screen_allocation_v3_suspension_status = coverage_sub.add_parser(
+        "manager-screen-allocation-v3-suspension-status",
+        help="Verify the sealed v3 suspension and its coverage projection",
+    )
+    _add_coverage_root(manager_screen_allocation_v3_suspension_status)
+    manager_screen_allocation_v3_suspension_status.add_argument("run_id")
+    manager_screen_allocation_v3_suspension_status.set_defaults(
+        func=cmd_coverage_manager_screen_allocation_v3_suspension_status
     )
 
     manager_screen_quote_impact_prepare = coverage_sub.add_parser(
@@ -622,9 +694,7 @@ def build_parser() -> argparse.ArgumentParser:
     manager_screen_supersede.add_argument("batch_id")
     manager_screen_supersede.add_argument("--input", required=True)
     _add_timestamp(manager_screen_supersede)
-    manager_screen_supersede.set_defaults(
-        func=cmd_coverage_manager_screen_supersede
-    )
+    manager_screen_supersede.set_defaults(func=cmd_coverage_manager_screen_supersede)
 
     manager_screen_calibration_prepare = coverage_sub.add_parser(
         "manager-screen-calibration-prepare",
@@ -755,9 +825,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_coverage_root(quality_scope_prepare)
     quality_scope_prepare.add_argument("run_id")
-    quality_scope_prepare.add_argument(
-        "--policy", default="policies/triage-quality-audit.json"
-    )
+    quality_scope_prepare.add_argument("--policy", default="policies/triage-quality-audit.json")
     _add_timestamp(quality_scope_prepare)
     quality_scope_prepare.set_defaults(func=cmd_coverage_quality_scope_prepare)
 
@@ -783,9 +851,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     _add_coverage_root(quality_triage_prepare)
     quality_triage_prepare.add_argument("cycle_id")
-    quality_triage_prepare.add_argument(
-        "--policy", default="policies/triage-quality-audit.json"
-    )
+    quality_triage_prepare.add_argument("--policy", default="policies/triage-quality-audit.json")
     _add_timestamp(quality_triage_prepare)
     quality_triage_prepare.set_defaults(func=cmd_coverage_quality_triage_prepare)
 
@@ -1068,9 +1134,7 @@ def build_parser() -> argparse.ArgumentParser:
         default="policies/research-allocation.json",
     )
     _add_timestamp(profile_followup_approve)
-    profile_followup_approve.set_defaults(
-        func=cmd_coverage_profile_followup_approve
-    )
+    profile_followup_approve.set_defaults(func=cmd_coverage_profile_followup_approve)
 
     profile_followup_decline = coverage_sub.add_parser(
         "profile-followup-decline",
@@ -1091,9 +1155,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="JSON array of executable restart triggers",
     )
     _add_timestamp(profile_followup_decline)
-    profile_followup_decline.set_defaults(
-        func=cmd_coverage_profile_followup_decline
-    )
+    profile_followup_decline.set_defaults(func=cmd_coverage_profile_followup_decline)
 
     profile_compare = coverage_sub.add_parser(
         "profile-compare",
@@ -1230,9 +1292,7 @@ def cmd_assets_migrate(ns: argparse.Namespace) -> int:
     if not ns.plan:
         raise MigrationError("--plan is required with --apply")
     if ns.output or ns.migration_id or ns.at:
-        raise MigrationError(
-            "--output, --migration-id, and --at are dry-run options"
-        )
+        raise MigrationError("--output, --migration-id, and --at are dry-run options")
     result = apply_migration_plan(load_migration_plan(ns.plan))
     _write_success(result)
     return 1 if result["failed_count"] or result["blocked_count"] else 0
@@ -1445,11 +1505,7 @@ def cmd_alerts_check(ns: argparse.Namespace) -> int:
 
 def cmd_schedule_build(ns: argparse.Namespace) -> int:
     requested_as_of = (
-        _timestamp(ns.as_of)
-        if ns.as_of
-        else _timestamp(ns.at)
-        if ns.record_hits
-        else None
+        _timestamp(ns.as_of) if ns.as_of else _timestamp(ns.at) if ns.record_hits else None
     )
     path = write_review_schedule(
         ns.research_root,
@@ -1666,6 +1722,66 @@ def cmd_coverage_manager_screen_control_status(ns: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_coverage_manager_screen_allocation_v3_freeze(
+    ns: argparse.Namespace,
+) -> int:
+    payload = freeze_manager_screen_allocation_v3_contract(
+        root=ns.root,
+        run_id=ns.run_id,
+        manager={
+            "agent": ns.manager_agent,
+            "model": ns.manager_model,
+            "tools": ns.manager_tool,
+        },
+        reason=ns.reason,
+        frozen_at=_timestamp(ns.at),
+        prior_policy_path=ns.prior_policy,
+        future_policy_path=ns.future_policy,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_allocation_v3_status(
+    ns: argparse.Namespace,
+) -> int:
+    payload = manager_screen_allocation_v3_activation_drift_status(
+        root=ns.root,
+        run_id=ns.run_id,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_allocation_v3_suspend(
+    ns: argparse.Namespace,
+) -> int:
+    payload = suspend_manager_screen_allocation_v3_revocable_commitments(
+        root=ns.root,
+        run_id=ns.run_id,
+        manager={
+            "agent": ns.manager_agent,
+            "model": ns.manager_model,
+            "tools": ns.manager_tool,
+        },
+        reason=ns.reason,
+        suspended_at=_timestamp(ns.at),
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
+def cmd_coverage_manager_screen_allocation_v3_suspension_status(
+    ns: argparse.Namespace,
+) -> int:
+    payload = verify_manager_screen_allocation_v3_suspension(
+        root=ns.root,
+        run_id=ns.run_id,
+    )
+    _write_success({"ok": True, **payload})
+    return 0
+
+
 def cmd_coverage_manager_screen_quote_impact_prepare(
     ns: argparse.Namespace,
 ) -> int:
@@ -1833,9 +1949,7 @@ def cmd_coverage_trigger_rebuild(ns: argparse.Namespace) -> int:
 
 
 def cmd_coverage_trigger_checkpoint(ns: argparse.Namespace) -> int:
-    manifest = ns.scope_manifest or str(
-        Path(ns.root) / "scopes" / ns.run_id / "manifest.json"
-    )
+    manifest = ns.scope_manifest or str(Path(ns.root) / "scopes" / ns.run_id / "manifest.json")
     _write_success(
         {
             "ok": True,
@@ -1925,9 +2039,7 @@ def cmd_coverage_quality_triage_prepare(ns: argparse.Namespace) -> int:
 def cmd_coverage_quality_triage_record(ns: argparse.Namespace) -> int:
     status = cycle_quality_status(root=ns.root, cycle_id=ns.cycle_id)
     if status["status"] != "pending_reviews":
-        materialization = materialize_cycle_quality_reopens(
-            root=ns.root, cycle_id=ns.cycle_id
-        )
+        materialization = materialize_cycle_quality_reopens(root=ns.root, cycle_id=ns.cycle_id)
         _write_success(
             {
                 "ok": status["status"] == "passed",
@@ -1948,9 +2060,7 @@ def cmd_coverage_quality_triage_record(ns: argparse.Namespace) -> int:
         completed_at=_timestamp(ns.at),
     )
     status = cycle_quality_status(root=ns.root, cycle_id=ns.cycle_id)
-    materialization = materialize_cycle_quality_reopens(
-        root=ns.root, cycle_id=ns.cycle_id
-    )
+    materialization = materialize_cycle_quality_reopens(root=ns.root, cycle_id=ns.cycle_id)
     _write_success(
         {
             "ok": status["status"] == "passed",
@@ -1978,13 +2088,10 @@ def cmd_coverage_quality_triage_record_continuation(ns: argparse.Namespace) -> i
         reviews=_load_review_rows(ns.reviews),
         completed_at=_timestamp(ns.at),
     )
-    materialization = materialize_cycle_quality_reopens(
-        root=ns.root, cycle_id=ns.cycle_id
-    )
+    materialization = materialize_cycle_quality_reopens(root=ns.root, cycle_id=ns.cycle_id)
     _write_success(
         {
-            "ok": status["status"] == "passed"
-            and materialization["reopen_count"] == 0,
+            "ok": status["status"] == "passed" and materialization["reopen_count"] == 0,
             **status,
             "reopen_materialization": materialization,
         }
@@ -2332,9 +2439,7 @@ def main(argv: list[str] | None = None) -> int:
         error_code = _error_code(exc)
         if error_code is None:
             raise
-        return _write_failure(
-            {"ok": False, "error_code": error_code, "error": str(exc)}
-        )
+        return _write_failure({"ok": False, "error_code": error_code, "error": str(exc)})
 
 
 def _write_failure(payload: dict[str, object], stream: TextIO | None = None) -> int:
@@ -2357,6 +2462,11 @@ def _error_code(exc: Exception) -> str | None:
         (LaneArbitrationError, "lane_arbitration_error"),
         (LegacyTransitionError, "legacy_transition_error"),
         (ManagerScreenControlError, "manager_screen_control_error"),
+        (ManagerScreenAllocationV3Error, "manager_screen_allocation_v3_error"),
+        (
+            ManagerScreenAllocationV3SuspensionError,
+            "manager_screen_allocation_v3_suspension_error",
+        ),
         (ManagerScreenGovernanceError, "manager_screen_governance_error"),
         (ManagerScreenQuoteImpactError, "manager_screen_quote_impact_error"),
         (ManagerScreeningError, "manager_screening_error"),

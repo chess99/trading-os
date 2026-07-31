@@ -41,7 +41,9 @@ ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SYMBOL_RE = re.compile(r"^CN:[0-9]{6}$")
 EVIDENCE_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9:._/-]{0,199}$")
 
-ROUTES = {"pass", "watch", "send_to_analyst"}
+DIRECT_ALLOCATION_ROUTES = {"pass", "watch", "send_to_analyst"}
+DEFERRED_ALLOCATION_ROUTES = {"pass", "watch", "research_candidate"}
+ROUTES = DIRECT_ALLOCATION_ROUTES | DEFERRED_ALLOCATION_ROUTES
 CONFIDENCES = {"low", "medium", "high"}
 TRIGGER_TYPES = {"filing", "price", "date", "ttl", "event", "thesis"}
 EXTERNAL_SOURCE_TYPES = {"filing", "exchange", "market_data", "company", "other"}
@@ -125,13 +127,14 @@ DECISION_V2_POLICY_REF_KEYS = {
     "canonical_fact_line_required",
     "high_liability_to_assets_pct",
 }
+DECISION_V3_POLICY_REF_KEYS = {"research_candidate_requires_allocation"}
 POLICY_V2_REF_KEYS = POLICY_REF_KEYS | DECISION_V2_POLICY_REF_KEYS
+POLICY_V3_REF_KEYS = POLICY_V2_REF_KEYS | DECISION_V3_POLICY_REF_KEYS
 RUN_CONTROL_POLICY_REF_KEYS = {"run_control_required"}
-PRE_CAPACITY_CONTROL_POLICY_REF_KEYS = (
-    PRE_CAPACITY_POLICY_REF_KEYS | RUN_CONTROL_POLICY_REF_KEYS
-)
+PRE_CAPACITY_CONTROL_POLICY_REF_KEYS = PRE_CAPACITY_POLICY_REF_KEYS | RUN_CONTROL_POLICY_REF_KEYS
 CONTROL_POLICY_REF_KEYS = POLICY_REF_KEYS | RUN_CONTROL_POLICY_REF_KEYS
 POLICY_V2_CONTROL_REF_KEYS = POLICY_V2_REF_KEYS | RUN_CONTROL_POLICY_REF_KEYS
+POLICY_V3_CONTROL_REF_KEYS = POLICY_V3_REF_KEYS | RUN_CONTROL_POLICY_REF_KEYS
 CALIBRATION_ERROR_TYPES = {
     "security_identity_error",
     "verifiable_factual_error",
@@ -315,6 +318,12 @@ class ManagerScreeningError(ValueError):
     """Raised when a manager-screen batch is malformed or cannot advance."""
 
 
+def _routes_for_policy(policy: Mapping[str, Any]) -> set[str]:
+    if policy.get("decision_contract_version") == 3:
+        return DEFERRED_ALLOCATION_ROUTES
+    return DIRECT_ALLOCATION_ROUTES
+
+
 @serialized_coverage_write
 def freeze_manager_screen_batch(
     *,
@@ -378,9 +387,9 @@ def freeze_manager_screen_batch(
             packet_path.with_name(f"{packet_path.name}.seal.json"),
         )
     )
-    journal_exists = journal_path.exists() or journal_path.with_name(
-        f"{journal_path.name}.seal.json"
-    ).exists()
+    journal_exists = (
+        journal_path.exists() or journal_path.with_name(f"{journal_path.name}.seal.json").exists()
+    )
     if artifact_exists or journal_exists:
         if artifacts_complete:
             verified = _verify_batch_dir(batch_dir, repository_root=repository_root)
@@ -541,9 +550,7 @@ def freeze_manager_screen_batch(
             quote_amendment=quote_amendment,
             repository_root=repository_root,
             decision_contract_version=policy.get("decision_contract_version", 1),
-            high_liability_to_assets_pct=policy.get(
-                "high_liability_to_assets_pct"
-            ),
+            high_liability_to_assets_pct=policy.get("high_liability_to_assets_pct"),
         )
         for member in members
     ]
@@ -557,11 +564,21 @@ def freeze_manager_screen_batch(
         "batch_sha256": batch_sha256,
         "instructions": {
             "role": "同一名投资经理 Agent 在一份 packet 内统一浏览整批公司。",
-            "routes": {
-                "pass": "当前不值得继续购买研究时间；记录可执行重启条件。",
-                "watch": "业务可能可投，但需等待价格、财报、事件或关键证据。",
-                "send_to_analyst": "下一小时深入研究很可能改变判断；只把少数候选交给研究员。",
-            },
+            "routes": (
+                {
+                    "pass": "当前不值得继续购买研究时间；记录可执行重启条件。",
+                    "watch": "业务可能可投，但需等待价格、财报、事件或关键证据。",
+                    "research_candidate": (
+                        "下一小时研究很可能改变判断；只提名候选，不在初筛阶段购买预算。"
+                    ),
+                }
+                if policy.get("decision_contract_version") == 3
+                else {
+                    "pass": "当前不值得继续购买研究时间；记录可执行重启条件。",
+                    "watch": "业务可能可投，但需等待价格、财报、事件或关键证据。",
+                    "send_to_analyst": ("下一小时深入研究很可能改变判断；只把少数候选交给研究员。"),
+                }
+            ),
             "rubric": [
                 "业务是否看得懂，普通股股东如何获得现金。",
                 "生存、治理、资本结构或会计质量是否存在明显阻断。",
@@ -582,9 +599,9 @@ def freeze_manager_screen_batch(
         "dossiers": dossiers,
         "portfolio_action": None,
     }
-    if policy.get("decision_contract_version") == 2:
+    if policy.get("decision_contract_version") in {2, 3}:
         packet["instructions"]["decision_contract"] = {
-            "version": 2,
+            "version": policy["decision_contract_version"],
             "canonical_fact_line": (
                 "one_line_reason 必须逐字使用 dossier decision_support 中的 "
                 "canonical_fact_line.text 作为前缀；后缀只写定性判断，不得手抄数字"
@@ -596,6 +613,16 @@ def freeze_manager_screen_batch(
             "material_acknowledgement": (
                 "assessment=material 的 reason 必须原样进入 one_line_reason "
                 "定性后缀或 decisive_question"
+            ),
+            **(
+                {
+                    "research_candidate": (
+                        "research_candidate 只是未购预算提名；必须等待完整 scope 后的"
+                        " sealed allocation，不能直接生成 quick_profile 任务"
+                    )
+                }
+                if policy.get("decision_contract_version") == 3
+                else {}
             ),
         }
     _validate_packet(packet, batch=batch, batch_sha256=batch_sha256)
@@ -652,8 +679,8 @@ def record_manager_screen_decisions(
         raise ManagerScreeningError(
             f"superseded manager-screen batch cannot be recorded: {batch_name}"
         )
-    manifest_path, _, manifest_seal, intake_path, _, intake_seal = (
-        _load_scope_artifacts(base=base, run_id=run)
+    manifest_path, _, manifest_seal, intake_path, _, intake_seal = _load_scope_artifacts(
+        base=base, run_id=run
     )
     _require_scope_binding(
         batch=batch,
@@ -684,9 +711,7 @@ def record_manager_screen_decisions(
         existing = complete["result"]
         replay_keys = ("manager", "additional_evidence", "decisions")
         if any(existing[key] != normalized[key] for key in replay_keys):
-            raise ManagerScreeningError(
-                f"sealed manager-screen result is immutable: {batch_name}"
-            )
+            raise ManagerScreeningError(f"sealed manager-screen result is immutable: {batch_name}")
         result_seal = complete["result_seal"]
         _materialize_decisions(
             base=base,
@@ -830,8 +855,7 @@ def _enforce_send_to_analyst_capacity(
                 require_result=True,
             )
             effective_decisions = {
-                decision["symbol"]: decision
-                for decision in verified["result"]["decisions"]
+                decision["symbol"]: decision for decision in verified["result"]["decisions"]
             }
             try:
                 overlay = load_manager_screen_quote_impact_overlay(
@@ -846,16 +870,13 @@ def _enforce_send_to_analyst_capacity(
                 ) from exc
             if overlay["state"] == "recorded":
                 for review in overlay["reviews"]:
-                    effective_decisions[review["symbol"]] = review[
-                        "effective_decision"
-                    ]
+                    effective_decisions[review["symbol"]] = review["effective_decision"]
             for symbol, decision in effective_decisions.items():
                 queue = queue_by_symbol.get(symbol)
                 if (
                     queue is None
                     or queue.get("manager_screen_run_id") != run_id
-                    or queue.get("manager_screen_batch_id")
-                    != verified["batch"]["batch_id"]
+                    or queue.get("manager_screen_batch_id") != verified["batch"]["batch_id"]
                     or queue.get("manager_screen_route") != decision["route"]
                 ):
                     raise ManagerScreeningError(
@@ -889,10 +910,8 @@ def _enforce_send_to_analyst_capacity(
                 or any(row.get(field) is not None for field in legacy_binding_fields)
             )
         )
-        or row.get("legacy_transition_result_path")
-        == canonical_transition_result_path
-        or row.get("manager_screen_result_path")
-        == canonical_transition_result_path
+        or row.get("legacy_transition_result_path") == canonical_transition_result_path
+        or row.get("manager_screen_result_path") == canonical_transition_result_path
         for row in queue_by_symbol.values()
     )
     if transition_dir.exists() or queue_references_transition:
@@ -927,29 +946,20 @@ def _enforce_send_to_analyst_capacity(
                     or queue.get("legacy_transition_run_id") != run_id
                     or queue.get("legacy_transition_id") != TRANSITION_ID
                     or queue.get("legacy_transition_action") != "adoption"
-                    or queue.get("legacy_transition_result_path")
-                    != transition["result_path"]
-                    or queue.get("legacy_transition_result_sha256")
-                    != transition["result_sha256"]
+                    or queue.get("legacy_transition_result_path") != transition["result_path"]
+                    or queue.get("legacy_transition_result_sha256") != transition["result_sha256"]
                     or queue.get("manager_screen_run_id") != run_id
                     or queue.get("manager_screen_batch_id") != TRANSITION_ID
-                    or queue.get("manager_screen_result_path")
-                    != transition["result_path"]
-                    or queue.get("manager_screen_result_sha256")
-                    != transition["result_sha256"]
+                    or queue.get("manager_screen_result_path") != transition["result_path"]
+                    or queue.get("manager_screen_result_sha256") != transition["result_sha256"]
                     or queue.get("manager_screen_route") != decision["route"]
                 ):
                     raise ManagerScreeningError(
                         "research queue does not match the sealed legacy adoption "
                         f"during capacity accounting: {symbol}"
                     )
-    sealed_send_count = sum(
-        route == "send_to_analyst" for route in queue_routes.values()
-    )
-    requested_send_count = sum(
-        decision["route"] == "send_to_analyst"
-        for decision in decisions
-    )
+    sealed_send_count = sum(route == "send_to_analyst" for route in queue_routes.values())
+    requested_send_count = sum(decision["route"] == "send_to_analyst" for decision in decisions)
     if sealed_send_count + requested_send_count > capacity:
         raise ManagerScreeningError(
             "manager-screen send_to_analyst run capacity would be exceeded: "
@@ -970,13 +980,33 @@ def _enforce_run_capacity_policy_monotonic(
         run_dir=run_dir,
         repository_root=repository_root,
     )
+    requested_version = requested_policy.get("decision_contract_version")
+    contract_presence = _allocation_v3_contract_presence(run_dir)
+    migration_required = bool(existing_policies) and any(
+        policy.get("decision_contract_version") != 3 for policy in existing_policies
+    )
+    v3_migration_authorized = False
+    if requested_version == 3 and (migration_required or contract_presence != "absent"):
+        v3_migration_authorized = _allocation_v3_policy_authorized(
+            run_dir=run_dir,
+            requested_policy=requested_policy,
+            existing_policies=existing_policies,
+            repository_root=repository_root,
+        )
+        if not v3_migration_authorized:
+            raise ManagerScreeningError(
+                "manager-screen decision contract v3 requires its sealed allocation "
+                "contract and exact future-policy binding"
+            )
+    elif requested_version != 3 and contract_presence != "absent":
+        raise ManagerScreeningError(
+            "a manager-screen allocation v3 contract exists; subsequent batches "
+            "must use its exact future-policy binding"
+        )
     if not existing_policies:
         return
     requested = requested_policy.get("send_to_analyst_capacity_per_run")
-    effective = min(
-        int(policy["send_to_analyst_capacity_per_run"])
-        for policy in existing_policies
-    )
+    effective = min(int(policy["send_to_analyst_capacity_per_run"]) for policy in existing_policies)
     if requested is None:
         raise ManagerScreeningError(
             "manager-screen run capacity policy cannot remove an established cap: "
@@ -988,13 +1018,12 @@ def _enforce_run_capacity_policy_monotonic(
             f"requested {requested} > established {effective}"
         )
     established_paths = {str(policy["path"]) for policy in existing_policies}
-    if requested_policy.get("path") not in established_paths:
+    if requested_policy.get("path") not in established_paths and not v3_migration_authorized:
         raise ManagerScreeningError(
             "manager-screen run policy path cannot change after capacity is bound"
         )
     established_effort = min(
-        float(policy["quick_profile_effort_budget_hours"])
-        for policy in existing_policies
+        float(policy["quick_profile_effort_budget_hours"]) for policy in existing_policies
     )
     requested_effort = float(requested_policy["quick_profile_effort_budget_hours"])
     if requested_effort > established_effort:
@@ -1003,33 +1032,96 @@ def _enforce_run_capacity_policy_monotonic(
             f"requested {requested_effort} > established {established_effort}"
         )
     established_v2 = [
-        policy
-        for policy in existing_policies
-        if policy.get("decision_contract_version") == 2
+        policy for policy in existing_policies if policy.get("decision_contract_version") in {2, 3}
     ]
     if established_v2:
-        if requested_policy.get("decision_contract_version") != 2:
+        if requested_version not in {2, 3}:
             raise ManagerScreeningError(
                 "manager-screen decision contract v2 cannot be removed within a run"
             )
         established_liability_threshold = min(
-            float(policy["high_liability_to_assets_pct"])
-            for policy in established_v2
+            float(policy["high_liability_to_assets_pct"]) for policy in established_v2
         )
-        requested_liability_threshold = float(
-            requested_policy["high_liability_to_assets_pct"]
-        )
+        requested_liability_threshold = float(requested_policy["high_liability_to_assets_pct"])
         if requested_liability_threshold > established_liability_threshold:
             raise ManagerScreeningError(
                 "manager-screen high-liability risk gate cannot be loosened within "
                 f"a run: requested {requested_liability_threshold} > established "
                 f"{established_liability_threshold}"
             )
+    if (
+        any(policy.get("decision_contract_version") == 3 for policy in existing_policies)
+        and requested_policy.get("decision_contract_version") != 3
+    ):
+        raise ManagerScreeningError(
+            "manager-screen decision contract v3 cannot be downgraded within a run"
+        )
     if any(policy.get("run_control_required") is True for policy in existing_policies):
         if requested_policy.get("run_control_required") is not True:
             raise ManagerScreeningError(
                 "manager-screen run control requirement cannot be removed within a run"
             )
+
+
+def _allocation_v3_contract_presence(run_dir: Path) -> str:
+    contract_path = run_dir / "governance" / "allocation-v3" / "contract.json"
+    seal_path = contract_path.with_name(f"{contract_path.name}.seal.json")
+    artifact = contract_path.exists()
+    seal = seal_path.exists()
+    if artifact and seal:
+        return "complete"
+    if artifact or seal:
+        return "partial"
+    return "absent"
+
+
+def _allocation_v3_policy_authorized(
+    *,
+    run_dir: Path,
+    requested_policy: Mapping[str, Any],
+    existing_policies: list[dict[str, Any]],
+    repository_root: Path,
+) -> bool:
+    """Require the exact sealed v3 future policy throughout a migrated run."""
+
+    if requested_policy.get("decision_contract_version") != 3:
+        return False
+    from .manager_screen_allocation_v3 import (
+        ManagerScreenAllocationV3Error,
+        verify_manager_screen_allocation_v3_contract,
+    )
+
+    try:
+        contract = verify_manager_screen_allocation_v3_contract(
+            root=run_dir.parent.parent,
+            run_id=run_dir.name,
+        )
+    except ManagerScreenAllocationV3Error:
+        return False
+    prior = contract["prior_policy"]
+    future = contract["future_policy"]
+    binding_fields = (
+        "policy_id",
+        "version",
+        "path",
+        "file_sha256",
+        "payload_sha256",
+        "decision_contract_version",
+        "send_to_analyst_capacity_per_run",
+        "quick_profile_effort_budget_hours",
+    )
+    if any(requested_policy.get(field) != future.get(field) for field in binding_fields):
+        return False
+    if (
+        requested_policy.get("research_candidate_requires_allocation") is not True
+        or future.get("research_candidate_requires_allocation") is not True
+    ):
+        return False
+    prior_bound = any(
+        all(policy.get(field) == prior.get(field) for field in binding_fields)
+        for policy in existing_policies
+    )
+    return prior_bound
 
 
 def _effective_run_send_capacity(
@@ -1041,10 +1133,7 @@ def _effective_run_send_capacity(
         run_dir=run_dir,
         repository_root=repository_root,
     )
-    capacities = [
-        int(policy["send_to_analyst_capacity_per_run"])
-        for policy in policies
-    ]
+    capacities = [int(policy["send_to_analyst_capacity_per_run"]) for policy in policies]
     return min(capacities) if capacities else None
 
 
@@ -1063,9 +1152,7 @@ def _active_run_bounded_policies(
         )
         if verified["supersession"] is not None:
             continue
-        capacity = verified["batch"]["policy"].get(
-            "send_to_analyst_capacity_per_run"
-        )
+        capacity = verified["batch"]["policy"].get("send_to_analyst_capacity_per_run")
         if capacity is not None:
             policies.append(dict(verified["batch"]["policy"]))
     return policies
@@ -1097,8 +1184,8 @@ def prepare_manager_screen_calibration(
     )
     batch = verified["batch"]
     manager_result = verified["result"]
-    manifest_path, _, manifest_seal, intake_path, _, intake_seal = (
-        _load_scope_artifacts(base=base, run_id=run)
+    manifest_path, _, manifest_seal, intake_path, _, intake_seal = _load_scope_artifacts(
+        base=base, run_id=run
     )
     _require_scope_binding(
         batch=batch,
@@ -1112,15 +1199,13 @@ def prepare_manager_screen_calibration(
         manager_result["recorded_at"],
         "manager result recorded_at",
     ):
-        raise ManagerScreeningError(
-            "calibration prepared_at cannot predate the manager result"
-        )
+        raise ManagerScreeningError("calibration prepared_at cannot predate the manager result")
     calibration_root = batch_dir / "calibration"
-    existing_ids = sorted(
-        path.name
-        for path in calibration_root.iterdir()
-        if path.is_dir()
-    ) if calibration_root.is_dir() else []
+    existing_ids = (
+        sorted(path.name for path in calibration_root.iterdir() if path.is_dir())
+        if calibration_root.is_dir()
+        else []
+    )
     if existing_ids and existing_ids != [calibration_name]:
         raise ManagerScreeningError(
             "manager-screen calibration is single-shot; a calibration already exists "
@@ -1161,14 +1246,8 @@ def prepare_manager_screen_calibration(
             calibration,
             repository_root=repository_root,
         )
-    dossier_by_symbol = {
-        item["symbol"]: item
-        for item in verified["packet"]["dossiers"]
-    }
-    decision_by_symbol = {
-        item["symbol"]: item
-        for item in manager_result["decisions"]
-    }
+    dossier_by_symbol = {item["symbol"]: item for item in verified["packet"]["dossiers"]}
+    decision_by_symbol = {item["symbol"]: item for item in manager_result["decisions"]}
     samples = []
     for symbol in plan["sample_symbols"]:
         dossier = dossier_by_symbol[symbol]
@@ -1177,10 +1256,7 @@ def prepare_manager_screen_calibration(
                 "symbol": symbol,
                 "decision": decision_by_symbol[symbol],
                 "dossier": dossier,
-                "evidence_ids": [
-                    item["evidence_id"]
-                    for item in dossier["evidence_catalog"]
-                ],
+                "evidence_ids": [item["evidence_id"] for item in dossier["evidence_catalog"]],
             }
         )
     packet = {
@@ -1262,9 +1338,7 @@ def record_manager_screen_calibration(
     )
     packet = calibration["packet"]
     if recorded < _parse_datetime(packet["prepared_at"], "calibration prepared_at"):
-        raise ManagerScreeningError(
-            "calibration recorded_at cannot predate packet preparation"
-        )
+        raise ManagerScreeningError("calibration recorded_at cannot predate packet preparation")
     result_path = calibration_dir / "result.json"
     if result_path.exists():
         complete = _verify_calibration_dir(
@@ -1301,14 +1375,9 @@ def record_manager_screen_calibration(
         recorded_at=recorded,
         legacy_contract=False,
     )
-    material_error_count = sum(
-        len(review["material_errors"])
-        for review in normalized["reviews"]
-    )
+    material_error_count = sum(len(review["material_errors"]) for review in normalized["reviews"])
     material_error_symbols = [
-        review["symbol"]
-        for review in normalized["reviews"]
-        if review["material_errors"]
+        review["symbol"] for review in normalized["reviews"] if review["material_errors"]
     ]
     route_disagreement_symbols = [
         review["symbol"]
@@ -1316,9 +1385,7 @@ def record_manager_screen_calibration(
         if review["route_disagreement"]["present"]
     ]
     adjudicated_symbols = [
-        review["symbol"]
-        for review in normalized["reviews"]
-        if review["adjudication"]["performed"]
+        review["symbol"] for review in normalized["reviews"] if review["adjudication"]["performed"]
     ]
     result = {
         "schema_version": 1,
@@ -1495,23 +1562,18 @@ def manager_screen_status(
                                 quote_impact["result_sha256"],
                             )
                 original_effort = float(
-                    verified["batch"]["policy"][
-                        "quick_profile_effort_budget_hours"
-                    ]
+                    verified["batch"]["policy"]["quick_profile_effort_budget_hours"]
                 )
                 for decision in original_decisions.values():
                     if decision["route"] == "send_to_analyst":
                         purchased_analyst_budget[decision["symbol"]] = original_effort
                 if quote_impact["state"] == "recorded":
-                    quote_effort = float(
-                        quote_impact["quick_profile_effort_budget_hours"]
-                    )
+                    quote_effort = float(quote_impact["quick_profile_effort_budget_hours"])
                     for review in quote_impact["reviews"]:
                         if (
                             review["action"] == "replacement"
                             and review["old_route"] != "send_to_analyst"
-                            and review["effective_decision"]["route"]
-                            == "send_to_analyst"
+                            and review["effective_decision"]["route"] == "send_to_analyst"
                         ):
                             purchased_analyst_budget[review["symbol"]] = quote_effort
                 for decision in effective_decisions.values():
@@ -1678,20 +1740,13 @@ def manager_screen_status(
         1 for item in calibration_rows if item["status"] == "not_applicable"
     )
     calibration_material_errors = sum(
-        item.get("material_error_count", 0)
-        for item in calibration_rows
+        item.get("material_error_count", 0) for item in calibration_rows
     )
     calibration_route_disagreements = sum(
-        item.get("route_disagreement_count", 0)
-        for item in calibration_rows
+        item.get("route_disagreement_count", 0) for item in calibration_rows
     )
-    calibration_adjudications = sum(
-        item.get("adjudication_count", 0)
-        for item in calibration_rows
-    )
-    calibration_planned_batches = sum(
-        1 for item in calibration_rows if item["status"] == "planned"
-    )
+    calibration_adjudications = sum(item.get("adjudication_count", 0) for item in calibration_rows)
+    calibration_planned_batches = sum(1 for item in calibration_rows if item["status"] == "planned")
     try:
         control = manager_screen_control_status(
             root=base,
@@ -1700,9 +1755,7 @@ def manager_screen_status(
             open_company_count=len(open_symbols),
         )
     except ManagerScreenControlError as exc:
-        raise ManagerScreeningError(
-            "manager-screen run control is invalid"
-        ) from exc
+        raise ManagerScreeningError("manager-screen run control is invalid") from exc
     return {
         "schema_version": 1,
         "run_id": run,
@@ -1711,9 +1764,7 @@ def manager_screen_status(
         "screenable_intake_count": screenable_total,
         "legacy_transition": transition,
         "batches_total": len(verified_batches),
-        "active_batches": sum(
-            1 for item in verified_batches if item["supersession"] is None
-        ),
+        "active_batches": sum(1 for item in verified_batches if item["supersession"] is None),
         "completed_batches": sum(
             1
             for item in verified_batches
@@ -1743,18 +1794,10 @@ def manager_screen_status(
         "by_route": dict(sorted(by_route.items())),
         "analyst_budget": {
             "purchased_company_count": len(purchased_analyst_budget),
-            "purchased_effort_budget_hours": sum(
-                purchased_analyst_budget.values()
-            ),
-            "historical_purchased_company_count": len(
-                purchased_analyst_budget
-            ),
-            "historical_purchased_effort_budget_hours": sum(
-                purchased_analyst_budget.values()
-            ),
-            "current_effective_send_company_count": len(
-                current_effective_send_budget
-            ),
+            "purchased_effort_budget_hours": sum(purchased_analyst_budget.values()),
+            "historical_purchased_company_count": len(purchased_analyst_budget),
+            "historical_purchased_effort_budget_hours": sum(purchased_analyst_budget.values()),
+            "current_effective_send_company_count": len(current_effective_send_budget),
             "current_effective_send_effort_budget_hours": sum(
                 current_effective_send_budget.values()
             ),
@@ -1787,9 +1830,7 @@ def manager_screen_status(
             "route_disagreement_count": calibration_route_disagreements,
             "adjudication_count": calibration_adjudications,
             "coverage_rate": (
-                calibration_reviewed / calibration_planned
-                if calibration_planned
-                else None
+                calibration_reviewed / calibration_planned if calibration_planned else None
             ),
             "batches_without_calibration_policy": calibration_unconfigured,
             "superseded_batches_not_applicable": calibration_not_applicable,
@@ -1808,8 +1849,7 @@ def manager_screen_status(
                             else (
                                 "not_applicable"
                                 if calibration_rows
-                                and calibration_not_applicable
-                                == len(calibration_rows)
+                                and calibration_not_applicable == len(calibration_rows)
                                 else "complete"
                             )
                         )
@@ -1864,8 +1904,8 @@ def verify_manager_screen_terminal(
         )
         result = verified["result"]
         cutoff = _parse_datetime(result["information_cutoff"], "result information_cutoff")
-        manifest_path, _, manifest_seal, intake_path, _, intake_seal = (
-            _load_scope_artifacts(base=base, run_id=result["run_id"])
+        manifest_path, _, manifest_seal, intake_path, _, intake_seal = _load_scope_artifacts(
+            base=base, run_id=result["run_id"]
         )
         _require_scope_binding(
             batch=verified["batch"],
@@ -1914,8 +1954,7 @@ def _calibration_reviewer_contract() -> dict[str, Any]:
 def _is_legacy_calibration_packet(packet: Mapping[str, Any]) -> bool:
     reviewer_contract = packet.get("reviewer_contract")
     return (
-        isinstance(reviewer_contract, Mapping)
-        and "adjudication_trigger" not in reviewer_contract
+        isinstance(reviewer_contract, Mapping) and "adjudication_trigger" not in reviewer_contract
     )
 
 
@@ -1940,9 +1979,7 @@ def _calibration_plan(
         for member in sorted(
             members,
             key=lambda item: hashlib.sha256(
-                (
-                    f"{batch['run_id']}\0{batch['batch_id']}\0{item['symbol']}"
-                ).encode("utf-8")
+                (f"{batch['run_id']}\0{batch['batch_id']}\0{item['symbol']}").encode("utf-8")
             ).hexdigest(),
         )[:required]
     ]
@@ -1980,9 +2017,7 @@ def _normalize_calibration_submission(
         or set(submission) != CALIBRATION_SUBMISSION_KEYS
         or submission.get("schema_version") != 1
     ):
-        raise ManagerScreeningError(
-            "calibration submission fields do not match the v1 contract"
-        )
+        raise ManagerScreeningError("calibration submission fields do not match the v1 contract")
     reviewer = _validate_manager(submission.get("reviewer"))
     if reviewer["agent"] == manager_result["manager"]["agent"]:
         raise ManagerScreeningError(
@@ -2002,34 +2037,20 @@ def _normalize_calibration_submission(
     reviews = submission.get("reviews")
     if not isinstance(reviews, list):
         raise ManagerScreeningError("calibration reviews must be an array")
-    received = [
-        item.get("symbol")
-        for item in reviews
-        if isinstance(item, Mapping)
-    ]
+    received = [item.get("symbol") for item in reviews if isinstance(item, Mapping)]
     if received != sample_symbols or len(reviews) != len(sample_symbols):
         raise ManagerScreeningError(
             "calibration reviews must cover the deterministic sample exactly once "
             "and in sample order"
         )
-    sample_by_symbol = {
-        item["symbol"]: item
-        for item in packet["samples"]
-    }
+    sample_by_symbol = {item["symbol"]: item for item in packet["samples"]}
     external_by_symbol: dict[str, set[str]] = {}
     for item in additional:
-        external_by_symbol.setdefault(item["symbol"], set()).add(
-            item["evidence_id"]
-        )
+        external_by_symbol.setdefault(item["symbol"], set()).add(item["evidence_id"])
     normalized_reviews = []
     for review in reviews:
-        if (
-            not isinstance(review, Mapping)
-            or set(review) != CALIBRATION_REVIEW_KEYS
-        ):
-            raise ManagerScreeningError(
-                "calibration review fields do not match the v1 contract"
-            )
+        if not isinstance(review, Mapping) or set(review) != CALIBRATION_REVIEW_KEYS:
+            raise ManagerScreeningError("calibration review fields do not match the v1 contract")
         symbol = _symbol(review.get("symbol"))
         allowed_evidence = set(sample_by_symbol[symbol]["evidence_ids"])
         allowed_evidence.update(external_by_symbol.get(symbol, set()))
@@ -2073,21 +2094,15 @@ def _validate_calibration_errors(
     allowed_evidence: set[str],
 ) -> list[dict[str, Any]]:
     if not isinstance(value, list):
-        raise ManagerScreeningError(
-            f"calibration material_errors must be an array: {symbol}"
-        )
+        raise ManagerScreeningError(f"calibration material_errors must be an array: {symbol}")
     seen_types: set[str] = set()
     normalized = []
     for item in value:
         if not isinstance(item, Mapping) or set(item) != CALIBRATION_ERROR_KEYS:
-            raise ManagerScreeningError(
-                f"calibration material error fields are invalid: {symbol}"
-            )
+            raise ManagerScreeningError(f"calibration material error fields are invalid: {symbol}")
         error_type = item.get("type")
         if error_type not in CALIBRATION_ERROR_TYPES:
-            raise ManagerScreeningError(
-                f"invalid calibration material error type: {error_type}"
-            )
+            raise ManagerScreeningError(f"invalid calibration material error type: {error_type}")
         if error_type in seen_types:
             raise ManagerScreeningError(
                 f"duplicate calibration material error type for {symbol}: {error_type}"
@@ -2119,14 +2134,10 @@ def _validate_route_disagreement(
     allowed_evidence: set[str],
 ) -> dict[str, Any]:
     if not isinstance(value, Mapping) or set(value) != ROUTE_DISAGREEMENT_KEYS:
-        raise ManagerScreeningError(
-            f"route disagreement fields are invalid: {symbol}"
-        )
+        raise ManagerScreeningError(f"route disagreement fields are invalid: {symbol}")
     present = value.get("present")
     if not isinstance(present, bool):
-        raise ManagerScreeningError(
-            f"route disagreement present must be boolean: {symbol}"
-        )
+        raise ManagerScreeningError(f"route disagreement present must be boolean: {symbol}")
     finding = value.get("finding")
     evidence_ids = _calibration_evidence_ids(
         value.get("evidence_ids"),
@@ -2162,19 +2173,13 @@ def _validate_calibration_adjudication(
     legacy_contract: bool,
 ) -> dict[str, Any]:
     if not isinstance(value, Mapping) or set(value) != CALIBRATION_ADJUDICATION_KEYS:
-        raise ManagerScreeningError(
-            f"calibration adjudication fields are invalid: {symbol}"
-        )
+        raise ManagerScreeningError(f"calibration adjudication fields are invalid: {symbol}")
     performed = value.get("performed")
     if not isinstance(performed, bool):
-        raise ManagerScreeningError(
-            f"calibration adjudication performed must be boolean: {symbol}"
-        )
+        raise ManagerScreeningError(f"calibration adjudication performed must be boolean: {symbol}")
     outcome = value.get("outcome")
     if outcome not in ADJUDICATION_OUTCOMES:
-        raise ManagerScreeningError(
-            f"invalid calibration adjudication outcome: {outcome}"
-        )
+        raise ManagerScreeningError(f"invalid calibration adjudication outcome: {outcome}")
     evidence_ids = _calibration_evidence_ids(
         value.get("evidence_ids"),
         allowed=allowed_evidence,
@@ -2201,15 +2206,11 @@ def _validate_calibration_adjudication(
         )
     if not performed:
         if outcome != "not_needed" or finding is not None or evidence_ids:
-            raise ManagerScreeningError(
-                f"unperformed adjudication must be not_needed: {symbol}"
-            )
+            raise ManagerScreeningError(f"unperformed adjudication must be not_needed: {symbol}")
         normalized_finding = None
     else:
         if outcome == "not_needed":
-            raise ManagerScreeningError(
-                f"performed adjudication requires an outcome: {symbol}"
-            )
+            raise ManagerScreeningError(f"performed adjudication requires an outcome: {symbol}")
         normalized_finding = _text(
             finding,
             f"{symbol}.adjudication.finding",
@@ -2232,12 +2233,7 @@ def _calibration_evidence_ids(
     if (
         not isinstance(value, list)
         or (required and not value)
-        or any(
-            not isinstance(item, str)
-            or not item
-            or item not in allowed
-            for item in value
-        )
+        or any(not isinstance(item, str) or not item or item not in allowed for item in value)
         or len(value) != len(set(value))
     ):
         raise ManagerScreeningError(f"{label} contains invalid evidence references")
@@ -2250,25 +2246,18 @@ def _validate_calibration_packet(
     verified_batch: Mapping[str, Any],
     repository_root: Path,
 ) -> None:
-    if (
-        set(packet) != CALIBRATION_PACKET_KEYS
-        or packet.get("schema_version") != 1
-    ):
-        raise ManagerScreeningError(
-            "manager-screen calibration packet fields are invalid"
-        )
+    if set(packet) != CALIBRATION_PACKET_KEYS or packet.get("schema_version") != 1:
+        raise ManagerScreeningError("manager-screen calibration packet fields are invalid")
     batch = verified_batch["batch"]
     manager_result = verified_batch["result"]
     if (
         packet.get("run_id") != batch["run_id"]
         or packet.get("batch_id") != batch["batch_id"]
-        or packet.get("batch_path")
-        != _relative(verified_batch["batch_path"], repository_root)
+        or packet.get("batch_path") != _relative(verified_batch["batch_path"], repository_root)
         or packet.get("batch_sha256") != verified_batch["batch_seal"].sha256
         or packet.get("manager_result_path")
         != _relative(verified_batch["result_path"], repository_root)
-        or packet.get("manager_result_sha256")
-        != verified_batch["result_seal"].sha256
+        or packet.get("manager_result_sha256") != verified_batch["result_seal"].sha256
     ):
         raise ManagerScreeningError(
             "manager-screen calibration packet does not bind its batch/result"
@@ -2279,9 +2268,7 @@ def _validate_calibration_packet(
         manager_result["recorded_at"],
         "manager result recorded_at",
     ):
-        raise ManagerScreeningError(
-            "manager-screen calibration packet predates manager result"
-        )
+        raise ManagerScreeningError("manager-screen calibration packet predates manager result")
     policy = packet.get("policy")
     if (
         not isinstance(policy, Mapping)
@@ -2293,12 +2280,12 @@ def _validate_calibration_packet(
             CONTROL_POLICY_REF_KEYS,
             POLICY_V2_REF_KEYS,
             POLICY_V2_CONTROL_REF_KEYS,
+            POLICY_V3_REF_KEYS,
+            POLICY_V3_CONTROL_REF_KEYS,
         )
         or not _has_calibration_policy(policy)
     ):
-        raise ManagerScreeningError(
-            "manager-screen calibration packet policy is invalid"
-        )
+        raise ManagerScreeningError("manager-screen calibration packet policy is invalid")
     for key in ("file_sha256", "payload_sha256"):
         _sha256(policy.get(key), f"calibration policy.{key}")
     expected_plan = _calibration_plan(batch, policy=policy)
@@ -2307,20 +2294,10 @@ def _validate_calibration_packet(
             "manager-screen calibration packet sample does not match policy"
         )
     samples = packet.get("samples")
-    if not isinstance(samples, list) or len(samples) != expected_plan[
-        "planned_sample_count"
-    ]:
-        raise ManagerScreeningError(
-            "manager-screen calibration packet sample count is invalid"
-        )
-    dossier_by_symbol = {
-        item["symbol"]: item
-        for item in verified_batch["packet"]["dossiers"]
-    }
-    decision_by_symbol = {
-        item["symbol"]: item
-        for item in manager_result["decisions"]
-    }
+    if not isinstance(samples, list) or len(samples) != expected_plan["planned_sample_count"]:
+        raise ManagerScreeningError("manager-screen calibration packet sample count is invalid")
+    dossier_by_symbol = {item["symbol"]: item for item in verified_batch["packet"]["dossiers"]}
+    decision_by_symbol = {item["symbol"]: item for item in manager_result["decisions"]}
     for expected_symbol, sample in zip(
         expected_plan["sample_symbols"],
         samples,
@@ -2345,13 +2322,9 @@ def _validate_calibration_packet(
     legacy_contract = dict(expected_contract)
     legacy_contract.pop("adjudication_trigger", None)
     if packet.get("reviewer_contract") not in (expected_contract, legacy_contract):
-        raise ManagerScreeningError(
-            "manager-screen calibration reviewer contract is invalid"
-        )
+        raise ManagerScreeningError("manager-screen calibration reviewer contract is invalid")
     if packet.get("non_blocking") is not True or packet.get("portfolio_action") is not None:
-        raise ManagerScreeningError(
-            "manager-screen calibration packet must be non-blocking"
-        )
+        raise ManagerScreeningError("manager-screen calibration packet must be non-blocking")
 
 
 def _validate_calibration_result(
@@ -2361,28 +2334,19 @@ def _validate_calibration_result(
     packet_sha256: str,
     verified_batch: Mapping[str, Any],
 ) -> None:
-    if (
-        set(result) != CALIBRATION_RESULT_KEYS
-        or result.get("schema_version") != 1
-    ):
-        raise ManagerScreeningError(
-            "manager-screen calibration result fields are invalid"
-        )
+    if set(result) != CALIBRATION_RESULT_KEYS or result.get("schema_version") != 1:
+        raise ManagerScreeningError("manager-screen calibration result fields are invalid")
     if (
         result.get("run_id") != packet["run_id"]
         or result.get("batch_id") != packet["batch_id"]
         or result.get("calibration_id") != packet["calibration_id"]
         or result.get("packet_sha256") != packet_sha256
         or result.get("batch_sha256") != verified_batch["batch_seal"].sha256
-        or result.get("manager_result_sha256")
-        != verified_batch["result_seal"].sha256
-        or result.get("policy_payload_sha256")
-        != packet["policy"]["payload_sha256"]
+        or result.get("manager_result_sha256") != verified_batch["result_seal"].sha256
+        or result.get("policy_payload_sha256") != packet["policy"]["payload_sha256"]
         or result.get("plan") != packet["plan"]
     ):
-        raise ManagerScreeningError(
-            "manager-screen calibration result does not bind its inputs"
-        )
+        raise ManagerScreeningError("manager-screen calibration result does not bind its inputs")
     recorded = _parse_datetime(result.get("recorded_at"), "calibration recorded_at")
     if recorded < _parse_datetime(packet["prepared_at"], "calibration prepared_at"):
         raise ManagerScreeningError("manager-screen calibration result predates packet")
@@ -2400,17 +2364,10 @@ def _validate_calibration_result(
         legacy_contract=_is_legacy_calibration_packet(packet),
     )
     if any(result[key] != normalized[key] for key in normalized):
-        raise ManagerScreeningError(
-            "manager-screen calibration result is not normalized"
-        )
-    material_error_count = sum(
-        len(review["material_errors"])
-        for review in normalized["reviews"]
-    )
+        raise ManagerScreeningError("manager-screen calibration result is not normalized")
+    material_error_count = sum(len(review["material_errors"]) for review in normalized["reviews"])
     material_error_symbols = [
-        review["symbol"]
-        for review in normalized["reviews"]
-        if review["material_errors"]
+        review["symbol"] for review in normalized["reviews"] if review["material_errors"]
     ]
     route_disagreement_symbols = [
         review["symbol"]
@@ -2418,9 +2375,7 @@ def _validate_calibration_result(
         if review["route_disagreement"]["present"]
     ]
     adjudicated_symbols = [
-        review["symbol"]
-        for review in normalized["reviews"]
-        if review["adjudication"]["performed"]
+        review["symbol"] for review in normalized["reviews"] if review["adjudication"]["performed"]
     ]
     expected_summary = {
         "status": "material_error" if material_error_count else "complete",
@@ -2436,9 +2391,7 @@ def _validate_calibration_result(
         "adjudicated_symbols": adjudicated_symbols,
     }
     if result.get("summary") != expected_summary:
-        raise ManagerScreeningError(
-            "manager-screen calibration result summary is invalid"
-        )
+        raise ManagerScreeningError("manager-screen calibration result summary is invalid")
     if (
         result.get("non_blocking") is not True
         or result.get("recursive_correction") != "forbidden"
@@ -2479,9 +2432,7 @@ def _verify_calibration_dir(
         or calibration_dir.parent.parent.name != packet["batch_id"]
         or calibration_dir.parent.parent.parent.name != packet["run_id"]
     ):
-        raise ManagerScreeningError(
-            "manager-screen calibration directory identity is invalid"
-        )
+        raise ManagerScreeningError("manager-screen calibration directory identity is invalid")
     expected_packet_path = _relative(packet_path, repository_root)
     result = None
     result_seal = None
@@ -2498,9 +2449,7 @@ def _verify_calibration_dir(
                 "manager-screen calibration result has unexpected artifact type"
             )
         if result.get("packet_path") != expected_packet_path:
-            raise ManagerScreeningError(
-                "manager-screen calibration result path binding is invalid"
-            )
+            raise ManagerScreeningError("manager-screen calibration result path binding is invalid")
         _validate_calibration_result(
             result,
             packet=packet,
@@ -2556,9 +2505,7 @@ def _calibration_record_summary(
         "status": result["summary"]["status"],
         "reviewed_sample_count": result["summary"]["reviewed_sample_count"],
         "material_error_count": result["summary"]["material_error_count"],
-        "route_disagreement_count": result["summary"][
-            "route_disagreement_count"
-        ],
+        "route_disagreement_count": result["summary"]["route_disagreement_count"],
         "packet_path": _relative(calibration["packet_path"], repository_root),
         "packet_sha256": calibration["packet_seal"].sha256,
         "result_path": _relative(calibration["result_path"], repository_root),
@@ -2582,8 +2529,7 @@ def _batch_calibration_status(
     )
     if len(calibration_dirs) > 1:
         raise ManagerScreeningError(
-            f"manager-screen calibration correction chain is forbidden: "
-            f"{batch['batch_id']}"
+            f"manager-screen calibration correction chain is forbidden: {batch['batch_id']}"
         )
     if calibration_dirs:
         if verified.get("result") is None:
@@ -2696,13 +2642,19 @@ def _load_policy_contract(
     maximum_size = _positive_int(payload.get("maximum_batch_size"), "maximum_batch_size")
     if not minimum_size <= default_size <= maximum_size:
         raise ManagerScreeningError("manager-screen batch-size policy is inconsistent")
-    if set(payload.get("routes") or []) != ROUTES:
+    decision_contract_version = payload.get("decision_contract_version")
+    if decision_contract_version not in {None, 2, 3}:
+        raise ManagerScreeningError(
+            "manager-screen decision_contract_version must be 2 or 3 when configured"
+        )
+    expected_routes = (
+        DEFERRED_ALLOCATION_ROUTES if decision_contract_version == 3 else DIRECT_ALLOCATION_ROUTES
+    )
+    if set(payload.get("routes") or []) != expected_routes:
         raise ManagerScreeningError("manager-screen policy routes do not match the contract")
     effort = payload.get("quick_profile_effort_budget_hours")
     if isinstance(effort, bool) or not isinstance(effort, (int, float)) or effort <= 0:
-        raise ManagerScreeningError(
-            "quick_profile_effort_budget_hours must be positive"
-        )
+        raise ManagerScreeningError("quick_profile_effort_budget_hours must be positive")
     stops = payload.get("quick_profile_stop_conditions")
     if (
         not isinstance(stops, list)
@@ -2748,9 +2700,7 @@ def _load_policy_contract(
         or not isinstance(sample_rate, (int, float))
         or not 0 < float(sample_rate) <= 1
     ):
-        raise ManagerScreeningError(
-            "calibration_sample_rate must be greater than 0 and at most 1"
-        )
+        raise ManagerScreeningError("calibration_sample_rate must be greater than 0 and at most 1")
     calibration_minimum = _positive_int(
         quality.get("calibration_minimum_per_batch"),
         "calibration_minimum_per_batch",
@@ -2774,20 +2724,15 @@ def _load_policy_contract(
             payload.get("send_to_analyst_capacity_per_run"),
             "send_to_analyst_capacity_per_run",
         )
-    decision_contract_version = payload.get("decision_contract_version")
     decision_v2: dict[str, Any] = {}
     if decision_contract_version is not None:
-        if decision_contract_version != 2:
-            raise ManagerScreeningError(
-                "manager-screen decision_contract_version must be 2 when configured"
-            )
         if payload.get("mandatory_risk_acknowledgement") is not True:
             raise ManagerScreeningError(
-                "decision contract v2 must require mandatory risk acknowledgement"
+                "decision contract v2+ must require mandatory risk acknowledgement"
             )
         if payload.get("canonical_fact_line_required") is not True:
             raise ManagerScreeningError(
-                "decision contract v2 must require the canonical fact line"
+                "decision contract v2+ must require the canonical fact line"
             )
         liability_threshold = payload.get("high_liability_to_assets_pct")
         if (
@@ -2800,11 +2745,24 @@ def _load_policy_contract(
                 "high_liability_to_assets_pct must be greater than 0 and at most 100"
             )
         decision_v2 = {
-            "decision_contract_version": 2,
+            "decision_contract_version": decision_contract_version,
             "mandatory_risk_acknowledgement": True,
             "canonical_fact_line_required": True,
             "high_liability_to_assets_pct": float(liability_threshold),
+            **(
+                {"research_candidate_requires_allocation": True}
+                if decision_contract_version == 3
+                and payload.get("research_candidate_requires_allocation") is True
+                else {}
+            ),
         }
+        if (
+            decision_contract_version == 3
+            and decision_v2.get("research_candidate_requires_allocation") is not True
+        ):
+            raise ManagerScreeningError(
+                "decision contract v3 must require sealed research-candidate allocation"
+            )
     run_control: dict[str, Any] = {}
     if "run_control_required" in payload:
         if payload.get("run_control_required") is not True:
@@ -2835,11 +2793,7 @@ def _load_policy_contract(
         "calibration_minimum_per_batch": calibration_minimum,
         "calibration_material_error_types": sorted(CALIBRATION_ERROR_TYPES),
         "route_disagreement_is_material_error": False,
-        **(
-            {"send_to_analyst_capacity_per_run": capacity}
-            if capacity is not None
-            else {}
-        ),
+        **({"send_to_analyst_capacity_per_run": capacity} if capacity is not None else {}),
         **decision_v2,
         **run_control,
     }
@@ -2853,9 +2807,7 @@ def _load_scope_artifacts(*, base: Path, run_id: str):
         manifest_seal = verify_sealed(manifest_path)
         intake_seal = verify_sealed(intake_path)
     except (OSError, SealingError) as exc:
-        raise ManagerScreeningError(
-            f"scope artifacts are not validly sealed: {run_id}"
-        ) from exc
+        raise ManagerScreeningError(f"scope artifacts are not validly sealed: {run_id}") from exc
     if manifest_seal.artifact_type != "all_a_scope_manifest":
         raise ManagerScreeningError("scope manifest has an unexpected artifact type")
     if intake_seal.artifact_type != "all_a_baseline_intake":
@@ -2919,10 +2871,7 @@ def _latest_quote_amendment(
     if not amendment_dir.is_dir():
         return None, None
     base_sha256 = hashlib.sha256(base_snapshot_path.read_bytes()).hexdigest()
-    base_symbols = {
-        _symbol(item.get("symbol"))
-        for item in read_jsonl(base_snapshot_path)
-    }
+    base_symbols = {_symbol(item.get("symbol")) for item in read_jsonl(base_snapshot_path)}
     eligible = []
     for path in sorted(amendment_dir.glob("*.json")):
         if path.name.endswith(".seal.json"):
@@ -3001,8 +2950,7 @@ def _validate_quote_amendment_payload(
         "quote amendment effective_at",
     )
     if (
-        payload.get("base_snapshot_path")
-        != _relative(base_snapshot_path, repository_root)
+        payload.get("base_snapshot_path") != _relative(base_snapshot_path, repository_root)
         or payload.get("base_snapshot_sha256") != base_snapshot_sha256
     ):
         raise ManagerScreeningError(
@@ -3034,21 +2982,17 @@ def _validate_quote_amendment_payload(
             not isinstance(freshness, Mapping)
             or freshness.get("schema_version") != 1
             or freshness.get("status") != "fresh"
-            or freshness.get("max_age_seconds")
-            != freshness_policy.get("max_age_seconds")
+            or freshness.get("max_age_seconds") != freshness_policy.get("max_age_seconds")
             or freshness.get("future_tolerance_seconds")
             != freshness_policy.get("future_tolerance_seconds")
         ):
-            raise ManagerScreeningError(
-                f"quote amendment freshness row is invalid: {symbol}"
-            )
+            raise ManagerScreeningError(f"quote amendment freshness row is invalid: {symbol}")
         quote_as_of = _parse_datetime(
             freshness.get("quote_as_of"),
             f"{symbol}.quote amendment as_of",
         )
         if (
-            _parse_datetime(quote.get("as_of"), f"{symbol}.quote as_of")
-            != quote_as_of
+            _parse_datetime(quote.get("as_of"), f"{symbol}.quote as_of") != quote_as_of
             or freshness.get("evaluated_at") != effective_at.isoformat()
         ):
             raise ManagerScreeningError(
@@ -3056,13 +3000,9 @@ def _validate_quote_amendment_payload(
             )
         age = effective_at - quote_as_of
         if age > dt.timedelta(seconds=max_age):
-            raise ManagerScreeningError(
-                f"quote amendment claims a stale quote is fresh: {symbol}"
-            )
+            raise ManagerScreeningError(f"quote amendment claims a stale quote is fresh: {symbol}")
         if -age > dt.timedelta(seconds=future_tolerance):
-            raise ManagerScreeningError(
-                f"quote amendment quote is after effective_at: {symbol}"
-            )
+            raise ManagerScreeningError(f"quote amendment quote is after effective_at: {symbol}")
         source = quote.get("source")
         if (
             not isinstance(source, str)
@@ -3091,17 +3031,13 @@ def _validate_quote_amendment_payload(
             or not math.isfinite(float(price))
             or price <= 0
         ):
-            raise ManagerScreeningError(
-                f"quote amendment price is invalid: {symbol}"
-            )
+            raise ManagerScreeningError(f"quote amendment price is invalid: {symbol}")
     if len(symbols) != len(set(symbols)) or set(symbols) != base_symbols:
         raise ManagerScreeningError(
             "quote amendment must cover the frozen company universe exactly once"
         )
     if payload.get("portfolio_action") is not None:
-        raise ManagerScreeningError(
-            "quote amendment cannot contain a portfolio action"
-        )
+        raise ManagerScreeningError("quote amendment cannot contain a portfolio action")
 
 
 def _apply_quote_amendment(
@@ -3109,10 +3045,7 @@ def _apply_quote_amendment(
     *,
     amendment: Mapping[str, Any],
 ) -> list[dict[str, Any]]:
-    quotes = {
-        _symbol(item.get("symbol")): item
-        for item in amendment["quotes"]
-    }
+    quotes = {_symbol(item.get("symbol")): item for item in amendment["quotes"]}
     updated = []
     for company in companies:
         row = dict(company)
@@ -3148,9 +3081,7 @@ def _require_scope_binding(
         "baseline_intake_sha256": intake_sha256,
     }
     if batch.get("scope") != expected:
-        raise ManagerScreeningError(
-            "manager-screen batch does not bind the frozen scope artifacts"
-        )
+        raise ManagerScreeningError("manager-screen batch does not bind the frozen scope artifacts")
 
 
 def _candidate_members(
@@ -3182,9 +3113,7 @@ def _candidate_members(
             raise ManagerScreeningError("baseline intake member must be an object")
         symbol = _symbol(member.get("symbol"))
         if symbol in intake_symbols:
-            raise ManagerScreeningError(
-                f"duplicate baseline intake member: {symbol}"
-            )
+            raise ManagerScreeningError(f"duplicate baseline intake member: {symbol}")
         intake_symbols.add(symbol)
         action = member.get("materialization_action")
         if action != "normalize_queue":
@@ -3247,9 +3176,7 @@ def _manager_screen_transition_overlay(
     queue_by_symbol: Mapping[str, Mapping[str, Any]],
 ) -> dict[str, Any]:
     run_id = _identifier(intake.get("run_id"), "baseline intake run_id")
-    transition_dir = (
-        base / "manager-screen" / run_id / "legacy-transition-001"
-    )
+    transition_dir = base / "manager-screen" / run_id / "legacy-transition-001"
     absent = {
         "state": "absent",
         "release_count": 0,
@@ -3263,9 +3190,7 @@ def _manager_screen_transition_overlay(
     if not transition_dir.exists():
         return absent
     if not transition_dir.is_dir():
-        raise ManagerScreeningError(
-            "legacy transition path is not a directory"
-        )
+        raise ManagerScreeningError("legacy transition path is not a directory")
 
     from .legacy_transition import (
         LegacyTransitionError,
@@ -3275,9 +3200,7 @@ def _manager_screen_transition_overlay(
     try:
         status = legacy_transition_status(root=base, run_id=run_id)
     except LegacyTransitionError as exc:
-        raise ManagerScreeningError(
-            f"legacy transition is invalid: {exc}"
-        ) from exc
+        raise ManagerScreeningError(f"legacy transition is invalid: {exc}") from exc
     if status["state"] != "recorded":
         return {
             **absent,
@@ -3332,36 +3255,24 @@ def _manager_screen_transition_overlay(
     actions: dict[str, str] = {}
     for item in plan.get("members", []):
         if not isinstance(item, Mapping):
-            raise ManagerScreeningError(
-                "legacy transition plan member is invalid"
-            )
+            raise ManagerScreeningError("legacy transition plan member is invalid")
         symbol = _symbol(item.get("symbol"))
         if symbol in actions:
-            raise ManagerScreeningError(
-                f"duplicate legacy transition member: {symbol}"
-            )
+            raise ManagerScreeningError(f"duplicate legacy transition member: {symbol}")
         actions[symbol] = str(item.get("action"))
 
     release_symbols = result.get("releases")
     if not isinstance(release_symbols, list):
-        raise ManagerScreeningError(
-            "legacy transition releases must be an array"
-        )
+        raise ManagerScreeningError("legacy transition releases must be an array")
     if len(release_symbols) != len(set(release_symbols)):
-        raise ManagerScreeningError(
-            "legacy transition releases contain duplicates"
-        )
+        raise ManagerScreeningError("legacy transition releases contain duplicates")
     manifest_by_symbol: dict[str, dict[str, Any]] = {}
     for member in manifest.get("members", []):
         if not isinstance(member, Mapping):
-            raise ManagerScreeningError(
-                "scope manifest member must be an object"
-            )
+            raise ManagerScreeningError("scope manifest member must be an object")
         symbol = _symbol(member.get("symbol"))
         if symbol in manifest_by_symbol:
-            raise ManagerScreeningError(
-                f"duplicate scope manifest member: {symbol}"
-            )
+            raise ManagerScreeningError(f"duplicate scope manifest member: {symbol}")
         _positive_int(member.get("ordinal"), "scope ordinal")
         manifest_by_symbol[symbol] = dict(member)
 
@@ -3369,31 +3280,20 @@ def _manager_screen_transition_overlay(
     for value in release_symbols:
         symbol = _symbol(value)
         if actions.get(symbol) != "rescreen":
-            raise ManagerScreeningError(
-                f"legacy transition release action is invalid: {symbol}"
-            )
+            raise ManagerScreeningError(f"legacy transition release action is invalid: {symbol}")
         member = manifest_by_symbol.get(symbol)
         if member is None:
-            raise ManagerScreeningError(
-                f"legacy transition release is outside scope: {symbol}"
-            )
+            raise ManagerScreeningError(f"legacy transition release is outside scope: {symbol}")
         queued = queue_by_symbol.get(symbol) or {}
         if (
-            queued.get("legacy_transition_result_sha256")
-            != status["result_sha256"]
+            queued.get("legacy_transition_result_sha256") != status["result_sha256"]
             or queued.get("legacy_transition_action") != "rescreen"
         ):
-            raise ManagerScreeningError(
-                f"legacy transition release is not materialized: {symbol}"
-            )
+            raise ManagerScreeningError(f"legacy transition release is not materialized: {symbol}")
         release_members.append(member)
-    release_members.sort(
-        key=lambda item: _positive_int(item.get("ordinal"), "scope ordinal")
-    )
+    release_members.sort(key=lambda item: _positive_int(item.get("ordinal"), "scope ordinal"))
     if len(release_members) != classification["rescreen"]:
-        raise ManagerScreeningError(
-            "legacy transition release count does not match classification"
-        )
+        raise ManagerScreeningError("legacy transition release count does not match classification")
     return {
         "state": "recorded",
         "release_count": len(release_members),
@@ -3419,9 +3319,7 @@ def _bound_repository_artifact(
     try:
         path.relative_to(repository_root)
     except ValueError as exc:
-        raise ManagerScreeningError(
-            f"{label} is outside the repository"
-        ) from exc
+        raise ManagerScreeningError(f"{label} is outside the repository") from exc
     try:
         sealed = verify_sealed(path)
     except (OSError, SealingError) as exc:
@@ -3501,14 +3399,10 @@ def _build_dossier(
     )
     if require_fact_snapshot:
         if not isinstance(facts, Mapping):
-            raise ManagerScreeningError(
-                f"manager-screen fact snapshot is missing: {symbol}"
-            )
+            raise ManagerScreeningError(f"manager-screen fact snapshot is missing: {symbol}")
         annuals = facts.get("annuals")
         if not isinstance(annuals, list):
-            raise ManagerScreeningError(
-                f"manager-screen annual facts are invalid: {symbol}"
-            )
+            raise ManagerScreeningError(f"manager-screen annual facts are invalid: {symbol}")
         facts = dict(facts)
         facts["annual_history_complete"] = len(annuals) >= minimum_annual_periods
     prior_screening = (
@@ -3521,7 +3415,7 @@ def _build_dossier(
     market_snapshot = {key: company.get(key) for key in MARKET_FIELDS}
     if isinstance(facts, Mapping):
         facts = dict(facts)
-        if decision_contract_version == 2:
+        if decision_contract_version in {2, 3}:
             facts["decision_support"] = build_decision_support(
                 symbol=symbol,
                 name=_text(member.get("name"), "member name"),
@@ -3596,18 +3490,12 @@ def _require_fresh_quote_policy(
     frozen_at: dt.datetime,
 ) -> None:
     if not isinstance(facts, Mapping):
-        raise ManagerScreeningError(
-            f"manager-screen quote freshness policy is missing: {symbol}"
-        )
+        raise ManagerScreeningError(f"manager-screen quote freshness policy is missing: {symbol}")
     freshness = facts.get("quote_freshness")
     if not isinstance(freshness, Mapping):
-        raise ManagerScreeningError(
-            f"manager-screen quote freshness policy is missing: {symbol}"
-        )
+        raise ManagerScreeningError(f"manager-screen quote freshness policy is missing: {symbol}")
     if freshness.get("schema_version") != 1 or freshness.get("status") != "fresh":
-        raise ManagerScreeningError(
-            f"manager-screen quote freshness state is invalid: {symbol}"
-        )
+        raise ManagerScreeningError(f"manager-screen quote freshness state is invalid: {symbol}")
     max_age = _positive_int(
         freshness.get("max_age_seconds"),
         f"{symbol}.quote_freshness.max_age_seconds",
@@ -3627,9 +3515,7 @@ def _require_fresh_quote_policy(
             f"({quote_as_of.isoformat()}, max_age={max_age}s)"
         )
     if -age > dt.timedelta(seconds=future_tolerance):
-        raise ManagerScreeningError(
-            f"manager-screen quote is after batch freeze: {symbol}"
-        )
+        raise ManagerScreeningError(f"manager-screen quote is after batch freeze: {symbol}")
 
 
 def _timeline_summary(path: Path, *, symbol: str) -> dict[str, Any]:
@@ -3670,9 +3556,7 @@ def _normalize_submission(
     recorded_at: dt.datetime,
 ) -> dict[str, Any]:
     if not isinstance(submission, Mapping) or set(submission) != SUBMISSION_KEYS:
-        raise ManagerScreeningError(
-            "manager-screen submission fields do not match the v1 contract"
-        )
+        raise ManagerScreeningError("manager-screen submission fields do not match the v1 contract")
     if submission.get("schema_version") != 1:
         raise ManagerScreeningError("manager-screen submission schema_version must be 1")
     manager = _validate_manager(submission.get("manager"))
@@ -3724,27 +3608,19 @@ def _validate_additional_evidence(
     result = []
     for item in value:
         if not isinstance(item, Mapping) or set(item) != EXTERNAL_EVIDENCE_KEYS:
-            raise ManagerScreeningError(
-                "additional evidence fields do not match the v1 contract"
-            )
+            raise ManagerScreeningError("additional evidence fields do not match the v1 contract")
         evidence_id = _text(item.get("evidence_id"), "additional evidence id")
         if not evidence_id.startswith("external:") or not EVIDENCE_ID_RE.fullmatch(evidence_id):
-            raise ManagerScreeningError(
-                "additional evidence id must use the external: prefix"
-            )
+            raise ManagerScreeningError("additional evidence id must use the external: prefix")
         if evidence_id in seen:
             raise ManagerScreeningError(f"duplicate additional evidence id: {evidence_id}")
         seen.add(evidence_id)
         symbol = _symbol(item.get("symbol"))
         if symbol not in symbols:
-            raise ManagerScreeningError(
-                f"additional evidence symbol is outside batch: {symbol}"
-            )
+            raise ManagerScreeningError(f"additional evidence symbol is outside batch: {symbol}")
         source_type = item.get("source_type")
         if source_type not in EXTERNAL_SOURCE_TYPES:
-            raise ManagerScreeningError(
-                f"invalid additional evidence source_type: {source_type}"
-            )
+            raise ManagerScreeningError(f"invalid additional evidence source_type: {source_type}")
         accessed = _parse_datetime(item.get("accessed_at"), "evidence accessed_at")
         if accessed > recorded_at:
             raise ManagerScreeningError("evidence accessed_at cannot be in the future")
@@ -3782,7 +3658,7 @@ def _validate_decisions(
         external_by_symbol.setdefault(item["symbol"], set()).add(item["evidence_id"])
     reason_max = batch["policy"]["one_line_reason_max_chars"]
     question_max = batch["policy"]["decisive_question_max_chars"]
-    decision_v2 = batch["policy"].get("decision_contract_version") == 2
+    decision_v2 = batch["policy"].get("decision_contract_version") in {2, 3}
     decision_keys = DECISION_V2_KEYS if decision_v2 else DECISION_KEYS
     normalized = []
     for item in value:
@@ -3792,7 +3668,7 @@ def _validate_decisions(
             )
         symbol = _symbol(item.get("symbol"))
         route = item.get("route")
-        if route not in ROUTES:
+        if route not in _routes_for_policy(batch["policy"]):
             raise ManagerScreeningError(f"invalid manager-screen route: {route}")
         reason = _text(item.get("one_line_reason"), f"{symbol}.one_line_reason")
         if "\n" in reason or "\r" in reason or len(reason) > reason_max:
@@ -3801,9 +3677,7 @@ def _validate_decisions(
             )
         question = _text(item.get("decisive_question"), f"{symbol}.decisive_question")
         if len(question) > question_max:
-            raise ManagerScreeningError(
-                f"{symbol}.decisive_question exceeds {question_max} chars"
-            )
+            raise ManagerScreeningError(f"{symbol}.decisive_question exceeds {question_max} chars")
         triggers = _validate_triggers(item.get("revisit_triggers"), symbol=symbol)
         if route in {"pass", "watch"} and not triggers:
             raise ManagerScreeningError(
@@ -3823,15 +3697,12 @@ def _validate_decisions(
                 f"{symbol}.evidence_ids must be a non-empty unique string array"
             )
         local_ids = {
-            evidence["evidence_id"]
-            for evidence in dossier_by_symbol[symbol]["evidence_catalog"]
+            evidence["evidence_id"] for evidence in dossier_by_symbol[symbol]["evidence_catalog"]
         }
         allowed = local_ids | external_by_symbol.get(symbol, set())
         unknown = sorted(set(evidence_ids) - allowed)
         if unknown:
-            raise ManagerScreeningError(
-                f"{symbol} cites evidence outside its dossier: {unknown}"
-            )
+            raise ManagerScreeningError(f"{symbol} cites evidence outside its dossier: {unknown}")
         normalized_decision = {
             "symbol": symbol,
             "route": route,
@@ -3842,20 +3713,16 @@ def _validate_decisions(
             "evidence_ids": list(evidence_ids),
         }
         if decision_v2:
-            facts = dossier_by_symbol[symbol]["market_snapshot"].get(
-                "manager_screen_facts"
-            )
+            facts = dossier_by_symbol[symbol]["market_snapshot"].get("manager_screen_facts")
             support = facts.get("decision_support") if isinstance(facts, Mapping) else None
             try:
                 validate_canonical_reason(reason, support)
-                normalized_decision["risk_acknowledgements"] = (
-                    validate_risk_acknowledgements(
-                        item.get("risk_acknowledgements"),
-                        support=support,
-                        decision_evidence_ids=evidence_ids,
-                        one_line_reason=reason,
-                        decisive_question=question,
-                    )
+                normalized_decision["risk_acknowledgements"] = validate_risk_acknowledgements(
+                    item.get("risk_acknowledgements"),
+                    support=support,
+                    decision_evidence_ids=evidence_ids,
+                    one_line_reason=reason,
+                    decisive_question=question,
                 )
             except ManagerScreenDecisionQualityError as exc:
                 raise ManagerScreeningError(
@@ -3885,13 +3752,9 @@ def _validate_triggers(value: Any, *, symbol: str) -> list[dict[str, Any]]:
         elif isinstance(condition, Mapping):
             condition = dict(condition)
             if not condition:
-                raise ManagerScreeningError(
-                    f"{symbol}.trigger.condition must not be empty"
-                )
+                raise ManagerScreeningError(f"{symbol}.trigger.condition must not be empty")
         else:
-            raise ManagerScreeningError(
-                f"{symbol}.trigger.condition must be a string or object"
-            )
+            raise ManagerScreeningError(f"{symbol}.trigger.condition must be a string or object")
         result.append(
             {
                 "type": trigger_type,
@@ -3923,6 +3786,10 @@ def _materialize_decisions(
         "pass": ("catalog", "等待重启条件，不购买新的单公司研究时间。"),
         "watch": ("watch_only", "按价格、财报、事件或关键证据触发器重新评估。"),
         "send_to_analyst": ("quick_profile", "交给一名研究员解决决定性问题。"),
+        "research_candidate": (
+            "candidate_unfunded",
+            "保留为未购预算候选；完整 scope 封存后由投资经理统一配置研究资本。",
+        ),
     }
     for decision in result["decisions"]:
         symbol = decision["symbol"]
@@ -3943,9 +3810,13 @@ def _materialize_decisions(
                 and current.get("assigned_agent") is None
             )
         )
-        if not already_materialized and current is not None and (
-            current.get("status") == "running"
-            or current.get("task_type") in PROTECTED_TASK_TYPES
+        if (
+            not already_materialized
+            and current is not None
+            and (
+                current.get("status") == "running"
+                or current.get("task_type") in PROTECTED_TASK_TYPES
+            )
         ):
             raise ManagerScreeningError(
                 f"coverage advanced after batch freeze; refusing to overwrite {symbol}"
@@ -3976,15 +3847,11 @@ def _materialize_decisions(
                     "name": members[symbol]["name"],
                     "priority": 3,
                     "reason": decision["one_line_reason"],
-                    "target_company_dir": (
-                        f"research/companies/CN/{symbol.split(':', 1)[1]}"
-                    ),
+                    "target_company_dir": (f"research/companies/CN/{symbol.split(':', 1)[1]}"),
                     "assigned_agent": None,
                     "started_at": None,
                     "finished_at": (
-                        None
-                        if decision["route"] == "send_to_analyst"
-                        else result["recorded_at"]
+                        None if decision["route"] == "send_to_analyst" else result["recorded_at"]
                     ),
                     "failure_reason": None,
                     "manager_screen_run_id": batch["run_id"],
@@ -4005,16 +3872,11 @@ def _materialize_decisions(
                         "status": "pending",
                         "result_path": None,
                         "next_action": (
-                            "由一名研究员只解决 manager-screen 的决定性问题；"
-                            "深研后再购买独立承保。"
+                            "由一名研究员只解决 manager-screen 的决定性问题；深研后再购买独立承保。"
                         ),
-                        "effort_budget_hours": batch["policy"][
-                            "quick_profile_effort_budget_hours"
-                        ],
+                        "effort_budget_hours": batch["policy"]["quick_profile_effort_budget_hours"],
                         "preceding_stage": "manager_screen",
-                        "stop_conditions": list(
-                            batch["policy"]["quick_profile_stop_conditions"]
-                        ),
+                        "stop_conditions": list(batch["policy"]["quick_profile_stop_conditions"]),
                     }
                 )
             else:
@@ -4032,6 +3894,10 @@ def _materialize_decisions(
                     "stop_conditions",
                 ):
                     updated.pop(stale, None)
+            if decision["route"] == "research_candidate":
+                updated["research_budget_state"] = "candidate_unfunded"
+            else:
+                updated.pop("research_budget_state", None)
             for stale in (
                 "allocation_sha256",
                 "selected_by",
@@ -4060,8 +3926,7 @@ def _materialize_decisions(
         existing_screen = screening.get(symbol)
         if not later_progress and (
             existing_screen is None
-            or existing_screen.get("manager_screen_result_path")
-            in {None, result_relative}
+            or existing_screen.get("manager_screen_result_path") in {None, result_relative}
         ):
             screen = {
                 "symbol": symbol,
@@ -4080,6 +3945,8 @@ def _materialize_decisions(
                 "confidence": decision["confidence"],
                 "revisit_triggers": decision["revisit_triggers"],
             }
+            if decision["route"] == "research_candidate":
+                screen["research_budget_state"] = "candidate_unfunded"
             if screen != existing_screen:
                 screening[symbol] = screen
                 screening_changed = True
@@ -4157,9 +4024,7 @@ def _load_freeze_journal(
             f"manager-screen freeze journal is not validly sealed: {batch_dir}"
         ) from exc
     if sealed.artifact_type != "manager_screen_freeze_journal":
-        raise ManagerScreeningError(
-            "manager-screen freeze journal has an unexpected artifact type"
-        )
+        raise ManagerScreeningError("manager-screen freeze journal has an unexpected artifact type")
     _validate_freeze_journal(
         journal,
         batch_dir=batch_dir,
@@ -4180,9 +4045,7 @@ def _validate_freeze_journal(
         or journal.get("schema_version") != 1
         or journal.get("portfolio_action") is not None
     ):
-        raise ManagerScreeningError(
-            "manager-screen freeze journal fields do not match v1"
-        )
+        raise ManagerScreeningError("manager-screen freeze journal fields do not match v1")
     batch = journal.get("batch")
     packet = journal.get("packet")
     if not isinstance(batch, Mapping) or not isinstance(packet, Mapping):
@@ -4198,8 +4061,7 @@ def _validate_freeze_journal(
         or journal.get("created_at") != batch.get("frozen_at")
         or journal.get("batch_sha256") != batch_sha256
         or journal.get("packet_sha256") != packet_sha256
-        or packet.get("batch_path")
-        != _relative(batch_dir / "batch.json", repository_root)
+        or packet.get("batch_path") != _relative(batch_dir / "batch.json", repository_root)
     ):
         raise ManagerScreeningError(
             "manager-screen freeze journal identity or SHA binding is invalid"
@@ -4224,9 +4086,7 @@ def _repair_manager_screen_freeze(
         sealed_at=frozen_at,
     )
     if batch_seal.sha256 != journal["batch_sha256"]:
-        raise ManagerScreeningError(
-            "repaired manager-screen batch diverges from freeze journal"
-        )
+        raise ManagerScreeningError("repaired manager-screen batch diverges from freeze journal")
     packet_seal = seal_json(
         batch_dir / "packet.json",
         journal["packet"],
@@ -4234,9 +4094,7 @@ def _repair_manager_screen_freeze(
         sealed_at=frozen_at,
     )
     if packet_seal.sha256 != journal["packet_sha256"]:
-        raise ManagerScreeningError(
-            "repaired manager-screen packet diverges from freeze journal"
-        )
+        raise ManagerScreeningError("repaired manager-screen packet diverges from freeze journal")
     verified = _verify_batch_dir(batch_dir, repository_root=repository_root)
     _discard_freeze_journal(batch_dir)
     return verified
@@ -4297,9 +4155,7 @@ def _verify_batch_dir(
                 f"manager-screen result is not validly sealed: {result_path}"
             ) from exc
         if result_seal.artifact_type != "manager_screen_result":
-            raise ManagerScreeningError(
-                "manager-screen result has an unexpected artifact type"
-            )
+            raise ManagerScreeningError("manager-screen result has an unexpected artifact type")
         result = _read_object(result_path)
         _validate_result(
             result,
@@ -4323,9 +4179,7 @@ def _verify_batch_dir(
             repository_root=repository_root,
         )
     except ManagerScreenGovernanceError as exc:
-        raise ManagerScreeningError(
-            f"manager-screen supersession is invalid: {batch_dir}"
-        ) from exc
+        raise ManagerScreeningError(f"manager-screen supersession is invalid: {batch_dir}") from exc
     if supersession is not None and result is not None:
         raise ManagerScreeningError(
             "manager-screen batch cannot have both a result and a supersession"
@@ -4372,12 +4226,9 @@ def _verify_bound_quote_amendment(
         or payload.get("run_id") != batch["run_id"]
         or payload.get("amendment_id") != reference["amendment_id"]
         or payload.get("effective_at") != reference["effective_at"]
-        or payload.get("base_snapshot_sha256")
-        != reference["base_snapshot_sha256"]
+        or payload.get("base_snapshot_sha256") != reference["base_snapshot_sha256"]
     ):
-        raise ManagerScreeningError(
-            "manager-screen batch quote amendment binding is invalid"
-        )
+        raise ManagerScreeningError("manager-screen batch quote amendment binding is invalid")
     base_path = (repository_root / payload["base_snapshot_path"]).resolve()
     try:
         base_path.relative_to(repository_root.resolve())
@@ -4385,10 +4236,7 @@ def _verify_bound_quote_amendment(
         raise ManagerScreeningError(
             "quote amendment base snapshot is outside the repository"
         ) from exc
-    base_symbols = {
-        _symbol(item.get("symbol"))
-        for item in read_jsonl(base_path)
-    }
+    base_symbols = {_symbol(item.get("symbol")) for item in read_jsonl(base_path)}
     _validate_quote_amendment_payload(
         payload,
         run_id=batch["run_id"],
@@ -4400,10 +4248,7 @@ def _verify_bound_quote_amendment(
 
 
 def _validate_batch(batch: Mapping[str, Any]) -> None:
-    if (
-        set(batch) not in (LEGACY_BATCH_KEYS, BATCH_KEYS)
-        or batch.get("schema_version") != 1
-    ):
+    if set(batch) not in (LEGACY_BATCH_KEYS, BATCH_KEYS) or batch.get("schema_version") != 1:
         raise ManagerScreeningError("manager-screen batch fields do not match v1")
     _identifier(batch.get("run_id"), "run_id")
     _identifier(batch.get("batch_id"), "batch_id")
@@ -4424,9 +4269,7 @@ def _validate_batch(batch: Mapping[str, Any]) -> None:
             not isinstance(quote_amendment, Mapping)
             or set(quote_amendment) != QUOTE_AMENDMENT_REF_KEYS
         ):
-            raise ManagerScreeningError(
-                "manager-screen quote amendment reference is invalid"
-            )
+            raise ManagerScreeningError("manager-screen quote amendment reference is invalid")
         _identifier(
             quote_amendment.get("amendment_id"),
             "quote amendment id",
@@ -4436,9 +4279,7 @@ def _validate_batch(batch: Mapping[str, Any]) -> None:
             "quote amendment path",
         )
         if Path(amendment_path).is_absolute():
-            raise ManagerScreeningError(
-                "quote amendment path must be repository-relative"
-            )
+            raise ManagerScreeningError("quote amendment path must be repository-relative")
         _sha256(quote_amendment.get("sha256"), "quote amendment sha256")
         _sha256(
             quote_amendment.get("base_snapshot_sha256"),
@@ -4453,18 +4294,16 @@ def _validate_batch(batch: Mapping[str, Any]) -> None:
                 "quote amendment cannot become effective after batch freeze"
             )
     policy = batch.get("policy")
-    if (
-        not isinstance(policy, Mapping)
-        or set(policy)
-        not in (
-            LEGACY_POLICY_REF_KEYS,
-            PRE_CAPACITY_POLICY_REF_KEYS,
-            PRE_CAPACITY_CONTROL_POLICY_REF_KEYS,
-            POLICY_REF_KEYS,
-            CONTROL_POLICY_REF_KEYS,
-            POLICY_V2_REF_KEYS,
-            POLICY_V2_CONTROL_REF_KEYS,
-        )
+    if not isinstance(policy, Mapping) or set(policy) not in (
+        LEGACY_POLICY_REF_KEYS,
+        PRE_CAPACITY_POLICY_REF_KEYS,
+        PRE_CAPACITY_CONTROL_POLICY_REF_KEYS,
+        POLICY_REF_KEYS,
+        CONTROL_POLICY_REF_KEYS,
+        POLICY_V2_REF_KEYS,
+        POLICY_V2_CONTROL_REF_KEYS,
+        POLICY_V3_REF_KEYS,
+        POLICY_V3_CONTROL_REF_KEYS,
     ):
         raise ManagerScreeningError("manager-screen policy reference is invalid")
     for key in ("file_sha256", "payload_sha256"):
@@ -4481,40 +4320,42 @@ def _validate_batch(batch: Mapping[str, Any]) -> None:
             or not isinstance(sample_rate, (int, float))
             or not 0 < float(sample_rate) <= 1
         ):
-            raise ManagerScreeningError(
-                "sealed manager-screen calibration sample rate is invalid"
-            )
+            raise ManagerScreeningError("sealed manager-screen calibration sample rate is invalid")
         _positive_int(
             policy.get("calibration_minimum_per_batch"),
             "policy.calibration_minimum_per_batch",
         )
         if (
-            set(policy.get("calibration_material_error_types") or [])
-            != CALIBRATION_ERROR_TYPES
+            set(policy.get("calibration_material_error_types") or []) != CALIBRATION_ERROR_TYPES
             or policy.get("route_disagreement_is_material_error") is not False
         ):
-            raise ManagerScreeningError(
-                "sealed manager-screen calibration contract is invalid"
-            )
+            raise ManagerScreeningError("sealed manager-screen calibration contract is invalid")
     if "send_to_analyst_capacity_per_run" in policy:
         _positive_int(
             policy.get("send_to_analyst_capacity_per_run"),
             "policy.send_to_analyst_capacity_per_run",
         )
     if "run_control_required" in policy and policy.get("run_control_required") is not True:
-        raise ManagerScreeningError(
-            "sealed manager-screen run-control requirement is invalid"
-        )
+        raise ManagerScreeningError("sealed manager-screen run-control requirement is invalid")
     if DECISION_V2_POLICY_REF_KEYS.intersection(policy):
+        contract_version = policy.get("decision_contract_version")
         if (
             not DECISION_V2_POLICY_REF_KEYS.issubset(policy)
-            or policy.get("decision_contract_version") != 2
+            or contract_version not in {2, 3}
             or policy.get("mandatory_risk_acknowledgement") is not True
             or policy.get("canonical_fact_line_required") is not True
         ):
-            raise ManagerScreeningError(
-                "sealed manager-screen decision v2 contract is invalid"
-            )
+            raise ManagerScreeningError("sealed manager-screen decision v2+ contract is invalid")
+        if contract_version == 3:
+            if (
+                not DECISION_V3_POLICY_REF_KEYS.issubset(policy)
+                or policy.get("research_candidate_requires_allocation") is not True
+            ):
+                raise ManagerScreeningError(
+                    "sealed manager-screen decision v3 allocation contract is invalid"
+                )
+        elif DECISION_V3_POLICY_REF_KEYS.intersection(policy):
+            raise ManagerScreeningError("sealed manager-screen v2 contract contains v3-only fields")
         liability_threshold = policy.get("high_liability_to_assets_pct")
         if (
             isinstance(liability_threshold, bool)
@@ -4522,9 +4363,7 @@ def _validate_batch(batch: Mapping[str, Any]) -> None:
             or not math.isfinite(float(liability_threshold))
             or not 0 < float(liability_threshold) <= 100
         ):
-            raise ManagerScreeningError(
-                "sealed manager-screen high-liability threshold is invalid"
-            )
+            raise ManagerScreeningError("sealed manager-screen high-liability threshold is invalid")
     requested = _positive_int(batch.get("requested_batch_size"), "requested_batch_size")
     if not policy["minimum_batch_size"] <= requested <= policy["maximum_batch_size"]:
         raise ManagerScreeningError("requested batch size violates sealed policy")
@@ -4590,7 +4429,7 @@ def _validate_packet(
         evidence_ids = [item.get("evidence_id") for item in catalog if isinstance(item, Mapping)]
         if len(evidence_ids) != len(catalog) or len(evidence_ids) != len(set(evidence_ids)):
             raise ManagerScreeningError("manager-screen evidence ids must be unique")
-        if batch["policy"].get("decision_contract_version") == 2:
+        if batch["policy"].get("decision_contract_version") in {2, 3}:
             market_snapshot = dossier.get("market_snapshot")
             facts = (
                 market_snapshot.get("manager_screen_facts")
@@ -4598,9 +4437,7 @@ def _validate_packet(
                 else None
             )
             if not isinstance(market_snapshot, Mapping) or not isinstance(facts, Mapping):
-                raise ManagerScreeningError(
-                    "manager-screen decision v2 support facts are missing"
-                )
+                raise ManagerScreeningError("manager-screen decision v2 support facts are missing")
             try:
                 validate_decision_support(
                     facts.get("decision_support"),
@@ -4610,14 +4447,11 @@ def _validate_packet(
                     facts=facts,
                     prior_screening=dossier.get("prior_screening"),
                     timeline=dossier.get("timeline"),
-                    high_liability_to_assets_pct=batch["policy"][
-                        "high_liability_to_assets_pct"
-                    ],
+                    high_liability_to_assets_pct=batch["policy"]["high_liability_to_assets_pct"],
                 )
             except ManagerScreenDecisionQualityError as exc:
                 raise ManagerScreeningError(
-                    f"manager-screen decision v2 support is invalid: {dossier['symbol']}: "
-                    f"{exc}"
+                    f"manager-screen decision v2 support is invalid: {dossier['symbol']}: {exc}"
                 ) from exc
     if received != expected:
         raise ManagerScreeningError("manager-screen dossier order does not match batch")

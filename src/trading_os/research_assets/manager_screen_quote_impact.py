@@ -36,7 +36,9 @@ DEFAULT_ABSOLUTE_PRICE_CHANGE_PCT = 20.0
 PRICE_CHANGE_POLICY_KEY = "quote_amendment_review_absolute_price_change_pct"
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$")
 SYMBOL_RE = re.compile(r"^CN:[0-9]{6}$")
-ROUTES = {"pass", "watch", "send_to_analyst"}
+DIRECT_ALLOCATION_ROUTES = {"pass", "watch", "send_to_analyst"}
+DEFERRED_ALLOCATION_ROUTES = {"pass", "watch", "research_candidate"}
+ROUTES = DIRECT_ALLOCATION_ROUTES | DEFERRED_ALLOCATION_ROUTES
 CONFIDENCES = {"low", "medium", "high"}
 TRIGGER_TYPES = {"filing", "price", "date", "ttl", "event", "thesis"}
 PROTECTED_TASK_TYPES = {
@@ -62,6 +64,7 @@ DECISION_V2_POLICY_KEYS = {
     "canonical_fact_line_required",
     "high_liability_to_assets_pct",
 }
+DECISION_V3_POLICY_KEYS = {"research_candidate_requires_allocation"}
 REVIEW_KEYS = {"symbol", "action", "replacement"}
 SUBMISSION_KEYS = {"schema_version", "manager", "reviews"}
 VALUATION_FIELDS = (
@@ -74,6 +77,12 @@ VALUATION_FIELDS = (
 
 class ManagerScreenQuoteImpactError(ValueError):
     """Raised when a completed-batch quote-impact review is invalid."""
+
+
+def _routes_for_version(version: int) -> set[str]:
+    if version == 3:
+        return DEFERRED_ALLOCATION_ROUTES
+    return DIRECT_ALLOCATION_ROUTES
 
 
 @serialized_coverage_write
@@ -103,6 +112,13 @@ def prepare_manager_screen_quote_impact(
         quote_amendment_path=quote_amendment_path,
         policy_path=policy_path,
     )
+    if inputs["decision_contract_version"] in {1, 2} and _allocation_v3_contract_active(
+        base=base,
+        run_id=run,
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "pre-contract v1/v2 quote-impact workflow is read-only after allocation v3 activation"
+        )
     if prepared < _parse_datetime(
         inputs["amendment"]["effective_at"],
         "quote amendment effective_at",
@@ -178,7 +194,7 @@ def prepare_manager_screen_quote_impact(
         (
             "Provide a complete replacement manager-screen decision; v2 keep "
             "is forbidden because its canonical fact line contains stale valuation."
-            if inputs["decision_contract_version"] == 2
+            if inputs["decision_contract_version"] in {2, 3}
             else "Choose keep or provide a complete replacement manager-screen decision."
         ),
     ]
@@ -256,6 +272,10 @@ def record_manager_screen_quote_impact(
     _validate_verified_review_semantics(verified)
     plan = verified["plan"]
     packet = verified["packet"]
+    precontract_quote_frozen = plan["policy"].get("decision_contract_version", 1) in {
+        1,
+        2,
+    } and _allocation_v3_contract_active(base=base, run_id=run)
     if recorded < _parse_datetime(plan["prepared_at"], "plan prepared_at"):
         raise ManagerScreenQuoteImpactError("recorded_at cannot predate quote-impact preparation")
     normalized = _normalize_submission(
@@ -286,11 +306,28 @@ def record_manager_screen_quote_impact(
         existing = complete["result"]
         if any(existing[key] != normalized[key] for key in ("manager", "reviews", "decisions")):
             raise ManagerScreenQuoteImpactError("sealed quote-impact result is immutable")
+        if precontract_quote_frozen:
+            _require_frozen_quote_projection_binding(
+                base=base,
+                repository_root=repository_root,
+                plan=plan,
+                result=existing,
+                result_path=result_path,
+                result_sha256=complete["result_seal"].sha256,
+            )
+            return _record_summary(
+                existing,
+                result_path=result_path,
+                result_sha256=complete["result_seal"].sha256,
+                repository_root=repository_root,
+                idempotent=True,
+            )
         _enforce_capacity(
             base=base,
             run_id=run,
             plan=plan,
             reviews=existing["reviews"],
+            purchases_already_recorded=True,
         )
         _materialize_replacements(
             base=base,
@@ -309,6 +346,11 @@ def record_manager_screen_quote_impact(
             idempotent=True,
         )
 
+    if precontract_quote_frozen:
+        raise ManagerScreenQuoteImpactError(
+            "pre-contract v1/v2 quote-impact result cannot be recorded after "
+            "allocation v3 activation"
+        )
     _enforce_capacity(
         base=base,
         run_id=run,
@@ -370,6 +412,86 @@ def record_manager_screen_quote_impact(
         repository_root=repository_root,
         idempotent=False,
     )
+
+
+def _allocation_v3_contract_active(*, base: Path, run_id: str) -> bool:
+    contract_path = (
+        base / "manager-screen" / run_id / "governance" / "allocation-v3" / "contract.json"
+    )
+    seal_path = contract_path.with_name(f"{contract_path.name}.seal.json")
+    artifact = contract_path.exists()
+    seal = seal_path.exists()
+    if not artifact and not seal:
+        return False
+    if artifact != seal:
+        raise ManagerScreenQuoteImpactError(
+            "manager-screen allocation v3 contract is only partially sealed"
+        )
+    from .manager_screen_allocation_v3 import (
+        ManagerScreenAllocationV3Error,
+        verify_manager_screen_allocation_v3_contract,
+    )
+
+    try:
+        verify_manager_screen_allocation_v3_contract(root=base, run_id=run_id)
+    except ManagerScreenAllocationV3Error as exc:
+        raise ManagerScreenQuoteImpactError(
+            "manager-screen allocation v3 contract is invalid"
+        ) from exc
+    return True
+
+
+def _require_frozen_quote_projection_binding(
+    *,
+    base: Path,
+    repository_root: Path,
+    plan: Mapping[str, Any],
+    result: Mapping[str, Any],
+    result_path: Path,
+    result_sha256: str,
+) -> None:
+    queue_rows = read_jsonl(base / RESEARCH_QUEUE_FILE)
+    queue = {
+        row.get("symbol"): row
+        for row in queue_rows
+        if isinstance(row, Mapping) and isinstance(row.get("symbol"), str)
+    }
+    if len(queue) != len(queue_rows):
+        raise ManagerScreenQuoteImpactError(
+            "research queue is invalid during frozen quote-impact replay"
+        )
+    result_relative = _relative(result_path, repository_root)
+    errors = []
+    for review in result["reviews"]:
+        if review["action"] != "replacement":
+            continue
+        symbol = review["symbol"]
+        decision = review["effective_decision"]
+        row = queue.get(symbol)
+        history = row.get("stage_history") if isinstance(row, Mapping) else None
+        history_bound = isinstance(history, list) and any(
+            isinstance(item, Mapping)
+            and item.get("stage") == "manager_screen_quote_impact"
+            and item.get("result_sha256") == result_sha256
+            for item in history
+        )
+        if (
+            not isinstance(row, Mapping)
+            or row.get("manager_screen_run_id") != plan["run_id"]
+            or row.get("manager_screen_batch_id") != plan["batch_id"]
+            or row.get("manager_screen_route") != decision["route"]
+            or row.get("manager_screen_result_path") != result_relative
+            or row.get("manager_screen_result_sha256") != result_sha256
+            or row.get("decisive_question") != decision["decisive_question"]
+            or list(row.get("evidence_ids") or []) != list(decision["evidence_ids"])
+            or not history_bound
+        ):
+            errors.append(symbol)
+    if errors:
+        raise ManagerScreenQuoteImpactError(
+            "post-contract v1/v2 quote-impact replay is read-only and its current "
+            f"projection binding drifted: {sorted(errors)}"
+        )
 
 
 def manager_screen_quote_impact_status(
@@ -455,7 +577,7 @@ def load_manager_screen_quote_impact_overlay(
         "packet_sha256": None,
         "result_path": None,
         "result_sha256": None,
-        "effective_route_delta": {route: 0 for route in sorted(ROUTES)},
+        "effective_route_delta": {route: 0 for route in sorted(DIRECT_ALLOCATION_ROUTES)},
         "decisions": [],
         "reviews": [],
         "quick_profile_effort_budget_hours": None,
@@ -463,9 +585,7 @@ def load_manager_screen_quote_impact_overlay(
     if not reviews_root.exists():
         return empty
     if not reviews_root.is_dir():
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact reviews path is not a directory"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact reviews path is not a directory")
     entries = sorted(reviews_root.iterdir(), key=lambda path: path.name)
     if any(not entry.is_dir() for entry in entries):
         raise ManagerScreenQuoteImpactError(
@@ -489,6 +609,7 @@ def load_manager_screen_quote_impact_overlay(
     _validate_verified_review_semantics(verified)
     plan = verified["plan"]
     result = verified["result"]
+    effective_routes = _routes_for_version(plan["policy"].get("decision_contract_version", 1))
     common = {
         **empty,
         "state": "recorded" if result is not None else "prepared",
@@ -498,9 +619,8 @@ def load_manager_screen_quote_impact_overlay(
         "plan_sha256": verified["plan_seal"].sha256,
         "packet_path": _relative(verified["packet_path"], repository_root),
         "packet_sha256": verified["packet_seal"].sha256,
-        "quick_profile_effort_budget_hours": plan["policy"][
-            "quick_profile_effort_budget_hours"
-        ],
+        "quick_profile_effort_budget_hours": plan["policy"]["quick_profile_effort_budget_hours"],
+        "effective_route_delta": {route: 0 for route in sorted(effective_routes)},
     }
     if result is None:
         return common
@@ -514,14 +634,10 @@ def load_manager_screen_quote_impact_overlay(
         **common,
         "keep_count": result["summary"]["keep_count"],
         "replacement_count": result["summary"]["replacement_count"],
-        "new_send_to_analyst_count": result["summary"][
-            "new_send_to_analyst_count"
-        ],
+        "new_send_to_analyst_count": result["summary"]["new_send_to_analyst_count"],
         "result_path": _relative(verified["result_path"], repository_root),
         "result_sha256": verified["result_seal"].sha256,
-        "effective_route_delta": {
-            route: route_delta[route] for route in sorted(ROUTES)
-        },
+        "effective_route_delta": {route: route_delta[route] for route in sorted(effective_routes)},
         "decisions": [dict(decision) for decision in result["decisions"]],
         "reviews": [dict(review) for review in result["reviews"]],
     }
@@ -598,7 +714,7 @@ def _candidate_rows(inputs: Mapping[str, Any]) -> list[dict[str, Any]]:
                 )
             ),
         }
-        if inputs["decision_contract_version"] == 2:
+        if inputs["decision_contract_version"] in {2, 3}:
             row["decision_support"] = _quote_decision_support(
                 dossier=dossier,
                 quote=quote,
@@ -634,9 +750,7 @@ def _quote_decision_support(
     try:
         return build_decision_support(**inputs)
     except ManagerScreenDecisionQualityError as exc:
-        raise ManagerScreenQuoteImpactError(
-            "v2 quote-impact decision support is invalid"
-        ) from exc
+        raise ManagerScreenQuoteImpactError("v2 quote-impact decision support is invalid") from exc
 
 
 def _quote_decision_support_inputs(
@@ -648,18 +762,14 @@ def _quote_decision_support_inputs(
 ) -> dict[str, Any]:
     market = dossier.get("market_snapshot")
     if not isinstance(market, Mapping):
-        raise ManagerScreenQuoteImpactError(
-            "v2 quote-impact dossier market snapshot is invalid"
-        )
+        raise ManagerScreenQuoteImpactError("v2 quote-impact dossier market snapshot is invalid")
     amended_market = dict(market)
     amended_market["price"] = quote.get("price")
     for field in VALUATION_FIELDS:
         amended_market[field] = quote.get(field)
     facts = amended_market.get("manager_screen_facts")
     if not isinstance(facts, Mapping):
-        raise ManagerScreenQuoteImpactError(
-            "v2 quote-impact dossier facts are invalid"
-        )
+        raise ManagerScreenQuoteImpactError("v2 quote-impact dossier facts are invalid")
     facts = dict(facts)
     facts.pop("decision_support", None)
     amended_market["manager_screen_facts"] = facts
@@ -668,9 +778,7 @@ def _quote_decision_support_inputs(
         "high_liability_to_assets_pct",
     )
     if threshold > 100:
-        raise ManagerScreenQuoteImpactError(
-            "high_liability_to_assets_pct must be at most 100"
-        )
+        raise ManagerScreenQuoteImpactError("high_liability_to_assets_pct must be at most 100")
     return {
         "symbol": dossier.get("symbol"),
         "name": dossier.get("name"),
@@ -682,9 +790,7 @@ def _quote_decision_support_inputs(
             else None
         ),
         "timeline": (
-            dossier.get("timeline")
-            if isinstance(dossier.get("timeline"), Mapping)
-            else None
+            dossier.get("timeline") if isinstance(dossier.get("timeline"), Mapping) else None
         ),
         "high_liability_to_assets_pct": threshold,
         "canonical_source_evidence_id": canonical_source_evidence_id,
@@ -762,15 +868,13 @@ def _load_completed_inputs(
         )
     batch_policy = batch.get("policy")
     if not isinstance(batch_policy, Mapping):
-        raise ManagerScreenQuoteImpactError(
-            "sealed manager-screen batch policy is invalid"
-        )
+        raise ManagerScreenQuoteImpactError("sealed manager-screen batch policy is invalid")
     decision_contract_version = batch_policy.get("decision_contract_version", 1)
-    if decision_contract_version not in {1, 2}:
+    if decision_contract_version not in {1, 2, 3}:
         raise ManagerScreenQuoteImpactError(
             "sealed manager-screen decision contract version is invalid"
         )
-    if decision_contract_version == 2 and (
+    if decision_contract_version in {2, 3} and (
         not DECISION_V2_POLICY_KEYS.issubset(batch_policy)
         or batch_policy.get("mandatory_risk_acknowledgement") is not True
         or batch_policy.get("canonical_fact_line_required") is not True
@@ -778,14 +882,18 @@ def _load_completed_inputs(
         raise ManagerScreenQuoteImpactError(
             "sealed manager-screen decision v2 policy is incomplete"
         )
+    if decision_contract_version == 3 and (
+        not DECISION_V3_POLICY_KEYS.issubset(batch_policy)
+        or batch_policy.get("research_candidate_requires_allocation") is not True
+    ):
+        raise ManagerScreenQuoteImpactError(
+            "sealed manager-screen decision v3 policy is incomplete"
+        )
     expected_decision_keys = (
-        DECISION_V2_KEYS if decision_contract_version == 2 else DECISION_KEYS
+        DECISION_V2_KEYS if decision_contract_version in {2, 3} else DECISION_KEYS
     )
     for decision in decisions:
-        if (
-            not isinstance(decision, Mapping)
-            or set(decision) != expected_decision_keys
-        ):
+        if not isinstance(decision, Mapping) or set(decision) != expected_decision_keys:
             raise ManagerScreenQuoteImpactError(
                 "original manager-screen decision contract is invalid"
             )
@@ -868,9 +976,12 @@ def _load_completed_inputs(
     decision_policy_ref = (
         {
             key: batch_policy[key]
-            for key in DECISION_V2_POLICY_KEYS
+            for key in (
+                DECISION_V2_POLICY_KEYS
+                | (DECISION_V3_POLICY_KEYS if decision_contract_version == 3 else set())
+            )
         }
-        if decision_contract_version == 2
+        if decision_contract_version in {2, 3}
         else {}
     )
     return {
@@ -941,9 +1052,9 @@ def _normalize_submission(
         action = raw.get("action")
         old_decision = dict(packet_row["old_decision"])
         if action == "keep":
-            if decision_contract_version == 2:
+            if decision_contract_version in {2, 3}:
                 raise ManagerScreenQuoteImpactError(
-                    f"v2 quote-impact review requires a complete replacement: {symbol}"
+                    f"v2+ quote-impact review requires a complete replacement: {symbol}"
                 )
             if raw.get("replacement") is not None:
                 raise ManagerScreenQuoteImpactError(
@@ -991,9 +1102,7 @@ def _decision(
     decision_contract_version: int,
     decision_support: Any,
 ) -> dict[str, Any]:
-    expected_keys = (
-        DECISION_V2_KEYS if decision_contract_version == 2 else DECISION_KEYS
-    )
+    expected_keys = DECISION_V2_KEYS if decision_contract_version in {2, 3} else DECISION_KEYS
     if not isinstance(value, Mapping) or set(value) != expected_keys:
         raise ManagerScreenQuoteImpactError(
             f"replacement decision fields do not match contract: {symbol}"
@@ -1001,10 +1110,10 @@ def _decision(
     if _symbol(value.get("symbol")) != symbol:
         raise ManagerScreenQuoteImpactError(f"replacement decision symbol mismatch: {symbol}")
     route = value.get("route")
-    if route not in ROUTES:
+    if route not in _routes_for_version(decision_contract_version):
         raise ManagerScreenQuoteImpactError(f"invalid replacement route: {route}")
     reason = _text(value.get("one_line_reason"), f"{symbol}.one_line_reason")
-    if decision_contract_version == 2:
+    if decision_contract_version in {2, 3}:
         try:
             reason = validate_canonical_reason(reason, decision_support)
         except ManagerScreenDecisionQualityError as exc:
@@ -1047,7 +1156,7 @@ def _decision(
         "confidence": confidence,
         "evidence_ids": list(evidence_ids),
     }
-    if decision_contract_version == 2:
+    if decision_contract_version in {2, 3}:
         try:
             result["risk_acknowledgements"] = validate_risk_acknowledgements(
                 value.get("risk_acknowledgements"),
@@ -1103,40 +1212,86 @@ def _enforce_capacity(
     run_id: str,
     plan: Mapping[str, Any],
     reviews: list[Mapping[str, Any]],
+    purchases_already_recorded: bool = False,
 ) -> None:
     capacity = plan["policy"]["send_to_analyst_capacity_per_run"]
-    queue = read_jsonl(base / RESEARCH_QUEUE_FILE)
-    queue_by_symbol = {row["symbol"]: row for row in queue if isinstance(row.get("symbol"), str)}
-    if len(queue_by_symbol) != len(queue):
-        raise ManagerScreenQuoteImpactError("research queue symbols are missing or duplicated")
-    final_routes = {
-        symbol: row.get("manager_screen_route")
-        for symbol, row in queue_by_symbol.items()
-        if row.get("manager_screen_run_id") == run_id
-    }
-    committed_before = sum(route == "send_to_analyst" for route in final_routes.values())
-    for review in reviews:
-        if review["action"] != "replacement":
-            continue
-        symbol = review["symbol"]
-        current = queue_by_symbol.get(symbol)
-        if current is None:
-            raise ManagerScreenQuoteImpactError(
-                f"research queue is missing replacement candidate: {symbol}"
-            )
-        if current.get("manager_screen_run_id") != run_id:
-            raise ManagerScreenQuoteImpactError(
-                f"replacement candidate belongs to a different run: {symbol}"
-            )
-        final_routes[symbol] = review["effective_decision"]["route"]
-    committed_after = sum(route == "send_to_analyst" for route in final_routes.values())
-    if committed_after > capacity:
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact replacements exceed manager-screen "
-            "send_to_analyst run capacity after final materialization: "
-            f"{committed_before} committed before, "
-            f"{committed_after} committed after > {capacity}"
+    new_purchases = sum(
+        review["action"] == "replacement"
+        and review["old_route"] != "send_to_analyst"
+        and review["effective_decision"]["route"] == "send_to_analyst"
+        for review in reviews
+    )
+    if purchases_already_recorded:
+        # The immutable result passed this check before sealing.  Replays may
+        # be repairing a queue/screening crash, so live status can legitimately
+        # lag the sealed replacement and must not block deterministic repair.
+        return
+    if new_purchases:
+        _reject_post_contract_direct_quote_purchases(
+            base=base,
+            run_id=run_id,
         )
+    from .manager_screening import ManagerScreeningError, manager_screen_status
+
+    try:
+        status = manager_screen_status(root=base, run_id=run_id)
+    except ManagerScreeningError as exc:
+        raise ManagerScreenQuoteImpactError(
+            "manager-screen status is invalid during cumulative quote-impact capacity accounting"
+        ) from exc
+    budget = status.get("analyst_budget")
+    if not isinstance(budget, Mapping):
+        raise ManagerScreenQuoteImpactError(
+            "manager-screen status is missing cumulative analyst purchases"
+        )
+    purchased_before = budget.get("purchased_company_count")
+    if isinstance(purchased_before, bool) or not isinstance(purchased_before, int):
+        raise ManagerScreenQuoteImpactError(
+            "manager-screen cumulative analyst purchase count is invalid"
+        )
+    projected_purchases = purchased_before + new_purchases
+    if projected_purchases > capacity:
+        raise ManagerScreenQuoteImpactError(
+            "quote-impact replacements exceed cumulative manager-screen analyst "
+            "purchase capacity: "
+            f"{purchased_before} purchased before + "
+            f"{new_purchases} new purchases "
+            f"> {capacity}"
+        )
+
+
+def _reject_post_contract_direct_quote_purchases(
+    *,
+    base: Path,
+    run_id: str,
+) -> None:
+    contract_path = (
+        base / "manager-screen" / run_id / "governance" / "allocation-v3" / "contract.json"
+    )
+    seal_path = contract_path.with_name(f"{contract_path.name}.seal.json")
+    artifact = contract_path.exists()
+    seal = seal_path.exists()
+    if not artifact and not seal:
+        return
+    if artifact != seal:
+        raise ManagerScreenQuoteImpactError(
+            "allocation v3 contract is only partially sealed; direct quote-impact "
+            "analyst purchase is forbidden"
+        )
+    from .manager_screen_allocation_v3 import (
+        ManagerScreenAllocationV3Error,
+        verify_manager_screen_allocation_v3_contract,
+    )
+
+    try:
+        verify_manager_screen_allocation_v3_contract(root=base, run_id=run_id)
+    except ManagerScreenAllocationV3Error as exc:
+        raise ManagerScreenQuoteImpactError(
+            "allocation v3 contract is invalid; direct quote-impact analyst purchase is forbidden"
+        ) from exc
+    raise ManagerScreenQuoteImpactError(
+        "post-contract quote-impact review cannot purchase analyst budget directly"
+    )
 
 
 def _materialize_replacements(
@@ -1253,7 +1408,14 @@ def _materialize_replacements(
                         "next_action": (
                             "Wait for an executable restart trigger."
                             if decision["route"] == "pass"
-                            else "Reassess on the sealed watch trigger."
+                            else (
+                                "Reassess on the sealed watch trigger."
+                                if decision["route"] == "watch"
+                                else (
+                                    "Keep as an unfunded candidate until the full-scope "
+                                    "sealed research allocation."
+                                )
+                            )
                         ),
                     }
                 )
@@ -1263,6 +1425,10 @@ def _materialize_replacements(
                     "stop_conditions",
                 ):
                     updated.pop(field, None)
+            if decision["route"] == "research_candidate":
+                updated["research_budget_state"] = "candidate_unfunded"
+            else:
+                updated.pop("research_budget_state", None)
         if updated != current:
             queue[symbol] = updated
             queue_changed = True
@@ -1278,6 +1444,7 @@ def _materialize_replacements(
                         "pass": "catalog",
                         "watch": "watch_only",
                         "send_to_analyst": "quick_profile",
+                        "research_candidate": "candidate_unfunded",
                     }[decision["route"]],
                     "priority": None,
                     "reason": decision["one_line_reason"],
@@ -1293,6 +1460,10 @@ def _materialize_replacements(
                     "revisit_triggers": decision["revisit_triggers"],
                 }
             )
+            if decision["route"] == "research_candidate":
+                screen["research_budget_state"] = "candidate_unfunded"
+            else:
+                screen.pop("research_budget_state", None)
             if screen != old_screen:
                 screening[symbol] = screen
                 screening_changed = True
@@ -1450,18 +1621,11 @@ def _verify_policy_binding(
         raise ManagerScreenQuoteImpactError("quote-impact policy binding is invalid")
     for field in ("policy_id", "version", "path"):
         if not isinstance(value.get(field), str) or not value[field]:
-            raise ManagerScreenQuoteImpactError(
-                "quote-impact policy provenance is invalid"
-            )
+            raise ManagerScreenQuoteImpactError("quote-impact policy provenance is invalid")
     for field in ("file_sha256", "payload_sha256"):
         digest = value.get(field)
-        if (
-            not isinstance(digest, str)
-            or re.fullmatch(r"[0-9a-f]{64}", digest) is None
-        ):
-            raise ManagerScreenQuoteImpactError(
-                "quote-impact policy digest is invalid"
-            )
+        if not isinstance(digest, str) or re.fullmatch(r"[0-9a-f]{64}", digest) is None:
+            raise ManagerScreenQuoteImpactError("quote-impact policy digest is invalid")
     _positive_number(
         value.get("absolute_price_change_pct"),
         "absolute_price_change_pct",
@@ -1488,27 +1652,36 @@ def _verify_policy_binding(
         or not stops
         or not all(isinstance(row, str) and row.strip() for row in stops)
     ):
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact policy stop conditions are invalid"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact policy stop conditions are invalid")
     if DECISION_V2_POLICY_KEYS.intersection(value):
+        contract_version = value.get("decision_contract_version")
         if (
             not DECISION_V2_POLICY_KEYS.issubset(value)
-            or value.get("decision_contract_version") != 2
+            or contract_version not in {2, 3}
             or value.get("mandatory_risk_acknowledgement") is not True
             or value.get("canonical_fact_line_required") is not True
         ):
             raise ManagerScreenQuoteImpactError(
-                "quote-impact sealed decision v2 policy is invalid"
+                "quote-impact sealed decision v2+ policy is invalid"
+            )
+        if contract_version == 3:
+            if (
+                not DECISION_V3_POLICY_KEYS.issubset(value)
+                or value.get("research_candidate_requires_allocation") is not True
+            ):
+                raise ManagerScreenQuoteImpactError(
+                    "quote-impact sealed decision v3 policy is invalid"
+                )
+        elif DECISION_V3_POLICY_KEYS.intersection(value):
+            raise ManagerScreenQuoteImpactError(
+                "quote-impact sealed v2 policy contains v3-only fields"
             )
         liability_threshold = _positive_number(
             value.get("high_liability_to_assets_pct"),
             "high_liability_to_assets_pct",
         )
         if liability_threshold > 100:
-            raise ManagerScreenQuoteImpactError(
-                "high_liability_to_assets_pct must be at most 100"
-            )
+            raise ManagerScreenQuoteImpactError("high_liability_to_assets_pct must be at most 100")
     payload = value.get("payload")
     if payload is None:
         # v1 plans sealed before immutable payload embedding retain the
@@ -1516,9 +1689,7 @@ def _verify_policy_binding(
         # metadata; verification must not depend on the mutable live policy.
         return
     if not isinstance(payload, Mapping):
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact embedded policy payload is invalid"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact embedded policy payload is invalid")
     payload = dict(payload)
     payload_threshold = _positive_number(
         payload.get(
@@ -1545,8 +1716,7 @@ def _verify_policy_binding(
     )
     payload_stops = payload.get("quick_profile_stop_conditions")
     if (
-        hashlib.sha256(canonical_json_bytes(payload)).hexdigest()
-        != value["payload_sha256"]
+        hashlib.sha256(canonical_json_bytes(payload)).hexdigest() != value["payload_sha256"]
         or payload_threshold != float(value["absolute_price_change_pct"])
         or payload_capacity != value["send_to_analyst_capacity_per_run"]
         or payload_reason_max != value["one_line_reason_max_chars"]
@@ -1577,12 +1747,14 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         raise ManagerScreenQuoteImpactError(
             "quote-impact decision contract does not match the sealed batch"
         )
-    if plan_decision_version == 2 and any(
-        plan["policy"].get(key) != batch["policy"].get(key)
-        for key in DECISION_V2_POLICY_KEYS
+    decision_policy_keys = DECISION_V2_POLICY_KEYS | (
+        DECISION_V3_POLICY_KEYS if plan_decision_version == 3 else set()
+    )
+    if plan_decision_version in {2, 3} and any(
+        plan["policy"].get(key) != batch["policy"].get(key) for key in decision_policy_keys
     ):
         raise ManagerScreenQuoteImpactError(
-            "quote-impact decision v2 policy does not match the sealed batch"
+            "quote-impact decision v2+ policy does not match the sealed batch"
         )
     candidate_symbols = plan.get("candidate_symbols")
     rows = packet.get("rows")
@@ -1594,26 +1766,15 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         or not isinstance(rows, list)
         or len(rows) != len(candidate_symbols)
     ):
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact candidate plan or packet is invalid"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact candidate plan or packet is invalid")
     original_decisions = original_result.get("decisions")
     if not isinstance(original_decisions, list):
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact original decisions are invalid"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact original decisions are invalid")
     original_by_symbol: dict[str, Mapping[str, Any]] = {}
-    expected_original_keys = (
-        DECISION_V2_KEYS if plan_decision_version == 2 else DECISION_KEYS
-    )
+    expected_original_keys = DECISION_V2_KEYS if plan_decision_version in {2, 3} else DECISION_KEYS
     for decision in original_decisions:
-        if (
-            not isinstance(decision, Mapping)
-            or set(decision) != expected_original_keys
-        ):
-            raise ManagerScreenQuoteImpactError(
-                "quote-impact original decision is invalid"
-            )
+        if not isinstance(decision, Mapping) or set(decision) != expected_original_keys:
+            raise ManagerScreenQuoteImpactError("quote-impact original decision is invalid")
         symbol = decision.get("symbol")
         if not isinstance(symbol, str) or symbol in original_by_symbol:
             raise ManagerScreenQuoteImpactError(
@@ -1652,9 +1813,7 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
             raise ManagerScreenQuoteImpactError(
                 f"v2 quote-impact support inputs are missing: {symbol}"
             )
-        source_evidence_id = (
-            f"quote-amendment:{verified['amendment']['amendment_id']}:{symbol}"
-        )
+        source_evidence_id = f"quote-amendment:{verified['amendment']['amendment_id']}:{symbol}"
         expected_quote_binding = {
             "as_of": quote.get("as_of"),
             "source": quote.get("source"),
@@ -1671,11 +1830,9 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
                 f"v2 quote-impact canonical evidence binding is invalid: {symbol}"
             )
         valuation = row.get("valuation")
-        if (
-            not isinstance(valuation, Mapping)
-            or valuation.get("new")
-            != {field: quote.get(field) for field in VALUATION_FIELDS}
-        ):
+        if not isinstance(valuation, Mapping) or valuation.get("new") != {
+            field: quote.get(field) for field in VALUATION_FIELDS
+        }:
             raise ManagerScreenQuoteImpactError(
                 f"v2 quote-impact amended valuation is invalid: {symbol}"
             )
@@ -1704,8 +1861,7 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         result.get("schema_version") != 1
         or result.get("original_result_path") != plan.get("original_result_path")
         or result.get("quote_amendment_path") != plan.get("quote_amendment_path")
-        or result.get("policy_payload_sha256")
-        != plan.get("policy", {}).get("payload_sha256")
+        or result.get("policy_payload_sha256") != plan.get("policy", {}).get("payload_sha256")
         or result.get("manager") != original_result.get("manager")
         or result.get("portfolio_action") is not None
         or not isinstance(reviews, list)
@@ -1713,16 +1869,12 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         or len(reviews) != len(candidate_symbols)
         or len(decisions) != len(candidate_symbols)
     ):
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact result content is invalid"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact result content is invalid")
     if _parse_datetime(result.get("recorded_at"), "result recorded_at") < _parse_datetime(
         plan.get("prepared_at"),
         "plan prepared_at",
     ):
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact result predates its preparation"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact result predates its preparation")
     normalized_reviews = []
     normalized_decisions = []
     for symbol, row, review, decision in zip(
@@ -1745,14 +1897,12 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
             or review.get("symbol") != symbol
             or review.get("old_route") != row["old_decision"].get("route")
         ):
-            raise ManagerScreenQuoteImpactError(
-                f"quote-impact review content is invalid: {symbol}"
-            )
+            raise ManagerScreenQuoteImpactError(f"quote-impact review content is invalid: {symbol}")
         action = review.get("action")
         if action == "keep":
-            if plan_decision_version == 2:
+            if plan_decision_version in {2, 3}:
                 raise ManagerScreenQuoteImpactError(
-                    f"v2 quote-impact result cannot keep stale price facts: {symbol}"
+                    f"v2+ quote-impact result cannot keep stale price facts: {symbol}"
                 )
             if (
                 review.get("replacement") is not None
@@ -1779,9 +1929,7 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
                     f"quote-impact replacement decision is inconsistent: {symbol}"
                 )
         else:
-            raise ManagerScreenQuoteImpactError(
-                f"quote-impact review action is invalid: {symbol}"
-            )
+            raise ManagerScreenQuoteImpactError(f"quote-impact review action is invalid: {symbol}")
         if decision != effective:
             raise ManagerScreenQuoteImpactError(
                 f"quote-impact effective decision list is inconsistent: {symbol}"
@@ -1797,9 +1945,7 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         )
         normalized_decisions.append(effective)
     if reviews != normalized_reviews or decisions != normalized_decisions:
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact result is not canonically normalized"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact result is not canonically normalized")
     expected_summary = {
         "candidate_count": len(reviews),
         "keep_count": sum(row["action"] == "keep" for row in reviews),
@@ -1812,9 +1958,7 @@ def _validate_verified_review_semantics(verified: Mapping[str, Any]) -> None:
         ),
     }
     if result.get("summary") != expected_summary:
-        raise ManagerScreenQuoteImpactError(
-            "quote-impact result summary is inconsistent"
-        )
+        raise ManagerScreenQuoteImpactError("quote-impact result summary is inconsistent")
 
 
 def _record_summary(

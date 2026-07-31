@@ -20,6 +20,7 @@ DECISIONS = {
     "triage_candidate",
     "quick_profile",
     "profile_candidate",
+    "candidate_unfunded",
     "scoped_research",
     "deep_candidate",
     "targeted_followup",
@@ -162,8 +163,7 @@ def write_jsonl(path: str | Path, records: list[dict[str, Any]], sort_key: str =
     file_path.parent.mkdir(parents=True, exist_ok=True)
     sorted_records = sorted(records, key=lambda item: str(item.get(sort_key, "")))
     payload = "".join(
-        json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n"
-        for item in sorted_records
+        json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n" for item in sorted_records
     )
     atomic_write_bytes(file_path, payload.encode("utf-8"))
     return file_path
@@ -268,9 +268,7 @@ def reconcile_research_queue(
                     "finished_at": None,
                     "result_path": None,
                     "failure_reason": None,
-                    "next_action": (
-                        "按 v2 研究协议重建初研，并在结构化报告验证通过后重新承保。"
-                    ),
+                    "next_action": ("按 v2 研究协议重建初研，并在结构化报告验证通过后重新承保。"),
                 }
             )
             changes.append(
@@ -339,9 +337,7 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
         try:
             status["trigger_hits"] = verify_trigger_hit_ledger(root=base)
         except TriggerHitError as exc:
-            raise CoverageValidationError(
-                f"trigger-hit ledger validation failed: {exc}"
-            ) from exc
+            raise CoverageValidationError(f"trigger-hit ledger validation failed: {exc}") from exc
     lane_runs = []
     scopes_root = base / "scopes"
     if scopes_root.is_dir():
@@ -351,9 +347,7 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
             if not (scope_dir / "lane-arbitration.json").exists():
                 continue
             try:
-                lane_runs.append(
-                    verify_lane_arbitration(root=base, run_id=scope_dir.name)
-                )
+                lane_runs.append(verify_lane_arbitration(root=base, run_id=scope_dir.name))
             except LaneArbitrationError as exc:
                 raise CoverageValidationError(
                     f"lane arbitration validation failed for {scope_dir.name}: {exc}"
@@ -383,9 +377,7 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
             if not (cycle_dir / "quality" / "binding.json").exists():
                 continue
             try:
-                quality_cycles.append(
-                    cycle_quality_gate_status(root=base, cycle_id=cycle_dir.name)
-                )
+                quality_cycles.append(cycle_quality_gate_status(root=base, cycle_id=cycle_dir.name))
             except QualityWorkflowError as exc:
                 raise CoverageValidationError(
                     f"triage quality validation failed for {cycle_dir.name}: {exc}"
@@ -399,9 +391,7 @@ def validate_coverage_root(root: str | Path) -> dict[str, Any]:
 
         for run_dir in sorted(path for path in manager_screen_root.iterdir() if path.is_dir()):
             try:
-                manager_screen_runs.append(
-                    manager_screen_status(root=base, run_id=run_dir.name)
-                )
+                manager_screen_runs.append(manager_screen_status(root=base, run_id=run_dir.name))
             except ManagerScreeningError as exc:
                 raise CoverageValidationError(
                     f"manager-screen validation failed for {run_dir.name}: {exc}"
@@ -458,8 +448,7 @@ def enqueue_research(
             "send_to_analyst 判断；不得启动单公司初筛 Agent。"
         ),
         "rapid_triage": (
-            "在15分钟预算内完成快速甄别；封存后等待全批次横向比较，"
-            "不得按完成顺序直接晋级正式画像。"
+            "在15分钟预算内完成快速甄别；封存后等待全批次横向比较，不得按完成顺序直接晋级正式画像。"
         ),
         "quick_profile": (
             "按 playbooks/research-capital-allocation.md 完成快速投资画像；"
@@ -563,23 +552,17 @@ def _sealed_scope_symbols(root: Path) -> set[str]:
         try:
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise CoverageValidationError(
-                f"scope manifest is invalid: {manifest_path}"
-            ) from exc
+            raise CoverageValidationError(f"scope manifest is invalid: {manifest_path}") from exc
         if (
             not isinstance(manifest, dict)
             or manifest.get("run_id") != scope_dir.name
             or manifest.get("market") != "CN"
             or not isinstance(manifest.get("members"), list)
         ):
-            raise CoverageValidationError(
-                f"scope manifest identity is invalid: {manifest_path}"
-            )
+            raise CoverageValidationError(f"scope manifest identity is invalid: {manifest_path}")
         for member in manifest["members"]:
             if not isinstance(member, dict):
-                raise CoverageValidationError(
-                    f"scope manifest member is invalid: {manifest_path}"
-                )
+                raise CoverageValidationError(f"scope manifest member is invalid: {manifest_path}")
             symbol = member.get("symbol")
             if not isinstance(symbol, str) or not SYMBOL_RE.fullmatch(symbol):
                 raise CoverageValidationError(
@@ -653,13 +636,9 @@ def _validate_queue_record(record: dict[str, Any], path: Path) -> None:
     task_type = record["task_type"]
     effort = record.get("effort_budget_hours")
     if effort is not None and (
-        isinstance(effort, bool)
-        or not isinstance(effort, (int, float))
-        or effort <= 0
+        isinstance(effort, bool) or not isinstance(effort, (int, float)) or effort <= 0
     ):
-        raise CoverageValidationError(
-            f"effort_budget_hours must be positive in {path}"
-        )
+        raise CoverageValidationError(f"effort_budget_hours must be positive in {path}")
     if task_type in BUDGETED_TASK_TYPES:
         if effort is None:
             raise CoverageValidationError(

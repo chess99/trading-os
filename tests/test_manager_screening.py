@@ -126,16 +126,23 @@ def _policy(path: Path, *, decision_contract_version: int = 1) -> Path:
             },
         },
     }
-    if decision_contract_version == 2:
-        payload["version"] = "2.0.0"
+    if decision_contract_version in {2, 3}:
+        payload["version"] = f"{decision_contract_version}.0.0"
         payload["payload"].update(
             {
-                "decision_contract_version": 2,
+                "decision_contract_version": decision_contract_version,
                 "mandatory_risk_acknowledgement": True,
                 "canonical_fact_line_required": True,
                 "high_liability_to_assets_pct": 90.0,
             }
         )
+        if decision_contract_version == 3:
+            payload["payload"].update(
+                {
+                    "routes": ["pass", "watch", "research_candidate"],
+                    "research_candidate_requires_allocation": True,
+                }
+            )
     elif decision_contract_version != 1:
         raise ValueError("unsupported decision contract fixture")
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -273,9 +280,7 @@ def _recorded_transition_root(tmp_path: Path) -> tuple[dict, Path]:
                 },
             }
         )
-    snapshot_path = (
-        root / "snapshots" / TRANSITION_RUN_ID / "companies.jsonl"
-    )
+    snapshot_path = root / "snapshots" / TRANSITION_RUN_ID / "companies.jsonl"
     _write_jsonl(snapshot_path, companies)
     manifest["universe_source"] = {
         "path": snapshot_path.relative_to(repository).as_posix(),
@@ -284,9 +289,7 @@ def _recorded_transition_root(tmp_path: Path) -> tuple[dict, Path]:
     manifest["market"] = "CN"
     for member in intake["members"]:
         member["ordinal"] = next(
-            item["ordinal"]
-            for item in manifest["members"]
-            if item["symbol"] == member["symbol"]
+            item["ordinal"] for item in manifest["members"] if item["symbol"] == member["symbol"]
         )
 
     for path in (
@@ -309,9 +312,7 @@ def _recorded_transition_root(tmp_path: Path) -> tuple[dict, Path]:
         artifact_type="all_a_baseline_intake",
         sealed_at=CUTOFF,
     )
-    policy_path = _policy(
-        repository / "policies" / "manager-screening.json"
-    )
+    policy_path = _policy(repository / "policies" / "manager-screening.json")
     freeze_legacy_transition(
         root=root,
         run_id=TRANSITION_RUN_ID,
@@ -372,9 +373,7 @@ def _send_submission(symbols: list[str]) -> dict:
     submission = _submission(symbols)
     for decision in submission["decisions"]:
         decision["route"] = "send_to_analyst"
-        decision["one_line_reason"] = (
-            "下一小时核验现金转换很可能改变判断。"
-        )
+        decision["one_line_reason"] = "下一小时核验现金转换很可能改变判断。"
         decision["revisit_triggers"] = []
     return submission
 
@@ -383,9 +382,9 @@ def _v2_submission(packet: dict) -> dict:
     submission = _submission([row["symbol"] for row in packet["dossiers"]])
     dossier_by_symbol = {row["symbol"]: row for row in packet["dossiers"]}
     for decision in submission["decisions"]:
-        support = dossier_by_symbol[decision["symbol"]]["market_snapshot"][
-            "manager_screen_facts"
-        ]["decision_support"]
+        support = dossier_by_symbol[decision["symbol"]]["market_snapshot"]["manager_screen_facts"][
+            "decision_support"
+        ]
         acknowledgements = []
         material_reasons = []
         for flag in support["mandatory_risk_flags"]:
@@ -420,6 +419,15 @@ def _v2_submission(packet: dict) -> dict:
                 ]
             )
         )
+    return submission
+
+
+def _v3_submission(packet: dict, *, all_candidates: bool = False) -> dict:
+    submission = _v2_submission(packet)
+    for decision in submission["decisions"]:
+        if all_candidates or decision["route"] == "send_to_analyst":
+            decision["route"] = "research_candidate"
+            decision["revisit_triggers"] = []
     return submission
 
 
@@ -460,16 +468,8 @@ def _calibration_submission(
                 },
                 "adjudication": {
                     "performed": has_error,
-                    "outcome": (
-                        "material_error_confirmed"
-                        if has_error
-                        else "not_needed"
-                    ),
-                    "finding": (
-                        "一次性裁决已完成，不启动 correction 链。"
-                        if has_error
-                        else None
-                    ),
+                    "outcome": ("material_error_confirmed" if has_error else "not_needed"),
+                    "finding": ("一次性裁决已完成，不启动 correction 链。" if has_error else None),
                     "evidence_ids": [evidence_id] if has_error else [],
                 },
             }
@@ -563,14 +563,14 @@ def test_decision_v2_binds_canonical_facts_and_requires_risk_acknowledgement(
     )
     batch_dir = root / "manager-screen" / RUN_ID / "batch-001"
     packet = json.loads((batch_dir / "packet.json").read_text(encoding="utf-8"))
-    first_support = packet["dossiers"][0]["market_snapshot"][
-        "manager_screen_facts"
-    ]["decision_support"]
+    first_support = packet["dossiers"][0]["market_snapshot"]["manager_screen_facts"][
+        "decision_support"
+    ]
     assert "中报" in first_support["canonical_fact_line"]["text"]
     assert "一季报" not in first_support["canonical_fact_line"]["text"]
-    assert [
-        flag["category"] for flag in first_support["mandatory_risk_flags"]
-    ] == ["capital_structure"]
+    assert [flag["category"] for flag in first_support["mandatory_risk_flags"]] == [
+        "capital_structure"
+    ]
 
     submission = _v2_submission(packet)
     missing_ack = copy.deepcopy(submission)
@@ -622,9 +622,7 @@ def test_decision_v2_binds_canonical_facts_and_requires_risk_acknowledgement(
     assert calibration["planned_sample_count"] == 1
 
     changed_ack = copy.deepcopy(submission)
-    changed_ack["decisions"][0]["risk_acknowledgements"][0][
-        "assessment"
-    ] = "not_material"
+    changed_ack["decisions"][0]["risk_acknowledgements"][0]["assessment"] = "not_material"
     with pytest.raises(ManagerScreeningError):
         record_manager_screen_decisions(
             root=root,
@@ -633,6 +631,135 @@ def test_decision_v2_binds_canonical_facts_and_requires_risk_acknowledgement(
             submission=changed_ack,
             recorded_at=CUTOFF + dt.timedelta(minutes=4),
         )
+
+
+def test_decision_v3_records_unfunded_candidates_without_buying_profile_budget(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.manager_screening import (
+        ManagerScreeningError,
+        freeze_manager_screen_batch,
+        manager_screen_status,
+        record_manager_screen_decisions,
+        verify_manager_screen_terminal,
+    )
+
+    root, policy_path = _root(tmp_path)
+    _policy(policy_path, decision_contract_version=3)
+    freeze_manager_screen_batch(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        frozen_at=CUTOFF + dt.timedelta(minutes=1),
+        policy_path=policy_path,
+    )
+    batch_dir = root / "manager-screen" / RUN_ID / "batch-001"
+    packet = json.loads((batch_dir / "packet.json").read_text(encoding="utf-8"))
+    assert set(packet["instructions"]["routes"]) == {
+        "pass",
+        "watch",
+        "research_candidate",
+    }
+    assert packet["instructions"]["decision_contract"]["version"] == 3
+
+    invalid = _v3_submission(packet)
+    invalid["decisions"][1]["route"] = "send_to_analyst"
+    with pytest.raises(ManagerScreeningError, match="invalid manager-screen route"):
+        record_manager_screen_decisions(
+            root=root,
+            run_id=RUN_ID,
+            batch_id="batch-001",
+            submission=invalid,
+            recorded_at=CUTOFF + dt.timedelta(minutes=2),
+        )
+
+    recorded = record_manager_screen_decisions(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        submission=_v3_submission(packet),
+        recorded_at=CUTOFF + dt.timedelta(minutes=2),
+    )
+    assert recorded["by_route"] == {"pass": 1, "research_candidate": 1}
+    queue = {row["symbol"]: row for row in read_jsonl(root / "research_queue.jsonl")}
+    candidate = queue["CN:000002"]
+    assert candidate["task_type"] == "manager_screen"
+    assert candidate["status"] == "completed"
+    assert candidate["manager_screen_route"] == "research_candidate"
+    assert candidate["research_budget_state"] == "candidate_unfunded"
+    assert "effort_budget_hours" not in candidate
+    assert not any(row.get("task_type") == "quick_profile" for row in queue.values())
+    screening = {row["symbol"]: row for row in read_jsonl(root / "screening.jsonl")}
+    assert screening["CN:000002"]["decision"] == "candidate_unfunded"
+    assert screening["CN:000002"]["research_budget_state"] == "candidate_unfunded"
+    assert verify_manager_screen_terminal(
+        root=root,
+        queued=candidate,
+        symbol="CN:000002",
+        scope_cutoff=CUTOFF + dt.timedelta(minutes=3),
+    ) == (recorded["result_path"], recorded["result_sha256"])
+    status = manager_screen_status(root=root, run_id=RUN_ID)
+    assert status["analyst_budget"]["purchased_company_count"] == 0
+    assert status["analyst_budget"]["current_backlog_company_count"] == 0
+
+
+def test_decision_v3_cannot_bypass_migration_contract_on_the_v2_policy_path(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.manager_screening import (
+        ManagerScreeningError,
+        freeze_manager_screen_batch,
+        record_manager_screen_decisions,
+    )
+
+    root, policy_path = _root(tmp_path)
+    _policy(policy_path, decision_contract_version=2)
+    policy = json.loads(policy_path.read_text(encoding="utf-8"))
+    policy["payload"]["send_to_analyst_capacity_per_run"] = 1
+    policy_path.write_text(
+        json.dumps(policy, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    freeze_manager_screen_batch(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        batch_size=1,
+        frozen_at=CUTOFF + dt.timedelta(minutes=1),
+        policy_path=policy_path,
+    )
+    packet1 = json.loads(
+        (root / "manager-screen" / RUN_ID / "batch-001" / "packet.json").read_text(encoding="utf-8")
+    )
+    first = _v2_submission(packet1)
+    first["decisions"][0]["route"] = "send_to_analyst"
+    first["decisions"][0]["revisit_triggers"] = []
+    record_manager_screen_decisions(
+        root=root,
+        run_id=RUN_ID,
+        batch_id="batch-001",
+        submission=first,
+        recorded_at=CUTOFF + dt.timedelta(minutes=2),
+    )
+
+    _policy(policy_path, decision_contract_version=3)
+    policy = json.loads(policy_path.read_text(encoding="utf-8"))
+    policy["payload"]["send_to_analyst_capacity_per_run"] = 1
+    policy_path.write_text(
+        json.dumps(policy, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ManagerScreeningError, match="sealed allocation contract"):
+        freeze_manager_screen_batch(
+            root=root,
+            run_id=RUN_ID,
+            batch_id="batch-002",
+            batch_size=2,
+            frozen_at=CUTOFF + dt.timedelta(minutes=3),
+            policy_path=policy_path,
+        )
+    assert not (root / "manager-screen" / RUN_ID / "batch-002").exists()
 
 
 def test_manager_freeze_replays_batch_packet_crash_from_sealed_journal(
@@ -687,9 +814,7 @@ def test_manager_freeze_replays_batch_packet_crash_from_sealed_journal(
         policy_path=policy_path,
     )
     second_batch = json.loads(
-        (
-            root / "manager-screen" / RUN_ID / "batch-002" / "batch.json"
-        ).read_text(encoding="utf-8")
+        (root / "manager-screen" / RUN_ID / "batch-002" / "batch.json").read_text(encoding="utf-8")
     )
     assert [row["symbol"] for row in second_batch["members"]] == [
         "CN:000003",
@@ -705,9 +830,7 @@ def test_manager_freeze_replays_batch_packet_crash_from_sealed_journal(
         policy_path=policy_path,
     )
     packet = json.loads((batch_dir / "packet.json").read_text(encoding="utf-8"))
-    assert packet["dossiers"][0]["prior_queue"]["reason"] != (
-        "mutable state changed after crash"
-    )
+    assert packet["dossiers"][0]["prior_queue"]["reason"] != ("mutable state changed after crash")
     assert verify_sealed(batch_dir / "batch.json").sha256 == repaired["batch_sha256"]
     assert verify_sealed(batch_dir / "packet.json").sha256 == repaired["packet_sha256"]
     assert sorted(path.name for path in batch_dir.iterdir()) == [
@@ -881,9 +1004,7 @@ def test_record_routes_only_selected_companies_to_analyst_and_status(tmp_path: P
     )
     assert recorded["by_route"] == {"pass": 1, "send_to_analyst": 1}
     result_payload = json.loads(
-        (root / "manager-screen" / RUN_ID / "batch-001" / "result.json").read_text(
-            encoding="utf-8"
-        )
+        (root / "manager-screen" / RUN_ID / "batch-001" / "result.json").read_text(encoding="utf-8")
     )
     calibration_plan = result_payload["quality_state"]["calibration"]
     assert calibration_plan["status"] == "planned_non_blocking"
@@ -996,9 +1117,7 @@ def test_recorded_transition_releases_join_scope_order_and_status_conservation(
     assert status["legacy_transition"]["state"] == "recorded"
     assert status["legacy_transition"]["release_count"] == 1
     assert status["remaining_unbatched_count"] == 1
-    assert status["deferred_current_state"] == {
-        "legacy_transition_adoption": 2
-    }
+    assert status["deferred_current_state"] == {"legacy_transition_adoption": 2}
     assert status["screenable_conservation_satisfied"] is True
 
     frozen = freeze_manager_screen_batch(
@@ -1010,9 +1129,7 @@ def test_recorded_transition_releases_join_scope_order_and_status_conservation(
         policy_path=policy_path,
     )
     batch = json.loads(
-        (Path(fixture["repository_root"]) / frozen["batch_path"]).read_text(
-            encoding="utf-8"
-        )
+        (Path(fixture["repository_root"]) / frozen["batch_path"]).read_text(encoding="utf-8")
     )
     assert batch["members"] == [
         {
@@ -1057,9 +1174,7 @@ def test_capacity_fails_closed_when_legacy_adoption_route_is_tampered(
         policy_path=policy_path,
     )
     packet = json.loads(
-        (Path(fixture["repository_root"]) / frozen["packet_path"]).read_text(
-            encoding="utf-8"
-        )
+        (Path(fixture["repository_root"]) / frozen["packet_path"]).read_text(encoding="utf-8")
     )
     queue_path = root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
@@ -1072,13 +1187,7 @@ def test_capacity_fails_closed_when_legacy_adoption_route_is_tampered(
     legacy_send["manager_screen_route"] = "pass"
     write_jsonl(queue_path, queue)
     queue_before = queue_path.read_bytes()
-    result_path = (
-        root
-        / "manager-screen"
-        / TRANSITION_RUN_ID
-        / "batch-001"
-        / "result.json"
-    )
+    result_path = root / "manager-screen" / TRANSITION_RUN_ID / "batch-001" / "result.json"
 
     with pytest.raises(
         ManagerScreeningError,
@@ -1088,9 +1197,7 @@ def test_capacity_fails_closed_when_legacy_adoption_route_is_tampered(
             root=root,
             run_id=TRANSITION_RUN_ID,
             batch_id="batch-001",
-            submission=_send_submission(
-                [packet["dossiers"][0]["symbol"]]
-            ),
+            submission=_send_submission([packet["dossiers"][0]["symbol"]]),
             recorded_at=RECORDED_AT + dt.timedelta(minutes=2),
         )
     assert not result_path.exists()
@@ -1121,17 +1228,11 @@ def test_capacity_fails_closed_when_legacy_adoption_run_binding_is_missing(
         policy_path=policy_path,
     )
     packet = json.loads(
-        (Path(fixture["repository_root"]) / frozen["packet_path"]).read_text(
-            encoding="utf-8"
-        )
+        (Path(fixture["repository_root"]) / frozen["packet_path"]).read_text(encoding="utf-8")
     )
     queue_path = root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
-    adoption = next(
-        item
-        for item in queue
-        if item.get("legacy_transition_action") == "adoption"
-    )
+    adoption = next(item for item in queue if item.get("legacy_transition_action") == "adoption")
     adoption.pop("legacy_transition_run_id")
     write_jsonl(queue_path, queue)
 
@@ -1143,9 +1244,7 @@ def test_capacity_fails_closed_when_legacy_adoption_run_binding_is_missing(
             root=root,
             run_id=TRANSITION_RUN_ID,
             batch_id="batch-001",
-            submission=_send_submission(
-                [packet["dossiers"][0]["symbol"]]
-            ),
+            submission=_send_submission([packet["dossiers"][0]["symbol"]]),
             recorded_at=RECORDED_AT + dt.timedelta(minutes=2),
         )
 
@@ -1173,16 +1272,9 @@ def test_capacity_fails_closed_when_referenced_legacy_transition_is_missing(
         policy_path=policy_path,
     )
     packet = json.loads(
-        (Path(fixture["repository_root"]) / frozen["packet_path"]).read_text(
-            encoding="utf-8"
-        )
+        (Path(fixture["repository_root"]) / frozen["packet_path"]).read_text(encoding="utf-8")
     )
-    transition_dir = (
-        root
-        / "manager-screen"
-        / TRANSITION_RUN_ID
-        / "legacy-transition-001"
-    )
+    transition_dir = root / "manager-screen" / TRANSITION_RUN_ID / "legacy-transition-001"
     queue_path = root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
     for item in queue:
@@ -1194,13 +1286,7 @@ def test_capacity_fails_closed_when_referenced_legacy_transition_is_missing(
     write_jsonl(queue_path, queue)
     shutil.rmtree(transition_dir)
     queue_before = queue_path.read_bytes()
-    result_path = (
-        root
-        / "manager-screen"
-        / TRANSITION_RUN_ID
-        / "batch-001"
-        / "result.json"
-    )
+    result_path = root / "manager-screen" / TRANSITION_RUN_ID / "batch-001" / "result.json"
 
     with pytest.raises(
         ManagerScreeningError,
@@ -1210,9 +1296,7 @@ def test_capacity_fails_closed_when_referenced_legacy_transition_is_missing(
             root=root,
             run_id=TRANSITION_RUN_ID,
             batch_id="batch-001",
-            submission=_send_submission(
-                [packet["dossiers"][0]["symbol"]]
-            ),
+            submission=_send_submission([packet["dossiers"][0]["symbol"]]),
             recorded_at=RECORDED_AT + dt.timedelta(minutes=2),
         )
     assert not result_path.exists()
@@ -1238,9 +1322,7 @@ def test_capacity_ignores_legacy_reference_from_an_unrelated_run(
         batch_size=1,
         policy_path=policy_path,
     )
-    packet = json.loads(
-        (tmp_path / frozen["packet_path"]).read_text(encoding="utf-8")
-    )
+    packet = json.loads((tmp_path / frozen["packet_path"]).read_text(encoding="utf-8"))
     queue_path = root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
     queue.append(
@@ -1258,9 +1340,7 @@ def test_capacity_ignores_legacy_reference_from_an_unrelated_run(
         root=root,
         run_id=RUN_ID,
         batch_id="batch-001",
-        submission=_send_submission(
-            [packet["dossiers"][0]["symbol"]]
-        ),
+        submission=_send_submission([packet["dossiers"][0]["symbol"]]),
         recorded_at=CUTOFF + dt.timedelta(minutes=2),
     )
     assert recorded["decision_count"] == 1
@@ -1280,11 +1360,7 @@ def test_transition_release_fails_closed_when_not_materialized(
     root = Path(fixture["coverage_root"])
     queue_path = root / "research_queue.jsonl"
     queue = read_jsonl(queue_path)
-    release = next(
-        item
-        for item in queue
-        if item["symbol"] == fixture["symbols"]["rescreen"]
-    )
+    release = next(item for item in queue if item["symbol"] == fixture["symbols"]["rescreen"])
     release.pop("legacy_transition_result_sha256")
     write_jsonl(queue_path, queue)
 
@@ -1307,11 +1383,7 @@ def test_transition_duplicate_release_tamper_fails_closed(
     fixture, _ = _recorded_transition_root(tmp_path)
     root = Path(fixture["coverage_root"])
     result_path = (
-        root
-        / "manager-screen"
-        / TRANSITION_RUN_ID
-        / "legacy-transition-001"
-        / "result.json"
+        root / "manager-screen" / TRANSITION_RUN_ID / "legacy-transition-001" / "result.json"
     )
     result = json.loads(result_path.read_text(encoding="utf-8"))
     result["releases"].append(result["releases"][0])
@@ -1389,9 +1461,7 @@ def test_superseded_batch_releases_members_and_cannot_be_recorded(tmp_path: Path
         frozen_at=CUTOFF + dt.timedelta(minutes=4),
         policy_path=policy_path,
     )
-    second_batch = json.loads(
-        (tmp_path / frozen["batch_path"]).read_text(encoding="utf-8")
-    )
+    second_batch = json.loads((tmp_path / frozen["batch_path"]).read_text(encoding="utf-8"))
     assert [item["symbol"] for item in second_batch["members"]] == [
         "CN:000001",
         "CN:000002",
@@ -1431,9 +1501,7 @@ def test_send_to_analyst_run_capacity_rejects_whole_batch_before_writes(
         frozen_at=CUTOFF + dt.timedelta(minutes=1),
         policy_path=policy_path,
     )
-    first_batch = json.loads(
-        (tmp_path / first["batch_path"]).read_text(encoding="utf-8")
-    )
+    first_batch = json.loads((tmp_path / first["batch_path"]).read_text(encoding="utf-8"))
     assert first_batch["policy"]["send_to_analyst_capacity_per_run"] == 1
     record_manager_screen_decisions(
         root=root,
@@ -1454,9 +1522,7 @@ def test_send_to_analyst_run_capacity_rejects_whole_batch_before_writes(
     submitted_copy = copy.deepcopy(submission)
     queue_before = (root / "research_queue.jsonl").read_bytes()
     screening_before = (root / "screening.jsonl").read_bytes()
-    result_path = (
-        root / "manager-screen" / RUN_ID / "batch-002" / "result.json"
-    )
+    result_path = root / "manager-screen" / RUN_ID / "batch-002" / "result.json"
     with pytest.raises(
         ManagerScreeningError,
         match=r"1 sealed \+ 2 requested > 1.*whole batch was rejected",
@@ -1503,9 +1569,7 @@ def test_policy_without_run_capacity_remains_backward_compatible(tmp_path: Path)
             frozen_at=CUTOFF + dt.timedelta(minutes=index * 2 - 1),
             policy_path=policy_path,
         )
-        batch = json.loads(
-            (tmp_path / frozen["batch_path"]).read_text(encoding="utf-8")
-        )
+        batch = json.loads((tmp_path / frozen["batch_path"]).read_text(encoding="utf-8"))
         assert "send_to_analyst_capacity_per_run" not in batch["policy"]
         record_manager_screen_decisions(
             root=root,
@@ -1787,10 +1851,7 @@ def test_sealed_quote_amendment_refreshes_immutable_snapshot_and_binds_batch(
         quote_max_age=dt.timedelta(hours=1),
     )
     assert replay["sha256"] == amendment["sha256"]
-    assert (
-        hashlib.sha256(immutable_snapshot.read_bytes()).hexdigest()
-        == original_sha256
-    )
+    assert hashlib.sha256(immutable_snapshot.read_bytes()).hexdigest() == original_sha256
 
     frozen = freeze_manager_screen_batch(
         root=root,
@@ -1813,9 +1874,7 @@ def test_sealed_quote_amendment_refreshes_immutable_snapshot_and_binds_batch(
     from trading_os.research_assets.sealing import seal_json
 
     valid_amendment_path = tmp_path / amendment["path"]
-    forged = copy.deepcopy(
-        json.loads(valid_amendment_path.read_text(encoding="utf-8"))
-    )
+    forged = copy.deepcopy(json.loads(valid_amendment_path.read_text(encoding="utf-8")))
     forged["amendment_id"] = "quotes-forged"
     stale_as_of = (CUTOFF - dt.timedelta(days=30)).isoformat()
     for quote in forged["quotes"]:
@@ -2535,9 +2594,7 @@ def test_manager_screen_fails_closed_on_unsealed_transition_directory(
     )
 
     root, policy_path = _root(tmp_path)
-    transition_dir = (
-        root / "manager-screen" / RUN_ID / "legacy-transition-001"
-    )
+    transition_dir = root / "manager-screen" / RUN_ID / "legacy-transition-001"
     transition_dir.mkdir(parents=True)
     (transition_dir / "plan.json").write_text("{}", encoding="utf-8")
 

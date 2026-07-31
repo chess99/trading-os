@@ -38,15 +38,32 @@ packet 对每家公司提供：
 
 投资经理可对少数信息不足项补查一手来源，并在 `additional_evidence` 中记录 URL、访问时间和 symbol。不要为了每家公司都查完整年报而把初筛变成深研。
 
-## 未来 manager-screen decision contract v2
+## Manager-screen decision contract v3
 
-以下 contract 只适用于未来新冻结的 v2 batch。旧 sealed v1 batch、packet、result 和 quote-impact 资产保持原样，不回写、不迁移，也不为了采用 v2 重做历史决策。
+以下 contract 只适用于未来新冻结的 v3 batch。旧 sealed v1/v2 batch、packet、result 和 quote-impact 资产保持原样，不回写、不迁移，也不为了采用 v3 重做历史决策。v3 继承 v2 的 canonical fact line、风险回应和 quote-impact 完整 replacement 规则。
 
 - packet 为每家公司程序生成 `decision_support.canonical_fact_line` 对象；`one_line_reason` 必须以其中的 `.text` 作为逐字、逐字符的精确前缀，并紧接一个全角分号；前缀之后只能追加投资经理的定性判断。
 - 定性后缀不得手抄、重算、四舍五入或“纠正”市值、价格、期间等数字。数字事实只认 packet 中绑定 snapshot 或 quote amendment 的 canonical fact line；若事实存疑，应把核验要求写入决定性问题，不在后缀另造一套数字。
-- `decision_support.mandatory_risk_flags` 是必须逐项回应的风险候选，不是自动路由规则。flag 的存在本身不能把公司机械改成 `pass`、`watch` 或 `send_to_analyst`。
+- `decision_support.mandatory_risk_flags` 是必须逐项回应的风险候选，不是自动路由规则。flag 的存在本身不能把公司机械改成 `pass`、`watch` 或 `research_candidate`。
 - 每个 mandatory flag 都必须在 `risk_acknowledgements` 中按 packet 顺序、用稳定 flag ID 标记为 `material` 或 `not_material` 并说明理由。被标记为 `material` 的理由必须同时进入 `one_line_reason` 的定性后缀或 `decisive_question`，不能只留在 acknowledgement 中。
-- v2 quote-impact 必须提交该公司的完整 replacement decision，而不是字段补丁；即使 route 不变，也必须用新 amendment 生成的 `canonical_fact_line.text` 刷新 reason 前缀，并重新提交决定性问题、trigger、置信度、证据和全部 risk acknowledgements。replacement 追加封存，不覆盖原 result，也不构成 correction 链。
+- v2/v3 quote-impact 必须提交该公司的完整 replacement decision，而不是字段补丁；即使 route 不变，也必须用新 amendment 生成的 `canonical_fact_line.text` 刷新 reason 前缀，并重新提交决定性问题、trigger、置信度、证据和全部 risk acknowledgements。replacement 追加封存，不覆盖原 result，也不构成 correction 链。
+- v3 的 `research_candidate` 只是未购预算提名。初筛记录不得把它物化为 `quick_profile,pending`；完整 scope 封存后，主 Agent 才对全部候选执行一次 sealed quick-profile allocation。
+
+`send_to_analyst` 是 legacy decision contract v1/v2 的路由名：旧合同中它直接购买 quick-profile 预算，旧 sealed result 继续按原合同只读保留。新 v3 禁止生成或使用 `send_to_analyst`；v3 只能用未购预算的 `research_candidate`，再由后续 sealed allocation 决定是否购买研究预算。
+
+从旧 v1/v2 存量切换到 v3 时，run 保持暂停并严格按以下顺序执行；每个 status 都必须通过后才能进入下一步或继续冻结 v3 batch：
+
+```bash
+python -m trading_os coverage manager-screen-allocation-v3-freeze <run-id> \
+  --future-policy policies/manager-screening-allocation-v3.json \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-status <run-id>
+python -m trading_os coverage manager-screen-allocation-v3-suspend <run-id> \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-suspension-status <run-id>
+```
 
 当前这一轮 manager-screen 仍为 `paused`。calibration 完成后也只允许受控续跑约 300 家（默认约两个 150 家 batch），随后再次停下审计；只有 calibration 与这批受控续跑中的身份错误、期间错误和强风险遗漏都为 0，才由主 Agent 考虑全面恢复。任一指标非 0 时保持暂停，修的是未来 contract 或后续正式研究，不对 sealed 决策生成 correction 套 correction。
 
@@ -80,13 +97,13 @@ run control 是 append-only sealed 时间线：`paused` 禁止新 freeze 和首�
 
 业务可能可投，但需要等待价格、财报、事件或证据成熟。要求与 `pass` 相同，并明确等待什么。
 
-### `send_to_analyst`
+### `research_candidate`
 
-只有当下一小时研究很可能改变判断时使用。决定性问题必须足够具体，研究员能在有限预算内回答。该路由直接创建 `quick_profile` 预算，不再经过独立 L1 allocation。
+只有当下一小时研究很可能改变判断时使用。决定性问题必须足够具体，研究员能在有限预算内回答。该路由只进入未购预算候选池，不直接创建研究任务。
 
-该决定同时写入 queue 的 manager-screen result 路径/SHA-256、决定性问题和证据 ID。研究员 package 的 `manager_screen_binding` 必须逐项匹配这些字段，并提交引用自身 source ID 的 `decisive_answer`；不能用一份泛化 profile 代替问题回答。
+完整 scope 后，主 Agent 在同一 run 的全部候选中一次性比较并封存 allocation。已完成或 running 的旧 v2 预算锁定；尚未 claim 的旧 pending 可被显式撤回或替换。历史购买记录不删除，有效 quick-profile 数量与工时不得突破 run 上限。
 
-`send_to_analyst` 总量受 sealed policy 的 run 级容量约束。记录前统计同 run 全部 sealed result；既有数量加本批申请超限时整批原子拒绝，在 result、queue、screening 写入前失败。程序不得为了塞进容量而把 Agent 的路由改成 `pass` 或 `watch`。
+allocation 选中的公司才物化为 `quick_profile,pending`，同时保留 manager-screen result 路径/SHA-256、决定性问题和证据 ID。研究员 package 的 `manager_screen_binding` 必须逐项匹配这些字段，并提交引用自身 source ID 的 `decisive_answer`；不能用一份泛化 profile 代替问题回答。
 
 ## 禁止字段
 

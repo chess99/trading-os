@@ -69,16 +69,23 @@ def _write_policy(
             "principles": {"same_manager_per_batch": True},
         },
     }
-    if decision_contract_version == 2:
+    if decision_contract_version in {2, 3}:
         policy["payload"].update(
             {
-                "decision_contract_version": 2,
+                "decision_contract_version": decision_contract_version,
                 "mandatory_risk_acknowledgement": True,
                 "canonical_fact_line_required": True,
                 "high_liability_to_assets_pct": 70.0,
                 "one_line_reason_max_chars": 2000,
             }
         )
+        if decision_contract_version == 3:
+            policy["payload"].update(
+                {
+                    "routes": ["pass", "watch", "research_candidate"],
+                    "research_candidate_requires_allocation": True,
+                }
+            )
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         json.dumps(policy, ensure_ascii=False, indent=2) + "\n",
@@ -130,33 +137,31 @@ def _manager_submission(
     for index, dossier in enumerate(packet["dossiers"]):
         symbol = dossier["symbol"]
         route = (
-            routes[index]
-            if routes is not None
-            else ("pass" if index == 0 else "send_to_analyst")
+            routes[index] if routes is not None else ("pass" if index == 0 else "send_to_analyst")
         )
         decision = {
-                "symbol": symbol,
-                "route": route,
-                "one_line_reason": (
-                    "当前证据不足以购买进一步研究预算。"
-                    if route in {"pass", "watch"}
-                    else "决定性问题可在画像预算内解决。"
-                ),
-                "decisive_question": "正常化股东收益能否覆盖当前估值？",
-                "revisit_triggers": (
-                    [
-                        {
-                            "type": "price",
-                            "condition": "价格较当前下跌20%",
-                            "reason": "安全边际可能改善。",
-                        }
-                    ]
-                    if route in {"pass", "watch"}
-                    else []
-                ),
-                "confidence": "medium",
-                "evidence_ids": [dossier["evidence_catalog"][0]["evidence_id"]],
-            }
+            "symbol": symbol,
+            "route": route,
+            "one_line_reason": (
+                "当前证据不足以购买进一步研究预算。"
+                if route in {"pass", "watch"}
+                else "决定性问题可在画像预算内解决。"
+            ),
+            "decisive_question": "正常化股东收益能否覆盖当前估值？",
+            "revisit_triggers": (
+                [
+                    {
+                        "type": "price",
+                        "condition": "价格较当前下跌20%",
+                        "reason": "安全边际可能改善。",
+                    }
+                ]
+                if route in {"pass", "watch"}
+                else []
+            ),
+            "confidence": "medium",
+            "evidence_ids": [dossier["evidence_catalog"][0]["evidence_id"]],
+        }
         support = (
             dossier.get("market_snapshot", {})
             .get("manager_screen_facts", {})
@@ -164,8 +169,7 @@ def _manager_submission(
         )
         if isinstance(support, dict):
             decision["one_line_reason"] = (
-                f"{support['canonical_fact_line']['text']}；"
-                "当前仍需按决定性问题分配研究预算"
+                f"{support['canonical_fact_line']['text']}；当前仍需按决定性问题分配研究预算"
             )
             decision["risk_acknowledgements"] = [
                 {
@@ -252,6 +256,8 @@ def _fixture(
         policy_path=policy_path,
     )
     packet = json.loads((tmp_path / frozen["packet_path"]).read_text(encoding="utf-8"))
+    if original_routes is None and decision_contract_version == 3:
+        original_routes = ("pass", "research_candidate")
     recorded = record_manager_screen_decisions(
         root=root,
         run_id=RUN_ID,
@@ -453,6 +459,77 @@ def test_prepare_selects_only_threshold_candidates_and_is_idempotent(
     assert packet["rows"][0]["valuation"]["new"]["market_cap_cny"] == 12_500_000_000
     assert read_jsonl(context["root"] / "research_queue.jsonl") == queue_before
     assert read_jsonl(context["root"] / "screening.jsonl") == screening_before
+
+
+def test_post_contract_v2_quote_prepare_is_frozen(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import trading_os.research_assets.manager_screen_quote_impact as quote_impact
+
+    context = _fixture(tmp_path, decision_contract_version=2)
+    monkeypatch.setattr(
+        quote_impact,
+        "_allocation_v3_contract_active",
+        lambda **_: True,
+    )
+    with pytest.raises(
+        quote_impact.ManagerScreenQuoteImpactError,
+        match="read-only",
+    ):
+        _prepare(context)
+
+
+def test_post_contract_v2_quote_replay_never_rematerializes_suspended_row(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import trading_os.research_assets.manager_screen_quote_impact as quote_impact
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+
+    context = _fixture(tmp_path, decision_contract_version=2)
+    _prepare(context)
+    packet = _load_review_packet(tmp_path)
+    submission = _review_submission(
+        packet,
+        actions={"CN:000001": "send_to_analyst"},
+    )
+    recorded = quote_impact.record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=submission,
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    queue_path = context["root"] / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    row = next(item for item in queue if item["symbol"] == "CN:000001")
+    row.update(
+        {
+            "task_type": "manager_screen",
+            "status": "completed",
+            "research_budget_state": "candidate_unfunded",
+        }
+    )
+    write_jsonl(queue_path, queue)
+    queue_before = queue_path.read_bytes()
+    monkeypatch.setattr(
+        quote_impact,
+        "_allocation_v3_contract_active",
+        lambda **_: True,
+    )
+    replayed = quote_impact.record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=submission,
+        recorded_at=CUTOFF + dt.timedelta(minutes=6),
+    )
+    assert replayed["result_sha256"] == recorded["result_sha256"]
+    assert replayed["idempotent"] is True
+    assert queue_path.read_bytes() == queue_before
 
 
 @pytest.mark.parametrize("old_price", [None, 0.0, -1.0])
@@ -672,7 +749,9 @@ def test_replacement_materializes_and_profile_accepts_new_predecessor(
     )
 
 
-def test_capacity_uses_net_route_change(tmp_path: Path):
+def test_capacity_does_not_refund_historical_purchase_on_net_route_change(
+    tmp_path: Path,
+):
     from trading_os.research_assets.manager_screen_quote_impact import (
         ManagerScreenQuoteImpactError,
         record_manager_screen_quote_impact,
@@ -709,15 +788,15 @@ def test_capacity_uses_net_route_change(tmp_path: Path):
             "CN:000002": "pass",
         },
     )
-    recorded = record_manager_screen_quote_impact(
-        root=net_context["root"],
-        run_id=RUN_ID,
-        batch_id=BATCH_ID,
-        review_id=REVIEW_ID,
-        submission=net_submission,
-        recorded_at=CUTOFF + dt.timedelta(minutes=5),
-    )
-    assert recorded["new_send_to_analyst_count"] == 1
+    with pytest.raises(ManagerScreenQuoteImpactError, match="cumulative"):
+        record_manager_screen_quote_impact(
+            root=net_context["root"],
+            run_id=RUN_ID,
+            batch_id=BATCH_ID,
+            review_id=REVIEW_ID,
+            submission=net_submission,
+            recorded_at=CUTOFF + dt.timedelta(minutes=5),
+        )
 
 
 def test_new_batch_capacity_counts_recorded_quote_impact_effective_routes(
@@ -770,17 +849,9 @@ def test_new_batch_capacity_counts_recorded_quote_impact_effective_routes(
         frozen_at=CUTOFF + dt.timedelta(minutes=6),
         policy_path=context["policy_path"],
     )
-    packet = json.loads(
-        (tmp_path / frozen["packet_path"]).read_text(encoding="utf-8")
-    )
+    packet = json.loads((tmp_path / frozen["packet_path"]).read_text(encoding="utf-8"))
     queue_before = (context["root"] / "research_queue.jsonl").read_bytes()
-    result_path = (
-        context["root"]
-        / "manager-screen"
-        / RUN_ID
-        / "batch-002"
-        / "result.json"
-    )
+    result_path = context["root"] / "manager-screen" / RUN_ID / "batch-002" / "result.json"
 
     with pytest.raises(
         ManagerScreeningError,
@@ -806,6 +877,7 @@ def test_later_progress_capacity_uses_final_materialized_routes(
 ):
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
     from trading_os.research_assets.manager_screen_quote_impact import (
+        ManagerScreenQuoteImpactError,
         record_manager_screen_quote_impact,
     )
 
@@ -837,35 +909,24 @@ def test_later_progress_capacity_uses_final_materialized_routes(
         },
     )
 
-    recorded = record_manager_screen_quote_impact(
-        root=context["root"],
-        run_id=RUN_ID,
-        batch_id=BATCH_ID,
-        review_id=REVIEW_ID,
-        submission=submission,
-        recorded_at=CUTOFF + dt.timedelta(minutes=6),
-    )
-    final_queue = read_jsonl(queue_path)
-    final_routes = {
-        row["symbol"]: row["manager_screen_route"]
-        for row in final_queue
-        if row.get("manager_screen_run_id") == RUN_ID
-    }
-    later_final = next(row for row in final_queue if row["symbol"] == "CN:000002")
-    result = json.loads((tmp_path / recorded["result_path"]).read_text(encoding="utf-8"))
-    sealed_routes = {row["symbol"]: row["route"] for row in result["decisions"]}
-
-    assert sum(route == "send_to_analyst" for route in final_routes.values()) == 1
-    assert final_routes == sealed_routes
-    assert later_final["task_type"] == "deep_research"
-    assert later_final["status"] == "running"
-    assert later_final["assigned_agent"] == "/analyst/deep"
-    assert later_final["result_path"] == "research/deep-in-progress.json"
+    queue_before = queue_path.read_bytes()
+    with pytest.raises(ManagerScreenQuoteImpactError, match="cumulative"):
+        record_manager_screen_quote_impact(
+            root=context["root"],
+            run_id=RUN_ID,
+            batch_id=BATCH_ID,
+            review_id=REVIEW_ID,
+            submission=submission,
+            recorded_at=CUTOFF + dt.timedelta(minutes=6),
+        )
+    assert queue_path.read_bytes() == queue_before
 
 
 def test_capacity_and_materialization_conserve_later_progress_routes_directly(
     tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
 ):
+    import trading_os.research_assets.manager_screening as screening
     from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
     from trading_os.research_assets.manager_screen_quote_impact import (
         _enforce_capacity,
@@ -958,7 +1019,7 @@ def test_capacity_and_materialization_conserve_later_progress_routes_directly(
         "review_id": REVIEW_ID,
         "original_result_path": original_path,
         "policy": {
-            "send_to_analyst_capacity_per_run": 1,
+            "send_to_analyst_capacity_per_run": 2,
             "quick_profile_effort_budget_hours": 1.5,
             "quick_profile_stop_conditions": ["stop"],
         },
@@ -983,6 +1044,11 @@ def test_capacity_and_materialization_conserve_later_progress_routes_directly(
         / "result.json"
     )
 
+    monkeypatch.setattr(
+        screening,
+        "manager_screen_status",
+        lambda **_: {"analyst_budget": {"purchased_company_count": 1}},
+    )
     _enforce_capacity(
         base=root,
         run_id=RUN_ID,
@@ -1370,30 +1436,22 @@ def test_v2_quote_impact_rebuilds_support_and_accepts_complete_replacement(
     _prepare(context)
     packet = _load_review_packet(tmp_path)
     row = packet["rows"][0]
-    old_support = (
-        context["packet"]["dossiers"][0]["market_snapshot"][
-            "manager_screen_facts"
-        ]["decision_support"]
-    )
+    old_support = context["packet"]["dossiers"][0]["market_snapshot"]["manager_screen_facts"][
+        "decision_support"
+    ]
     support = row["decision_support"]
 
     assert old_support["canonical_fact_line"]["market_cap_cny"] == 10_000_000_000
     assert support["canonical_fact_line"]["market_cap_cny"] == 12_500_000_000
-    assert support["canonical_fact_line"]["sha256"] != old_support[
-        "canonical_fact_line"
-    ]["sha256"]
-    expected_source_evidence_id = (
-        f"quote-amendment:quotes-002:{row['symbol']}"
-    )
+    assert support["canonical_fact_line"]["sha256"] != old_support["canonical_fact_line"]["sha256"]
+    expected_source_evidence_id = f"quote-amendment:quotes-002:{row['symbol']}"
     assert (
         support["canonical_fact_line"]["source_evidence_id"]
         == expected_source_evidence_id
         == row["quote"]["evidence_id"]
     )
     assert expected_source_evidence_id in row["allowed_evidence_ids"]
-    assert [flag["flag_id"] for flag in support["mandatory_risk_flags"]] == [
-        "audit_or_listing"
-    ]
+    assert [flag["flag_id"] for flag in support["mandatory_risk_flags"]] == ["audit_or_listing"]
 
     submission = _review_submission(
         packet,
@@ -1411,12 +1469,8 @@ def test_v2_quote_impact_rebuilds_support_and_accepts_complete_replacement(
     replacement = result["decisions"][0]
 
     assert replacement["route"] == "watch"
-    assert replacement["one_line_reason"].startswith(
-        f"{support['canonical_fact_line']['text']}；"
-    )
-    assert replacement["risk_acknowledgements"] == row["old_decision"][
-        "risk_acknowledgements"
-    ]
+    assert replacement["one_line_reason"].startswith(f"{support['canonical_fact_line']['text']}；")
+    assert replacement["risk_acknowledgements"] == row["old_decision"]["risk_acknowledgements"]
     assert (
         manager_screen_quote_impact_status(
             root=context["root"],
@@ -1426,6 +1480,86 @@ def test_v2_quote_impact_rebuilds_support_and_accepts_complete_replacement(
         )["replacement_count"]
         == 1
     )
+
+
+def test_v3_quote_impact_keeps_candidate_unfunded_after_full_replacement(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        record_manager_screen_quote_impact,
+    )
+    from trading_os.research_assets.manager_screening import manager_screen_status
+
+    context = _fixture(
+        tmp_path,
+        decision_contract_version=3,
+        first_name="ST甲公司",
+    )
+    _prepare(context)
+    packet = _load_review_packet(tmp_path)
+    recorded = record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=_review_submission(
+            packet,
+            actions={"CN:000001": "research_candidate"},
+        ),
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    result = json.loads((tmp_path / recorded["result_path"]).read_text(encoding="utf-8"))
+    assert result["decisions"][0]["route"] == "research_candidate"
+    queue = {row["symbol"]: row for row in read_jsonl(context["root"] / "research_queue.jsonl")}
+    candidate = queue["CN:000001"]
+    assert candidate["task_type"] == "manager_screen"
+    assert candidate["status"] == "completed"
+    assert candidate["manager_screen_route"] == "research_candidate"
+    assert candidate["research_budget_state"] == "candidate_unfunded"
+    assert "effort_budget_hours" not in candidate
+    screening = {row["symbol"]: row for row in read_jsonl(context["root"] / "screening.jsonl")}
+    assert screening["CN:000001"]["decision"] == "candidate_unfunded"
+    assert screening["CN:000001"]["research_budget_state"] == "candidate_unfunded"
+    status = manager_screen_status(root=context["root"], run_id=RUN_ID)
+    assert status["analyst_budget"]["purchased_company_count"] == 0
+    assert status["batches"][0]["quote_impact_review"]["effective_route_delta"] == {
+        "pass": -1,
+        "research_candidate": 1,
+        "watch": 0,
+    }
+
+
+def test_v3_quote_impact_clears_stale_candidate_budget_state(tmp_path: Path):
+    from trading_os.research_assets.coverage_store import read_jsonl
+    from trading_os.research_assets.manager_screen_quote_impact import (
+        record_manager_screen_quote_impact,
+    )
+
+    context = _fixture(
+        tmp_path,
+        decision_contract_version=3,
+        original_routes=("research_candidate", "pass"),
+    )
+    _prepare(context)
+    packet = _load_review_packet(tmp_path)
+    record_manager_screen_quote_impact(
+        root=context["root"],
+        run_id=RUN_ID,
+        batch_id=BATCH_ID,
+        review_id=REVIEW_ID,
+        submission=_review_submission(
+            packet,
+            actions={"CN:000001": "pass"},
+        ),
+        recorded_at=CUTOFF + dt.timedelta(minutes=5),
+    )
+    queue = {row["symbol"]: row for row in read_jsonl(context["root"] / "research_queue.jsonl")}
+    screening = {row["symbol"]: row for row in read_jsonl(context["root"] / "screening.jsonl")}
+    assert queue["CN:000001"]["manager_screen_route"] == "pass"
+    assert "research_budget_state" not in queue["CN:000001"]
+    assert screening["CN:000001"]["decision"] == "catalog"
+    assert "research_budget_state" not in screening["CN:000001"]
 
 
 def test_v2_quote_impact_rejects_keep(tmp_path: Path):
@@ -1473,9 +1607,7 @@ def test_v2_quote_impact_rejects_tampered_packet_canonical_support(
     prepared = _prepare(context)
     packet_path = tmp_path / prepared["packet_path"]
     packet = json.loads(packet_path.read_text(encoding="utf-8"))
-    packet["rows"][0]["decision_support"]["canonical_fact_line"][
-        "market_cap_cny"
-    ] = 1
+    packet["rows"][0]["decision_support"]["canonical_fact_line"]["market_cap_cny"] = 1
     packet_path.with_name(f"{packet_path.name}.seal.json").unlink()
     packet_path.write_bytes(canonical_json_bytes(packet))
     seal_json(
@@ -1518,12 +1650,8 @@ def test_v2_quote_impact_rejects_rehashed_tampered_canonical_source(
     packet = json.loads(packet_path.read_text(encoding="utf-8"))
     canonical = packet["rows"][0]["decision_support"]["canonical_fact_line"]
     canonical["source_evidence_id"] = f"snapshot:{packet['rows'][0]['symbol']}"
-    unsigned = {
-        key: value for key, value in canonical.items() if key != "sha256"
-    }
-    canonical["sha256"] = hashlib.sha256(
-        canonical_json_bytes(unsigned)
-    ).hexdigest()
+    unsigned = {key: value for key, value in canonical.items() if key != "sha256"}
+    canonical["sha256"] = hashlib.sha256(canonical_json_bytes(unsigned)).hexdigest()
     packet_path.with_name(f"{packet_path.name}.seal.json").unlink()
     packet_path.write_bytes(canonical_json_bytes(packet))
     seal_json(

@@ -4,7 +4,7 @@
 
 研究时间本身是资本。主 Agent 负责决定“下一小时花在哪里”，研究员负责用证据回答具体问题。
 
-初筛不使用机械分数，也不增加独立 allocation Agent：投资经理的 `send_to_analyst` 就是 L1 预算决策。
+初筛不使用机械分数，也不增加独立 allocation Agent。投资经理先用 `research_candidate` 提名，不购买预算；完整 scope 后仍由同一主 Agent 执行一次 sealed 横向配置。
 
 ## 漏斗
 
@@ -12,7 +12,7 @@
 |---|---:|---:|---|---|
 | L0 scope | universe 全量 | 批次级 | 程序 + 主 Agent | 身份、纳入、硬排除、异常 |
 | L1 manager screen | 全量，默认每批 150 | 批次级 | 同一主 Agent | 是否值得购买下一小时 |
-| L2 quick profile | 仅 `send_to_analyst` | 约 1.5 小时 | 单公司研究员 | 决定性问题能否解决 |
+| L2 quick profile | sealed allocation 选中者 | 约 1.5 小时 | 单公司研究员 | 决定性问题能否解决 |
 | L3 scoped research | 少数 | 约 4 小时 | 单公司研究员 | 投资路径能否由证据建立 |
 | L4 deep research | 更少 | 约 24 小时 | 单公司研究员 | 重建业务、会计、盈利和估值 |
 | L5 underwriting | 极少 | 12 小时起 | 独立 reviewer | 深研主张能否承保 |
@@ -24,11 +24,25 @@
 
 ## L1：投资经理直接配置
 
-`pass`、`watch`、`send_to_analyst` 必须基于可读理由、决定性问题、证据和相对研究价值。不得生成精确总分。
+`pass`、`watch`、`research_candidate` 必须基于可读理由、决定性问题、证据和相对研究价值。不得生成精确总分。
 
-初筛同一批由同一个主 Agent完成，避免不同单公司 Agent 的尺度漂移。只有候选才购买单公司上下文和工具调用。
+初筛同一批由同一个主 Agent 完成，避免不同单公司 Agent 的尺度漂移。`research_candidate` 只购买进入候选池的权利；只有最终 allocation 选中者才购买单公司上下文和工具调用。
 
-`send_to_analyst` 是第一笔 analyst 预算，但仍受 manager-screen policy 的 run 级上限。记录成功后，queue 保留原 result 路径/SHA-256、决定性问题和证据 ID；quick profile 必须绑定它们，并用自身来源形成 `decisive_answer`，否则不得进入同层比较。
+完整 scope 后的 sealed allocation 是第一笔 analyst 预算，受 manager-screen policy 的 run 级上限。已完成或 running 的旧 v2 预算锁定；未 claim 的 pending 可在这一次 allocation 中显式 deselect/replace，历史记录继续保留。选中后 queue 保留原 result 路径/SHA-256、决定性问题和证据 ID；quick profile 必须绑定它们，并用自身来源形成 `decisive_answer`，否则不得进入同层比较。
+
+旧 v1/v2 存量进入 v3 前，主 Agent 在暂停状态按以下顺序封存并核验治理资产；完成 suspension status 前不得继续领取旧 pending 或冻结新的 v3 batch：
+
+```bash
+python -m trading_os coverage manager-screen-allocation-v3-freeze <run-id> \
+  --future-policy policies/manager-screening-allocation-v3.json \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-status <run-id>
+python -m trading_os coverage manager-screen-allocation-v3-suspend <run-id> \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-suspension-status <run-id>
+```
 
 ## L2/L3：研究员结果回到投资经理
 

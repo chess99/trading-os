@@ -11,8 +11,8 @@
 
 - 主 Agent 是投资经理：冻结范围、浏览整批压缩 dossier、统一判断研究价值、配置研究预算并维护共享状态。
 - 初筛每批默认 150 家，由同一个主 Agent 完整判断；不得为初筛派发“一家公司一个 Agent”。
-- 只有 `send_to_analyst` 才交给单公司研究员。研究员一次只处理一家公司；提交的 `manager_screen_binding` 必须匹配原 result 的路径、SHA-256、决定性问题和证据 ID，并用自己的来源提交 `decisive_answer`。
-- `send_to_analyst` 受 manager-screen run 级容量约束；超限时整批拒绝，不允许程序机械改写路由。targeted/scoped/deep/underwriting 等后续预算同样按 run 记账，不能靠新开 cycle 或 batch 扩容。
+- decision contract v3 的 `research_candidate` 只提名候选，不购买预算。完整 scope 封存后，主 Agent 通过一次 sealed allocation 在全市场候选中购买 quick-profile；只有被选中的公司才交给单公司研究员。研究员一次只处理一家公司；提交的 `manager_screen_binding` 必须匹配原 result 的路径、SHA-256、决定性问题和证据 ID，并用自己的来源提交 `decisive_answer`。
+- quick-profile 有效预算受 manager-screen run 级容量约束；已完成或已领取的预算锁定，尚未领取的旧 v2 `send_to_analyst` 可在完整 scope 后的一次 sealed allocation 中显式撤回或替换。历史购买记录保留；有效预算不得超过 run 上限。targeted/scoped/deep/underwriting 等后续预算同样按 run 记账，不能靠新开 cycle 或 batch 扩容。
 - 深研完成后，独立承保、challenger 和组合综合都必须由主 Agent 分阶段显式批准；上游批准不自动授予下游预算。承保 reviewer 不代写研究。
 - 单公司层不得输出 `buy_now`、组合操作或仓位；只有组合层可以。
 
@@ -23,9 +23,9 @@
 - 半盲 reviewer 不能读取此前结论性答案；完全独立 challenger 用于重大风险、重大分歧或潜在前五大仓位。
 - 验证通过后才更新公司状态和 coverage；批次末尾运行 reconcile。
 - 不得因市值小、流动性低、暂时亏损、负 PE 或行业冷门静默丢弃公司。
-- 程序化快照只能准备材料和确定行政顺序，不得直接决定 `pass`、`watch`、`send_to_analyst` 或组合操作。
+- 程序化快照只能准备材料和确定行政顺序，不得直接决定 `pass`、`watch`、`research_candidate`、研究预算或组合操作。
 - manager-screen 行情必须覆盖完整 universe、带来源和时间并通过新鲜度校验；默认最多 72 小时、未来容忍 5 分钟。已封存快照不可覆盖，只能追加绑定原快照路径与 SHA-256 的 sealed quote amendment。
-- 新 manager-screen batch 使用 decision contract v2：程序生成并绑定 canonical fact line；投资经理只追加定性理由，不得手抄财务数字或报告期间。
+- 新 manager-screen batch 使用 decision contract v3：程序生成并绑定 canonical fact line；投资经理只追加定性理由，不得手抄财务数字或报告期间。v3 继承 v2 的全部事实与风险合同，但把候选提名和预算购买分开；旧 sealed v1/v2 资产保持不可变。
 - `mandatory_risk_flags` 只是必须逐项回应的风险候选，不自动决定路由；每项都要明确判断 `material` 或 `not_material`，重大风险理由必须进入正式 reason 或决定性问题。
 - 初筛的 `pass` / `watch` 必须记录理由、决定性问题、证据引用和可执行重启条件。
 - 路由观点差异是校准信号，不自动视为错误。初筛 material error 仅包括证券身份错误、可核验事实错误、重大风险遗漏和 contract 违规。
@@ -80,12 +80,21 @@ python -m trading_os coverage manager-screen-quote-amend <run-id> <amendment-id>
   --tencent-previous-close-date <YYYY-MM-DD>
 python -m trading_os coverage scope-freeze <run-id> --mode auto --scope-cutoff <timestamp> \
   --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
-python -m trading_os coverage manager-screen-freeze <run-id> <batch-id>
-python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
 python -m trading_os coverage manager-screen-control-status <run-id>
 python -m trading_os coverage manager-screen-control-record <run-id> <event-id> \
   --state paused --manager-agent <agent> --manager-model <model> \
   --manager-tool <tool> --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-freeze <run-id> \
+  --future-policy policies/manager-screening-allocation-v3.json \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-status <run-id>
+python -m trading_os coverage manager-screen-allocation-v3-suspend <run-id> \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-suspension-status <run-id>
+python -m trading_os coverage manager-screen-freeze <run-id> <batch-id>
+python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
 python -m trading_os coverage manager-screen-quote-impact-prepare <run-id> <batch-id> <review-id> \
   --quote-amendment <amendment.json>
 python -m trading_os coverage manager-screen-quote-impact-record <run-id> <batch-id> <review-id> \

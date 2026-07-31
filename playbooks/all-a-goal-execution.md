@@ -11,8 +11,9 @@
 → 程序封存全市场事实快照
 → 程序生成每批 100—200 家压缩 dossier
 → 同一投资经理 Agent 完整浏览一批
-→ pass / watch / send_to_analyst
-→ 少数候选由单公司研究员解决决定性问题
+→ pass / watch / research_candidate（未购预算）
+→ 完整 scope 后由主 Agent 一次性横向配置 quick-profile 预算
+→ 被选中的少数候选由单公司研究员解决决定性问题
 → scoped research → deep research
 → 独立承保 / challenger
 → 最新行情下的组合综合
@@ -60,13 +61,14 @@ coverage/cn-a/manager-screen/{RUN_ID}/{BATCH_ID}/
 
 `pass` 和 `watch` 不写单公司 Markdown；它们的不可变事实源是封存 result。只有研究员开始正式研究后才写公司时间线。
 
-## 未来 manager-screen decision contract v2
+## Manager-screen decision contract v3
 
-v2 只约束未来新冻结的 batch，不追溯改写任何 sealed v1 batch、packet、result 或 quote-impact 资产。
+v3 只约束未来新冻结的 batch，不追溯改写任何 sealed v1/v2 batch、packet、result 或 quote-impact 资产。v3 继承 v2 的 canonical fact line、风险回应和完整 replacement 规则，并把候选提名与预算购买分离。
 
 - packet 的 `decision_support.canonical_fact_line` 对象由程序根据所绑定的 snapshot 或 quote amendment 生成。主 Agent 的 `one_line_reason` 必须把其中的 `.text` 加全角分号作为逐字精确前缀；前缀后的定性后缀不得手抄、重算、舍入或修正数字。
 - packet 的 `decision_support.mandatory_risk_flags` 只是必须回应的风险候选，不自动决定 route。每个 flag 必须在 decision 的 `risk_acknowledgements` 中明确标为 `material` 或 `not_material` 并说明理由；material 理由还必须进入 reason 的定性后缀或决定性问题。
-- v2 quote-impact 不是 delta patch。每个受影响 symbol 都必须提交完整 replacement decision，用新 amendment 对应的 canonical 市值事实刷新 reason 精确前缀，并完整重交 risk acknowledgements、决定性问题、trigger、证据与置信度；route 可以保持不变。replacement 只追加封存，不覆盖原决策，也不启动 correction 链。
+- v2/v3 quote-impact 不是 delta patch。每个受影响 symbol 都必须提交完整 replacement decision，用新 amendment 对应的 canonical 市值事实刷新 reason 精确前缀，并完整重交 risk acknowledgements、决定性问题、trigger、证据与置信度；route 可以保持不变。replacement 只追加封存，不覆盖原决策，也不启动 correction 链。
+- v3 的第三条路由是 `research_candidate`。它只表示“值得进入全市场候选池”，不得生成 `quick_profile,pending`、不得占用研究预算。完整 scope 结束后，主 Agent 对全部候选执行一次 sealed allocation；已完成或 running 的旧预算锁定，尚未 claim 的旧 v2 pending 可以显式撤回或被更高价值候选替换，但有效总预算不得超过原 run 上限。
 
 本轮 manager-screen 保持 `paused`。calibration 结束后先只受控续跑约 300 家（默认约两个 batch），然后再次暂停审计；只有 calibration 与受控续跑样本中的身份错误、期间错误、强风险遗漏都为 0，主 Agent 才能考虑全面恢复。该门槛不是自动恢复开关；任何一项非 0 都继续暂停，并在未来 contract、正式研究或至多一次显式裁决中处理，不为旧决策制造递归 correction。
 
@@ -91,7 +93,7 @@ Material error 只包括：
 3. 重大风险遗漏；
 4. decision contract 违规。
 
-投资经理与 reviewer 对 `pass/watch/send_to_analyst` 的观点差异不是自动错误。程序对 schema、整批覆盖、顺序、证据引用和禁止字段做 100% 校验。calibration 按 policy 生成确定性样本，由独立 reviewer 完整覆盖并封存 packet/result；路由分歧只单列为 calibration signal，不触发裁决。material error 只限上述四类，不阻塞 coverage；只有记录 material error 时才必须且允许每家公司执行一次裁决，也不生成递归 correction。
+投资经理与 reviewer 对 `pass/watch/research_candidate` 的观点差异不是自动错误。程序对 schema、整批覆盖、顺序、证据引用和禁止字段做 100% 校验。calibration 按 policy 生成确定性样本，由独立 reviewer 完整覆盖并封存 packet/result；路由分歧只单列为 calibration signal，不触发裁决。material error 只限上述四类，不阻塞 coverage；只有记录 material error 时才必须且允许每家公司执行一次裁决，也不生成递归 correction。
 
 新 calibration packet 以 `reviewer_contract.adjudication_trigger=material_error_only` 固化触发规则。缺少该字段的早期 sealed result 若含纯路由分歧 adjudication，只做历史兼容读取和计数，不使结果失效；所有新 record 必须遵守新规则，兼容路径不能用于新增资产。
 
@@ -101,7 +103,7 @@ Material error 只包括：
 
 研究员一次只处理一家公司。package 必须绑定原 manager-screen result 的路径、SHA-256、决定性问题和证据 ID，并用自身 source ID 提交 `decisive_answer`；绑定不一致不得记录。研究员结果仍需真实来源、反证、正常化盈利/现金桥接和 provenance。
 
-`send_to_analyst` 与 targeted/scoped/deep/underwriting 容量均按同一 manager-screen run 记账，不能靠新 cycle/batch 扩容；超限应原子拒绝，不机械改路由。只有完成 deep research、结构化主张和来源封存的公司才能由主 Agent 显式购买独立承保。重大风险、重大分歧或潜在前五大仓位才考虑 challenger，但 challenger 与 portfolio 必须分别获得新的主 Agent 批准；上游 approval 不授权下游。研究层不给组合操作。
+quick-profile allocation 与 targeted/scoped/deep/underwriting 容量均按同一 manager-screen run 记账，不能靠新 cycle/batch 扩容；超限应原子拒绝，不机械改路由。只有完成 deep research、结构化主张和来源封存的公司才能由主 Agent 显式购买独立承保。重大风险、重大分歧或潜在前五大仓位才考虑 challenger，但 challenger 与 portfolio 必须分别获得新的主 Agent 批准；上游 approval 不授权下游。研究层不给组合操作。
 
 ## Legacy transition 与 GC
 
@@ -115,6 +117,10 @@ plan、packet、result 全部封存并守恒。资产清理只先生成只读 re
 
 ## 命令
 
+从旧 v1/v2 存量切换到 v3 时，run 必须保持暂停，并按
+`allocation-v3-freeze → allocation-v3-status → allocation-v3-suspend → allocation-v3-suspension-status`
+完成合同封存、核验和旧未领取预算暂停；四步通过后才继续冻结新的 v3 batch。
+
 ```bash
 python -m trading_os coverage manager-screen-snapshot <run-id> \
   --information-cutoff <timestamp>
@@ -124,6 +130,16 @@ python -m trading_os coverage scope-freeze <run-id> --mode auto \
   --scope-cutoff <timestamp> \
   --universe-file coverage/cn-a/snapshots/<run-id>/companies.jsonl
 python -m trading_os coverage scope-status <run-id>
+
+python -m trading_os coverage manager-screen-allocation-v3-freeze <run-id> \
+  --future-policy policies/manager-screening-allocation-v3.json \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-status <run-id>
+python -m trading_os coverage manager-screen-allocation-v3-suspend <run-id> \
+  --manager-agent <agent> --manager-model <model> --manager-tool <tool> \
+  --reason <reason> --at <timestamp>
+python -m trading_os coverage manager-screen-allocation-v3-suspension-status <run-id>
 
 python -m trading_os coverage manager-screen-freeze <run-id> <batch-id> --batch-size 150
 python -m trading_os coverage manager-screen-record <run-id> <batch-id> --input <decisions.json>
@@ -165,7 +181,7 @@ quality-triage-* / allocate-research / apply-allocation / profile-finalize
 
 - dossier 生成耗时；
 - 主 Agent 浏览与提交耗时；
-- send_to_analyst 数量和比例；
+- research_candidate 数量、最终购买 quick-profile 的数量和比例；
 - 研究员、深研、承保各自耗时；
 - 验证与修复耗时。
 

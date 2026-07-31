@@ -203,9 +203,7 @@ def _manager_bound_followup_candidate(
 
     _coverage(root)
     coverage_root = root / "coverage" / "cn-a"
-    result_path = (
-        coverage_root / "manager-screen" / "manager-run" / "batch-001" / "result.json"
-    )
+    result_path = coverage_root / "manager-screen" / "manager-run" / "batch-001" / "result.json"
     decisive_question = "正常化所有者收益能否由公开证据确认？"
     evidence_ids = ["snapshot:CN:600519"]
     sealed = seal_json(
@@ -299,6 +297,9 @@ def test_record_profile_waits_for_comparison_then_advances_to_scoped(tmp_path: P
     assert queue["task_type"] == "quick_profile"
     assert queue["status"] == "completed"
     assert queue["stage_history"][0]["stage"] == "quick_profile"
+    assert queue["revisit_triggers"] == _profile()["revisit_triggers"]
+    screening = read_jsonl(tmp_path / "coverage" / "cn-a" / "screening.jsonl")[0]
+    assert screening["revisit_triggers"] == _profile()["revisit_triggers"]
     promoted = finalize_profile_stage(
         root=tmp_path / "coverage" / "cn-a",
         cycle_id="2026-07-26-test-cycle",
@@ -439,9 +440,12 @@ def test_agent_profile_comparison_is_score_free_and_controls_budget(tmp_path: Pa
     assert selection["risk_cluster_mode"] == "conservative_unclassified"
     assert selection["agent_decision"] == decisions
     assert selection["research_policy"]["path"] == "policies/research-allocation.json"
-    assert selection["research_policy"]["file_sha256"] == hashlib.sha256(
-        (tmp_path / "policies" / "research-allocation.json").read_bytes()
-    ).hexdigest()
+    assert (
+        selection["research_policy"]["file_sha256"]
+        == hashlib.sha256(
+            (tmp_path / "policies" / "research-allocation.json").read_bytes()
+        ).hexdigest()
+    )
     queue = read_jsonl(tmp_path / "coverage" / "cn-a" / "research_queue.jsonl")
     assert queue[0]["task_type"] == "scoped_research"
     assert queue[0]["status"] == "pending"
@@ -492,15 +496,15 @@ def test_manager_screen_profile_cohort_supersedes_legacy_allocation(
                 "model": "test-model",
                 "tools": ["sealed manager-screen result"],
             },
-                "decisions": [
-                    {
-                        "symbol": "CN:600519",
-                        "route": "send_to_analyst",
-                        "decisive_question": "普通股现金收益是否支持继续研究？",
-                        "evidence_ids": ["snapshot:CN:600519"],
-                    },
-                    {"symbol": "CN:000001", "route": "pass"},
-                ],
+            "decisions": [
+                {
+                    "symbol": "CN:600519",
+                    "route": "send_to_analyst",
+                    "decisive_question": "普通股现金收益是否支持继续研究？",
+                    "evidence_ids": ["snapshot:CN:600519"],
+                },
+                {"symbol": "CN:000001", "route": "pass"},
+            ],
             "portfolio_action": None,
         },
         artifact_type=predecessor_artifact_type,
@@ -1095,6 +1099,75 @@ def test_claim_profile_task_prevents_duplicate_company_assignment(tmp_path: Path
     assert queue["assigned_agent"] == "/root/qp_600519"
 
 
+def test_claim_profile_task_blocks_revocable_v3_commitments(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    import trading_os.research_assets.manager_screen_allocation_v3 as allocation_v3
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import claim_profile_task
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    run_id = "2026-07-31-run"
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "preceding_stage": "manager_screen",
+            "manager_screen_run_id": run_id,
+            "manager_screen_batch_id": "batch-001",
+            "manager_screen_result_path": (
+                f"coverage/cn-a/manager-screen/{run_id}/batch-001/result.json"
+            ),
+            "manager_screen_result_sha256": "b" * 64,
+            "manager_screen_route": "send_to_analyst",
+            "decisive_question": "是否值得购买下一小时研究？",
+            "evidence_ids": ["snapshot:CN:600519"],
+        }
+    )
+    write_jsonl(queue_path, queue)
+    governance = root / "manager-screen" / run_id / "governance" / "allocation-v3"
+    governance.mkdir(parents=True)
+    (governance / "contract.json").write_text("{}", encoding="utf-8")
+    (governance / "contract.json.seal.json").write_text("{}", encoding="utf-8")
+
+    commitment_class = "revocable"
+
+    def verified_contract(**_):
+        return {
+            "commitment_classification": [
+                {
+                    "symbol": "CN:600519",
+                    "commitment_class": commitment_class,
+                }
+            ]
+        }
+
+    monkeypatch.setattr(
+        allocation_v3,
+        "verify_manager_screen_allocation_v3_contract",
+        verified_contract,
+    )
+    with pytest.raises(ResearchAllocationError, match="no eligible profile task"):
+        claim_profile_task(
+            root=root,
+            agent="/root/revocable",
+            claimed_at=RECORDED_AT,
+            symbol="CN:600519",
+        )
+
+    commitment_class = "irreversible"
+    claimed = claim_profile_task(
+        root=root,
+        agent="/root/irreversible",
+        claimed_at=RECORDED_AT,
+        symbol="CN:600519",
+    )
+    assert claimed["symbol"] == "CN:600519"
+
+
 def test_symbol_less_claim_isolated_to_latest_manager_run_and_stage(tmp_path: Path):
     from trading_os.research_assets.coverage_store import write_jsonl
     from trading_os.research_assets.profile_workflow import claim_profile_task
@@ -1565,9 +1638,7 @@ def test_manager_bound_targeted_followup_requires_original_manager(
         )
 
     alternate_policy = tmp_path / "policies" / "alternate-research-allocation.json"
-    alternate_policy.write_bytes(
-        (tmp_path / "policies" / "research-allocation.json").read_bytes()
-    )
+    alternate_policy.write_bytes((tmp_path / "policies" / "research-allocation.json").read_bytes())
     with pytest.raises(ResearchAllocationError, match="canonical"):
         approve_targeted_followup(
             root=root,
@@ -1677,11 +1748,7 @@ def test_targeted_followup_approval_enforces_manager_run_capacity(tmp_path: Path
         policy_path="policies/research-allocation.json",
     )
     prior_approval_path = (
-        coverage_root
-        / "profiles"
-        / "prior-cycle"
-        / "targeted-followup-approvals"
-        / "000001.json"
+        coverage_root / "profiles" / "prior-cycle" / "targeted-followup-approvals" / "000001.json"
     )
     seal_json(
         prior_approval_path,
@@ -1759,19 +1826,11 @@ def test_targeted_followup_approval_journal_repairs_half_written_coverage(
             approved_at=RECORDED_AT + dt.timedelta(seconds=30),
         )
     approval_path = (
-        root
-        / "profiles"
-        / "2026-07-26-test-cycle"
-        / "targeted-followup-approvals"
-        / "600519.json"
+        root / "profiles" / "2026-07-26-test-cycle" / "targeted-followup-approvals" / "600519.json"
     )
     assert verify_sealed(approval_path).artifact_type == "targeted_followup_approval"
-    assert read_jsonl(root / "research_queue.jsonl")[0]["task_type"] == (
-        "targeted_followup"
-    )
-    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == (
-        "targeted_followup_candidate"
-    )
+    assert read_jsonl(root / "research_queue.jsonl")[0]["task_type"] == ("targeted_followup")
+    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == ("targeted_followup_candidate")
 
     monkeypatch.setattr(workflow, "write_jsonl", original_write)
     repaired = workflow.approve_targeted_followup(
@@ -1788,11 +1847,7 @@ def test_targeted_followup_approval_journal_repairs_half_written_coverage(
     assert queue["task_type"] == "targeted_followup"
     assert screening["decision"] == "targeted_followup"
     assert (
-        sum(
-            item["stage"] == "targeted_followup_approval"
-            for item in queue["stage_history"]
-        )
-        == 1
+        sum(item["stage"] == "targeted_followup_approval" for item in queue["stage_history"]) == 1
     )
 
 
@@ -1862,9 +1917,7 @@ def test_explicit_approval_adopts_legacy_pending_targeted_followup(
     assert queue["reason"] == "Manager explicitly approves one decisive evidence followup."
     assert queue["targeted_followup_approval_sha256"] == approved["approval_sha256"]
     assert queue["stage_history"][-1]["stage"] == "targeted_followup_approval"
-    assert screening["reason"] == (
-        "Manager explicitly approves one decisive evidence followup."
-    )
+    assert screening["reason"] == ("Manager explicitly approves one decisive evidence followup.")
     assert any(
         item == f"targeted_followup_approval_sha256:{approved['approval_sha256']}"
         for item in screening["evidence"]
@@ -1983,12 +2036,8 @@ def test_original_manager_can_seal_terminal_followup_decline_via_cli(
     assert sealed.artifact_type == "targeted_followup_decline"
     decline = json.loads(decline_path.read_text(encoding="utf-8"))
     assert decline["budget_decision"] == "declined"
-    assert decline["manager_screen_binding"]["manager"] == (
-        "/root/original-manager"
-    )
-    assert decline["analyst_recommendation"]["research_agent"] == (
-        "/root/company-researcher"
-    )
+    assert decline["manager_screen_binding"]["manager"] == ("/root/original-manager")
+    assert decline["analyst_recommendation"]["research_agent"] == ("/root/company-researcher")
 
     queue = read_jsonl(root / "research_queue.jsonl")[0]
     screening = read_jsonl(root / "screening.jsonl")[0]
@@ -1998,11 +2047,14 @@ def test_original_manager_can_seal_terminal_followup_decline_via_cli(
     assert queue["stage_history"][-1]["stage"] == "targeted_followup_decline"
     assert screening["decision"] == "price_watch"
     assert screening["revisit_triggers"] == triggers
-    assert _targeted_followup_approval_ledger(
-        base=root,
-        repository_root=tmp_path,
-        manager_screen_run_id="manager-run",
-    ) == {}
+    assert (
+        _targeted_followup_approval_ledger(
+            base=root,
+            repository_root=tmp_path,
+            manager_screen_run_id="manager-run",
+        )
+        == {}
+    )
     replay = decline_targeted_followup(
         root=root,
         symbol="CN:600519",
@@ -2015,13 +2067,7 @@ def test_original_manager_can_seal_terminal_followup_decline_via_cli(
     assert replay["idempotent"] is True
     assert replay["decline_sha256"] == sealed.sha256
     queue = read_jsonl(root / "research_queue.jsonl")[0]
-    assert (
-        sum(
-            item["stage"] == "targeted_followup_decline"
-            for item in queue["stage_history"]
-        )
-        == 1
-    )
+    assert sum(item["stage"] == "targeted_followup_decline" for item in queue["stage_history"]) == 1
     with pytest.raises(ResearchAllocationError, match="sealed decline"):
         approve_targeted_followup(
             root=root,
@@ -2140,8 +2186,7 @@ def test_followup_decline_closes_unapproved_legacy_pending_without_capacity(
     assert queue["assigned_agent"] is None
     assert queue["started_at"] is None
     assert not any(
-        item.get("stage") == "targeted_followup"
-        and item.get("status") == "completed"
+        item.get("stage") == "targeted_followup" and item.get("status") == "completed"
         for item in queue["stage_history"]
     )
     assert (
@@ -2375,9 +2420,7 @@ def test_followup_decline_journal_repairs_half_written_coverage(
         )
     queue = read_jsonl(root / "research_queue.jsonl")[0]
     assert queue["targeted_followup_decline_sha256"]
-    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == (
-        "targeted_followup_candidate"
-    )
+    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == ("targeted_followup_candidate")
     decline_path = tmp_path / queue["targeted_followup_decline_path"]
     decline_seal = verify_sealed(decline_path)
 
@@ -2393,9 +2436,7 @@ def test_followup_decline_journal_repairs_half_written_coverage(
     )
     assert repaired["idempotent"] is True
     assert repaired["decline_sha256"] == decline_seal.sha256
-    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == (
-        "conditional_stop"
-    )
+    assert read_jsonl(root / "screening.jsonl")[0]["decision"] == ("conditional_stop")
 
 
 def test_targeted_followup_sealed_ledger_reserves_capacity_before_materialization(
@@ -2470,11 +2511,7 @@ def test_targeted_followup_sealed_ledger_reserves_capacity_before_materializatio
             approved_at=RECORDED_AT,
         )
     approval_path = (
-        root
-        / "profiles"
-        / "capacity-crash-cycle"
-        / "targeted-followup-approvals"
-        / "600519.json"
+        root / "profiles" / "capacity-crash-cycle" / "targeted-followup-approvals" / "600519.json"
     )
     approval_seal = verify_sealed(approval_path)
 
@@ -2896,6 +2933,65 @@ def test_record_profile_replay_is_read_only_and_conflicts_fail(tmp_path: Path):
             root=root,
             policy=changed_policy,
             policy_reference="research-allocation.default@changed",
+            recorded_at=RECORDED_AT,
+        )
+
+
+def test_record_profile_replay_repairs_only_missing_terminal_triggers(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import record_profile_package
+    from trading_os.research_assets.research_allocation import ResearchAllocationError
+    from trading_os.research_assets.sealing import verify_sealed
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    package = _package()
+    first = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    profile_sha = verify_sealed(tmp_path / first["profile_path"]).sha256
+    evaluation_sha = verify_sealed(tmp_path / first["evaluation_path"]).sha256
+    queue = read_jsonl(root / "research_queue.jsonl")
+    screening = read_jsonl(root / "screening.jsonl")
+    queue[0]["revisit_triggers"] = []
+    screening[0]["revisit_triggers"] = []
+    write_jsonl(root / "research_queue.jsonl", queue)
+    write_jsonl(root / "screening.jsonl", screening)
+
+    replayed = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert replayed == {**first, "idempotent": True}
+    assert (
+        read_jsonl(root / "research_queue.jsonl")[0]["revisit_triggers"]
+        == (package["profile"]["revisit_triggers"])
+    )
+    assert (
+        read_jsonl(root / "screening.jsonl")[0]["revisit_triggers"]
+        == (package["profile"]["revisit_triggers"])
+    )
+    assert verify_sealed(tmp_path / first["profile_path"]).sha256 == profile_sha
+    assert verify_sealed(tmp_path / first["evaluation_path"]).sha256 == evaluation_sha
+
+    screening = read_jsonl(root / "screening.jsonl")
+    screening[0]["reason"] = "tampered terminal projection"
+    write_jsonl(root / "screening.jsonl", screening)
+    with pytest.raises(ResearchAllocationError, match="outside the repairable"):
+        record_profile_package(
+            package,
+            root=root,
+            policy=_policy(),
+            policy_reference="research-allocation.default@1.0.0",
             recorded_at=RECORDED_AT,
         )
 
