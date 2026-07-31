@@ -21,6 +21,8 @@ SUSPENDED_AT = FROZEN_AT + dt.timedelta(minutes=10)
 def _ready_repository(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
+    *,
+    legacy_formal_history: bool = False,
 ) -> Path:
     root, _ = _repository(tmp_path, monkeypatch)
     queue_path = root / "research_queue.jsonl"
@@ -29,6 +31,15 @@ def _ready_repository(
     for row in queue:
         symbol = row["symbol"]
         ticker = symbol.split(":", 1)[1]
+        if legacy_formal_history and symbol == "CN:000001":
+            row["stage_history"] = [
+                {
+                    "stage": "quick_profile",
+                    "status": "completed",
+                    "finished_at": (FROZEN_AT - dt.timedelta(days=30)).isoformat(),
+                    "result_path": "coverage/cn-a/profiles/legacy/000001/profile.json",
+                }
+            ]
         row.update(
             {
                 "name": f"测试公司{ticker}",
@@ -163,6 +174,25 @@ def test_noncritical_screening_display_changes_do_not_revoke_eligibility(
     assert materialized["reason"] == "更新后的展示理由仍保留。"
     assert materialized["confidence"] == "low"
     assert materialized["decision"] == "candidate_unfunded"
+
+
+def test_suspension_allows_formal_history_that_predates_the_current_purchase(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    root = _ready_repository(
+        tmp_path,
+        monkeypatch,
+        legacy_formal_history=True,
+    )
+
+    result = _suspend(root)
+
+    assert result["suspended_commitment_count"] == 196
+    queue = _by_symbol(root / "research_queue.jsonl")["CN:000001"]
+    assert queue["research_budget_state"] == "candidate_unfunded"
+    assert queue["stage_history"][0]["stage"] == "quick_profile"
+    assert queue["stage_history"][-1]["stage"] == ("manager_screen_allocation_v3_suspension")
 
 
 @pytest.mark.parametrize(

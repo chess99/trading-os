@@ -78,13 +78,6 @@ _PURCHASE_FIELDS = {
     "selected_by",
     "stop_conditions",
 }
-_FORMAL_STAGES = {
-    "quick_profile",
-    "targeted_followup",
-    "scoped_research",
-    "deep_research",
-    "underwriting",
-}
 
 
 @serialized_coverage_write
@@ -603,11 +596,6 @@ def _require_still_revocable(
         history = []
     if attempts is None:
         attempts = []
-    formal_history = [
-        item
-        for item in history
-        if isinstance(item, Mapping) and item.get("stage") in _FORMAL_STAGES
-    ]
     result_path = row.get("manager_screen_result_path")
     result_sha256 = row.get("manager_screen_result_sha256")
     decisive_question = row.get("decisive_question")
@@ -627,7 +615,6 @@ def _require_still_revocable(
         or not isinstance(attempts, list)
         or attempts
         or not isinstance(history, list)
-        or formal_history
         or not isinstance(result_path, str)
         or not result_path.strip()
         or not isinstance(result_sha256, str)
@@ -641,6 +628,11 @@ def _require_still_revocable(
         raise ManagerScreenAllocationV3SuspensionError(
             "commitment is no longer pending, never claimed, and never attempted"
         )
+    # The sealed contract already classifies formal progress relative to each
+    # purchase timestamp.  Legacy research completed before the current run's
+    # purchase is therefore compatible with revocation and must not be treated
+    # as work performed against this commitment.  Exact activation-row binding
+    # below prevents any post-contract history from being ignored.
     if activation is not None:
         for field in (
             "manager_screen_result_path",
