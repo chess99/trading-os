@@ -1714,6 +1714,81 @@ def test_targeted_followup_approval_journal_repairs_half_written_coverage(
     )
 
 
+def test_explicit_approval_adopts_legacy_pending_targeted_followup(
+    tmp_path: Path,
+):
+    from trading_os.research_assets.coverage_store import read_jsonl, write_jsonl
+    from trading_os.research_assets.profile_workflow import (
+        approve_targeted_followup,
+        record_profile_package,
+    )
+
+    _coverage(tmp_path)
+    root = tmp_path / "coverage" / "cn-a"
+    package = _package()
+    package["profile"]["governance_status"] = "uncertain"
+    package["profile"]["normalized_earnings_status"] = "uncertain"
+    package["profile"]["valuation"]["base_expected_annual_return"] = 0.06
+    package["profile"]["valuation"]["bull_expected_annual_return"] = 0.12
+    package["provenance"]["agent"] = "/root/company-researcher"
+    result = record_profile_package(
+        package,
+        root=root,
+        policy=_policy(),
+        policy_reference="research-allocation.default@1.0.0",
+        recorded_at=RECORDED_AT,
+    )
+    assert result["next_stage"] == "targeted_followup_candidate"
+
+    queue_path = root / "research_queue.jsonl"
+    queue = read_jsonl(queue_path)
+    queue[0].update(
+        {
+            "task_type": "targeted_followup",
+            "status": "pending",
+            "preceding_stage": "quick_profile",
+            "assigned_agent": None,
+            "started_at": None,
+            "finished_at": None,
+            "reason": "legacy evaluator purchased this budget automatically",
+        }
+    )
+    write_jsonl(queue_path, queue)
+    screening_path = root / "screening.jsonl"
+    screening = read_jsonl(screening_path)
+    screening[0].update(
+        {
+            "decision": "targeted_followup",
+            "reason": "legacy evaluator purchased this budget automatically",
+        }
+    )
+    write_jsonl(screening_path, screening)
+
+    approved = approve_targeted_followup(
+        root=root,
+        symbol="CN:600519",
+        manager="/root/investment-manager",
+        reason="Manager explicitly approves one decisive evidence followup.",
+        policy=_policy(),
+        approved_at=RECORDED_AT + dt.timedelta(seconds=30),
+    )
+
+    assert approved["task_type"] == "targeted_followup"
+    assert approved["status"] == "pending"
+    queue = read_jsonl(queue_path)[0]
+    screening = read_jsonl(screening_path)[0]
+    assert queue["reason"] == "Manager explicitly approves one decisive evidence followup."
+    assert queue["targeted_followup_approval_sha256"] == approved["approval_sha256"]
+    assert queue["stage_history"][-1]["stage"] == "targeted_followup_approval"
+    assert screening["reason"] == (
+        "Manager explicitly approves one decisive evidence followup."
+    )
+    assert any(
+        item == f"targeted_followup_approval_sha256:{approved['approval_sha256']}"
+        for item in screening["evidence"]
+    )
+
+
 def test_targeted_followup_sealed_ledger_reserves_capacity_before_materialization(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,

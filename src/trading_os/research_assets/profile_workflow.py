@@ -312,7 +312,38 @@ def approve_targeted_followup(
     queued = _one_record(queue, symbol, "research queue")
     screen = _one_record(screening, symbol, "screening")
     repository_root = base.parent.parent
-    research_agent = queued.get("assigned_agent")
+    legacy_pending_followup = bool(
+        queued.get("task_type") == "targeted_followup"
+        and queued.get("status") == "pending"
+        and queued.get("preceding_stage") in {"quick_profile", "scoped_research"}
+        and screen.get("decision") == "targeted_followup"
+        and not queued.get("targeted_followup_approval_path")
+        and not queued.get("targeted_followup_approval_sha256")
+        and not _history_completed(queued, "targeted_followup")
+    )
+    legacy_profile_row: Mapping[str, Any] | None = None
+    if legacy_pending_followup:
+        preceding_stage = str(queued["preceding_stage"])
+        legacy_profile_row = _profile_comparison_row(
+            queued,
+            ordinal=1,
+            cycle=_text(queued.get("profile_cycle_id"), "profile_cycle_id"),
+            stage=preceding_stage,
+            repository_root=repository_root,
+        )
+        if legacy_profile_row.get("current_next_stage") not in {
+            "targeted_followup",
+            "targeted_followup_candidate",
+        }:
+            raise ResearchAllocationError(
+                "legacy targeted followup is not backed by a sealed analyst "
+                f"recommendation: {symbol}"
+            )
+    research_agent = (
+        legacy_profile_row.get("research_agent")
+        if legacy_profile_row is not None
+        else queued.get("assigned_agent")
+    )
     if research_agent == manager_name:
         raise ResearchAllocationError(
             "targeted-followup manager must be independent of the research agent"
@@ -384,7 +415,7 @@ def approve_targeted_followup(
             repository_root=repository_root,
             idempotent=True,
         )
-    if (
+    if not legacy_pending_followup and (
         queued.get("status") != "completed"
         or screen.get("decision") != "targeted_followup_candidate"
         or queued.get("task_type") not in {"quick_profile", "scoped_research"}
@@ -423,7 +454,11 @@ def approve_targeted_followup(
         "approved_at": approved_at.isoformat(),
         "manager": manager_name,
         "reason": approval_reason,
-        "preceding_stage": str(queued["task_type"]),
+        "preceding_stage": (
+            str(queued["preceding_stage"])
+            if legacy_pending_followup
+            else str(queued["task_type"])
+        ),
         "next_stage": "targeted_followup",
         "effort_budget_hours": _effort_budget(policy, "targeted_followup"),
         "stop_conditions": _stop_conditions("targeted_followup"),
@@ -670,6 +705,24 @@ def _materialize_targeted_followup_approval(
         raise ResearchAllocationError(
             f"sealed targeted-followup approval cannot repair queue state: {symbol}"
         )
+    elif (
+        queued.get("task_type") == "targeted_followup"
+        and queued.get("status") == "pending"
+        and not queued.get("targeted_followup_approval_path")
+        and not queued.get("targeted_followup_approval_sha256")
+    ):
+        # A small number of tasks were materialized by the legacy evaluator
+        # before explicit manager approval became mandatory.  Keep the sealed
+        # analyst recommendation, but replace the mutable queue rationale with
+        # the manager's explicit budget decision while adding the approval
+        # ledger binding below.
+        queued.update(
+            {
+                "reason": approval["reason"],
+                "effort_budget_hours": approval["effort_budget_hours"],
+                "stop_conditions": list(approval["stop_conditions"]),
+            }
+        )
     queued.update(
         {
             "targeted_followup_approval_path": relative,
@@ -697,6 +750,10 @@ def _materialize_targeted_followup_approval(
                 "next_action": _next_action("targeted_followup", False),
             }
         )
+    elif screen.get("decision") == "targeted_followup" and queued.get(
+        "status"
+    ) == "pending":
+        screen["reason"] = approval["reason"]
     screen["evidence"] = list(dict.fromkeys(evidence + approval_evidence))
     write_jsonl(
         base / RESEARCH_QUEUE_FILE,
